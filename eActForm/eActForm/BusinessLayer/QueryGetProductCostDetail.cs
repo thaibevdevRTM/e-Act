@@ -42,7 +42,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ProductCostOfGroupByPrice> getProductcostdetail(string brandId,string smellId, string size, string p_customerid)
+        public static List<ProductCostOfGroupByPrice> getProductcostdetail(string brandId, string smellId, string size, string p_customerid, string productId)
         {
             try
             {
@@ -70,32 +70,48 @@ namespace eActForm.BusinessLayer
                 if (size == "")
                 {
                     // group same price
-                    groupByPrice = (from p in lists
-                                  group p by p.wholeSalesPrice into g
-                                  select new ProductCostOfGroupByPrice {
-                                   id = Guid.NewGuid().ToString(),
-                                   brandId = lists.FirstOrDefault().brandId,
-                                   smellId = lists.FirstOrDefault().smellId,
-                                   smellName = lists.FirstOrDefault().smellName,
-                                   brandName = lists.FirstOrDefault().brandName,
-                                   wholeSalesPrice = g.Key,
-                                   isShowGroup = true,
-                                  detailGroup = g.ToList() }).ToList();
-                    
-                }
+                    // groupByPrice = 
+                    groupByPrice = lists.GroupBy(item => new { item.wholeSalesPrice, item.brandName })
+                   .Select((group, index) => new ProductCostOfGroupByPrice
+                   {
+                       id = Guid.NewGuid().ToString(),
+                       brandId = group.First().brandId,
+                       smellId = group.First().smellId,
+                       smellName = group.First().smellName,
+                       brandName = group.First().brandName,
+                       wholeSalesPrice = group.First().wholeSalesPrice,
+                       isShowGroup = true,
+                       detailGroup = group.ToList()
+                   }).ToList();
+                
+
+
+                //group p by p.wholeSalesPrice into g
+
+                //select new ProductCostOfGroupByPrice {
+                // id = Guid.NewGuid().ToString(),
+                // brandId = lists.FirstOrDefault().brandId,
+                // smellId = lists.FirstOrDefault().smellId,
+                // smellName = lists.FirstOrDefault().smellName,
+                // brandName = lists.FirstOrDefault().brandName,
+                // wholeSalesPrice = g.Key,
+                // isShowGroup = true,
+                //detailGroup = g.ToList() }).ToList();
+
+            }
                 else
                 {
-                    groupByPrice[0].isShowGroup = false;
-                    groupByPrice[0].detailGroup = lists;
-                }
-                
-                return groupByPrice;
+                groupByPrice[0].isShowGroup = false;
+                groupByPrice[0].detailGroup = lists;
             }
+
+            return groupByPrice;
+        }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("getProductcostdetail => " + ex.Message);
                 throw new Exception("getProductcostdetail >>" + ex.Message);
-            }
-        }
+    }
+}
     }
 }

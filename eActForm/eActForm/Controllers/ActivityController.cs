@@ -253,7 +253,8 @@ namespace eActForm.Controllers
                 var productlist = new Activity_Model();
                 if (productid != "")
                 {
-                    productlist.productcostdetaillist = QueryGetProductCostDetail.getProductCostByProductId(productid, cusid);
+                    activityModel.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid).Where(x => x.productId == productid).ToList();
+                   // productlist.productcostdetaillist = QueryGetProductCostDetail.getProductCostByProductId(productid, cusid);
                 }
                 else
                 {
