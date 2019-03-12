@@ -180,6 +180,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BusinessLayer\ActFormAppCode.cs" />
     <Compile Include="BusinessLayer\ActivityFormCommandHandler.cs" />
+    <Compile Include="BusinessLayer\EmailAppCodes.cs" />
     <Compile Include="BusinessLayer\ApproveAppCode.cs" />
     <Compile Include="BusinessLayer\ApproveFlowAppCode.cs" />
     <Compile Include="BusinessLayer\QueryGetActivityById.cs" />

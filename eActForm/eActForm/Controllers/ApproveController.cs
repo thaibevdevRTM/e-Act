@@ -17,8 +17,7 @@ namespace eActForm.Controllers
         {
             if (actId == null) return RedirectToAction("index", "Home");
             else
-            {
-                ApproveAppCode.insertApprove(actId);
+            {                
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
                 models.approveStatusLists = ApproveAppCode.getApproveStatus();
                 return View(models);
@@ -79,14 +78,14 @@ namespace eActForm.Controllers
             var resultAjax = new AjaxResult();
             try
             {
-                eActController.sendEmail(
-                    "tanapong.w@thaibev.com"
-                    , "champ.tanapong@gmail.com"
-                    , "Test Subject eAct"
-                    , "Test Body"
-                    , eActController.genPdfFile(GridHtml, activityId)
+                //eActController.sendEmail(
+                //    "tanapong.w@thaibev.com"
+                //    , "champ.tanapong@gmail.com"
+                //    , "Test Subject eAct"
+                //    , "Test Body"
+                //    , eActController.genPdfFile(GridHtml, activityId)
 
-                    );
+                //    );
                 resultAjax.Success = true;
             }
             catch (Exception ex)

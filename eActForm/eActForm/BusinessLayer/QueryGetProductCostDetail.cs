@@ -83,35 +83,35 @@ namespace eActForm.BusinessLayer
                        isShowGroup = true,
                        detailGroup = group.ToList()
                    }).ToList();
-                
 
 
-                //group p by p.wholeSalesPrice into g
 
-                //select new ProductCostOfGroupByPrice {
-                // id = Guid.NewGuid().ToString(),
-                // brandId = lists.FirstOrDefault().brandId,
-                // smellId = lists.FirstOrDefault().smellId,
-                // smellName = lists.FirstOrDefault().smellName,
-                // brandName = lists.FirstOrDefault().brandName,
-                // wholeSalesPrice = g.Key,
-                // isShowGroup = true,
-                //detailGroup = g.ToList() }).ToList();
+                    //group p by p.wholeSalesPrice into g
 
-            }
+                    //select new ProductCostOfGroupByPrice {
+                    // id = Guid.NewGuid().ToString(),
+                    // brandId = lists.FirstOrDefault().brandId,
+                    // smellId = lists.FirstOrDefault().smellId,
+                    // smellName = lists.FirstOrDefault().smellName,
+                    // brandName = lists.FirstOrDefault().brandName,
+                    // wholeSalesPrice = g.Key,
+                    // isShowGroup = true,
+                    //detailGroup = g.ToList() }).ToList();
+
+                }
                 else
                 {
-                groupByPrice[0].isShowGroup = false;
-                groupByPrice[0].detailGroup = lists;
-            }
+                    groupByPrice[0].isShowGroup = false;
+                    groupByPrice[0].detailGroup = lists;
+                }
 
-            return groupByPrice;
-        }
+                return groupByPrice;
+            }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("getProductcostdetail => " + ex.Message);
                 throw new Exception("getProductcostdetail >>" + ex.Message);
-    }
-}
+            }
+        }
     }
 }

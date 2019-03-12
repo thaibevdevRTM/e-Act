@@ -253,12 +253,12 @@ namespace eActForm.Controllers
                 var productlist = new Activity_Model();
                 if (productid != "")
                 {
-                    activityModel.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid).Where(x => x.productId == productid).ToList();
+                    //activityModel.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid).Where(x => x.productId == productid).ToList();
                    // productlist.productcostdetaillist = QueryGetProductCostDetail.getProductCostByProductId(productid, cusid);
                 }
                 else
                 {
-                    activityModel.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid);
+                    activityModel.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid);
                 }               
 
                 CostThemeDetail costthememodel = new CostThemeDetail();
@@ -424,16 +424,21 @@ namespace eActForm.Controllers
             {
                 string genDoc = ActivityFormCommandHandler.genNumberActivity(activityId);
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc);
-                GridHtml = GridHtml.Replace("---", genDoc);
+                if (countresult > 0)
+                {
+                    GridHtml = GridHtml.Replace("---", genDoc);
+                    genPdfFile(GridHtml, activityId);
+                    ApproveAppCode.insertApprove(activityId);
+                    EmailAppCodes.sendApproveActForm(activityId);
+                }
+                //sendEmail(
+                //    "tanapong.w@thaibev.com"
+                //    , "champ.tanapong@gmail.com"
+                //    , "Test Subject eAct"
+                //    , "Test Body"
+                //    , genPdfFile(GridHtml, activityId)
 
-                sendEmail(
-                    "tanapong.w@thaibev.com"
-                    , "champ.tanapong@gmail.com"
-                    , "Test Subject eAct"
-                    , "Test Body"
-                    , genPdfFile(GridHtml, activityId)
-
-                    );
+                //    );
 
 
                 resultAjax.Success = true;

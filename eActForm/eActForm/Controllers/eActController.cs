@@ -226,7 +226,7 @@ namespace eActForm.Controllers
             MemoryStream msPreview = new MemoryStream();
             byte[] PreviewBytes = new byte[0];
             List<Attachment> files = new List<Attachment>();
-
+            
             msPreview = GetFileReportTomail_Preview(GridHtml);
             PreviewBytes = msPreview.ToArray();
 
@@ -296,21 +296,6 @@ namespace eActForm.Controllers
                 return ms;
             }
 
-        }
-
-
-        public static void sendEmail(string mailTo, string cc, string subject, string body, List<Attachment> files)
-        {
-            GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
-            GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
-            GMailer mailer = new GMailer();
-            mailer.ToEmail = mailTo;
-            mailer.Subject = subject;
-            mailer.Body = body;
-            mailer.p_Attachment = files;
-            mailer.CC = cc;
-            mailer.IsHtml = true;
-            mailer.Send();
         }
 
     }
