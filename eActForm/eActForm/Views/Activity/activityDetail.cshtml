@@ -1,0 +1,129 @@
+﻿@model eActForm.Models.Activity_Model
+@{
+    Layout = null;
+    decimal? total = 0;
+}
+<style>
+    .font12 {
+        font-size: 10px;
+    }
+    .font12B {
+        font-size: 10px;
+    }
+</style>
+<div class="row">
+    <div class="col-12">
+        <p class="lead">รายละเอียดค่าใช้จ่าย (Cost)</p>
+    </div>
+    <div class="col-12">
+        <table class="table table-bordered" id="">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="align-content-center font12B" rowspan="2" onclick="onDelActDetail();"> <label class="btn ink-reaction btn-danger fa fa-trash-o"></label></th>
+                    <th class="align-content-center font12B" rowspan="2" style="width:20%;">ประเภทกิจกรรม</th>
+                    <th class="align-content-center font12B" rowspan="2" style="width:30%;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</th>
+                    <th class="align-content-center font12B" colspan="5" style="width:40%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
+
+                </tr>
+                <tr>
+                    <th class="align-content-center font12B">ยอดขายปกติ (Cost)</th>
+                    <th class="align-content-center font12B">ยอดขายข่วงทำกิจกรรม (Case)</th>
+                    <th class="align-content-center font12B">% Growth</th>
+                    <th class="align-content-center font12B">ค่าใช้จ่ายรวม Spending Exp. (Bath)</th>
+                    <th class="align-content-center font12B">% : ยอดขาย</th>
+                </tr>
+            </thead>
+
+            @if (Model.costthemedetail != null)
+            {
+                var index = 0;
+                total = 0;
+                foreach (var item in Model.costthemedetail)
+                {
+
+                    <tr>
+
+                        <td onclick="onDelActDetail('@item.id')">
+                            <label class="btn ink-reaction btn-danger fa fa-trash-o"></label>
+                        </td>
+                        <td style="text-align:center">@item.typeTheme</td>
+                        <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                        <td>@Html.TextBoxFor(model => item.normalCost, new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                        <td>
+                            @Html.TextBoxFor(model => item.themeCost, new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
+                        </td>
+                        <td>@Html.TextBoxFor(model => item.growth, new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                        <td>@Html.TextBoxFor(model => item.total, new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font12" })</td>
+                        <td>@Html.TextBoxFor(model => item.total, new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font12" })</td>
+
+                    </tr>
+                    total = total + item.total;
+                    index++;
+                }
+            }
+
+                    <tr>
+                        <td colspan="3" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <h4>
+                                <p class="text-success text-center">
+                                    @if (total != null)
+                                    {
+                                        @total.Value.ToString();
+                                    }
+                                </p>
+                            </h4>
+                        </td>
+                    </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    function calGrowth(id, rowIndex) {
+
+        if ($('#lblThemeCost_' + rowIndex).val() != "" && $('#lblGrowth_' + rowIndex).val() != "") {
+            var name = $('#lblProductName_' + rowIndex).val();
+            var normalCost = $('#lblNormalCost_' + rowIndex).val();
+            var themeCost = $('#lblThemeCost_' + rowIndex).val();
+            var growth = $("#lblGrowth_" + rowIndex).val();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("calDetailTheme", "Activity")',
+                data: {
+                    activityModel: ObjModel,
+                    name: name,
+                    normalCost: normalCost,
+                    id: id,
+                    themeCost: themeCost,
+                    growth: growth,
+                }
+            }).done(function (response) {
+                ObjModel = response.Data.activityModel;
+                callThemedetailcost(response.Data.activityModel);
+            });
+        }
+    }
+        function onDelActDetail(id) {
+
+                $.ajax({
+                url: '@Url.Action("delActDetail", "Activity")',
+                data: {
+                    rowid: id,
+                    activityModel: ObjModel,
+                },
+                dataType: "json",
+                type: 'POST',
+                    success: function (response) {
+                        ObjModel = response.Data.activityModel;
+                        callThemedetailcost(response.Data.activityModel);
+                }
+            });
+        }
+
+</script>

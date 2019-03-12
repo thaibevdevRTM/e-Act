@@ -1,0 +1,317 @@
+﻿@model eActForm.Models.Activity_Model
+@{
+    Layout = null;
+    decimal? totalActCost = 0;
+}
+
+<script>
+   function submitPreview() {
+
+         bootbox.confirm("ยืนยัน บันทึกข้อมูล!", function (result) {
+             bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
+            $.ajax({
+            url: '@Url.Action("submitPreview", "Activity")',
+            data: {
+                GridHtml: $("#Grid").html(),
+                status: 2,
+                activityId: $("#HdId").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+            }).done(function (response) {
+                var url = '@Url.Action("Index", "Home")';
+                window.location.href = url;
+
+                console.log('success');
+                 });
+         });
+      }
+</script>
+
+
+@Html.HiddenFor(m => m.activityFormModel.id, new { id = "HdId" })
+
+<div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <div style=""></div>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="Grid" style="width:97%; margin-left:20px;">
+                <style>
+                    .cssborderbottom {
+                        border-bottom-width: 1px;
+                        border-bottom-style: solid;
+                        border-bottom-color: gray;
+                    }
+                </style>
+
+                <div>
+                    <div style="text-align:center;"><h5>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</h5></div>
+                </div>
+                <div>
+                    <table style="width:100%; margin-top:30px;">
+                        <tr>
+                            <td width="140px;"></td>
+                            <td width="260px;" style="margin-left:10px;"></td>
+                            <td width="20px;"></td>
+                            <td width="150px;" style="text-align:right; font-size:12.5px;">Activity No.</td>
+                            <td width="5px;"></td>
+                            <td width="160px;" class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.activityNo) </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align:right; font-size:12.5px;">Document Date</td>
+                            <td></td>
+                            <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.documentDate) </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align:right; font-size:12.5px;">Reference</td>
+                            <td></td>
+                            <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.reference) </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:12.5px;">ชื่อกิจกรรม</td>
+                            <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.activityName) </td>
+                            <td></td>
+                            <td style="text-align:right; font-size:12.5px;">ลูกค้า(Customer Name)</td>
+                            <td></td>
+                            <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.customerName) </td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:12.5px;">ประเภทกิจกรรม(Theme)</td>
+                            <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.txttheme) </td>
+                            <td></td>
+                            <td style="text-align:right; font-size:12.5px;">ช่องทาง(Channel)</td>
+                            <td></td>
+                            <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.chanel) </td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:12.5px;">วัตถุประสงค์</td>
+                            <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.objective)</td>
+                            <td></td>
+                            <td style="text-align:right; font-size:12.5px;">กลุ่มสินค้า(Product Group)</td>
+                            <td></td>
+                            <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.productGroupText) </td>
+                        </tr>
+                        <tr>
+                            <td style="height:10px;"></td>
+                        </tr>
+                        <tr>
+                            @if (Model.activityFormModel != null)
+                            {
+                                if (Model.activityFormModel.trade == "term")
+                                {
+                                    <td style="text-align:right">X &nbsp; </td>
+                                }
+                                else
+                                {
+                                    <td style="text-align:right"></td>
+                                }
+                            }
+                            <td style="font-size:12.5px;">ไม่ได้เกิดจาก รายการส่งเสริมการขาย (Trade Term)</td>
+                            <td></td>
+                            <td style="text-align:right; font-size:12.5px;">ระยะเวลากิจกรรม</td>
+                            <td></td>
+                            <td style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.activityPeriodSt) To @Html.DisplayFor(item => item.activityFormModel.activityPeriodEnd)</td>
+                        </tr>
+                        <tr>
+                            @if (Model.activityFormModel != null)
+                            {
+                                if (Model.activityFormModel.trade == "outterm")
+                                {
+                                    <td style="text-align:right">X &nbsp; </td>
+                                }
+                                else
+                                {
+                                    <td style="text-align:right"></td>
+                                }
+                            }
+                            <td style="font-size:12.5px;">รายการส่งเสริมการขาย (นอกTrade Term)</td>
+                            <td></td>
+                            <td style="text-align:right; font-size:12.5px;">(Activity Period)</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align:right; font-size:12.5px;">ระยะเวลาการให้ทุนพิเศษ</td>
+                            <td></td>
+                            <td style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.costPeriodSt) To @Html.DisplayFor(item => item.activityFormModel.costPeriodEnd)</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align:right; font-size:12.5px;">(Cost Period)</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div>
+                    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                </div>
+
+                <div style="width:100%; ">
+                    <div style="margin-top:5px;">
+                        รายละเอียดของการทำกิจกรรม(Activity Detail)
+                    </div>
+                    <div style="margin-top:15px;">
+                        <label style="font-size:12.5px; white-space:pre-line;">@Html.DisplayFor(item => item.activityFormModel.activityDetail) </label>
+                    </div>
+                </div>
+
+                <div>
+                    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                </div>
+
+                <div style="margin-top:5px; width:100%;">
+                    โครงสร้างราคา-ไม่รวม Vat(Product Cost - Bath Per Case)
+                </div>
+
+                <div>
+                    <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td rowspan="2" style="width:20%; font-size:12.5px;">ชื่อสินค้า (product Name)</td>
+                            <td rowspan="2" style="width:10%;  font-size:12.5px;">Std. Wholesales Price</td>
+                            <td colspan="3" style="width:20%;  font-size:12.5px;">Normal Discount (%)</td>
+                            <td style="width:10%;  font-size:12.5px;">Normal</td>
+                            <td style="width:10%;  font-size:12.5px;">Normal</td>
+                            <td style="width:10%;  font-size:12.5px;">Promotion</td>
+                            <td style="width:10%;  font-size:12.5px;">Special</td>
+                            <td style="width:10%;  font-size:12.5px;">Promotion</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:12.5px;">(1)</td>
+                            <td style="font-size:12.5px;">(2)</td>
+                            <td style="font-size:12.5px;">(3)</td>
+                            <td style="font-size:12.5px;">Cost</td>
+                            <td style="font-size:12.5px;">GP%</td>
+                            <td style="font-size:12.5px;">GP%</td>
+                            <td style="font-size:12.5px;">Discount %</td>
+                            <td style="font-size:12.5px;">Cost (BHT)</td>
+                        </tr>
+                        @if (Model.productcostdetaillist.Any())
+                        {
+                            foreach (var item in Model.productcostdetaillist)
+                            {
+                                <tr>
+                                    <td style="font-size:12.5px;">@item.productName</td>
+                                    <td style="font-size:12.5px;">@item.wholeSalesPrice</td>
+                                    <td style="font-size:12.5px;">@item.disCount1</td>
+                                    <td style="font-size:12.5px;">@item.disCount2</td>
+                                    <td style="font-size:12.5px;">@item.disCount3</td>
+                                    <td style="font-size:12.5px;">@item.normalCost</td>
+                                    <td style="font-size:12.5px;">@item.normalGp</td>
+                                    <td style="font-size:12.5px;">@item.promotionGp</td>
+                                    <td style="font-size:12.5px;">@item.specialDisc</td>
+                                    <td style="font-size:12.5px;">@item.promotionCost</td>
+                                </tr>
+                            }
+                        }
+
+
+                    </table>
+                </div>
+
+
+                <div>
+                    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                </div>
+
+                <div style="margin-top:5px; width:100%;">
+                    รายละเอียดค่าใช้จ่าย (Cost)
+                </div>
+
+                <div>
+                    <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td rowspan="2" width="15%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
+                            <td rowspan="2" width="40%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
+                            <td colspan="4" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
+                        </tr>
+                        <tr>
+                            <td width="10%" style="font-size:12.5px;">ยอดขายปกติ (Cost)</td>
+                            <td width="10%" style="font-size:12.5px;">ยอดขายข่วงทำกิจกรรม (Case)</td>
+                            <td width="10%" style="font-size:12.5px;">% Growth</td>
+                            <td width="15%" style="font-size:12.5px;">ค่าใช้จ่ายรวม Spending Exp. (Bath)</td>
+                        </tr>
+                        @if (Model.productcostdetaillist.Any())
+                        {
+                            foreach (var item in Model.costthemedetail)
+                            {
+                                <tr>
+                                    <td style="font-size:12.5px;">@item.typeTheme</td>
+                                    <td style="font-size:12.5px;">@item.productName</td>
+                                    <td style="font-size:12.5px;">@item.normalCost</td>
+                                    <td style="font-size:12.5px;">@item.themeCost</td>
+                                    <td style="font-size:12.5px;">@item.growth</td>
+                                    <td style="font-size:12.5px;">@item.total</td>
+                                </tr>
+                                totalActCost = totalActCost + item.total;
+                            }
+                        }
+
+
+                        <tr>
+                            <td style="border:none; border-bottom:none;"></td>
+                            <td style="text-align:right; border:none; border-bottom:none;">รวม</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (totalActCost != null)
+                                {
+                                    @totalActCost.Value.ToString();
+                                }
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <div>
+                    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                </div>
+                <div style="margin-top:10px;">
+                    อนุมัติค่าใช้จ่าย(Approve)
+                </div>
+                <div style="margin-bottom:10px;">
+                    ประมาณการ(Estimate)
+                </div>
+
+                <div>
+                    @if (Model.activityFormModel != null)
+                    {
+                        @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
+                    }
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div>
+                <p class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                    <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+

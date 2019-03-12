@@ -1,0 +1,83 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.ActSignatureModel.SignModel
+
+@{
+    TempData["empName"] = UtilsAppCode.Session.User.empFNameTH + " " + UtilsAppCode.Session.User.empLNameTH;
+    TempData["positionTitle"] = UtilsAppCode.Session.User.empPositionTitleTH;
+}
+<h2>จัดการลายเซ็น</h2>
+<hr />
+<div class="row">
+
+
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <div class="profile_img">
+            <div id="crop-avatar">
+                <!-- Current avatar -->
+                @{
+                    var src = "http://webapp8.apps.thaibev.com/files/eCheck/Photos/" + @UtilsAppCode.Session.User.empId + ".jpg";
+                }
+                <img class="img-responsive avatar-view" src=@src alt="Avatar" title="Change the avatar">
+            </div>
+        </div>
+        <h3>@TempData["empName"]</h3>
+
+        <ul class="list-unstyled user_data">
+            <li>
+                <i class="fa fa-map-marker user-profile-icon"></i> @UtilsAppCode.Session.User.empCompanyName
+            </li>
+
+            <li>
+                <i class="fa fa-briefcase user-profile-icon"></i> @TempData["positionTitle"]
+            </li>
+
+            <li class="m-top-xs">
+                <i class="fa fa-external-link user-profile-icon"></i>
+            </li>
+        </ul>
+
+
+    </div>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+
+        @Html.Action("listsSignature", "Signature", new { empId = @UtilsAppCode.Session.User.empId })
+    </div>
+
+</div>
+
+<script src="~/Scripts/SignatureTool.js"></script>
+<script>
+    var signaturePadWrappers = document.querySelectorAll('.signature-pad');
+
+    Array.prototype.forEach.call(signaturePadWrappers, function (wrapper) {
+        var canvas = wrapper.querySelector('canvas');
+        var clearButton = wrapper.querySelector('.btn-clear-canvas');
+        var hiddenInput = wrapper.querySelector('input[type="hidden"]');
+
+        var signaturePad = new SignaturePad(canvas);
+
+        // Read base64 string from hidden input
+        var base64str = hiddenInput.value;
+
+        if (base64str) {
+            // Draws signature image from data URL
+            signaturePad.fromDataURL('data:image/png;base64,' + base64str);
+        }
+
+        if (hiddenInput.disabled) {
+            signaturePad.off();
+        } else {
+            signaturePad.onEnd = function () {
+                // Returns signature image as data URL and set it to hidden input
+                base64str = signaturePad.toDataURL().split(',')[1];
+                hiddenInput.value = base64str;
+            };
+
+            clearButton.addEventListener('click', function () {
+                // Clear the canvas and hidden input
+                signaturePad.clear();
+                hiddenInput.value = '';
+            });
+        }
+    });
+</script>

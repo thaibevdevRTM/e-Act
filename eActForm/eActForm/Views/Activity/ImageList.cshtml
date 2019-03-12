@@ -1,0 +1,46 @@
+﻿@model eActForm.Models.TB_Act_Image_Model.ImageModels
+@{
+    Layout = null;
+}
+
+
+<div>
+    <table>
+        <thead>
+            @if (Model.tbActImageList.Count > 0)
+            {
+                <tr>
+                    @foreach (var item in Model.tbActImageList)
+                    {
+                    <td width="120px;">
+                        @if (item._image.Length > 0)
+                        {
+                            var base64 = Convert.ToBase64String(item._image);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            <span class="close" onclick="javascript:onclickDelImage('@item.id');">&times;</span>
+                            <img src="@imgSrc" href=" " id="catImage"  class="img-thumbnail" width="100px" height="100px" />
+                        }
+                    </td>
+                    }
+                </tr>
+
+
+            }
+        </thead>
+    </table>
+</div>
+<script>
+
+    function onclickDelImage(id) {
+        console.log(id);
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("deleteImgById", "Activity")',
+            data: {
+                id: id,
+            }
+        }).done(function (response) {
+            CallImageView($("#hdActivityId").val());
+        });
+    }
+</script>

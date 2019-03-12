@@ -1,0 +1,124 @@
+﻿@using eActForm.BusinessLayer;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+
+    <!-- Bootstrap -->
+    <link href="~/content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="~/Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+    <link href="~/content/vendors/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+
+    <style type="text/css">
+
+        .my-bootbox-class .modal-dialog {
+            width: 400px;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="" class="site_title">
+                            <img src="~/images/logo-ss.png" class="profile_img" width="30px" />
+                            <span>RTM Sale Support</span>
+                        </a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            @{
+                                var src = "http://webapp8.apps.thaibev.com/files/eCheck/Photos/" + @UtilsAppCode.Session.User.empId + ".jpg";
+                            }
+                            <img src=@src alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>@UtilsAppCode.Session.User.empFNameTH  @UtilsAppCode.Session.User.empLNameTH</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    @RenderPage("_sidebar.cshtml")
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            @RenderPage("_topnav.cshtml")
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    @RenderBody()
+                </div>
+            </div>
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    <!-- Bootstrap -->
+    <script src="~/Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Content/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- Datatables -->
+    <script src="~/Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+    <!--bootbox-->
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/bootbox.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="~/Content/vendors/build/js/custom.js"></script>
+
+
+</body>
+</html>
