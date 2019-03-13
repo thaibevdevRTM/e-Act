@@ -23,8 +23,11 @@ namespace eActForm.BusinessLayer
                                                             {
                                                                 id = dr["id"].ToString(),
                                                             }).ToList();
-                model.flowMain = lists[0];
-                model.flowDetail = getFlowDetail(model.flowMain.id);
+                if (lists.Count > 0)
+                {
+                    model.flowMain = lists[0];
+                    model.flowDetail = getFlowDetail(model.flowMain.id);
+                }
                 return model;
             }
             catch (Exception ex)
@@ -32,7 +35,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFlow by actFormId >>" + ex.Message);
             }
         }
-        public static ApproveFlowModel.approveFlowModel getFlow(string subId, string customerId, string productTypeId)
+        public static ApproveFlowModel.approveFlowModel getFlow(string subId, string customerId, string productCatId)
         {
             try
             {
@@ -40,7 +43,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowMain"
                     , new SqlParameter[] {new SqlParameter("@subjectId",subId)
                     ,new SqlParameter("@customerId",customerId)
-                    ,new SqlParameter("@productTypeId",productTypeId)});
+                    ,new SqlParameter("@productCatId",productCatId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                                                             select new ApproveFlowModel.flowApprove()
                                                             {

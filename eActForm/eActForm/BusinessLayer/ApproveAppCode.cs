@@ -30,7 +30,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("fillterApproveByEmpid >>" + ex.Message);
             }
         }
-        public static int updateApprove(string actFormId, string statusId, string remark)
+        public static int updateApprove(HttpServerUtilityBase server,string actFormId, string statusId, string remark)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace eActForm.BusinessLayer
                 {
                     // update approve
                     rtn += updateActFormWithApproveDetail(actFormId);
-                    EmailAppCodes.sendApproveActForm(actFormId);
+                    EmailAppCodes.sendApproveActForm(actFormId, server);
                 }
                 return rtn;
             }

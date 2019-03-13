@@ -9,12 +9,13 @@ using Microsoft.ApplicationBlocks.Data;
 using WebLibrary;
 using eActForm.Models;
 using System.Net.Mail;
+using System.Net.Mime;
 
 namespace eActForm.BusinessLayer
 {
     public class EmailAppCodes
     {
-        public static string sendRejectActForm(string actFormId )
+        public static string sendRejectActForm(string actFormId)
         {
             try
             {
@@ -25,7 +26,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("sendRejectActForm >> " + ex.Message);
             }
         }
-        public static string sendApproveActForm(string actFormId) 
+        public static string sendApproveActForm(string actFormId,HttpServerUtilityBase server)
         {
             try
             {
@@ -41,18 +42,23 @@ namespace eActForm.BusinessLayer
                         , item.activityNo
                         , item.sumTotal
                         , item.createBy
-                        , "http://203.159.75.75/MAS/eact/"
+                        , string.Format(ConfigurationManager.AppSettings["urlApprove"], actFormId)
                         );
+
+                    List<Attachment> files = new List<Attachment>();
+                    string pathFile = string.Format(ConfigurationManager.AppSettings["rooPdftURL"],actFormId);                    
+                    files.Add(new Attachment(pathFile, new ContentType("application/pdf")));
 
                     sendEmail("parnupong.k@thaibev.com" //item.empEmail
                         , ConfigurationManager.AppSettings["emailApproveCC"]
                         , ConfigurationManager.AppSettings["emailApproveSubject"]
                         , strBody
-                        , new List<Attachment>());
+                        , files);
                 }
 
                 return "";
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception("sendApproveActForm >> " + ex.Message);
             }
@@ -62,7 +68,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                
+
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveNextLevel"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
                 var models = (from DataRow dr in ds.Tables[0].Rows
@@ -79,7 +85,7 @@ namespace eActForm.BusinessLayer
                               }).ToList();
                 return models;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("getEmailNextLevel >> " + ex.Message);
             }

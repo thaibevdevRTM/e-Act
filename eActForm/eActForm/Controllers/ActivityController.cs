@@ -37,8 +37,9 @@ namespace eActForm.Controllers
             activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
             activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
-            activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().GroupBy(item => item.activitySales).Select(grp => new TB_Act_ActivityGroup_Model
-            { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+            activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                .GroupBy(item => item.activitySales)
+                .Select(grp => new TB_Act_ActivityGroup_Model{ id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
 
             return View(activityModel);
         }
@@ -427,9 +428,9 @@ namespace eActForm.Controllers
                 if (countresult > 0)
                 {
                     GridHtml = GridHtml.Replace("---", genDoc);
-                    genPdfFile(GridHtml, activityId);
+                    AppCode.genPdfFile(GridHtml, activityId);
                     ApproveAppCode.insertApprove(activityId);
-                    EmailAppCodes.sendApproveActForm(activityId);
+                    EmailAppCodes.sendApproveActForm(activityId,Server);
                 }
                 //sendEmail(
                 //    "tanapong.w@thaibev.com"

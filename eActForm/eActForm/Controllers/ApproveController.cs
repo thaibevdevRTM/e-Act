@@ -17,7 +17,7 @@ namespace eActForm.Controllers
         {
             if (actId == null) return RedirectToAction("index", "Home");
             else
-            {                
+            {
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
                 models.approveStatusLists = ApproveAppCode.getApproveStatus();
                 return View(models);
@@ -28,7 +28,7 @@ namespace eActForm.Controllers
         public JsonResult insertApprove()
         {
             var result = new AjaxResult();
-            if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["approveStatusLists"], Request.Form["txtRemark"]) > 0)
+            if (ApproveAppCode.updateApprove(Server, Request.Form["lblActFormId"], Request.Form["approveStatusLists"], Request.Form["txtRemark"]) > 0)
             {
                 result.Success = true;
             }
@@ -45,9 +45,9 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-        public ActionResult approvePositionLists(string customerId, string productTypeId)
+        public ActionResult approvePositionLists(string customerId, string productCatId)
         {
-            ApproveFlowModel.approveFlowModel model = ApproveFlowAppCode.getFlow(ConfigurationManager.AppSettings["subjectActivityFormId"], customerId, productTypeId);
+            ApproveFlowModel.approveFlowModel model = ApproveFlowAppCode.getFlow(ConfigurationManager.AppSettings["subjectActivityFormId"], customerId, productCatId);
             return PartialView(model);
         }
 
@@ -70,7 +70,7 @@ namespace eActForm.Controllers
             return PartialView(activityModel);
         }
 
-        
+
         [HttpPost]
         [ValidateInput(false)]
         public JsonResult genPdfApprove(string GridHtml, string activityId)
