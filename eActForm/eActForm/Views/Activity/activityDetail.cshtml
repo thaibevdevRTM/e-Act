@@ -1,5 +1,7 @@
 ﻿@model eActForm.Models.Activity_Model
 @{
+    /**/
+
     Layout = null;
     decimal? total = 0;
 }
@@ -7,6 +9,7 @@
     .font12 {
         font-size: 10px;
     }
+
     .font12B {
         font-size: 10px;
     }
@@ -34,20 +37,40 @@
                 </tr>
             </thead>
 
-            @if (Model.costthemedetail != null)
+            @if (Model.activitydetaillist != null)
             {
                 var index = 0;
                 total = 0;
-                foreach (var item in Model.costthemedetail)
+                foreach (var item in Model.activitydetaillist)
                 {
-
                     <tr>
-
                         <td onclick="onDelActDetail('@item.id')">
                             <label class="btn ink-reaction btn-danger fa fa-trash-o"></label>
                         </td>
-                        <td style="text-align:center">@item.typeTheme</td>
-                        <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                        @if (item.isShowGroup)
+                        {
+                            <td style="text-align:center">@item.typeTheme</td>
+                        }
+                        else
+                        {
+                            for (int i = 0; i < @item.detailGroup.Count; i++)
+                            {
+                                <td style="text-align:center">@item.detailGroup[i].typeTheme</td>
+                            }
+                        }
+
+                        @if (item.isShowGroup)
+                        {
+                            <td style="text-align:right">@item.brandName @item.smellName ALL(@item.detailGroup.Count)</td>
+                        }
+                        else
+                        {
+                            for (int i = 0; i < @item.detailGroup.Count; i++)
+                            {
+                                @*<td style="text-align:right">@item.detailGroup[i].productName</td>*@
+                                <td>@Html.TextBoxFor(model => item.detailGroup[i].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                            }
+                        }
                         <td>@Html.TextBoxFor(model => item.normalCost, new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
                         <td>
                             @Html.TextBoxFor(model => item.themeCost, new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
@@ -62,23 +85,23 @@
                 }
             }
 
-                    <tr>
-                        <td colspan="3" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>
-                            <h4>
-                                <p class="text-success text-center">
-                                    @if (total != null)
-                                    {
-                                        @total.Value.ToString();
-                                    }
-                                </p>
-                            </h4>
-                        </td>
-                    </tr>
+            <tr>
+                <td colspan="3" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>
+                    <h4>
+                        <p class="text-success text-center">
+                            @if (total != null)
+                            {
+                                @total.Value.ToString();
+                            }
+                        </p>
+                    </h4>
+                </td>
+            </tr>
         </table>
     </div>
 </div>

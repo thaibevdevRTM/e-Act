@@ -27,7 +27,7 @@ namespace eActForm.BusinessLayer
                                   activityId = d["activityId"].ToString(),
                                   productId = d["productId"].ToString(),
                                   productName = d["productName"].ToString(),
-                                  typeTheme = d["typeTheme"].ToString(),
+                                  typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == d["activityTypeId"].ToString()).FirstOrDefault().activitySales,
                                   normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(d["normalCost"].ToString()),
                                   themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(d["themeCost"].ToString()),
                                   growth = d["growth"].ToString() == "" ? 0 : decimal.Parse(d["growth"].ToString()),

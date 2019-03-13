@@ -25,6 +25,7 @@ namespace eActForm.Models
         public List<TB_Act_Image_Model.ImageModel> productImageList { get; set; }
         public ActivityForm activityFormModel { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
 
         public Activity_Model()
         {
@@ -38,6 +39,7 @@ namespace eActForm.Models
             productGroupList = new List<TB_Act_ProductGroup_Model>();
             productBrandList = new List<TB_Act_ProductBrand_Model>();
             productImageList = new List<TB_Act_Image_Model.ImageModel>();
+            activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
 
         }
 
@@ -135,7 +137,7 @@ namespace eActForm.Models
 
     }
 
-    public class CostThemeDetail : ActBaseModel
+    public class CostThemeDetailOfGroupByPrice : ActBaseModel
     {
         public string id { get; set; }
         public string activityId { get; set; }
@@ -147,6 +149,29 @@ namespace eActForm.Models
         public decimal? themeCost { get; set; }
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
+        public string smellId { get; set; }
+        public string brandName { get; set; }
+        public string smellName { get; set; }
+        public bool isShowGroup { get; set; }
+        public List<Productcostdetail> detailGroup { get; set; }
+    }
+
+        public class CostThemeDetail : ActBaseModel
+    {
+        public string id { get; set; }
+        public string activityId { get; set; }
+        public string typeTheme { get; set; }
+        public string activityTypeId { get; set; }
+        public string productId { get; set; }
+        public string productName { get; set; }
+        public decimal? normalCost { get; set; }
+        public decimal? themeCost { get; set; }
+        public decimal? growth { get; set; }
+        public decimal? total { get; set; }
+        public string smellId { get; set; }
+        public string brandName { get; set; }
+        public string smellName { get; set; }
+        public bool isShowGroup { get; set; }
     }
 
     public class ProductCostOfGroupByPrice : ActBaseModel
@@ -195,6 +220,11 @@ namespace eActForm.Models
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
+        public string typeTheme { get; set; }
+        public string activityTypeId { get; set; }
+        public decimal? themeCost { get; set; }
+        public decimal? growth { get; set; }
+        public decimal? total { get; set; }
         public Boolean delFlag { get; set; }
         public DateTime? createdDate { get; set; }
         public string createdByUserId { get; set; }

@@ -149,11 +149,18 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                CostThemeDetail costthememodel = new CostThemeDetail();
-                costthememodel.id = Guid.NewGuid().ToString();
-                costthememodel.activityTypeId = themeId;
-                costthememodel.typeTheme = txttheme;
-                activityModel.costthemedetail.Add(costthememodel);
+                
+                CostThemeDetailOfGroupByPrice costThemeDetailOfGroupByPriceModel = new CostThemeDetailOfGroupByPrice();
+                Productcostdetail productcostdetail = new Productcostdetail();
+                costThemeDetailOfGroupByPriceModel.id = Guid.NewGuid().ToString();
+                costThemeDetailOfGroupByPriceModel.activityTypeId = themeId;
+                costThemeDetailOfGroupByPriceModel.isShowGroup = false;
+                productcostdetail.id = Guid.NewGuid().ToString();
+                productcostdetail.typeTheme = txttheme;
+
+                costThemeDetailOfGroupByPriceModel.detailGroup = new List<Productcostdetail>();
+                costThemeDetailOfGroupByPriceModel.detailGroup.Add(productcostdetail);
+                activityModel.activitydetaillist.Add(costThemeDetailOfGroupByPriceModel);
 
                 var resultData = new { activityModel };
                 result.Data = resultData;
@@ -245,40 +252,36 @@ namespace eActForm.Controllers
             , string theme)
         {
             var result = new AjaxResult();
-            //Activity_Model activityModel = new Activity_Model();
             try
             {
-
-                // activityModel.productcostdetaillist
                 var productlist = new Activity_Model();
-                if (productid != "")
-                {
-                    activityModel.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid).Where(x => x.productId == productid).ToList();
-                   // productlist.productcostdetaillist = QueryGetProductCostDetail.getProductCostByProductId(productid, cusid);
-                }
-                else
-                {
-                    activityModel.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid);
-                }               
+                productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme);
 
-                CostThemeDetail costthememodel = new CostThemeDetail();
-                int i = 0;
-                foreach (var item in productlist.productcostdetaillist)
+                foreach (var item in productlist.productcostdetaillist1)
                 {
-                    costthememodel = new CostThemeDetail();
+                    activityModel.productcostdetaillist1.Add(item);
+                }
+
+                CostThemeDetailOfGroupByPrice costthememodel = new CostThemeDetailOfGroupByPrice();
+                int i = 0;
+                foreach (var item in productlist.productcostdetaillist1)
+                {
+                    costthememodel = new CostThemeDetailOfGroupByPrice();
                     costthememodel.id = Guid.NewGuid().ToString();
                     costthememodel.typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == theme).FirstOrDefault().activitySales;
                     costthememodel.activityTypeId = theme;
-                    costthememodel.productName = item.productName;
-                    costthememodel.productId = item.productId;
-                    activityModel.costthemedetail.Add(costthememodel);
+                    costthememodel.brandName = item.brandName;
+                    costthememodel.smellName = item.smellName;
+                    costthememodel.isShowGroup = item.isShowGroup;
+                    costthememodel.detailGroup = item.detailGroup;
+                    activityModel.activitydetaillist.Add(costthememodel);
                     i++;
                 }
 
                 var resultData = new
                 {
                     activityModel = activityModel,
-
+                    checkrow = productlist.productcostdetaillist1.Count == 0 ? false : true,
                 };
                 result.Data = resultData;
 
@@ -371,12 +374,12 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             if (rowid != null)
             {
-                var list = activityModel.productcostdetaillist.Single(r => r.id == rowid);
-                activityModel.productcostdetaillist.Remove(list);
+                var list = activityModel.productcostdetaillist1.Single(r => r.id == rowid);
+                activityModel.productcostdetaillist1.Remove(list);
             }
             else
             {
-                activityModel.productcostdetaillist = new List<Productcostdetail>();
+                activityModel.productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
             }
 
             var resultData = new
@@ -395,12 +398,12 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             if (rowid != null)
             {
-                var list = activityModel.costthemedetail.Single(r => r.id == rowid);
-                activityModel.costthemedetail.Remove(list);
+                var list = activityModel.activitydetaillist.Single(r => r.id == rowid);
+                activityModel.activitydetaillist.Remove(list);
             }
             else
             {
-                activityModel.costthemedetail = new List<CostThemeDetail>();
+                activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
             }
 
             var resultData = new
