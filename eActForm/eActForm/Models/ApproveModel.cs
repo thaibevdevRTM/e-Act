@@ -20,6 +20,7 @@ namespace eActForm.Models
             public string flowId { get; set; }
             public string actFormId { get; set; }
             public bool isPermisionApprove { get; set; } // current login can be approve
+            public string statusId { get; set; } // approve status of current user
         }
         public class approveDetailModel : ActBaseModel
         {

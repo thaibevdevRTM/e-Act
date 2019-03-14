@@ -26,7 +26,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("sendRejectActForm >> " + ex.Message);
             }
         }
-        public static string sendApproveActForm(string actFormId,HttpServerUtilityBase server)
+        public static string sendApproveActForm(string actFormId)
         {
             try
             {
@@ -46,10 +46,10 @@ namespace eActForm.BusinessLayer
                         );
 
                     List<Attachment> files = new List<Attachment>();
-                    string pathFile = string.Format(ConfigurationManager.AppSettings["rooPdftURL"],actFormId);                    
+                    string pathFile = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"],actFormId));                    
                     files.Add(new Attachment(pathFile, new ContentType("application/pdf")));
 
-                    sendEmail("parnupong.k@thaibev.com" //item.empEmail
+                    sendEmail("parnupong.k@thaibev.com"//item.empEmail
                         , ConfigurationManager.AppSettings["emailApproveCC"]
                         , ConfigurationManager.AppSettings["emailApproveSubject"]
                         , strBody
