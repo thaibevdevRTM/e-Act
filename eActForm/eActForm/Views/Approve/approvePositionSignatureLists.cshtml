@@ -36,7 +36,7 @@
                 @{ var index = 0;}
                 @foreach (var item in Model.approveFlowDetail)
                 {
-                    if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusName == "อนุมัติ")
+                    if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
                     {
                         //var base64 = Convert.ToBase64String(Model.approveDetailLists[index].signature);
                         //var imgSrc = String.Format("data:image/png;base64,{0}", base64);

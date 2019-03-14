@@ -13,7 +13,6 @@
     }
 
     function genPdf() {
-        console.log("genPdffffffffffffffffffffff");
             $.ajax({
             url: '@Url.Action("genPdfApprove", "Approve")',
             data: {
@@ -23,10 +22,28 @@
             dataType: "json",
             type: 'POST',
             }).done(function (response) {
-              
+
                 console.log("genPdff");
                 console.log('success');
                  });
+    }
+
+    function insertApprove() {
+                $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("insertApprove", "Approve")',
+            data: {
+                actFormId: $("#HdId").val(),
+                statusId: $("#ddlStatus").val(),
+                txtRemark: $("#txtRemark").val()
+            }
+                }).done(function (response) {
+                    if (response.Success) {
+                        bootbox.alert("ดำเนินการเรียบร้อยครับ");
+                    } else {
+                        bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + response.Message);
+                    }
+        });
     }
 
 
@@ -309,7 +326,9 @@
         <div class="modal-footer">
             <div>
                 <p class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                    
+                    <button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="insertApprove();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                    <button type="button" class="btn btn-info pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
                 </p>
             </div>
 
