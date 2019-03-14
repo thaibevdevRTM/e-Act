@@ -596,12 +596,12 @@
              success: function (response) {
 
                  ObjModel = response.Data.activityModel;
-                 if (response.Data.activityModel.productcostdetaillist1.length > 0) {
+                 if (response.Data.checkrow > 0) {
                      CallChangefunc(response.Data.activityModel);
                      callThemedetailcost(response.Data.activityModel);
                  }
                  else {
-                     bootbox.alert("ไม่พบข้อมูล");
+                     bootbox.alert("ไม่พบ สินค้า!");
                  }
 
              }
