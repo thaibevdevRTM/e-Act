@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using System.Configuration;
 using eActForm.BusinessLayer;
 using eActForm.Models;
-using System.Configuration;
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -25,18 +24,21 @@ namespace eActForm.Controllers
         }
 
         [HttpPost]
-        public JsonResult insertApprove()
+        public JsonResult insertApprove(string actFormId,string statusId,string txtRemark )
         {
             var result = new AjaxResult();
-            if (ApproveAppCode.updateApprove(Server, Request.Form["lblActFormId"], Request.Form["approveStatusLists"], Request.Form["txtRemark"]) > 0)
+            result.Success = false;
+            try
             {
-                result.Success = true;
+                if (ApproveAppCode.updateApprove(actFormId, statusId, txtRemark) > 0)
+                {
+                    result.Success = true;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                result.Success = false;
+                result.Message = ex.Message;
             }
-
             return Json(result);
         }
 
@@ -78,14 +80,7 @@ namespace eActForm.Controllers
             var resultAjax = new AjaxResult();
             try
             {
-                //eActController.sendEmail(
-                //    "tanapong.w@thaibev.com"
-                //    , "champ.tanapong@gmail.com"
-                //    , "Test Subject eAct"
-                //    , "Test Body"
-                //    , eActController.genPdfFile(GridHtml, activityId)
-
-                //    );
+                AppCode.genPdfFile(GridHtml, activityId);
                 resultAjax.Success = true;
             }
             catch (Exception ex)

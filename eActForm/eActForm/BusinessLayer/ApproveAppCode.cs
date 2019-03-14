@@ -30,7 +30,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("fillterApproveByEmpid >>" + ex.Message);
             }
         }
-        public static int updateApprove(HttpServerUtilityBase server,string actFormId, string statusId, string remark)
+        public static int updateApprove(string actFormId, string statusId, string remark)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace eActForm.BusinessLayer
                 {
                     // update approve
                     rtn += updateActFormWithApproveDetail(actFormId);
-                    EmailAppCodes.sendApproveActForm(actFormId, server);
+                    EmailAppCodes.sendApproveActForm(actFormId);
                 }
                 return rtn;
             }
@@ -176,12 +176,14 @@ namespace eActForm.BusinessLayer
                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
+                    var empDetail = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
                     var lists = (from DataRow dr in ds.Tables[0].Rows
                                  select new ApproveModel.approveModel()
                                  {
                                      id = dr["id"].ToString(),
                                      flowId = dr["flowId"].ToString(),
                                      actFormId = dr["actFormId"].ToString(),
+                                     statusId = (empDetail.Count > 0)? empDetail.FirstOrDefault().statusId : "",
                                      delFlag = (bool)dr["delFlag"],
                                      createdDate = (DateTime?)dr["createdDate"],
                                      createdByUserId = dr["createdByUserId"].ToString(),

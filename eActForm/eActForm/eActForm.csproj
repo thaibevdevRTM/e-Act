@@ -205,6 +205,7 @@
     <Compile Include="Controllers\ActivityViewerController.cs" />
     <Compile Include="Controllers\AjaxResult.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
+    <Compile Include="Controllers\ApproveListsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\eActController.cs" />
@@ -2083,10 +2084,12 @@
     <Content Include="Views\Approve\previewApprove.cshtml" />
     <Content Include="Uploadfiles\ActivityForm\ActivityForm.pdf" />
     <Content Include="Uploadfiles\ActivityForm\ActivityFormpdf" />
+    <Content Include="Views\Approve\indexLists.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="error\" />
+    <Folder Include="Views\ApproveLists\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\eAct\" />
   </ItemGroup>

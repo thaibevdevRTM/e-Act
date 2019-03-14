@@ -456,7 +456,7 @@ namespace eActForm.Controllers
                     GridHtml = GridHtml.Replace("---", genDoc);
                     AppCode.genPdfFile(GridHtml, activityId);
                     ApproveAppCode.insertApprove(activityId);
-                    EmailAppCodes.sendApproveActForm(activityId,Server);
+                    EmailAppCodes.sendApproveActForm(activityId);
                 }
                 //sendEmail(
                 //    "tanapong.w@thaibev.com"
@@ -474,6 +474,7 @@ namespace eActForm.Controllers
             {
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
+                ExceptionManager.WriteError(ex.Message);
             }
             return Json(resultAjax, "text/plain");
         }
