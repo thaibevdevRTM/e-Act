@@ -64,8 +64,8 @@ namespace eActForm.Controllers
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
-            activityModel.productcostdetaillist = QueryGetCostDetailById.getcostDetailById(actId);
-            activityModel.costthemedetail = QueryGetActivityDetailById.getActivityDetailById(actId);
+            activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
+            activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
 
             return PartialView(activityModel);
         }

@@ -43,43 +43,51 @@
                 total = 0;
                 foreach (var item in Model.activitydetaillist)
                 {
-                    <tr>
-                        <td onclick="onDelActDetail('@item.id')">
-                            <label class="btn ink-reaction btn-danger fa fa-trash-o"></label>
-                        </td>
-                        @if (item.isShowGroup)
-                        {
-                            <td style="text-align:center">@item.typeTheme</td>
-                        }
-                        else
-                        {
-                            for (int i = 0; i < @item.detailGroup.Count; i++)
-                            {
-                                <td style="text-align:center">@item.detailGroup[i].typeTheme</td>
-                            }
-                        }
+            <tr>
+                <td onclick="onDelActDetail('@item.id')">
+                    <label class="btn ink-reaction btn-danger fa fa-trash-o"></label>
+                </td>
+                @if (item.isShowGroup == "true")
+                {
+                    <td style="text-align:center">@item.typeTheme</td>
+                }
+                else if (item.isShowGroup == "false")
+                {
+                    for (int i = 0; i < @item.detailGroup.Count; i++)
+                    {
+                        <td style="text-align:center">@item.detailGroup[i].typeTheme</td>
+                    }
+                }
+                else
+                {
+                    <td style="text-align:center">@item.productName</td>
+                }
 
-                        @if (item.isShowGroup)
-                        {
-                            <td style="text-align:right">@item.brandName @item.smellName ALL(@item.detailGroup.Count)</td>
-                        }
-                        else
-                        {
-                            for (int i = 0; i < @item.detailGroup.Count; i++)
-                            {
-                                @*<td style="text-align:right">@item.detailGroup[i].productName</td>*@
-                                <td>@Html.TextBoxFor(model => item.detailGroup[i].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
-                            }
-                        }
-                        <td>@Html.TextBoxFor(model => item.normalCost, new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
-                        <td>
-                            @Html.TextBoxFor(model => item.themeCost, new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
-                        </td>
-                        <td>@Html.TextBoxFor(model => item.growth, new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
-                        <td>@Html.TextBoxFor(model => item.total, new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font12" })</td>
-                        <td>@Html.TextBoxFor(model => item.total, new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font12" })</td>
+                @if (item.isShowGroup == "true")
+                {
+                    <td style="text-align:right">@item.brandName @item.smellName ALL(@item.detailGroup.Count)</td>
+                }
+                else if (item.isShowGroup == "false")
+                {
+                    for (int i = 0; i < @item.detailGroup.Count; i++)
+                    {
+                        @*<td style="text-align:right">@item.detailGroup[i].productName</td>*@
+                        <td>@Html.TextBoxFor(model => item.detailGroup[i].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                    }
+                }
+                else
+                {
+                    <td style="text-align:center">@item.productName</td>
+                }
+                <td>@Html.TextBoxFor(model => item.normalCost, new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                <td>
+                    @Html.TextBoxFor(model => item.themeCost, new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
+                </td>
+                <td>@Html.TextBoxFor(model => item.growth, new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                <td>@Html.TextBoxFor(model => item.total, new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font12" })</td>
+                <td>@Html.TextBoxFor(model => item.total, new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font12" })</td>
 
-                    </tr>
+            </tr>
                     total = total + item.total;
                     index++;
                 }

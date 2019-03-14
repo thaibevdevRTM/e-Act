@@ -158,7 +158,7 @@ namespace eActForm.Models
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
-        public bool isShowGroup { get; set; }
+        public string isShowGroup { get; set; }
         public List<Productcostdetail> detailGroup { get; set; }
     }
 
@@ -201,7 +201,7 @@ namespace eActForm.Models
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
-        public bool isShowGroup { get;set; }
+        public string isShowGroup { get;set; }
         public List<Productcostdetail> detailGroup { get; set; }
     }
 

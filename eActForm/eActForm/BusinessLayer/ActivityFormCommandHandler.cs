@@ -24,27 +24,6 @@ namespace eActForm.BusinessLayer
             model.activityFormModel.updatedDate = DateTime.Now;
             rtn = insertActivityForm(model.activityFormModel);
 
-
-            //int i = 0;
-            //foreach(var item in model.productcostdetaillist1)
-            //{
-            //    model.productcostdetaillist1[i].activityId = activityId;
-            //    model.productcostdetaillist1[i].createdByUserId = UtilsAppCode.Session.User.empId; 
-            //    model.productcostdetaillist1[i].createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-            //    model.productcostdetaillist1[i].updatedByUserId = UtilsAppCode.Session.User.empId; 
-            //    model.productcostdetaillist1[i].updatedDate = DateTime.Now;
-            //    i++;
-            //}
-            //int ii = 0;
-            //foreach (var item in model.costdetaillist1)
-            //{
-            //    model.costdetaillist1[ii].activityId = activityId;
-            //    model.costdetaillist1[ii].createdByUserId = UtilsAppCode.Session.User.empId; 
-            //    model.costdetaillist1[ii].createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-            //    model.costdetaillist1[ii].updatedByUserId = UtilsAppCode.Session.User.empId; 
-            //    model.costdetaillist1[ii].updatedDate = DateTime.Now;
-            //    ii++;
-            //}
             foreach (var item in model.productcostdetaillist1)
             {
                 foreach(var itemIn in item.detailGroup)

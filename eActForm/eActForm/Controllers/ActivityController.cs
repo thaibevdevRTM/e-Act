@@ -30,16 +30,32 @@ namespace eActForm.Controllers
             return View();
         }
 
-        public ActionResult ActivityForm()
+        public ActionResult ActivityForm(string activityId)
         {
-            Session["activityId"] = Guid.NewGuid().ToString();
             Activity_Model activityModel = new Activity_Model();
+            activityModel.activityFormModel = new ActivityForm();
             activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
             activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
+            activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup();
+
             activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
                 .GroupBy(item => item.activitySales)
-                .Select(grp => new TB_Act_ActivityGroup_Model{ id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+                .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+            if (!string.IsNullOrEmpty(activityId))
+            {
+                Session["activityId"] = activityId;
+                activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+                activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
+                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
+                activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
+                activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
+
+            }
+            else
+            {
+                Session["activityId"] = Guid.NewGuid().ToString();
+            }
 
             return View(activityModel);
         }
@@ -51,8 +67,8 @@ namespace eActForm.Controllers
             Activity_Model activityModel = new Activity_Model();
 
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-            activityModel.productcostdetaillist = QueryGetCostDetailById.getcostDetailById(activityId);
-            activityModel.costthemedetail = QueryGetActivityDetailById.getActivityDetailById(activityId);
+            //activityModel.productcostdetaillist = QueryGetCostDetailById.getcostDetailById(activityId);
+            //activityModel.costthemedetail = QueryGetActivityDetailById.getActivityDetailById(activityId);
 
             activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().ToList();
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
@@ -72,8 +88,15 @@ namespace eActForm.Controllers
         public ActionResult ImageList(string activityId)
         {
             TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-            getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId);
-            return PartialView(getImageModel);
+            if (!string.IsNullOrEmpty(activityId))
+            {
+                getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId);
+                return PartialView(getImageModel);
+            }
+            else
+            {
+                return PartialView(getImageModel);
+            }
         }
 
         public ActionResult productCostDetail(Activity_Model activityModel)
@@ -96,8 +119,8 @@ namespace eActForm.Controllers
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-            activityModel.productcostdetaillist = QueryGetCostDetailById.getcostDetailById(activityId);
-            activityModel.costthemedetail = QueryGetActivityDetailById.getActivityDetailById(activityId);
+            activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
+            activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
 
             return PartialView(activityModel);
         }
@@ -155,7 +178,7 @@ namespace eActForm.Controllers
                 Productcostdetail productcostdetail = new Productcostdetail();
                 costThemeDetailOfGroupByPriceModel.id = Guid.NewGuid().ToString();
                 costThemeDetailOfGroupByPriceModel.activityTypeId = themeId;
-                costThemeDetailOfGroupByPriceModel.isShowGroup = false;
+                costThemeDetailOfGroupByPriceModel.isShowGroup = "false";
                 productcostdetail.id = Guid.NewGuid().ToString();
                 productcostdetail.typeTheme = txttheme;
 

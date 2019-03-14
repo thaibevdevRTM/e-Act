@@ -33,7 +33,7 @@
                         <td>
                             @Html.ActionLink(" ", "deleteUser", new { id = item.id }, new { onclick = "return confirm('Are you sure you wish to delete this user?');", @class = "btn ink-reaction btn-danger fa fa-trash-o" })
 
-                            @Html.ActionLink(" ", "EditForm", "Activity", new { activityId = item.id }, new { @class = "btn ink-reaction btn-info fa fa-edit" })
+                            @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id }, new { @class = "btn ink-reaction btn-info fa fa-edit" })
 
                             @Html.ActionLink(" ", "deleteUser", new { actId = item.id }, new { onclick = "return confirm('Are you sure you wish to delete this user?');", @class = "btn ink-reaction btn-default fa fa-search" })
 

@@ -205,9 +205,9 @@
                             <td style="font-size:12.5px;">Discount %</td>
                             <td style="font-size:12.5px;">Cost (BHT)</td>
                         </tr>
-                        @if (Model.productcostdetaillist.Any())
+                        @if (Model.productcostdetaillist1.Any())
                         {
-                            foreach (var item in Model.productcostdetaillist)
+                            foreach (var item in Model.productcostdetaillist1)
                             {
                                 <tr>
                                     <td style="font-size:12.5px;">@item.productName</td>
@@ -250,9 +250,9 @@
                             <td width="10%" style="font-size:12.5px;">% Growth</td>
                             <td width="15%" style="font-size:12.5px;">ค่าใช้จ่ายรวม Spending Exp. (Bath)</td>
                         </tr>
-                        @if (Model.productcostdetaillist.Any())
+                        @if (Model.activitydetaillist.Any())
                         {
-                            foreach (var item in Model.costthemedetail)
+                            foreach (var item in Model.activitydetaillist)
                             {
                                 <tr>
                                     <td style="font-size:12.5px;">@item.typeTheme</td>
@@ -294,12 +294,12 @@
                     ประมาณการ(Estimate)
                 </div>
 
-                @*<div>
+                <div>
                     @if (Model.activityFormModel != null)
                     {
                         @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
                     }
-                </div>*@
+                </div>
 
             </div>
         </div>
