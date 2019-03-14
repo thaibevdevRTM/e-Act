@@ -83,9 +83,15 @@ namespace eActForm.Models
             public decimal? totalCost { get; set; }
         }
 
-
     }
-
+    public class SearchActivityModels
+    {
+        public List<Customers_Model> customerslist { get; set; }
+        public List<Product_Cate_Model> productcatelist { get; set; }
+        public List<TB_Act_ProductGroup_Model> productGroupList { get; set; }
+        public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
+        public List<ApproveModel.approveStatus> approveStatusList { get; set; }
+    }
 
     public class ActivityForm
     {
