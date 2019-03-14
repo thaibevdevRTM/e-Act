@@ -37,8 +37,9 @@ namespace eActForm.Controllers
             activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
             activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
-            activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().GroupBy(item => item.activitySales).Select(grp => new TB_Act_ActivityGroup_Model
-            { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+            activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                .GroupBy(item => item.activitySales)
+                .Select(grp => new TB_Act_ActivityGroup_Model{ id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
 
             return View(activityModel);
         }
@@ -427,16 +428,21 @@ namespace eActForm.Controllers
             {
                 string genDoc = ActivityFormCommandHandler.genNumberActivity(activityId);
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc);
-                GridHtml = GridHtml.Replace("---", genDoc);
+                if (countresult > 0)
+                {
+                    GridHtml = GridHtml.Replace("---", genDoc);
+                    AppCode.genPdfFile(GridHtml, activityId);
+                    ApproveAppCode.insertApprove(activityId);
+                    EmailAppCodes.sendApproveActForm(activityId,Server);
+                }
+                //sendEmail(
+                //    "tanapong.w@thaibev.com"
+                //    , "champ.tanapong@gmail.com"
+                //    , "Test Subject eAct"
+                //    , "Test Body"
+                //    , genPdfFile(GridHtml, activityId)
 
-                sendEmail(
-                    "tanapong.w@thaibev.com"
-                    , "champ.tanapong@gmail.com"
-                    , "Test Subject eAct"
-                    , "Test Body"
-                    , genPdfFile(GridHtml, activityId)
-
-                    );
+                //    );
 
 
                 resultAjax.Success = true;

@@ -28,6 +28,8 @@ namespace eActForm.Models
             public int? rangNo { get; set; }
             public string ImgName { get; set; }
             public string empId { get; set; }
+            public string empPrefix { get; set; }
+            public string empEmail { get; set; }
             public string empName { get; set; }
             public string statusId { get; set; }
             public string statusName { get; set; }
@@ -41,6 +43,19 @@ namespace eActForm.Models
             public string nameTH { get; set; }
             public string nameEN { get; set; }
             public string description { get; set; }
+        }
+
+        public class approveEmailDetailModel : ActBaseModel
+        {
+            public string id { get; set; }
+            public string activityName { get; set; }
+            public string activitySales { get; set; }
+            public string activityNo { get; set; }
+            public string sumTotal { get; set; }
+            public string empPrefix { get; set; }
+            public string empEmail { get; set; }
+            public string empName { get; set; }
+            public string createBy { get; set; }
         }
     }
 }
