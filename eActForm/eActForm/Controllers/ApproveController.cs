@@ -24,13 +24,13 @@ namespace eActForm.Controllers
         }
 
         [HttpPost]
-        public JsonResult insertApprove(string actFormId,string statusId,string txtRemark )
+        public JsonResult insertApprove( )
         {
             var result = new AjaxResult();
             result.Success = false;
             try
             {
-                if (ApproveAppCode.updateApprove(actFormId, statusId, txtRemark) > 0)
+                if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"]) > 0)
                 {
                     result.Success = true;
                 }
@@ -75,12 +75,20 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult genPdfApprove(string GridHtml, string activityId)
+        public JsonResult genPdfApprove(string GridHtml,string statusId, string activityId)
         {
             var resultAjax = new AjaxResult();
             try
             {
                 AppCode.genPdfFile(GridHtml, activityId);
+                if( statusId == ConfigurationManager.AppSettings["statusReject"])
+                {
+                    EmailAppCodes.sendRejectActForm(activityId);
+                }
+                else
+                {
+                    EmailAppCodes.sendApproveActForm(activityId);
+                }
                 resultAjax.Success = true;
             }
             catch (Exception ex)
