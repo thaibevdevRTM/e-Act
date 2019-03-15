@@ -26,6 +26,7 @@ namespace eActForm.Models
         public ActivityForm activityFormModel { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
         public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
+      
 
         public Activity_Model()
         {
@@ -41,6 +42,12 @@ namespace eActForm.Models
             productImageList = new List<TB_Act_Image_Model.ImageModel>();
             activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
 
+        }
+
+        public enum modeForm
+        { 
+            insert,
+            edit
         }
 
         public class actForms
@@ -135,6 +142,7 @@ namespace eActForm.Models
         public byte UploadedImage { get; set; }
         public string getUploadedImage { get; set; }
         public string refId { get; set; }
+        public string mode { get; set; }
         public Boolean delFlag { get; set; }
         public DateTime? createdDate { get; set; }
         public string createdByUserId { get; set; }

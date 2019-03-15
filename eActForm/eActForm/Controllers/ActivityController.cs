@@ -30,7 +30,7 @@ namespace eActForm.Controllers
             return View();
         }
 
-        public ActionResult ActivityForm(string activityId)
+        public ActionResult ActivityForm(string activityId,string mode)
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = new ActivityForm();
@@ -46,6 +46,7 @@ namespace eActForm.Controllers
             {
                 Session["activityId"] = activityId;
                 activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+                activityModel.activityFormModel.mode = mode;
                 activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
                 activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
                 activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
@@ -55,6 +56,7 @@ namespace eActForm.Controllers
             else
             {
                 Session["activityId"] = Guid.NewGuid().ToString();
+                activityModel.activityFormModel.mode = mode;
             }
 
             return View(activityModel);

@@ -171,7 +171,7 @@
                     </div>
                     <div class="radio">
                         <label>
-                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm") รายการส่งเสริมการขาย (นอก Trade Term)
+                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { Checked = "checked" }) รายการส่งเสริมการขาย (นอก Trade Term)
                         </label>
                     </div>
                 </div>
@@ -244,7 +244,7 @@
     @Html.Action("productCostDetail", "Activity", new { activityModel = Model })
 </div>
 
-<div class="row">
+<div class="row" id="divAddProductCostDetail">
     <div class="col-lg-2 col-xs-2">
     </div>
     <div class="form-group col-lg-2 col-xs-2">
@@ -273,7 +273,7 @@
 </div>
 
 
-<div class="row">
+<div class="row" id="divAddActivityDetail">
     <div class="form-group col-lg-8 col-xs-8">
     </div>
     <div class="form-group col-lg-3 col-xs-3">
@@ -311,7 +311,7 @@
 
 <input type="hidden" id="hdcusname">
 @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
-
+@Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
 <script type="text/javascript">
 
        $(document).ready(function () {
@@ -671,12 +671,11 @@
     }
 
     function SubmitData() {
-
-
             $.ajax({
                 url: '@Url.Action("insertDataActivity", "Activity")',
                 data: {
                     statusId: 1,
+                    Mode: $("#hdMode").val(),
                     DocumentDate: $("#txtdateDoc").val(),
                     Reference: $("#txtReference").val(),
                     CustomerId: $("#ddlCustomer").val(),
@@ -689,7 +688,7 @@
                     ActivityName: $("#txtActivityName").val(),
                     Theme: $("#ddlTheme").val(),
                     Objective: $("#txtObjective").val(),
-                    Trade: $('[name=Trade]:checked').val(),
+                    Trade: $("input[name='activityFormModel.trade']:checked").val(),
                     ActivityDetail: $("#txtActivityDetail").val(),
                     activityModel: ObjModel,
                 },
@@ -699,9 +698,7 @@
                 if (response.Success) {
                     callPreviewData(response.ActivityId);
                 }
-
             });
-
     }
 
     function modeEdit() {
