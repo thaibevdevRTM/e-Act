@@ -47,8 +47,8 @@ namespace eActForm.Controllers
                 Session["activityId"] = activityId;
                 activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
                 activityModel.activityFormModel.mode = mode;
-                activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
-                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
+                Session["productcostdetaillist1"] = QueryGetCostDetailById.getcostDetailById(activityId);
+                Session["activitydetaillist"] = QueryGetActivityDetailById.getActivityDetailById(activityId);
                 activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
                 activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
 
@@ -101,13 +101,25 @@ namespace eActForm.Controllers
             }
         }
 
-        public ActionResult productCostDetail(Activity_Model activityModel)
+        public ActionResult productCostDetail()
         {
+            Activity_Model activityModel = new Activity_Model();
+            if (Session["productcostdetaillist1"] != null)
+            {
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+            }
+
             return PartialView(activityModel);
         }
 
-        public ActionResult activityDetail(Activity_Model activityModel)
+        public ActionResult activityDetail()
         {
+            Activity_Model activityModel = new Activity_Model();
+            if (Session["activitydetaillist"] != null)
+            {
+                activityModel.activitydetaillist = ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]);
+            }
+
             return PartialView(activityModel);
         }
 
@@ -156,6 +168,8 @@ namespace eActForm.Controllers
             try
             {
                 activityModel.activityFormModel = activityFormModel;
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                activityModel.activitydetaillist = ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]);
                 int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, Session["activityId"].ToString());
 
                 result.ActivityId = Session["activityId"].ToString();
@@ -170,17 +184,20 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult addDetailTheme(Activity_Model activityModel, string themeId, string txttheme)
+        public JsonResult addDetailTheme(string themeId, string txttheme)
         {
             var result = new AjaxResult();
             try
             {
-                
+                Activity_Model activityModel = new Activity_Model();
                 CostThemeDetailOfGroupByPrice costThemeDetailOfGroupByPriceModel = new CostThemeDetailOfGroupByPrice();
+                activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
+
                 Productcostdetail productcostdetail = new Productcostdetail();
                 costThemeDetailOfGroupByPriceModel.id = Guid.NewGuid().ToString();
                 costThemeDetailOfGroupByPriceModel.activityTypeId = themeId;
                 costThemeDetailOfGroupByPriceModel.isShowGroup = "false";
+
                 productcostdetail.id = Guid.NewGuid().ToString();
                 productcostdetail.typeTheme = txttheme;
 
@@ -188,8 +205,8 @@ namespace eActForm.Controllers
                 costThemeDetailOfGroupByPriceModel.detailGroup.Add(productcostdetail);
                 activityModel.activitydetaillist.Add(costThemeDetailOfGroupByPriceModel);
 
-                var resultData = new { activityModel };
-                result.Data = resultData;
+
+                Session["activitydetaillist"] = activityModel.activitydetaillist;
 
             }
             catch (Exception ex)
@@ -200,12 +217,15 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult calDetailTheme(Activity_Model activityModel, string id, string name, string normalCost, string themeCost, string growth)
+        public JsonResult calDetailTheme( string id, string name, string normalCost, string themeCost, string growth)
         {
             var result = new AjaxResult();
             try
             {
-                activityModel.costthemedetail
+                Activity_Model activityModel = new Activity_Model();
+                activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
+
+                activityModel.activitydetaillist
                     .Where(r => r.id != null && r.id.Equals(id))
                     .Select(r =>
                     {
@@ -233,8 +253,8 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult calDiscountProduct(Activity_Model activityModel
-            , string id
+        public JsonResult calDiscountProduct(
+              string id
             , string normalCost
             , string normalGP
             , string promotionGP
@@ -243,6 +263,8 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
+                Activity_Model activityModel = new Activity_Model();
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 activityModel.productcostdetaillist1
                     .Where(r => r.id != null && r.id.Equals(id))
                     .Select(r =>
@@ -269,8 +291,8 @@ namespace eActForm.Controllers
 
 
 
-        public JsonResult addItemProduct(Activity_Model activityModel
-            , string productid
+        public JsonResult addItemProduct(
+              string productid
             , string brandid
             , string smellId
             , string size
@@ -280,6 +302,10 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
+                Activity_Model activityModel = new Activity_Model();
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
+
                 var productlist = new Activity_Model();
                 productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme);
 
@@ -295,6 +321,7 @@ namespace eActForm.Controllers
                     costthememodel = new CostThemeDetailOfGroupByPrice();
                     costthememodel.id = Guid.NewGuid().ToString();
                     costthememodel.typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == theme).FirstOrDefault().activitySales;
+                    costthememodel.productId = item.productId;
                     costthememodel.activityTypeId = theme;
                     costthememodel.brandName = item.brandName;
                     costthememodel.smellName = item.smellName;
@@ -304,9 +331,10 @@ namespace eActForm.Controllers
                     i++;
                 }
 
+                Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
+                Session["activitydetaillist"] = activityModel.activitydetaillist;
                 var resultData = new
                 {
-                    activityModel = activityModel,
                     checkrow = productlist.productcostdetaillist1.Count == 0 ? false : true,
                 };
                 result.Data = resultData;

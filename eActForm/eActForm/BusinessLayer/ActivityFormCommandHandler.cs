@@ -24,7 +24,7 @@ namespace eActForm.BusinessLayer
             model.activityFormModel.updatedDate = DateTime.Now;
             rtn = insertActivityForm(model.activityFormModel);
 
-
+           
             foreach (var item in model.productcostdetaillist1)
             {
                 if (model.activityFormModel.mode != Activity_Model.modeForm.edit.ToString())
@@ -35,16 +35,15 @@ namespace eActForm.BusinessLayer
                         productcostdetail.id = itemIn.id;
                         productcostdetail.activityId = activityId;
                         productcostdetail.productId = itemIn.productId;
-                        productcostdetail.productName = itemIn.productName;
-                        productcostdetail.wholeSalesPrice = itemIn.wholeSalesPrice;
-                        productcostdetail.disCount1 = itemIn.disCount1;
-                        productcostdetail.disCount2 = itemIn.disCount2;
-                        productcostdetail.disCount3 = itemIn.disCount3;
-                        productcostdetail.normalCost = itemIn.normalCost;
-                        productcostdetail.normalGp = itemIn.normalGp;
-                        productcostdetail.promotionGp = itemIn.promotionGp;
-                        productcostdetail.specialDisc = itemIn.specialDisc;
-                        productcostdetail.promotionCost = itemIn.promotionCost;
+                        productcostdetail.wholeSalesPrice = item.wholeSalesPrice;
+                        productcostdetail.disCount1 = item.disCount1;
+                        productcostdetail.disCount2 = item.disCount2;
+                        productcostdetail.disCount3 = item.disCount3;
+                        productcostdetail.normalCost = item.normalCost;
+                        productcostdetail.normalGp = item.normalGp;
+                        productcostdetail.promotionGp = item.promotionGp;
+                        productcostdetail.specialDisc = item.specialDisc;
+                        productcostdetail.promotionCost = item.promotionCost;
                         productcostdetail.delFlag = itemIn.delFlag;
                         productcostdetail.createdByUserId = UtilsAppCode.Session.User.empId;
                         productcostdetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -59,7 +58,6 @@ namespace eActForm.BusinessLayer
                     productcostdetail.id = item.id;
                     productcostdetail.activityId = activityId;
                     productcostdetail.productId = item.productId;
-                    productcostdetail.productName = item.productName;
                     productcostdetail.wholeSalesPrice = item.wholeSalesPrice;
                     productcostdetail.disCount1 = item.disCount1;
                     productcostdetail.disCount2 = item.disCount2;
@@ -92,11 +90,10 @@ namespace eActForm.BusinessLayer
                         costThemeDetail.activityTypeId = item.activityTypeId;
                         costThemeDetail.typeTheme = item.typeTheme;
                         costThemeDetail.productId = itemIn.productId;
-                        costThemeDetail.productName = itemIn.productName;
-                        costThemeDetail.normalCost = itemIn.normalCost;
-                        costThemeDetail.themeCost = itemIn.themeCost;
-                        costThemeDetail.growth = itemIn.growth;
-                        costThemeDetail.total = itemIn.total;
+                        costThemeDetail.normalCost = item.normalCost;
+                        costThemeDetail.themeCost = item.themeCost;
+                        costThemeDetail.growth = item.growth;
+                        costThemeDetail.total = item.total;
                         costThemeDetail.delFlag = itemIn.delFlag;
                         costThemeDetail.createdByUserId = UtilsAppCode.Session.User.empId;
                         costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -113,7 +110,6 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.activityTypeId = item.activityTypeId;
                     costThemeDetail.typeTheme = item.typeTheme;
                     costThemeDetail.productId = item.productId;
-                    costThemeDetail.productName = item.productName;
                     costThemeDetail.normalCost = item.normalCost;
                     costThemeDetail.themeCost = item.themeCost;
                     costThemeDetail.growth = item.growth;

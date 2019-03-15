@@ -26,7 +26,7 @@ namespace eActForm.Models
         public ActivityForm activityFormModel { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
         public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
-      
+
 
         public Activity_Model()
         {
@@ -45,10 +45,11 @@ namespace eActForm.Models
         }
 
         public enum modeForm
-        { 
+        {
             insert,
             edit
         }
+
 
         public class actForms
         {
@@ -170,7 +171,7 @@ namespace eActForm.Models
         public List<Productcostdetail> detailGroup { get; set; }
     }
 
-        public class CostThemeDetail : ActBaseModel
+    public class CostThemeDetail : ActBaseModel
     {
         public string id { get; set; }
         public string activityId { get; set; }
@@ -209,7 +210,7 @@ namespace eActForm.Models
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
-        public string isShowGroup { get;set; }
+        public string isShowGroup { get; set; }
         public List<Productcostdetail> detailGroup { get; set; }
     }
 
@@ -244,8 +245,8 @@ namespace eActForm.Models
         public string createdByUserId { get; set; }
         public DateTime? updatedDate { get; set; }
         public string updatedByUserId { get; set; }
-        
+
     }
 
-   
+
 }

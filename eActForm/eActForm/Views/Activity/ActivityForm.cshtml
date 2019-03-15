@@ -318,7 +318,7 @@
 
            //$('.field-date').datepicker({ autoclose: true, todayHighlight: true, format: "dd/mm/yyyy" });
 
-           ObjModel = @Html.Raw(Json.Encode(Model));
+           ObjModel = {};
            document.getElementById("ddlProductfilter").disabled = true;
            document.getElementById("ddlProductSize").disabled = true;
 
@@ -607,7 +607,6 @@
          $.ajax({
                 url: '@Url.Action("addItemProduct", "Activity")',
              data: {
-             activityModel: ObjModel,
              productid: $("#ddlProductfilter").val(),
                  brandid: $("#ddlProductBrand").val(),
                  smellId: $("#ddlProductSmell").val(),
@@ -618,11 +617,9 @@
                 dataType: "json",
                 type: 'POST',
              success: function (response) {
-
-                 ObjModel = response.Data.activityModel;
                  if (response.Data.checkrow > 0) {
-                     CallChangefunc(response.Data.activityModel);
-                     callThemedetailcost(response.Data.activityModel);
+                     CallChangefunc();
+                     callThemedetailcost();
                  }
                  else {
                      bootbox.alert("ไม่พบ สินค้า!");
@@ -640,13 +637,11 @@
             type: 'POST',
             url:  '@Url.Action("addDetailTheme", "Activity")',
              data: {
-                 activityModel: ObjModel,
                  themeId: $("#ddlThemeDetail").val(),
                  txttheme: txtddlTheme,
             }
          }).done(function (response) {
-            ObjModel = response.Data.activityModel;
-            callThemedetailcost(response.Data.activityModel);
+            callThemedetailcost();
         });
     }
 
@@ -690,7 +685,6 @@
                     Objective: $("#txtObjective").val(),
                     Trade: $("input[name='activityFormModel.trade']:checked").val(),
                     ActivityDetail: $("#txtActivityDetail").val(),
-                    activityModel: ObjModel,
                 },
                 dataType: "json",
                 type: 'POST',
@@ -726,38 +720,7 @@
         //$("input.txtnormalGp").attr("disabled", true);
     }
 
-       @*function callPopupPreview() {
-
-            $.ajax({
-            url: '@Url.Action("getPreviewData", "Activity")',
-            data: {
-                ActivityNo: $("#txtActivityNo").val(),
-                DocumentDate: $("#txtdateDoc").val(),
-                Reference: $("#txtReference").val(),
-                CustomerId: $("#ddlCustomer").val(),
-                ProductCategory: $("#ddlProductCate").val(),
-                ProductGroup: $("#ddlProductGrp").val(),
-                ActivityPeriodST: $("#txtdateActivitySt").val(),
-                ActivityPeriodEnd: $("#txtdateActivityEnd").val(),
-                CostPeriodST: $("#txtdateCostPerSt").val(),
-                CostPeriodEnd: $("#txtdateCostPerEnd").val(),
-                ActivityName: $("#txtActivityName").val(),
-                Theme: $("#ddlTheme").val(),
-                Objective: $("#txtObjective").val(),
-                Trade: $('[name=Trade]:checked').val(),
-                ActivityDetail: $("#txtActivityDetail").val(),
-                chanel: $("#txtchanel").val(),
-                activityModel: ObjModel,
-            },
-            dataType: "json",
-            type: 'POST',
-            }).done(function (response) {
-            callPreviewData(response.Data.activityModel);
-        });
-      }*@
-
-
-
+      
       function callPreviewData(obj) {
         $.ajax({
             type: 'POST',

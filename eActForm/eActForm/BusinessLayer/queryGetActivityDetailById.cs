@@ -25,6 +25,7 @@ namespace eActForm.BusinessLayer
                               {
                                   id = d["Id"].ToString(),
                                   activityId = d["activityId"].ToString(),
+                                  activityTypeId = d["activityTypeId"].ToString(),
                                   productId = d["productId"].ToString(),
                                   productName = d["productName"].ToString(),
                                   typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == d["activityTypeId"].ToString()).FirstOrDefault().activitySales,
