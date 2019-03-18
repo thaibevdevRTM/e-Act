@@ -33,9 +33,7 @@
 
 
 <form class="form-horizontal form-label-left" id="demo-form2" novalidate="" data-parsley-validate="">
-
     <div class="row">
-
         <div class="form-group">
             <div class="col-md-6 col-xs-12"></div>
             <div class="col-md-6 col-xs-12">
@@ -44,7 +42,8 @@
                         Act No.
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" id="txtActivityNo" class="form-control textboxcss" readonly>
+                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
+                        @*<input type="text" id="txtActivityNo" class="form-control textboxcss" readonly>*@
                     </div>
                 </div>
             </div>
@@ -57,7 +56,7 @@
                         Document Date<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input class="form-control textboxcss" id="txtdateDoc">
+                        @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
                     </div>
                 </div>
             </div>
@@ -70,7 +69,7 @@
                         Reference
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="text" id="txtReference" class="form-control textboxcss" placeholder="">
+                        @Html.TextBoxFor(x => x.activityFormModel.reference, new { @class = "form-control textboxcss", @id = "txtReference" })
                     </div>
                 </div>
             </div>
@@ -83,19 +82,44 @@
                         ลูกค้า (Customer Name)<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(model => model.customerslist, new SelectList(Model.customerslist, "id", "cusNameTH"), "Please Select", new { @class = "form-control textboxcss", required = "required", id = "ddlCustomer", onchange = "onchangeCustomer();", Name = "ddlCustomer" })
-                        <input type="hidden" id="txtchanel" class="form-control textboxcss" readonly>
+                        @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH",0), "Please Select", new { @class = "form-control textboxcss",
+                        onchange = "onchangeCustomer();", id = "ddlCustomer"})
                     </div>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityName">
-                    ชื่อกิจกรรม <span class="required">*</span>
-                </label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                    <input type="text" id="txtActivityName" class="form-control">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityName">
+                        ชื่อกิจกรรม <span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtchanel">
+                        ช่องทาง (Channel)
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.activityFormModel.chanel, new { @class = "form-control textboxcss", @id = "txtchanel", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
+                        ประเภทกิจกรรม<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales",0), "Please Select", new { @class = "form-control textboxcss",
+                          id = "ddlTheme"})
+                    </div>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
@@ -104,18 +128,24 @@
                         Product category<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(model => model.productcatelist, new SelectList(Model.productcatelist, "id", "cateName"), "Please Select", new { @class = "form-control textboxcss", required = "required", id = "ddlProductCate", onchange = "onchangeCate();", Name = "ddlProductCate" })
+                        @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName",0), "Please Select", new { @class = "form-control textboxcss", required = "required",
+                       onchange = "onchangeCate();", id = "ddlProductCate" })
                     </div>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
-                    ประเภทกิจกรรม<span class="required">*</span>
-                </label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.activityGroupList, new SelectList(Model.activityGroupList, "id", "activitySales"), "Please Select", new { @class = "form-control textboxcss", required = "required", id = "ddlTheme", Name = "ddlTheme" })
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtObjective">
+                        วัตถุประสงค์<span class="required">*</span>
+                    </label>
+
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+                    </div>
+
+
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
@@ -124,32 +154,7 @@
                         กลุ่มสินค้า (Product Group)<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(model => model.productGroupList, new SelectList(Model.productGroupList, "id", "groupName"), "Please Select", new { @class = "form-control textboxcss", required = "required", id = "ddlProductGrp" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6 col-xs-12">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtObjective">
-                    วัตถุประสงค์<span class="required">*</span>
-                </label>
-                <div class="col-md-6">
-                    <input type="text" id="txtObjective" class="form-control textboxcss">
-                </div>
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
-                        เวลากิจกรรม (Activity Period)<span class="required">*</span>
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input class="form-control textboxcss" id="txtdateActivitySt">
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input class="form-control textboxcss" id="txtdateActivityEnd">
-                        </div>
+                        @Html.DropDownListFor(model => model.activityFormModel.productGroupId, new SelectList(Model.productGroupList, "id", "groupName", 0), "Please Select", new { @class = "form-control textboxcss", required = "required", id = "ddlProductGrp" })
                     </div>
                 </div>
             </div>
@@ -161,28 +166,40 @@
                 <div class="col-md-9 col-sm-9 col-xs-12">
                     <div class="radio">
                         <label>
-                            <input name="Trade" id="term" type="radio" checked="" value="term"> ไม่เกิดจาก รายการส่งเสริมการขาย (Trade Term)
+                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "term") ไม่เกิดจาก รายการส่งเสริมการขาย (Trade Term)
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input name="Trade" id="outterm" type="radio" checked="checked" value="outterm"> รายการส่งเสริมการขาย (นอก Trade Term)
+                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { Checked = "checked" }) รายการส่งเสริมการขาย (นอก Trade Term)
                         </label>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
-
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                        เวลากิจกรรม (Activity Period)<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateActivitySt" })
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateActivityEnd" })
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
                         เวลาการให้ทุนพิเศษ (Cost Period)<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input class="form-control textboxcss" id="txtdateCostPerSt">
+                            @Html.TextBoxFor(x => x.activityFormModel.costPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateCostPerSt" })
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input class="form-control textboxcss" id="txtdateCostPerEnd">
+                            @Html.TextBoxFor(x => x.activityFormModel.costPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateCostPerEnd" })
                         </div>
                     </div>
                 </div>
@@ -193,13 +210,12 @@
 </form>
 
 <hr />
-
 <div class="row">
     <div class="col-12">
         <p class="lead">รายละเอียดของการทำกิจกรรม (Activity Detail)</p>
     </div>
     <div class="col-md-6">
-        <textarea name="message" id="txtActivityDetail" class="form-control" rows="5" cols="50"></textarea>
+        @Html.TextAreaFor(x => x.activityFormModel.activityDetail, 5, 60, new { @class = "form-control textboxcss", @id = "txtActivityDetail" })
     </div>
 
     <div class="col-md-6">
@@ -212,14 +228,23 @@
 
 </div>
 <div class="row">
+    <div class="col-md-6">
 
+    </div>
+
+    <div class="col-md-6">
+        <div id="divgetimage" class="col-lg-12">
+            @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id != null ? Model.activityFormModel.id : "" })
+        </div>
+    </div>
 </div>
+
 <hr />
 <div id="getQuery" class="col-lg-12">
-    @Html.Action("productCostDetail", "Activity")
+    @Html.Action("productCostDetail", "Activity", new { activityModel = Model })
 </div>
 
-<div class="row">
+<div class="row" id="divAddProductCostDetail">
     <div class="col-lg-2 col-xs-2">
     </div>
     <div class="form-group col-lg-2 col-xs-2">
@@ -244,11 +269,11 @@
 </div>
 <hr />
 <div id="divgetdetailcost" class="col-lg-12">
-    @Html.Action("activityDetail", "Activity")
+    @Html.Action("activityDetail", "Activity", new { activityModel = Model })
 </div>
 
 
-<div class="row">
+<div class="row" id="divAddActivityDetail">
     <div class="form-group col-lg-8 col-xs-8">
     </div>
     <div class="form-group col-lg-3 col-xs-3">
@@ -285,16 +310,22 @@
 </div>
 
 <input type="hidden" id="hdcusname">
-
+@Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
+@Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
 <script type="text/javascript">
 
        $(document).ready(function () {
 
            //$('.field-date').datepicker({ autoclose: true, todayHighlight: true, format: "dd/mm/yyyy" });
-           ObjModel = {};
 
-           //onchangeCustomer();
-           //onchangeCate();
+           ObjModel = {};
+           document.getElementById("ddlProductfilter").disabled = true;
+           document.getElementById("ddlProductSize").disabled = true;
+
+
+           if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
+               modeEdit();
+           }
        });
 
 
@@ -567,23 +598,15 @@
             bootbox.alert(required);
             return false;
         }
-
         //if ($("#ddlProductBrand").val() == '0') {
         //    $("#ddlProductBrand").focus();
         //    bootbox.alert("กรุณา เลือกสินค้า");
         //    return false;
         //}
 
-            var skillsSelect = document.getElementById("ddlProductSize");
-            var selectedText = skillsSelect.options[skillsSelect.selectedIndex].text;
-
-            var sSelectddlCustomer = document.getElementById("ddlCustomer");
-            var sddlCustomerText = sSelectddlCustomer.options[sSelectddlCustomer.selectedIndex].text;
-
          $.ajax({
                 url: '@Url.Action("addItemProduct", "Activity")',
              data: {
-             activityModel: ObjModel,
              productid: $("#ddlProductfilter").val(),
                  brandid: $("#ddlProductBrand").val(),
                  smellId: $("#ddlProductSmell").val(),
@@ -594,11 +617,9 @@
                 dataType: "json",
                 type: 'POST',
              success: function (response) {
-
-                 ObjModel = response.Data.activityModel;
                  if (response.Data.checkrow > 0) {
-                     CallChangefunc(response.Data.activityModel);
-                     callThemedetailcost(response.Data.activityModel);
+                     CallChangefunc();
+                     callThemedetailcost();
                  }
                  else {
                      bootbox.alert("ไม่พบ สินค้า!");
@@ -616,27 +637,14 @@
             type: 'POST',
             url:  '@Url.Action("addDetailTheme", "Activity")',
              data: {
-                 activityModel: ObjModel,
                  themeId: $("#ddlThemeDetail").val(),
                  txttheme: txtddlTheme,
             }
          }).done(function (response) {
-            ObjModel = response.Data.activityModel;
-            callThemedetailcost(response.Data.activityModel);
+            callThemedetailcost();
         });
     }
 
-        function callThemedetailcost(obj) {
-        $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("activityDetail", "Activity")',
-            data: {
-                activityModel: obj
-            }
-        }).done(function (htmlResponse) {
-            $("#divgetdetailcost").html(htmlResponse)
-        });
-    }
 
     function validatesubmit() {
 
@@ -658,12 +666,11 @@
     }
 
     function SubmitData() {
-
-
             $.ajax({
                 url: '@Url.Action("insertDataActivity", "Activity")',
                 data: {
                     statusId: 1,
+                    Mode: $("#hdMode").val(),
                     DocumentDate: $("#txtdateDoc").val(),
                     Reference: $("#txtReference").val(),
                     CustomerId: $("#ddlCustomer").val(),
@@ -676,9 +683,8 @@
                     ActivityName: $("#txtActivityName").val(),
                     Theme: $("#ddlTheme").val(),
                     Objective: $("#txtObjective").val(),
-                    Trade: $('[name=Trade]:checked').val(),
+                    Trade: $("input[name='activityFormModel.trade']:checked").val(),
                     ActivityDetail: $("#txtActivityDetail").val(),
-                    activityModel: ObjModel,
                 },
                 dataType: "json",
                 type: 'POST',
@@ -686,45 +692,35 @@
                 if (response.Success) {
                     callPreviewData(response.ActivityId);
                 }
-
             });
-
     }
 
+    function modeEdit() {
 
+        document.getElementById("ddlProductfilter").disabled = true;
+        document.getElementById("ddlProductSize").disabled = true;
+        document.getElementById("txtdateDoc").disabled = true;
+        document.getElementById("txtReference").disabled = true;
+        document.getElementById("txtActivityNo").disabled = true;
+        document.getElementById("ddlCustomer").disabled = true;
+        document.getElementById("txtActivityName").disabled = true;
+        document.getElementById("txtchanel").disabled = true;
+        document.getElementById("ddlTheme").disabled = true;
+        document.getElementById("ddlProductCate").disabled = true;
+        document.getElementById("txtObjective").disabled = true;
+        document.getElementById("ddlProductGrp").disabled = true;
+        document.getElementById("txtdateActivitySt").disabled = true;
+        document.getElementById("txtdateActivityEnd").disabled = true;
+        document.getElementById("txtdateCostPerSt").disabled = true;
+        document.getElementById("txtdateCostPerEnd").disabled = true;
+        document.getElementById("dropzoneJsForm").disabled = true;
+        document.getElementById("txtActivityDetail").disabled = true;
+        document.getElementById("divAddActivityDetail").style.display = "none";
+        document.getElementById("divAddProductCostDetail").style.display = "none";
+        //$("input.txtnormalGp").attr("disabled", true);
+    }
 
-       function callPopupPreview() {
-
-            $.ajax({
-            url: '@Url.Action("getPreviewData", "Activity")',
-            data: {
-                ActivityNo: $("#txtActivityNo").val(),
-                DocumentDate: $("#txtdateDoc").val(),
-                Reference: $("#txtReference").val(),
-                CustomerId: $("#ddlCustomer").val(),
-                ProductCategory: $("#ddlProductCate").val(),
-                ProductGroup: $("#ddlProductGrp").val(),
-                ActivityPeriodST: $("#txtdateActivitySt").val(),
-                ActivityPeriodEnd: $("#txtdateActivityEnd").val(),
-                CostPeriodST: $("#txtdateCostPerSt").val(),
-                CostPeriodEnd: $("#txtdateCostPerEnd").val(),
-                ActivityName: $("#txtActivityName").val(),
-                Theme: $("#ddlTheme").val(),
-                Objective: $("#txtObjective").val(),
-                Trade: $('[name=Trade]:checked').val(),
-                ActivityDetail: $("#txtActivityDetail").val(),
-                chanel: $("#txtchanel").val(),
-                activityModel: ObjModel,
-            },
-            dataType: "json",
-            type: 'POST',
-            }).done(function (response) {
-            callPreviewData(response.Data.activityModel);
-        });
-      }
-
-
-
+      
       function callPreviewData(obj) {
         $.ajax({
             type: 'POST',
@@ -739,6 +735,18 @@
     }
 
 
+    function callThemedetailcost(obj) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("activityDetail", "Activity")',
+            data: {
+                activityModel: obj
+            }
+        }).done(function (htmlResponse) {
+            $("#divgetdetailcost").html(htmlResponse)
+        });
+    }
+
     function CallChangefunc(obj) {
 
         $.ajax({
@@ -747,6 +755,17 @@
             data: { activityModel: obj}
         }).done(function (htmlResponse) {
             $("#getQuery").html(htmlResponse)
+        });
+    }
+
+    function CallImageView(obj) {
+
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("ImageList", "Activity")',
+            data: { activityId: obj}
+        }).done(function (htmlResponse) {
+            $("#divgetimage").html(htmlResponse)
         });
     }
 
@@ -760,10 +779,10 @@
         addRemoveLinks: true,
         init: function () {
             this.on("complete", function (file) {
-                console.log("upload success");
+
+                CallImageView($("#hdActivityId").val());
 
                 this.on("removedfile", function (file) {
-
                     var name = file.name;
                      $.ajax({
                      type: 'POST',
@@ -772,7 +791,7 @@
                          name: name,
                      }
                  }).done(function (response) {
-
+                     CallImageView($("#hdActivityId").val());
                  });
 
               });

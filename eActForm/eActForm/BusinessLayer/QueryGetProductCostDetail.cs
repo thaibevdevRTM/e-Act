@@ -88,7 +88,7 @@ namespace eActForm.BusinessLayer
                    productId = group.First().productId,
                    productName = group.First().productName,
                    wholeSalesPrice = group.First().wholeSalesPrice,
-                   isShowGroup = p_productId != "" ? false : true,
+                   isShowGroup = p_productId != "" ? "false" : "true",
                    detailGroup = group.ToList()
                }).ToList();
 
