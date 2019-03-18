@@ -137,7 +137,8 @@
                     growth: growth,
                 }
             }).done(function (response) {
-                callThemedetailcost(response.Data.activityModel);
+                console.log(response.success);
+                callThemedetailcost();
             });
         }
     }
@@ -147,13 +148,12 @@
                 url: '@Url.Action("delActDetail", "Activity")',
                 data: {
                     rowid: id,
-                    activityModel: ObjModel,
                 },
                 dataType: "json",
                 type: 'POST',
                     success: function (response) {
-                        ObjModel = response.Data.activityModel;
-                        callThemedetailcost(response.Data.activityModel);
+                        console.log(response.success);
+                        callThemedetailcost();
                 }
             });
         }

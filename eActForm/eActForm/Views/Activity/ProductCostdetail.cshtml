@@ -134,8 +134,8 @@
                  specialDisc: specialDisc,
             }
          }).done(function (response) {
-             ObjModel = response.Data.activityModel;
-             CallChangefunc(response.Data.activityModel);
+             console.log(response.success);
+             CallChangefunc();
         });
 
         }
@@ -147,14 +147,14 @@
             url: '@Url.Action("delCostDetail", "Activity")',
             data: {
                 rowid: id,
-                activityModel: ObjModel,
             },
             dataType: "json",
             type: 'POST',
                 success: function (response) {
-                    ObjModel = response.Data.activityModel;
-                    CallChangefunc(response.Data.activityModel);
-            }
+                    console.log(response.success);
+                    CallChangefunc();
+                }
+                
         });
     }
 
