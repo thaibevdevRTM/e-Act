@@ -2085,12 +2085,11 @@
     <Content Include="Views\Approve\previewApprove.cshtml" />
     <Content Include="Uploadfiles\ActivityForm\ActivityForm.pdf" />
     <Content Include="Uploadfiles\ActivityForm\ActivityFormpdf" />
-    <Content Include="Views\Approve\indexLists.cshtml" />
+    <Content Include="Views\ApproveLists\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="error\" />
-    <Folder Include="Views\ApproveLists\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\eAct\" />
   </ItemGroup>
