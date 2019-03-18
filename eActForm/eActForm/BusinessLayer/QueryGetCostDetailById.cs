@@ -12,7 +12,7 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGetCostDetailById
     {
-        public static List<Productcostdetail> getcostDetailById(string activityId)
+        public static List<ProductCostOfGroupByPrice> getcostDetailById(string activityId)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace eActForm.BusinessLayer
                  , new SqlParameter("@activityId", activityId));
 
                 var result = (from DataRow d in ds.Tables[0].Rows
-                              select new Productcostdetail()
+                              select new ProductCostOfGroupByPrice()
                               {
                                   id = d["Id"].ToString(),
                                   activityId = d["activityId"].ToString(),
@@ -40,14 +40,14 @@ namespace eActForm.BusinessLayer
                                   createdByUserId = d["createdByUserId"].ToString(),
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
-                              });
+                              }).OrderBy(x => x.createdDate);
 
                 return result.ToList();
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("getcostDetailById => " + ex.Message);
-                return new List<Productcostdetail>();
+                return new List<ProductCostOfGroupByPrice>();
             }
 
         }

@@ -1,9 +1,11 @@
 ﻿@model eActForm.Models.Activity_Model
 @{
-    /**/
+                /**/
 
-    Layout = null;
-    decimal? total = 0;
+                /**/
+
+                Layout = null;
+                decimal? total = 0;
 }
 <style>
     .font12 {
@@ -47,23 +49,27 @@
                         <td onclick="onDelActDetail('@item.id')">
                             <label class="btn ink-reaction btn-danger fa fa-trash-o"></label>
                         </td>
-                        @if (item.isShowGroup)
+                        @if (item.isShowGroup == "true")
                         {
                             <td style="text-align:center">@item.typeTheme</td>
                         }
-                        else
+                        else if (item.isShowGroup == "false")
                         {
                             for (int i = 0; i < @item.detailGroup.Count; i++)
                             {
                                 <td style="text-align:center">@item.detailGroup[i].typeTheme</td>
                             }
                         }
-
-                        @if (item.isShowGroup)
-                        {
-                            <td style="text-align:right">@item.brandName @item.smellName ALL(@item.detailGroup.Count)</td>
-                        }
                         else
+                        {
+                            <td style="text-align:center">@item.typeTheme</td>
+                        }
+
+                        @if (item.isShowGroup == "true")
+                        {
+                            <td>@item.brandName @item.smellName ALL(@item.detailGroup.Count)</td>
+                        }
+                        else if (item.isShowGroup == "false")
                         {
                             for (int i = 0; i < @item.detailGroup.Count; i++)
                             {
@@ -71,6 +77,11 @@
                                 <td>@Html.TextBoxFor(model => item.detailGroup[i].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
                             }
                         }
+                        else
+                        {
+                            <td style="text-align:center">@item.productName</td>
+                        }
+
                         <td>@Html.TextBoxFor(model => item.normalCost, new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
                         <td>
                             @Html.TextBoxFor(model => item.themeCost, new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
@@ -119,7 +130,6 @@
                 type: 'POST',
                 url: '@Url.Action("calDetailTheme", "Activity")',
                 data: {
-                    activityModel: ObjModel,
                     name: name,
                     normalCost: normalCost,
                     id: id,
@@ -127,7 +137,6 @@
                     growth: growth,
                 }
             }).done(function (response) {
-                ObjModel = response.Data.activityModel;
                 callThemedetailcost(response.Data.activityModel);
             });
         }

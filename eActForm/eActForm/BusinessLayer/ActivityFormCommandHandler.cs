@@ -12,7 +12,7 @@ namespace eActForm.BusinessLayer
 {
     public class ActivityFormCommandHandler
     {
-        public static int insertAllActivity(Activity_Model model,string activityId)
+        public static int insertAllActivity(Activity_Model model, string activityId)
         {
 
             int rtn = 0;
@@ -24,46 +24,50 @@ namespace eActForm.BusinessLayer
             model.activityFormModel.updatedDate = DateTime.Now;
             rtn = insertActivityForm(model.activityFormModel);
 
-
-            //int i = 0;
-            //foreach(var item in model.productcostdetaillist1)
-            //{
-            //    model.productcostdetaillist1[i].activityId = activityId;
-            //    model.productcostdetaillist1[i].createdByUserId = UtilsAppCode.Session.User.empId; 
-            //    model.productcostdetaillist1[i].createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-            //    model.productcostdetaillist1[i].updatedByUserId = UtilsAppCode.Session.User.empId; 
-            //    model.productcostdetaillist1[i].updatedDate = DateTime.Now;
-            //    i++;
-            //}
-            //int ii = 0;
-            //foreach (var item in model.costdetaillist1)
-            //{
-            //    model.costdetaillist1[ii].activityId = activityId;
-            //    model.costdetaillist1[ii].createdByUserId = UtilsAppCode.Session.User.empId; 
-            //    model.costdetaillist1[ii].createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-            //    model.costdetaillist1[ii].updatedByUserId = UtilsAppCode.Session.User.empId; 
-            //    model.costdetaillist1[ii].updatedDate = DateTime.Now;
-            //    ii++;
-            //}
+           
             foreach (var item in model.productcostdetaillist1)
             {
-                foreach(var itemIn in item.detailGroup)
+                if (model.activityFormModel.mode != Activity_Model.modeForm.edit.ToString())
+                {
+                    foreach (var itemIn in item.detailGroup)
+                    {
+                        Productcostdetail productcostdetail = new Productcostdetail();
+                        productcostdetail.id = itemIn.id;
+                        productcostdetail.activityId = activityId;
+                        productcostdetail.productId = itemIn.productId;
+                        productcostdetail.wholeSalesPrice = item.wholeSalesPrice;
+                        productcostdetail.disCount1 = item.disCount1;
+                        productcostdetail.disCount2 = item.disCount2;
+                        productcostdetail.disCount3 = item.disCount3;
+                        productcostdetail.normalCost = item.normalCost;
+                        productcostdetail.normalGp = item.normalGp;
+                        productcostdetail.promotionGp = item.promotionGp;
+                        productcostdetail.specialDisc = item.specialDisc;
+                        productcostdetail.promotionCost = item.promotionCost;
+                        productcostdetail.delFlag = itemIn.delFlag;
+                        productcostdetail.createdByUserId = UtilsAppCode.Session.User.empId;
+                        productcostdetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                        productcostdetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                        productcostdetail.updatedDate = DateTime.Now;
+                        model.productcostdetaillist.Add(productcostdetail);
+                    }
+                }
+                else
                 {
                     Productcostdetail productcostdetail = new Productcostdetail();
-                    productcostdetail.id = itemIn.id;
+                    productcostdetail.id = item.id;
                     productcostdetail.activityId = activityId;
-                    productcostdetail.productId = itemIn.productId;
-                    productcostdetail.productName = itemIn.productName;
-                    productcostdetail.wholeSalesPrice = itemIn.wholeSalesPrice;
-                    productcostdetail.disCount1 = itemIn.disCount1;
-                    productcostdetail.disCount2 = itemIn.disCount2;
-                    productcostdetail.disCount3 = itemIn.disCount3;
-                    productcostdetail.normalCost = itemIn.normalCost;
-                    productcostdetail.normalGp = itemIn.normalGp;
-                    productcostdetail.promotionGp = itemIn.promotionGp;
-                    productcostdetail.specialDisc = itemIn.specialDisc;
-                    productcostdetail.promotionCost = itemIn.promotionCost;
-                    productcostdetail.delFlag = itemIn.delFlag;
+                    productcostdetail.productId = item.productId;
+                    productcostdetail.wholeSalesPrice = item.wholeSalesPrice;
+                    productcostdetail.disCount1 = item.disCount1;
+                    productcostdetail.disCount2 = item.disCount2;
+                    productcostdetail.disCount3 = item.disCount3;
+                    productcostdetail.normalCost = item.normalCost;
+                    productcostdetail.normalGp = item.normalGp;
+                    productcostdetail.promotionGp = item.promotionGp;
+                    productcostdetail.specialDisc = item.specialDisc;
+                    productcostdetail.promotionCost = item.promotionCost;
+                    productcostdetail.delFlag = item.delFlag;
                     productcostdetail.createdByUserId = UtilsAppCode.Session.User.empId;
                     productcostdetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                     productcostdetail.updatedByUserId = UtilsAppCode.Session.User.empId;
@@ -72,22 +76,45 @@ namespace eActForm.BusinessLayer
                 }
             }
 
+
+
             foreach (var item in model.activitydetaillist)
             {
-                foreach (var itemIn in item.detailGroup)
+                if (model.activityFormModel.mode != Activity_Model.modeForm.edit.ToString())
+                {
+                    foreach (var itemIn in item.detailGroup)
+                    {
+                        CostThemeDetail costThemeDetail = new CostThemeDetail();
+                        costThemeDetail.id = itemIn.id;
+                        costThemeDetail.activityId = activityId;
+                        costThemeDetail.activityTypeId = item.activityTypeId;
+                        costThemeDetail.typeTheme = item.typeTheme;
+                        costThemeDetail.productId = itemIn.productId;
+                        costThemeDetail.normalCost = item.normalCost;
+                        costThemeDetail.themeCost = item.themeCost;
+                        costThemeDetail.growth = item.growth;
+                        costThemeDetail.total = item.total;
+                        costThemeDetail.delFlag = itemIn.delFlag;
+                        costThemeDetail.createdByUserId = UtilsAppCode.Session.User.empId;
+                        costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                        costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                        costThemeDetail.updatedDate = DateTime.Now;
+                        model.costthemedetail.Add(costThemeDetail);
+                    }
+                }
+                else
                 {
                     CostThemeDetail costThemeDetail = new CostThemeDetail();
-                    costThemeDetail.id = itemIn.id;
+                    costThemeDetail.id = item.id;
                     costThemeDetail.activityId = activityId;
                     costThemeDetail.activityTypeId = item.activityTypeId;
                     costThemeDetail.typeTheme = item.typeTheme;
-                    costThemeDetail.productId = itemIn.productId;
-                    costThemeDetail.productName = itemIn.productName;
-                    costThemeDetail.normalCost = itemIn.normalCost;
-                    costThemeDetail.themeCost = itemIn.themeCost;
-                    costThemeDetail.growth = itemIn.growth;
-                    costThemeDetail.total = itemIn.total;
-                    costThemeDetail.delFlag = itemIn.delFlag;
+                    costThemeDetail.productId = item.productId;
+                    costThemeDetail.normalCost = item.normalCost;
+                    costThemeDetail.themeCost = item.themeCost;
+                    costThemeDetail.growth = item.growth;
+                    costThemeDetail.total = item.total;
+                    costThemeDetail.delFlag = item.delFlag;
                     costThemeDetail.createdByUserId = UtilsAppCode.Session.User.empId;
                     costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                     costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
@@ -108,6 +135,9 @@ namespace eActForm.BusinessLayer
         }
 
 
+
+
+
         public static string genNumberActivity(string activityId)
         {
             try
@@ -126,7 +156,7 @@ namespace eActForm.BusinessLayer
 
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message + ">> genNumberActivity");
                 return null;
@@ -149,7 +179,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
-                 
+
                     });
             }
             catch (Exception ex)
@@ -309,7 +339,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static int updateStatusGenDocActivity(string statusId, string activityId , string genNumDoc)
+        public static int updateStatusGenDocActivity(string statusId, string activityId, string genNumDoc)
         {
 
             int result = 0;
@@ -331,7 +361,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-    
+
 
         public static List<TB_Act_ActivityFormDocNo_Model> getActivityDoc(string cusId)
         {
