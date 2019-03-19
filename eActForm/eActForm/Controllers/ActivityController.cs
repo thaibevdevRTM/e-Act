@@ -197,32 +197,40 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult calDetailTheme(string id, string name, string normalCost, string themeCost, string growth)
+        public JsonResult calDetailTheme(string id, string productId, string name, string normalCost, string themeCost, string growth)
         {
             var result = new AjaxResult();
+
             try
             {
                 Activity_Model activityModel = new Activity_Model();
+                decimal p_total = 0;
+                decimal getPromotionCost = 0;
+                decimal getNormalCost = 0;
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
-
-                activityModel.activitydetaillist
-                    .Where(r => r.id != null && r.id.Equals(id))
-                    .Select(r =>
-                    {
-                        r.productName = name;
-                        r.normalCost = decimal.Parse(normalCost == "" ? "0" : normalCost);
-                        r.growth = decimal.Parse(growth == "" ? "0" : growth);
-                        r.themeCost = decimal.Parse(themeCost == "" ? "0" : themeCost);
-                        r.total = decimal.Parse(themeCost == "" ? "0" : themeCost)
-                        + (decimal.Parse(themeCost == "" ? "0" : themeCost) * (decimal.Parse(growth == "" ? "0" : growth) / 100));
-                        return r;
-                    }).ToList();
-
-                var resultData = new
+                if (checkNullorEmpty(themeCost) != "0")
                 {
-                    activityModel,
-                };
-                result.Data = resultData;
+                    getNormalCost = decimal.Parse(checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().normalCost.ToString()));
+                    getPromotionCost = decimal.Parse(checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().promotionCost.ToString()));
+                    p_total = (getNormalCost - getPromotionCost) * decimal.Parse(normalCost);
+                }
+
+                decimal p_growth = normalCost == "0" ? 0 : (decimal.Parse(themeCost) - decimal.Parse(normalCost)) / decimal.Parse(normalCost);
+                activityModel.activitydetaillist
+                        .Where(r => r.id != null && r.id.Equals(id))
+                        .Select(r =>
+                        {
+                            r.productName = name;
+                            r.normalCost = decimal.Parse(normalCost);
+                            r.growth = p_growth;
+                            r.themeCost = decimal.Parse(themeCost);
+                            r.total = p_total;
+                            return r;
+                        }).ToList();
+
+                Session["activitydetaillist"] = activityModel.activitydetaillist;
+                result.Success = true;
 
             }
             catch (Exception ex)
@@ -250,15 +258,19 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                decimal p_wholeSalesPrice = wholeSalesPrice == "" ? 1 : decimal.Parse(wholeSalesPrice);
-                decimal p_disCount1 = disCount1 == "" ? 1 : p_wholeSalesPrice - ((decimal.Parse(disCount1) / 100) * p_wholeSalesPrice);
-                decimal p_disCount2 = disCount2 == "" ? p_disCount1 : p_disCount1 - ((decimal.Parse(disCount2) / 100) * p_disCount1);
-                decimal p_disCount3 = disCount3 == "" ? p_disCount2 : p_disCount2 - ((decimal.Parse(disCount3) / 100) * p_disCount2);
 
-                decimal p_normalGp = saleOut == "" ? 1 : decimal.Parse(saleOut) - (((p_wholeSalesPrice * decimal.Parse("1.07")) 
-                    / QueryGetAllProduct.getProductById(productId).FirstOrDefault().pack)
-                    / decimal.Parse(saleOut));
 
+                decimal p_wholeSalesPrice = wholeSalesPrice == "" ? 0 : decimal.Parse(checkNullorEmpty(wholeSalesPrice));
+                decimal p_disCount1 = disCount1 == "" ? 1 : p_wholeSalesPrice - ((decimal.Parse(checkNullorEmpty(disCount1)) / 100) * p_wholeSalesPrice);
+                decimal p_disCount2 = disCount2 == "" ? p_disCount1 : p_disCount1 - ((decimal.Parse(checkNullorEmpty(disCount2)) / 100) * p_disCount1);
+                decimal p_disCount3 = disCount3 == "" ? p_disCount2 : p_disCount2 - ((decimal.Parse(checkNullorEmpty(disCount3)) / 100) * p_disCount2);
+
+                decimal getPackProduct = QueryGetAllProduct.getProductById(productId).FirstOrDefault().pack;
+                decimal p_normalGp = checkNullorEmpty(saleOut) == "0" || getPackProduct == 0 ? 0 : (decimal.Parse(saleOut) - (p_wholeSalesPrice * decimal.Parse("1.07"))
+                    / getPackProduct) / decimal.Parse(saleOut);
+                decimal p_PromotionGp = checkNullorEmpty(saleIn) == "0" || getPackProduct == 0 ? 0 : (decimal.Parse(saleIn) - (p_wholeSalesPrice * decimal.Parse("1.07"))
+                    / getPackProduct) / decimal.Parse(checkNullorEmpty(saleIn));
+                decimal p_PromotionCost = checkNullorEmpty(specialDisc) == "0" || p_disCount3 == 0 ? 0 : p_disCount3 - (p_disCount3 * (decimal.Parse(specialDisc) / 100));
 
 
                 Activity_Model activityModel = new Activity_Model();
@@ -267,22 +279,22 @@ namespace eActForm.Controllers
                     .Where(r => r.id != null && r.id.Equals(id))
                     .Select(r =>
                     {
-                        r.wholeSalesPrice = decimal.Parse(wholeSalesPrice == null || wholeSalesPrice == "" ? "0" : wholeSalesPrice);
-                        r.disCount1 = decimal.Parse(disCount1 == null || disCount1 == "" ? "0" : disCount1);
-                        r.disCount2 = decimal.Parse(disCount2 == null || disCount2 == "" ? "0" : disCount2);
-                        r.disCount3 = decimal.Parse(disCount3 == null || disCount3 == "" ? "0" : disCount3);
+                        r.wholeSalesPrice = decimal.Parse(checkNullorEmpty(wholeSalesPrice));
+                        r.disCount1 = decimal.Parse(checkNullorEmpty(disCount1));
+                        r.disCount2 = decimal.Parse(checkNullorEmpty(disCount2));
+                        r.disCount3 = decimal.Parse(checkNullorEmpty(disCount3));
+                        r.saleOut = decimal.Parse(checkNullorEmpty(saleOut));
+                        r.saleIn = decimal.Parse(checkNullorEmpty(saleIn));
                         r.normalGp = p_normalGp;
-
-                        //r.promotionGp = decimal.Parse(promotionGP == null || promotionGP == "" ? "0" : promotionGP);
-                        r.specialDisc = decimal.Parse(specialDisc == "" ? "0" : specialDisc);
+                        r.promotionGp = p_PromotionGp;
+                        r.specialDisc = decimal.Parse(checkNullorEmpty(specialDisc));
                         r.normalCost = p_disCount3;
-
-
-                        r.promotionCost = decimal.Parse(normalCost == "" ? "0" : normalCost)
-                        - (decimal.Parse(normalCost == "" ? "0" : normalCost) * (decimal.Parse(specialDisc == "" ? "0" : specialDisc) / 100));
+                        r.promotionCost = p_PromotionCost;
                         return r;
                     }).ToList();
                 Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
+
+
                 result.Success = true;
             }
             catch (Exception ex)
@@ -536,7 +548,10 @@ namespace eActForm.Controllers
 
 
 
-
+        public string checkNullorEmpty(string p)
+        {
+            return p == "" || p == null || p == "0" ? "0" : p;
+        }
 
 
     }

@@ -201,6 +201,8 @@ namespace eActForm.Models
         public decimal? disCount3 { get; set; }
         public decimal? normalCost { get; set; }
         public decimal? normalGp { get; set; }
+        public string strNormalGP { get; set; }
+        public string strPromotionGP { get; set; }
         public decimal? promotionGp { get; set; }
         public decimal? specialDisc { get; set; }
         public decimal? promotionCost { get; set; }

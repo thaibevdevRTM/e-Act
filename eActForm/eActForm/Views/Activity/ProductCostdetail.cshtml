@@ -85,11 +85,11 @@
                         <td style="text-align:right">
                             @Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "normalCost_" + index, @class = "form-control textboxcss font12",  @readonly = true })
                         </td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp, new { @id = "normalGp_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, new { @id = "promotionGp_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp,"{0:p0}", new { @id = "normalGp_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:p0}", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.specialDisc, new { @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.specialDisc, new { @id = "specialDisc_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.specialDisc, new { @id = "specialDisc_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.promotionCost, new { @id = "promotionCost_" + index, @class = "form-control textboxcss font12" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.promotionCost, "{0:n2}", new { @id = "promotionCost_" + index, @class = "form-control textboxcss font12" })</td>
                     </tr>
                     index++;
                 }
