@@ -30,7 +30,7 @@ namespace eActForm.Controllers
             return View();
         }
 
-        public ActionResult ActivityForm(string activityId,string mode)
+        public ActionResult ActivityForm(string activityId, string mode)
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = new ActivityForm();
@@ -65,30 +65,7 @@ namespace eActForm.Controllers
             return View(activityModel);
         }
 
-        public ActionResult EditForm(string activityId)
-        {
 
-            Session["activityId"] = activityId;
-            Activity_Model activityModel = new Activity_Model();
-
-            activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-            //activityModel.productcostdetaillist = QueryGetCostDetailById.getcostDetailById(activityId);
-            //activityModel.costthemedetail = QueryGetActivityDetailById.getActivityDetailById(activityId);
-
-            activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().ToList();
-            activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
-            activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup();
-            activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
-            activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
-            activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().GroupBy(item => item.activitySales)
-               .Select(grp => new TB_Act_ActivityGroup_Model
-               {
-                   id = grp.First().id,
-                   activitySales = grp.First().activitySales
-               }).ToList();
-
-            return View(activityModel);
-        }
 
         public ActionResult ImageList(string activityId)
         {
@@ -220,7 +197,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult calDetailTheme( string id, string name, string normalCost, string themeCost, string growth)
+        public JsonResult calDetailTheme(string id, string name, string normalCost, string themeCost, string growth)
         {
             var result = new AjaxResult();
             try
@@ -258,6 +235,13 @@ namespace eActForm.Controllers
 
         public JsonResult calDiscountProduct(
               string id
+            , string productId
+            , string wholeSalesPrice
+            , string saleOut
+            , string saleIn
+            , string disCount1
+            , string disCount2
+            , string disCount3
             , string normalCost
             , string normalGP
             , string promotionGP
@@ -266,23 +250,40 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
+                decimal p_wholeSalesPrice = wholeSalesPrice == "" ? 1 : decimal.Parse(wholeSalesPrice);
+                decimal p_disCount1 = disCount1 == "" ? 1 : p_wholeSalesPrice - ((decimal.Parse(disCount1) / 100) * p_wholeSalesPrice);
+                decimal p_disCount2 = disCount2 == "" ? p_disCount1 : p_disCount1 - ((decimal.Parse(disCount2) / 100) * p_disCount1);
+                decimal p_disCount3 = disCount3 == "" ? p_disCount2 : p_disCount2 - ((decimal.Parse(disCount3) / 100) * p_disCount2);
+
+                decimal p_normalGp = saleOut == "" ? 1 : decimal.Parse(saleOut) - (((p_wholeSalesPrice * decimal.Parse("1.07")) 
+                    / QueryGetAllProduct.getProductById(productId).FirstOrDefault().pack)
+                    / decimal.Parse(saleOut));
+
+
+
                 Activity_Model activityModel = new Activity_Model();
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 activityModel.productcostdetaillist1
                     .Where(r => r.id != null && r.id.Equals(id))
                     .Select(r =>
                     {
-                        r.normalGp = decimal.Parse(normalGP == null || normalGP == "" ? "0" : normalGP);
-                        r.promotionGp = decimal.Parse(promotionGP == null || promotionGP == "" ? "0" : promotionGP);
+                        r.wholeSalesPrice = decimal.Parse(wholeSalesPrice == null || wholeSalesPrice == "" ? "0" : wholeSalesPrice);
+                        r.disCount1 = decimal.Parse(disCount1 == null || disCount1 == "" ? "0" : disCount1);
+                        r.disCount2 = decimal.Parse(disCount2 == null || disCount2 == "" ? "0" : disCount2);
+                        r.disCount3 = decimal.Parse(disCount3 == null || disCount3 == "" ? "0" : disCount3);
+                        r.normalGp = p_normalGp;
+
+                        //r.promotionGp = decimal.Parse(promotionGP == null || promotionGP == "" ? "0" : promotionGP);
                         r.specialDisc = decimal.Parse(specialDisc == "" ? "0" : specialDisc);
+                        r.normalCost = p_disCount3;
+
+
                         r.promotionCost = decimal.Parse(normalCost == "" ? "0" : normalCost)
                         - (decimal.Parse(normalCost == "" ? "0" : normalCost) * (decimal.Parse(specialDisc == "" ? "0" : specialDisc) / 100));
                         return r;
                     }).ToList();
-
-                var resultData = new { activityModel };
-                result.Data = resultData;
-
+                Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
+                result.Success = true;
             }
             catch (Exception ex)
             {
@@ -306,9 +307,9 @@ namespace eActForm.Controllers
             try
             {
                 Activity_Model activityModel = new Activity_Model();
-                
-               
-                if(Session["productcostdetaillist1"] == null)
+
+
+                if (Session["productcostdetaillist1"] == null)
                 {
                     activityModel.productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
                     activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
@@ -485,12 +486,12 @@ namespace eActForm.Controllers
                 Session["activitydetaillist"] = activityModel.activitydetaillist;
                 result.Success = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.Message = ex.Message;
                 result.Success = false;
             }
-           
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

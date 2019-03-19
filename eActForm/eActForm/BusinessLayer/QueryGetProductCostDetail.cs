@@ -64,8 +64,8 @@ namespace eActForm.BusinessLayer
                                  brandName = d["brandName"].ToString(),
                                  smellName = d["smellName"].ToString(),
                                  typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == p_theme).FirstOrDefault().activitySales,
-                                 wholeSalesPrice = decimal.Parse(d["price"].ToString()),
-                                 normalCost = decimal.Parse(d["price"].ToString()),
+                                 wholeSalesPrice = d["price"] is DBNull ? 0 : decimal.Parse(d["price"].ToString()),
+                                 normalCost = d["price"] is DBNull ? 0 : decimal.Parse(d["price"].ToString()),
                              }).ToList();
                 if (p_productId != "")
                 {
