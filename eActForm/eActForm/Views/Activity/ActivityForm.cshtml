@@ -617,7 +617,7 @@
                 dataType: "json",
                 type: 'POST',
              success: function (response) {
-                 if (response.Data.checkrow > 0) {
+                 if (response.Data.checkrow) {
                      CallChangefunc();
                      callThemedetailcost();
                  }

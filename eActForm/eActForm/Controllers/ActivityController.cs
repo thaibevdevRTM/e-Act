@@ -488,16 +488,6 @@ namespace eActForm.Controllers
                     ApproveAppCode.insertApprove(activityId);
                     EmailAppCodes.sendApproveActForm(activityId);
                 }
-                //sendEmail(
-                //    "tanapong.w@thaibev.com"
-                //    , "champ.tanapong@gmail.com"
-                //    , "Test Subject eAct"
-                //    , "Test Body"
-                //    , genPdfFile(GridHtml, activityId)
-
-                //    );
-
-
                 resultAjax.Success = true;
             }
             catch (Exception ex)

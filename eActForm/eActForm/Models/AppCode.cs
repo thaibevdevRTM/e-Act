@@ -23,6 +23,15 @@ namespace eActForm.Models
     {
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
 
+        public enum ApproveStatus
+        {
+            Draft = 1
+            , รออนุมัติ = 2
+            , อนุมัติ = 3
+            , Success = 4
+            , ไม่อนุมัติ = 5
+        }
+
         public static MemoryStream GetFileReportTomail_Preview(string GridHtml)
         {
             MemoryStream ms = new MemoryStream();
