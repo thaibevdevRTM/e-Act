@@ -29,12 +29,12 @@
                     <th class="align-content-center font10" rowspan="2" style="width:15%;">ชื่อสินค้า (product Name)</th>
                     <th class="align-content-center font10" rowspan="2" style="width:10%;">Std. Wholesales Price</th>
                     <th class="align-content-center font10" colspan="2" style="width:10%;">ราคาขาย</th>
-                    <th class="align-content-center font10" colspan="3" style="width:15%;">Normal Discount (%)</th>
-                    <th class="align-content-center font10" style="width:10%;">Normal</th>
-                    <th class="align-content-center font10" style="width:10%;">Normal</th>
-                    <th class="align-content-center font10" style="width:10%;">Promotion</th>
-                    <th class="align-content-center font10" colspan="2" style="width:10%;">Special Discount %</th>
-                    <th class="align-content-center font10" style="width:10%;">Promotion</th>
+                    <th class="align-content-center font10" colspan="3" style="width:18%;">Normal Discount (%)</th>
+                    <th class="align-content-center font10" style="width:8%;">Normal</th>
+                    <th class="align-content-center font10" style="width:7%;">Normal</th>
+                    <th class="align-content-center font10" style="width:7%;">Promotion</th>
+                    <th class="align-content-center font10" colspan="2" style="width:12%;">Special Discount %</th>
+                    <th class="align-content-center font10" style="width:8%;">Promotion</th>
                 </tr>
                 <tr>
                     <th class="align-content-center font10">&nbsp;&nbsp;Normal&nbsp;&nbsp;</th>
@@ -87,7 +87,7 @@
                         </td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp,"{0:p0}", new { @id = "normalGp_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:p0}", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.specialDisc, new { @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.specialDiscBaht, new { @id = "specialDiscBaht_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.specialDisc, new { @id = "specialDisc_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.promotionCost, "{0:n2}", new { @id = "promotionCost_" + index, @class = "form-control textboxcss font12" })</td>
                     </tr>
@@ -129,6 +129,7 @@
             var normalGP = $('#normalGP_' + rowIndex).val();
             var promotionGP = $('#promotionGP_' + rowIndex).val();
             var specialDisc = $("#specialDisc_" + rowIndex).val();
+            var specialDiscBaht = $("#specialDiscBaht_" + rowIndex).val();
 
             $.ajax({
             type: 'POST',
@@ -146,6 +147,7 @@
                  normalGP: normalGP,
                  promotionGP: promotionGP,
                  specialDisc: specialDisc,
+                 specialDiscBaht: specialDiscBaht,
             }
          }).done(function (response) {
              CallChangefunc();
