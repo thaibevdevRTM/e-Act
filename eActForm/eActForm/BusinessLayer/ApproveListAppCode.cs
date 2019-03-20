@@ -10,11 +10,11 @@ namespace eActForm.BusinessLayer
 {
     public class ApproveListAppCode
     {
-        public static List<Activity_Model.actForm> getFilterFormByStatusId(List<Activity_Model.actForm> lists,string statusId)
+        public static List<Activity_Model.actForm> getFilterFormByStatusId(List<Activity_Model.actForm> lists,int statusId)
         {
             try
             {
-                return lists.Where(r => r.statusId == statusId).ToList();
+                return lists.Where(r => r.statusId == statusId.ToString()).ToList();
             }
             catch (Exception ex)
             {

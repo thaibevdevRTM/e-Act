@@ -18,9 +18,9 @@
                     <th>Doc.Date</th>
                     <th>Act.No</th>
                     <th>วัตถุประสงค์</th>
-                    <th>ยอดขายช่วงกิจกรรม</th>
-                    <th>ค่าใช้จ่าย</th>
-                    <th>% ต่อยอดขาย</th>
+                    <th align="center">ยอดขายช่วงกิจกรรม</th>
+                    <th align="center">ค่าใช้จ่าย</th>
+                    <th align="center">% ต่อยอดขาย</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +28,7 @@
                 {
                 <tr class="gradeX">
                     <td>
-                        @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id }, new {@class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
+                        @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
 
                         @Html.ActionLink(" ", "index", "approve", new { actId = item.id }, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
                     </td>
@@ -36,11 +36,11 @@
                     <td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
                     <td>@item.activityNo</td>
                     <td>@item.objective</td>
-                    <td>@item.themeCost</td>
-                    <td>@item.totalCost</td>
-                    <td></td>
+                    <td align="center">@item.themeCost</td>
+                    <td align="center">@item.totalCost</td>
+                    <td align="center">@{ var precentOfSale = (item.totalCost * 100) / item.themeCost; } @string.Format("{0:N}", precentOfSale.ToString())%</td>
                 </tr>
-                }
+                        }
             </tbody>
         </table>
 

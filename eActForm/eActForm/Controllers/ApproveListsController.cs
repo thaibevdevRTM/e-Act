@@ -33,7 +33,7 @@ namespace eActForm.Controllers
                 model = new Activity_Model.actForms();
                 model.actLists = ApproveListAppCode.getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
                 TempData["ApproveFormLists"] = model.actLists;
-                model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists,AppCode.ApproveStatus.รออนุมัติ.ToString());
+                model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists,(int)AppCode.ApproveStatus.รออนุมัติ);
             }
             else
             {
@@ -56,7 +56,7 @@ namespace eActForm.Controllers
 
             if (Request.Form["ddlStatus"] != "")
             {
-                model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, Request.Form["ddlStatus"]);
+                model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, int.Parse(Request.Form["ddlStatus"]));
             }
             TempData["ApproveSearchResult"] = model.actLists;
             return RedirectToAction("ListView");

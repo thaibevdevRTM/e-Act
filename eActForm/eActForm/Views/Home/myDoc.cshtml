@@ -1,6 +1,52 @@
 ﻿@using eActForm.Models
 @model eActForm.Models.Activity_Model.actForms
 
+<script>
+    function checkDelete(actId,statusId) {
+        var msg = "";
+        if (statusId == "1") {
+            // can be delete
+            msg = "คุณต้องการลบเอกสารนี้หรือไม่?"
+        }
+        else {
+            // can't delete
+            msg = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ <br/> ท่านต้องการยกเลิกเอกสารหรือไม่ค่ะ?";
+        }
+
+        bootbox.confirm({
+            title: "Confirm Message",
+            message: msg,
+            buttons: {
+                confirm: {
+                    label: "Yes",
+                    className: "btn-success"
+                },
+                cancel: {
+                    label: "No",
+                    className: "btn-danger"
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("requestDeleteDoc", "Home")',
+                        data: {
+                            actId: actId,
+                            statusId: statusId,
+                        },
+                        dataType: "json",
+                        type: 'POST',
+                        }).done(function (response) {
+                            //var url = '@Url.Action("Index", "Home")';
+                            //window.location.href = url;
+                            console.log('success');
+                             });
+                }
+
+            }
+        });
+    }
+</script>
 <div class="row">
 
     <div class="col-md-12 col-xs-12">
@@ -10,8 +56,7 @@
 
         <a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>คือ Delete
         <a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit
-        <a class="btn ink-reaction btn-default fa fa-search" href="#"></a>คือ View
-        <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" href="#"></a>คือ Approve
+        <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View
 
         <table id="datatable" class="table table-striped table-hover">
             <thead>
@@ -32,13 +77,14 @@
                 {
                     <tr class="gradeX">
                         <td>
-                            @Html.ActionLink(" ", "deleteUser", new { id = item.id }, new { onclick = "return confirm('Are you sure you wish to delete this user?');", @class = "btn ink-reaction btn-danger fa fa-trash-o" })
+                            <a href="javascript:" target="_blank" onclick="return checkDelete('@item.id','@item.statusId');">
+                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                            </a>
 
                             @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit }, new { @class = "btn ink-reaction btn-info fa fa-edit" })
 
-                            @Html.ActionLink(" ", "deleteUser", new { actId = item.id }, new { onclick = "return confirm('Are you sure you wish to delete this user?');", @class = "btn ink-reaction btn-default fa fa-search" })
+                            @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
 
-                            @Html.ActionLink(" ", "index", "approve", new { actId = item.id }, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
                         </td>
                         <td>@item.statusName</td>
                         <td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
@@ -77,5 +123,8 @@
             }
         });
 
-    })
+    });
+
+
+
 </script>
