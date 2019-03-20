@@ -1,0 +1,161 @@
+﻿@model eActForm.Models.Budget_Activity_Model
+@{
+	Layout = null;
+	//decimal? totalActCost = 0;
+}
+
+<script>
+   function submitPreview() {
+
+         bootbox.confirm("ยืนยัน บันทึกข้อมูล!", function (result) {
+             bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
+            $.ajax({
+            url: '@Url.Action("submitPreview", "Activity")',
+            data: {
+                GridHtml: $("#Grid").html(),
+                status: 2,
+                activityId: $("#HdId").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+            }).done(function (response) {
+                var url = '@Url.Action("Index", "Home")';
+                window.location.href = url;
+
+                console.log('success');
+                 });
+         });
+      }
+</script>
+
+@*@Html.HiddenFor(m => m.activityFormModel.id, new { id = "HdId" })*@
+
+<div class="modal-dialog modal-lg">
+	<!-- Modal content-->
+	<div class="modal-content">
+		<div class="modal-header">
+			<div style=""></div>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+		</div>
+		<div class="modal-body">
+			<div id="Grid" style="width:97%; margin-left:20px;">
+				<style>
+					.cssborderbottom {
+						border-bottom-width: 1px;
+						border-bottom-style: solid;
+						border-bottom-color: gray;
+					}
+				</style>
+
+				<div>
+					<div style="text-align:left;">
+						<h5>
+							เลขที่กิจกรรมส่งเสริมการขาย :
+							@if (Model.Budget_Activity_Product_list != null)
+							{
+								@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo)
+							}
+						</h5>
+					</div>
+				</div>
+
+				<div>
+					<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+				</div>
+
+				<div style="margin-top:5px; width:100%;">
+					รายละเอียดค่าใช้จ่าย (Cost)
+				</div>
+
+				<div>
+					<table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+						<tr>
+							<td rowspan="2" width="30%" style="font-size:12.5px;">กลุ่มสินค้า/ชื่อสินค้า/Remark</td>
+							<td colspan="5" style="font-size:12.5px;">ค่าใช้จ่ายจริง (Estimate)</td>
+						</tr>
+						<tr>
+							<td width="10%" style="font-size:12.5px;">จำนวนเงินที่ตั้ง</td>
+							<td width="10%" style="font-size:12.5px;">เลขที่ใบแจ้งหนี้</td>
+							<td width="10%" style="font-size:12.5px;">จำนวนเงินจ่าย</td>
+							<td width="10%" style="font-size:12.5px;">วันที่ทำกิจกรรม</td>
+							@*<td width="15%" style="font-size:12.5px;">5</td>*@
+						</tr>
+
+						<tr>
+							<td width="10%" style="font-size:12.5px;text-align:center;">
+								@if (Model.Budget_Activity_Product_list != null)
+								{
+									@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).prd_productDetail)
+								}
+							</td>
+							<td width="15%" style="font-size:12.5px;">
+								@if (Model.Budget_Activity_Product_list != null)
+								{
+									@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).totalCost)
+								}
+							</td>
+							<td width="10%" style="font-size:12.5px;"><input class="form-control textboxcss" id="txt_invoice_no"></td>
+							<td width="10%" style="font-size:12.5px;"><input class="form-control textboxcss" id="txt_เงินจ่าย"></td>
+							<td width="10%" style="font-size:12.5px;"><input class="form-control textboxcss" id="txt_date_action"></td>
+							@*<td width="10%" style="font-size:12.5px;">5</td>*@
+						</tr>
+					</table>
+				</div>
+				<div>
+					@*@if (Model.activityFormModel != null)
+					{
+						@Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
+					}*@
+				</div>
+
+			</div>
+		</div>
+		<div class="modal-footer">
+			<div>
+				<p class="d-flex justify-content-center">
+					<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+					<button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+				</p>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function () {
+
+		//$('.field-date').datepicker({ autoclose: true, todayHighlight: true, format: "dd/mm/yyyy" });
+		ObjModel = {};
+		//onchangeCustomer();
+		//onchangeCate();
+	});
+
+
+	$.datetimepicker.setLocale('th');
+	var thaiYear = function (ct) {
+		var leap = 3;
+		var dayWeek = ["พฤ.", "ศ.", "ส.", "อา.", "จ.", "อ.", "พ."];
+		if (ct) {
+			var yearL = new Date(ct).getFullYear();
+			leap = (((yearL % 4 == 0) && (yearL % 100 != 0)) || (yearL % 400 == 0)) ? 2 : 3;
+			if (leap == 2) {
+				dayWeek = ["ศ.", "ส.", "อา.", "จ.", "อ.", "พ.", "พฤ."];
+			}
+		}
+		this.setOptions({
+			i18n: { th: { dayOfWeek: dayWeek } }, dayOfWeekStart: leap,
+		})
+	};
+
+	$("#txt_date_action").datetimepicker({
+		timepicker: false,
+		format: 'd-m-Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000
+		lang: 'th',  // แสดงภาษาไทย
+		onChangeMonth: thaiYear,
+		onShow: thaiYear,
+		//yearOffset: 543,  // ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ
+		closeOnDateSelect: true,
+	});
+</script>
