@@ -24,6 +24,7 @@ namespace eActForm.Models
             public string smellId { get; set; }
             public string brandId { get; set; }
             public string size { get; set; }
+            public Int32 pack { get; set; }
             public Int32 unit { get; set; }
             public Int32 litre { get; set; }
         }
