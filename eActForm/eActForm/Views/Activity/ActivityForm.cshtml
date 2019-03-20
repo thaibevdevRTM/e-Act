@@ -217,28 +217,7 @@
     <div class="col-md-6">
         @Html.TextAreaFor(x => x.activityFormModel.activityDetail, 5, 60, new { @class = "form-control textboxcss", @id = "txtActivityDetail" })
     </div>
-
-    <div class="col-md-6">
-        <form action="@Url.Action("uploadFilesImage", "Activity")" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
-            <div class="dz-message">
-                <span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
-            </div>
-        </form>
-    </div>
-
 </div>
-<div class="row">
-    <div class="col-md-6">
-
-    </div>
-
-    <div class="col-md-6">
-        <div id="divgetimage" class="col-lg-12">
-            @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id != null ? Model.activityFormModel.id : "" })
-        </div>
-    </div>
-</div>
-
 <hr />
 <div id="getQuery" class="col-lg-12">
     @Html.Action("productCostDetail", "Activity", new { activityModel = Model })
@@ -285,7 +264,7 @@
             }
         </select>
     </div>
-    <div class="form-group col-1" onclick="AddThemeCost()">
+    <div class="form-group col-lg-1 col-xs-1" onclick="AddThemeCost()">
         <label class="btn ink-reaction btn-danger fa fa-plus"></label>
     </div>
 </div>
@@ -298,6 +277,23 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-12">
+        <p class="lead">อัพโหลด รูปภาพ</p>
+    </div>
+    <div class="col-md-6">
+        <form action="@Url.Action("uploadFilesImage", "Activity")" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
+            <div class="dz-message">
+                <span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div id="divgetimage" class="col-lg-12">
+            @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id != null ? Model.activityFormModel.id : "" })
+        </div>
+    </div>
+</div>
 <hr />
 
 <div class="row">
@@ -326,70 +322,18 @@
            if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
                modeEdit();
            }
-       });
+    });
 
 
-    $.datetimepicker.setLocale('th');
-    var thaiYear = function (ct) {
-        var leap = 3;
-        var dayWeek = ["พฤ.", "ศ.", "ส.", "อา.", "จ.", "อ.", "พ."];
-        if (ct) {
-            var yearL = new Date(ct).getFullYear();
-            leap = (((yearL % 4 == 0) && (yearL % 100 != 0)) || (yearL % 400 == 0)) ? 2 : 3;
-            if (leap == 2) {
-                dayWeek = ["ศ.", "ส.", "อา.", "จ.", "อ.", "พ.", "พฤ."];
-            }
-        }
-        this.setOptions({
-            i18n: { th: { dayOfWeek: dayWeek } }, dayOfWeekStart: leap,
-        })
-    };
+    $(function () {
+        $("#txtdateDoc").datepicker();
+        $("#txtdateActivitySt").datepicker();
+        $("#txtdateActivityEnd").datepicker();
+        $("#txtdateCostPerSt").datepicker();
+        $("#txtdateCostPerEnd").datepicker();
 
-    $("#txtdateDoc").datetimepicker({
-        timepicker: false,
-        format: 'd-m-Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000
-        lang: 'th',  // แสดงภาษาไทย
-        onChangeMonth: thaiYear,
-        onShow: thaiYear,
-        //yearOffset: 543,  // ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ
-        closeOnDateSelect: true,
     });
-    $("#txtdateActivitySt").datetimepicker({
-        timepicker: false,
-        format: 'd-m-Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000
-        lang: 'th',  // แสดงภาษาไทย
-        onChangeMonth: thaiYear,
-        onShow: thaiYear,
-        //yearOffset: 543,  // ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ
-        closeOnDateSelect: true,
-    });
-    $("#txtdateActivityEnd").datetimepicker({
-        timepicker: false,
-        format: 'd-m-Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000
-        lang: 'th',  // แสดงภาษาไทย
-        onChangeMonth: thaiYear,
-        onShow: thaiYear,
-        //yearOffset: 543,  // ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ
-        closeOnDateSelect: true,
-    });
-    $("#txtdateCostPerSt").datetimepicker({
-        timepicker: false,
-        format: 'd-m-Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000
-        lang: 'th',  // แสดงภาษาไทย
-        onChangeMonth: thaiYear,
-        onShow: thaiYear,
-        //yearOffset: 543,  // ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ
-        closeOnDateSelect: true,
-    });
-    $("#txtdateCostPerEnd").datetimepicker({
-        timepicker: false,
-        format: 'd-m-Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000
-        lang: 'th',  // แสดงภาษาไทย
-        onChangeMonth: thaiYear,
-        onShow: thaiYear,
-        //yearOffset: 543,  // ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ
-        closeOnDateSelect: true,
-    });
+
 
     $("#ddlProductSize").change(function () {
         var ddlProduct = $("#ddlProductfilter");
@@ -603,7 +547,7 @@
         //    bootbox.alert("กรุณา เลือกสินค้า");
         //    return false;
         //}
-
+        $("#WaitDialog").show();
          $.ajax({
                 url: '@Url.Action("addItemProduct", "Activity")',
              data: {
@@ -622,9 +566,9 @@
                      callThemedetailcost();
                  }
                  else {
-                     bootbox.alert("ไม่พบ สินค้า!");
+                     bootbox.alert("ไม่พบ สินค้า!");    
                  }
-
+                 $("#WaitDialog").hide();
              }
          });
     }
@@ -632,7 +576,7 @@
     function AddThemeCost() {
         var ddlTheme = document.getElementById("ddlThemeDetail");
         var txtddlTheme = ddlTheme.options[ddlTheme.selectedIndex].text;
-
+        $("#WaitDialog").show();
          $.ajax({
             type: 'POST',
             url:  '@Url.Action("addDetailTheme", "Activity")',
@@ -641,7 +585,9 @@
                  txttheme: txtddlTheme,
             }
          }).done(function (response) {
-            callThemedetailcost();
+             console.log(response.success);
+             callThemedetailcost();
+             $("#WaitDialog").hide();
         });
     }
 
@@ -720,7 +666,7 @@
         //$("input.txtnormalGp").attr("disabled", true);
     }
 
-      
+
       function callPreviewData(obj) {
         $.ajax({
             type: 'POST',

@@ -2078,7 +2078,6 @@
     <Content Include="Views\Approve\approvePositionLists.cshtml" />
     <Content Include="Views\ActivityViewer\activityPDFView.cshtml" />
     <Content Include="Views\Signature\currentSignature.cshtml" />
-    <Content Include="Views\Activity\EditForm.cshtml" />
     <Content Include="Views\Approve\approveLists.cshtml" />
     <Content Include="Views\Home\contact.cshtml" />
     <Content Include="Views\Activity\ImageList.cshtml" />
