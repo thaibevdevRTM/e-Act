@@ -138,7 +138,7 @@
     </Reference>
     <Reference Include="WebLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\WebLibrary.dll</HintPath>
+      <HintPath>..\..\..\..\MAS_WebAPI\WebLibrary\bin\Release\WebLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

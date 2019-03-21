@@ -34,13 +34,9 @@
                             actId: actId,
                             statusId: statusId,
                         },
-                        dataType: "json",
-                        type: 'POST',
-                        }).done(function (response) {
-                            //var url = '@Url.Action("Index", "Home")';
-                            //window.location.href = url;
-                            console.log('success');
-                             });
+                    }).done(function (htmlResponse) {
+                        $("#getQuery").html(htmlResponse);
+                    });
                 }
 
             }

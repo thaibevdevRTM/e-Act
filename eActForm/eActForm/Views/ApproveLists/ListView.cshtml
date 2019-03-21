@@ -38,7 +38,7 @@
                     <td>@item.objective</td>
                     <td align="center">@item.themeCost</td>
                     <td align="center">@item.totalCost</td>
-                    <td align="center">@{ var precentOfSale = (item.totalCost * 100) / item.themeCost; } @string.Format("{0:N}", precentOfSale.ToString())%</td>
+                    <td align="center">@{ var precentOfSale = item.themeCost == 0 ? 0 : (item.totalCost * 100) / item.themeCost; } @string.Format("{0:N}", precentOfSale.ToString())%</td>
                 </tr>
                         }
             </tbody>
