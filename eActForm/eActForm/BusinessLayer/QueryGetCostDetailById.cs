@@ -27,6 +27,8 @@ namespace eActForm.BusinessLayer
                                   productId = d["productId"].ToString(),
                                   productName = d["productName"].ToString(),
                                   wholeSalesPrice = d["wholeSalesPrice"].ToString() == "" ? 0 : decimal.Parse(d["wholeSalesPrice"].ToString()),
+                                  saleIn = d["saleIn"].ToString() == "" ? 0 : decimal.Parse(d["saleIn"].ToString()),
+                                  saleOut = d["saleOut"].ToString() == "" ? 0 : decimal.Parse(d["saleOut"].ToString()),
                                   disCount1 = d["discount1"].ToString() == "" ? 0 : decimal.Parse(d["discount1"].ToString()),
                                   disCount2 = d["discount2"].ToString() == "" ? 0 : decimal.Parse(d["discount2"].ToString()),
                                   disCount3 = d["discount3"].ToString() == "" ? 0 : decimal.Parse(d["discount3"].ToString()),
@@ -34,13 +36,14 @@ namespace eActForm.BusinessLayer
                                   normalGp = d["normalGp"].ToString() == "" ? 0 : decimal.Parse(d["normalGp"].ToString()),
                                   promotionGp = d["promotionGp"].ToString() == "" ? 0 : decimal.Parse(d["promotionGp"].ToString()),
                                   specialDisc = d["specialDisc"].ToString() == "" ? 0 : decimal.Parse(d["specialDisc"].ToString()),
+                                  specialDiscBaht = d["specialDiscBaht"].ToString() == "" ? 0 : decimal.Parse(d["specialDiscBaht"].ToString()),
                                   promotionCost = d["promotionCost"].ToString() == "" ? 0 : decimal.Parse(d["promotionCost"].ToString()),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
-                              }).OrderBy(x => x.createdDate);
+                              }).OrderBy(x => x.productName);
 
                 return result.ToList();
             }

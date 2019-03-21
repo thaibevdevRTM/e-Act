@@ -183,10 +183,10 @@
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateActivitySt" })
+                            @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt" })
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateActivityEnd" })
+                            @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivityEnd" })
                         </div>
                     </div>
                 </div>
@@ -196,10 +196,10 @@
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.costPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateCostPerSt" })
+                            @Html.TextBoxFor(x => x.activityFormModel.costPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerSt" })
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.costPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateCostPerEnd" })
+                            @Html.TextBoxFor(x => x.activityFormModel.costPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerEnd" })
                         </div>
                     </div>
                 </div>
@@ -311,7 +311,12 @@
 <script type="text/javascript">
 
        $(document).ready(function () {
-
+           $(".fv").each(function () {
+               var v = $(this).val();
+               if (v == '') {
+                   $(this).focus();
+               }
+           });
            //$('.field-date').datepicker({ autoclose: true, todayHighlight: true, format: "dd/mm/yyyy" });
 
            ObjModel = {};
@@ -326,11 +331,21 @@
 
 
     $(function () {
-        $("#txtdateDoc").datepicker();
-        $("#txtdateActivitySt").datepicker();
-        $("#txtdateActivityEnd").datepicker();
-        $("#txtdateCostPerSt").datepicker();
-        $("#txtdateCostPerEnd").datepicker();
+        $("#txtdateDoc").datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        $("#txtdateActivitySt").datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        $("#txtdateActivityEnd").datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        $("#txtdateCostPerSt").datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        $("#txtdateCostPerEnd").datepicker({
+            format: 'dd/mm/yyyy'
+        });
 
     });
 

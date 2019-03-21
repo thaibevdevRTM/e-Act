@@ -160,9 +160,13 @@ namespace eActForm.Models
         public string activityTypeId { get; set; }
         public string productId { get; set; }
         public string productName { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalCost { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? themeCost { get; set; }
+        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
         public decimal? growth { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? total { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
@@ -196,16 +200,26 @@ namespace eActForm.Models
         public string productId { get; set; }
         public string productName { get; set; }
         public decimal? wholeSalesPrice { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
         public decimal? disCount1 { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
         public decimal? disCount2 { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
         public decimal? disCount3 { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalCost { get; set; }
+        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
         public decimal? normalGp { get; set; }
         public string strNormalGP { get; set; }
         public string strPromotionGP { get; set; }
+        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
         public decimal? promotionGp { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
         public decimal? specialDisc { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? specialDiscBaht { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? promotionCost { get; set; }
         public decimal? saleIn { get; set; }
         public decimal? saleOut { get; set; }
@@ -231,6 +245,7 @@ namespace eActForm.Models
         public decimal? normalGp { get; set; }
         public decimal? promotionGp { get; set; }
         public decimal? specialDisc { get; set; }
+        public decimal? specialDisBaht { get; set; }
         public decimal? promotionCost { get; set; }
         public decimal? saleIn { get; set; }
         public decimal? saleOut { get; set; }

@@ -36,6 +36,8 @@ namespace eActForm.BusinessLayer
                         productcostdetail.activityId = activityId;
                         productcostdetail.productId = itemIn.productId;
                         productcostdetail.wholeSalesPrice = item.wholeSalesPrice;
+                        productcostdetail.saleIn = item.saleIn;
+                        productcostdetail.saleOut = item.saleOut;
                         productcostdetail.disCount1 = item.disCount1;
                         productcostdetail.disCount2 = item.disCount2;
                         productcostdetail.disCount3 = item.disCount3;
@@ -43,6 +45,7 @@ namespace eActForm.BusinessLayer
                         productcostdetail.normalGp = item.normalGp;
                         productcostdetail.promotionGp = item.promotionGp;
                         productcostdetail.specialDisc = item.specialDisc;
+                        productcostdetail.specialDisBaht = item.specialDiscBaht;
                         productcostdetail.promotionCost = item.promotionCost;
                         productcostdetail.delFlag = itemIn.delFlag;
                         productcostdetail.createdByUserId = UtilsAppCode.Session.User.empId;
@@ -59,6 +62,8 @@ namespace eActForm.BusinessLayer
                     productcostdetail.activityId = activityId;
                     productcostdetail.productId = item.productId;
                     productcostdetail.wholeSalesPrice = item.wholeSalesPrice;
+                    productcostdetail.saleIn = item.saleIn;
+                    productcostdetail.saleOut = item.saleOut;
                     productcostdetail.disCount1 = item.disCount1;
                     productcostdetail.disCount2 = item.disCount2;
                     productcostdetail.disCount3 = item.disCount3;
@@ -66,6 +71,7 @@ namespace eActForm.BusinessLayer
                     productcostdetail.normalGp = item.normalGp;
                     productcostdetail.promotionGp = item.promotionGp;
                     productcostdetail.specialDisc = item.specialDisc;
+                    productcostdetail.specialDisBaht = item.specialDiscBaht;
                     productcostdetail.promotionCost = item.promotionCost;
                     productcostdetail.delFlag = item.delFlag;
                     productcostdetail.createdByUserId = UtilsAppCode.Session.User.empId;

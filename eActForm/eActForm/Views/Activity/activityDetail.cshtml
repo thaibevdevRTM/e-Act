@@ -8,6 +8,7 @@
     decimal? total = 0;
     decimal? normalTotal = 0;
     decimal? activityTotal = 0;
+    decimal? growthTotal = 0;
 }
 <style>
     .font12 {
@@ -108,7 +109,8 @@
                     <p class="text-success text-center">
                         @if (normalTotal != null)
                         {
-                            @normalTotal.Value.ToString("0.##");
+                            string result = String.Format("{0:n2}", @normalTotal);
+                            @result.ToString();
                         }
                     </p>
                 </td>
@@ -116,20 +118,32 @@
                     <p class="text-success text-center">
                         @if (activityTotal != null)
                         {
-                            @activityTotal.Value.ToString("0.##");
+                            string result = String.Format("{0:n2}", @activityTotal);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success text-center">
+                        @if (activityTotal != 0 && normalTotal != 0)
+                        {
+                            growthTotal = (activityTotal - normalTotal) / normalTotal;
+                            string result = String.Format("{0:P0}.", @growthTotal);
+                            @result.ToString();
+
                         }
                     </p>
                 </td>
                 <td>&nbsp;</td>
-                <td>&nbsp;</td>
                 <td>
                     <h4>
-                        <p class="text-success text-center">
+                        @*<p class="text-success text-center">
                             @if (total != null)
                             {
-                                @total.Value.ToString();
+                                string result = String.Format("{0:P0}.", @total);
+                                @result.ToString();
                             }
-                        </p>
+                        </p>*@
                     </h4>
                 </td>
             </tr>

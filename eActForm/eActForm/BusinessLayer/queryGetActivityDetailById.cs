@@ -38,7 +38,7 @@ namespace eActForm.BusinessLayer
                                   createdByUserId = d["createdByUserId"].ToString(),
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
-                              }).OrderBy(x => x.createdDate).ThenBy(x => x.typeTheme);
+                              }).OrderBy(x => x.productName).ThenBy(x => x.typeTheme);
 
                 return result.ToList();
             }
