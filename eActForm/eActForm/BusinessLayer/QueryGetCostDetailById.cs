@@ -12,7 +12,7 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGetCostDetailById
     {
-        public static List<Productcostdetail> getcostDetailById(string activityId)
+        public static List<ProductCostOfGroupByPrice> getcostDetailById(string activityId)
         {
             try
             {
@@ -20,34 +20,37 @@ namespace eActForm.BusinessLayer
                  , new SqlParameter("@activityId", activityId));
 
                 var result = (from DataRow d in ds.Tables[0].Rows
-                              select new Productcostdetail()
+                              select new ProductCostOfGroupByPrice()
                               {
                                   id = d["Id"].ToString(),
                                   activityId = d["activityId"].ToString(),
                                   productId = d["productId"].ToString(),
                                   productName = d["productName"].ToString(),
                                   wholeSalesPrice = d["wholeSalesPrice"].ToString() == "" ? 0 : decimal.Parse(d["wholeSalesPrice"].ToString()),
+                                  saleIn = d["saleIn"].ToString() == "" ? 0 : decimal.Parse(d["saleIn"].ToString()),
+                                  saleOut = d["saleOut"].ToString() == "" ? 0 : decimal.Parse(d["saleOut"].ToString()),
                                   disCount1 = d["discount1"].ToString() == "" ? 0 : decimal.Parse(d["discount1"].ToString()),
                                   disCount2 = d["discount2"].ToString() == "" ? 0 : decimal.Parse(d["discount2"].ToString()),
                                   disCount3 = d["discount3"].ToString() == "" ? 0 : decimal.Parse(d["discount3"].ToString()),
-                                  normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(d["normalCost"].ToString()),
+                                  normalCost = d["wholeSalesPrice"].ToString() == "" ? 0 : decimal.Parse(d["wholeSalesPrice"].ToString()),
                                   normalGp = d["normalGp"].ToString() == "" ? 0 : decimal.Parse(d["normalGp"].ToString()),
                                   promotionGp = d["promotionGp"].ToString() == "" ? 0 : decimal.Parse(d["promotionGp"].ToString()),
                                   specialDisc = d["specialDisc"].ToString() == "" ? 0 : decimal.Parse(d["specialDisc"].ToString()),
+                                  specialDiscBaht = d["specialDiscBaht"].ToString() == "" ? 0 : decimal.Parse(d["specialDiscBaht"].ToString()),
                                   promotionCost = d["promotionCost"].ToString() == "" ? 0 : decimal.Parse(d["promotionCost"].ToString()),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
-                              });
+                              }).OrderBy(x => x.productName);
 
                 return result.ToList();
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("getcostDetailById => " + ex.Message);
-                return new List<Productcostdetail>();
+                return new List<ProductCostOfGroupByPrice>();
             }
 
         }

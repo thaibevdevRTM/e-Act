@@ -30,58 +30,76 @@ namespace eActForm.Controllers
             return View();
         }
 
-        public ActionResult ActivityForm()
+        public ActionResult ActivityForm(string activityId, string mode)
         {
-            Session["activityId"] = Guid.NewGuid().ToString();
             Activity_Model activityModel = new Activity_Model();
+            activityModel.activityFormModel = new ActivityForm();
             activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
             activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
-            activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().GroupBy(item => item.activitySales).Select(grp => new TB_Act_ActivityGroup_Model
-            { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
-
-            return View(activityModel);
-        }
-
-        public ActionResult EditForm(string activityId)
-        {
-
-            Session["activityId"] = activityId;
-            Activity_Model activityModel = new Activity_Model();
-
-            activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-            activityModel.productcostdetaillist = QueryGetCostDetailById.getcostDetailById(activityId);
-            activityModel.costthemedetail = QueryGetActivityDetailById.getActivityDetailById(activityId);
-
-            activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().ToList();
-            activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
             activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup();
-            activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
-            activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
-            activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().GroupBy(item => item.activitySales)
-               .Select(grp => new TB_Act_ActivityGroup_Model
-               {
-                   id = grp.First().id,
-                   activitySales = grp.First().activitySales
-               }).ToList();
+            activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                .GroupBy(item => item.activitySales)
+                .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+
+            Session.Remove("productcostdetaillist1");
+            Session.Remove("activitydetaillist");
+
+            if (!string.IsNullOrEmpty(activityId))
+            {
+                Session["activityId"] = activityId;
+                activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+                activityModel.activityFormModel.mode = mode;
+                Session["productcostdetaillist1"] = QueryGetCostDetailById.getcostDetailById(activityId);
+                Session["activitydetaillist"] = QueryGetActivityDetailById.getActivityDetailById(activityId);
+                activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
+                activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
+
+            }
+            else
+            {
+                Session["activityId"] = Guid.NewGuid().ToString();
+                activityModel.activityFormModel.mode = mode;
+            }
 
             return View(activityModel);
         }
+
+
 
         public ActionResult ImageList(string activityId)
         {
             TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-            getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId);
-            return PartialView(getImageModel);
+            if (!string.IsNullOrEmpty(activityId))
+            {
+                getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId);
+                return PartialView(getImageModel);
+            }
+            else
+            {
+                return PartialView(getImageModel);
+            }
         }
 
-        public ActionResult productCostDetail(Activity_Model activityModel)
+        public ActionResult productCostDetail()
         {
+            Activity_Model activityModel = new Activity_Model();
+            if (Session["productcostdetaillist1"] != null)
+            {
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+            }
+
             return PartialView(activityModel);
         }
 
-        public ActionResult activityDetail(Activity_Model activityModel)
+        public ActionResult activityDetail()
         {
+            Activity_Model activityModel = new Activity_Model();
+            if (Session["activitydetaillist"] != null)
+            {
+                activityModel.activitydetaillist = ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]);
+            }
+
             return PartialView(activityModel);
         }
 
@@ -95,8 +113,8 @@ namespace eActForm.Controllers
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-            activityModel.productcostdetaillist = QueryGetCostDetailById.getcostDetailById(activityId);
-            activityModel.costthemedetail = QueryGetActivityDetailById.getActivityDetailById(activityId);
+            activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
+            activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
 
             return PartialView(activityModel);
         }
@@ -130,6 +148,8 @@ namespace eActForm.Controllers
             try
             {
                 activityModel.activityFormModel = activityFormModel;
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                activityModel.activitydetaillist = ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]);
                 int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, Session["activityId"].ToString());
 
                 result.ActivityId = Session["activityId"].ToString();
@@ -144,19 +164,29 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult addDetailTheme(Activity_Model activityModel, string themeId, string txttheme)
+        public JsonResult addDetailTheme(string themeId, string txttheme)
         {
             var result = new AjaxResult();
             try
             {
-                CostThemeDetail costthememodel = new CostThemeDetail();
-                costthememodel.id = Guid.NewGuid().ToString();
-                costthememodel.activityTypeId = themeId;
-                costthememodel.typeTheme = txttheme;
-                activityModel.costthemedetail.Add(costthememodel);
+                Activity_Model activityModel = new Activity_Model();
+                CostThemeDetailOfGroupByPrice costThemeDetailOfGroupByPriceModel = new CostThemeDetailOfGroupByPrice();
+                activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
 
-                var resultData = new { activityModel };
-                result.Data = resultData;
+                Productcostdetail productcostdetail = new Productcostdetail();
+                costThemeDetailOfGroupByPriceModel.id = Guid.NewGuid().ToString();
+                costThemeDetailOfGroupByPriceModel.activityTypeId = themeId;
+                costThemeDetailOfGroupByPriceModel.isShowGroup = "false";
+
+                productcostdetail.id = Guid.NewGuid().ToString();
+                productcostdetail.typeTheme = txttheme;
+
+                costThemeDetailOfGroupByPriceModel.detailGroup = new List<Productcostdetail>();
+                costThemeDetailOfGroupByPriceModel.detailGroup.Add(productcostdetail);
+                activityModel.activitydetaillist.Add(costThemeDetailOfGroupByPriceModel);
+
+
+                Session["activitydetaillist"] = activityModel.activitydetaillist;
 
             }
             catch (Exception ex)
@@ -167,29 +197,40 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult calDetailTheme(Activity_Model activityModel, string id, string name, string normalCost, string themeCost, string growth)
+        public JsonResult calDetailTheme(string id, string productId, string name, string normalCost, string themeCost, string growth)
         {
             var result = new AjaxResult();
+
             try
             {
-                activityModel.costthemedetail
-                    .Where(r => r.id != null && r.id.Equals(id))
-                    .Select(r =>
-                    {
-                        r.productName = name;
-                        r.normalCost = decimal.Parse(normalCost == "" ? "0" : normalCost);
-                        r.growth = decimal.Parse(growth == "" ? "0" : growth);
-                        r.themeCost = decimal.Parse(themeCost == "" ? "0" : themeCost);
-                        r.total = decimal.Parse(themeCost == "" ? "0" : themeCost)
-                        + (decimal.Parse(themeCost == "" ? "0" : themeCost) * (decimal.Parse(growth == "" ? "0" : growth) / 100));
-                        return r;
-                    }).ToList();
-
-                var resultData = new
+                Activity_Model activityModel = new Activity_Model();
+                decimal p_total = 0;
+                decimal getPromotionCost = 0;
+                decimal getNormalCost = 0;
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
+                if (checkNullorEmpty(themeCost) != "0")
                 {
-                    activityModel,
-                };
-                result.Data = resultData;
+                    getNormalCost = decimal.Parse(checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().normalCost.ToString()));
+                    getPromotionCost = decimal.Parse(checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().promotionCost.ToString()));
+                    p_total = (getNormalCost - getPromotionCost) * decimal.Parse(themeCost);
+                }
+
+                decimal p_growth = normalCost == "0" ? 0 : (decimal.Parse(themeCost) - decimal.Parse(normalCost)) / decimal.Parse(normalCost);
+                activityModel.activitydetaillist
+                        .Where(r => r.id != null && r.id.Equals(id))
+                        .Select(r =>
+                        {
+                            r.productName = name;
+                            r.normalCost = decimal.Parse(normalCost);
+                            r.growth = p_growth;
+                            r.themeCost = decimal.Parse(themeCost);
+                            r.total = p_total;
+                            return r;
+                        }).ToList();
+
+                Session["activitydetaillist"] = activityModel.activitydetaillist;
+                result.Success = true;
 
             }
             catch (Exception ex)
@@ -200,31 +241,64 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult calDiscountProduct(Activity_Model activityModel
-            , string id
+        public JsonResult calDiscountProduct(
+              string id
+            , string productId
+            , string wholeSalesPrice
+            , string saleOut
+            , string saleIn
+            , string disCount1
+            , string disCount2
+            , string disCount3
             , string normalCost
             , string normalGP
             , string promotionGP
-            , string specialDisc)
+            , string specialDisc
+            , string specialDiscBaht)
         {
             var result = new AjaxResult();
             try
             {
+                decimal p_wholeSalesPrice = checkNullorEmpty(wholeSalesPrice) == "0" ? 0 : decimal.Parse(checkNullorEmpty(wholeSalesPrice));
+                decimal p_disCount1 = checkNullorEmpty(disCount1) == "0" ? p_wholeSalesPrice : p_wholeSalesPrice - ((decimal.Parse(checkNullorEmpty(disCount1)) / 100) * p_wholeSalesPrice);
+                decimal p_disCount2 = checkNullorEmpty(disCount2) == "0" ? p_disCount1 : p_disCount1 - ((decimal.Parse(checkNullorEmpty(disCount2)) / 100) * p_disCount1);
+                decimal p_disCount3 = checkNullorEmpty(disCount3) == "0" ? p_disCount2 : p_disCount2 - ((decimal.Parse(checkNullorEmpty(disCount3)) / 100) * p_disCount2);
+
+                decimal getPackProduct = QueryGetAllProduct.getProductById(productId).FirstOrDefault().pack;
+
+                decimal p_normalGp = checkNullorEmpty(saleOut) == "0" || getPackProduct == 0 ? 0 : (decimal.Parse(saleOut) - (p_wholeSalesPrice * decimal.Parse("1.07"))
+                    / getPackProduct) / decimal.Parse(saleOut);
+              
+                decimal p_PromotionCost = checkNullorEmpty(specialDisc) == "0" && checkNullorEmpty(specialDiscBaht) == "0" || p_disCount3 == 0 ? p_disCount3 : (p_disCount3 - (p_disCount3 * (decimal.Parse(specialDisc) / 100))) - decimal.Parse(checkNullorEmpty(specialDiscBaht));
+
+                decimal p_PromotionGp = checkNullorEmpty(saleIn) == "0" ? 0 : (decimal.Parse(saleIn) - (p_PromotionCost * decimal.Parse("1.07"))
+                  / getPackProduct) / decimal.Parse(checkNullorEmpty(saleIn));
+
+
+                Activity_Model activityModel = new Activity_Model();
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 activityModel.productcostdetaillist1
                     .Where(r => r.id != null && r.id.Equals(id))
                     .Select(r =>
                     {
-                        r.normalGp = decimal.Parse(normalGP == null || normalGP == "" ? "0" : normalGP);
-                        r.promotionGp = decimal.Parse(promotionGP == null || promotionGP == "" ? "0" : promotionGP);
-                        r.specialDisc = decimal.Parse(specialDisc == "" ? "0" : specialDisc);
-                        r.promotionCost = decimal.Parse(normalCost == "" ? "0" : normalCost)
-                        - (decimal.Parse(normalCost == "" ? "0" : normalCost) * (decimal.Parse(specialDisc == "" ? "0" : specialDisc) / 100));
+                        r.wholeSalesPrice = decimal.Parse(checkNullorEmpty(wholeSalesPrice));
+                        r.disCount1 = decimal.Parse(checkNullorEmpty(disCount1));
+                        r.disCount2 = decimal.Parse(checkNullorEmpty(disCount2));
+                        r.disCount3 = decimal.Parse(checkNullorEmpty(disCount3));
+                        r.saleOut = decimal.Parse(checkNullorEmpty(saleOut));
+                        r.saleIn = decimal.Parse(checkNullorEmpty(saleIn));
+                        r.normalGp = p_normalGp;
+                        r.promotionGp = p_PromotionGp;
+                        r.specialDisc = decimal.Parse(checkNullorEmpty(specialDisc));
+                        r.specialDiscBaht = decimal.Parse(checkNullorEmpty(specialDiscBaht));
+                        r.normalCost = p_disCount3;
+                        r.promotionCost = p_PromotionCost;
                         return r;
                     }).ToList();
+                Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
 
-                var resultData = new { activityModel };
-                result.Data = resultData;
 
+                result.Success = true;
             }
             catch (Exception ex)
             {
@@ -236,8 +310,8 @@ namespace eActForm.Controllers
 
 
 
-        public JsonResult addItemProduct(Activity_Model activityModel
-            , string productid
+        public JsonResult addItemProduct(
+              string productid
             , string brandid
             , string smellId
             , string size
@@ -245,39 +319,53 @@ namespace eActForm.Controllers
             , string theme)
         {
             var result = new AjaxResult();
-            //Activity_Model activityModel = new Activity_Model();
             try
             {
+                Activity_Model activityModel = new Activity_Model();
 
-                // activityModel.productcostdetaillist
-                var productlist = new Activity_Model();
-                if (productid != "")
+
+                if (Session["productcostdetaillist1"] == null)
                 {
-                    productlist.productcostdetaillist = QueryGetProductCostDetail.getProductCostByProductId(productid, cusid);
+                    activityModel.productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
+                    activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
                 }
                 else
                 {
-                    activityModel.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid);
-                }               
+                    activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                    activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
+                }
 
-                CostThemeDetail costthememodel = new CostThemeDetail();
-                int i = 0;
-                foreach (var item in productlist.productcostdetaillist)
+
+                var productlist = new Activity_Model();
+                productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme);
+
+                foreach (var item in productlist.productcostdetaillist1)
                 {
-                    costthememodel = new CostThemeDetail();
+                    activityModel.productcostdetaillist1.Add(item);
+                }
+
+                CostThemeDetailOfGroupByPrice costthememodel = new CostThemeDetailOfGroupByPrice();
+                int i = 0;
+                foreach (var item in productlist.productcostdetaillist1)
+                {
+                    costthememodel = new CostThemeDetailOfGroupByPrice();
                     costthememodel.id = Guid.NewGuid().ToString();
                     costthememodel.typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == theme).FirstOrDefault().activitySales;
-                    costthememodel.activityTypeId = theme;
-                    costthememodel.productName = item.productName;
                     costthememodel.productId = item.productId;
-                    activityModel.costthemedetail.Add(costthememodel);
+                    costthememodel.activityTypeId = theme;
+                    costthememodel.brandName = item.brandName;
+                    costthememodel.smellName = item.smellName;
+                    costthememodel.isShowGroup = item.isShowGroup;
+                    costthememodel.detailGroup = item.detailGroup;
+                    activityModel.activitydetaillist.Add(costthememodel);
                     i++;
                 }
 
+                Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
+                Session["activitydetaillist"] = activityModel.activitydetaillist;
                 var resultData = new
                 {
-                    activityModel = activityModel,
-
+                    checkrow = productlist.productcostdetaillist1.Count == 0 ? false : true,
                 };
                 result.Data = resultData;
 
@@ -368,22 +456,27 @@ namespace eActForm.Controllers
         public JsonResult delCostDetail(string rowid, Activity_Model activityModel)
         {
             var result = new AjaxResult();
-            if (rowid != null)
+            try
             {
-                var list = activityModel.productcostdetaillist.Single(r => r.id == rowid);
-                activityModel.productcostdetaillist.Remove(list);
-            }
-            else
-            {
-                activityModel.productcostdetaillist = new List<Productcostdetail>();
-            }
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                if (rowid != null)
+                {
+                    var list = activityModel.productcostdetaillist1.Single(r => r.id == rowid);
+                    activityModel.productcostdetaillist1.Remove(list);
+                }
+                else
+                {
+                    activityModel.productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
+                }
 
-            var resultData = new
+                Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
+                result.Success = true;
+            }
+            catch (Exception ex)
             {
-                activityModel = activityModel,
-
-            };
-            result.Data = resultData;
+                result.Message = ex.Message;
+                result.Success = false;
+            }
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -392,22 +485,27 @@ namespace eActForm.Controllers
         public JsonResult delActDetail(string rowid, Activity_Model activityModel)
         {
             var result = new AjaxResult();
-            if (rowid != null)
+            try
             {
-                var list = activityModel.costthemedetail.Single(r => r.id == rowid);
-                activityModel.costthemedetail.Remove(list);
-            }
-            else
-            {
-                activityModel.costthemedetail = new List<CostThemeDetail>();
-            }
+                activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
+                if (rowid != null)
+                {
+                    var list = activityModel.activitydetaillist.Single(r => r.id == rowid);
+                    activityModel.activitydetaillist.Remove(list);
+                }
+                else
+                {
+                    activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
+                }
 
-            var resultData = new
+                Session["activitydetaillist"] = activityModel.activitydetaillist;
+                result.Success = true;
+            }
+            catch (Exception ex)
             {
-                activityModel = activityModel,
-
-            };
-            result.Data = resultData;
+                result.Message = ex.Message;
+                result.Success = false;
+            }
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -423,31 +521,31 @@ namespace eActForm.Controllers
             {
                 string genDoc = ActivityFormCommandHandler.genNumberActivity(activityId);
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc);
-                GridHtml = GridHtml.Replace("---", genDoc);
-
-                sendEmail(
-                    "tanapong.w@thaibev.com"
-                    , "champ.tanapong@gmail.com"
-                    , "Test Subject eAct"
-                    , "Test Body"
-                    , genPdfFile(GridHtml, activityId)
-
-                    );
-
-
+                if (countresult > 0)
+                {
+                    GridHtml = GridHtml.Replace("---", genDoc);
+                    ApproveAppCode.updateApproveWaitingByRangNo(activityId);
+                    AppCode.genPdfFile(GridHtml, activityId);
+                    ApproveAppCode.insertApprove(activityId);
+                    EmailAppCodes.sendApproveActForm(activityId);
+                }
                 resultAjax.Success = true;
             }
             catch (Exception ex)
             {
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
+                ExceptionManager.WriteError(ex.Message);
             }
             return Json(resultAjax, "text/plain");
         }
 
 
 
-
+        public string checkNullorEmpty(string p)
+        {
+            return p == "" || p == null || p == "0" ? "0" : p;
+        }
 
 
     }

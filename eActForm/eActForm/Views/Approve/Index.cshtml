@@ -27,6 +27,7 @@
 , new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
 , new { id = "form", @class = "form-horizontal form-label-left" }))
         {
+            var item = Model.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
             <h3>อนุมัติ</h3>
             <hr />
             <div class="form-group">
@@ -36,7 +37,13 @@
                             เหตุผล(เพิ่มเติม)
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <textarea name="txtRemark" id="txtRemark" class="form-control" placeholder="เหตุผล(เพิ่มเติม)" rows="5" cols="50"></textarea>
+                            <textarea name="txtRemark" id="txtRemark" class="form-control" placeholder="เหตุผล(เพิ่มเติม)" rows="5" cols="50">
+                                    @if(  item != null && item.Count > 0)
+                                    {
+                                        @item.FirstOrDefault().remark;  
+                                        ;
+                                    }
+                            </textarea>
                         </div>
                     </div>
                 </div>
@@ -53,7 +60,10 @@
                             {
                                 <input type="hidden" id="lblApproveId" name="lblApproveId" value="@Model.approveModel.id" />
                             }
-                            @Html.DropDownListFor(model => model.approveStatusLists, new SelectList(Model.approveStatusLists, "id", "nameTH"), "-Selected-", new { @class = "form-control", required = "required", id = "ddlStatus" })
+                            @Html.DropDownListFor(m => m.approveModel.statusId, new SelectList(Model.approveStatusLists, "id", "nameTH"), "-Selected-", new { @class = "form-control", required = "required", id = "ddlStatus", Name = "ddlStatus" })
+                            <script>
+
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -70,24 +80,33 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-xs-12">
-
-                @*@if (Model.approveModel == null || Model.approveModel.isPermisionApprove)
-        {*@
-                <button type="submit" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
-                @*<button type="button" class="btn btn-success pull-right" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>*@
-                <a href="@Url.Action("index", "home")" class="btn btn-info pull-right"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                @*}
-        else
-        {
-            <p class="text-danger text-center">
-                คุณไม่สามารถอนุมัติเอกสารฉบับนี้ได้<br />
-                เนื่องจากไม่มีรายชื่ออยู่ในการอนุมัติ<br />
-                @Html.ActionLink(" สอบถามข้อมูลเพิ่มเติม Click ", "contact", "home")
-            </p>
-        }*@
+            <div class="form-group">
+                <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @*@if (Model.approveModel.statusId != "")
+                    {
+                        <h4 class="text-danger text-center">
+                            เอกสารฉับบนี้ได้ถูกอนุมัติเรียบร้อยแล้วครับ
+                        </h4>
+                    }
+                    else*@ 
+                    @if (Model.approveModel.isPermisionApprove)
+                    {
+                        <button type="submit" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                        <a href="@Url.Action("index", "home")" class="btn btn-info pull-right"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                    }
+                    else
+                    {
+                        <h4 class="text-danger text-center">
+                            คุณไม่สามารถอนุมัติเอกสารฉบับนี้ได้<br />
+                            เนื่องจากไม่มีรายชื่ออยู่ในการอนุมัติ<br />
+                            @Html.ActionLink(" สอบถามข้อมูลเพิ่มเติม Click ", "contact", "home")
+                        </h4>
+                    }
+                </div>
             </div>
         }
+
     </div>
 </div>
 
@@ -98,9 +117,9 @@
 </div>
 
 <script>
-    function beginQuery() {
 
-       
+
+    function beginQuery() {
 
         $(".fv").each(function () {
             var v = $(this).val();
@@ -108,21 +127,17 @@
                 $(this).focus();
             }
         });
-
-        $("#getQuery").fadeOut(300);
+        $("#WaitDialog").show();
     }
 
-    function successQuery() {
-       
-        callPreviewApprove('@actId');
-        genPdf();
-        //bootbox.alert({
-        //    message: "ดำเนินการเรียบร้อยครับ",
-        //    className: "my-bootbox-class",
-        //    callback: function () {
+    function successQuery(response) {
+        if (response.Success) {
+            callPreviewApprove('@actId');
+        } else {
+            $("#WaitDialog").hide();
+            bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + response.Message);
+        }
 
-        //    }
-        //})
     }
 
     function failureQuery(data) {
@@ -131,7 +146,6 @@
 
 
     function callPreviewApprove(obj) {
-        console.log("iiiiiiiiiiiiiiiiiii" + obj);
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("previewApprove", "Approve")',
@@ -141,6 +155,7 @@
         }).done(function (htmlResponse) {
             $("#divPreviewApprove").html(htmlResponse)
             $('#ModalPreviewPDF').modal('show');
+            genPdf();
         });
     }
 

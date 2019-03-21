@@ -1,12 +1,20 @@
 ﻿@model eActForm.Models.Activity_Model
 @{
+    /**/
+
+    /**/
+
     Layout = null;
     decimal? total = 0;
+    decimal? normalTotal = 0;
+    decimal? activityTotal = 0;
+    decimal? growthTotal = 0;
 }
 <style>
     .font12 {
         font-size: 10px;
     }
+
     .font12B {
         font-size: 10px;
     }
@@ -19,10 +27,10 @@
         <table class="table table-bordered" id="">
             <thead class="thead-dark">
                 <tr>
-                    <th class="align-content-center font12B" rowspan="2" onclick="onDelActDetail();"> <label class="btn ink-reaction btn-danger fa fa-trash-o"></label></th>
+                    <th class="align-content-center font12B" rowspan="2" width="10px" onclick="onDelActDetail();"> <label class="btn ink-reaction btn-danger fa fa-trash-o"></label></th>
                     <th class="align-content-center font12B" rowspan="2" style="width:20%;">ประเภทกิจกรรม</th>
                     <th class="align-content-center font12B" rowspan="2" style="width:30%;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</th>
-                    <th class="align-content-center font12B" colspan="5" style="width:40%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
+                    <th class="align-content-center font12B" colspan="5" style="width:50%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
 
                 </tr>
                 <tr>
@@ -34,78 +42,138 @@
                 </tr>
             </thead>
 
-            @if (Model.costthemedetail != null)
+            @if (Model.activitydetaillist != null)
             {
                 var index = 0;
                 total = 0;
-                foreach (var item in Model.costthemedetail)
+
+                foreach (var item in Model.activitydetaillist)
                 {
-
                     <tr>
-
                         <td onclick="onDelActDetail('@item.id')">
                             <label class="btn ink-reaction btn-danger fa fa-trash-o"></label>
+                            @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
                         </td>
-                        <td style="text-align:center">@item.typeTheme</td>
-                        <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
-                        <td>@Html.TextBoxFor(model => item.normalCost, new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                        @if (item.isShowGroup == "true")
+                        {
+                            <td style="text-align:center">@item.typeTheme</td>
+                        }
+                        else if (item.isShowGroup == "false")
+                        {
+                            for (int i = 0; i < @item.detailGroup.Count; i++)
+                            {
+                                <td style="text-align:center">@item.detailGroup[i].typeTheme</td>
+                            }
+                        }
+                        else
+                        {
+                            <td style="text-align:center">@item.typeTheme</td>
+                        }
+
+                        @if (item.isShowGroup == "true")
+                        {
+                            <td>@item.brandName @item.smellName ALL(@item.detailGroup.Count)</td>
+                        }
+                        else if (item.isShowGroup == "false")
+                        {
+                            for (int i = 0; i < @item.detailGroup.Count; i++)
+                            {
+                                @*<td style="text-align:right">@item.detailGroup[i].productName</td>*@
+                                <td>@Html.TextBoxFor(model => item.detailGroup[i].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                            }
+                        }
+                        else
+                        {
+                            <td style="text-align:center">@item.productName</td>
+                        }
+
+                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
                         <td>
-                            @Html.TextBoxFor(model => item.themeCost, new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
+                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
                         </td>
-                        <td>@Html.TextBoxFor(model => item.growth, new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
-                        <td>@Html.TextBoxFor(model => item.total, new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font12" })</td>
-                        <td>@Html.TextBoxFor(model => item.total, new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font12" })</td>
+                        <td>@Html.TextBoxFor(model => item.growth, "{0:p0}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font12" })</td>
+                        <td>@Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font12" })</td>
+                        <td>@Html.TextBoxFor(model => item.total, "{0:p0}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font12" })</td>
 
                     </tr>
                     total = total + item.total;
+                    normalTotal = item.normalCost == null ? 0 + normalTotal : item.normalCost + normalTotal;
+                    activityTotal = item.themeCost == null ? 0 + activityTotal : item.themeCost + activityTotal;
                     index++;
                 }
             }
 
-                    <tr>
-                        <td colspan="3" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>
-                            <h4>
-                                <p class="text-success text-center">
-                                    @if (total != null)
-                                    {
-                                        @total.Value.ToString();
-                                    }
-                                </p>
-                            </h4>
-                        </td>
-                    </tr>
+            <tr>
+                <td colspan="3" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
+                <td>
+                    <p class="text-success text-center">
+                        @if (normalTotal != null)
+                        {
+                            string result = String.Format("{0:n2}", @normalTotal);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success text-center">
+                        @if (activityTotal != null)
+                        {
+                            string result = String.Format("{0:n2}", @activityTotal);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success text-center">
+                        @if (activityTotal != 0 && normalTotal != 0)
+                        {
+                            growthTotal = (activityTotal - normalTotal) / normalTotal;
+                            string result = String.Format("{0:P0}.", @growthTotal);
+                            @result.ToString();
+
+                        }
+                    </p>
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                    <h4>
+                        @*<p class="text-success text-center">
+                            @if (total != null)
+                            {
+                                string result = String.Format("{0:P0}.", @total);
+                                @result.ToString();
+                            }
+                        </p>*@
+                    </h4>
+                </td>
+            </tr>
         </table>
     </div>
 </div>
 
 <script>
+
     function calGrowth(id, rowIndex) {
 
-        if ($('#lblThemeCost_' + rowIndex).val() != "" && $('#lblGrowth_' + rowIndex).val() != "") {
+        if ($('#lblThemeCost_' + rowIndex).val() != "" && $('#lblNormalCost_' + rowIndex).val() != "") {
             var name = $('#lblProductName_' + rowIndex).val();
             var normalCost = $('#lblNormalCost_' + rowIndex).val();
             var themeCost = $('#lblThemeCost_' + rowIndex).val();
             var growth = $("#lblGrowth_" + rowIndex).val();
-
+            var productId = $("#hdProductId_" + rowIndex).val();
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("calDetailTheme", "Activity")',
                 data: {
-                    activityModel: ObjModel,
                     name: name,
                     normalCost: normalCost,
                     id: id,
+                    productId: productId,
                     themeCost: themeCost,
                     growth: growth,
                 }
             }).done(function (response) {
-                ObjModel = response.Data.activityModel;
-                callThemedetailcost(response.Data.activityModel);
+                callThemedetailcost();
             });
         }
     }
@@ -115,13 +183,12 @@
                 url: '@Url.Action("delActDetail", "Activity")',
                 data: {
                     rowid: id,
-                    activityModel: ObjModel,
                 },
                 dataType: "json",
                 type: 'POST',
                     success: function (response) {
-                        ObjModel = response.Data.activityModel;
-                        callThemedetailcost(response.Data.activityModel);
+                        console.log(response.success);
+                        callThemedetailcost();
                 }
             });
         }
