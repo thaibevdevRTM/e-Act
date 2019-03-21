@@ -215,7 +215,7 @@ namespace eActForm.Models
         public string strPromotionGP { get; set; }
         [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
         public decimal? promotionGp { get; set; }
-        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
         public decimal? specialDisc { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? specialDiscBaht { get; set; }
