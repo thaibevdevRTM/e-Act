@@ -40,6 +40,15 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
+        [HttpPost]
+        public JsonResult requestDeleteDoc(string actId,string statusId)
+        {
+            //return RedirectToAction("index");
+            JsonResult result = new JsonResult();
+
+            return result;
+        }
+
         public ActionResult searchActForm()
         {
             string count = Request.Form.AllKeys.Count().ToString();

@@ -11,7 +11,23 @@ namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
+        public static int updateApproveWaitingByRangNo(string actId)
+        {
+            try
+            {
 
+                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateWaitingApproveByRangNo"
+                    , new SqlParameter[] {new SqlParameter("@rangNo",1)
+                    ,new SqlParameter("@actId",actId)
+                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
+                    ,new SqlParameter("@updateDate",DateTime.Now)
+                    });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public static bool getPremisionApproveByEmpid(List<ApproveModel.approveDetailModel> lists, string empId)
         {
             try
@@ -52,7 +68,7 @@ namespace eActForm.BusinessLayer
                 {
                     // update approve
                     rtn += updateActFormWithApproveDetail(actFormId);
-                    
+
                 }
                 return rtn;
             }
@@ -182,7 +198,7 @@ namespace eActForm.BusinessLayer
                                      id = dr["id"].ToString(),
                                      flowId = dr["flowId"].ToString(),
                                      actFormId = dr["actFormId"].ToString(),
-                                     statusId = (empDetail.Count > 0)? empDetail.FirstOrDefault().statusId : "",
+                                     statusId = (empDetail.Count > 0) ? empDetail.FirstOrDefault().statusId : "",
                                      delFlag = (bool)dr["delFlag"],
                                      createdDate = (DateTime?)dr["createdDate"],
                                      createdByUserId = dr["createdByUserId"].ToString(),

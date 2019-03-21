@@ -33,7 +33,7 @@ namespace eActForm.Controllers
                 if (response != null && response.userModel.Count > 0)
                 {
                     UtilsAppCode.Session.User = response.userModel[0];
-                    return RedirectToAction("index", "Home");
+                    return RedirectToAction("index", "DashBoard");
                 }
                 else
                 {
