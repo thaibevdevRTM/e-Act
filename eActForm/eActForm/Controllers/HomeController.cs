@@ -40,13 +40,26 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-        [HttpPost]
-        public JsonResult requestDeleteDoc(string actId,string statusId)
+        public ActionResult requestDeleteDoc(string actId,string statusId)
         {
             //return RedirectToAction("index");
-            JsonResult result = new JsonResult();
+            AjaxResult result = new AjaxResult();
+            result.Success = false; 
+            if( statusId == "1")
+            {
+                // Draft
+                if(ActFormAppCode.deleteActForm(actId, "request delete by user") > 0)
+                {
+                    result.Success = true;
+                    TempData["SearchDataModel"] = null;
+                }
+            }
+            else
+            {
 
-            return result;
+            }
+
+            return RedirectToAction("myDoc");
         }
 
         public ActionResult searchActForm()

@@ -524,10 +524,12 @@ namespace eActForm.Controllers
                 if (countresult > 0)
                 {
                     GridHtml = GridHtml.Replace("---", genDoc);
-                    ApproveAppCode.updateApproveWaitingByRangNo(activityId);
                     AppCode.genPdfFile(GridHtml, activityId);
-                    ApproveAppCode.insertApprove(activityId);
-                    EmailAppCodes.sendApproveActForm(activityId);
+                    if (ApproveAppCode.insertApprove(activityId) > 0)
+                    {
+                        ApproveAppCode.updateApproveWaitingByRangNo(activityId);
+                        EmailAppCodes.sendApproveActForm(activityId);
+                    }
                 }
                 resultAjax.Success = true;
             }

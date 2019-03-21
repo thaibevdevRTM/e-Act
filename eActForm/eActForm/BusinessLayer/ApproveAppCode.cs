@@ -11,6 +11,29 @@ namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
+        public static List<ApproveModel.approveWaitingModel> getAllWaitingApproveGroupByEmpId()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountWaitingApproveGroupByEmpId");
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveModel.approveWaitingModel()
+                             {
+                                 empId = dr["empId"].ToString()
+                                 ,waitingCount = dr["waitingCount"].ToString()
+                                 ,empPrefix = dr["empPrefix"].ToString()
+                                 ,empFNameTH = dr["empFNameTH"].ToString()
+                                 ,empLNameTH = dr["empLNameTH"].ToString()
+                                 ,empEmail = dr["empEmail"].ToString()
+                             }).ToList();
+                return lists;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("getAllWaitingApproveGroupByEmpId >> " + ex.Message);
+            }
+        }
+
         public static int updateApproveWaitingByRangNo(string actId)
         {
             try
@@ -25,7 +48,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("updateApproveWaitingByRangNo >>" + ex.Message);
             }
         }
         public static bool getPremisionApproveByEmpid(List<ApproveModel.approveDetailModel> lists, string empId)

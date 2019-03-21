@@ -7,6 +7,19 @@ namespace eActForm.Models
 {
     public class ApproveModel
     {
+        public class approveWaitingModels
+        {
+            public List<approveWaitingModel> waitingLists { get; set; }
+        }
+        public class approveWaitingModel
+        {
+            public string empId { get; set; }
+	        public string waitingCount { get; set; }
+	        public string empPrefix { get; set; }
+	        public string empFNameTH { get; set; }
+	        public string empLNameTH { get; set; }
+            public string empEmail { get; set; }
+        }
         public class approveModels
         {
             public approveModel approveModel { get; set; }
