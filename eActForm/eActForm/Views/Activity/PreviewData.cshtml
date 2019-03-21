@@ -2,6 +2,8 @@
 @{
     Layout = null;
     decimal? totalActCost = 0;
+    decimal? costActivity = 0;
+    decimal? costProduct = 0;
 }
 
 <script>
@@ -212,14 +214,14 @@
                                 <tr>
                                     <td style="font-size:12.5px;">@item.productName</td>
                                     <td style="font-size:12.5px;">@item.wholeSalesPrice</td>
-                                    <td style="font-size:12.5px;">@item.disCount1</td>
-                                    <td style="font-size:12.5px;">@item.disCount2</td>
-                                    <td style="font-size:12.5px;">@item.disCount3</td>
-                                    <td style="font-size:12.5px;">@item.normalCost</td>
-                                    <td style="font-size:12.5px;">@item.normalGp</td>
-                                    <td style="font-size:12.5px;">@item.promotionGp</td>
-                                    <td style="font-size:12.5px;">@item.specialDisc</td>
-                                    <td style="font-size:12.5px;">@item.promotionCost</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.disCount1)</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.disCount2)</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.disCount3)</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.normalCost)</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.normalGp)</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.promotionGp)</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.specialDisc)</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.promotionCost)</td>
                                 </tr>
                             }
                         }
@@ -255,12 +257,14 @@
                                 <tr>
                                     <td style="font-size:12.5px;">@item.typeTheme</td>
                                     <td style="font-size:12.5px;">@item.productName</td>
-                                    <td style="font-size:12.5px;">@item.normalCost</td>
-                                    <td style="font-size:12.5px;">@item.themeCost</td>
-                                    <td style="font-size:12.5px;">@item.growth</td>
-                                    <td style="font-size:12.5px;">@item.total</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.normalCost)</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.themeCost)</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.growth)</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.total)</td>
                                 </tr>
                                 totalActCost = totalActCost + item.total;
+                                costProduct = costProduct + item.normalCost;
+                                costActivity = costActivity + item.themeCost;
                             }
                         }
 
@@ -268,13 +272,28 @@
                         <tr>
                             <td style="border:none; border-bottom:none;"></td>
                             <td style="text-align:right; border:none; border-bottom:none;">รวม</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>
+                                @if (costProduct != null)
+                                {
+                                    string result = String.Format("{0:n2}", @costProduct);
+                                    @result.ToString();
+                                }
+                            </td>
+                            <td>
+                                @if (costActivity != null)
+                                {
+                                    string result = String.Format("{0:n2}", @costActivity);
+                                    @result.ToString();
+                                }
+                            </td>
+                            <td>
+                               
+                            </td>
                             <td>
                                 @if (totalActCost != null)
                                 {
-                                    @totalActCost.Value.ToString();
+                                    string result = String.Format("{0:n2}", @totalActCost);
+                                    @result.ToString();
                                 }
                             </td>
                         </tr>

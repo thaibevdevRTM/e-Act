@@ -289,7 +289,7 @@ namespace eActForm.Controllers
                         r.saleIn = decimal.Parse(checkNullorEmpty(saleIn));
                         r.normalGp = p_normalGp;
                         r.promotionGp = p_PromotionGp;
-                        r.specialDisc = decimal.Parse(checkNullorEmpty(specialDisc));
+                        r.specialDisc = decimal.Parse(checkNullorEmpty(specialDisc)) / 100;
                         r.specialDiscBaht = decimal.Parse(checkNullorEmpty(specialDiscBaht));
                         r.normalCost = p_disCount3;
                         r.promotionCost = p_PromotionCost;
