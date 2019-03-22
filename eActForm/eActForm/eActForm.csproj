@@ -181,6 +181,7 @@
     <Compile Include="BusinessLayer\ActFormAppCode.cs" />
     <Compile Include="BusinessLayer\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\ApproveListAppCode.cs" />
+    <Compile Include="BusinessLayer\BudgetFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\EmailAppCodes.cs" />
     <Compile Include="BusinessLayer\ApproveAppCode.cs" />
     <Compile Include="BusinessLayer\ApproveFlowAppCode.cs" />
