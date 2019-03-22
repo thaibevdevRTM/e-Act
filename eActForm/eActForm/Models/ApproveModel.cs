@@ -26,6 +26,13 @@ namespace eActForm.Models
             public List<approveDetailModel> approveDetailLists { get; set; }
             public List<approveStatus> approveStatusLists { get; set; }
             public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
+
+            public approveModels()
+            {
+                approveModel = new approveModel();
+                approveDetailLists = new List<approveDetailModel>();
+            }
+
         }
         public class approveModel : ActBaseModel
         {

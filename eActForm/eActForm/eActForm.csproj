@@ -2087,6 +2087,7 @@
     <Content Include="Uploadfiles\ActivityForm\ActivityFormpdf" />
     <Content Include="Views\ApproveLists\index.cshtml" />
     <Content Include="Views\ApproveLists\ListView.cshtml" />
+    <Content Include="Views\Home\approveLists.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
