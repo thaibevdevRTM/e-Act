@@ -192,9 +192,11 @@
     <Compile Include="BusinessLayer\QueryGetAllProduct.cs" />
     <Compile Include="BusinessLayer\QuerygetAllProductCate.cs" />
     <Compile Include="BusinessLayer\QueryGetAllProductGroup.cs" />
+    <Compile Include="BusinessLayer\QueryGetBudgetActivity.cs" />
     <Compile Include="BusinessLayer\QueryGetChanelNameByCustomerId.cs" />
     <Compile Include="BusinessLayer\QueryGetCostDetailById.cs" />
     <Compile Include="BusinessLayer\QueryGetImageById.cs" />
+    <Compile Include="BusinessLayer\QueryGetInvoiceActivityStstus.cs" />
     <Compile Include="BusinessLayer\QueryGetMessage.cs" />
     <Compile Include="BusinessLayer\QueryGetProductCostDetail.cs" />
     <Compile Include="BusinessLayer\AuthenAppCode.cs" />
@@ -205,6 +207,7 @@
     <Compile Include="Controllers\AjaxResult.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BudgetController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\eActController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -219,6 +222,7 @@
     <Compile Include="Models\ActSignatureModel.cs" />
     <Compile Include="Models\ActUserModel.cs" />
     <Compile Include="Models\AppCode.cs" />
+    <Compile Include="Models\Budget_Activity_Model.cs" />
     <Compile Include="Models\TB_Act_ActivityFormDocNo_Model.cs" />
     <Compile Include="Models\TB_Act_ActivityGroup_Model.cs" />
     <Compile Include="Models\ApproveFlowModel.cs" />
@@ -234,6 +238,8 @@
     <Compile Include="Models\TB_Act_ProductType_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Cate_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Model.cs" />
+    <Compile Include="Models\TB_Bud_ActivityInvoice_Model.cs" />
+    <Compile Include="Models\TB_Inv_InvoiceActivity_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -2028,6 +2034,9 @@
     <Content Include="Views\Approve\previewApprove.cshtml" />
     <Content Include="Uploadfiles\ActivityForm\ActivityForm.pdf" />
     <Content Include="Uploadfiles\ActivityForm\ActivityFormpdf" />
+    <Content Include="Views\Budget\activityList.cshtml" />
+    <Content Include="Views\Budget\EditForm.cshtml" />
+    <Content Include="Views\Budget\PreviewBudgetInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
