@@ -4,30 +4,48 @@
     decimal? totalActCost = 0;
     decimal? costActivity = 0;
     decimal? costProduct = 0;
+    decimal? perTotal = 0;
 }
 
 <script>
-   function submitPreview() {
+    function submitPreview() {
 
-         bootbox.confirm("ยืนยัน บันทึกข้อมูล!", function (result) {
-             bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
-            $.ajax({
-            url: '@Url.Action("submitPreview", "Activity")',
-            data: {
-                GridHtml: $("#Grid").html(),
-                status: 2,
-                activityId: $("#HdId").val(),
+        bootbox.confirm({
+            message: "ยืนยัน บันทึกข้อมูล!",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
             },
-            dataType: "json",
-            type: 'POST',
-            }).done(function (response) {
-                var url = '@Url.Action("Index", "Home")';
-                window.location.href = url;
+            callback: function (result) {
+                if (result == true) {
+                    console.log(result);
+                    bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
+                    $.ajax({
+                        url: '@Url.Action("submitPreview", "Activity")',
+                        data: {
+                            GridHtml: $("#Grid").html(),
+                            status: 2,
+                            activityId: $("#HdId").val(),
+                        },
+                        dataType: "json",
+                        type: 'POST',
+                    }).done(function (response) {
+                        var url = '@Url.Action("Index", "Home")';
+                        window.location.href = url;
 
-                console.log('success');
-                 });
-         });
-      }
+                        console.log('success');
+                    });
+                }
+            }
+
+        });
+    }
 </script>
 
 
@@ -262,9 +280,10 @@
                                     <td style="font-size:12.5px;">@Html.DisplayFor(m => item.growth)</td>
                                     <td style="font-size:12.5px;">@Html.DisplayFor(m => item.total)</td>
                                 </tr>
-                                totalActCost = totalActCost + item.total;
-                                costProduct = costProduct + item.normalCost;
-                                costActivity = costActivity + item.themeCost;
+
+                                totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
+                                costProduct = item.normalCost == null ? 0 + costProduct : item.normalCost + costProduct;
+                                costActivity = item.themeCost == null ? 0 + costActivity : item.themeCost + costActivity;
                             }
                         }
 
@@ -273,26 +292,31 @@
                             <td style="border:none; border-bottom:none;"></td>
                             <td style="text-align:right; border:none; border-bottom:none;">รวม</td>
                             <td>
-                                @if (costProduct != null)
+                                @if (costProduct != 0)
                                 {
                                     string result = String.Format("{0:n2}", @costProduct);
                                     @result.ToString();
                                 }
                             </td>
                             <td>
-                                @if (costActivity != null)
+                                @if (costActivity != 0)
                                 {
                                     string result = String.Format("{0:n2}", @costActivity);
                                     @result.ToString();
                                 }
                             </td>
                             <td>
-                               
-                            </td>
-                            <td>
-                                @if (totalActCost != null)
+                                @if (totalActCost != 0)
                                 {
                                     string result = String.Format("{0:n2}", @totalActCost);
+                                    @result.ToString();
+                                }
+                            </td>
+                            <td>
+                                @if (totalActCost != 0 && costActivity != 0)
+                                {
+                                    perTotal = totalActCost * 100 / costActivity;
+                                    string result = String.Format("{0:n2}", @perTotal);
                                     @result.ToString();
                                 }
                             </td>

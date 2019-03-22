@@ -87,7 +87,7 @@ namespace eActForm.Models
         }
         public static List<Attachment> genPdfFile(string GridHtml, string activityId)
         {
-            GridHtml = GridHtml.Replace("\n", "");
+            //GridHtml = GridHtml.Replace("\n", "");
             ContentType xlsxContent = new ContentType("application/pdf");
             MemoryStream msPreview = new MemoryStream();
             byte[] PreviewBytes = new byte[0];
