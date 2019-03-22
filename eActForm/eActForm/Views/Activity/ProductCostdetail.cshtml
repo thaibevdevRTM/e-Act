@@ -1,14 +1,18 @@
 ﻿@model eActForm.Models.Activity_Model
 @{
+    /**/
+
+    /**/
+
     ViewBag.Title = "ProductCostdetail";
 }
 
 <style>
-    .font12{
-        font-size:10px;
+    .font8 {
+        font-size: 8px;
     }
 
-    .font12B {
+    .font10 {
         font-size: 10px;
     }
 </style>
@@ -21,29 +25,29 @@
         <table class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
-                    <th class="align-content-center font12B" rowspan="2" onclick="onDelCostDetail();"> <label class="btn ink-reaction btn-danger fa fa-trash-o"></label></th>
-                    <th class="align-content-center font12B" rowspan="2" style="width:20%;">ชื่อสินค้า (product Name)</th>
-                    <th class="align-content-center font12B" rowspan="2" style="width:10%;">Std. Wholesales Price</th>
-                    <th class="align-content-center font12B" colspan="2" style="width:10%;">ราคาขาย</th>
-                    <th class="align-content-center font12B" colspan="3" style="width:15%;">Normal Discount (%)</th>
-                    <th class="align-content-center font12B" style="width:6%;">Normal</th>
-                    <th class="align-content-center font12B" style="width:6%;">Normal</th>
-                    <th class="align-content-center font12B" style="width:6%;">Promotion</th>
-                    <th class="align-content-center font12B" colspan="2" style="width:15%;">Special Discount %</th>
-                    <th class="align-content-center font12B" style="width:10%;">Promotion</th>
+                    <th class="align-content-center font10" rowspan="2" width="10px" onclick="onDelCostDetail();"> <label class="btn ink-reaction btn-danger fa fa-trash-o"></label></th>
+                    <th class="align-content-center font10" rowspan="2" style="width:15%;">ชื่อสินค้า (product Name)</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:10%;">Std. Wholesales Price</th>
+                    <th class="align-content-center font10" colspan="2" style="width:10%;">ราคาขาย</th>
+                    <th class="align-content-center font10" colspan="3" style="width:18%;">Normal Discount (%)</th>
+                    <th class="align-content-center font10" style="width:8%;">Normal</th>
+                    <th class="align-content-center font10" style="width:7%;">Normal</th>
+                    <th class="align-content-center font10" style="width:7%;">Promotion</th>
+                    <th class="align-content-center font10" colspan="2" style="width:12%;">Special Discount %</th>
+                    <th class="align-content-center font10" style="width:8%;">Promotion</th>
                 </tr>
                 <tr>
-                    <th class="align-content-center font12B">&nbsp;&nbsp;Normal&nbsp;&nbsp;</th>
-                    <th class="align-content-center font12B">Promotion</th>
-                    <th class="align-content-center font12B">(1)</th>
-                    <th class="align-content-center font12B">(2)</th>
-                    <th class="align-content-center font12B">(3)</th>
-                    <th class="align-content-center font12B">Cost</th>
-                    <th class="align-content-center font12B">GP%</th>
-                    <th class="align-content-center font12B">GP%</th>
-                    <th class="align-content-center font12B">บาท</th>
-                    <th class="align-content-center font12B">&nbsp;&nbsp;&nbsp;%</th>
-                    <th class="align-content-center font12B">Cost (BHT)</th>
+                    <th class="align-content-center font10">&nbsp;&nbsp;Normal&nbsp;&nbsp;</th>
+                    <th class="align-content-center font8">Promotion</th>
+                    <th class="align-content-center font10">(1)</th>
+                    <th class="align-content-center font10">(2)</th>
+                    <th class="align-content-center font10">(3)</th>
+                    <th class="align-content-center font10">Cost</th>
+                    <th class="align-content-center font10">GP%</th>
+                    <th class="align-content-center font10">GP%</th>
+                    <th class="align-content-center font10">บาท</th>
+                    <th class="align-content-center font10">&nbsp;&nbsp;&nbsp;%</th>
+                    <th class="align-content-center font10">Cost (BHT)</th>
                 </tr>
             </thead>
 
@@ -52,33 +56,41 @@
                 var index = 0;
                 foreach (var item in Model.productcostdetaillist1)
                 {
-            <tr>
-                <td onclick="onDelCostDetail('@item.id')">
-                    <label class="btn ink-reaction btn-danger fa fa-trash-o"></label>
-                </td>
-                @if (item.isShowGroup)
-                {
-                    <td style="text-align:right">@item.brandName @item.smellName ALL(@item.detailGroup.Count)</td>
-                }
-                else
-                {
-                    <td style="text-align:right">@item.productName</td>
-                }
-                <td style="text-align:right">@item.wholeSalesPrice</td>
-                <td style="text-align:right">@Html.TextBoxFor(model => item.saleOut, new { @id = "saleOut_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                <td style="text-align:right">@Html.TextBoxFor(model => item.saleIn, new { @id = "saleIn_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                <td style="text-align:right">@Html.TextBoxFor(model => item.disCount1, new { @id = "disCount1_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                <td style="text-align:right">@Html.TextBoxFor(model => item.disCount2, new { @id = "disCount2_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                <td style="text-align:right">@Html.TextBoxFor(model => item.disCount3, new { @id = "disCount3_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                <td style="text-align:right">
-                    @Html.TextBoxFor(model => item.normalCost, new { @id = "normalCost_" + index, @class = "form-control textboxcss font12" })
-                </td>
-                <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp, new { @id = "normalGp_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, new { @id = "promotionGp_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                <td style="text-align:right">@Html.TextBoxFor(model => item.specialDisc, new { @id = "specialDisc_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                <td style="text-align:right">@Html.TextBoxFor(model => item.specialDisc, new { @id = "specialDisc_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                <td style="text-align:right">@Html.TextBoxFor(model => item.promotionCost, new { @id = "promotionCost_" + index, @class = "form-control textboxcss font12" })</td>
-            </tr>
+                    <tr>
+                        <td onclick="onDelCostDetail('@item.id')">
+                            <label class="btn ink-reaction btn-danger fa fa-trash-o"></label>
+                            @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
+                        </td>
+                        @if (item.isShowGroup == "true")
+                        {
+                            <td style="text-align:right">@item.brandName @item.smellName ALL(@item.detailGroup.Count)</td>
+                        }
+                        else if (item.isShowGroup == "false")
+                        {
+                            for (int i = 0; i < @item.detailGroup.Count; i++)
+                            {
+                                <td style="text-align:right">@item.detailGroup[i].productName</td>
+                            }
+                        }
+                        else
+                        {
+                            <td style="text-align:right">@item.productName</td>
+                        }
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font12", @readonly = true })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.saleOut, new { @id = "saleOut_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.saleIn, new { @id = "saleIn_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.disCount1, "{0:n0}", new { @id = "disCount1_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.disCount2, "{0:n0}", new { @id = "disCount2_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.disCount3, "{0:n0}", new { @id = "disCount3_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">
+                            @Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "normalCost_" + index, @class = "form-control textboxcss font12",  @readonly = true })
+                        </td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp,"{0:p0}", new { @id = "normalGp_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" , @readonly = true })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:p0}", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")", @readonly = true })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.specialDiscBaht, new { @id = "specialDiscBaht_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.specialDisc, "{0:n0}", new { @id = "specialDisc_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.promotionCost, "{0:n2}", new { @id = "promotionCost_" + index, @class = "form-control textboxcss font12", @readonly = true })</td>
+                    </tr>
                     index++;
                 }
             }
@@ -104,28 +116,41 @@
     </div>
 </div>
 <script>
-    function calProductDiscount(id,rowIndex) {
-
-        if ($('#normalCost_' + rowIndex).val() != "" && $('#specialDisc_' + rowIndex).val() != "") {
+    function calProductDiscount(id, rowIndex) {
+        if ($('#wholeSalesPrice_' + rowIndex).val() != "") {
+            var productId = $('#hdProductId_' + rowIndex).val();
+            var wholeSalesPrice = $('#wholeSalesPrice_' + rowIndex).val();
+            var saleOut = $('#saleOut_' + rowIndex).val();
+            var saleIn = $('#saleIn_' + rowIndex).val();
+            var disCount1 = $('#disCount1_' + rowIndex).val();
+            var disCount2 = $('#disCount2_' + rowIndex).val();
+            var disCount3 = $('#disCount3_' + rowIndex).val();
             var normalCost = $('#normalCost_' + rowIndex).val();
             var normalGP = $('#normalGP_' + rowIndex).val();
             var promotionGP = $('#promotionGP_' + rowIndex).val();
             var specialDisc = $("#specialDisc_" + rowIndex).val();
+            var specialDiscBaht = $("#specialDiscBaht_" + rowIndex).val();
 
             $.ajax({
             type: 'POST',
             url:  '@Url.Action("calDiscountProduct", "Activity")',
              data: {
-                 activityModel: ObjModel,
                  id: id,
+                 productId: productId,
+                 wholeSalesPrice: wholeSalesPrice,
+                 saleOut: saleOut,
+                 saleIn: saleIn,
+                 disCount1: disCount1,
+                 disCount2: disCount2,
+                 disCount3: disCount3,
                  normalCost: normalCost,
                  normalGP: normalGP,
                  promotionGP: promotionGP,
                  specialDisc: specialDisc,
+                 specialDiscBaht: specialDiscBaht,
             }
          }).done(function (response) {
-             ObjModel = response.Data.activityModel;
-             CallChangefunc(response.Data.activityModel);
+             CallChangefunc();
         });
 
         }
@@ -137,14 +162,14 @@
             url: '@Url.Action("delCostDetail", "Activity")',
             data: {
                 rowid: id,
-                activityModel: ObjModel,
             },
             dataType: "json",
             type: 'POST',
                 success: function (response) {
-                    ObjModel = response.Data.activityModel;
-                    CallChangefunc(response.Data.activityModel);
-            }
+                    console.log(response.success);
+                    CallChangefunc();
+                }
+
         });
     }
 

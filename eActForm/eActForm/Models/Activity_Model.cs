@@ -25,6 +25,8 @@ namespace eActForm.Models
         public List<TB_Act_Image_Model.ImageModel> productImageList { get; set; }
         public ActivityForm activityFormModel { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
+
 
         public Activity_Model()
         {
@@ -38,8 +40,16 @@ namespace eActForm.Models
             productGroupList = new List<TB_Act_ProductGroup_Model>();
             productBrandList = new List<TB_Act_ProductBrand_Model>();
             productImageList = new List<TB_Act_Image_Model.ImageModel>();
+            activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
 
         }
+
+        public enum modeForm
+        {
+            insert,
+            edit
+        }
+
 
         public class actForms
         {
@@ -81,9 +91,15 @@ namespace eActForm.Models
             public decimal? totalCost { get; set; }
         }
 
-
     }
-
+    public class SearchActivityModels
+    {
+        public List<Customers_Model> customerslist { get; set; }
+        public List<Product_Cate_Model> productcatelist { get; set; }
+        public List<TB_Act_ProductGroup_Model> productGroupList { get; set; }
+        public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
+        public List<ApproveModel.approveStatus> approveStatusList { get; set; }
+    }
 
     public class ActivityForm
     {
@@ -127,12 +143,36 @@ namespace eActForm.Models
         public byte UploadedImage { get; set; }
         public string getUploadedImage { get; set; }
         public string refId { get; set; }
+        public string mode { get; set; }
         public Boolean delFlag { get; set; }
         public DateTime? createdDate { get; set; }
         public string createdByUserId { get; set; }
         public DateTime? updatedDate { get; set; }
         public string updatedByUserId { get; set; }
 
+    }
+
+    public class CostThemeDetailOfGroupByPrice : ActBaseModel
+    {
+        public string id { get; set; }
+        public string activityId { get; set; }
+        public string typeTheme { get; set; }
+        public string activityTypeId { get; set; }
+        public string productId { get; set; }
+        public string productName { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? normalCost { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? themeCost { get; set; }
+        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
+        public decimal? growth { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? total { get; set; }
+        public string smellId { get; set; }
+        public string brandName { get; set; }
+        public string smellName { get; set; }
+        public string isShowGroup { get; set; }
+        public List<Productcostdetail> detailGroup { get; set; }
     }
 
     public class CostThemeDetail : ActBaseModel
@@ -147,6 +187,10 @@ namespace eActForm.Models
         public decimal? themeCost { get; set; }
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
+        public string smellId { get; set; }
+        public string brandName { get; set; }
+        public string smellName { get; set; }
+        public bool isShowGroup { get; set; }
     }
 
     public class ProductCostOfGroupByPrice : ActBaseModel
@@ -156,13 +200,26 @@ namespace eActForm.Models
         public string productId { get; set; }
         public string productName { get; set; }
         public decimal? wholeSalesPrice { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
         public decimal? disCount1 { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
         public decimal? disCount2 { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
         public decimal? disCount3 { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalCost { get; set; }
+        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
         public decimal? normalGp { get; set; }
+        public string strNormalGP { get; set; }
+        public string strPromotionGP { get; set; }
+        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
         public decimal? promotionGp { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
         public decimal? specialDisc { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? specialDiscBaht { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? promotionCost { get; set; }
         public decimal? saleIn { get; set; }
         public decimal? saleOut { get; set; }
@@ -170,7 +227,7 @@ namespace eActForm.Models
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
-        public bool isShowGroup { get;set; }
+        public string isShowGroup { get; set; }
         public List<Productcostdetail> detailGroup { get; set; }
     }
 
@@ -188,6 +245,7 @@ namespace eActForm.Models
         public decimal? normalGp { get; set; }
         public decimal? promotionGp { get; set; }
         public decimal? specialDisc { get; set; }
+        public decimal? specialDisBaht { get; set; }
         public decimal? promotionCost { get; set; }
         public decimal? saleIn { get; set; }
         public decimal? saleOut { get; set; }
@@ -195,13 +253,18 @@ namespace eActForm.Models
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
+        public string typeTheme { get; set; }
+        public string activityTypeId { get; set; }
+        public decimal? themeCost { get; set; }
+        public decimal? growth { get; set; }
+        public decimal? total { get; set; }
         public Boolean delFlag { get; set; }
         public DateTime? createdDate { get; set; }
         public string createdByUserId { get; set; }
         public DateTime? updatedDate { get; set; }
         public string updatedByUserId { get; set; }
-        
+
     }
 
-   
+
 }

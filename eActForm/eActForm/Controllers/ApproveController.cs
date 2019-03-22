@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using System.Configuration;
 using eActForm.BusinessLayer;
 using eActForm.Models;
-using System.Configuration;
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -18,7 +17,6 @@ namespace eActForm.Controllers
             if (actId == null) return RedirectToAction("index", "Home");
             else
             {
-                ApproveAppCode.insertApprove(actId);
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
                 models.approveStatusLists = ApproveAppCode.getApproveStatus();
                 return View(models);
@@ -26,18 +24,21 @@ namespace eActForm.Controllers
         }
 
         [HttpPost]
-        public JsonResult insertApprove()
+        public JsonResult insertApprove( )
         {
             var result = new AjaxResult();
-            if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["approveStatusLists"], Request.Form["txtRemark"]) > 0)
+            result.Success = false;
+            try
             {
-                result.Success = true;
+                if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"]) > 0)
+                {
+                    result.Success = true;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                result.Success = false;
+                result.Message = ex.Message;
             }
-
             return Json(result);
         }
 
@@ -46,9 +47,9 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-        public ActionResult approvePositionLists(string customerId, string productTypeId)
+        public ActionResult approvePositionLists(string customerId, string productCatId)
         {
-            ApproveFlowModel.approveFlowModel model = ApproveFlowAppCode.getFlow(ConfigurationManager.AppSettings["subjectActivityFormId"], customerId, productTypeId);
+            ApproveFlowModel.approveFlowModel model = ApproveFlowAppCode.getFlow(ConfigurationManager.AppSettings["subjectActivityFormId"], customerId, productCatId);
             return PartialView(model);
         }
 
@@ -65,28 +66,29 @@ namespace eActForm.Controllers
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
-            activityModel.productcostdetaillist = QueryGetCostDetailById.getcostDetailById(actId);
-            activityModel.costthemedetail = QueryGetActivityDetailById.getActivityDetailById(actId);
+            activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
+            activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
 
             return PartialView(activityModel);
         }
 
-        
+
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult genPdfApprove(string GridHtml, string activityId)
+        public JsonResult genPdfApprove(string GridHtml,string statusId, string activityId)
         {
             var resultAjax = new AjaxResult();
             try
             {
-                eActController.sendEmail(
-                    "tanapong.w@thaibev.com"
-                    , "champ.tanapong@gmail.com"
-                    , "Test Subject eAct"
-                    , "Test Body"
-                    , eActController.genPdfFile(GridHtml, activityId)
-
-                    );
+                AppCode.genPdfFile(GridHtml, activityId);
+                if( statusId == ConfigurationManager.AppSettings["statusReject"])
+                {
+                    EmailAppCodes.sendRejectActForm(activityId);
+                }
+                else
+                {
+                    EmailAppCodes.sendApproveActForm(activityId);
+                }
                 resultAjax.Success = true;
             }
             catch (Exception ex)

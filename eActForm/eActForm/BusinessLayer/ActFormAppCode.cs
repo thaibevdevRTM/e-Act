@@ -10,6 +10,22 @@ namespace eActForm.BusinessLayer
 {
     public class ActFormAppCode
     {
+        public static int deleteActForm(string actId, string reamrk)
+        {
+            try
+            {
+                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateDelFlagActivityForm"
+                    , new SqlParameter[] { new SqlParameter("@actId", actId)
+                    ,new SqlParameter("@remark",reamrk)
+                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
+                    ,new SqlParameter("@updateDate",DateTime.Now)
+                    });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("deleteActForm >>" + ex.Message);
+            }
+        }
         public static List<Activity_Model.actForm> getActFormByEmpId(string empId)
         {
             try
@@ -30,7 +46,6 @@ namespace eActForm.BusinessLayer
                                  productTypeId = dr["productTypeId"].ToString(),
                                  productTypeNameEN = dr["nameEN"].ToString(),
                                  cusShortName = dr["cusShortName"].ToString(),
-                                 
                                  productCategory = dr["productCateText"].ToString(),
                                  productGroup = dr["productGroupId"].ToString(),
                                  groupName = dr["groupName"].ToString(),

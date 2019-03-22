@@ -11,7 +11,46 @@ namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
+        public static List<ApproveModel.approveWaitingModel> getAllWaitingApproveGroupByEmpId()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountWaitingApproveGroupByEmpId");
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveModel.approveWaitingModel()
+                             {
+                                 empId = dr["empId"].ToString()
+                                 ,waitingCount = dr["waitingCount"].ToString()
+                                 ,empPrefix = dr["empPrefix"].ToString()
+                                 ,empFNameTH = dr["empFNameTH"].ToString()
+                                 ,empLNameTH = dr["empLNameTH"].ToString()
+                                 ,empEmail = dr["empEmail"].ToString()
+                             }).ToList();
+                return lists;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("getAllWaitingApproveGroupByEmpId >> " + ex.Message);
+            }
+        }
 
+        public static int updateApproveWaitingByRangNo(string actId)
+        {
+            try
+            {
+
+                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateWaitingApproveByRangNo"
+                    , new SqlParameter[] {new SqlParameter("@rangNo",1)
+                    ,new SqlParameter("@actId",actId)
+                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
+                    ,new SqlParameter("@updateDate",DateTime.Now)
+                    });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("updateApproveWaitingByRangNo >>" + ex.Message);
+            }
+        }
         public static bool getPremisionApproveByEmpid(List<ApproveModel.approveDetailModel> lists, string empId)
         {
             try
@@ -52,6 +91,7 @@ namespace eActForm.BusinessLayer
                 {
                     // update approve
                     rtn += updateActFormWithApproveDetail(actFormId);
+
                 }
                 return rtn;
             }
@@ -174,12 +214,14 @@ namespace eActForm.BusinessLayer
                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
+                    var empDetail = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
                     var lists = (from DataRow dr in ds.Tables[0].Rows
                                  select new ApproveModel.approveModel()
                                  {
                                      id = dr["id"].ToString(),
                                      flowId = dr["flowId"].ToString(),
                                      actFormId = dr["actFormId"].ToString(),
+                                     statusId = (empDetail.Count > 0) ? empDetail.FirstOrDefault().statusId : "",
                                      delFlag = (bool)dr["delFlag"],
                                      createdDate = (DateTime?)dr["createdDate"],
                                      createdByUserId = dr["createdByUserId"].ToString(),

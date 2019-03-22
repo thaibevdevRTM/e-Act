@@ -13,17 +13,17 @@
     }
 
     function genPdf() {
-        console.log("genPdffffffffffffffffffffff");
             $.ajax({
             url: '@Url.Action("genPdfApprove", "Approve")',
             data: {
                 GridHtml: $("#Grid").html(),
+                statusId: $("ddlStatus").val(),
                 activityId: $("#HdId").val()
             },
             dataType: "json",
             type: 'POST',
             }).done(function (response) {
-              
+                $("#WaitDialog").hide();
                 console.log("genPdff");
                 console.log('success');
                  });
@@ -308,8 +308,8 @@
         </div>
         <div class="modal-footer">
             <div>
-                <p class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                <p class="d-flex justify-content-center">                   
+                    <button type="button" class="btn btn-info pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
                 </p>
             </div>
 
