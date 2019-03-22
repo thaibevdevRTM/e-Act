@@ -4,33 +4,65 @@
 	//decimal? totalActCost = 0;
 }
 
-<script>
-   function submitPreview() {
 
-         bootbox.confirm("ยืนยัน บันทึกข้อมูล!", function (result) {
-             bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
-            $.ajax({
-            url: '@Url.Action("submitPreview", "Activity")',
-            data: {
-                GridHtml: $("#Grid").html(),
-                status: 2,
-                activityId: $("#HdId").val(),
+<script>
+
+	   function submitInvoice() {
+
+	   bootbox.confirm("ยืนยัน บันทึกข้อมูล!", function (result) {
+		   if (result == true) {   
+			$.ajax({
+            url: '@Url.Action("submitInvoice", "Budget")',
+				data: {
+				budgetInvoiceModel: ObjModel,
+				Id: $("#hd_activityId").val(),
+				activityId: $("#hd_activityId").val(),
+				productId: $("#hd_productId").val(),
+				invoiceNo: $("#txt_invoice_no").val(),
+				invTotalBath: $("#txt_invoice_baht").val(),
+				actionDate: $("#txt_date_action").val(),
             },
             dataType: "json",
             type: 'POST',
-            }).done(function (response) {
-                var url = '@Url.Action("Index", "Home")';
-                window.location.href = url;
+			}).done
+			(
+				function (response)
+				{
+				
+					$.ajax({
+					url: '@Url.Action("EditForm", "Budget")',
+					data: {
+						activityId: $("#hd_activityId").val(),
+						productId: $("#hd_productId").val(),
+					},
+					dataType: "json",
+					type: 'POST',
+					})
+					$('#myModal').modal('hide');
+					console.log('success');
+				}
+			);
+		   } else {
 
-                console.log('success');
-                 });
+
+		   }
          });
-      }
+	}
+
+
 </script>
 
-@*@Html.HiddenFor(m => m.activityFormModel.id, new { id = "HdId" })*@
+<input type="hidden" id="hd_activity">
+@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).act_activityFormId, new { @id = "hd_activityId" })
+@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).prd_productId, new { @id = "hd_productId" })
 
-<div class="modal-dialog modal-lg">
+<style>
+	.font14 {
+		font-size: 14px;
+	}
+</style>
+
+<div class="modal-dialog modal-lg" style="width:90%;">
 	<!-- Modal content-->
 	<div class="modal-content">
 		<div class="modal-header">
@@ -49,13 +81,13 @@
 
 				<div>
 					<div style="text-align:left;">
-						<h5>
+						<h4>
 							เลขที่กิจกรรมส่งเสริมการขาย :
 							@if (Model.Budget_Activity_Product_list != null)
 							{
 								@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo)
 							}
-						</h5>
+						</h4>
 					</div>
 				</div>
 
@@ -63,49 +95,43 @@
 					<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
 				</div>
 
-				<div style="margin-top:5px; width:100%;">
-					รายละเอียดค่าใช้จ่าย (Cost)
+				<div style="margin-top:5px; width:100%;" class="font-weight-bold">
+					<h5><strong>รายละเอียดค่าใช้จ่าย (Cost)</strong></h5>
 				</div>
 
 				<div>
 					<table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
 						<tr>
-							<td rowspan="2" width="30%" style="font-size:12.5px;">กลุ่มสินค้า/ชื่อสินค้า/Remark</td>
-							<td colspan="5" style="font-size:12.5px;">ค่าใช้จ่ายจริง (Estimate)</td>
+							<td rowspan="2" width="30%" class="font14">กลุ่มสินค้า/ชื่อสินค้า/Remark</td>
+							<td colspan="5" class="font14">ค่าใช้จ่ายจริง (Estimate)</td>
 						</tr>
 						<tr>
-							<td width="10%" style="font-size:12.5px;">จำนวนเงินที่ตั้ง</td>
-							<td width="10%" style="font-size:12.5px;">เลขที่ใบแจ้งหนี้</td>
-							<td width="10%" style="font-size:12.5px;">จำนวนเงินจ่าย</td>
-							<td width="10%" style="font-size:12.5px;">วันที่ทำกิจกรรม</td>
-							@*<td width="15%" style="font-size:12.5px;">5</td>*@
+							<td width="10%" class="font14">จำนวนเงินที่ตั้ง</td>
+							<td width="10%" class="font14">เลขที่ใบแจ้งหนี้</td>
+							<td width="10%" class="font14">จำนวนเงินจ่าย</td>
+							<td width="10%" class="font14">วันที่ทำกิจกรรม</td>
 						</tr>
 
 						<tr>
-							<td width="10%" style="font-size:12.5px;text-align:center;">
+							<td width="10%" class="font14" style="text-align:left;">
 								@if (Model.Budget_Activity_Product_list != null)
 								{
 									@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).prd_productDetail)
 								}
 							</td>
-							<td width="15%" style="font-size:12.5px;">
+							<td width="15%" class="font14" style="text-align:right;">
 								@if (Model.Budget_Activity_Product_list != null)
 								{
 									@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).totalCost)
 								}
+								&nbsp;
 							</td>
-							<td width="10%" style="font-size:12.5px;"><input class="form-control textboxcss" id="txt_invoice_no"></td>
-							<td width="10%" style="font-size:12.5px;"><input class="form-control textboxcss" id="txt_เงินจ่าย"></td>
-							<td width="10%" style="font-size:12.5px;"><input class="form-control textboxcss" id="txt_date_action"></td>
-							@*<td width="10%" style="font-size:12.5px;">5</td>*@
+							<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no"></td>
+							<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht"></td>
+							<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action"></td>
 						</tr>
+
 					</table>
-				</div>
-				<div>
-					@*@if (Model.activityFormModel != null)
-					{
-						@Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
-					}*@
 				</div>
 
 			</div>
@@ -114,7 +140,7 @@
 			<div>
 				<p class="d-flex justify-content-center">
 					<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-					<button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+					<button type="button" class="btn ink-reaction btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
 				</p>
 			</div>
 
@@ -130,7 +156,19 @@
 		ObjModel = {};
 		//onchangeCustomer();
 		//onchangeCate();
+
+		//var dp = $('#txt_date_action').datepicker().data('datepicker');
+		//dp.selectDate(new Date());
+
 	});
+
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+
+	today = dd + '-' + mm + '-' + yyyy;
+	document.getElementById("txt_date_action").defaultValue = today;
 
 
 	$.datetimepicker.setLocale('th');
@@ -157,5 +195,6 @@
 		onShow: thaiYear,
 		//yearOffset: 543,  // ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ
 		closeOnDateSelect: true,
-	});
+	}
+	);
 </script>

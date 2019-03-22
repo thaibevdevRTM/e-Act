@@ -50,26 +50,30 @@
 						<td>
 							@*@using (Html.BeginForm("Index", "Home"))
 							{
-								@Html.ActionLink(" ", "EditForm", "Budget", new { activityId = item.act_activityFormId }, new { @class = "btn ink-reaction btn-default fa fa-btc" });
+								@Html.ActionLink(" ", "PreviewBudgetInvoice", "Budget", new { activityId = item.act_activityFormId }, new { @class = "btn ink-reaction btn-default fa fa-btc" });
 							}*@
 
-							<div onclick="AddInvoiceitem()">
-								<button type="button" class="btn ink-reaction btn-warning fa fa-btc" onclick="validate_invoice_submit()"></button>
-							</div>
+							@*<div onclick="AddInvoiceitem()">
+			<button type="button" class="btn ink-reaction btn-warning fa fa-btc" onclick="validate_invoice_submit()"></button>
+		</div>*@
+
+							<a href="javascript:void(0);" class="anchorDetail btn ink-reaction btn-warning fa fa-btc" data-activity-id="@item.act_activityFormId" data-product-id="@item.prd_productId"></a>
 
 						</td>
 
 						<td style="font-size:12.5px;">@item.act_typeTheme</td>
 						<td style="font-size:12.5px;">@item.prd_productDetail</td>
 						<td style="font-size:12.5px;text-align:right;">@item.totalCost</td>
-						<td style="font-size:12.5px;">@item.invoiceNo</td>
-						<td style="font-size:12.5px;">@item.paymentNo</td>
-						<td style="font-size:12.5px;">@item.saleActCase</td>
-						<td style="font-size:12.5px;">@item.saleActBath</td>
-						<td style="font-size:12.5px;">@item.invTotalBath</td>
-						<td style="font-size:12.5px;">@item.balanceBath</td>
+						@*------  display when have invoice row --------------------*@
+						<td style="font-size:12.5px;">@*@item.invoiceNo*@</td>
+						<td style="font-size:12.5px;">@*@item.paymentNo*@</td>
+						<td style="font-size:12.5px;">@*@item.saleActCase*@</td>
+						<td style="font-size:12.5px;">@*@item.saleActBath*@</td>
+						<td style="font-size:12.5px;">@*@item.invTotalBath*@</td>
+						<td style="font-size:12.5px;">@*@item.balanceBath*@</td>
 						<td style="font-size:12.5px;">@*@Html.DisplayFor(x => item.actionDate)*@ </td>
-						<td style="font-size:12.5px;">@item.bud_ActivityStatus</td>
+						@*--------------------------------------------------*@
+						<td style="font-size:12.5px;">@item.invoiceProductStatusNameTH</td>
 					</tr>
 					index++;
 				}
@@ -78,32 +82,49 @@
 	</table>
 
 
-	<div class="modal fade" id="previewModal" role="dialog" style="display:none">
-		<div id="divPreview">
-			@Html.Action("PreviewBudgetInvoice", "Budget")
-			test
-		</div>
+	<div id='myModal' class="modal fade" role="dialog">
+		<div id='myModalContent'></div>
 	</div>
 
-	<script type="text/javascript">
-		function validate_invoice_submit() {
+	<script>
+		var TeamDetailPostBackURL = '/Budget/PreviewBudgetInvoice';
+		$(function () {
+			$(".anchorDetail").click(function () {
+				debugger;
+				var $buttonClicked = $(this);
+				var var_activityId = $buttonClicked.attr('data-activity-id');
+				var var_productId = $buttonClicked.attr('data-product-id');
+				var options = { "backdrop": "static", keyboard: true };
+				//alert("Dynamic content activityId : " + activityId);
+				//alert("Dynamic content productId : " + productId);
 
-			var required = "กรุณา ระบุ :<br>";
-			var validate = true;
-			//if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
-			//if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
-			//if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
-			//if ($("#ddlProductCate").val() == "0") { required += "Product category*<br>"; validate = false; }
-			//if ($("#ddlProductGrp").val() == "0") { required += "กลุ่มสินค้า *<br>"; validate = false; }
+				$.ajax({
+					type: "GET",
+					url: TeamDetailPostBackURL,
+					contentType: "application/json; charset=utf-8",
+					data: {
+						"activityId": var_activityId,
+						"productId": var_productId
+					},
+					datatype: "json",
+					success: function (data) {
+						debugger;
+						$('#myModalContent').html(data);
+						$('#myModal').modal(options);
+						$('#myModal').modal('show');
 
-			if (validate == true) {
-				$("#previewModal").modal('show');
-				//PreviewBudgetInvoice(response.ActivityId);
-				//SubmitData();
-				//bootbox.alert(required)
-			}
-			else {
-				bootbox.alert(required)
-			}
-		}
+					},
+					error: function () {
+						alert("Dynamic content load failed.");
+					}
+				});
+			});
+			//$("#closebtn").on('click',function(){
+			//    $('#myModal').modal('hide');
+
+			$("#closbtn").click(function () {
+				$('#myModal').modal('hide');
+			});
+		});
+
 	</script>

@@ -88,16 +88,19 @@ namespace eActForm.BusinessLayer
 								  normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(d["normalCost"].ToString()),
 								  themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(d["themeCost"].ToString()),
 								  totalCost = d["totalCost"].ToString() == "" ? 0 : decimal.Parse(d["totalCost"].ToString()),
-								  invoiceNo = d["invoiceNo"].ToString(),
-								  paymentNo = d["paymentNo"].ToString(),     /*ใบสำคัญจ่าย*/
-								  saleActCase = d["saleActCase"].ToString() == "" ? 0 : decimal.Parse(d["saleActCase"].ToString()),    /*ยอดขายช่วงทำกิจกรรม case*/
-								  saleActBath = d["saleActBath"].ToString() == "" ? 0 : decimal.Parse(d["saleActBath"].ToString()),    /*ยอดขายช่วงทำกิจกรรม bath*/
-								  invTotalBath = d["invTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invTotalBath"].ToString()),   /*จำนวนเงินจ่าย*/
-								  balanceBath = d["balanceBath"].ToString() == "" ? 0 : decimal.Parse(d["balanceBath"].ToString()),    /*ผลต่าง ดูก่อนอาจไม่เก็บใช้คำนวนแทน ถ้าเก็บน่าจะเก็บที่ระดับกิจกรรม*/
-								  //actionDate = DateTime.Parse(d["actionDate"].ToString()) == "" ? "" : DateTime.Parse(d["actionDate"].ToString()), /*วันที่ทำรายการ*/
-
 								  invoiceProductStatusId = d["invoiceProductStatusId"].ToString(), /*สภานะเงินของรายการ product*/
-								  bud_ActivityStatus  = d["bud_ActivityStatusNameTH"].ToString(), /*สภานะเงินของรายการ product*/
+								  invoiceProductStatusNameTH = d["invoiceProductStatusNameTH"].ToString(), /*สภานะเงินของรายการ product*/
+
+								  //invoiceNo = d["invoiceNo"].ToString(),
+								  //invoiceSeq = d["invoiceSeq"].ToString() == "" ? 0 : int.Parse(d["invoiceSeq"].ToString()),
+								  //paymentNo = d["paymentNo"].ToString(),     /*ใบสำคัญจ่าย*/
+								  //saleActCase = d["saleActCase"].ToString() == "" ? 0 : decimal.Parse(d["saleActCase"].ToString()),    /*ยอดขายช่วงทำกิจกรรม case*/
+								  //saleActBath = d["saleActBath"].ToString() == "" ? 0 : decimal.Parse(d["saleActBath"].ToString()),    /*ยอดขายช่วงทำกิจกรรม bath*/
+								  //invTotalBath = d["invTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invTotalBath"].ToString()),   /*จำนวนเงินจ่าย*/
+								  //balanceBath = d["balanceBath"].ToString() == "" ? 0 : decimal.Parse(d["balanceBath"].ToString()),    /*ผลต่าง ดูก่อนอาจไม่เก็บใช้คำนวนแทน ถ้าเก็บน่าจะเก็บที่ระดับกิจกรรม*/
+				  				  //actionDate = DateTime.Parse(d["actionDate"].ToString()) == "" ? "" : DateTime.Parse(d["actionDate"].ToString()), /*วันที่ทำรายการ*/
+
+								  productSeq = d["productSeq"].ToString() == "" ? 0 : int.Parse(d["productSeq"].ToString()),
 								  prd_cate_productCateText = d["prd_cate_productCateText"].ToString(),
 								  prd_group_groupName = d["prd_group_groupName"].ToString(),
 								  productCode = d["productCode"].ToString(),

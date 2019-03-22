@@ -29,12 +29,34 @@ namespace eActForm.Controllers
 		//    return View();
 		//}
 
+		[HttpPost]
+		//[ValidateInput(false)]
+		public JsonResult submitInvoice(Budget_Activity_Model.Budget_Activity_Invoice_Att budgetInvoiceModel)
+		{
+			var resultAjax = new AjaxResult();
+			try
+			{
+
+				//budgetInvoiceModel. = budgetInvoiceModel;
+				int countSuccess = BudgetFormCommandHandler.insertInvoiceProduct(budgetInvoiceModel);
+
+				//resultAjax.ActivityId = Session["activityId"].ToString();
+				resultAjax.Success = true;
+			}
+			catch (Exception ex)
+			{
+				resultAjax.Success = false;
+				resultAjax.Message = ex.Message;
+			}
+			return Json(resultAjax, "text/plain");
+		}
+
+
 		public ActionResult PreviewBudgetInvoice(string activityId, string productId)
 		{
-			Budget_Activity_Model budget_Model = new Budget_Activity_Model();
-			budget_Model.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, productId);
-
-			return PartialView(budget_Model);
+			Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
+			Budget_Activity.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, productId);
+			return PartialView("PreviewBudgetInvoice", Budget_Activity);
 		}
 
 
@@ -42,7 +64,7 @@ namespace eActForm.Controllers
         {
             Session["activityId"] = Guid.NewGuid().ToString();
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-            budget_activity_model.budget_activity_list = QueryBudgetBiz.getBudgetActivity("2",null).ToList();
+            budget_activity_model.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("2",null).ToList();
 		
 			return View(budget_activity_model);
         }
@@ -53,7 +75,7 @@ namespace eActForm.Controllers
 			Session["activityId"] = activityId;
 			Session["activityNo"] = activityNo;
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-			budget_activity_model.budget_activity_list = QueryBudgetBiz.getBudgetActivity("2", null).ToList();
+			budget_activity_model.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("2", null).ToList();
 			budget_activity_model.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId,null);
 
 			return View(budget_activity_model);
