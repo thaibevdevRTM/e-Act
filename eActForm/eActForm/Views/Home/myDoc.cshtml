@@ -99,7 +99,8 @@
                                 <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
                             </a>
 
-                            @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit }, new { @class = "btn ink-reaction btn-info fa fa-edit" })
+                            @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit }, new { @class = "btn ink-reaction btn-info fa fa-edit",
+                           onclick = "waitpopup();" })
 
                             @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
 
@@ -150,7 +151,8 @@
         });
 
     });
-
-
+    function waitpopup() {
+        $("#WaitDialog").show();
+    }
 
 </script>

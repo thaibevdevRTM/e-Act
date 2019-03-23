@@ -306,17 +306,17 @@
                                 }
                             </td>
                             <td>
-                                @if (totalActCost != 0)
+                                @if (totalActCost != 0 && costActivity != 0)
                                 {
-                                    string result = String.Format("{0:n2}", @totalActCost);
+                                    perTotal = (costActivity - costProduct) / costProduct;
+                                    string result = String.Format("{0:p0}", @perTotal);
                                     @result.ToString();
                                 }
                             </td>
                             <td>
-                                @if (totalActCost != 0 && costActivity != 0)
+                                @if (totalActCost != 0)
                                 {
-                                    perTotal = totalActCost * 100 / costActivity;
-                                    string result = String.Format("{0:n2}", @perTotal);
+                                    string result = String.Format("{0:n2}", @totalActCost);
                                     @result.ToString();
                                 }
                             </td>
