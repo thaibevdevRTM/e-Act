@@ -56,7 +56,7 @@
                         Document Date<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
+                        @Html.TextBoxFor(x => x.activityFormModel.documentDate,  new { @class = "form-control textboxcss", @id = "txtdateDoc" , @Value = @DateTime.Now.ToShortDateString() })
                     </div>
                 </div>
             </div>
@@ -300,7 +300,7 @@
     <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-5">
 
         <p class="d-flex justify-content-center">
-            <button type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Submit</button>
+            <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Submit</button>
         </p>
     </div>
 </div>
@@ -332,19 +332,19 @@
 
     $(function () {
         $("#txtdateDoc").datepicker({
-            format: 'dd/mm/yyyy'
+           
         });
         $("#txtdateActivitySt").datepicker({
-            format: 'dd/mm/yyyy'
+         
         });
         $("#txtdateActivityEnd").datepicker({
-            format: 'dd/mm/yyyy'
+            //format: 'dd-mm-yyyy'
         });
         $("#txtdateCostPerSt").datepicker({
-            format: 'dd/mm/yyyy'
+           
         });
         $("#txtdateCostPerEnd").datepicker({
-            format: 'dd/mm/yyyy'
+           
         });
 
     });
@@ -627,12 +627,15 @@
 
     function SubmitData() {
         $("#WaitDialog").show();
+
+        console.log($("#txtdateDoc").val());
+        console.log($("#txtdateActivitySt").val());
             $.ajax({
                 url: '@Url.Action("insertDataActivity", "Activity")',
                 data: {
                     statusId: 1,
                     Mode: $("#hdMode").val(),
-                    DocumentDate: $("#txtdateDoc").val(),
+                    documentDate: $("#txtdateDoc").val(),
                     Reference: $("#txtReference").val(),
                     CustomerId: $("#ddlCustomer").val(),
                     ProductCateId: $("#ddlProductCate").val(),
@@ -684,7 +687,9 @@
         document.getElementById("divUploadImg").style.display = "none";
         document.getElementById("rdbterm").disabled = true;
         document.getElementById("rdbOutterm").disabled = true;
+        document.getElementById("btnsubmit").disabled = true;
         //$("input.txtnormalGp").attr("disabled", true);
+        
     }
 
 

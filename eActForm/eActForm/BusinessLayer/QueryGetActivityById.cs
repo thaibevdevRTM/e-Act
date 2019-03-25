@@ -25,7 +25,7 @@ namespace eActForm.BusinessLayer
                                   id = d["Id"].ToString(),
                                   statusId = int.Parse(d["statusId"].ToString()), 
                                   activityNo = d["activityNo"].ToString(),
-                                  documentDate = !string.IsNullOrEmpty(d["documentDate"].ToString()) ? DateTime.Parse(d["documentDate"].ToString()) : (DateTime?)null,
+                                  documentDate = d["documentDate"] is DBNull ? null : (DateTime?)d["documentDate"],//!string.IsNullOrEmpty(d["documentDate"].ToString()) ? DateTime.Parse(d["documentDate"].ToString()) : (DateTime)null,
                                   reference = d["reference"].ToString(),
                                   customerName = d["customerName"].ToString(),
                                   cusShortName = d["cusShortName"].ToString(),
