@@ -1,0 +1,130 @@
+﻿@model eActForm.Models.Budget_Activity_Model
+	@{
+		ViewBag.Title = "Edit Page";
+	}
+
+	<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+	<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+	<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+	<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+	<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+
+	<style type="text/css">
+
+		.my-bootbox-class .modal-dialog {
+			width: 400px;
+			font-size: 18px;
+		}
+	</style>
+
+	<div class="alert alert-success" role="alert">
+		<h4 class="alert-heading">แบบฟอร์มการขอทำกิจกรรมส่งเสริมการขาย : รายละเอียดค่าใช้จ่ายตั้งจ่ายจริง <br />กิจกรรมเลขที่ : @Session["activityNo"]  </h4>
+		<p></p>
+	</div>
+
+	<table class="table table-striped table-hover" id="content">
+		<thead class="thead-dark">
+			<tr style="background-color:#2B5D95;color:#ffffff;">
+				<th class="align-content-center font12B" </th>
+				<th class="align-content-center font12B" style="width:10%;">ประเภทกิจกรรม</th>
+				<th class="align-content-center font12B" style="width:20%;">กลุ่มสินค้า/ชื่อสินค้า/Remark</th>
+				<th class="align-content-center font12B">จำนวนเงินที่ตั้ง</th>
+				<th class="align-content-center font12B">เลขที่ใบแจ้งหนี้</th>
+				<th class="align-content-center font12B">เลขที่ใบสำคัญจ่าย</th>
+				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
+				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>
+				<th class="align-content-center font12B">จำนวนเงินจ่าย</th>
+				<th class="align-content-center font12B">ผลต่าง-บาท</th>
+				<th class="align-content-center font12B">วันที่ทำรายการ</th>
+				<th class="align-content-center font12B">สถานะ</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@if (Model.Budget_Activity_Product_list.Count > 0)
+			{
+				var index = 0;
+				foreach (var item in Model.Budget_Activity_Product_list)
+				{
+					<tr class="gradeX">
+						<td>
+							@*@using (Html.BeginForm("Index", "Home"))
+							{
+								@Html.ActionLink(" ", "PreviewBudgetInvoice", "Budget", new { activityId = item.act_activityFormId }, new { @class = "btn ink-reaction btn-default fa fa-btc" });
+							}*@
+
+							@*<div onclick="AddInvoiceitem()">
+			<button type="button" class="btn ink-reaction btn-warning fa fa-btc" onclick="validate_invoice_submit()"></button>
+		</div>*@
+
+							<a href="javascript:void(0);" class="anchorDetail btn ink-reaction btn-warning fa fa-btc" data-activity-id="@item.act_activityFormId" data-product-id="@item.prd_productId"></a>
+
+						</td>
+
+						<td style="font-size:12.5px;">@item.act_typeTheme</td>
+						<td style="font-size:12.5px;">@item.prd_productDetail</td>
+						<td style="font-size:12.5px;text-align:right;">@item.totalCost</td>
+						@*------  display when have invoice row --------------------*@
+						<td style="font-size:12.5px;">@*@item.invoiceNo*@</td>
+						<td style="font-size:12.5px;">@*@item.paymentNo*@</td>
+						<td style="font-size:12.5px;">@*@item.saleActCase*@</td>
+						<td style="font-size:12.5px;">@*@item.saleActBath*@</td>
+						<td style="font-size:12.5px;">@*@item.invTotalBath*@</td>
+						<td style="font-size:12.5px;">@*@item.balanceBath*@</td>
+						<td style="font-size:12.5px;">@*@Html.DisplayFor(x => item.actionDate)*@ </td>
+						@*--------------------------------------------------*@
+						<td style="font-size:12.5px;">@item.invoiceProductStatusNameTH</td>
+					</tr>
+					index++;
+				}
+			}
+		</tbody>
+	</table>
+
+
+	<div id='myModal' class="modal fade" role="dialog">
+		<div id='myModalContent'></div>
+	</div>
+
+	<script>
+		var TeamDetailPostBackURL = '/Budget/PreviewBudgetInvoice';
+		$(function () {
+			$(".anchorDetail").click(function () {
+				debugger;
+				var $buttonClicked = $(this);
+				var var_activityId = $buttonClicked.attr('data-activity-id');
+				var var_productId = $buttonClicked.attr('data-product-id');
+				var options = { "backdrop": "static", keyboard: true };
+				//alert("Dynamic content activityId : " + activityId);
+				//alert("Dynamic content productId : " + productId);
+
+				$.ajax({
+					type: "GET",
+					url: TeamDetailPostBackURL,
+					contentType: "application/json; charset=utf-8",
+					data: {
+						"activityId": var_activityId,
+						"productId": var_productId
+					},
+					datatype: "json",
+					success: function (data) {
+						debugger;
+						$('#myModalContent').html(data);
+						$('#myModal').modal(options);
+						$('#myModal').modal('show');
+
+					},
+					error: function () {
+						alert("Dynamic content load failed.");
+					}
+				});
+			});
+			//$("#closebtn").on('click',function(){
+			//    $('#myModal').modal('hide');
+
+			$("#closbtn").click(function () {
+				$('#myModal').modal('hide');
+			});
+		});
+
+	</script>
