@@ -14,7 +14,7 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             SearchActivityModels models = new SearchActivityModels();
-            models.approveStatusList = ApproveAppCode.getApproveStatus();
+            models.approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.doc);
             models.productGroupList = QueryGetAllProductGroup.getAllProductGroup();
             models.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
             models.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
@@ -28,13 +28,9 @@ namespace eActForm.Controllers
         public ActionResult approveLists(string actId)
         {
             var result = new AjaxResult();
-
             ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
-            models.approveStatusLists = ApproveAppCode.getApproveStatus();
-
-
+            //models.approveStatusLists = ApproveAppCode.getApproveStatus();
             return PartialView(models);
-
         }
 
      
@@ -59,19 +55,19 @@ namespace eActForm.Controllers
             //return RedirectToAction("index");
             AjaxResult result = new AjaxResult();
             result.Success = false;
-            if (statusId == "1")
-            {
+            //if (statusId == "1")
+            //{
                 // Draft
                 if (ActFormAppCode.deleteActForm(actId, "request delete by user") > 0)
                 {
                     result.Success = true;
                     TempData["SearchDataModel"] = null;
                 }
-            }
-            else
-            {
+            //}
+            //else
+            //{
 
-            }
+            //}
 
             return RedirectToAction("myDoc");
         }

@@ -63,6 +63,7 @@ namespace eActForm.Models
             public string id { get; set; }
             public string nameTH { get; set; }
             public string nameEN { get; set; }
+            public string type { get; set; }
             public string description { get; set; }
         }
 
