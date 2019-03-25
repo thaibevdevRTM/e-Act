@@ -23,6 +23,7 @@ namespace eActForm.BusinessLayer
 				result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertBudgetActivityInvoice"
 					, new SqlParameter[] {new SqlParameter("@id", Guid.NewGuid().ToString())
 					,new SqlParameter("@activityId",model.activityId)
+					,new SqlParameter("@activityNo",model.activityNo)
 					,new SqlParameter("@productId",model.productId)
 					,new SqlParameter("@paymentNo",model.paymentNo)
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
@@ -39,5 +40,29 @@ namespace eActForm.BusinessLayer
 
 			return result;
 		}
+
+		public static int deleteInvoiceProduct(Budget_Activity_Model.Budget_Activity_Invoice_Att model)
+		{
+
+			int result = 0;
+
+			try
+			{
+
+				result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteBudgetActivityInvoice"
+					, new SqlParameter[] {new SqlParameter("@activityId",model.activityId)
+					,new SqlParameter("@productId",model.productId)
+					,new SqlParameter("@invoiceNo",model.invoiceNo)
+					});
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError(ex.Message + ">> usp_deleteBudgetActivityInvoice");
+			}
+
+			return result;
+		}
+
+
 	}
 }

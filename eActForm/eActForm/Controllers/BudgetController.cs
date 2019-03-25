@@ -29,7 +29,7 @@ namespace eActForm.Controllers
 		//    return View();
 		//}
 
-		[HttpPost]
+		//[HttpPost]
 		//[ValidateInput(false)]
 		public JsonResult submitInvoice(Budget_Activity_Model.Budget_Activity_Invoice_Att budgetInvoiceModel)
 		{
@@ -51,6 +51,23 @@ namespace eActForm.Controllers
 			return Json(resultAjax, "text/plain");
 		}
 
+		public JsonResult delInvoiceDetail(Budget_Activity_Model.Budget_Activity_Invoice_Att budgetInvoiceModel)
+		{
+			var result = new AjaxResult();
+			try
+			{		
+				int countSuccess = BudgetFormCommandHandler.deleteInvoiceProduct(budgetInvoiceModel);
+				result.Success = true;
+			}
+			catch (Exception ex)
+			{
+				result.Message = ex.Message;
+				result.Success = false;
+			}
+
+			return Json(result, JsonRequestBehavior.AllowGet);
+		}
+
 
 		public ActionResult PreviewBudgetInvoice(string activityId, string productId)
 		{
@@ -69,11 +86,11 @@ namespace eActForm.Controllers
 			return View(budget_activity_model);
         }
 
-		public ActionResult EditForm(string activityId, string activityNo)
+		public ActionResult EditForm(string activityId)
 		{
 
 			Session["activityId"] = activityId;
-			Session["activityNo"] = activityNo;
+			//Session["activityNo"] = activityNo;
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
 			budget_activity_model.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("2", null).ToList();
 			budget_activity_model.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId,null);

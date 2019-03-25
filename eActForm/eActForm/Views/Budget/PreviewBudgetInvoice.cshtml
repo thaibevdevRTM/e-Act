@@ -10,13 +10,14 @@
 	   function submitInvoice() {
 
 	   bootbox.confirm("ยืนยัน บันทึกข้อมูล!", function (result) {
-		   if (result == true) {   
+		   if (result == true) {
 			$.ajax({
             url: '@Url.Action("submitInvoice", "Budget")',
 				data: {
 				budgetInvoiceModel: ObjModel,
 				Id: $("#hd_activityId").val(),
 				activityId: $("#hd_activityId").val(),
+				activityNo: $("#hd_activityNo").val(),
 				productId: $("#hd_productId").val(),
 				invoiceNo: $("#txt_invoice_no").val(),
 				invTotalBath: $("#txt_invoice_baht").val(),
@@ -28,12 +29,12 @@
 			(
 				function (response)
 				{
-				
+
 					$.ajax({
 					url: '@Url.Action("EditForm", "Budget")',
 					data: {
 						activityId: $("#hd_activityId").val(),
-						productId: $("#hd_productId").val(),
+						//productId: $("#hd_productId").val(),
 					},
 					dataType: "json",
 					type: 'POST',
@@ -53,7 +54,8 @@
 </script>
 
 <input type="hidden" id="hd_activity">
-@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).act_activityFormId, new { @id = "hd_activityId" })
+@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).act_activityId, new { @id = "hd_activityId" })
+@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).act_activityNo, new { @id = "hd_activityNo" })
 @Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).prd_productId, new { @id = "hd_productId" })
 
 <style>

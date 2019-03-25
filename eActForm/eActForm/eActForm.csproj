@@ -242,8 +242,6 @@
     <Compile Include="Models\TB_Act_ProductType_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Cate_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Model.cs" />
-    <Compile Include="Models\TB_Bud_ActivityInvoice_Model.cs" />
-    <Compile Include="Models\TB_Inv_InvoiceActivity_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
