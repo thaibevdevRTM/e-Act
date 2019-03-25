@@ -168,6 +168,7 @@ namespace eActForm.Models
         public decimal? growth { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? total { get; set; }
+        
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
@@ -199,8 +200,8 @@ namespace eActForm.Models
         public string activityId { get; set; }
         public string productId { get; set; }
         public string productName { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? wholeSalesPrice { get; set; }
-
         [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
         public decimal? disCount1 { get; set; }
         [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
@@ -215,7 +216,7 @@ namespace eActForm.Models
         public string strPromotionGP { get; set; }
         [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
         public decimal? promotionGp { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
         public decimal? specialDisc { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? specialDiscBaht { get; set; }

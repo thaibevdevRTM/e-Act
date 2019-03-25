@@ -546,7 +546,7 @@ namespace eActForm.Controllers
 
         public string checkNullorEmpty(string p)
         {
-            return p == "" || p == null || p == "0" ? "0" : p;
+            return p == "" || p == null || p == "0" || p == "0.00" ? "0" : p;
         }
 
 

@@ -166,12 +166,12 @@
                 <div class="col-md-9 col-sm-9 col-xs-12">
                     <div class="radio">
                         <label>
-                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "term") ไม่เกิดจาก รายการส่งเสริมการขาย (Trade Term)
+                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "term" , new { @id= "rdbterm" }) ไม่เกิดจาก รายการส่งเสริมการขาย (Trade Term)
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { Checked = "checked" }) รายการส่งเสริมการขาย (นอก Trade Term)
+                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { Checked = "checked" , @id= "rdbOutterm" }) รายการส่งเสริมการขาย (นอก Trade Term)
                         </label>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
-                        เวลากิจกรรม (Activity Period)<span class="required">*</span>
+                        เวลากิจกรรม (Activity Period)
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -192,7 +192,7 @@
                 </div>
                 <div class="row">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
-                        เวลาการให้ทุนพิเศษ (Cost Period)<span class="required">*</span>
+                        เวลาการให้ทุนพิเศษ (Cost Period)
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -273,11 +273,11 @@
 
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
     <div id="divPreview">
-        @Html.Action("PreviewData", "Activity")
+        @*@Html.Action("PreviewData", "Activity")*@
     </div>
 </div>
 
-<div class="row">
+<div class="row" id="divUploadImg">
     <div class="col-12">
         <p class="lead">อัพโหลด รูปภาพ</p>
     </div>
@@ -311,12 +311,12 @@
 <script type="text/javascript">
 
        $(document).ready(function () {
-           $(".fv").each(function () {
-               var v = $(this).val();
-               if (v == '') {
-                   $(this).focus();
-               }
-           });
+           //$(".fv").each(function () {
+           //    var v = $(this).val();
+           //    if (v == '') {
+           //        $(this).focus();
+           //    }
+           //});
            //$('.field-date').datepicker({ autoclose: true, todayHighlight: true, format: "dd/mm/yyyy" });
 
            ObjModel = {};
@@ -618,7 +618,6 @@
         if ($("#ddlProductGrp").val() == "0") { required += "กลุ่มสินค้า *<br>"; validate = false; }
 
         if (validate == true) {
-            $("#previewModal").modal('show');
             SubmitData();
         }
         else {
@@ -627,6 +626,7 @@
     }
 
     function SubmitData() {
+        $("#WaitDialog").show();
             $.ajax({
                 url: '@Url.Action("insertDataActivity", "Activity")',
                 data: {
@@ -652,6 +652,7 @@
             }).done(function (response) {
                 if (response.Success) {
                     callPreviewData(response.ActivityId);
+                    
                 }
             });
     }
@@ -678,6 +679,11 @@
         document.getElementById("txtActivityDetail").disabled = true;
         document.getElementById("divAddActivityDetail").style.display = "none";
         document.getElementById("divAddProductCostDetail").style.display = "none";
+        $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
+        $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", "disabled");
+        document.getElementById("divUploadImg").style.display = "none";
+        document.getElementById("rdbterm").disabled = true;
+        document.getElementById("rdbOutterm").disabled = true;
         //$("input.txtnormalGp").attr("disabled", true);
     }
 
@@ -690,8 +696,9 @@
                 activityId: obj
             }
         }).done(function (htmlResponse) {
+            $("#WaitDialog").hide();
             $("#divPreview").html(htmlResponse)
-            $('#myModal').modal('show');
+            $('#previewModal').modal('show');
         });
     }
 

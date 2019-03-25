@@ -133,7 +133,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 int rtn = 0;
-                if (getApproveByActFormId(actId).approveModel == null)
+                if (getApproveByActFormId(actId).approveDetailLists.Count == 0 )
                 {
                     List<ApproveModel.approveModel> list = new List<ApproveModel.approveModel>();
                     ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
@@ -184,7 +184,6 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-
                 ApproveModel.approveModels models = new ApproveModel.approveModels();
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveDetailByActFormId"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
@@ -210,10 +209,12 @@ namespace eActForm.BusinessLayer
 
                                              }).ToList();
 
-                ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveByActFormId"
-                   , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
-                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                
+                if (models.approveDetailLists.Count > 0)
                 {
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveByActFormId"
+                   , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
+
                     var empDetail = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
                     var lists = (from DataRow dr in ds.Tables[0].Rows
                                  select new ApproveModel.approveModel()
