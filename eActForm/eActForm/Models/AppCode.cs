@@ -31,6 +31,11 @@ namespace eActForm.Models
             , Success = 4
             , ไม่อนุมัติ = 5
         }
+        public enum StatusType
+        {
+            app, // approve
+            doc // document
+        }
 
         public static MemoryStream GetFileReportTomail_Preview(string GridHtml)
         {

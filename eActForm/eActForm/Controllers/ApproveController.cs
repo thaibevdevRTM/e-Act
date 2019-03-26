@@ -18,7 +18,7 @@ namespace eActForm.Controllers
             else
             {
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
-                models.approveStatusLists = ApproveAppCode.getApproveStatus();
+                models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app);
                 return View(models);
             }
         }

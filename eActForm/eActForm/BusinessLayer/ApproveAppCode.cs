@@ -242,12 +242,13 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getCountApproveByActFormId >>" + ex.Message);
             }
         }
-        public static List<ApproveModel.approveStatus> getApproveStatus()
+        public static List<ApproveModel.approveStatus> getApproveStatus(AppCode.StatusType type)
         {
             try
             {
 
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveStatusAll");
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveStatusAll"
+                    ,new SqlParameter("@type",type.ToString()));
                 var list = (from DataRow dr in ds.Tables[0].Rows
                             select new ApproveModel.approveStatus()
                             {
@@ -255,6 +256,7 @@ namespace eActForm.BusinessLayer
                                 nameEN = dr["nameEN"].ToString(),
                                 nameTH = dr["nameTH"].ToString(),
                                 description = dr["description"].ToString(),
+                                type = dr["type"].ToString(),
                                 delFlag = (bool)dr["delFlag"],
                                 createdDate = (DateTime?)dr["createdDate"],
                                 createdByUserId = dr["createdByUserId"].ToString(),
