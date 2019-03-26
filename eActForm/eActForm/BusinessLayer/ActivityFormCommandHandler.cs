@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using WebLibrary;
@@ -17,6 +18,8 @@ namespace eActForm.BusinessLayer
 
             int rtn = 0;
             model.activityFormModel.id = activityId;
+
+            //model.activityFormModel.documentDate = DateTime.ParseExact(model.activityFormModel.documentDate.Value.ToString(), "dd/MM/yyyy", null);
             model.activityFormModel.activityNo = model.activityFormModel.activityNo != null ? model.activityFormModel.activityNo : "---";
             model.activityFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
             model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
