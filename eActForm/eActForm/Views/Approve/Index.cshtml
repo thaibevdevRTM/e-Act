@@ -112,7 +112,6 @@
 
 <div class="modal fade" id="ModalPreviewPDF" style="display:none">
     <div id="divPreviewApprove">
-        @Html.Action("previewApprove", "Approve")
     </div>
 </div>
 
@@ -148,9 +147,9 @@
     function callPreviewApprove(obj) {
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("previewApprove", "Approve")',
+            url:  '@Url.Action("PreviewData", "Activity")',
             data: {
-                actId: obj
+                activityId: obj
             }
         }).done(function (htmlResponse) {
             $("#divPreviewApprove").html(htmlResponse)

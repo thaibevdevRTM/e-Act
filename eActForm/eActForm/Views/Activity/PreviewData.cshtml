@@ -143,7 +143,17 @@
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">ระยะเวลากิจกรรม</td>
                             <td></td>
-                            <td style="font-size:12.5px;">@Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy") To @Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                            <td style="font-size:12.5px;">
+                                @if (Model.activityFormModel.activityPeriodSt != null)
+                                {
+                                    @Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy")
+                                }
+                                To
+                                @if (Model.activityFormModel.activityPeriodEnd != null)
+                                {
+                                    @Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy")
+                                }
+                            </td>
                         </tr>
                         <tr>
                             @if (Model.activityFormModel != null)
@@ -169,7 +179,17 @@
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">ระยะเวลาการให้ทุนพิเศษ</td>
                             <td></td>
-                            <td style="font-size:12.5px;">@Model.activityFormModel.costPeriodSt.Value.ToString("dd/MM/yyyy") To @Model.activityFormModel.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                            <td style="font-size:12.5px;">
+                                @if (Model.activityFormModel.costPeriodSt != null)
+                                {
+                                    @Model.activityFormModel.costPeriodSt.Value.ToString("dd/MM/yyyy")
+                                }
+                                To
+                                @if (Model.activityFormModel.costPeriodEnd != null)
+                                {
+                                    @Model.activityFormModel.costPeriodEnd.Value.ToString("dd/MM/yyyy")
+                                }
+                            </td>
                         </tr>
                         <tr>
                             <td></td>
@@ -231,7 +251,7 @@
                             {
                                 <tr>
                                     <td style="font-size:12.5px;">@item.productName</td>
-                                    <td style="font-size:12.5px;">@item.wholeSalesPrice</td>
+                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
                                     <td style="font-size:12.5px;">@Html.DisplayFor(m => item.disCount1)</td>
                                     <td style="font-size:12.5px;">@Html.DisplayFor(m => item.disCount2)</td>
                                     <td style="font-size:12.5px;">@Html.DisplayFor(m => item.disCount3)</td>
