@@ -73,6 +73,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
+                // update approve detail
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateApprove"
                         , new SqlParameter[] {new SqlParameter("@actFormId",actFormId)
                     , new SqlParameter("@empId",UtilsAppCode.Session.User.empId)
@@ -82,12 +83,13 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                         });
 
+                // update activity form
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
                     // update reject
                     rtn += updateActFormWithApproveReject(actFormId);
                 }
-                else
+                else if( statusId ==  ConfigurationManager.AppSettings["statusApprove"])
                 {
                     // update approve
                     rtn += updateActFormWithApproveDetail(actFormId);
@@ -195,6 +197,7 @@ namespace eActForm.BusinessLayer
                                                  rangNo = (int)dr["rangNo"],
                                                  empId = dr["empId"].ToString(),
                                                  empName = dr["empName"].ToString(),
+                                                 empEmail = dr["empEmail"].ToString(),
                                                  statusId = dr["statusId"].ToString(),
                                                  statusName = dr["statusName"].ToString(),
                                                  isSendEmail = (bool)dr["isSendEmail"],
@@ -222,6 +225,7 @@ namespace eActForm.BusinessLayer
                                      id = dr["id"].ToString(),
                                      flowId = dr["flowId"].ToString(),
                                      actFormId = dr["actFormId"].ToString(),
+                                     actNo = dr["activityNo"].ToString(),
                                      statusId = (empDetail.Count > 0) ? empDetail.FirstOrDefault().statusId : "",
                                      delFlag = (bool)dr["delFlag"],
                                      createdDate = (DateTime?)dr["createdDate"],
