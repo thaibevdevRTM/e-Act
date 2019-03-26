@@ -106,9 +106,7 @@ namespace eActForm.Models
         public string id { get; set; }
         public int statusId { get; set; }
         public string activityNo { get; set; }
-
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime? documentDate { get; set; }
         public string reference { get; set; }
         public string cusShortName { get; set; }
@@ -122,17 +120,11 @@ namespace eActForm.Models
         public string productGroupText { get; set; }
         public string groupShort { get; set; }
         public string productTypeId { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? activityPeriodSt { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? activityPeriodEnd { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? costPeriodSt { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? costPeriodEnd { get; set; }
         public string activityName { get; set; }
         public string theme { get; set; }
