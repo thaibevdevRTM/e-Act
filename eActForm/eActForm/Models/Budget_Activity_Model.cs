@@ -50,8 +50,10 @@ namespace eActForm.Models
 			public decimal normalCost { get; set; }
 			public decimal themeCost { get; set; }
 			public decimal totalCost { get; set; }
+			public string invoiceId { get; set; }
 			public string invoiceNo { get; set; }
 			public decimal invTotalBath { get; set; }       /*จำนวนเงินจ่าย*/
+			public decimal productStandBath { get; set; } /*ยอดยกมา*/
 			public decimal productBalanceBath { get; set; } /*ผลต่าง*/
 			public string invoiceProductStatusId { get; set; }
 			public string invoiceProductStatusNameTH { get; set; }

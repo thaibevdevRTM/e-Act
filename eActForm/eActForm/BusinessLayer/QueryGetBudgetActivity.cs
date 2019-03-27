@@ -68,13 +68,14 @@ namespace eActForm.BusinessLayer
             }
         }
 
-		public static List<Budget_Activity_Model.Budget_Activity_Product_Att> getBudgetActivityProduct(string act_activityID, string prd_productID)
+		public static List<Budget_Activity_Model.Budget_Activity_Product_Att> getBudgetActivityProduct(string act_activityID, string prd_productID, string inv_invoiceID)
 		{
 			try
 			{
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivityProduct"
 				 , new SqlParameter("@activityID", act_activityID)
-				 , new SqlParameter("@productID", prd_productID));
+				 , new SqlParameter("@productID", prd_productID)
+				 , new SqlParameter("@invoiceID", inv_invoiceID));
 
 				var result = (from DataRow d in ds.Tables[0].Rows
 							  select new Budget_Activity_Model.Budget_Activity_Product_Att()
@@ -88,8 +89,11 @@ namespace eActForm.BusinessLayer
 								  themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(d["themeCost"].ToString()),
 								  totalCost = d["totalCost"].ToString() == "" ? 0 : decimal.Parse(d["totalCost"].ToString()),
 
+								  invoiceId = d["invoiceId"].ToString(),
 								  invoiceNo = d["invoiceNo"].ToString(),
 								  invTotalBath = d["invTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invTotalBath"].ToString()),
+
+								  productStandBath = d["productStandBath"].ToString() == "" ? 0 : decimal.Parse(d["productStandBath"].ToString()),
 								  productBalanceBath = d["productBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["productBalanceBath"].ToString()),
 								  invoiceProductStatusId = d["invoiceProductStatusId"].ToString(), /*สภานะเงินของรายการ product*/
 								  invoiceProductStatusNameTH = d["invoiceProductStatusNameTH"].ToString(), /*สภานะเงินของรายการ product*/

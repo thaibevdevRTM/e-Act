@@ -17,130 +17,153 @@
 		}
 	</style>
 
-	<div class="alert alert-success" role="alert">
-		<h4 class="alert-heading">แบบฟอร์มการขอทำกิจกรรมส่งเสริมการขาย : รายละเอียดค่าใช้จ่ายตั้งจ่ายจริง <br />กิจกรรมเลขที่ : @Session["activityNo"]  </h4>
-		<p></p>
-	</div>
+	
 
-	<table class="table table-hover" id="content">
-		<thead class="thead-dark">
-			<tr style="background-color:#2B5D95;color:#ffffff;">
-				<th class="align-content-center font12B" ></th>
-				<th class="align-content-center font12B" style="width:10%;">ประเภทกิจกรรม</th>
-				<th class="align-content-center font12B" style="width:20%;">กลุ่มสินค้า/ชื่อสินค้า/Remark</th>
-				<th class="align-content-center font12B">จำนวนเงินที่ตั้ง</th>
-				<th class="align-content-center font12B">เลขที่ใบแจ้งหนี้</th>
-				@*<th class="align-content-center font12B">เลขที่ใบสำคัญจ่าย</th>
-				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
-				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>*@
-				<th class="align-content-center font12B">จำนวนเงินจ่าย</th>
-				<th class="align-content-center font12B">ผลต่าง-บาท</th>
-				<th class="align-content-center font12B">วันที่ทำรายการ</th>
-				<th class="align-content-center font12B" style="width:20%;">สถานะ</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			@if (Model.Budget_Activity_Product_list.Count > 0)
-			{
-				var index = 0;
-				foreach (var item in Model.Budget_Activity_Product_list)
+		<div class="alert alert-success" role="alert">
+			<h4 class="alert-heading">
+				แบบฟอร์มรายละเอียดค่าใช้จ่ายตั้งจ่ายจริง  กิจกรรมเลขที่ :
+				@if (Model.Budget_Activity_Product_list != null)
 				{
-					if (@item.invoiceSeq == 0)
-					{
-						<tr class="gradeX" style="background-color:whitesmoke;">
-							<td>
-								<a href="javascript:onSelectProduct();" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-btc" data-activity-id="@item.act_activityId" data-product-id="@item.prd_productId" onclick=""></a>
-							</td>
-
-							<td style="font-size:12.5px;">@item.act_typeTheme</td>
-							<td style="font-size:12.5px;">@item.prd_productDetail</td>
-							<td style="font-size:12.5px;text-align:right;">@item.totalCost</td>
-							@*------  display when have invoice row --------------------*@
-							<td style="font-size:12.5px;"></td>
-							<td style="font-size:12.5px;"></td>
-							<td style="font-size:12.5px;"></td>
-							<td style="font-size:12.5px;"></td>
-							@*--------------------------------------------------*@
-							<td style="font-size:12.5px;"></td>
-						</tr>
-					}
-					else
-					{
-						<tr class="gradeX">
-							<td>
-								
-							</td>
-
-							<td style="font-size:12.5px;">
-								<a href="javascript:onEditInvoice();" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" data-activity-id="@item.act_activityId" data-product-id="@item.prd_productId" onclick=""></a>
-								
-								<a href="javascript:onDeleteInvoice();" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-btc" data-activity-id="@item.act_activityId" data-product-id="@item.prd_productId" data-invoice-no="@item.invoiceNo" onclick=""></a>
-							</td>
-
-							<td style="font-size:12.5px;"></td>
-							<td style="font-size:12.5px;text-align:right;">@item.totalCost</td>
-							@*------  display when have invoice row --------------------*@
-							<td style="font-size:12.5px;">@item.invoiceNo</td>
-							<td style="font-size:12.5px;">@item.invTotalBath</td>
-							<td style="font-size:12.5px;">@item.productBalanceBath</td>
-							<td style="font-size:12.5px;">@Html.DisplayFor(x => item.invActionDate) </td>
-							@*--------------------------------------------------*@
-							<td style="font-size:12.5px;">@item.invoiceProductStatusNameTH</td>
-						</tr>
-					}
-
-					index++;
+					@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo)
 				}
-			}
-		</tbody>
-	</table>
+			</h4>
+			<p></p>
+		</div>
+
+		<table class="table table-hover" id="content">
+			<thead class="thead-dark">
+				<tr style="background-color:#2B5D95;color:#ffffff;">
+					<th class="align-content-center font12B"></th>
+					<th class="align-content-center font12B" style="width:10%;">ประเภทกิจกรรม</th>
+					<th class="align-content-center font12B" style="width:20%;">กลุ่มสินค้า/ชื่อสินค้า/Remark</th>
+					<th class="align-content-center font12B">จำนวนเงินที่ตั้ง</th>
+					<th class="align-content-center font12B">เลขที่ใบแจ้งหนี้</th>
+					@*<th class="align-content-center font12B">เลขที่ใบสำคัญจ่าย</th>
+					<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
+					<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>*@
+					<th class="align-content-center font12B">จำนวนเงินจ่าย</th>
+					<th class="align-content-center font12B">ผลต่าง-บาท</th>
+					<th class="align-content-center font12B">วันที่ทำรายการ</th>
+					<th class="align-content-center font12B" style="width:20%;">สถานะ</th>
+				</tr>
+			</thead>
+
+			<tbody>
+					@if (Model.Budget_Activity_Product_list.Count > 0)
+					{
+						var index = 0;
+						foreach (var item in Model.Budget_Activity_Product_list)
+						{
+							if (@item.invoiceSeq == 0)
+							{
+								<tr class="gradeX" style="background-color:whitesmoke;">
+									<td>
+										<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-btc" onclick="javascript:onSelectProduct('@item.act_activityId','@item.prd_productId','');"></a>
+									</td>
+
+									<td style="font-size:12.5px;">@item.act_typeTheme</td>
+									<td style="font-size:12.5px;">@item.prd_productDetail</td>
+									<td style="font-size:12.5px;text-align:right;">@item.totalCost</td>
+									@*------  display when have invoice row --------------------*@
+									<td style="font-size:12.5px;"></td>
+									<td style="font-size:12.5px;"></td>
+									<td style="font-size:12.5px;"></td>
+									<td style="font-size:12.5px;"></td>
+									@*--------------------------------------------------*@
+									<td style="font-size:12.5px;">ตั้งจ่าย</td>
+								</tr>
+							}
+							else
+							{
+								<tr class="gradeX">
+									<td></td>
+
+									<td style="font-size:12.5px;">
+										<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectProduct('@item.act_activityId','@item.prd_productId','@item.invoiceId');"></a>
+
+										@*<a href="javascript:onDeleteInvoice();" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-btc" data-activity-id="@item.act_activityId" data-product-id="@item.prd_productId" data-invoice-no="@item.invoiceNo" onclick=""></a>*@
+										<a href="javascript:" target="_blank" onclick="return onDelete('@item.act_activityId','@item.prd_productId','@item.invoiceNo');">
+											<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+										</a>
+
+									</td>
+
+									<td style="font-size:12.5px;"></td>
+									<td style="font-size:12.5px;text-align:right;">@item.productStandBath</td>
+									@*------  display when have invoice row --------------------*@
+									<td style="font-size:12.5px;">@item.invoiceNo</td>
+									<td style="font-size:12.5px;">@item.invTotalBath</td>
+									<td style="font-size:12.5px;">@item.productBalanceBath</td>
+									<td style="font-size:12.5px;">@Html.DisplayFor(x => item.invActionDate) </td>
+									@*--------------------------------------------------*@
+									<td style="font-size:12.5px;">@item.invoiceProductStatusNameTH</td>
+								</tr>
+							}
+
+							index++;
+						}
+					}
+			</tbody>
+		</table>
+		
+		<div id='myModal' class="modal fade" role="dialog">
+			<div id='myModalContent'></div>
+		</div>
 
 
-	<div id='myModal' class="modal fade" role="dialog">
-		<div id='myModalContent'></div>
-	</div>
 
-	<script>
+		@*<div id='myEditModal' class="modal fade" role="dialog">
+			<div id='myEditModalContent'></div>
+		</div>*@
 
-		function onDeleteInvoice() {
-			//var TeamDetailPostBackURL = '/Budget/PreviewBudgetInvoice';
-			debugger;
-			var $buttonClicked = $(this);
-			var var_activityId = $buttonClicked.attr('data-activity-id');
-			var var_productId = $buttonClicked.attr('data-product-id');
-			var var_invoiceNo = $buttonClicked.attr('data-invoice-no');
+		<script>
 
-			$.ajax({
-				type: "GET",
-				url: '@Url.Action("delInvoiceDetail", "Budget")',
-				contentType: "application/json; charset=utf-8",
-				data: {
-					"activityId": var_activityId,
-					"invoiceNo": var_invoiceNo,
-					"productId": var_productId
-				},
-				datatype: "json",
-				success: function (data) {
-					//debugger;
-					//$('#myModalContent').html(data);
-					//$('#myModal').modal(options);
-					//$('#myModal').modal('show');
+    function onDelete(actId,prdId,invNo) {
+        var msg = "";
 
-				},
-				error: function () {
-					alert("Dynamic content load failed.");
-				}
-			});
-		}
+            // can be delete
+		msg = "คุณต้องการลบเอกสาร " + invNo +" นี้หรือไม่?"
 
+        bootbox.confirm({
+            title: "Confirm Message",
+            message: msg,
+            buttons: {
+                confirm: {
+                    label: "Yes",
+                    className: "btn-success"
+                },
+                cancel: {
+                    label: "No",
+                    className: "btn-danger"
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("delInvoiceDetail", "Budget")',
+                        data: {
+                            actId: actId,
+							prdId: prdId,
+							invNo: invNo,
+						},
+						success: function (response) {
+							console.log(response.success);
+							window.location.reload()
+						}
 
-		function onSelectProduct() {
+					})
+                }
+            }
+        });
+    }
+
+		function onSelectProduct(actId, prdId,invId) {
 			var TeamDetailPostBackURL = '/Budget/PreviewBudgetInvoice';
 			debugger;
-			var $buttonClicked = $(this);
-			var var_activityId = $buttonClicked.attr('data-activity-id');
-			var var_productId = $buttonClicked.attr('data-product-id');
+			//var $buttonClicked = $(this);
+			var var_activityId = actId;
+			var var_productId = prdId;
+			var var_invoiceId = invId;
 			var options = { "backdrop": "static", keyboard: true };
 
 			$.ajax({
@@ -149,7 +172,8 @@
 				contentType: "application/json; charset=utf-8",
 				data: {
 					"activityId": var_activityId,
-					"productId": var_productId
+					"productId": var_productId,
+					"invoiceId": var_invoiceId
 				},
 				datatype: "json",
 				success: function (data) {
@@ -157,7 +181,6 @@
 					$('#myModalContent').html(data);
 					$('#myModal').modal(options);
 					$('#myModal').modal('show');
-
 				},
 				error: function () {
 					alert("Dynamic content load failed.");
@@ -166,43 +189,12 @@
 		}
 
 
-		//var TeamDetailPostBackURL = '/Budget/PreviewBudgetInvoice';
-		//$(function  () {
-		//	$(".anchorDetail").click(function () {
-		//		debugger;
-		//		var $buttonClicked = $(this);
-		//		var var_activityId = $buttonClicked.attr('data-activity-id');
-		//		var var_productId = $buttonClicked.attr('data-product-id');
-		//		var options = { "backdrop": "static", keyboard: true };
-		//		//alert("Dynamic content activityId : " + activityId);
-		//		//alert("Dynamic content productId : " + productId);
-
-		//		$.ajax({
-		//			type: "GET",
-		//			url: TeamDetailPostBackURL,
-		//			contentType: "application/json; charset=utf-8",
-		//			data: {
-		//				"activityId": var_activityId,
-		//				"productId": var_productId
-		//			},
-		//			datatype: "json",
-		//			success: function (data) {
-		//				debugger;
-		//				$('#myModalContent').html(data);
-		//				$('#myModal').modal(options);
-		//				$('#myModal').modal('show');
-
-		//			},
-		//			error: function () {
-		//				alert("Dynamic content load failed.");
-		//			}
-		//		});
-		//	});
+	//	//$("#closbtn").click(function () {
+	//	//	$('#myModal').modal('hide');
+	//	//});
 
 
-		//	//$("#closbtn").click(function () {
-		//	//	$('#myModal').modal('hide');
-		//	//});
-		//});
 
-	</script>
+
+
+		</script>
