@@ -17,7 +17,7 @@
             url: '@Url.Action("genPdfApprove", "Approve")',
             data: {
                 GridHtml: $("#Grid").html(),
-                statusId: $("ddlStatus").val(),
+                statusId: $("#ddlStatus").val(),
                 activityId: $("#HdId").val()
             },
             dataType: "json",
@@ -253,9 +253,9 @@
                             <td width="10%" style="font-size:12.5px;">% Growth</td>
                             <td width="15%" style="font-size:12.5px;">ค่าใช้จ่ายรวม Spending Exp. (Bath)</td>
                         </tr>
-                        @if (Model.productcostdetaillist.Any())
+                        @if (Model.activitydetaillist.Any())
                         {
-                            foreach (var item in Model.costthemedetail)
+                            foreach (var item in Model.activitydetaillist)
                             {
                                 <tr>
                                     <td style="font-size:12.5px;">@item.typeTheme</td>

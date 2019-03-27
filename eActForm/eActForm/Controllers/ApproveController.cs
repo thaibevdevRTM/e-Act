@@ -80,13 +80,13 @@ namespace eActForm.Controllers
             var resultAjax = new AjaxResult();
             try
             {
-                AppCode.genPdfFile(GridHtml, activityId);
                 if( statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
                     EmailAppCodes.sendRejectActForm(activityId);
                 }
-                else
+                else if( statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
+                    AppCode.genPdfFile(GridHtml, activityId);
                     EmailAppCodes.sendApproveActForm(activityId);
                 }
                 resultAjax.Success = true;
