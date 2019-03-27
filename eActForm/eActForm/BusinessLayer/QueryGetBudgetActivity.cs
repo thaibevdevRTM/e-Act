@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
-	public class QueryBudgetBiz
+    public class QueryBudgetBiz
     {
         public static List<Budget_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityNo)
         {
@@ -68,19 +69,18 @@ namespace eActForm.BusinessLayer
             }
         }
 
-		public static List<Budget_Activity_Model.Budget_Activity_Product_Att> getBudgetActivityProduct(string act_activityID, string prd_productID, string inv_invoiceID)
+		public static List<Budget_Activity_Model.Budget_Activity_Product_Att> getBudgetActivityProduct(string act_activityID, string prd_productID)
 		{
 			try
 			{
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivityProduct"
 				 , new SqlParameter("@activityID", act_activityID)
-				 , new SqlParameter("@productID", prd_productID)
-				 , new SqlParameter("@invoiceID", inv_invoiceID));
+				 , new SqlParameter("@productID", prd_productID));
 
 				var result = (from DataRow d in ds.Tables[0].Rows
 							  select new Budget_Activity_Model.Budget_Activity_Product_Att()
 							  {
-								  act_activityId = d["act_activityId"].ToString(),
+								  act_activityFormId = d["act_activityFormId"].ToString(),
 								  act_activityNo = d["act_activityNo"].ToString(),
 								  prd_productId = d["prd_productId"].ToString(),
 								  act_typeTheme = d["act_typeTheme"].ToString(),
@@ -88,26 +88,29 @@ namespace eActForm.BusinessLayer
 								  normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(d["normalCost"].ToString()),
 								  themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(d["themeCost"].ToString()),
 								  totalCost = d["totalCost"].ToString() == "" ? 0 : decimal.Parse(d["totalCost"].ToString()),
-
-								  invoiceId = d["invoiceId"].ToString(),
-								  invoiceNo = d["invoiceNo"].ToString(),
-								  invTotalBath = d["invTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invTotalBath"].ToString()),
-
-								  productStandBath = d["productStandBath"].ToString() == "" ? 0 : decimal.Parse(d["productStandBath"].ToString()),
-								  productBalanceBath = d["productBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["productBalanceBath"].ToString()),
 								  invoiceProductStatusId = d["invoiceProductStatusId"].ToString(), /*สภานะเงินของรายการ product*/
 								  invoiceProductStatusNameTH = d["invoiceProductStatusNameTH"].ToString(), /*สภานะเงินของรายการ product*/
-								  invoiceSeq = d["invoiceSeq"].ToString() == "" ? 0 : int.Parse(d["invoiceSeq"].ToString()),
-								  invActionDate = d["invActionDate"] is DBNull ? null : (DateTime?)d["invActionDate"],
-								  //invActionDate = DateTime.Parse(d["invActionDate"].ToString()), /*วันที่ทำรายการ*/
-								  //invActionDate = DateTime.ParseExact(d["invActionDate"].ToString(), "MM/dd/yyyy HH:mm:ss"),
 
+								  //invoiceNo = d["invoiceNo"].ToString(),
+								  //invoiceSeq = d["invoiceSeq"].ToString() == "" ? 0 : int.Parse(d["invoiceSeq"].ToString()),
 								  //paymentNo = d["paymentNo"].ToString(),     /*ใบสำคัญจ่าย*/
 								  //saleActCase = d["saleActCase"].ToString() == "" ? 0 : decimal.Parse(d["saleActCase"].ToString()),    /*ยอดขายช่วงทำกิจกรรม case*/
 								  //saleActBath = d["saleActBath"].ToString() == "" ? 0 : decimal.Parse(d["saleActBath"].ToString()),    /*ยอดขายช่วงทำกิจกรรม bath*/
 								  //invTotalBath = d["invTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invTotalBath"].ToString()),   /*จำนวนเงินจ่าย*/
 								  //balanceBath = d["balanceBath"].ToString() == "" ? 0 : decimal.Parse(d["balanceBath"].ToString()),    /*ผลต่าง ดูก่อนอาจไม่เก็บใช้คำนวนแทน ถ้าเก็บน่าจะเก็บที่ระดับกิจกรรม*/
+				  				  //actionDate = DateTime.Parse(d["actionDate"].ToString()) == "" ? "" : DateTime.Parse(d["actionDate"].ToString()), /*วันที่ทำรายการ*/
 
+								  productSeq = d["productSeq"].ToString() == "" ? 0 : int.Parse(d["productSeq"].ToString()),
+								  prd_cate_productCateText = d["prd_cate_productCateText"].ToString(),
+								  prd_group_groupName = d["prd_group_groupName"].ToString(),
+								  productCode = d["productCode"].ToString(),
+								  productName = d["productName"].ToString(),
+								  size = d["size"].ToString(),
+								  unit = d["unit"].ToString() == "" ? 0 : decimal.Parse(d["unit"].ToString()),
+								  smellId = d["smellId"].ToString(),
+								  smell_nameTH = d["smell_nameTH"].ToString(),
+								  smell_nameEN = d["smell_nameEN"].ToString(),
+								  brand_Name = d["brand_Name"].ToString(),
 							  });
 
 				return result.ToList();
