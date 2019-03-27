@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using WebLibrary;
@@ -17,6 +18,13 @@ namespace eActForm.BusinessLayer
 
             int rtn = 0;
             model.activityFormModel.id = activityId;
+
+            model.activityFormModel.documentDate = DateTime.ParseExact(model.activityFormModel.dateDoc, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            model.activityFormModel.activityPeriodSt = DateTime.ParseExact(model.activityFormModel.str_activityPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            model.activityFormModel.activityPeriodEnd = DateTime.ParseExact(model.activityFormModel.str_activityPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            model.activityFormModel.costPeriodSt = DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            model.activityFormModel.costPeriodEnd = DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
             model.activityFormModel.activityNo = model.activityFormModel.activityNo != null ? model.activityFormModel.activityNo : "---";
             model.activityFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
             model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -352,7 +360,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusActivityForm"
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_InsertNumDocAndStatusActFormByActId"
                     , new SqlParameter[] {new SqlParameter("@statusId",statusId)
                     ,new SqlParameter("@activityId",activityId)
                     ,new SqlParameter("@genActivityDoc",genNumDoc)
@@ -360,7 +368,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> updateStatusActivity");
+                ExceptionManager.WriteError(ex.Message + ">> updateStatusGenDocActivity");
             }
 
             return result;

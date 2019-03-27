@@ -112,6 +112,7 @@ namespace eActForm.Controllers
         public ActionResult PreviewData(string activityId)
         {
             Activity_Model activityModel = new Activity_Model();
+           
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
@@ -291,7 +292,7 @@ namespace eActForm.Controllers
                         r.promotionGp = p_PromotionGp;
                         r.specialDisc = decimal.Parse(checkNullorEmpty(specialDisc));
                         r.specialDiscBaht = decimal.Parse(checkNullorEmpty(specialDiscBaht));
-                        r.normalCost = p_disCount3;
+                        r.normalCost = p_disCount3 == 0 ? p_wholeSalesPrice : p_disCount3;
                         r.promotionCost = p_PromotionCost;
                         return r;
                     }).ToList();
@@ -546,7 +547,7 @@ namespace eActForm.Controllers
 
         public string checkNullorEmpty(string p)
         {
-            return p == "" || p == null || p == "0" ? "0" : p;
+            return p == "" || p == null || p == "0" || p == "0.00" ? "0" : p;
         }
 
 

@@ -1869,20 +1869,6 @@
     <Content Include="Content\vendors\datatables.net-bs\.bower.json" />
     <Content Include="Content\vendors\datatables.net-bs\bower.json" />
     <Content Include="Content\vendors\datatables.net-bs\Readme.md" />
-    <Content Include="ActivityFormPdf\.pdf" />
-    <Content Include="ActivityFormPdf\03CEB2F2-21FF-4A41-8907-DF569864FB9E.pdf.pdf" />
-    <Content Include="ActivityFormPdf\16183E64-A348-4120-93C5-0FA86D9E574A.pdf.pdf" />
-    <Content Include="ActivityFormPdf\2E8F7C33-9B7E-4171-9B85-89739C1DE2C2.pdf" />
-    <Content Include="ActivityFormPdf\43EA629D-5CEB-4B98-ACF3-121D41AC9D05.pdf.pdf" />
-    <Content Include="ActivityFormPdf\57B4DCA7-475C-407C-B101-D5918858D269.pdf" />
-    <Content Include="ActivityFormPdf\7334B951-812C-47A5-A6CC-08DE53DB75DD.pdf" />
-    <Content Include="ActivityFormPdf\889CEC4B-C726-413C-B8FE-526F96E3D1C3.pdf.pdf" />
-    <Content Include="ActivityFormPdf\94cdc185-2dd1-4ccf-ba80-8fc03324a831.pdf.pdf" />
-    <Content Include="ActivityFormPdf\9C0DFB2A-C2AC-4CD7-9CFC-EB1086D3047D.pdf.pdf" />
-    <Content Include="ActivityFormPdf\A56C6D20-8C36-4725-A0A0-7B0F0B6EA471" />
-    <Content Include="ActivityFormPdf\A56C6D20-8C36-4725-A0A0-7B0F0B6EA471.pdf" />
-    <Content Include="ActivityFormPdf\AD3AE9BB-56DA-453A-922C-471CBBA4A0BF.pdf.pdf" />
-    <Content Include="ActivityFormPdf\C67853F7-972F-414B-9BA2-F138A7A6E96C.pdf" />
     <Content Include="Content\vendors\nprogress\.bower.json" />
     <Content Include="Content\vendors\nprogress\bower.json" />
     <Content Include="Content\vendors\nprogress\component.json" />
@@ -1981,6 +1967,7 @@
     <Content Include="Content\vendors\jquery-sparkline\README.md" />
     <Content Include="Content\vendors\jquery-sparkline\sparkline.jquery.json" />
     <Content Include="Content\vendors\bootstrap-datepicker\LICENSE" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -2000,23 +1987,6 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="signature\70008316.png" />
-    <Content Include="Uploadfiles\ActivityForm\120710 - Copy %282%29_97C60FD8-EE7E-4F9F-9BAD-39D49B31AFD2.jpg" />
-    <Content Include="Uploadfiles\ActivityForm\128_1dddc229-b80f-4cec-af12-0a52e92758ad_B613DDF4-914D-4F6E-8FD6-09058414ACCE.png" />
-    <Content Include="Uploadfiles\ActivityForm\128_c7f5c883-676e-4eb8-9868-a6135c798618_B613DDF4-914D-4F6E-8FD6-09058414ACCE.png" />
-    <Content Include="Uploadfiles\ActivityForm\1_97C60FD8-EE7E-4F9F-9BAD-39D49B31AFD2.jpg" />
-    <Content Include="Uploadfiles\ActivityForm\20190112_172347_5260D9C7-A9D5-4E41-8221-9075DA250D6E.jpg" />
-    <Content Include="Uploadfiles\ActivityForm\20190112_172347_9FCD1F50-C470-45DD-8332-2A5EE82786C1.jpg" />
-    <Content Include="Uploadfiles\ActivityForm\20190112_172347_F5BFC769-D25F-413B-ABD6-96D260E5D0FE.jpg" />
-    <Content Include="Uploadfiles\ActivityForm\MTM_Processpng_9FCD1F50-C470-45DD-8332-2A5EE82786C1.png" />
-    <Content Include="Uploadfiles\ActivityForm\MTM_Processpng_manual_1C098BA1-561F-4211-888B-71E3C110E224.png" />
-    <Content Include="Uploadfiles\ActivityForm\myTravel_5260D9C7-A9D5-4E41-8221-9075DA250D6E.png" />
-    <Content Include="Uploadfiles\ActivityForm\myTravel_9FCD1F50-C470-45DD-8332-2A5EE82786C1.png" />
-    <Content Include="Uploadfiles\ActivityForm\pic_B45BAAD9-768C-438F-814E-747F1B4DBF28.jpg" />
-    <Content Include="Uploadfiles\ActivityForm\proxy_error_ac876cb3-bff9-4664-b4bb-01e989141cf8.png" />
-    <Content Include="Uploadfiles\ActivityForm\sign_27857EE2-106C-4CC3-B8BC-77D3E292DC3F.jpg" />
-    <Content Include="Uploadfiles\ActivityForm\sign_D0132CE7-806A-40C6-AF21-E52F2D91EEB0.jpg" />
-    <Content Include="Uploadfiles\ActivityForm\sign_D09F7631-6BA2-4186-A0CD-5512E3965C4F.jpg" />
     <Content Include="WebForm1.aspx" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -2034,7 +2004,6 @@
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -2088,15 +2057,19 @@
     <Content Include="Views\Activity\ImageList.cshtml" />
     <Content Include="Views\Approve\approvePositionSignatureLists.cshtml" />
     <Content Include="Views\Approve\previewApprove.cshtml" />
-    <Content Include="Uploadfiles\ActivityForm\ActivityForm.pdf" />
-    <Content Include="Uploadfiles\ActivityForm\ActivityFormpdf" />
+    <Content Include="Views\ApproveLists\index.cshtml" />
+    <Content Include="Views\ApproveLists\ListView.cshtml" />
+    <Content Include="Views\Home\approveLists.cshtml" />
     <Content Include="Views\Budget\activityList.cshtml" />
     <Content Include="Views\Budget\EditForm.cshtml" />
     <Content Include="Views\Budget\PreviewBudgetInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ActivityFormPdf\" />
     <Folder Include="App_Data\" />
     <Folder Include="error\" />
+    <Folder Include="signature\" />
+    <Folder Include="Uploadfiles\ActivityForm\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\eAct\" />
   </ItemGroup>
