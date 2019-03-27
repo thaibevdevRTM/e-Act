@@ -230,7 +230,7 @@ namespace eActForm.Controllers
                             r.growth = p_growth;
                             r.themeCost = decimal.Parse(themeCost);
                             r.total = p_total;
-                            r.perTotal = p_growth;
+                            r.perTotal = get_PerTotal;
                             return r;
                         }).ToList();
 

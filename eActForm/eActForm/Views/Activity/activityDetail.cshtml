@@ -92,9 +92,9 @@
                         <td>
                             @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
                         </td>
-                        <td>@Html.TextBoxFor(model => item.growth, "{0:n0}%", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font12" })</td>
+                        <td>@Html.TextBoxFor(model => item.growth, "{0:n2}%", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font12" })</td>
                         <td>@Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font12" })</td>
-                        <td>@Html.TextBoxFor(model => item.perTotal, "{0:n0}%", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font12" })</td>
+                        <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}%", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font12" })</td>
 
                     </tr>
                     total = item.normalCost == null ? 0 + total : item.total + total;
@@ -129,7 +129,7 @@
                         @if (activityTotal != 0 && normalTotal != 0)
                         {
                             growthTotal = (activityTotal - normalTotal) / normalTotal;
-                            string result = String.Format("{0:n0}%", @growthTotal);
+                            string result = String.Format("{0:n2}%", @growthTotal);
                             @result.ToString();
 
                         }
@@ -149,7 +149,7 @@
                         @if (total != 0 && activityTotal != 0)
                         {
                             perTotal = total * 100 / activityTotal;
-                            string result = String.Format("{0:n0}%", @perTotal);
+                            string result = String.Format("{0:n2}%", @perTotal);
                             @result.ToString();
                         }
                     </p>

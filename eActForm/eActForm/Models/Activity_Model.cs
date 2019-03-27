@@ -159,7 +159,7 @@ namespace eActForm.Models
         public decimal? normalCost { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? themeCost { get; set; }
-        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? growth { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? total { get; set; }
