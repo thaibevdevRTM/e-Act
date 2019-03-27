@@ -31,11 +31,6 @@ namespace eActForm.Models
             , Success = 4
             , ไม่อนุมัติ = 5
         }
-        public enum StatusType
-        {
-            app, // approve
-            doc // document
-        }
 
         public static MemoryStream GetFileReportTomail_Preview(string GridHtml)
         {
@@ -92,7 +87,7 @@ namespace eActForm.Models
         }
         public static List<Attachment> genPdfFile(string GridHtml, string activityId)
         {
-            //GridHtml = GridHtml.Replace("\n", "");
+            GridHtml = GridHtml.Replace("\n", "");
             ContentType xlsxContent = new ContentType("application/pdf");
             MemoryStream msPreview = new MemoryStream();
             byte[] PreviewBytes = new byte[0];

@@ -19,42 +19,6 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actFormId);
-                if( models.approveDetailLists != null && models.approveDetailLists.Count > 0)
-                {
-                    #region get mail to
-                    var lists = (from m in models.approveDetailLists
-                                 where (m.statusId != "")
-                                 select m).ToList();
-                    string strMailTo = "";
-                    foreach (ApproveModel.approveDetailModel m in lists)
-                    {
-                        strMailTo = (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email
-                    }
-                    List<ApproveModel.approveDetailModel> createUsers =  ActFormAppCode.getUserCreateActForm(actFormId);
-                    foreach(ApproveModel.approveDetailModel m in createUsers)
-                    {
-                        strMailTo = (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email
-                    }
-                    #endregion
-
-                    var empUser = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList(); // get current user
-                    string strBody = string.Format(ConfigurationManager.AppSettings["emailRejectBody"]
-                        , models.approveModel.actNo
-                        , empUser.FirstOrDefault().empPrefix + " " + empUser.FirstOrDefault().empName
-                        , empUser.FirstOrDefault().remark
-                        );
-
-                    List<Attachment> files = new List<Attachment>();
-                    string pathFile = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
-                    files.Add(new Attachment(pathFile, new ContentType("application/pdf")));
-
-                    sendEmail("parnupong.k@thaibev.com"//strMailTo
-                        , ConfigurationManager.AppSettings["emailApproveCC"]
-                        , ConfigurationManager.AppSettings["emailRejectSubject"]
-                        , strBody
-                        , files);
-                }
                 return "";
             }
             catch (Exception ex)
