@@ -26,6 +26,31 @@ namespace eActForm.BusinessLayer
                 throw new Exception("deleteActForm >>" + ex.Message);
             }
         }
+        public static List<ApproveModel.approveDetailModel> getUserCreateActForm(string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserCreateActivityForm"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveModel.approveDetailModel()
+                             {
+                                 empId = dr["empId"].ToString(),
+                                 empName = dr["empName"].ToString(),
+                                 empEmail = dr["empEmail"].ToString(),
+                                 delFlag = (bool)dr["delFlag"],
+                                 createdDate = (DateTime?)dr["createdDate"],
+                                 createdByUserId = dr["createdByUserId"].ToString(),
+                                 updatedDate = (DateTime?)dr["updatedDate"],
+                                 updatedByUserId = dr["updatedByUserId"].ToString()
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getUserCreateActForm >>" + ex.Message);
+            }
+        }
         public static List<Activity_Model.actForm> getActFormByEmpId(string empId)
         {
             try
