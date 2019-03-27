@@ -146,9 +146,9 @@
     function callPreviewApprove(obj) {
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("previewApprove", "Approve")',
+            url:  '@Url.Action("PreviewData", "Activity")',
             data: {
-                actId: obj
+                activityId: obj
             }
         }).done(function (htmlResponse) {
             $("#divPreviewApprove").html(htmlResponse)
