@@ -19,7 +19,12 @@ namespace eActForm.BusinessLayer
             int rtn = 0;
             model.activityFormModel.id = activityId;
 
-            //model.activityFormModel.documentDate = DateTime.ParseExact(model.activityFormModel.documentDate.Value.ToString(), "dd/MM/yyyy", null);
+            model.activityFormModel.documentDate = DateTime.ParseExact(model.activityFormModel.dateDoc, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            model.activityFormModel.activityPeriodSt = DateTime.ParseExact(model.activityFormModel.str_activityPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            model.activityFormModel.activityPeriodEnd = DateTime.ParseExact(model.activityFormModel.str_activityPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            model.activityFormModel.costPeriodSt = DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            model.activityFormModel.costPeriodEnd = DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
             model.activityFormModel.activityNo = model.activityFormModel.activityNo != null ? model.activityFormModel.activityNo : "---";
             model.activityFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
             model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
