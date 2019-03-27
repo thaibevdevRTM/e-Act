@@ -62,7 +62,7 @@
                         }
                         else
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" , @Value = @DateTime.Today.ToString("dd/MM/yyyy") })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" , @Value = @DateTime.Today.ToString("dd-MM-yyyy") })
 
                         }
                     </div>
