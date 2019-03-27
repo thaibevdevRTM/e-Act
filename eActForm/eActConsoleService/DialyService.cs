@@ -31,7 +31,7 @@ namespace eActConsoleService
                             m.empEmail = Properties.Settings.Default.strDefaultEmail;
                         }
                         strName = m.empPrefix + " " + m.empFNameTH + " " + m.empLNameTH;
-                            strBody = string.Format(Properties.Settings.Default.strBody, strName, m.waitingCount,Properties.Settings.Default.strUrlApprove);
+                            strBody = string.Format(Properties.Settings.Default.strBody, strName, m.waitingCount);
                             new MailOffice365G(Properties.Settings.Default.strMailUser
                                 , Properties.Settings.Default.strMailPassword
                                 , Properties.Settings.Default.strMailUser

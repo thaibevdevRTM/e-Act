@@ -4,48 +4,30 @@
     decimal? totalActCost = 0;
     decimal? costActivity = 0;
     decimal? costProduct = 0;
-    decimal? perTotal = 0;
 }
 
 <script>
-    function submitPreview() {
+   function submitPreview() {
 
-        bootbox.confirm({
-            message: "ยืนยัน บันทึกข้อมูล!",
-            buttons: {
-                confirm: {
-                    label: 'Yes',
-                    className: 'btn-success'
-                },
-                cancel: {
-                    label: 'No',
-                    className: 'btn-danger'
-                }
+         bootbox.confirm("ยืนยัน บันทึกข้อมูล!", function (result) {
+             bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
+            $.ajax({
+            url: '@Url.Action("submitPreview", "Activity")',
+            data: {
+                GridHtml: $("#Grid").html(),
+                status: 2,
+                activityId: $("#HdId").val(),
             },
-            callback: function (result) {
-                if (result == true) {
-                    console.log(result);
-                    bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
-                    $.ajax({
-                        url: '@Url.Action("submitPreview", "Activity")',
-                        data: {
-                            GridHtml: $("#Grid").html(),
-                            status: 2,
-                            activityId: $("#HdId").val(),
-                        },
-                        dataType: "json",
-                        type: 'POST',
-                    }).done(function (response) {
-                        var url = '@Url.Action("Index", "Home")';
-                        window.location.href = url;
+            dataType: "json",
+            type: 'POST',
+            }).done(function (response) {
+                var url = '@Url.Action("Index", "Home")';
+                window.location.href = url;
 
-                        console.log('success');
-                    });
-                }
-            }
-
-        });
-    }
+                console.log('success');
+                 });
+         });
+      }
 </script>
 
 
@@ -87,7 +69,7 @@
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">Document Date</td>
                             <td></td>
-                            <td class="cssborderbottom" style="font-size:12.5px;">@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy") </td>
+                            <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.documentDate) </td>
                         </tr>
                         <tr>
                             <td></td>
@@ -143,17 +125,7 @@
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">ระยะเวลากิจกรรม</td>
                             <td></td>
-                            <td style="font-size:12.5px;">
-                                @if (Model.activityFormModel.activityPeriodSt != null)
-                                {
-                                    @Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy")
-                                }
-                                To
-                                @if (Model.activityFormModel.activityPeriodEnd != null)
-                                {
-                                    @Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy")
-                                }
-                            </td>
+                            <td style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.activityPeriodSt) To @Html.DisplayFor(item => item.activityFormModel.activityPeriodEnd)</td>
                         </tr>
                         <tr>
                             @if (Model.activityFormModel != null)
@@ -179,17 +151,7 @@
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">ระยะเวลาการให้ทุนพิเศษ</td>
                             <td></td>
-                            <td style="font-size:12.5px;">
-                                @if (Model.activityFormModel.costPeriodSt != null)
-                                {
-                                    @Model.activityFormModel.costPeriodSt.Value.ToString("dd/MM/yyyy")
-                                }
-                                To
-                                @if (Model.activityFormModel.costPeriodEnd != null)
-                                {
-                                    @Model.activityFormModel.costPeriodEnd.Value.ToString("dd/MM/yyyy")
-                                }
-                            </td>
+                            <td style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.costPeriodSt) To @Html.DisplayFor(item => item.activityFormModel.costPeriodEnd)</td>
                         </tr>
                         <tr>
                             <td></td>
@@ -251,7 +213,7 @@
                             {
                                 <tr>
                                     <td style="font-size:12.5px;">@item.productName</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
+                                    <td style="font-size:12.5px;">@item.wholeSalesPrice</td>
                                     <td style="font-size:12.5px;">@Html.DisplayFor(m => item.disCount1)</td>
                                     <td style="font-size:12.5px;">@Html.DisplayFor(m => item.disCount2)</td>
                                     <td style="font-size:12.5px;">@Html.DisplayFor(m => item.disCount3)</td>
@@ -300,10 +262,9 @@
                                     <td style="font-size:12.5px;">@Html.DisplayFor(m => item.growth)</td>
                                     <td style="font-size:12.5px;">@Html.DisplayFor(m => item.total)</td>
                                 </tr>
-
-                                totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
-                                costProduct = item.normalCost == null ? 0 + costProduct : item.normalCost + costProduct;
-                                costActivity = item.themeCost == null ? 0 + costActivity : item.themeCost + costActivity;
+                                totalActCost = totalActCost + item.total;
+                                costProduct = costProduct + item.normalCost;
+                                costActivity = costActivity + item.themeCost;
                             }
                         }
 
@@ -312,29 +273,24 @@
                             <td style="border:none; border-bottom:none;"></td>
                             <td style="text-align:right; border:none; border-bottom:none;">รวม</td>
                             <td>
-                                @if (costProduct != 0)
+                                @if (costProduct != null)
                                 {
                                     string result = String.Format("{0:n2}", @costProduct);
                                     @result.ToString();
                                 }
                             </td>
                             <td>
-                                @if (costActivity != 0)
+                                @if (costActivity != null)
                                 {
                                     string result = String.Format("{0:n2}", @costActivity);
                                     @result.ToString();
                                 }
                             </td>
                             <td>
-                                @if (totalActCost != 0 && costActivity != 0)
-                                {
-                                    perTotal = (costActivity - costProduct) / costProduct;
-                                    string result = String.Format("{0:p0}", @perTotal);
-                                    @result.ToString();
-                                }
+                               
                             </td>
                             <td>
-                                @if (totalActCost != 0)
+                                @if (totalActCost != null)
                                 {
                                     string result = String.Format("{0:n2}", @totalActCost);
                                     @result.ToString();

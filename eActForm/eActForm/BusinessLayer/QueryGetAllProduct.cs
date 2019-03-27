@@ -145,7 +145,7 @@ namespace eActForm.BusinessLayer
                                  size = d["size"].ToString() == "" ? "0" : d["size"].ToString(),
                                  unit = d["unit"].ToString() == "" ? 0 : Convert.ToInt32(d["unit"].ToString()),
                                  litre = d["litre"].ToString() == "" ? 0 : Convert.ToInt32(d["litre"].ToString()),
-                                 pack = d["pack"].ToString() == "" ? -1 : Convert.ToInt32(d["pack"].ToString()),
+                                 pack = d["pack"].ToString() == "" ? 0 : Convert.ToInt32(d["pack"].ToString()),
                                  delFlag = (bool)d["delFlag"],
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),
