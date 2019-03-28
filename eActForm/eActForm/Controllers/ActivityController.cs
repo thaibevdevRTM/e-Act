@@ -262,6 +262,12 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
+                normalCost = normalCost.Replace(",", "");
+                wholeSalesPrice = wholeSalesPrice.Replace(",", "");
+                saleOut = saleOut.Replace(",", "");
+                saleIn = saleIn.Replace(",", "");
+                normalGP = normalGP == null ? "" : normalGP.Replace(",", "");
+                promotionGP = promotionGP == null ? "" : promotionGP.Replace(",", "");
                 decimal p_wholeSalesPrice = checkNullorEmpty(wholeSalesPrice) == "0" ? 0 : decimal.Parse(checkNullorEmpty(wholeSalesPrice));
                 decimal p_disCount1 = checkNullorEmpty(disCount1) == "0" ? p_wholeSalesPrice : p_wholeSalesPrice - ((decimal.Parse(checkNullorEmpty(disCount1)) / 100) * p_wholeSalesPrice);
                 decimal p_disCount2 = checkNullorEmpty(disCount2) == "0" ? p_disCount1 : p_disCount1 - ((decimal.Parse(checkNullorEmpty(disCount2)) / 100) * p_disCount1);
@@ -269,13 +275,13 @@ namespace eActForm.Controllers
 
                 decimal getPackProduct = QueryGetAllProduct.getProductById(productId).FirstOrDefault().pack;
 
-                decimal p_normalGp = checkNullorEmpty(saleOut) == "0" || getPackProduct == -1 ? 0 : (decimal.Parse(saleOut) - (p_wholeSalesPrice * decimal.Parse("1.07"))
-                    / -getPackProduct) / decimal.Parse(saleOut);
+                decimal p_normalGp = checkNullorEmpty(saleOut) == "0" ? 0 : ((decimal.Parse(saleOut) - (p_disCount3 * decimal.Parse("1.07")))
+                    / getPackProduct / decimal.Parse(saleOut)) * 100;
               
                 decimal p_PromotionCost = checkNullorEmpty(specialDisc) == "0" && checkNullorEmpty(specialDiscBaht) == "0" || p_disCount3 == 0 ? p_disCount3 : (p_disCount3 - (p_disCount3 * (decimal.Parse(specialDisc) / 100))) - decimal.Parse(checkNullorEmpty(specialDiscBaht));
 
-                decimal p_PromotionGp = checkNullorEmpty(saleIn) == "0" ? 0 : (decimal.Parse(saleIn) - (p_PromotionCost * decimal.Parse("1.07"))
-                  / -getPackProduct) / decimal.Parse(checkNullorEmpty(saleIn));
+                decimal p_PromotionGp = checkNullorEmpty(saleIn) == "0" ? 0 : ((decimal.Parse(saleIn) - (p_PromotionCost * decimal.Parse("1.07")))
+                  / getPackProduct / decimal.Parse(checkNullorEmpty(saleIn))) * 100;
 
 
                 Activity_Model activityModel = new Activity_Model();
