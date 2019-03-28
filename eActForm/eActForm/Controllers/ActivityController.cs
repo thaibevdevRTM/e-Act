@@ -273,8 +273,8 @@ namespace eActForm.Controllers
 
                 decimal getPackProduct = QueryGetAllProduct.getProductById(productId).FirstOrDefault().pack;
 
-                decimal p_normalGp = checkNullorEmpty(saleOut) == "0" || getPackProduct == 0 ? 0 : (decimal.Parse(saleOut) - (p_wholeSalesPrice * decimal.Parse("1.07"))
-                    / getPackProduct) / decimal.Parse(saleOut);
+                decimal p_normalGp = checkNullorEmpty(saleOut) == "0" || getPackProduct == -1 ? 0 : (decimal.Parse(saleOut) - (p_wholeSalesPrice * decimal.Parse("1.07"))
+                    / -getPackProduct) / decimal.Parse(saleOut);
               
                 decimal p_PromotionCost = checkNullorEmpty(specialDisc) == "0" && checkNullorEmpty(specialDiscBaht) == "0" || p_disCount3 == 0 ? p_disCount3 : (p_disCount3 - (p_disCount3 * (decimal.Parse(specialDisc) / 100))) - decimal.Parse(checkNullorEmpty(specialDiscBaht));
 
