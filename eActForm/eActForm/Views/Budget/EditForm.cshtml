@@ -58,7 +58,7 @@
 							{
 								<tr class="gradeX" style="background-color:whitesmoke;">
 									<td>
-										<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-btc" onclick="javascript:onSelectProduct('@item.act_activityId','@item.prd_productId','');"></a>
+										<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-btc" onclick="javascript:onSelectProduct('@item.act_activityId','@item.prd_productId','@item.activityOfEstimateId','');"></a>
 									</td>
 
 									<td style="font-size:12.5px;">@item.act_typeTheme</td>
@@ -79,13 +79,13 @@
 									<td></td>
 
 									<td style="font-size:12.5px;">
-										<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectProduct('@item.act_activityId','@item.prd_productId','@item.invoiceId');"></a>
+										<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectProduct('@item.act_activityId','@item.prd_productId','@item.activityOfEstimateId','@item.invoiceId');"></a>
 
 										@*<a href="javascript:onDeleteInvoice();" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-btc" data-activity-id="@item.act_activityId" data-product-id="@item.prd_productId" data-invoice-no="@item.invoiceNo" onclick=""></a>*@
-										<a href="javascript:" target="_blank" onclick="return onDelete('@item.act_activityId','@item.prd_productId','@item.invoiceNo');">
+										<a href="javascript:" target="_blank" onclick="return onDelete('@item.act_activityId','@item.prd_productId','@item.activityOfEstimateId','@item.invoiceNo');">
 											<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
 										</a>
-
+										
 									</td>
 
 									<td style="font-size:12.5px;"></td>
@@ -118,7 +118,8 @@
 
 		<script>
 
-    function onDelete(actId,prdId,invNo) {
+			function onDelete(actId, prdId, estId, invNo) {
+				
         var msg = "";
 
             // can be delete
@@ -137,14 +138,16 @@
                     className: "btn-danger"
                 }
             },
-            callback: function (result) {
-                if (result) {
+			callback: function (result) {
+				console.log(estId);
+				if (result) {
                     $.ajax({
                         url: '@Url.Action("delInvoiceDetail", "Budget")',
                         data: {
                             actId: actId,
 							prdId: prdId,
-							invNo: invNo,
+							estId: estId,
+							invNo: invNo
 						},
 						success: function (response) {
 							console.log(response.success);
@@ -157,13 +160,14 @@
         });
     }
 
-		function onSelectProduct(actId, prdId,invId) {
+			function onSelectProduct(actId, prdId, estimateId,invId) {
 			var TeamDetailPostBackURL = '/Budget/PreviewBudgetInvoice';
 			debugger;
 			//var $buttonClicked = $(this);
 			var var_activityId = actId;
 			var var_productId = prdId;
 			var var_invoiceId = invId;
+			var var_activityOfEstimateId = estimateId;
 			var options = { "backdrop": "static", keyboard: true };
 
 			$.ajax({
@@ -173,6 +177,7 @@
 				data: {
 					"activityId": var_activityId,
 					"productId": var_productId,
+					"activityOfEstimateId": var_activityOfEstimateId,
 					"invoiceId": var_invoiceId
 				},
 				datatype: "json",

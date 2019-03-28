@@ -91,13 +91,14 @@ namespace eActForm.BusinessLayer
             }
         }
 
-		public static List<Budget_Activity_Model.Budget_Activity_Product_Att> getBudgetActivityProduct(string act_activityID, string prd_productID, string inv_invoiceID)
+		public static List<Budget_Activity_Model.Budget_Activity_Product_Att> getBudgetActivityProduct(string act_activityID, string prd_productID, string act_activityOfEstimateId, string inv_invoiceID)
 		{
 			try
 			{
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivityProduct"
 				 , new SqlParameter("@activityID", act_activityID)
 				 , new SqlParameter("@productID", prd_productID)
+				 , new SqlParameter("@activityOfEstimateID", act_activityOfEstimateId)
 				 , new SqlParameter("@invoiceID", inv_invoiceID));
 
 				var result = (from DataRow d in ds.Tables[0].Rows
@@ -106,6 +107,7 @@ namespace eActForm.BusinessLayer
 								  act_activityId = d["act_activityId"].ToString(),
 								  act_activityNo = d["act_activityNo"].ToString(),
 								  prd_productId = d["prd_productId"].ToString(),
+								  activityOfEstimateId = d["activityOfEstimateId"].ToString(),
 								  act_typeTheme = d["act_typeTheme"].ToString(),
 								  prd_productDetail = d["prd_productDetail"].ToString(),
 								  normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(d["normalCost"].ToString()),

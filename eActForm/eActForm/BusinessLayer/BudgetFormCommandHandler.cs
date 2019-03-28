@@ -25,6 +25,7 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@activityId",model.activityId)
 					,new SqlParameter("@activityNo",model.activityNo)
 					,new SqlParameter("@productId",model.productId)
+					,new SqlParameter("@activityOfEstimateId",model.activityOfEstimateId)
 					,new SqlParameter("@paymentNo",model.paymentNo)
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
 					,new SqlParameter("@invTotalBath",model.invTotalBath)
@@ -54,6 +55,7 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@activityId",model.activityId)
 					,new SqlParameter("@activityNo",model.activityNo)
 					,new SqlParameter("@productId",model.productId)
+					,new SqlParameter("@activityOfEstimateId",model.activityOfEstimateId)
 					,new SqlParameter("@paymentNo",model.paymentNo)
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
 					,new SqlParameter("@invTotalBath",model.invTotalBath)
@@ -70,7 +72,8 @@ namespace eActForm.BusinessLayer
 			return result;
 		}
 
-		public static int deleteInvoiceProduct(string activityId,string productId,string invoiceNo)
+		public static int deleteInvoiceProduct(string activityId,string productId,string estimateId, string invoiceNo)
+		//public static int deleteInvoiceProduct(string activityId, string estimateId, string invoiceNo)
 		{
 
 			int result = 0;
@@ -81,6 +84,7 @@ namespace eActForm.BusinessLayer
 				result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteBudgetActivityInvoice"
 					, new SqlParameter[] {new SqlParameter("@activityId",activityId)
 					,new SqlParameter("@productId",productId)
+					,new SqlParameter("@activityOfEstimateId",estimateId)
 					,new SqlParameter("@invoiceNo",invoiceNo)
 					});
 			}

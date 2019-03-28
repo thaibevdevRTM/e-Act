@@ -18,7 +18,7 @@ namespace eActForm.Models
 			public string id { get; set; }
 			public string activityId { get; set; }
 			public string productId { get; set; }
-
+			public string activityOfEstimateId { get; set; }
 			public string activityNo { get; set; }
 			public string paymentNo { get; set; }
 			public string invoiceNo { get; set; }
@@ -45,6 +45,7 @@ namespace eActForm.Models
 			public string act_activityId { get; set; }
 			public string act_activityNo { get; set; }
 			public string prd_productId { get; set; }
+			public string activityOfEstimateId { get; set; }
 			public string act_typeTheme { get; set; }
 			public string prd_productDetail { get; set; }
 			public decimal normalCost { get; set; }

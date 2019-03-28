@@ -16,6 +16,7 @@
 				activityId: $("#hd_activityId").val(),
 				activityNo: $("#hd_activityNo").val(),
 				productId: $("#hd_productId").val(),
+				activityOfEstimateId: $("#hd_activityOfEstimateId").val(),
 				//invoiceId: $("#hd_invoiceId").val(),
 				invoiceNo: $("#txt_invoice_no").val(),
 				invTotalBath: $("#txt_invoice_baht").val(),
@@ -30,11 +31,11 @@
 				@*var var_activityId = document.getElementById("hd_activityId").value;
 				var url = "@Url.Action("EditForm", "Budget")" + "?activityId=" + var_activityId ;
 				window.location.href = url;*@
-				
+
 				window.location.reload()
 			}
 		   })
-			
+
 
 	   @*bootbox.confirm("ยืนยัน บันทึกข้อมูล!", function (result) {
 		   if (result == true) {
@@ -85,6 +86,7 @@
 @Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).act_activityNo, new { @id = "hd_activityNo" })
 @Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).prd_productId, new { @id = "hd_productId" })
 @Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).invoiceId, new { @id = "hd_invoiceId" })
+@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).activityOfEstimateId, new { @id = "hd_activityOfEstimateId" })
 <style>
 	.font14 {
 		font-size: 14px;
@@ -189,7 +191,7 @@
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht"></td>
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action"></td>
 								<td width="10%">
-									@Html.DropDownListFor(item => item.Budget_Activity_Ststus_list, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH",2), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatusNew" })
+									@Html.DropDownListFor(item => item.Budget_Activity_Ststus_list, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 2), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatusNew" })
 								</td>
 							}
 
