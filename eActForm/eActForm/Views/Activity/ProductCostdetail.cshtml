@@ -76,12 +76,13 @@
                         {
                             <td style="text-align:right">@item.productName</td>
                         }
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font12", @readonly = true })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.saleOut, new { @id = "saleOut_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font12", @readonly = true })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.saleOut, new { @id = "saleOut_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ",saleOut_" + index +")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.saleIn, new { @id = "saleIn_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.disCount1, "{0:n0}", new { @id = "disCount1_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.disCount2, "{0:n0}", new { @id = "disCount2_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.disCount3, "{0:n0}", new { @id = "disCount3_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.disCount1, new { @id = "disCount1_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" ,
+                                                    @onfocus = "clearZero(disCount1_" + index +")" } )</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.disCount2,  new { @id = "disCount2_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.disCount3, new { @id = "disCount3_" + index, @class = "form-control textboxcss font12", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
                         <td style="text-align:right">
                             @Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "normalCost_" + index, @class = "form-control textboxcss font12",  @readonly = true })
                         </td>
@@ -116,7 +117,8 @@
     </div>
 </div>
 <script>
-    function calProductDiscount(id, rowIndex) {
+    function calProductDiscount(id, rowIndex, crt) {
+        console.log(crt);
         if ($('#wholeSalesPrice_' + rowIndex).val() != "") {
             var productId = $('#hdProductId_' + rowIndex).val();
             var wholeSalesPrice = $('#wholeSalesPrice_' + rowIndex).val();
@@ -149,11 +151,16 @@
                  specialDisc: specialDisc,
                  specialDiscBaht: specialDiscBaht,
             }
-         }).done(function (response) {
+            }).done(function (response) {
+               // $("#" + crt).focus();
              CallChangefunc();
         });
 
         }
+    }
+
+    function clearZero(txtid) {
+        $(txtid).val("");
     }
 
     function onDelCostDetail(id) {
