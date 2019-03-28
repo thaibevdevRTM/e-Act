@@ -190,7 +190,18 @@ namespace eActForm.Controllers
                 List<TB_Act_Product_Model.Product_Model> productModel = new List<TB_Act_Product_Model.Product_Model>();
                 if (size != "")
                 {
-                    productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.brandId == brandId || x.smellId == smellId) && x.size == size).ToList();
+                    if (smellId == "")
+                    {
+                        productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.brandId == brandId) && x.size == size).ToList();
+                    }
+                    else if (brandId == "")
+                    {
+                        productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.smellId == smellId) && x.size == size).ToList();
+                    }
+                    else
+                    {
+                        productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.brandId == brandId || x.smellId == smellId) && x.size == size).ToList();
+                    }
                 }
                 else
                 {
