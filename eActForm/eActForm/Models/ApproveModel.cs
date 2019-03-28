@@ -58,6 +58,7 @@ namespace eActForm.Models
             public bool? isSendEmail { get; set; }
             public string remark { get; set; }
             public byte[] signature { get; set; }
+            public string activityNo { get; set; }
         }
         public class approveStatus : ActBaseModel
         {
