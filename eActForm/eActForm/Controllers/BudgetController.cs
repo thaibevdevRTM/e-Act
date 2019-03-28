@@ -122,7 +122,7 @@ namespace eActForm.Controllers
 			Session["activityId"] = activityId;
 			//Session["activityNo"] = activityNo;
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-			budget_activity_model.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("2", null).ToList();
+			budget_activity_model.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("3", null).ToList();
 			budget_activity_model.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, null,null);
 			budget_activity_model.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
 
@@ -134,7 +134,7 @@ namespace eActForm.Controllers
         {
             Session["activityId"] = Guid.NewGuid().ToString();
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-            budget_activity_model.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("2",null).ToList();
+            budget_activity_model.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("3",null).ToList();
 		
 			return View(budget_activity_model);
         }
