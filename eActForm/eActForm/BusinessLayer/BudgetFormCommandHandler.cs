@@ -12,6 +12,35 @@ namespace eActForm.BusinessLayer
 {
 	public class BudgetFormCommandHandler
 	{
+		//update Invoice Product
+		public static int updateInvoiceProduct(Budget_Activity_Model.Budget_Activity_Invoice_Att model)
+		{
+			int result = 0;
+
+			try
+			{
+
+				result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateBudgetActivityInvoice"
+					, new SqlParameter[] {new SqlParameter("@id", model.id)
+					,new SqlParameter("@activityId",model.activityId)
+					,new SqlParameter("@activityNo",model.activityNo)
+					,new SqlParameter("@productId",model.productId)
+					,new SqlParameter("@paymentNo",model.paymentNo)
+					,new SqlParameter("@invoiceNo",model.invoiceNo)
+					,new SqlParameter("@invTotalBath",model.invTotalBath)
+					,new SqlParameter("@actionDate",model.actionDate)
+					,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+					,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+					});
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError(ex.Message + ">> usp_updateBudgetActivityInvoice");
+			}
+
+			return result;
+		}
+
 		public static int insertInvoiceProduct(Budget_Activity_Model.Budget_Activity_Invoice_Att model)
 		{
 
@@ -23,6 +52,7 @@ namespace eActForm.BusinessLayer
 				result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertBudgetActivityInvoice"
 					, new SqlParameter[] {new SqlParameter("@id", Guid.NewGuid().ToString())
 					,new SqlParameter("@activityId",model.activityId)
+					,new SqlParameter("@activityNo",model.activityNo)
 					,new SqlParameter("@productId",model.productId)
 					,new SqlParameter("@paymentNo",model.paymentNo)
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
@@ -39,5 +69,29 @@ namespace eActForm.BusinessLayer
 
 			return result;
 		}
+
+		public static int deleteInvoiceProduct(string activityId,string productId,string invoiceNo)
+		{
+
+			int result = 0;
+
+			try
+			{
+
+				result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteBudgetActivityInvoice"
+					, new SqlParameter[] {new SqlParameter("@activityId",activityId)
+					,new SqlParameter("@productId",productId)
+					,new SqlParameter("@invoiceNo",invoiceNo)
+					});
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError(ex.Message + ">> usp_deleteBudgetActivityInvoice");
+			}
+
+			return result;
+		}
+
+
 	}
 }

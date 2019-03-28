@@ -37,10 +37,11 @@
                             เหตุผล(เพิ่มเติม)
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required>
+                            <textarea name="txtRemark" id="txtRemark" class="form-control" placeholder="เหตุผล(เพิ่มเติม)" rows="5" cols="50">
                                     @if(  item != null && item.Count > 0)
                                     {
-                                        @item.FirstOrDefault().remark.Trim();
+                                        @item.FirstOrDefault().remark;  
+                                        ;
                                     }
                             </textarea>
                         </div>
@@ -111,11 +112,12 @@
 
 <div class="modal fade" id="ModalPreviewPDF" style="display:none">
     <div id="divPreviewApprove">
+        @Html.Action("previewApprove", "Approve")
     </div>
 </div>
 
 <script>
-    $("#txtRemark").val('');
+
 
     function beginQuery() {
 
@@ -139,7 +141,7 @@
     }
 
     function failureQuery(data) {
-        bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
+        openErrorDialog(data.responseText);
     }
 
 

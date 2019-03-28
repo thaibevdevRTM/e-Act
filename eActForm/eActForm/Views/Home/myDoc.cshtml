@@ -1,12 +1,6 @@
 ﻿@using eActForm.Models
 @model eActForm.Models.Activity_Model.actForms
-<style type="text/css">
 
-    .my-bootbox-class .modal-dialog {
-        width: 200px;
-        font-size: 18px;
-    }
-</style>
 <script>
     function checkDelete(actId,statusId) {
         var msg = "";
@@ -48,22 +42,6 @@
             }
         });
     }
-
-
-      function callApproveList(actId) {
-        $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("approveLists", "Home")',
-            data: {
-                actId: actId
-            }
-        }).done(function (response) {
-            $("#divModalApprovelist").html(response)
-            $('#modalApprovelist').modal('show');
-        });
-      }
-
-
 </script>
 <div class="row">
 
@@ -110,11 +88,6 @@
 
                             @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
 
-
-                            <a onclick="callApproveList('@item.id');">
-                                <i class="btn ink-reaction btn-default fa fa-eye-slash"></i>
-                            </a>
-
                         </td>
                         <td>@item.statusName</td>
                         <td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
@@ -130,16 +103,16 @@
         </table>
 
     </div>
-</div>
-<div class="modal fade" id="modalApprovelist" role="dialog" style="display:none">
-    <div id="divModalApprovelist">
-    </div>
+
 </div>
 <script>
     $(document).ready(function () {
         $('#datatable').DataTable({
             "columnDefs": [
                 { "orderable": false, "targets": 0 }
+                , { "orderable": false, "targets": 1 }
+                , { "orderable": false, "targets": 2 }
+                , { "orderable": false, "targets": 3 }
             ],
             "dom": 'lCfrtip',
             "order": [],
@@ -154,8 +127,7 @@
         });
 
     });
-    function waitpopup() {
-        $("#WaitDialog").show();
-    }
+
+
 
 </script>
