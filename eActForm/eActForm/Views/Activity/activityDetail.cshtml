@@ -92,9 +92,15 @@
                         <td>
                             @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
                         </td>
+<<<<<<< HEAD
                         <td>@Html.TextBoxFor(model => item.growth, "{0:n0}%", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font12" })</td>
                         <td>@Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font12" })</td>
                         <td>@Html.TextBoxFor(model => item.perTotal, "{0:n0}%", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font12" })</td>
+=======
+                        <td>@Html.TextBoxFor(model => item.growth, "{0:p0}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font12" })</td>
+                        <td>@Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font12" })</td>
+                        <td>@Html.TextBoxFor(model => item.total, "{0:p0}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font12" })</td>
+>>>>>>> parent of 962f5fb... Merge branch 'developer' of https://github.com/thaibevdevRTM/e-Act into developer
 
                     </tr>
                     total = item.normalCost == null ? 0 + total : item.total + total;
@@ -129,13 +135,18 @@
                         @if (activityTotal != 0 && normalTotal != 0)
                         {
                             growthTotal = (activityTotal - normalTotal) / normalTotal;
+<<<<<<< HEAD
                             string result = String.Format("{0:n0}%", @growthTotal);
+=======
+                            string result = String.Format("{0:P0}.", @growthTotal);
+>>>>>>> parent of 962f5fb... Merge branch 'developer' of https://github.com/thaibevdevRTM/e-Act into developer
                             @result.ToString();
 
                         }
                     </p>
                 </td>
                 <td>
+<<<<<<< HEAD
                     <p class="text-success text-center">
                         @if (total != 0)
                         {
@@ -153,6 +164,17 @@
                             @result.ToString();
                         }
                     </p>
+=======
+                    <h4>
+                        @*<p class="text-success text-center">
+                            @if (total != null)
+                            {
+                                string result = String.Format("{0:P0}.", @total);
+                                @result.ToString();
+                            }
+                        </p>*@
+                    </h4>
+>>>>>>> parent of 962f5fb... Merge branch 'developer' of https://github.com/thaibevdevRTM/e-Act into developer
                 </td>
             </tr>
         </table>

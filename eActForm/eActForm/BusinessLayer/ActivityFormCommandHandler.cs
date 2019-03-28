@@ -18,6 +18,7 @@ namespace eActForm.BusinessLayer
 
             int rtn = 0;
             model.activityFormModel.id = activityId;
+<<<<<<< HEAD
 
             model.activityFormModel.documentDate = DateTime.ParseExact(model.activityFormModel.dateDoc, "dd-MM-yyyy", CultureInfo.InvariantCulture);
             model.activityFormModel.activityPeriodSt = DateTime.ParseExact(model.activityFormModel.str_activityPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
@@ -25,6 +26,8 @@ namespace eActForm.BusinessLayer
             model.activityFormModel.costPeriodSt = DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
             model.activityFormModel.costPeriodEnd = DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
 
+=======
+>>>>>>> parent of 962f5fb... Merge branch 'developer' of https://github.com/thaibevdevRTM/e-Act into developer
             model.activityFormModel.activityNo = model.activityFormModel.activityNo != null ? model.activityFormModel.activityNo : "---";
             model.activityFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
             model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;

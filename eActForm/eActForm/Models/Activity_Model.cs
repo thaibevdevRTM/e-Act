@@ -163,7 +163,6 @@ namespace eActForm.Models
         public decimal? growth { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? total { get; set; }
-        public decimal? perTotal { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }

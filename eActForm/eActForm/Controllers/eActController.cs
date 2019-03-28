@@ -40,7 +40,7 @@ namespace eActForm.Controllers
                 };
             }
             catch (Exception ex)
-            {
+            {               
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -182,7 +182,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getddlProduct(string size, string brandId, string smellId)
+        public JsonResult getddlProduct(string size, string brandId,string smellId)
         {
             var result = new AjaxResult();
             try
@@ -190,18 +190,7 @@ namespace eActForm.Controllers
                 List<TB_Act_Product_Model.Product_Model> productModel = new List<TB_Act_Product_Model.Product_Model>();
                 if (size != "")
                 {
-                    if (smellId == "")
-                    {
-                        productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.brandId == brandId) && x.size == size).ToList();
-                    }
-                    else if (brandId == "")
-                    {
-                        productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.smellId == smellId) && x.size == size).ToList();
-                    }
-                    else
-                    {
-                        productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.brandId == brandId || x.smellId == smellId) && x.size == size).ToList();
-                    }
+                    productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.brandId == brandId || x.smellId == smellId) && x.size == size).ToList();
                 }
                 else
                 {
@@ -232,7 +221,7 @@ namespace eActForm.Controllers
         }
 
 
-
+     
 
     }
 }
