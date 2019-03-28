@@ -106,6 +106,7 @@ namespace eActForm.BusinessLayer
                         costThemeDetail.themeCost = item.themeCost;
                         costThemeDetail.growth = item.growth;
                         costThemeDetail.total = item.total;
+                        costThemeDetail.perTotal = item.perTotal;
                         costThemeDetail.delFlag = itemIn.delFlag;
                         costThemeDetail.createdByUserId = UtilsAppCode.Session.User.empId;
                         costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -126,6 +127,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.themeCost = item.themeCost;
                     costThemeDetail.growth = item.growth;
                     costThemeDetail.total = item.total;
+                    costThemeDetail.perTotal = item.perTotal;
                     costThemeDetail.delFlag = item.delFlag;
                     costThemeDetail.createdByUserId = UtilsAppCode.Session.User.empId;
                     costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;

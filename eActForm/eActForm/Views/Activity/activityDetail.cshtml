@@ -82,7 +82,7 @@
                             <td class="font10 textLeft">@item.productName</td>
                         }
 
-                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")" , onfocus = "setZero(lblNormalCost_" + index +")" })</td>
                         <td>
                             @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
                         </td>
@@ -154,7 +154,11 @@
 </div>
 
 <script>
-
+    function setZero(txtId) {
+        if ($(txtId).val() == "0.00")
+        $(txtId).val("");
+    }
+    
     function calGrowth(id, rowIndex) {
 
         if ($('#lblThemeCost_' + rowIndex).val() != "" && $('#lblNormalCost_' + rowIndex).val() != "") {
