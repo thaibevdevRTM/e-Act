@@ -84,11 +84,13 @@
 
                         <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")" , onfocus = "setZero(lblNormalCost_" + index +")" })</td>
                         <td>
-                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
+                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")" })
                         </td>
-                        <td>@Html.TextBoxFor(model => item.growth, "{0:n2}%", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight" })</td>
-                        <td>@Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight" })</td>
-                        <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}%", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight" })</td>
+                        <td>
+                            @Html.TextBoxFor(model => item.growth, "{0:p2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })
+                        </td>
+                        <td>@Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
+                        <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}%", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
 
                     </tr>
                     total = item.normalCost == null ? 0 + total : item.total + total;
@@ -101,7 +103,7 @@
             <tr>
                 <td colspan="3" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
                 <td>
-                    <p class="text-success text-center">
+                    <p class="text-success textRight">
                         @if (normalTotal != 0)
                         {
                             string result = String.Format("{0:n2}", @normalTotal);
@@ -110,7 +112,7 @@
                     </p>
                 </td>
                 <td>
-                    <p class="text-success text-center">
+                    <p class="text-success textRight">
                         @if (activityTotal != 0)
                         {
                             string result = String.Format("{0:n2}", @activityTotal);
@@ -119,18 +121,18 @@
                     </p>
                 </td>
                 <td>
-                    <p class="text-success text-center">
+                    <p class="text-success textRight">
                         @if (activityTotal != 0 && normalTotal != 0)
                         {
-                            growthTotal = (activityTotal - normalTotal) / normalTotal;
-                            string result = String.Format("{0:n0}%", @growthTotal);
+                            growthTotal = (activityTotal - normalTotal) / normalTotal * 100;
+                            string result = String.Format("{0:n2}%", @growthTotal);
                             @result.ToString();
 
                         }
                     </p>
                 </td>
                 <td>
-                    <p class="text-success text-center">
+                    <p class="text-success textRight">
                         @if (total != 0)
                         {
                             string result = String.Format("{0:n2}", @total);
@@ -139,10 +141,10 @@
                     </p>
                 </td>
                 <td>
-                    <p class="text-success text-center">
+                    <p class="text-success textRight">
                         @if (total != 0 && activityTotal != 0)
                         {
-                            perTotal = total * 100 / (activityTotal * Convert.ToDecimal(Session["promotionTotal"].ToString()));
+                            perTotal = total * 100 / (activityTotal * Convert.ToDecimal(TempData["promotionTotal"].ToString() == "0.00" ? "1" : TempData["promotionTotal"].ToString()));
                             string result = String.Format("{0:n2}%", @perTotal);
                             @result.ToString();
                         }
