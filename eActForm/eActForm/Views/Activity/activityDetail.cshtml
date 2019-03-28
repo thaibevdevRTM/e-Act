@@ -10,16 +10,10 @@
     decimal? normalTotal = 0;
     decimal? activityTotal = 0;
     decimal? growthTotal = 0;
-}
-<style>
-    .font12 {
-        font-size: 10px;
-    }
+    
 
-    .font12B {
-        font-size: 10px;
-    }
-</style>
+}
+
 <div class="row">
     <div class="col-12">
         <p class="lead">รายละเอียดค่าใช้จ่าย (Cost)</p>
@@ -28,18 +22,18 @@
         <table class="table table-bordered" id="tbl_activityDetail">
             <thead class="thead-dark">
                 <tr>
-                    <th class="align-content-center font12B" rowspan="2" width="10px" onclick="onDelActDetail();"> <button class="btn ink-reaction btn-danger fa fa-trash-o"></button></th>
-                    <th class="align-content-center font12B" rowspan="2" style="width:20%;">ประเภทกิจกรรม</th>
-                    <th class="align-content-center font12B" rowspan="2" style="width:30%;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</th>
-                    <th class="align-content-center font12B" colspan="5" style="width:50%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
+                    <th class="align-content-center font10" rowspan="2" width="10px" onclick="onDelActDetail();"> <button class="btn ink-reaction btn-danger fa fa-trash-o"></button></th>
+                    <th class="align-content-center font10" rowspan="2" style="width:20%;">ประเภทกิจกรรม</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:30%;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</th>
+                    <th class="align-content-center font10" colspan="5" style="width:50%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
 
                 </tr>
                 <tr>
-                    <th class="align-content-center font12B">ยอดขายปกติ (Cost)</th>
-                    <th class="align-content-center font12B">ยอดขายข่วงทำกิจกรรม (Case)</th>
-                    <th class="align-content-center font12B">% Growth</th>
-                    <th class="align-content-center font12B">ค่าใช้จ่ายรวม Spending Exp. (Bath)</th>
-                    <th class="align-content-center font12B">% : ยอดขาย</th>
+                    <th class="align-content-center font10">ยอดขายปกติ (Cost)</th>
+                    <th class="align-content-center font10">ยอดขายข่วงทำกิจกรรม (Case)</th>
+                    <th class="align-content-center font10">% Growth</th>
+                    <th class="align-content-center font10">ค่าใช้จ่ายรวม Spending Exp. (Bath)</th>
+                    <th class="align-content-center font10">% : ยอดขาย</th>
                 </tr>
             </thead>
 
@@ -57,44 +51,44 @@
                         </td>
                         @if (item.isShowGroup == "true")
                         {
-                            <td style="text-align:center">@item.typeTheme</td>
+                            <td class="font10 textLeft">@item.typeTheme</td>
                         }
                         else if (item.isShowGroup == "false")
                         {
                             for (int i = 0; i < @item.detailGroup.Count; i++)
                             {
-                                <td style="text-align:center">@item.detailGroup[i].typeTheme</td>
+                                <td class="font10 textLeft">@item.detailGroup[i].typeTheme</td>
                             }
                         }
                         else
                         {
-                            <td style="text-align:center">@item.typeTheme</td>
+                            <td class="font10 textLeft">@item.typeTheme</td>
                         }
 
                         @if (item.isShowGroup == "true")
                         {
-                            <td>@item.brandName @item.smellName ALL(@item.detailGroup.Count)</td>
+                            <td class="font10 textLeft">@item.brandName @item.smellName ALL(@item.detailGroup.Count)</td>
                         }
                         else if (item.isShowGroup == "false")
                         {
                             for (int i = 0; i < @item.detailGroup.Count; i++)
                             {
                                 @*<td style="text-align:right">@item.detailGroup[i].productName</td>*@
-                                <td>@Html.TextBoxFor(model => item.detailGroup[i].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                                <td>@Html.TextBoxFor(model => item.detailGroup[i].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
                             }
                         }
                         else
                         {
-                            <td style="text-align:center">@item.productName</td>
+                            <td class="font10 textLeft">@item.productName</td>
                         }
 
-                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
                         <td>
-                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font12", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
+                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")" })
                         </td>
-                        <td>@Html.TextBoxFor(model => item.growth, "{0:n0}%", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font12" })</td>
-                        <td>@Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font12" })</td>
-                        <td>@Html.TextBoxFor(model => item.perTotal, "{0:n0}%", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font12" })</td>
+                        <td>@Html.TextBoxFor(model => item.growth, "{0:n2}%", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight" })</td>
+                        <td>@Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight" })</td>
+                        <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}%", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight" })</td>
 
                     </tr>
                     total = item.normalCost == null ? 0 + total : item.total + total;
@@ -148,8 +142,8 @@
                     <p class="text-success text-center">
                         @if (total != 0 && activityTotal != 0)
                         {
-                            perTotal = total * 100 / activityTotal;
-                            string result = String.Format("{0:n0}%", @perTotal);
+                            perTotal = total * 100 / (activityTotal * Convert.ToDecimal(Session["promotionTotal"].ToString()));
+                            string result = String.Format("{0:n2}%", @perTotal);
                             @result.ToString();
                         }
                     </p>
