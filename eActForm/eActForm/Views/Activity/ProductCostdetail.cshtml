@@ -68,7 +68,7 @@
                             <td class="font10 textLeft">@item.productName</td>
                         }
                         <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.saleOut, "{0:n2}", new { @id = "saleOut_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.saleOut, "{0:n2}", new { @id = "saleOut_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")", @onfocus = "setZero(saleOut_" + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.saleIn, "{0:n2}", new { @id = "saleIn_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.disCount1, "{0:n2}", new { @id = "disCount1_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.disCount2, "{0:n2}", new { @id = "disCount2_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" })</td>
