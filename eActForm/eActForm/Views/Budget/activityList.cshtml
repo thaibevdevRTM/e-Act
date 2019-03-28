@@ -57,9 +57,25 @@
 					<td style="font-size:12.5px;">@item.cus_cusNameTH</td>
 					<td style="font-size:12.5px;">@Html.DisplayFor(x => item.act_activityPeriodSt) - @Html.DisplayFor(x => item.act_activityPeriodEnd) </td>
 					<td style="font-size:12.5px;">@Html.DisplayFor(x => item.act_costPeriodSt) - @Html.DisplayFor(x => item.act_costPeriodEnd) </td>
-					<td style="font-size:12.5px;text-align:right;">@item.act_totalCost</td>
+					<td style="font-size:12.5px;text-align:right;">
+				
+						@if (item.act_totalCost != 0)
+						{
+							string result = String.Format("{0:n2}", @item.act_totalCost);
+							@result.ToString();
+						}
+									
+					</td>
 					<td style="font-size:12.5px;text-align:right;">0</td> @*รอทำ query คำนวน*@
-					<td style="font-size:12.5px;text-align:right;">@item.act_totalCost</td> @*รอทำ query คำนวน*@
+					<td style="font-size:12.5px;text-align:right;">
+		
+						@if (item.act_totalCost != 0)
+						{
+							string result = String.Format("{0:n2}", @item.act_totalCost);
+							@result.ToString();
+						}
+									
+						</td> @*รอทำ query คำนวน*@
 					<td style="font-size:12.5px;text-align:center">@item.bud_ActivityStatus</td> @*รอทำ query คำนวนในระดับกิจกรรม ค้างจ่าย จ่ายบางส่วน จบรายการ *@
 				</tr>
 				index++;
