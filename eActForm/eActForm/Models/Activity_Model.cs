@@ -164,10 +164,11 @@ namespace eActForm.Models
         public decimal? normalCost { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? themeCost { get; set; }
-        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? growth { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? total { get; set; }
+        public decimal? perTotal { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
@@ -187,6 +188,7 @@ namespace eActForm.Models
         public decimal? themeCost { get; set; }
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
+        public decimal? perTotal { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
@@ -198,6 +200,7 @@ namespace eActForm.Models
         public string id { get; set; }
         public string activityId { get; set; }
         public string productId { get; set; }
+        public string pack { get; set; }
         public string productName { get; set; }
         public decimal? wholeSalesPrice { get; set; }
 
@@ -253,6 +256,7 @@ namespace eActForm.Models
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
+        public string pack { get; set; }
         public string typeTheme { get; set; }
         public string activityTypeId { get; set; }
         public decimal? themeCost { get; set; }

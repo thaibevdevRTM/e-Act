@@ -56,7 +56,15 @@
                         Document Date<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
+                        @if (Model.activityFormModel.documentDate.ToString() != "")
+                        {
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" , @Value = @DateTime.Today.ToString("dd-MM-yyyy") })
+
+                        }
                     </div>
                 </div>
             </div>
@@ -317,7 +325,7 @@
                    $(this).focus();
                }
            });
-           //$('.field-date').datepicker({ autoclose: true, todayHighlight: true, format: "dd/mm/yyyy" });
+           $('.field-date').datepicker({ autoclose: true, todayHighlight: true, format: "dd/mm/yyyy" });
 
            ObjModel = {};
            document.getElementById("ddlProductfilter").disabled = true;
