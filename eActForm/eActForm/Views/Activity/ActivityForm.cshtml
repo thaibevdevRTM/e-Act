@@ -409,6 +409,10 @@
         });
     });
 
+    function setZero(txtId) {
+        if ($(txtId).val() == "0.00")
+            $(txtId).val("");
+    }
 
     function onchangeCustomer() {
         ObjModel = {};
