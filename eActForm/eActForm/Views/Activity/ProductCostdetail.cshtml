@@ -63,13 +63,13 @@
                         </td>
                         @if (item.isShowGroup == "true")
                         {
-                            <td style="text-align:right">@item.brandName @item.smellName ALL(@item.detailGroup.Count)</td>
+                            <td style="text-align:right">@item.brandName @item.smellName ALL(@item.detailGroup.Count) Pack(@item.pack) </td>
                         }
                         else if (item.isShowGroup == "false")
                         {
                             for (int i = 0; i < @item.detailGroup.Count; i++)
                             {
-                                <td style="text-align:right">@item.detailGroup[i].productName</td>
+                            <td style="text-align:right">@item.detailGroup[i].productName Pack(@item.pack)</td>
                             }
                         }
                         else
