@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using WebLibrary;
@@ -365,7 +366,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusActivityForm"
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_InsertNumDocAndStatusActFormByActId"
                     , new SqlParameter[] {new SqlParameter("@statusId",statusId)
                     ,new SqlParameter("@activityId",activityId)
                     ,new SqlParameter("@genActivityDoc",genNumDoc)
@@ -373,7 +374,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> updateStatusActivity");
+                ExceptionManager.WriteError(ex.Message + ">> updateStatusGenDocActivity");
             }
 
             return result;

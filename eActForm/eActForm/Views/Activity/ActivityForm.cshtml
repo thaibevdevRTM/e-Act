@@ -174,12 +174,12 @@
                 <div class="col-md-9 col-sm-9 col-xs-12">
                     <div class="radio">
                         <label>
-                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "term") ไม่เกิดจาก รายการส่งเสริมการขาย (Trade Term)
+                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "term" , new { @id= "rdbterm" }) ไม่เกิดจาก รายการส่งเสริมการขาย (Trade Term)
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { Checked = "checked" }) รายการส่งเสริมการขาย (นอก Trade Term)
+                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { Checked = "checked" , @id= "rdbOutterm" }) รายการส่งเสริมการขาย (นอก Trade Term)
                         </label>
                     </div>
                 </div>
@@ -187,7 +187,7 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
-                        เวลากิจกรรม (Activity Period)<span class="required">*</span>
+                        เวลากิจกรรม (Activity Period)
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -200,7 +200,7 @@
                 </div>
                 <div class="row">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
-                        เวลาการให้ทุนพิเศษ (Cost Period)<span class="required">*</span>
+                        เวลาการให้ทุนพิเศษ (Cost Period)
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -281,11 +281,11 @@
 
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
     <div id="divPreview">
-        @Html.Action("PreviewData", "Activity")
+        @*@Html.Action("PreviewData", "Activity")*@
     </div>
 </div>
 
-<div class="row">
+<div class="row" id="divUploadImg">
     <div class="col-12">
         <p class="lead">อัพโหลด รูปภาพ</p>
     </div>
@@ -308,7 +308,7 @@
     <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-5">
 
         <p class="d-flex justify-content-center">
-            <button type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Submit</button>
+            <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Submit</button>
         </p>
     </div>
 </div>
@@ -340,19 +340,19 @@
 
     $(function () {
         $("#txtdateDoc").datepicker({
-            format: 'dd/mm/yyyy'
+            format: 'dd-mm-yyyy'
         });
         $("#txtdateActivitySt").datepicker({
-            format: 'dd/mm/yyyy'
+            format: 'dd-mm-yyyy'
         });
         $("#txtdateActivityEnd").datepicker({
-            format: 'dd/mm/yyyy'
+            format: 'dd-mm-yyyy'
         });
         $("#txtdateCostPerSt").datepicker({
-            format: 'dd/mm/yyyy'
+            format: 'dd-mm-yyyy'
         });
         $("#txtdateCostPerEnd").datepicker({
-            format: 'dd/mm/yyyy'
+            format: 'dd-mm-yyyy'
         });
 
     });
@@ -626,7 +626,6 @@
         if ($("#ddlProductGrp").val() == "0") { required += "กลุ่มสินค้า *<br>"; validate = false; }
 
         if (validate == true) {
-            $("#previewModal").modal('show');
             SubmitData();
         }
         else {
@@ -635,12 +634,22 @@
     }
 
     function SubmitData() {
+        $("#WaitDialog").show();
+
+        console.log($("#txtdateDoc").val());
+        console.log($("#txtdateActivitySt").val());
             $.ajax({
                 url: '@Url.Action("insertDataActivity", "Activity")',
                 data: {
                     statusId: 1,
                     Mode: $("#hdMode").val(),
-                    DocumentDate: $("#txtdateDoc").val(),
+                    dateDoc: $("#txtdateDoc").val(),
+                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                    str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
+                    str_activityPeriodSt: $("#txtdateActivitySt").val(),
+                    str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
+                    dateProductlist: $("#txtdateActivitySt").val(),
+                    dateActivitylist: $("#txtdateActivityEnd").val(),
                     Reference: $("#txtReference").val(),
                     CustomerId: $("#ddlCustomer").val(),
                     ProductCateId: $("#ddlProductCate").val(),
@@ -660,6 +669,7 @@
             }).done(function (response) {
                 if (response.Success) {
                     callPreviewData(response.ActivityId);
+                    
                 }
             });
     }
@@ -686,7 +696,14 @@
         document.getElementById("txtActivityDetail").disabled = true;
         document.getElementById("divAddActivityDetail").style.display = "none";
         document.getElementById("divAddProductCostDetail").style.display = "none";
+        $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
+        $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", "disabled");
+        document.getElementById("divUploadImg").style.display = "none";
+        document.getElementById("rdbterm").disabled = true;
+        document.getElementById("rdbOutterm").disabled = true;
+        document.getElementById("btnsubmit").disabled = true;
         //$("input.txtnormalGp").attr("disabled", true);
+        
     }
 
 
@@ -698,8 +715,9 @@
                 activityId: obj
             }
         }).done(function (htmlResponse) {
+            $("#WaitDialog").hide();
             $("#divPreview").html(htmlResponse)
-            $('#myModal').modal('show');
+            $('#previewModal').modal('show');
         });
     }
 
