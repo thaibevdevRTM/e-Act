@@ -63,6 +63,7 @@ namespace eActForm.BusinessLayer
                                  smellId = d["smellId"].ToString(),
                                  brandName = d["brandName"].ToString(),
                                  smellName = d["smellName"].ToString(),
+                                 pack = QueryGetAllProduct.getProductById(d["productId"].ToString()).FirstOrDefault().pack.ToString(),
                                  typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == p_theme).FirstOrDefault().activitySales,
                                  wholeSalesPrice = d["price"] is DBNull ? 0 : decimal.Parse(d["price"].ToString()),
                                  normalCost = d["price"] is DBNull ? 0 : decimal.Parse(d["price"].ToString()),
@@ -87,6 +88,7 @@ namespace eActForm.BusinessLayer
                    brandName = group.First().brandName,
                    productId = group.First().productId,
                    productName = group.First().productName,
+                   pack = QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString(),
                    wholeSalesPrice = group.First().wholeSalesPrice,
                    isShowGroup = p_productId != "" ? "false" : "true",
                    detailGroup = group.ToList()
