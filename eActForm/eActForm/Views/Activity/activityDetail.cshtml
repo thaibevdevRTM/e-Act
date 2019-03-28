@@ -123,7 +123,7 @@
                         @if (activityTotal != 0 && normalTotal != 0)
                         {
                             growthTotal = (activityTotal - normalTotal) / normalTotal;
-                            string result = String.Format("{0:n2}%", @growthTotal);
+                            string result = String.Format("{0:n0}%", @growthTotal);
                             @result.ToString();
 
                         }

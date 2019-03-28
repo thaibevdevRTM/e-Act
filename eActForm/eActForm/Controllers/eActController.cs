@@ -40,7 +40,7 @@ namespace eActForm.Controllers
                 };
             }
             catch (Exception ex)
-            {
+            {               
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -182,7 +182,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getddlProduct(string size, string brandId, string smellId)
+        public JsonResult getddlProduct(string size, string brandId,string smellId)
         {
             var result = new AjaxResult();
             try
@@ -232,7 +232,7 @@ namespace eActForm.Controllers
         }
 
 
-
+     
 
     }
 }
