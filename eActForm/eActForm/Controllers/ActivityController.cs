@@ -216,9 +216,7 @@ namespace eActForm.Controllers
                     getNormalCost = decimal.Parse(checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().normalCost.ToString()));
                     getPromotionCost = decimal.Parse(checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().promotionCost.ToString()));
                     p_total = (getNormalCost - getPromotionCost) * decimal.Parse(themeCost);
-
-                    //get_PerTotal = p_total * 100 / (decimal.Parse(normalCost) * getPromotionCost); //ยอดขายปกติ
-                    get_PerTotal = p_total * 100 / (decimal.Parse(themeCost) * getPromotionCost);// % ยอดขายโปโมชั่น
+                    get_PerTotal = p_total * 100 / decimal.Parse(themeCost);
                 }
 
                 decimal p_growth = normalCost == "0" ? 0 : (decimal.Parse(themeCost) - decimal.Parse(normalCost)) / decimal.Parse(normalCost);
@@ -232,7 +230,7 @@ namespace eActForm.Controllers
                             r.growth = p_growth;
                             r.themeCost = decimal.Parse(themeCost);
                             r.total = p_total;
-                            r.perTotal = get_PerTotal;
+                            r.perTotal = p_growth;
                             return r;
                         }).ToList();
 

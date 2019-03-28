@@ -20,14 +20,10 @@ namespace eActForm.BusinessLayer
             model.activityFormModel.id = activityId;
 
             model.activityFormModel.documentDate = DateTime.ParseExact(model.activityFormModel.dateDoc, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodSt) ? (DateTime?)null : 
-                DateTime.ParseExact(model.activityFormModel.str_activityPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodEnd) ? (DateTime?)null : 
-                DateTime.ParseExact(model.activityFormModel.str_activityPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            model.activityFormModel.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null : 
-                DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
-                DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            model.activityFormModel.activityPeriodSt = DateTime.ParseExact(model.activityFormModel.str_activityPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            model.activityFormModel.activityPeriodEnd = DateTime.ParseExact(model.activityFormModel.str_activityPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            model.activityFormModel.costPeriodSt = DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            model.activityFormModel.costPeriodEnd = DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
 
             model.activityFormModel.activityNo = model.activityFormModel.activityNo != null ? model.activityFormModel.activityNo : "---";
             model.activityFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
@@ -112,7 +108,6 @@ namespace eActForm.BusinessLayer
                         costThemeDetail.themeCost = item.themeCost;
                         costThemeDetail.growth = item.growth;
                         costThemeDetail.total = item.total;
-                        costThemeDetail.perTotal = item.perTotal;
                         costThemeDetail.delFlag = itemIn.delFlag;
                         costThemeDetail.createdByUserId = UtilsAppCode.Session.User.empId;
                         costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -133,7 +128,6 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.themeCost = item.themeCost;
                     costThemeDetail.growth = item.growth;
                     costThemeDetail.total = item.total;
-                    costThemeDetail.perTotal = item.perTotal;
                     costThemeDetail.delFlag = item.delFlag;
                     costThemeDetail.createdByUserId = UtilsAppCode.Session.User.empId;
                     costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;

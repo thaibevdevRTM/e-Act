@@ -33,7 +33,6 @@ namespace eActForm.BusinessLayer
                                   themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(d["themeCost"].ToString()),
                                   growth = d["growth"].ToString() == "" ? 0 : decimal.Parse(d["growth"].ToString()),
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(d["total"].ToString()),
-                                  perTotal = d["perTotal"].ToString() == "" ? 0 : decimal.Parse(d["perTotal"].ToString()),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),
