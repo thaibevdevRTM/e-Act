@@ -207,7 +207,7 @@ namespace eActForm.Controllers
                 Activity_Model activityModel = new Activity_Model();
                 decimal p_total = 0;
                 decimal getPromotionCost = 0;
-                decimal getNormalCost = 0;
+                decimal getNormalCost = 0, get_PerTotal;
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
                 if (checkNullorEmpty(themeCost) != "0")
@@ -215,10 +215,7 @@ namespace eActForm.Controllers
                     getNormalCost = decimal.Parse(checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().normalCost.ToString()));
                     getPromotionCost = decimal.Parse(checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().promotionCost.ToString()));
                     p_total = (getNormalCost - getPromotionCost) * decimal.Parse(themeCost);
-<<<<<<< HEAD
                     get_PerTotal = p_total * 100 / decimal.Parse(themeCost);
-=======
->>>>>>> parent of 962f5fb... Merge branch 'developer' of https://github.com/thaibevdevRTM/e-Act into developer
                 }
 
                 decimal p_growth = normalCost == "0" ? 0 : (decimal.Parse(themeCost) - decimal.Parse(normalCost)) / decimal.Parse(normalCost);
@@ -231,10 +228,7 @@ namespace eActForm.Controllers
                             r.growth = p_growth;
                             r.themeCost = decimal.Parse(themeCost);
                             r.total = p_total;
-<<<<<<< HEAD
                             r.perTotal = p_growth;
-=======
->>>>>>> parent of 962f5fb... Merge branch 'developer' of https://github.com/thaibevdevRTM/e-Act into developer
                             return r;
                         }).ToList();
 
