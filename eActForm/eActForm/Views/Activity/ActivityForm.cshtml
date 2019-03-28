@@ -56,7 +56,6 @@
                         Document Date<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-<<<<<<< HEAD
                         @if (Model.activityFormModel.documentDate.ToString() != "")
                         {
                             @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
@@ -66,9 +65,6 @@
                             @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" , @Value = @DateTime.Today.ToString("dd/MM/yyyy") })
 
                         }
-=======
-                        @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
->>>>>>> parent of 962f5fb... Merge branch 'developer' of https://github.com/thaibevdevRTM/e-Act into developer
                     </div>
                 </div>
             </div>

@@ -112,7 +112,7 @@ namespace eActForm.Controllers
         public ActionResult PreviewData(string activityId)
         {
             Activity_Model activityModel = new Activity_Model();
-           
+
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
@@ -207,7 +207,8 @@ namespace eActForm.Controllers
                 Activity_Model activityModel = new Activity_Model();
                 decimal p_total = 0;
                 decimal getPromotionCost = 0;
-                decimal getNormalCost = 0, get_PerTotal;
+                decimal getNormalCost = 0;
+                decimal get_PerTotal = 0;
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
                 if (checkNullorEmpty(themeCost) != "0")
@@ -215,10 +216,13 @@ namespace eActForm.Controllers
                     getNormalCost = decimal.Parse(checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().normalCost.ToString()));
                     getPromotionCost = decimal.Parse(checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().promotionCost.ToString()));
                     p_total = (getNormalCost - getPromotionCost) * decimal.Parse(themeCost);
-                    get_PerTotal = p_total * 100 / decimal.Parse(themeCost);
+
+                    //get_PerTotal = p_total * 100 / (decimal.Parse(normalCost) * getPromotionCost); //ยอดขายปกติ
+                    get_PerTotal = p_total * 100 / (decimal.Parse(themeCost) * getPromotionCost);// % ยอดขายโปโมชั่น
                 }
 
                 decimal p_growth = normalCost == "0" ? 0 : (decimal.Parse(themeCost) - decimal.Parse(normalCost)) / decimal.Parse(normalCost);
+
                 activityModel.activitydetaillist
                         .Where(r => r.id != null && r.id.Equals(id))
                         .Select(r =>
@@ -228,7 +232,7 @@ namespace eActForm.Controllers
                             r.growth = p_growth;
                             r.themeCost = decimal.Parse(themeCost);
                             r.total = p_total;
-                            r.perTotal = p_growth;
+                            r.perTotal = get_PerTotal;
                             return r;
                         }).ToList();
 
@@ -277,7 +281,7 @@ namespace eActForm.Controllers
 
                 decimal p_normalGp = checkNullorEmpty(saleOut) == "0" ? 0 : ((decimal.Parse(saleOut) - (p_disCount3 * decimal.Parse("1.07")))
                     / getPackProduct / decimal.Parse(saleOut)) * 100;
-              
+
                 decimal p_PromotionCost = checkNullorEmpty(specialDisc) == "0" && checkNullorEmpty(specialDiscBaht) == "0" || p_disCount3 == 0 ? p_disCount3 : (p_disCount3 - (p_disCount3 * (decimal.Parse(specialDisc) / 100))) - decimal.Parse(checkNullorEmpty(specialDiscBaht));
 
                 decimal p_PromotionGp = checkNullorEmpty(saleIn) == "0" ? 0 : ((decimal.Parse(saleIn) - (p_PromotionCost * decimal.Parse("1.07")))
