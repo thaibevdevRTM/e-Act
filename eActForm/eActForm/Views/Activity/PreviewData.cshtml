@@ -49,6 +49,28 @@
 </script>
 
 
+<style type="text/css">
+
+    
+    .font8 {
+        font-size: 8px;
+    }
+
+    .font10 {
+        font-size: 10px;
+    }
+
+    .textRight {
+        text-align: right;
+    }
+
+    .textLeft {
+        text-align: left;
+    }
+</style>
+
+
+
 @Html.HiddenFor(m => m.activityFormModel.id, new { id = "HdId" })
 
 <div class="modal-dialog modal-lg">
@@ -250,16 +272,16 @@
                             foreach (var item in Model.productcostdetaillist1)
                             {
                                 <tr>
-                                    <td style="font-size:12.5px;">@item.productName</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.disCount1)</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.disCount2)</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.disCount3)</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.normalCost)</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.normalGp)</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.promotionGp)</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.specialDisc)</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.promotionCost)</td>
+                                    <td style="font-size:12.5px;" class="textLeft">@item.productName</td>
+                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
+                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.disCount1)</td>
+                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.disCount2)</td>
+                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.disCount3)</td>
+                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.normalCost)</td>
+                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.normalGp)</td>
+                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.promotionGp)</td>
+                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.specialDisc)</td>
+                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.promotionCost)</td>
                                 </tr>
                             }
                         }
@@ -293,12 +315,12 @@
                             foreach (var item in Model.activitydetaillist)
                             {
                                 <tr>
-                                    <td style="font-size:12.5px;">@item.typeTheme</td>
-                                    <td style="font-size:12.5px;">@item.productName</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.normalCost)</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.themeCost)</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.growth)</td>
-                                    <td style="font-size:12.5px;">@Html.DisplayFor(m => item.total)</td>
+                                    <td style="font-size:12.5px;" class="textLeft">@item.typeTheme</td>
+                                    <td style="font-size:12.5px;" class="textLeft">@item.productName</td>
+                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.normalCost)</td>
+                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.themeCost)</td>
+                                    <td style="font-size:12.5px;" class="textRight">@string.Format("{0:p2}", item.growth)</td>
+                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.total)</td>
                                 </tr>
 
                                 totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
@@ -311,29 +333,29 @@
                         <tr>
                             <td style="border:none; border-bottom:none;"></td>
                             <td style="text-align:right; border:none; border-bottom:none;">รวม</td>
-                            <td>
+                            <td class="textRight">
                                 @if (costProduct != 0)
                                 {
                                     string result = String.Format("{0:n2}", @costProduct);
                                     @result.ToString();
                                 }
                             </td>
-                            <td>
+                            <td class="textRight">
                                 @if (costActivity != 0)
                                 {
                                     string result = String.Format("{0:n2}", @costActivity);
                                     @result.ToString();
                                 }
                             </td>
-                            <td>
+                            <td class="textRight">
                                 @if (totalActCost != 0 && costActivity != 0)
                                 {
-                                    perTotal = (costActivity - costProduct) / costProduct;
-                                    string result = String.Format("{0:p0}", @perTotal);
+                                    perTotal = (costActivity - costProduct) / costProduct * 100;
+                                    string result = String.Format("{0:n2}%", @perTotal);
                                     @result.ToString();
                                 }
                             </td>
-                            <td>
+                            <td class="textRight">
                                 @if (totalActCost != 0)
                                 {
                                     string result = String.Format("{0:n2}", @totalActCost);
