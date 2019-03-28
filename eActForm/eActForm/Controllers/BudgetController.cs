@@ -20,9 +20,9 @@ using WebLibrary;
 
 namespace eActForm.Controllers
 {
-    [LoginExpire]
-    public class BudgetController : Controller
-    {
+	[LoginExpire]
+	public class BudgetController : Controller
+	{
 		// GET: Budget
 		//public ActionResult activityList()
 		//{
@@ -57,7 +57,7 @@ namespace eActForm.Controllers
 				resultAjax.Message = ex.Message;
 			}
 			return Json(resultAjax, "text/plain");
-			
+
 		}
 
 		public JsonResult delInvoiceDetail(string actId, string prdId, string estId, string invNo)
@@ -86,7 +86,7 @@ namespace eActForm.Controllers
 
 		public ActionResult PreviewBudgetInvoice(string activityId, string productId, string activityOfEstimateId,string invoiceId)
 		{
-						
+
 			if (!string.IsNullOrEmpty(invoiceId))
 			{
 				Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
@@ -102,7 +102,7 @@ namespace eActForm.Controllers
 				//		item.Selected = true;
 				//	}
 				//}
-				
+
 				return PartialView("PreviewBudgetInvoice", Budget_Activity);
 			}
 			else
@@ -127,19 +127,19 @@ namespace eActForm.Controllers
 			budget_activity_model.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
 
 			return View(budget_activity_model);
-			
+
 		}
 
 		public ActionResult activityList()
-        {
-            Session["activityId"] = Guid.NewGuid().ToString();
+		{
+			Session["activityId"] = Guid.NewGuid().ToString();
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-            budget_activity_model.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("3",null).ToList();
-		
+			budget_activity_model.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("3", null).ToList();
+
 			return View(budget_activity_model);
-        }
+		}
 	}
 
-  
+
 
 }

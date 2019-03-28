@@ -26,12 +26,20 @@ namespace eActForm.Models
             public List<approveDetailModel> approveDetailLists { get; set; }
             public List<approveStatus> approveStatusLists { get; set; }
             public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
+
+            public approveModels()
+            {
+                approveModel = new approveModel();
+                approveDetailLists = new List<approveDetailModel>();
+            }
+
         }
         public class approveModel : ActBaseModel
         {
             public string id { get; set; }
             public string flowId { get; set; }
             public string actFormId { get; set; }
+            public string actNo { get; set; }
             public bool isPermisionApprove { get; set; } // current login can be approve
             public string statusId { get; set; } // approve status of current user
         }
@@ -50,12 +58,14 @@ namespace eActForm.Models
             public bool? isSendEmail { get; set; }
             public string remark { get; set; }
             public byte[] signature { get; set; }
+            public string activityNo { get; set; }
         }
         public class approveStatus : ActBaseModel
         {
             public string id { get; set; }
             public string nameTH { get; set; }
             public string nameEN { get; set; }
+            public string type { get; set; }
             public string description { get; set; }
         }
 

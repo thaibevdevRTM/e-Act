@@ -14,7 +14,7 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             SearchActivityModels models = new SearchActivityModels();
-            models.approveStatusList = ApproveAppCode.getApproveStatus();
+            models.approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app);
             models.productGroupList = QueryGetAllProductGroup.getAllProductGroup();
             models.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
             models.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
@@ -24,6 +24,16 @@ namespace eActForm.Controllers
 
             return View(models);
         }
+
+        public ActionResult approveLists(string actId)
+        {
+            var result = new AjaxResult();
+            ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
+            //models.approveStatusLists = ApproveAppCode.getApproveStatus();
+            return PartialView(models);
+        }
+
+     
 
         public ActionResult myDoc()
         {
@@ -40,24 +50,24 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-        public ActionResult requestDeleteDoc(string actId,string statusId)
+        public ActionResult requestDeleteDoc(string actId, string statusId)
         {
             //return RedirectToAction("index");
             AjaxResult result = new AjaxResult();
-            result.Success = false; 
-            if( statusId == "1")
-            {
+            result.Success = false;
+            //if (statusId == "1")
+            //{
                 // Draft
-                if(ActFormAppCode.deleteActForm(actId, "request delete by user") > 0)
+                if (ActFormAppCode.deleteActForm(actId, "request delete by user") > 0)
                 {
                     result.Success = true;
                     TempData["SearchDataModel"] = null;
                 }
-            }
-            else
-            {
+            //}
+            //else
+            //{
 
-            }
+            //}
 
             return RedirectToAction("myDoc");
         }
@@ -68,12 +78,12 @@ namespace eActForm.Controllers
             Activity_Model.actForms model = new Activity_Model.actForms();
             model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId);
 
-            if( Request.Form["txtActivityNo"] != "")
+            if (Request.Form["txtActivityNo"] != "")
             {
-                model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();                             
+                model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
             }
 
-            if( Request.Form["ddlStatus"] != "")
+            if (Request.Form["ddlStatus"] != "")
             {
                 model.actLists = model.actLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
             }

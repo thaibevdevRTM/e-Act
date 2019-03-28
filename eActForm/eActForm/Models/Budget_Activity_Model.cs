@@ -39,7 +39,7 @@ namespace eActForm.Models
 			public string updatedByUserId { get; set; }
 		}
 
-			public class Budget_Activity_Product_Att
+		public class Budget_Activity_Product_Att
 		{
 			//usp_getBudgetActivityProduct for Query Biz
 			public string act_activityId { get; set; }

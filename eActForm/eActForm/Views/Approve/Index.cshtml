@@ -37,11 +37,10 @@
                             เหตุผล(เพิ่มเติม)
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <textarea name="txtRemark" id="txtRemark" class="form-control" placeholder="เหตุผล(เพิ่มเติม)" rows="5" cols="50">
+                            <textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required>
                                     @if(  item != null && item.Count > 0)
                                     {
-                                        @item.FirstOrDefault().remark;  
-                                        ;
+                                        @item.FirstOrDefault().remark.Trim();
                                     }
                             </textarea>
                         </div>
@@ -83,14 +82,13 @@
             <div class="form-group">
                 <div class="col-md-3 col-sm-3 col-xs-12"></div>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @*@if (Model.approveModel.statusId != "")
+                    @if (Model.approveModel.statusId != "2")
                     {
                         <h4 class="text-danger text-center">
                             เอกสารฉับบนี้ได้ถูกอนุมัติเรียบร้อยแล้วครับ
                         </h4>
                     }
-                    else*@ 
-                    @if (Model.approveModel.isPermisionApprove)
+                    else if (Model.approveModel.isPermisionApprove)
                     {
                         <button type="submit" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
                         <a href="@Url.Action("index", "home")" class="btn btn-info pull-right"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
@@ -112,12 +110,11 @@
 
 <div class="modal fade" id="ModalPreviewPDF" style="display:none">
     <div id="divPreviewApprove">
-        @Html.Action("previewApprove", "Approve")
     </div>
 </div>
 
 <script>
-
+    $("#txtRemark").val('');
 
     function beginQuery() {
 
@@ -141,7 +138,7 @@
     }
 
     function failureQuery(data) {
-        openErrorDialog(data.responseText);
+        bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
     }
 
 

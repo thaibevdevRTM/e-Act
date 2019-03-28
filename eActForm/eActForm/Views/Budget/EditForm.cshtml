@@ -1,30 +1,77 @@
 ﻿@model eActForm.Models.Budget_Activity_Model
-	@{
-		ViewBag.Title = "Edit Page";
+@{
+	ViewBag.Title = "Edit Page";
+}
+
+<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+
+<style type="text/css">
+
+	.my-bootbox-class .modal-dialog {
+		width: 400px;
+		font-size: 18px;
 	}
+</style>
 
-	<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-	<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
-	<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
-	<script src="~/Scripts/dropzone/dropzone.min.js"></script>
-	<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
 
-	<style type="text/css">
 
-		.my-bootbox-class .modal-dialog {
-			width: 400px;
-			font-size: 18px;
+<div class="alert alert-success" role="alert">
+	<h4 class="alert-heading">
+		แบบฟอร์มรายละเอียดค่าใช้จ่ายตั้งจ่ายจริง  กิจกรรมเลขที่ :
+		@if (Model.Budget_Activity_Product_list != null)
+		{
+			@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo)
 		}
-	</style>
+	</h4>
+	<p></p>
+</div>
 
-	
+<table class="table table-hover" id="content">
+	<thead class="thead-dark">
+		<tr style="background-color:#2B5D95;color:#ffffff;">
+			<th class="align-content-center font12B"></th>
+			<th class="align-content-center font12B" style="width:10%;">ประเภทกิจกรรม</th>
+			<th class="align-content-center font12B" style="width:20%;">กลุ่มสินค้า/ชื่อสินค้า</th>
+			<th class="align-content-center font12B">จำนวนเงินที่ตั้ง</th>
+			<th class="align-content-center font12B">เลขที่ใบแจ้งหนี้</th>
+			@*<th class="align-content-center font12B">เลขที่ใบสำคัญจ่าย</th>
+				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
+				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>*@
+			<th class="align-content-center font12B">จำนวนเงินจ่าย</th>
+			<th class="align-content-center font12B">ผลต่าง-บาท</th>
+			<th class="align-content-center font12B">วันที่ทำรายการ</th>
+			<th class="align-content-center font12B" style="width:20%;">สถานะ</th>
+		</tr>
+	</thead>
 
-		<div class="alert alert-success" role="alert">
-			<h4 class="alert-heading">
-				แบบฟอร์มรายละเอียดค่าใช้จ่ายตั้งจ่ายจริง  กิจกรรมเลขที่ :
-				@if (Model.Budget_Activity_Product_list != null)
+	<tbody>
+		@if (Model.Budget_Activity_Product_list.Count > 0)
+		{
+			var index = 0;
+			foreach (var item in Model.Budget_Activity_Product_list)
+			{
+				if (@item.invoiceSeq == 0)
 				{
-					@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo)
+					<tr class="gradeX" style="background-color:whitesmoke;">
+						<td>
+							<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-btc" onclick="javascript:onSelectProduct('@item.act_activityId','@item.prd_productId','');"></a>
+						</td>
+
+						<td style="font-size:12.5px;">@item.act_typeTheme</td>
+						<td style="font-size:12.5px;">@item.prd_productDetail</td>
+						<td style="font-size:12.5px;text-align:right;">@item.totalCost</td>
+						@*------  display when have invoice row --------------------*@
+						<td style="font-size:12.5px;"></td>
+						<td style="font-size:12.5px;"></td>
+						<td style="font-size:12.5px;"></td>
+						<td style="font-size:12.5px;"></td>
+						@*--------------------------------------------------*@
+						<td style="font-size:12.5px;">ตั้งจ่าย</td>
+					</tr>
 				}
 			</h4>
 			<p></p>
@@ -112,11 +159,11 @@
 
 
 
-		@*<div id='myEditModal' class="modal fade" role="dialog">
-			<div id='myEditModalContent'></div>
-		</div>*@
+@*<div id='myEditModal' class="modal fade" role="dialog">
+		<div id='myEditModalContent'></div>
+	</div>*@
 
-		<script>
+<script>
 
 			function onDelete(actId, prdId, estId, invNo) {
 				
@@ -202,4 +249,4 @@
 
 
 
-		</script>
+</script>
