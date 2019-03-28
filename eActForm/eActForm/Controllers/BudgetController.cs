@@ -86,20 +86,33 @@ namespace eActForm.Controllers
 
 		public ActionResult PreviewBudgetInvoice(string activityId, string productId, string invoiceId)
 		{
-
-
+						
 			if (!string.IsNullOrEmpty(invoiceId))
 			{
 				Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
 				Budget_Activity.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, productId, invoiceId);
+				Budget_Activity.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
+
+
+				//var selectList = new SelectList(Budget_Activity.Budget_Activity_Ststus_list);
+				//foreach (var item in selectList)
+				//{
+				//	if (item.Value == Budget_Activity.Budget_Activity_Product_list.ElementAt(0).invoiceActivityStatusId)
+				//	{
+				//		item.Selected = true;
+				//	}
+				//}
+				
 				return PartialView("PreviewBudgetInvoice", Budget_Activity);
 			}
 			else
 			{
 				Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
 				Budget_Activity.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, productId,null);
+				Budget_Activity.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
 				return PartialView("PreviewBudgetInvoice", Budget_Activity);
 			}
+
 		}
 
 
@@ -111,6 +124,7 @@ namespace eActForm.Controllers
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
 			budget_activity_model.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("2", null).ToList();
 			budget_activity_model.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, null,null);
+			budget_activity_model.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
 
 			return View(budget_activity_model);
 			//return RedirectToAction("EditForm");

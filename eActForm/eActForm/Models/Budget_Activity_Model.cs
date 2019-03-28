@@ -71,13 +71,16 @@ namespace eActForm.Models
 			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
 			public DateTime? invActionDate { get; set; } /*วันที่ทำรายการ*/
 
+			public string invoiceActivityStatusId { get; set; }
+			public string invoiceActivityStatusNameTH { get; set; }
+
 		}
 
 		public class Budget_Activity_Status_Att
 		{
 			public string id { get; set; }
-			public string NameEN { get; set; }
-			public string NameTH { get; set; }
+			public string nameEN { get; set; }
+			public string nameTH { get; set; }
 			public string description { get; set; }
 			public Boolean delFlag { get; set; }
 
@@ -96,8 +99,8 @@ namespace eActForm.Models
 		public class Budget_Product_Status_Att
 		{
 			public string id { get; set; }
-			public string NameEN { get; set; }
-			public string NameTH { get; set; }
+			public string nameEN { get; set; }
+			public string nameTH { get; set; }
 			public string description { get; set; }
 		}
 

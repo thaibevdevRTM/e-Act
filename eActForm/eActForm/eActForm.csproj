@@ -199,7 +199,6 @@
     <Compile Include="BusinessLayer\QueryGetChanelNameByCustomerId.cs" />
     <Compile Include="BusinessLayer\QueryGetCostDetailById.cs" />
     <Compile Include="BusinessLayer\QueryGetImageById.cs" />
-    <Compile Include="BusinessLayer\QueryGetInvoiceActivityStstus.cs" />
     <Compile Include="BusinessLayer\QueryGetMessage.cs" />
     <Compile Include="BusinessLayer\QueryGetProductCostDetail.cs" />
     <Compile Include="BusinessLayer\AuthenAppCode.cs" />

@@ -11,7 +11,30 @@ namespace eActForm.BusinessLayer
 {
 	public class QueryBudgetBiz
     {
-        public static List<Budget_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityNo)
+
+		public static List<Budget_Activity_Model.Budget_Activity_Status_Att> getBudgetActivityStatus()
+		{
+			try
+			{
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivityStstus");
+
+				var result = (from DataRow d in ds.Tables[0].Rows
+							  select new Budget_Activity_Model.Budget_Activity_Status_Att()
+							  {
+								  id = d["id"].ToString(),
+								  nameTH = d["nameTH"].ToString(),
+							  });
+
+				return result.ToList();
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("getBudgetActivityStatus => " + ex.Message);
+				return new List<Budget_Activity_Model.Budget_Activity_Status_Att>();
+			}
+		}
+
+		public static List<Budget_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityNo)
         {
             try
             {
@@ -99,6 +122,9 @@ namespace eActForm.BusinessLayer
 								  invoiceProductStatusNameTH = d["invoiceProductStatusNameTH"].ToString(), /*สภานะเงินของรายการ product*/
 								  invoiceSeq = d["invoiceSeq"].ToString() == "" ? 0 : int.Parse(d["invoiceSeq"].ToString()),
 								  invActionDate = d["invActionDate"] is DBNull ? null : (DateTime?)d["invActionDate"],
+
+								  invoiceActivityStatusId = d["invoiceActivityStatusId"].ToString(),
+								  invoiceActivityStatusNameTH = d["invoiceActivityStatusNameTH"].ToString(),
 								  //invActionDate = DateTime.Parse(d["invActionDate"].ToString()), /*วันที่ทำรายการ*/
 								  //invActionDate = DateTime.ParseExact(d["invActionDate"].ToString(), "MM/dd/yyyy HH:mm:ss"),
 
