@@ -1,0 +1,76 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace eActForm.Models
+{
+    public class TB_Inv_InvoiceActivity_Model
+	{
+
+
+        public List<InvoiceActivityModel> budget_activity_list { get; set; }
+
+        public TB_Inv_InvoiceActivity_Model()
+        {
+            budget_activity_list = new List<InvoiceActivityModel>();
+        }
+
+         public class InvoiceActivityModel
+        {
+            public string act_form_id { get; set; }
+            public int act_approveStatusId { get; set; }
+            public string act_activityNo { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+            public DateTime? act_documentDate { get; set; }
+
+            public string act_reference { get; set; }
+            public string act_customerId { get; set; }
+            public string cus_cusShortName { get; set; }
+            public string cus_cusNameEN { get; set; }
+            public string cus_cusNameTH { get; set; }
+            
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_activityPeriodSt { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_activityPeriodEnd { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_costPeriodSt { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_costPeriodEnd { get; set; }
+
+            public string act_activityName { get; set; }
+            public string act_theme { get; set; }
+            public string act_objective { get; set; }
+            public string act_trade { get; set; }
+            public string act_activityDetail { get; set; }
+            public string act_delFlag { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_createdDate { get; set; }
+
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime? act_updatedDate { get; set; }
+
+            public string act_createdByUserId { get; set; }
+            public string act_updatedByUserId { get; set; }
+            public decimal act_normalCost { get; set; }
+            public decimal act_themeCost { get; set; }
+            public decimal act_totalCost { get; set; }
+        }
+
+       
+    }
+}

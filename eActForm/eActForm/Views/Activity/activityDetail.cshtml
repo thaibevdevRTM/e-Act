@@ -5,6 +5,7 @@
     /**/
 
     Layout = null;
+    decimal? perTotal = 0;
     decimal? total = 0;
     decimal? normalTotal = 0;
     decimal? activityTotal = 0;
@@ -18,7 +19,7 @@
         <p class="lead">รายละเอียดค่าใช้จ่าย (Cost)</p>
     </div>
     <div class="col-12">
-        <table class="table table-bordered" id="">
+        <table class="table table-bordered" id="tbl_activityDetail">
             <thead class="thead-dark">
                 <tr>
                     <th class="align-content-center font10" rowspan="2" width="10px" onclick="onDelActDetail();"> <button class="btn ink-reaction btn-danger fa fa-trash-o"></button></th>
@@ -45,7 +46,7 @@
                 {
                     <tr>
                         <td onclick="onDelActDetail('@item.id')">
-                            <label class="btn ink-reaction btn-danger fa fa-trash-o"></label>
+                            <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
                             @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
                         </td>
                         @if (item.isShowGroup == "true")
@@ -90,7 +91,7 @@
                         <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}%", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight" })</td>
 
                     </tr>
-                    total = total + item.total;
+                    total = item.normalCost == null ? 0 + total : item.total + total;
                     normalTotal = item.normalCost == null ? 0 + normalTotal : item.normalCost + normalTotal;
                     activityTotal = item.themeCost == null ? 0 + activityTotal : item.themeCost + activityTotal;
                     index++;
@@ -101,7 +102,7 @@
                 <td colspan="3" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
                 <td>
                     <p class="text-success text-center">
-                        @if (normalTotal != null)
+                        @if (normalTotal != 0)
                         {
                             string result = String.Format("{0:n2}", @normalTotal);
                             @result.ToString();
@@ -110,7 +111,7 @@
                 </td>
                 <td>
                     <p class="text-success text-center">
-                        @if (activityTotal != null)
+                        @if (activityTotal != 0)
                         {
                             string result = String.Format("{0:n2}", @activityTotal);
                             @result.ToString();
@@ -122,13 +123,12 @@
                         @if (activityTotal != 0 && normalTotal != 0)
                         {
                             growthTotal = (activityTotal - normalTotal) / normalTotal;
-                            string result = String.Format("{0:n2}%", @growthTotal);
+                            string result = String.Format("{0:n0}%", @growthTotal);
                             @result.ToString();
 
                         }
                     </p>
                 </td>
-                <td>&nbsp;</td>
                 <td>
                     <p class="text-success text-center">
                         @if (total != 0)

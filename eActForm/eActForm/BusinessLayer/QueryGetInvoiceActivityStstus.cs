@@ -22,8 +22,8 @@ namespace eActForm.BusinessLayer
 							  select new Budget_Activity_Model.Budget_Activity_Status_Att()
 							  {
 								  id = d["id"].ToString(),
-								  nameEN = d["NameEN"].ToString(),
-								  nameTH = d["NameTH"].ToString(),
+								  NameEN = d["NameEN"].ToString(),
+								  NameTH = d["NameTH"].ToString(),
 								  description = d["description"].ToString(),
 								  delFlag = bool.Parse(d["delFlag"].ToString()),
 								  createdDate = DateTime.Parse(d["createdDate"].ToString()),

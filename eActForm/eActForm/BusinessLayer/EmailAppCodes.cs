@@ -19,6 +19,37 @@ namespace eActForm.BusinessLayer
         {
             try
             {
+                ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actFormId);
+                if (models.approveDetailLists != null && models.approveDetailLists.Count > 0)
+                {
+                    #region get mail to
+                    var lists = (from m in models.approveDetailLists
+                                 where (m.statusId != "")
+                                 select m).ToList();
+                    string strMailTo = "";
+                    foreach (ApproveModel.approveDetailModel m in lists)
+                    {
+                        strMailTo = (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email
+                    }
+                    List<ApproveModel.approveDetailModel> createUsers = ActFormAppCode.getUserCreateActForm(actFormId);
+                    foreach (ApproveModel.approveDetailModel m in createUsers)
+                    {
+                        strMailTo = (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email
+                    }
+                    #endregion
+
+                    var empUser = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList(); // get current user
+                    string strBody = string.Format(ConfigurationManager.AppSettings["emailRejectBody"]
+                        , models.approveModel.actNo
+                        , empUser.FirstOrDefault().empPrefix + " " + empUser.FirstOrDefault().empName
+                        , empUser.FirstOrDefault().remark
+                        );
+
+                    sendEmailActForm(actFormId
+                        , strMailTo
+                        , ConfigurationManager.AppSettings["emailRejectSubject"]
+                        , strBody);
+                }
                 return "";
             }
             catch (Exception ex)
@@ -31,29 +62,52 @@ namespace eActForm.BusinessLayer
             try
             {
                 List<ApproveModel.approveEmailDetailModel> lists = getEmailNextLevel(actFormId);
-                foreach (ApproveModel.approveEmailDetailModel item in lists)
+                string strBody = "";
+                if (lists.Count > 0)
                 {
-                    string strBody = string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
-                        , item.empPrefix + " " + item.empName //เรียน
-                        , "รออนุมัติ"
-                        , "Activity Form"
-                        , item.activityName
-                        , item.activitySales
-                        , item.activityNo
-                        , item.sumTotal
-                        , item.createBy
-                        , string.Format(ConfigurationManager.AppSettings["urlApprove"], actFormId)
-                        );
+                    foreach (ApproveModel.approveEmailDetailModel item in lists)
+                    {
+                        strBody = string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
+                            , item.empPrefix + " " + item.empName //เรียน
+                            , "รออนุมัติ"
+                            , "Activity Form"
+                            , item.activityName
+                            , item.activitySales
+                            , item.activityNo
+                            , item.sumTotal
+                            , item.createBy
+                            , string.Format(ConfigurationManager.AppSettings["urlApprove"], actFormId)
+                            );
 
-                    List<Attachment> files = new List<Attachment>();
-                    string pathFile = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"],actFormId));                    
-                    files.Add(new Attachment(pathFile, new ContentType("application/pdf")));
+                        sendEmailActForm(actFormId
+                            , item.empEmail
+                            , ConfigurationManager.AppSettings["emailApproveSubject"]
+                            , strBody);
+                    }
+                }
+                else
+                {
+                    // case all updated
+                    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountStatusApproveDetail"
+                        , new SqlParameter[] {new SqlParameter("@actFormId",actFormId)
+                        ,new SqlParameter("@statusId",AppCode.ApproveStatus.อนุมัติ)});
+                    if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
+                    {
+                        DataRow dr = ds.Tables[0].Rows[0];
+                        if (dr["countAll"].ToString() == dr["countStatusApproved"].ToString())
+                        {
+                            // all approved then send the email notification to user create
+                            List<ApproveModel.approveDetailModel> createUsers = ActFormAppCode.getUserCreateActForm(actFormId);
+                            strBody = string.Format(ConfigurationManager.AppSettings["emailAllApproveBody"]
+                                , createUsers.FirstOrDefault().empName
+                                , createUsers.FirstOrDefault().activityNo);
 
-                    sendEmail("parnupong.k@thaibev.com"//item.empEmail
-                        , ConfigurationManager.AppSettings["emailApproveCC"]
-                        , ConfigurationManager.AppSettings["emailApproveSubject"]
-                        , strBody
-                        , files);
+                            sendEmailActForm(actFormId
+                            , createUsers.FirstOrDefault().empEmail
+                            , ConfigurationManager.AppSettings["emailAllApprovedSubject"]
+                            , strBody);
+                        }
+                    }
                 }
 
                 return "";
@@ -62,6 +116,19 @@ namespace eActForm.BusinessLayer
             {
                 throw new Exception("sendApproveActForm >> " + ex.Message);
             }
+        }
+
+        private static void sendEmailActForm(string actFormId, string mailTo, string strSubject, string strBody)
+        {
+            List<Attachment> files = new List<Attachment>();
+            string pathFile = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
+            files.Add(new Attachment(pathFile, new ContentType("application/pdf")));
+
+            sendEmail("parnupong.k@thaibev.com"//mailTo
+                    , ConfigurationManager.AppSettings["emailApproveCC"]
+                    , strSubject
+                    , strBody
+                    , files);
         }
 
         private static List<ApproveModel.approveEmailDetailModel> getEmailNextLevel(string actFormId)

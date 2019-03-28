@@ -19,7 +19,6 @@ namespace eActForm.Models
 			public string activityId { get; set; }
 			public string productId { get; set; }
 
-			public string activityNo { get; set; }
 			public string paymentNo { get; set; }
 			public string invoiceNo { get; set; }
 			public decimal saleActCase { get; set; }
@@ -42,7 +41,7 @@ namespace eActForm.Models
 			public class Budget_Activity_Product_Att
 		{
 			//usp_getBudgetActivityProduct for Query Biz
-			public string act_activityId { get; set; }
+			public string act_activityFormId { get; set; }
 			public string act_activityNo { get; set; }
 			public string prd_productId { get; set; }
 			public string act_typeTheme { get; set; }
@@ -50,14 +49,20 @@ namespace eActForm.Models
 			public decimal normalCost { get; set; }
 			public decimal themeCost { get; set; }
 			public decimal totalCost { get; set; }
-			public string invoiceId { get; set; }
-			public string invoiceNo { get; set; }
-			public decimal invTotalBath { get; set; }       /*จำนวนเงินจ่าย*/
-			public decimal productStandBath { get; set; } /*ยอดยกมา*/
-			public decimal productBalanceBath { get; set; } /*ผลต่าง*/
-			public string invoiceProductStatusId { get; set; }
-			public string invoiceProductStatusNameTH { get; set; }
-			public Int32 invoiceSeq { get; set; }
+			public string invoiceProductStatusId { get; set; } /*สภานะเงินของรายการ product*/
+			public string invoiceProductStatusNameTH { get; set; } /*สภานะเงินของรายการ product*/
+
+			public string prd_cate_productCateText { get; set; }
+			public string prd_group_groupName { get; set; }
+			public string productCode { get; set; }
+			public string productName { get; set; }
+			public string size { get; set; }
+			public decimal unit { get; set; }
+			public string smellId { get; set; }
+			public string smell_nameTH { get; set; }
+			public string smell_nameEN { get; set; }
+			public string brand_Name { get; set; }
+			public Int32 productSeq { get; set; }
 
 			//public string invoiceNo { get; set; }
 			//public Int32 invoiceSeq { get; set; }
@@ -67,20 +72,17 @@ namespace eActForm.Models
 			//public decimal invTotalBath { get; set; }	/*จำนวนเงินจ่าย*/
 			//public decimal balanceBath { get; set; }	/*ผลต่าง*/
 
-			[DataType(DataType.Date)]
-			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-			public DateTime? invActionDate { get; set; } /*วันที่ทำรายการ*/
-
-			public string invoiceActivityStatusId { get; set; }
-			public string invoiceActivityStatusNameTH { get; set; }
+			//[DataType(DataType.Date)]
+			//[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+			//public DateTime? actionDate { get; set; } /*วันที่ทำรายการ*/
 
 		}
 
 		public class Budget_Activity_Status_Att
 		{
 			public string id { get; set; }
-			public string nameEN { get; set; }
-			public string nameTH { get; set; }
+			public string NameEN { get; set; }
+			public string NameTH { get; set; }
 			public string description { get; set; }
 			public Boolean delFlag { get; set; }
 
@@ -99,8 +101,8 @@ namespace eActForm.Models
 		public class Budget_Product_Status_Att
 		{
 			public string id { get; set; }
-			public string nameEN { get; set; }
-			public string nameTH { get; set; }
+			public string NameEN { get; set; }
+			public string NameTH { get; set; }
 			public string description { get; set; }
 		}
 
