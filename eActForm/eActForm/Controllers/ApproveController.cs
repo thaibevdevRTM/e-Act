@@ -18,7 +18,7 @@ namespace eActForm.Controllers
             else
             {
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
-                models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app);
+                models.approveStatusLists = ApproveAppCode.getApproveStatus();
                 return View(models);
             }
         }
@@ -80,13 +80,13 @@ namespace eActForm.Controllers
             var resultAjax = new AjaxResult();
             try
             {
+                AppCode.genPdfFile(GridHtml, activityId);
                 if( statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
                     EmailAppCodes.sendRejectActForm(activityId);
                 }
-                else if( statusId == ConfigurationManager.AppSettings["statusApprove"])
+                else
                 {
-                    AppCode.genPdfFile(GridHtml, activityId);
                     EmailAppCodes.sendApproveActForm(activityId);
                 }
                 resultAjax.Success = true;

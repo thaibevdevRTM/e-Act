@@ -14,7 +14,7 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             SearchActivityModels models = new SearchActivityModels();
-            models.approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app);
+            models.approveStatusList = ApproveAppCode.getApproveStatus();
             models.productGroupList = QueryGetAllProductGroup.getAllProductGroup();
             models.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
             models.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
