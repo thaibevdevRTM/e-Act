@@ -8,15 +8,44 @@
 <script>
 
 	   function submitInvoice() {
+		   $.ajax({
+            url: '@Url.Action("submitInvoice", "Budget")',
+				data: {
+				budgetInvoiceModel: ObjModel,
+				Id: $("#hd_invoiceId").val(),
+				activityId: $("#hd_activityId").val(),
+				activityNo: $("#hd_activityNo").val(),
+				productId: $("#hd_productId").val(),
+				activityOfEstimateId: $("#hd_activityOfEstimateId").val(),
+				//invoiceId: $("#hd_invoiceId").val(),
+				invoiceNo: $("#txt_invoice_no").val(),
+				invTotalBath: $("#txt_invoice_baht").val(),
+				actionDate: $("#txt_date_action").val(),
+            },
+            dataType: "json",
+			type: 'POST',
+			success: function (response) {
+				$('#myModal').modal('hide');
+				console.log(response.success);
 
-	   bootbox.confirm("ยืนยัน บันทึกข้อมูล!", function (result) {
-		   if (result == true) {   
+				@*var var_activityId = document.getElementById("hd_activityId").value;
+				var url = "@Url.Action("EditForm", "Budget")" + "?activityId=" + var_activityId ;
+				window.location.href = url;*@
+
+				window.location.reload()
+			}
+		   })
+
+
+	   @*bootbox.confirm("ยืนยัน บันทึกข้อมูล!", function (result) {
+		   if (result == true) {
 			$.ajax({
             url: '@Url.Action("submitInvoice", "Budget")',
 				data: {
 				budgetInvoiceModel: ObjModel,
 				Id: $("#hd_activityId").val(),
 				activityId: $("#hd_activityId").val(),
+				activityNo: $("#hd_activityNo").val(),
 				productId: $("#hd_productId").val(),
 				invoiceNo: $("#txt_invoice_no").val(),
 				invTotalBath: $("#txt_invoice_baht").val(),
@@ -28,12 +57,12 @@
 			(
 				function (response)
 				{
-				
+
 					$.ajax({
 					url: '@Url.Action("EditForm", "Budget")',
 					data: {
 						activityId: $("#hd_activityId").val(),
-						productId: $("#hd_productId").val(),
+						//productId: $("#hd_productId").val(),
 					},
 					dataType: "json",
 					type: 'POST',
@@ -46,16 +75,18 @@
 
 
 		   }
-         });
+         });*@
 	}
 
 
 </script>
 
 <input type="hidden" id="hd_activity">
-@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).act_activityFormId, new { @id = "hd_activityId" })
+@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).act_activityId, new { @id = "hd_activityId" })
+@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).act_activityNo, new { @id = "hd_activityNo" })
 @Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).prd_productId, new { @id = "hd_productId" })
-
+@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).invoiceId, new { @id = "hd_invoiceId" })
+@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).activityOfEstimateId, new { @id = "hd_activityOfEstimateId" })
 <style>
 	.font14 {
 		font-size: 14px;
@@ -83,12 +114,21 @@
 					<div style="text-align:left;">
 						<h4>
 							เลขที่กิจกรรมส่งเสริมการขาย :
-							@if (Model.Budget_Activity_Product_list != null)
+							@if (Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo != null)
 							{
 								@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo)
 							}
 						</h4>
 					</div>
+					@if (Model.Budget_Activity_Product_list.ElementAt(0).invoiceId != "")
+					{
+						<div style="text-align:left;">
+							<h4>
+								เลขที่ใบแจ้งหนี้ :
+								@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).invoiceNo)
+							</h4>
+						</div>
+					}
 				</div>
 
 				<div>
@@ -110,6 +150,7 @@
 							<td width="10%" class="font14">เลขที่ใบแจ้งหนี้</td>
 							<td width="10%" class="font14">จำนวนเงินจ่าย</td>
 							<td width="10%" class="font14">วันที่ทำกิจกรรม</td>
+							<td width="10%" class="font14">สถานะ</td>
 						</tr>
 
 						<tr>
@@ -117,18 +158,43 @@
 								@if (Model.Budget_Activity_Product_list != null)
 								{
 									@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).prd_productDetail)
+
 								}
 							</td>
 							<td width="15%" class="font14" style="text-align:right;">
-								@if (Model.Budget_Activity_Product_list != null)
+								@*@if (Model.Budget_Activity_Product_list != null)*@
+
+
+								@if (Model.Budget_Activity_Product_list.ElementAt(0).invoiceId != "")
 								{
-									@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).totalCost)
+									@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(Model.Budget_Activity_Product_list.Count - 1).productStandBath)
 								}
+								else
+								{
+									@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(Model.Budget_Activity_Product_list.Count - 1).productBalanceBath)
+								}
+
 								&nbsp;
 							</td>
-							<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no"></td>
-							<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht"></td>
-							<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action"></td>
+							@if (Model.Budget_Activity_Product_list.ElementAt(0).invoiceId != "")
+							{
+								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no" value="@Html.DisplayFor(item => item.Budget_Activity_Product_list.ElementAt(0).invoiceNo)"></td>
+								<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht" value="@Html.DisplayFor(item => item.Budget_Activity_Product_list.ElementAt(0).invTotalBath)"></td>
+								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action" value="@Html.DisplayFor(item => item.Budget_Activity_Product_list.ElementAt(0).invActionDate)"></td>
+								<td width="10%">
+									@Html.DropDownListFor(item => item.Budget_Activity_Ststus_list, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 1), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatusEdit" })
+								</td>
+							}
+							else
+							{
+								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no"></td>
+								<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht"></td>
+								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action"></td>
+								<td width="10%">
+									@Html.DropDownListFor(item => item.Budget_Activity_Ststus_list, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 2), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatusNew" })
+								</td>
+							}
+
 						</tr>
 
 					</table>
