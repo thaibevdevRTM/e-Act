@@ -106,9 +106,6 @@ namespace eActForm.Models
         public string id { get; set; }
         public int statusId { get; set; }
         public string activityNo { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime? documentDate { get; set; }
         public string reference { get; set; }
         public string cusShortName { get; set; }
@@ -122,17 +119,11 @@ namespace eActForm.Models
         public string productGroupText { get; set; }
         public string groupShort { get; set; }
         public string productTypeId { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? activityPeriodSt { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? activityPeriodEnd { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? costPeriodSt { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? costPeriodEnd { get; set; }
         public string activityName { get; set; }
         public string theme { get; set; }
@@ -149,7 +140,11 @@ namespace eActForm.Models
         public string createdByUserId { get; set; }
         public DateTime? updatedDate { get; set; }
         public string updatedByUserId { get; set; }
-
+        public string dateDoc { get; set; }
+        public string str_costPeriodSt { get; set; }
+        public string str_costPeriodEnd { get; set; }
+        public string str_activityPeriodSt { get; set; }
+        public string str_activityPeriodEnd { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel
@@ -164,10 +159,11 @@ namespace eActForm.Models
         public decimal? normalCost { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? themeCost { get; set; }
-        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? growth { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? total { get; set; }
+        public decimal? perTotal { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
@@ -187,6 +183,7 @@ namespace eActForm.Models
         public decimal? themeCost { get; set; }
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
+        public decimal? perTotal { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
@@ -198,24 +195,25 @@ namespace eActForm.Models
         public string id { get; set; }
         public string activityId { get; set; }
         public string productId { get; set; }
+        public string pack { get; set; }
         public string productName { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? wholeSalesPrice { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? disCount1 { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? disCount2 { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? disCount3 { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalCost { get; set; }
-        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalGp { get; set; }
         public string strNormalGP { get; set; }
         public string strPromotionGP { get; set; }
-        [DisplayFormat(DataFormatString = "{0:p0}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? promotionGp { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? specialDisc { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? specialDiscBaht { get; set; }
@@ -253,6 +251,7 @@ namespace eActForm.Models
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
+        public string pack { get; set; }
         public string typeTheme { get; set; }
         public string activityTypeId { get; set; }
         public decimal? themeCost { get; set; }

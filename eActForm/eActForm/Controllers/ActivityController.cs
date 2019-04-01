@@ -112,6 +112,7 @@ namespace eActForm.Controllers
         public ActionResult PreviewData(string activityId)
         {
             Activity_Model activityModel = new Activity_Model();
+
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
@@ -207,6 +208,7 @@ namespace eActForm.Controllers
                 decimal p_total = 0;
                 decimal getPromotionCost = 0;
                 decimal getNormalCost = 0;
+                decimal get_PerTotal = 0;
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
                 if (checkNullorEmpty(themeCost) != "0")
@@ -214,9 +216,13 @@ namespace eActForm.Controllers
                     getNormalCost = decimal.Parse(checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().normalCost.ToString()));
                     getPromotionCost = decimal.Parse(checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().promotionCost.ToString()));
                     p_total = (getNormalCost - getPromotionCost) * decimal.Parse(themeCost);
+
+                    //get_PerTotal = p_total * 100 / (decimal.Parse(normalCost) * getPromotionCost); //ยอดขายปกติ
+                    get_PerTotal = p_total * 100 / (decimal.Parse(themeCost) * getPromotionCost);// % ยอดขายโปโมชั่น
                 }
 
                 decimal p_growth = normalCost == "0" ? 0 : (decimal.Parse(themeCost) - decimal.Parse(normalCost)) / decimal.Parse(normalCost);
+
                 activityModel.activitydetaillist
                         .Where(r => r.id != null && r.id.Equals(id))
                         .Select(r =>
@@ -226,6 +232,7 @@ namespace eActForm.Controllers
                             r.growth = p_growth;
                             r.themeCost = decimal.Parse(themeCost);
                             r.total = p_total;
+                            r.perTotal = get_PerTotal;
                             return r;
                         }).ToList();
 
@@ -259,6 +266,12 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
+                normalCost = normalCost.Replace(",", "");
+                wholeSalesPrice = wholeSalesPrice.Replace(",", "");
+                saleOut = saleOut.Replace(",", "");
+                saleIn = saleIn.Replace(",", "");
+                normalGP = normalGP == null ? "" : normalGP.Replace(",", "");
+                promotionGP = promotionGP == null ? "" : promotionGP.Replace(",", "");
                 decimal p_wholeSalesPrice = checkNullorEmpty(wholeSalesPrice) == "0" ? 0 : decimal.Parse(checkNullorEmpty(wholeSalesPrice));
                 decimal p_disCount1 = checkNullorEmpty(disCount1) == "0" ? p_wholeSalesPrice : p_wholeSalesPrice - ((decimal.Parse(checkNullorEmpty(disCount1)) / 100) * p_wholeSalesPrice);
                 decimal p_disCount2 = checkNullorEmpty(disCount2) == "0" ? p_disCount1 : p_disCount1 - ((decimal.Parse(checkNullorEmpty(disCount2)) / 100) * p_disCount1);
@@ -266,13 +279,13 @@ namespace eActForm.Controllers
 
                 decimal getPackProduct = QueryGetAllProduct.getProductById(productId).FirstOrDefault().pack;
 
-                decimal p_normalGp = checkNullorEmpty(saleOut) == "0" || getPackProduct == 0 ? 0 : (decimal.Parse(saleOut) - (p_wholeSalesPrice * decimal.Parse("1.07"))
-                    / getPackProduct) / decimal.Parse(saleOut);
-              
+                decimal p_normalGp = checkNullorEmpty(saleOut) == "0" ? 0 : ((decimal.Parse(saleOut) - (p_disCount3 * decimal.Parse("1.07")))
+                    / getPackProduct / decimal.Parse(saleOut)) * 100;
+
                 decimal p_PromotionCost = checkNullorEmpty(specialDisc) == "0" && checkNullorEmpty(specialDiscBaht) == "0" || p_disCount3 == 0 ? p_disCount3 : (p_disCount3 - (p_disCount3 * (decimal.Parse(specialDisc) / 100))) - decimal.Parse(checkNullorEmpty(specialDiscBaht));
 
-                decimal p_PromotionGp = checkNullorEmpty(saleIn) == "0" ? 0 : (decimal.Parse(saleIn) - (p_PromotionCost * decimal.Parse("1.07"))
-                  / getPackProduct) / decimal.Parse(checkNullorEmpty(saleIn));
+                decimal p_PromotionGp = checkNullorEmpty(saleIn) == "0" ? 0 : ((decimal.Parse(saleIn) - (p_PromotionCost * decimal.Parse("1.07")))
+                  / getPackProduct / decimal.Parse(checkNullorEmpty(saleIn))) * 100;
 
 
                 Activity_Model activityModel = new Activity_Model();
@@ -291,7 +304,7 @@ namespace eActForm.Controllers
                         r.promotionGp = p_PromotionGp;
                         r.specialDisc = decimal.Parse(checkNullorEmpty(specialDisc));
                         r.specialDiscBaht = decimal.Parse(checkNullorEmpty(specialDiscBaht));
-                        r.normalCost = p_disCount3;
+                        r.normalCost = p_disCount3 == 0 ? p_wholeSalesPrice : p_disCount3;
                         r.promotionCost = p_PromotionCost;
                         return r;
                     }).ToList();
@@ -524,10 +537,12 @@ namespace eActForm.Controllers
                 if (countresult > 0)
                 {
                     GridHtml = GridHtml.Replace("---", genDoc);
-                    ApproveAppCode.updateApproveWaitingByRangNo(activityId);
                     AppCode.genPdfFile(GridHtml, activityId);
-                    ApproveAppCode.insertApprove(activityId);
-                    EmailAppCodes.sendApproveActForm(activityId);
+                    if (ApproveAppCode.insertApprove(activityId) > 0)
+                    {
+                        ApproveAppCode.updateApproveWaitingByRangNo(activityId);
+                        EmailAppCodes.sendApproveActForm(activityId);
+                    }
                 }
                 resultAjax.Success = true;
             }
@@ -544,7 +559,7 @@ namespace eActForm.Controllers
 
         public string checkNullorEmpty(string p)
         {
-            return p == "" || p == null || p == "0" ? "0" : p;
+            return p == "" || p == null || p == "0" || p == "0.00" ? "0" : p;
         }
 
 

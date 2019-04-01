@@ -1,0 +1,229 @@
+﻿@model eActForm.Models.Budget_Activity_Model
+@{
+	ViewBag.Title = "Edit Page";
+}
+
+<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+
+<style type="text/css">
+
+	.my-bootbox-class .modal-dialog {
+		width: 400px;
+		font-size: 18px;
+	}
+</style>
+
+
+
+<div class="alert alert-success" role="alert">
+	<h4 class="alert-heading">
+		แบบฟอร์มรายละเอียดค่าใช้จ่ายตั้งจ่ายจริง  กิจกรรมเลขที่ :
+		@if (Model.Budget_Activity_Product_list != null)
+		{
+			@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo)
+		}
+	</h4>
+	<p></p>
+</div>
+
+<table class="table table-hover" id="content">
+	<thead class="thead-dark">
+		<tr style="background-color:#2B5D95;color:#ffffff;">
+			<th class="align-content-center font12B"></th>
+			<th class="align-content-center font12B" style="width:10%;">ประเภทกิจกรรม</th>
+			<th class="align-content-center font12B" style="width:20%;">กลุ่มสินค้า/ชื่อสินค้า</th>
+			<th class="align-content-center font12B">จำนวนเงินที่ตั้ง</th>
+			<th class="align-content-center font12B">เลขที่ใบแจ้งหนี้</th>
+			@*<th class="align-content-center font12B">เลขที่ใบสำคัญจ่าย</th>
+				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
+				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>*@
+			<th class="align-content-center font12B">จำนวนเงินจ่าย</th>
+			<th class="align-content-center font12B">ผลต่าง-บาท</th>
+			<th class="align-content-center font12B">วันที่ทำรายการ</th>
+			<th class="align-content-center font12B" style="width:20%;">สถานะ</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		@if (Model.Budget_Activity_Product_list.Count > 0)
+		{
+			var index = 0;
+			foreach (var item in Model.Budget_Activity_Product_list)
+			{
+				if (@item.invoiceSeq == 0)
+				{
+					<tr class="gradeX" style="background-color:whitesmoke;">
+						<td>
+							<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-btc" onclick="javascript:onSelectProduct('@item.act_activityId','@item.prd_productId','@item.activityOfEstimateId','');"></a>
+						</td>
+
+						<td style="font-size:12.5px;">@item.act_typeTheme</td>
+						<td style="font-size:12.5px;">@item.prd_productDetail</td>
+						<td style="font-size:12.5px;text-align:right;">
+							@if (item.totalCost != 0)
+								{
+								string result = String.Format("{0:n2}", @item.totalCost);
+								@result.ToString();
+								}
+						</td>
+						@*------  display when have invoice row --------------------*@
+						<td style="font-size:12.5px;"></td>
+						<td style="font-size:12.5px;"></td>
+						<td style="font-size:12.5px;"></td>
+						<td style="font-size:12.5px;"></td>
+						@*--------------------------------------------------*@
+						<td style="font-size:12.5px;">ตั้งจ่าย</td>
+					</tr>
+				}
+				else
+				{
+					<tr class="gradeX">
+						<td></td>
+
+						<td style="font-size:12.5px;"></td>
+
+						<td style="font-size:12.5px;">
+							<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectProduct('@item.act_activityId','@item.prd_productId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+
+							@*<a href="javascript:onDeleteInvoice();" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-btc" data-activity-id="@item.act_activityId" data-product-id="@item.prd_productId" data-invoice-no="@item.invoiceNo" onclick=""></a>*@
+							<a href="javascript:" target="_blank" onclick="return onDelete('@item.act_activityId','@item.prd_productId','@item.activityOfEstimateId','@item.invoiceNo');">
+								<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+							</a>
+
+						</td>
+						<td style="font-size:12.5px;text-align:right;">
+							@if (item.productStandBath != 0)
+							{
+								string result = String.Format("{0:n2}", @item.productStandBath);
+								@result.ToString();
+							}
+
+						</td>
+						@*------  display when have invoice row --------------------*@
+						<td style="font-size:12.5px;">@item.invoiceNo</td>
+						<td style="font-size:12.5px;text-align:right;">
+							@if (item.invTotalBath != 0)
+							{
+								string result = String.Format("{0:n2}", @item.invTotalBath);
+								@result.ToString();
+							}
+						</td>
+						<td style="font-size:12.5px;text-align:right;">
+							@if (item.productBalanceBath != 0)
+							{
+								string result = String.Format("{0:n2}", @item.productBalanceBath);
+								@result.ToString();
+							}
+											
+						</td>
+						<td style="font-size:12.5px;">@Html.DisplayFor(x => item.invActionDate) </td>
+						@*--------------------------------------------------*@
+						<td style="font-size:12.5px;">@item.invoiceProductStatusNameTH</td>
+					</tr>
+				}
+
+				index++;
+			}
+		}
+	</tbody>
+</table>
+
+<div id='myModal' class="modal fade" role="dialog">
+	<div id='myModalContent'></div>
+</div>
+
+
+
+@*<div id='myEditModal' class="modal fade" role="dialog">
+		<div id='myEditModalContent'></div>
+	</div>*@
+
+<script>
+
+    function onDelete(actId,prdId,estId,invNo) {
+        var msg = "";
+
+            // can be delete
+		msg = "คุณต้องการลบเอกสาร " + invNo +" นี้หรือไม่?"
+
+        bootbox.confirm({
+            title: "Confirm Message",
+            message: msg,
+            buttons: {
+                confirm: {
+                    label: "Yes",
+                    className: "btn-success"
+                },
+                cancel: {
+                    label: "No",
+                    className: "btn-danger"
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("delInvoiceDetail", "Budget")',
+                        data: {
+                            actId: actId,
+							prdId: prdId,
+							estId: estId,
+							invNo: invNo,
+						},
+						success: function (response) {
+							console.log(response.success);
+							window.location.reload()
+						}
+
+					})
+                }
+            }
+        });
+    }
+
+	function onSelectProduct(actId, prdId,estId,invId) {
+			var TeamDetailPostBackURL = '/Budget/PreviewBudgetInvoice';
+			debugger;
+			//var $buttonClicked = $(this);
+			var var_activityId = actId;
+			var var_productId = prdId;
+			var var_estId = estId;
+			var var_invoiceId = invId;
+			var options = { "backdrop": "static", keyboard: true };
+
+			$.ajax({
+				type: "GET",
+				url: TeamDetailPostBackURL,
+				contentType: "application/json; charset=utf-8",
+				data: {
+					"activityId": var_activityId,
+					"productId": var_productId,
+					"activityOfEstimateId": var_estId,
+					"invoiceId": var_invoiceId
+				},
+				datatype: "json",
+				success: function (data) {
+					debugger;
+					$('#myModalContent').html(data);
+					$('#myModal').modal(options);
+					$('#myModal').modal('show');
+				},
+				error: function () {
+					alert("Dynamic content load failed.");
+				}
+			});
+		}
+
+
+	//	//$("#closbtn").click(function () {
+	//	//	$('#myModal').modal('hide');
+	//	//});
+
+
+
+
+
+</script>

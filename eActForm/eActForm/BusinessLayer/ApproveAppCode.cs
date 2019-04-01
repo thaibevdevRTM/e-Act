@@ -11,6 +11,29 @@ namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
+        public static List<ApproveModel.approveWaitingModel> getAllWaitingApproveGroupByEmpId()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountWaitingApproveGroupByEmpId");
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveModel.approveWaitingModel()
+                             {
+                                 empId = dr["empId"].ToString()
+                                 ,waitingCount = dr["waitingCount"].ToString()
+                                 ,empPrefix = dr["empPrefix"].ToString()
+                                 ,empFNameTH = dr["empFNameTH"].ToString()
+                                 ,empLNameTH = dr["empLNameTH"].ToString()
+                                 ,empEmail = dr["empEmail"].ToString()
+                             }).ToList();
+                return lists;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("getAllWaitingApproveGroupByEmpId >> " + ex.Message);
+            }
+        }
+
         public static int updateApproveWaitingByRangNo(string actId)
         {
             try
@@ -25,7 +48,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("updateApproveWaitingByRangNo >>" + ex.Message);
             }
         }
         public static bool getPremisionApproveByEmpid(List<ApproveModel.approveDetailModel> lists, string empId)
@@ -50,6 +73,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
+                // update approve detail
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateApprove"
                         , new SqlParameter[] {new SqlParameter("@actFormId",actFormId)
                     , new SqlParameter("@empId",UtilsAppCode.Session.User.empId)
@@ -59,12 +83,13 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                         });
 
+                // update activity form
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
                     // update reject
                     rtn += updateActFormWithApproveReject(actFormId);
                 }
-                else
+                else if( statusId ==  ConfigurationManager.AppSettings["statusApprove"])
                 {
                     // update approve
                     rtn += updateActFormWithApproveDetail(actFormId);
@@ -110,7 +135,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 int rtn = 0;
-                if (getApproveByActFormId(actId).approveModel == null)
+                if (getApproveByActFormId(actId).approveDetailLists.Count == 0 )
                 {
                     List<ApproveModel.approveModel> list = new List<ApproveModel.approveModel>();
                     ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
@@ -161,7 +186,6 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-
                 ApproveModel.approveModels models = new ApproveModel.approveModels();
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveDetailByActFormId"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
@@ -173,6 +197,7 @@ namespace eActForm.BusinessLayer
                                                  rangNo = (int)dr["rangNo"],
                                                  empId = dr["empId"].ToString(),
                                                  empName = dr["empName"].ToString(),
+                                                 empEmail = dr["empEmail"].ToString(),
                                                  statusId = dr["statusId"].ToString(),
                                                  statusName = dr["statusName"].ToString(),
                                                  isSendEmail = (bool)dr["isSendEmail"],
@@ -187,10 +212,12 @@ namespace eActForm.BusinessLayer
 
                                              }).ToList();
 
-                ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveByActFormId"
-                   , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
-                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                
+                if (models.approveDetailLists.Count > 0)
                 {
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveByActFormId"
+                   , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
+
                     var empDetail = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
                     var lists = (from DataRow dr in ds.Tables[0].Rows
                                  select new ApproveModel.approveModel()
@@ -198,6 +225,7 @@ namespace eActForm.BusinessLayer
                                      id = dr["id"].ToString(),
                                      flowId = dr["flowId"].ToString(),
                                      actFormId = dr["actFormId"].ToString(),
+                                     actNo = dr["activityNo"].ToString(),
                                      statusId = (empDetail.Count > 0) ? empDetail.FirstOrDefault().statusId : "",
                                      delFlag = (bool)dr["delFlag"],
                                      createdDate = (DateTime?)dr["createdDate"],
@@ -218,12 +246,13 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getCountApproveByActFormId >>" + ex.Message);
             }
         }
-        public static List<ApproveModel.approveStatus> getApproveStatus()
+        public static List<ApproveModel.approveStatus> getApproveStatus(AppCode.StatusType type)
         {
             try
             {
 
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveStatusAll");
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveStatusAll"
+                    ,new SqlParameter("@type",type.ToString()));
                 var list = (from DataRow dr in ds.Tables[0].Rows
                             select new ApproveModel.approveStatus()
                             {
@@ -231,6 +260,7 @@ namespace eActForm.BusinessLayer
                                 nameEN = dr["nameEN"].ToString(),
                                 nameTH = dr["nameTH"].ToString(),
                                 description = dr["description"].ToString(),
+                                type = dr["type"].ToString(),
                                 delFlag = (bool)dr["delFlag"],
                                 createdDate = (DateTime?)dr["createdDate"],
                                 createdByUserId = dr["createdByUserId"].ToString(),

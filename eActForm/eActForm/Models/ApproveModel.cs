@@ -7,18 +7,39 @@ namespace eActForm.Models
 {
     public class ApproveModel
     {
+        public class approveWaitingModels
+        {
+            public List<approveWaitingModel> waitingLists { get; set; }
+        }
+        public class approveWaitingModel
+        {
+            public string empId { get; set; }
+	        public string waitingCount { get; set; }
+	        public string empPrefix { get; set; }
+	        public string empFNameTH { get; set; }
+	        public string empLNameTH { get; set; }
+            public string empEmail { get; set; }
+        }
         public class approveModels
         {
             public approveModel approveModel { get; set; }
             public List<approveDetailModel> approveDetailLists { get; set; }
             public List<approveStatus> approveStatusLists { get; set; }
             public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
+
+            public approveModels()
+            {
+                approveModel = new approveModel();
+                approveDetailLists = new List<approveDetailModel>();
+            }
+
         }
         public class approveModel : ActBaseModel
         {
             public string id { get; set; }
             public string flowId { get; set; }
             public string actFormId { get; set; }
+            public string actNo { get; set; }
             public bool isPermisionApprove { get; set; } // current login can be approve
             public string statusId { get; set; } // approve status of current user
         }
@@ -37,12 +58,14 @@ namespace eActForm.Models
             public bool? isSendEmail { get; set; }
             public string remark { get; set; }
             public byte[] signature { get; set; }
+            public string activityNo { get; set; }
         }
         public class approveStatus : ActBaseModel
         {
             public string id { get; set; }
             public string nameTH { get; set; }
             public string nameEN { get; set; }
+            public string type { get; set; }
             public string description { get; set; }
         }
 
