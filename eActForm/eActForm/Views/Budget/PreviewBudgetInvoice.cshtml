@@ -21,6 +21,7 @@
 				invoiceNo: $("#txt_invoice_no").val(),
 				invTotalBath: $("#txt_invoice_baht").val(),
 				actionDate: $("#txt_date_action").val(),
+				invoiceBudgetStatusId: $("#ddlStatus").val(),
             },
             dataType: "json",
 			type: 'POST',
@@ -157,6 +158,7 @@
 							<td width="10%" class="font14" style="text-align:left;">
 								@if (Model.Budget_Activity_Product_list != null)
 								{
+						
 									@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).prd_productDetail)
 
 								}
@@ -173,7 +175,6 @@
 								{
 									@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(Model.Budget_Activity_Product_list.Count - 1).productBalanceBath)
 								}
-
 								&nbsp;
 							</td>
 							@if (Model.Budget_Activity_Product_list.ElementAt(0).invoiceId != "")
@@ -182,7 +183,7 @@
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht" value="@Html.DisplayFor(item => item.Budget_Activity_Product_list.ElementAt(0).invTotalBath)"></td>
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action" value="@Html.DisplayFor(item => item.Budget_Activity_Product_list.ElementAt(0).invActionDate)"></td>
 								<td width="10%">
-									@Html.DropDownListFor(item => item.Budget_Activity_Ststus_list, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 1), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatusEdit" })
+									@Html.DropDownListFor(item => Model.Budget_Activity_Product_list.ElementAt(0).invoiceBudgetStatusId, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", Model.Budget_Activity_Product_list.ElementAt(0).invoiceBudgetStatusId), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })
 								</td>
 							}
 							else
@@ -191,12 +192,10 @@
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht"></td>
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action"></td>
 								<td width="10%">
-									@Html.DropDownListFor(item => item.Budget_Activity_Ststus_list, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 2), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatusNew" })
+									@Html.DropDownListFor(item => Model.Budget_Activity_Product_list.ElementAt(0).invoiceBudgetStatusId, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", Model.Budget_Activity_Product_list.ElementAt(0).invoiceBudgetStatusId), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })
 								</td>
 							}
-
 						</tr>
-
 					</table>
 				</div>
 

@@ -27,6 +27,10 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@productId",model.productId)
 					,new SqlParameter("@activityOfEstimateId",model.activityOfEstimateId)
 					,new SqlParameter("@paymentNo",model.paymentNo)
+					
+					//รอเพิ่ม invoiceProductStatusId จาก ddlStatus ใน store procedure
+					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
+
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
 					,new SqlParameter("@invTotalBath",model.invTotalBath)
 					,new SqlParameter("@actionDate",model.actionDate)
@@ -57,6 +61,10 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@productId",model.productId)
 					,new SqlParameter("@activityOfEstimateId",model.activityOfEstimateId)
 					,new SqlParameter("@paymentNo",model.paymentNo)
+					
+					//รอเพิ่ม invoiceProductStatusId จาก ddlStatus ใน store procedure
+					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
+
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
 					,new SqlParameter("@invTotalBath",model.invTotalBath)
 					,new SqlParameter("@actionDate",model.actionDate)

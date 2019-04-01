@@ -34,7 +34,6 @@
 			<th class="align-content-center font12B">ยอดยกมา</th>
 			<th class="align-content-center font12B">คงเหลือ</th>
 			<th class="align-content-center font12B">สถานะ</th>
-
 		</tr>
 	</thead>
 
@@ -50,7 +49,6 @@
 						{
 							@Html.ActionLink(" ", "EditForm", "Budget", new { activityId = item.act_form_id, activityNo = item.act_activityNo }, new { @class = "btn ink-reaction btn-default fa fa-search" });
 						}
-
 					</td>
 
 					<td style="font-size:12.5px;">@item.act_activityNo</td>
@@ -58,20 +56,24 @@
 					<td style="font-size:12.5px;">@Html.DisplayFor(x => item.act_activityPeriodSt) - @Html.DisplayFor(x => item.act_activityPeriodEnd) </td>
 					<td style="font-size:12.5px;">@Html.DisplayFor(x => item.act_costPeriodSt) - @Html.DisplayFor(x => item.act_costPeriodEnd) </td>
 					<td style="font-size:12.5px;text-align:right;">
-				
 						@if (item.act_totalCost != 0)
 						{
 							string result = String.Format("{0:n2}", @item.act_totalCost);
 							@result.ToString();
-						}
-									
+						}									
 					</td>
-					<td style="font-size:12.5px;text-align:right;">0</td> @*รอทำ query คำนวน*@
+					<td style="font-size:12.5px;text-align:right;">
+						@if (item.act_totalCost != 0)
+						{
+							string result = String.Format("{0:n2}", @item.act_total_invoive);
+							@result.ToString();
+						}
+					</td> @*ยอดยกมา *@
 					<td style="font-size:12.5px;text-align:right;">
 		
 						@if (item.act_totalCost != 0)
 						{
-							string result = String.Format("{0:n2}", @item.act_totalCost);
+							string result = String.Format("{0:n2}", @item.act_balance);
 							@result.ToString();
 						}
 									

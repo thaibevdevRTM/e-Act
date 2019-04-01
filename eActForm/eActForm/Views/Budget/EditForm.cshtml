@@ -65,78 +65,74 @@
 						<td style="font-size:12.5px;">@item.prd_productDetail</td>
 						<td style="font-size:12.5px;text-align:right;">
 							@if (item.totalCost != 0)
-								{
+							{
 								string result = String.Format("{0:n2}", @item.totalCost);
 								@result.ToString();
-								}
+							}
 						</td>
-						@*------  display when have invoice row --------------------*@
+						@*------  display when have invoice row ------------*@
 						<td style="font-size:12.5px;"></td>
 						<td style="font-size:12.5px;"></td>
 						<td style="font-size:12.5px;"></td>
 						<td style="font-size:12.5px;"></td>
 						@*--------------------------------------------------*@
-						<td style="font-size:12.5px;">ตั้งจ่าย</td>
+						<td style="font-size:12.5px;">@item.budgetStatusNameTH</td>
 					</tr>
 				}
 				else
 				{
-					<tr class="gradeX">
-						<td></td>
+				@*------  display when have invoice row --------------------*@
+				<tr class="gradeX">
+					<td></td>
 
-						<td style="font-size:12.5px;"></td>
+					<td style="font-size:12.5px;"></td>
 
-						<td style="font-size:12.5px;">
-							<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectProduct('@item.act_activityId','@item.prd_productId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+					<td style="font-size:12.5px;">
+						<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectProduct('@item.act_activityId','@item.prd_productId','@item.activityOfEstimateId','@item.invoiceId');"></a>
 
-							@*<a href="javascript:onDeleteInvoice();" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-btc" data-activity-id="@item.act_activityId" data-product-id="@item.prd_productId" data-invoice-no="@item.invoiceNo" onclick=""></a>*@
-							<a href="javascript:" target="_blank" onclick="return onDelete('@item.act_activityId','@item.prd_productId','@item.activityOfEstimateId','@item.invoiceNo');">
-								<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-							</a>
+						@*<a href="javascript:onDeleteInvoice();" class="anchorDetail btn ink-reaction btn-sm btn-warning fa fa-btc" data-activity-id="@item.act_activityId" data-product-id="@item.prd_productId" data-invoice-no="@item.invoiceNo" onclick=""></a>*@
+						<a href="javascript:" target="_blank" onclick="return onDelete('@item.act_activityId','@item.prd_productId','@item.activityOfEstimateId','@item.invoiceNo');">
+							<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+						</a>
 
-						</td>
-						<td style="font-size:12.5px;text-align:right;">
-							@if (item.productStandBath != 0)
-							{
-								string result = String.Format("{0:n2}", @item.productStandBath);
-								@result.ToString();
-							}
-
-						</td>
-						@*------  display when have invoice row --------------------*@
-						<td style="font-size:12.5px;">@item.invoiceNo</td>
-						<td style="font-size:12.5px;text-align:right;">
-							@if (item.invTotalBath != 0)
-							{
-								string result = String.Format("{0:n2}", @item.invTotalBath);
-								@result.ToString();
-							}
-						</td>
-						<td style="font-size:12.5px;text-align:right;">
-							@if (item.productBalanceBath != 0)
-							{
-								string result = String.Format("{0:n2}", @item.productBalanceBath);
-								@result.ToString();
-							}
-											
-						</td>
-						<td style="font-size:12.5px;">@Html.DisplayFor(x => item.invActionDate) </td>
-						@*--------------------------------------------------*@
-						<td style="font-size:12.5px;">@item.invoiceProductStatusNameTH</td>
-					</tr>
-				}
-
-				index++;
+					</td>
+					<td style="font-size:12.5px;text-align:right;">
+						@if (item.productStandBath != 0)
+						{
+							string result = String.Format("{0:n2}", @item.productStandBath);
+							@result.ToString();
+						}
+					</td>
+					<td style="font-size:12.5px;">@item.invoiceNo</td>
+					<td style="font-size:12.5px;text-align:right;">
+						@if (item.invTotalBath != 0)
+						{
+							string result = String.Format("{0:n2}", @item.invTotalBath);
+							@result.ToString();
+						}
+					</td>
+					<td style="font-size:12.5px;text-align:right;">
+						@if (item.productBalanceBath != 0)
+						{
+							string result = String.Format("{0:n2}", @item.productBalanceBath);
+							@result.ToString();
+						}
+					</td>
+					<td style="font-size:12.5px;">@Html.DisplayFor(x => item.invActionDate) </td>
+					@*----------------------------------------------------------*@
+					<td style="font-size:12.5px;">@item.invoiceBudgetStatusNameTH</td>
+				</tr>
 			}
+
+			index++;
 		}
+	}
 	</tbody>
 </table>
 
 <div id='myModal' class="modal fade" role="dialog">
 	<div id='myModalContent'></div>
 </div>
-
-
 
 @*<div id='myEditModal' class="modal fade" role="dialog">
 		<div id='myEditModalContent'></div>

@@ -29,7 +29,8 @@ namespace eActForm.Models
 			[DataType(DataType.Date)]
 			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
 			public DateTime? actionDate { get; set; }
-			public Int32 invoiceProductStatusId { get; set; }
+
+			public Int32 invoiceBudgetStatusId { get; set; }
 			public Int32 invoiceSeq { get; set; }
 			public Boolean delFlag { get; set; }
 
@@ -56,8 +57,8 @@ namespace eActForm.Models
 			public decimal invTotalBath { get; set; }       /*จำนวนเงินจ่าย*/
 			public decimal productStandBath { get; set; } /*ยอดยกมา*/
 			public decimal productBalanceBath { get; set; } /*ผลต่าง*/
-			public string invoiceProductStatusId { get; set; }
-			public string invoiceProductStatusNameTH { get; set; }
+			public string budgetStatusId { get; set; }
+			public string budgetStatusNameTH { get; set; }
 			public Int32 invoiceSeq { get; set; }
 
 			//public string invoiceNo { get; set; }
@@ -72,8 +73,8 @@ namespace eActForm.Models
 			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
 			public DateTime? invActionDate { get; set; } /*วันที่ทำรายการ*/
 
-			public string invoiceActivityStatusId { get; set; }
-			public string invoiceActivityStatusNameTH { get; set; }
+			public string invoiceBudgetStatusId { get; set; }
+			public string invoiceBudgetStatusNameTH { get; set; }
 
 		}
 
@@ -84,7 +85,7 @@ namespace eActForm.Models
 			public string nameTH { get; set; }
 			public string description { get; set; }
 			public Boolean delFlag { get; set; }
-
+						
 			[DataType(DataType.Date)]
 			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
 			public DateTime? createdDate { get; set; }
@@ -157,6 +158,8 @@ namespace eActForm.Models
 			public decimal act_normalCost { get; set; }
 			public decimal act_themeCost { get; set; }
 			public decimal act_totalCost { get; set; }
+			public decimal act_balance { get; set; } /*ผลต่าง*/
+			public decimal act_total_invoive { get; set; }/*ยอดยกมา*/
 
 			public string bud_ActivityStatusId { get; set; }
 			public string bud_ActivityStatus { get; set; }

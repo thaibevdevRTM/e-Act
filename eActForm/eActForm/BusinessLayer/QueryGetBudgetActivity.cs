@@ -67,6 +67,8 @@ namespace eActForm.BusinessLayer
 								  act_normalCost = d["act_normalCost"].ToString() == "" ? 0 : decimal.Parse(d["act_normalCost"].ToString()),
 								  act_themeCost = d["act_themeCost"].ToString() == "" ? 0 : decimal.Parse(d["act_themeCost"].ToString()),
 								  act_totalCost = d["act_totalCost"].ToString() == "" ? 0 : decimal.Parse(d["act_totalCost"].ToString()),
+								  act_total_invoive = d["act_total_invoive"].ToString() == "" ? 0 : decimal.Parse(d["act_total_invoive"].ToString()),
+								  act_balance = d["act_balance"].ToString() == "" ? 0 : decimal.Parse(d["act_balance"].ToString()),
 
 								  //delFlag = bool.Parse(d["delFlag"].ToString()),
 								  act_createdDate = DateTime.Parse(d["act_createdDate"].ToString()),
@@ -120,13 +122,13 @@ namespace eActForm.BusinessLayer
 
 								  productStandBath = d["productStandBath"].ToString() == "" ? 0 : decimal.Parse(d["productStandBath"].ToString()),
 								  productBalanceBath = d["productBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["productBalanceBath"].ToString()),
-								  invoiceProductStatusId = d["invoiceProductStatusId"].ToString(), /*สภานะเงินของรายการ product*/
-								  invoiceProductStatusNameTH = d["invoiceProductStatusNameTH"].ToString(), /*สภานะเงินของรายการ product*/
+								  budgetStatusId = d["budgetStatusId"].ToString(), /*สภานะเงินของรายการ product*/
+								  budgetStatusNameTH = d["budgetStatusNameTH"].ToString(), /*สภานะเงินของรายการ product*/
 								  invoiceSeq = d["invoiceSeq"].ToString() == "" ? 0 : int.Parse(d["invoiceSeq"].ToString()),
 								  invActionDate = d["invActionDate"] is DBNull ? null : (DateTime?)d["invActionDate"],
 
-								  invoiceActivityStatusId = d["invoiceActivityStatusId"].ToString(),
-								  invoiceActivityStatusNameTH = d["invoiceActivityStatusNameTH"].ToString(),
+								  invoiceBudgetStatusId = d["invoiceBudgetStatusId"].ToString(),
+								  invoiceBudgetStatusNameTH = d["invoiceBudgetStatusNameTH"].ToString(),
 								  //invActionDate = DateTime.Parse(d["invActionDate"].ToString()), /*วันที่ทำรายการ*/
 								  //invActionDate = DateTime.ParseExact(d["invActionDate"].ToString(), "MM/dd/yyyy HH:mm:ss"),
 
