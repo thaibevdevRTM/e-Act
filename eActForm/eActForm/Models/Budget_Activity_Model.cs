@@ -10,27 +10,42 @@ namespace eActForm.Models
 		public List<Budget_Activity_Att> Budget_Activity_list { get; set; }
 		public List<Budget_Activity_Status_Att> Budget_Activity_Ststus_list { get; set; }
 		public List<Budget_Activity_Product_Att> Budget_Activity_Product_list { get; set; }
+		public List<Budget_Activity_Invoice_Att> Budget_Activity_Invoice_list { get; set; }
+
 		//public TB_Bud_ActivityInvoice_Model Bud_ActivityInvoice_Model { get; set; }
 		//public List<Budget_Activity_Product_Att> Budget_Activity_Product_model { get; set; }
 
 		public class Budget_Activity_Invoice_Att
 		{
-			public string id { get; set; }
+
+			public string invoiceId { get; set; }
 			public string activityId { get; set; }
-			public string productId { get; set; }
-			public string activityOfEstimateId { get; set; }
 			public string activityNo { get; set; }
+			public string activityOfEstimateId { get; set; }
+			public string activityTypeTheme { get; set; }
+
+			public string productId { get; set; }
+			public string productDetail { get; set; }
+			public decimal normalCost { get; set; }
+			public decimal themeCost { get; set; }
+			public decimal totalCost { get; set; }
+			public decimal productStandBath { get; set; }
+
 			public string paymentNo { get; set; }
 			public string invoiceNo { get; set; }
 			public decimal saleActCase { get; set; }
 			public decimal saleActBath { get; set; }
-			public decimal invTotalBath { get; set; }
+			public decimal invoiceTotalBath { get; set; }
+
+			public decimal productBalanceBath { get; set; }
+			public Int32 productBudgetStatusId { get; set; }
+			public string productBudgetStatusNameTH { get; set; }
 
 			[DataType(DataType.Date)]
 			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-			public DateTime? actionDate { get; set; }
-
+			public DateTime? invoiceActionDate { get; set; }
 			public Int32 invoiceBudgetStatusId { get; set; }
+			public string invoiceBudgetStatusNameTH { get; set; }
 			public Int32 invoiceSeq { get; set; }
 			public Boolean delFlag { get; set; }
 
@@ -52,14 +67,14 @@ namespace eActForm.Models
 			public decimal normalCost { get; set; }
 			public decimal themeCost { get; set; }
 			public decimal totalCost { get; set; }
-			public string invoiceId { get; set; }
-			public string invoiceNo { get; set; }
+			//public string invoiceId { get; set; }
+			//public string invoiceNo { get; set; }
 			public decimal invTotalBath { get; set; }       /*จำนวนเงินจ่าย*/
-			public decimal productStandBath { get; set; } /*ยอดยกมา*/
+			//public decimal productStandBath { get; set; } /*ยอดยกมา มันก็เท่ากับผลต่างไง*/
 			public decimal productBalanceBath { get; set; } /*ผลต่าง*/
 			public string budgetStatusId { get; set; }
 			public string budgetStatusNameTH { get; set; }
-			public Int32 invoiceSeq { get; set; }
+			//public Int32 invoiceSeq { get; set; }
 
 			//public string invoiceNo { get; set; }
 			//public Int32 invoiceSeq { get; set; }
@@ -73,8 +88,8 @@ namespace eActForm.Models
 			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
 			public DateTime? invActionDate { get; set; } /*วันที่ทำรายการ*/
 
-			public string invoiceBudgetStatusId { get; set; }
-			public string invoiceBudgetStatusNameTH { get; set; }
+			//public string invoiceBudgetStatusId { get; set; }
+			//public string invoiceBudgetStatusNameTH { get; set; }
 
 		}
 

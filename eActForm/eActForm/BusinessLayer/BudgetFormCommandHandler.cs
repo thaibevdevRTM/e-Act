@@ -21,7 +21,7 @@ namespace eActForm.BusinessLayer
 			{
 
 				result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateBudgetActivityInvoice"
-					, new SqlParameter[] {new SqlParameter("@id", model.id)
+					, new SqlParameter[] {new SqlParameter("@id", model.invoiceId)
 					,new SqlParameter("@activityId",model.activityId)
 					,new SqlParameter("@activityNo",model.activityNo)
 					,new SqlParameter("@productId",model.productId)
@@ -32,8 +32,8 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
 
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
-					,new SqlParameter("@invTotalBath",model.invTotalBath)
-					,new SqlParameter("@actionDate",model.actionDate)
+					,new SqlParameter("@invTotalBath",model.invoiceTotalBath)
+					,new SqlParameter("@actionDate",model.invoiceActionDate)
 					,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
 					,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
 					});
@@ -66,8 +66,8 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
 
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
-					,new SqlParameter("@invTotalBath",model.invTotalBath)
-					,new SqlParameter("@actionDate",model.actionDate)
+					,new SqlParameter("@invTotalBath",model.invoiceTotalBath)
+					,new SqlParameter("@actionDate",model.invoiceActionDate)
 					,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
 					,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
 					});

@@ -37,7 +37,7 @@ namespace eActForm.Controllers
 			try
 			{
 
-				if (!string.IsNullOrEmpty(budgetInvoiceModel.id))
+				if (!string.IsNullOrEmpty(budgetInvoiceModel.activityId))
 				{
 					//update invoice
 					int countSuccess = BudgetFormCommandHandler.updateInvoiceProduct(budgetInvoiceModel);
@@ -84,50 +84,26 @@ namespace eActForm.Controllers
 			return PartialView("EditBudgetInvoice", Budget_Activity_Invoice);
 		}
 
-		public ActionResult PreviewBudgetInvoice(string activityId, string productId, string activityOfEstimateId,string invoiceId)
+
+		public ActionResult activityProductInvoiceList(string activityId , string activityOfEstimateId)
 		{
+			Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
+			Budget_Activity.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId,  activityOfEstimateId);
+			Budget_Activity.Budget_Activity_Invoice_list = QueryBudgetBiz.getBudgetActivityInvoice(activityId, activityOfEstimateId, null);
+			Budget_Activity.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
 
-			if (!string.IsNullOrEmpty(invoiceId))
-			{
-				Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
-				Budget_Activity.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, productId, activityOfEstimateId, invoiceId);
-				Budget_Activity.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
-
-
-				//var selectList = new SelectList(Budget_Activity.Budget_Activity_Ststus_list);
-				//foreach (var item in selectList)
-				//{
-				//	if (item.Value == Budget_Activity.Budget_Activity_Product_list.ElementAt(0).invoiceActivityStatusId)
-				//	{
-				//		item.Selected = true;
-				//	}
-				//}
-
-				return PartialView("PreviewBudgetInvoice", Budget_Activity);
-			}
-			else
-			{
-				Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
-				Budget_Activity.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, productId, activityOfEstimateId,null);
-				Budget_Activity.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
-				return PartialView("PreviewBudgetInvoice", Budget_Activity);
-			}
-
+			return PartialView(Budget_Activity);
 		}
 
-
-		public ActionResult EditForm(string activityId)
+		public ActionResult activityProductList(string activityId)
 		{
-
 			Session["activityId"] = activityId;
 			//Session["activityNo"] = activityNo;
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-			//budget_activity_model.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("3", null).ToList();
-			budget_activity_model.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId,null, null,null);
+			budget_activity_model.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId,  null);
 			budget_activity_model.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
 
 			return View(budget_activity_model);
-
 		}
 
 		public ActionResult activityList()
