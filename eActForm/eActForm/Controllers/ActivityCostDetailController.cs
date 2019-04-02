@@ -18,6 +18,11 @@ namespace eActForm.Controllers
             {
                 activityModel.activitydetaillist = ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]);
             }
+            else
+            {
+                activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
+                Session["activitydetaillist"] = activityModel.activitydetaillist;
+            }
 
             return PartialView(activityModel);
         }
