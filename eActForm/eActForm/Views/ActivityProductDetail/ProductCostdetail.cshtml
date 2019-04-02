@@ -128,7 +128,7 @@
 
             $.ajax({
             type: 'POST',
-            url:  '@Url.Action("calDiscountProduct", "Activity")',
+            url:  '@Url.Action("calDiscountProduct", "ActivityProductDetail")',
              data: {
                  id: id,
                  productId: productId,
@@ -154,7 +154,7 @@
     function onDelCostDetail(id) {
 
             $.ajax({
-            url: '@Url.Action("delCostDetail", "Activity")',
+            url: '@Url.Action("delCostDetail", "ActivityProductDetail")',
             data: {
                 rowid: id,
             },

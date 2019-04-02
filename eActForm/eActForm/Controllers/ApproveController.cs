@@ -18,7 +18,7 @@ namespace eActForm.Controllers
             else
             {
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
-                models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app);
+                models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app).Where(x => x.id == "3" || x.id == "5").ToList();
                 return View(models);
             }
         }
