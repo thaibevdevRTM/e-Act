@@ -171,7 +171,7 @@
             var productId = $("#hdProductId_" + rowIndex).val();
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("calDetailTheme", "Activity")',
+                url: '@Url.Action("calCostDetailTheme", "ActivityCostDetail")',
                 data: {
                     name: name,
                     normalCost: normalCost,
@@ -188,7 +188,7 @@
         function onDelActDetail(id) {
 
                 $.ajax({
-                url: '@Url.Action("delActDetail", "Activity")',
+                url: '@Url.Action("delActCostDetail", "ActivityCostDetail")',
                 data: {
                     rowid: id,
                 },

@@ -37,6 +37,11 @@ namespace eActForm.Models
             doc // document
         }
 
+        public static string checkNullorEmpty(string p)
+        {
+            return p == "" || p == null || p == "0" || p == "0.00" ? "0" : p;
+        }
+
         public static MemoryStream GetFileReportTomail_Preview(string GridHtml)
         {
             MemoryStream ms = new MemoryStream();
