@@ -19,7 +19,7 @@ namespace eActForm.Models
 			public string invoiceNo { get; set; }
 			public decimal saleActCase { get; set; }
 			public decimal saleActBath { get; set; }
-			public decimal invTotalBath { get; set; }
+			public decimal invoiceTotalBath { get; set; }
 
 			[DataType(DataType.Date)]
 			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]

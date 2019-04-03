@@ -75,7 +75,7 @@
 						@*จำนวนเงินจ่าย*@
 						@if (item.totalCost != 0)
 						{
-							string result = String.Format("{0:n2}", @item.invTotalBath);
+							string result = String.Format("{0:n2}", @item.invoiceTotalBath);
 							@result.ToString();
 						}
 					</td>
@@ -99,7 +99,11 @@
 <br />
 <hr />
 
-<div id="divPreview">
+<div id="divPreviewInvoiceList">
+</div>
+
+<div id='myModalInvoice' class="modal fade" role="dialog">
+	<div id='myModalInvoiceContent'></div>
 </div>
 
 <br />
@@ -115,17 +119,43 @@
 				activityOfEstimateId: activityOfEstimateId
             }
         }).done(function (htmlResponse) {
-			$("#divPreview").html(htmlResponse);
+			$("#divPreviewInvoiceList").html(htmlResponse);
         });
 		}
 
+	function submitInvoice() {
+		var var_activityId = $("#hd_activityId").val();
+		var var_activityOfEstimateId = $("#hd_activityOfEstimateId").val();
+		
+		$.ajax({
+			url: '@Url.Action("submitInvoice", "Budget")',
+			data: {
+				budgetInvoiceModel: ObjModel,
+				Id: $("#hd_invoiceId").val(),
+				activityId: $("#hd_activityId").val(),
+				activityNo: $("#hd_activityNo").val(),
+				productId: $("#hd_productId").val(),
+				activityOfEstimateId: $("#hd_activityOfEstimateId").val(),
+				invoiceId: $("#hd_invoiceId").val(),
+				invoiceNo: $("#txt_invoice_no").val(),
+				invoiceTotalBath: $("#txt_invoice_baht").val(),
+				invoiceActionDate: $("#txt_date_action").val(),
+				invoiceBudgetStatusId: $("#ddlStatus").val(),
+			},
+			dataType: "json",
+			type: 'POST',
+			success: function (response) {
+				$('#myModalInvoice').modal('hide');
+				callInvoiceList(var_activityId, var_activityOfEstimateId);
+				console.log(response.success);
+			}
+		})
+	}
 
-    @*function onDelete(actId,prdId,estId,invNo) {
+    function onDelete(actId,estId,invId,invNo) {
         var msg = "";
-
-            // can be delete
-		msg = "คุณต้องการลบเอกสาร " + invNo +" นี้หรือไม่?"
-
+		// can be delete
+		msg = "คุณต้องการลบเอกสาร " + invNo + " นี้หรือไม่?";
         bootbox.confirm({
             title: "Confirm Message",
             message: msg,
@@ -139,72 +169,59 @@
                     className: "btn-danger"
                 }
             },
-            callback: function (result) {
+			callback: function (result) {
                 if (result) {
                     $.ajax({
                         url: '@Url.Action("delInvoiceDetail", "Budget")',
                         data: {
                             actId: actId,
-							prdId: prdId,
 							estId: estId,
-							invNo: invNo,
+							invId: invId,
 						},
 						success: function (response) {
 							console.log(response.success);
-							window.location.reload()
+							callInvoiceList(actId, estId);
+							//window.location.reload()
 						}
 
 					})
                 }
             }
         });
-    }*@
+    }
 
-	//function onSelectProduct(actId, prdId,estId) {
-	//		var TeamDetailPostBackURL = '/Budget/PreviewBudgetInvoice';
-	//		debugger;
-	//		//var $buttonClicked = $(this);
-	//		var var_activityId = actId;
-	//		var var_productId = prdId;
-	//		var var_estId = estId;
-	//		var options = { "backdrop": "static", keyboard: true };
-
-	//		$.ajax({
-	//			type: "GET",
-	//			url: TeamDetailPostBackURL,
-	//			contentType: "application/json; charset=utf-8",
-	//			data: {
-	//				"activityId": var_activityId,
-	//				"productId": var_productId,
-	//				"activityOfEstimateId": var_estId
-	//			},
-	//			datatype: "json",
-	//			success: function (data) {
-	//				debugger;
-	//				$('#myModalContent').html(data);
-	//				$('#myModal').modal(options);
-	//				$('#myModal').modal('show');
-	//			},
-	//			error: function () {
-	//				alert("Dynamic content load failed.");
-	//			}
-	//		});
-	//}
-
-	@*function callInvoiceList(actId) {
+	function onSelectInvoice(actId, estId, invId) {
+		var TeamDetailPostBackURL = '/Budget/activityProductInvoiceEdit';
+		debugger;
+		//var $buttonClicked = $(this);
 		var var_activityId = actId;
-		alert(var_activityId);
-        $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("activityInvoiceList", "Budget")',
-			data:
-			{
-				"activityId": var_activityId
-			}
-        }).done(function (htmlResponse) {
-			$("#div_activityProductInvoiceList").html(htmlResponse)
-        });
-    }*@
+		var var_estId = estId;
+		var var_invoiceId = invId;
+		var options = { "backdrop": "static", keyboard: true };
 
+		$.ajax({
+			type: "GET",
+			url: TeamDetailPostBackURL,
+			contentType: "application/json; charset=utf-8",
+			data: {
+				"activityId": var_activityId,
+				"activityOfEstimateId": var_estId,
+				"invoiceId": var_invoiceId
+			},
+			datatype: "json",
+			success: function (data) {
+				debugger;
+				$('#myModalInvoiceContent').html(data);
+				$('#myModalInvoice').modal(options);
+				$('#myModalInvoice').modal('show');
+			},
+			error: function () {
+				alert("Dynamic content load failed.");
+			}
+		});
+
+
+		//callInvoiceList(var_activityId, var_estId);
+	}
 
 </script>

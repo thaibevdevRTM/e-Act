@@ -54,7 +54,7 @@
 				<div class="col-md-2 col-sm-2 col-xs-12 text-right">
 					@if (Model.Budget_Activity_Product_list.Count > 0)
 					{
-						<a href="javascript:" class="anchorDetail btn ink-reaction btn-group-lg btn-warning fa fa-plus" onclick="javascript:onSelectProduct('@Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo','@Model.Budget_Activity_Product_list.ElementAt(0).activityOfEstimateId','');"> เพิ่มรายการตัดจ่าย</a>
+						<a href="javascript:" class="anchorDetail btn ink-reaction btn-group-lg btn-warning fa fa-plus" onclick="javascript:onSelectInvoice('@Model.Budget_Activity_Product_list.ElementAt(0).act_activityId','@Model.Budget_Activity_Product_list.ElementAt(0).activityOfEstimateId','');"> เพิ่มรายการตัดจ่าย</a>
 					}
 				</div>
 			</div>
@@ -62,7 +62,7 @@
 	</div>
 </div>
 
-	<div class="row">
+<div class="row">
 		<table class="table table-bordered" id="content">
 			<thead class="thead-dark">
 				<tr>
@@ -90,8 +90,8 @@
 					{
 						<tr class="gradeX">
 							<td style="text-align:center;">
-								<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectProduct('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-								<a href="javascript:" target="_blank" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');">
+								<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+								<a href="javascript:" target="_blank" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
 									<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
 								</a>
 							</td>

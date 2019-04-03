@@ -117,7 +117,7 @@ namespace eActForm.BusinessLayer
 								  normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(d["normalCost"].ToString()),
 								  themeCost = d["themeCost"].ToString() == "" ? 0 : decimal.Parse(d["themeCost"].ToString()),
 								  totalCost = d["totalCost"].ToString() == "" ? 0 : decimal.Parse(d["totalCost"].ToString()),
-								  invTotalBath = d["invTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invTotalBath"].ToString()),
+								  invoiceTotalBath = d["invoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invoiceTotalBath"].ToString()),
 
 								  productBalanceBath = d["productBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["productBalanceBath"].ToString()),
 								  budgetStatusId = d["budgetStatusId"].ToString(), /*สภานะเงินของรายการ product*/

@@ -32,7 +32,7 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
 
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
-					,new SqlParameter("@invTotalBath",model.invoiceTotalBath)
+					,new SqlParameter("@invoiceTotalBath",model.invoiceTotalBath)
 					,new SqlParameter("@actionDate",model.invoiceActionDate)
 					,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
 					,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
@@ -66,7 +66,7 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
 
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
-					,new SqlParameter("@invTotalBath",model.invoiceTotalBath)
+					,new SqlParameter("@invoiceTotalBath",model.invoiceTotalBath)
 					,new SqlParameter("@actionDate",model.invoiceActionDate)
 					,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
 					,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
@@ -80,7 +80,7 @@ namespace eActForm.BusinessLayer
 			return result;
 		}
 
-		public static int deleteInvoiceProduct(string activityId,string productId,string estimateId, string invoiceNo)
+		public static int deleteInvoiceProduct(string activityId,string estimateId, string invoiceId)
 		//public static int deleteInvoiceProduct(string activityId, string estimateId, string invoiceNo)
 		{
 
@@ -91,9 +91,8 @@ namespace eActForm.BusinessLayer
 
 				result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteBudgetActivityInvoice"
 					, new SqlParameter[] {new SqlParameter("@activityId",activityId)
-					,new SqlParameter("@productId",productId)
 					,new SqlParameter("@activityOfEstimateId",estimateId)
-					,new SqlParameter("@invoiceNo",invoiceNo)
+					,new SqlParameter("@invoiceId",invoiceId)
 					});
 			}
 			catch (Exception ex)

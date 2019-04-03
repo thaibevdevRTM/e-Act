@@ -35,6 +35,8 @@ namespace eActForm.Models
 			public string invoiceNo { get; set; }
 			public decimal saleActCase { get; set; }
 			public decimal saleActBath { get; set; }
+
+			[DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
 			public decimal invoiceTotalBath { get; set; }
 
 			public decimal productBalanceBath { get; set; }
@@ -69,7 +71,7 @@ namespace eActForm.Models
 			public decimal totalCost { get; set; }
 			//public string invoiceId { get; set; }
 			//public string invoiceNo { get; set; }
-			public decimal invTotalBath { get; set; }       /*จำนวนเงินจ่าย*/
+			public decimal invoiceTotalBath { get; set; }       /*จำนวนเงินจ่าย*/
 			//public decimal productStandBath { get; set; } /*ยอดยกมา มันก็เท่ากับผลต่างไง*/
 			public decimal productBalanceBath { get; set; } /*ผลต่าง*/
 			public string budgetStatusId { get; set; }
