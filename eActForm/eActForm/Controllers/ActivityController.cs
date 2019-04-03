@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -240,7 +241,7 @@ namespace eActForm.Controllers
                 resultAjax.Message = ex.Message;
                 ExceptionManager.WriteError(ex.Message);
             }
-            return Json(resultAjax, "text/plain");
+            return  Json(resultAjax, "text/plain");
         }
 
 
