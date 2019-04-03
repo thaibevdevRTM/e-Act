@@ -61,13 +61,13 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td colspan="2">&nbsp;</td>
-            <td rowspan="2">กลุ่มกิจกรรม</td>
-            <td rowspan="3">Special Discount (Pro Deal)</td>
-            <td rowspan="3">Compensate (CN)</td>
+            <td rowspan="2"></td>
+            <td rowspan="3"></td>
+            <td rowspan="3"></td>
             <td rowspan="3"></td>
             <td></td>
             <td></td>
-            <td rowspan="3">หมายเหตุ</td>
+            <td rowspan="3"></td>
         </tr>
     </table>
 </body>
