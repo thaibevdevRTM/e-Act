@@ -9,9 +9,9 @@ namespace eActForm.Models
     {
         public class actFormRepDetails
         {
-            public List<actFormRepDetail> repDetailLists { get; set; }
+            public List<actFormRepDetailModel> actFormRepDetailLists { get; set; }
         }
-        public class actFormRepDetail : Activity_Model.actForm
+        public class actFormRepDetailModel : Activity_Model.actForm
         {
             public string cusNameTH { get; set; }
             public string productId { get; set; }
@@ -20,7 +20,10 @@ namespace eActForm.Models
             public string typeTheme { get; set; }
             public string normalSale { get; set; }
             public string promotionSale { get; set; }
-            public string total { get; set; }
+            public decimal? total { get; set; }
+            public decimal? specialDisc { get; set; }
+            public decimal? specialDiscBaht { get; set; }
+            public decimal? promotionCost { get; set; }
         }
     }
 }

@@ -1,1 +1,75 @@
-﻿
+﻿@using eActForm.Models
+@model eActForm.Models.RepDetailModel.actFormRepDetails
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <table border="0" cellpadding="2" cellspacing="2" style="text-align:center;">
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td colspan="2">&nbsp;</td>
+                <td rowspan="2">กลุ่มกิจกรรม</td>
+                <td rowspan="3">Special Discount (Pro Deal)</td>
+                <td rowspan="3">Compensate (CN)</td>
+                <td rowspan="3">ประมาณการค่าใช้จ่าย</td>
+                <td colspan="2">ประมาณการยอดขาย</td>
+                <td rowspan="3">หมายเหตุ</td>
+            </tr>
+            <tr>
+                <td>ลำดับที่</td>
+                <td>เลขที่ Activity</td>
+                <td>ชื่อลูกค้า</td>
+                <td colspan="2" width="188">ระยะเวลากิจกรรม</td>
+                <td colspan="2" width="188">ระยะเวลาให้ทุน</td>
+                <td rowspan="2">ชื่อสินค้า</td>
+                <td rowspan="2">ขนาด</td>
+                <td colspan="2" rowspan="2">รายละเอียดกิจกรรม</td>
+                <td>ยอดขายก่อนจัดกิจกรรม</td>
+                <td>ยอดขายช่วงจัดกิจกรรม</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>วันเริ่มต้น</td>
+                <td>วันสิ้นสุด</td>
+                <td>วันเริ่มต้น</td>
+                <td>วันสิ้นสุด</td>
+                <td>14 กลุ่ม</td>
+                <td>กล่อง</td>
+                <td>กล่อง</td>
+            </tr>
+            @{ var index = 1; decimal? sumTotal = 0;}
+            @foreach (var item in Model.actFormRepDetailLists)
+            {
+            <tr>
+                <td>@index</td>
+                <td>@item.activityNo</td>
+                <td>@item.cusNameTH</td>
+                <td>@item.activityPeriodSt</td>
+                <td>@item.activityPeriodEnd</td>
+                <td>@item.costPeriodSt</td>
+                <td>@item.costPeriodEnd</td>
+                <td>@item.productName</td>
+                <td>@item.size</td>
+                <td colspan="2">@item.activityDetail</td>
+                <td rowspan="2">@item.typeTheme</td>
+                <td rowspan="3">@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @discount</td>
+                <td rowspan="3">@item.total</td>
+                <td rowspan="3">@item.normalSale</td>
+                <td>@item.promotionSale</td>
+                <td></td>
+                <td rowspan="3"></td>
+            </tr>
+            @{ sumTotal += item.total;}
+                index++;
+            }
+        </table>
+    </div>
+</div>
