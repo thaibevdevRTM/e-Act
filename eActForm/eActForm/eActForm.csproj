@@ -2017,7 +2017,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -2067,6 +2069,7 @@
     <Content Include="Views\Budget\activityList.cshtml" />
     <Content Include="Views\Budget\EditForm.cshtml" />
     <Content Include="Views\Budget\PreviewBudgetInvoice.cshtml" />
+    <Content Include="Views\Shared\_search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActivityFormPdf\" />
