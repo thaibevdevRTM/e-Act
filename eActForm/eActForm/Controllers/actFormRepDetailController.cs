@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using eActForm.BusinessLayer;
 using eActForm.Models;
+using iTextSharp.text;
 using WebLibrary;
 namespace eActForm.Controllers
 {
@@ -56,6 +59,15 @@ namespace eActForm.Controllers
             }
 
             return PartialView(model);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public FileResult repReportDetailExcel(string gridHtml)
+        {
+
+            AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), "pdfRepDetail");
+            return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "actFormReportDetail.xls");
         }
     }
 }

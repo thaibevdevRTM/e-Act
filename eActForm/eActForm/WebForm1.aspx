@@ -8,67 +8,37 @@
 </head>
 <body>
     <table border="0" cellpadding="2" cellspacing="2" style="text-align:center;">
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td colspan="2">&nbsp;</td>
-            <td rowspan="2">กลุ่มกิจกรรม</td>
-            <td rowspan="3">Special Discount (Pro Deal)</td>
-            <td rowspan="3">Compensate (CN)</td>
-            <td rowspan="3"><span style="mso-spacerun: yes">&nbsp;</span>ประมาณการค่าใช้จ่าย<span style="mso-spacerun: yes">&nbsp;</span></td>
-            <td colspan="2">ประมาณการยอดขาย</td>
-            <td rowspan="3">หมายเหตุ</td>
-        </tr>
-        <tr>
-            <td>ลำดับที่</td>
-            <td>เลขที่ Activity</td>
-            <td>ชื่อลูกค้า</td>
-            <td colspan="2" width="188">ระยะเวลากิจกรรม</td>
-            <td colspan="2" width="188">ระยะเวลาให้ทุน</td>
-            <td rowspan="2">ชื่อสินค้า</td>
-            <td rowspan="2">ขนาด</td>
-            <td colspan="2" rowspan="2">รายละเอียดกิจกรรม</td>
-            <td>ยอดขายก่อนจัดกิจกรรม</td>
-            <td><span style="mso-spacerun: yes">&nbsp;</span>ยอดขายช่วงจัดกิจกรรม<span style="mso-spacerun: yes">&nbsp;</span></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>วันเริ่มต้น</td>
-            <td>วันสิ้นสุด</td>
-            <td>วันเริ่มต้น</td>
-            <td>วันสิ้นสุด</td>
-            <td>14 กลุ่ม</td>
-            <td>กล่อง</td>
-            <td><span style="mso-spacerun: yes">&nbsp;</span>กล่อง<span style="mso-spacerun: yes">&nbsp;</span></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td colspan="2">&nbsp;</td>
-            <td rowspan="2"></td>
-            <td rowspan="3"></td>
-            <td rowspan="3"></td>
-            <td rowspan="3"></td>
-            <td></td>
-            <td></td>
-            <td rowspan="3"></td>
-        </tr>
+        <thead>
+                <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
+                    <th rowspan="3">ลำดับที่</th>
+                    <th rowspan="3">เลขที่ Activity</th>
+                    <th rowspan="3">ชื่อลูกค้า</th>
+                    <th colspan="2" rowspan="2">ระยะเวลากิจกรรม</th>
+                    <th colspan="2" rowspan="2">ระยะเวลาให้ทุน</th>
+                    <th rowspan="3">ชื่อสินค้า</th>
+                    <th rowspan="3">ขนาด</th>
+                    <th rowspan="3">รายละเอียดกิจกรรม</th>
+                    <th rowspan="2">กลุ่มกิจกรรม</th>
+                    <th rowspan="3">Special Discount (Pro Deal)</th>
+                    <th rowspan="3">Compensate (CN)</th>
+                    <th rowspan="3">ประมาณการค่าใช้จ่าย</th>
+                    <th colspan="2">ประมาณการยอดขาย</th>
+                    <th rowspan="3">หมายเหตุ</th>
+                </tr>
+                <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
+                    <th>ยอดขายก่อนจัดกิจกรรม</th>
+                    <th>ยอดขายช่วงจัดกิจกรรม</th>
+                </tr>
+                <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
+                    <th>วันเริ่มต้น</th>
+                    <th>วันสิ้นสุด</th>
+                    <th>วันเริ่มต้น</th>
+                    <th>วันสิ้นสุด</th>
+                    <th>14 กลุ่ม</th>
+                    <th>กล่อง</th>
+                    <th>กล่อง</th>
+                </tr>
+            </thead>
     </table>
 </body>
 </html>
