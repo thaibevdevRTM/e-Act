@@ -20,7 +20,7 @@ namespace eActForm.Models
         public List<ProductSmellModel> productSmellLists { get; set; }
         public List<Customers_Model> customerslist { get; set; }
         public List<TB_Act_Other_Model> otherlist { get; set; }
-        public List<Productcostdetail> productcostdetaillist { get; set; }
+        //public List<Productcostdetail> productcostdetaillist { get; set; }
         public List<CostThemeDetail> costthemedetail { get; set; }
         public List<TB_Act_Image_Model.ImageModel> productImageList { get; set; }
         public ActivityForm activityFormModel { get; set; }
@@ -31,7 +31,7 @@ namespace eActForm.Models
         public Activity_Model()
         {
             productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
-            productcostdetaillist = new List<Productcostdetail>();
+           // productcostdetaillist = new List<Productcostdetail>();
             costthemedetail = new List<CostThemeDetail>();
             productlist = new List<Product_Model>();
             productcatelist = new List<Product_Cate_Model>();
@@ -163,12 +163,23 @@ namespace eActForm.Models
         public decimal? growth { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? total { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? perTotal { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
+        public string brandId { get; set; }
+        public int size { get; set; }
+        public string pack { get; set; }
         public string smellName { get; set; }
-        public string isShowGroup { get; set; }
-        public List<Productcostdetail> detailGroup { get; set; }
+        public Boolean isShowGroup { get; set; }
+
+        public int rowNo { get; set; }
+        public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
+
+        public CostThemeDetailOfGroupByPrice()
+        {
+            detailGroup = new List<ProductCostOfGroupByPrice>();
+        }
     }
 
     public class CostThemeDetail : ActBaseModel
@@ -186,17 +197,22 @@ namespace eActForm.Models
         public decimal? perTotal { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
+        public string brandId { get; set; }
         public string smellName { get; set; }
-        public bool isShowGroup { get; set; }
+        public Boolean isShowGroup { get; set; }
+
+        public int rowNo { get; set; }
     }
 
     public class ProductCostOfGroupByPrice : ActBaseModel
     {
         public string id { get; set; }
         public string activityId { get; set; }
+        public string activityTypeId { get; set; }
         public string productId { get; set; }
         public string pack { get; set; }
         public string productName { get; set; }
+        public string typeTheme { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? wholeSalesPrice { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
@@ -224,9 +240,22 @@ namespace eActForm.Models
         public string brandId { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
+        public int size { get; set; }
         public string smellName { get; set; }
-        public string isShowGroup { get; set; }
-        public List<Productcostdetail> detailGroup { get; set; }
+        public decimal? specialDisBaht { get; set; }
+        public decimal? themeCost { get; set; }
+        public decimal? growth { get; set; }
+        public decimal? total { get; set; }
+        public decimal? perTotal { get; set; }
+        public Boolean isShowGroup { get; set; }
+        public int rowNo { get; set; }
+        public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
+
+        public ProductCostOfGroupByPrice()
+        {
+            detailGroup = new List<ProductCostOfGroupByPrice>();
+        }
+
     }
 
     public class Productcostdetail
@@ -251,12 +280,14 @@ namespace eActForm.Models
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string smellName { get; set; }
+        public string size { get; set; }
         public string pack { get; set; }
         public string typeTheme { get; set; }
         public string activityTypeId { get; set; }
         public decimal? themeCost { get; set; }
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
+        public Boolean isShowGroup { get; set; }
         public Boolean delFlag { get; set; }
         public DateTime? createdDate { get; set; }
         public string createdByUserId { get; set; }

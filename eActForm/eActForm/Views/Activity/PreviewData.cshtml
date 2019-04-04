@@ -51,7 +51,7 @@
 
 <style type="text/css">
 
-    
+
     .font8 {
         font-size: 8px;
     }
@@ -272,17 +272,32 @@
                             foreach (var item in Model.productcostdetaillist1)
                             {
                                 <tr>
-                                    <td style="font-size:12.5px;" class="textLeft">@item.productName</td>
-                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
-                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.disCount1)</td>
-                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.disCount2)</td>
-                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.disCount3)</td>
-                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.normalCost)</td>
-                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.normalGp)</td>
-                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.promotionGp)</td>
-                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.specialDisc)</td>
-                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.promotionCost)</td>
+                                    @if (item.isShowGroup == true)
+                                    {
+                                        <td style="font-size:10px; text-align:left">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.smellName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) Pack(@Html.DisplayFor(m => item.pack)) </td>
+                                    }
+                                    else if (item.isShowGroup == false)
+                                    {
+                                        for (int i = 0; i < @item.detailGroup.Count; i++)
+                                        {
+                                            <td style="font-size:10px; text-align:left">@Html.DisplayFor(m => item.detailGroup[i].productName) Pack(@Html.DisplayFor(m => item.pack))</td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td class="font10 textLeft">@Html.DisplayFor(m => item.productName)</td>
+                                    }
+                                    <td style="font-size:10px; text-align:right">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
+                                    <td style="font-size:10px; text-align:right">@Html.DisplayFor(m => item.disCount1)</td>
+                                    <td style="font-size:10px; text-align:right">@Html.DisplayFor(m => item.disCount2)</td>
+                                    <td style="font-size:10px; text-align:right">@Html.DisplayFor(m => item.disCount3)</td>
+                                    <td style="font-size:10px; text-align:right">@Html.DisplayFor(m => item.normalCost)</td>
+                                    <td style="font-size:10px; text-align:right">@Html.DisplayFor(m => item.normalGp)</td>
+                                    <td style="font-size:10px; text-align:right">@Html.DisplayFor(m => item.promotionGp)</td>
+                                    <td style="font-size:10px; text-align:right">@Html.DisplayFor(m => item.specialDisc)</td>
+                                    <td style="font-size:10px; text-align:right">@Html.DisplayFor(m => item.promotionCost)</td>
                                 </tr>
+
                             }
                         }
                     </table>
@@ -300,8 +315,8 @@
                 <div>
                     <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td rowspan="2" width="15%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
-                            <td rowspan="2" width="40%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
+                            <td rowspan="2" width="20%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
+                            <td rowspan="2" width="35%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
                             <td colspan="4" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
                         </tr>
                         <tr>
@@ -315,12 +330,33 @@
                             foreach (var item in Model.activitydetaillist)
                             {
                                 <tr>
-                                    <td style="font-size:12.5px;" class="textLeft">@item.typeTheme</td>
-                                    <td style="font-size:12.5px;" class="textLeft">@item.productName</td>
-                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.normalCost)</td>
-                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.themeCost)</td>
-                                    <td style="font-size:12.5px;" class="textRight">@string.Format("{0:p2}", item.growth)</td>
-                                    <td style="font-size:12.5px;" class="textRight">@Html.DisplayFor(m => item.total)</td>
+                                    <td style="font-size:10px;" class="textLeft">@item.typeTheme</td>
+
+                                    @if (item.isShowGroup == true)
+                                    {
+                                        <td class="font10 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.smellName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) Pack(@Html.DisplayFor(m => item.pack)) </td>
+                                    }
+                                    else if (item.isShowGroup == false)
+                                    {
+                                        for (int i = 0; i < @item.detailGroup.Count; i++)
+                                        {
+                                            <td class="font10 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) Pack(@Html.DisplayFor(m => item.pack))</td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td class="font10 textLeft">@Html.DisplayFor(m => item.productName)</td>
+                                    }
+
+                                    @*<td style="font-size:12.5px;" class="textLeft">@item.productName</td>*@
+
+
+
+
+                                    <td style="font-size:10px;" class="textRight">@Html.DisplayFor(m => item.normalCost)</td>
+                                    <td style="font-size:10px;" class="textRight">@Html.DisplayFor(m => item.themeCost)</td>
+                                    <td style="font-size:10px;" class="textRight">@string.Format("{0:p2}", item.growth)</td>
+                                    <td style="font-size:10px;" class="textRight">@Html.DisplayFor(m => item.total)</td>
                                 </tr>
 
                                 totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
