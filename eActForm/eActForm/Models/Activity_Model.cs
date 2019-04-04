@@ -56,7 +56,7 @@ namespace eActForm.Models
             public List<actForm> actLists { get; set; }
         }
 
-        public class actForm
+        public class actForm : ActBaseModel
         {
             public string id { get; set; }
             public string statusId { get; set; }
@@ -81,11 +81,6 @@ namespace eActForm.Models
             public string objective { get; set; }
             public string trade { get; set; }
             public string activityDetail { get; set; }
-            public Boolean delFlag { get; set; }
-            public DateTime? createdDate { get; set; }
-            public string createdByUserId { get; set; }
-            public DateTime? updatedDate { get; set; }
-            public string updatedByUserId { get; set; }
             public decimal? normalCost { get; set; }
             public decimal? themeCost { get; set; }
             public decimal? totalCost { get; set; }

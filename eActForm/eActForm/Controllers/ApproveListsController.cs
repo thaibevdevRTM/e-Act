@@ -52,9 +52,7 @@ namespace eActForm.Controllers
             if (Request.Form["txtActivityNo"] != "")
             {
                 model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
-            }
-
-            if (Request.Form["ddlStatus"] != "")
+            }else if (Request.Form["ddlStatus"] != "")
             {
                 model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, int.Parse(Request.Form["ddlStatus"]));
             }
