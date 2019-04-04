@@ -72,7 +72,19 @@
 						}
 					</td>
 					@*--------------------------------------------------*@
-					<td style="font-size:12.5px;">@item.budgetStatusNameTH</td>
+
+					@if (item.budgetStatusId == "1")
+					{
+						<td style="font-size:12.5px;text-align:center; color:firebrick;">@item.budgetStatusNameTH</td>
+					}
+					else if (item.budgetStatusId == "2")
+					{
+						<td style="font-size:12.5px;text-align:center; color:darkorange;">@item.budgetStatusNameTH</td>
+					}
+					else
+					{
+						<td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.budgetStatusNameTH</td>
+					}
 				</tr>
 				index++;
 			}

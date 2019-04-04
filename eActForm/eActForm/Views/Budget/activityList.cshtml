@@ -61,7 +61,7 @@
 						{
 							string result = String.Format("{0:n2}", @item.act_totalCost);
 							@result.ToString();
-						}									
+						}
 					</td>
 					<td style="font-size:12.5px;text-align:right;">
 						@if (item.act_totalCost != 0)
@@ -69,17 +69,28 @@
 							string result = String.Format("{0:n2}", @item.act_total_invoive);
 							@result.ToString();
 						}
-					</td> @*ยอดยกมา *@
+					</td>
 					<td style="font-size:12.5px;text-align:right;">
-		
 						@if (item.act_totalCost != 0)
 						{
 							string result = String.Format("{0:n2}", @item.act_balance);
 							@result.ToString();
 						}
-									
-						</td> @*รอทำ query คำนวน*@
-					<td style="font-size:12.5px;text-align:center">@item.bud_ActivityStatus</td> @*รอทำ query คำนวนในระดับกิจกรรม ค้างจ่าย จ่ายบางส่วน จบรายการ *@
+
+					</td>
+
+					@if (item.bud_ActivityStatusId == "1")
+					{
+						<td style="font-size:12.5px;text-align:center; color:firebrick;">@item.bud_ActivityStatus</td>
+					}
+					else if (item.bud_ActivityStatusId == "2")
+					{
+						<td style="font-size:12.5px;text-align:center; color:darkorange;">@item.bud_ActivityStatus</td>
+					}
+					else
+					{
+						<td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.bud_ActivityStatus</td>
+					}
 				</tr>
 				index++;
 			}

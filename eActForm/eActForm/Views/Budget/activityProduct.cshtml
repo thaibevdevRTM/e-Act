@@ -23,7 +23,7 @@
 <div id="divPreviewProductList">
 </div>
 
-<br /><hr />
+<hr />
 
 <div id="divPreviewInvoiceList">
 </div>
@@ -38,13 +38,9 @@
 <script>
 
 	$('document').ready(function () {
-
 		callProductList($("#hd_activityId").val());
-
-
 	});
-
-
+	
 	function callProductList(activityId) {
         $.ajax({
             type: 'POST',
