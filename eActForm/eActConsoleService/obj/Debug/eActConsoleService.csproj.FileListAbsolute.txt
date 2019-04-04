@@ -1,7 +1,6 @@
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.exe.config
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.exe
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.pdb
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojResolveAssemblyReference.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
@@ -70,3 +69,4 @@ D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActCons
 D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
