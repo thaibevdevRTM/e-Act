@@ -10,12 +10,13 @@ using WebLibrary;
 using eActForm.Models;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace eActForm.BusinessLayer
 {
     public class EmailAppCodes
     {
-        public static string sendRejectActForm(string actFormId)
+        public static void sendRejectActForm(string actFormId)
         {
             try
             {
@@ -50,14 +51,13 @@ namespace eActForm.BusinessLayer
                         , ConfigurationManager.AppSettings["emailRejectSubject"]
                         , strBody);
                 }
-                return "";
             }
             catch (Exception ex)
             {
-                throw new Exception("sendRejectActForm >> " + ex.Message);
+                ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message);
             }
         }
-        public static string sendApproveActForm(string actFormId)
+        public static void sendApproveActForm(string actFormId)
         {
             try
             {
@@ -90,7 +90,8 @@ namespace eActForm.BusinessLayer
                     // case all updated
                     DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountStatusApproveDetail"
                         , new SqlParameter[] {new SqlParameter("@actFormId",actFormId)
-                        ,new SqlParameter("@statusId",AppCode.ApproveStatus.อนุมัติ)});
+                        ,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.อนุมัติ)});
+
                     if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
                     {
                         DataRow dr = ds.Tables[0].Rows[0];
@@ -109,12 +110,10 @@ namespace eActForm.BusinessLayer
                         }
                     }
                 }
-
-                return "";
             }
             catch (Exception ex)
             {
-                throw new Exception("sendApproveActForm >> " + ex.Message);
+                ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message);
             }
         }
 
