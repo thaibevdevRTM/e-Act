@@ -253,7 +253,7 @@
 </div>
 <hr />
 <div id="getQuery" class="col-lg-12">
-    @Html.Action("productCostDetail", "Activity", new { activityModel = Model })
+    @Html.Action("productCostDetail", "ActivityProductDetail", new { activityModel = Model })
 </div>
 
 <div class="row" id="divAddProductCostDetail">
@@ -281,7 +281,7 @@
 </div>
 <hr />
 <div id="divgetdetailcost" class="col-lg-12">
-    @Html.Action("activityDetail", "Activity", new { activityModel = Model })
+    @Html.Action("activityCostDetail", "ActivityCostDetail", new { activityModel = Model })
 </div>
 
 
@@ -600,7 +600,7 @@
         //}
         $("#WaitDialog").show();
          $.ajax({
-                url: '@Url.Action("addItemProduct", "Activity")',
+                url: '@Url.Action("addItemProduct", "ActivityProductDetail")',
              data: {
              productid: $("#ddlProductfilter").val(),
                  brandid: $("#ddlProductBrand").val(),
@@ -630,7 +630,7 @@
         $("#WaitDialog").show();
          $.ajax({
             type: 'POST',
-            url:  '@Url.Action("addDetailTheme", "Activity")',
+            url:  '@Url.Action("addCostDetailTheme", "ActivityCostDetail")',
              data: {
                  themeId: $("#ddlThemeDetail").val(),
                  txttheme: txtddlTheme,
@@ -751,7 +751,7 @@
     function callThemedetailcost(obj) {
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("activityDetail", "Activity")',
+            url:  '@Url.Action("activityCostDetail", "ActivityCostDetail")',
             data: {
                 activityModel: obj
             }
@@ -764,7 +764,7 @@
 
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("ProductCostdetail", "Activity")',
+            url:  '@Url.Action("ProductCostdetail", "ActivityProductDetail")',
             data: { activityModel: obj}
         }).done(function (htmlResponse) {
             $("#getQuery").html(htmlResponse)

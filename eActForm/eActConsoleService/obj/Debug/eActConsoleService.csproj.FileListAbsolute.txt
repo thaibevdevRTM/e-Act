@@ -1,7 +1,6 @@
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.exe.config
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.exe
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.pdb
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojResolveAssemblyReference.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
@@ -70,29 +69,4 @@ D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActCons
 D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\ApplicationInsights.config
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.exe.config
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.exe
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\eActConsoleService.pdb
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\eActForm.dll
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\WebActivatorEx.dll
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Optimization.dll
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Mvc.dll
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\itextsharp.dll
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\Newtonsoft.Json.dll
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\itextsharp.xmlworker.dll
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\Microsoft.Web.Infrastructure.dll
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.dll
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.Razor.dll
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Razor.dll
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.Deployment.dll
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\eActForm.pdb
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\eActForm.dll.config
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Optimization.xml
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Mvc.xml
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\Newtonsoft.Json.xml
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.xml
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.Razor.xml
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Razor.xml
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.Deployment.xml
-D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CopyComplete
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
