@@ -2066,6 +2066,7 @@
     <Content Include="Views\Budget\activityProductInvoiceList.cshtml" />
     <Content Include="Views\Budget\activityProductInvoiceEdit.cshtml" />
     <Content Include="Views\Budget\budgetPreviewApprove.cshtml" />
+    <Content Include="Views\Budget\activityProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActivityFormPdf\" />
