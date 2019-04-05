@@ -11,14 +11,79 @@ namespace eActForm.BusinessLayer
 {
     public class RepDetailAppCode
     {
-        public static List<RepDetailModel.actFormRepDetailModel> getRepDetailReportByCreateDateAndStatusId(AppCode.ApproveStatus statusId, string startDate, string endDate)
+        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByActNo(List<RepDetailModel.actFormRepDetailModel> lists, string actNo)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDateAndStatusId"
+                return lists.Where(r => r.activityNo == actNo).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
+            }
+        }
+        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByStatusId(List<RepDetailModel.actFormRepDetailModel> lists, string statusId)
+        {
+            try
+            {
+                return lists.Where(r => r.statusId == statusId).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
+            }
+        }
+        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByCustomer(List<RepDetailModel.actFormRepDetailModel> lists, string customerId)
+        {
+            try
+            {
+                return lists.Where(r => r.customerId == customerId).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
+            }
+        }
+        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByActivity(List<RepDetailModel.actFormRepDetailModel> lists, string activityId)
+        {
+            try
+            {
+                return lists.Where(r => r.theme == activityId).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
+            }
+        }
+        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByProductType(List<RepDetailModel.actFormRepDetailModel> lists, string productType)
+        {
+            try
+            {
+                return lists.Where(r => r.productTypeId == productType).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFilterRepDetailByProductType >>" + ex.Message);
+            }
+        }
+        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByProductGroup(List<RepDetailModel.actFormRepDetailModel> lists, string productGroup)
+        {
+            try
+            {
+                return lists.Where(r => r.productGroupid == productGroup).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
+            }
+        }
+        public static List<RepDetailModel.actFormRepDetailModel> getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDate"
                     , new SqlParameter[] {
-                        new SqlParameter("@statusId",(int)statusId)
-                        ,new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
+                        new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
                     });
 
@@ -33,6 +98,8 @@ namespace eActForm.BusinessLayer
                                  documentDate = (DateTime?)dr["documentDate"] ?? null,
                                  reference = dr["reference"].ToString(),
                                  customerId = dr["customerId"].ToString(),
+                                 productCateId = dr["productCateId"].ToString(),
+                                 productGroupid = dr["productGroupid"].ToString(),
                                  cusNameTH = dr["cusNameTH"].ToString(),
                                  productId = dr["productId"].ToString(),
                                  productName = dr["productName"].ToString(),
@@ -51,8 +118,8 @@ namespace eActForm.BusinessLayer
                                  productCategory = dr["productCateText"].ToString(),
                                  productGroup = dr["productGroupId"].ToString(),
                                  groupName = dr["groupName"].ToString(),
-                                 activityPeriodSt = (DateTime?)dr["activityPeriodSt"] ?? null,
-                                 activityPeriodEnd = (DateTime?)dr["activityPeriodEnd"] ?? null,
+                                 activityPeriodSt = dr["activityPeriodSt"] is DBNull ? null : (DateTime?)dr["activityPeriodSt"],
+                                 activityPeriodEnd = dr["activityPeriodEnd"] is DBNull ? null : (DateTime?)dr["activityPeriodEnd"],
                                  costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
                                  costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
                                  activityName = dr["activityName"].ToString(),

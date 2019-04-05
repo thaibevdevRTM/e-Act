@@ -13,15 +13,7 @@ namespace eActForm.Controllers
         // GET: ApproveLists
         public ActionResult Index()
         {
-            SearchActivityModels models = new SearchActivityModels();
-            models.approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app);
-            models.productGroupList = QueryGetAllProductGroup.getAllProductGroup();
-            models.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
-            models.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
-            models.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
-                .GroupBy(item => item.activitySales)
-                .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
-
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
             return View(models);
         }
 

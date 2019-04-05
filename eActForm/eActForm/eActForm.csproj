@@ -204,6 +204,7 @@
     <Compile Include="BusinessLayer\QueryGetProductCostDetail.cs" />
     <Compile Include="BusinessLayer\AuthenAppCode.cs" />
     <Compile Include="BusinessLayer\RepDetailAppCode.cs" />
+    <Compile Include="BusinessLayer\SearchAppCode.cs" />
     <Compile Include="BusinessLayer\SignatureAppCode.cs" />
     <Compile Include="BusinessLayer\UtilsAppCode.cs" />
     <Compile Include="Controllers\actFormRepDetailController.cs" />
@@ -1825,6 +1826,7 @@
     </Content>
     <Content Include="images\al.jpeg" />
     <Content Include="images\blank.png" />
+    <Content Include="images\checkmark.gif" />
     <Content Include="images\icon_ref.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\logo-ss.png" />

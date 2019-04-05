@@ -35,11 +35,17 @@
 <script type="text/javascript">
 
     function beginQuery() {
-        $("#getQuery").fadeOut(300);
+        if ($("#ddlCustomer").val() == "") {
+            doMsgFail("กรุณาระบุ ลูกค้า ครับ");
+            $("#ddlCustomer").focus();
+            return false;
+        }
+        else {
+            $("#getQuery").fadeOut(300);
+        }
     }
 
     function successQuery(htmlResponse) {
-        console.log(htmlResponse);
         $("#getQuery").html(htmlResponse)
         $("#getQuery").fadeIn(300);
     }

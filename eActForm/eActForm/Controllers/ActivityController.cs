@@ -227,7 +227,7 @@ namespace eActForm.Controllers
                 {
                     GridHtml = GridHtml.Replace("---", genDoc);
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), activityId);
-                    if (ApproveAppCode.insertApprove(activityId) > 0)
+                    if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                     {
                         ApproveAppCode.updateApproveWaitingByRangNo(activityId);
                         EmailAppCodes.sendApproveActForm(activityId);

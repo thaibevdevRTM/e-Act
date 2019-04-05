@@ -130,36 +130,77 @@ namespace eActForm.BusinessLayer
                 throw new Exception("updateActFormWithApproveDetail >> " + ex.Message);
             }
         }
-        public static int insertApprove(string actId)
+
+        /// <summary>
+        /// for Activity Form
+        /// </summary>
+        /// <param name="actId"></param>
+        /// <returns></returns>
+        public static int insertApproveForActivityForm(string actId)
+        {
+            try
+            {
+                if (getApproveByActFormId(actId).approveDetailLists.Count == 0 )
+                {
+                    ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
+                    return insertApproveByFlow(flowModel, actId);
+                }
+                else return 999; // alredy approve
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("insertApprove >> " + ex.Message);
+            }
+        }
+
+        public static int insertApproveForReportDetail(string customerId,string productTypeId)
+        {
+            try
+            {
+                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowForReportDetail(ConfigurationManager.AppSettings["subjectReportDetailId"]
+                    , customerId
+                    , productTypeId);
+                return insertApproveByFlow(flowModel, "");
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("insertApproveForReportDetail >>" + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// insertApproveByFlow
+        /// </summary>
+        /// <param name="flowModel"></param>
+        /// <param name="actId"></param>
+        /// <returns></returns>
+        public static int insertApproveByFlow(ApproveFlowModel.approveFlowModel flowModel , string actId)
         {
             try
             {
                 int rtn = 0;
-                if (getApproveByActFormId(actId).approveDetailLists.Count == 0 )
+                List<ApproveModel.approveModel> list = new List<ApproveModel.approveModel>();
+                ApproveModel.approveModel model = new ApproveModel.approveModel();
+                model.id = Guid.NewGuid().ToString();
+                model.flowId = flowModel.flowMain.id;
+                model.actFormId = actId;
+                model.delFlag = false;
+                model.createdDate = DateTime.Now;
+                model.createdByUserId = UtilsAppCode.Session.User.empId;
+                model.updatedDate = DateTime.Now;
+                model.updatedByUserId = UtilsAppCode.Session.User.empId;
+                list.Add(model);
+                DataTable dt = AppCode.ToDataTable(list);
+                foreach (DataRow dr in dt.Rows)
                 {
-                    List<ApproveModel.approveModel> list = new List<ApproveModel.approveModel>();
-                    ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
-                    ApproveModel.approveModel model = new ApproveModel.approveModel();
-                    model.id = Guid.NewGuid().ToString();
-                    model.flowId = flowModel.flowMain.id;
-                    model.actFormId = actId;
-                    model.delFlag = false;
-                    model.createdDate = DateTime.Now;
-                    model.createdByUserId = UtilsAppCode.Session.User.empId;
-                    model.updatedDate = DateTime.Now;
-                    model.updatedByUserId = UtilsAppCode.Session.User.empId;
-                    list.Add(model);
-                    DataTable dt = AppCode.ToDataTable(list);
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        rtn += SqlHelper.ExecuteNonQueryTypedParams(AppCode.StrCon, "usp_insertApprove", dr);
-                    }
+                    rtn += SqlHelper.ExecuteNonQueryTypedParams(AppCode.StrCon, "usp_insertApprove", dr);
+                }
 
-                    // insert approve detail
-                    foreach (ApproveFlowModel.flowApproveDetail m in flowModel.flowDetail)
-                    {
-                        rtn += SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertApproveDetail"
-                            , new SqlParameter[] {new SqlParameter("@id",Guid.NewGuid().ToString())
+                // insert approve detail
+                foreach (ApproveFlowModel.flowApproveDetail m in flowModel.flowDetail)
+                {
+                    rtn += SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertApproveDetail"
+                        , new SqlParameter[] {new SqlParameter("@id",Guid.NewGuid().ToString())
                             ,new SqlParameter("@approveId",model.id)
                             ,new SqlParameter("@rangNo",m.rangNo)
                             ,new SqlParameter("@empId",m.empId)
@@ -171,17 +212,17 @@ namespace eActForm.BusinessLayer
                             ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
                             ,new SqlParameter("@updatedDate",DateTime.Now)
                             ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
-                            });
-                    }
+                        });
                 }
-                else rtn = 999; // alredy approve
+
                 return rtn;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                throw new Exception("insertApprove >> " + ex.Message);
+                throw new Exception(ex.Message);
             }
         }
+
         public static ApproveModel.approveModels getApproveByActFormId(string actFormId)
         {
             try
