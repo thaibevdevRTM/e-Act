@@ -41,43 +41,12 @@ namespace eActForm.BusinessLayer
                 List<ProductCostOfGroupByPrice> insertProductlist = new List<ProductCostOfGroupByPrice>();
                 foreach (var item in model.productcostdetaillist1)
                 {
-                    if (model.activityFormModel.mode != Activity_Model.modeForm.edit.ToString())
-                    {
-                        
-                        foreach (var itemIn in item.detailGroup)
-                        {
-                            ProductCostOfGroupByPrice productcostdetail = new ProductCostOfGroupByPrice();
-                            productcostdetail.id = itemIn.id;
-                            productcostdetail.activityId = activityId;
-                            productcostdetail.productId = itemIn.productId;
-                            productcostdetail.wholeSalesPrice = item.wholeSalesPrice;
-                            productcostdetail.saleIn = item.saleIn;
-                            productcostdetail.saleOut = item.saleOut;
-                            productcostdetail.disCount1 = item.disCount1;
-                            productcostdetail.disCount2 = item.disCount2;
-                            productcostdetail.disCount3 = item.disCount3;
-                            productcostdetail.normalCost = item.normalCost;
-                            productcostdetail.normalGp = item.normalGp;
-                            productcostdetail.promotionGp = item.promotionGp;
-                            productcostdetail.specialDisc = item.specialDisc;
-                            productcostdetail.specialDisBaht = item.specialDiscBaht;
-                            productcostdetail.promotionCost = item.promotionCost;
-                            productcostdetail.isShowGroup = item.isShowGroup;
-                            productcostdetail.rowNo = insertIndex;
-                            productcostdetail.delFlag = itemIn.delFlag;
-                            productcostdetail.createdByUserId = UtilsAppCode.Session.User.empId;
-                            productcostdetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                            productcostdetail.updatedByUserId = UtilsAppCode.Session.User.empId;
-                            productcostdetail.updatedDate = DateTime.Now;
-                            insertProductlist.Add(productcostdetail);
-                        }
-                    }
-                    else
+                    foreach (var itemIn in item.detailGroup)
                     {
                         ProductCostOfGroupByPrice productcostdetail = new ProductCostOfGroupByPrice();
-                        productcostdetail.id = item.id;
+                        productcostdetail.id = itemIn.id;
                         productcostdetail.activityId = activityId;
-                        productcostdetail.productId = item.productId;
+                        productcostdetail.productId = itemIn.productId;
                         productcostdetail.wholeSalesPrice = item.wholeSalesPrice;
                         productcostdetail.saleIn = item.saleIn;
                         productcostdetail.saleOut = item.saleOut;
@@ -90,9 +59,9 @@ namespace eActForm.BusinessLayer
                         productcostdetail.specialDisc = item.specialDisc;
                         productcostdetail.specialDisBaht = item.specialDiscBaht;
                         productcostdetail.promotionCost = item.promotionCost;
-                        productcostdetail.rowNo = insertIndex;
-                        productcostdetail.delFlag = item.delFlag;
                         productcostdetail.isShowGroup = item.isShowGroup;
+                        productcostdetail.rowNo = insertIndex;
+                        productcostdetail.delFlag = itemIn.delFlag;
                         productcostdetail.createdByUserId = UtilsAppCode.Session.User.empId;
                         productcostdetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                         productcostdetail.updatedByUserId = UtilsAppCode.Session.User.empId;
@@ -103,11 +72,12 @@ namespace eActForm.BusinessLayer
                 }
 
 
+
+
+
                 insertIndex = 1;
                 foreach (var item in model.activitydetaillist.ToList())
                 {
-                    if (model.activityFormModel.mode != Activity_Model.modeForm.edit.ToString())
-                    {
                         foreach (var itemIn in item.detailGroup)
                         {
                             CostThemeDetail costThemeDetail = new CostThemeDetail();
@@ -132,31 +102,7 @@ namespace eActForm.BusinessLayer
                             costThemeDetail.updatedDate = DateTime.Now;
                             model.costthemedetail.Add(costThemeDetail);
                         }
-                    }
-                    else
-                    {
-                        CostThemeDetail costThemeDetail = new CostThemeDetail();
-                        costThemeDetail.id = item.id;
-                        costThemeDetail.activityId = activityId;
-                        costThemeDetail.activityTypeId = item.activityTypeId;
-                        costThemeDetail.typeTheme = item.typeTheme;
-                        costThemeDetail.productId = item.productId;
-                        costThemeDetail.normalCost = item.normalCost;
-                        costThemeDetail.themeCost = item.themeCost;
-                        costThemeDetail.growth = item.growth;
-                        costThemeDetail.total = item.total;
-                        costThemeDetail.perTotal = item.perTotal;
-                        costThemeDetail.brandId = item.brandId;
-                        costThemeDetail.smellId = item.smellId;
-                        costThemeDetail.isShowGroup = item.isShowGroup;
-                        costThemeDetail.rowNo = insertIndex;
-                        costThemeDetail.delFlag = item.delFlag;
-                        costThemeDetail.createdByUserId = UtilsAppCode.Session.User.empId;
-                        costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                        costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
-                        costThemeDetail.updatedDate = DateTime.Now;
-                        model.costthemedetail.Add(costThemeDetail);
-                    }
+                    
                     insertIndex++;
                 }
 
@@ -174,8 +120,8 @@ namespace eActForm.BusinessLayer
                 ExceptionManager.WriteError(ex.Message + ">> insertAllActivity");
                 return rtn;
             }
-        
-           
+
+
         }
 
 
@@ -189,15 +135,26 @@ namespace eActForm.BusinessLayer
                 string result = string.Empty;
 
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);
-                int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().customerId).FirstOrDefault().docNo);
+                if (getActList.Any())
+                {
+                    if (getActList.FirstOrDefault().activityNo.ToString() == "---")
+                    {
+                        int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().customerId).FirstOrDefault().docNo);
 
-                result += getActList.FirstOrDefault().trade == "term" ? "S" : "W";
-                result += getActList.FirstOrDefault().groupShort.Trim();
-                result += getActList.FirstOrDefault().chanelShort.Trim();
-                result += getActList.FirstOrDefault().cusShortName.Trim();
-                result += DateTime.Today.Year.ToString().Substring(2, 2);
-                result += string.Format("{0:0000}", genNumber);
+                        result += getActList.FirstOrDefault().trade == "term" ? "S" : "W";
+                        result += getActList.FirstOrDefault().groupShort.Trim();
+                        result += getActList.FirstOrDefault().chanelShort.Trim();
+                        result += getActList.FirstOrDefault().cusShortName.Trim();
+                        result += DateTime.Today.Year.ToString().Substring(2, 2);
+                        result += string.Format("{0:0000}", genNumber);
 
+                    }
+                    else
+                    {
+                        result = getActList.FirstOrDefault().activityNo.ToString();
+                    }
+                }
+               
                 return result;
             }
             catch (Exception ex)
