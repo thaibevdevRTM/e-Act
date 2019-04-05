@@ -2073,8 +2073,6 @@
     <Content Include="Views\Budget\activityProductInvoiceEdit.cshtml" />
     <Content Include="Views\Budget\budgetPreviewApprove.cshtml" />
     <Content Include="Views\Budget\activityProduct.cshtml" />
-    <Content Include="Views\Budget\EditForm.cshtml" />
-    <Content Include="Views\Budget\PreviewBudgetInvoice.cshtml" />
     <Content Include="Views\Shared\_search.cshtml" />
     <Content Include="Views\actFormRepDetail\index.cshtml" />
     <Content Include="Views\actFormRepDetail\repListView.cshtml" />
