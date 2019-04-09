@@ -26,7 +26,6 @@
                     <th class="align-content-center font10" rowspan="2" style="width:20%;">ประเภทกิจกรรม</th>
                     <th class="align-content-center font10" rowspan="2" style="width:30%;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</th>
                     <th class="align-content-center font10" colspan="5" style="width:50%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
-
                 </tr>
                 <tr>
                     <th class="align-content-center font10">ยอดขายปกติ (Cost)</th>
@@ -49,15 +48,18 @@
                             <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
                             @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
                         </td>
-                        @if (item.isShowGroup == "true")
+                        @if (item.isShowGroup == true)
                         {
                             <td class="font10 textLeft">@item.typeTheme</td>
                         }
-                        else if (item.isShowGroup == "false")
+                        else if (item.isShowGroup == false)
                         {
-                            for (int i = 0; i < @item.detailGroup.Count; i++)
+                            if (item.detailGroup != null)
                             {
+                                for (int i = 0; i < @item.detailGroup.Count; i++)
+                                {
                                 <td class="font10 textLeft">@item.detailGroup[i].typeTheme</td>
+                                }
                             }
                         }
                         else
@@ -65,11 +67,11 @@
                             <td class="font10 textLeft">@item.typeTheme</td>
                         }
 
-                        @if (item.isShowGroup == "true")
+                        @if (item.isShowGroup == true)
                         {
-                            <td class="font10 textLeft">@item.brandName @item.smellName ALL(@item.detailGroup.Count)</td>
+                            <td class="font10 textLeft">@item.brandName @item.smellName @item.size ALL(@item.detailGroup.Count)</td>
                         }
-                        else if (item.isShowGroup == "false")
+                        else if (item.isShowGroup == false)
                         {
                             for (int i = 0; i < @item.detailGroup.Count; i++)
                             {
@@ -89,7 +91,9 @@
                         <td>
                             @Html.TextBoxFor(model => item.growth, "{0:p2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })
                         </td>
-                        <td>@Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
+                        <td>
+                            @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")", onfocus = "setZero(lblTotal_" + index + ")" })
+                        </td>
                         <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}%", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
 
                     </tr>
@@ -144,7 +148,8 @@
                     <p class="text-success textRight">
                         @if (total != 0 && activityTotal != 0)
                         {
-                            perTotal = total * 100 / (activityTotal * Convert.ToDecimal(TempData["promotionTotal"].ToString() == "0.00" ? "1" : TempData["promotionTotal"].ToString()));
+
+                            perTotal = total * 100 / (activityTotal * Convert.ToDecimal(Session["promotionTotal"] == null ? "1" : Session["promotionTotal"].ToString()));
                             string result = String.Format("{0:n2}%", @perTotal);
                             @result.ToString();
                         }
@@ -169,6 +174,8 @@
             var themeCost = $('#lblThemeCost_' + rowIndex).val();
             var growth = $("#lblGrowth_" + rowIndex).val();
             var productId = $("#hdProductId_" + rowIndex).val();
+            var total =  $("#lblTotal_" + rowIndex).val();
+                
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("calCostDetailTheme", "ActivityCostDetail")',
@@ -179,6 +186,7 @@
                     productId: productId,
                     themeCost: themeCost,
                     growth: growth,
+                    total: total,
                 }
             }).done(function (response) {
                 callThemedetailcost();
