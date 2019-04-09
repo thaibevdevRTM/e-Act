@@ -20,15 +20,20 @@ namespace eActForm.BusinessLayer
                              select new ApproveModel.approveWaitingModel()
                              {
                                  empId = dr["empId"].ToString()
-                                 ,waitingCount = dr["waitingCount"].ToString()
-                                 ,empPrefix = dr["empPrefix"].ToString()
-                                 ,empFNameTH = dr["empFNameTH"].ToString()
-                                 ,empLNameTH = dr["empLNameTH"].ToString()
-                                 ,empEmail = dr["empEmail"].ToString()
+                                 ,
+                                 waitingCount = dr["waitingCount"].ToString()
+                                 ,
+                                 empPrefix = dr["empPrefix"].ToString()
+                                 ,
+                                 empFNameTH = dr["empFNameTH"].ToString()
+                                 ,
+                                 empLNameTH = dr["empLNameTH"].ToString()
+                                 ,
+                                 empEmail = dr["empEmail"].ToString()
                              }).ToList();
                 return lists;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("getAllWaitingApproveGroupByEmpId >> " + ex.Message);
             }
@@ -89,7 +94,7 @@ namespace eActForm.BusinessLayer
                     // update reject
                     rtn += updateActFormWithApproveReject(actFormId);
                 }
-                else if( statusId ==  ConfigurationManager.AppSettings["statusApprove"])
+                else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
                     // update approve
                     rtn += updateActFormWithApproveDetail(actFormId);
@@ -140,7 +145,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                if (getApproveByActFormId(actId).approveDetailLists.Count == 0 )
+                if (getApproveByActFormId(actId).approveDetailLists.Count == 0)
                 {
                     ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
                     return insertApproveByFlow(flowModel, actId);
@@ -153,28 +158,13 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static int insertApproveForReportDetail(string customerId,string productTypeId)
-        {
-            try
-            {
-                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowForReportDetail(ConfigurationManager.AppSettings["subjectReportDetailId"]
-                    , customerId
-                    , productTypeId);
-                return insertApproveByFlow(flowModel, "");
-            }
-            catch(Exception ex)
-            {
-                throw new Exception("insertApproveForReportDetail >>" + ex.Message);
-            }
-        }
-
         /// <summary>
         /// insertApproveByFlow
         /// </summary>
         /// <param name="flowModel"></param>
         /// <param name="actId"></param>
         /// <returns></returns>
-        public static int insertApproveByFlow(ApproveFlowModel.approveFlowModel flowModel , string actId)
+        public static int insertApproveByFlow(ApproveFlowModel.approveFlowModel flowModel, string actId)
         {
             try
             {
@@ -217,7 +207,7 @@ namespace eActForm.BusinessLayer
 
                 return rtn;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -253,7 +243,7 @@ namespace eActForm.BusinessLayer
 
                                              }).ToList();
 
-                
+
                 if (models.approveDetailLists.Count > 0)
                 {
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveByActFormId"
@@ -293,7 +283,7 @@ namespace eActForm.BusinessLayer
             {
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveStatusAll"
-                    ,new SqlParameter("@type",type.ToString()));
+                    , new SqlParameter("@type", type.ToString()));
                 var list = (from DataRow dr in ds.Tables[0].Rows
                             select new ApproveModel.approveStatus()
                             {

@@ -181,6 +181,7 @@
     <Compile Include="BusinessLayer\ActFormAppCode.cs" />
     <Compile Include="BusinessLayer\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\ApproveListAppCode.cs" />
+    <Compile Include="BusinessLayer\ApproveRepDetailAppCode.cs" />
     <Compile Include="BusinessLayer\BudgetFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\EmailAppCodes.cs" />
     <Compile Include="BusinessLayer\ApproveAppCode.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Controllers\AjaxResult.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
+    <Compile Include="Controllers\ApproveListsRepDetailController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
@@ -2078,6 +2080,9 @@
     <Content Include="Views\Shared\_search.cshtml" />
     <Content Include="Views\actFormRepDetail\index.cshtml" />
     <Content Include="Views\actFormRepDetail\repListView.cshtml" />
+    <Content Include="Views\ApproveListsRepDetail\index.cshtml" />
+    <Content Include="Views\actFormRepDetail\approvePositionSignature.cshtml" />
+    <Content Include="Views\ApproveListsRepDetail\ListView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActivityFormPdf\" />

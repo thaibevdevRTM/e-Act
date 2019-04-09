@@ -229,7 +229,7 @@ namespace eActForm.Controllers
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                     {
                         ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                        EmailAppCodes.sendApproveActForm(activityId);
+                        EmailAppCodes.sendApprove(activityId,AppCode.ApproveEmailType.Activity_Form);
                     }
                 }
                 resultAjax.Success = true;

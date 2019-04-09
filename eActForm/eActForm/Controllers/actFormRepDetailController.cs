@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
 using eActForm.BusinessLayer;
 using eActForm.Models;
 using iTextSharp.text;
@@ -26,9 +27,7 @@ namespace eActForm.Controllers
             try
             {
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
-                model.actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"]
-                    , Request.Form["endDate"]);
-
+                model.actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"]);
                 if (Request.Form["txtActivityNo"] != "")
                 {
                     model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByActNo(model.actFormRepDetailLists, Request.Form["txtActivityNo"]);
@@ -55,9 +54,14 @@ namespace eActForm.Controllers
                     {
                         model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByProductGroup(model.actFormRepDetailLists, Request.Form["ddlProductGrp"]);
                     }
+                    if (Request.Form["ddlCustomer"] != "" && Request.Form["ddlProductType"] != "")
+                    {
+                        model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                                        ConfigurationManager.AppSettings["subjectReportDetailId"]
+                                        , Request.Form["ddlCustomer"]
+                                        , Request.Form["ddlProductType"]);
+                    }
                 }
-
-
                 TempData["ActFormRepDetail"] = model;
             }
             catch (Exception ex)
@@ -65,15 +69,21 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return RedirectToAction("repListView");
+            return RedirectToAction("repListView", new { startDate = Request.Form["startDate"] });
         }
 
-        public ActionResult repListView()
+        public ActionResult approvePositionSignature(ApproveFlowModel.approveFlowModel flowModel)
+        {
+            return PartialView(flowModel);
+        }
+
+        public ActionResult repListView(string startDate)
         {
             RepDetailModel.actFormRepDetails model = null;
             try
             {
                 model = (RepDetailModel.actFormRepDetails)TempData["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
             }
             catch (Exception ex)
             {
@@ -85,13 +95,23 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult repReportDetailApprove(string gridHtml)
+        public JsonResult repReportDetailApprove(string gridHtml, string customerId, string productTypeId, string startDate, string endDate)
         {
             var result = new AjaxResult();
             try
             {
-                AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), "pdfRepDetail");
-                result.Success = true;
+                string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate);
+                if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId) > 0)
+                {
+                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), actRepDetailId);
+                    EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveEmailType.Report_Detail);
+                    result.Success = true;
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = AppCode.StrMessFail;
+                }
             }
             catch (Exception ex)
             {

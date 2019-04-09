@@ -84,12 +84,12 @@ namespace eActForm.Controllers
             {
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
-                    EmailAppCodes.sendRejectActForm(activityId);
+                    EmailAppCodes.sendReject(activityId);
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), activityId);
-                    EmailAppCodes.sendApproveActForm(activityId);
+                    EmailAppCodes.sendApprove(activityId,AppCode.ApproveEmailType.Activity_Form);
                 }
                 resultAjax.Success = true;
             }

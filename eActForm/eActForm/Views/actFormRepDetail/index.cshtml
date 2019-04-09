@@ -26,6 +26,7 @@
 </div>
 
 <div class="row tile_count">
+    
     <div id="getQuery" class="col-md-12 col-xs-12">
 
     </div>
@@ -37,7 +38,10 @@
     function beginQuery() {
         if ($("#ddlCustomer").val() == "") {
             doMsgFail("กรุณาระบุ ลูกค้า ครับ");
-            $("#ddlCustomer").focus();
+            return false;
+        }
+         if ($("#ddlProductType").val() == "") {
+            doMsgFail("กรุณาระบุ Product Type ครับ");
             return false;
         }
         else {
@@ -51,7 +55,7 @@
     }
 
     function failureQuery(data) {
-        //(data.responseText);
+        doMsgFail(data.responseText);
     }
 
 </script>

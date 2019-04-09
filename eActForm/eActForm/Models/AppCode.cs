@@ -22,7 +22,14 @@ namespace eActForm.Models
     public class AppCode
     {
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
+        public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
 
+        public enum ApproveEmailType
+        {
+            Activity_Form
+                , Report_Detail
+                , Report_Summary
+        }
         public enum ApproveStatus
         {
             Draft = 1

@@ -16,7 +16,7 @@ namespace eActForm.BusinessLayer
 {
     public class EmailAppCodes
     {
-        public static void sendRejectActForm(string actFormId)
+        public static void sendReject(string actFormId)
         {
             try
             {
@@ -57,28 +57,19 @@ namespace eActForm.BusinessLayer
                 ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message);
             }
         }
-        public static void sendApproveActForm(string actFormId)
+        public static void sendApprove(string actFormId, AppCode.ApproveEmailType emailType)
         {
             try
             {
-                List<ApproveModel.approveEmailDetailModel> lists = getEmailNextLevel(actFormId);
+                List<ApproveModel.approveEmailDetailModel> lists = (emailType == AppCode.ApproveEmailType.Activity_Form) ? getEmailApproveNextLevel(actFormId) 
+                    : getEmailApproveRepDetailNextLevel(actFormId);
                 string strBody = "";
                 if (lists.Count > 0)
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-                        strBody = string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
-                            , item.empPrefix + " " + item.empName //เรียน
-                            , "รออนุมัติ"
-                            , "Activity Form"
-                            , item.activityName
-                            , item.activitySales
-                            , item.activityNo
-                            , item.sumTotal
-                            , item.createBy
-                            , string.Format(ConfigurationManager.AppSettings["urlApprove"], actFormId)
-                            );
 
+                        strBody = getEmailBody(item, emailType, actFormId);
                         sendEmailActForm(actFormId
                             , item.empEmail
                             , ConfigurationManager.AppSettings["emailApproveSubject"]
@@ -130,13 +121,47 @@ namespace eActForm.BusinessLayer
                     , files);
         }
 
-        private static List<ApproveModel.approveEmailDetailModel> getEmailNextLevel(string actFormId)
+        private static string getEmailBody(ApproveModel.approveEmailDetailModel item, AppCode.ApproveEmailType emailType,string actId)
         {
             try
             {
 
+                string strBody = (emailType == AppCode.ApproveEmailType.Activity_Form) ?
+                            string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
+                            , item.empPrefix + " " + item.empName //เรียน
+                            , AppCode.ApproveStatus.รออนุมัติ.ToString()
+                            , emailType.ToString().Replace("_", " ")
+                            , item.activityName
+                            , item.activitySales
+                            , item.activityNo
+                            , item.sumTotal
+                            , item.createBy
+                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId)
+                            ) :
+                            string.Format(ConfigurationManager.AppSettings["emailApproveRepDetailBody"]
+                            , item.empPrefix + " " + item.empName //เรียน
+                            , AppCode.ApproveStatus.รออนุมัติ.ToString()
+                            , emailType.ToString().Replace("_", " ")
+                            , item.customerName
+                            , item.productTypeName
+                            , item.createBy
+                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId)
+                            );
+
+                return strBody;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        private static List<ApproveModel.approveEmailDetailModel> getEmailApproveNextLevel(string actFormId)
+        {
+            try
+            {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveNextLevel"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
+
                 var models = (from DataRow dr in ds.Tables[0].Rows
                               select new ApproveModel.approveEmailDetailModel()
                               {
@@ -147,6 +172,31 @@ namespace eActForm.BusinessLayer
                                   activitySales = dr["activitySales"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
                                   sumTotal = dr["sumTotal"].ToString(),
+                                  createBy = dr["createBy"].ToString(),
+                              }).ToList();
+                return models;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getEmailNextLevel >> " + ex.Message);
+            }
+        }
+
+        private static List<ApproveModel.approveEmailDetailModel> getEmailApproveRepDetailNextLevel(string actFormId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveRepDetailNextLevel"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
+
+                var models = (from DataRow dr in ds.Tables[0].Rows
+                              select new ApproveModel.approveEmailDetailModel()
+                              {
+                                  empEmail = dr["empEmail"].ToString(),
+                                  empPrefix = dr["empPrefix"].ToString(),
+                                  empName = dr["empName"].ToString(),
+                                  productTypeName = dr["productTypeName"].ToString(),
+                                  customerName = dr["customerName"].ToString(),
                                   createBy = dr["createBy"].ToString(),
                               }).ToList();
                 return models;
