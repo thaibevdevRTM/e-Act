@@ -33,15 +33,6 @@ namespace eActForm.Controllers
 		//[ValidateInput(false)]
 
 		
-		public PartialViewResult budgetPreviewApprove(string activityId, string activityOfEstimateId, string invoiceId)
-		{		// รอ develop
-				Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
-				Budget_Activity.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, activityOfEstimateId);
-				Budget_Activity.Budget_Activity_Invoice_list = QueryBudgetBiz.getBudgetActivityInvoice(activityId, activityOfEstimateId, invoiceId);
-				Budget_Activity.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
-				return PartialView("budgetPreviewApprove", Budget_Activity);
-		}
-
 		public JsonResult submitInvoice(Budget_Activity_Model.Budget_Activity_Invoice_Att budgetInvoiceModel)
 		{
 			var resultAjax = new AjaxResult();
@@ -86,6 +77,8 @@ namespace eActForm.Controllers
 			return Json(result, JsonRequestBehavior.AllowGet);
 		}
 
+
+		//---------------------------------------------------------------------------------------
 		public PartialViewResult activityProductInvoiceEdit(string activityId, string activityOfEstimateId, string invoiceId)
 		{
 
@@ -130,7 +123,9 @@ namespace eActForm.Controllers
 			}
 			return PartialView(budget_activity);
 		}
-		
+		//----------------------------------------------------------------------------------------
+
+
 		public ActionResult activityProduct(string activityId)
 		{
 			Budget_Activity_Model budget_activity = new Budget_Activity_Model();

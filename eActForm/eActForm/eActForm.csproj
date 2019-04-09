@@ -215,6 +215,7 @@
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BudgetApproveController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\eActController.cs" />
@@ -2067,17 +2068,17 @@
     <Content Include="Views\ApproveLists\index.cshtml" />
     <Content Include="Views\ApproveLists\ListView.cshtml" />
     <Content Include="Views\Home\approveLists.cshtml" />
-    <Content Include="Views\Budget\activityList.cshtml" />
-    <Content Include="Views\Budget\activityProductList.cshtml" />
-    <Content Include="Views\Budget\activityProductInvoiceList.cshtml" />
-    <Content Include="Views\Budget\activityProductInvoiceEdit.cshtml" />
-    <Content Include="Views\Budget\budgetPreviewApprove.cshtml" />
-    <Content Include="Views\Budget\activityProduct.cshtml" />
-    <Content Include="Views\Budget\EditForm.cshtml" />
-    <Content Include="Views\Budget\PreviewBudgetInvoice.cshtml" />
     <Content Include="Views\Shared\_search.cshtml" />
     <Content Include="Views\actFormRepDetail\index.cshtml" />
     <Content Include="Views\actFormRepDetail\repListView.cshtml" />
+    <Content Include="Views\BudgetApprove\budgetApprove.cshtml" />
+    <Content Include="Views\BudgetApprove\budgetApproveList.cshtml" />
+    <Content Include="Views\BudgetApprove\Index.cshtml" />
+    <Content Include="Views\Budget\activityList.cshtml" />
+    <Content Include="Views\Budget\activityProduct.cshtml" />
+    <Content Include="Views\Budget\activityProductInvoiceEdit.cshtml" />
+    <Content Include="Views\Budget\activityProductInvoiceList.cshtml" />
+    <Content Include="Views\Budget\activityProductList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActivityFormPdf\" />
