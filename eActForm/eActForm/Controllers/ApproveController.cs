@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Configuration;
 using eActForm.BusinessLayer;
 using eActForm.Models;
+using iTextSharp.text;
+
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -18,13 +20,13 @@ namespace eActForm.Controllers
             else
             {
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
-                models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app);
+                models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app).Where(x => x.id == "3" || x.id == "5").ToList();
                 return View(models);
             }
         }
 
         [HttpPost]
-        public JsonResult insertApprove( )
+        public JsonResult insertApprove()
         {
             var result = new AjaxResult();
             result.Success = false;
@@ -35,7 +37,7 @@ namespace eActForm.Controllers
                     result.Success = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result.Message = ex.Message;
             }
@@ -75,18 +77,18 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult genPdfApprove(string GridHtml,string statusId, string activityId)
+        public JsonResult genPdfApprove(string GridHtml, string statusId, string activityId)
         {
             var resultAjax = new AjaxResult();
             try
             {
-                if( statusId == ConfigurationManager.AppSettings["statusReject"])
+                if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
                     EmailAppCodes.sendRejectActForm(activityId);
                 }
-                else if( statusId == ConfigurationManager.AppSettings["statusApprove"])
+                else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
-                    AppCode.genPdfFile(GridHtml, activityId);
+                    AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), activityId);
                     EmailAppCodes.sendApproveActForm(activityId);
                 }
                 resultAjax.Success = true;

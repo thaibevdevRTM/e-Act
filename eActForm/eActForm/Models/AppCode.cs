@@ -37,7 +37,12 @@ namespace eActForm.Models
             doc // document
         }
 
-        public static MemoryStream GetFileReportTomail_Preview(string GridHtml)
+        public static string checkNullorEmpty(string p)
+        {
+            return p == "" || p == null || p == "0" || p == "0.00" ? "0" : p;
+        }
+
+        public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc)
         {
             MemoryStream ms = new MemoryStream();
             try
@@ -67,7 +72,7 @@ namespace eActForm.Models
                 string path = System.Web.HttpContext.Current.Server.MapPath("~") + "\\Content\\" + "tablethin.css";
                 string readText = System.IO.File.ReadAllText(path);
 
-                Document pdfDoc = new Document(PageSize.A4, 25, 25, 10, 10);
+                //Document pdfDoc = new Document(pageSize, 25, 25, 10, 10);
                 using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
                 {
 
@@ -90,7 +95,7 @@ namespace eActForm.Models
             }
 
         }
-        public static List<Attachment> genPdfFile(string GridHtml, string activityId)
+        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string activityId)
         {
             //GridHtml = GridHtml.Replace("\n", "");
             ContentType xlsxContent = new ContentType("application/pdf");
@@ -98,7 +103,7 @@ namespace eActForm.Models
             byte[] PreviewBytes = new byte[0];
             List<Attachment> files = new List<Attachment>();
 
-            msPreview = GetFileReportTomail_Preview(GridHtml);
+            msPreview = GetFileReportTomail_Preview(GridHtml, doc);
             PreviewBytes = msPreview.ToArray();
 
             var rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));

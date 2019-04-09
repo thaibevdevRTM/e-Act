@@ -54,13 +54,14 @@ namespace eActForm.BusinessLayer
                      , new SqlParameter("@p_customerid", p_customerid));
 
                 var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new Productcostdetail()
+                             select new ProductCostOfGroupByPrice()
                              {
                                  id = Guid.NewGuid().ToString(),
                                  productId = d["productId"].ToString(),
                                  productName = d["productName"].ToString(),
                                  brandId = d["brandId"].ToString(),
                                  smellId = d["smellId"].ToString(),
+                                 size = int.Parse(AppCode.checkNullorEmpty(d["size"].ToString())),
                                  brandName = d["brandName"].ToString(),
                                  smellName = d["smellName"].ToString(),
                                  pack = QueryGetAllProduct.getProductById(d["productId"].ToString()).FirstOrDefault().pack.ToString(),
@@ -78,7 +79,10 @@ namespace eActForm.BusinessLayer
                 }
 
 
-                groupByPrice = lists.OrderByDescending(o => o.wholeSalesPrice).GroupBy(item => new { item.wholeSalesPrice, item.brandName, item.smellName })
+                groupByPrice = lists.OrderByDescending(o => o.wholeSalesPrice)
+                    .OrderByDescending(x => x.size)
+                    .GroupBy(item => new { item.wholeSalesPrice, item.brandName, item.smellName })
+                    
                .Select((group, index) => new ProductCostOfGroupByPrice
                {
                    id = Guid.NewGuid().ToString(),
@@ -88,18 +92,13 @@ namespace eActForm.BusinessLayer
                    brandName = group.First().brandName,
                    productId = group.First().productId,
                    productName = group.First().productName,
+                   size = group.First().size,
                    pack = QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString(),
                    wholeSalesPrice = group.First().wholeSalesPrice,
-                   isShowGroup = p_productId != "" ? "false" : "true",
+                   isShowGroup = p_productId != "" ? false : true,
                    detailGroup = group.ToList()
                }).ToList();
 
-                //else
-                //{
-
-                //    groupByPrice[0].isShowGroup = false;
-                //    groupByPrice[0].detailGroup = lists;
-                //}
                 return groupByPrice;
             }
             catch (Exception ex)

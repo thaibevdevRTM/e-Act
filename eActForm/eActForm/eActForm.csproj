@@ -203,9 +203,13 @@
     <Compile Include="BusinessLayer\QueryGetMessage.cs" />
     <Compile Include="BusinessLayer\QueryGetProductCostDetail.cs" />
     <Compile Include="BusinessLayer\AuthenAppCode.cs" />
+    <Compile Include="BusinessLayer\RepDetailAppCode.cs" />
     <Compile Include="BusinessLayer\SignatureAppCode.cs" />
     <Compile Include="BusinessLayer\UtilsAppCode.cs" />
+    <Compile Include="Controllers\actFormRepDetailController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\ActivityCostDetailController.cs" />
+    <Compile Include="Controllers\ActivityProductDetailController.cs" />
     <Compile Include="Controllers\ActivityViewerController.cs" />
     <Compile Include="Controllers\AjaxResult.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
@@ -227,6 +231,7 @@
     <Compile Include="Models\ActUserModel.cs" />
     <Compile Include="Models\AppCode.cs" />
     <Compile Include="Models\Budget_Activity_Model.cs" />
+    <Compile Include="Models\RepDetailModel.cs" />
     <Compile Include="Models\TB_Act_ActivityFormDocNo_Model.cs" />
     <Compile Include="Models\TB_Act_ActivityGroup_Model.cs" />
     <Compile Include="Models\ApproveFlowModel.cs" />
@@ -2015,7 +2020,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -2037,9 +2044,8 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\SaleActual\Sale.cshtml" />
-    <Content Include="Views\Activity\ProductCostdetail.cshtml" />
-    <Content Include="Views\Activity\activityDetail.cshtml" />
-    <Content Include="Views\Activity\ApproveForm.cshtml" />
+    <Content Include="Views\ActivityProductDetail\ProductCostdetail.cshtml" />
+    <Content Include="Views\ActivityCostDetail\activityCostDetail.cshtml" />
     <Content Include="Views\Activity\PreviewData.cshtml" />
     <Content Include="Views\Shared\_sidebar.cshtml" />
     <Content Include="Views\Shared\_TopNav.cshtml" />
@@ -2066,6 +2072,10 @@
     <Content Include="Views\Budget\activityList.cshtml" />
     <Content Include="Views\Budget\EditForm.cshtml" />
     <Content Include="Views\Budget\PreviewBudgetInvoice.cshtml" />
+    <Content Include="Views\ActivityProductDetail\showDetailGroup.cshtml" />
+    <Content Include="Views\Shared\_search.cshtml" />
+    <Content Include="Views\actFormRepDetail\index.cshtml" />
+    <Content Include="Views\actFormRepDetail\repListView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActivityFormPdf\" />
