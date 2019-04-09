@@ -33,13 +33,15 @@
 </script>
 
 
+
 @Html.HiddenFor(m => m.activityFormModel.id, new { id = "HdId" })
+
 <div class="modal-dialog modal-lg">
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">
             <div style=""></div>
-            <button type="button" class="close" data-dismiss="modal" onclick="onClickClose()">&times;</button>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
             <div id="Grid" style="width:97%; margin-left:20px;">
@@ -48,6 +50,22 @@
                         border-bottom-width: 1px;
                         border-bottom-style: solid;
                         border-bottom-color: gray;
+                    }
+
+                    .font8 {
+                        font-size: 8px;
+                    }
+
+                    .font11 {
+                        font-size: 11px;
+                    }
+
+                    .textRight {
+                        text-align: right;
+                    }
+
+                    .textLeft {
+                        text-align: left;
                     }
                 </style>
 
@@ -70,7 +88,7 @@
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">Document Date</td>
                             <td></td>
-                            <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.documentDate) </td>
+                            <td class="cssborderbottom" style="font-size:12.5px;">@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy") </td>
                         </tr>
                         <tr>
                             <td></td>
@@ -126,7 +144,17 @@
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">ระยะเวลากิจกรรม</td>
                             <td></td>
-                            <td style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.activityPeriodSt) To @Html.DisplayFor(item => item.activityFormModel.activityPeriodEnd)</td>
+                            <td style="font-size:12.5px;">
+                                @if (Model.activityFormModel.activityPeriodSt != null)
+                                {
+                                    @Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy")
+                                }
+                                To
+                                @if (Model.activityFormModel.activityPeriodEnd != null)
+                                {
+                                    @Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy")
+                                }
+                            </td>
                         </tr>
                         <tr>
                             @if (Model.activityFormModel != null)
@@ -152,7 +180,17 @@
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">ระยะเวลาการให้ทุนพิเศษ</td>
                             <td></td>
-                            <td style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.costPeriodSt) To @Html.DisplayFor(item => item.activityFormModel.costPeriodEnd)</td>
+                            <td style="font-size:12.5px;">
+                                @if (Model.activityFormModel.costPeriodSt != null)
+                                {
+                                    @Model.activityFormModel.costPeriodSt.Value.ToString("dd/MM/yyyy")
+                                }
+                                To
+                                @if (Model.activityFormModel.costPeriodEnd != null)
+                                {
+                                    @Model.activityFormModel.costPeriodEnd.Value.ToString("dd/MM/yyyy")
+                                }
+                            </td>
                         </tr>
                         <tr>
                             <td></td>
@@ -213,21 +251,34 @@
                             foreach (var item in Model.productcostdetaillist1)
                             {
                                 <tr>
-                                    <td style="font-size:12.5px;">@item.productName</td>
-                                    <td style="font-size:12.5px;">@item.wholeSalesPrice</td>
-                                    <td style="font-size:12.5px;">@item.disCount1</td>
-                                    <td style="font-size:12.5px;">@item.disCount2</td>
-                                    <td style="font-size:12.5px;">@item.disCount3</td>
-                                    <td style="font-size:12.5px;">@item.normalCost</td>
-                                    <td style="font-size:12.5px;">@item.normalGp</td>
-                                    <td style="font-size:12.5px;">@item.promotionGp</td>
-                                    <td style="font-size:12.5px;">@item.specialDisc</td>
-                                    <td style="font-size:12.5px;">@item.promotionCost</td>
+                                    @if (item.isShowGroup == true)
+                                    {
+                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.smellName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) Pack(@Html.DisplayFor(m => item.pack)) </td>
+                                    }
+                                    else if (item.isShowGroup == false)
+                                    {
+                                        for (int i = 0; i < @item.detailGroup.Count; i++)
+                                        {
+                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) Pack(@Html.DisplayFor(m => item.pack))</td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td class="font10 textLeft">@Html.DisplayFor(m => item.productName)</td>
+                                    }
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.disCount1)</td>
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.disCount2)</td>
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.disCount3)</td>
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.normalGp)</td>
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.promotionGp)</td>
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
                                 </tr>
+
                             }
                         }
-
-
                     </table>
                 </div>
 
@@ -243,8 +294,8 @@
                 <div>
                     <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td rowspan="2" width="15%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
-                            <td rowspan="2" width="40%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
+                            <td rowspan="2" width="20%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
+                            <td rowspan="2" width="35%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
                             <td colspan="4" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
                         </tr>
                         <tr>
@@ -258,14 +309,38 @@
                             foreach (var item in Model.activitydetaillist)
                             {
                                 <tr>
-                                    <td style="font-size:12.5px;">@item.typeTheme</td>
-                                    <td style="font-size:12.5px;">@item.productName</td>
-                                    <td style="font-size:12.5px;">@item.normalCost</td>
-                                    <td style="font-size:12.5px;">@item.themeCost</td>
-                                    <td style="font-size:12.5px;">@item.growth</td>
-                                    <td style="font-size:12.5px;">@item.total</td>
+                                    <td style="font-size:10px;" class="textLeft">@item.typeTheme</td>
+
+                                    @if (item.isShowGroup == true)
+                                    {
+                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.smellName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) Pack(@Html.DisplayFor(m => item.pack)) </td>
+                                    }
+                                    else if (item.isShowGroup == false)
+                                    {
+                                        for (int i = 0; i < @item.detailGroup.Count; i++)
+                                        {
+                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) Pack(@Html.DisplayFor(m => item.pack))</td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.productName)</td>
+                                    }
+
+                                    @*<td style="font-size:12.5px;" class="textLeft">@item.productName</td>*@
+
+
+
+
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.themeCost)</td>
+                                    <td class="font11 textRight">@string.Format("{0:p2}", item.growth)</td>
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.total)</td>
                                 </tr>
-                                totalActCost = totalActCost + item.total;
+
+                                totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
+                                costProduct = item.normalCost == null ? 0 + costProduct : item.normalCost + costProduct;
+                                costActivity = item.themeCost == null ? 0 + costActivity : item.themeCost + costActivity;
                             }
                         }
 
@@ -273,13 +348,33 @@
                         <tr>
                             <td style="border:none; border-bottom:none;"></td>
                             <td style="text-align:right; border:none; border-bottom:none;">รวม</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                @if (totalActCost != null)
+                            <td class="textRight">
+                                @if (costProduct != 0)
                                 {
-                                    @totalActCost.Value.ToString();
+                                    string result = String.Format("{0:n2}", @costProduct);
+                                    @result.ToString();
+                                }
+                            </td>
+                            <td class="textRight">
+                                @if (costActivity != 0)
+                                {
+                                    string result = String.Format("{0:n2}", @costActivity);
+                                    @result.ToString();
+                                }
+                            </td>
+                            <td class="textRight">
+                                @if (totalActCost != 0 && costActivity != 0)
+                                {
+                                    perTotal = (costActivity - costProduct) / costProduct * 100;
+                                    string result = String.Format("{0:n2}%", @perTotal);
+                                    @result.ToString();
+                                }
+                            </td>
+                            <td class="textRight">
+                                @if (totalActCost != 0)
+                                {
+                                    string result = String.Format("{0:n2}", @totalActCost);
+                                    @result.ToString();
                                 }
                             </td>
                         </tr>
@@ -308,7 +403,7 @@
         </div>
         <div class="modal-footer">
             <div>
-                <p class="d-flex justify-content-center">                   
+                <p class="d-flex justify-content-center">
                     <button type="button" class="btn btn-info pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
                 </p>
             </div>
