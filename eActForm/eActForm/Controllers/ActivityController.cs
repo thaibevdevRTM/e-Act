@@ -220,6 +220,7 @@ namespace eActForm.Controllers
             int countresult = 0;
             try
             {
+
                 string genDoc = ActivityFormCommandHandler.genNumberActivity(activityId);
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc);
                 if (countresult > 0)
