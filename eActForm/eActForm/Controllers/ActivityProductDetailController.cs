@@ -95,6 +95,15 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult showDetailGroup(string rowId)
+        {
+            Activity_Model activityModel = new Activity_Model();
+            activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+            activityModel.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.id == rowId).ToList();
+
+             return PartialView(activityModel);
+        }
+
         public JsonResult delCostDetail(string rowid, Activity_Model activityModel)
         {
             var result = new AjaxResult();
@@ -151,11 +160,8 @@ namespace eActForm.Controllers
 
                 var productlist = new Activity_Model();
                 productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme);
-
-                foreach (var item in productlist.productcostdetaillist1)
-                {
-                    activityModel.productcostdetaillist1.Add(item);
-                }
+                activityModel.productcostdetaillist1.AddRange(productlist.productcostdetaillist1);
+              
 
                 CostThemeDetailOfGroupByPrice costthememodel = new CostThemeDetailOfGroupByPrice();
                 int i = 0;
@@ -167,7 +173,10 @@ namespace eActForm.Controllers
                     costthememodel.productId = item.productId;
                     costthememodel.activityTypeId = theme;
                     costthememodel.brandName = item.brandName;
+                    costthememodel.size = item.size;
                     costthememodel.smellName = item.smellName;
+                    costthememodel.smellId = item.smellId;
+                    costthememodel.brandId = item.brandId;
                     costthememodel.isShowGroup = item.isShowGroup;
                     costthememodel.detailGroup = item.detailGroup;
                     activityModel.activitydetaillist.Add(costthememodel);

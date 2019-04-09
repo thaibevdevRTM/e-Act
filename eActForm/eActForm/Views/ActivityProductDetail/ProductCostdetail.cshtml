@@ -4,8 +4,8 @@
 
     /**/
     decimal? promotionTotal = 0;
-    TempData["promotionTotal"] = 0.00;
     ViewBag.Title = "ProductCostdetail";
+
 }
 
 <div class="row">
@@ -17,7 +17,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th class="align-content-center font10" rowspan="2" width="10px" onclick="onDelCostDetail();"> <button class="btn ink-reaction btn-danger fa fa-trash-o"></button></th>
-                    <th class="align-content-center font10" rowspan="2" style="width:10%;">ชื่อสินค้า (product Name)</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:17%;">ชื่อสินค้า (product Name)</th>
                     <th class="align-content-center font10" rowspan="2" style="width:7%;">Std. Wholesales Price</th>
                     <th class="align-content-center font10" colspan="2" style="width:15%;">ราคาขาย</th>
                     <th class="align-content-center font10" colspan="3" style="width:20%;">Normal Discount (%)</th>
@@ -52,20 +52,23 @@
                             <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
                             @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
                         </td>
-                        @if (item.isShowGroup == "true")
+                        @if (item.isShowGroup == true)
                         {
-                            <td class="font10 textLeft">@item.brandName @item.smellName ALL(@item.detailGroup.Count) Pack(@item.pack) </td>
+                            <td class="font10 textLeft" onclick="showdetail('@item.id')">@item.brandName @item.smellName @item.size ALL(@item.detailGroup.Count) Pack(@item.pack) </td>
                         }
-                        else if (item.isShowGroup == "false")
+                        else if (item.isShowGroup == false)
                         {
-                            for (int i = 0; i < @item.detailGroup.Count; i++)
+                            if (item.detailGroup != null)
                             {
-                                <td class="font10 textLeft">@item.detailGroup[i].productName Pack(@item.pack)</td>
+                                for (int i = 0; i < @item.detailGroup.Count; i++)
+                                {
+                                    <td class="font10 textLeft" onclick="showdetail('@item.id')">@item.detailGroup[i].productName Pack(@item.pack)</td>
+                                }
                             }
                         }
                         else
                         {
-                            <td class="font10 textLeft">@item.productName</td>
+                            <td class="font10 textLeft" onclick="showdetail('@item.id')">@item.productName</td>
                         }
                         <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.saleOut, "{0:n2}", new { @id = "saleOut_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")", @onfocus = "setZero(saleOut_" + index + ")" })</td>
@@ -78,14 +81,14 @@
                         </td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp, "{0:n2}%", new { @id = "normalGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")", @readonly = true })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:n2}%", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")", @readonly = true })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.specialDiscBaht, "{0:n2}", new { @id = "specialDiscBaht_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" ,@onfocus = "setZero(specialDiscBaht_" + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.specialDisc, "{0:n2}", new { @id = "specialDisc_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")" ,@onfocus = "setZero(specialDisc_" + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.specialDiscBaht, "{0:n2}", new { @id = "specialDiscBaht_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")", @onfocus = "setZero(specialDiscBaht_" + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.specialDisc, "{0:n2}", new { @id = "specialDisc_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")", @onfocus = "setZero(specialDisc_" + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.promotionCost, "{0:n2}", new { @id = "promotionCost_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
                     </tr>
                     promotionTotal = item.promotionCost == null ? 0 + promotionTotal : item.promotionCost + promotionTotal;
                     index++;
                 }
-                TempData["promotionTotal"] = promotionTotal;
+                Session["promotionTotal"] = promotionTotal;
             }
 
             <tr>
@@ -107,6 +110,11 @@
 
             </tr>
         </table>
+    </div>
+</div>
+
+<div class="modal fade" id="modalProductDetaillist" role="dialog" style="display:none">
+    <div id="divModalProductDetaillist">
     </div>
 </div>
 <input type="hidden" id="hdPromotionCost" value="@promotionTotal">
@@ -151,6 +159,20 @@
         }
     }
 
+    function showdetail(rowId) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("showDetailGroup", "ActivityProductDetail")',
+            data: {
+                rowId: rowId
+            }
+        }).done(function (response) {
+            $("#divModalProductDetaillist").html(response)
+            $('#modalProductDetaillist').modal('show');
+        });
+    }
+
+
     function onDelCostDetail(id) {
 
             $.ajax({
@@ -165,7 +187,7 @@
                     CallChangefunc();
                 }
 
-        });
+            });
     }
 
 </script>
