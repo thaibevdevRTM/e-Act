@@ -64,15 +64,15 @@ namespace eActForm.Controllers
                 CostThemeDetailOfGroupByPrice costThemeDetailOfGroupByPriceModel = new CostThemeDetailOfGroupByPrice();
                 activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
 
-                Productcostdetail productcostdetail = new Productcostdetail();
+                ProductCostOfGroupByPrice productcostdetail = new ProductCostOfGroupByPrice();
                 costThemeDetailOfGroupByPriceModel.id = Guid.NewGuid().ToString();
                 costThemeDetailOfGroupByPriceModel.activityTypeId = themeId;
-                costThemeDetailOfGroupByPriceModel.isShowGroup = "false";
+                costThemeDetailOfGroupByPriceModel.isShowGroup = false;
 
                 productcostdetail.id = Guid.NewGuid().ToString();
                 productcostdetail.typeTheme = txttheme;
 
-                costThemeDetailOfGroupByPriceModel.detailGroup = new List<Productcostdetail>();
+                costThemeDetailOfGroupByPriceModel.detailGroup = new List<ProductCostOfGroupByPrice>();
                 costThemeDetailOfGroupByPriceModel.detailGroup.Add(productcostdetail);
                 activityModel.activitydetaillist.Add(costThemeDetailOfGroupByPriceModel);
 
@@ -88,14 +88,14 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult calCostDetailTheme(string id, string productId, string name, string normalCost, string themeCost, string growth)
+        public JsonResult calCostDetailTheme(string id, string productId, string name, string normalCost, string themeCost, string growth, string total)
         {
             var result = new AjaxResult();
 
             try
             {
                 Activity_Model activityModel = new Activity_Model();
-                decimal p_total = 0;
+                decimal p_total = AppCode.checkNullorEmpty(total) != "0" ? decimal.Parse(total) : 0;
                 decimal getPromotionCost = 0;
                 decimal getNormalCost = 0;
                 decimal get_PerTotal = 0;
@@ -105,10 +105,11 @@ namespace eActForm.Controllers
                 {
                     getNormalCost = decimal.Parse(AppCode.checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().normalCost.ToString()));
                     getPromotionCost = decimal.Parse(AppCode.checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productId == productId).FirstOrDefault().promotionCost.ToString()));
-                    p_total = (getNormalCost - getPromotionCost) * decimal.Parse(themeCost);
+                    getPromotionCost = getPromotionCost == 0 ? 1 : getPromotionCost;
+                    p_total = (getNormalCost - getPromotionCost) * decimal.Parse(themeCost) + p_total;
 
                     //get_PerTotal = p_total * 100 / (decimal.Parse(normalCost) * getPromotionCost); //ยอดขายปกติ
-                    get_PerTotal = p_total * 100 / (decimal.Parse(themeCost) * getPromotionCost);// % ยอดขายโปโมชั่น
+                    get_PerTotal = p_total / (decimal.Parse(themeCost) *  getPromotionCost);// % ยอดขายโปโมชั่น
                 }
 
                 decimal p_growth = normalCost == "0" ? 0 : (decimal.Parse(themeCost) - decimal.Parse(normalCost)) / decimal.Parse(normalCost);
