@@ -83,6 +83,7 @@ namespace eActForm.Models
             public string activityDetail { get; set; }
             public decimal? normalCost { get; set; }
             public decimal? themeCost { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? totalCost { get; set; }
         }
 

@@ -123,7 +123,7 @@ namespace eActForm.Controllers
                         .Where(r => r.id != null && r.id.Equals(id))
                         .Select(r =>
                         {
-                            r.productName = name;
+                            r.detailGroup[0].productName = name;
                             r.normalCost = decimal.Parse(normalCost);
                             r.growth = p_growth;
                             r.themeCost = decimal.Parse(themeCost);
