@@ -28,8 +28,8 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\System.Web.
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\System.Web.WebPages.Razor.xml
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\System.Web.Razor.xml
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\System.Web.WebPages.Deployment.xml
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Release\eActConsoleService.csprojResolveAssemblyReference.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Release\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Release\eActConsoleService.csproj.CopyComplete
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Release\eActConsoleService.exe
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Release\eActConsoleService.pdb
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Release\eActConsoleService.csprojAssemblyReference.cache

@@ -12,7 +12,7 @@ namespace eActConsoleService.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.6.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -20,30 +20,6 @@ namespace eActConsoleService.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("[e-ActivityForm] แจ้งเอกสาร Activity รออนุมัติ")]
-        public string strSubject {
-            get {
-                return ((string)(this["strSubject"]));
-            }
-            set {
-                this["strSubject"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://203.159.75.75/mas/eact/?s=approve")]
-        public string strUrlApprove {
-            get {
-                return ((string)(this["strUrlApprove"]));
-            }
-            set {
-                this["strUrlApprove"] = value;
             }
         }
         
@@ -68,18 +44,6 @@ namespace eActConsoleService.Properties {
             }
             set {
                 this["strMailPassword"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string strMailCC {
-            get {
-                return ((string)(this["strMailCC"]));
-            }
-            set {
-                this["strMailCC"] = value;
             }
         }
         
@@ -110,6 +74,42 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("[e-ActivityForm] แจ้งเอกสารรออนุมัติ จากระบบอัตโนมัติ")]
+        public string strSubject {
+            get {
+                return ((string)(this["strSubject"]));
+            }
+            set {
+                this["strSubject"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://203.159.75.75/eact/?s=approve")]
+        public string strUrlApprove {
+            get {
+                return ((string)(this["strUrlApprove"]));
+            }
+            set {
+                this["strUrlApprove"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("tanapong.w@Thaibev.com,jitaree.b@thaibev.com,parnupong.k@thaibev.com")]
+        public string strMailCC {
+            get {
+                return ((string)(this["strMailCC"]));
+            }
+            set {
+                this["strMailCC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(@"
           เรียน {0}
           <br/><br/>
@@ -117,8 +117,8 @@ namespace eActConsoleService.Properties {
           <br/><br/>
           ท่านมีเอกสาร Activity Form <b>รออนุมัติ</b> จำนวน <b>{1}</b> รายการ
           <br/>
-          ท่านสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ :<a href=""http://203.159.75.75/eact/?s=approve"" > Click </a> <br><br>
-
+          ท่านสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ : <a href='{2}'>more detail click</a> <br/><br/>
+          
           <br/>จึงเรียนมาเพื่อทราบ
           <br/>ส่วนงานพัฒนาระบบงานสนับสนุนการขาย-RTM
           <br/>อีเมล์นี้ถูกสร้างจากระบบอัตโนมัติ ไม่ต้องตอบกลับ
@@ -137,13 +137,37 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("tanapong.w@Thaibev.com,jitaree.b@thaibev.com,parnupong.k@thaibev.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("parnupong.k@thaibev.com")]
         public string strDefaultEmail {
             get {
                 return ((string)(this["strDefaultEmail"]));
             }
             set {
                 this["strDefaultEmail"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("true")]
+        public string isDevelop {
+            get {
+                return ((string)(this["isDevelop"]));
+            }
+            set {
+                this["isDevelop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("tanapong.w@Thaibev.com,jitaree.b@thaibev.com,parnupong.k@thaibev.com")]
+        public string emailForDevelopSite {
+            get {
+                return ((string)(this["emailForDevelopSite"]));
+            }
+            set {
+                this["emailForDevelopSite"] = value;
             }
         }
     }
