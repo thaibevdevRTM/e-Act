@@ -1,0 +1,50 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.ApproveModel.approveModels
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	var actId = "6ce93ae9-b6ad-4bc5-9a58-f22c10deed41";
+	//var actId = Request.QueryString["actId"];
+}
+<script src="~/Scripts/jquery-1.11.2.min.js"></script>
+<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<h2>การอนุมัติ</h2>
+<hr />
+
+
+@*@using (Ajax.BeginForm("insertBudgetApprove", "BudgetApprove"
+, new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
+, new { id = "form", @class = "form-horizontal form-label-left" }))
+{
+	<h3>อนุมัติ</h3>
+	<hr />
+}*@
+
+
+<div class="modal fade" id="ModalPreviewPDF" >
+	<div id="divPreviewBudgetApprove">
+	</div>
+</div>
+
+<script>
+	$('document').ready(function () {
+		callPreviewApprove('@actId');
+	});
+
+    function callPreviewApprove(obj) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("previewBudgetApprove", "BudgetApprove")',
+            data: {
+                actId: obj
+            }
+        }).done(function (htmlResponse) {
+            $("#divPreviewBudgetApprove").html(htmlResponse)
+			$('#ModalPreviewPDF').modal('show');
+            genPdf();
+        });
+    }
+
+</script>

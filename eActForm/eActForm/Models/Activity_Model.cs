@@ -64,6 +64,8 @@ namespace eActForm.Models
             public string activityNo { get; set; }
             public DateTime? documentDate { get; set; }
             public string reference { get; set; }
+            public string productCateId { get; set; }
+            public string productGroupid { get; set; }
             public string customerId { get; set; }
             public string channelName { get; set; }
             public string productTypeId { get; set; }
@@ -83,6 +85,7 @@ namespace eActForm.Models
             public string activityDetail { get; set; }
             public decimal? normalCost { get; set; }
             public decimal? themeCost { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? totalCost { get; set; }
         }
 
@@ -90,7 +93,7 @@ namespace eActForm.Models
     public class SearchActivityModels
     {
         public List<Customers_Model> customerslist { get; set; }
-        public List<Product_Cate_Model> productcatelist { get; set; }
+        public List<TB_Act_ProductType_Model> productTypelist { get; set; }
         public List<TB_Act_ProductGroup_Model> productGroupList { get; set; }
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
         public List<ApproveModel.approveStatus> approveStatusList { get; set; }

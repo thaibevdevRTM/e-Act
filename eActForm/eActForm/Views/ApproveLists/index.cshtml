@@ -18,36 +18,7 @@
 , new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
 , new { id = "form", @class = "form-horizontal form-label-left" }))
             {
-                @RenderPage("~/Views/Shared/_search.cshtml")
-                @*<div class="form-group">
-                        <div class="col-md-6 col-xs-12">
-                            <div class="row">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityNo">
-                                    Act No.
-                                </label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="text" id="txtActivityNo" name="txtActivityNo" class="form-control textboxcss">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xs-12">
-                            <div class="row">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
-                                    สถานะ
-                                </label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    @Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <button type="submit" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
-                            <a href="#" class="btn btn-info pull-right"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                        </div>
-                    </div>*@
-
+                @RenderPage("~/Views/Shared/_search.cshtml")           
             }
         </div>
     </div>
@@ -75,7 +46,7 @@
     }
 
     function failureQuery(data) {
-        //(data.responseText);
+        doMsgFail(data.responseText);
     }
 
 </script>

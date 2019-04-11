@@ -357,7 +357,7 @@
 
 
            if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
-               modeEdit();
+               setTxtReadOnly();
            }
     });
 
@@ -691,6 +691,8 @@
                     Objective: $("#txtObjective").val(),
                     Trade: $("input[name='activityFormModel.trade']:checked").val(),
                     ActivityDetail: $("#txtActivityDetail").val(),
+                    activityNo :$("#txtActivityNo").val(),
+                    
                 },
                 dataType: "json",
                 type: 'POST',
@@ -701,7 +703,7 @@
             });
     }
 
-    function modeEdit() {
+    function setTxtReadOnly() {
 
         document.getElementById("ddlProductfilter").disabled = true;
         document.getElementById("ddlProductSize").disabled = true;

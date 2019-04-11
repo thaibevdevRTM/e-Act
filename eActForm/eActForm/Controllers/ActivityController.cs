@@ -220,16 +220,18 @@ namespace eActForm.Controllers
             int countresult = 0;
             try
             {
+
                 string genDoc = ActivityFormCommandHandler.genNumberActivity(activityId);
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc);
                 if (countresult > 0)
                 {
                     GridHtml = GridHtml.Replace("---", genDoc);
-                    AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), activityId);
-                    if (ApproveAppCode.insertApprove(activityId) > 0)
+                    var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
+                    AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+                    if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                     {
                         ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                        EmailAppCodes.sendApproveActForm(activityId);
+                        EmailAppCodes.sendApprove(activityId,AppCode.ApproveType.Activity_Form);
                     }
                 }
                 resultAjax.Success = true;
