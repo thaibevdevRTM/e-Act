@@ -87,6 +87,35 @@ namespace eActForm.BusinessLayer
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
                     });
 
+                return dataTableToRepDetailModels(ds);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getRepDetailReportByCreateDateAndStatusId >>" + ex.Message);
+            }
+        }
+
+        public static List<RepDetailModel.actFormRepDetailModel> getRepDetailReportByCreateDateAndStatusId(string repDetailId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByRepDetailId"
+                    , new SqlParameter[] {
+                        new SqlParameter("@repDetailId",repDetailId)
+                    });
+
+                return dataTableToRepDetailModels(ds);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getRepDetailReportByCreateDateAndStatusId >>" + ex.Message);
+            }
+        }
+
+        private static List<RepDetailModel.actFormRepDetailModel> dataTableToRepDetailModels(DataSet ds)
+        {
+            try
+            {
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new RepDetailModel.actFormRepDetailModel()
                              {
@@ -138,10 +167,11 @@ namespace eActForm.BusinessLayer
 
                 return lists;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                throw new Exception("getRepDetailReportByCreateDateAndStatusId >>" + ex.Message);
+                throw new Exception(ex.Message);
             }
         }
+
     }
 }

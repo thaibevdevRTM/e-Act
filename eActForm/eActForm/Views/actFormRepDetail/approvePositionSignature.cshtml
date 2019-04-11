@@ -1,61 +1,64 @@
 ﻿@model eActForm.Models.ApproveFlowModel.approveFlowModel
 
 <div class="row">
-    <div class="text-center">
-        <table style="text-align:center;width:100%;" border="0" cellpadding="5" cellspacing="5">
-            <tr>
+    @if (Model.flowDetail != null)
+    {
+        <div class="text-center">
+            <table style="text-align:center;width:100%;" border="0" cellpadding="5" cellspacing="5">
+                <tr>
 
-                @foreach (var item in Model.flowDetail)
-                {
-                    if (item.isShowInDoc)
+                    @foreach (var item in Model.flowDetail)
                     {
-                        <td style="width:150px;">
-                            <div style="font-size:12.5px;">
-                                @item.approveGroupName
-                            </div>
-                            <div style="font-size:12.5px;">
-                                (@item.approveGroupNameEN)
-                            </div>
-                        </td>
+                        if (item.isShowInDoc)
+                        {
+                            <td style="width:150px;">
+                                <div style="font-size:12.5px;">
+                                    @item.approveGroupName
+                                </div>
+                                <div style="font-size:12.5px;">
+                                    (@item.approveGroupNameEN)
+                                </div>
+                            </td>
+                        }
                     }
-                }
-            </tr>
+                </tr>
 
-            <tr>
-                @foreach (var item in Model.flowDetail)
-                {
-                    if (item.isShowInDoc)
+                <tr>
+                    @foreach (var item in Model.flowDetail)
                     {
-                        <td>
-                            <div style="text-align:center;height:100px;"></div>
-                        </td>
+                        if (item.isShowInDoc)
+                        {
+                            <td>
+                                <div style="text-align:center;height:100px;"></div>
+                            </td>
+                        }
                     }
-                }
-            </tr>
+                </tr>
 
-            <tr>
-                @foreach (var item in Model.flowDetail)
-                {
-                    if (item.isShowInDoc)
+                <tr>
+                    @foreach (var item in Model.flowDetail)
                     {
-                        <td>
-                            <div style="text-align:center; margin-top:20px; font-size:12.5px;">@item.empFNameTH @item.empLNameTH</div>
-                        </td>
+                        if (item.isShowInDoc)
+                        {
+                            <td>
+                                <div style="text-align:center; margin-top:20px; font-size:12.5px;">@item.empFNameTH @item.empLNameTH</div>
+                            </td>
+                        }
                     }
-                }
-            </tr>
-            <tr>
-                @foreach (var item in Model.flowDetail)
-                {
-                    if (item.isShowInDoc)
+                </tr>
+                <tr>
+                    @foreach (var item in Model.flowDetail)
                     {
-                        <td>
-                            <div style="text-align:center; height:50px; font-size:12.5px;">@item.empPositionTitleTH</div>
-                        </td>
+                        if (item.isShowInDoc)
+                        {
+                            <td>
+                                <div style="text-align:center; height:50px; font-size:12.5px;">@item.empPositionTitleTH</div>
+                            </td>
+                        }
                     }
-                }
-            </tr>
+                </tr>
 
-        </table>
-    </div>
+            </table>
+        </div>
+    }
 </div>

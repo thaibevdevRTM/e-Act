@@ -1,4 +1,4 @@
-﻿
+﻿@using eActForm.Models
 @model eActForm.Models.RepDetailModel.actApproveRepDetailModels
 <div class="row">
 
@@ -26,7 +26,7 @@
                         <td>
                             @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
 
-                            @Html.ActionLink(" ", "index", "approve", new { actId = item.id }, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
+                            @Html.ActionLink(" ", "index", "approve", new { actId = item.id ,type=AppCode.ApproveType.Report_Detail}, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
                         </td>
                         <td>@item.statusName</td>
                         <td>@{var date = item.startDate == null ? "" : item.startDate.Value.ToString("MMM yyyy");} @date </td>

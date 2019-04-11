@@ -32,9 +32,13 @@ namespace eActForm.Controllers
             result.Success = false;
             try
             {
-                if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"]) > 0)
+                if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"]) > 0)
                 {
                     result.Success = true;
+                }
+                else
+                {
+                    result.Message = AppCode.StrMessFail;
                 }
             }
             catch (Exception ex)
@@ -88,8 +92,9 @@ namespace eActForm.Controllers
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
-                    AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), activityId);
-                    EmailAppCodes.sendApprove(activityId,AppCode.ApproveEmailType.Activity_Form);
+                    var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
+                    AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+                    EmailAppCodes.sendApprove(activityId,AppCode.ApproveType.Activity_Form);
                 }
                 resultAjax.Success = true;
             }

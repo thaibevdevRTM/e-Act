@@ -2085,7 +2085,9 @@
     <Content Include="Views\ApproveListsRepDetail\ListView.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ActBudget\" />
     <Folder Include="ActivityFormPdf\" />
+    <Folder Include="ActRepDetail\" />
     <Folder Include="App_Data\" />
     <Folder Include="error\" />
     <Folder Include="signature\" />

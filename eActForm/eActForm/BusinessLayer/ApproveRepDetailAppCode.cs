@@ -11,7 +11,20 @@ namespace eActForm.BusinessLayer
 {
     public class ApproveRepDetailAppCode
     {
-
+        public static int updateActRepDetailByApproveDetail(string actId)
+        {
+            try
+            {
+                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusActRepDetailByApproveDetail"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actId)
+                    ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("updateActRepDetailByApproveDetail >> " + ex.Message);
+            }
+        }
         public static List<RepDetailModel.actApproveRepDetailModel> getApproveRepDetailListsByEmpId()
         {
             try
@@ -39,12 +52,13 @@ namespace eActForm.BusinessLayer
                              }).ToList();
                 return lists;
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception("getApproveRepDetailListsByEmpId >>" + ex.Message);
             }
         }
-        public static string insertActivityRepDetail(string customerId,string productTypeId,string startDate,string endDate)
+        public static string insertActivityRepDetail(string customerId, string productTypeId, string startDate, string endDate)
         {
             try
             {
@@ -64,14 +78,14 @@ namespace eActForm.BusinessLayer
                         ,new SqlParameter("@updatedDate",DateTime.Now)
                         ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
                     });
-                    return id;
+                return id;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("insertActivityRepDetail >>" + ex.Message);
             }
         }
-        public static int insertApproveForReportDetail(string customerId, string productTypeId,string actId)
+        public static int insertApproveForReportDetail(string customerId, string productTypeId, string actId)
         {
             try
             {
@@ -80,7 +94,7 @@ namespace eActForm.BusinessLayer
                     ConfigurationManager.AppSettings["subjectReportDetailId"]
                     , customerId
                     , productTypeId);
-                if( ApproveAppCode.insertApproveByFlow(flowModel, actId) > 0)
+                if (ApproveAppCode.insertApproveByFlow(flowModel, actId) > 0)
                 {
                     rtn = ApproveAppCode.updateApproveWaitingByRangNo(actId);
                 }

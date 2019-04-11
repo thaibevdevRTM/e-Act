@@ -24,7 +24,7 @@ namespace eActForm.Models
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
 
-        public enum ApproveEmailType
+        public enum ApproveType
         {
             Activity_Form
                 , Report_Detail
@@ -102,7 +102,7 @@ namespace eActForm.Models
             }
 
         }
-        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string activityId)
+        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath)
         {
             //GridHtml = GridHtml.Replace("\n", "");
             ContentType xlsxContent = new ContentType("application/pdf");
@@ -111,9 +111,7 @@ namespace eActForm.Models
             List<Attachment> files = new List<Attachment>();
 
             msPreview = GetFileReportTomail_Preview(GridHtml, doc);
-            PreviewBytes = msPreview.ToArray();
-
-            var rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
+            PreviewBytes = msPreview.ToArray();          
             File.WriteAllBytes(rootPath, PreviewBytes);
 
             if (PreviewBytes.Length != 0)

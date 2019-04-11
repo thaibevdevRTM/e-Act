@@ -74,7 +74,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("fillterApproveByEmpid >>" + ex.Message);
             }
         }
-        public static int updateApprove(string actFormId, string statusId, string remark)
+        public static int updateApprove(string actFormId, string statusId, string remark,string approveType)
         {
             try
             {
@@ -88,6 +88,51 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                         });
 
+                if( approveType == AppCode.ApproveType.Activity_Form.ToString())
+                {
+                    rtn = updateActFormStatus(statusId,actFormId);
+                }else if( approveType == AppCode.ApproveType.Report_Detail.ToString())
+                {
+                    //
+                    rtn = updateActRepDetailStatus(statusId,actFormId);
+                }
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("updateApprove >> " + ex.Message);
+            }
+        }
+
+        private static int updateActRepDetailStatus(string statusId, string actFormId)
+        {
+            try
+            {
+                int rtn = 0;
+                // update activity form
+                if (statusId == ConfigurationManager.AppSettings["statusReject"])
+                {
+                    // update reject
+                    //rtn += updateActFormWithApproveReject(actFormId);
+                }
+                else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
+                {
+                    // update approve
+                    rtn += ApproveRepDetailAppCode.updateActRepDetailByApproveDetail(actFormId);
+
+                }
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        private static int updateActFormStatus(string statusId,string actFormId)
+        {
+            try
+            {
+                int rtn = 0;
                 // update activity form
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
@@ -102,11 +147,12 @@ namespace eActForm.BusinessLayer
                 }
                 return rtn;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                throw new Exception("updateApprove >> " + ex.Message);
+                throw new Exception(ex.Message);
             }
         }
+
         public static int updateActFormWithApproveReject(string actId)
         {
             try
@@ -249,7 +295,7 @@ namespace eActForm.BusinessLayer
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveByActFormId"
                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
-                    var empDetail = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
+                    var empDetail = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList(); //
                     var lists = (from DataRow dr in ds.Tables[0].Rows
                                  select new ApproveModel.approveModel()
                                  {

@@ -34,6 +34,7 @@ namespace eActForm.Controllers
                 }
                 else
                 {
+                    #region filter
                     if (Request.Form["ddlStatus"] != "")
                     {
                         model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByStatusId(model.actFormRepDetailLists, Request.Form["ddlStatus"]);
@@ -61,6 +62,7 @@ namespace eActForm.Controllers
                                         , Request.Form["ddlCustomer"]
                                         , Request.Form["ddlProductType"]);
                     }
+                    #endregion
                 }
                 TempData["ActFormRepDetail"] = model;
             }
@@ -77,6 +79,27 @@ namespace eActForm.Controllers
             return PartialView(flowModel);
         }
 
+        /// <summary>
+        /// for approve
+        /// </summary>
+        /// <param name="actId"></param>
+        /// <returns></returns>
+        public ActionResult repPreviewListView(string actId)
+        {
+            RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
+            try
+            {
+                model.actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(actId);
+                model.flowList = new ApproveFlowModel.approveFlowModel();
+                TempData["ActFormRepDetail"] = model;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return RedirectToAction("repListView", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
+        }
         public ActionResult repListView(string startDate)
         {
             RepDetailModel.actFormRepDetails model = null;
@@ -103,8 +126,9 @@ namespace eActForm.Controllers
                 string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate);
                 if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId) > 0)
                 {
-                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), actRepDetailId);
-                    EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveEmailType.Report_Detail);
+                    var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId));
+                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                    EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail);
                     result.Success = true;
                 }
                 else
@@ -112,6 +136,28 @@ namespace eActForm.Controllers
                     result.Success = false;
                     result.Message = AppCode.StrMessFail;
                 }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult repDetailGenPDF(string gridHtml, string actId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actId));
+                List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail);
+                result.Success = true;
             }
             catch (Exception ex)
             {

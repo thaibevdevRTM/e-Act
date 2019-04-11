@@ -57,18 +57,17 @@ namespace eActForm.BusinessLayer
                 ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message);
             }
         }
-        public static void sendApprove(string actFormId, AppCode.ApproveEmailType emailType)
+        public static void sendApprove(string actFormId, AppCode.ApproveType emailType)
         {
             try
             {
-                List<ApproveModel.approveEmailDetailModel> lists = (emailType == AppCode.ApproveEmailType.Activity_Form) ? getEmailApproveNextLevel(actFormId) 
+                List<ApproveModel.approveEmailDetailModel> lists = (emailType == AppCode.ApproveType.Activity_Form) ? getEmailApproveNextLevel(actFormId)
                     : getEmailApproveRepDetailNextLevel(actFormId);
                 string strBody = "";
                 if (lists.Count > 0)
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-
                         strBody = getEmailBody(item, emailType, actFormId);
                         sendEmailActForm(actFormId
                             , item.empEmail
@@ -111,22 +110,23 @@ namespace eActForm.BusinessLayer
         private static void sendEmailActForm(string actFormId, string mailTo, string strSubject, string strBody)
         {
             List<Attachment> files = new List<Attachment>();
+            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
             string pathFile = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
             files.Add(new Attachment(pathFile, new ContentType("application/pdf")));
 
-            sendEmail("parnupong.k@thaibev.com"//mailTo
+            sendEmail(mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , strSubject
                     , strBody
                     , files);
         }
 
-        private static string getEmailBody(ApproveModel.approveEmailDetailModel item, AppCode.ApproveEmailType emailType,string actId)
+        private static string getEmailBody(ApproveModel.approveEmailDetailModel item, AppCode.ApproveType emailType, string actId)
         {
             try
             {
 
-                string strBody = (emailType == AppCode.ApproveEmailType.Activity_Form) ?
+                string strBody = (emailType == AppCode.ApproveType.Activity_Form) ?
                             string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
                             , item.empPrefix + " " + item.empName //เรียน
                             , AppCode.ApproveStatus.รออนุมัติ.ToString()
@@ -150,7 +150,7 @@ namespace eActForm.BusinessLayer
 
                 return strBody;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

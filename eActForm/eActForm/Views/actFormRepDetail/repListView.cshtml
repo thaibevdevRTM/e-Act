@@ -13,39 +13,11 @@
         </div>
     </div>
     <div class="col-md-4 col-xs-12"></div>
-    <script type="text/javascript">
-            $(function () {
-                $("#btnSubmit").click(function () {
-                    $("#WaitDialog").show();
-                    $.ajax({
-                        url: '@Url.Action("repReportDetailApprove", "actFormRepDetail")',
-                        data: {
-                            gridHtml: $("#Grid").html(),
-                            customerId: $("#ddlCustomer").val(),
-                            productTypeId: $("#ddlProductType").val(),
-                            startDate: $("#startDate").val(),
-                            endDate: $("#endDate").val()
-                        },
-                        dataType: "json",
-                        type: 'POST'
-                    }).done(function (response) {
-                        $("#WaitDialog").hide();
-                        if (response.Success) {
-                            doSuccess("ดำเนินการเรียบร้อยครับ");
-                            }
-                            else {
-                            doMsgFail("ไม่สามารถดำเนินการได้สำเร็จ กรุณาติดต่อ Admin ครับ");
-                            }
-                    });
-
-
-                });
-            });
-    </script>
+    
 </div>
 
 <div id="Grid" class="row">
-    @if (Model != null && Model.actFormRepDetailLists.Count > 0)
+    @if (Model.actFormRepDetailLists != null && Model.actFormRepDetailLists.Count > 0)
     {
         <div class="col-md-12 col-xs-12">
             <table>
@@ -190,7 +162,7 @@
     <div class="row">
         <div class="col-md-12 col-xs-12">
             <div class="pull-right" style="margin-right:10px;">
-                @if (Model != null && Model.actFormRepDetailLists.Count > 0)
+                @if (Model.actFormRepDetailLists != null && Model.actFormRepDetailLists.Count > 0)
                 {
                     @Html.Action("approvePositionSignature", "actFormRepDetail", new { flowModel = Model.flowList })
                 }
@@ -198,3 +170,33 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+            $(function () {
+                $("#btnSubmit").click(function () {
+                    $("#WaitDialog").show();
+                    $.ajax({
+                        url: '@Url.Action("repReportDetailApprove", "actFormRepDetail")',
+                        data: {
+                            gridHtml: $("#Grid").html(),
+                            customerId: $("#ddlCustomer").val(),
+                            productTypeId: $("#ddlProductType").val(),
+                            startDate: $("#startDate").val(),
+                            endDate: $("#endDate").val()
+                        },
+                        dataType: "json",
+                        type: 'POST'
+                    }).done(function (response) {
+                        $("#WaitDialog").hide();
+                        if (response.Success) {
+                            doSuccess("ดำเนินการเรียบร้อยครับ");
+                            }
+                            else {
+                            doMsgFail("ไม่สามารถดำเนินการได้สำเร็จ กรุณาติดต่อ Admin ครับ");
+                            }
+                    });
+
+
+                });
+            });
+</script>
