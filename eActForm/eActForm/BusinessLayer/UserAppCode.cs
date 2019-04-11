@@ -10,24 +10,26 @@ namespace eActForm.BusinessLayer
 {
     public class UserAppCode
     {
-        public static void setRoleUser()
+        public static int setRoleUser()
         {
             try
             {
+                int rtn = 0;
                 if (UtilsAppCode.Session.User != null)
                 {
                     DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserByEmpId"
                         , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
-                    if( ds.Tables.Count > 0)
+                    if (ds.Tables.Count > 0)
                     {
-                        foreach(DataRow dr in ds.Tables[0].Rows)
+                        rtn = ds.Tables[0].Rows.Count;
+                        foreach (DataRow dr in ds.Tables[0].Rows)
                         {
                             switch (dr["roleId"])
                             {
                                 case "1":
                                     UtilsAppCode.Session.User.isCreator = true; break;
                                 case "2":
-                                    UtilsAppCode.Session.User.isApprove = true;break;
+                                    UtilsAppCode.Session.User.isApprove = true; break;
                                 case "3":
                                     UtilsAppCode.Session.User.isAdmin = true; break;
                                 case "4":
@@ -36,8 +38,9 @@ namespace eActForm.BusinessLayer
                         }
                     }
                 }
+                return rtn;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("setRoleUser>>" + ex.Message);
             }
