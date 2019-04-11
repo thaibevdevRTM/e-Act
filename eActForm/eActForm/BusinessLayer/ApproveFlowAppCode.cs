@@ -10,6 +10,40 @@ namespace eActForm.BusinessLayer
 {
     public class ApproveFlowAppCode
     {
+        public static ApproveFlowModel.approveFlowModel getFlowForReportDetail(string subId,string customerId,string productTypeId)
+        {
+            try
+            {
+                ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowMainForReportDetail"
+                    , new SqlParameter[] {new SqlParameter("@subjectId",subId)
+                    ,new SqlParameter("@customerId",customerId)
+                    ,new SqlParameter("@productTypeId",productTypeId)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApprove()
+                             {
+                                 id = dr["id"].ToString(),
+                                 flowNameTH = dr["flowNameTH"].ToString(),
+                                 cusNameTH = dr["cusNameTH"].ToString(),
+                                 cusNameEN = dr["cusNameEN"].ToString(),
+                                 nameTH = dr["nameTH"].ToString(),
+                             }).ToList();
+                model.flowMain = lists[0];
+                model.flowDetail = getFlowDetail(model.flowMain.id);
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFlowForReportDetail >>" + ex.Message);
+            }
+        }
+
+        /// <summary> 
+        /// get flow for type the activity form
+        /// </summary>
+        /// <param name="subId"></param>
+        /// <param name="actFormId"></param>
+        /// <returns></returns>
         public static ApproveFlowModel.approveFlowModel getFlowId(string subId, string actFormId)
         {
             try
@@ -35,6 +69,14 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFlow by actFormId >>" + ex.Message);
             }
         }
+
+        /// <summary>
+        /// get flow for type the activity form
+        /// </summary>
+        /// <param name="subId"></param>
+        /// <param name="customerId"></param>
+        /// <param name="productCatId"></param>
+        /// <returns></returns>
         public static ApproveFlowModel.approveFlowModel getFlow(string subId, string customerId, string productCatId)
         {
             try

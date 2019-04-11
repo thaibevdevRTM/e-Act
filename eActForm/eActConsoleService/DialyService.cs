@@ -18,7 +18,7 @@ namespace eActConsoleService
             try
             {
                 strLogs.WriteLine("== Start Service " + DateTime.Now.ToString("dd MM yyyy HH:mm:ss ") + "==");
-                string strBody = "", strName = "";
+                string strBody = "", strName = "", strMailTo = "";
                 ApproveModel.approveWaitingModels model = new ApproveModel.approveWaitingModels();
                 model.waitingLists = AppCode.getAllWaitingApproveGroupByEmpId();
                 foreach (ApproveModel.approveWaitingModel m in model.waitingLists)
@@ -31,24 +31,25 @@ namespace eActConsoleService
                             m.empEmail = Properties.Settings.Default.strDefaultEmail;
                         }
                         strName = m.empPrefix + " " + m.empFNameTH + " " + m.empLNameTH;
-                            strBody = string.Format(Properties.Settings.Default.strBody, strName, m.waitingCount,Properties.Settings.Default.strUrlApprove);
-                            new MailOffice365G(Properties.Settings.Default.strMailUser
-                                , Properties.Settings.Default.strMailPassword
-                                , Properties.Settings.Default.strMailUser
-                                , m.empEmail
-                                , Properties.Settings.Default.strSubject
-                                , strBody
-                                , Properties.Settings.Default.strMailCC).Send();
-                        
+                        strBody = string.Format(Properties.Settings.Default.strBody, strName, m.waitingCount, Properties.Settings.Default.strUrlApprove);
+                        strMailTo = bool.Parse(Properties.Settings.Default.isDevelop) ? Properties.Settings.Default.emailForDevelopSite : m.empEmail;
+                        new MailOffice365G(Properties.Settings.Default.strMailUser
+                            , Properties.Settings.Default.strMailPassword
+                            , Properties.Settings.Default.strMailUser
+                            , m.empEmail
+                            , Properties.Settings.Default.strSubject
+                            , strBody
+                            , Properties.Settings.Default.strMailCC).Send();
+
                     }
                     catch (Exception ex)
                     {
-                        strLogs.WriteLine(" Error User : " + m.empId +" mess : " + ex.Message);
+                        strLogs.WriteLine(" Error User : " + m.empId + " mess : " + ex.Message);
                         strLogs.WriteLine("== END " + DateTime.Now.ToString("dd MM yyyy HH:mm:ss ") + "==");
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 strLogs.WriteLine(" Error Main : " + ex.Message);
                 strLogs.WriteLine("== END " + DateTime.Now.ToString("dd MM yyyy HH:mm:ss ") + "==");

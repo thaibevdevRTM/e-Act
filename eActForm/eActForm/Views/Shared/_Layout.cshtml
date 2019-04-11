@@ -144,6 +144,13 @@
     <!-- Custom Theme Scripts -->
     <script src="~/Content/vendors/build/js/custom.js"></script>
 
-
+    <script>
+        function doMsgSuccess(msg) {
+            bootbox.alert("<div class='row'><div class='text-center'><img width='150px' src='../images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>");
+        }
+        function doMsgFail(msg) {
+            bootbox.alert("<div class='row'><div class='text-center'><br/>" + msg + "</div></div>");
+        }
+    </script>
 </body>
 </html>

@@ -1,6 +1,5 @@
 ﻿@using eActForm.Models
-@model eActForm.Models.Activity_Model.actForms
-
+@model eActForm.Models.RepDetailModel.actApproveRepDetailModels
 <div class="row">
 
     <div class="col-md-12 col-xs-12">
@@ -15,35 +14,26 @@
                 <tr style="background-color:#2B5D95;color:#ffffff;">
                     <th></th>
                     <th>Status</th>
-                    <th>Doc.Date</th>
-                    <th>Act.No</th>
-                    <th>วัตถุประสงค์</th>
-                    <th align="center">ยอดขายช่วงกิจกรรม</th>
-                    <th align="center">ค่าใช้จ่าย</th>
-                    <th align="center">% ต่อยอดขาย</th>
+                    <th>รายงานเดือน</th>
+                    <th>Customer</th>
+                    <th>Product Type</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.actLists)
+                @foreach (var item in Model.repDetailLists)
                 {
                     <tr class="gradeX">
                         <td>
                             @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
 
-                            @Html.ActionLink(" ", "index", "approve", new { actId = item.id,type=AppCode.ApproveType.Activity_Form }, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
+                            @Html.ActionLink(" ", "index", "approve", new { actId = item.id ,type=AppCode.ApproveType.Report_Detail}, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
                         </td>
                         <td>@item.statusName</td>
-                        <td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
-                        <td>@item.activityNo</td>
-                        <td>@item.objective</td>
-                        <td align="center">@item.themeCost</td>
-                        <td align="center">@item.totalCost</td>
-                        <td align="center">
-                            @{ var precentOfSale = item.themeCost == 0 ? 0 : (item.totalCost * 100) / item.themeCost; }
-                        @string.Format("{0:n2}", precentOfSale.ToString())%
-                    </td>
-                </tr>
-            }
+                        <td>@{var date = item.startDate == null ? "" : item.startDate.Value.ToString("MMM yyyy");} @date </td>
+                        <td>@item.customerName</td>
+                        <td>@item.productTypeName</td>
+                    </tr>
+                }
             </tbody>
         </table>
 
