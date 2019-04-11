@@ -1,5 +1,5 @@
 ﻿
-@model eActForm.Models.Budget_Activity_Model
+@model eActForm.Models.Budget_Approve_Model
 @{
 	ViewBag.Title = "Edit Page";
 }
@@ -18,10 +18,10 @@
 	}
 </style>
 
-@Html.HiddenFor(x => x.Budget_Activity_list.ElementAt(0).act_form_id, new { @id = "hd_activityId" })
+@*@Html.HiddenFor(x => x.Budget_Activity_list.ElementAt(0).act_form_id, new { @id = "hd_activityId" })*@
 
 
-<div id="divPreviewProductList">
+<div id="divBudgetApproveList">
 </div>
 
 <hr />
@@ -52,7 +52,7 @@
 				activityId: activityId
             }
         }).done(function (htmlResponse) {
-			$("#divPreviewProductList").html(htmlResponse);
+			$("#divBudgetApproveList").html(htmlResponse);
 		});
 	}
 

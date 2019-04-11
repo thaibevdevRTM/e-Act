@@ -26,21 +26,33 @@
 <hr />
 
 <div id="divPreviewInvoiceList">
+
 </div>
 
 <div id='myModalInvoice' class="modal fade" role="dialog">
 	<div id='myModalInvoiceContent'></div>
 </div>
 
-<br />
+
+<div class="row">
+	<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="javascript:onInvoicePrintPreview('@Model.Budget_Activity_list.ElementAt(0).act_form_id');"><i class="fa fa-file-o fa-fw"></i>&nbsp;Print Preview</button>
+	@*<a href="javascript:" class="btn ink-reaction btn-group-lg btn-warning fa fa-file-o pull-right" onclick="javascript:onInvoicePrintPreview('@Model.Budget_Activity_list.ElementAt(0).act_form_id');;"> Print Preview</a>*@
+
+</div>
 <hr />
+<br />
+
+<div id='myModalInvoicePreview' class="modal fade" role="dialog">
+	<div id='myModalInvoicePreviewContent'></div>
+</div>
+
 
 <script>
 
 	$('document').ready(function () {
 		callProductList($("#hd_activityId").val());
 	});
-	
+
 	function callProductList(activityId) {
         $.ajax({
             type: 'POST',
@@ -164,6 +176,35 @@
 				$('#myModalInvoiceContent').html(data);
 				$('#myModalInvoice').modal(options);
 				$('#myModalInvoice').modal('show');
+
+			},
+			error: function () {
+				alert("Dynamic content load failed.");
+			}
+		});
+		//callInvoiceList(var_activityId, var_estId);
+	}
+
+	function onInvoicePrintPreview(actId) {
+		var TeamDetailPostBackURL = '/Budget/activityInvoicePreviewList';
+		debugger;
+		//var $buttonClicked = $(this);
+		var var_activityId = actId;
+		var options = { "backdrop": "static", keyboard: true };
+
+		$.ajax({
+			type: "GET",
+			url: TeamDetailPostBackURL,
+			contentType: "application/json; charset=utf-8",
+			data: {
+				"activityId": var_activityId
+			},
+			datatype: "json",
+			success: function (data) {
+				debugger;
+				$('#myModalInvoicePreviewContent').html(data);
+				$('#myModalInvoicePreview').modal(options);
+				$('#myModalInvoicePreview').modal('show');
 
 			},
 			error: function () {

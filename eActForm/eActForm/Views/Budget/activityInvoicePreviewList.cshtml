@@ -1,0 +1,291 @@
+﻿
+@model eActForm.Models.Budget_Approve_Model
+@{
+	Layout = null;
+}
+
+<script type="text/javascript">
+
+	$('document').ready(function () {
+		showCurrentDate();
+	});
+
+	function showCurrentDate() {
+		n = new Date();
+		y = n.getFullYear();
+		m = n.getMonth() + 1;
+		d = n.getDate();
+
+		if (m < 10) { m = '0' + m }
+		if (d < 10) { d = '0' + d }
+
+		document.getElementById("docDate").innerHTML = d + "/" + m + "/" + y;
+	}
+
+    function onClickClose() {
+        @*var url = '@Url.Action("activityProduct", "Budget")';
+        window.location.href = url;*@
+    }
+
+	function onClickPrint() {
+		genPdf();
+		alert("gen pdf ok ;) ")
+	}
+	
+    function genPdf() {
+            $.ajax({
+            url: '@Url.Action("genPdfApprove", "Budget")',
+            data: {
+                GridHtml: $("#Grid").html(),
+				activityId: $("#HactivityId").val()
+            },
+            dataType: "json",
+            type: 'POST',
+            }).done(function (response) {
+                $("#WaitDialog").hide();
+                console.log("genPdff");
+                console.log('success');
+                 });
+	}
+
+
+</script>
+
+<style type="text/css">
+
+	.my-bootbox-class .modal-dialog {
+		width: 400px;
+		font-size: 18px;
+	}
+</style>
+
+@Html.HiddenFor(m => m.Budget_Activity_list.ElementAt(0).act_form_id, new { id = "HactivityId" })
+
+<div class="modal-dialog modal-lg" style="width:95%;">
+	<div class="modal-content">
+		<div class="modal-header">
+			<div style=""></div>
+			<button type="button" class="close" data-dismiss="modal" onclick="onClickClose()">&times;</button>
+		</div>
+
+		<div class="modal-body">
+			<div id="Grid" style="width:97%; margin-left:10px;">
+				<style>
+					.cssborderbottom {
+						border-bottom-width: 1px;
+						border-bottom-style: solid;
+						border-bottom-color: gray;
+					}
+				</style>
+
+				<div>
+					<div style="text-align:center;"><h5>รายละเอียดค่าใช้จ่าย ตั้งจ่ายจริง</h5></div>
+				</div>
+
+				<div>
+					<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+				</div>
+
+
+				<div style="width:100%;">
+					<table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;">
+						<tr>
+							<td style="width:50%;">&nbsp;</td>
+							<td style="width:50%;">&nbsp;</td>
+						</tr>
+						<tr>
+							<td style="text-align:left;"></td>
+							<td style="text-align:right;">
+								<label style="font-size:12.0px; white-space:pre-line;"> Activity No : </label>  @Model.Budget_Activity_list.ElementAt(0).act_activityNo
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align:left">
+								<label style="font-size:12.0px; white-space:pre-line;"> ชื่อกิจกรรม (Activity Name) : </label> @Model.Budget_Activity_list.ElementAt(0).act_activityName
+
+							</td>
+							<td style="text-align:right;">
+								<div style="font-size:12.0px; white-space:pre-line; font-weight:bold"> Document Date : <span id="docDate" style="font-size:12.0px; font-weight:normal"></span></div>
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align:left;">
+								<label style="font-size:12.0px; white-space:pre-line;"> Theme : </label>  @Model.Budget_Approve_list.ElementAt(0).activityTypeTheme
+							</td>
+							<td style="text-align:right;">
+								<label style="font-size:12.0px; white-space:pre-line;"> ลูกค้า (Customer Name) : </label>  @Model.Budget_Activity_list.ElementAt(0).cus_cusNameTH
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align:left;">
+								<label style="font-size:12.0px; white-space:pre-line;"> ระยะเวลากิจกรรม (Activity Period) : </label>
+							</td>
+							<td style="text-align:right;">
+								<label style="font-size:12.0px; white-space:pre-line;"> ช่องทาง (Channel) : </label>
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align:left;">
+								<label style="font-size:12.0px; white-space:pre-line;"> ระยะเวลาการให้ทุนพิเศษ (Cast Period) : </label>
+							</td>
+							<td style="text-align:right;">
+								<label style="font-size:12.0px; white-space:pre-line;"> กลุ่มสินค้า (Product Group) : </label>
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align:left;">
+								<label style="font-size:12.0px; white-space:pre-line;"> วัตถุประสงค์ (Objective) : </label>
+							</td>
+							<td style="text-align:right;"></td>
+						</tr>
+						<tr>
+							<td style="text-align:left;"></td>
+							<td style="text-align:right;"></td>
+						</tr>
+						<tr>
+							<td style="text-align:left;"></td>
+							<td style="text-align:right;"><br /></td>
+						</tr>
+						<tr>
+							<td style="text-align:left; font-size:12.5px;"> รายละเอียดการใช้จ่ายจริง (Actual) </td>
+							<td style="text-align:right;"></td>
+						</tr>
+
+					</table>
+				</div>
+
+				<div>
+					<table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+						<tr>
+							<td rowspan="2" style="width:10%; font-size:12.5px;">ประเภทกิจกรรม</td>
+							<td rowspan="2" style="width:30%; font-size:12.5px;">กลุ่มสินค้า / ชื่อสินค้า</td>
+							<td colspan="4" style="width:40%; font-size:12.5px;">จ่ายจริง (Actual)</td>
+
+							<td rowspan="2" style="width:10%; font-size:12.5px;">ผลต่าง-บาท</td>
+							<td rowspan="2" style="width:5%; font-size:12.5px;">วันที่ทำรายการ</td>
+							<td rowspan="2" style="width:5%; font-size:12.5px;">สถานะ</td>
+						</tr>
+						<tr>
+							<td style="font-size:12.5px;">จำนวนเงินที่ตั้ง</td>
+							<td style="font-size:12.5px;">เลขที่ใบแจ้งหนี้</td>
+							<td style="font-size:12.5px;">เลขที่ใบสำคัญจ่าย</td>
+							<td style="font-size:12.5px;">จำนวนเงินจ่าย (฿)</td>
+						</tr>
+
+						@if (Model.Budget_Approve_list.Any())
+						{
+							var index = 0;
+							foreach (var item in Model.Budget_Approve_list)
+							{
+								<tr>
+									<td style="text-align:left;">@item.activityTypeTheme</td>
+									<td style="text-align:left;">@item.productDetail</td>
+									<td style="text-align:right;">
+										@if (item.productStandBath != null)
+										{
+											string result = String.Format("{0:n2}", @item.productStandBath);
+											@result.ToString();
+										}
+									</td>
+									<td>
+										@if (item.invoiceNo != null)
+										{
+											@item.invoiceNo;
+										}
+									</td>
+									<td></td>
+									<td style="text-align:right;">
+										@if (item.invoiceTotalBath != null)
+										{
+											string result = String.Format("{0:n2}", @item.invoiceTotalBath);
+											@result.ToString();
+										}
+									</td>
+									<td style="text-align:right;">
+										@if (item.productBalanceBath != null)
+										{
+											string result = String.Format("{0:n2}", @item.productBalanceBath);
+											@result.ToString();
+										}
+									</td>
+									<td>
+										@if (item.invoiceActionDate != null)
+										{
+											string result = String.Format("{0:dd/MM/yyyy}", @item.invoiceActionDate);
+											@result.ToString();
+										}
+									</td>
+									<td>
+										@if (item.invoiceBudgetStatusNameTH != null)
+										{
+											@item.invoiceBudgetStatusNameTH;
+										}
+									</td>
+									
+								</tr>
+								index++;
+							}
+						}
+
+						@*@if (Model.Budget_Activity_Invoice_list.Any())
+		{
+		foreach (var item in Model.Budget_Activity_Invoice_list)
+		{
+		<tr>
+			<td style="font-size:12.5px;">@item.invoiceNo</td>
+			<td style="font-size:12.5px;"></td>
+			<td style="font-size:12.5px;"></td>
+			<td style="font-size:12.5px;"></td>
+			<td style="font-size:12.5px;"></td>
+			<td style="font-size:12.5px;">@item.normalCost</td>
+			<td style="font-size:12.5px;"></td>
+			<td style="font-size:12.5px;"></td>
+			<td style="font-size:12.5px;"></td>
+			<td style="font-size:12.5px;"></td>
+		</tr>
+		}
+		}*@
+					</table>
+				</div>
+
+
+				<div>
+					<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+				</div>
+
+				<div style="margin-top:5px; width:100%;">
+					รายละเอียดค่าใช้จ่าย (Cost)
+				</div>
+
+				<div>
+					<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+				</div>
+				<div style="margin-top:10px;">
+					อนุมัติค่าใช้จ่าย(Approve)
+				</div>
+				<div style="margin-bottom:10px;">
+					ประมาณการ(Estimate)
+				</div>
+
+				<div>
+					@*@if (Model.Budget_Activity_list != null)
+			{
+				@Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.Budget_Activity_list.ElementAt(0).act_form_id })
+			}*@
+				</div>
+
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<div>
+				<p class="d-flex justify-content-center">
+					<button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="onClickPrint();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Print</button>
+					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+				</p>
+			</div>
+
+		</div>
+
+	</div>
+</div>

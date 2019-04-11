@@ -9,7 +9,7 @@ using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
-	public class QueryBudgetBiz
+	public class QueryGetBudgetActivity
 	{
 
 		public static List<Budget_Activity_Model.Budget_Activity_Status_Att> getBudgetActivityStatus()
@@ -34,7 +34,7 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-		public static List<Budget_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo)
+		public static List<TB_Budget_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo)
 		{
 			try
 			{
@@ -44,7 +44,7 @@ namespace eActForm.BusinessLayer
 				 , new SqlParameter("@act_activityNo", act_activityNo));
 
 				var result = (from DataRow d in ds.Tables[0].Rows
-							  select new Budget_Activity_Model.Budget_Activity_Att()
+							  select new TB_Budget_Activity_Model.Budget_Activity_Att()
 							  {
 								  act_form_id = d["act_form_id"].ToString(),
 								  act_approveStatusId = int.Parse(d["act_approveStatusId"].ToString()),
@@ -61,6 +61,7 @@ namespace eActForm.BusinessLayer
 								  act_costPeriodEnd = !string.IsNullOrEmpty(d["act_costPeriodEnd"].ToString()) ? DateTime.Parse(d["act_costPeriodEnd"].ToString()) : (DateTime?)null,
 								  act_activityName = d["act_activityName"].ToString(),
 								  act_theme = d["act_theme"].ToString(),
+								  //act_themeName = d["act_themeName"].ToString(),
 								  act_objective = d["act_objective"].ToString(),
 								  act_trade = d["act_trade"].ToString(),
 								  act_activityDetail = d["act_activityDetail"].ToString(),
@@ -90,7 +91,7 @@ namespace eActForm.BusinessLayer
 			catch (Exception ex)
 			{
 				ExceptionManager.WriteError("getActivityByApproveStatusId => " + ex.Message);
-				return new List<Budget_Activity_Model.Budget_Activity_Att>();
+				return new List<TB_Budget_Activity_Model.Budget_Activity_Att>();
 			}
 		}
 
@@ -133,6 +134,9 @@ namespace eActForm.BusinessLayer
 				return new List<Budget_Activity_Model.Budget_Activity_Product_Att>();
 			}
 		}
+
+
+
 
 		public static List<Budget_Activity_Model.Budget_Activity_Invoice_Att> getBudgetActivityInvoice(string activityId, string activityOfEstimateId, string invoiceId)
 		{

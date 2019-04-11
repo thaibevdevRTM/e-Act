@@ -196,6 +196,7 @@
     <Compile Include="BusinessLayer\QuerygetAllProductCate.cs" />
     <Compile Include="BusinessLayer\QueryGetAllProductGroup.cs" />
     <Compile Include="BusinessLayer\QueryGetBudgetActivity.cs" />
+    <Compile Include="BusinessLayer\QueryGetBudgetApprove.cs" />
     <Compile Include="BusinessLayer\QueryGetChanelNameByCustomerId.cs" />
     <Compile Include="BusinessLayer\QueryGetCostDetailById.cs" />
     <Compile Include="BusinessLayer\QueryGetImageById.cs" />
@@ -215,8 +216,8 @@
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\BudgetApproveController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
+    <Compile Include="Controllers\BudgetViewerController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\eActController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Models\ActUserModel.cs" />
     <Compile Include="Models\AppCode.cs" />
     <Compile Include="Models\Budget_Activity_Model.cs" />
+    <Compile Include="Models\Budget_Approve_Model.cs" />
     <Compile Include="Models\RepDetailModel.cs" />
     <Compile Include="Models\TB_Act_ActivityFormDocNo_Model.cs" />
     <Compile Include="Models\TB_Act_ActivityGroup_Model.cs" />
@@ -248,6 +250,7 @@
     <Compile Include="Models\TB_Act_ProductType_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Cate_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Model.cs" />
+    <Compile Include="Models\TB_Budget_Activity_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -2068,7 +2071,6 @@
     <Content Include="Views\ApproveLists\index.cshtml" />
     <Content Include="Views\ApproveLists\ListView.cshtml" />
     <Content Include="Views\Home\approveLists.cshtml" />
-    <Content Include="Views\Budget\activityList.cshtml" />
     <Content Include="Views\ActivityProductDetail\showDetailGroup.cshtml" />
     <Content Include="Views\Shared\_search.cshtml" />
     <Content Include="Views\actFormRepDetail\index.cshtml" />
@@ -2076,11 +2078,14 @@
     <Content Include="Views\BudgetApprove\budgetApprove.cshtml" />
     <Content Include="Views\BudgetApprove\budgetApproveList.cshtml" />
     <Content Include="Views\BudgetApprove\Index.cshtml" />
-    <Content Include="Views\Budget\activityList.cshtml" />
     <Content Include="Views\Budget\activityProduct.cshtml" />
     <Content Include="Views\Budget\activityProductInvoiceEdit.cshtml" />
     <Content Include="Views\Budget\activityProductInvoiceList.cshtml" />
     <Content Include="Views\Budget\activityProductList.cshtml" />
+    <Content Include="Views\Budget\activityList.cshtml" />
+    <Content Include="Views\BudgetViewer\budgetPDFView.cshtml" />
+    <Content Include="Views\BudgetApprove\budgetApproveDetail.cshtml" />
+    <Content Include="Views\Budget\activityInvoicePreviewList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActivityFormPdf\" />

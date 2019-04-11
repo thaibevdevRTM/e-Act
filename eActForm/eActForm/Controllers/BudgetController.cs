@@ -23,16 +23,28 @@ namespace eActForm.Controllers
 	[LoginExpire]
 	public class BudgetController : Controller
 	{
-		// GET: Budget
-		//public ActionResult activityList()
-		//{
-		//    return View();
-		//}
 
-		//[HttpPost]
-		//[ValidateInput(false)]
+		[HttpPost]
+		[ValidateInput(false)]
+		public JsonResult genPdfApprove(string GridHtml, string activityId)
+		{
+			var resultAjax = new AjaxResult();
+			try
+			{
+				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), activityId);
+				//EmailAppCodes.sendApproveActForm(activityId);
+			
+				resultAjax.Success = true;
+			}
+			catch (Exception ex)
+			{
+				resultAjax.Success = false;
+				resultAjax.Message = ex.Message;
+			}
+			return Json(resultAjax, "text/plain");
+		}
 
-		
+
 		public JsonResult submitInvoice(Budget_Activity_Model.Budget_Activity_Invoice_Att budgetInvoiceModel)
 		{
 			var resultAjax = new AjaxResult();
@@ -81,31 +93,37 @@ namespace eActForm.Controllers
 		//---------------------------------------------------------------------------------------
 		public PartialViewResult activityProductInvoiceEdit(string activityId, string activityOfEstimateId, string invoiceId)
 		{
-
 			if (!string.IsNullOrEmpty(invoiceId))
 			{// for edit invoice
 				Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
-				Budget_Activity.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, activityOfEstimateId);
-				Budget_Activity.Budget_Activity_Invoice_list = QueryBudgetBiz.getBudgetActivityInvoice(activityId, activityOfEstimateId, invoiceId);
-				Budget_Activity.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
+				Budget_Activity.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId);
+				Budget_Activity.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, invoiceId);
+				Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
 				return PartialView("activityProductInvoiceEdit", Budget_Activity);
 			}
 			else
 			{// for insert invoice
 				Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
-				Budget_Activity.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, activityOfEstimateId);
-				Budget_Activity.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
+				Budget_Activity.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId);
+				Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
 				return PartialView("activityProductInvoiceEdit", Budget_Activity);
 			}
 		}
-
+		
+		public PartialViewResult activityInvoicePreviewList(string activityId)
+		{
+			Budget_Approve_Model Budget_Approve_Model = new Budget_Approve_Model();
+			Budget_Approve_Model.Budget_Approve_list = QueryGetBudgetApprove.getBudgetActivityApprove(activityId);
+			Budget_Approve_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null);
+			return PartialView(Budget_Approve_Model);
+		}
+		
 		public PartialViewResult activityProductInvoiceList(string activityId , string activityOfEstimateId)
 		{
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-			budget_activity_model.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId,  activityOfEstimateId);
-			budget_activity_model.Budget_Activity_Invoice_list = QueryBudgetBiz.getBudgetActivityInvoice(activityId, activityOfEstimateId, null);
-			budget_activity_model.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
-
+			budget_activity_model.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId,  activityOfEstimateId);
+			budget_activity_model.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, null);
+			budget_activity_model.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
 			return PartialView(budget_activity_model);
 		}
 
@@ -115,8 +133,8 @@ namespace eActForm.Controllers
 			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
 			try
 			{
-				budget_activity.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, null);
-				budget_activity.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();	
+				budget_activity.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, null);
+				budget_activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();	
 			} catch (Exception ex)
 			{
 				Console.WriteLine(ex.Message);
@@ -131,7 +149,7 @@ namespace eActForm.Controllers
 			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
 			try
 			{
-				budget_activity.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("3", activityId, null).ToList();
+				budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", activityId, null).ToList();
 			}
 			catch (Exception ex)
 			{
@@ -144,8 +162,7 @@ namespace eActForm.Controllers
 		{
 			//Session["activityId"] = Guid.NewGuid().ToString();
 			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
-			budget_activity.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("3", null,null).ToList();
-
+			budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", null,null).ToList();
 			return View(budget_activity);
 		}
 	}

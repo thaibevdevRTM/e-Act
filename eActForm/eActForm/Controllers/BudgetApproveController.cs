@@ -53,15 +53,14 @@ namespace eActForm.Controllers
 			return Json(resultAjax, "text/plain");
 		}
 
-
-		public ActionResult budgetApproveList(string activityId)
+		public ActionResult budgetApproveDetail(string activityId)
 		{
 			//Session["activityId"] = activityId;
 			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
 			try
 			{
-				budget_activity.Budget_Activity_Product_list = QueryBudgetBiz.getBudgetActivityProduct(activityId, null);
-				budget_activity.Budget_Activity_Ststus_list = QueryBudgetBiz.getBudgetActivityStatus();
+				budget_activity.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, null);
+				budget_activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
 			}
 			catch (Exception ex)
 			{
@@ -70,18 +69,33 @@ namespace eActForm.Controllers
 			return PartialView(budget_activity);
 		}
 
-		public ActionResult budgetApprove(string activityId)
+		public PartialViewResult budgetApproveList(string isSubmitApprove, string activityId)
 		{
-			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
+			//Session["activityId"] = activityId;
+			Budget_Approve_Model budget_approve = new Budget_Approve_Model();
 			try
 			{
-				budget_activity.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("3", activityId, null).ToList();
+				budget_approve.Budget_Approve_list = QueryGetBudgetApprove.getBudgetActivityApprove( activityId);
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex.Message);
 			}
-			return View(budget_activity);
+			return PartialView(budget_approve);
+		}
+
+		public ActionResult budgetApprove(string activityId)
+		{
+			Budget_Approve_Model budget_approve = new Budget_Approve_Model();
+			try
+			{
+				//budget_activity.Budget_Activity_list = QueryBudgetBiz.getBudgetActivity("3", activityId, null).ToList();
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
+			return View(budget_approve);
 		}
 
 	}
