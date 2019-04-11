@@ -33,6 +33,7 @@ namespace eActForm.Controllers
                 if (response != null && response.userModel.Count > 0)
                 {
                     UtilsAppCode.Session.User = response.userModel[0];
+                    UserAppCode.setRoleUser();
                     UtilsAppCode.Session.User.empId = "11005737";
                     return RedirectToAction("index", "DashBoard");
                 }
