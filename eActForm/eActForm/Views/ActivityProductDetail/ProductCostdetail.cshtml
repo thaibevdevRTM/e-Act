@@ -5,7 +5,7 @@
     /**/
     decimal? promotionTotal = 0;
     ViewBag.Title = "ProductCostdetail";
-
+    Session["promotionTotal"] = 0;
 }
 
 <div class="row">
@@ -54,7 +54,7 @@
                         </td>
                         @if (item.isShowGroup == true)
                         {
-                            <td class="font10 textLeft" onclick="showdetail('@item.id')">@item.brandName @item.smellName @item.size ALL(@item.detailGroup.Count) Pack(@item.pack) </td>
+                            <td class="font10 textLeft" onclick="showdetail('@item.id')"><span role="button">@item.brandName @item.smellName @item.size ALL(@item.detailGroup.Count) Pack(@item.pack)</span></td>
                         }
                         else if (item.isShowGroup == false)
                         {
@@ -62,13 +62,13 @@
                             {
                                 for (int i = 0; i < @item.detailGroup.Count; i++)
                                 {
-                                    <td class="font10 textLeft" onclick="showdetail('@item.id')">@item.detailGroup[i].productName Pack(@item.pack)</td>
+                                    <td class="font10 textLeft" onclick="showdetail('@item.id')"><span role="button">@item.detailGroup[i].productName Pack(@item.pack)</span></td>
                                 }
                             }
                         }
                         else
                         {
-                            <td class="font10 textLeft" onclick="showdetail('@item.id')">@item.productName</td>
+                    <td class="font10 textLeft" onclick="showdetail('@item.id')"><span role="button">@item.productName</span></td>
                         }
                         <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.saleOut, "{0:n2}", new { @id = "saleOut_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.id + "', " + index + ")", @onfocus = "setZero(saleOut_" + index + ")" })</td>
