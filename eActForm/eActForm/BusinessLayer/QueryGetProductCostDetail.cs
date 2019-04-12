@@ -92,7 +92,7 @@ namespace eActForm.BusinessLayer
                    id = Guid.NewGuid().ToString(),
                    brandId = group.First().brandId,
                    smellId = group.First().smellId,
-                   smellName = group.First().smellName,
+                   smellName = smellId == "" ? "" : group.First().smellName,
                    brandName = group.First().brandName,
                    productId = group.First().productId,
                    productName = group.First().productName,

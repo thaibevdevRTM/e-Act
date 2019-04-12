@@ -97,7 +97,7 @@ namespace eActForm.Controllers
             try
             {
                 Activity_Model activityModel = new Activity_Model();
-                decimal p_total = AppCode.checkNullorEmpty(total) != "0" ? decimal.Parse(total) : 0;
+                decimal p_total = decimal.Parse(total);//AppCode.checkNullorEmpty(total) != "0" ? decimal.Parse(total) : 0;
                 decimal getPromotionCost = 0;
                 decimal getNormalCost = 0;
                 decimal get_PerTotal = 0;
