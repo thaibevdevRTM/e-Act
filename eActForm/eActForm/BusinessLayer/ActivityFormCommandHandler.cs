@@ -57,7 +57,7 @@ namespace eActForm.BusinessLayer
                         productcostdetail.normalGp = item.normalGp;
                         productcostdetail.promotionGp = item.promotionGp;
                         productcostdetail.specialDisc = item.specialDisc;
-                        productcostdetail.specialDisBaht = item.specialDiscBaht;
+                        productcostdetail.specialDiscBaht = item.specialDiscBaht;
                         productcostdetail.promotionCost = item.promotionCost;
                         productcostdetail.isShowGroup = item.isShowGroup;
                         productcostdetail.rowNo = insertIndex;
