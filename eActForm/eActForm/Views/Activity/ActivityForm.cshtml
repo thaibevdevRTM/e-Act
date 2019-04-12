@@ -341,7 +341,7 @@
 @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
 @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
 <script type="text/javascript">
-
+    
        $(document).ready(function () {
            $(".fv").each(function () {
                var v = $(this).val();
@@ -612,7 +612,9 @@
                 dataType: "json",
                 type: 'POST',
              success: function (response) {
-                 if (response.Data.checkrow) {
+                 if (response.Data > 0) {
+
+                     rowCount = response.Data;
                      CallChangefunc();
                      callThemedetailcost();
                  }
@@ -625,8 +627,12 @@
     }
 
     function AddThemeCost() {
+
         var ddlTheme = document.getElementById("ddlThemeDetail");
         var txtddlTheme = ddlTheme.options[ddlTheme.selectedIndex].text;
+        if (txtddlTheme == 'Please Select') { bootbox.alert("กรุณา ระบุ ประเภทกิจกรรม");  return false; }
+
+
         $("#WaitDialog").show();
          $.ajax({
             type: 'POST',
@@ -636,7 +642,6 @@
                  txttheme: txtddlTheme,
             }
          }).done(function (response) {
-             console.log(response.success);
              callThemedetailcost();
              $("#WaitDialog").hide();
         });
@@ -652,6 +657,8 @@
         if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
         if ($("#ddlProductCate").val() == "0") { required += "Product category*<br>"; validate = false; }
         if ($("#ddlProductGrp").val() == "0") { required += "กลุ่มสินค้า *<br>"; validate = false; }
+        console.log(rowCount);
+        if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 
         if (validate == true) {
             SubmitData();
@@ -692,7 +699,7 @@
                     Trade: $("input[name='activityFormModel.trade']:checked").val(),
                     ActivityDetail: $("#txtActivityDetail").val(),
                     activityNo :$("#txtActivityNo").val(),
-                    
+
                 },
                 dataType: "json",
                 type: 'POST',
