@@ -30,30 +30,24 @@ namespace eActForm.Controllers
                 UtilsAppCode.Session.User = new ActUserModel.User();
                 string strUserName = EncrptHelper.MD5Encryp(Request.Form["txtUserName"].ToString());
                 string strPassword = EncrptHelper.MD5Encryp(Request.Form["txtPassword"].ToString());
-                if (UserAppCode.setRoleUser(Request.Form["txtUserName"]) > 0)
+                ActUserModel.ResponseUserAPI response = AuthenAppCode.doAuthen(strUserName, strPassword);
+                if (response != null && response.userModel.Count > 0)
                 {
-                    ActUserModel.ResponseUserAPI response = AuthenAppCode.doAuthen(strUserName, strPassword);
-                    if (response != null && response.userModel.Count > 0)
-                    {
-                        UtilsAppCode.Session.User = response.userModel[0];
-                        UtilsAppCode.Session.User.empId = "11005737";
-                        ApproveAppCode.setCountWatingApprove();
-                        return RedirectToAction("index", "DashBoard");
-                    }
-                    else
-                    {
-                        TempData["CustomerError"] = ConfigurationManager.AppSettings["messLoginFail"];
-                    }
+                    UtilsAppCode.Session.User = response.userModel[0];
+                    UserAppCode.setRoleUser(UtilsAppCode.Session.User.empId);
+                    ApproveAppCode.setCountWatingApprove();
+                    return RedirectToAction("index", "DashBoard");
                 }
                 else
                 {
                     TempData["CustomerError"] = ConfigurationManager.AppSettings["messLoginFail"];
                 }
+
             }
             catch (Exception ex)
             {
                 TempData["CustomerError"] = ex.Message;
-                
+
             }
             return RedirectToAction("Index");
 

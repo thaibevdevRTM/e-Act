@@ -24,7 +24,7 @@ namespace eActForm.BusinessLayer
                         rtn = ds.Tables[0].Rows.Count;
                         foreach (DataRow dr in ds.Tables[0].Rows)
                         {
-                            switch (dr["roleId"])
+                            switch (dr["roleId"].ToString())
                             {
                                 case "1":
                                     UtilsAppCode.Session.User.isCreator = true; break;

@@ -121,7 +121,7 @@
                         <td>@item.activityName</td>
                         <td>@item.cusShortName</td>
                         <td>@item.productCategory</td>
-                        <td>@{ date = item.createdDate == null ? "" : item.createdDate.Value.ToString("yyyy/MM/dd");} @date</td>
+                        <td>@{ date = item.createdDate == null ? "" : item.createdDate.Value.ToString("dd/MM/yyyy");} @date</td>
                         <td>
 
                             @if (@item.totalCost != 0)
