@@ -31,7 +31,8 @@ namespace eActForm.Controllers
 			var resultAjax = new AjaxResult();
 			try
 			{
-				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), activityId);
+				var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], activityId));
+				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
 				//EmailAppCodes.sendApproveActForm(activityId);
 			
 				resultAjax.Success = true;

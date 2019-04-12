@@ -49,12 +49,21 @@ namespace eActForm.BusinessLayer
 								  act_form_id = d["act_form_id"].ToString(),
 								  act_approveStatusId = int.Parse(d["act_approveStatusId"].ToString()),
 								  act_activityNo = d["act_activityNo"].ToString(),
-
 								  act_reference = d["act_reference"].ToString(),
 								  act_customerId = d["act_customerId"].ToString(),
+
 								  cus_cusShortName = d["cus_cusShortName"].ToString(),
 								  cus_cusNameEN = d["cus_cusNameEN"].ToString(),
 								  cus_cusNameTH = d["cus_cusNameTH"].ToString(),
+
+								  ch_chanelCust = d["ch_chanelCust"].ToString(),
+								  ch_chanelGroup = d["ch_chanelGroup"].ToString(),
+								  ch_chanelTradingPartner = d["ch_chanelTradingPartner"].ToString(),
+
+								  prd_groupName = d["prd_groupName"].ToString(),
+								  prd_groupNameTH = d["prd_groupNameTH"].ToString(),
+								  prd_groupShort = d["prd_groupShort"].ToString(),
+
 								  act_activityPeriodSt = !string.IsNullOrEmpty(d["act_activityPeriodSt"].ToString()) ? DateTime.Parse(d["act_activityPeriodSt"].ToString()) : (DateTime?)null,
 								  act_activityPeriodEnd = !string.IsNullOrEmpty(d["act_activityPeriodEnd"].ToString()) ? DateTime.Parse(d["act_activityPeriodEnd"].ToString()) : (DateTime?)null,
 								  act_costPeriodSt = !string.IsNullOrEmpty(d["act_costPeriodSt"].ToString()) ? DateTime.Parse(d["act_costPeriodSt"].ToString()) : (DateTime?)null,

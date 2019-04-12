@@ -15,6 +15,7 @@ namespace eActForm.Models
 
 		public class Budget_Approve_Att
 		{
+			public string budgetActivityId { get; set; }
 			public string activityId { get; set; }
 			public string activityNo { get; set; }
 			public string activityName { get; set; }
