@@ -29,6 +29,7 @@ namespace eActForm.BusinessLayer
                                  activityTypeId = d["activityTypeId"].ToString(),
                                  productId = d["productId"].ToString(),
                                  productName = d["productName"].ToString(),
+                                 productDetail = d["productDetail"].ToString(),
                                  smellName = d["smellName"].ToString(),
                                  brandName = d["brandName"].ToString(),
                                  size = int.Parse(AppCode.checkNullorEmpty(d["size"].ToString())),
@@ -68,7 +69,7 @@ namespace eActForm.BusinessLayer
                    growth = group.First().growth,
                    total = group.First().total,
                    perTotal = group.First().perTotal,
-                   pack = QueryGetAllProduct.getProductById(group.First().productId).Any() ? QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString() : "" ,
+                   pack = QueryGetAllProduct.getProductById(group.First().productId).Any() ? "Pack" + QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString() : "" ,
                    isShowGroup = group.First().isShowGroup,
                    rowNo = group.First().rowNo,
                    detailGroup = group.ToList()

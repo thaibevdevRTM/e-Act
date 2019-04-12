@@ -85,6 +85,7 @@ namespace eActForm.BusinessLayer
                             costThemeDetail.activityId = activityId;
                             costThemeDetail.activityTypeId = item.activityTypeId;
                             costThemeDetail.typeTheme = item.typeTheme;
+                            costThemeDetail.productDetail = itemIn.productName;
                             costThemeDetail.productId = itemIn.productId;
                             costThemeDetail.normalCost = item.normalCost;
                             costThemeDetail.brandId = item.brandId;
@@ -139,15 +140,15 @@ namespace eActForm.BusinessLayer
                 {
                     if (getActList.FirstOrDefault().activityNo.ToString() == "---")
                     {
-                        int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().customerId).FirstOrDefault().docNo);
+                        int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id).FirstOrDefault().docNo);
 
                         result += getActList.FirstOrDefault().trade == "term" ? "S" : "W";
-                        result += getActList.FirstOrDefault().groupShort.Trim();
+                        result += getActList.FirstOrDefault().shortBrand.Trim();
                         result += getActList.FirstOrDefault().chanelShort.Trim();
                         result += getActList.FirstOrDefault().cusShortName.Trim();
-                        result += DateTime.Today.Year.ToString().Substring(2, 2);
+                        result += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
                         result += string.Format("{0:0000}", genNumber);
-
+         
                     }
                     else
                     {
@@ -364,12 +365,12 @@ namespace eActForm.BusinessLayer
 
 
 
-        public static List<TB_Act_ActivityFormDocNo_Model> getActivityDoc(string cusId)
+        public static List<TB_Act_ActivityFormDocNo_Model> getActivityDoc(string chanel_Id)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertDocNoByCusId"
-                , new SqlParameter("@cusId", cusId));
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertDocNoByChanelId"
+                , new SqlParameter("@chanel_Id", chanel_Id));
 
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Act_ActivityFormDocNo_Model()
