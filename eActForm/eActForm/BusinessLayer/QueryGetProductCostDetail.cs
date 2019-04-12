@@ -85,14 +85,14 @@ namespace eActForm.BusinessLayer
 
                 groupByPrice = lists.OrderByDescending(o => o.wholeSalesPrice)
                     .OrderByDescending(x => x.size)
-                    .GroupBy(item => new { item.wholeSalesPrice, item.brandName, item.smellName })
+                    .GroupBy(item => new { item.wholeSalesPrice, item.size })
                     
                .Select((group, index) => new ProductCostOfGroupByPrice
                {
                    id = Guid.NewGuid().ToString(),
                    brandId = group.First().brandId,
                    smellId = group.First().smellId,
-                   smellName = group.First().smellName,
+                   smellName = smellId == "" ? "" : group.First().smellName,
                    brandName = group.First().brandName,
                    productId = group.First().productId,
                    productName = group.First().productName,

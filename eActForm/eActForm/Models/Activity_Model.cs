@@ -249,7 +249,6 @@ namespace eActForm.Models
         public string brandName { get; set; }
         public int size { get; set; }
         public string smellName { get; set; }
-        public decimal? specialDisBaht { get; set; }
         public decimal? themeCost { get; set; }
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
