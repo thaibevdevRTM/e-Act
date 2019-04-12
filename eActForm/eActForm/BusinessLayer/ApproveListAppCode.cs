@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.ApplicationBlocks.Data;
 using eActForm.Models;
+using WebLibrary;
 namespace eActForm.BusinessLayer
 {
     public class ApproveListAppCode
@@ -66,7 +67,9 @@ namespace eActForm.BusinessLayer
             }
             catch(Exception ex)
             {
-                throw new Exception("getApproveListsByStatusId >> " + ex.Message);
+                //throw new Exception("getApproveListsByStatusId >> " + ex.Message);
+                ExceptionManager.WriteError("getApproveListsByStatusId >> " + ex.Message);
+                return new List<Activity_Model.actForm>();
             }
         }
     }

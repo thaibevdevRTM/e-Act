@@ -11,6 +11,17 @@ namespace eActForm.BusinessLayer
 {
     public class ApproveRepDetailAppCode
     {
+        public static List<RepDetailModel.actApproveRepDetailModel> getFilterFormByStatusId(List<RepDetailModel.actApproveRepDetailModel> lists, int statusId)
+        {
+            try
+            {
+                return lists.Where(r => r.statusId == statusId.ToString()).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFilterFormByStatusId >> " + ex.Message);
+            }
+        }
         public static int updateActRepDetailByApproveDetail(string actId)
         {
             try
