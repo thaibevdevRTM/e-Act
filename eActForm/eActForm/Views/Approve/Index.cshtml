@@ -1,9 +1,11 @@
 ﻿@using eActForm.BusinessLayer;
+@using eActForm.Models;
 @model eActForm.Models.ApproveModel.approveModels
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var actId = Request.QueryString["actId"];
+    var type = Request.QueryString["type"];
 }
 
 <script src="~/Scripts/jquery-1.11.2.min.js"></script>
@@ -58,6 +60,7 @@
                             @if (Model.approveModel != null)
                             {
                                 <input type="hidden" id="lblApproveId" name="lblApproveId" value="@Model.approveModel.id" />
+                                <input type="hidden" id="lblApproveType" name="lblApproveType" value="@type" />
                             }
                             @Html.DropDownListFor(m => m.approveModel.statusId, new SelectList(Model.approveStatusLists, "id", "nameTH"), "-Selected-", new { @class = "form-control", required = "required", id = "ddlStatus", Name = "ddlStatus" })
                             <script>
@@ -124,13 +127,21 @@
                 $(this).focus();
             }
         });
+
         $("#WaitDialog").show();
     }
 
     function successQuery(response) {
         if (response.Success) {
-            callPreviewApprove('@actId');
-        } else {
+            if ('@type' == '@AppCode.ApproveType.Activity_Form.ToString()') {
+                callPreviewApprove('@actId');
+            }
+            else {
+                callPreviewRepDetailApprove('@actId')
+            }
+
+
+        }else {
             $("#WaitDialog").hide();
             bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + response.Message);
         }
@@ -141,6 +152,43 @@
         bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
     }
 
+
+    function callPreviewRepDetailApprove(obj) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("repPreviewListView", "actFormRepDetail")',
+            data: {
+                actId: obj
+            }
+        }).done(function (htmlResponse) {
+
+            $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("repDetailGenPDF", "actFormRepDetail")',
+            data: {
+                gridHtml: htmlResponse
+                ,actId:'@actId'
+            }
+            }).done(function (htmlResponse) {
+                $("#WaitDialog").hide();
+                bootbox.confirm({
+                        message: "ดำเนินการเรียบร้อยครับ",
+                        buttons: {
+                            confirm: {
+                                label: 'OK',
+                                className: 'btn-success'
+                            }
+                        },
+                        callback: function (result) {
+
+                        }
+
+                    });
+            });
+
+
+        });
+    }
 
     function callPreviewApprove(obj) {
         $.ajax({

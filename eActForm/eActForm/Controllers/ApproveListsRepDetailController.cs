@@ -8,9 +8,9 @@ using eActForm.BusinessLayer;
 namespace eActForm.Controllers
 {
     [LoginExpire]
-    public class ApproveListsController : Controller
+    public class ApproveListsRepDetailController : Controller
     {
-        // GET: ApproveLists
+        // GET: ApproveListsRepDetail
         public ActionResult Index()
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
@@ -19,32 +19,25 @@ namespace eActForm.Controllers
 
         public ActionResult ListView()
         {
-            Activity_Model.actForms model = new Activity_Model.actForms();
+            RepDetailModel.actApproveRepDetailModels model = new RepDetailModel.actApproveRepDetailModels();
             if (TempData["ApproveSearchResult"] == null)
             {
-                model = new Activity_Model.actForms();
-                model.actLists = ApproveListAppCode.getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
-                TempData["ApproveFormLists"] = model.actLists;
-                model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists,(int)AppCode.ApproveStatus.รออนุมัติ);
+                model.repDetailLists = ApproveRepDetailAppCode.getApproveRepDetailListsByEmpId();
+                TempData["ApproveFormLists"] = model.repDetailLists;
             }
             else
             {
-                model.actLists = (List<Activity_Model.actForm>)TempData["ApproveSearchResult"];
+                //model.actLists = (List<Activity_Model.actForm>)TempData["ApproveSearchResult"];
             }
             return PartialView(model);
         }
-        
 
         public ActionResult searchActForm()
         {
-            string count = Request.Form.AllKeys.Count().ToString();
             Activity_Model.actForms model = new Activity_Model.actForms();
             model.actLists = (List<Activity_Model.actForm>)TempData["ApproveFormLists"];
 
-            if (Request.Form["txtActivityNo"] != "")
-            {
-                model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
-            }else if (Request.Form["ddlStatus"] != "")
+            if (Request.Form["ddlStatus"] != "")
             {
                 model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, int.Parse(Request.Form["ddlStatus"]));
             }

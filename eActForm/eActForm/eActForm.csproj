@@ -181,6 +181,7 @@
     <Compile Include="BusinessLayer\ActFormAppCode.cs" />
     <Compile Include="BusinessLayer\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\ApproveListAppCode.cs" />
+    <Compile Include="BusinessLayer\ApproveRepDetailAppCode.cs" />
     <Compile Include="BusinessLayer\BudgetFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\EmailAppCodes.cs" />
     <Compile Include="BusinessLayer\ApproveAppCode.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="BusinessLayer\QueryGetProductCostDetail.cs" />
     <Compile Include="BusinessLayer\AuthenAppCode.cs" />
     <Compile Include="BusinessLayer\RepDetailAppCode.cs" />
+    <Compile Include="BusinessLayer\SearchAppCode.cs" />
     <Compile Include="BusinessLayer\SignatureAppCode.cs" />
     <Compile Include="BusinessLayer\UtilsAppCode.cs" />
     <Compile Include="Controllers\actFormRepDetailController.cs" />
@@ -214,6 +216,7 @@
     <Compile Include="Controllers\AjaxResult.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
+    <Compile Include="Controllers\ApproveListsRepDetailController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BudgetApproveController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
@@ -1824,6 +1827,7 @@
     </Content>
     <Content Include="images\al.jpeg" />
     <Content Include="images\blank.png" />
+    <Content Include="images\checkmark.gif" />
     <Content Include="images\icon_ref.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\logo-ss.png" />
@@ -2073,6 +2077,9 @@
     <Content Include="Views\Shared\_search.cshtml" />
     <Content Include="Views\actFormRepDetail\index.cshtml" />
     <Content Include="Views\actFormRepDetail\repListView.cshtml" />
+    <Content Include="Views\ApproveListsRepDetail\index.cshtml" />
+    <Content Include="Views\actFormRepDetail\approvePositionSignature.cshtml" />
+    <Content Include="Views\ApproveListsRepDetail\ListView.cshtml" />
     <Content Include="Views\BudgetApprove\budgetApprove.cshtml" />
     <Content Include="Views\BudgetApprove\budgetApproveList.cshtml" />
     <Content Include="Views\BudgetApprove\Index.cshtml" />
@@ -2083,7 +2090,9 @@
     <Content Include="Views\Budget\activityProductList.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ActBudget\" />
     <Folder Include="ActivityFormPdf\" />
+    <Folder Include="ActRepDetail\" />
     <Folder Include="App_Data\" />
     <Folder Include="error\" />
     <Folder Include="signature\" />

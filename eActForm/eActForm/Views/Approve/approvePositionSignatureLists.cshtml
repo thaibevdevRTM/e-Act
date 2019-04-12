@@ -21,14 +21,17 @@
 
                 @foreach (var item in Model.approveFlowDetail)
                 {
-                    <td style="width:150px;">
-                        <div style="font-size:12.5px;">
-                            @item.approveGroupName
-                        </div>
-                        <div style="font-size:12.5px;">
-                            (@item.approveGroupNameEN)
-                        </div>
-                    </td>
+                    if (item.isShowInDoc)
+                    {
+                        <td style="width:150px;">
+                            <div style="font-size:12.5px;">
+                                @item.approveGroupName
+                            </div>
+                            <div style="font-size:12.5px;">
+                                (@item.approveGroupNameEN)
+                            </div>
+                        </td>
+                    }
                 }
             </tr>
 
@@ -36,39 +39,45 @@
                 @{ var index = 0;}
                 @foreach (var item in Model.approveFlowDetail)
                 {
-                    if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
+                    if (item.isShowInDoc)
                     {
-                        //var base64 = Convert.ToBase64String(Model.approveDetailLists[index].signature);
-                        //var imgSrc = String.Format("data:image/png;base64,{0}", base64);
-                        <td>
-                            <img style="text-align:center;" width="150" height="100" src="@Model.approveDetailLists[index].ImgName"/>
-                        </td>
+                        if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
+                        {
+                            <td>
+                                <img style="text-align:center;" width="150" height="100" src="@Model.approveDetailLists[index].ImgName" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <div style="text-align:center;height:100px;"></div>
+                            </td>
+                        }
+                        index++;
                     }
-                    else
-                    {
-                        <td>
-                            <div style="text-align:center;height:100px;"></div>
-                        </td>
-                    }
-                    index++;
                 }
             </tr>
 
             <tr>
                 @foreach (var item in Model.approveFlowDetail)
                 {
-
-                    <td>
-                        <div style="text-align:center; margin-top:20px; font-size:12.5px;">@item.empFNameTH @item.empLNameTH</div>
-                    </td>
+                    if (item.isShowInDoc)
+                    {
+                        <td>
+                            <div style="text-align:center; margin-top:20px; font-size:12.5px;">@item.empFNameTH @item.empLNameTH</div>
+                        </td>
+                    }
                 }
             </tr>
             <tr>
                 @foreach (var item in Model.approveFlowDetail)
                 {
-                    <td>
-                        <div style="text-align:center; height:50px; font-size:12.5px;">@item.empPositionTitleTH</div>
-                    </td>
+                    if (item.isShowInDoc)
+                    {
+                        <td>
+                            <div style="text-align:center; height:50px; font-size:12.5px;">@item.empPositionTitleTH</div>
+                        </td>
+                    }
                 }
             </tr>
 

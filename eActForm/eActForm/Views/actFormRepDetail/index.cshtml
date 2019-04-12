@@ -26,6 +26,7 @@
 </div>
 
 <div class="row tile_count">
+    
     <div id="getQuery" class="col-md-12 col-xs-12">
 
     </div>
@@ -35,17 +36,26 @@
 <script type="text/javascript">
 
     function beginQuery() {
-        $("#getQuery").fadeOut(300);
+        if ($("#ddlCustomer").val() == "") {
+            doMsgFail("กรุณาระบุ ลูกค้า ครับ");
+            return false;
+        }
+         if ($("#ddlProductType").val() == "") {
+            doMsgFail("กรุณาระบุ Product Type ครับ");
+            return false;
+        }
+        else {
+            $("#getQuery").fadeOut(300);
+        }
     }
 
     function successQuery(htmlResponse) {
-        console.log(htmlResponse);
         $("#getQuery").html(htmlResponse)
         $("#getQuery").fadeIn(300);
     }
 
     function failureQuery(data) {
-        //(data.responseText);
+        doMsgFail(data.responseText);
     }
 
 </script>
