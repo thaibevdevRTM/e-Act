@@ -109,6 +109,8 @@ namespace eActForm.Models
         public string customerId { get; set; }
         public string chanel { get; set; }
         public string chanelShort { get; set; }
+        public string shortBrand { get; set; }
+        public string chanel_Id { get; set; }
         public string productCateId { get; set; }
         public string productCateText { get; set; }
         public string productGroupId { get; set; }
@@ -149,6 +151,8 @@ namespace eActForm.Models
         public string activityId { get; set; }
         public string typeTheme { get; set; }
         public string activityTypeId { get; set; }
+
+        public string productDetail { get; set; }
         public string productId { get; set; }
         public string productName { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
@@ -195,6 +199,7 @@ namespace eActForm.Models
         public string brandName { get; set; }
         public string brandId { get; set; }
         public string smellName { get; set; }
+        public string productDetail { get; set; }
         public Boolean isShowGroup { get; set; }
 
         public int rowNo { get; set; }
@@ -208,6 +213,7 @@ namespace eActForm.Models
         public string productId { get; set; }
         public string pack { get; set; }
         public string productName { get; set; }
+        public string productDetail { get; set; }
         public string typeTheme { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? wholeSalesPrice { get; set; }
@@ -217,6 +223,9 @@ namespace eActForm.Models
         public decimal? disCount2 { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? disCount3 { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+
+        public decimal? saleNormal { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalCost { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]

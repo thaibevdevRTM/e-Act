@@ -121,6 +121,7 @@ namespace eActForm.Controllers
                 }
 
                 Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
+                result.Data = activityModel.productcostdetaillist1.Count;
                 result.Success = true;
             }
             catch (Exception ex)
@@ -157,12 +158,10 @@ namespace eActForm.Controllers
                     activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
                 }
 
-
                 var productlist = new Activity_Model();
                 productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme);
                 activityModel.productcostdetaillist1.AddRange(productlist.productcostdetaillist1);
               
-
                 CostThemeDetailOfGroupByPrice costthememodel = new CostThemeDetailOfGroupByPrice();
                 int i = 0;
                 foreach (var item in productlist.productcostdetaillist1)
@@ -185,11 +184,11 @@ namespace eActForm.Controllers
 
                 Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
                 Session["activitydetaillist"] = activityModel.activitydetaillist;
-                var resultData = new
-                {
-                    checkrow = productlist.productcostdetaillist1.Count == 0 ? false : true,
-                };
-                result.Data = resultData;
+                //var resultData = new
+                //{
+                //    checkrow = productlist.productcostdetaillist1.Count,
+                //};
+                result.Data = productlist.productcostdetaillist1.Count;
 
             }
             catch (Exception ex)

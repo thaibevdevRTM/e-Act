@@ -10,7 +10,7 @@
     decimal? normalTotal = 0;
     decimal? activityTotal = 0;
     decimal? growthTotal = 0;
-    
+
 
 }
 
@@ -40,9 +40,11 @@
             {
                 var index = 0;
                 total = 0;
-
+                Session["promotionTotal"] = 0;
+                
                 foreach (var item in Model.activitydetaillist)
                 {
+                    
                     <tr>
                         <td onclick="onDelActDetail('@item.id')">
                             <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
@@ -52,20 +54,17 @@
                         {
                             <td class="font10 textLeft">@item.typeTheme</td>
                         }
-                        else if (item.isShowGroup == false)
+                        else
                         {
                             if (item.detailGroup != null)
                             {
                                 for (int i = 0; i < @item.detailGroup.Count; i++)
                                 {
-                                <td class="font10 textLeft">@item.detailGroup[i].typeTheme</td>
+                                    <td class="font10 textLeft">@item.detailGroup[i].typeTheme</td>
                                 }
                             }
                         }
-                        else
-                        {
-                            <td class="font10 textLeft">@item.typeTheme</td>
-                        }
+
 
                         @if (item.isShowGroup == true)
                         {
@@ -84,7 +83,7 @@
                             <td class="font10 textLeft">@item.productName</td>
                         }
 
-                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")" , onfocus = "setZero(lblNormalCost_" + index +")" })</td>
+                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")" })</td>
                         <td>
                             @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")" })
                         </td>
@@ -165,7 +164,7 @@
         if ($(txtId).val() == "0.00")
         $(txtId).val("");
     }
-    
+
     function calGrowth(id, rowIndex) {
 
         if ($('#lblThemeCost_' + rowIndex).val() != "" && $('#lblNormalCost_' + rowIndex).val() != "") {
@@ -175,7 +174,7 @@
             var growth = $("#lblGrowth_" + rowIndex).val();
             var productId = $("#hdProductId_" + rowIndex).val();
             var total =  $("#lblTotal_" + rowIndex).val();
-                
+
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("calCostDetailTheme", "ActivityCostDetail")',

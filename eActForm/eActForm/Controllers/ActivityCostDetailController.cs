@@ -117,7 +117,7 @@ namespace eActForm.Controllers
 
                 }
 
-                decimal p_growth = normalCost == "0" ? 0 : (decimal.Parse(themeCost) - decimal.Parse(normalCost)) / decimal.Parse(normalCost);
+                decimal p_growth = normalCost == "0" ? 0 : (decimal.Parse(themeCost) - decimal.Parse(normalCost)) / decimal.Parse(AppCode.checkNullorEmpty(normalCost) == "0" ? "1" : normalCost);
 
                 activityModel.activitydetaillist
                         .Where(r => r.id != null && r.id.Equals(id))
