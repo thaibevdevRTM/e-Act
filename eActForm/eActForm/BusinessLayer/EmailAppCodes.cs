@@ -91,7 +91,8 @@ namespace eActForm.BusinessLayer
                             List<ApproveModel.approveDetailModel> createUsers = ActFormAppCode.getUserCreateActForm(actFormId);
                             strBody = string.Format(ConfigurationManager.AppSettings["emailAllApproveBody"]
                                 , createUsers.FirstOrDefault().empName
-                                , createUsers.FirstOrDefault().activityNo);
+                                , createUsers.FirstOrDefault().activityNo
+                                , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actFormId));
 
                             sendEmailActForm(actFormId
                             , createUsers.FirstOrDefault().empEmail

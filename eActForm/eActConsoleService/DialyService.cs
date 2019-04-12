@@ -36,7 +36,7 @@ namespace eActConsoleService
                         new MailOffice365G(Properties.Settings.Default.strMailUser
                             , Properties.Settings.Default.strMailPassword
                             , Properties.Settings.Default.strMailUser
-                            , m.empEmail
+                            , strMailTo
                             , Properties.Settings.Default.strSubject
                             , strBody
                             , Properties.Settings.Default.strMailCC).Send();
