@@ -27,21 +27,21 @@ namespace eActForm.Controllers
             }
             else
             {
-                //model.actLists = (List<Activity_Model.actForm>)TempData["ApproveSearchResult"];
+                model.repDetailLists = (List<RepDetailModel.actApproveRepDetailModel>)TempData["ApproveSearchResult"];
             }
             return PartialView(model);
         }
 
         public ActionResult searchActForm()
         {
-            Activity_Model.actForms model = new Activity_Model.actForms();
-            model.actLists = (List<Activity_Model.actForm>)TempData["ApproveFormLists"];
+            RepDetailModel.actApproveRepDetailModels model = new RepDetailModel.actApproveRepDetailModels();
+            model.repDetailLists = (List<RepDetailModel.actApproveRepDetailModel>)TempData["ApproveFormLists"];
 
             if (Request.Form["ddlStatus"] != "")
             {
-                model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, int.Parse(Request.Form["ddlStatus"]));
+                model.repDetailLists = ApproveRepDetailAppCode.getFilterFormByStatusId(model.repDetailLists, int.Parse(Request.Form["ddlStatus"]));
             }
-            TempData["ApproveSearchResult"] = model.actLists;
+            TempData["ApproveSearchResult"] = model.repDetailLists;
             return RedirectToAction("ListView");
         }
     }

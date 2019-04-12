@@ -59,6 +59,12 @@ namespace eActForm.Models
             public string empDepartmentTH { get; set; }
             public string empManagerId { get; set; }
             public string empEmail { get; set; }
+            public bool isCreator { get; set; }
+            public bool isApprove { get; set; }
+            public bool isAdmin { get; set; }
+            public bool isSuperAdmin { get; set; }
+            public string countWatingActForm { get; set; }
+            public string counteatingRepDetail { get; set; }
         }
     }
 }

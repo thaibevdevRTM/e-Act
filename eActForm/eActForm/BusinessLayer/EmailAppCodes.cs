@@ -134,7 +134,7 @@ namespace eActForm.BusinessLayer
                             , item.activityName
                             , item.activitySales
                             , item.activityNo
-                            , item.sumTotal
+                            , String.Format("{0:n2}", item.sumTotal)
                             , item.createBy
                             , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId)
                             ) :
