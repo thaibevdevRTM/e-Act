@@ -149,14 +149,22 @@ namespace eActForm.Controllers
 
                 if (Session["productcostdetaillist1"] == null)
                 {
-                    activityModel.productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
-                    activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
+                    activityModel.productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();            
                 }
                 else
                 {
                     activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                }
+
+                if (Session["activitydetaillist"] == null)
+                {
+                    activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
+                }
+                else
+                {
                     activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
                 }
+
 
                 var productlist = new Activity_Model();
                 productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme);
@@ -181,9 +189,11 @@ namespace eActForm.Controllers
                     activityModel.activitydetaillist.Add(costthememodel);
                     i++;
                 }
+              
 
                 Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
                 Session["activitydetaillist"] = activityModel.activitydetaillist;
+               
                 //var resultData = new
                 //{
                 //    checkrow = productlist.productcostdetaillist1.Count,

@@ -148,7 +148,7 @@
                         @if (total != 0 && activityTotal != 0)
                         {
 
-                            perTotal = total * 100 / (activityTotal * Convert.ToDecimal(Session["promotionTotal"] == null ? "1" : Session["promotionTotal"].ToString()));
+                            perTotal = total * 100 / (activityTotal * Convert.ToDecimal(Session["promotionTotal"] == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
                             string result = String.Format("{0:n2}%", @perTotal);
                             @result.ToString();
                         }

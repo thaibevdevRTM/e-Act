@@ -64,6 +64,8 @@ namespace eActForm.Controllers
                 CostThemeDetailOfGroupByPrice costThemeDetailOfGroupByPriceModel = new CostThemeDetailOfGroupByPrice();
                 activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
 
+
+
                 ProductCostOfGroupByPrice productcostdetail = new ProductCostOfGroupByPrice();
                 costThemeDetailOfGroupByPriceModel.id = Guid.NewGuid().ToString();
                 costThemeDetailOfGroupByPriceModel.activityTypeId = themeId;
@@ -127,7 +129,7 @@ namespace eActForm.Controllers
                             r.normalCost = decimal.Parse(normalCost);
                             r.growth = p_growth;
                             r.themeCost = decimal.Parse(themeCost);
-                            r.total = p_total;
+                            r.total = p_total * r.detailGroup.Count;
                             r.perTotal = get_PerTotal;
                             return r;
                         }).ToList();
