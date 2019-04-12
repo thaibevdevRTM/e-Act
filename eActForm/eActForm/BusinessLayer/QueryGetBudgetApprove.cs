@@ -22,7 +22,7 @@ namespace eActForm.BusinessLayer
 				var result = (from DataRow d in ds.Tables[0].Rows
 							  select new Budget_Approve_Model.Budget_Approve_Att()
 							  {
-
+								  budgetActivityId = d["budgetActivityId"].ToString(),
 								  activityId = d["activityId"].ToString(),
 								  activityNo = d["activityNo"].ToString(),
 								  activitEstimateId = d["activitEstimateId"].ToString(),

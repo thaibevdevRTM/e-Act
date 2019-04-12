@@ -16,12 +16,20 @@ namespace eActForm.Models
 			[DataType(DataType.Date)]
 			[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
 			public DateTime? act_documentDate { get; set; }
-
 			public string act_reference { get; set; }
 			public string act_customerId { get; set; }
+
 			public string cus_cusShortName { get; set; }
 			public string cus_cusNameEN { get; set; }
 			public string cus_cusNameTH { get; set; }
+
+			public string ch_chanelCust { get; set; }
+			public string ch_chanelGroup { get; set; }
+			public string ch_chanelTradingPartner { get; set; }
+
+			public string prd_groupName { get; set; }
+			public string prd_groupNameTH { get; set; }
+			public string prd_groupShort { get; set; }
 
 			[DataType(DataType.Date)]
 			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
