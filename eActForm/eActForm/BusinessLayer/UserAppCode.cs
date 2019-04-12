@@ -10,7 +10,7 @@ namespace eActForm.BusinessLayer
 {
     public class UserAppCode
     {
-        public static int setRoleUser()
+        public static int setRoleUser(string strUserName)
         {
             try
             {
@@ -18,7 +18,7 @@ namespace eActForm.BusinessLayer
                 if (UtilsAppCode.Session.User != null)
                 {
                     DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserByEmpId"
-                        , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
+                        , new SqlParameter[] { new SqlParameter("@empId", strUserName) });
                     if (ds.Tables.Count > 0)
                     {
                         rtn = ds.Tables[0].Rows.Count;
