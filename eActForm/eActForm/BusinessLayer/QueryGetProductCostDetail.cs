@@ -89,7 +89,7 @@ namespace eActForm.BusinessLayer
                     
                .Select((group, index) => new ProductCostOfGroupByPrice
                {
-                   id = Guid.NewGuid().ToString(),
+                   productGroupId = Guid.NewGuid().ToString(),
                    brandId = group.First().brandId,
                    smellId = group.First().smellId,
                    smellName = smellId == "" ? "" : group.First().smellName,

@@ -22,69 +22,12 @@ namespace eActForm.Controllers
             return PartialView(activityModel);
         }
 
-        public JsonResult calDiscountProduct(
-              string id
-            , string productId
-            , string wholeSalesPrice
-            , string saleOut
-            , string saleIn
-            , string disCount1
-            , string disCount2
-            , string disCount3
-            , string normalCost
-            , string normalGP
-            , string promotionGP
-            , string specialDisc
-            , string specialDiscBaht)
+        public JsonResult calDiscountProduct(ProductCostOfGroupByPrice  model)
         {
             var result = new AjaxResult();
             try
             {
-                normalCost = normalCost.Replace(",", "");
-                wholeSalesPrice = wholeSalesPrice.Replace(",", "");
-                saleOut = saleOut.Replace(",", "");
-                saleIn = saleIn.Replace(",", "");
-                normalGP = normalGP == null ? "" : normalGP.Replace(",", "");
-                promotionGP = promotionGP == null ? "" : promotionGP.Replace(",", "");
-                decimal p_wholeSalesPrice = AppCode.checkNullorEmpty(wholeSalesPrice) == "0" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(wholeSalesPrice));
-                decimal p_disCount1 = AppCode.checkNullorEmpty(disCount1) == "0" ? p_wholeSalesPrice : p_wholeSalesPrice - ((decimal.Parse(AppCode.checkNullorEmpty(disCount1)) / 100) * p_wholeSalesPrice);
-                decimal p_disCount2 = AppCode.checkNullorEmpty(disCount2) == "0" ? p_disCount1 : p_disCount1 - ((decimal.Parse(AppCode.checkNullorEmpty(disCount2)) / 100) * p_disCount1);
-                decimal p_disCount3 = AppCode.checkNullorEmpty(disCount3) == "0" ? p_disCount2 : p_disCount2 - ((decimal.Parse(AppCode.checkNullorEmpty(disCount3)) / 100) * p_disCount2);
-
-                decimal getPackProduct = QueryGetAllProduct.getProductById(productId).FirstOrDefault().pack;
-
-                decimal p_normalGp = AppCode.checkNullorEmpty(saleOut) == "0" ? 0 : ((decimal.Parse(saleOut) - (p_disCount3 * decimal.Parse("1.07")))
-                    / getPackProduct / decimal.Parse(saleOut)) * 100;
-
-                decimal p_PromotionCost = AppCode.checkNullorEmpty(specialDisc) == "0" && AppCode.checkNullorEmpty(specialDiscBaht) == "0" || p_disCount3 == 0 ? p_disCount3 : (p_disCount3 - (p_disCount3 * (decimal.Parse(specialDisc) / 100))) - decimal.Parse(AppCode.checkNullorEmpty(specialDiscBaht));
-
-                decimal p_PromotionGp = AppCode.checkNullorEmpty(saleIn) == "0" ? 0 : ((decimal.Parse(saleIn) - (p_PromotionCost * decimal.Parse("1.07")))
-                  / getPackProduct / decimal.Parse(AppCode.checkNullorEmpty(saleIn))) * 100;
-
-
-                Activity_Model activityModel = new Activity_Model();
-                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-                activityModel.productcostdetaillist1
-                    .Where(r => r.id != null && r.id.Equals(id))
-                    .Select(r =>
-                    {
-                        r.wholeSalesPrice = decimal.Parse(AppCode.checkNullorEmpty(wholeSalesPrice));
-                        r.disCount1 = decimal.Parse(AppCode.checkNullorEmpty(disCount1));
-                        r.disCount2 = decimal.Parse(AppCode.checkNullorEmpty(disCount2));
-                        r.disCount3 = decimal.Parse(AppCode.checkNullorEmpty(disCount3));
-                        r.saleOut = decimal.Parse(AppCode.checkNullorEmpty(saleOut));
-                        r.saleIn = decimal.Parse(AppCode.checkNullorEmpty(saleIn));
-                        r.normalGp = p_normalGp;
-                        r.promotionGp = p_PromotionGp;
-                        r.specialDisc = decimal.Parse(AppCode.checkNullorEmpty(specialDisc));
-                        r.specialDiscBaht = decimal.Parse(AppCode.checkNullorEmpty(specialDiscBaht));
-                        r.normalCost = p_disCount3 == 0 ? p_wholeSalesPrice : p_disCount3;
-                        r.promotionCost = p_PromotionCost;
-                        return r;
-                    }).ToList();
-                Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
-
-
+                calProductDetail(model);
                 result.Success = true;
             }
             catch (Exception ex)
@@ -170,12 +113,14 @@ namespace eActForm.Controllers
                 productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme);
                 activityModel.productcostdetaillist1.AddRange(productlist.productcostdetaillist1);
               
+
+
                 CostThemeDetailOfGroupByPrice costthememodel = new CostThemeDetailOfGroupByPrice();
                 int i = 0;
                 foreach (var item in productlist.productcostdetaillist1)
                 {
                     costthememodel = new CostThemeDetailOfGroupByPrice();
-                    costthememodel.id = Guid.NewGuid().ToString();
+                    costthememodel.productGroupId = item.productGroupId;
                     costthememodel.typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == theme).FirstOrDefault().activitySales;
                     costthememodel.productId = item.productId;
                     costthememodel.activityTypeId = theme;
@@ -190,15 +135,15 @@ namespace eActForm.Controllers
                     i++;
                 }
 
-               // activityModel.productcostdetaillist1.Add(calProductDetail(activityModel.productcostdetaillist1));
 
                 Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
+                //calculate Cost GP
+                foreach (var item in productlist.productcostdetaillist1)
+                {
+                    bool calSuccess = calProductDetail(item);
+                }
                 Session["activitydetaillist"] = activityModel.activitydetaillist;
                
-                //var resultData = new
-                //{
-                //    checkrow = productlist.productcostdetaillist1.Count,
-                //};
                 result.Data = productlist.productcostdetaillist1.Count;
 
             }
@@ -211,55 +156,62 @@ namespace eActForm.Controllers
         }
 
 
-        public ProductCostOfGroupByPrice calProductDetail(ProductCostOfGroupByPrice model)
+        public bool calProductDetail(ProductCostOfGroupByPrice model)
         {
+            bool success = true;
+            try
+            {
+                var normalCost = model.normalCost.ToString().Replace(",", "");
+                var wholeSalesPrice = model.wholeSalesPrice.ToString().Replace(",", "");
+                var saleOut = model.saleOut.ToString().Replace(",", "");
+                var saleIn = model.saleIn.ToString().Replace(",", "");
+                var normalGP = model.normalGp == null ? "" : model.normalGp.ToString().Replace(",", "");
+                var promotionGP = model.promotionGp == null ? "" : model.promotionGp.ToString().Replace(",", "");
 
-            var normalCost = model.normalCost.ToString().Replace(",", "");
-            var wholeSalesPrice = model.wholeSalesPrice.ToString().Replace(",", "");
-            var saleOut = model.saleOut.ToString().Replace(",", "");
-            var saleIn = model.saleIn.ToString().Replace(",", "");
-            var normalGP = model.normalGp == null ? "" : model.normalGp.ToString().Replace(",", "");
-            var promotionGP = model.promotionGp == null ? "" : model.promotionGp.ToString().Replace(",", "");
+                decimal p_wholeSalesPrice = AppCode.checkNullorEmpty(wholeSalesPrice) == "0" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(wholeSalesPrice));
+                decimal p_disCount1 = AppCode.checkNullorEmpty(model.disCount1.ToString()) == "0" ? p_wholeSalesPrice : p_wholeSalesPrice - ((decimal.Parse(AppCode.checkNullorEmpty(model.disCount1.ToString())) / 100) * p_wholeSalesPrice);
+                decimal p_disCount2 = AppCode.checkNullorEmpty(model.disCount2.ToString()) == "0" ? p_disCount1 : p_disCount1 - ((decimal.Parse(AppCode.checkNullorEmpty(model.disCount2.ToString())) / 100) * p_disCount1);
+                decimal p_disCount3 = AppCode.checkNullorEmpty(model.disCount3.ToString()) == "0" ? p_disCount2 : p_disCount2 - ((decimal.Parse(AppCode.checkNullorEmpty(model.disCount3.ToString())) / 100) * p_disCount2);
 
-            decimal p_wholeSalesPrice = AppCode.checkNullorEmpty(wholeSalesPrice) == "0" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(wholeSalesPrice));
-            decimal p_disCount1 = AppCode.checkNullorEmpty(model.disCount1.ToString()) == "0" ? p_wholeSalesPrice : p_wholeSalesPrice - ((decimal.Parse(AppCode.checkNullorEmpty(model.disCount1.ToString())) / 100) * p_wholeSalesPrice);
-            decimal p_disCount2 = AppCode.checkNullorEmpty(model.disCount2.ToString()) == "0" ? p_disCount1 : p_disCount1 - ((decimal.Parse(AppCode.checkNullorEmpty(model.disCount2.ToString())) / 100) * p_disCount1);
-            decimal p_disCount3 = AppCode.checkNullorEmpty(model.disCount3.ToString()) == "0" ? p_disCount2 : p_disCount2 - ((decimal.Parse(AppCode.checkNullorEmpty(model.disCount3.ToString())) / 100) * p_disCount2);
+                decimal getPackProduct = QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().pack;
 
-            decimal getPackProduct = QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().pack;
+                decimal p_normalGp = AppCode.checkNullorEmpty(saleOut) == "0" ? 0 : ((decimal.Parse(saleOut) - (p_disCount3 * decimal.Parse("1.07")))
+                    / getPackProduct / decimal.Parse(saleOut)) * 100;
 
-            decimal p_normalGp = AppCode.checkNullorEmpty(saleOut) == "0" ? 0 : ((decimal.Parse(saleOut) - (p_disCount3 * decimal.Parse("1.07")))
-                / getPackProduct / decimal.Parse(saleOut)) * 100;
+                decimal p_PromotionCost = AppCode.checkNullorEmpty(model.specialDisc.ToString()) == "0" && AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()) == "0" || p_disCount3 == 0 ? p_disCount3 : (p_disCount3 - (p_disCount3 * (decimal.Parse(model.specialDisc.ToString()) / 100))) - decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
 
-            decimal p_PromotionCost = AppCode.checkNullorEmpty(model.specialDisc.ToString()) == "0" && AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()) == "0" || p_disCount3 == 0 ? p_disCount3 : (p_disCount3 - (p_disCount3 * (decimal.Parse(model.specialDisc.ToString()) / 100))) - decimal.Parse(AppCode.checkNullorEmpty(model.specialDisc.ToString()));
-
-            decimal p_PromotionGp = AppCode.checkNullorEmpty(saleIn) == "0" ? 0 : ((decimal.Parse(saleIn) - (p_PromotionCost * decimal.Parse("1.07")))
-              / getPackProduct / decimal.Parse(AppCode.checkNullorEmpty(saleIn))) * 100;
-
-
-            Activity_Model activityModel = new Activity_Model();
-            activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-            activityModel.productcostdetaillist1
-                .Where(r => r.id != null && r.id.Equals(model.id))
-                .Select(r =>
-                {
-                    r.wholeSalesPrice = decimal.Parse(AppCode.checkNullorEmpty(wholeSalesPrice));
-                    r.disCount1 = decimal.Parse(AppCode.checkNullorEmpty(model.disCount1.ToString()));
-                    r.disCount2 = decimal.Parse(AppCode.checkNullorEmpty(model.disCount2.ToString()));
-                    r.disCount3 = decimal.Parse(AppCode.checkNullorEmpty(model.disCount3.ToString()));
-                    r.saleOut = decimal.Parse(AppCode.checkNullorEmpty(saleOut));
-                    r.saleIn = decimal.Parse(AppCode.checkNullorEmpty(saleIn));
-                    r.normalGp = p_normalGp;
-                    r.promotionGp = p_PromotionGp;
-                    r.specialDisc = decimal.Parse(AppCode.checkNullorEmpty(model.specialDisc.ToString()));
-                    r.specialDiscBaht = decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
-                    r.normalCost = p_disCount3 == 0 ? p_wholeSalesPrice : p_disCount3;
-                    r.promotionCost = p_PromotionCost;
-                    return r;
-                }).ToList();
+                decimal p_PromotionGp = AppCode.checkNullorEmpty(saleIn) == "0" ? 0 : ((decimal.Parse(saleIn) - (p_PromotionCost * decimal.Parse("1.07")))
+                  / getPackProduct / decimal.Parse(AppCode.checkNullorEmpty(saleIn))) * 100;
 
 
-            return model;
+                Activity_Model activityModel = new Activity_Model();
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                activityModel.productcostdetaillist1
+                    .Where(r => r.productGroupId != null && r.productGroupId.Equals(model.productGroupId))
+                    .Select(r =>
+                    {
+                        r.wholeSalesPrice = decimal.Parse(AppCode.checkNullorEmpty(wholeSalesPrice));
+                        r.disCount1 = decimal.Parse(AppCode.checkNullorEmpty(model.disCount1.ToString()));
+                        r.disCount2 = decimal.Parse(AppCode.checkNullorEmpty(model.disCount2.ToString()));
+                        r.disCount3 = decimal.Parse(AppCode.checkNullorEmpty(model.disCount3.ToString()));
+                        r.saleOut = decimal.Parse(AppCode.checkNullorEmpty(saleOut));
+                        r.saleIn = decimal.Parse(AppCode.checkNullorEmpty(saleIn));
+                        r.normalGp = p_normalGp;
+                        r.promotionGp = p_PromotionGp;
+                        r.specialDisc = decimal.Parse(AppCode.checkNullorEmpty(model.specialDisc.ToString()));
+                        r.specialDiscBaht = decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
+                        r.normalCost = p_disCount3 == 0 ? p_wholeSalesPrice : p_disCount3;
+                        r.promotionCost = p_PromotionCost;
+                        return r;
+                    }).ToList();
+                Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
+            }
+            catch(Exception ex)
+            {
+                success = false;
+            }
+
+            return success;
         }
     }
 }
