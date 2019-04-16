@@ -55,7 +55,7 @@ namespace eActForm.Controllers
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 if (rowid != null)
                 {
-                    var list = activityModel.productcostdetaillist1.Single(r => r.id == rowid);
+                    var list = activityModel.productcostdetaillist1.Single(r => r.productGroupId == rowid);
                     activityModel.productcostdetaillist1.Remove(list);
                 }
                 else

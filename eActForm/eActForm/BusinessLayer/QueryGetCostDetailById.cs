@@ -59,7 +59,7 @@ namespace eActForm.BusinessLayer
                     .GroupBy(item => new { item.wholeSalesPrice, item.size })
                .Select((group, index) => new ProductCostOfGroupByPrice
                {
-                   id = group.First().productGroupId,
+                   productGroupId = group.First().productGroupId,
                    brandId = group.First().brandId,
                    smellId = group.First().smellId,
                    smellName = group.First().smellName,
