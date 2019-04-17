@@ -19,7 +19,15 @@
                 <li>
                     <a><i class="fa fa-edit"></i> Activity Forms <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li>@Html.ActionLink(" Activity Form", "ActivityForm", "Activity")</li>
+                        <li>@Html.ActionLink(" Activity Form", "ActivityForm", "Activity")</li>                        
+                    </ul>
+                </li>
+            }
+            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            {
+                <li>
+                    <a><i class="fa fa-bar-chart-o"></i> Budget Forms <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
                         <li>@Html.ActionLink(" Budget Form", "activityList", "Budget")</li>
                     </ul>
                 </li>
@@ -30,7 +38,7 @@
                     <a><i class="fa fa-inbox"></i> Documents <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li>@Html.ActionLink(" Documents", "Index", "Home")</li>
-                        <li>@Html.ActionLink(" Sale", "sale", "SaleActual")</li>
+                        <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
                     </ul>
                 </li>
             }
