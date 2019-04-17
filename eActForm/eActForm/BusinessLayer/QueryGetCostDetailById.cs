@@ -24,6 +24,7 @@ namespace eActForm.BusinessLayer
                               select new ProductCostOfGroupByPrice()
                               {
                                   id = d["Id"].ToString(),
+                                  productGroupId = d["productGroupId"].ToString(),
                                   activityId = d["activityId"].ToString(),
                                   productId = d["productId"].ToString(),
                                   brandId = d["brandId"].ToString(),
@@ -31,7 +32,7 @@ namespace eActForm.BusinessLayer
                                   smellName = d["smellName"].ToString(),
                                   size = int.Parse(AppCode.checkNullorEmpty(d["size"].ToString())),
                                   productName = d["productName"].ToString(),
-                                  pack = QueryGetAllProduct.getProductById(d["productId"].ToString()).FirstOrDefault().pack.ToString(),
+                                  pack = d["productId"].ToString() != "" ? QueryGetAllProduct.getProductById(d["productId"].ToString()).FirstOrDefault().pack.ToString() : "",
                                   wholeSalesPrice = d["wholeSalesPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["wholeSalesPrice"].ToString())),
                                   saleIn = d["saleIn"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["saleIn"].ToString())),
                                   saleOut = d["saleOut"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["saleOut"].ToString())),
@@ -55,10 +56,10 @@ namespace eActForm.BusinessLayer
 
                 groupByPrice = lists
                     .OrderBy(x => x.rowNo)
-                    .GroupBy(item => new { item.wholeSalesPrice, item.brandName, item.smellName,item.isShowGroup })
+                    .GroupBy(item => new { item.wholeSalesPrice, item.size , item.rowNo })
                .Select((group, index) => new ProductCostOfGroupByPrice
                {
-                   id = Guid.NewGuid().ToString(),
+                   productGroupId = group.First().productGroupId,
                    brandId = group.First().brandId,
                    smellId = group.First().smellId,
                    smellName = group.First().smellName,
@@ -78,7 +79,7 @@ namespace eActForm.BusinessLayer
                    specialDisc = group.First().specialDisc,
                    specialDiscBaht = group.First().specialDiscBaht,
                    promotionCost = group.First().promotionCost,
-                   pack = QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString(),
+                   pack = QueryGetAllProduct.getProductById(group.First().productId).Any() ? "Pack" + QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString() : "",
                    rowNo = group.First().rowNo,
                    isShowGroup = group.First().isShowGroup,
                    detailGroup = group.ToList()

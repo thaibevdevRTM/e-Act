@@ -268,19 +268,19 @@
                                 <tr>
                                     @if (item.isShowGroup == true)
                                     {
-                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.smellName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) Pack(@Html.DisplayFor(m => item.pack)) </td>
-                                    }
-                                    else if (item.isShowGroup == false)
-                                    {
-                                        for (int i = 0; i < @item.detailGroup.Count; i++)
-                                        {
-                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) Pack(@Html.DisplayFor(m => item.pack))</td>
-                                        }
+                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) @Html.DisplayFor(m => item.pack) </td>
                                     }
                                     else
                                     {
-                                        <td class="font10 textLeft">@Html.DisplayFor(m => item.productName)</td>
+                                        if (item.detailGroup != null)
+                                        {
+                                            for (int i = 0; i < @item.detailGroup.Count; i++)
+                                            {
+                                                <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) (@Html.DisplayFor(m => item.pack))</td>
+                                            }
+                                        }
                                     }
+
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.disCount1)</td>
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.disCount2)</td>
@@ -328,16 +328,16 @@
 
                                     @if (item.isShowGroup == true)
                                     {
-                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.smellName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) @Html.DisplayFor(m => item.pack) </td>
+                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) </td>
                                     }
                                     else
                                     {
                                         for (int i = 0; i < @item.detailGroup.Count; i++)
                                         {
-                                          <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) @Html.DisplayFor(m => item.detailGroup[i].productDetail) @Html.DisplayFor(m => item.pack)</td>
+                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) @Html.DisplayFor(m => item.detailGroup[i].productDetail)</td>
                                         }
                                     }
-                                 
+
 
                                     @*<td style="font-size:12.5px;" class="textLeft">@item.productName</td>*@
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>

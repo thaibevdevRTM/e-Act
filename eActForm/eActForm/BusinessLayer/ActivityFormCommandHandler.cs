@@ -45,6 +45,7 @@ namespace eActForm.BusinessLayer
                     {
                         ProductCostOfGroupByPrice productcostdetail = new ProductCostOfGroupByPrice();
                         productcostdetail.id = itemIn.id;
+                        productcostdetail.productGroupId = item.productGroupId;
                         productcostdetail.activityId = activityId;
                         productcostdetail.productId = itemIn.productId;
                         productcostdetail.wholeSalesPrice = item.wholeSalesPrice;
@@ -82,6 +83,7 @@ namespace eActForm.BusinessLayer
                         {
                             CostThemeDetail costThemeDetail = new CostThemeDetail();
                             costThemeDetail.id = itemIn.id;
+                            costThemeDetail.productGroupId = item.productGroupId;
                             costThemeDetail.activityId = activityId;
                             costThemeDetail.activityTypeId = item.activityTypeId;
                             costThemeDetail.typeTheme = item.typeTheme;

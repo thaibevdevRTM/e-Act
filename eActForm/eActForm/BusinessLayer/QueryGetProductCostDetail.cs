@@ -71,7 +71,7 @@ namespace eActForm.BusinessLayer
                                  disCount1 = d["discount1"] is DBNull ? 0 : decimal.Parse(d["discount1"].ToString()),
                                  disCount2 = d["discount2"] is DBNull ? 0 : decimal.Parse(d["discount2"].ToString()),
                                  disCount3 = d["discount3"] is DBNull ? 0 : decimal.Parse(d["discount3"].ToString()),
-                                 saleIn = d["saleNormal"] is DBNull ? 0 : decimal.Parse(d["saleNormal"].ToString()),
+                                 saleNormal = d["saleNormal"] is DBNull ? 0 : decimal.Parse(d["saleNormal"].ToString()),
                              }).ToList();
                 if (p_productId != "")
                 {
@@ -85,11 +85,11 @@ namespace eActForm.BusinessLayer
 
                 groupByPrice = lists.OrderByDescending(o => o.wholeSalesPrice)
                     .OrderByDescending(x => x.size)
-                    .GroupBy(item => new { item.wholeSalesPrice, item.size })
+                    .GroupBy(item => new { item.wholeSalesPrice, item.size  })
                     
                .Select((group, index) => new ProductCostOfGroupByPrice
                {
-                   id = Guid.NewGuid().ToString(),
+                   productGroupId = Guid.NewGuid().ToString(),
                    brandId = group.First().brandId,
                    smellId = group.First().smellId,
                    smellName = smellId == "" ? "" : group.First().smellName,
@@ -97,13 +97,13 @@ namespace eActForm.BusinessLayer
                    productId = group.First().productId,
                    productName = group.First().productName,
                    size = group.First().size,
-                   pack = QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString(),
+                   pack = QueryGetAllProduct.getProductById(group.First().productId).Any() ? "Pack" + QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString() : "",
                    wholeSalesPrice = group.First().wholeSalesPrice,
                    normalCost = group.First().normalCost,
                    disCount1 = group.First().disCount1,
                    disCount2 = group.First().disCount2,
                    disCount3 = group.First().disCount3,
-                   saleIn = group.First().saleIn,
+                   saleNormal = group.First().saleNormal,
                    isShowGroup = p_productId != "" ? false : true,
                    detailGroup = group.ToList()
                }).ToList();
