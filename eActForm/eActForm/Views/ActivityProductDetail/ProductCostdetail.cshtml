@@ -70,7 +70,7 @@
                         }
 
                         <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.saleOut, "{0:n2}", new { @id = "saleOut_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(saleOut_" + index + ")" })</td>
+                        <td style="text-align:right">@Html.TextBoxFor(model => item.saleNormal, "{0:n2}", new { @id = "saleNormal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(saleNormal_" + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.saleIn, "{0:n2}", new { @id = "saleIn_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(saleIn_" + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.disCount1, "{0:n2}", new { @id = "disCount1_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(disCount1_" + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.disCount2, "{0:n2}", new { @id = "disCount2_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(disCount2_" + index + ")" })</td>
@@ -124,7 +124,7 @@
         if ($('#wholeSalesPrice_' + rowIndex).val() != "") {
             var productId = $('#hdProductId_' + rowIndex).val();
             var wholeSalesPrice = $('#wholeSalesPrice_' + rowIndex).val();
-            var saleOut = $('#saleOut_' + rowIndex).val();
+            var saleNormal = $('#saleNormal_' + rowIndex).val();
             var saleIn = $('#saleIn_' + rowIndex).val();
             var disCount1 = $('#disCount1_' + rowIndex).val();
             var disCount2 = $('#disCount2_' + rowIndex).val();
@@ -142,7 +142,7 @@
                  productGroupId: id,
                  productId: productId,
                  wholeSalesPrice: wholeSalesPrice,
-                 saleOut: saleOut,
+                 saleNormal: saleNormal,
                  saleIn: saleIn,
                  disCount1: disCount1,
                  disCount2: disCount2,

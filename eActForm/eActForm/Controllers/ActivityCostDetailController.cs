@@ -67,7 +67,7 @@ namespace eActForm.Controllers
 
 
                 ProductCostOfGroupByPrice productcostdetail = new ProductCostOfGroupByPrice();
-                costThemeDetailOfGroupByPriceModel.id = Guid.NewGuid().ToString();
+                costThemeDetailOfGroupByPriceModel.productGroupId = Guid.NewGuid().ToString();
                 costThemeDetailOfGroupByPriceModel.activityTypeId = themeId;
                 costThemeDetailOfGroupByPriceModel.isShowGroup = false;
 

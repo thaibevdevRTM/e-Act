@@ -29,7 +29,7 @@ namespace eActForm.BusinessLayer
                                  activityId = d["activityId"].ToString(),
                                  activityTypeId = d["activityTypeId"].ToString(),
                                  productId = d["productId"].ToString(),
-                                 productName = d["productName"].ToString() + d["productDetail"].ToString(),
+                                 productName = d["productName"].ToString() == "" ? d["productDetail"].ToString() : d["productName"].ToString(),
                                  //productDetail = d["productDetail"].ToString(),
                                  pack = d["productId"].ToString() != "" ? QueryGetAllProduct.getProductById(d["productId"].ToString()).FirstOrDefault().pack.ToString() : "",
                                  smellName = d["smellName"].ToString(),
@@ -53,7 +53,7 @@ namespace eActForm.BusinessLayer
 
                 groupByPrice = lists
                     .OrderBy(x => x.rowNo)
-                    .GroupBy(item => new { item.wholeSalesPrice , item.size })
+                    .GroupBy(item => new { item.wholeSalesPrice , item.size  , item.rowNo})
                .Select((group, index) => new CostThemeDetailOfGroupByPrice
                {
                    productGroupId = group.First().productGroupId,

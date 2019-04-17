@@ -276,7 +276,7 @@
                                         {
                                             for (int i = 0; i < @item.detailGroup.Count; i++)
                                             {
-                                                <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) Pack(@Html.DisplayFor(m => item.pack))</td>
+                                                <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) (@Html.DisplayFor(m => item.pack))</td>
                                             }
                                         }
                                     }
@@ -328,13 +328,13 @@
 
                                     @if (item.isShowGroup == true)
                                     {
-                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) @Html.DisplayFor(m => item.pack) </td>
+                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) </td>
                                     }
                                     else
                                     {
                                         for (int i = 0; i < @item.detailGroup.Count; i++)
                                         {
-                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) @Html.DisplayFor(m => item.detailGroup[i].productDetail) @Html.DisplayFor(m => item.pack)</td>
+                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) @Html.DisplayFor(m => item.detailGroup[i].productDetail)</td>
                                         }
                                     }
 

@@ -163,7 +163,7 @@ namespace eActForm.Controllers
             {
                 var normalCost = model.normalCost.ToString().Replace(",", "");
                 var wholeSalesPrice = model.wholeSalesPrice.ToString().Replace(",", "");
-                var saleOut = model.saleOut.ToString().Replace(",", "");
+                var saleNormal = model.saleNormal.ToString().Replace(",", "");
                 var saleIn = model.saleIn.ToString().Replace(",", "");
                 var normalGP = model.normalGp == null ? "" : model.normalGp.ToString().Replace(",", "");
                 var promotionGP = model.promotionGp == null ? "" : model.promotionGp.ToString().Replace(",", "");
@@ -175,8 +175,8 @@ namespace eActForm.Controllers
 
                 decimal getPackProduct = QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().pack;
 
-                decimal p_normalGp = AppCode.checkNullorEmpty(saleOut) == "0" ? 0 : ((decimal.Parse(saleOut) - (p_disCount3 * decimal.Parse("1.07")))
-                    / getPackProduct / decimal.Parse(saleOut)) * 100;
+                decimal p_normalGp = AppCode.checkNullorEmpty(saleNormal) == "0" ? 0 : ((decimal.Parse(saleNormal) - (p_disCount3 * decimal.Parse("1.07")))
+                    / getPackProduct / decimal.Parse(saleNormal)) * 100;
 
                 decimal p_PromotionCost = AppCode.checkNullorEmpty(model.specialDisc.ToString()) == "0" && AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()) == "0" || p_disCount3 == 0 ? p_disCount3 : (p_disCount3 - (p_disCount3 * (decimal.Parse(model.specialDisc.ToString()) / 100))) - decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
 
@@ -194,7 +194,7 @@ namespace eActForm.Controllers
                         r.disCount1 = decimal.Parse(AppCode.checkNullorEmpty(model.disCount1.ToString()));
                         r.disCount2 = decimal.Parse(AppCode.checkNullorEmpty(model.disCount2.ToString()));
                         r.disCount3 = decimal.Parse(AppCode.checkNullorEmpty(model.disCount3.ToString()));
-                        r.saleOut = decimal.Parse(AppCode.checkNullorEmpty(saleOut));
+                        r.saleNormal = decimal.Parse(AppCode.checkNullorEmpty(saleNormal));
                         r.saleIn = decimal.Parse(AppCode.checkNullorEmpty(saleIn));
                         r.normalGp = p_normalGp;
                         r.promotionGp = p_PromotionGp;
