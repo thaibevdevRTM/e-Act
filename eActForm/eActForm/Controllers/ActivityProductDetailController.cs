@@ -42,7 +42,7 @@ namespace eActForm.Controllers
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-            activityModel.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.id == rowId).ToList();
+            activityModel.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).ToList();
 
              return PartialView(activityModel);
         }
