@@ -150,6 +150,7 @@ namespace eActForm.Models
     public class CostThemeDetailOfGroupByPrice : ActBaseModel
     {
         public string id { get; set; }
+        public string productGroupId { get; set; }
         public string activityId { get; set; }
         public string typeTheme { get; set; }
         public string activityTypeId { get; set; }
@@ -157,6 +158,7 @@ namespace eActForm.Models
         public string productDetail { get; set; }
         public string productId { get; set; }
         public string productName { get; set; }
+        public decimal? wholeSalesPrice { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalCost { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
@@ -187,6 +189,7 @@ namespace eActForm.Models
     public class CostThemeDetail : ActBaseModel
     {
         public string id { get; set; }
+        public string productGroupId { get; set; }
         public string activityId { get; set; }
         public string typeTheme { get; set; }
         public string activityTypeId { get; set; }
@@ -197,6 +200,7 @@ namespace eActForm.Models
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
         public decimal? perTotal { get; set; }
+        public decimal? wholeSalesPrice { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string brandId { get; set; }
@@ -210,6 +214,7 @@ namespace eActForm.Models
     public class ProductCostOfGroupByPrice : ActBaseModel
     {
         public string id { get; set; }
+        public string productGroupId { get; set; }
         public string activityId { get; set; }
         public string activityTypeId { get; set; }
         public string productId { get; set; }
