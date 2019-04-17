@@ -39,7 +39,7 @@ namespace eActForm.BusinessLayer
                                   disCount1 = d["discount1"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["discount1"].ToString())),
                                   disCount2 = d["discount2"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["discount2"].ToString())),
                                   disCount3 = d["discount3"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["discount3"].ToString())),
-                                  normalCost = d["wholeSalesPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["wholeSalesPrice"].ToString())),
+                                  normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["normalCost"].ToString())),
                                   normalGp = d["normalGp"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["normalGp"].ToString())),
                                   promotionGp = d["promotionGp"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["promotionGp"].ToString())),
                                   specialDisc = d["specialDisc"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["specialDisc"].ToString())),
