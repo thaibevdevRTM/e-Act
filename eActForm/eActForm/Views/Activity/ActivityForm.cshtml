@@ -389,7 +389,8 @@
             data: {
                 brandId: $("#ddlProductBrand").val(),
                 size: $("#ddlProductSize").val(),
-                smellId: $("#ddlProductSmell").val()
+                smellId: $("#ddlProductSmell").val(),
+                productGroupId: $("#ddlProductGrp").val()
             },
             dataType: "json",
             type: 'POST',
@@ -444,7 +445,8 @@
             url: '@Url.Action("getProductDetail", "eAct")',
             data: {
                 brandId: $("#ddlProductBrand").val(),
-                smellId: $("#ddlProductSmell").val()
+                smellId: $("#ddlProductSmell").val(),
+                productGroupId:$("#ddlProductGrp").val()
             },
             dataType: "json",
             type: 'POST',
