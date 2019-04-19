@@ -35,7 +35,7 @@ namespace eActForm.BusinessLayer
                                   pack = d["productId"].ToString() != "" ? QueryGetAllProduct.getProductById(d["productId"].ToString()).FirstOrDefault().pack.ToString() : "",
                                   wholeSalesPrice = d["wholeSalesPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["wholeSalesPrice"].ToString())),
                                   saleIn = d["saleIn"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["saleIn"].ToString())),
-                                  saleOut = d["saleOut"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["saleOut"].ToString())),
+                                  saleNormal = d["saleOut"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["saleOut"].ToString())),
                                   disCount1 = d["discount1"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["discount1"].ToString())),
                                   disCount2 = d["discount2"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["discount2"].ToString())),
                                   disCount3 = d["discount3"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["discount3"].ToString())),
