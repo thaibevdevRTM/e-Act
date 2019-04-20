@@ -130,6 +130,7 @@ namespace eActForm.Models
         public string txttheme { get; set; }
         public string objective { get; set; }
         public string trade { get; set; }
+        [DataType(DataType.MultilineText)]
         public string activityDetail { get; set; }
         public byte UploadedImage { get; set; }
         public string getUploadedImage { get; set; }

@@ -69,7 +69,7 @@ namespace eActForm.BusinessLayer
                    size = group.First().size,
                    wholeSalesPrice = group.First().wholeSalesPrice,
                    saleIn = group.First().saleIn,
-                   saleOut = group.First().saleOut,
+                   saleNormal = group.First().saleNormal,
                    disCount1 = group.First().disCount1,
                    disCount2 = group.First().disCount2,
                    disCount3 = group.First().disCount3,

@@ -226,12 +226,14 @@ namespace eActForm.Controllers
                 if (countresult > 0)
                 {
                     GridHtml = GridHtml.Replace("---", genDoc);
+                    //GridHtml = GridHtml.Replace("\n", "<br />");
+          
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                     {
                         ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                        EmailAppCodes.sendApprove(activityId,AppCode.ApproveType.Activity_Form);
+                       EmailAppCodes.sendApprove(activityId,AppCode.ApproveType.Activity_Form);
                     }
                 }
                 resultAjax.Success = true;

@@ -82,6 +82,10 @@
                     .textLeft {
                         text-align: left;
                     }
+
+                    .line-breaks {
+                        white-space: pre-line;
+                    }
                 </style>
 
                 <div>
@@ -227,10 +231,10 @@
                         รายละเอียดของการทำกิจกรรม(Activity Detail)
                     </div>
                     <div style="margin-top:15px;">
-                        <label style="font-size:12.5px; white-space:pre-line;">@Html.DisplayFor(item => item.activityFormModel.activityDetail) </label>
+                        <label style="font-size:12.5px; white-space: pre-line"> @Html.Raw(Html.Encode(Model.activityFormModel.activityDetail))</label>
                     </div>
                 </div>
-
+                <br />
                 <div>
                     <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
                 </div>
