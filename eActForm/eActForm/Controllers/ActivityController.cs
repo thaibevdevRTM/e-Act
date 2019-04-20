@@ -214,7 +214,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult submitPreview(string GridHtml, string status, string activityId)
+        public JsonResult submitPreview(string GridHtml1, string GridHtml2, string GridHtml3, string status, string activityId)
         {
             var resultAjax = new AjaxResult();
             int countresult = 0;
@@ -225,15 +225,17 @@ namespace eActForm.Controllers
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc);
                 if (countresult > 0)
                 {
-                    GridHtml = GridHtml.Replace("---", genDoc);
-                    //GridHtml = GridHtml.Replace("\n", "<br />");
-          
+                    GridHtml1 = GridHtml1.Replace("---", genDoc);
+                    GridHtml2 = GridHtml2.Replace("\n", "<br />");
+                    string mixHtml = GridHtml1 + GridHtml2 + GridHtml3;
+
+
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
-                    AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+                    AppCode.genPdfFile(mixHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                     {
                         ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                       EmailAppCodes.sendApprove(activityId,AppCode.ApproveType.Activity_Form);
+                       //EmailAppCodes.sendApprove(activityId,AppCode.ApproveType.Activity_Form);
                     }
                 }
                 resultAjax.Success = true;
