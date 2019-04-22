@@ -234,8 +234,8 @@ namespace eActForm.Controllers
                     AppCode.genPdfFile(mixHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                     {
-                       // ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                       //EmailAppCodes.sendApprove(activityId,AppCode.ApproveType.Activity_Form);
+                        ApproveAppCode.updateApproveWaitingByRangNo(activityId);
+                        EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form);
                     }
                 }
                 resultAjax.Success = true;
