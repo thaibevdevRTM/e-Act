@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer
                                  updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                  updatedByUserId = d["updatedByUserId"].ToString(),
                              });
-                return lists.ToList();
+                return lists.OrderBy(x => x.cusNameTH).ToList();
             }
             catch(Exception ex)
             {

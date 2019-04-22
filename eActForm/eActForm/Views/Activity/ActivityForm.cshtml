@@ -80,15 +80,7 @@
                         }
                         else
                         {
-                            if (Model.activityFormModel.documentDate != null)
-                            {
-                                @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
-                            }
-                            else
-                            {
-                                @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Today.ToString("dd-MM-yyyy") })
-
-                            }
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd")+"-"+@DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString()})
                         }
                     </div>
                 </div>
@@ -204,7 +196,7 @@
                     </div>
                     <div class="radio">
                         <label>
-                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { Checked = "checked", @id = "rdbOutterm" }) รายการส่งเสริมการขาย (นอก Trade Term)
+                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { @id = "rdbOutterm" }) รายการส่งเสริมการขาย (นอก Trade Term)
                         </label>
                     </div>
                 </div>
@@ -248,6 +240,8 @@
         <p class="lead">รายละเอียดของการทำกิจกรรม (Activity Detail)</p>
     </div>
     <div class="col-md-6">
+       
+       
         @Html.TextAreaFor(x => x.activityFormModel.activityDetail, 5, 60, new { @class = "form-control textboxcss", @id = "txtActivityDetail" })
     </div>
 </div>
@@ -330,8 +324,9 @@
 
 <div class="row">
     <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-5">
-
+      
         <p class="d-flex justify-content-center">
+            <a id="btncancel" href="../Home/Index" class="btn ink-reaction btn-danger">&nbsp;Cancel</a>
             <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Submit</button>
         </p>
     </div>
@@ -650,17 +645,19 @@
     }
 
 
-    function validatesubmit() {
 
+    function validatesubmit() {
+        console.log();
         var required = "กรุณา ระบุ :<br>";
         var validate = true;
         if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
         if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
         if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
-        if ($("#ddlProductCate").val() == "0") { required += "Product category*<br>"; validate = false; }
-        if ($("#ddlProductGrp").val() == "0") { required += "กลุ่มสินค้า *<br>"; validate = false; }
+        if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
+        if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
+        if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
         console.log(rowCount);
-        if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
+        //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 
         if (validate == true) {
             SubmitData();
@@ -673,7 +670,7 @@
     function SubmitData() {
         $("#WaitDialog").show();
 
-        console.log($("#txtdateDoc").val());
+        console.log($("input[name='activityFormModel.trade']:checked").val());
         console.log($("#txtdateActivitySt").val());
             $.ajax({
                 url: '@Url.Action("insertDataActivity", "Activity")',
@@ -739,7 +736,7 @@
         document.getElementById("divUploadImg").style.display = "none";
         document.getElementById("rdbterm").disabled = true;
         document.getElementById("rdbOutterm").disabled = true;
-        document.getElementById("btnsubmit").disabled = true;
+        //document.getElementById("btnsubmit").disabled = true;
         //$("input.txtnormalGp").attr("disabled", true);
     }
 

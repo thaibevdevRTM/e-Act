@@ -84,6 +84,7 @@ namespace eActForm.BusinessLayer
 
 
                 groupByPrice = lists.OrderByDescending(o => o.wholeSalesPrice)
+                    .Where(x => x.wholeSalesPrice > 0)
                     .OrderByDescending(x => x.size)
                     .GroupBy(item => new { item.wholeSalesPrice, item.size  })
                     
