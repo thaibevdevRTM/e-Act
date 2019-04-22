@@ -24,6 +24,10 @@ namespace eActForm.Models
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
 
+        public enum ApproveEmailype
+        {
+            approve
+        }
         public enum ApproveType
         {
             Activity_Form

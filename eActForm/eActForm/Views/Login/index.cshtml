@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_BlankLayout.cshtml";
-    var s = Request["s"];
+    var s = Request["s"] != null ? Request["s"] : "" ;
+    var actId = Request["actId"] != null ? Request["actId"] : "" ;
 }
 <body class="login">
     <div>
@@ -18,7 +19,8 @@
                                 @Html.AntiForgeryToken()
                                 <h1>Login Activity Form</h1>
                                 <div>
-                                    @*<input type="hidden" name="txtParam" id="txtParam" value="@s" />*@
+                                    <input type="hidden" name="txtParam" id="txtParam" value="@s" />
+                                    <input type="hidden" name="txtActId" id="txtActId" value="@actId" />
                                     <input type="text" name="txtUserName" class="form-control" placeholder="Username" required="" />
                                 </div>
                                 <div>
