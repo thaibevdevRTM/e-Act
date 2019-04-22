@@ -105,6 +105,7 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message);
+                throw new Exception("sendEmailApprove" + ex.Message);
             }
         }
 
