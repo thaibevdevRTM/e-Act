@@ -16,6 +16,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
+                EmailAppCodes.resendHistory(actId);
                 EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Activity_Form);
                 result.Success = true;
             }

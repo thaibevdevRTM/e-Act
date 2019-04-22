@@ -222,5 +222,26 @@ namespace eActForm.BusinessLayer
             mailer.IsHtml = true;
             mailer.Send();
         }
+
+        public static void resendHistory(string actId)
+        {
+            try
+            {
+                SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "ups_insertResendHistory"
+                    , new SqlParameter[] {
+                        new SqlParameter("@id",Guid.NewGuid().ToString())
+                        ,new SqlParameter("@actFormId",actId)
+                        ,new SqlParameter("@delFlag",false)
+                        ,new SqlParameter("@createdDate",DateTime.Now)
+                        ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+                        ,new SqlParameter("@updatedDate",DateTime.Now)
+                        ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("resendHistory>> " + ex.Message);
+            }
+        }
     }
 }
