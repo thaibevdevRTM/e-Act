@@ -88,7 +88,7 @@ namespace eActForm.Controllers
             {
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
-                    EmailAppCodes.sendReject(activityId);
+                    EmailAppCodes.sendReject(activityId,AppCode.ApproveType.Activity_Form);
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
