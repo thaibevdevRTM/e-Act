@@ -58,6 +58,7 @@
                         Act No.
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
                         @*<input type="text" id="txtActivityNo" class="form-control textboxcss" readonly>*@
                     </div>
@@ -249,7 +250,7 @@
     <div class="col-12">
         <p class="lead">รายละเอียดของการทำกิจกรรม (Activity Detail)</p>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-6">
         @Html.TextAreaFor(x => x.activityFormModel.activityDetail, 6, 50, new { @class = "form-control textboxcss", @Styles="font-size: 8pt", @id = "txtActivityDetail" })
     </div>
 </div>

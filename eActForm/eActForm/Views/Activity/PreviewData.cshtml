@@ -30,8 +30,6 @@
                         url: '@Url.Action("submitPreview", "Activity")',
                         data: {
                             GridHtml1: $("#Grid1").html(),
-                            GridHtml2: $("#Grid2").html(),
-                            GridHtml3: $("#Grid3").html(),
                             status: 2,
                             activityId: $("#HdId").val(),
                         },
@@ -233,11 +231,39 @@
                         รายละเอียดของการทำกิจกรรม(Activity Detail)
                     </div>
                     <div style="margin-top:15px;">
-                        <p style="font-size:12px;"> (item => item.activityFormModel.activityDetail)</p>
+                        <table>
+                            <tr>
+                                <td width="50%">
+                                    <p style="font-size:12px;">
+                                        @Html.Raw(Model.activityFormModel.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                                    </p>
+                                </td>
+
+                                @*@if (Model.productImageList.Any())
+                                {
+                                    string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
+                                    foreach (var item in Model.productImageList)
+                                    {
+                                            <td>
+                                                <img src="@url @item._fileName" style="width:120px; height:120px;"/>
+                                            </td>
+                                    }
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }*@
+
+
+
+
+                            </tr>
+                        </table>
+
                     </div>
                 </div>
 
-              
+
                 <div>
                     <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
                 </div>
