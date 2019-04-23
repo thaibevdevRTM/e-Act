@@ -182,6 +182,7 @@
     <Compile Include="BusinessLayer\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\ApproveListAppCode.cs" />
     <Compile Include="BusinessLayer\ApproveRepDetailAppCode.cs" />
+    <Compile Include="BusinessLayer\BudgetApproveListAppCode.cs" />
     <Compile Include="BusinessLayer\BudgetFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\EmailAppCodes.cs" />
     <Compile Include="BusinessLayer\ApproveAppCode.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Controllers\ApproveListsController.cs" />
     <Compile Include="Controllers\ApproveListsRepDetailController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BudgetApproveController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
     <Compile Include="Controllers\BudgetViewerController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
@@ -2001,6 +2003,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Views\BudgetApprove\Index.cshtml" />
     <Content Include="WebForm1.aspx" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -2082,17 +2085,13 @@
     <Content Include="Views\ApproveListsRepDetail\index.cshtml" />
     <Content Include="Views\actFormRepDetail\approvePositionSignature.cshtml" />
     <Content Include="Views\ApproveListsRepDetail\ListView.cshtml" />
-    <Content Include="Views\BudgetApprove\budgetApprove.cshtml" />
-    <Content Include="Views\BudgetApprove\budgetApproveList.cshtml" />
-    <Content Include="Views\BudgetApprove\Index.cshtml" />
     <Content Include="Views\Budget\activityProduct.cshtml" />
     <Content Include="Views\Budget\activityProductInvoiceEdit.cshtml" />
     <Content Include="Views\Budget\activityProductInvoiceList.cshtml" />
     <Content Include="Views\Budget\activityProductList.cshtml" />
     <Content Include="Views\Budget\activityList.cshtml" />
-    <Content Include="Views\BudgetViewer\budgetPDFView.cshtml" />
-    <Content Include="Views\BudgetApprove\budgetApproveDetail.cshtml" />
     <Content Include="Views\Budget\activityInvoicePreviewList.cshtml" />
+    <Content Include="Views\BudgetApprove\budgetApproveList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
@@ -2103,6 +2102,7 @@
     <Folder Include="signature\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\BudgetViewer\" />
     <Folder Include="Views\eAct\" />
   </ItemGroup>
   <ItemGroup>

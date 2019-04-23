@@ -46,6 +46,7 @@ namespace eActForm.BusinessLayer
 				var result = (from DataRow d in ds.Tables[0].Rows
 							  select new TB_Budget_Activity_Model.Budget_Activity_Att()
 							  {
+								  budget_id = d["budget_Id"].ToString(),
 								  act_form_id = d["act_form_id"].ToString(),
 								  act_approveStatusId = int.Parse(d["act_approveStatusId"].ToString()),
 								  act_activityNo = d["act_activityNo"].ToString(),
@@ -81,6 +82,10 @@ namespace eActForm.BusinessLayer
 								  act_total_invoive = d["act_total_invoive"].ToString() == "" ? 0 : decimal.Parse(d["act_total_invoive"].ToString()),
 								  act_balance = d["act_balance"].ToString() == "" ? 0 : decimal.Parse(d["act_balance"].ToString()),
 
+								  //sum_cost_product_inv = d["sum_cost_product_inv"].ToString() == "" ? 0 : decimal.Parse(d["sum_cost_product_inv"].ToString()),
+								  //sum_total_invoice = d["sum_total_invoice"].ToString() == "" ? 0 : decimal.Parse(d["sum_total_invoice"].ToString()),
+								  //sum_balance_product_inv = d["sum_balance_product_inv"].ToString() == "" ? 0 : decimal.Parse(d["sum_balance_product_inv"].ToString()),
+
 								  //delFlag = bool.Parse(d["delFlag"].ToString()),
 								  act_createdDate = DateTime.Parse(d["act_createdDate"].ToString()),
 								  act_createdByUserId = d["act_createdByUserId"].ToString(),
@@ -89,9 +94,6 @@ namespace eActForm.BusinessLayer
 
 								  bud_ActivityStatusId = d["bud_ActivityStatusId"].ToString(),
 								  bud_ActivityStatus = d["bud_ActivityStatus"].ToString(),
-
-								  //inv_invoiceStatusID = d["inv_invoiceStatusID"].ToString() =="" ? "1" : d["inv_invoiceStatusID"].ToString(),
-								  //inv_activityStatus = d["inv_activityStatus"].ToString()=="" ? "ค้างจ่าย" : d["inv_activityStatus"].ToString(),
 
 							  });
 

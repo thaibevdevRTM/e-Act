@@ -9,6 +9,7 @@ namespace eActForm.Models
 
 		public class Budget_Activity_Att
 		{
+			public string budget_id { get; set; }
 			public string act_form_id { get; set; }
 			public int act_approveStatusId { get; set; }
 			public string act_activityNo { get; set; }

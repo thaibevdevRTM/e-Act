@@ -15,6 +15,7 @@ namespace eActForm.Models
 
 		public class Budget_Approve_Att
 		{
+			public string budgetId { get; set; }
 			public string budgetActivityId { get; set; }
 			public string activityId { get; set; }
 			public string activityNo { get; set; }
@@ -61,6 +62,12 @@ namespace eActForm.Models
 
 			[DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
 			public decimal productSumInvoiceBath { get; set; }
+			[DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+			public decimal sum_cost_product_inv { get; set; }
+			[DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+			public decimal sum_total_invoice { get; set; }
+			[DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+			public decimal sum_balance_product_inv { get; set; }
 
 		}
 

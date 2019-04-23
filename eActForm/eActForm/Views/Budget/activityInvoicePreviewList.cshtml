@@ -27,22 +27,40 @@
         window.location.href = url;*@
     }
 
-	function onClickPrint() {
+	function onClickSubmitApprove() {
 		genPdf();
+		submitApproveBudget();
+
 	}
-	
+
     function genPdf() {
             $.ajax({
-            url: '@Url.Action("genPdfApprove", "Budget")',
+            url: '@Url.Action("genPdfApprove", "BudgetApprove")',
             data: {
-                GridHtml: $("#Grid").html(),
-				activityId: $("#HactivityId").val()
+				GridHtml: $("#Grid").html(),
+				budgetId: $("#HbudgetId").val()
+				//activityId: $("#HactivityId").val()
             },
             dataType: "json",
             type: 'POST',
             }).done(function (response) {
                 $("#WaitDialog").hide();
                 console.log("genPdff");
+                console.log('success');
+                 });
+	}
+
+	function submitApproveBudget() {
+            $.ajax({
+            url: '@Url.Action("submitPreviewBudget", "Budget")',
+            data: {
+				GridHtml: $("#Grid").html(),
+				budgetId: $("#HbudgetId").val()
+            },
+            dataType: "json",
+            type: 'POST',
+            }).done(function (response) {
+                $("#WaitDialog").hide();
                 console.log('success');
                  });
 	}
@@ -58,7 +76,7 @@
 	}
 </style>
 
-@Html.HiddenFor(m => m.Budget_Activity_list.ElementAt(0).act_form_id, new { id = "HactivityId" })
+@Html.HiddenFor(m => m.Budget_Activity_list.ElementAt(0).budget_id, new { id = "HbudgetId" })
 
 <div class="modal-dialog modal-lg" style="width:95%;">
 	<div class="modal-content">
@@ -76,15 +94,15 @@
 						border-bottom-color: gray;
 					}
 				</style>
-				
+
 				<div>
 					<div style="text-align:center;"><h5>รายละเอียดค่าใช้จ่าย ตั้งจ่ายจริง</h5></div>
 				</div>
-				
+
 				<div>
 					<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
 				</div>
-				
+
 				<div>
 					<table style="border-bottom-width:0px; border-bottom-style:solid; border-bottom-color:gray; width:100%;">
 						<tr>
@@ -128,7 +146,7 @@
 								<label> ช่องทาง (Channel) : </label> @Model.Budget_Activity_list.ElementAt(0).ch_chanelGroup
 							</td>
 						</tr>
-						
+
 						<tr>
 							<td style="text-align:left;">
 								<label> ระยะเวลาการให้ทุนพิเศษ (Cast Period) : </label>
@@ -138,29 +156,29 @@
 								<label> กลุ่มสินค้า (Product Group) : </label> @Model.Budget_Activity_list.ElementAt(0).prd_groupShort
 							</td>
 						</tr>
-						
+
 						<tr>
 							<td style="text-align:left;">
 								<label> วัตถุประสงค์ (Objective) : </label>  @Model.Budget_Activity_list.ElementAt(0).act_objective
 							</td>
 							<td style="text-align:right;"></td>
 						</tr>
-						
+
 						<tr>
 							<td style="text-align:left;"></td>
 							<td style="text-align:right;"></td>
 						</tr>
-						
+
 						<tr>
 							<td style="text-align:left;"></td>
 							<td style="text-align:right;"></td>
 						</tr>
-						
+
 						<tr>
 							<td style="text-align:left;"></td>
 							<td style="text-align:right;"></td>
 						</tr>
-					
+
 					</table>
 				</div>
 
@@ -170,8 +188,8 @@
 						<label> รายละเอียดการใช้จ่ายจริง (Actual) : </label>
 					</div>
 
-					
-					<table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+
+					<table class="tablethin" style="width:100%; text-align:center; border-color:gray;" border="1" cellpadding="0" cellspacing="0">
 						<tr>
 							<td rowspan="2" style="width:10%; font-size:11px;">ประเภทกิจกรรม</td>
 							<td rowspan="2" style="width:30%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
@@ -193,18 +211,53 @@
 							var index = 0;
 							foreach (var item in Model.Budget_Approve_list)
 							{
-								<tr>
-									<td style="text-align:left;font-size:12px;">@item.activityTypeTheme</td>
-									<td style="text-align:left;font-size:12px;">@item.productDetail</td>
-									<td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.productStandBath)</td>
-									<td style="text-align:center;font-size:12px;">@item.invoiceNo</td>
-									<td></td>
-									<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.invoiceTotalBath)</td>
-									<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)</td>
-									<td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
-									<td style="text-align:center;font-size:12px;">@item.invoiceBudgetStatusNameTH</td>
-								</tr>
+
+								if (@item.invoiceNo == "")
+								{
+									<tr>
+										<td style="text-align:left;font-size:12px;">&nbsp;@item.activityTypeTheme</td>
+										<td style="text-align:left;font-size:12px;">&nbsp;@item.productDetail</td>
+										<td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.productStandBath)&nbsp;</td>
+										<td style="text-align:center;font-size:12px;">@item.invoiceNo</td>
+										<td></td>
+										<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.invoiceTotalBath)&nbsp;</td>
+										<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)&nbsp;</td>
+										<td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
+										<td style="text-align:center;font-size:12px;">&nbsp;ตั้งจ่าย</td>
+									</tr>
+								}
+								else
+								{
+									<tr>
+										<td style="text-align:left;font-size:12px;border-right-style:none;"></td>
+										<td style="text-align:left;font-size:12px;border-left-style:none;"></td>
+										<td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.productStandBath)&nbsp;</td>
+										<td style="text-align:center;font-size:12px;">@item.invoiceNo</td>
+										<td></td>
+										<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.invoiceTotalBath)&nbsp;</td>
+										<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)&nbsp;</td>
+										<td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
+										<td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
+									</tr>
+								}
+
+
 								index++;
+								if (index == Model.Budget_Approve_list.Count)
+								{
+									<tr>
+										<td style="text-align:left;font-size:12px;"></td>
+										<td style="text-align:right;font-size:12px;">Total &nbsp;</td>
+										<td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.sum_cost_product_inv)&nbsp;</td>
+										<td style="text-align:center;font-size:12px;"></td>
+										<td></td>
+										<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.sum_total_invoice)&nbsp;</td>
+										<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.sum_balance_product_inv)&nbsp;</td>
+										<td style="text-align:center;font-size:12px;"></td>
+										<td style="text-align:center;font-size:12px;"></td>
+									</tr>
+								}
+
 							}
 						}
 					</table>
@@ -216,7 +269,7 @@
 		<div class="modal-footer">
 			<div>
 				<p class="d-flex justify-content-center">
-					<button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="onClickPrint();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Print</button>
+					<button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
 					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
 				</p>
 			</div>

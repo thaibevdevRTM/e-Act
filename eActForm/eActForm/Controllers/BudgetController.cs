@@ -1,19 +1,22 @@
-﻿using eActForm.BusinessLayer;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+using System.Data.SqlClient;
+using Microsoft.ApplicationBlocks.Data;
+using eActForm.BusinessLayer;
 using eActForm.Models;
 using iTextSharp.text;
 using iTextSharp.text.html;
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using WebLibrary;
@@ -26,21 +29,37 @@ namespace eActForm.Controllers
 
 		[HttpPost]
 		[ValidateInput(false)]
-		public JsonResult genPdfApprove(string GridHtml, string activityId)
+		public JsonResult submitPreviewBudget(string GridHtml, string budgetId)
 		{
 			var resultAjax = new AjaxResult();
 			try
 			{
-				var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], activityId));
+				//var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
+				//AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+				//if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
+				//{
+				//	ApproveAppCode.updateApproveWaitingByRangNo(activityId);
+				//	EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form);
+				//}
+				//resultAjax.Success = true;
+
+
+				var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetId));
 				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-				//EmailAppCodes.sendApproveActForm(activityId);
-			
+				if (BudgetApproveController.insertApproveForBudgetForm(budgetId) > 0)
+				{
+					BudgetApproveController.updateApproveWaitingByRangNo(budgetId);
+					//EmailAppCodes.sendApprove(budgetId, AppCode.ApproveType.Activity_Form);
+				}
 				resultAjax.Success = true;
+
+
 			}
 			catch (Exception ex)
 			{
 				resultAjax.Success = false;
 				resultAjax.Message = ex.Message;
+				ExceptionManager.WriteError(ex.Message);
 			}
 			return Json(resultAjax, "text/plain");
 		}
