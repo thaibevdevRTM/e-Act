@@ -111,6 +111,8 @@ namespace eActForm.Models
         public string customerId { get; set; }
         public string chanel { get; set; }
         public string chanelShort { get; set; }
+        public string shortBrand { get; set; }
+        public string chanel_Id { get; set; }
         public string productCateId { get; set; }
         public string productCateText { get; set; }
         public string productGroupId { get; set; }
@@ -128,6 +130,7 @@ namespace eActForm.Models
         public string txttheme { get; set; }
         public string objective { get; set; }
         public string trade { get; set; }
+        [DataType(DataType.MultilineText)]
         public string activityDetail { get; set; }
         public byte UploadedImage { get; set; }
         public string getUploadedImage { get; set; }
@@ -148,11 +151,15 @@ namespace eActForm.Models
     public class CostThemeDetailOfGroupByPrice : ActBaseModel
     {
         public string id { get; set; }
+        public string productGroupId { get; set; }
         public string activityId { get; set; }
         public string typeTheme { get; set; }
         public string activityTypeId { get; set; }
+
+        public string productDetail { get; set; }
         public string productId { get; set; }
         public string productName { get; set; }
+        public decimal? wholeSalesPrice { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalCost { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
@@ -183,6 +190,7 @@ namespace eActForm.Models
     public class CostThemeDetail : ActBaseModel
     {
         public string id { get; set; }
+        public string productGroupId { get; set; }
         public string activityId { get; set; }
         public string typeTheme { get; set; }
         public string activityTypeId { get; set; }
@@ -193,10 +201,12 @@ namespace eActForm.Models
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
         public decimal? perTotal { get; set; }
+        public decimal? wholeSalesPrice { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
         public string brandId { get; set; }
         public string smellName { get; set; }
+        public string productDetail { get; set; }
         public Boolean isShowGroup { get; set; }
 
         public int rowNo { get; set; }
@@ -205,11 +215,13 @@ namespace eActForm.Models
     public class ProductCostOfGroupByPrice : ActBaseModel
     {
         public string id { get; set; }
+        public string productGroupId { get; set; }
         public string activityId { get; set; }
         public string activityTypeId { get; set; }
         public string productId { get; set; }
         public string pack { get; set; }
         public string productName { get; set; }
+        public string productDetail { get; set; }
         public string typeTheme { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? wholeSalesPrice { get; set; }
@@ -219,6 +231,9 @@ namespace eActForm.Models
         public decimal? disCount2 { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? disCount3 { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+
+        public decimal? saleNormal { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalCost { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
@@ -240,7 +255,6 @@ namespace eActForm.Models
         public string brandName { get; set; }
         public int size { get; set; }
         public string smellName { get; set; }
-        public decimal? specialDisBaht { get; set; }
         public decimal? themeCost { get; set; }
         public decimal? growth { get; set; }
         public decimal? total { get; set; }

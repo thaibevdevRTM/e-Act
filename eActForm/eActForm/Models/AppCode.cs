@@ -24,6 +24,10 @@ namespace eActForm.Models
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
 
+        public enum ApproveEmailype
+        {
+            approve
+        }
         public enum ApproveType
         {
             Activity_Form
@@ -46,7 +50,7 @@ namespace eActForm.Models
 
         public static string checkNullorEmpty(string p)
         {
-            return p == "" || p == null || p == "0" || p == "0.00" ? "0" : p;
+            return p == "" || p == null || p == "0" || p == "0.00" || p == "0.000" || p == "0.0000" ? "0" : p;
         }
 
         public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc)

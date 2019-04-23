@@ -114,43 +114,47 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getddlSize(string Id)
-        {
-            var result = new AjaxResult();
-            try
-            {
-                List<TB_Act_Product_Model.Product_Model> productModel = new List<TB_Act_Product_Model.Product_Model>();
+        //public JsonResult getddlSize(string Id)
+        //{
+        //    var result = new AjaxResult();
+        //    try
+        //    {
+        //        List<TB_Act_Product_Model.Product_Model> productModel = new List<TB_Act_Product_Model.Product_Model>();
 
-                productModel = QueryGetAllProduct.getAllProduct().Where(x => x.brandId == Id).ToList();
-                var resultData = new
-                {
-                    getProductSize = productModel.Select(x => new
-                    {
-                        Value = x.id,
-                        Text = x.size
-                    }).ToList(),
-                };
-                result.Data = resultData;
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = ex.Message;
-            }
+        //        productModel = QueryGetAllProduct.getAllProduct().Where(x => x.brandId == Id).ToList();
+        //        var resultData = new
+        //        {
+        //            getProductSize = productModel.Select(x => new
+        //            {
+        //                Value = x.id,
+        //                Text = x.size
+        //            }).ToList(),
+        //        };
+        //        result.Data = resultData;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.Success = false;
+        //        result.Message = ex.Message;
+        //    }
 
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
 
-        public JsonResult getProductDetail(string brandId, string smellId)
+        public JsonResult getProductDetail(string brandId, string smellId,string productGroupId)
         {
             var result = new AjaxResult();
             try
             {
                 List<TB_Act_Product_Model.Product_Model> getProductDetail = new List<TB_Act_Product_Model.Product_Model>();
-                if (smellId != "")
+                if( smellId != "" && brandId != "")
                 {
-                    getProductDetail = QueryGetAllProduct.getProductBySmellId(smellId);
+                    getProductDetail = QueryGetAllProduct.getProductBySmellIdAndBrandId(smellId, brandId);
+                }
+                else if (smellId != "")
+                {
+                    getProductDetail = QueryGetAllProduct.getProductBySmellId(smellId, productGroupId);
                 }
                 else
                 {
@@ -182,7 +186,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getddlProduct(string size, string brandId,string smellId)
+        public JsonResult getddlProduct(string size, string brandId,string smellId,string productGroupId)
         {
             var result = new AjaxResult();
             try
@@ -190,22 +194,27 @@ namespace eActForm.Controllers
                 List<TB_Act_Product_Model.Product_Model> productModel = new List<TB_Act_Product_Model.Product_Model>();
                 if (size != "")
                 {
-                    if (smellId == "")
+
+                    if(smellId != "" && brandId != "")
                     {
-                        productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.brandId == brandId) && x.size == size).ToList();
+                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => x.brandId == brandId && x.smellId == smellId && x.size == size).ToList();
+                    }
+                    else if (smellId == "")
+                    {
+                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => (x.brandId == brandId) && x.size == size).ToList();
                     }
                     else if (brandId == "")
                     {
-                        productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.smellId == smellId) && x.size == size).ToList();
+                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => (x.smellId == smellId) && x.size == size).ToList();
                     }
                     else
                     {
-                        productModel = QueryGetAllProduct.getAllProduct().Where(x => (x.brandId == brandId || x.smellId == smellId) && x.size == size).ToList();
+                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => (x.brandId == brandId || x.smellId == smellId) && x.size == size).ToList();
                     }
                 }
                 else
                 {
-                    productModel = QueryGetAllProduct.getAllProduct().Where(x => x.brandId == brandId).ToList();
+                    productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => x.brandId == brandId).ToList();
                     if (smellId != "")
                     {
                         productModel = productModel.Where(x => x.smellId == smellId).ToList();

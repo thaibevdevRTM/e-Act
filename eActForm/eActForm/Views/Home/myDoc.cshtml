@@ -61,6 +61,24 @@
             $("#divModalApprovelist").html(response)
             $('#modalApprovelist').modal('show');
         });
+    }
+
+    function resendApprove(actId) {
+        $("#WaitDialog").show();
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("resendApprove", "Base")',
+            data: {
+                actId: actId
+            }
+        }).done(function (response) {
+            $("#WaitDialog").hide();
+            if (response.Success) {
+                doMsgSuccess("ดำเนินการเรียบร้อยครับ")
+            } else {
+                doMsgFail(response.Message);
+            }
+        });
       }
 
 
@@ -74,7 +92,9 @@
 
         <a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>คือ Delete
         <a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit
-        <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View
+        <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
+        <a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>คือ History Approve
+        <a class="btn ink-reaction btn-info fa fa-send-o" href="#"></a>คือ Resend Email
 
         <table id="datatable" class="table table-striped table-hover">
             <thead>
@@ -99,20 +119,28 @@
                                 <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
                             </a>
                             @*@if (item.statusId == "1" || item.statusId == "5")
-                                {*@
+                            {*@
                             @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             @*}
-                                else
-                                {
-                                    <i class="btn ink-reaction btn-info fa fa-edit"></i>
-                                }*@
+                            else
+                            {
+                                <i class="btn ink-reaction btn-info fa fa-edit"></i>
+                            }*@
 
                             @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
 
 
                             <a onclick="callApproveList('@item.id');">
-                                <i class="btn ink-reaction btn-default fa fa-eye-slash"></i>
+                                <i class="btn ink-reaction btn-dark fa fa-eye"></i>
                             </a>
+
+                            @if (item.statusId == "2")
+                            {
+
+                                <a onclick="resendApprove('@item.id');">
+                                    <i class="btn ink-reaction btn-info fa fa-send-o"></i>
+                                </a>
+                            }
 
                         </td>
                         <td>@item.statusName</td>
@@ -121,7 +149,7 @@
                         <td>@item.activityName</td>
                         <td>@item.cusShortName</td>
                         <td>@item.productCategory</td>
-                        <td>@{ date = item.createdDate == null ? "" : item.createdDate.Value.ToString("yyyy/MM/dd");} @date</td>
+                        <td>@{ date = item.createdDate == null ? "" : item.createdDate.Value.ToString("dd/MM/yyyy");} @date</td>
                         <td>
 
                             @if (@item.totalCost != 0)

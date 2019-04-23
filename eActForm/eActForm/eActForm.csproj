@@ -209,6 +209,7 @@
     <Compile Include="BusinessLayer\RepDetailAppCode.cs" />
     <Compile Include="BusinessLayer\SearchAppCode.cs" />
     <Compile Include="BusinessLayer\SignatureAppCode.cs" />
+    <Compile Include="BusinessLayer\UserAppCode.cs" />
     <Compile Include="BusinessLayer\UtilsAppCode.cs" />
     <Compile Include="Controllers\actFormRepDetailController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
@@ -2078,6 +2079,7 @@
     <Content Include="Views\ApproveLists\index.cshtml" />
     <Content Include="Views\ApproveLists\ListView.cshtml" />
     <Content Include="Views\Home\approveLists.cshtml" />
+    <Content Include="Views\Budget\activityList.cshtml" />
     <Content Include="Views\ActivityProductDetail\showDetailGroup.cshtml" />
     <Content Include="Views\Shared\_search.cshtml" />
     <Content Include="Views\actFormRepDetail\index.cshtml" />

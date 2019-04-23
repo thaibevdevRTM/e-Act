@@ -91,7 +91,8 @@ namespace eActForm.BusinessLayer
                             List<ApproveModel.approveDetailModel> createUsers = ActFormAppCode.getUserCreateActForm(actFormId);
                             strBody = string.Format(ConfigurationManager.AppSettings["emailAllApproveBody"]
                                 , createUsers.FirstOrDefault().empName
-                                , createUsers.FirstOrDefault().activityNo);
+                                , createUsers.FirstOrDefault().activityNo
+                                , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actFormId));
 
                             sendEmailActForm(actFormId
                             , createUsers.FirstOrDefault().empEmail
@@ -104,6 +105,7 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message);
+                throw new Exception("sendEmailApprove" + ex.Message);
             }
         }
 
@@ -134,7 +136,7 @@ namespace eActForm.BusinessLayer
                             , item.activityName
                             , item.activitySales
                             , item.activityNo
-                            , item.sumTotal
+                            , String.Format("{0:n2}", item.sumTotal)
                             , item.createBy
                             , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId)
                             ) :
@@ -219,6 +221,27 @@ namespace eActForm.BusinessLayer
             mailer.CC = cc;
             mailer.IsHtml = true;
             mailer.Send();
+        }
+
+        public static void resendHistory(string actId)
+        {
+            try
+            {
+                SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "ups_insertResendHistory"
+                    , new SqlParameter[] {
+                        new SqlParameter("@id",Guid.NewGuid().ToString())
+                        ,new SqlParameter("@actFormId",actId)
+                        ,new SqlParameter("@delFlag",false)
+                        ,new SqlParameter("@createdDate",DateTime.Now)
+                        ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+                        ,new SqlParameter("@updatedDate",DateTime.Now)
+                        ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("resendHistory>> " + ex.Message);
+            }
         }
     }
 }

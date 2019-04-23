@@ -11,6 +11,26 @@ namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
+        public static void setCountWatingApprove()
+        {
+            try
+            {
+                if (UtilsAppCode.Session.User != null)
+                {
+                    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountWatingApproveByEmpId"
+                        , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
+                    if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                    {
+                        UtilsAppCode.Session.User.countWatingActForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
+                        UtilsAppCode.Session.User.counteatingRepDetail = ds.Tables[0].Rows[0]["repFormId"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("setCountWatingApprove >>" + ex.Message);
+            }
+        }
         public static List<ApproveModel.approveWaitingModel> getAllWaitingApproveGroupByEmpId()
         {
             try
@@ -74,7 +94,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("fillterApproveByEmpid >>" + ex.Message);
             }
         }
-        public static int updateApprove(string actFormId, string statusId, string remark,string approveType)
+        public static int updateApprove(string actFormId, string statusId, string remark, string approveType)
         {
             try
             {
@@ -88,13 +108,14 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                         });
 
-                if( approveType == AppCode.ApproveType.Activity_Form.ToString())
+                if (approveType == AppCode.ApproveType.Activity_Form.ToString())
                 {
-                    rtn = updateActFormStatus(statusId,actFormId);
-                }else if( approveType == AppCode.ApproveType.Report_Detail.ToString())
+                    rtn = updateActFormStatus(statusId, actFormId);
+                }
+                else if (approveType == AppCode.ApproveType.Report_Detail.ToString())
                 {
                     //
-                    rtn = updateActRepDetailStatus(statusId,actFormId);
+                    rtn = updateActRepDetailStatus(statusId, actFormId);
                 }
                 return rtn;
             }
@@ -128,7 +149,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
-        private static int updateActFormStatus(string statusId,string actFormId)
+        private static int updateActFormStatus(string statusId, string actFormId)
         {
             try
             {
@@ -147,7 +168,7 @@ namespace eActForm.BusinessLayer
                 }
                 return rtn;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

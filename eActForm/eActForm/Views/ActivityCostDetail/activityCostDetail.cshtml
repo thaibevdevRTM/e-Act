@@ -10,7 +10,7 @@
     decimal? normalTotal = 0;
     decimal? activityTotal = 0;
     decimal? growthTotal = 0;
-    
+
 
 }
 
@@ -40,11 +40,13 @@
             {
                 var index = 0;
                 total = 0;
-
+                Session["promotionTotal"] = 0;
+                
                 foreach (var item in Model.activitydetaillist)
                 {
+                    
                     <tr>
-                        <td onclick="onDelActDetail('@item.id')">
+                        <td onclick="onDelActDetail('@item.productGroupId')">
                             <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
                             @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
                         </td>
@@ -52,31 +54,31 @@
                         {
                             <td class="font10 textLeft">@item.typeTheme</td>
                         }
+                        else
+                        {
+                            if (item.detailGroup != null)
+                            {
+                                for (int i = 0; i < @item.detailGroup.Count; i++)
+                                {
+                                    <td class="font10 textLeft">@item.detailGroup[i].typeTheme</td>
+                                }
+                            }
+                        }
+
+
+                        @if (item.isShowGroup == true)
+                        {
+                            <td class="font10 textLeft">@item.brandName  @item.size ALL(@item.detailGroup.Count)</td>
+                        }
                         else if (item.isShowGroup == false)
                         {
                             if (item.detailGroup != null)
                             {
                                 for (int i = 0; i < @item.detailGroup.Count; i++)
                                 {
-                                <td class="font10 textLeft">@item.detailGroup[i].typeTheme</td>
-                                }
-                            }
-                        }
-                        else
-                        {
-                            <td class="font10 textLeft">@item.typeTheme</td>
-                        }
-
-                        @if (item.isShowGroup == true)
-                        {
-                            <td class="font10 textLeft">@item.brandName @item.smellName @item.size ALL(@item.detailGroup.Count)</td>
-                        }
-                        else if (item.isShowGroup == false)
-                        {
-                            for (int i = 0; i < @item.detailGroup.Count; i++)
-                            {
                                 @*<td style="text-align:right">@item.detailGroup[i].productName</td>*@
-                                <td>@Html.TextBoxFor(model => item.detailGroup[i].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calGrowth('" + item.id + "'," + index + ")" })</td>
+                                <td>@Html.TextBoxFor(model => item.detailGroup[i].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")" })</td>
+                                }
                             }
                         }
                         else
@@ -84,15 +86,15 @@
                             <td class="font10 textLeft">@item.productName</td>
                         }
 
-                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")" , onfocus = "setZero(lblNormalCost_" + index +")" })</td>
+                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")" })</td>
                         <td>
-                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")" })
+                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")" })
                         </td>
                         <td>
                             @Html.TextBoxFor(model => item.growth, "{0:p2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.id + "'," + index + ")", onfocus = "setZero(lblTotal_" + index + ")" })
+                            @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")" })
                         </td>
                         <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}%", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
 
@@ -149,7 +151,7 @@
                         @if (total != 0 && activityTotal != 0)
                         {
 
-                            perTotal = total * 100 / (activityTotal * Convert.ToDecimal(Session["promotionTotal"] == null ? "1" : Session["promotionTotal"].ToString()));
+                            perTotal = total / (activityTotal * Convert.ToDecimal(Session["promotionTotal"] == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
                             string result = String.Format("{0:n2}%", @perTotal);
                             @result.ToString();
                         }
@@ -165,24 +167,33 @@
         if ($(txtId).val() == "0.00")
         $(txtId).val("");
     }
-    
-    function calGrowth(id, rowIndex) {
 
-        if ($('#lblThemeCost_' + rowIndex).val() != "" && $('#lblNormalCost_' + rowIndex).val() != "") {
+    function calGrowth(id, rowIndex, checktotal) {
+
             var name = $('#lblProductName_' + rowIndex).val();
             var normalCost = $('#lblNormalCost_' + rowIndex).val();
+            normalCost = normalCost == "" ? 0 : normalCost;
             var themeCost = $('#lblThemeCost_' + rowIndex).val();
+            themeCost = themeCost == "" ? 0 : themeCost;
             var growth = $("#lblGrowth_" + rowIndex).val();
+            growth = growth == "" ? 0 : growth;
             var productId = $("#hdProductId_" + rowIndex).val();
-            var total =  $("#lblTotal_" + rowIndex).val();
-                
+    
+            var total = 0;
+            if (checktotal == true) {
+                var total = $("#lblTotal_" + rowIndex).val();
+            }
+           
+
+           
+
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("calCostDetailTheme", "ActivityCostDetail")',
                 data: {
                     name: name,
                     normalCost: normalCost,
-                    id: id,
+                    productGroupId: id,
                     productId: productId,
                     themeCost: themeCost,
                     growth: growth,
@@ -191,7 +202,7 @@
             }).done(function (response) {
                 callThemedetailcost();
             });
-        }
+        
     }
         function onDelActDetail(id) {
 

@@ -11,6 +11,17 @@ namespace eActForm.BusinessLayer
 {
     public class ApproveRepDetailAppCode
     {
+        public static List<RepDetailModel.actApproveRepDetailModel> getFilterFormByStatusId(List<RepDetailModel.actApproveRepDetailModel> lists, int statusId)
+        {
+            try
+            {
+                return lists.Where(r => r.statusId == statusId.ToString()).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFilterFormByStatusId >> " + ex.Message);
+            }
+        }
         public static int updateActRepDetailByApproveDetail(string actId)
         {
             try
@@ -31,26 +42,33 @@ namespace eActForm.BusinessLayer
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveRepDetailFormByEmpId"
                     , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
-
-                var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new RepDetailModel.actApproveRepDetailModel()
-                             {
-                                 id = dr["id"].ToString(),
-                                 statusId = dr["statusId"].ToString(),
-                                 statusName = dr["statusName"].ToString(),
-                                 startDate = dr["startDate"] is DBNull ? null : (DateTime?)dr["startDate"],
-                                 endDate = dr["endDate"] is DBNull ? null : (DateTime?)dr["endDate"],
-                                 customerId = dr["customerId"].ToString(),
-                                 productTypeId = dr["productTypeId"].ToString(),
-                                 productTypeName = dr["productTypeName"].ToString(),
-                                 customerName = dr["customerName"].ToString(),
-                                 delFlag = (bool)dr["delFlag"],
-                                 createdDate = (DateTime?)dr["createdDate"],
-                                 createdByUserId = dr["createdByUserId"].ToString(),
-                                 updatedDate = (DateTime?)dr["updatedDate"],
-                                 updatedByUserId = dr["updatedByUserId"].ToString()
-                             }).ToList();
-                return lists;
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    var lists = (from DataRow dr in ds.Tables[0].Rows
+                                 select new RepDetailModel.actApproveRepDetailModel()
+                                 {
+                                     id = dr["id"].ToString(),
+                                     statusId = dr["statusId"].ToString(),
+                                     statusName = dr["statusName"].ToString(),
+                                     startDate = dr["startDate"] is DBNull ? null : (DateTime?)dr["startDate"],
+                                     endDate = dr["endDate"] is DBNull ? null : (DateTime?)dr["endDate"],
+                                     customerId = dr["customerId"].ToString(),
+                                     productTypeId = dr["productTypeId"].ToString(),
+                                     productTypeName = dr["productTypeName"].ToString(),
+                                     customerName = dr["customerName"].ToString(),
+                                     delFlag = (bool)dr["delFlag"],
+                                     createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
+                                     createdByUserId = dr["createdByUserId"].ToString(),
+                                     updatedDate = dr["updatedDate"] is DBNull ? null : (DateTime?)dr["updatedDate"],
+                                     updatedByUserId = dr["updatedByUserId"].ToString()
+                                 }).ToList();
+                    return lists;
+                }
+                else
+                {
+                    return new List<RepDetailModel.actApproveRepDetailModel>();
+                }
+                
 
             }
             catch (Exception ex)

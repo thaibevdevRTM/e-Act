@@ -66,8 +66,12 @@ namespace eActForm.BusinessLayer
                                  smellName = d["smellName"].ToString(),
                                  pack = QueryGetAllProduct.getProductById(d["productId"].ToString()).FirstOrDefault().pack.ToString(),
                                  typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == p_theme).FirstOrDefault().activitySales,
-                                 wholeSalesPrice = d["price"] is DBNull ? 0 : decimal.Parse(d["price"].ToString()),
-                                 normalCost = d["price"] is DBNull ? 0 : decimal.Parse(d["price"].ToString()),
+                                 wholeSalesPrice = d["wholeSalesPrice"] is DBNull ? 0 : decimal.Parse(d["wholeSalesPrice"].ToString()),
+                                 normalCost = d["normalCost"] is DBNull ? 0 : decimal.Parse(d["normalCost"].ToString()),
+                                 disCount1 = d["discount1"] is DBNull ? 0 : decimal.Parse(d["discount1"].ToString()),
+                                 disCount2 = d["discount2"] is DBNull ? 0 : decimal.Parse(d["discount2"].ToString()),
+                                 disCount3 = d["discount3"] is DBNull ? 0 : decimal.Parse(d["discount3"].ToString()),
+                                 saleNormal = d["saleNormal"] is DBNull ? 0 : decimal.Parse(d["saleNormal"].ToString()),
                              }).ToList();
                 if (p_productId != "")
                 {
@@ -80,21 +84,27 @@ namespace eActForm.BusinessLayer
 
 
                 groupByPrice = lists.OrderByDescending(o => o.wholeSalesPrice)
+                    .Where(x => x.wholeSalesPrice > 0)
                     .OrderByDescending(x => x.size)
-                    .GroupBy(item => new { item.wholeSalesPrice, item.brandName, item.smellName })
+                    .GroupBy(item => new { item.wholeSalesPrice, item.size  })
                     
                .Select((group, index) => new ProductCostOfGroupByPrice
                {
-                   id = Guid.NewGuid().ToString(),
+                   productGroupId = Guid.NewGuid().ToString(),
                    brandId = group.First().brandId,
                    smellId = group.First().smellId,
-                   smellName = group.First().smellName,
+                   smellName = smellId == "" ? "" : group.First().smellName,
                    brandName = group.First().brandName,
                    productId = group.First().productId,
                    productName = group.First().productName,
                    size = group.First().size,
-                   pack = QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString(),
+                   pack = QueryGetAllProduct.getProductById(group.First().productId).Any() ? "Pack" + QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString() : "",
                    wholeSalesPrice = group.First().wholeSalesPrice,
+                   normalCost = group.First().normalCost,
+                   disCount1 = group.First().disCount1,
+                   disCount2 = group.First().disCount2,
+                   disCount3 = group.First().disCount3,
+                   saleNormal = group.First().saleNormal,
                    isShowGroup = p_productId != "" ? false : true,
                    detailGroup = group.ToList()
                }).ToList();
