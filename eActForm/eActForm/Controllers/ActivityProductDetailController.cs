@@ -22,7 +22,7 @@ namespace eActForm.Controllers
             return PartialView(activityModel);
         }
 
-        public JsonResult calDiscountProduct(ProductCostOfGroupByPrice  model)
+        public JsonResult calDiscountProduct(ProductCostOfGroupByPrice model)
         {
             var result = new AjaxResult();
             try
@@ -44,7 +44,7 @@ namespace eActForm.Controllers
             activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
             activityModel.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).ToList();
 
-             return PartialView(activityModel);
+            return PartialView(activityModel);
         }
 
         public JsonResult delCostDetail(string rowid, Activity_Model activityModel)
@@ -88,31 +88,16 @@ namespace eActForm.Controllers
             try
             {
                 Activity_Model activityModel = new Activity_Model();
+                activityModel.productcostdetaillist1 = Session["productcostdetaillist1"] == null ? new List<ProductCostOfGroupByPrice>()
+                    : ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]); ;
 
-
-                if (Session["productcostdetaillist1"] == null)
-                {
-                    activityModel.productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();            
-                }
-                else
-                {
-                    activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-                }
-
-                if (Session["activitydetaillist"] == null)
-                {
-                    activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
-                }
-                else
-                {
-                    activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
-                }
+                activityModel.activitydetaillist = Session["activitydetaillist"] == null ? new List<CostThemeDetailOfGroupByPrice>()
+                    : (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]; ;
 
 
                 var productlist = new Activity_Model();
                 productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme);
                 activityModel.productcostdetaillist1.AddRange(productlist.productcostdetaillist1);
-              
 
 
                 CostThemeDetailOfGroupByPrice costthememodel = new CostThemeDetailOfGroupByPrice();
@@ -135,7 +120,6 @@ namespace eActForm.Controllers
                     i++;
                 }
 
-
                 Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
                 //calculate Cost GP
                 foreach (var item in productlist.productcostdetaillist1)
@@ -143,7 +127,7 @@ namespace eActForm.Controllers
                     bool calSuccess = calProductDetail(item);
                 }
                 Session["activitydetaillist"] = activityModel.activitydetaillist;
-               
+
                 result.Data = productlist.productcostdetaillist1.Count;
 
             }
@@ -206,7 +190,7 @@ namespace eActForm.Controllers
                     }).ToList();
                 Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 success = false;
             }
