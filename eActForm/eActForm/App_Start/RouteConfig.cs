@@ -16,7 +16,7 @@ namespace eActForm
             routes.MapRoute(
                 name: "tbwebbackend",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Activity", action = "ActivityForm", id = UrlParameter.Optional }
+                defaults: new { controller = "DashBoard", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

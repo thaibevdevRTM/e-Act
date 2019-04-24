@@ -85,10 +85,16 @@ namespace eActForm.Controllers
         public ActionResult PreviewData(string activityId)
         {
             Activity_Model activityModel = new Activity_Model();
-            activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-            activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
-            activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
-
+            try
+            {
+                activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+                activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
+                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
+            }
+            catch(Exception ex)
+            {
+                TempData["PreviewDataError"] = AppCode.StrMessFail + ex.Message;
+            }
             return PartialView(activityModel);
         }
 
