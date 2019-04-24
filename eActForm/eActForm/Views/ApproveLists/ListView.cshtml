@@ -39,7 +39,7 @@
                         <td align="center">@string.Format("{0:n2}",item.themeCost)</td>
                         <td align="center">@string.Format("{0:n2}", @item.totalCost)</td>
                         <td align="center">
-                            @{ var precentOfSale = item.themeCost == 0 ? 0 : (item.totalCost * 100) / item.themeCost; }
+                            @{ var precentOfSale = item.themeCost == 0 ? 0 : (item.totalCost /item.themeCost )* 100 ; }
                         @string.Format("{0:n2}", precentOfSale)%
                     </td>
                 </tr>

@@ -103,7 +103,7 @@ namespace eActForm.Controllers
                 decimal get_PerTotal = 0;
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
-                if (AppCode.checkNullorEmpty(themeCost) != "0" && activityModel.productcostdetaillist1 != null )
+                if (AppCode.checkNullorEmpty(themeCost) != "0" && activityModel.productcostdetaillist1 != null)
                 {
                     if (activityModel.productcostdetaillist1.Where(x => x.productId == productId).Any() && activityModel.productcostdetaillist1.Where(x => x.productId == productId).Any())
                     {
@@ -112,9 +112,9 @@ namespace eActForm.Controllers
                         getPromotionCost = decimal.Parse(AppCode.checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).Any() ?
                            activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).FirstOrDefault().promotionCost.ToString() : "0"));
                         getPromotionCost = getPromotionCost == 0 ? 1 : getPromotionCost;
-                        p_total = AppCode.checkNullorEmpty(total) == "0" ?  (getNormalCost - getPromotionCost) * decimal.Parse(themeCost) : p_total;
+                        p_total = AppCode.checkNullorEmpty(total) == "0" ? (getNormalCost - getPromotionCost) * decimal.Parse(themeCost) : p_total;
                         //get_PerTotal = p_total * 100 / (decimal.Parse(normalCost) * getPromotionCost); //ยอดขายปกติ
-                        get_PerTotal = p_total / (decimal.Parse(themeCost) * getPromotionCost);// % ยอดขายโปโมชั่น
+                        get_PerTotal = (p_total / (decimal.Parse(themeCost) * getPromotionCost)) * 100;// % ยอดขายโปโมชั่น
                     }
 
                 }
@@ -129,7 +129,7 @@ namespace eActForm.Controllers
                             r.normalCost = decimal.Parse(normalCost);
                             r.growth = p_growth;
                             r.themeCost = decimal.Parse(themeCost);
-                            r.total = p_total * r.detailGroup.Count;
+                            r.total = p_total;
                             r.perTotal = get_PerTotal;
                             return r;
                         }).ToList();
