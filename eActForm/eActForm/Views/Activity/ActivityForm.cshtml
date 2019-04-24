@@ -11,6 +11,7 @@
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
@@ -108,9 +109,11 @@
                             @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
                             {
                                 @class = "form-control textboxcss",
-                            onchange = "onchangeCustomer();",
+                                onchange = "onchangeCustomer();",
                                 id = "ddlCustomer"
                             })
+
+                            @*@Html.DropDownListFor(n => n.DDLSaleTeam, new SelectList(Model.getSaleTeamlist, "SalesTeamId", "SalesUnitDesc"), new { @class = "form-control selectpicker", data_show_subtext = "true", data_live_search = "true", style = "width:100%;" })*@
                         </div>
                     </div>
                 </div>
