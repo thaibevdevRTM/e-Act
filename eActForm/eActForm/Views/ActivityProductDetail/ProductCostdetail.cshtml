@@ -85,9 +85,11 @@
                         <td style="text-align:right">@Html.TextBoxFor(model => item.promotionCost, "{0:n2}", new { @id = "promotionCost_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
                     </tr>
                     promotionTotal = item.promotionCost == null ? 0 + promotionTotal : item.promotionCost + promotionTotal;
+
                     index++;
                 }
                 Session["promotionTotal"] = promotionTotal;
+
             }
            
 

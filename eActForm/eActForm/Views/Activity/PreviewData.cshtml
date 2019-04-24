@@ -239,20 +239,21 @@
                                     </p>
                                 </td>
 
-                                @*@if (Model.productImageList.Any())
+                                @if (Model.productImageList.Any())
                                 {
                                     string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
                                     foreach (var item in Model.productImageList)
                                     {
-                                            <td>
-                                                <img src="@url @item._fileName" style="width:120px; height:120px;"/>
-                                            </td>
+                                        <td>
+                                            <img width="120" height="120" src="@url@item._fileName" />
+
+                                        </td>
                                     }
                                 }
                                 else
                                 {
                                     <td></td>
-                                }*@
+                                }
 
 
 

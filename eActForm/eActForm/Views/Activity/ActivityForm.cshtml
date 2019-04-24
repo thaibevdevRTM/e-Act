@@ -47,9 +47,8 @@
 </div>
 
 
-
-<form class="form-horizontal form-label-left" id="demo-form2" novalidate="" data-parsley-validate="">
-    <div class="row">
+<div class="row">
+    <form class="form-horizontal form-label-left" id="demo-form2" novalidate="" data-parsley-validate="">
         <div class="form-group">
             <div class="col-md-6 col-xs-12"></div>
             <div class="col-md-6 col-xs-12">
@@ -58,200 +57,200 @@
                         Act No.
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
-                        @*<input type="text" id="txtActivityNo" class="form-control textboxcss" readonly>*@
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
+                            @*<input type="text" id="txtActivityNo" class="form-control textboxcss" readonly>*@
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6 col-xs-12"></div>
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
-                        Document Date<span class="required">*</span>
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @if (Model.activityFormModel.documentDate.ToString() != "")
-                        {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
-                        }
-                        else
-                        {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString() })
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6 col-xs-12"></div>
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReference">
-                        Reference
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.activityFormModel.reference, new { @class = "form-control textboxcss", @id = "txtReference" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6 col-xs-12"></div>
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
-                        ลูกค้า (Customer Name)<span class="required">*</span>
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
-                        {
-                            @class = "form-control textboxcss",
-                        onchange = "onchangeCustomer();",
-                            id = "ddlCustomer"
-                        })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityName">
-                        ชื่อกิจกรรม <span class="required">*</span>
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName" })
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtchanel">
-                        ช่องทาง (Channel)
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.activityFormModel.chanel, new { @class = "form-control textboxcss", @id = "txtchanel", @readonly = "readonly" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
-                        ประเภทกิจกรรม<span class="required">*</span>
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
-                        {
-                            @class = "form-control textboxcss",
-                          id = "ddlTheme"
-                        })
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                        Product category<span class="required">*</span>
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
-                        {
-                            @class = "form-control textboxcss",
-                            required = "required",
-                       onchange = "onchangeCate();",
-                            id = "ddlProductCate"
-                        })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtObjective">
-                        วัตถุประสงค์<span class="required">*</span>
-                    </label>
-
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
-                    </div>
-
-
-                </div>
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
-                        กลุ่มสินค้า (Product Group)<span class="required">*</span>
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(model => model.activityFormModel.productGroupId, new SelectList(Model.productGroupList, "id", "groupName", 0), "Please Select", new { @class = "form-control textboxcss", required = "required", id = "ddlProductGrp" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6 col-xs-12">
-                <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                </label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                    <div class="radio">
-                        <label>
-                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "term", new { @id = "rdbterm" }) ไม่เกิดจาก รายการส่งเสริมการขาย (Trade Term)
+            <div class="form-group">
+                <div class="col-md-6 col-xs-12"></div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                            Document Date<span class="required">*</span>
                         </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @if (Model.activityFormModel.documentDate.ToString() != "")
+                            {
+                                @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString() })
+                            }
+                        </div>
                     </div>
-                    <div class="radio">
-                        <label>
-                            @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { @id = "rdbOutterm" }) รายการส่งเสริมการขาย (นอก Trade Term)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-xs-12"></div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReference">
+                            Reference
                         </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
-                        เวลากิจกรรม (Activity Period)
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt" })
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivityEnd" })
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
-                        เวลาการให้ทุนพิเศษ (Cost Period)
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.costPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerSt" })
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.costPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerEnd" })
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(x => x.activityFormModel.reference, new { @class = "form-control textboxcss", @id = "txtReference" })
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-md-6 col-xs-12"></div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
+                            ลูกค้า (Customer Name)<span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
+                            {
+                                @class = "form-control textboxcss",
+                            onchange = "onchangeCustomer();",
+                                id = "ddlCustomer"
+                            })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityName">
+                            ชื่อกิจกรรม <span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtchanel">
+                            ช่องทาง (Channel)
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(x => x.activityFormModel.chanel, new { @class = "form-control textboxcss", @id = "txtchanel", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
+                            ประเภทกิจกรรม<span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
+                            {
+                                @class = "form-control textboxcss",
+                              id = "ddlTheme"
+                            })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
+                            Product category<span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
+                            {
+                                @class = "form-control textboxcss",
+                                required = "required",
+                           onchange = "onchangeCate();",
+                                id = "ddlProductCate"
+                            })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtObjective">
+                            วัตถุประสงค์<span class="required">*</span>
+                        </label>
+
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
+                            กลุ่มสินค้า (Product Group)<span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.DropDownListFor(model => model.activityFormModel.productGroupId, new SelectList(Model.productGroupList, "id", "groupName", 0), "Please Select", new { @class = "form-control textboxcss", required = "required", id = "ddlProductGrp" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-xs-12">
+                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="radio">
+                            <label>
+                                @Html.RadioButtonFor(m => m.activityFormModel.trade, "term", new { @id = "rdbterm" }) ไม่เกิดจาก รายการส่งเสริมการขาย (Trade Term)
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { @id = "rdbOutterm" }) รายการส่งเสริมการขาย (นอก Trade Term)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                            เวลากิจกรรม (Activity Period)
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt" })
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivityEnd" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                            เวลาการให้ทุนพิเศษ (Cost Period)
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(x => x.activityFormModel.costPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerSt" })
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(x => x.activityFormModel.costPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerEnd" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-    </div>
-</form>
-
+    </form>
+</div>
 <hr />
 <div class="row">
     <div class="col-12">
         <p class="lead">รายละเอียดของการทำกิจกรรม (Activity Detail)</p>
     </div>
     <div class="col-md-6">
-        @Html.TextAreaFor(x => x.activityFormModel.activityDetail, 6, 50, new { @class = "form-control textboxcss", @Styles="font-size: 8pt", @id = "txtActivityDetail" })
+        @Html.TextAreaFor(x => x.activityFormModel.activityDetail, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtActivityDetail" })
     </div>
 </div>
 <hr />
@@ -334,14 +333,12 @@
 <div class="row">
 
     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-
-       
         <p class="d-flex justify-content-center">
             <a href="@Url.Action("index", "Home")" class="btn btn-info"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
             <button id="btnsubmit" style="width:200px" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Submit</button>
         </p>
     </div>
-    
+
 </div>
 
 <input type="hidden" id="hdcusname">
