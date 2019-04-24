@@ -61,9 +61,17 @@ namespace eActForm.Controllers
 
         public ActionResult approvePositionSignatureLists(string actId)
         {
-            ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
-            ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
-            models.approveFlowDetail = flowModel.flowDetail;
+            ApproveModel.approveModels models = new ApproveModel.approveModels();
+            try
+            {
+                models = ApproveAppCode.getApproveByActFormId(actId);
+                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
+                models.approveFlowDetail = flowModel.flowDetail;
+            }
+            catch(Exception ex)
+            {
+                TempData["approvePositionSignatureError"] = AppCode.StrMessFail + ex.Message;
+            }
             return PartialView(models);
         }
 
