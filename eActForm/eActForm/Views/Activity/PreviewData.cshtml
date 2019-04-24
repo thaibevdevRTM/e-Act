@@ -54,380 +54,383 @@
 @Html.HiddenFor(m => m.activityFormModel.id, new { id = "HdId" })
 
 <div class="modal-dialog modal-lg">
-    <!-- Modal content-->
-    <div class="modal-content">
-        <div class="modal-header">
-            <div style=""></div>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div id="Grid1" style="width:97%; margin-left:20px;">
-                <style>
-                    .cssborderbottom {
-                        border-bottom-width: 1px;
-                        border-bottom-style: solid;
-                        border-bottom-color: gray;
-                    }
+    @if (Model.activityFormModel != null)
+    {
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <div style=""></div>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="Grid1" style="width:97%; margin-left:20px;">
+                    <style>
+                        .cssborderbottom {
+                            border-bottom-width: 1px;
+                            border-bottom-style: solid;
+                            border-bottom-color: gray;
+                        }
 
-                    .font8 {
-                        font-size: 8px;
-                    }
+                        .font8 {
+                            font-size: 8px;
+                        }
 
-                    .font11 {
-                        font-size: 11px;
-                    }
+                        .font11 {
+                            font-size: 11px;
+                        }
 
-                    .textRight {
-                        text-align: right;
-                    }
+                        .textRight {
+                            text-align: right;
+                        }
 
-                    .textLeft {
-                        text-align: left;
-                    }
+                        .textLeft {
+                            text-align: left;
+                        }
 
-                    .line-breaks {
-                        white-space: pre-line;
-                    }
-                </style>
+                        .line-breaks {
+                            white-space: pre-line;
+                        }
+                    </style>
 
-                <div>
-                    <div style="text-align:center;"><h5>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</h5></div>
-                </div>
-                <div>
-                    <table style="width:100%; margin-top:30px;">
-                        <tr>
-                            <td width="140px;"></td>
-                            <td width="260px;" style="margin-left:10px;"></td>
-                            <td width="20px;"></td>
-                            <td width="150px;" style="text-align:right; font-size:12.5px;">Activity No.</td>
-                            <td width="5px;"></td>
-                            <td width="160px;" class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.activityNo) </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td style="text-align:right; font-size:12.5px;">Document Date</td>
-                            <td></td>
-                            <td class="cssborderbottom" style="font-size:12.5px;">@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy") </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td style="text-align:right; font-size:12.5px;">Reference</td>
-                            <td></td>
-                            <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.reference) </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size:12.5px;">ชื่อกิจกรรม</td>
-                            <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.activityName) </td>
-                            <td></td>
-                            <td style="text-align:right; font-size:12.5px;">ลูกค้า(Customer Name)</td>
-                            <td></td>
-                            <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.customerName) </td>
-                        </tr>
-                        <tr>
-                            <td style="font-size:12.5px;">ประเภทกิจกรรม(Theme)</td>
-                            <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.txttheme) </td>
-                            <td></td>
-                            <td style="text-align:right; font-size:12.5px;">ช่องทาง(Channel)</td>
-                            <td></td>
-                            <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.chanel) </td>
-                        </tr>
-                        <tr>
-                            <td style="font-size:12.5px;">วัตถุประสงค์</td>
-                            <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.objective)</td>
-                            <td></td>
-                            <td style="text-align:right; font-size:12.5px;">กลุ่มสินค้า(Product Group)</td>
-                            <td></td>
-                            <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.productGroupText) </td>
-                        </tr>
-                        <tr>
-                            <td style="height:10px;"></td>
-                        </tr>
-                        <tr>
-                            @if (Model.activityFormModel != null)
-                            {
-                                if (Model.activityFormModel.trade == "term")
-                                {
-                                    <td style="text-align:right">X &nbsp; </td>
-                                }
-                                else
-                                {
-                                    <td style="text-align:right"></td>
-                                }
-                            }
-                            <td style="font-size:12.5px;">ไม่ได้เกิดจาก รายการส่งเสริมการขาย (Trade Term)</td>
-                            <td></td>
-                            <td style="text-align:right; font-size:12.5px;">ระยะเวลากิจกรรม</td>
-                            <td></td>
-                            <td style="font-size:12.5px;">
-                                @if (Model.activityFormModel.activityPeriodSt != null)
-                                {
-                                    @Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy")
-                                }
-                                To
-                                @if (Model.activityFormModel.activityPeriodEnd != null)
-                                {
-                                    @Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy")
-                                }
-                            </td>
-                        </tr>
-                        <tr>
-                            @if (Model.activityFormModel != null)
-                            {
-                                if (Model.activityFormModel.trade == "outterm")
-                                {
-                                    <td style="text-align:right">X &nbsp; </td>
-                                }
-                                else
-                                {
-                                    <td style="text-align:right"></td>
-                                }
-                            }
-                            <td style="font-size:12.5px;">รายการส่งเสริมการขาย (นอกTrade Term)</td>
-                            <td></td>
-                            <td style="text-align:right; font-size:12.5px;">(Activity Period)</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td style="text-align:right; font-size:12.5px;">ระยะเวลาการให้ทุนพิเศษ</td>
-                            <td></td>
-                            <td style="font-size:12.5px;">
-                                @if (Model.activityFormModel.costPeriodSt != null)
-                                {
-                                    @Model.activityFormModel.costPeriodSt.Value.ToString("dd/MM/yyyy")
-                                }
-                                To
-                                @if (Model.activityFormModel.costPeriodEnd != null)
-                                {
-                                    @Model.activityFormModel.costPeriodEnd.Value.ToString("dd/MM/yyyy")
-                                }
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td style="text-align:right; font-size:12.5px;">(Cost Period)</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div>
-                    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
-                </div>
-
-                <div style="width:100%; ">
-                    <div style="margin-top:5px;">
-                        รายละเอียดของการทำกิจกรรม(Activity Detail)
+                    <div>
+                        <div style="text-align:center;"><h5>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</h5></div>
                     </div>
-                </div>
-            </div>
-
-            <div id="Grid2" style="white-space: pre-line; width:97%; margin-left:20px;">
-                <p style="font-size:12.5px;  margin-bottom:-30px; margin-top:-10px"> @Html.DisplayFor(item => item.activityFormModel.activityDetail)</p>
-            </div>
-
-            <div id="Grid3" style="width:97%; margin-left:20px;">
-                <div>
-                    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
-                </div>
-
-                <div style="margin-top:5px; width:100%;">
-                    โครงสร้างราคา-ไม่รวม Vat(Product Cost - Bath Per Case)
-                </div>
-
-                <div>
-                    <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <td rowspan="2" style="width:20%; font-size:12.5px;">ชื่อสินค้า (product Name)</td>
-                            <td rowspan="2" style="width:10%;  font-size:12.5px;">Std. Wholesales Price</td>
-                            <td colspan="3" style="width:20%;  font-size:12.5px;">Normal Discount (%)</td>
-                            <td style="width:10%;  font-size:12.5px;">Normal</td>
-                            <td style="width:10%;  font-size:12.5px;">Normal</td>
-                            <td style="width:10%;  font-size:12.5px;">Promotion</td>
-                            <td style="width:10%;  font-size:12.5px;">Special</td>
-                            <td style="width:10%;  font-size:12.5px;">Promotion</td>
-                        </tr>
-                        <tr>
-                            <td style="font-size:12.5px;">(1)</td>
-                            <td style="font-size:12.5px;">(2)</td>
-                            <td style="font-size:12.5px;">(3)</td>
-                            <td style="font-size:12.5px;">Cost</td>
-                            <td style="font-size:12.5px;">GP%</td>
-                            <td style="font-size:12.5px;">GP%</td>
-                            <td style="font-size:12.5px;">Discount %</td>
-                            <td style="font-size:12.5px;">Cost (BHT)</td>
-                        </tr>
-                        @if (Model.productcostdetaillist1.Any())
-                        {
-                            foreach (var item in Model.productcostdetaillist1)
-                            {
-                                <tr>
-                                    @if (item.isShowGroup == true)
+                    <div>
+                        <table style="width:100%; margin-top:30px;">
+                            <tr>
+                                <td width="140px;"></td>
+                                <td width="260px;" style="margin-left:10px;"></td>
+                                <td width="20px;"></td>
+                                <td width="150px;" style="text-align:right; font-size:12.5px;">Activity No.</td>
+                                <td width="5px;"></td>
+                                <td width="160px;" class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.activityNo) </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align:right; font-size:12.5px;">Document Date</td>
+                                <td></td>
+                                <td class="cssborderbottom" style="font-size:12.5px;">@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy") </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align:right; font-size:12.5px;">Reference</td>
+                                <td></td>
+                                <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.reference) </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12.5px;">ชื่อกิจกรรม</td>
+                                <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.activityName) </td>
+                                <td></td>
+                                <td style="text-align:right; font-size:12.5px;">ลูกค้า(Customer Name)</td>
+                                <td></td>
+                                <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.customerName) </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12.5px;">ประเภทกิจกรรม(Theme)</td>
+                                <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.txttheme) </td>
+                                <td></td>
+                                <td style="text-align:right; font-size:12.5px;">ช่องทาง(Channel)</td>
+                                <td></td>
+                                <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.chanel) </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12.5px;">วัตถุประสงค์</td>
+                                <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormModel.objective)</td>
+                                <td></td>
+                                <td style="text-align:right; font-size:12.5px;">กลุ่มสินค้า(Product Group)</td>
+                                <td></td>
+                                <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.productGroupText) </td>
+                            </tr>
+                            <tr>
+                                <td style="height:10px;"></td>
+                            </tr>
+                            <tr>
+                                @if (Model.activityFormModel != null)
+                                {
+                                    if (Model.activityFormModel.trade == "term")
                                     {
-                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) @Html.DisplayFor(m => item.pack) </td>
+                                        <td style="text-align:right">X &nbsp; </td>
                                     }
                                     else
                                     {
-                                        if (item.detailGroup != null)
+                                        <td style="text-align:right"></td>
+                                    }
+                                }
+                                <td style="font-size:12.5px;">ไม่ได้เกิดจาก รายการส่งเสริมการขาย (Trade Term)</td>
+                                <td></td>
+                                <td style="text-align:right; font-size:12.5px;">ระยะเวลากิจกรรม</td>
+                                <td></td>
+                                <td style="font-size:12.5px;">
+                                    @if (Model.activityFormModel.activityPeriodSt != null)
+                                    {
+                                        @Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    To
+                                    @if (Model.activityFormModel.activityPeriodEnd != null)
+                                    {
+                                        @Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy")
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                @if (Model.activityFormModel != null)
+                                {
+                                    if (Model.activityFormModel.trade == "outterm")
+                                    {
+                                        <td style="text-align:right">X &nbsp; </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align:right"></td>
+                                    }
+                                }
+                                <td style="font-size:12.5px;">รายการส่งเสริมการขาย (นอกTrade Term)</td>
+                                <td></td>
+                                <td style="text-align:right; font-size:12.5px;">(Activity Period)</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align:right; font-size:12.5px;">ระยะเวลาการให้ทุนพิเศษ</td>
+                                <td></td>
+                                <td style="font-size:12.5px;">
+                                    @if (Model.activityFormModel.costPeriodSt != null)
+                                    {
+                                        @Model.activityFormModel.costPeriodSt.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    To
+                                    @if (Model.activityFormModel.costPeriodEnd != null)
+                                    {
+                                        @Model.activityFormModel.costPeriodEnd.Value.ToString("dd/MM/yyyy")
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align:right; font-size:12.5px;">(Cost Period)</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div>
+                        <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                    </div>
+
+                    <div style="width:100%; ">
+                        <div style="margin-top:5px;">
+                            รายละเอียดของการทำกิจกรรม(Activity Detail)
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Grid2" style="white-space: pre-line; width:97%; margin-left:20px;">
+                    <p style="font-size:12.5px;  margin-bottom:-30px; margin-top:-10px"> @Html.DisplayFor(item => item.activityFormModel.activityDetail)</p>
+                </div>
+
+                <div id="Grid3" style="width:97%; margin-left:20px;">
+                    <div>
+                        <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                    </div>
+
+                    <div style="margin-top:5px; width:100%;">
+                        โครงสร้างราคา-ไม่รวม Vat(Product Cost - Bath Per Case)
+                    </div>
+
+                    <div>
+                        <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td rowspan="2" style="width:20%; font-size:12.5px;">ชื่อสินค้า (product Name)</td>
+                                <td rowspan="2" style="width:10%;  font-size:12.5px;">Std. Wholesales Price</td>
+                                <td colspan="3" style="width:20%;  font-size:12.5px;">Normal Discount (%)</td>
+                                <td style="width:10%;  font-size:12.5px;">Normal</td>
+                                <td style="width:10%;  font-size:12.5px;">Normal</td>
+                                <td style="width:10%;  font-size:12.5px;">Promotion</td>
+                                <td style="width:10%;  font-size:12.5px;">Special</td>
+                                <td style="width:10%;  font-size:12.5px;">Promotion</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12.5px;">(1)</td>
+                                <td style="font-size:12.5px;">(2)</td>
+                                <td style="font-size:12.5px;">(3)</td>
+                                <td style="font-size:12.5px;">Cost</td>
+                                <td style="font-size:12.5px;">GP%</td>
+                                <td style="font-size:12.5px;">GP%</td>
+                                <td style="font-size:12.5px;">Discount %</td>
+                                <td style="font-size:12.5px;">Cost (BHT)</td>
+                            </tr>
+                            @if (Model.productcostdetaillist1.Any())
+                            {
+                                foreach (var item in Model.productcostdetaillist1)
+                                {
+                                    <tr>
+                                        @if (item.isShowGroup == true)
+                                        {
+                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) @Html.DisplayFor(m => item.pack) </td>
+                                        }
+                                        else
+                                        {
+                                            if (item.detailGroup != null)
+                                            {
+                                                for (int i = 0; i < @item.detailGroup.Count; i++)
+                                                {
+                                                    <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) (@Html.DisplayFor(m => item.pack))</td>
+                                                }
+                                            }
+                                        }
+
+                                        <td class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
+                                        <td class="font11 textRight">@Html.DisplayFor(m => item.disCount1)</td>
+                                        <td class="font11 textRight">@Html.DisplayFor(m => item.disCount2)</td>
+                                        <td class="font11 textRight">@Html.DisplayFor(m => item.disCount3)</td>
+                                        <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
+                                        <td class="font11 textRight">@Html.DisplayFor(m => item.normalGp)</td>
+                                        <td class="font11 textRight">@Html.DisplayFor(m => item.promotionGp)</td>
+                                        <td class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
+                                        <td class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
+                                    </tr>
+
+                                }
+                            }
+                        </table>
+                    </div>
+
+
+                    <div>
+                        <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                    </div>
+
+                    <div style="margin-top:5px; width:100%;">
+                        รายละเอียดค่าใช้จ่าย (Cost)
+                    </div>
+
+                    <div>
+                        <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td rowspan="2" width="20%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
+                                <td rowspan="2" width="30%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
+                                <td colspan="4" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
+                            </tr>
+                            <tr>
+                                <td width="12%" style="font-size:12.5px;">ยอดขายปกติ (Cost)</td>
+                                <td width="12%" style="font-size:12.5px;">ยอดขายข่วงทำกิจกรรม (Case)</td>
+                                <td width="12%" style="font-size:12.5px;">% Growth</td>
+                                <td width="14%" style="font-size:12.5px;">ค่าใช้จ่ายรวม Spending Exp. (Bath)</td>
+                            </tr>
+                            @if (Model.activitydetaillist.Any())
+                            {
+                                foreach (var item in Model.activitydetaillist)
+                                {
+                                    <tr>
+                                        <td style="font-size:10px;" class="textLeft">@item.typeTheme</td>
+
+                                        @if (item.isShowGroup == true)
+                                        {
+                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) </td>
+                                        }
+                                        else
                                         {
                                             for (int i = 0; i < @item.detailGroup.Count; i++)
                                             {
-                                                <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) (@Html.DisplayFor(m => item.pack))</td>
+                                                <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) @Html.DisplayFor(m => item.detailGroup[i].productDetail)</td>
                                             }
                                         }
-                                    }
 
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.disCount1)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.disCount2)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.disCount3)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.normalGp)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.promotionGp)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
-                                </tr>
 
+                                        @*<td style="font-size:12.5px;" class="textLeft">@item.productName</td>*@
+                                        <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
+                                        <td class="font11 textRight">@Html.DisplayFor(m => item.themeCost)</td>
+                                        <td class="font11 textRight">@string.Format("{0:p2}", item.growth)</td>
+                                        <td class="font11 textRight">@Html.DisplayFor(m => item.total)</td>
+                                    </tr>
+
+                                    totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
+                                    costProduct = item.normalCost == null ? 0 + costProduct : item.normalCost + costProduct;
+                                    costActivity = item.themeCost == null ? 0 + costActivity : item.themeCost + costActivity;
+                                }
                             }
-                        }
-                    </table>
-                </div>
 
 
-                <div>
-                    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
-                </div>
+                            <tr>
+                                <td style="border:none; border-bottom:none;"></td>
+                                <td style="text-align:right; border:none; border-bottom:none;">รวม</td>
+                                <td class="textRight">
+                                    @if (costProduct != 0)
+                                    {
+                                        string result = String.Format("{0:n2}", @costProduct);
+                                        @result.ToString();
+                                    }
+                                </td>
+                                <td class="textRight">
+                                    @if (costActivity != 0)
+                                    {
+                                        string result = String.Format("{0:n2}", @costActivity);
+                                        @result.ToString();
+                                    }
+                                </td>
+                                <td class="textRight">
+                                    @if (totalActCost != 0 && costActivity != 0)
+                                    {
+                                        perTotal = (costActivity - costProduct) / costProduct * 100;
+                                        string result = String.Format("{0:n2}%", @perTotal);
+                                        @result.ToString();
+                                    }
+                                </td>
+                                <td class="textRight">
+                                    @if (totalActCost != 0)
+                                    {
+                                        string result = String.Format("{0:n2}", @totalActCost);
+                                        @result.ToString();
+                                    }
+                                </td>
+                            </tr>
 
-                <div style="margin-top:5px; width:100%;">
-                    รายละเอียดค่าใช้จ่าย (Cost)
-                </div>
+                        </table>
+                    </div>
 
-                <div>
-                    <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <td rowspan="2" width="20%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
-                            <td rowspan="2" width="30%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
-                            <td colspan="4" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
-                        </tr>
-                        <tr>
-                            <td width="12%" style="font-size:12.5px;">ยอดขายปกติ (Cost)</td>
-                            <td width="12%" style="font-size:12.5px;">ยอดขายข่วงทำกิจกรรม (Case)</td>
-                            <td width="12%" style="font-size:12.5px;">% Growth</td>
-                            <td width="14%" style="font-size:12.5px;">ค่าใช้จ่ายรวม Spending Exp. (Bath)</td>
-                        </tr>
-                        @if (Model.activitydetaillist.Any())
+                    <div>
+                        <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                    </div>
+                    <div style="margin-top:10px;">
+                        อนุมัติค่าใช้จ่าย(Approve)
+                    </div>
+                    <div style="margin-bottom:10px;">
+                        ประมาณการ(Estimate)
+                    </div>
+
+                    <div>
+                        @if (Model.activityFormModel != null)
                         {
-                            foreach (var item in Model.activitydetaillist)
-                            {
-                                <tr>
-                                    <td style="font-size:10px;" class="textLeft">@item.typeTheme</td>
-
-                                    @if (item.isShowGroup == true)
-                                    {
-                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) </td>
-                                    }
-                                    else
-                                    {
-                                        for (int i = 0; i < @item.detailGroup.Count; i++)
-                                        {
-                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) @Html.DisplayFor(m => item.detailGroup[i].productDetail)</td>
-                                        }
-                                    }
-
-
-                                    @*<td style="font-size:12.5px;" class="textLeft">@item.productName</td>*@
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.themeCost)</td>
-                                    <td class="font11 textRight">@string.Format("{0:p2}", item.growth)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.total)</td>
-                                </tr>
-
-                                totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
-                                costProduct = item.normalCost == null ? 0 + costProduct : item.normalCost + costProduct;
-                                costActivity = item.themeCost == null ? 0 + costActivity : item.themeCost + costActivity;
-                            }
+                            @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
                         }
+                    </div>
 
 
-                        <tr>
-                            <td style="border:none; border-bottom:none;"></td>
-                            <td style="text-align:right; border:none; border-bottom:none;">รวม</td>
-                            <td class="textRight">
-                                @if (costProduct != 0)
-                                {
-                                    string result = String.Format("{0:n2}", @costProduct);
-                                    @result.ToString();
-                                }
-                            </td>
-                            <td class="textRight">
-                                @if (costActivity != 0)
-                                {
-                                    string result = String.Format("{0:n2}", @costActivity);
-                                    @result.ToString();
-                                }
-                            </td>
-                            <td class="textRight">
-                                @if (totalActCost != 0 && costActivity != 0)
-                                {
-                                    perTotal = (costActivity - costProduct) / costProduct * 100;
-                                    string result = String.Format("{0:n2}%", @perTotal);
-                                    @result.ToString();
-                                }
-                            </td>
-                            <td class="textRight">
-                                @if (totalActCost != 0)
-                                {
-                                    string result = String.Format("{0:n2}", @totalActCost);
-                                    @result.ToString();
-                                }
-                            </td>
-                        </tr>
-
-                    </table>
                 </div>
-
+            </div>
+            <div class="modal-footer">
                 <div>
-                    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                    <p class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                        <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                    </p>
                 </div>
-                <div style="margin-top:10px;">
-                    อนุมัติค่าใช้จ่าย(Approve)
-                </div>
-                <div style="margin-bottom:10px;">
-                    ประมาณการ(Estimate)
-                </div>
-
-                <div>
-                    @if (Model.activityFormModel != null)
-                    {
-                        @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
-                    }
-                </div>
-
 
             </div>
         </div>
-        <div class="modal-footer">
-            <div>
-                <p class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-                    <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
-                </p>
-            </div>
-
-        </div>
-    </div>
+    }
 </div>
 
