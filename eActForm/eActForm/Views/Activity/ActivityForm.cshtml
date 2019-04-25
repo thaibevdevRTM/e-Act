@@ -1,13 +1,8 @@
 ﻿@model eActForm.Models.Activity_Model
 @{
     ViewBag.Title = "Home Page";
+    var mode = Request["mode"] == null ? "" : Request["mode"];
 }
-<!--
-<script src="~/Scripts/bootstrap.bundle.min.js"></script>
-<script src="~/Content/dist/js/bootstrap-select.js"></script>
-<link rel="stylesheet" href="~/Content/dist/css/bootstrap-select.css">
--->
-
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
@@ -58,30 +53,27 @@
                         Act No.
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
-                            @*<input type="text" id="txtActivityNo" class="form-control textboxcss" readonly>*@
-                        </div>
+                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-6 col-xs-12"></div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
-                            Document Date<span class="required">*</span>
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            @if (Model.activityFormModel.documentDate.ToString() != "")
-                            {
-                                @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
-                            }
-                            else
-                            {
-                                @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString() })
-                            }
-                        </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12"></div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                        Document Date<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @if (Model.activityFormModel.documentDate.ToString() != "")
+                        {
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString() })
+                        }
                     </div>
                 </div>
             </div>
@@ -98,23 +90,21 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-6 col-xs-12"></div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
-                            ลูกค้า (Customer Name)<span class="required">*</span>
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
-                            {
-                                @class = "form-control textboxcss",
-                                onchange = "onchangeCustomer();",
-                                id = "ddlCustomer"
-                            })
-
-                            @*@Html.DropDownListFor(n => n.DDLSaleTeam, new SelectList(Model.getSaleTeamlist, "SalesTeamId", "SalesUnitDesc"), new { @class = "form-control selectpicker", data_show_subtext = "true", data_live_search = "true", style = "width:100%;" })*@
-                        </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12"></div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
+                        ลูกค้า (Customer Name)<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
+                        {
+                            @class = "form-control textboxcss",
+                        onchange = "onchangeCustomer();",
+                            id = "ddlCustomer"
+                        })
                     </div>
                 </div>
             </div>
@@ -140,35 +130,35 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-6 col-xs-12">
-                    <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
-                            ประเภทกิจกรรม<span class="required">*</span>
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
-                            {
-                                @class = "form-control textboxcss",
-                              id = "ddlTheme"
-                            })
-                        </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
+                        ประเภทกิจกรรม<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
+                        {
+                            @class = "form-control textboxcss",
+                          id = "ddlTheme"
+                        })
                     </div>
                 </div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                            Product category<span class="required">*</span>
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
-                            {
-                                @class = "form-control textboxcss",
-                                required = "required",
-                           onchange = "onchangeCate();",
-                                id = "ddlProductCate"
-                            })
-                        </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
+                        Product category<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
+                        {
+                            @class = "form-control textboxcss",
+                            required = "required",
+                       onchange = "onchangeCate();",
+                            id = "ddlProductCate"
+                        })
                     </div>
                 </div>
             </div>
@@ -334,11 +324,15 @@
 <hr />
 
 <div class="row">
+    <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-5">
 
-    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
         <p class="d-flex justify-content-center">
+            @if (mode != "")
+            {
+                <button id="btnsubmit" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew()">&nbsp;Save As</button>
+            }
             <a href="@Url.Action("index", "Home")" class="btn btn-info"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-            <button id="btnsubmit" style="width:200px" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Submit</button>
+            <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
         </p>
     </div>
 
@@ -659,7 +653,6 @@
 
 
     function validatesubmit() {
-        console.log();
         var required = "กรุณา ระบุ :<br>";
         var validate = true;
         if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
@@ -681,9 +674,6 @@
 
     function SubmitData() {
         $("#WaitDialog").show();
-
-        console.log($("input[name='activityFormModel.trade']:checked").val());
-        console.log($("#txtdateActivitySt").val());
             $.ajax({
                 url: '@Url.Action("insertDataActivity", "Activity")',
                 data: {
@@ -719,6 +709,68 @@
                     callPreviewData(response.ActivityId);
                 }
             });
+    }
+
+    function copyAndSaveNew() {
+        bootbox.confirm({
+            message: "<p class='lead text-center'>คุณต้องการ copy เอกสารเพื่อไปสร้างเอกสารใหม่ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+                    $("#WaitDialog").show();
+            $.ajax({
+                url: '@Url.Action("copyAndSaveNewActivityForm", "Activity")',
+                data: {
+                    statusId: 1,
+                    Mode: $("#hdMode").val(),
+                    dateDoc: $("#txtdateDoc").val(),
+                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                    str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
+                    str_activityPeriodSt: $("#txtdateActivitySt").val(),
+                    str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
+                    dateProductlist: $("#txtdateActivitySt").val(),
+                    dateActivitylist: $("#txtdateActivityEnd").val(),
+                    Reference: $("#txtReference").val(),
+                    CustomerId: $("#ddlCustomer").val(),
+                    ProductCateId: $("#ddlProductCate").val(),
+                    ProductGroupId: $("#ddlProductGrp").val(),
+                    ActivityPeriodST: $("#txtdateActivitySt").val(),
+                    ActivityPeriodEnd: $("#txtdateActivityEnd").val(),
+                    CostPeriodST: $("#txtdateCostPerSt").val(),
+                    CostPeriodEnd: $("#txtdateCostPerEnd").val(),
+                    ActivityName: $("#txtActivityName").val(),
+                    Theme: $("#ddlTheme").val(),
+                    Objective: $("#txtObjective").val(),
+                    Trade: $("input[name='activityFormModel.trade']:checked").val(),
+                    ActivityDetail: $("#txtActivityDetail").val(),
+                    activityNo :$("#txtActivityNo").val(),
+
+                },
+                dataType: "json",
+                type: 'POST',
+            }).done(function (response) {
+                $("#WaitDialog").hide();
+                console.log(response);
+                if (response.Success) {
+                    var url = '@Url.Action("ActivityForm", "activity")';
+                    window.location.href = url+"?ActivityId="+response.ActivityId;
+                } else {
+                    doMsgFail(response.Message);
+                }
+            });
+                }
+            }
+
+        });
     }
 
     function setTxtReadOnly() {
