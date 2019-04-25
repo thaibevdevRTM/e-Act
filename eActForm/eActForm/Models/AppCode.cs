@@ -16,6 +16,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using WebLibrary;
+using static eActForm.Models.TB_Act_Image_Model;
 
 namespace eActForm.Models
 {
@@ -207,5 +208,45 @@ namespace eActForm.Models
 
         }
 
+
+        public static List<ImageModel> writeImagestoFile(HttpServerUtilityBase server, List<ImageModel> imgLists)
+        {
+            try
+            {
+                foreach (ImageModel dr in imgLists)
+                {
+                    if (dr._image != null && dr._image.Length > 0)
+                    {
+                        dr._fileName = writeFileHistory(server, dr._image, dr.activityId + "_" + dr.id + ".png").Replace("..", "");
+                    }
+                }
+                return imgLists;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static string writeFileHistory(HttpServerUtilityBase server, byte[] imgByte, string fileName)
+        {
+            try
+            {
+                string filePath = "../uploadImages/" + fileName;
+                if (imgByte.Length > 0)
+                {
+                    if (!File.Exists(server.MapPath(filePath)))
+                    {
+                        File.WriteAllBytes(server.MapPath(filePath), imgByte);
+                    }
+                }
+                return filePath;
+            }
+            catch (Exception ex)
+            {
+                return server.MapPath(fileName) + ex.Message;
+            }
+        }
     }
 }
