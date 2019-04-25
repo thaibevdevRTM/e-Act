@@ -85,11 +85,16 @@ namespace eActForm.Controllers
         public ActionResult PreviewData(string activityId)
         {
             Activity_Model activityModel = new Activity_Model();
-            activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-            activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
-            activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
-            activityModel.productImageList = AppCode.writeImagestoFile(Server, QueryGetImageById.GetImage(activityId));
-
+            try
+            {
+                activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+                activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
+                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
+            }
+            catch(Exception ex)
+            {
+                TempData["PreviewDataError"] = AppCode.StrMessFail + ex.Message;
+            }
             return PartialView(activityModel);
         }
 
@@ -215,7 +220,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult submitPreview(string GridHtml1, string status, string activityId)
+        public JsonResult submitPreview(string GridHtml1, string GridHtml2, string GridHtml3, string status, string activityId)
         {
             var resultAjax = new AjaxResult();
             int countresult = 0;
@@ -226,14 +231,17 @@ namespace eActForm.Controllers
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc);
                 if (countresult > 0)
                 {
-                    GridHtml1 = GridHtml1.Replace("---", genDoc).Replace("<br>","<br/>");
+                    GridHtml1 = GridHtml1.Replace("---", genDoc);
+                    GridHtml2 = GridHtml2.Replace("\n", "<br />");
+                    string mixHtml = GridHtml1 + GridHtml2 + GridHtml3;
+
 
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
-                    AppCode.genPdfFile(GridHtml1, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+                    AppCode.genPdfFile(mixHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                     {
-                        //ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                        //EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form);
+                        ApproveAppCode.updateApproveWaitingByRangNo(activityId);
+                        EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form);
                     }
                 }
                 resultAjax.Success = true;

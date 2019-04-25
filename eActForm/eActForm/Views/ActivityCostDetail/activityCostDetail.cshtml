@@ -10,7 +10,7 @@
     decimal? normalTotal = 0;
     decimal? activityTotal = 0;
     decimal? growthTotal = 0;
-    decimal? promotioncost = 0;
+
 
 }
 
@@ -40,10 +40,11 @@
             {
                 var index = 0;
                 total = 0;
-
+                Session["promotionTotal"] = 0;
+                
                 foreach (var item in Model.activitydetaillist)
                 {
-
+                    
                     <tr>
                         <td onclick="onDelActDetail('@item.productGroupId')">
                             <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
@@ -75,8 +76,8 @@
                             {
                                 for (int i = 0; i < @item.detailGroup.Count; i++)
                                 {
-                                    @*<td style="text-align:right">@item.detailGroup[i].productName</td>*@
-                                    <td>@Html.TextBoxFor(model => item.detailGroup[i].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")" })</td>
+                                @*<td style="text-align:right">@item.detailGroup[i].productName</td>*@
+                                <td>@Html.TextBoxFor(model => item.detailGroup[i].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")" })</td>
                                 }
                             }
                         }
@@ -98,7 +99,7 @@
                         <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}%", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
 
                     </tr>
-                    total = item.total == null ? 0 + total : item.total + total;
+                    total = item.normalCost == null ? 0 + total : item.total + total;
                     normalTotal = item.normalCost == null ? 0 + normalTotal : item.normalCost + normalTotal;
                     activityTotal = item.themeCost == null ? 0 + activityTotal : item.themeCost + activityTotal;
                     index++;
@@ -149,7 +150,8 @@
                     <p class="text-success textRight">
                         @if (total != 0 && activityTotal != 0)
                         {
-                            perTotal = total / (activityTotal * Convert.ToDecimal(promotioncost == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
+
+                            perTotal = total / (activityTotal * Convert.ToDecimal(Session["promotionTotal"] == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
                             string result = String.Format("{0:n2}%", @perTotal);
                             @result.ToString();
                         }
@@ -176,14 +178,14 @@
             var growth = $("#lblGrowth_" + rowIndex).val();
             growth = growth == "" ? 0 : growth;
             var productId = $("#hdProductId_" + rowIndex).val();
-
+    
             var total = 0;
             if (checktotal == true) {
                 var total = $("#lblTotal_" + rowIndex).val();
             }
+           
 
-
-
+           
 
             $.ajax({
                 type: 'POST',
@@ -200,7 +202,7 @@
             }).done(function (response) {
                 callThemedetailcost();
             });
-
+        
     }
         function onDelActDetail(id) {
 

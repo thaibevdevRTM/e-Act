@@ -30,6 +30,8 @@
                         url: '@Url.Action("submitPreview", "Activity")',
                         data: {
                             GridHtml1: $("#Grid1").html(),
+                            GridHtml2: $("#Grid2").html(),
+                            GridHtml3: $("#Grid3").html(),
                             status: 2,
                             activityId: $("#HdId").val(),
                         },
@@ -258,9 +260,8 @@
                     </div>
                 </div>
 
-
-                <div>
-                    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                <div id="Grid2" style="white-space: pre-line; width:97%; margin-left:20px;">
+                    <p style="font-size:12.5px;  margin-bottom:-30px; margin-top:-10px"> @Html.DisplayFor(item => item.activityFormModel.activityDetail)</p>
                 </div>
 
                 <div style="margin-top:5px; width:100%;">

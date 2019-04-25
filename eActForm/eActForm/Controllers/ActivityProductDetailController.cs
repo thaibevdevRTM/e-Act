@@ -42,7 +42,7 @@ namespace eActForm.Controllers
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-            activityModel.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).OrderBy(x => x.productName).ToList();
+            activityModel.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).ToList();
 
             return PartialView(activityModel);
         }
@@ -153,9 +153,9 @@ namespace eActForm.Controllers
                 var promotionGP = model.promotionGp == null ? "" : model.promotionGp.ToString().Replace(",", "");
 
                 decimal p_wholeSalesPrice = AppCode.checkNullorEmpty(wholeSalesPrice) == "0" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(wholeSalesPrice));
-                decimal p_disCount1 = AppCode.checkNullorEmpty(model.disCount1.ToString()) == "0" ? p_wholeSalesPrice : p_wholeSalesPrice - (decimal.Parse(AppCode.checkNullorEmpty(model.disCount1.ToString())));
-                decimal p_disCount2 = AppCode.checkNullorEmpty(model.disCount2.ToString()) == "0" ? p_disCount1 : p_disCount1 - (decimal.Parse(AppCode.checkNullorEmpty(model.disCount2.ToString())));
-                decimal p_disCount3 = AppCode.checkNullorEmpty(model.disCount3.ToString()) == "0" ? p_disCount2 : p_disCount2 - (decimal.Parse(AppCode.checkNullorEmpty(model.disCount3.ToString())));
+                decimal p_disCount1 = AppCode.checkNullorEmpty(model.disCount1.ToString()) == "0" ? p_wholeSalesPrice : p_wholeSalesPrice - ((decimal.Parse(AppCode.checkNullorEmpty(model.disCount1.ToString())) / 100) * p_wholeSalesPrice);
+                decimal p_disCount2 = AppCode.checkNullorEmpty(model.disCount2.ToString()) == "0" ? p_disCount1 : p_disCount1 - ((decimal.Parse(AppCode.checkNullorEmpty(model.disCount2.ToString())) / 100) * p_disCount1);
+                decimal p_disCount3 = AppCode.checkNullorEmpty(model.disCount3.ToString()) == "0" ? p_disCount2 : p_disCount2 - ((decimal.Parse(AppCode.checkNullorEmpty(model.disCount3.ToString())) / 100) * p_disCount2);
 
                 decimal getPackProduct = QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().pack;
 
