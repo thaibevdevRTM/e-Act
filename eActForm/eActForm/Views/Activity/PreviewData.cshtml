@@ -30,8 +30,6 @@
                         url: '@Url.Action("submitPreview", "Activity")',
                         data: {
                             GridHtml1: $("#Grid1").html(),
-                            GridHtml2: $("#Grid2").html(),
-                            GridHtml3: $("#Grid3").html(),
                             status: 2,
                             activityId: $("#HdId").val(),
                         },
@@ -230,49 +228,73 @@
                         <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
                     </div>
 
-                    <div style="width:100%; ">
-                        <div style="margin-top:5px;">
-                            รายละเอียดของการทำกิจกรรม(Activity Detail)
-                        </div>
+                <div style="width:100%; ">
+                    <div style="margin-top:5px; font-size:12.5px;">
+                        รายละเอียดของการทำกิจกรรม(Activity Detail)
+                    </div>
+                    <div style="margin-top:15px;">
+                        <table>
+                            <tr>
+                                <td width="50%">
+                                    <p style="font-size:12px;">
+                                        @Html.Raw(Model.activityFormModel.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                                    </p>
+                                </td>
+
+                                @if (Model.productImageList.Any())
+                                {
+                                    string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
+                                    foreach (var item in Model.productImageList)
+                                    {
+                                        <td>
+                                            <img width="120" height="120" src="@url@item._fileName" />
+                                        </td>
+                                    }
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            </tr>
+                        </table>
                     </div>
                 </div>
 
-                <div id="Grid2" style="white-space: pre-line; width:97%; margin-left:20px;">
-                    <p style="font-size:12.5px;  margin-bottom:-30px; margin-top:-10px"> @Html.DisplayFor(item => item.activityFormModel.activityDetail)</p>
+
+                <div>
+                    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
                 </div>
 
-                <div id="Grid3" style="width:97%; margin-left:20px;">
+                
                     <div>
                         <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
                     </div>
 
-                    <div style="margin-top:5px; width:100%;">
-                        โครงสร้างราคา-ไม่รวม Vat(Product Cost - Bath Per Case)
-                    </div>
-
-                    <div>
-                        <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
-                            <tr>
-                                <td rowspan="2" style="width:20%; font-size:12.5px;">ชื่อสินค้า (product Name)</td>
-                                <td rowspan="2" style="width:10%;  font-size:12.5px;">Std. Wholesales Price</td>
-                                <td colspan="3" style="width:20%;  font-size:12.5px;">Normal Discount (%)</td>
-                                <td style="width:10%;  font-size:12.5px;">Normal</td>
-                                <td style="width:10%;  font-size:12.5px;">Normal</td>
-                                <td style="width:10%;  font-size:12.5px;">Promotion</td>
-                                <td style="width:10%;  font-size:12.5px;">Special</td>
-                                <td style="width:10%;  font-size:12.5px;">Promotion</td>
-                            </tr>
-                            <tr>
-                                <td style="font-size:12.5px;">(1)</td>
-                                <td style="font-size:12.5px;">(2)</td>
-                                <td style="font-size:12.5px;">(3)</td>
-                                <td style="font-size:12.5px;">Cost</td>
-                                <td style="font-size:12.5px;">GP%</td>
-                                <td style="font-size:12.5px;">GP%</td>
-                                <td style="font-size:12.5px;">Discount %</td>
-                                <td style="font-size:12.5px;">Cost (BHT)</td>
-                            </tr>
-                            @if (Model.productcostdetaillist1.Any())
+                <div>
+                    <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td rowspan="2" style="width:20%; font-size:12.5px;">ชื่อสินค้า (product Name)</td>
+                            <td rowspan="2" style="width:10%;  font-size:12.5px;">Std. Wholesales Price</td>
+                            <td colspan="3" style="width:20%;  font-size:12.5px;">Normal Discount (Baht)</td>
+                            <td style="width:10%;  font-size:12.5px;">Normal</td>
+                            <td style="width:10%;  font-size:12.5px;">Normal</td>
+                            <td style="width:10%;  font-size:12.5px;">Promotion</td>
+                            <td style="width:10%;  font-size:12.5px;">Special</td>
+                            <td style="width:10%;  font-size:12.5px;">Promotion</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:12.5px;">(1)</td>
+                            <td style="font-size:12.5px;">(2)</td>
+                            <td style="font-size:12.5px;">(3)</td>
+                            <td style="font-size:12.5px;">Cost</td>
+                            <td style="font-size:12.5px;">GP%</td>
+                            <td style="font-size:12.5px;">GP%</td>
+                            <td style="font-size:12.5px;">Discount %</td>
+                            <td style="font-size:12.5px;">Cost (BHT)</td>
+                        </tr>
+                        @if (Model.productcostdetaillist1.Any())
+                        {
+                            foreach (var item in Model.productcostdetaillist1)
                             {
                                 foreach (var item in Model.productcostdetaillist1)
                                 {
@@ -419,7 +441,7 @@
                     </div>
 
 
-                </div>
+             
             </div>
             <div class="modal-footer">
                 <div>

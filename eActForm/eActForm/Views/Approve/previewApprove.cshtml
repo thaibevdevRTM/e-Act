@@ -330,10 +330,6 @@
                                         <td class="font11 textLeft">@Html.DisplayFor(m => item.productName)</td>
                                     }
 
-                                    @*<td style="font-size:12.5px;" class="textLeft">@item.productName</td>*@
-
-
-
 
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.themeCost)</td>
@@ -366,7 +362,7 @@
                                 }
                             </td>
                             <td class="textRight">
-                                @if (totalActCost != 0 && costActivity != 0)
+                                @if (costActivity != 0 && costProduct != 0)
                                 {
                                     perTotal = (costActivity - costProduct) / costProduct * 100;
                                     string result = String.Format("{0:n2}%", @perTotal);
