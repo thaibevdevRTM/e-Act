@@ -79,7 +79,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                var lists = QueryGetAllProduct.getProductSmellByGroupId(productGroupId).OrderBy(x => x.nameTH).AsEnumerable();
+                var lists = QueryGetAllProduct.getProductSmellByGroupId(productGroupId);
                 result.Data = lists;
             }
             catch (Exception ex)
@@ -173,7 +173,7 @@ namespace eActForm.Controllers
                     {
                         Value = x.id,
                         Text = x.productName
-                    }).OrderBy(x => x.Text).ToList(),
+                    }).ToList(),
                 };
                 result.Data = resultData;
             }
