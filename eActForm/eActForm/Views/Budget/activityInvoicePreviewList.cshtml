@@ -1,5 +1,5 @@
 ﻿
-@model eActForm.Models.Budget_Approve_Model
+@model eActForm.Models.Budget_Activity_Model
 @{
 	Layout = null;
 }
@@ -52,10 +52,10 @@
 
 	function submitApproveBudget() {
             $.ajax({
-            url: '@Url.Action("submitPreviewBudget", "Budget")',
+            url: '@Url.Action("submitPreviewBudget", "BudgetApprove")',
             data: {
 				GridHtml: $("#Grid").html(),
-				budgetId: $("#HbudgetId").val()
+				budgetActivityId: $("#HbudgetId").val()
             },
             dataType: "json",
             type: 'POST',
@@ -130,7 +130,7 @@
 
 						<tr>
 							<td style="text-align:left;">
-								<label> Theme : </label>  @Model.Budget_Approve_list.ElementAt(0).activityTypeTheme
+								<label> Theme : </label>  @Model.Budget_Invoce_History_list.ElementAt(0).activityTypeTheme
 							</td>
 							<td style="text-align:right;">
 								<label> ลูกค้า (Customer Name) : </label>  @Model.Budget_Activity_list.ElementAt(0).cus_cusNameTH
@@ -206,10 +206,10 @@
 							<td style="font-size:11px;">จำนวนเงินจ่าย (฿)</td>
 						</tr>
 
-						@if (Model.Budget_Approve_list.Any())
+						@if (Model.Budget_Invoce_History_list.Any())
 						{
 							var index = 0;
-							foreach (var item in Model.Budget_Approve_list)
+							foreach (var item in Model.Budget_Invoce_History_list)
 							{
 
 								if (@item.invoiceNo == "")
@@ -243,7 +243,7 @@
 
 
 								index++;
-								if (index == Model.Budget_Approve_list.Count)
+								if (index == Model.Budget_Invoce_History_list.Count)
 								{
 									<tr>
 										<td style="text-align:left;font-size:12px;"></td>

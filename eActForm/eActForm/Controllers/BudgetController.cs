@@ -27,44 +27,6 @@ namespace eActForm.Controllers
 	public class BudgetController : Controller
 	{
 
-		[HttpPost]
-		[ValidateInput(false)]
-		public JsonResult submitPreviewBudget(string GridHtml, string budgetId)
-		{
-			var resultAjax = new AjaxResult();
-			try
-			{
-				//var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
-				//AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-				//if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
-				//{
-				//	ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-				//	EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form);
-				//}
-				//resultAjax.Success = true;
-
-
-				var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetId));
-				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-				if (BudgetApproveController.insertApproveForBudgetForm(budgetId) > 0)
-				{
-					BudgetApproveController.updateApproveWaitingByRangNo(budgetId);
-					//EmailAppCodes.sendApprove(budgetId, AppCode.ApproveType.Activity_Form);
-				}
-				resultAjax.Success = true;
-
-
-			}
-			catch (Exception ex)
-			{
-				resultAjax.Success = false;
-				resultAjax.Message = ex.Message;
-				ExceptionManager.WriteError(ex.Message);
-			}
-			return Json(resultAjax, "text/plain");
-		}
-
-
 		public JsonResult submitInvoice(Budget_Activity_Model.Budget_Activity_Invoice_Att budgetInvoiceModel)
 		{
 			var resultAjax = new AjaxResult();
@@ -132,10 +94,10 @@ namespace eActForm.Controllers
 		
 		public PartialViewResult activityInvoicePreviewList(string activityId)
 		{
-			Budget_Approve_Model Budget_Approve_Model = new Budget_Approve_Model();
-			Budget_Approve_Model.Budget_Approve_list = QueryGetBudgetApprove.getBudgetActivityApprove(activityId);
-			Budget_Approve_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null);
-			return PartialView(Budget_Approve_Model);
+			Budget_Activity_Model Budget_Model = new Budget_Activity_Model();
+			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId);
+			Budget_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null);
+			return PartialView(Budget_Model);
 		}
 		
 		public PartialViewResult activityProductInvoiceList(string activityId , string activityOfEstimateId)

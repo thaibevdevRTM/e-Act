@@ -221,7 +221,7 @@
     <Compile Include="Controllers\ApproveListsController.cs" />
     <Compile Include="Controllers\ApproveListsRepDetailController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\BudgetApproveController.cs" />
+    <Compile Include="Controllers\BudgetApproveListController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
     <Compile Include="Controllers\BudgetViewerController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
@@ -239,7 +239,7 @@
     <Compile Include="Models\ActUserModel.cs" />
     <Compile Include="Models\AppCode.cs" />
     <Compile Include="Models\Budget_Activity_Model.cs" />
-    <Compile Include="Models\Budget_Approve_Model.cs" />
+    <Compile Include="Models\Budget_Approve_Detail_Model.cs" />
     <Compile Include="Models\RepDetailModel.cs" />
     <Compile Include="Models\TB_Act_ActivityFormDocNo_Model.cs" />
     <Compile Include="Models\TB_Act_ActivityGroup_Model.cs" />
@@ -2004,7 +2004,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Views\BudgetApprove\Index.cshtml" />
+    <Content Include="Views\BudgetApproveList\Index.cshtml" />
     <Content Include="WebForm1.aspx" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -2093,7 +2093,7 @@
     <Content Include="Views\Budget\activityProductList.cshtml" />
     <Content Include="Views\Budget\activityList.cshtml" />
     <Content Include="Views\Budget\activityInvoicePreviewList.cshtml" />
-    <Content Include="Views\BudgetApprove\budgetApproveList.cshtml" />
+    <Content Include="Views\BudgetApproveList\budgetApproveList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

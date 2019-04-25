@@ -12,15 +12,15 @@ namespace eActForm.BusinessLayer
 	public class QueryGetBudgetApprove
 	{
 
-		public static List<Budget_Approve_Model.Budget_Approve_Att> getBudgetActivityApprove( string activityId)
+		public static List<Budget_Activity_Model.Budget_Invoice_history_Att> getBudgetInvoiceHistory( string activityId)
 		{
 			try
 			{
-				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivityApprove"
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetInvoiceHistory"
 				 , new SqlParameter("@activityId", activityId));
 
 				var result = (from DataRow d in ds.Tables[0].Rows
-							  select new Budget_Approve_Model.Budget_Approve_Att()
+							  select new Budget_Activity_Model.Budget_Invoice_history_Att()
 							  {
 								  budgetActivityId = d["budgetActivityId"].ToString(),
 								  activityId = d["activityId"].ToString(),
@@ -63,7 +63,7 @@ namespace eActForm.BusinessLayer
 			catch (Exception ex)
 			{
 				ExceptionManager.WriteError("getBudgetActivityApprove => " + ex.Message);
-				return new List<Budget_Approve_Model.Budget_Approve_Att>();
+				return new List<Budget_Activity_Model.Budget_Invoice_history_Att>();
 			}
 		}
 
