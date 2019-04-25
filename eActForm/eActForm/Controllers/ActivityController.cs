@@ -24,12 +24,6 @@ namespace eActForm.Controllers
     [LoginExpire]
     public class ActivityController : eActController
     {
-        // GET: Activity
-        public ActionResult Index()
-        {
-
-            return View();
-        }
 
         public ActionResult ActivityForm(string activityId, string mode)
         {
@@ -121,11 +115,12 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult insertDataActivity(ActivityForm activityFormModel, Activity_Model activityModel)
+        public JsonResult insertDataActivity(ActivityForm activityFormModel)
         {
             var result = new AjaxResult();
             try
             {
+                Activity_Model activityModel = new Activity_Model();
                 activityModel.activityFormModel = activityFormModel;
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 activityModel.activitydetaillist = ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]);
@@ -141,7 +136,32 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        
+
+        public JsonResult copyAndSaveNewActivityForm(ActivityForm activityFormModel)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                string actId = Guid.NewGuid().ToString();
+                Activity_Model activityModel = new Activity_Model();
+                activityModel.activityFormModel = activityFormModel;
+                activityModel.activityFormModel.activityNo = "";
+                activityModel.activityFormModel.dateDoc = DateTime.Now.ToString("dd-MM-yyyy");
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                activityModel.activitydetaillist = ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]);
+                int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, actId);
+
+                result.ActivityId = actId;
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpPost]
         public ActionResult uploadFilesImage()
@@ -183,7 +203,6 @@ namespace eActForm.Controllers
                     int resultImg = ActivityFormCommandHandler.insertImageForm(imageFormModel);
 
                 }
-
 
                 result.ActivityId = Session["activityId"].ToString();
                 result.Success = true;
@@ -254,10 +273,6 @@ namespace eActForm.Controllers
             }
             return  Json(resultAjax, "text/plain");
         }
-
-
-
-       
 
     }
 }
