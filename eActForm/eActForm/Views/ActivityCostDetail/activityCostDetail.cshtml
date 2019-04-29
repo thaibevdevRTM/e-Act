@@ -90,7 +90,7 @@
                             @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")" })
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => item.growth, "{0:p2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })
+                            @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })
                         </td>
                         <td>
                             @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")" })
@@ -168,6 +168,7 @@
 
     function calGrowth(id, rowIndex, checktotal) {
 
+
             var name = $('#lblProductName_' + rowIndex).val();
             var normalCost = $('#lblNormalCost_' + rowIndex).val();
             normalCost = normalCost == "" ? 0 : normalCost;
@@ -175,14 +176,14 @@
             themeCost = themeCost == "" ? 0 : themeCost;
             var growth = $("#lblGrowth_" + rowIndex).val();
             growth = growth == "" ? 0 : growth;
-            
-            var perTotal = $('#lblPerTotal_' + rowIndex).val();
-            perTotal = perTotal == "" ? 0 : perTotal;
+           
            var productId = $("#hdProductId_" + rowIndex).val();
   
             var total = 0;
+            var perTotal = 0;
             if (checktotal == true) {
-                var total = $("#lblTotal_" + rowIndex).val();
+                 total = $("#lblTotal_" + rowIndex).val();
+                 perTotal = $('#lblPerTotal_' + rowIndex).val();
             }
 
 
