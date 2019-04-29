@@ -54,6 +54,7 @@ namespace eActForm.BusinessLayer
                                  objective = dr["objective"].ToString(),
                                  trade = dr["trade"].ToString(),
                                  activityDetail = dr["activityDetail"].ToString(),
+                                 perTotal = dr["perTotal"] is DBNull ? 0 : (decimal?)dr["perTotal"],
                                  delFlag = (bool)dr["delFlag"],
                                  createdDate = (DateTime?)dr["createdDate"],
                                  createdByUserId = dr["createdByUserId"].ToString(),
