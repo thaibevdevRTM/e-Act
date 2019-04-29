@@ -304,6 +304,36 @@ namespace eActForm.Controllers
 			}
 			catch (Exception ex)
 			{
+				//throw new Exception("getFlow by actFormId >>" + ex.Message);
+				return "0";
+			}
+		}
+
+		
+		public static ApproveFlowModel.approveFlowModel getFlowIdBudgetByBudgetActivityId(string subId, string budget_activity_id)
+		{
+			try
+			{
+				ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowByBudgetActivtyId"
+					, new SqlParameter[] {
+						  new SqlParameter("@subId",subId)
+						, new SqlParameter("@budgetActivityId",budget_activity_id)
+					});
+				var lists = (from DataRow dr in ds.Tables[0].Rows
+							 select new ApproveFlowModel.flowApprove()
+							 {
+								 id = dr["id"].ToString(),
+							 }).ToList();
+				if (lists.Count > 0)
+				{
+					model.flowMain = lists[0];
+					model.flowDetail = getFlowDetailBudget(model.flowMain.id);
+				}
+				return model;
+			}
+			catch (Exception ex)
+			{
 				throw new Exception("getFlow by actFormId >>" + ex.Message);
 			}
 		}

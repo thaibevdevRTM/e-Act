@@ -2099,6 +2099,7 @@
     <Content Include="Views\BudgetApprove\approveLists.cshtml" />
     <Content Include="Views\BudgetApprove\approvePositionSignatureLists.cshtml" />
     <Content Include="Views\Budget\activityList.cshtml" />
+    <Content Include="Views\BudgetApprove\approvePositionLists.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

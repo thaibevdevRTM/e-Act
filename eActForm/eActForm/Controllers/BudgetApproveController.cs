@@ -31,15 +31,27 @@ namespace eActForm.Controllers
 			}
 		}
 
+
 		public ActionResult approvePositionSignatureLists(string actId)
 		{
 			var budget_approve_id = BudgetApproveListController.getApproveBudgetId(actId);
-
-			ApproveModel.approveModels models = getApproveByBudgetApproveId(budget_approve_id);
-			ApproveFlowModel.approveFlowModel flowModel = BudgetApproveListController.getFlowIdBudget(ConfigurationManager.AppSettings["subjectBudgetFormId"], budget_approve_id);
-			models.approveFlowDetail = flowModel.flowDetail;
-			return PartialView(models);
-
+			
+			// กรณี get flow ก่อน submit approve
+			if (budget_approve_id == "0")
+			{
+				ApproveModel.approveModels models = getApproveByBudgetApproveId(actId);
+				ApproveFlowModel.approveFlowModel flowModel = BudgetApproveListController.getFlowIdBudgetByBudgetActivityId(ConfigurationManager.AppSettings["subjectBudgetFormId"], actId);
+				models.approveFlowDetail = flowModel.flowDetail;
+				return PartialView(models);
+			}
+			else
+			{
+				ApproveModel.approveModels models = getApproveByBudgetApproveId(budget_approve_id);
+				ApproveFlowModel.approveFlowModel flowModel = BudgetApproveListController.getFlowIdBudget(ConfigurationManager.AppSettings["subjectBudgetFormId"], budget_approve_id);
+				models.approveFlowDetail = flowModel.flowDetail;
+				return PartialView(models);
+			}
+			
 		}
 
 
