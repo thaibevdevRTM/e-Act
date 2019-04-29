@@ -221,6 +221,7 @@
     <Compile Include="Controllers\ApproveListsController.cs" />
     <Compile Include="Controllers\ApproveListsRepDetailController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BudgetApproveController.cs" />
     <Compile Include="Controllers\BudgetApproveListController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
     <Compile Include="Controllers\BudgetViewerController.cs" />
@@ -2094,6 +2095,9 @@
     <Content Include="Views\Budget\activityList.cshtml" />
     <Content Include="Views\Budget\activityInvoicePreviewList.cshtml" />
     <Content Include="Views\BudgetApproveList\budgetApproveList.cshtml" />
+    <Content Include="Views\BudgetApprove\Index.cshtml" />
+    <Content Include="Views\BudgetApprove\approveLists.cshtml" />
+    <Content Include="Views\BudgetViewer\activityPDFView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
@@ -2104,7 +2108,6 @@
     <Folder Include="signature\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\BudgetViewer\" />
     <Folder Include="Views\eAct\" />
   </ItemGroup>
   <ItemGroup>

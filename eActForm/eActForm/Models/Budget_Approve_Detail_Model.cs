@@ -70,6 +70,7 @@ namespace eActForm.Models
 			public string activityDetail { get; set; }
 
 			public string budgetActivityId { get; set; }
+			public string budgetApproveId { get; set; }
 			public string approveId { get; set; }
 			public string approveDetailId { get; set; }
 

@@ -16,16 +16,17 @@ namespace eActForm.Controllers
             return View();
         }
 
-		public ActionResult activityPDFView(string actId)
+		public ActionResult activityPDFView(string budgetActivityId)
 		{
 			//TempData["fileViewer"] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actId));
-			TempData["actId"] = actId;
+			//var var_budgetActivityId = BudgetApproveListController.getApproveBudgetId(budgetActivityId);
+			TempData["budgetActivityId"] = budgetActivityId;
 			return PartialView();
 		}
 
-		public ActionResult getPDF(string actId)
+		public ActionResult getPDF(string budgetActivityId)
 		{
-			var fileStream = new FileStream(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actId)),
+			var fileStream = new FileStream(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetActivityId)),
 											 FileMode.Open,
 											 FileAccess.Read
 										   );
