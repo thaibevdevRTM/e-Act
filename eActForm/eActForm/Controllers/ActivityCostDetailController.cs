@@ -130,10 +130,10 @@ namespace eActForm.Controllers
                         {
                             r.detailGroup[0].productName = name;
                             r.normalCost = decimal.Parse(normalCost);
-                            r.growth = Math.Round(p_growth, 3);
+                            r.growth = Math.Round(p_growth, 2);
                             r.themeCost = decimal.Parse(themeCost);
-                            r.total = Math.Round(p_total, 3);
-                            r.perTotal = Math.Round(get_PerTotal, 3);
+                            r.total = Math.Round(p_total, 2);
+                            r.perTotal = Math.Round(get_PerTotal, 2);
                             return r;
                         }).ToList();
 
