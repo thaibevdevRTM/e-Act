@@ -180,12 +180,12 @@ namespace eActForm.Controllers
                         r.disCount3 = decimal.Parse(AppCode.checkNullorEmpty(model.disCount3.ToString()));
                         r.saleNormal = decimal.Parse(AppCode.checkNullorEmpty(saleNormal));
                         r.saleIn = decimal.Parse(AppCode.checkNullorEmpty(saleIn));
-                        r.normalGp = p_normalGp;
-                        r.promotionGp = p_PromotionGp;
+                        r.normalGp = Math.Round(p_normalGp, 3);
+                        r.promotionGp = Math.Round(p_PromotionGp, 3);
                         r.specialDisc = decimal.Parse(AppCode.checkNullorEmpty(model.specialDisc.ToString()));
                         r.specialDiscBaht = decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
                         r.normalCost = p_disCount3 == 0 ? p_wholeSalesPrice : p_disCount3;
-                        r.promotionCost = p_PromotionCost;
+                        r.promotionCost = Math.Round(p_PromotionCost, 3);
                         return r;
                     }).ToList();
                 Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;

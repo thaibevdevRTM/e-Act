@@ -87,6 +87,8 @@ namespace eActForm.Models
             public decimal? themeCost { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? totalCost { get; set; }
+
+            public decimal? perTotal { get; set; }
         }
 
     }
