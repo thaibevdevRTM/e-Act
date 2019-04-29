@@ -2006,6 +2006,9 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Views\BudgetApproveList\Index.cshtml" />
+    <Content Include="Views\BudgetApprove\previewApproveBudget.cshtml">
+      <BrowseToURL>~/BudgetApprove/previewApproveBudget</BrowseToURL>
+    </Content>
     <Content Include="WebForm1.aspx" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -2080,7 +2083,6 @@
     <Content Include="Views\ApproveLists\index.cshtml" />
     <Content Include="Views\ApproveLists\ListView.cshtml" />
     <Content Include="Views\Home\approveLists.cshtml" />
-    <Content Include="Views\Budget\activityList.cshtml" />
     <Content Include="Views\ActivityProductDetail\showDetailGroup.cshtml" />
     <Content Include="Views\Shared\_search.cshtml" />
     <Content Include="Views\actFormRepDetail\index.cshtml" />
@@ -2092,12 +2094,11 @@
     <Content Include="Views\Budget\activityProductInvoiceEdit.cshtml" />
     <Content Include="Views\Budget\activityProductInvoiceList.cshtml" />
     <Content Include="Views\Budget\activityProductList.cshtml" />
-    <Content Include="Views\Budget\activityList.cshtml" />
-    <Content Include="Views\Budget\activityInvoicePreviewList.cshtml" />
     <Content Include="Views\BudgetApproveList\budgetApproveList.cshtml" />
     <Content Include="Views\BudgetApprove\Index.cshtml" />
     <Content Include="Views\BudgetApprove\approveLists.cshtml" />
-    <Content Include="Views\BudgetViewer\activityPDFView.cshtml" />
+    <Content Include="Views\BudgetApprove\approvePositionSignatureLists.cshtml" />
+    <Content Include="Views\Budget\activityList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
@@ -2108,6 +2109,7 @@
     <Folder Include="signature\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\BudgetViewer\" />
     <Folder Include="Views\eAct\" />
   </ItemGroup>
   <ItemGroup>

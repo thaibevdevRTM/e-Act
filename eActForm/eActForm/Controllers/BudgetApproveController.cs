@@ -17,6 +17,7 @@ namespace eActForm.Controllers
 	[LoginExpire]
 	public class BudgetApproveController : Controller
 	{
+
 		// GET: Approve
 		public ActionResult Index(string budgetActivityId)
 		{
@@ -28,6 +29,26 @@ namespace eActForm.Controllers
 				models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app).Where(x => x.id == "3" || x.id == "5").ToList();
 				return View(models);
 			}
+		}
+
+		public ActionResult approvePositionSignatureLists(string actId)
+		{
+			var budget_approve_id = BudgetApproveListController.getApproveBudgetId(actId);
+
+			ApproveModel.approveModels models = getApproveByBudgetApproveId(budget_approve_id);
+			ApproveFlowModel.approveFlowModel flowModel = BudgetApproveListController.getFlowIdBudget(ConfigurationManager.AppSettings["subjectBudgetFormId"], budget_approve_id);
+			models.approveFlowDetail = flowModel.flowDetail;
+			return PartialView(models);
+
+		}
+
+
+		public PartialViewResult previewApproveBudget(string activityId)
+		{
+			Budget_Activity_Model Budget_Model = new Budget_Activity_Model();
+			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId);
+			Budget_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null);
+			return PartialView(Budget_Model);
 		}
 
 		public static ApproveModel.approveModels getApproveByBudgetApproveId(string budgetApproveId)
@@ -142,18 +163,8 @@ namespace eActForm.Controllers
 			return Json(resultAjax, "text/plain");
 		}
 
-		public ActionResult previewApprove(string budgetApproveId)
-		{
-			var actId = budgetApproveId;
-			Activity_Model activityModel = new Activity_Model();
-			activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
-			activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
-			activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
 
-			return PartialView(activityModel);
-		}
 
-//---------------- ยังไม่ได้แก้ *******
 		[HttpPost]
 		public JsonResult insertApprove()
 		{
@@ -177,8 +188,6 @@ namespace eActForm.Controllers
 			return Json(result);
 		}
 
-
-		//แก้ตรงนี้ด้วย cop มาแล้ว ******
 		public static int updateApprove(string actFormId, string statusId, string remark, string approveType)
 		{
 			try
@@ -240,7 +249,6 @@ namespace eActForm.Controllers
 				throw new Exception(ex.Message);
 			}
 		}
-
 
 		public static int updateBudgetFormWithApproveReject(string budgetApproveId)
 		{

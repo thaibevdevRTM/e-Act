@@ -261,7 +261,18 @@
 							}
 						}
 					</table>
+
+					<div>
+						<table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+					</div>
+
+					@if (Model.Budget_Activity_list.ElementAt(0).act_activityNo != null)
+					{
+						@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity_list.ElementAt(0).budget_id })
+					}
+
 				</div>
+
 
 			</div>
 		</div>
@@ -275,6 +286,8 @@
 			</div>
 
 		</div>
+
+
 
 	</div>
 </div>

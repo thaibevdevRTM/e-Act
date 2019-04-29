@@ -91,15 +91,7 @@ namespace eActForm.Controllers
 				return PartialView("activityProductInvoiceEdit", Budget_Activity);
 			}
 		}
-		
-		public PartialViewResult activityInvoicePreviewList(string activityId)
-		{
-			Budget_Activity_Model Budget_Model = new Budget_Activity_Model();
-			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId);
-			Budget_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null);
-			return PartialView(Budget_Model);
-		}
-		
+
 		public PartialViewResult activityProductInvoiceList(string activityId , string activityOfEstimateId)
 		{
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
