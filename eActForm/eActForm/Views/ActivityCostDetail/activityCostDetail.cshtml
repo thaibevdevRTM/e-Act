@@ -93,9 +93,9 @@
                             @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")" })
+                            @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")" })
                         </td>
-                        <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight",  @onchange = "calGrowth('" + item.productGroupId + "'," + index + "," + "true" + ")" })</td>
+                        <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight",  @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")" })</td>
 
                     </tr>
                     total = item.total == null ? 0 + total : item.total + total;
@@ -166,6 +166,56 @@
         $(txtId).val("");
     }
 
+    
+
+        function calGrowthPerTotal(id, rowIndex, checktotal) {
+            var perTotal = 0;
+            if (checktotal == true) {
+                 perTotal = $('#lblPerTotal_' + rowIndex).val();
+            }
+          $.ajax({
+                type: 'POST',
+                url: '@Url.Action("calCostPerTotal", "ActivityCostDetail")',
+                data: {
+                    productGroupId: id,
+                    perTotal: perTotal,
+                }
+            }).done(function (response) {
+                callThemedetailcost();
+            });
+    }
+
+
+    function calGrowthTotal(id, rowIndex, checktotal) {
+
+            var themeCost = $('#lblThemeCost_' + rowIndex).val();
+            themeCost = themeCost == "" ? 0 : themeCost;
+           var productId = $("#hdProductId_" + rowIndex).val();
+
+            var total = 0;
+            var perTotal = 0;
+            if (checktotal == true) {
+                 total = $("#lblTotal_" + rowIndex).val();
+                 perTotal = $('#lblPerTotal_' + rowIndex).val();
+            }
+          $.ajax({
+                type: 'POST',
+                url: '@Url.Action("calCostDetail", "ActivityCostDetail")',
+                data: {
+                    productGroupId: id,
+                    productId: productId,
+                    total: total,
+                    perTotal: perTotal,
+                    themeCost:themeCost,
+                }
+            }).done(function (response) {
+                callThemedetailcost();
+            });
+    }
+
+
+
+
     function calGrowth(id, rowIndex, checktotal) {
 
 
@@ -178,16 +228,7 @@
             growth = growth == "" ? 0 : growth;
            
            var productId = $("#hdProductId_" + rowIndex).val();
-  
-            var total = 0;
-            var perTotal = 0;
-            if (checktotal == true) {
-                 total = $("#lblTotal_" + rowIndex).val();
-                 perTotal = $('#lblPerTotal_' + rowIndex).val();
-            }
-
-
-
+ 
 
             $.ajax({
                 type: 'POST',
@@ -199,8 +240,6 @@
                     productId: productId,
                     themeCost: themeCost,
                     growth: growth,
-                    total: total,
-                    perTotal: perTotal,
                 }
             }).done(function (response) {
                 callThemedetailcost();

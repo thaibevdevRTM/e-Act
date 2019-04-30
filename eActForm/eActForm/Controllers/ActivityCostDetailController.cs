@@ -90,18 +90,96 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult calCostDetailTheme(string productGroupId, string productId, string name, string normalCost, string themeCost, string growth, string total,string perTotal)
+        public JsonResult calCostDetail(string productGroupId, string productId, string total, string perTotal, string themeCost)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                decimal p_total = decimal.Parse(total);
+                decimal p_perTotal = decimal.Parse(perTotal);
+                decimal getPromotionCost = 0;
+
+                Activity_Model activityModel = new Activity_Model();
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
+
+                if (activityModel.productcostdetaillist1.Where(x => x.productId == productId).Any() && activityModel.productcostdetaillist1.Where(x => x.productId == productId).Any())
+                {
+                    getPromotionCost = decimal.Parse(AppCode.checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).Any() ?
+                        activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).FirstOrDefault().promotionCost.ToString() : "0"));
+                    getPromotionCost = getPromotionCost == 0 ? 1 : getPromotionCost;
+                    p_perTotal = (p_total / (decimal.Parse(themeCost) * getPromotionCost)) * 100; // % ยอดขายโปโมชั่น
+                }
+
+
+                activityModel.activitydetaillist
+                           .Where(r => r.productGroupId != null && r.productGroupId.Equals(productGroupId))
+                           .Select(r =>
+                           {
+                               r.total = Math.Round(p_total, 2);
+                               r.perTotal = Math.Round(p_perTotal, 2);
+                               return r;
+                           }).ToList();
+
+                Session["activitydetaillist"] = activityModel.activitydetaillist;
+                result.Success = true;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult calCostPerTotal(string productGroupId, string perTotal)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                decimal p_perTotal = decimal.Parse(perTotal);
+
+                Activity_Model activityModel = new Activity_Model();
+                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
+
+                activityModel.activitydetaillist
+                           .Where(r => r.productGroupId != null && r.productGroupId.Equals(productGroupId))
+                           .Select(r =>
+                           {
+                               r.perTotal = Math.Round(p_perTotal, 2);
+                               return r;
+                           }).ToList();
+
+                Session["activitydetaillist"] = activityModel.activitydetaillist;
+                result.Success = true;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult calCostDetailTheme(string productGroupId, string productId, string name, string normalCost, string themeCost, string growth)
         {
             var result = new AjaxResult();
 
             try
             {
                 Activity_Model activityModel = new Activity_Model();
-                decimal p_total = decimal.Parse(total);//AppCode.checkNullorEmpty(total) != "0" ? decimal.Parse(total) : 0;
+
                 decimal getPromotionCost = 0;
                 decimal getNormalCost = 0;
-                decimal get_PerTotal = decimal.Parse(perTotal);
-              
+                decimal get_PerTotal = 0;
+                decimal p_total = 0;
+
 
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
@@ -114,9 +192,9 @@ namespace eActForm.Controllers
                         getPromotionCost = decimal.Parse(AppCode.checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).Any() ?
                            activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).FirstOrDefault().promotionCost.ToString() : "0"));
                         getPromotionCost = getPromotionCost == 0 ? 1 : getPromotionCost;
-                        p_total = AppCode.checkNullorEmpty(total) == "0" ? (getNormalCost - getPromotionCost) * decimal.Parse(themeCost) : p_total;
+                        p_total = (getNormalCost - getPromotionCost) * decimal.Parse(themeCost);
                         //get_PerTotal = p_total * 100 / (decimal.Parse(normalCost) * getPromotionCost); //ยอดขายปกติ
-                        get_PerTotal = AppCode.checkNullorEmpty(perTotal) == "0" ? (p_total / (decimal.Parse(themeCost) * getPromotionCost)) * 100 : decimal.Parse(perTotal); // % ยอดขายโปโมชั่น
+                        get_PerTotal = (p_total / (decimal.Parse(themeCost) * getPromotionCost)) * 100; // % ยอดขายโปโมชั่น
                     }
 
                 }
