@@ -329,10 +329,13 @@
         <p class="d-flex justify-content-center">
             @if (mode != "")
             {
-                <button id="btnsubmit" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew()">&nbsp;Save As</button>
+                <button id="btnSaveAs" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew()">&nbsp;Save As</button>
             }
-            <a href="@Url.Action("index", "Home")" class="btn btn-info"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+            <a href="@Url.Action("index", "Home")" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+            @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3  )
+            {
             <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
+            }
         </p>
     </div>
 
@@ -800,7 +803,6 @@
         document.getElementById("divUploadImg").style.display = "none";
         document.getElementById("rdbterm").disabled = true;
         document.getElementById("rdbOutterm").disabled = true;
-        document.getElementById("btnsubmit").disabled = true;
         //$("input.txtnormalGp").attr("disabled", true);
     }
 
