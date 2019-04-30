@@ -211,11 +211,34 @@
                 </div>
 
                 <div style="width:100%; ">
-                    <div style="margin-top:5px;">
+                    <div style="margin-top:5px; font-size:12.5px;">
                         รายละเอียดของการทำกิจกรรม(Activity Detail)
                     </div>
                     <div style="margin-top:15px;">
-                        <label style="font-size:12.5px; white-space:pre-line;">@Html.DisplayFor(item => item.activityFormModel.activityDetail) </label>
+                        <table style="width:100%">
+                            <tr>
+                                <td width="50%">
+                                    <p style="font-size:12px;">
+                                        @Html.Raw(Model.activityFormModel.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                                    </p>
+                                </td>
+
+                                @if (Model.productImageList.Any())
+                                {
+                                    string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
+                                    foreach (var item in Model.productImageList)
+                                    {
+                                        <td width="50%" style="text-align:right">
+                                            <img width="120" height="120" src="@url@item._fileName" />
+                                        </td>
+                                    }
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            </tr>
+                        </table>
                     </div>
                 </div>
 
