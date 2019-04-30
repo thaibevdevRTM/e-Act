@@ -100,7 +100,7 @@ namespace eActForm.Controllers
                 decimal p_total = decimal.Parse(total);//AppCode.checkNullorEmpty(total) != "0" ? decimal.Parse(total) : 0;
                 decimal getPromotionCost = 0;
                 decimal getNormalCost = 0;
-                decimal get_PerTotal = 0;
+                decimal get_PerTotal = decimal.Parse(perTotal);
               
 
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
