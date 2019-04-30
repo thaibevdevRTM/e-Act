@@ -141,7 +141,7 @@ namespace eActForm.BusinessLayer
                             , item.activityName
                             , item.activitySales
                             , item.activityNo
-                            , String.Format("{0:n2}", item.sumTotal)
+                            , String.Format("{0:0,0.00}", item.sumTotal)
                             , item.createBy
                             , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId)
                             ) :
@@ -178,7 +178,7 @@ namespace eActForm.BusinessLayer
                                   activityName = dr["activityName"].ToString(),
                                   activitySales = dr["activitySales"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
-                                  sumTotal = dr["sumTotal"].ToString(),
+                                  sumTotal = dr["sumTotal"] is DBNull ? 0 : (decimal)dr["sumTotal"],
                                   createBy = dr["createBy"].ToString(),
                               }).ToList();
                 return models;

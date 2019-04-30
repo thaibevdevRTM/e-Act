@@ -75,7 +75,7 @@ namespace eActForm.Models
             public string activityName { get; set; }
             public string activitySales { get; set; }
             public string activityNo { get; set; }
-            public string sumTotal { get; set; }
+            public decimal sumTotal { get; set; }
             public string customerName { get; set; }
             public string productTypeName { get; set; }
             public string empPrefix { get; set; }
