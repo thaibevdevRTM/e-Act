@@ -269,39 +269,56 @@
                             <td style="font-size:12.5px;">Cost</td>
                             <td style="font-size:12.5px;">GP%</td>
                             <td style="font-size:12.5px;">GP%</td>
-                            <td style="font-size:12.5px;">Discount %</td>
+                            @if (Model.productcostdetaillist1.Any())
+                            {
+                                if (Model.productcostdetaillist1[0].specialDiscBaht != 0)
+                                {
+                                    <td style="font-size:12.5px;">Discount Baht</td>
+                                }
+                                else
+                                {
+                                    <td style="font-size:12.5px;">Discount %</td>
+                                }
+                            }
                             <td style="font-size:12.5px;">Cost (BHT)</td>
                         </tr>
                         @if (Model.productcostdetaillist1.Any())
                         {
                             foreach (var item in Model.productcostdetaillist1)
                             {
-                                <tr>
-                                    @if (item.isShowGroup == true)
-                                    {
-                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.smellName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) Pack(@Html.DisplayFor(m => item.pack)) </td>
-                                    }
-                                    else if (item.isShowGroup == false)
-                                    {
-                                        for (int i = 0; i < @item.detailGroup.Count; i++)
-                                        {
-                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) Pack(@Html.DisplayFor(m => item.pack))</td>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <td class="font10 textLeft">@Html.DisplayFor(m => item.productName)</td>
-                                    }
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.disCount1)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.disCount2)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.disCount3)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.normalGp)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.promotionGp)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
-                                    <td class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
-                                </tr>
+                    <tr>
+                        @if (item.isShowGroup == true)
+                        {
+                            <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.smellName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) Pack(@Html.DisplayFor(m => item.pack)) </td>
+                        }
+                        else if (item.isShowGroup == false)
+                        {
+                            for (int i = 0; i < @item.detailGroup.Count; i++)
+                            {
+                                <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) Pack(@Html.DisplayFor(m => item.pack))</td>
+                            }
+                        }
+                        else
+                        {
+                            <td class="font10 textLeft">@Html.DisplayFor(m => item.productName)</td>
+                        }
+                        <td class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
+                        <td class="font11 textRight">@Html.DisplayFor(m => item.disCount1)</td>
+                        <td class="font11 textRight">@Html.DisplayFor(m => item.disCount2)</td>
+                        <td class="font11 textRight">@Html.DisplayFor(m => item.disCount3)</td>
+                        <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
+                        <td class="font11 textRight">@Html.DisplayFor(m => item.normalGp)</td>
+                        <td class="font11 textRight">@Html.DisplayFor(m => item.promotionGp)</td>
+                        @if (item.specialDiscBaht != 0)
+                        {
+                            <td class="font11 textRight">@Html.DisplayFor(m => item.specialDiscBaht)</td>
+                        }
+                        else
+                        {
+                            <td class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
+                        }
+                        <td class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
+                    </tr>
 
                             }
                         }
