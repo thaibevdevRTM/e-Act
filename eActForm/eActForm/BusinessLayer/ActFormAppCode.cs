@@ -56,7 +56,8 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityFormByEmpId"
+                string spName = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAll" : "usp_getActivityFormByEmpId";
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, spName
                     , new SqlParameter[] { new SqlParameter("@empId", empId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new Activity_Model.actForm()
