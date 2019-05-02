@@ -1,4 +1,4 @@
-﻿
+﻿@model eActForm.Models.DashBoardModel.infoDashBoardModels
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,33 +13,33 @@
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
-                    <div class="count">179</div>
-                    <h3>New Sign ups</h3>
-                    <p>Lorem ipsum psdea itgum rixt.</p>
+                    <div class="count">@Model.dashBoardLists[0].countCreated</div>
+                    <h3>เอกสารทั้งหมด</h3>
+                    <p>จำนวนเอกสารที่คุณสร้าง</p>
                 </div>
             </div>
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-comments-o"></i></div>
-                    <div class="count">179</div>
-                    <h3>New Sign ups</h3>
-                    <p>Lorem ipsum psdea itgum rixt.</p>
-                </div>
-            </div>
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
-                    <div class="count">179</div>
-                    <h3>New Sign ups</h3>
-                    <p>Lorem ipsum psdea itgum rixt.</p>
+                    <div class="count">@Model.dashBoardLists[0].countWaitingApprove</div>
+                    <h3>รออนุมัติ</h3>
+                    <p>จำนวนเอกสารที่รอการอนุมติ</p>
                 </div>
             </div>
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-check-square-o"></i></div>
-                    <div class="count">179</div>
-                    <h3>New Sign ups</h3>
-                    <p>Lorem ipsum psdea itgum rixt.</p>
+                    <div class="count">@Model.dashBoardLists[0].countApprove</div>
+                    <h3>อนุมัติ</h3>
+                    <p>จำนวนเอกสารที่ได้รับการอนุมติเรียบร้อย</p>
+                </div>
+            </div>
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                    <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
+                    <div class="count">@Model.dashBoardLists[0].countOverSLA</div>
+                    <h3>เกินกำหนด</h3>
+                    <p>SLA 2 days.</p>
                 </div>
             </div>
         </div>

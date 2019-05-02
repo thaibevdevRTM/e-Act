@@ -22,7 +22,7 @@ namespace eActForm.Controllers
             return PartialView(activityModel);
         }
 
-        public JsonResult calDiscountProduct(ProductCostOfGroupByPrice  model)
+        public JsonResult calDiscountProduct(ProductCostOfGroupByPrice model)
         {
             var result = new AjaxResult();
             try
@@ -42,9 +42,9 @@ namespace eActForm.Controllers
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-            activityModel.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).ToList();
+            activityModel.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).OrderBy(x => x.productName).ToList();
 
-             return PartialView(activityModel);
+            return PartialView(activityModel);
         }
 
         public JsonResult delCostDetail(string rowid, Activity_Model activityModel)
@@ -88,31 +88,16 @@ namespace eActForm.Controllers
             try
             {
                 Activity_Model activityModel = new Activity_Model();
+                activityModel.productcostdetaillist1 = Session["productcostdetaillist1"] == null ? new List<ProductCostOfGroupByPrice>()
+                    : ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]); ;
 
-
-                if (Session["productcostdetaillist1"] == null)
-                {
-                    activityModel.productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();            
-                }
-                else
-                {
-                    activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-                }
-
-                if (Session["activitydetaillist"] == null)
-                {
-                    activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
-                }
-                else
-                {
-                    activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
-                }
+                activityModel.activitydetaillist = Session["activitydetaillist"] == null ? new List<CostThemeDetailOfGroupByPrice>()
+                    : (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]; ;
 
 
                 var productlist = new Activity_Model();
                 productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme);
                 activityModel.productcostdetaillist1.AddRange(productlist.productcostdetaillist1);
-              
 
 
                 CostThemeDetailOfGroupByPrice costthememodel = new CostThemeDetailOfGroupByPrice();
@@ -135,7 +120,6 @@ namespace eActForm.Controllers
                     i++;
                 }
 
-
                 Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
                 //calculate Cost GP
                 foreach (var item in productlist.productcostdetaillist1)
@@ -143,7 +127,7 @@ namespace eActForm.Controllers
                     bool calSuccess = calProductDetail(item);
                 }
                 Session["activitydetaillist"] = activityModel.activitydetaillist;
-               
+
                 result.Data = productlist.productcostdetaillist1.Count;
 
             }
@@ -169,9 +153,9 @@ namespace eActForm.Controllers
                 var promotionGP = model.promotionGp == null ? "" : model.promotionGp.ToString().Replace(",", "");
 
                 decimal p_wholeSalesPrice = AppCode.checkNullorEmpty(wholeSalesPrice) == "0" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(wholeSalesPrice));
-                decimal p_disCount1 = AppCode.checkNullorEmpty(model.disCount1.ToString()) == "0" ? p_wholeSalesPrice : p_wholeSalesPrice - ((decimal.Parse(AppCode.checkNullorEmpty(model.disCount1.ToString())) / 100) * p_wholeSalesPrice);
-                decimal p_disCount2 = AppCode.checkNullorEmpty(model.disCount2.ToString()) == "0" ? p_disCount1 : p_disCount1 - ((decimal.Parse(AppCode.checkNullorEmpty(model.disCount2.ToString())) / 100) * p_disCount1);
-                decimal p_disCount3 = AppCode.checkNullorEmpty(model.disCount3.ToString()) == "0" ? p_disCount2 : p_disCount2 - ((decimal.Parse(AppCode.checkNullorEmpty(model.disCount3.ToString())) / 100) * p_disCount2);
+                decimal p_disCount1 = AppCode.checkNullorEmpty(model.disCount1.ToString()) == "0" ? p_wholeSalesPrice : p_wholeSalesPrice - (decimal.Parse(AppCode.checkNullorEmpty(model.disCount1.ToString())));
+                decimal p_disCount2 = AppCode.checkNullorEmpty(model.disCount2.ToString()) == "0" ? p_disCount1 : p_disCount1 - (decimal.Parse(AppCode.checkNullorEmpty(model.disCount2.ToString())));
+                decimal p_disCount3 = AppCode.checkNullorEmpty(model.disCount3.ToString()) == "0" ? p_disCount2 : p_disCount2 - (decimal.Parse(AppCode.checkNullorEmpty(model.disCount3.ToString())));
 
                 decimal getPackProduct = QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().pack;
 
@@ -196,17 +180,17 @@ namespace eActForm.Controllers
                         r.disCount3 = decimal.Parse(AppCode.checkNullorEmpty(model.disCount3.ToString()));
                         r.saleNormal = decimal.Parse(AppCode.checkNullorEmpty(saleNormal));
                         r.saleIn = decimal.Parse(AppCode.checkNullorEmpty(saleIn));
-                        r.normalGp = p_normalGp;
-                        r.promotionGp = p_PromotionGp;
+                        r.normalGp = Math.Round(p_normalGp, 3);
+                        r.promotionGp = Math.Round(p_PromotionGp, 3);
                         r.specialDisc = decimal.Parse(AppCode.checkNullorEmpty(model.specialDisc.ToString()));
                         r.specialDiscBaht = decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
                         r.normalCost = p_disCount3 == 0 ? p_wholeSalesPrice : p_disCount3;
-                        r.promotionCost = p_PromotionCost;
+                        r.promotionCost = Math.Round(p_PromotionCost, 3);
                         return r;
                     }).ToList();
                 Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 success = false;
             }

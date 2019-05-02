@@ -16,7 +16,7 @@ namespace eActForm.BusinessLayer
 {
     public class EmailAppCodes
     {
-        public static void sendReject(string actFormId)
+        public static void sendReject(string actFormId, AppCode.ApproveType emailType)
         {
             try
             {
@@ -49,7 +49,8 @@ namespace eActForm.BusinessLayer
                     sendEmailActForm(actFormId
                         , strMailTo
                         , ConfigurationManager.AppSettings["emailRejectSubject"]
-                        , strBody);
+                        , strBody
+                        , emailType);
                 }
             }
             catch (Exception ex)
@@ -72,7 +73,8 @@ namespace eActForm.BusinessLayer
                         sendEmailActForm(actFormId
                             , item.empEmail
                             , ConfigurationManager.AppSettings["emailApproveSubject"]
-                            , strBody);
+                            , strBody
+                            , emailType);
                     }
                 }
                 else
@@ -97,7 +99,8 @@ namespace eActForm.BusinessLayer
                             sendEmailActForm(actFormId
                             , createUsers.FirstOrDefault().empEmail
                             , ConfigurationManager.AppSettings["emailAllApprovedSubject"]
-                            , strBody);
+                            , strBody
+                            , emailType);
                         }
                     }
                 }
@@ -109,11 +112,13 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        private static void sendEmailActForm(string actFormId, string mailTo, string strSubject, string strBody)
+        private static void sendEmailActForm(string actFormId, string mailTo, string strSubject, string strBody, AppCode.ApproveType emailType)
         {
             List<Attachment> files = new List<Attachment>();
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            string pathFile = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
+            string pathFile = emailType == AppCode.ApproveType.Activity_Form ?
+                HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId)) 
+                : HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
             files.Add(new Attachment(pathFile, new ContentType("application/pdf")));
 
             sendEmail(mailTo
@@ -136,7 +141,7 @@ namespace eActForm.BusinessLayer
                             , item.activityName
                             , item.activitySales
                             , item.activityNo
-                            , String.Format("{0:n2}", item.sumTotal)
+                            , String.Format("{0:0,0.00}", item.sumTotal)
                             , item.createBy
                             , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId)
                             ) :
@@ -173,7 +178,7 @@ namespace eActForm.BusinessLayer
                                   activityName = dr["activityName"].ToString(),
                                   activitySales = dr["activitySales"].ToString(),
                                   activityNo = dr["activityNo"].ToString(),
-                                  sumTotal = dr["sumTotal"].ToString(),
+                                  sumTotal = dr["sumTotal"] is DBNull ? 0 : (decimal)dr["sumTotal"],
                                   createBy = dr["createBy"].ToString(),
                               }).ToList();
                 return models;

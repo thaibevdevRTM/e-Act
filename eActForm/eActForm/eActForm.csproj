@@ -184,6 +184,7 @@
     <Compile Include="BusinessLayer\ApproveRepDetailAppCode.cs" />
     <Compile Include="BusinessLayer\BudgetApproveListAppCode.cs" />
     <Compile Include="BusinessLayer\BudgetFormCommandHandler.cs" />
+    <Compile Include="BusinessLayer\DashBoardAppCode.cs" />
     <Compile Include="BusinessLayer\EmailAppCodes.cs" />
     <Compile Include="BusinessLayer\ApproveAppCode.cs" />
     <Compile Include="BusinessLayer\ApproveFlowAppCode.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="Models\AppCode.cs" />
     <Compile Include="Models\Budget_Activity_Model.cs" />
     <Compile Include="Models\Budget_Approve_Detail_Model.cs" />
+    <Compile Include="Models\DashBoardModel.cs" />
     <Compile Include="Models\RepDetailModel.cs" />
     <Compile Include="Models\TB_Act_ActivityFormDocNo_Model.cs" />
     <Compile Include="Models\TB_Act_ActivityGroup_Model.cs" />

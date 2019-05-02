@@ -75,9 +75,6 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
-
-
-
                 insertIndex = 1;
                 if (model.activitydetaillist != null)
                 {
@@ -113,11 +110,12 @@ namespace eActForm.BusinessLayer
                         insertIndex++;
                     }
                 }
-                DataTable dt = AppCode.ToDataTable<ProductCostOfGroupByPrice>(insertProductlist);
+                DataTable dt = AppCode.ToDataTable(insertProductlist);
                 rtn += deleteActivityOfProductByActivityId(activityId);
                 rtn += insertProductCost(dt);
 
-                DataTable dt1 = AppCode.ToDataTable<CostThemeDetail>(model.costthemedetail);
+
+                DataTable dt1 = AppCode.ToDataTable(model.costthemedetail);
                 rtn += deleteActivityOfEstimateByActivityId(activityId);
                 rtn += insertCostThemeDetail(dt1);
                 return rtn;

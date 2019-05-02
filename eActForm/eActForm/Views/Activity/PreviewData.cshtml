@@ -30,8 +30,6 @@
                         url: '@Url.Action("submitPreview", "Activity")',
                         data: {
                             GridHtml1: $("#Grid1").html(),
-                            GridHtml2: $("#Grid2").html(),
-                            GridHtml3: $("#Grid3").html(),
                             status: 2,
                             activityId: $("#HdId").val(),
                         },
@@ -229,17 +227,38 @@
                 </div>
 
                 <div style="width:100%; ">
-                    <div style="margin-top:5px;">
+                    <div style="margin-top:5px; font-size:12.5px;">
                         รายละเอียดของการทำกิจกรรม(Activity Detail)
                     </div>
+                    <div style="margin-top:15px;">
+                        <table style="width:100%">
+                            <tr>
+                                <td width="50%">
+                                    <p style="font-size:12px;">
+                                        @Html.Raw(Model.activityFormModel.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                                    </p>
+                                </td>
+
+                                @if (Model.productImageList.Any())
+                                {
+                                    string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
+                                    foreach (var item in Model.productImageList)
+                                    {
+                                        <td width="50%" style="text-align:right">
+                                            <img width="120" height="120" src="@url@item._fileName" />
+                                        </td>
+                                    }
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-            </div>
 
-            <div id="Grid2" style="white-space: pre-line; width:97%; margin-left:20px;">
-                <p style="font-size:12.5px;  margin-bottom:-30px; margin-top:-10px"> @Html.DisplayFor(item => item.activityFormModel.activityDetail)</p>
-            </div>
 
-            <div id="Grid3" style="width:97%; margin-left:20px;">
                 <div>
                     <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
                 </div>
@@ -253,7 +272,7 @@
                         <tr>
                             <td rowspan="2" style="width:20%; font-size:12.5px;">ชื่อสินค้า (product Name)</td>
                             <td rowspan="2" style="width:10%;  font-size:12.5px;">Std. Wholesales Price</td>
-                            <td colspan="3" style="width:20%;  font-size:12.5px;">Normal Discount (%)</td>
+                            <td colspan="3" style="width:20%;  font-size:12.5px;">Normal Discount (Baht)</td>
                             <td style="width:10%;  font-size:12.5px;">Normal</td>
                             <td style="width:10%;  font-size:12.5px;">Normal</td>
                             <td style="width:10%;  font-size:12.5px;">Promotion</td>
@@ -341,9 +360,12 @@
                                     }
                                     else
                                     {
-                                        for (int i = 0; i < @item.detailGroup.Count; i++)
+                                        if (item.detailGroup != null)
                                         {
-                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) @Html.DisplayFor(m => item.detailGroup[i].productDetail)</td>
+                                            for (int i = 0; i < @item.detailGroup.Count; i++)
+                                            {
+                                                <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) @Html.DisplayFor(m => item.detailGroup[i].productDetail)</td>
+                                            }
                                         }
                                     }
 
@@ -351,7 +373,7 @@
                                     @*<td style="font-size:12.5px;" class="textLeft">@item.productName</td>*@
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.themeCost)</td>
-                                    <td class="font11 textRight">@string.Format("{0:p2}", item.growth)</td>
+                                    <td class="font11 textRight">@string.Format("{0:n2}", item.growth)</td>
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.total)</td>
                                 </tr>
 

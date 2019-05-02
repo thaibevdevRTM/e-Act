@@ -90,7 +90,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult calCostDetailTheme(string productGroupId, string productId, string name, string normalCost, string themeCost, string growth, string total)
+        public JsonResult calCostDetailTheme(string productGroupId, string productId, string name, string normalCost, string themeCost, string growth, string total,string perTotal)
         {
             var result = new AjaxResult();
 
@@ -100,10 +100,12 @@ namespace eActForm.Controllers
                 decimal p_total = decimal.Parse(total);//AppCode.checkNullorEmpty(total) != "0" ? decimal.Parse(total) : 0;
                 decimal getPromotionCost = 0;
                 decimal getNormalCost = 0;
-                decimal get_PerTotal = 0;
+                decimal get_PerTotal = decimal.Parse(perTotal);
+              
+
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
-                if (AppCode.checkNullorEmpty(themeCost) != "0" && activityModel.productcostdetaillist1 != null )
+                if (AppCode.checkNullorEmpty(themeCost) != "0" && activityModel.productcostdetaillist1 != null)
                 {
                     if (activityModel.productcostdetaillist1.Where(x => x.productId == productId).Any() && activityModel.productcostdetaillist1.Where(x => x.productId == productId).Any())
                     {
@@ -112,14 +114,15 @@ namespace eActForm.Controllers
                         getPromotionCost = decimal.Parse(AppCode.checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).Any() ?
                            activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).FirstOrDefault().promotionCost.ToString() : "0"));
                         getPromotionCost = getPromotionCost == 0 ? 1 : getPromotionCost;
-                        p_total = AppCode.checkNullorEmpty(total) == "0" ?  (getNormalCost - getPromotionCost) * decimal.Parse(themeCost) : p_total;
+                        p_total = AppCode.checkNullorEmpty(total) == "0" ? (getNormalCost - getPromotionCost) * decimal.Parse(themeCost) : p_total;
                         //get_PerTotal = p_total * 100 / (decimal.Parse(normalCost) * getPromotionCost); //ยอดขายปกติ
-                        get_PerTotal = p_total / (decimal.Parse(themeCost) * getPromotionCost);// % ยอดขายโปโมชั่น
+                        get_PerTotal = AppCode.checkNullorEmpty(perTotal) == "0" ? (p_total / (decimal.Parse(themeCost) * getPromotionCost)) * 100 : decimal.Parse(perTotal); // % ยอดขายโปโมชั่น
                     }
 
                 }
 
-                decimal p_growth = normalCost == "0" ? 0 : (decimal.Parse(themeCost) - decimal.Parse(normalCost)) / decimal.Parse(AppCode.checkNullorEmpty(normalCost) == "0" ? "1" : normalCost);
+                decimal p_growth = normalCost == "0" ? 0 : (decimal.Parse(themeCost) - decimal.Parse(normalCost)) / decimal.Parse(AppCode.checkNullorEmpty(normalCost) == "0" ? "1" : normalCost) * 100;
+
 
                 activityModel.activitydetaillist
                         .Where(r => r.productGroupId != null && r.productGroupId.Equals(productGroupId))
@@ -127,10 +130,10 @@ namespace eActForm.Controllers
                         {
                             r.detailGroup[0].productName = name;
                             r.normalCost = decimal.Parse(normalCost);
-                            r.growth = p_growth;
+                            r.growth = Math.Round(p_growth, 2);
                             r.themeCost = decimal.Parse(themeCost);
-                            r.total = p_total * r.detailGroup.Count;
-                            r.perTotal = get_PerTotal;
+                            r.total = Math.Round(p_total, 2);
+                            r.perTotal = Math.Round(get_PerTotal, 2);
                             return r;
                         }).ToList();
 

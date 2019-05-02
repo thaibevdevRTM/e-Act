@@ -53,7 +53,7 @@ namespace eActForm.BusinessLayer
 
                 groupByPrice = lists
                     .OrderBy(x => x.rowNo)
-                    .GroupBy(item => new { item.wholeSalesPrice , item.size  , item.rowNo})
+                    .GroupBy(item => new { item.normalCost, item.size  , item.rowNo , item.pack})
                .Select((group, index) => new CostThemeDetailOfGroupByPrice
                {
                    productGroupId = group.First().productGroupId,
