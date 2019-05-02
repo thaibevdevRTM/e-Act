@@ -209,13 +209,13 @@ namespace eActForm.Controllers
 				var var_budget_approve_id = actFormId;
 				 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateApprove"
 						, new SqlParameter[] {new SqlParameter("@actFormId",var_budget_approve_id)
-					//, new SqlParameter("@empId",UtilsAppCode.Session.User.empId)
-					, new SqlParameter("@empId","11025855") //70016911
+					, new SqlParameter("@empId",UtilsAppCode.Session.User.empId)
+					//, new SqlParameter("@empId","11025855") //70016911 test_emp_id
 					,new SqlParameter("@statusId",statusId)
 					,new SqlParameter("@remark",remark)
 					,new SqlParameter("@updateDate",DateTime.Now)
-					//,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
-					,new SqlParameter("@updateBy","70016911")
+					,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
+					//,new SqlParameter("@updateBy","70016911") test_emp_id
 						});
 
 
@@ -300,8 +300,8 @@ namespace eActForm.Controllers
 				if (UtilsAppCode.Session.User != null)
 				{
 					DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetCountWatingApproveByEmpId"
-						//, new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
-						, new SqlParameter[] { new SqlParameter("@empId", "11025855") });
+						, new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
+						//, new SqlParameter[] { new SqlParameter("@empId", "11025855") }); test_emp_id
 					//11025855
 					if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
 					{

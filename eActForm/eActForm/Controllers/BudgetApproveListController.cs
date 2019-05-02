@@ -55,7 +55,7 @@ namespace eActForm.Controllers
 			{
 				model = new Budget_Approve_Detail_Model.budgetForms();
 
-				UtilsAppCode.Session.User.empId = "11025855"; // empid for test approve modele
+				//UtilsAppCode.Session.User.empId = "11025855"; // empid for test approve modele test_emp_id
 				model.budgetFormLists = getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
 				TempData["ApproveFormLists"] = model.budgetFormLists;
 				model.budgetFormLists = getFilterFormByStatusId(model.budgetFormLists, (int)AppCode.ApproveStatus.รออนุมัติ);
@@ -215,8 +215,8 @@ namespace eActForm.Controllers
 				, new SqlParameter[] 
 				{
 				 new SqlParameter("@budgetActivityId", budgetActivityId)
-				 ,new SqlParameter("@createdByUserId", "70016911")
-				//,new SqlParameter("@createdByUserId", UtilsAppCode.Session.User.empId)
+				 //,new SqlParameter("@createdByUserId", "70016911") test_emp_id
+				,new SqlParameter("@createdByUserId", UtilsAppCode.Session.User.empId)
 				});
 
 				return rtn;
@@ -240,8 +240,8 @@ namespace eActForm.Controllers
 				model.actFormId = budgetId;
 				model.delFlag = false;
 				model.createdDate = DateTime.Now;
-				//model.createdByUserId = UtilsAppCode.Session.User.empId;
-				model.createdByUserId = "70016911";
+				model.createdByUserId = UtilsAppCode.Session.User.empId;
+				//model.createdByUserId = "70016911"; test_emp_id
 				model.updatedDate = DateTime.Now;
 				model.updatedByUserId = UtilsAppCode.Session.User.empId;
 				list.Add(model);
@@ -264,11 +264,11 @@ namespace eActForm.Controllers
 							,new SqlParameter("@remark","")
 							,new SqlParameter("@delFlag",false)
 							,new SqlParameter("@createdDate",DateTime.Now)
-							//,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
-							,new SqlParameter("@createdByUserId","70016911")
+							,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+							//,new SqlParameter("@createdByUserId","70016911")test_emp_id
 							,new SqlParameter("@updatedDate",DateTime.Now)
-							//,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
-							,new SqlParameter("@updatedByUserId","'70016911'")
+							,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+							//,new SqlParameter("@updatedByUserId","'70016911'")test_emp_id
 						});
 				}
 
@@ -288,8 +288,8 @@ namespace eActForm.Controllers
 				return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateWaitingApproveByRangNo"
 					, new SqlParameter[] {new SqlParameter("@rangNo",1)
 					,new SqlParameter("@actId", budgetId)
-					//,new SqlParameter("@updateBy", UtilsAppCode.Session.User.empId)
-					,new SqlParameter("@updateBy", "70016911")
+					,new SqlParameter("@updateBy", UtilsAppCode.Session.User.empId)
+					//,new SqlParameter("@updateBy", "70016911") test_emp_id
 					,new SqlParameter("@updateDate", DateTime.Now)
 					});
 			}
