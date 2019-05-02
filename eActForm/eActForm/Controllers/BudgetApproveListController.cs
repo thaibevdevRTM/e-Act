@@ -80,7 +80,13 @@ namespace eActForm.Controllers
 								 statusId = dr["statusId"].ToString(),
 								 statusName = dr["statusName"].ToString(),
 								 activityNo = dr["activityNo"].ToString(),
+
+								 regApproveId = dr["regApproveId"].ToString(),
+								 regApproveFlowId = dr["regApproveFlowId"].ToString(),
+								 budgetApproveId = dr["budgetApproveId"].ToString(),
 								 documentDate = dr["documentDate"] is DBNull ? null : (DateTime?)dr["documentDate"],
+								 
+
 								 reference = dr["reference"].ToString(),
 								 customerId = dr["customerId"].ToString(),
 								 channelName = dr["channelName"].ToString(),
@@ -103,7 +109,7 @@ namespace eActForm.Controllers
 								 activityDetail = dr["activityDetail"].ToString(),
 
 								 budgetActivityId = dr["budgetActivityId"].ToString(),
-								 budgetApproveId = dr["budgetApproveId"].ToString(),
+								 //budgetApproveId = dr["budgetApproveId"].ToString(),
 								 approveId = dr["approveId"].ToString(),
 								 approveDetailId = dr["approveDetailId"].ToString(),
 
@@ -150,17 +156,23 @@ namespace eActForm.Controllers
 			var resultAjax = new AjaxResult();
 			try
 			{
-
-				var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetActivityId));
-				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-				if (BudgetApproveListController.insertApproveForBudgetForm(budgetActivityId) > 0)
+				var budget_approve_id="";
+				if (BudgetApproveListController.insertApproveForBudgetForm(budgetActivityId) > 0) //usp_insertApproveDetail
 				{
-					var budget_approve_id = getApproveBudgetId(budgetActivityId);
+					budget_approve_id = getApproveBudgetId(budgetActivityId);
 					BudgetApproveListController.updateApproveWaitingByRangNo(budget_approve_id);
+
+					RedirectToAction("previewApproveBudget","BudgetApprove",budgetActivityId);
+
+					var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
+					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
 
 					//  ยังไม่ได้แก้ไปทำตอน approve ก่อน *****
 					//EmailAppCodes.sendApprove(budget_approve_id, AppCode.ApproveType.Activity_Form);
 				}
+
+				
+
 				resultAjax.Success = true;
 			}
 			catch (Exception ex)
@@ -181,7 +193,8 @@ namespace eActForm.Controllers
 
 				if (BudgetApproveController.getApproveByBudgetApproveId(budget_approve_id).approveDetailLists.Count == 0)
 				{
-					ApproveFlowModel.approveFlowModel flowModel = getFlowIdBudget(ConfigurationManager.AppSettings["subjectBudgetFormId"], budget_approve_id);
+					//ApproveFlowModel.approveFlowModel flowModel = getFlowIdBudget(ConfigurationManager.AppSettings["subjectBudgetFormId"], budgetActivityId);
+					ApproveFlowModel.approveFlowModel flowModel = getFlowIdBudgetByBudgetActivityId(ConfigurationManager.AppSettings["subjectBudgetFormId"], budgetActivityId);
 					return insertApproveByFlowBudget(flowModel, budget_approve_id);
 				}
 				else return 999; // alredy approve
@@ -310,7 +323,7 @@ namespace eActForm.Controllers
 		}
 
 		
-		public static ApproveFlowModel.approveFlowModel getFlowIdBudgetByBudgetActivityId(string subId, string budget_activity_id)
+		public static ApproveFlowModel.approveFlowModel getFlowIdBudgetByBudgetActivityId(string subId, string budgetActivityId)
 		{
 			try
 			{
@@ -318,7 +331,7 @@ namespace eActForm.Controllers
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowByBudgetActivtyId"
 					, new SqlParameter[] {
 						  new SqlParameter("@subId",subId)
-						, new SqlParameter("@budgetActivityId",budget_activity_id)
+						, new SqlParameter("@budgetActivityId",budgetActivityId)
 					});
 				var lists = (from DataRow dr in ds.Tables[0].Rows
 							 select new ApproveFlowModel.flowApprove()
@@ -338,12 +351,13 @@ namespace eActForm.Controllers
 			}
 		}
 
-		public static ApproveFlowModel.approveFlowModel getFlowIdBudget(string subId, string budget_approve_id) 
+		public static ApproveFlowModel.approveFlowModel getFlowIdBudget(string subId, string budget_approve_id)
 		{
 			try
 			{
 				ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowIdByBudgetId"
+					//DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowIdByBudgetActivityId"
 					, new SqlParameter[] {
 						  new SqlParameter("@subId",subId)
 						, new SqlParameter("@budgetApproveId",budget_approve_id)

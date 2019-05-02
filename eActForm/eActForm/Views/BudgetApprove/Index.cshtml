@@ -4,7 +4,8 @@
 @{
 	ViewBag.Title = "Index";
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	var var_budgetActivityId = Request.QueryString["budgetActivityId"];
+	//var var_budgetActivityId = Request.QueryString["budgetActivityId"];
+	var var_budgetApproveId = Request.QueryString["budgetApproveId"];
 	var type = Request.QueryString["type"];
 }
 
@@ -12,8 +13,11 @@
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
+@Html.HiddenFor(m => var_budgetApproveId, new { id = "HbudgetApproveId" })
+
 <h2>การอนุมัติ</h2>
 <hr />
+
 <div class="row">
 	<div class="col-md-4 col-xs-12">
 		<h3>ประวัติการอนุมัติ</h3>
@@ -23,7 +27,7 @@
 	<div class="col-md-8 col-xs-12">
 		<h3>เอกสารขออนุมัติ</h3>
 		<hr />
-		@Html.Action("activityPDFView", "BudgetViewer", new { budgetActivityId = var_budgetActivityId })
+		@Html.Action("activityPDFView", "BudgetViewer", new { budgetApproveId = var_budgetApproveId })
 
 		@using (Ajax.BeginForm("insertApprove", "BudgetApprove"
 , new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
@@ -56,7 +60,7 @@
 							สถานะ
 						</label>
 						<div class="col-md-9 col-sm-9 col-xs-12">
-							<input type="hidden" id="lblActFormId" name="lblActFormId" value="@var_budgetActivityId" />
+							<input type="hidden" id="lblActFormId" name="lblActFormId" value="@var_budgetApproveId" />
 							@if (Model.approveModel != null)
 							{
 								<input type="hidden" id="lblApproveId" name="lblApproveId" value="@Model.approveModel.id" />
@@ -132,8 +136,13 @@
     }
 
     function successQuery(response) {
-        if (response.Success) {
-			 callPreviewApprove('@var_budgetActivityId');
+		if (response.Success) {
+			//alert(@var_budgetApproveId);
+			alert('สลัดผัก');
+
+			callPreviewApprove('@var_budgetApproveId');
+	
+			//genPdfApproveBudget();
         }else {
             $("#WaitDialog").hide();
             bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + response.Message);
@@ -145,7 +154,8 @@
         bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
     }
 
-    function callPreviewApprove(obj) {
+	function callPreviewApprove(obj) {
+		alert('สลัดผัก 2');
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("previewApprove", "BudgetApprove")',
@@ -154,11 +164,12 @@
             }
         }).done(function (htmlResponse) {
             $("#divPreviewApprove").html(htmlResponse)
-            $('#ModalPreviewPDF').modal('show');
-            genPdf();
+			$('#ModalPreviewPDF').modal('show');
+			alert('สลัดผัก 3');
         });
     }
 
+	
 </script>
 
 

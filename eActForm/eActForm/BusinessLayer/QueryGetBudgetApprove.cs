@@ -11,6 +11,27 @@ namespace eActForm.BusinessLayer
 {
 	public class QueryGetBudgetApprove
 	{
+		public static List<Budget_Approve_Detail_Model.Budget_Approve_Detail_Att> getBudgetApproveId(string budgetApproveId)
+		{
+			try
+			{
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetApproveDetailByBudgetId"
+				 , new SqlParameter("@budgetApproveId", budgetApproveId));
+
+				var result = (from DataRow d in ds.Tables[0].Rows
+							  select new Budget_Approve_Detail_Model.Budget_Approve_Detail_Att()
+								{
+								  id = d["regApproveId"].ToString(),
+								  budgetApproveId = d["budgetApproveId"].ToString(),
+							  });
+				return result.ToList();
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("getBudgetActivityApprove => " + ex.Message);
+				return new List<Budget_Approve_Detail_Model.Budget_Approve_Detail_Att>();
+			}
+		}
 
 		public static List<Budget_Activity_Model.Budget_Invoice_history_Att> getBudgetInvoiceHistory( string activityId)
 		{
@@ -56,6 +77,9 @@ namespace eActForm.BusinessLayer
 								  sum_total_invoice = d["sum_total_invoice"].ToString() == "" ? 0 : decimal.Parse(d["sum_total_invoice"].ToString()),
 								  sum_balance_product_inv = d["sum_balance_product_inv"].ToString() == "" ? 0 : decimal.Parse(d["sum_balance_product_inv"].ToString()),
 
+								  invoiceApproveStatusId = d["invoiceApproveStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceApproveStatusId"].ToString()),
+								  invoiceApproveStatusName = d["invoiceApproveStatusName"].ToString(),
+
 							  });
 
 				return result.ToList();
@@ -66,6 +90,9 @@ namespace eActForm.BusinessLayer
 				return new List<Budget_Activity_Model.Budget_Invoice_history_Att>();
 			}
 		}
+
+
+
 
 	}
 }

@@ -19,48 +19,16 @@ namespace eActForm.Controllers
 	{
 
 		// GET: Approve
-		public ActionResult Index(string budgetActivityId)
+		public ActionResult Index(string budgetApproveId)
 		{
-			if (budgetActivityId == null) return RedirectToAction("index", "Home");
+			if (budgetApproveId == null) return RedirectToAction("index", "Home");
 			else
 			{
-				var budgetApproveId = BudgetApproveListController.getApproveBudgetId(budgetActivityId);
+				//var budgetApproveId = BudgetApproveListController.getApproveBudgetId(budgetActivityId);
 				ApproveModel.approveModels models = getApproveByBudgetApproveId(budgetApproveId);
 				models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app).Where(x => x.id == "3" || x.id == "5").ToList();
 				return View(models);
 			}
-		}
-
-
-		public ActionResult approvePositionSignatureLists(string actId)
-		{
-			var budget_approve_id = BudgetApproveListController.getApproveBudgetId(actId);
-			
-			// กรณี get flow ก่อน submit approve
-			if (budget_approve_id == "0")
-			{
-				ApproveModel.approveModels models = getApproveByBudgetApproveId(actId);
-				ApproveFlowModel.approveFlowModel flowModel = BudgetApproveListController.getFlowIdBudgetByBudgetActivityId(ConfigurationManager.AppSettings["subjectBudgetFormId"], actId);
-				models.approveFlowDetail = flowModel.flowDetail;
-				return PartialView(models);
-			}
-			else
-			{
-				ApproveModel.approveModels models = getApproveByBudgetApproveId(budget_approve_id);
-				ApproveFlowModel.approveFlowModel flowModel = BudgetApproveListController.getFlowIdBudget(ConfigurationManager.AppSettings["subjectBudgetFormId"], budget_approve_id);
-				models.approveFlowDetail = flowModel.flowDetail;
-				return PartialView(models);
-			}
-			
-		}
-
-
-		public PartialViewResult previewApproveBudget(string activityId)
-		{
-			Budget_Activity_Model Budget_Model = new Budget_Activity_Model();
-			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId);
-			Budget_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null);
-			return PartialView(Budget_Model);
 		}
 
 		public static ApproveModel.approveModels getApproveByBudgetApproveId(string budgetApproveId)
@@ -130,6 +98,31 @@ namespace eActForm.Controllers
 			}
 		}
 
+
+		public ActionResult approvePositionSignatureLists(string actId)
+		{
+			ApproveModel.approveModels models = getApproveByBudgetApproveId(actId);
+			ApproveFlowModel.approveFlowModel flowModel = BudgetApproveListController.getFlowIdBudgetByBudgetActivityId(ConfigurationManager.AppSettings["subjectBudgetFormId"], actId);
+			models.approveFlowDetail = flowModel.flowDetail;
+			return PartialView(models);
+
+		}
+
+	
+		public PartialViewResult previewApproveBudget(string activityId)
+		{
+			Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
+			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId);
+
+			//Budget_Model.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, null, null);
+			Budget_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null);
+			Budget_Model.Budget_Approve_detail_list = QueryGetBudgetApprove.getBudgetApproveId(activityId);
+			return PartialView(Budget_Model);
+
+		}
+
+		
+
 		public static bool getPremisionApproveByEmpid(List<ApproveModel.approveDetailModel> lists, string empId)
 		{
 			try
@@ -153,18 +146,25 @@ namespace eActForm.Controllers
 		{
 			return PartialView(models);
 		}
-		
+
 		[HttpPost]
 		[ValidateInput(false)]
-		public JsonResult genPdfApprove(string GridHtml, string budgetId)
+		public JsonResult genPdfApproveBudget(string GridHtml, string statusId,string budgetApproveId)
 		{
 			var resultAjax = new AjaxResult();
 			try
 			{
-				var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetId));
-				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-				//EmailAppCodes.sendApproveActForm(activityId);
 
+				if (statusId == ConfigurationManager.AppSettings["statusReject"])
+				{
+					//EmailAppCodes.sendReject(budgetApproveId);
+				}
+				else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
+				{
+					var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
+					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+					//EmailAppCodes.sendApprove(budgetApproveId, AppCode.ApproveType.Activity_Form);
+				}
 				resultAjax.Success = true;
 			}
 			catch (Exception ex)
@@ -205,9 +205,9 @@ namespace eActForm.Controllers
 			try
 			{
 				// update approve detail
-				var var_budget_approve_id = BudgetApproveListController.getApproveBudgetId(actFormId);
-
-				int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateApprove"
+				//var var_budget_approve_id = BudgetApproveListController.getApproveBudgetId(actFormId);
+				var var_budget_approve_id = actFormId;
+				 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateApprove"
 						, new SqlParameter[] {new SqlParameter("@actFormId",var_budget_approve_id)
 					//, new SqlParameter("@empId",UtilsAppCode.Session.User.empId)
 					, new SqlParameter("@empId","11025855") //70016911
@@ -221,7 +221,7 @@ namespace eActForm.Controllers
 
 				if (approveType == "ActivityBudget")
 				{
-					rtn = updateBudgetFormStatus(statusId, var_budget_approve_id); // test
+					rtn = updateBudgetFormStatus(statusId, var_budget_approve_id);
 				}
 				//else if (approveType == AppCode.ApproveType.Report_Detail.ToString())
 				//{

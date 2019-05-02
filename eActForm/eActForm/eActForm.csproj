@@ -2100,6 +2100,7 @@
     <Content Include="Views\BudgetApprove\approvePositionSignatureLists.cshtml" />
     <Content Include="Views\Budget\activityList.cshtml" />
     <Content Include="Views\BudgetApprove\approvePositionLists.cshtml" />
+    <Content Include="Views\BudgetViewer\activityPDFView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
@@ -2110,7 +2111,6 @@
     <Folder Include="signature\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\BudgetViewer\" />
     <Folder Include="Views\eAct\" />
   </ItemGroup>
   <ItemGroup>

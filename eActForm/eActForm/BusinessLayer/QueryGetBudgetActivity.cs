@@ -189,6 +189,12 @@ namespace eActForm.BusinessLayer
 								invoiceBudgetStatusId = d["invoiceBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceBudgetStatusId"].ToString()),
 								invoiceBudgetStatusNameTH = d["invoiceBudgetStatusNameTH"].ToString(),
 								invoiceSeq = d["invoiceSeq"].ToString() == "" ? 0 : int.Parse(d["invoiceSeq"].ToString()),
+
+								invoiceApproveStatusId = d["invoiceApproveStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceApproveStatusId"].ToString()),
+								approveInvoiceId = d["approveInvoiceId"].ToString(),
+								invoiceApproveStatusName = d["invoiceApproveStatusName"].ToString(),
+
+
 							  });
 
 				return result.ToList();

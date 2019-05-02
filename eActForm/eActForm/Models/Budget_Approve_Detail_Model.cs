@@ -3,30 +3,26 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-//using static eActForm.Models.TB_Act_Customers_Model;
-//using static eActForm.Models.TB_Act_Product_Cate_Model;
-//using static eActForm.Models.TB_Act_Product_Model;
+using static eActForm.Models.Budget_Activity_Model;
+using static eActForm.Models.TB_Budget_Activity_Model;
 
 namespace eActForm.Models
 {
 	public class Budget_Approve_Detail_Model
 	{
 
-		//public List<TB_Budget_Approve_Invoice_Model> Budget_Approve_Invoice_list { get; set; }
-
-		//public Budget_Approve_Att Budget_Approve_Form { get; set; }
-
-
+		//public List<Budget_Activity_Invoice_Att> Budget_Activity_Invoice_list { get; set; }
+		public List<Budget_Invoice_history_Att> Budget_Invoce_History_list { get; set; }
 		public List<Budget_Approve_Detail_Att> Budget_Approve_detail_list { get; set; }
+		public List<TB_Budget_Activity_Model.Budget_Activity_Att> Budget_Activity_list { get; set; }
 
 		public class Budget_Approve_Detail_Att
 		{
 			public string id { get; set; }
 			public string budgetActivityId { get; set; }
-			public string budgetApproveActivityId { get; set; }
-			public string budgetActivityInvoiceId { get; set; }
-
-
+			public string budgetApproveId { get; set; }
+			//public string budgetActivityInvoiceId { get; set; }
+			
 			public Boolean delFlag { get; set; }
 
 			public DateTime createdDate { get; set; }
@@ -39,6 +35,9 @@ namespace eActForm.Models
 		public class budgetForms
 		{
 			public List<budgetForm> budgetFormLists { get; set; }
+			public List<Budget_Invoice_history_Att> Budget_Invoce_History_list { get; set; }
+			public List<Budget_Activity_Model> Budget_Activity_list { get; set; }
+			public List<Budget_Approve_Detail_Att> Budget_Approve_detail_list { get; set; }
 		}
 
 		public class budgetForm : ActBaseModel
@@ -47,7 +46,12 @@ namespace eActForm.Models
 			public string statusId { get; set; }
 			public string statusName { get; set; }
 			public string activityNo { get; set; }
+
+			public string regApproveId { get; set; }
+			public string regApproveFlowId { get; set; }
+			//public string budgetApproveId { get; set; }
 			public DateTime? documentDate { get; set; }
+
 			public string reference { get; set; }
 			public string productCateId { get; set; }
 			public string productGroupid { get; set; }
