@@ -71,17 +71,10 @@ namespace eActForm.Controllers
         {
             string count = Request.Form.AllKeys.Count().ToString();
             Activity_Model.actForms model;
-            if (TempData["SearchDataModel"] != null)
+            model = new Activity_Model.actForms
             {
-                model = (Activity_Model.actForms)TempData["SearchDataModel"];
-            }
-            else
-            {
-                model = new Activity_Model.actForms
-                {
-                    actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId)
-                };
-            }
+                actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId)
+            };
 
             if (Request.Form["txtActivityNo"] != "")
             {
