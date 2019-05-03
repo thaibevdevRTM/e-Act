@@ -79,7 +79,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                var lists = QueryGetAllProduct.getProductSmellByGroupId(productGroupId).OrderBy(x => x.nameTH).AsEnumerable();
+                var lists = QueryGetAllProduct.getProductSmellByGroupId(productGroupId).OrderBy(x => x.nameTH).ToList();
                 result.Data = lists;
             }
             catch (Exception ex)

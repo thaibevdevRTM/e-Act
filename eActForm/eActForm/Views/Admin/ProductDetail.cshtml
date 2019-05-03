@@ -1,0 +1,48 @@
+﻿@model eActForm.Models.TB_Act_Product_Model.ProductList
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+
+    </div>
+    <div class="col-md-12 col-xs-12">
+
+        <table id="datatable" class="table table-striped table-hover">
+            <thead>
+                <tr style="background-color:#2B5D95;color:#ffffff;">
+                    <th  width="100"></th>
+                    <th>ProductCode</th>
+                    <th>Category</th>
+                    <th>Group</th>
+                    <th>Brand</th>
+                    <th>ProductName</th>
+                    <th>Size</th>
+                    <th>Pack</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.productLists)
+                {
+                    <tr class="gradeX">
+                        <td>
+                            <a onclick="checkDelete('@item.id');">
+                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>
+                            </a>
+                            <a onclick="return $adminPage.editProduct('@item.id','@item.productCode','@item.cateId','@item.groupId','@item.brandId','@item.size','@item.pack','@item.productName','@item.smellId');">
+                                <i class="btn ink-reaction btn-info fa fa-edit"></i>
+                            </a>
+                        </td>
+
+                        <td>@item.productCode</td>
+                        <td>@item.productCate</td>
+                        <td>@item.productGroup</td>
+                        <td>@item.brand</td>
+                        <td>@item.productName</td>
+                        <td>@item.size</td>
+                        <td>@item.pack</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
