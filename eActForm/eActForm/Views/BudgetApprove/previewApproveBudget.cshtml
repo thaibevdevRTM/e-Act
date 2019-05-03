@@ -48,7 +48,7 @@
                  });
 	}
 
-	function genPdfApproveBudget() {
+	@*function genPdfApproveBudget() {
 			alert("สลัดผัก 4");
 
             $.ajax({
@@ -66,7 +66,7 @@
                 console.log("genPdff");
                 console.log('success');
             });
-	}
+	}*@
 
 		function refreshApproveBudget() {
             $.ajax({
@@ -92,7 +92,7 @@
 </style>
 
 @Html.HiddenFor(m => m.Budget_Activity_list.ElementAt(0).budget_id, new { id = "HbudgetId" })
-@Html.HiddenFor(m => m.Budget_Approve_detail_list.ElementAt(0).budgetApproveId, new { id = "HbudgetApproveId" })
+@*@Html.HiddenFor(m => m.Budget_Approve_detail_list.ElementAt(0).budgetApproveId, new { id = "HbudgetApproveId" })*@
 
 <div class="modal-dialog modal-lg" style="width:95%;">
 	<div class="modal-content">
@@ -157,6 +157,7 @@
 							<td style="text-align:left;">
 								<label> ระยะเวลากิจกรรม (Activity Period) : </label>
 								@*@Model.Budget_Activity_list.ElementAt(0).act_activityPeriodSt.Value.ToString("dd/MM/yyyy")  to  @Model.Budget_Activity_list.ElementAt(0).act_activityPeriodEnd.Value.ToString("dd/MM/yyyy")*@
+								@Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodSt to @Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodEnd
 							</td>
 							<td style="text-align:right;">
 								<label> ช่องทาง (Channel) : </label> @Model.Budget_Activity_list.ElementAt(0).ch_chanelGroup
