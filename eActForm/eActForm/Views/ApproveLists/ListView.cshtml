@@ -28,7 +28,7 @@
                 {
                     <tr class="gradeX">
                         <td>
-                            @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
+                            @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id,type=AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
 
                             @Html.ActionLink(" ", "index", "approve", new { actId = item.id,type=AppCode.ApproveType.Activity_Form }, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
                         </td>

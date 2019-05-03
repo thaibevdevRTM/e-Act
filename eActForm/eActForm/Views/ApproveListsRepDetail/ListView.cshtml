@@ -17,6 +17,7 @@
                     <th>รายงานเดือน</th>
                     <th>Customer</th>
                     <th>Product Type</th>
+                    <th>Create Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +25,7 @@
                 {
                     <tr class="gradeX">
                         <td>
-                            @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
+                            @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id ,type=AppCode.ApproveType.Report_Detail.ToString()}, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
 
                             @Html.ActionLink(" ", "index", "approve", new { actId = item.id ,type=AppCode.ApproveType.Report_Detail}, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
                         </td>
@@ -32,6 +33,7 @@
                         <td>@{var date = item.startDate == null ? "" : item.startDate.Value.ToString("MMM yyyy");} @date </td>
                         <td>@item.customerName</td>
                         <td>@item.productTypeName</td>
+                        <td>@item.createdDate.Value.ToString("dd/MM/yyyy HH:mm:ss")</td>
                     </tr>
                 }
             </tbody>

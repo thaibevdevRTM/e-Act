@@ -9,8 +9,62 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <_PublishTargetUrl>D:\deploy\eAct</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
+    <File Include="ActRepDetail/0c0ec151-e347-46b7-a92f-e58df434eb21.pdf">
+      <publishTime>04/23/2019 16:47:03</publishTime>
+    </File>
+    <File Include="ActRepDetail/37349052-6886-424d-9f7d-9d76c40fc63b.pdf">
+      <publishTime>05/02/2019 09:31:07</publishTime>
+    </File>
+    <File Include="ActRepDetail/5cb6e209-d682-41ff-9210-fb489c12c122.pdf">
+      <publishTime>05/02/2019 15:06:17</publishTime>
+    </File>
+    <File Include="ActRepDetail/745f5a8e-09ea-4fe1-8a54-4b178a75b301.pdf">
+      <publishTime>04/23/2019 16:47:03</publishTime>
+    </File>
+    <File Include="ActRepDetail/8de26708-65d2-41df-9d51-a4db9ce24a9e.pdf">
+      <publishTime>05/02/2019 09:31:07</publishTime>
+    </File>
+    <File Include="ActRepDetail/9fc4fd53-4314-407e-b7f6-61b6917ab6e0.pdf">
+      <publishTime>05/02/2019 16:09:07</publishTime>
+    </File>
+    <File Include="ActRepDetail/e0ea294c-d8f2-40a0-841b-aedda8fdf31d.pdf">
+      <publishTime>05/02/2019 09:31:07</publishTime>
+    </File>
+    <File Include="ActRepDetail/e34e33ac-edb2-4dab-8319-1c440e447e6a.pdf">
+      <publishTime>05/02/2019 09:31:07</publishTime>
+    </File>
+    <File Include="ActRepDetail/f65d5aae-656c-4764-b141-509a6ddbd91e.pdf">
+      <publishTime>05/02/2019 09:31:07</publishTime>
+    </File>
     <File Include="ApplicationInsights.config">
       <publishTime>03/12/2019 10:55:30</publishTime>
+    </File>
+    <File Include="bin/ActRepDetail/0c0ec151-e347-46b7-a92f-e58df434eb21.pdf">
+      <publishTime>04/23/2019 16:47:03</publishTime>
+    </File>
+    <File Include="bin/ActRepDetail/37349052-6886-424d-9f7d-9d76c40fc63b.pdf">
+      <publishTime>05/02/2019 09:31:07</publishTime>
+    </File>
+    <File Include="bin/ActRepDetail/5cb6e209-d682-41ff-9210-fb489c12c122.pdf">
+      <publishTime>05/02/2019 15:06:17</publishTime>
+    </File>
+    <File Include="bin/ActRepDetail/745f5a8e-09ea-4fe1-8a54-4b178a75b301.pdf">
+      <publishTime>04/23/2019 16:47:03</publishTime>
+    </File>
+    <File Include="bin/ActRepDetail/8de26708-65d2-41df-9d51-a4db9ce24a9e.pdf">
+      <publishTime>05/02/2019 09:31:07</publishTime>
+    </File>
+    <File Include="bin/ActRepDetail/9fc4fd53-4314-407e-b7f6-61b6917ab6e0.pdf">
+      <publishTime>05/02/2019 16:09:07</publishTime>
+    </File>
+    <File Include="bin/ActRepDetail/e0ea294c-d8f2-40a0-841b-aedda8fdf31d.pdf">
+      <publishTime>05/02/2019 09:31:07</publishTime>
+    </File>
+    <File Include="bin/ActRepDetail/e34e33ac-edb2-4dab-8319-1c440e447e6a.pdf">
+      <publishTime>05/02/2019 09:31:07</publishTime>
+    </File>
+    <File Include="bin/ActRepDetail/f65d5aae-656c-4764-b141-509a6ddbd91e.pdf">
+      <publishTime>05/02/2019 09:31:07</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>03/12/2019 10:55:50</publishTime>

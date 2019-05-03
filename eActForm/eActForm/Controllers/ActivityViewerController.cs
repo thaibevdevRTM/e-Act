@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
 using System.IO;
-
+using eActForm.Models;
 namespace eActForm.Controllers
 {
     public class ActivityViewerController : Controller
@@ -16,16 +16,26 @@ namespace eActForm.Controllers
             return View();
         }
 
-        public ActionResult activityPDFView(string actId)
+        public ActionResult activityPDFView(string actId, string type)
         {
             //TempData["fileViewer"] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actId));
-            TempData["actId"] = actId;
+            ViewBag.actId = actId;
+            ViewBag.type = type;
             return PartialView();
         }
 
-        public ActionResult getPDF(string actId)
+        public ActionResult getPDF(string actId, string type)
         {
-            var fileStream = new FileStream(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actId)),
+            string rootPath = "";
+            if (type == AppCode.ApproveType.Report_Detail.ToString())
+            {
+                rootPath = ConfigurationManager.AppSettings["rootRepDetailPdftURL"];
+            }
+            else
+            {
+                rootPath = ConfigurationManager.AppSettings["rooPdftURL"];
+            }
+            var fileStream = new FileStream(Server.MapPath(string.Format(rootPath, actId)),
                                              FileMode.Open,
                                              FileAccess.Read
                                            );

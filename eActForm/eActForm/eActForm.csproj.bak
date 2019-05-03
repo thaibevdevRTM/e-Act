@@ -37,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,6 +47,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -215,7 +217,6 @@
     <Compile Include="Controllers\ActivityCostDetailController.cs" />
     <Compile Include="Controllers\ActivityProductDetailController.cs" />
     <Compile Include="Controllers\ActivityViewerController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AjaxResult.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
@@ -1837,7 +1838,6 @@
     <Content Include="images\logo-ss.png" />
     <Content Include="images\logo_vision2020.png" />
     <Content Include="images\non_al.jpeg" />
-    <Content Include="Scripts\Admin\adminPage.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -1982,33 +1982,6 @@
     <Content Include="Content\vendors\jquery-sparkline\README.md" />
     <Content Include="Content\vendors\jquery-sparkline\sparkline.jquery.json" />
     <Content Include="Content\vendors\bootstrap-datepicker\LICENSE" />
-    <Content Include="ActRepDetail\0c0ec151-e347-46b7-a92f-e58df434eb21.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ActRepDetail\37349052-6886-424d-9f7d-9d76c40fc63b.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ActRepDetail\5cb6e209-d682-41ff-9210-fb489c12c122.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ActRepDetail\745f5a8e-09ea-4fe1-8a54-4b178a75b301.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ActRepDetail\8de26708-65d2-41df-9d51-a4db9ce24a9e.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ActRepDetail\9fc4fd53-4314-407e-b7f6-61b6917ab6e0.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ActRepDetail\e0ea294c-d8f2-40a0-841b-aedda8fdf31d.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ActRepDetail\e34e33ac-edb2-4dab-8319-1c440e447e6a.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ActRepDetail\f65d5aae-656c-4764-b141-509a6ddbd91e.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -2120,12 +2093,11 @@
     <Content Include="Views\Budget\activityProductInvoiceEdit.cshtml" />
     <Content Include="Views\Budget\activityProductInvoiceList.cshtml" />
     <Content Include="Views\Budget\activityProductList.cshtml" />
-    <Content Include="Views\Admin\ProductDetail.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
     <Folder Include="ActivityFormPdf\" />
+    <Folder Include="ActRepDetail\" />
     <Folder Include="App_Data\" />
     <Folder Include="error\" />
     <Folder Include="signature\" />

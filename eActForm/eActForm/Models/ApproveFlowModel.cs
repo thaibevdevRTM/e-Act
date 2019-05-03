@@ -33,6 +33,9 @@ namespace eActForm.Models
             public string approveGroupNameEN { get; set; }
             public bool isShowInDoc { get; set; }
             public string description { get; set; }
+            public string statusId { get; set; }
+            public string remark;
+            public string imgSignature { get; set; }
         }
     }
 }

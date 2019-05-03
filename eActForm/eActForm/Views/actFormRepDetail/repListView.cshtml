@@ -42,13 +42,13 @@
                 <thead>
                     <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
                         <th rowspan="3">ลำดับที่</th>
-                        <th rowspan="3">เลขที่ Activity</th>
-                        <th rowspan="3" width="150px" style="text-align:center;">ชื่อลูกค้า</th>
+                        <th rowspan="3"width="80px" style="text-align:center;">เลขที่ Activity</th>
+                        <th rowspan="3" width="100px" style="text-align:center;">ชื่อลูกค้า</th>
                         <th colspan="2" rowspan="2">ระยะเวลากิจกรรม</th>
                         <th colspan="2" rowspan="2">ระยะเวลาให้ทุน</th>
                         <th rowspan="3" width="120px" style="text-align:center;">ชื่อสินค้า</th>
                         <th rowspan="3">ขนาด</th>
-                        <th rowspan="3" width="120px" style="text-align:center;">รายละเอียดกิจกรรม</th>
+                        <th rowspan="3" width="100px" style="text-align:center;">รายละเอียดกิจกรรม</th>
                         <th rowspan="2">กลุ่มกิจกรรม</th>
                         <th rowspan="3">Special Discount (Pro Deal)</th>
                         <th rowspan="3">Compensate (CN)</th>
@@ -130,7 +130,7 @@
                             <td>@item.size</td>
                             <td>@item.typeTheme</td>
                             <td>@item.typeTheme</td>
-                            <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @discount</td>
+                            <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
                             <td></td>
                             <td>@string.Format("{0:n2}", item.total)</td>
                             <td>@string.Format("{0:n2}", item.normalSale)</td>

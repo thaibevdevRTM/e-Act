@@ -89,6 +89,7 @@ namespace eActForm.Models
             public decimal? totalCost { get; set; }
 
             public decimal? perTotal { get; set; }
+            public string createByUserName { get; set; }
         }
 
     }
