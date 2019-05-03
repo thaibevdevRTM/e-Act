@@ -96,7 +96,7 @@ namespace eActForm.Controllers
             try
             {
                 decimal p_total = decimal.Parse(total);
-                decimal p_perTotal = decimal.Parse(perTotal);
+                decimal p_perTotal = 0;
                 decimal getPromotionCost = 0;
 
                 Activity_Model activityModel = new Activity_Model();
