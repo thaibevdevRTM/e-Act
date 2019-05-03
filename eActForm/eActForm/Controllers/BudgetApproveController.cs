@@ -207,7 +207,8 @@ namespace eActForm.Controllers
 				// update approve detail
 				//var var_budget_approve_id = BudgetApproveListController.getApproveBudgetId(actFormId);
 				var var_budget_approve_id = actFormId;
-				 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateApprove"
+				 //int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateApprove"
+					 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateBudgetApprove"
 						, new SqlParameter[] {new SqlParameter("@actFormId",var_budget_approve_id)
 					, new SqlParameter("@empId",UtilsAppCode.Session.User.empId)
 					//, new SqlParameter("@empId","11025855") //70016911 test_emp_id

@@ -94,6 +94,12 @@
 @Html.HiddenFor(m => m.Budget_Activity_list.ElementAt(0).budget_id, new { id = "HbudgetId" })
 @*@Html.HiddenFor(m => m.Budget_Approve_detail_list.ElementAt(0).budgetApproveId, new { id = "HbudgetApproveId" })*@
 
+@if(1==1)
+{
+	var count_wait_approve = 0;
+
+
+
 <div class="modal-dialog modal-lg" style="width:95%;">
 	<div class="modal-content">
 		<div class="modal-header">
@@ -266,6 +272,11 @@
 										{
 											<td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
 										}
+
+										@if (item.invoiceApproveStatusId == 2)
+										{
+											count_wait_approve ++;
+										}
 									</tr>
 								}
 
@@ -310,7 +321,10 @@
 			<div>
 				<p class="d-flex justify-content-center">
 					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-					<button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
+					@if (count_wait_approve == 0 )
+					{
+						<button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
+					}
 				</p>
 			</div>
 
@@ -320,3 +334,5 @@
 
 	</div>
 </div>
+
+}
