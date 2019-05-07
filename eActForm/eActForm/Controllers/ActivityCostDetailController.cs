@@ -218,7 +218,7 @@ namespace eActForm.Controllers
                             r.themeCost = decimal.Parse(themeCost);
                             r.total = Math.Round(p_total, 2);
                             r.perTotal = Math.Round(get_PerTotal, 2);
-                            r.unit = decimal.Parse(unit);
+                            r.unit = int.Parse(unit);
                             r.compensate = decimal.Parse(compensate);
                             r.LE = decimal.Parse(LE);
                             return r;
