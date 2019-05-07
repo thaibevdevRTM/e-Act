@@ -162,7 +162,7 @@ namespace eActForm.Controllers
 					budget_approve_id = getApproveBudgetId(budgetActivityId);
 					BudgetApproveListController.updateApproveWaitingByRangNo(budget_approve_id);
 
-					RedirectToAction("previewApproveBudget","BudgetApprove",budgetActivityId);
+					//RedirectToAction("previewApproveBudget","BudgetApprove",budgetActivityId);
 
 					var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
 					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
@@ -215,8 +215,8 @@ namespace eActForm.Controllers
 				, new SqlParameter[] 
 				{
 				 new SqlParameter("@budgetActivityId", budgetActivityId)
-				 //,new SqlParameter("@createdByUserId", "70016911") test_emp_id
-				,new SqlParameter("@createdByUserId", UtilsAppCode.Session.User.empId)
+				 ,new SqlParameter("@createdByUserId", "70016911") 
+				//,new SqlParameter("@createdByUserId", UtilsAppCode.Session.User.empId) test_emp_id
 				});
 
 				return rtn;
@@ -240,8 +240,8 @@ namespace eActForm.Controllers
 				model.actFormId = budgetId;
 				model.delFlag = false;
 				model.createdDate = DateTime.Now;
-				model.createdByUserId = UtilsAppCode.Session.User.empId;
-				//model.createdByUserId = "70016911"; test_emp_id
+				//model.createdByUserId = UtilsAppCode.Session.User.empId; test_emp_id
+				model.createdByUserId = "70016911"; 
 				model.updatedDate = DateTime.Now;
 				model.updatedByUserId = UtilsAppCode.Session.User.empId;
 				list.Add(model);

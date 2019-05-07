@@ -225,6 +225,7 @@
     <Compile Include="Controllers\BudgetApproveController.cs" />
     <Compile Include="Controllers\BudgetApproveListController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
+    <Compile Include="Controllers\BudgetMyDocController.cs" />
     <Compile Include="Controllers\BudgetViewerController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\eActController.cs" />
@@ -2103,6 +2104,9 @@
     <Content Include="Views\Budget\activityList.cshtml" />
     <Content Include="Views\BudgetApprove\approvePositionLists.cshtml" />
     <Content Include="Views\BudgetViewer\activityPDFView.cshtml" />
+    <Content Include="Views\BudgetMyDoc\Index.cshtml" />
+    <Content Include="Views\BudgetMyDoc\myDocBudget.cshtml" />
+    <Content Include="Views\BudgetMyDoc\myDocBudgetList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

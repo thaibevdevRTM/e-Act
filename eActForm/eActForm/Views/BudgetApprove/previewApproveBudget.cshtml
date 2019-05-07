@@ -25,8 +25,8 @@
 	}
 
     function onClickClose() {
-        @*var url = '@Url.Action("activityProduct", "Budget")';
-        window.location.href = url;*@
+        var url = '@Url.Action("activityList", "Budget")';
+        window.location.href = url;
     }
 
 	function onClickSubmitApprove() {
@@ -43,8 +43,13 @@
             dataType: "json",
             type: 'POST',
             }).done(function (response) {
-                $("#WaitDialog").hide();
-                console.log('success');
+				$("#WaitDialog").hide();
+				if (response.Success == true ) {
+					bootbox.Success("ดำเนินการเรียบร้อยครับ");
+				}
+				else {
+					doMsgFail("ไม่สามารถดำเนินการได้สำเร็จ กรุณาติดต่อ Admin ครับ");
+				}
                  });
 	}
 
