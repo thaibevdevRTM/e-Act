@@ -153,10 +153,11 @@ namespace eActForm.Controllers
 		[ValidateInput(false)]
 		public JsonResult submitPreviewBudget(string GridHtml, string budgetActivityId)
 		{
+			
 			var resultAjax = new AjaxResult();
 			try
 			{
-				var budget_approve_id="";
+				var budget_approve_id = "";
 				if (BudgetApproveListController.insertApproveForBudgetForm(budgetActivityId) > 0) //usp_insertApproveDetail
 				{
 					budget_approve_id = getApproveBudgetId(budgetActivityId);
@@ -170,8 +171,6 @@ namespace eActForm.Controllers
 					//  ยังไม่ได้แก้ไปทำตอน approve ก่อน *****
 					//EmailAppCodes.sendApprove(budget_approve_id, AppCode.ApproveType.Activity_Form);
 				}
-
-				
 
 				resultAjax.Success = true;
 			}
@@ -215,8 +214,8 @@ namespace eActForm.Controllers
 				, new SqlParameter[] 
 				{
 				 new SqlParameter("@budgetActivityId", budgetActivityId)
-				 ,new SqlParameter("@createdByUserId", "70016911") 
-				//,new SqlParameter("@createdByUserId", UtilsAppCode.Session.User.empId) test_emp_id
+				 //,new SqlParameter("@createdByUserId", "70016911") //test_emp_id
+				,new SqlParameter("@createdByUserId", UtilsAppCode.Session.User.empId) 
 				});
 
 				return rtn;
@@ -240,8 +239,8 @@ namespace eActForm.Controllers
 				model.actFormId = budgetId;
 				model.delFlag = false;
 				model.createdDate = DateTime.Now;
-				//model.createdByUserId = UtilsAppCode.Session.User.empId; test_emp_id
-				model.createdByUserId = "70016911"; 
+				model.createdByUserId = UtilsAppCode.Session.User.empId; 
+				//model.createdByUserId = "70016911"; //test_emp_id
 				model.updatedDate = DateTime.Now;
 				model.updatedByUserId = UtilsAppCode.Session.User.empId;
 				list.Add(model);

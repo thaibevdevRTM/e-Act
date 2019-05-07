@@ -25,12 +25,18 @@
 	}
 
     function onClickClose() {
-        var url = '@Url.Action("activityList", "Budget")';
+        var url = '@Url.Action("activityProduct", "Budget")';
         window.location.href = url;
     }
 
 	function onClickSubmitApprove() {
 		submitApproveBudget();
+
+		bootbox.alert("ดำเนินการเรียบร้อยแล้ว", function () {
+			var url = '@Url.Action("activityProduct", "Budget")';
+			window.location.href = url;
+		});
+
 	}
 
 	function submitApproveBudget() {
@@ -42,19 +48,34 @@
             },
             dataType: "json",
             type: 'POST',
-            }).done(function (response) {
-				$("#WaitDialog").hide();
+			});
+	}
+
+	@*function submitApproveBudget() {
+		alert("สลัดผัก A");
+            $.ajax({
+            url: '@Url.Action("submitPreviewBudget", "BudgetApproveList")',
+            data: {
+				GridHtml: $("#GridPDF").html(),
+				budgetActivityId: $("#HbudgetId").val()
+            },
+            dataType: "json",
+            type: 'POST',
+			}).Success(function (response) {
+				
 				if (response.Success == true ) {
 					bootbox.Success("ดำเนินการเรียบร้อยครับ");
 				}
 				else {
 					doMsgFail("ไม่สามารถดำเนินการได้สำเร็จ กรุณาติดต่อ Admin ครับ");
 				}
-                 });
-	}
+			});
+
+		alert("สลัดผัก B");
+	}*@
 
 	@*function genPdfApproveBudget() {
-			alert("สลัดผัก 4");
+			
 
             $.ajax({
             url: '@Url.Action("genPdfApproveBudget", "BudgetApprove")',
@@ -278,7 +299,7 @@
 											<td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
 										}
 
-										@if (item.invoiceApproveStatusId == 2)
+										@if (item.invoiceApproveStatusId == 2 || item.invoiceApproveStatusId == 5)
 										{
 											count_wait_approve ++;
 										}
@@ -325,6 +346,7 @@
 		<div class="modal-footer">
 			<div>
 				<p class="d-flex justify-content-center">
+
 					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
 					@if (count_wait_approve == 0 )
 					{
@@ -339,5 +361,4 @@
 
 	</div>
 </div>
-
 }

@@ -102,14 +102,13 @@
 			<thead>
 				<tr style="background-color:#2B5D95;color:#ffffff;">
 					<th></th>
-					<th>Status</th>
-					<th>Doc.Date</th>
-					<th>Act.No</th>
-					<th>Act.Name</th>
-					<th>Customer</th>
-					<th>Category</th>
-					<th>Create Date</th>
-					<th>Cost</th>
+					<th>สถานะ</th>
+					<th>วันที่เสนออนุมัติ</th>
+					<th>เลขกิจกรรม</th>
+					<th>ชื่อกิจกรรม</th>
+					<th>ลูกค้า</th>
+					<th>ประเภท</th>
+					<th>จำนวนเงิน</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -143,7 +142,6 @@
 						<td>@item.activityName</td>
 						<td>@item.cusShortName</td>
 						<td>@item.productCategory</td>
-						<td>@{ date = item.createdDate == null ? "" : item.createdDate.Value.ToString("dd/MM/yyyy");} @date</td>
 						<td align="right">
 							@if (@item.totalInvoiceApproveBath != 0)
 							{

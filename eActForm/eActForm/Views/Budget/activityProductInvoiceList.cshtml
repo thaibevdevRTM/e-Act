@@ -93,10 +93,17 @@
 				<td style="text-align:center;">
 					@if (item.invoiceApproveStatusId == 1)
 					{
-					<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-					<a href="javascript:" target="_blank" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
-						<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-					</a>
+						<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+						<a href="javascript:" target="_blank" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
+							<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+						</a>
+					}
+					else if (item.invoiceApproveStatusId == 5)
+					{
+						<div  class="anchorDetail btn ink-reaction btn-sm btn-dark fa fa-edit disabled"></div>
+						<a href="javascript:" target="_blank" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
+							<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+						</a>
 					}
 				</td>
 				<td style="font-size:12.5px;text-align:right;">

@@ -21,7 +21,7 @@ namespace eActForm.Controllers
 		// GET: Approve
 		public ActionResult Index(string budgetApproveId)
 		{
-			if (budgetApproveId == null) return RedirectToAction("index", "Home");
+			if (budgetApproveId == null) return RedirectToAction("index", "BudgetApproveList");
 			else
 			{
 				//var budgetApproveId = BudgetApproveListController.getApproveBudgetId(budgetActivityId);
@@ -121,8 +121,6 @@ namespace eActForm.Controllers
 
 		}
 
-		
-
 		public static bool getPremisionApproveByEmpid(List<ApproveModel.approveDetailModel> lists, string empId)
 		{
 			try
@@ -205,9 +203,7 @@ namespace eActForm.Controllers
 			try
 			{
 				// update approve detail
-				//var var_budget_approve_id = BudgetApproveListController.getApproveBudgetId(actFormId);
 				var var_budget_approve_id = actFormId;
-				 //int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateApprove"
 					 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateBudgetApprove"
 						, new SqlParameter[] {new SqlParameter("@actFormId",var_budget_approve_id)
 					, new SqlParameter("@empId",UtilsAppCode.Session.User.empId)
@@ -302,8 +298,9 @@ namespace eActForm.Controllers
 				{
 					DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetCountWatingApproveByEmpId"
 						, new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
-						//, new SqlParameter[] { new SqlParameter("@empId", "11025855") }); test_emp_id
+					//, new SqlParameter[] { new SqlParameter("@empId", "11025855") }); test_emp_id
 					//11025855
+					UtilsAppCode.Session.User.countWatingBudgetForm = "";
 					if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
 					{
 						UtilsAppCode.Session.User.countWatingBudgetForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
