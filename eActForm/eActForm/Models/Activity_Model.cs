@@ -168,6 +168,9 @@ namespace eActForm.Models
         public string productId { get; set; }
         public string productName { get; set; }
         public decimal? wholeSalesPrice { get; set; }
+        public decimal? LE { get; set; }
+        public decimal? compensate { get; set; }
+        public decimal? unit { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalCost { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
