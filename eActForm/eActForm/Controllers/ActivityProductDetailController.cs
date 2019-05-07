@@ -114,6 +114,7 @@ namespace eActForm.Controllers
                     costthememodel.smellName = item.smellName;
                     costthememodel.smellId = item.smellId;
                     costthememodel.brandId = item.brandId;
+                    costthememodel.unit = item.unit;
                     costthememodel.isShowGroup = item.isShowGroup;
                     costthememodel.detailGroup = item.detailGroup;
                     activityModel.activitydetaillist.Add(costthememodel);
