@@ -97,6 +97,9 @@ namespace eActForm.BusinessLayer
                             costThemeDetail.growth = item.growth;
                             costThemeDetail.total = item.total;
                             costThemeDetail.perTotal = item.perTotal;
+                            costThemeDetail.unit = item.unit;
+                            costThemeDetail.compensate = item.compensate;
+                            costThemeDetail.LE = item.LE;
                             costThemeDetail.rowNo = insertIndex;
                             costThemeDetail.delFlag = itemIn.delFlag;
                             costThemeDetail.isShowGroup = item.isShowGroup;

@@ -116,6 +116,7 @@ namespace eActForm.BusinessLayer
                                  productCode = d["productCode"].ToString(),
                                  productName = d["productName"].ToString(),
                                  smellId = d["smellId"].ToString(),
+                                 smellname = d["smellname"].ToString(),
                                  brandId = d["brandId"].ToString(),
                                  cateId = d["cateId"].ToString(),
                                  brand = d["brandName"].ToString(),

@@ -1,10 +1,11 @@
 ﻿@model eActForm.Models.Activity_Model
 @{
     Layout = null;
+    decimal? perTotal = 0;
     decimal? totalActCost = 0;
     decimal? costActivity = 0;
     decimal? costProduct = 0;
-    decimal? perTotal = 0;
+    decimal? growthPerTotal = 0;
 }
 
 <script>
@@ -397,7 +398,7 @@
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.total)</td>
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.perTotal)</td>
                                 </tr>
-
+                                perTotal = item.perTotal == null ? 0 + perTotal : item.perTotal + perTotal;
                                 totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
                                 costProduct = item.normalCost == null ? 0 + costProduct : item.normalCost + costProduct;
                                 costActivity = item.themeCost == null ? 0 + costActivity : item.themeCost + costActivity;
@@ -425,8 +426,8 @@
                             <td class="textRight">
                                 @if (totalActCost != 0 && costActivity != 0)
                                 {
-                                    perTotal = (costActivity - costProduct) / costProduct * 100;
-                                    string result = String.Format("{0:n2}%", @perTotal);
+                                    growthPerTotal = (costActivity - costProduct) / costProduct * 100;
+                                    string result = String.Format("{0:n2}%", @growthPerTotal);
                                     @result.ToString();
                                 }
                             </td>
@@ -434,6 +435,13 @@
                                 @if (totalActCost != 0)
                                 {
                                     string result = String.Format("{0:n2}", @totalActCost);
+                                    @result.ToString();
+                                }
+                            </td>
+                            <td class="textRight">
+                                @if (perTotal != 0)
+                                {
+                                    string result = String.Format("{0:n2}%", @perTotal);
                                     @result.ToString();
                                 }
                             </td>
