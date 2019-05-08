@@ -14,15 +14,11 @@ namespace eActForm.Controllers
         public ActionResult activityCostDetail()
         {
             Activity_Model activityModel = new Activity_Model();
-            if (Session["activitydetaillist"] != null)
-            {
-                activityModel.activitydetaillist = ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]);
-            }
-            else
-            {
-                activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
-                Session["activitydetaillist"] = activityModel.activitydetaillist;
-            }
+            activityModel.activitydetaillist = Session["activitydetaillist"] != null
+                ? ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"])
+                : new List<CostThemeDetailOfGroupByPrice>();
+            Session["activitydetaillist"] = activityModel.activitydetaillist;
+
 
             return PartialView(activityModel);
         }
@@ -206,6 +202,7 @@ namespace eActForm.Controllers
                         .Where(r => r.productGroupId != null && r.productGroupId.Equals(productGroupId))
                         .Select(r =>
                         {
+                            r.productName = name;
                             r.detailGroup[0].productName = name;
                             r.normalCost = decimal.Parse(normalCost);
                             r.growth = Math.Round(p_growth, 2);
