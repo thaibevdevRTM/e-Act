@@ -374,24 +374,15 @@
                             {
                                 <tr>
                                     <td style="font-size:10px;" class="textLeft">@item.typeTheme</td>
-
-                                    @if (item.isShowGroup == true)
+                                    @if (item.detailGroup != null && item.detailGroup.Count > 0)
                                     {
-                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.productName)  </td> <!-- Html.DisplayFor(m => item.size) ALL(Html.DisplayFor(m => item.detailGroup.Count)) -->
+                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[0].productName) </td>
                                     }
-                                    else if (item.isShowGroup == false)
+                                    else
                                     {
-                                        if (item.detailGroup != null)
-                                        {
-                                            for (int i = 0; i < @item.detailGroup.Count; i++)
-                                            {
-                                                <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) </td> <!--Html.DisplayFor(m => item.detailGroup[i].productDetail)-->
-                                            }
-                                        }
+                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.productName)  </td>
                                     }
 
-
-                                    @*<td style="font-size:12.5px;" class="textLeft">@item.productName</td>*@
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.themeCost)</td>
                                     <td class="font11 textRight">@string.Format("{0:n2}", item.growth)</td>

@@ -68,7 +68,7 @@ namespace eActForm.BusinessLayer
                    productId = group.First().productId,
                    wholeSalesPrice = group.First().wholeSalesPrice,
                    typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == group.First().activityTypeId).FirstOrDefault().activitySales,
-                   productName = group.First().productName,
+                   productName = group.First().isShowGroup ? group.First().brandName.Trim() + " " + group.First().size + "ALL(" + group.ToList().Count + ")" : group.First().productName,
                    size = group.First().size,
                    normalCost = group.First().normalCost,
                    themeCost = group.First().themeCost,

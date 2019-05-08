@@ -66,26 +66,15 @@
                             }
                         }
 
-
-
-                        @if (item.isShowGroup == true)
+                        @if (item.detailGroup != null && item.detailGroup.Count > 0)
                         {
-                            <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")" })</td>
-                        }
-                        else if (item.isShowGroup == false)
-                        {
-                            if (item.detailGroup != null)
-                            {
-                                for (int i = 0; i < @item.detailGroup.Count; i++)
-                                {
-                                    <td>@Html.TextBoxFor(model => item.detailGroup[i].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")" })</td>
-                                }
-                            }
+                            <td>@Html.TextBoxFor(model => item.detailGroup[0].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")" })</td>
                         }
                         else
                         {
-                            <td class="font10 textLeft">@item.productName</td>
+                            <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")" })</td>
                         }
+                        
                         <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")" })</td>
                         <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")" })</td>
 
@@ -113,67 +102,67 @@
                 }
             }
 
-        <tr>
+            <tr>
 
-            <td colspan="5" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
-            <td>
-                <p class="text-success textRight">
-                    @if (normalTotal != 0)
-                    {
-                        string result = String.Format("{0:n2}", @normalTotal);
-                        @result.ToString();
-                    }
-                </p>
-            </td>
-            <td>
-                <p class="text-success textRight">
-                    @if (activityTotal != 0)
-                    {
-                        string result = String.Format("{0:n2}", @activityTotal);
-                        @result.ToString();
-                    }
-                </p>
-            </td>
-            <td>
-                <p class="text-success textRight">
-                    @if (activityTotal != 0 && normalTotal != 0)
-                    {
-                        growthTotal = (activityTotal - normalTotal) / normalTotal * 100;
-                        string result = String.Format("{0:n2}%", @growthTotal);
-                        @result.ToString();
+                <td colspan="5" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
+                <td>
+                    <p class="text-success textRight">
+                        @if (normalTotal != 0)
+                        {
+                            string result = String.Format("{0:n2}", @normalTotal);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success textRight">
+                        @if (activityTotal != 0)
+                        {
+                            string result = String.Format("{0:n2}", @activityTotal);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success textRight">
+                        @if (activityTotal != 0 && normalTotal != 0)
+                        {
+                            growthTotal = (activityTotal - normalTotal) / normalTotal * 100;
+                            string result = String.Format("{0:n2}%", @growthTotal);
+                            @result.ToString();
 
-                    }
-                </p>
-            </td>
-            <td>
-                <p class="text-success textRight">
-                    @if (LE != 0)
-                    {
-                        string result = String.Format("{0:n2}%", @LE);
-                        @result.ToString();
-                    }
-                </p>
-            </td>
-            <td>
-                <p class="text-success textRight">
-                    @if (total != 0)
-                    {
-                        string result = String.Format("{0:n2}", @total);
-                        @result.ToString();
-                    }
-                </p>
-            </td>
-            <td>
-                @*<p class="text-success textRight">
-                @if (total != 0 && activityTotal != 0)
-                {
-                    perTotal = total / (activityTotal * Convert.ToDecimal(promotioncost == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
-                    string result = String.Format("{0:n2}", @perTotal);
-                    @result.ToString();
-                }
-            </p>*@
-            </td>
-        </tr>
+                        }
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success textRight">
+                        @if (LE != 0)
+                        {
+                            string result = String.Format("{0:n2}%", @LE);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success textRight">
+                        @if (total != 0)
+                        {
+                            string result = String.Format("{0:n2}", @total);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+                <td>
+                    @*<p class="text-success textRight">
+                            @if (total != 0 && activityTotal != 0)
+                            {
+                                perTotal = total / (activityTotal * Convert.ToDecimal(promotioncost == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
+                                string result = String.Format("{0:n2}", @perTotal);
+                                @result.ToString();
+                            }
+                        </p>*@
+                </td>
+            </tr>
         </table>
     </div>
 </div>

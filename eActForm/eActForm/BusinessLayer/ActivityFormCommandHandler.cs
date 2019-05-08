@@ -132,10 +132,6 @@ namespace eActForm.BusinessLayer
 
         }
 
-
-
-
-
         public static string genNumberActivity(string activityId)
         {
             try
@@ -155,14 +151,14 @@ namespace eActForm.BusinessLayer
                         result += getActList.FirstOrDefault().cusShortName.Trim();
                         result += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
                         result += string.Format("{0:0000}", genNumber);
-         
+
                     }
                     else
                     {
                         result = getActList.FirstOrDefault().activityNo.ToString();
                     }
                 }
-               
+
                 return result;
             }
             catch (Exception ex)
