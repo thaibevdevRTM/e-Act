@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Configuration;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 
@@ -10,6 +11,32 @@ namespace eActForm.BusinessLayer
 {
     public class ApproveFlowAppCode
     {
+        public static ApproveFlowModel.approveFlowModel getFlowByActFormId(string actId)
+        {
+            try
+            {
+                ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowMainByActFormId"
+                    , new SqlParameter[] {new SqlParameter("@actFormId", actId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApprove()
+                             {
+                                 id = dr["id"].ToString(),
+                                 flowNameTH = dr["flowNameTH"].ToString(),
+                                 cusNameTH = dr["cusNameTH"].ToString(),
+                                 cusNameEN = dr["cusNameEN"].ToString(),
+                                 nameTH = dr["nameTH"].ToString(),
+                             }).ToList();
+                model.flowMain = lists[0];
+                model.flowDetail = getFlowDetailWithApproveDetail(model.flowMain.id, actId);
+                return model;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("getFlowByActFormId >>" + ex.Message);
+            }
+        }
+
         public static ApproveFlowModel.approveFlowModel getFlowForReportDetail(string subId,string customerId,string productTypeId)
         {
             try
@@ -105,6 +132,40 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailWithApproveDetail(string flowId,string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveWithStatusDetail"
+                    , new SqlParameter[] {
+                        new SqlParameter("@flowId", flowId)
+                        ,new SqlParameter("@actFormId", actId)
+                    });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApproveDetail()
+                             {
+                                 id = dr["id"].ToString(),
+                                 rangNo = (int)dr["rangNo"],
+                                 empId = dr["empId"].ToString(),
+                                 empEmail = dr["empEmail"].ToString(),
+                                 empFNameTH = dr["empFNameTH"].ToString(),
+                                 empLNameTH = dr["empLNameTH"].ToString(),
+                                 empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
+                                 approveGroupName = dr["approveGroupName"].ToString(),
+                                 approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
+                                 isShowInDoc = (bool)dr["showInDoc"],
+                                 description = dr["description"].ToString(),
+                                 statusId = dr["statusId"].ToString(),
+                                 remark = dr["remark"].ToString(),
+                                 imgSignature = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFlowDetailWithApproveDetail >>" + ex.Message);
+            }
+        }
         public static List<ApproveFlowModel.flowApproveDetail> getFlowDetail(string flowId)
         {
             try

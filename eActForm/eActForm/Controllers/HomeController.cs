@@ -25,7 +25,7 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-     
+
 
         public ActionResult myDoc()
         {
@@ -39,6 +39,8 @@ namespace eActForm.Controllers
                 model = new Activity_Model.actForms();
                 model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId);
             }
+
+            TempData["SearchDataModel"] = model;
             return PartialView(model);
         }
 
@@ -50,12 +52,12 @@ namespace eActForm.Controllers
             result.Success = false;
             //if (statusId == "1")
             //{
-                // Draft
-                if (ActFormAppCode.deleteActForm(actId, "request delete by user") > 0)
-                {
-                    result.Success = true;
-                    TempData["SearchDataModel"] = null;
-                }
+            // Draft
+            if (ActFormAppCode.deleteActForm(actId, "request delete by user") > 0)
+            {
+                result.Success = true;
+                TempData["SearchDataModel"] = null;
+            }
             //}
             //else
             //{
@@ -68,8 +70,11 @@ namespace eActForm.Controllers
         public ActionResult searchActForm()
         {
             string count = Request.Form.AllKeys.Count().ToString();
-            Activity_Model.actForms model = new Activity_Model.actForms();
-            model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId);
+            Activity_Model.actForms model;
+            model = new Activity_Model.actForms
+            {
+                actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId)
+            };
 
             if (Request.Form["txtActivityNo"] != "")
             {

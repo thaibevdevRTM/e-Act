@@ -89,6 +89,7 @@ namespace eActForm.Models
             public decimal? totalCost { get; set; }
 
             public decimal? perTotal { get; set; }
+            public string createByUserName { get; set; }
         }
 
     }
@@ -114,6 +115,11 @@ namespace eActForm.Models
         public string chanel { get; set; }
         public string chanelShort { get; set; }
         public string shortBrand { get; set; }
+        public string productCode { get; set; }
+        public string productName { get; set; }
+        public string size { get; set; }
+        public string smell { get; set; }
+        public string pack { get; set; }
         public string chanel_Id { get; set; }
         public string productCateId { get; set; }
         public string productCateText { get; set; }

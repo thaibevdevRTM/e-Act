@@ -28,9 +28,18 @@
                     {
                         if (item.isShowInDoc)
                         {
-                            <td>
-                                <div style="text-align:center;height:100px;"></div>
-                            </td>
+                            if (item.statusId == "3")
+                            {
+                                <td>
+                                    <img style="text-align:center;" width="150" height="100" src="@item.imgSignature" />
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <div style="text-align:center;height:100px;"></div>
+                                </td>
+                            }
                         }
                     }
                 </tr>

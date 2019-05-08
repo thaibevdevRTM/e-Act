@@ -90,7 +90,7 @@ namespace eActForm.Controllers
             try
             {
                 model.actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(actId);
-                model.flowList = new ApproveFlowModel.approveFlowModel();
+                model.flowList = ApproveFlowAppCode.getFlowByActFormId(actId);
                 TempData["ActFormRepDetail"] = model;
             }
             catch (Exception ex)

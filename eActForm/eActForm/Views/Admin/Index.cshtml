@@ -1,0 +1,147 @@
+﻿@model eActForm.Models.Activity_Model
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+
+<style type="text/css">
+
+    .margin-t {
+        margin-top: 10px;
+    }
+
+    .form-controlMix {
+        padding: 0;
+        height: 37px;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        border-bottom-color: rgba(12, 12, 12, 0.12);
+        background: transparent;
+        color: #0c0c0c;
+        font-size: 16px;
+        box-shadow: none;
+        font-size:10pt;
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <h3 style="text-align: center">เพิ่มสินค้า</h3>
+    </div>
+</div>
+<hr />
+
+<div class="row form-group">
+    <div class="col-md-2 col-sm-6 col-xs-2">
+        Product category:
+        @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
+        {
+            @class = "form-control",
+            required = "required",
+            onchange = "return $adminPage.onchangeCate();",
+            id = "ddlProductCate"
+        })
+    </div>
+
+    <div class="col-md-2 col-sm-6 col-xs-2">
+        Product Group:
+        @Html.DropDownListFor(model => model.activityFormModel.productGroupId, new SelectList(Model.productGroupList, "id", "groupName", 0), "Please Select", new
+        {
+             @class = "form-control",
+             required = "required",
+             id = "ddlProductGrp",
+             onchange = "return $adminPage.onchangeGroup();",
+       })
+    </div>
+
+
+    <div class="col-md-2 col-sm-6 col-xs-2">
+        Brand:
+        @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "- เลือกประเภท -", new
+         {
+            @class = "form-control",
+          required = "required",
+          id = "ddlProductBrand"
+         })
+    </div>
+    <div class="col-md-1 col-sm-6 col-xs-1">
+        Size:
+        @Html.TextBoxFor(x => x.activityFormModel.size, new { @class = "form-control", @id = "txtSize" })
+    </div>
+
+    <div class="col-md-1 col-sm-6 col-xs-1">
+        Pack:
+        @Html.TextBoxFor(x => x.activityFormModel.pack, new { @class = "form-control", @id = "txtPack" })
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        ProductDetail:
+        @Html.TextBoxFor(x => x.activityFormModel.productName, new { @class = "form-controlMix", @id = "txtProductName", @style = "width:50%;" })
+    </div>
+    <div class="col-md-5 col-sm-12 col-xs-3">
+        ProductCode:
+        @Html.TextBoxFor(x => x.activityFormModel.productCode, new { @class = "form-controlMix", @id = "txtProductCode"})
+    </div>
+    <div class="col-md-5 col-sm-12 col-xs-3">
+        กลิ่น:
+        @Html.TextBoxFor(x => x.activityFormModel.smell, new { @class = "form-controlMix", @id = "txtsmell" })
+        @*<input type="text" class="form-control" required="required" id="txtsmell" name="txtsmell" />*@
+        <input type="hidden" id="smellId" name="smellId" />
+    </div>
+
+</div>
+
+<hr />
+
+<div class="row form-group">
+    <div id="getQuery" class="col-lg-12">
+        @Html.Action("ProductDetail", "Admin")
+    </div>
+</div>
+
+<script src="~/Scripts/Admin/adminPage.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+            $adminPage.urlGetGroup = '@Url.Action("getProductGroup", "eAct")';
+            $adminPage.urlGetBrand = '@Url.Action("getProductBrand", "eAct")';
+
+    });
+
+    $("#txtsmell").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("getProductSmell", "eAct")',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            productGroupId : $("#ddlProductGrp").val(),
+                        },
+                        success: function (result) {
+                            response($.map(result.Data, function (item) {
+                                return { label: item.nameTH, value: item.nameTH, id: item.id };
+                            }))
+
+                        }
+                    })
+                },
+                minLength: 0,
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) {
+                    }
+                }, select: function (event, ui) {
+                    $("#smellId").val(ui.item.id)
+                }
+            }).focus(function () {
+                $(this).data("uiAutocomplete").search($(this).val());
+            });
+</script>
