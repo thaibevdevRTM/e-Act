@@ -168,6 +168,9 @@ namespace eActForm.Models
         public string productId { get; set; }
         public string productName { get; set; }
         public decimal? wholeSalesPrice { get; set; }
+        public decimal? LE { get; set; }
+        public decimal? compensate { get; set; }
+        public int unit { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? normalCost { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
@@ -209,6 +212,9 @@ namespace eActForm.Models
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
         public decimal? perTotal { get; set; }
+        public int unit { get; set; }
+        public decimal? compensate { get; set; }
+        public decimal? LE { get; set; }
         public decimal? wholeSalesPrice { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
@@ -267,6 +273,9 @@ namespace eActForm.Models
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
         public decimal? perTotal { get; set; }
+        public int unit { get; set; }
+        public decimal? compensate { get; set; }
+        public decimal? LE { get; set; }
         public Boolean isShowGroup { get; set; }
         public int rowNo { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
