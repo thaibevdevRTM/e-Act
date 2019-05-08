@@ -25,7 +25,7 @@
         color: #0c0c0c;
         font-size: 16px;
         box-shadow: none;
-        font-size:10pt;
+        font-size: 10pt;
     }
 </style>
 
@@ -79,7 +79,12 @@
         Pack:
         @Html.TextBoxFor(x => x.activityFormModel.pack, new { @class = "form-control", @id = "txtPack" })
     </div>
+    <div class="form-group col-md-2 col-sm-12 col-xs-2" onclick="return $adminPage.checkProduct();">
+        <label class="btn ink-reaction btn-success fa fa-plus" style="margin-top:20px; font-size:20px;"></label>
+    </div>
+
 </div>
+
 
 <div class="row form-group">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -88,13 +93,7 @@
     </div>
     <div class="col-md-5 col-sm-12 col-xs-3">
         ProductCode:
-        @Html.TextBoxFor(x => x.activityFormModel.productCode, new { @class = "form-controlMix", @id = "txtProductCode"})
-    </div>
-    <div class="col-md-5 col-sm-12 col-xs-3">
-        กลิ่น:
-        @Html.TextBoxFor(x => x.activityFormModel.smell, new { @class = "form-controlMix", @id = "txtsmell" })
-        @*<input type="text" class="form-control" required="required" id="txtsmell" name="txtsmell" />*@
-        <input type="hidden" id="smellId" name="smellId" />
+        @Html.TextBoxFor(x => x.activityFormModel.productCode, new { @class = "form-controlMix", @id = "txtProductCode" })
     </div>
 
 </div>
@@ -113,35 +112,10 @@
 
             $adminPage.urlGetGroup = '@Url.Action("getProductGroup", "eAct")';
             $adminPage.urlGetBrand = '@Url.Action("getProductBrand", "eAct")';
+            $adminPage.urlAddProduct = '@Url.Action("addNewProduct", "Admin")';
+            $adminPage.urlCheckProduct = '@Url.Action("checkProduct", "Admin")';
 
     });
 
-    $("#txtsmell").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: '@Url.Action("getProductSmell", "eAct")',
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-                            productGroupId : $("#ddlProductGrp").val(),
-                        },
-                        success: function (result) {
-                            response($.map(result.Data, function (item) {
-                                return { label: item.nameTH, value: item.nameTH, id: item.id };
-                            }))
 
-                        }
-                    })
-                },
-                minLength: 0,
-                messages: {
-                    noResults: '',
-                    results: function (resultsCount) {
-                    }
-                }, select: function (event, ui) {
-                    $("#smellId").val(ui.item.id)
-                }
-            }).focus(function () {
-                $(this).data("uiAutocomplete").search($(this).val());
-            });
 </script>

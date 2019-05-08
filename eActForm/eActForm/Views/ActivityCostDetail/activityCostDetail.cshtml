@@ -87,7 +87,7 @@
                             <td class="font10 textLeft">@item.productName</td>
                         }
                         <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")" })</td>
-                        <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")" })</td>
+                        <td>@Html.TextBoxFor(model => item.compensate,"{0:n2}", new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")" })</td>
 
                         <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowth('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")" })</td>
                         <td>
