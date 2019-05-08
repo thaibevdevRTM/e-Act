@@ -22,6 +22,7 @@ namespace eActForm.Models
             public string productCode { get; set; }
             public string productName { get; set; }
             public string smellId { get; set; }
+            public string smellname { get; set; }
             public string brandId { get; set; }
             public string cateId { get; set; }
             public string brand { get; set; }
