@@ -111,7 +111,7 @@
 					}
 					<a href="@Url.Action("index", "BudgetApproveList")" class="btn btn-info pull-right"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
 				</div>
-				
+
 			</div>
 		}
 
@@ -138,15 +138,11 @@
         $("#WaitDialog").show();
     }
 
-    function successQuery(response) {
+	function successQuery(response) {
 		if (response.Success) {
-
 			var budgetApproveId = $("#HbudgetApproveId").val()
-			var url = '@Url.Action("index", "BudgetApprove")?budgetApproveId=' + budgetApproveId;
-			window.location.href = url;
+			callPreviewApprove(budgetApproveId);
 
-			//callRefreshIndex('@var_budgetApproveId');
-			//callPreviewApprove('@var_budgetApproveId');
 			//genPdfApproveBudget();
         }else {
             $("#WaitDialog").hide();
@@ -155,39 +151,28 @@
 
     }
 
-    function failureQuery(data) {
-        bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
-    }
-
-	@*function callRefreshIndex(obj) {
-		alert('สลัดผัก index');
-
-        $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("index", "BudgetApprove")',
-            data: {
-                actId: obj
-            }
-        }).done(function (htmlResponse) {
-   //         $("#divPreviewApprove").html(htmlResponse)
-			//$('#ModalPreviewPDF').modal('show');
-        });
-	}*@
 
 	function callPreviewApprove(obj) {
+
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("previewApproveBudget", "BudgetApprove")',
             data: {
-                actId: obj
+				budgetApproveId: obj
             }
         }).done(function (htmlResponse) {
             $("#divPreviewApprove").html(htmlResponse)
 			$('#ModalPreviewPDF').modal('show');
+			genPdfApproveBudget();
         });
     }
 
-	
+
+
+
+	function failureQuery(data) {
+		bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
+	}
 </script>
 
 

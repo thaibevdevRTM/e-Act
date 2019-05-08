@@ -2009,9 +2009,7 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Views\BudgetApproveList\Index.cshtml" />
-    <Content Include="Views\BudgetApprove\previewApproveBudget.cshtml">
-      <BrowseToURL>~/BudgetApprove/previewApproveBudget</BrowseToURL>
-    </Content>
+    <Content Include="Views\BudgetApprove\previewApproveBudget.cshtml" />
     <Content Include="WebForm1.aspx" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -2107,6 +2105,8 @@
     <Content Include="Views\BudgetMyDoc\Index.cshtml" />
     <Content Include="Views\BudgetMyDoc\myDocBudget.cshtml" />
     <Content Include="Views\BudgetMyDoc\myDocBudgetList.cshtml" />
+    <Content Include="Views\Budget\previewBudgetInvoice.cshtml" />
+    <Content Include="Views\BudgetApprove\approvePositionSignatureListsByBudgetApproveId.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

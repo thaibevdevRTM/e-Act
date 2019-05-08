@@ -33,12 +33,14 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-		public static List<Budget_Activity_Model.Budget_Invoice_history_Att> getBudgetInvoiceHistory( string activityId)
+		public static List<Budget_Activity_Model.Budget_Invoice_history_Att> getBudgetInvoiceHistory( string activityId , string budgetApproveId)
 		{
 			try
 			{
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetInvoiceHistory"
-				 , new SqlParameter("@activityId", activityId));
+				 , new SqlParameter("@activityId", activityId)
+				 , new SqlParameter("@budgetApproveId", budgetApproveId)
+				 );
 
 				var result = (from DataRow d in ds.Tables[0].Rows
 							  select new Budget_Activity_Model.Budget_Invoice_history_Att()

@@ -1,6 +1,5 @@
 ﻿@*@model eActForm.Models.Budget_Activity_Model*@
 
-@using eActForm.BusinessLayer;
 @using eActForm.Models
 @model eActForm.Models.Budget_Approve_Detail_Model
 @{
@@ -26,29 +25,45 @@
 	}
 
     function onClickClose() {
-        var url = '@Url.Action("index", "BudgetApproveList")';
+        var url = '@Url.Action("activityProduct", "Budget")';
         window.location.href = url;
     }
 
-		function genPdfApproveBudget() {
-		alert('สลัดผัก genPdfApproveBudget');
+	function onClickSubmitApprove() {
+		submitApproveBudget();
 
+		bootbox.alert("ดำเนินการเรียบร้อยแล้ว", function () {
+			var url = '@Url.Action("activityProduct", "Budget")';
+			window.location.href = url;
+		});
+
+	}
+
+	function submitApproveBudget() {
             $.ajax({
-            url: '@Url.Action("genPdfApproveBudget", "BudgetApprove")',
+            url: '@Url.Action("submitPreviewBudget", "BudgetApproveList")',
             data: {
-				GridHtml: $("#GridPDFApprove").html(),
-                statusId: $("#ddlStatus").val(),
-				budgetApproveId: $("#HbudgetApproveId").val()
+				GridHtml: $("#GridPDF").html(),
+				budgetActivityId: $("#HbudgetId").val()
+            },
+            dataType: "json",
+            type: 'POST',
+			});
+	}
+
+	function refreshApproveBudget() {
+            $.ajax({
+            url: '@Url.Action("previewApproveBudget", "BudgetApprove")',
+            data: {
+				budgetActivityId: $("#HbudgetId").val()
             },
             dataType: "json",
             type: 'POST',
             }).done(function (response) {
                 $("#WaitDialog").hide();
-                console.log("genPdff");
                 console.log('success');
                  });
 	}
-
 </script>
 
 <style type="text/css">
@@ -76,7 +91,7 @@
 			</div>
 
 			<div class="modal-body">
-				<div id="GridPDFApprove" style="width:97%; margin-left:10px;">
+				<div id="GridPDF" style="width:97%; margin-left:10px;">
 					<style>
 						.cssborderbottom {
 							border-bottom-width: 1px;
@@ -274,11 +289,10 @@
 							<table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
 						</div>
 
-						@if (Model.Budget_Approve_detail_list.ElementAt(0).budgetApproveId != null)
+						@if (Model.Budget_Activity_list.ElementAt(0).budget_id != null)
 						{
-							@Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = Model.Budget_Approve_detail_list.ElementAt(0).budgetApproveId })
+							@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity_list.ElementAt(0).budget_id })
 						}
-
 
 					</div>
 
@@ -291,6 +305,10 @@
 					<p class="d-flex justify-content-center">
 
 						<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+						@if (count_wait_approve == 0)
+						{
+							<button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
+						}
 					</p>
 				</div>
 

@@ -108,18 +108,37 @@ namespace eActForm.Controllers
 
 		}
 
-	
-		public PartialViewResult previewApproveBudget(string activityId)
+		public ActionResult approvePositionSignatureListsByBudgetApproveId(string budgetApproveId)
+		{
+			 ApproveModel.approveModels models = new ApproveModel.approveModels();
+            try
+            {
+                models = ApproveAppCode.getApproveByActFormId(budgetApproveId);
+                ApproveFlowModel.approveFlowModel flowModel = BudgetApproveListController.getFlowIdByBudgetApproveId(budgetApproveId);
+                models.approveFlowDetail = flowModel.flowDetail;
+            }
+            catch(Exception ex)
+            {
+                TempData["approvePositionSignatureError"] = AppCode.StrMessFail + ex.Message;
+            }
+            return PartialView(models);
+		}
+
+
+		public PartialViewResult previewApproveBudget(string budgetApproveId)
 		{
 			Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
-			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId);
-
-			//Budget_Model.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, null, null);
-			Budget_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null);
-			Budget_Model.Budget_Approve_detail_list = QueryGetBudgetApprove.getBudgetApproveId(activityId);
+			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(null,budgetApproveId);
+			Budget_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, null, null, budgetApproveId);
+			Budget_Model.Budget_Approve_detail_list = QueryGetBudgetApprove.getBudgetApproveId(budgetApproveId);
 			return PartialView(Budget_Model);
 
+			//budgetApproveId
+			//activityId
+
 		}
+
+
 
 		public static bool getPremisionApproveByEmpid(List<ApproveModel.approveDetailModel> lists, string empId)
 		{

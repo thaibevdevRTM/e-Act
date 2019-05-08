@@ -34,14 +34,16 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-		public static List<TB_Budget_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo)
+		public static List<TB_Budget_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId)
 		{
 			try
 			{
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivity"
 				 , new SqlParameter("@act_approveStatusId", act_approveStatusId)
 				 , new SqlParameter("@act_activityId", act_activityId)
-				 , new SqlParameter("@act_activityNo", act_activityNo));
+				 , new SqlParameter("@act_activityNo", act_activityNo)
+				  , new SqlParameter("@budgetApproveId", budgetApproveId)
+				 );
 
 				var result = (from DataRow d in ds.Tables[0].Rows
 							  select new TB_Budget_Activity_Model.Budget_Activity_Att()
