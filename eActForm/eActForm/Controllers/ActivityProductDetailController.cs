@@ -169,6 +169,8 @@ namespace eActForm.Controllers
                 decimal p_PromotionGp = AppCode.checkNullorEmpty(saleIn) == "0" ? 0 : ((decimal.Parse(saleIn) - (p_PromotionCost * decimal.Parse("1.07")))
                   / getPackProduct / decimal.Parse(AppCode.checkNullorEmpty(saleIn))) * 100;
 
+                p_PromotionGp = p_PromotionGp > 0 ? p_PromotionGp : p_PromotionGp * -1;
+
 
                 Activity_Model activityModel = new Activity_Model();
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);

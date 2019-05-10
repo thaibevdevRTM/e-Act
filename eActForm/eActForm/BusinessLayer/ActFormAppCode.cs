@@ -52,13 +52,17 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getUserCreateActForm >>" + ex.Message);
             }
         }
-        public static List<Activity_Model.actForm> getActFormByEmpId(string empId)
+        public static List<Activity_Model.actForm> getActFormByEmpId(string empId,DateTime startDate, DateTime endDate)
         {
             try
             {
                 string spName = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAll" : "usp_getActivityFormByEmpId";
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, spName
-                    , new SqlParameter[] { new SqlParameter("@empId", empId) });
+                    , new SqlParameter[] {
+                        new SqlParameter("@empId", empId)
+                        ,new SqlParameter("@startDate", startDate)
+                        ,new SqlParameter("@endDate", endDate)
+                    });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new Activity_Model.actForm()
                              {
