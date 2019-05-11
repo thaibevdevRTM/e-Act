@@ -74,7 +74,7 @@ namespace eActForm.BusinessLayer
 								  act_costPeriodSt = !string.IsNullOrEmpty(d["act_costPeriodSt"].ToString()) ? DateTime.Parse(d["act_costPeriodSt"].ToString()) : (DateTime?)null,
 								  act_costPeriodEnd = !string.IsNullOrEmpty(d["act_costPeriodEnd"].ToString()) ? DateTime.Parse(d["act_costPeriodEnd"].ToString()) : (DateTime?)null,
 								  act_activityName = d["act_activityName"].ToString(),
-								  act_theme = d["act_theme"].ToString(),
+								  act_theme = d["act_activitySales"].ToString(),
 								  //act_themeName = d["act_themeName"].ToString(),
 								  act_objective = d["act_objective"].ToString(),
 								  act_trade = d["act_trade"].ToString(),

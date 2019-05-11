@@ -25,7 +25,7 @@
 		@{ var index = 0;}
 		@foreach (var item in Model.approveFlowDetail)
 		{
-			if (item.isShowInDoc) //กรูเจอแล้วววววววว เข้
+			if (item.isShowInDoc) 
 			{
 				if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
 				{
