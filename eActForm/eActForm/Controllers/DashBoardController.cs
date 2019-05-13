@@ -15,9 +15,15 @@ namespace eActForm.Controllers
         {
             DashBoardModel.infoDashBoardModels model = new DashBoardModel.infoDashBoardModels
             {
-                dashBoardLists = DashBoardAppCode.getInfoDashBoard()
+                dashBoardLists = DashBoardAppCode.getInfoDashBoard(),
+                customerSpendingLists = DashBoardAppCode.getInfoGroupCustomerSpending()
             };
             return View(model);
+        }
+        public ActionResult monthTotalSpending()
+        {
+            List<DashBoardModel.infoMonthTotalSpending> model = DashBoardAppCode.getInfoMonthSpending();
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult sumTotalDashBoard()

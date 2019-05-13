@@ -37,7 +37,7 @@ namespace eActForm.Controllers
             else
             {
                 model = new Activity_Model.actForms();
-                model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId);
+                model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, DateTime.Now.AddDays(-7),DateTime.Now);
             }
 
             TempData["SearchDataModel"] = model;
@@ -50,19 +50,19 @@ namespace eActForm.Controllers
             //return RedirectToAction("index");
             AjaxResult result = new AjaxResult();
             result.Success = false;
-            //if (statusId == "1")
-            //{
-            // Draft
-            if (ActFormAppCode.deleteActForm(actId, "request delete by user") > 0)
+            if (statusId == "1")
             {
-                result.Success = true;
-                TempData["SearchDataModel"] = null;
+                //Draft
+                if (ActFormAppCode.deleteActForm(actId, "request delete by user") > 0)
+                {
+                    result.Success = true;
+                    TempData["SearchDataModel"] = null;
+                }
             }
-            //}
-            //else
-            //{
+            else
+            {
 
-            //}
+            }
 
             return RedirectToAction("myDoc");
         }
@@ -71,9 +71,11 @@ namespace eActForm.Controllers
         {
             string count = Request.Form.AllKeys.Count().ToString();
             Activity_Model.actForms model;
+            DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-7) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
+            DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
             model = new Activity_Model.actForms
             {
-                actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId)
+                actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, startDate, endDate)
             };
 
             if (Request.Form["txtActivityNo"] != "")

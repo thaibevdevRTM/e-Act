@@ -366,8 +366,7 @@
                             <td width="10%" style="font-size:12.5px;">ยอดขายข่วงทำกิจกรรม (Case)</td>
                             <td width="10%" style="font-size:12.5px;">% Growth</td>
                             <td width="12%" style="font-size:12.5px;">ค่าใช้จ่ายรวม Spending Exp. (Bath)</td>
-                            <td width="8%" style="font-size:12.5px;">% : ยอดขาย</td>
-
+                            <td width="8%" style="font-size:12.5px;">% ยอดขาย</td>
                         </tr>
                         @if (Model.activitydetaillist.Any())
                         {
@@ -375,24 +374,15 @@
                             {
                                 <tr>
                                     <td style="font-size:10px;" class="textLeft">@item.typeTheme</td>
-
-                                    @if (item.isShowGroup == true)
+                                    @if (item.detailGroup != null && item.detailGroup.Count > 0)
                                     {
-                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) </td>
+                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[0].productName) </td>
                                     }
                                     else
                                     {
-                                        if (item.detailGroup != null)
-                                        {
-                                            for (int i = 0; i < @item.detailGroup.Count; i++)
-                                            {
-                                                <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) @Html.DisplayFor(m => item.detailGroup[i].productDetail)</td>
-                                            }
-                                        }
+                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.productName)  </td>
                                     }
 
-
-                                    @*<td style="font-size:12.5px;" class="textLeft">@item.productName</td>*@
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.themeCost)</td>
                                     <td class="font11 textRight">@string.Format("{0:n2}", item.growth)</td>
