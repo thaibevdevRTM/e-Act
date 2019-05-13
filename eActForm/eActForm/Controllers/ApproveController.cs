@@ -99,10 +99,11 @@ namespace eActForm.Controllers
                     EmailAppCodes.sendReject(activityId,AppCode.ApproveType.Activity_Form);
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
-                {
+                {                    
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
                     EmailAppCodes.sendApprove(activityId,AppCode.ApproveType.Activity_Form);
+                    ApproveAppCode.setCountWatingApprove();
                 }
                 resultAjax.Success = true;
             }

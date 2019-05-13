@@ -14,7 +14,7 @@
     <div class="col-md-6 col-xs-12">
         <div class="row">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
-                สถานะ
+                Status
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
                 @Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
@@ -25,16 +25,16 @@
 <div class="form-group">
     <div class="col-md-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">
-            start date
+            Start date
         </label>
         <div class="col-md-9 col-sm-9 col-xs-12">
-            <input type="text" name="startDate" id="startDate" value="@DateTime.Now.ToString("MM/dd/yyyy")" class="form-control fv">
+            <input type="text" name="startDate" id="startDate" value="@DateTime.Now.AddDays(-7).ToString("MM/dd/yyyy")" class="form-control fv">
         </div>
 
     </div>
     <div class="col-md-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="endDate">
-            end date
+            End date
         </label>
         <div class="col-md-9 col-sm-9 col-xs-12">
             <input type="text" name="endDate" id="endDate" value="@DateTime.Now.ToString("MM/dd/yyyy")" class="form-control fv">
@@ -46,7 +46,7 @@
     <div class="col-md-6 col-xs-12">
         <div class="row">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
-                ลูกค้า<span class="required"></span>
+                Customer<span class="required"></span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
                 @Html.DropDownListFor(model => model.customerslist, new SelectList(Model.customerslist, "id", "cusNameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCustomer", Name = "ddlCustomer" })
@@ -56,7 +56,7 @@
     </div>
     <div class="col-md-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
-            ประเภทกิจกรรม<span class="required"></span>
+            Activity Type<span class="required"></span>
         </label>
         <div class="col-md-9 col-sm-9 col-xs-12">
             @Html.DropDownListFor(model => model.activityGroupList, new SelectList(Model.activityGroupList, "id", "activitySales"), "Please Select", new { @class = "form-control textboxcss", id = "ddlTheme", Name = "ddlTheme" })

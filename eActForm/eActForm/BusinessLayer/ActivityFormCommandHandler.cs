@@ -97,6 +97,9 @@ namespace eActForm.BusinessLayer
                             costThemeDetail.growth = item.growth;
                             costThemeDetail.total = item.total;
                             costThemeDetail.perTotal = item.perTotal;
+                            costThemeDetail.unit = item.unit;
+                            costThemeDetail.compensate = item.compensate;
+                            costThemeDetail.LE = item.LE;
                             costThemeDetail.rowNo = insertIndex;
                             costThemeDetail.delFlag = itemIn.delFlag;
                             costThemeDetail.isShowGroup = item.isShowGroup;
@@ -129,10 +132,6 @@ namespace eActForm.BusinessLayer
 
         }
 
-
-
-
-
         public static string genNumberActivity(string activityId)
         {
             try
@@ -152,14 +151,14 @@ namespace eActForm.BusinessLayer
                         result += getActList.FirstOrDefault().cusShortName.Trim();
                         result += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
                         result += string.Format("{0:0000}", genNumber);
-         
+
                     }
                     else
                     {
                         result = getActList.FirstOrDefault().activityNo.ToString();
                     }
                 }
-               
+
                 return result;
             }
             catch (Exception ex)

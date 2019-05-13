@@ -48,19 +48,13 @@
             <div class="col-md-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Transaction Summary <small>Weekly progress</small></h2>
-                        <div class="filter">
-                            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-                            </div>
-                        </div>
+                        <h2>Transaction Summary <small>Monthly progress</small></h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
                         <div class="col-md-9 col-sm-12 col-xs-12">
                             <div class="demo-container" style="height:280px">
-                                <div id="chart_plot_02" class="demo-placeholder"></div>
+                                <canvas id="myChart" height="110"></canvas>
                             </div>
                             <div class="tiles">
                                 <div class="col-md-4 tile">
@@ -91,88 +85,25 @@
                         <div class="col-md-3 col-sm-12 col-xs-12">
                             <div>
                                 <div class="x_title">
-                                    <h2>Top Profiles</h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li>
-                                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                        </li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li>
-                                                    <a href="#">Settings 1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Settings 2</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a class="close-link"><i class="fa fa-close"></i></a>
-                                        </li>
-                                    </ul>
+                                    <h2>Top Customer Profiles</h2>
                                     <div class="clearfix"></div>
                                 </div>
                                 <ul class="list-unstyled top_profiles scroll-view">
                                     <li class="media event">
-                                        <a class="pull-left border-aero profile_thumb">
-                                            <i class="fa fa-user aero"></i>
-                                        </a>
-                                        <div class="media-body">
-                                            <a class="title" href="#">Ms. Mary Jane</a>
-                                            <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                                            <p>
-                                                <small>12 Sales Today</small>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="media event">
-                                        <a class="pull-left border-green profile_thumb">
-                                            <i class="fa fa-user green"></i>
-                                        </a>
-                                        <div class="media-body">
-                                            <a class="title" href="#">Ms. Mary Jane</a>
-                                            <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                                            <p>
-                                                <small>12 Sales Today</small>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="media event">
-                                        <a class="pull-left border-blue profile_thumb">
-                                            <i class="fa fa-user blue"></i>
-                                        </a>
-                                        <div class="media-body">
-                                            <a class="title" href="#">Ms. Mary Jane</a>
-                                            <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                                            <p>
-                                                <small>12 Sales Today</small>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="media event">
-                                        <a class="pull-left border-aero profile_thumb">
-                                            <i class="fa fa-user aero"></i>
-                                        </a>
-                                        <div class="media-body">
-                                            <a class="title" href="#">Ms. Mary Jane</a>
-                                            <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                                            <p>
-                                                <small>12 Sales Today</small>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="media event">
-                                        <a class="pull-left border-green profile_thumb">
-                                            <i class="fa fa-user green"></i>
-                                        </a>
-                                        <div class="media-body">
-                                            <a class="title" href="#">Ms. Mary Jane</a>
-                                            <p><strong>$2300. </strong> Agent Avarage Sales </p>
-                                            <p>
-                                                <small>12 Sales Today</small>
-                                            </p>
-                                        </div>
+
+                                        @foreach (var item in Model.customerSpendingLists)
+                                        {
+                                            <a class="pull-left border-aero profile_thumb">
+                                                <i class="fa fa-user aero"></i>
+                                            </a>
+                                            <div class="media-body">
+                                                <a class="title" href="#">@item.customerName</a>
+                                                <p class="text-warning"><strong>@string.Format("{0:n2}", item.sumSpending) </strong> Activity Cost Summary </p>
+                                                <p>
+                                                    <small>12 Sales Today</small>
+                                                </p>
+                                            </div>
+                                        }
                                     </li>
                                 </ul>
                             </div>
@@ -493,7 +424,6 @@
 <script src="~/Content/vendors/nprogress/nprogress.js"></script>
 <!-- Chart.js -->
 <script src="~/Content/vendors/Chart.js/dist/Chart.min.js"></script>
-
 <!-- jQuery Sparklines -->
 <script src="~/Content/vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
 <!-- Flot -->
@@ -510,3 +440,72 @@
 <script src="~/Content/vendors/DateJS/build/date.js"></script>
 <!-- bootstrap-daterangepicker -->
 <script src="~/Content/vendors/moment/min/moment.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        init_flot_chart();
+    });
+
+    function init_flot_chart() {
+
+            $.ajax({
+        type: "GET",
+        url: '@Url.Action("monthTotalSpending", "DashBoard")',
+        data: {},
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+                success: function (response) {
+            genMonthlySpending(response);
+        },
+    });
+    }
+
+    function genMonthlySpending(jsondata) {
+
+        var chart_plot_02_data = [];
+        var labels = [];
+        jsondata.forEach(function (e) {
+            labels.push([e.monthDate]);
+            chart_plot_02_data.push(e.sumTotal);
+        })
+
+        console.log(chart_plot_02_data);
+        console.log( labels);
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Montly Summary',
+                    backgroundColor: "rgba(255,99,132,0.2)",
+                    borderColor: "rgba(255,99,132,1)",
+                    pointBorderColor: "#fff",
+                    pointBackgroundColor: "rgba(255,99,132,1)",
+                    pointBorderColor: "#fff",
+                    data: chart_plot_02_data,
+                }]
+            },
+            // Configuration options go here
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: chart_plot_02_data[chart_plot_02_data.length-1][0],
+                            responsive: true, // Instruct chart js to respond nicely.
+                            maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                        }
+                    }]
+                }
+            }
+        });
+        chart.update();
+    }
+
+
+
+</script>
