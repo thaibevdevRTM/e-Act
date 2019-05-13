@@ -664,8 +664,8 @@
         if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
         if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
         if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
-        console.log(rowCount);
-        if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
+        //console.log(rowCount);
+        //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 
         if (validate == true) {
             SubmitData();
