@@ -90,17 +90,17 @@
                 type: 'POST',
                 success: function (response) {
                     if (response.Success == true) {
-                        $adminPage.callInsertProduct("คุณต้องการแก้ไขสินค้า ใช่ หรือ ไม่!");
+                        $adminPage.callInsertProduct("คุณต้องการแก้ไขสินค้า ใช่ หรือ ไม่!","update");
                     }
                     else {
-                        $adminPage.callInsertProduct("คุณต้องการเพิ่ม ใช่ หรือ ไม่!");
+                        $adminPage.callInsertProduct("คุณต้องการเพิ่ม ใช่ หรือ ไม่!","insert");
                     }
                 }
             });
 
         },
 
-        callInsertProduct: function (msg) {
+        callInsertProduct: function (msg,type) {
             bootbox.confirm({
                 message: msg,
                 buttons: {
@@ -117,23 +117,45 @@
                     if (result == true) {
                         console.log(result);
                         bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
-                        $.ajax({
-                            url: $adminPage.urlAddProduct,
-                            data: {
-                                p_cateId: $("#ddlProductCate").val(),
-                                p_groupId: $("#ddlProductGrp").val(),
-                                p_brandId: $("#ddlProductBrand").val(),
-                                p_size: $("#txtSize").val(),
-                                p_pack: $("#txtPack").val(),
-                                p_productName: $("#txtProductName").val(),
-                                p_productCode: $("#txtProductCode").val(),
-                            },
-                            dataType: "json",
-                            type: 'POST',
-                            success: function (response) {
 
-                            }
-                        });
+                        if (type == "insert") {
+                            $.ajax({
+                                url: $adminPage.urlAddProduct,
+                                data: {
+                                    p_cateId: $("#ddlProductCate").val(),
+                                    p_groupId: $("#ddlProductGrp").val(),
+                                    p_brandId: $("#ddlProductBrand").val(),
+                                    p_size: $("#txtSize").val(),
+                                    p_pack: $("#txtPack").val(),
+                                    p_productName: $("#txtProductName").val(),
+                                    p_productCode: $("#txtProductCode").val(),
+                                },
+                                dataType: "json",
+                                type: 'POST',
+                                success: function (response) {
+
+                                }
+                            });
+                        }
+                        else {
+                            $.ajax({
+                                url: $adminPage.urlUpdateProduct,
+                                data: {
+                                    p_cateId: $("#ddlProductCate").val(),
+                                    p_groupId: $("#ddlProductGrp").val(),
+                                    p_brandId: $("#ddlProductBrand").val(),
+                                    p_size: $("#txtSize").val(),
+                                    p_pack: $("#txtPack").val(),
+                                    p_productName: $("#txtProductName").val(),
+                                    p_productCode: $("#txtProductCode").val(),
+                                },
+                                dataType: "json",
+                                type: 'POST',
+                                success: function (response) {
+
+                                }
+                            });
+                        }
                     }
                 }
 

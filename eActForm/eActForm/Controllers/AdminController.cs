@@ -58,5 +58,13 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult updateProduct(string p_cateId, string p_groupId, string p_brandId, string p_size, string p_pack, string p_productName, string p_productCode)
+        {
+            var result = new AjaxResult();
+
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

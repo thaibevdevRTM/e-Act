@@ -116,9 +116,12 @@
                 {
                     <tr class="gradeX">
                         <td>
-                            <a href="javascript:" target="_blank" onclick="return checkDelete('@item.id','@item.statusId');">
-                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-                            </a>
+                            @if (item.statusId == "1")
+                            {
+                                <a href="javascript:" target="_blank" onclick="return checkDelete('@item.id','@item.statusId');">
+                                    <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                                </a>
+                            }
                             @*@if (item.statusId == "1" || item.statusId == "5")
                                 {*@
                             @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })

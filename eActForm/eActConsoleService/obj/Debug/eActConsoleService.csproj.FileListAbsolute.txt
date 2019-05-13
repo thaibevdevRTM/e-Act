@@ -85,3 +85,6 @@ D:\project\GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPage
 D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CopyComplete
 D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
+D:\project\GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\Microsoft.Exchange.WebServices.dll
+D:\project\GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\WebLibrary.pdb
+D:\project\GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\Microsoft.Exchange.WebServices.xml

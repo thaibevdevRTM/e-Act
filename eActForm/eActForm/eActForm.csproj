@@ -183,6 +183,7 @@
     <Compile Include="BusinessLayer\ApproveListAppCode.cs" />
     <Compile Include="BusinessLayer\ApproveRepDetailAppCode.cs" />
     <Compile Include="BusinessLayer\BudgetFormCommandHandler.cs" />
+    <Compile Include="BusinessLayer\CommandHandler\ProductCommand.cs" />
     <Compile Include="BusinessLayer\DashBoardAppCode.cs" />
     <Compile Include="BusinessLayer\EmailAppCodes.cs" />
     <Compile Include="BusinessLayer\ApproveAppCode.cs" />
