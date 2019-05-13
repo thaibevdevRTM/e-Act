@@ -34,6 +34,7 @@ namespace eActForm.Models
             Activity_Form
                 , Report_Detail
                 , Report_Summary
+				, Budget_form
         }
         public enum ApproveStatus
         {

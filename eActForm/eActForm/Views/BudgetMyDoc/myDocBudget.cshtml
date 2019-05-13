@@ -67,7 +67,7 @@
         $("#WaitDialog").show();
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("resendApprove", "Base")',
+            url:  '@Url.Action("resendApproveBudget", "Base")',
             data: {
                 actId: actId
             }

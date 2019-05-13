@@ -168,6 +168,7 @@ namespace eActForm.Controllers
 
 					//  ยังไม่ได้แก้ไปทำตอน approve ก่อน *****
 					//EmailAppCodes.sendApprove(budget_approve_id, AppCode.ApproveType.Activity_Form);
+					EmailAppCodes.sendApproveBudget(budget_approve_id, AppCode.ApproveType.Budget_form);
 				}
 
 				resultAjax.Success = true;

@@ -180,6 +180,7 @@ namespace eActForm.Controllers
 				{
 					var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
 					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+					EmailAppCodes.sendApproveBudget(budgetApproveId, AppCode.ApproveType.Budget_form);
 					//EmailAppCodes.sendApprove(budgetApproveId, AppCode.ApproveType.Activity_Form);
 				}
 				resultAjax.Success = true;
