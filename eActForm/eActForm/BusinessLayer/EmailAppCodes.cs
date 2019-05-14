@@ -58,18 +58,20 @@ namespace eActForm.BusinessLayer
                 ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message);
             }
         }
-        public static void sendApprove(string actFormId, AppCode.ApproveType emailType)
+        public static void sendApprove(string actFormId, AppCode.ApproveType emailType, bool isResend)
         {
             try
             {
                 List<ApproveModel.approveEmailDetailModel> lists = (emailType == AppCode.ApproveType.Activity_Form) ? getEmailApproveNextLevel(actFormId)
                     : getEmailApproveRepDetailNextLevel(actFormId);
-                string strBody = "";
+                string strBody = "",strSubject="";
                 if (lists.Count > 0)
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
                         strBody = getEmailBody(item, emailType, actFormId);
+                        strSubject = ConfigurationManager.AppSettings["emailApproveSubject"];
+                        strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
                             , item.empEmail
                             , ConfigurationManager.AppSettings["emailApproveSubject"]
@@ -117,7 +119,7 @@ namespace eActForm.BusinessLayer
             List<Attachment> files = new List<Attachment>();
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
             string pathFile = emailType == AppCode.ApproveType.Activity_Form ?
-                HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId)) 
+                HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
                 : HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
             files.Add(new Attachment(pathFile, new ContentType("application/pdf")));
 

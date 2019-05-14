@@ -68,7 +68,7 @@ namespace eActForm.Controllers
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
                 models.approveFlowDetail = flowModel.flowDetail;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 TempData["approvePositionSignatureError"] = AppCode.StrMessFail + ex.Message;
             }
@@ -96,13 +96,13 @@ namespace eActForm.Controllers
             {
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
-                    EmailAppCodes.sendReject(activityId,AppCode.ApproveType.Activity_Form);
+                    EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form);
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
-                {                    
+                {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-                    EmailAppCodes.sendApprove(activityId,AppCode.ApproveType.Activity_Form);
+                    EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
                     ApproveAppCode.setCountWatingApprove();
                 }
                 resultAjax.Success = true;

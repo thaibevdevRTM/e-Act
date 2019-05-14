@@ -40,7 +40,7 @@ namespace eActForm.Controllers
                 model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, DateTime.Now.AddDays(-7),DateTime.Now);
             }
 
-            TempData["SearchDataModel"] = model;
+            TempData["SearchDataModel"] = null;
             return PartialView(model);
         }
 
