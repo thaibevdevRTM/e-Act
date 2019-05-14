@@ -39,6 +39,7 @@ namespace eActForm.BusinessLayer
                                   productGroupId = d["productGroupId"].ToString(),
                                   productTypeId = d["productTypeId"].ToString(),
                                   groupShort = d["groupShort"].ToString(),
+                                  brandName = d["brandName"].ToString(),
                                   shortBrand = d["shortBrand"].ToString(),
                                   activityPeriodSt = !string.IsNullOrEmpty(d["activityPeriodSt"].ToString()) ? DateTime.Parse(d["activityPeriodSt"].ToString()) : (DateTime?)null,
                                   activityPeriodEnd = !string.IsNullOrEmpty(d["activityPeriodEnd"].ToString()) ? DateTime.Parse(d["activityPeriodEnd"].ToString()) : (DateTime?)null,
