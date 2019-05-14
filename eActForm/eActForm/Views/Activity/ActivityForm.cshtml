@@ -861,10 +861,19 @@
 <script>
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
+        maxFiles: 2,
+        acceptedFiles: "image/jpeg,image/png,image/jpg",
         paramName: "file",
         maxFilesize: 2,
         addRemoveLinks: true,
         init: function () {
+             this.on("addedfile", function(event) {
+                 while (this.files.length > this.options.maxFiles) {
+                     this.removeFile(this.files[0]);
+                     bootbox.alert("Limit Upload File")
+             }
+         });
+
             this.on("complete", function (file) {
 
                 CallImageView($("#hdActivityId").val());
