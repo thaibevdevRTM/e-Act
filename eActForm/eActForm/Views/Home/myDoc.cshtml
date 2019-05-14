@@ -99,38 +99,31 @@
         <table id="datatable" class="table table-striped table-hover">
             <thead>
                 <tr style="background-color:#2B5D95;color:#ffffff;">
-                    <th width="200" style="text-align:center;">#</th>
+                    <th width="150" style="text-align:center;">#</th>
                     <th>Status</th>
                     <th>Doc.Date</th>
                     <th>Act.No</th>
-                    <th width="25%">Act.Name</th>
+                    <th width="150">Act.Name</th>
                     <th>Customer</th>
                     <th>Category</th>
-                    <th>Cost</th>
-                    <th>Create Date</th>
-                    <th>Create By</th>
+                    <th width="80">Cost</th>
+                    <th width="80">Create Date</th>
+                    <th width="80">Create By</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.actLists)
                 {
                     <tr class="gradeX">
-                        <td>
-                            @if (item.statusId == "1")
+                        <td width="200">
+
+                            @if (item.statusId == "1" || item.statusId == "5")
                             {
                                 <a href="javascript:" target="_blank" onclick="return checkDelete('@item.id','@item.statusId');">
                                     <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
                                 </a>
                             }
-                            @*@if (item.statusId == "1" || item.statusId == "5")
-                                {*@
                             @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
-                            @*}
-                                else
-                                {
-                                    <i class="btn ink-reaction btn-info fa fa-edit"></i>
-                                }*@
-
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
                                 @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })

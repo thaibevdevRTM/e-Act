@@ -68,30 +68,30 @@
 
                         @if (item.detailGroup != null && item.detailGroup.Count > 0)
                         {
-                            <td>@Html.TextBoxFor(model => item.detailGroup[0].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")" })</td>
+                            <td>@Html.TextBoxFor(model => item.detailGroup[0].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")" ,style="autofocus = 'autofocus'" })</td>
                         }
                         else
                         {
-                            <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")" })</td>
+                            <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")",style="autofocus = 'autofocus'" })</td>
                         }
 
-                        <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")" })</td>
-                        <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")" })</td>
+                        <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")",style="autofocus = 'autofocus'" })</td>
+                        <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")",style="autofocus = 'autofocus'" })</td>
 
-                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")" })</td>
+                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")",style="autofocus = 'autofocus'" })</td>
                         <td>
-                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")" })
+                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")",style="autofocus = 'autofocus'" })
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })
+                            @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true,style="autofocus = 'autofocus'" })
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => item.LE, "{0:n2}", new { @id = "lblLE_" + index, Name = "lblLE_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")" })
+                            @Html.TextBoxFor(model => item.LE, "{0:n2}", new { @id = "lblLE_" + index, Name = "lblLE_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")",style="autofocus = 'autofocus'" })
                         </td>
                         <td>
-                            @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")" })
+                            @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")",style="autofocus = 'autofocus'" })
                         </td>
-                        <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")" })</td>
+                        <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")",style="autofocus = 'autofocus'" })</td>
 
                     </tr>
                     LE = item.LE == null ? 0 + LE : item.LE + LE;
@@ -169,10 +169,10 @@
 
 <script>
     function setZero(txtId) {
-        if ($(txtId).val() == "0.00")
-        $(txtId).val("");
+        if ($(txtId).val() == "0.00") {
+            $(txtId).val("");            
+        }
     }
-
 
     // case %Spending of sale Change
     function calGrowthPerTotal(id, rowIndex, checktotal) {
@@ -194,7 +194,7 @@
 
     // case spending input change
     function calGrowthTotal(id, rowIndex, checktotal) {
-        
+
         var themeCost = $('#lblThemeCost_' + rowIndex).val();
         themeCost = themeCost == "" ? 0 : themeCost;
         var productId = $("#hdProductId_" + rowIndex).val();
@@ -219,55 +219,50 @@
 
     // case all input change
     function calActivityDetailCost(id, rowIndex, checktotal) {
+        var name = $('#lblProductName_' + rowIndex).val();
+        var normalCost = $('#lblNormalCost_' + rowIndex).val();
+        normalCost = normalCost == "" ? 0 : normalCost;
+        var themeCost = $('#lblThemeCost_' + rowIndex).val();
+        themeCost = themeCost == "" ? 0 : themeCost;
+        var unit = $("#lblUnit_" + rowIndex).val();
+        unit = unit == "" ? 0 : unit;
+        var compensate = $("#lblCompensate_" + rowIndex).val();
+        compensate = compensate == "" ? 0 : compensate;
+        var LE = $("#lblLE_" + rowIndex).val();
+        LE = LE == "" ? 0 : LE;
+        var productId = $("#hdProductId_" + rowIndex).val();
 
-
-            var name = $('#lblProductName_' + rowIndex).val();
-            var normalCost = $('#lblNormalCost_' + rowIndex).val();
-            normalCost = normalCost == "" ? 0 : normalCost;
-            var themeCost = $('#lblThemeCost_' + rowIndex).val();
-            themeCost = themeCost == "" ? 0 : themeCost;
-            var unit = $("#lblUnit_" + rowIndex).val();
-            unit = unit == "" ? 0 : unit;
-            var compensate = $("#lblCompensate_" + rowIndex).val();
-            compensate = compensate == "" ? 0 : compensate;
-            var LE = $("#lblLE_" + rowIndex).val();
-            LE = LE == "" ? 0 : LE;
-           var productId = $("#hdProductId_" + rowIndex).val();
-
-        console.log("LE : "+LE);
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("calActivityDetailCost", "ActivityCostDetail")',
-                data: {
-                    name: name,
-                    productGroupId: id,
-                    productId: productId,
-                    normalCase : normalCost,
-                    promotionCase: themeCost,
-                    unit: unit,
-                    compensate: compensate,
-                    LE:LE,
-
-                }
-            }).done(function (response) {
-                callThemedetailcost();
-            });
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("calActivityDetailCost", "ActivityCostDetail")',
+            data: {
+                name: name,
+                productGroupId: id,
+                productId: productId,
+                normalCase: normalCost,
+                promotionCase: themeCost,
+                unit: unit,
+                compensate: compensate,
+                LE: LE,
+            }
+        }).done(function (response) {
+            callThemedetailcost();
+        });
 
     }
-        function onDelActDetail(id) {
+    function onDelActDetail(id) {
 
-                $.ajax({
-                url: '@Url.Action("delActCostDetail", "ActivityCostDetail")',
-                data: {
-                    rowid: id,
-                },
-                dataType: "json",
-                type: 'POST',
-                    success: function (response) {
-                        console.log(response.success);
-                        callThemedetailcost();
-                }
-            });
-        }
+        $.ajax({
+            url: '@Url.Action("delActCostDetail", "ActivityCostDetail")',
+            data: {
+                rowid: id,
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                callThemedetailcost();
+            }
+        });
+    }
 
 </script>
