@@ -859,41 +859,41 @@
 </script>
 
 <script>
+
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
         maxFiles: 2,
         acceptedFiles: "image/jpeg,image/png,image/jpg",
         paramName: "file",
-        maxFilesize: 2,
+        maxFilesize: 5,
         addRemoveLinks: true,
         init: function () {
-             this.on("addedfile", function(event) {
-                 while (this.files.length > this.options.maxFiles) {
-                     this.removeFile(this.files[0]);
-                     bootbox.alert("Limit Upload File")
-             }
-         });
+    
+             //this.on("maxfilesexceeded", function(file){
+             //      alert("ไม่เกิน 2 รูป!");
+             //});
 
             this.on("complete", function (file) {
+                console.log(file);
+                    CallImageView($("#hdActivityId").val());
 
-                CallImageView($("#hdActivityId").val());
+                    this.on("removedfile", function (file) {
+                        var name = file.name;
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("deleteImg", "Activity")',
+                            data: {
+                                name: name,
+                            }
+                        }).done(function (response) {
 
-                this.on("removedfile", function (file) {
-                    var name = file.name;
-                     $.ajax({
-                     type: 'POST',
-                     url:  '@Url.Action("deleteImg", "Activity")',
-                     data: {
-                         name: name,
-                     }
-                 }).done(function (response) {
-                     CallImageView($("#hdActivityId").val());
-                 });
+                            CallImageView($("#hdActivityId").val());
+                        });
 
-              });
+                    });
 
-            });
-        }
-
+                });
+            }
+          
     };
 </script>

@@ -30,7 +30,7 @@ namespace eActForm.BusinessLayer
                 model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
                    DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture); ;
                 model.activityFormModel.activityNo = model.activityFormModel.activityNo != null ? model.activityFormModel.activityNo : "---";
-                model.activityFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
+                model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId;
                 model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                 model.activityFormModel.updatedDate = DateTime.Now;
@@ -65,7 +65,7 @@ namespace eActForm.BusinessLayer
                             productcostdetail.isShowGroup = item.isShowGroup;
                             productcostdetail.rowNo = insertIndex;
                             productcostdetail.delFlag = itemIn.delFlag;
-                            productcostdetail.createdByUserId = UtilsAppCode.Session.User.empId;
+                            productcostdetail.createdByUserId = model.activityFormModel.createdByUserId;
                             productcostdetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                             productcostdetail.updatedByUserId = UtilsAppCode.Session.User.empId;
                             productcostdetail.updatedDate = DateTime.Now;
@@ -103,7 +103,7 @@ namespace eActForm.BusinessLayer
                             costThemeDetail.rowNo = insertIndex;
                             costThemeDetail.delFlag = itemIn.delFlag;
                             costThemeDetail.isShowGroup = item.isShowGroup;
-                            costThemeDetail.createdByUserId = UtilsAppCode.Session.User.empId;
+                            costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
                             costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                             costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
                             costThemeDetail.updatedDate = DateTime.Now;
