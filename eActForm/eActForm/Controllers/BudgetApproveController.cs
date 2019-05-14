@@ -175,6 +175,7 @@ namespace eActForm.Controllers
 				if (statusId == ConfigurationManager.AppSettings["statusReject"])
 				{
 					//EmailAppCodes.sendReject(budgetApproveId);
+					EmailAppCodes.sendRejectBudget(budgetApproveId, AppCode.ApproveType.Budget_form);
 				}
 				else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
 				{
@@ -309,6 +310,32 @@ namespace eActForm.Controllers
 			}
 		}
 
+		public static List<ApproveModel.approveDetailModel> getUserCreateBudgetForm(string budgetApproveId)
+		{
+			try
+			{
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserCreateBudgetForm"
+					, new SqlParameter[] { new SqlParameter("@budgetApproveId", budgetApproveId) });
+				var lists = (from DataRow dr in ds.Tables[0].Rows
+							 select new ApproveModel.approveDetailModel()
+							 {
+								 empId = dr["empId"].ToString(),
+								 empName = dr["empName"].ToString(),
+								 empEmail = dr["empEmail"].ToString(),
+								 activityNo = dr["activityNo"].ToString(),
+								 delFlag = (bool)dr["delFlag"],
+								 createdDate = (DateTime?)dr["createdDate"],
+								 createdByUserId = dr["createdByUserId"].ToString(),
+								 updatedDate = (DateTime?)dr["updatedDate"],
+								 updatedByUserId = dr["updatedByUserId"].ToString()
+							 }).ToList();
+				return lists;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("getUserCreateActForm >>" + ex.Message);
+			}
+		}
 
 		public static void setCountWatingApproveBudget() 
 		{

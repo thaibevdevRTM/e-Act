@@ -8,6 +8,7 @@ using System.Configuration;
 using Microsoft.ApplicationBlocks.Data;
 using WebLibrary;
 using eActForm.Models;
+using eActForm.Controllers;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -252,6 +253,49 @@ namespace eActForm.BusinessLayer
         }
 
 		//--------------------------------------------------------------------------//
+
+		public static void sendRejectBudget(string actFormId, AppCode.ApproveType emailType)
+		{
+			try
+			{
+				ApproveModel.approveModels models =  BudgetApproveController.getApproveByBudgetApproveId(actFormId);
+				if (models.approveDetailLists != null && models.approveDetailLists.Count > 0)
+				{
+					#region get mail to
+					var lists = (from m in models.approveDetailLists
+								 where (m.statusId != "")
+								 select m).ToList();
+					string strMailTo = "";
+					foreach (ApproveModel.approveDetailModel m in lists)
+					{
+						strMailTo = (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email
+					}
+					List<ApproveModel.approveDetailModel> createUsers = BudgetApproveController.getUserCreateBudgetForm(actFormId);
+					foreach (ApproveModel.approveDetailModel m in createUsers)
+					{
+						strMailTo = (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email
+					}
+					#endregion
+
+					var empUser = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList(); // get current user
+					string strBody = string.Format(ConfigurationManager.AppSettings["emailRejectBody"]
+						, models.approveModel.actNo
+						, empUser.FirstOrDefault().empPrefix + " " + empUser.FirstOrDefault().empName
+						, empUser.FirstOrDefault().remark
+						);
+
+					sendEmailBudgetForm(actFormId
+						, strMailTo
+						, ConfigurationManager.AppSettings["emailRejectSubject"]
+						, strBody
+						, emailType);
+				}
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message);
+			}
+		}
 
 		public static void sendApproveBudget(string actFormId, AppCode.ApproveType emailType)
 		{
