@@ -21,6 +21,7 @@
                     <th align="center">ยอดขายช่วงกิจกรรม</th>
                     <th align="center">ค่าใช้จ่าย</th>
                     <th align="center">% ต่อยอดขาย</th>
+                    <th align="center">createBy</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,9 +41,8 @@
                         <td align="center">@string.Format("{0:n2}", @item.totalCost)</td>
                         <td align="center">
                             @string.Format("{0:n2}", @item.perTotal)
-                            @*@{ var precentOfSale = item.themeCost == 0 ? 0 : (item.totalCost / item.themeCost) * 100; }
-                            @string.Format("{0:n2}", precentOfSale)%*@
                         </td>
+                        <td>@item.createByUserName</td>
                 </tr>
             }
             </tbody>

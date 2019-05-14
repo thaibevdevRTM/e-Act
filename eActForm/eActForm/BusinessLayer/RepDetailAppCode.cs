@@ -145,7 +145,7 @@ namespace eActForm.BusinessLayer
                                  productTypeNameEN = dr["nameEN"].ToString(),
                                  cusShortName = dr["cusShortName"].ToString(),
                                  productCategory = dr["productCateText"].ToString(),
-                                 productGroup = dr["productGroupId"].ToString(),
+                                 productGroup = dr["productGroup"].ToString(),
                                  groupName = dr["groupName"].ToString(),
                                  activityPeriodSt = dr["activityPeriodSt"] is DBNull ? null : (DateTime?)dr["activityPeriodSt"],
                                  activityPeriodEnd = dr["activityPeriodEnd"] is DBNull ? null : (DateTime?)dr["activityPeriodEnd"],

@@ -40,7 +40,7 @@ namespace eActForm.Controllers
                 model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, DateTime.Now.AddDays(-7),DateTime.Now);
             }
 
-            TempData["SearchDataModel"] = model;
+            TempData["SearchDataModel"] = null;
             return PartialView(model);
         }
 
@@ -88,6 +88,26 @@ namespace eActForm.Controllers
                 model.actLists = model.actLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
             }
 
+            if(Request.Form["ddlCustomer"] != "")
+            {
+                model.actLists = model.actLists.Where(r => r.customerId == Request.Form["ddlCustomer"]).ToList();
+            }
+
+            if( Request.Form["ddlTheme"] != "")
+            {
+                model.actLists = model.actLists.Where(r => r.theme == Request.Form["ddlTheme"]).ToList();
+            }
+
+            if (Request.Form["ddlProductType"] != "")
+            {
+                model.actLists = model.actLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
+            }
+
+            if (Request.Form["ddlProductGrp"] != "")
+            {
+                model.actLists = model.actLists.Where(r => r.productGroupid == Request.Form["ddlProductGrp"]).ToList();
+            }
+            
             TempData["SearchDataModel"] = model;
             return RedirectToAction("myDoc");
         }

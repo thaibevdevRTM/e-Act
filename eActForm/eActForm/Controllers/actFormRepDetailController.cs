@@ -128,7 +128,7 @@ namespace eActForm.Controllers
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
-                    EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail);
+                    EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail, false);
                     result.Success = true;
                 }
                 else
@@ -156,7 +156,7 @@ namespace eActForm.Controllers
             {
                 var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actId));
                 List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
-                EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail);
+                EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail, false);
                 result.Success = true;
             }
             catch (Exception ex)

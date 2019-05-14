@@ -468,7 +468,8 @@
         var labels = [];
         jsondata.forEach(function (e) {
             labels.push([e.monthDate]);
-            chart_plot_02_data.push(e.sumTotal);
+            var value = e.sumTotal / 1000000;
+            chart_plot_02_data.push(value);
         })
 
         console.log(chart_plot_02_data);
@@ -495,11 +496,28 @@
                     yAxes: [{
                         ticks: {
                             beginAtZero: true,
-                            max: chart_plot_02_data[chart_plot_02_data.length-1][0],
+                            max: chart_plot_02_data[chart_plot_02_data.length - 1][0],
                             responsive: true, // Instruct chart js to respond nicely.
                             maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'ล้านบาท',
+                            fontSize: 10,
                         }
+
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 10
+                        },
+                        gridLines: {
+                            display: false
+                        }
+
                     }]
+
                 }
             }
         });

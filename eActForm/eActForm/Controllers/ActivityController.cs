@@ -245,14 +245,14 @@ namespace eActForm.Controllers
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc);
                 if (countresult > 0)
                 {
-                    GridHtml1 = GridHtml1.Replace("---", genDoc).Replace("<br>","<br/>");
+                    GridHtml1 = GridHtml1.Replace("---", genDoc).Replace("<br>", "<br/>");
 
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     AppCode.genPdfFile(GridHtml1, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                     {
                         ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                        EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form);
+                        EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
                     }
                 }
                 resultAjax.Success = true;
@@ -263,7 +263,7 @@ namespace eActForm.Controllers
                 resultAjax.Message = ex.Message;
                 ExceptionManager.WriteError(ex.Message);
             }
-            return  Json(resultAjax, "text/plain");
+            return Json(resultAjax, "text/plain");
         }
 
     }
