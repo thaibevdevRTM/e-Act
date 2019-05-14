@@ -278,7 +278,7 @@ namespace eActForm.BusinessLayer
 					#endregion
 
 					var empUser = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList(); // get current user
-					string strBody = string.Format(ConfigurationManager.AppSettings["emailRejectBody"]
+					string strBody = string.Format(ConfigurationManager.AppSettings["emailRejectBodyBudget"]
 						, models.approveModel.actNo
 						, empUser.FirstOrDefault().empPrefix + " " + empUser.FirstOrDefault().empName
 						, empUser.FirstOrDefault().remark
@@ -286,7 +286,7 @@ namespace eActForm.BusinessLayer
 
 					sendEmailBudgetForm(actFormId
 						, strMailTo
-						, ConfigurationManager.AppSettings["emailRejectSubject"]
+						, ConfigurationManager.AppSettings["emailRejectSubjectBudget"]
 						, strBody
 						, emailType);
 				}
@@ -311,7 +311,7 @@ namespace eActForm.BusinessLayer
 						strBody = getEmailBodyBudget(item, emailType, actFormId);
 						sendEmailBudgetForm(actFormId
 							, item.empEmail
-							, ConfigurationManager.AppSettings["emailApproveSubject"]
+							, ConfigurationManager.AppSettings["emailApprovedSubjectBudget"]
 							, strBody
 							, emailType);
 					}
@@ -346,7 +346,7 @@ namespace eActForm.BusinessLayer
 			}
 			catch (Exception ex)
 			{
-				ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message);
+				ExceptionManager.WriteError("Email sendApproveBudgetForm >> " + ex.Message);
 				throw new Exception("sendEmailApprove" + ex.Message);
 			}
 		}

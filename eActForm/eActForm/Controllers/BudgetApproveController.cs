@@ -345,8 +345,7 @@ namespace eActForm.Controllers
 				{
 					DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetCountWatingApproveByEmpId"
 						, new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
-					//, new SqlParameter[] { new SqlParameter("@empId", "11025855") }); test_emp_id
-					//11025855
+
 					UtilsAppCode.Session.User.countWatingBudgetForm = "";
 					if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
 					{

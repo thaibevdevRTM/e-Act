@@ -166,7 +166,6 @@ namespace eActForm.Controllers
 					var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
 					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
 
-					//  ยังไม่ได้แก้ไปทำตอน approve ก่อน *****
 					//EmailAppCodes.sendApprove(budget_approve_id, AppCode.ApproveType.Activity_Form);
 					EmailAppCodes.sendApproveBudget(budget_approve_id, AppCode.ApproveType.Budget_form);
 				}
