@@ -126,7 +126,15 @@
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">กลุ่มสินค้า(Product Group)</td>
                             <td></td>
-                            <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.brandName) </td>
+                            @if (Model.activityFormModel.brandName == null)
+                            {
+                                <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.productGroupText) </td>
+                            }
+                            else
+                            {
+                                <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.brandName) </td>
+                            }
+
                         </tr>
                         <tr>
                             <td style="height:10px;"></td>
@@ -228,9 +236,20 @@
                                     string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
                                     foreach (var item in Model.productImageList)
                                     {
-                                        <td width="50%" style="text-align:right">
-                                            <img width="120" height="120" src="@url@item._fileName" />
-                                        </td>
+                                        if (Model.productImageList.Count == 1)
+                                        {
+                                            <td width="50%" style="text-align:right">
+                                                <img width="220" height="120" src="@url@item._fileName" />
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td width="50%" style="text-align:right;">
+                                                <img width="130" height="120" src="@url@item._fileName" />
+                                            </td>
+
+                                        }
+
                                     }
                                 }
                                 else
