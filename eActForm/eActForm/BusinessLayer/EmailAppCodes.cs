@@ -74,7 +74,7 @@ namespace eActForm.BusinessLayer
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
                             , item.empEmail
-                            , ConfigurationManager.AppSettings["emailApproveSubject"]
+                            , strSubject
                             , strBody
                             , emailType);
                     }
