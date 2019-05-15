@@ -332,9 +332,9 @@
                 <button id="btnSaveAs" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew()">&nbsp;Save As</button>
             }
             <a href="@Url.Action("index", "Home")" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-            @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3)
+            @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3  )
             {
-                <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
+              <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
             }
         </p>
     </div>
@@ -344,7 +344,6 @@
 <input type="hidden" id="hdcusname">
 @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
 @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
-@Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
 <script type="text/javascript">
 
        $(document).ready(function () {
@@ -359,7 +358,7 @@
            ObjModel = {};
            document.getElementById("ddlProductfilter").disabled = true;
            document.getElementById("ddlProductSize").disabled = true;
-           
+
 
            if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
                setTxtReadOnly();
@@ -421,8 +420,8 @@
 
     function onchangeCustomer() {
         ObjModel = {};
-        //CallChangefunc();
-        //callThemedetailcost();
+        CallChangefunc();
+        callThemedetailcost();
          $("#txtchanel").val('');
          $.ajax({
                 url: '@Url.Action("getChanel", "eAct")',
@@ -490,8 +489,8 @@
     function onchangeCate() {
 
         ObjModel = {};
-        //CallChangefunc();
-        //callThemedetailcost();
+        CallChangefunc();
+        callThemedetailcost();
         $("#ddlProductBrand").val('');
         $("#ddlProductfilter").val('');
         $("#ddlProductSize").val('');
@@ -522,8 +521,8 @@
                  else {
                      document.getElementById("ddlProductGrp").disabled = true;
                  }
-                 //CallChangefunc();
-                 //callThemedetailcost();
+                 CallChangefunc();
+                 callThemedetailcost();
 
                 }
          });
@@ -533,8 +532,8 @@
 
     $("#ddlProductGrp").change(function () {
         ObjModel = {};
-        //CallChangefunc();
-        //callThemedetailcost();
+        CallChangefunc();
+        callThemedetailcost();
 
         var ddlProductBrand = $("#ddlProductBrand");
 
@@ -665,8 +664,8 @@
         if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
         if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
         if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
-        //console.log(rowCount);
-        //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
+        console.log(rowCount);
+        if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 
         if (validate == true) {
             SubmitData();
@@ -703,9 +702,8 @@
                     Objective: $("#txtObjective").val(),
                     Trade: $("input[name='activityFormModel.trade']:checked").val(),
                     ActivityDetail: $("#txtActivityDetail").val(),
-                    activityNo: $("#txtActivityNo").val(),
-                    createdByUserId:  $("#hdcreateUser").val(),
-    
+                    activityNo :$("#txtActivityNo").val(),
+
                 },
                 dataType: "json",
                 type: 'POST',
@@ -757,7 +755,7 @@
                     Objective: $("#txtObjective").val(),
                     Trade: $("input[name='activityFormModel.trade']:checked").val(),
                     ActivityDetail: $("#txtActivityDetail").val(),
-                    activityNo: $("#txtActivityNo").val(),
+                    activityNo :$("#txtActivityNo").val(),
 
                 },
                 dataType: "json",
@@ -861,40 +859,32 @@
 </script>
 
 <script>
-
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
-        maxFiles: 2,
-        acceptedFiles: "image/jpeg,image/png",
         paramName: "file",
-        maxFilesize: 10,
+        maxFilesize: 2,
         addRemoveLinks: true,
         init: function () {
-
-             //this.on("maxfilesexceeded", function(file){
-             //      alert("ไม่เกิน 2 รูป!");
-             //});
-
             this.on("complete", function (file) {
-                    CallImageView($("#hdActivityId").val());
 
-                    this.on("removedfile", function (file) {
-                        var name = file.name;
-                        $.ajax({
-                            type: 'POST',
-                            url: '@Url.Action("deleteImg", "Activity")',
-                            data: {
-                                name: name,
-                            }
-                        }).done(function (response) {
+                CallImageView($("#hdActivityId").val());
 
-                            CallImageView($("#hdActivityId").val());
-                        });
+                this.on("removedfile", function (file) {
+                    var name = file.name;
+                     $.ajax({
+                     type: 'POST',
+                     url:  '@Url.Action("deleteImg", "Activity")',
+                     data: {
+                         name: name,
+                     }
+                 }).done(function (response) {
+                     CallImageView($("#hdActivityId").val());
+                 });
 
-                    });
+              });
 
-                });
-            }
+            });
+        }
 
     };
 </script>
