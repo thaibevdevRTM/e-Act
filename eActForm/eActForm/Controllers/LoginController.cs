@@ -37,7 +37,9 @@ namespace eActForm.Controllers
                     //UtilsAppCode.Session.User.empId = "11028011";
                     UserAppCode.setRoleUser(UtilsAppCode.Session.User.empId);
                     ApproveAppCode.setCountWatingApprove();
-                    if (Request.Form["txtParam"] != null && Request.Form["txtParam"] == AppCode.ApproveEmailype.approve.ToString())
+					BudgetApproveController.setCountWatingApproveBudget();
+
+					if (Request.Form["txtParam"] != null && Request.Form["txtParam"] == AppCode.ApproveEmailype.approve.ToString())
                     {
                         return RedirectToAction("index", "ApproveLists");
                     }

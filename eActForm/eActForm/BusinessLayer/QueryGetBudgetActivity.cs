@@ -9,7 +9,7 @@ using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
-	public class QueryBudgetBiz
+	public class QueryGetBudgetActivity
 	{
 
 		public static List<Budget_Activity_Model.Budget_Activity_Status_Att> getBudgetActivityStatus()
@@ -34,33 +34,48 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-		public static List<Budget_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo)
+		public static List<TB_Budget_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId)
 		{
 			try
 			{
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivity"
 				 , new SqlParameter("@act_approveStatusId", act_approveStatusId)
 				 , new SqlParameter("@act_activityId", act_activityId)
-				 , new SqlParameter("@act_activityNo", act_activityNo));
+				 , new SqlParameter("@act_activityNo", act_activityNo)
+				  , new SqlParameter("@budgetApproveId", budgetApproveId)
+				 );
 
 				var result = (from DataRow d in ds.Tables[0].Rows
-							  select new Budget_Activity_Model.Budget_Activity_Att()
+							  select new TB_Budget_Activity_Model.Budget_Activity_Att()
 							  {
+								  budget_id = d["budget_Id"].ToString(),
 								  act_form_id = d["act_form_id"].ToString(),
 								  act_approveStatusId = int.Parse(d["act_approveStatusId"].ToString()),
 								  act_activityNo = d["act_activityNo"].ToString(),
-
 								  act_reference = d["act_reference"].ToString(),
 								  act_customerId = d["act_customerId"].ToString(),
+
 								  cus_cusShortName = d["cus_cusShortName"].ToString(),
 								  cus_cusNameEN = d["cus_cusNameEN"].ToString(),
 								  cus_cusNameTH = d["cus_cusNameTH"].ToString(),
+
+								  ch_chanelCust = d["ch_chanelCust"].ToString(),
+								  ch_chanelGroup = d["ch_chanelGroup"].ToString(),
+								  ch_chanelTradingPartner = d["ch_chanelTradingPartner"].ToString(),
+
+								  prd_groupName = d["prd_groupName"].ToString(),
+								  prd_groupNameTH = d["prd_groupNameTH"].ToString(),
+								  prd_groupShort = d["prd_groupShort"].ToString(),
+
 								  act_activityPeriodSt = !string.IsNullOrEmpty(d["act_activityPeriodSt"].ToString()) ? DateTime.Parse(d["act_activityPeriodSt"].ToString()) : (DateTime?)null,
+								  //act_activityPeriodSt = d["act_activityPeriodSt"].ToString(),
+
 								  act_activityPeriodEnd = !string.IsNullOrEmpty(d["act_activityPeriodEnd"].ToString()) ? DateTime.Parse(d["act_activityPeriodEnd"].ToString()) : (DateTime?)null,
 								  act_costPeriodSt = !string.IsNullOrEmpty(d["act_costPeriodSt"].ToString()) ? DateTime.Parse(d["act_costPeriodSt"].ToString()) : (DateTime?)null,
 								  act_costPeriodEnd = !string.IsNullOrEmpty(d["act_costPeriodEnd"].ToString()) ? DateTime.Parse(d["act_costPeriodEnd"].ToString()) : (DateTime?)null,
 								  act_activityName = d["act_activityName"].ToString(),
-								  act_theme = d["act_theme"].ToString(),
+								  act_theme = d["act_activitySales"].ToString(),
+								  //act_themeName = d["act_themeName"].ToString(),
 								  act_objective = d["act_objective"].ToString(),
 								  act_trade = d["act_trade"].ToString(),
 								  act_activityDetail = d["act_activityDetail"].ToString(),
@@ -71,6 +86,10 @@ namespace eActForm.BusinessLayer
 								  act_total_invoive = d["act_total_invoive"].ToString() == "" ? 0 : decimal.Parse(d["act_total_invoive"].ToString()),
 								  act_balance = d["act_balance"].ToString() == "" ? 0 : decimal.Parse(d["act_balance"].ToString()),
 
+								  //sum_cost_product_inv = d["sum_cost_product_inv"].ToString() == "" ? 0 : decimal.Parse(d["sum_cost_product_inv"].ToString()),
+								  //sum_total_invoice = d["sum_total_invoice"].ToString() == "" ? 0 : decimal.Parse(d["sum_total_invoice"].ToString()),
+								  //sum_balance_product_inv = d["sum_balance_product_inv"].ToString() == "" ? 0 : decimal.Parse(d["sum_balance_product_inv"].ToString()),
+
 								  //delFlag = bool.Parse(d["delFlag"].ToString()),
 								  act_createdDate = DateTime.Parse(d["act_createdDate"].ToString()),
 								  act_createdByUserId = d["act_createdByUserId"].ToString(),
@@ -80,9 +99,6 @@ namespace eActForm.BusinessLayer
 								  bud_ActivityStatusId = d["bud_ActivityStatusId"].ToString(),
 								  bud_ActivityStatus = d["bud_ActivityStatus"].ToString(),
 
-								  //inv_invoiceStatusID = d["inv_invoiceStatusID"].ToString() =="" ? "1" : d["inv_invoiceStatusID"].ToString(),
-								  //inv_activityStatus = d["inv_activityStatus"].ToString()=="" ? "ค้างจ่าย" : d["inv_activityStatus"].ToString(),
-
 							  });
 
 				return result.ToList();
@@ -90,7 +106,7 @@ namespace eActForm.BusinessLayer
 			catch (Exception ex)
 			{
 				ExceptionManager.WriteError("getActivityByApproveStatusId => " + ex.Message);
-				return new List<Budget_Activity_Model.Budget_Activity_Att>();
+				return new List<TB_Budget_Activity_Model.Budget_Activity_Att>();
 			}
 		}
 
@@ -134,6 +150,9 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
+
+
+
 		public static List<Budget_Activity_Model.Budget_Activity_Invoice_Att> getBudgetActivityInvoice(string activityId, string activityOfEstimateId, string invoiceId)
 		{
 			try
@@ -174,6 +193,12 @@ namespace eActForm.BusinessLayer
 								invoiceBudgetStatusId = d["invoiceBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceBudgetStatusId"].ToString()),
 								invoiceBudgetStatusNameTH = d["invoiceBudgetStatusNameTH"].ToString(),
 								invoiceSeq = d["invoiceSeq"].ToString() == "" ? 0 : int.Parse(d["invoiceSeq"].ToString()),
+
+								invoiceApproveStatusId = d["invoiceApproveStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceApproveStatusId"].ToString()),
+								approveInvoiceId = d["approveInvoiceId"].ToString(),
+								invoiceApproveStatusName = d["invoiceApproveStatusName"].ToString(),
+
+
 							  });
 
 				return result.ToList();

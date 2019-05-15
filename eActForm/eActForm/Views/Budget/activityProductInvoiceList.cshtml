@@ -26,9 +26,9 @@
 	<div class="row">
 		<div class="col-md-12 col-xs-12">
 			<div class="row">
-				<div class="col-md-10 col-sm-10 col-xs-12">
-					<h5><strong>กิจกรรมเลขที่ : </strong>@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo)</h5>
-				</div>
+				@*<div class="col-md-10 col-sm-10 col-xs-12">
+					<h5><strong>Activity No : </strong>@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo)</h5>
+				</div>*@
 				<div class="col-md-2 col-sm-2 col-xs-12 text-right">
 
 				</div>
@@ -72,12 +72,13 @@
 				<th class="align-content-center font12B" style="text-align:right;">จำนวนเงินที่ตั้ง</th>
 				<th class="align-content-center font12B" style="text-align:center;">เลขที่ใบแจ้งหนี้</th>
 				@*<th class="align-content-center font12B">เลขที่ใบสำคัญจ่าย</th>
-				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
-				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>*@
+		<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
+		<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>*@
 				<th class="align-content-center font12B" style="text-align:right;">จำนวนเงินจ่าย</th>
 				<th class="align-content-center font12B" style="text-align:right;">ผลต่าง-บาท</th>
 				<th class="align-content-center font12B" style="text-align:center;">วันที่ทำรายการ</th>
 				<th class="align-content-center font12B" style="text-align:center;">สถานะ</th>
+				<th class="align-content-center font12B" style="text-align:center;">สถานะอนุมัติ</th>
 			</tr>
 		</thead>
 
@@ -88,64 +89,88 @@
 				var index = 0;
 				foreach (var item in Model.Budget_Activity_Invoice_list)
 				{
-					<tr class="gradeX">
-						<td style="text-align:center;">
-							<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-							<a href="javascript:" target="_blank" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
-								<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-							</a>
-						</td>
-						<td style="font-size:12.5px;text-align:right;">
-							@if (item.productStandBath != null)
-							{
-								string result = String.Format("{0:n2}", @item.productStandBath);
-								@result.ToString();
-							}
-						</td>
-						<td style="font-size:12.5px;text-align:center;">
-							@if (item.invoiceNo != null)
-							{
-								string result = String.Format("{0:n2}", @item.invoiceNo);
-								@result.ToString();
-							}
-						</td>
+			<tr class="gradeX">
+				<td style="text-align:center;">
+					@if (item.invoiceApproveStatusId == 1)
+					{
+						<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+						<a href="javascript:" target="_blank" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
+							<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+						</a>
+					}
+					else if (item.invoiceApproveStatusId == 5)
+					{
+						<div  class="anchorDetail btn ink-reaction btn-sm btn-dark fa fa-edit disabled"></div>
+						<a href="javascript:" target="_blank" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
+							<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+						</a>
+					}
+				</td>
+				<td style="font-size:12.5px;text-align:right;">
+					@if (item.productStandBath != null)
+					{
+						string result = String.Format("{0:n2}", @item.productStandBath);
+						@result.ToString();
+					}
+				</td>
+				<td style="font-size:12.5px;text-align:center;">
+					@if (item.invoiceNo != null)
+					{
+						string result = String.Format("{0:n2}", @item.invoiceNo);
+						@result.ToString();
+					}
+				</td>
 
-						<td style="font-size:12.5px;text-align:right;">
-							@*จำนวนเงินจ่าย*@
-							@if (item.invoiceTotalBath != null)
+				<td style="font-size:12.5px;text-align:right;">
+					@*จำนวนเงินจ่าย*@
+					@if (item.invoiceTotalBath != null)
+					{
+						string result = String.Format("{0:n2}", @item.invoiceTotalBath);
+						@result.ToString();
+					}
+				</td>
+
+				<td style="font-size:12.5px;text-align:right;">
+					@*ผลต่าง-บาท*@
+					@if (item.productBalanceBath != null)
+					{
+						string result = String.Format("{0:n2}", @item.productBalanceBath);
+						@result.ToString();
+					}
+				</td>
+				<td style="font-size:12.5px;text-align:center;">@Html.DisplayFor(x => item.invoiceActionDate) </td>
+
+				@if (item.invoiceBudgetStatusId == 1)
+				{
+					<td style="font-size:12.5px;text-align:center; color:firebrick;">@item.invoiceBudgetStatusNameTH</td>
+				}
+				else if (item.invoiceBudgetStatusId == 2)
+				{
+					<td style="font-size:12.5px;text-align:center; color:darkorange;">@item.invoiceBudgetStatusNameTH</td>
+				}
+				else
+				{
+					<td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.invoiceBudgetStatusNameTH</td>
+				}
+
+					<td style="font-size:12.5px;text-align:center;">
+						@*สถานะการอนุมัติ invoice*@
+						@if (item.invoiceApproveStatusName != null)
+						{
+							if (item.invoiceApproveStatusId != 1)
 							{
-								string result = String.Format("{0:n2}", @item.invoiceTotalBath);
+								string result = String.Format("{0:n2}", @item.invoiceApproveStatusName);
 								@result.ToString();
 							}
-						</td>
 
-						<td style="font-size:12.5px;text-align:right;">
-							@*ผลต่าง-บาท*@
-							@if (item.productBalanceBath != null)
-							{
-								string result = String.Format("{0:n2}", @item.productBalanceBath);
-								@result.ToString();
-							}
-						</td>
-						<td style="font-size:12.5px;text-align:center;">@Html.DisplayFor(x => item.invoiceActionDate) </td>
-
-						@if (item.invoiceBudgetStatusId == 1)
-						{
-							<td style="font-size:12.5px;text-align:center; color:firebrick;">@item.invoiceBudgetStatusNameTH</td>
 						}
-						else if (item.invoiceBudgetStatusId == 2)
-						{
-							<td style="font-size:12.5px;text-align:center; color:darkorange;">@item.invoiceBudgetStatusNameTH</td>
-						}
-						else
-						{
-							<td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.invoiceBudgetStatusNameTH</td>
-						}
-					</tr>
+					</td>
+			</tr>
 					index++;
 				}
 			}
 		</tbody>
 		@*------------------------------------------------------------------------------------------------*@
 	</table>
-	</div>
+
+</div>
