@@ -1,50 +1,178 @@
 ﻿@using eActForm.BusinessLayer;
+@using eActForm.Models;
 @model eActForm.Models.ApproveModel.approveModels
 @{
 	ViewBag.Title = "Index";
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	var actId = "6ce93ae9-b6ad-4bc5-9a58-f22c10deed41";
-	//var actId = Request.QueryString["actId"];
+	//var var_budgetActivityId = Request.QueryString["budgetActivityId"];
+	var var_budgetApproveId = Request.QueryString["budgetApproveId"];
+	var type = Request.QueryString["type"];
 }
+
 <script src="~/Scripts/jquery-1.11.2.min.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
+@Html.HiddenFor(m => var_budgetApproveId, new { id = "HbudgetApproveId" })
+
 <h2>การอนุมัติ</h2>
 <hr />
 
+<div class="row">
+	<div class="col-md-4 col-xs-12">
+		<h3>ประวัติการอนุมัติ</h3>
+		<hr />
+		@Html.Action("approveLists", "BudgetApprove", Model)
+	</div>
+	<div class="col-md-8 col-xs-12">
+		<h3>เอกสารขออนุมัติ</h3>
+		<hr />
+		@Html.Action("activityPDFView", "BudgetViewer", new { budgetApproveId = var_budgetApproveId })
 
-@*@using (Ajax.BeginForm("insertBudgetApprove", "BudgetApprove"
+		@using (Ajax.BeginForm("insertApprove", "BudgetApprove"
 , new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
 , new { id = "form", @class = "form-horizontal form-label-left" }))
-{
-	<h3>อนุมัติ</h3>
-	<hr />
-}*@
+		{
+			var item = Model.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
+			<h3>อนุมัติ</h3>
+			<hr />
+			<div class="form-group">
+				<div class="col-md-12 col-xs-12">
+					<div class="row">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
+							เหตุผล(เพิ่มเติม)
+						</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+							<textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required>
+                                    @if(  item != null && item.Count > 0)
+                                    {
+                                        @item.FirstOrDefault().remark.Trim();
+                                    }
+                            </textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-12 col-xs-12">
+					<div class="row">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
+							สถานะ
+						</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+							<input type="hidden" id="lblActFormId" name="lblActFormId" value="@var_budgetApproveId" />
+							@if (Model.approveModel != null)
+							{
+								<input type="hidden" id="lblApproveId" name="lblApproveId" value="@Model.approveModel.id" />
+								<input type="hidden" id="lblApproveType" name="lblApproveType" value="@type" />
+							}
+							@Html.DropDownListFor(m => m.approveModel.statusId, new SelectList(Model.approveStatusLists, "id", "nameTH"), "-Selected-", new { @class = "form-control", required = "required", id = "ddlStatus", Name = "ddlStatus" })
+							<script>
 
+							</script>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-12 col-xs-12">
+					<div class="row">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="currentSignature">
+							ลายเซ็นปัจจุบัน
+						</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+							@Html.Action("currentSignature", "Signature", new { empId = UtilsAppCode.Session.User.empId })
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-3 col-sm-3 col-xs-12"></div>
+				<div class="col-md-9 col-sm-9 col-xs-12">
 
-<div class="modal fade" id="ModalPreviewPDF" >
-	<div id="divPreviewBudgetApprove">
+					@if (Model.approveModel.statusId != "2")
+					{
+						<h4 class="text-danger text-center">
+							เอกสารฉับบนี้ได้ถูกอนุมัติเรียบร้อยแล้วครับ
+						</h4>
+					}
+					else if (Model.approveModel.isPermisionApprove)
+					{
+						<button type="submit" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+
+					}
+					else
+					{
+						<h4 class="text-danger text-center">
+							คุณไม่สามารถอนุมัติเอกสารฉบับนี้ได้<br />
+							เนื่องจากไม่มีรายชื่ออยู่ในการอนุมัติ<br />
+							@Html.ActionLink(" สอบถามข้อมูลเพิ่มเติม Click ", "contact", "home")
+						</h4>
+					}
+					<a href="@Url.Action("index", "BudgetApproveList")" class="btn btn-info pull-right"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+				</div>
+
+			</div>
+		}
+
+	</div>
+</div>
+
+<div class="modal fade" id="ModalPreviewPDF" style="display:none">
+	<div id="divPreviewApprove">
 	</div>
 </div>
 
 <script>
-	$('document').ready(function () {
-		callPreviewApprove('@actId');
-	});
+    $("#txtRemark").val('');
 
-    function callPreviewApprove(obj) {
+    function beginQuery() {
+
+        $(".fv").each(function () {
+            var v = $(this).val();
+            if (v == '') {
+                $(this).focus();
+            }
+        });
+
+        $("#WaitDialog").show();
+    }
+
+	function successQuery(response) {
+		if (response.Success) {
+			var budgetApproveId = $("#HbudgetApproveId").val()
+			callPreviewApprove(budgetApproveId);
+
+			//genPdfApproveBudget();
+        }else {
+            $("#WaitDialog").hide();
+            bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + response.Message);
+        }
+
+    }
+
+
+	function callPreviewApprove(obj) {
+
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("previewBudgetApprove", "BudgetApprove")',
+            url:  '@Url.Action("previewApproveBudget", "BudgetApprove")',
             data: {
-                actId: obj
+				budgetApproveId: obj
             }
         }).done(function (htmlResponse) {
-            $("#divPreviewBudgetApprove").html(htmlResponse)
+            $("#divPreviewApprove").html(htmlResponse)
 			$('#ModalPreviewPDF').modal('show');
-            genPdf();
+			genPdfApproveBudget();
         });
     }
 
+
+
+
+	function failureQuery(data) {
+		bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
+	}
 </script>
+
+

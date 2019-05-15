@@ -5,9 +5,6 @@
 	//decimal? totalActCost = 0;
 }
 
-
-
-
 <input type="hidden" id="hd_activity">
 @Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).act_activityId, new { @id = "hd_activityId" })
 @Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).act_activityNo, new { @id = "hd_activityNo" })
@@ -18,7 +15,6 @@
 {
 	@Html.HiddenFor(x => x.Budget_Activity_Invoice_list.ElementAt(0).invoiceId, new { @id = "hd_invoiceId" })
 }
-
 
 <style>
 	.font14 {
@@ -135,8 +131,8 @@
 		<div class="modal-footer">
 			<div>
 				<p class="d-flex justify-content-center">
-					<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
 					<button type="button" class="btn ink-reaction btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
 				</p>
 			</div>
 
@@ -157,7 +153,6 @@
 
 	today = dd + '-' + mm + '-' + yyyy;
 	document.getElementById("txt_date_action").defaultValue = today;
-
 
 	$.datetimepicker.setLocale('th');
 	var thaiYear = function (ct) {
