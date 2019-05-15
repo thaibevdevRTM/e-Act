@@ -245,9 +245,20 @@
                                     string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
                                     foreach (var item in Model.productImageList)
                                     {
-                                        <td width="50%" style="text-align:right">
-                                            <img width="120" height="120" src="@url@item._fileName" />
-                                        </td>
+                                        if (Model.productImageList.Count == 1)
+                                        {
+                                            <td width="50%" style="text-align:right">
+                                                <img width="220" height="120" src="@url@item._fileName" />
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td width="50%" style="text-align:right;">
+                                                <img width="130" height="120" src="@url@item._fileName" />
+                                            </td>
+       
+                                        }
+
                                     }
                                 }
                                 else
@@ -362,7 +373,7 @@
                             <td colspan="5" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
                         </tr>
                         <tr>
-                            <td width="10%" style="font-size:12.5px;">ยอดขายปกติ (Cost)</td>
+                            <td width="10%" style="font-size:12.5px;">ยอดขายปกติ (Case)</td>
                             <td width="10%" style="font-size:12.5px;">ยอดขายข่วงทำกิจกรรม (Case)</td>
                             <td width="10%" style="font-size:12.5px;">% Growth</td>
                             <td width="12%" style="font-size:12.5px;">ค่าใช้จ่ายรวม Spending Exp. (Bath)</td>

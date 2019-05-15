@@ -160,6 +160,16 @@ namespace eActForm.Controllers
                 {
                     getProductDetail = QueryGetAllProduct.getProductByBrandId(brandId);
                 }
+
+                var getProductsizee = getProductDetail.GroupBy(item => item.size)
+                      .Select(group => new TB_Act_Product_Model.Product_Model
+                      {
+                          id = group.First().brandId,
+                          size = group.First().size,
+                      }).OrderByDescending(x => x.size).ToList();
+                getProductsizee = getProductsizee.OrderByDescending(x => x.size).ToList();
+
+
                 var resultData = new
                 {
                     getProductsize = getProductDetail.GroupBy(item => item.size)
@@ -175,6 +185,7 @@ namespace eActForm.Controllers
                         Text = x.productName
                     }).OrderBy(x => x.Text).ToList(),
                 };
+                
                 result.Data = resultData;
             }
             catch (Exception ex)
@@ -188,6 +199,7 @@ namespace eActForm.Controllers
 
         public JsonResult getddlProduct(string size, string brandId,string smellId,string productGroupId)
         {
+            int psize = size == "" ? 0 : int.Parse(size);
             var result = new AjaxResult();
             try
             {
@@ -197,19 +209,19 @@ namespace eActForm.Controllers
 
                     if(smellId != "" && brandId != "")
                     {
-                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => x.brandId == brandId && x.smellId == smellId && x.size == size).ToList();
+                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => x.brandId == brandId && x.smellId == smellId && x.size == psize).ToList();
                     }
                     else if (smellId == "")
                     {
-                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => (x.brandId == brandId) && x.size == size).ToList();
+                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => (x.brandId == brandId) && x.size == psize).ToList();
                     }
                     else if (brandId == "")
                     {
-                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => (x.smellId == smellId) && x.size == size).ToList();
+                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => (x.smellId == smellId) && x.size == psize).ToList();
                     }
                     else
                     {
-                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => (x.brandId == brandId || x.smellId == smellId) && x.size == size).ToList();
+                        productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => (x.brandId == brandId || x.smellId == smellId) && x.size == psize).ToList();
                     }
                 }
                 else
