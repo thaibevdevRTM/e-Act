@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Configuration;
 using System.IO;
 using eActForm.Models;
+using WebLibrary;
 namespace eActForm.Controllers
 {
     public class ActivityViewerController : Controller
@@ -26,19 +27,32 @@ namespace eActForm.Controllers
 
         public ActionResult getPDF(string actId, string type)
         {
-            string rootPath = "";
-            if (type == AppCode.ApproveType.Report_Detail.ToString())
+            string rootPath = "", mapPath = "";
+
+            try
             {
-                rootPath = ConfigurationManager.AppSettings["rootRepDetailPdftURL"];
+                
+                if (type == AppCode.ApproveType.Report_Detail.ToString())
+                {
+                    rootPath = ConfigurationManager.AppSettings["rootRepDetailPdftURL"];
+                }
+                else
+                {
+                    rootPath = ConfigurationManager.AppSettings["rooPdftURL"];
+                }
+                if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, actId)))){
+                    actId = "fileNotFound";
+                }
+
             }
-            else
+            catch(Exception ex)
             {
-                rootPath = ConfigurationManager.AppSettings["rooPdftURL"];
+                ExceptionManager.WriteError(ex.Message);
             }
             var fileStream = new FileStream(Server.MapPath(string.Format(rootPath, actId)),
-                                             FileMode.Open,
-                                             FileAccess.Read
-                                           );
+                                                     FileMode.Open,
+                                                     FileAccess.Read
+                                                   );
             var fsResult = new FileStreamResult(fileStream, "application/pdf");
             return fsResult;
         }

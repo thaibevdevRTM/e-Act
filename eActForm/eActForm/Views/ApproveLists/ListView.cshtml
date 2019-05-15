@@ -29,9 +29,11 @@
                 {
                     <tr class="gradeX">
                         <td>
-                            @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id,type=AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
-
-                            @Html.ActionLink(" ", "index", "approve", new { actId = item.id,type=AppCode.ApproveType.Activity_Form }, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
+                            @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
+                            <a onclick="callApproveList('@item.id');">
+                                <i class="btn ink-reaction btn-dark fa fa-eye"></i>
+                            </a>
+                            @Html.ActionLink(" ", "index", "approve", new { actId = item.id, type = AppCode.ApproveType.Activity_Form }, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
                         </td>
                         <td>@item.statusName</td>
                         <td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
@@ -55,7 +57,7 @@
 
 <div class="modal fade" id="ModalPreviewPDF" style="display:none">
     <div id="divPreviewApprove">
-        @Html.Action("activityPDFView", "ActivityViewer", new { actId = ViewBag.actId })
+
     </div>
 </div>
 
@@ -81,4 +83,17 @@
         });
 
     })
+
+    function callApproveList(actId) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("approveLists", "Home")',
+            data: {
+                actId: actId
+            }
+        }).done(function (response) {
+            $("#divPreviewApprove").html(response)
+            $('#ModalPreviewPDF').modal('show');
+        });
+    }
 </script>
