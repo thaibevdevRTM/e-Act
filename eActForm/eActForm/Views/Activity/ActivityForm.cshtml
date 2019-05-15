@@ -732,46 +732,46 @@
             callback: function (result) {
                 if (result == true) {
                     $("#WaitDialog").show();
-            $.ajax({
-                url: '@Url.Action("copyAndSaveNewActivityForm", "Activity")',
-                data: {
-                    statusId: 1,
-                    Mode: $("#hdMode").val(),
-                    dateDoc: $("#txtdateDoc").val(),
-                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
-                    str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
-                    str_activityPeriodSt: $("#txtdateActivitySt").val(),
-                    str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
-                    dateProductlist: $("#txtdateActivitySt").val(),
-                    dateActivitylist: $("#txtdateActivityEnd").val(),
-                    Reference: $("#txtReference").val(),
-                    CustomerId: $("#ddlCustomer").val(),
-                    ProductCateId: $("#ddlProductCate").val(),
-                    ProductGroupId: $("#ddlProductGrp").val(),
-                    ActivityPeriodST: $("#txtdateActivitySt").val(),
-                    ActivityPeriodEnd: $("#txtdateActivityEnd").val(),
-                    CostPeriodST: $("#txtdateCostPerSt").val(),
-                    CostPeriodEnd: $("#txtdateCostPerEnd").val(),
-                    ActivityName: $("#txtActivityName").val(),
-                    Theme: $("#ddlTheme").val(),
-                    Objective: $("#txtObjective").val(),
-                    Trade: $("input[name='activityFormModel.trade']:checked").val(),
-                    ActivityDetail: $("#txtActivityDetail").val(),
-                    activityNo: $("#txtActivityNo").val(),
+                    $.ajax({
+                        url: '@Url.Action("copyAndSaveNewActivityForm", "Activity")',
+                        data: {
+                            statusId: 1,
+                            Mode: $("#hdMode").val(),
+                            dateDoc: $("#txtdateDoc").val(),
+                            str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                            str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
+                            str_activityPeriodSt: $("#txtdateActivitySt").val(),
+                            str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
+                            dateProductlist: $("#txtdateActivitySt").val(),
+                            dateActivitylist: $("#txtdateActivityEnd").val(),
+                            Reference: $("#txtReference").val(),
+                            CustomerId: $("#ddlCustomer").val(),
+                            ProductCateId: $("#ddlProductCate").val(),
+                            ProductGroupId: $("#ddlProductGrp").val(),
+                            ActivityPeriodST: $("#txtdateActivitySt").val(),
+                            ActivityPeriodEnd: $("#txtdateActivityEnd").val(),
+                            CostPeriodST: $("#txtdateCostPerSt").val(),
+                            CostPeriodEnd: $("#txtdateCostPerEnd").val(),
+                            ActivityName: $("#txtActivityName").val(),
+                            Theme: $("#ddlTheme").val(),
+                            Objective: $("#txtObjective").val(),
+                            Trade: $("input[name='activityFormModel.trade']:checked").val(),
+                            ActivityDetail: $("#txtActivityDetail").val(),
+                            activityNo: $("#txtActivityNo").val(),
 
-                },
-                dataType: "json",
-                type: 'POST',
-            }).done(function (response) {
-                $("#WaitDialog").hide();
-                console.log(response);
-                if (response.Success) {
-                    var url = '@Url.Action("ActivityForm", "activity")';
-                    window.location.href = url+"?ActivityId="+response.ActivityId;
-                } else {
-                    doMsgFail(response.Message);
-                }
-            });
+                        },
+                        dataType: "json",
+                        type: 'POST',
+                    }).done(function (response) {
+                        $("#WaitDialog").hide();
+                        console.log(response);
+                        if (response.Success) {
+                            var url = '@Url.Action("ActivityForm", "activity")';
+                            window.location.href = url + "?ActivityId=" + response.ActivityId;
+                        } else {
+                            doMsgFail(response.Message);
+                        }
+                    });
                 }
             }
 

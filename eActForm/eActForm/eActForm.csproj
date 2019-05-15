@@ -2018,6 +2018,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="manual\manual_eAct.pdf" />
+    <Content Include="ActivityFormPdf\fileNotFound.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ActRepDetail\fileNotFound.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -2143,7 +2149,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
-    <Folder Include="ActivityFormPdf\" />
     <Folder Include="App_Data\" />
     <Folder Include="error\" />
     <Folder Include="signatureFile\" />

@@ -11,12 +11,12 @@
 
 
     function onClickClose() {
-        var url = '@Url.Action("Index", "Approve")';
+        var url = '@Url.Action("Index", "ApproveLists")';
         window.location.href = url;
     }
 
     function genPdf() {
-            $.ajax({
+        $.ajax({
             url: '@Url.Action("genPdfApprove", "Approve")',
             data: {
                 GridHtml: $("#Grid").html(),
@@ -25,11 +25,9 @@
             },
             dataType: "json",
             type: 'POST',
-            }).done(function (response) {
-                $("#WaitDialog").hide();
-                console.log("genPdff");
-                console.log('success');
-                 });
+        }).done(function (response) {
+            $("#WaitDialog").hide();
+        });
     }
 
 
@@ -44,7 +42,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <div style=""></div>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" onclick="onClickClose();" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
             <div id="Grid" style="width:97%; margin-left:20px;">
