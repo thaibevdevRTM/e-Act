@@ -702,7 +702,8 @@
                     Objective: $("#txtObjective").val(),
                     Trade: $("input[name='activityFormModel.trade']:checked").val(),
                     ActivityDetail: $("#txtActivityDetail").val(),
-                    activityNo :$("#txtActivityNo").val(),
+                    activityNo: $("#txtActivityNo").val(),
+                    createdByUserId: @Model.activityFormModel.createdByUserId,
 
                 },
                 dataType: "json",
@@ -755,7 +756,8 @@
                     Objective: $("#txtObjective").val(),
                     Trade: $("input[name='activityFormModel.trade']:checked").val(),
                     ActivityDetail: $("#txtActivityDetail").val(),
-                    activityNo :$("#txtActivityNo").val(),
+                    activityNo: $("#txtActivityNo").val(),
+                     createdByUserId: @Model.activityFormModel.createdByUserId,
 
                 },
                 dataType: "json",
@@ -874,7 +876,6 @@
              //});
 
             this.on("complete", function (file) {
-                console.log(file);
                     CallImageView($("#hdActivityId").val());
 
                     this.on("removedfile", function (file) {
