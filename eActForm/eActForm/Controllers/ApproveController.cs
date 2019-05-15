@@ -53,12 +53,6 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-        public ActionResult approvePositionLists(string customerId, string productCatId)
-        {
-            ApproveFlowModel.approveFlowModel model = ApproveFlowAppCode.getFlow(ConfigurationManager.AppSettings["subjectActivityFormId"], customerId, productCatId);
-            return PartialView(model);
-        }
-
         public ActionResult approvePositionSignatureLists(string actId)
         {
             ApproveModel.approveModels models = new ApproveModel.approveModels();
