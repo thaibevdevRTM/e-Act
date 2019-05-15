@@ -143,7 +143,7 @@
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">กลุ่มสินค้า(Product Group)</td>
                             <td></td>
-                            @if (Model.activityFormModel.brandName == null)
+                            @if (string.IsNullOrEmpty(Model.activityFormModel.brandName))
                             {
                                 <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.productGroupText) </td>
                             }
