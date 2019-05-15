@@ -114,6 +114,7 @@ namespace eActForm.Models
         public string customerId { get; set; }
         public string chanel { get; set; }
         public string chanelShort { get; set; }
+        public string brandName { get; set; }
         public string shortBrand { get; set; }
         public string productCode { get; set; }
         public string productName { get; set; }
