@@ -321,7 +321,7 @@ namespace eActForm.BusinessLayer
             int result = 0;
             try
             {
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertAllActivity"
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertCostThemeDetail"
                     , new SqlParameter[] {new SqlParameter("@id",model.id)
                      ,new SqlParameter("@productGroupId",model.productGroupId)
                     ,new SqlParameter("@activityId",model.activityId)
