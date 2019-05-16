@@ -189,6 +189,7 @@ namespace eActForm.Controllers
                     imageFormModel._image = binData;
                     imageFormModel.imageType = "ActivityForm";
                     imageFormModel._fileName = genUniqueName;
+                    //imageFormModel.typeFiles = extension;
                     imageFormModel.delFlag = false;
                     imageFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
                     imageFormModel.createdDate = DateTime.Now;

@@ -308,7 +308,7 @@
     <div class="col-12">
         <p class="lead">อัพโหลด รูปภาพ</p>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" id="divUploadFiles">
         <form action="@Url.Action("uploadFilesImage", "Activity")" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
             <div class="dz-message">
                 <span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
@@ -802,7 +802,9 @@
         document.getElementById("divAddProductCostDetail").style.display = "none";
         $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
         $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", "disabled");
-        document.getElementById("divUploadImg").style.display = "none";
+        document.getElementById("divUploadFiles").style.display = "none";
+        document.getElementById("iconDelFile").style.display = "none";
+       
         document.getElementById("rdbterm").disabled = true;
         document.getElementById("rdbOutterm").disabled = true;
         //$("input.txtnormalGp").attr("disabled", true);

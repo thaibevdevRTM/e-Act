@@ -260,10 +260,10 @@
                                         }
                                         else
                                         {
-                                            <td width="50%" style="text-align:right;">
+                                            <td width="40%" style="text-align:right;">
                                                 <img width="130" height="120" src="@url@item._fileName" />
                                             </td>
-       
+
                                         }
 
                                     }
@@ -433,7 +433,7 @@
                                 }
                             </td>
                             <td class="textRight">
-                                @if (totalActCost != 0 && costActivity != 0)
+                                @if (totalActCost != 0 && costActivity != 0 && costProduct != 0)
                                 {
                                     growthPerTotal = (costActivity - costProduct) / costProduct * 100;
                                     string result = String.Format("{0:n2}%", @growthPerTotal);
