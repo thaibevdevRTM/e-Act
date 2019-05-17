@@ -65,7 +65,7 @@ namespace eActConsoleService
         {
             get
             {
-                var location = System.Reflection.Assembly.GetEntryAssembly().Location;
+                var location  = System.Reflection.Assembly.GetEntryAssembly().Location;
                 string str = string.Format(Properties.Settings.Default.logsFileName, new string[] { Path.GetDirectoryName(location), DateTime.Now.ToString("ddMMyyyy") });
                 return str;
             }
