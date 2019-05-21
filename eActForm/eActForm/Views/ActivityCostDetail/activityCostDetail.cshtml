@@ -66,14 +66,14 @@
                 }
             }
 
-            @if (item.isShowGroup != true)
-            {
+            @*@if (item.isShowGroup != true)
+            {*@
                 <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
-            }
+            @*}
             else
             {
                 <td>@Html.TextBoxFor(model => item.brandName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" }) </td>
-            }
+            }*@
 
             <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")", style = "autofocus = 'autofocus'" })</td>
             <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")", style = "autofocus = 'autofocus'" })</td>

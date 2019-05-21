@@ -683,8 +683,7 @@
                 data: {
                     statusId: 1,
                     Mode: $("#hdMode").val(),
-                    dateDoc: $("#txtdateDoc").val(),
-                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                    dateDoc: $("#txtdateDoc").val(),                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
                     str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
                     str_activityPeriodSt: $("#txtdateActivitySt").val(),
                     str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
@@ -803,7 +802,10 @@
         $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
         $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", "disabled");
         document.getElementById("divUploadFiles").style.display = "none";
-        document.getElementById("iconDelFile").style.display = "none";
+        if(document.getElementById("iconDelFile") !== null)
+        {
+            document.getElementById("iconDelFile").style.display = "none";
+        }
        
         document.getElementById("rdbterm").disabled = true;
         document.getElementById("rdbOutterm").disabled = true;
