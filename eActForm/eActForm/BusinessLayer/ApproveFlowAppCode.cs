@@ -17,7 +17,7 @@ namespace eActForm.BusinessLayer
             {
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowMainByActFormId"
-                    , new SqlParameter[] {new SqlParameter("@actFormId", actId) });
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApprove()
                              {
@@ -31,13 +31,13 @@ namespace eActForm.BusinessLayer
                 model.flowDetail = getFlowDetailWithApproveDetail(model.flowMain.id, actId);
                 return model;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("getFlowByActFormId >>" + ex.Message);
             }
         }
 
-        public static ApproveFlowModel.approveFlowModel getFlowForReportDetail(string subId,string customerId,string productTypeId)
+        public static ApproveFlowModel.approveFlowModel getFlowForReportDetail(string subId, string customerId, string productTypeId)
         {
             try
             {
@@ -80,10 +80,10 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] {new SqlParameter("@subId",subId)
                     ,new SqlParameter("@actFormId",actFormId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                                                            select new ApproveFlowModel.flowApprove()
-                                                            {
-                                                                id = dr["id"].ToString(),
-                                                            }).ToList();
+                             select new ApproveFlowModel.flowApprove()
+                             {
+                                 id = dr["id"].ToString(),
+                             }).ToList();
                 if (lists.Count > 0)
                 {
                     model.flowMain = lists[0];
@@ -114,14 +114,14 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@customerId",customerId)
                     ,new SqlParameter("@productCatId",productCatId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                                                            select new ApproveFlowModel.flowApprove()
-                                                            {
-                                                                id = dr["id"].ToString(),
-                                                                flowNameTH = dr["flowNameTH"].ToString(),
-                                                                cusNameTH = dr["cusNameTH"].ToString(),
-                                                                cusNameEN = dr["cusNameEN"].ToString(),
-                                                                nameTH = dr["nameTH"].ToString(),
-                                                            }).ToList();
+                             select new ApproveFlowModel.flowApprove()
+                             {
+                                 id = dr["id"].ToString(),
+                                 flowNameTH = dr["flowNameTH"].ToString(),
+                                 cusNameTH = dr["cusNameTH"].ToString(),
+                                 cusNameEN = dr["cusNameEN"].ToString(),
+                                 nameTH = dr["nameTH"].ToString(),
+                             }).ToList();
                 model.flowMain = lists[0];
                 model.flowDetail = getFlowDetail(model.flowMain.id);
                 return model;
@@ -132,7 +132,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailWithApproveDetail(string flowId,string actId)
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailWithApproveDetail(string flowId, string actId)
         {
             try
             {

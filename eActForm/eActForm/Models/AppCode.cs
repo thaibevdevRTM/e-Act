@@ -28,6 +28,7 @@ namespace eActForm.Models
         public enum ApproveEmailype
         {
             approve
+                , document
         }
         public enum ApproveType
         {

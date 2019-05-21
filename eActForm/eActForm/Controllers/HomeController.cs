@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
 using eActForm.Models;
 using eActForm.BusinessLayer;
 namespace eActForm.Controllers
@@ -11,7 +12,7 @@ namespace eActForm.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        public ActionResult Index()
+        public ActionResult Index(string actId)
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
             return View(models);
@@ -27,7 +28,7 @@ namespace eActForm.Controllers
 
 
 
-        public ActionResult myDoc()
+        public ActionResult myDoc(string actId)
         {
             Activity_Model.actForms model;
             if (TempData["SearchDataModel"] != null)
@@ -37,7 +38,11 @@ namespace eActForm.Controllers
             else
             {
                 model = new Activity_Model.actForms();
-                model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, DateTime.Now.AddDays(-7),DateTime.Now);
+                model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, DateTime.Now.AddDays(-15), DateTime.Now);
+                if(actId != null && actId != "")
+                {
+                    model.actLists = model.actLists.Where(r => r.id.Equals(actId)).ToList();
+                }
             }
 
             TempData["SearchDataModel"] = null;
@@ -50,20 +55,17 @@ namespace eActForm.Controllers
             //return RedirectToAction("index");
             AjaxResult result = new AjaxResult();
             result.Success = false;
-            if (statusId == "1")
+            if (statusId == "1" || statusId == "6")
             {
                 //Draft
-                if (ActFormAppCode.deleteActForm(actId, "request delete by user") > 0)
-                {
-                    result.Success = true;
-                    TempData["SearchDataModel"] = null;
-                }
+                result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"]) > 0 ? true : false;
             }
             else
             {
-
+                result.Success = ActFormAppCode.updateWaitingCancel(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"]) > 0 ? true : false;
             }
 
+            TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];
             return RedirectToAction("myDoc");
         }
 
@@ -71,7 +73,7 @@ namespace eActForm.Controllers
         {
             string count = Request.Form.AllKeys.Count().ToString();
             Activity_Model.actForms model;
-            DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-7) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
+            DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
             model = new Activity_Model.actForms
             {
@@ -88,12 +90,12 @@ namespace eActForm.Controllers
                 model.actLists = model.actLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
             }
 
-            if(Request.Form["ddlCustomer"] != "")
+            if (Request.Form["ddlCustomer"] != "")
             {
                 model.actLists = model.actLists.Where(r => r.customerId == Request.Form["ddlCustomer"]).ToList();
             }
 
-            if( Request.Form["ddlTheme"] != "")
+            if (Request.Form["ddlTheme"] != "")
             {
                 model.actLists = model.actLists.Where(r => r.theme == Request.Form["ddlTheme"]).ToList();
             }
@@ -107,7 +109,7 @@ namespace eActForm.Controllers
             {
                 model.actLists = model.actLists.Where(r => r.productGroupid == Request.Form["ddlProductGrp"]).ToList();
             }
-            
+
             TempData["SearchDataModel"] = model;
             return RedirectToAction("myDoc");
         }
