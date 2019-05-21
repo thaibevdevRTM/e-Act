@@ -65,7 +65,9 @@ namespace eActForm.BusinessLayer
                                  brandName = d["brandName"].ToString(),
                                  smellName = d["smellName"].ToString(),
                                  unit = d["unit"] is DBNull ? 0 : int.Parse(d["unit"].ToString()),
-                                 pack = QueryGetAllProduct.getProductById(d["productId"].ToString()).FirstOrDefault().pack.ToString(),
+                                 pack = QueryGetAllProduct.getProductById(d["productId"].ToString()).Any() ?
+                                 QueryGetAllProduct.getProductById(d["productId"].ToString()).FirstOrDefault().pack.ToString() :
+                                 "",
                                  typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == p_theme).FirstOrDefault().activitySales,
                                  wholeSalesPrice = d["wholeSalesPrice"] is DBNull ? 0 : decimal.Parse(d["wholeSalesPrice"].ToString()),
                                  normalCost = d["normalCost"] is DBNull ? 0 : decimal.Parse(d["normalCost"].ToString()),
