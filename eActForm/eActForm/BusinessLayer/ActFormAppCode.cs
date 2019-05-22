@@ -22,7 +22,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
 
-                if( rtn > 0)
+                if (rtn > 0)
                 {
                     EmailAppCodes.sendRequestCancelToAdmin(actId);
                 }

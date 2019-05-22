@@ -79,11 +79,10 @@ namespace eActForm.BusinessLayer
                    specialDisc = group.First().specialDisc,
                    specialDiscBaht = group.First().specialDiscBaht,
                    promotionCost = group.First().promotionCost,
-                   pack = QueryGetAllProduct.getProductById(group.First().productId).Any() ? "Pack" + QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString() : "",
+                   pack = group.First().pack == "" ? "" : "Pack " + group.First().pack,//QueryGetAllProduct.getProductById(group.First().productId).Any() ? "Pack" + QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString() : "",
                    rowNo = group.First().rowNo,
                    isShowGroup = group.First().isShowGroup,
                    detailGroup = group.ToList()
-
                }).ToList();
 
 

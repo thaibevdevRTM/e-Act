@@ -117,7 +117,10 @@
 </div>
 
 <script>
-    $("#txtRemark").val('');
+    
+    $(document).ready(function () {
+        $("#txtRemark").val('');
+    });
 
     function confirmQuery() {
         var mess = $("#ddlStatus option:selected").text()
@@ -141,13 +144,11 @@
         });
     }
 
-    function beginQuery() {
-        
+    function beginQuery() {        
         $("#WaitDialog").show();
     }
 
     function successQuery(response) {
-        $("#WaitDialog").show();
         if (response.Success) {
             if ('@type' == '@AppCode.ApproveType.Activity_Form.ToString()') {
                 callPreviewApprove('@actId');

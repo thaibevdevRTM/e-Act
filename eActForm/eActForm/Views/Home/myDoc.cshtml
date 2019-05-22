@@ -35,6 +35,7 @@
             },
             callback: function (result) {
                 if (result) {
+                    $("#WaitDialog").show();
                     $.ajax({
                         url: '@Url.Action("requestDeleteDoc", "Home")',
                         data: {
@@ -43,6 +44,7 @@
                         },
                     }).done(function (htmlResponse) {
                         $("#getQuery").html(htmlResponse);
+                        $("#WaitDialog").hide();
                     });
                 }
 
