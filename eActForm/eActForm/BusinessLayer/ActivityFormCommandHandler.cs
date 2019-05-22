@@ -288,6 +288,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@customerId",model.customerId)
                     ,new SqlParameter("@productCateId",model.productCateId)
                     ,new SqlParameter("@productGroupId",model.productGroupId)
+                    ,new SqlParameter("@brandId",model.productBrandId)
                     ,new SqlParameter("@activityPeriodST",model.activityPeriodSt)
                     ,new SqlParameter("@activityPeriodEND",model.activityPeriodEnd)
                     ,new SqlParameter("@costPeriodST",model.costPeriodSt)

@@ -237,7 +237,7 @@ namespace eActForm.Controllers
                         .Select(r =>
                         {
                             r.productName = name;
-                            r.detailGroup[0].productName = name;
+                            //r.detailGroup[0].productName = name;
                             r.normalCost = decimal.Parse(normalCase);
                             r.growth = Math.Round(p_growth, 2);
                             r.themeCost = decimal.Parse(promotionCase);
