@@ -7,32 +7,6 @@
     decimal? perTotal = 0;
 }
 
-<script type="text/javascript">
-
-
-    function onClickClose() {
-        var url = '@Url.Action("Index", "ApproveLists")';
-        window.location.href = url;
-    }
-
-    function genPdf() {
-        $.ajax({
-            url: '@Url.Action("genPdfApprove", "Approve")',
-            data: {
-                GridHtml: $("#Grid").html(),
-                statusId: $("#ddlStatus").val(),
-                activityId: $("#HdId").val()
-            },
-            dataType: "json",
-            type: 'POST',
-        }).done(function (response) {
-            $("#WaitDialog").hide();
-        });
-    }
-
-
-</script>
-
 
 
 @Html.HiddenFor(m => m.activityFormModel.id, new { id = "HdId" })
@@ -462,7 +436,7 @@
         <div class="modal-footer">
             <div>
                 <p class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-info pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                    <button id="btnSubmitClose" type="button" class="btn btn-info pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
                 </p>
             </div>
         </div>

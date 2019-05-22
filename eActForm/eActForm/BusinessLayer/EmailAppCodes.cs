@@ -154,7 +154,11 @@ namespace eActForm.BusinessLayer
             string pathFile = emailType == AppCode.ApproveType.Activity_Form ?
                 HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
                 : HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
-            files.Add(new Attachment(pathFile, new ContentType("application/pdf")));
+
+            if (System.IO.File.Exists(pathFile))
+            {
+                files.Add(new Attachment(pathFile, new ContentType("application/pdf")));
+            }
 
             sendEmail(mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]

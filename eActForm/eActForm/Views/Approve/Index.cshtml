@@ -26,7 +26,7 @@
         @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
 
         @using (Ajax.BeginForm("insertApprove", "Approve"
-, new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
+, new AjaxOptions {  HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery"}
 , new { id = "formApprove", @class = "form-horizontal form-label-left" }))
         {
             var item = Model.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
@@ -118,8 +118,16 @@
 
 <script>
     
+
     $(document).ready(function () {
+        $(".fv").each(function () {
+            var v = $(this).val();
+            if (v == '') {
+                $(this).focus();
+            }
+        });
         $("#txtRemark").val('');
+
     });
 
     function confirmQuery() {
@@ -136,19 +144,21 @@
                 }
             },
             callback: function (result) {
-                if (result == true) {
+                if (result == true) {                    
                     $("#formApprove").submit();
                 }
             }
 
         });
+        
     }
 
-    function beginQuery() {        
-        $("#WaitDialog").show();
+    function beginQuery() {
+        
     }
 
     function successQuery(response) {
+        $("#WaitDialog").show();
         if (response.Success) {
             if ('@type' == '@AppCode.ApproveType.Activity_Form.ToString()') {
                 callPreviewApprove('@actId');
@@ -173,54 +183,71 @@
     function callPreviewRepDetailApprove(obj) {
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("repPreviewListView", "actFormRepDetail")',
+            url: '@Url.Action("repPreviewListView", "actFormRepDetail")',
             data: {
                 actId: obj
             }
         }).done(function (htmlResponse) {
-
             $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("repDetailGenPDF", "actFormRepDetail")',
-            data: {
-                gridHtml: htmlResponse
-                ,actId:'@actId'
-            }
+                type: 'POST',
+                url: '@Url.Action("repDetailGenPDF", "actFormRepDetail")',
+                data: {
+                    gridHtml: htmlResponse
+                    , actId: '@actId'
+                }
             }).done(function (htmlResponse) {
                 $("#WaitDialog").hide();
                 bootbox.confirm({
-                        message: "ดำเนินการเรียบร้อยครับ",
-                        buttons: {
-                            confirm: {
-                                label: 'OK',
-                                className: 'btn-success'
-                            }
-                        },
-                        callback: function (result) {
-                            var url = '@Url.Action("Index", "ApproveListsRepDetail")';
-                            window.location.href = url;
+                    message: "ดำเนินการเรียบร้อยครับ",
+                    buttons: {
+                        confirm: {
+                            label: 'OK',
+                            className: 'btn-success'
                         }
+                    },
+                    callback: function (result) {
+                        var url = '@Url.Action("Index", "ApproveListsRepDetail")';
+                        window.location.href = url;
+                    }
 
-                    });
+                });
             });
-
-
         });
     }
 
     function callPreviewApprove(obj) {
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("previewApprove", "Approve")',
+            url: '@Url.Action("previewApprove", "Approve")',
             data: {
                 actId: obj
             }
         }).done(function (htmlResponse) {
-            $("#divPreviewApprove").html(htmlResponse)
-            $('#ModalPreviewPDF').modal('show');
+            $("#divPreviewApprove").html(htmlResponse);            
             genPdf();
         });
-        }
+    }
+
+    function onClickClose() {
+        var url = '@Url.Action("Index", "ApproveLists")';
+        window.location.href = url;
+    }
+
+    function genPdf() {
+        $.ajax({
+            url: '@Url.Action("genPdfApprove", "Approve")',
+            data: {
+                GridHtml: $("#Grid").html(),
+                statusId: $("#ddlStatus").val(),
+                activityId: $("#HdId").val()
+            },
+            dataType: "json",
+            type: 'POST',
+        }).done(function (response) {
+            $("#WaitDialog").hide();
+            $('#ModalPreviewPDF').modal('show');
+        });
+    }
 
 </script>
 
