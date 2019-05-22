@@ -37,6 +37,7 @@ namespace eActForm.BusinessLayer
                                   productCateId = d["productCateId"].ToString(),
                                   productGroupText = d["productGroupText"].ToString(),
                                   productGroupId = d["productGroupId"].ToString(),
+                                  productBrandId = d["brandId"].ToString(),
                                   productTypeId = d["productTypeId"].ToString(),
                                   groupShort = d["groupShort"].ToString(),
                                   brandName = d["brandName"].ToString(),
