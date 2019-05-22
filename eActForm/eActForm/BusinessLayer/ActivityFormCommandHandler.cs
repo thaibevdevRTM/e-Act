@@ -30,7 +30,7 @@ namespace eActForm.BusinessLayer
                 model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
                    DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture); ;
                 model.activityFormModel.activityNo = model.activityFormModel.activityNo != null ? model.activityFormModel.activityNo : "---";
-                model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId:UtilsAppCode.Session.User.empId;
+                model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
                 model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                 model.activityFormModel.updatedDate = DateTime.Now;
@@ -78,37 +78,38 @@ namespace eActForm.BusinessLayer
                 insertIndex = 1;
                 if (model.activitydetaillist != null)
                 {
+                    rtn += deleteActivityOfEstimateByActivityId(activityId);
                     foreach (var item in model.activitydetaillist.ToList())
                     {
-                        foreach (var itemIn in item.detailGroup)
-                        {
-                            CostThemeDetail costThemeDetail = new CostThemeDetail();
-                            costThemeDetail.id = itemIn.id;
-                            costThemeDetail.productGroupId = item.productGroupId;
-                            costThemeDetail.activityId = activityId;
-                            costThemeDetail.activityTypeId = item.activityTypeId;
-                            costThemeDetail.typeTheme = item.typeTheme;
-                            costThemeDetail.productDetail = itemIn.productName;
-                            costThemeDetail.productId = itemIn.productId;
-                            costThemeDetail.normalCost = item.normalCost;
-                            costThemeDetail.brandId = item.brandId;
-                            costThemeDetail.smellId = item.smellId;
-                            costThemeDetail.themeCost = item.themeCost;
-                            costThemeDetail.growth = item.growth;
-                            costThemeDetail.total = item.total;
-                            costThemeDetail.perTotal = item.perTotal;
-                            costThemeDetail.unit = item.unit;
-                            costThemeDetail.compensate = item.compensate;
-                            costThemeDetail.LE = item.LE;
-                            costThemeDetail.rowNo = insertIndex;
-                            costThemeDetail.delFlag = itemIn.delFlag;
-                            costThemeDetail.isShowGroup = item.isShowGroup;
-                            costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
-                            costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                            costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
-                            costThemeDetail.updatedDate = DateTime.Now;
-                            model.costthemedetail.Add(costThemeDetail);
-                        }
+
+                        CostThemeDetail costThemeDetail = new CostThemeDetail();
+                        costThemeDetail.id = item.id;
+                        costThemeDetail.productGroupId = item.productGroupId;
+                        costThemeDetail.activityId = activityId;
+                        costThemeDetail.activityTypeId = item.activityTypeId;
+                        costThemeDetail.typeTheme = item.typeTheme;
+                        costThemeDetail.productDetail = item.productName;
+                        costThemeDetail.productId = item.productId;
+                        costThemeDetail.normalCost = item.normalCost;
+                        costThemeDetail.brandId = item.brandId;
+                        costThemeDetail.smellId = item.smellId;
+                        costThemeDetail.themeCost = item.themeCost;
+                        costThemeDetail.growth = item.growth;
+                        costThemeDetail.total = item.total;
+                        costThemeDetail.perTotal = item.perTotal;
+                        costThemeDetail.unit = item.unit;
+                        costThemeDetail.compensate = item.compensate;
+                        costThemeDetail.LE = item.LE;
+                        costThemeDetail.rowNo = insertIndex;
+                        costThemeDetail.delFlag = item.delFlag;
+                        costThemeDetail.isShowGroup = item.isShowGroup;
+                        costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
+                        costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                        costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                        costThemeDetail.updatedDate = DateTime.Now;
+                        // model.costthemedetail.Add(costThemeDetail);
+
+                        rtn += insertEstimate(costThemeDetail);
 
                         insertIndex++;
                     }
@@ -118,9 +119,12 @@ namespace eActForm.BusinessLayer
                 rtn += insertProductCost(dt);
 
 
-                DataTable dt1 = AppCode.ToDataTable(model.costthemedetail);
-                rtn += deleteActivityOfEstimateByActivityId(activityId);
-                rtn += insertCostThemeDetail(dt1);
+
+                //DataTable dt1 = AppCode.ToDataTable(model.costthemedetail);
+
+
+
+
                 return rtn;
             }
             catch (Exception ex)
@@ -177,7 +181,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] {new SqlParameter("@activityId",model.activityId)
                     ,new SqlParameter("@imageType",model.imageType)
                     ,new SqlParameter("@image",model._image)
-                     ,new SqlParameter("@fileName",model._fileName)
+                    ,new SqlParameter("@fileName",model._fileName)
                     ,new SqlParameter("@remark",model.remark)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
@@ -308,6 +312,45 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
+        protected static int insertEstimate(CostThemeDetail model)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertCostThemeDetail"
+                    , new SqlParameter[] {new SqlParameter("@id",model.id)
+                     ,new SqlParameter("@productGroupId",model.productGroupId)
+                    ,new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@activityTypeId",model.activityTypeId)
+                    ,new SqlParameter("@typeTheme",model.typeTheme)
+                    ,new SqlParameter("@productDetail",model.productDetail)
+                    ,new SqlParameter("@productId",model.productId)
+                    ,new SqlParameter("@productName",model.productName)
+                    ,new SqlParameter("@normalCost",model.normalCost)
+                    ,new SqlParameter("@themeCost",model.themeCost)
+                    ,new SqlParameter("@growth",model.growth)
+                    ,new SqlParameter("@unit",model.unit)
+                    ,new SqlParameter("@compensate",model.compensate)
+                    ,new SqlParameter("@le",model.LE)
+                    ,new SqlParameter("@total",model.total)
+                    ,new SqlParameter("@perTotal",model.perTotal)
+                    ,new SqlParameter("@isShowGroup",model.isShowGroup)
+                    ,new SqlParameter("@rowNo",model.rowNo)
+                    ,new SqlParameter("@delFlag",model.delFlag)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertAllActivity");
+            }
+
+            return result;
+        }
+
         protected static int insertProductCost(DataTable dt)
         {
             try
@@ -333,6 +376,7 @@ namespace eActForm.BusinessLayer
                 int rtn = 0;
                 foreach (DataRow dr in dt.Rows)
                 {
+
                     rtn += SqlHelper.ExecuteNonQueryTypedParams(AppCode.StrCon, "usp_insertCostThemeDetail", dr);
                 }
                 return rtn;

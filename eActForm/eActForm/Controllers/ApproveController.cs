@@ -76,7 +76,7 @@ namespace eActForm.Controllers
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
-
+            activityModel.productImageList = AppCode.writeImagestoFile(Server, QueryGetImageById.GetImage(actId));
             return PartialView(activityModel);
         }
 

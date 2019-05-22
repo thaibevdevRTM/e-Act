@@ -19,6 +19,7 @@ namespace eActForm.Models
             public byte[] _image { get; set; }
             public string _fileName { get; set; }
             public string remark { get; set; }
+            public string typeFiles { get; set; }
         }
 
     }
