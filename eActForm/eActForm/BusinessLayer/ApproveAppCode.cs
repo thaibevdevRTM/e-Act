@@ -210,14 +210,19 @@ namespace eActForm.BusinessLayer
         /// <returns></returns>
         public static int insertApproveForActivityForm(string actId)
         {
+            int success = 0;
             try
             {
                 if (getApproveByActFormId(actId).approveDetailLists.Count == 0)
                 {
                     ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
-                    return insertApproveByFlow(flowModel, actId);
+                    success = insertApproveByFlow(flowModel, actId);
                 }
-                else return 999; // alredy approve
+                else
+                {
+                    success = clearStatusApproveAndInsertHistory(actId);
+                }
+                return success; // alredy approve
             }
             catch (Exception ex)
             {
@@ -374,6 +379,22 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static int clearStatusApproveAndInsertHistory(string activityId )
+        {
+            int result = 0;
+            try
+            {
 
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_clearStatusApproveAndInsertHis"
+                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("clearStatusApproveAndInsertHistory >> " + ex.Message);
+            }
+
+            return result;
+        }
     }
 }

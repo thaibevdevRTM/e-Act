@@ -109,8 +109,8 @@ namespace eActForm.Controllers
                     costthememodel.typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == theme).FirstOrDefault().activitySales;
                     costthememodel.productId = item.productId;
                     costthememodel.activityTypeId = theme;
-                    costthememodel.brandName = item.brandName.Trim() + " " + item.size + "ALL(" + item.detailGroup.Count + ")";
-                    costthememodel.productName = item.isShowGroup ? costthememodel.brandName : item.productName;
+                    costthememodel.brandName = item.brandName.Trim() + " " + item.size + "ALL(" + item.detailGroup.Count + ") " + item.pack;
+                    costthememodel.productName = item.isShowGroup ? costthememodel.brandName : item.productName + " "+ item.pack;
                     costthememodel.size = item.size;
                     costthememodel.smellName = item.smellName;
                     costthememodel.smellId = item.smellId;
