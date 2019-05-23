@@ -670,60 +670,6 @@ function init_skycons() {
 
 }
 
-
-function init_chart_doughnut() {
-
-    if (typeof (Chart) === 'undefined') { return; }
-
-
-    if ($('.canvasDoughnut').length) {
-
-        var chart_doughnut_settings = {
-            type: 'doughnut',
-            tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-            data: {
-                labels: [
-                    "Symbian",
-                    "Blackberry",
-                    "Other",
-                    "Android",
-                    "IOS"
-                ],
-                datasets: [{
-                    data: [15, 20, 30, 10, 30],
-                    backgroundColor: [
-                        "#BDC3C7",
-                        "#9B59B6",
-                        "#E74C3C",
-                        "#26B99A",
-                        "#3498DB"
-                    ],
-                    hoverBackgroundColor: [
-                        "#CFD4D8",
-                        "#B370CF",
-                        "#E95E4F",
-                        "#36CAAB",
-                        "#49A9EA"
-                    ]
-                }]
-            },
-            options: {
-                legend: false,
-                responsive: false
-            }
-        }
-
-        $('.canvasDoughnut').each(function () {
-
-            var chart_element = $(this);
-            var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
-
-        });
-
-    }
-
-}
-
 function init_gauge() {
 
     if (typeof (Gauge) === 'undefined') { return; }
@@ -4963,39 +4909,39 @@ function init_echarts() {
 
 $(document).ready(function () {
 
-    init_sparklines();
-    init_sidebar();
-    init_wysiwyg();
-    init_InputMask();
-    init_JQVmap();
-    init_cropper();
-    init_knob();
-    init_IonRangeSlider();
-    init_ColorPicker();
-    init_TagsInput();
-    init_parsley();
-    init_daterangepicker();
-    init_daterangepicker_right();
-    init_daterangepicker_single_call();
-    init_daterangepicker_reservation();
-    init_SmartWizard();
-    init_EasyPieChart();
-    init_charts();
-    init_echarts();
-    init_morris_charts();
-    init_skycons();
-    init_select2();
-    init_validator();
-    init_DataTables();
-    init_chart_doughnut();
-    init_gauge();
-    init_PNotify();
-    init_starrr();
-    init_calendar();
-    init_compose();
-    init_CustomNotification();
-    init_autosize();
-    init_autocomplete();
+    //init_sparklines();
+    //init_sidebar();
+    //init_wysiwyg();
+    //init_InputMask();
+    //init_JQVmap();
+    //init_cropper();
+    //init_knob();
+    //init_IonRangeSlider();
+    //init_ColorPicker();
+    //init_TagsInput();
+    //init_parsley();
+    //init_daterangepicker();
+    //init_daterangepicker_right();
+    //init_daterangepicker_single_call();
+    //init_daterangepicker_reservation();
+    //init_SmartWizard();
+    //init_EasyPieChart();
+    //init_charts();
+    //init_echarts();
+    //init_morris_charts();
+    //init_skycons();
+    //init_select2();
+    //init_validator();
+    //init_DataTables();
+    //init_chart_doughnut();
+    //init_gauge();
+    //init_PNotify();
+    //init_starrr();
+    //init_calendar();
+    //init_compose();
+    //init_CustomNotification();
+    //init_autosize();
+    //init_autocomplete();
 
 });
 

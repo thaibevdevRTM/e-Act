@@ -16,7 +16,8 @@ namespace eActForm.Controllers
             DashBoardModel.infoDashBoardModels model = new DashBoardModel.infoDashBoardModels
             {
                 dashBoardLists = DashBoardAppCode.getInfoDashBoard(),
-                customerSpendingLists = DashBoardAppCode.getInfoGroupCustomerSpending()
+                customerSpendingLists = DashBoardAppCode.getInfoGroupCustomerSpending(),
+                sumSpendingOfYear = DashBoardAppCode.getInfoSumSepndingOfYear(),
             };
             if (Request.QueryString["s"] != null)
             {

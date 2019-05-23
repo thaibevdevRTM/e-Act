@@ -11,6 +11,27 @@ namespace eActForm.BusinessLayer
 {
     public class DashBoardAppCode
     {
+        public static List<DashBoardModel.infoSumSpendindOfTheYear> getInfoSumSepndingOfYear()
+        {
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDashBoardSumSpendingOfYear");
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new DashBoardModel.infoSumSpendindOfTheYear()
+                             {
+                                 sumNonAlcoholSpending = dr["sumNonAlcoholSpending"] is DBNull ? 0 : (decimal)dr["sumNonAlcoholSpending"],
+                                 sumAlcoholSpending = dr["sumSpending"] is DBNull ? 0 : (decimal)dr["sumAlcoholSpending"],
+                                 sumSpending = dr["sumSpending"] is DBNull ? 0 : (decimal)dr["sumSpending"]
+                             }).ToList();
+                return lists;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getInfoDashBoard >> " + ex.Message);
+            }
+        }
         public static List<DashBoardModel.infoDashBoardModel> getInfoDashBoard()
         {
             try

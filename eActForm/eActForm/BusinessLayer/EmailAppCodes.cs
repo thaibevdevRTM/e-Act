@@ -33,9 +33,6 @@ namespace eActForm.BusinessLayer
                 {
                     mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
                 }
-
-                mailTo = ConfigurationManager.AppSettings["emailApproveCC"];
-
                 sendEmail(mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , ConfigurationManager.AppSettings["emailRequestCancelSubject"]
@@ -129,7 +126,7 @@ namespace eActForm.BusinessLayer
                             strBody = string.Format(ConfigurationManager.AppSettings["emailAllApproveBody"]
                                 , createUsers.FirstOrDefault().empName
                                 , createUsers.FirstOrDefault().activityNo
-                                , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actFormId));
+                                , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
 
                             sendEmailActForm(actFormId
                             , createUsers.FirstOrDefault().empEmail
