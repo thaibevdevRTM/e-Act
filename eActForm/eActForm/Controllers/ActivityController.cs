@@ -170,26 +170,30 @@ namespace eActForm.Controllers
                 foreach (string UploadedImage in Request.Files)
                 {
                     HttpPostedFileBase httpPostedFile = Request.Files[UploadedImage];
-                    string folderKeepFile = "ActivityForm";
-                    string UploadDirectory = Server.MapPath("~") + "\\Uploadfiles\\" + folderKeepFile + "\\";
-                    string resultFilePath = "";
-                    AppCode.CheckFolder_CreateNotHave_Direct(UploadDirectory);
+                    //string folderKeepFile = "ActivityForm";
+                    //string UploadDirectory = Server.MapPath("~") + "\\" + AppCode.ApproveType.UploadFile.ToString() + "\\";
 
-                    string genUniqueName = httpPostedFile.FileName.ToString();
+                    string resultFilePath = "";
+                    // AppCode.CheckFolder_CreateNotHave_Direct(UploadDirectory);
+
+                    //string genUniqueName = httpPostedFile.FileName.ToString();
                     string extension = Path.GetExtension(httpPostedFile.FileName);
                     int indexGetFileName = httpPostedFile.FileName.LastIndexOf('.');
-                    var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + Session["activityId"].ToString();
-                    string resultFileUrl = UploadDirectory + _fileName + extension;
-                    resultFilePath = resultFileUrl;
+                    var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + DateTime.Now.ToString("ddMMyyHHmm") + extension;
+                    string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootfiles"].ToString(), _fileName));
+
+                    resultFilePath = UploadDirectory;
                     BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
-                    binData = b.ReadBytes(httpPostedFile.ContentLength);
+                    //binData = b.ReadBytes(httpPostedFile.ContentLength);
+                    binData = b.ReadBytes(0);
+                    //string UploadDirectory = string.Format(System.Configuration.ConfigurationManager.AppSettings["rootfiles"].ToString(), _fileName);
                     httpPostedFile.SaveAs(resultFilePath);
 
                     imageFormModel.activityId = Session["activityId"].ToString();
                     imageFormModel._image = binData;
-                    imageFormModel.imageType = "ActivityForm";
-                    imageFormModel._fileName = genUniqueName;
-                    //imageFormModel.typeFiles = extension;
+                    imageFormModel.imageType = "UploadFile";
+                    imageFormModel._fileName = _fileName;
+                    imageFormModel.extension = extension;
                     imageFormModel.delFlag = false;
                     imageFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
                     imageFormModel.createdDate = DateTime.Now;

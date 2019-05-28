@@ -182,6 +182,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@imageType",model.imageType)
                     ,new SqlParameter("@image",model._image)
                     ,new SqlParameter("@fileName",model._fileName)
+                    ,new SqlParameter("@extension",model.extension)
                     ,new SqlParameter("@remark",model.remark)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
