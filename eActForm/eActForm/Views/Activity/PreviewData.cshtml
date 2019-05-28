@@ -246,20 +246,22 @@
                                     string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
                                     foreach (var item in Model.productImageList)
                                     {
-                                        if (Model.productImageList.Count == 1)
+                                        if (item.extension != ".pdf")
                                         {
-                                            <td width="50%" style="text-align:right">
-                                                <img width="220" height="120" src="@url@item._fileName" />
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td width="40%" style="text-align:right;">
-                                                <img width="130" height="120" src="@url@item._fileName" />
-                                            </td>
+                                            if (Model.productImageList.Count == 1)
+                                            {
+                                                <td width="50%" style="text-align:right">
+                                                    <img width="220" height="120" src="../Uploadfiles/@item._fileName" />
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td width="40%" style="text-align:right;">
+                                                    <img width="130" height="120" src="../Uploadfiles/@item._fileName" />
+                                                </td>
 
+                                            }
                                         }
-
                                     }
                                 }
                                 else

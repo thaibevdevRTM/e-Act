@@ -147,14 +147,33 @@ namespace eActForm.BusinessLayer
         private static void sendEmailActForm(string actFormId, string mailTo, string strSubject, string strBody, AppCode.ApproveType emailType)
         {
             List<Attachment> files = new List<Attachment>();
+            string[] pathFile = new string[10]; 
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            string pathFile = emailType == AppCode.ApproveType.Activity_Form ?
+            pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
                 HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
                 : HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
 
-            if (System.IO.File.Exists(pathFile))
+            TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
+            getImageModel.tbActImageList = QueryGetImageById.GetImage(actFormId);
+            if(getImageModel.tbActImageList.Any())
             {
-                files.Add(new Attachment(pathFile, new ContentType("application/pdf")));
+                foreach(var item in getImageModel.tbActImageList)
+                {
+                    if (item.extension == ".pdf")
+                    {
+                        int i = 1;
+                        pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootfiles"], item._fileName));
+                        i++;
+                    }
+                }
+            }
+
+            foreach (var item in pathFile)
+            {
+                if (System.IO.File.Exists(item))
+                {
+                    files.Add(new Attachment(item, new ContentType("application/pdf")));
+                }
             }
 
             sendEmail(mailTo
@@ -163,6 +182,10 @@ namespace eActForm.BusinessLayer
                     , strBody
                     , files);
         }
+
+
+
+
 
         private static string getEmailBody(ApproveModel.approveEmailDetailModel item, AppCode.ApproveType emailType, string actId)
         {

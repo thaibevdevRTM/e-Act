@@ -374,6 +374,8 @@
            if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
                setTxtReadOnly();
            }
+
+
     });
 
 
@@ -820,6 +822,9 @@
         {
             document.getElementById("iconDelFile").style.display = "none";
         }
+        if (document.getElementById("iconDelFile1") !== null) {
+             document.getElementById("iconDelFile1").style.display = "none";
+        }
 
         document.getElementById("rdbterm").disabled = true;
         document.getElementById("rdbOutterm").disabled = true;
@@ -880,23 +885,22 @@
 
 <script>
 
+  
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
-        maxFiles: 2,
+        maxFiles: 5,
         acceptedFiles: "image/jpeg,image/png,application/pdf",
         paramName: "file",
         maxFilesize: 10,
-        addRemoveLinks: true,
+        //addRemoveLinks: true,
         init: function () {
 
-             //this.on("maxfilesexceeded", function(file){
-             //      alert("ไม่เกิน 2 รูป!");
-             //});
-
             this.on("complete", function (file) {
+                this.removeFile(file);
                     CallImageView($("#hdActivityId").val());
 
-                    this.on("removedfile", function (file) {
+
+                    @*this.on("removedfile", function (file) {
                         var name = file.name;
                         $.ajax({
                             type: 'POST',
@@ -904,12 +908,12 @@
                             data: {
                                 name: name,
                             }
-                        }).done(function (response) {
-
+                        }).success(function (response) {
+                            console.log("sssssss");
                             CallImageView($("#hdActivityId").val());
                         });
 
-                    });
+                    });*@
 
                 });
             }

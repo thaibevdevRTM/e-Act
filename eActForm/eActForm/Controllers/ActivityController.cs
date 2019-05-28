@@ -50,6 +50,7 @@ namespace eActForm.Controllers
                 activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
                 activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
                 activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
+               
             }
             else
             {
@@ -221,7 +222,6 @@ namespace eActForm.Controllers
         public JsonResult deleteImg(string name)
         {
             var result = new AjaxResult();
-
             int resultImg = ActivityFormCommandHandler.deleteImg(name, Session["activityId"].ToString());
 
             return Json(result, JsonRequestBehavior.AllowGet);
