@@ -131,7 +131,7 @@
                             <td>@item.activityDetail</td>
                             <td>@item.typeTheme</td>
                             <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
-                            <td></td>
+                            <td>@string.Format("{0:n2}", item.compensate)</td>
                             <td>@string.Format("{0:n2}", item.total)</td>
                             <td>@string.Format("{0:n2}", item.normalSale)</td>
                             <td>@string.Format("{0:n2}", item.promotionSale)</td>
