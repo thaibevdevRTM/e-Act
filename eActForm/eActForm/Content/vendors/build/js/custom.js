@@ -4933,11 +4933,10 @@ $(document).ready(function () {
     init_select2();
     init_validator();
     init_DataTables();
-    init_chart_doughnut();
     init_gauge();
-    init_PNotify();
-    init_starrr();
-    init_calendar();
+    //init_PNotify();
+    //init_starrr();
+    //init_calendar();
     init_compose();
     init_CustomNotification();
     init_autosize();

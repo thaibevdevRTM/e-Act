@@ -61,31 +61,6 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.6.241.11; Initial Catalog=EActDB-DEV;User ID=rtmdev;password=Thaib" +
-            "evRTM@DB;Max Pool Size=200;")]
-        public string strConn {
-            get {
-                return ((string)(this["strConn"]));
-            }
-            set {
-                this["strConn"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("[e-ActivityForm] แจ้งเอกสารรออนุมัติ จากระบบอัตโนมัติ")]
-        public string strSubject {
-            get {
-                return ((string)(this["strSubject"]));
-            }
-            set {
-                this["strSubject"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("http://203.159.75.75/eact/?s=approve")]
         public string strUrlApprove {
             get {
@@ -110,12 +85,61 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("parnupong.k@thaibev.com")]
+        public string strDefaultEmail {
+            get {
+                return ((string)(this["strDefaultEmail"]));
+            }
+            set {
+                this["strDefaultEmail"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("tanapong.w@Thaibev.com,jitaree.b@thaibev.com,parnupong.k@thaibev.com")]
+        public string emailForDevelopSite {
+            get {
+                return ((string)(this["emailForDevelopSite"]));
+            }
+            set {
+                this["emailForDevelopSite"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.6.241.11; Initial Catalog=EActDB;User ID=rtmdev;password=ThaibevRT" +
+            "M@DB;Max Pool Size=200;")]
+        public string strConn {
+            get {
+                return ((string)(this["strConn"]));
+            }
+            set {
+                this["strConn"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MTM แจ้งเอกสารรออนุมัติจากระบบอัตโนมัติ")]
+        public string strSubject {
+            get {
+                return ((string)(this["strSubject"]));
+            }
+            set {
+                this["strSubject"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(@"
           เรียน {0}
           <br/><br/>
           แจ้งเอกสารจากระบบอัตโนมัติ
           <br/><br/>
-          ท่านมีเอกสาร Activity Form <b>รออนุมัติ</b> จำนวน <b>{1}</b> รายการ
+          ท่านมีเอกสาร <b>รออนุมัติ</b> จำนวน <b>{1}</b> รายการ
           <br/>
           ท่านสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ : <a href='{2}'>more detail click</a> <br/><br/>
           
@@ -137,18 +161,6 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("parnupong.k@thaibev.com")]
-        public string strDefaultEmail {
-            get {
-                return ((string)(this["strDefaultEmail"]));
-            }
-            set {
-                this["strDefaultEmail"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("true")]
         public string isDevelop {
             get {
@@ -156,18 +168,6 @@ namespace eActConsoleService.Properties {
             }
             set {
                 this["isDevelop"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("tanapong.w@Thaibev.com,jitaree.b@thaibev.com,parnupong.k@thaibev.com")]
-        public string emailForDevelopSite {
-            get {
-                return ((string)(this["emailForDevelopSite"]));
-            }
-            set {
-                this["emailForDevelopSite"] = value;
             }
         }
     }
