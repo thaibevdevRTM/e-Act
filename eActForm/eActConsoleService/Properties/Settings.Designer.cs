@@ -122,7 +122,19 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MTM แจ้งเอกสารรออนุมัติจากระบบอัตโนมัติ")]
+        [global::System.Configuration.DefaultSettingValueAttribute("true")]
+        public string isDevelop {
+            get {
+                return ((string)(this["isDevelop"]));
+            }
+            set {
+                this["isDevelop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("[e-ActivityForm] แจ้งเอกสาร รออนุมัติ จากระบบอัตโนมัติ")]
         public string strSubject {
             get {
                 return ((string)(this["strSubject"]));
@@ -134,40 +146,13 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"
-          เรียน {0}
-          <br/><br/>
-          แจ้งเอกสารจากระบบอัตโนมัติ
-          <br/><br/>
-          ท่านมีเอกสาร <b>รออนุมัติ</b> จำนวน <b>{1}</b> รายการ
-          <br/>
-          ท่านสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ : <a href='{2}'>more detail click</a> <br/><br/>
-          
-          <br/>จึงเรียนมาเพื่อทราบ
-          <br/>ส่วนงานพัฒนาระบบงานสนับสนุนการขาย-RTM
-          <br/>อีเมล์นี้ถูกสร้างจากระบบอัตโนมัติ ไม่ต้องตอบกลับ
-          <br/>หากท่านต้องการทราบรายละเอียดเพิ่มเติม กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน
-          <br/>เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4580,4607
-          <br/>Hot Line: 063-1970586
-        ")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"เรียน {0}<br/><br/>แจ้งเอกสารจากระบบอัตโนมัติ<br/><br/>ท่านมีเอกสาร <b>รออนุมัติ</b> จำนวน <b>{1}</b> รายการ<br/>ท่านสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ : <a href={2}>more detail click</a> <br/><br/><br/>จึงเรียนมาเพื่อทราบ          <br/>ส่วนงานพัฒนาระบบงานสนับสนุนการขาย-RTM          <br/>อีเมล์นี้ถูกสร้างจากระบบอัตโนมัติ ไม่ต้องตอบกลับ          <br/>หากท่านต้องการทราบรายละเอียดเพิ่มเติม กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน          <br/>เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4580,4607          <br/>Hot Line: 063-1970586")]
         public string strBody {
             get {
                 return ((string)(this["strBody"]));
             }
             set {
                 this["strBody"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("true")]
-        public string isDevelop {
-            get {
-                return ((string)(this["isDevelop"]));
-            }
-            set {
-                this["isDevelop"] = value;
             }
         }
     }

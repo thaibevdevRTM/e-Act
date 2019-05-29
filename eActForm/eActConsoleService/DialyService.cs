@@ -34,6 +34,8 @@ namespace eActConsoleService
                         strBody = string.Format(Properties.Settings.Default.strBody, strName, m.waitingCount, Properties.Settings.Default.strUrlApprove);
                         strMailTo = bool.Parse(Properties.Settings.Default.isDevelop) ? Properties.Settings.Default.emailForDevelopSite : m.empEmail;
 
+                        //strBody = @"เรียน Mr. ศุภณัฏฐ์ โชติรชตอนันต์<br/><br/>แจ้งเอกสารจากระบบอัตโนมัติ<br/><br/>ท่านมีเอกสาร <b>รออนุมัติ</b> จำนวน <b>25</b> รายการ<br/>ท่านสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ : <a href=http://203.159.75.75/eact/?s=approve>more detail click</a> <br/><br/><br/>จึงเรียนมาเพื่อทราบ          <br/>ส่วนงานพัฒนาระบบงานสนับสนุนการขาย-RTM          <br/>อีเมล์นี้ถูกสร้างจากระบบอัตโนมัติ ไม่ต้องตอบกลับ          <br/>หากท่านต้องการทราบรายละเอียดเพิ่มเติม กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน          <br/>เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4580,4607          <br/>Hot Line: 063-1970586";
+
                         sendEmail(strMailTo
                             , Properties.Settings.Default.strMailCC
                             , Properties.Settings.Default.strSubject
