@@ -25,7 +25,7 @@ namespace eActForm.Controllers
             return PartialView();
         }
 
-        public ActionResult getPDF(string actId, string type ,string fileName)
+        public ActionResult getPDF(string actId, string type )
         {
             string rootPath = "", mapPath = "";
 
@@ -39,7 +39,6 @@ namespace eActForm.Controllers
                 else if(type == "UploadFile")
                 {
                     rootPath = ConfigurationManager.AppSettings["rootfiles"];
-                    actId = fileName;
                 }
                 else
                 {

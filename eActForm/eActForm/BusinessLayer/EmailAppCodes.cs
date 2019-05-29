@@ -157,14 +157,15 @@ namespace eActForm.BusinessLayer
             getImageModel.tbActImageList = QueryGetImageById.GetImage(actFormId);
             if(getImageModel.tbActImageList.Any())
             {
-                foreach(var item in getImageModel.tbActImageList)
+                int i = 1;
+                foreach (var item in getImageModel.tbActImageList)
                 {
                     if (item.extension == ".pdf")
                     {
-                        int i = 1;
                         pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootfiles"], item._fileName));
-                        i++;
+                       
                     }
+                    i++;
                 }
             }
 

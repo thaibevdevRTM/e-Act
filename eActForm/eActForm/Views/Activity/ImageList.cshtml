@@ -1,40 +1,50 @@
 ﻿@model eActForm.Models.TB_Act_Image_Model.ImageModels
 @{
     Layout = null;
+    var url = System.Configuration.ConfigurationManager.AppSettings["rootfiles"].ToString();
 }
 
+<div class="row">
 
-<div>
-    <table>
-        <thead>
-            @if (Model.tbActImageList != null)
+    @if (Model.tbActImageList != null)
+    {
+        foreach (var item in Model.tbActImageList)
+        {
+            if (item.extension != ".pdf")
             {
-                <tr>
-                    @foreach (var item in Model.tbActImageList)
-                    {
-                        <td width="120px;">
-                            @if (item.extension != ".pdf")
-                            {
-
-                                <span id="iconDelFile" class="close" onclick="javascript:onclickDelImage('@item.id');">&times;</span>
-
-                                <img src="../Uploadfiles/@item._fileName" id="catImage" width="100px" height="100px" />
-                            }
-                            else
-                            {
-
-                                <span id="iconDelFile1" class="close" onclick="javascript:onclickDelImage('@item.id');">&times;</span>
-
-                                <img src="~/images/adobe-acrobat-pdf-file-512.png" width="100px" height="100px" />
-                                <a href="@Url.Action("getPDF", "ActivityViewer", new { actId = @item.activityId ,type= @item.imageType , fileName = item._fileName })" target="_blank">@item._fileName</a>
-                            }
-                        </td>
-                    }
-                </tr>
+                <div class="col-md-2">
+                    <div>
+                        <div class="col-md-1">
+                            <span id="iconDelFile" class="close" onclick="javascript:onclickDelImage('@item.id');">&times;</span>
+                        </div>
+                        <img src="@string.Format(url,item._fileName)" id="catImage" width="100px" height="100px" />
+                    </div>
+                </div>
             }
-        </thead>
-    </table>
+            else
+            {
+                <div class="col-md-2">
+                    <div>
+                        <div class="col-md-1">
+                            <span id="iconDelFile1" class="close" onclick="javascript:onclickDelImage('@item.id');">&times;</span>
+                        </div>
+                        <img src="~/images/adobe-acrobat-pdf-file-512.png" width="100px" height="100px" />
+                    </div>
+                    <div>
+                        <a href="@Url.Action("getPDF", "ActivityViewer", new { actId = item._fileName ,type= @item.imageType })" target="_blank">@item._fileName</a>
+                    </div>
+                </div>
+
+            }
+
+
+        }
+    }
+
 </div>
+
+
+
 <script>
 
     function onclickDelImage(id) {

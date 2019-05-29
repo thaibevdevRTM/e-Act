@@ -65,16 +65,26 @@ namespace eActForm.Controllers
 
         public ActionResult ImageList(string activityId)
         {
-            TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-            if (!string.IsNullOrEmpty(activityId))
+            try
             {
-                getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId);
-                return PartialView(getImageModel);
+                TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
+                if (!string.IsNullOrEmpty(activityId))
+                {
+                    getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId);
+                    return PartialView(getImageModel);
+                }
+                else
+                {
+                    return PartialView(getImageModel);
+                }
             }
-            else
+            catch(Exception ex)
             {
-                return PartialView(getImageModel);
+                ExceptionManager.WriteError("ImageList => " + ex.Message);
             }
+          
+            return PartialView();
+            
         }
 
         public ActionResult PreviewData(string activityId)
@@ -167,10 +177,11 @@ namespace eActForm.Controllers
             {
                 byte[] binData = null;
                 TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel();
-
+                ExceptionManager.WriteError("Request.Files.Count => " + Request.Files.Count);
                 foreach (string UploadedImage in Request.Files)
                 {
                     HttpPostedFileBase httpPostedFile = Request.Files[UploadedImage];
+                  
                     //string folderKeepFile = "ActivityForm";
                     //string UploadDirectory = Server.MapPath("~") + "\\" + AppCode.ApproveType.UploadFile.ToString() + "\\";
 
@@ -181,8 +192,8 @@ namespace eActForm.Controllers
                     string extension = Path.GetExtension(httpPostedFile.FileName);
                     int indexGetFileName = httpPostedFile.FileName.LastIndexOf('.');
                     var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + DateTime.Now.ToString("ddMMyyHHmm") + extension;
-                    string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootfiles"].ToString(), _fileName));
-
+                    string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootUploadfiles"].ToString(), _fileName));
+                    ExceptionManager.WriteError("UploadDirectory => " + UploadDirectory);
                     resultFilePath = UploadDirectory;
                     BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
                     //binData = b.ReadBytes(httpPostedFile.ContentLength);
@@ -212,6 +223,7 @@ namespace eActForm.Controllers
             {
                 result.Message = ex.Message;
                 result.Success = false;
+                ExceptionManager.WriteError("uploadFilesImage => " + ex.Message);
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);

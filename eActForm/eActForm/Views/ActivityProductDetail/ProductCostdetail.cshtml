@@ -136,7 +136,6 @@
             var promotionGP = $('#promotionGP_' + rowIndex).val();
             var specialDisc = $("#specialDisc_" + rowIndex).val();
             var specialDiscBaht = $("#specialDiscBaht_" + rowIndex).val();
-            console.log(id);
             $.ajax({
             type: 'POST',
             url:  '@Url.Action("calDiscountProduct", "ActivityProductDetail")',
@@ -187,7 +186,6 @@
             type: 'POST',
                 success: function (response) {
                     rowCount = response.Data;
-                    console.log(response.success);
 
                     CallChangefunc();
                 }

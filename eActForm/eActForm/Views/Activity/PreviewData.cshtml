@@ -25,7 +25,6 @@
             },
             callback: function (result) {
                 if (result == true) {
-                    console.log(result);
                     bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
                     $.ajax({
                         url: '@Url.Action("submitPreview", "Activity")',
@@ -39,7 +38,6 @@
                     }).done(function (response) {
                         var url = '@Url.Action("Index", "Home")';
                         window.location.href = url;
-                        console.log('success');
                     });
                 }
             }
@@ -243,7 +241,7 @@
 
                                 @if (Model.productImageList.Any())
                                 {
-                                    string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
+                                    string url = System.Configuration.ConfigurationManager.AppSettings["rootfiles"].ToString();
                                     foreach (var item in Model.productImageList)
                                     {
                                         if (item.extension != ".pdf")
@@ -251,13 +249,13 @@
                                             if (Model.productImageList.Count == 1)
                                             {
                                                 <td width="50%" style="text-align:right">
-                                                    <img width="220" height="120" src="../Uploadfiles/@item._fileName" />
+                                                    <img width="220" height="120" src="@string.Format(url,item._fileName)" />
                                                 </td>
                                             }
                                             else
                                             {
                                                 <td width="40%" style="text-align:right;">
-                                                    <img width="130" height="120" src="../Uploadfiles/@item._fileName" />
+                                                    <img width="130" height="120" src="@string.Format(url,item._fileName)" />
                                                 </td>
 
                                             }
@@ -449,11 +447,11 @@
                                 }
                             </td>
                             <td class="textRight">
-                                @if (perTotal != 0)
+                                @*@if (perTotal != 0)
                                 {
                                     string result = String.Format("{0:n2}%", @perTotal);
                                     @result.ToString();
-                                }
+                                }*@
                             </td>
                         </tr>
 

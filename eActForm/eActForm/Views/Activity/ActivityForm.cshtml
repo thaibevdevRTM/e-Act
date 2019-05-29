@@ -121,12 +121,7 @@
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <div class="row">
-                        @*<label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtchanel">
-                                ช่องทาง (Channel)
-                            </label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                @Html.TextBoxFor(x => x.activityFormModel.chanel, new { @class = "form-control textboxcss", @id = "txtchanel", @readonly = "readonly" })
-                            </div>*@
+                      
                         @Html.HiddenFor(x => x.activityFormModel.chanel, new { @id = "txtchanel" })
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
                             Product category<span class="required">*</span>
@@ -264,10 +259,7 @@
     </div>
     <div class="col-lg-2 col-xs-2">
     </div>
-    @*<div class="form-group col-lg-2 col-xs-2">
-            ประเภท
-            @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "- เลือกประเภท -", new { @class = "form-control", required = "required", id = "ddlProductBrand" })
-        </div>*@
+   
     <div class="form-group col-lg-2 col-xs-2">
         รสชาติ
         @Html.DropDownListFor(model => model.productSmellLists, new SelectList(Model.productSmellLists, "id", "nameTH"), "- เลือกรสชาติ -", new { @class = "form-control", required = "required", id = "ddlProductSmell" })
@@ -325,8 +317,8 @@
             </div>
         </form>
     </div>
-    <div class="col-md-6">
-        <div id="divgetimage" class="col-lg-12">
+    <div class="col-md-12">
+        <div id="divgetimage" class="col-md-12">
             @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id != null ? Model.activityFormModel.id : "" })
         </div>
     </div>
@@ -364,7 +356,6 @@
                    $(this).focus();
                }
            });
-          // $('.field-date').datepicker({ autoclose: true, todayHighlight: true, format: "dd/mm/yyyy" });
 
            ObjModel = {};
            document.getElementById("ddlProductfilter").disabled = true;
@@ -433,8 +424,6 @@
 
     function onchangeCustomer() {
         ObjModel = {};
-        //CallChangefunc();
-        //callThemedetailcost();
          $("#txtchanel").val('');
          $.ajax({
                 url: '@Url.Action("getChanel", "eAct")',
@@ -502,8 +491,6 @@
     function onchangeCate() {
 
         ObjModel = {};
-        //CallChangefunc();
-        //callThemedetailcost();
         $("#ddlProductBrand").val('');
         $("#ddlProductfilter").val('');
         $("#ddlProductSize").val('');
@@ -534,8 +521,7 @@
                  else {
                      document.getElementById("ddlProductGrp").disabled = true;
                  }
-                 //CallChangefunc();
-                 //callThemedetailcost();
+
 
                 }
          });
@@ -545,8 +531,6 @@
 
     $("#ddlProductGrp").change(function () {
         ObjModel = {};
-        //CallChangefunc();
-        //callThemedetailcost();
 
         var ddlProductBrand = $("#ddlProductBrand");
 
@@ -606,17 +590,10 @@
         var required = "กรุณา ระบุ :<br>";
         var validate = true;
         if ($("#ddlTheme").val() == '') { required += "ประเภทกิจกรรม*<br>"; validate = false; }
-        //if ($("#ddlCustomer").val() == '0') { required += "ลูกค้า(Customer Name)*<br>"; validate = false; }
-        //if ($("#ddlProductGrp").val() == '0') { required += "กลุ่มสินค้า(Product Group)*<br>"; validate = false; }
         if (validate != true) {
             bootbox.alert(required);
             return false;
         }
-        //if ($("#ddlProductBrand").val() == '0') {
-        //    $("#ddlProductBrand").focus();
-        //    bootbox.alert("กรุณา เลือกสินค้า");
-        //    return false;
-        //}
         $("#WaitDialog").show();
          $.ajax({
                 url: '@Url.Action("addItemProduct", "ActivityProductDetail")',
@@ -679,7 +656,7 @@
         if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
         if ($("#txtdateActivitySt").val() == "" && $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; }
         if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
-        //console.log(rowCount);
+       
         //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 
         if (validate == true) {
@@ -778,7 +755,6 @@
                         type: 'POST',
                     }).done(function (response) {
                         $("#WaitDialog").hide();
-                        console.log(response);
                         if (response.Success) {
                             var url = '@Url.Action("ActivityForm", "activity")';
                             window.location.href = url + "?ActivityId=" + response.ActivityId;
@@ -818,17 +794,12 @@
         $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
         $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", "disabled");
         document.getElementById("divUploadFiles").style.display = "none";
-        if(document.getElementById("iconDelFile") !== null)
-        {
-            document.getElementById("iconDelFile").style.display = "none";
-        }
-        if (document.getElementById("iconDelFile1") !== null) {
-             document.getElementById("iconDelFile1").style.display = "none";
-        }
+        document.getElementById("divdelfile").style.display = "none";
+        document.getElementById("divdelfile1").style.display = "none";
+
 
         document.getElementById("rdbterm").disabled = true;
         document.getElementById("rdbOutterm").disabled = true;
-        //$("input.txtnormalGp").attr("disabled", true);
     }
 
 
@@ -896,24 +867,8 @@
         init: function () {
 
             this.on("complete", function (file) {
-                this.removeFile(file);
+                console.log("success upload");
                     CallImageView($("#hdActivityId").val());
-
-
-                    @*this.on("removedfile", function (file) {
-                        var name = file.name;
-                        $.ajax({
-                            type: 'POST',
-                            url: '@Url.Action("deleteImg", "Activity")',
-                            data: {
-                                name: name,
-                            }
-                        }).success(function (response) {
-                            console.log("sssssss");
-                            CallImageView($("#hdActivityId").val());
-                        });
-
-                    });*@
 
                 });
             }

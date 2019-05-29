@@ -84,12 +84,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\eActForm\eActForm.csproj">
-      <Project>{f2ed982e-1ccb-455b-ab47-758aec9c6a25}</Project>
-      <Name>eActForm</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="bin\Debug\logs\" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +97,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\eActForm\eActForm.csproj">
+      <Project>{f2ed982e-1ccb-455b-ab47-758aec9c6a25}</Project>
+      <Name>eActForm</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

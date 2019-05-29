@@ -2151,6 +2151,7 @@
     <Folder Include="ActBudget\" />
     <Folder Include="App_Data\" />
     <Folder Include="error\" />
+    <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
     <Folder Include="Views\Base\" />
