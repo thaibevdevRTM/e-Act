@@ -34,10 +34,12 @@ namespace eActConsoleService
                         strBody = string.Format(Properties.Settings.Default.strBody, strName, m.waitingCount, Properties.Settings.Default.strUrlApprove);
                         strMailTo = bool.Parse(Properties.Settings.Default.isDevelop) ? Properties.Settings.Default.emailForDevelopSite : m.empEmail;
 
-                        DialyService.sendEmail(strMailTo
+                        sendEmail(strMailTo
                             , Properties.Settings.Default.strMailCC
                             , Properties.Settings.Default.strSubject
                             , strBody);
+
+                        strLogs.WriteLine("== Email to " + m.empEmail + " is success. ==");
 
                     }
                     catch (Exception ex)
