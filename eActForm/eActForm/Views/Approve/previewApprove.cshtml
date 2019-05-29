@@ -206,24 +206,20 @@
 
                                 @if (Model.productImageList.Any())
                                 {
-                                    string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
+                                    string url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfiles"].ToString();
                                     foreach (var item in Model.productImageList)
                                     {
-                                        if (item.extension != ".pdf")
+                                        if (Model.productImageList.Count == 1)
                                         {
-                                            if (Model.productImageList.Count == 1)
-                                            {
-                                                <td width="50%" style="text-align:right">
-                                                    <img width="220" height="120" src="../Uploadfiles/@item._fileName" />
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td width="40%" style="text-align:right;">
-                                                    <img width="130" height="120" src="../Uploadfiles/@item._fileName" />
-                                                </td>
-
-                                            }
+                                            <td width="50%" style="text-align:right">
+                                                <img width="220" height="120" src="@string.Format(url,item._fileName)" />
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td width="40%" style="text-align:right;">
+                                                <img width="130" height="120" src="@string.Format(url,item._fileName)" />
+                                            </td>
                                         }
                                     }
                                 }

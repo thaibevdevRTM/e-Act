@@ -93,7 +93,7 @@ namespace eActForm.Controllers
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
-            activityModel.productImageList = AppCode.writeImagestoFile(Server, QueryGetImageById.GetImage(activityId));
+            activityModel.productImageList = QueryGetImageById.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();
 
             return PartialView(activityModel);
         }
@@ -198,7 +198,7 @@ namespace eActForm.Controllers
                     BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
                     //binData = b.ReadBytes(httpPostedFile.ContentLength);
                     binData = b.ReadBytes(0);
-                    //string UploadDirectory = string.Format(System.Configuration.ConfigurationManager.AppSettings["rootfiles"].ToString(), _fileName);
+                    //string UploadDirectory = string.Format(System.Configuration.ConfigurationManager.AppSettings["urlUploadfiles"].ToString(), _fileName);
                     httpPostedFile.SaveAs(resultFilePath);
 
                     imageFormModel.activityId = Session["activityId"].ToString();
@@ -263,7 +263,7 @@ namespace eActForm.Controllers
                 if (countresult > 0)
                 {
                     GridHtml1 = GridHtml1.Replace("---", genDoc).Replace("<br>", "<br/>");
-
+                    ExceptionManager.WriteError(GridHtml1);
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     AppCode.genPdfFile(GridHtml1, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
@@ -285,3 +285,5 @@ namespace eActForm.Controllers
 
     }
 }
+
+

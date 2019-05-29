@@ -162,7 +162,7 @@ namespace eActForm.BusinessLayer
                 {
                     if (item.extension == ".pdf")
                     {
-                        pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootfiles"], item._fileName));
+                        pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
                        
                     }
                     i++;

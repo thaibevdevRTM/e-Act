@@ -7,6 +7,7 @@ using System.Configuration;
 using eActForm.BusinessLayer;
 using eActForm.Models;
 using iTextSharp.text;
+using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -101,6 +102,7 @@ namespace eActForm.Controllers
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     GridHtml = GridHtml.Replace("<br>", "<br/>");
+                    ExceptionManager.WriteError(GridHtml);
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
                     ApproveAppCode.setCountWatingApprove();

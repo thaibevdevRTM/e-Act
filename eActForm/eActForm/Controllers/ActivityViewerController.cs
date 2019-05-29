@@ -38,7 +38,7 @@ namespace eActForm.Controllers
                 }
                 else if(type == "UploadFile")
                 {
-                    rootPath = ConfigurationManager.AppSettings["rootfiles"];
+                    rootPath = ConfigurationManager.AppSettings["urlUploadfiles"];
                 }
                 else
                 {
