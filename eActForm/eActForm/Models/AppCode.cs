@@ -81,7 +81,7 @@ namespace eActForm.Models
                 GridBuilder.Append("</html>");
 
                 GridBuilder.Append(sw.ToString());
-
+               
 
                 string path = System.Web.HttpContext.Current.Server.MapPath("~") + "\\Content\\" + "tablethin.css";
                 string readText = System.IO.File.ReadAllText(path);
@@ -93,8 +93,9 @@ namespace eActForm.Models
                     pdfDoc.Open();
                     using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
                     {
-                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"))))
+                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">".ToLower(), ".png\"/>").Replace(".jpg\">".ToLower(), ".jpg\"/>").Replace(".jpeg\">".ToLower(), ".jpeg\"/>"))))
                         {
+                            ExceptionManager.WriteError(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"));
                             XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
                         }
                         pdfDoc.Close();

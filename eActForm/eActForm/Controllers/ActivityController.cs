@@ -204,7 +204,7 @@ namespace eActForm.Controllers
                     imageFormModel.activityId = Session["activityId"].ToString();
                     imageFormModel._image = binData;
                     imageFormModel.imageType = "UploadFile";
-                    imageFormModel._fileName = _fileName;
+                    imageFormModel._fileName = _fileName.ToLower();
                     imageFormModel.extension = extension;
                     imageFormModel.delFlag = false;
                     imageFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
@@ -263,7 +263,7 @@ namespace eActForm.Controllers
                 if (countresult > 0)
                 {
                     GridHtml1 = GridHtml1.Replace("---", genDoc).Replace("<br>", "<br/>");
-                    ExceptionManager.WriteError(GridHtml1);
+                  
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     AppCode.genPdfFile(GridHtml1, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
