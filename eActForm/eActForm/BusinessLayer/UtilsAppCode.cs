@@ -67,10 +67,7 @@ namespace eActForm.BusinessLayer
                 {
                     if (imgByte.Length > 0)
                     {
-                        if (!File.Exists(server.MapPath(filePath)))
-                        {
-                            File.WriteAllBytes(server.MapPath(filePath), imgByte);
-                        }
+                        File.WriteAllBytes(server.MapPath(filePath), imgByte);
                     }
                     return filePath;
                 }
