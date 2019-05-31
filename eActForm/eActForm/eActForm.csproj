@@ -186,6 +186,7 @@
     <Compile Include="BusinessLayer\BudgetFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ProductCommand.cs" />
     <Compile Include="BusinessLayer\DashBoardAppCode.cs" />
+    <Compile Include="BusinessLayer\DocumentsAppCode.cs" />
     <Compile Include="BusinessLayer\EmailAppCodes.cs" />
     <Compile Include="BusinessLayer\ApproveAppCode.cs" />
     <Compile Include="BusinessLayer\ApproveFlowAppCode.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="Controllers\BudgetMyDocController.cs" />
     <Compile Include="Controllers\BudgetViewerController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
+    <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\eActController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -246,6 +248,7 @@
     <Compile Include="Models\Budget_Activity_Model.cs" />
     <Compile Include="Models\Budget_Approve_Detail_Model.cs" />
     <Compile Include="Models\DashBoardModel.cs" />
+    <Compile Include="Models\DocumentsModel.cs" />
     <Compile Include="Models\RepDetailModel.cs" />
     <Compile Include="Models\TB_Act_ActivityFormDocNo_Model.cs" />
     <Compile Include="Models\TB_Act_ActivityGroup_Model.cs" />
@@ -2147,6 +2150,8 @@
     <Content Include="Views\BudgetApprove\approvePositionSignatureListsByBudgetApproveId.cshtml" />
     <Content Include="Views\Admin\ProductDetail.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Documents\reportDetail.cshtml" />
+    <Content Include="Views\Documents\reportDetailListsView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
