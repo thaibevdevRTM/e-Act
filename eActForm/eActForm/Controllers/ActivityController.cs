@@ -177,7 +177,6 @@ namespace eActForm.Controllers
             {
                 byte[] binData = null;
                 TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel();
-                ExceptionManager.WriteError("Request.Files.Count => " + Request.Files.Count);
                 foreach (string UploadedImage in Request.Files)
                 {
                     HttpPostedFileBase httpPostedFile = Request.Files[UploadedImage];
