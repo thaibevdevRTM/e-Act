@@ -150,7 +150,7 @@ namespace eActForm.BusinessLayer
                         int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id).FirstOrDefault().docNo);
 
                         result += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
-                        result += getActList.FirstOrDefault().shortBrand.Trim() == "" ? getActList.FirstOrDefault().groupShort.Trim() : getActList.FirstOrDefault().shortBrand.Trim();
+                        result += getActList.FirstOrDefault().shortBrand.Trim();
                         result += getActList.FirstOrDefault().chanelShort.Trim();
                         result += getActList.FirstOrDefault().cusShortName.Trim();
                         result += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
