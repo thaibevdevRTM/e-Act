@@ -36,11 +36,15 @@
             {
                 <li>
                     <a><i class="fa fa-inbox"></i> Documents <span class="fa fa-chevron-down"></span></a>
-					<ul class="nav child_menu">
-						<li>@Html.ActionLink(" Documents", "Index", "Home")</li>
-						<li>@Html.ActionLink(" Budget", "Index", "BudgetMyDoc")</li>
-						<!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
-					</ul>
+                    <ul class="nav child_menu">
+                        <li>@Html.ActionLink(" Documents", "Index", "Home")</li>
+                        <li>@Html.ActionLink(" Budget", "Index", "BudgetMyDoc")</li>
+                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                        {
+                            <li>@Html.ActionLink(" Report Detail", "reportDetail", "Documents")</li>
+                        }
+                            <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
+                        </ul>
                 </li>
             }
             @if (UtilsAppCode.Session.User.isApprove || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)

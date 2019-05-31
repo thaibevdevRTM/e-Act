@@ -143,14 +143,24 @@ else
     });
 
     function confirmQuery() {
-        var mess = $("#ddlStatus option:selected").text()
+
+        var statusId = $("#ddlStatus").val();
+        var mess = $("#txtRemark").val();
+        if (statusId == "5" && mess == "") {
+            doMsgFail("กรุณาระบุ เหตุผล(เพิ่มเติม) ค่ะ")
+            $("#txtRemark").focus();
+            return false;
+        }
+
+
+        mess = $("#ddlStatus option:selected").text();
         bootbox.confirm({
-            message: "คุณต้องดำเนินการ "+ mess + " ใช่หรือไม่?",
+            message: "คุณต้องดำเนินการ " + mess + " ใช่หรือไม่?",
             buttons: {
                 confirm: {
                     label: 'Yes',
                     className: 'btn-success'
-                },cancel: {
+                }, cancel: {
                     label: 'No',
                     className: 'btn-danger'
                 }

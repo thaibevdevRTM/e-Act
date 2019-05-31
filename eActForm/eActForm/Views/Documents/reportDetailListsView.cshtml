@@ -1,0 +1,112 @@
+﻿@using eActForm.Models
+@model eActForm.Models.DocumentsModel.actRepDetailModels
+
+<div class="row">
+
+    <div class="col-md-12 col-xs-12">
+
+    </div>
+    <div class="col-md-12 col-xs-12">
+
+        <a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>คือ Delete
+        <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
+        <a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>คือ History Approve
+        <a class="btn ink-reaction btn-info fa fa-send-o" href="#"></a>คือ Resend Email
+
+        <table id="datatable" class="table table-striped table-hover">
+            <thead>
+                <tr style="background-color:#2B5D95;color:#ffffff;">
+                    <th width="150" style="text-align:center;">#</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Customer</th>
+                    <th>Product Type</th>
+                    <th>Create Date</th>
+                    <th>Create By</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.actRepDetailLists)
+                {
+                <tr class="gradeX">
+                    <td width="200">
+
+
+                        <a href="javascript:" target="_blank" onclick="return checkDelete('@item.id','@item.statusId');">
+                            <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                        </a>
+
+                        @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Report_Detail.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
+
+
+                        <a onclick="callApproveList('@item.id');">
+                            <i class="btn ink-reaction btn-dark fa fa-eye"></i>
+                        </a>
+
+                        @if (item.statusId == "2")
+                        {
+
+                            <a onclick="resendApprove('@item.id');">
+                                <i class="btn ink-reaction btn-info fa fa-send-o"></i>
+                            </a>
+                        }
+
+                    </td>
+                    <td>@item.statusName</td>
+                    <td>@{var date = item.startDate == null ? "" : item.startDate.Value.ToString("dd/MM/yyyy");} @date </td>
+                    <td>@{date = item.endDate == null ? "" : item.endDate.Value.ToString("dd/MM/yyyy");} @date </td>
+                    <td>@item.customerName</td>
+                    <td>@item.ProductTypeName</td>
+                    <td>@item.createdDate</td>
+                    <td>@item.createdByUserId</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div class="modal fade" id="modalApprovelist" role="dialog" style="display:none">
+    <div id="divModalApprovelist">
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": 0 },
+                { "orderable": false, "targets": 3 },
+                { "orderable": false, "targets": 4 }
+            ],
+            "dom": 'lCfrtip',
+            "order": [],
+            "language": {
+                "lengthMenu": '_MENU_ entries per page',
+                "search": '<i class="fa fa-search"></i>',
+                "paginate": {
+                    "previous": '<i class="fa fa-angle-left"></i>',
+                    "next": '<i class="fa fa-angle-right"></i>'
+                }
+            }
+        });
+
+    });
+    function waitpopup() {
+        $("#WaitDialog").show();
+        }
+
+          function callApproveList(actId) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("approveLists", "Home")',
+            data: {
+                actId: actId
+            }
+        }).done(function (response) {
+            $("#divModalApprovelist").html(response)
+            $('#modalApprovelist').modal('show');
+        });
+    }
+
+</script>
