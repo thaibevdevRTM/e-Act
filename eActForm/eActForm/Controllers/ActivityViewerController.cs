@@ -25,7 +25,7 @@ namespace eActForm.Controllers
             return PartialView();
         }
 
-        public ActionResult getPDF(string actId, string type)
+        public ActionResult getPDF(string actId, string type )
         {
             string rootPath = "", mapPath = "";
 
@@ -36,12 +36,22 @@ namespace eActForm.Controllers
                 {
                     rootPath = ConfigurationManager.AppSettings["rootRepDetailPdftURL"];
                 }
+                else if(type == "UploadFile")
+                {
+                    rootPath = ConfigurationManager.AppSettings["rootUploadfiles"];
+                }
                 else
                 {
                     rootPath = ConfigurationManager.AppSettings["rooPdftURL"];
                 }
-                if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, actId)))){
-                    actId = "fileNotFound";
+
+
+                if (type != "UploadFile")
+                {
+                    if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, actId))))
+                    {
+                        actId = "fileNotFound";
+                    }
                 }
 
             }

@@ -26,6 +26,7 @@ namespace eActForm.BusinessLayer
                                  imageType = d["imageType"].ToString(),
                                  _image = (d["_image"] == null || d["_image"] is DBNull) ? new byte[0] : (byte[])d["_image"],
                                  _fileName = d["_fileName"].ToString(),
+                                 extension = d["extension"].ToString(),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),
