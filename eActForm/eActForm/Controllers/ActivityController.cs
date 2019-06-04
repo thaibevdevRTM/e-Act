@@ -50,10 +50,13 @@ namespace eActForm.Controllers
                 activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
                 activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
                 activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
+               
             }
             else
             {
-                Session["activityId"] = Guid.NewGuid().ToString();
+                string actId = Guid.NewGuid().ToString();
+                Session["activityId"] = actId;
+                activityModel.activityFormModel.id = actId;
                 activityModel.activityFormModel.mode = mode;
             }
 
@@ -64,16 +67,26 @@ namespace eActForm.Controllers
 
         public ActionResult ImageList(string activityId)
         {
-            TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-            if (!string.IsNullOrEmpty(activityId))
+            try
             {
-                getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId);
-                return PartialView(getImageModel);
+                TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
+                if (!string.IsNullOrEmpty(activityId))
+                {
+                    getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId);
+                    return PartialView(getImageModel);
+                }
+                else
+                {
+                    return PartialView(getImageModel);
+                }
             }
-            else
+            catch(Exception ex)
             {
-                return PartialView(getImageModel);
+                ExceptionManager.WriteError("ImageList => " + ex.Message);
             }
+          
+            return PartialView();
+            
         }
 
         public ActionResult PreviewData(string activityId)
@@ -82,7 +95,7 @@ namespace eActForm.Controllers
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
-            activityModel.productImageList = AppCode.writeImagestoFile(Server, QueryGetImageById.GetImage(activityId));
+            activityModel.productImageList = QueryGetImageById.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();
 
             return PartialView(activityModel);
         }
@@ -166,30 +179,25 @@ namespace eActForm.Controllers
             {
                 byte[] binData = null;
                 TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel();
-
                 foreach (string UploadedImage in Request.Files)
                 {
                     HttpPostedFileBase httpPostedFile = Request.Files[UploadedImage];
-                    string folderKeepFile = "ActivityForm";
-                    string UploadDirectory = Server.MapPath("~") + "\\Uploadfiles\\" + folderKeepFile + "\\";
-                    string resultFilePath = "";
-                    AppCode.CheckFolder_CreateNotHave_Direct(UploadDirectory);
-
-                    string genUniqueName = httpPostedFile.FileName.ToString();
+                  
+                    string resultFilePath = "";  
                     string extension = Path.GetExtension(httpPostedFile.FileName);
                     int indexGetFileName = httpPostedFile.FileName.LastIndexOf('.');
-                    var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + Session["activityId"].ToString();
-                    string resultFileUrl = UploadDirectory + _fileName + extension;
-                    resultFilePath = resultFileUrl;
-                    BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
-                    binData = b.ReadBytes(httpPostedFile.ContentLength);
+                    var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + DateTime.Now.ToString("ddMMyyHHmm") + extension;
+                    string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootUploadfiles"].ToString(), _fileName));
+                    resultFilePath = UploadDirectory;
+                    BinaryReader b = new BinaryReader(httpPostedFile.InputStream);  
+                    binData = b.ReadBytes(0);
                     httpPostedFile.SaveAs(resultFilePath);
 
                     imageFormModel.activityId = Session["activityId"].ToString();
                     imageFormModel._image = binData;
-                    imageFormModel.imageType = "ActivityForm";
-                    imageFormModel._fileName = genUniqueName;
-                    //imageFormModel.typeFiles = extension;
+                    imageFormModel.imageType = "UploadFile";
+                    imageFormModel._fileName = _fileName.ToLower();
+                    imageFormModel.extension = extension;
                     imageFormModel.delFlag = false;
                     imageFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
                     imageFormModel.createdDate = DateTime.Now;
@@ -207,6 +215,7 @@ namespace eActForm.Controllers
             {
                 result.Message = ex.Message;
                 result.Success = false;
+                ExceptionManager.WriteError("uploadFilesImage => " + ex.Message);
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -217,7 +226,6 @@ namespace eActForm.Controllers
         public JsonResult deleteImg(string name)
         {
             var result = new AjaxResult();
-
             int resultImg = ActivityFormCommandHandler.deleteImg(name, Session["activityId"].ToString());
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -247,7 +255,7 @@ namespace eActForm.Controllers
                 if (countresult > 0)
                 {
                     GridHtml1 = GridHtml1.Replace("---", genDoc).Replace("<br>", "<br/>");
-
+                  
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     AppCode.genPdfFile(GridHtml1, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
@@ -269,3 +277,5 @@ namespace eActForm.Controllers
 
     }
 }
+
+

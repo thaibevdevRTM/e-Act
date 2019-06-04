@@ -5,6 +5,7 @@
     decimal? costActivity = 0;
     decimal? costProduct = 0;
     decimal? perTotal = 0;
+    decimal? growthPerTotal = 0;
 }
 
 
@@ -123,7 +124,7 @@
                                     <td style="text-align:right"></td>
                                 }
                             }
-                            <td style="font-size:12.5px;">ไม่ได้เกิดจาก รายการส่งเสริมการขาย (Trade Term)</td>
+                            <td style="font-size:12.5px;">รายการส่งเสริมการขาย (Trade Term)</td>
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">ระยะเวลากิจกรรม</td>
                             <td></td>
@@ -205,23 +206,24 @@
 
                                 @if (Model.productImageList.Any())
                                 {
-                                    string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
+                                    string url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfiles"].ToString();
                                     foreach (var item in Model.productImageList)
                                     {
-                                        if (Model.productImageList.Count == 1)
+                                        if (item.extension != ".pdf")
                                         {
-                                            <td width="50%" style="text-align:right">
-                                                <img width="220" height="120" src="@url@item._fileName" />
-                                            </td>
+                                            if (Model.productImageList.Count == 1)
+                                            {
+                                                <td width="50%" style="text-align:right">
+                                                    <img width="220" height="120" src="@string.Format(url, item._fileName)" />
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td width="40%" style="text-align:right;">
+                                                    <img width="130" height="120" src="@string.Format(url, item._fileName)" />
+                                                </td>
+                                            }
                                         }
-                                        else
-                                        {
-                                            <td width="50%" style="text-align:right;">
-                                                <img width="130" height="120" src="@url@item._fileName" />
-                                            </td>
-
-                                        }
-
                                     }
                                 }
                                 else
@@ -271,6 +273,10 @@
                                     <td style="font-size:12.5px;">Discount %</td>
                                 }
                             }
+                            else
+                            {
+                                <td style="font-size:12.5px;">Discount %</td>
+                            }
                             <td style="font-size:12.5px;">Cost (BHT)</td>
                         </tr>
                         @if (Model.productcostdetaillist1.Any())
@@ -280,18 +286,18 @@
                                 <tr>
                                     @if (item.isShowGroup == true)
                                     {
-                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.smellName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) Pack(@Html.DisplayFor(m => item.pack)) </td>
-                                    }
-                                    else if (item.isShowGroup == false)
-                                    {
-                                        for (int i = 0; i < @item.detailGroup.Count; i++)
-                                        {
-                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) Pack(@Html.DisplayFor(m => item.pack))</td>
-                                        }
+                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) @Html.DisplayFor(m => item.pack) </td>
                                     }
                                     else
                                     {
-                                        <td class="font10 textLeft">@Html.DisplayFor(m => item.productName)</td>
+                                        if (item.detailGroup != null)
+                                        {
+                                            for (int i = 0; i < @item.detailGroup.Count; i++)
+                                            {
+                                                <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) (@Html.DisplayFor(m => item.pack))</td>
+                                            }
+                                        }
+
                                     }
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.disCount1)</td>
@@ -370,6 +376,7 @@
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.perTotal)</td>
                                 </tr>
 
+                                perTotal = item.perTotal == null ? 0 + perTotal : item.perTotal + perTotal;
                                 totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
                                 costProduct = item.normalCost == null ? 0 + costProduct : item.normalCost + costProduct;
                                 costActivity = item.themeCost == null ? 0 + costActivity : item.themeCost + costActivity;
@@ -395,10 +402,10 @@
                                 }
                             </td>
                             <td class="textRight">
-                                @if (costActivity != 0 && costProduct != 0)
+                                @if (totalActCost != 0 && costActivity != 0 && costProduct != 0)
                                 {
-                                    perTotal = (costActivity - costProduct) / costProduct * 100;
-                                    string result = String.Format("{0:n2}%", @perTotal);
+                                    growthPerTotal = (costActivity - costProduct) / costProduct * 100;
+                                    string result = String.Format("{0:n2}%", @growthPerTotal);
                                     @result.ToString();
                                 }
                             </td>
