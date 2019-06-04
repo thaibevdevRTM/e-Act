@@ -143,12 +143,18 @@ else
     });
 
     function confirmQuery() {
-
+        
         var statusId = $("#ddlStatus").val();
+        console.log(statusId+"tttt");
         var mess = $("#txtRemark").val();
         if (statusId == "5" && mess == "") {
             doMsgFail("กรุณาระบุ เหตุผล(เพิ่มเติม) ค่ะ")
             $("#txtRemark").focus();
+            return false;
+        }
+        else if (statusId == "") {
+            doMsgFail("กรุณาระบุ(สถานะ) ค่ะ")
+            $("#ddlStatus").focus();
             return false;
         }
 
