@@ -188,7 +188,6 @@ namespace eActForm.Controllers
                     int indexGetFileName = httpPostedFile.FileName.LastIndexOf('.');
                     var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + DateTime.Now.ToString("ddMMyyHHmm") + extension;
                     string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootUploadfiles"].ToString(), _fileName));
-                    ExceptionManager.WriteError("UploadDirectory => " + UploadDirectory);
                     resultFilePath = UploadDirectory;
                     BinaryReader b = new BinaryReader(httpPostedFile.InputStream);  
                     binData = b.ReadBytes(0);
