@@ -348,6 +348,8 @@
 @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
 @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
 <script type="text/javascript">
+       
+
 
        $(document).ready(function () {
            $(".fv").each(function () {
@@ -873,7 +875,6 @@
         init: function () {
 
             this.on("complete", function (file) {
-                console.log("success upload");
                     CallImageView($("#hdActivityId").val());
 
                 });

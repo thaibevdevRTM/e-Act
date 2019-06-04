@@ -54,7 +54,9 @@ namespace eActForm.Controllers
             }
             else
             {
-                Session["activityId"] = Guid.NewGuid().ToString();
+                string actId = Guid.NewGuid().ToString();
+                Session["activityId"] = actId;
+                activityModel.activityFormModel.id = actId;
                 activityModel.activityFormModel.mode = mode;
             }
 
