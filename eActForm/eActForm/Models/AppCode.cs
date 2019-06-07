@@ -118,15 +118,23 @@ namespace eActForm.Models
             List<Attachment> files = new List<Attachment>();
 
             msPreview = GetFileReportTomail_Preview(GridHtml, doc);
-            PreviewBytes = msPreview.ToArray();          
+      
+            PreviewBytes = msPreview.ToArray();
+            msPreview.Flush();
+            msPreview.Close();
+
+
             File.WriteAllBytes(rootPath, PreviewBytes);
 
-            if (PreviewBytes.Length != 0)
-            {
-                Attachment data_RepCashofSale = new Attachment(new MemoryStream(PreviewBytes), xlsxContent);
-                data_RepCashofSale.ContentDisposition.FileName = "eActForm.pdf";
-                files.Add(data_RepCashofSale);
-            }
+
+
+
+            //if (PreviewBytes.Length != 0)
+            //{
+            //    Attachment data_RepCashofSale = new Attachment(new MemoryStream(PreviewBytes), xlsxContent);
+            //    data_RepCashofSale.ContentDisposition.FileName = "eActForm.pdf";
+            //    files.Add(data_RepCashofSale);
+            //}
 
             return files;
         }

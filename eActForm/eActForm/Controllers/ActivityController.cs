@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -32,7 +33,7 @@ namespace eActForm.Controllers
             activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
             activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
-           
+
             activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
                 .GroupBy(item => item.activitySales)
                 .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
@@ -50,7 +51,7 @@ namespace eActForm.Controllers
                 activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
                 activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
                 activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
-               
+
             }
             else
             {
@@ -80,13 +81,13 @@ namespace eActForm.Controllers
                     return PartialView(getImageModel);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("ImageList => " + ex.Message);
             }
-          
+
             return PartialView();
-            
+
         }
 
         public ActionResult PreviewData(string activityId)
@@ -182,14 +183,14 @@ namespace eActForm.Controllers
                 foreach (string UploadedImage in Request.Files)
                 {
                     HttpPostedFileBase httpPostedFile = Request.Files[UploadedImage];
-                  
-                    string resultFilePath = "";  
+
+                    string resultFilePath = "";
                     string extension = Path.GetExtension(httpPostedFile.FileName);
                     int indexGetFileName = httpPostedFile.FileName.LastIndexOf('.');
                     var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + DateTime.Now.ToString("ddMMyyHHmm") + extension;
                     string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootUploadfiles"].ToString(), _fileName));
                     resultFilePath = UploadDirectory;
-                    BinaryReader b = new BinaryReader(httpPostedFile.InputStream);  
+                    BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
                     binData = b.ReadBytes(0);
                     httpPostedFile.SaveAs(resultFilePath);
 
@@ -254,14 +255,67 @@ namespace eActForm.Controllers
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc);
                 if (countresult > 0)
                 {
+                    TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
+                    getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId);
+                    string[] pathFile = new string[getImageModel.tbActImageList.Count];
+                    if (getImageModel.tbActImageList.Any())
+                    {
+                        int i = 0;
+                        foreach (var item in getImageModel.tbActImageList)
+                        {
+                            if (item.extension == ".pdf")
+                            {
+                                pathFile[i] = string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName);
+                            }
+                            i++;
+                        }
+                    }
+
+
+                    var rootPathInsert = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId+"_"));
                     GridHtml1 = GridHtml1.Replace("---", genDoc).Replace("<br>", "<br/>");
-                  
-                    var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
-                    AppCode.genPdfFile(GridHtml1, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+                    AppCode.genPdfFile(GridHtml1, new Document(PageSize.A4, 25, 25, 10, 10), rootPathInsert);
+
+
+                    PdfReader reader = null/* TODO Change to default(_) if this is not a reference type */;
+                    Document sourceDocument = null/* TODO Change to default(_) if this is not a reference type */;
+                    PdfCopy pdfCopyProvider = null/* TODO Change to default(_) if this is not a reference type */;
+                    PdfImportedPage importedPage;
+                    sourceDocument = new Document();
+                    var rootPathNewPDF = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
+                    pdfCopyProvider = new PdfCopy(sourceDocument, new System.IO.FileStream(rootPathNewPDF, System.IO.FileMode.Create));
+                    sourceDocument.Open();
+
+
+                    int page = get_pageCcount(rootPathInsert);
+                    reader = new PdfReader(rootPathInsert);
+                    for (int i = 1; i <= page; i++)
+                    {
+                        importedPage = pdfCopyProvider.GetImportedPage(reader, i);
+                        pdfCopyProvider.AddPage(importedPage);
+                    }
+
+
+                    for (int f = 0; f <= (pathFile.Length - 1); f++)
+                    {
+                        int pages = get_pageCcount(Server.MapPath(pathFile[f]));
+                        reader = new PdfReader(Server.MapPath(pathFile[f]));
+                        for (int i = 1; i <= pages; i++)
+                        {
+                            importedPage = pdfCopyProvider.GetImportedPage(reader, i);
+                            pdfCopyProvider.AddPage(importedPage);
+                        }
+                        reader.Close();
+                    }
+                    sourceDocument.Close();
+                    //System.IO.File.Delete(rootPathInsert);
+
+
+
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                     {
-                        ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                        EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
+                        // ApproveAppCode.updateApproveWaitingByRangNo(activityId);
+                        //EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
                     }
                 }
                 resultAjax.Success = true;
@@ -273,6 +327,19 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
             return Json(resultAjax, "text/plain");
+        }
+
+
+
+        private int get_pageCcount(string file)
+        {
+            var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using (StreamReader sr = new StreamReader(fs))
+            {
+                Regex regex = new Regex(@"/Type\s*/Page[^s]");
+                MatchCollection matches = regex.Matches(sr.ReadToEnd());
+                return matches.Count;
+            }
         }
 
     }
