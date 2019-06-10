@@ -118,12 +118,7 @@ namespace eActForm.Models
             List<Attachment> files = new List<Attachment>();
 
             msPreview = GetFileReportTomail_Preview(GridHtml, doc);
-      
             PreviewBytes = msPreview.ToArray();
-            msPreview.Flush();
-            msPreview.Close();
-
-
             File.WriteAllBytes(rootPath, PreviewBytes);
 
 
@@ -149,6 +144,8 @@ namespace eActForm.Models
                     using (FileStream file = new FileStream(pathFile, FileMode.Open, FileAccess.Read))
                     {
                         file.CopyTo(ms);
+                        file.Dispose();
+                        
                     }
                 }
                 return ms;
