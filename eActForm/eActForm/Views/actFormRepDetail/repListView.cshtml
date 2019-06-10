@@ -13,10 +13,10 @@
         </div>
     </div>
     <div class="col-md-4 col-xs-12"></div>
-    
+
 </div>
 
-<div id="Grid" class="row">
+<div id="Grid" class="row" style="background-color:white;">
     @if (Model.actFormRepDetailLists != null && Model.actFormRepDetailLists.Count > 0)
     {
         <div class="col-md-12 col-xs-12">
@@ -42,7 +42,7 @@
                 <thead>
                     <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
                         <th rowspan="3">ลำดับที่</th>
-                        <th rowspan="3"width="80px" style="text-align:center;">เลขที่ Activity</th>
+                        <th rowspan="3" width="80px" style="text-align:center;">เลขที่ Activity</th>
                         <th rowspan="3" width="100px" style="text-align:center;">ชื่อลูกค้า</th>
                         <th colspan="2" rowspan="2">ระยะเวลากิจกรรม</th>
                         <th colspan="2" rowspan="2">ระยะเวลาให้ทุน</th>
@@ -128,7 +128,15 @@
 
                             <td>@item.productName</td>
                             <td>@item.size</td>
-                            <td>@item.activityDetail</td>
+                            @if (item.activityNo == strActNo)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td>@item.activityDetail</td>
+                            }
+
                             <td>@item.typeTheme</td>
                             <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
                             <td>@string.Format("{0:n2}", item.compensate)</td>

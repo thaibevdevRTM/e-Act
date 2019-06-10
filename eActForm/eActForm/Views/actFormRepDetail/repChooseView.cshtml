@@ -1,0 +1,195 @@
+﻿@using eActForm.Models
+@model eActForm.Models.RepDetailModel.actFormRepDetails
+
+<div class="row">
+    <div class="col-md-4 col-xs-12"></div>
+    <div class="col-md-4 col-xs-12" style="padding: 0 30px 10px 30px;">
+        <div class="text-center">
+            <input type="hidden" name="GridHtml" />
+            <button type="submit" class="btn ink-reaction btn-success" id="btnSubmit" value="Export" style="width:100%;">
+                <i class="fa check-square-o"></i>&nbsp;Preview to Approve
+
+            </button>
+        </div>
+    </div>
+    <div class="col-md-4 col-xs-12"></div>
+
+</div>
+
+<div id="Grid" class="row">
+    @if (Model.actFormRepDetailLists != null && Model.actFormRepDetailLists.Count > 0)
+    {
+        <div class="col-md-12 col-xs-12">
+            <table>
+                <tr>
+                    <td>
+                        บริษัท โมเดิร์นเทรดแมนเนจเม้นท์ จำกัด
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        รายละเอียดขออนุมัติงบประมาณจัดกิจกรรมด้านส่งเสริมการขาย  @Model.actFormRepDetailLists[0].cusNameTH
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ประจำเดือน @ViewBag.MouthText
+                    </td>
+                </tr>
+            </table>
+
+            <table id="datatable" border="0" class="table table-striped jambo_table bulk_action">
+                <thead>
+                    <tr class="headings" style="text-align:center;">
+                        <th width="70px">#</th>
+                        <th width="70px">ลำดับที่</th>
+                        <th width="80px" style="text-align:center;">เลขที่ Activity</th>
+                        <th style="text-align:center;">ชื่อลูกค้า</th>
+                        <th style="text-align:center;">Create Date</th>
+                        <th colspan="2" rowspan="2" style="text-align:center;">ระยะเวลากิจกรรม</th>
+                        <th colspan="2" rowspan="2" style="text-align:center;">ระยะเวลาให้ทุน</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var index = 1; string strActNo = "";
+                    }
+                    @foreach (var item in Model.actFormRepDetailLists)
+                    {
+
+                        if (item.activityNo != strActNo)
+                        {
+                            <tr class="even pointer">
+                                <td class="a-center ">
+                                    <input type="checkbox" id="chk_@item.id"  class="icheckbox_flat-green" onchange="setDelFlagRepDetail('@item.id');" name="table_records">
+                                </td>
+                                <td class=" ">@index</td>
+                                <td class=" ">@item.activityNo</td>
+                                <td style="text-align:center;">@item.cusNameTH</td>
+                                @if (item.createdDate != null)
+                                {
+                                    <td width="100px">@item.createdDate.Value.ToString("dd/MM/yyyy")</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.activityPeriodSt != null)
+                                {
+                                    <td width="100px">@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.activityPeriodEnd != null)
+                                {
+                                    <td width="100px">@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.costPeriodSt != null)
+                                {
+                                    <td width="100px">@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                }
+                                else
+                                {
+                                    <td></td>}
+                                @if (item.costPeriodEnd != null)
+                                {
+                                    <td width="100px">@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @{strActNo = item.activityNo;
+                                }
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+
+    }
+</div>
+
+<div class="modal fade" id="previewModal" role="dialog" style="display:none">
+    <div id="divPreview">
+    </div>
+</div>
+
+<script type="text/javascript">
+    function setDelFlagRepDetail(id) {
+        console.log($("#chk_" + id).is(":checked"));
+        $.ajax({
+            url: '@Url.Action("repSetDelFlagRecodeDetail", "actFormRepDetail")',
+            data: {
+                actId: id,
+                delFlag: $("#chk_" + id).is(":checked")
+            },
+            dataType: "json",
+            type: 'POST'
+        }).done(function (response) {
+            console.log(response);
+        });
+    }
+
+    $(function () {
+        $("#btnSubmit").click(function () {
+            var startDate = $("#startDate").val();
+            $('#divPreview').load('@Url.Action("repListView", "actFormRepDetail", new { startDate = "" })');
+            $("#previewModal").modal('show');
+                    @*@*$("#WaitDialog").show();
+                    $.ajax({
+                        url: '@Url.Action("repListView", "actFormRepDetail")',
+                        data: {
+                            startDate: $("#startDate").val()
+                        },
+                        dataType: "json",
+                        type: 'POST'
+                    })
+                    successQuery(function (response) {
+                        console.log(response);
+                        $("#WaitDialog").hide();
+                        $("#divPreview").html(response);
+                        $("#previewModal").show();
+                    });*@
+                       
+
+
+                });
+            });
+
+            @*$(function () {
+                $("#btnSubmit").click(function () {
+                    $("#WaitDialog").show();
+                    $.ajax({
+                        url: '@Url.Action("repReportDetailApprove", "actFormRepDetail")',
+                        data: {
+                            gridHtml: $("#Grid").html(),
+                            customerId: $("#ddlCustomer").val(),
+                            productTypeId: $("#ddlProductType").val(),
+                            startDate: $("#startDate").val(),
+                            endDate: $("#endDate").val()
+                        },
+                        dataType: "json",
+                        type: 'POST'
+                    }).done(function (response) {
+                        $("#WaitDialog").hide();
+                        if (response.Success) {
+                            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+                        }
+                        else {
+                            doMsgFail("ไม่สามารถดำเนินการได้สำเร็จ กรุณาติดต่อ Admin ครับ");
+                        }
+                    });
+
+
+                });
+            });*@
+</script>

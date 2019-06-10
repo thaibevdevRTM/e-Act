@@ -64,14 +64,51 @@ namespace eActForm.Controllers
                     }
                     #endregion
                 }
-                TempData["ActFormRepDetail"] = model;
+                Session["ActFormRepDetail"] = model;
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return RedirectToAction("repListView", new { startDate = Request.Form["startDate"] });
+            return RedirectToAction("repChooseView", new { startDate = Request.Form["startDate"] });
+        }
+        public ActionResult repChooseView()
+        {
+            RepDetailModel.actFormRepDetails model = null;
+            try
+            {
+                model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
+
+        public JsonResult repSetDelFlagRecodeDetail(string actId,bool delFlag)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
+                model.actFormRepDetailLists
+                    .Where(r => r.id == actId)
+                    .Select(r => r.delFlag = delFlag
+                    ).ToList();
+                Session["ActFormRepDetail"] = model;
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return Json(result);
         }
 
         public ActionResult approvePositionSignature(ApproveFlowModel.approveFlowModel flowModel)
@@ -91,7 +128,7 @@ namespace eActForm.Controllers
             {
                 model.actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(actId);
                 model.flowList = ApproveFlowAppCode.getFlowByActFormId(actId);
-                TempData["ActFormRepDetail"] = model;
+                Session["ActFormRepDetail"] = model;
             }
             catch (Exception ex)
             {
@@ -100,12 +137,13 @@ namespace eActForm.Controllers
 
             return RedirectToAction("repListView", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
         }
+        
         public ActionResult repListView(string startDate)
         {
             RepDetailModel.actFormRepDetails model = null;
             try
             {
-                model = (RepDetailModel.actFormRepDetails)TempData["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
                 ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
             }
             catch (Exception ex)
@@ -123,7 +161,8 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate);
+                RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
+                string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
                 if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId) > 0)
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId));
