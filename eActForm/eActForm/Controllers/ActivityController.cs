@@ -198,7 +198,7 @@ namespace eActForm.Controllers
                     imageFormModel._image = binData;
                     imageFormModel.imageType = "UploadFile";
                     imageFormModel._fileName = _fileName.ToLower();
-                    imageFormModel.extension = extension;
+                    imageFormModel.extension = extension.ToLower();
                     imageFormModel.delFlag = false;
                     imageFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
                     imageFormModel.createdDate = DateTime.Now;
@@ -255,62 +255,29 @@ namespace eActForm.Controllers
                 countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc);
                 if (countresult > 0)
                 {
+
+
+                    var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
+                    GridHtml1 = GridHtml1.Replace("---", genDoc).Replace("<br>", "<br/>");
+                    AppCode.genPdfFile(GridHtml1, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
+
+
+
                     TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-                    getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId);
-                    string[] pathFile = new string[getImageModel.tbActImageList.Count];
+                    getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId).Where(x => x.extension == ".pdf").ToList();
+                    string[] pathFile = new string[getImageModel.tbActImageList.Count + 1];
+                    pathFile[0] = Server.MapPath(rootPathInsert);
                     if (getImageModel.tbActImageList.Any())
                     {
-                        int i = 0;
+                        int i = 1;
                         foreach (var item in getImageModel.tbActImageList)
                         {
-                            if (item.extension == ".pdf")
-                            {
-                                pathFile[i] = string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName);
-                            }
+                            pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
                             i++;
                         }
                     }
-
-
-                    var rootPathInsert = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId+"_"));
-                    GridHtml1 = GridHtml1.Replace("---", genDoc).Replace("<br>", "<br/>");
-                    AppCode.genPdfFile(GridHtml1, new Document(PageSize.A4, 25, 25, 10, 10), rootPathInsert);
-
-
-                    PdfReader reader = null/* TODO Change to default(_) if this is not a reference type */;
-                    Document sourceDocument = null/* TODO Change to default(_) if this is not a reference type */;
-                    PdfCopy pdfCopyProvider = null/* TODO Change to default(_) if this is not a reference type */;
-                    PdfImportedPage importedPage;
-                    sourceDocument = new Document();
-                    var rootPathNewPDF = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
-                    pdfCopyProvider = new PdfCopy(sourceDocument, new System.IO.FileStream(rootPathNewPDF, System.IO.FileMode.Create));
-                    sourceDocument.Open();
-
-
-                    int page = get_pageCcount(rootPathInsert);
-                    reader = new PdfReader(rootPathInsert);
-                    for (int i = 1; i <= page; i++)
-                    {
-                        importedPage = pdfCopyProvider.GetImportedPage(reader, i);
-                        pdfCopyProvider.AddPage(importedPage);
-                    }
-
-
-                    for (int f = 0; f <= (pathFile.Length - 1); f++)
-                    {
-                        int pages = get_pageCcount(Server.MapPath(pathFile[f]));
-                        reader = new PdfReader(Server.MapPath(pathFile[f]));
-                        for (int i = 1; i <= pages; i++)
-                        {
-                            importedPage = pdfCopyProvider.GetImportedPage(reader, i);
-                            pdfCopyProvider.AddPage(importedPage);
-                        }
-                        reader.Close();
-                    }
-                    sourceDocument.Close();
-                    //System.IO.File.Delete(rootPathInsert);
-
-
+                    var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
+                    var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
 
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                     {
@@ -329,19 +296,10 @@ namespace eActForm.Controllers
             return Json(resultAjax, "text/plain");
         }
 
+      
 
 
-        private int get_pageCcount(string file)
-        {
-            var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            using (StreamReader sr = new StreamReader(fs))
-            {
-                Regex regex = new Regex(@"/Type\s*/Page[^s]");
-                MatchCollection matches = regex.Matches(sr.ReadToEnd());
-                return matches.Count;
-            }
-        }
-
+        
     }
 }
 
