@@ -60,12 +60,11 @@
                         }
                         else
                         {
-                            if (item.detailGroup != null)
+                            if (item.detailGroup.Count >= 1)
                             {
-                                for (int i = 0; i < @item.detailGroup.Count; i++)
-                                {
-                                    <td class="font10 textLeft" onclick="showdetail('@item.productGroupId')"><span role="button">@item.detailGroup[i].productName @item.pack</span></td>
-                                }
+                               
+                                    <td class="font10 textLeft" onclick="showdetail('@item.productGroupId')"><span role="button">@item.detailGroup[0].productName @item.pack</span></td>
+                                
                             }
                         }
 
@@ -136,7 +135,6 @@
             var promotionGP = $('#promotionGP_' + rowIndex).val();
             var specialDisc = $("#specialDisc_" + rowIndex).val();
             var specialDiscBaht = $("#specialDiscBaht_" + rowIndex).val();
-            console.log(id);
             $.ajax({
             type: 'POST',
             url:  '@Url.Action("calDiscountProduct", "ActivityProductDetail")',
@@ -187,7 +185,6 @@
             type: 'POST',
                 success: function (response) {
                     rowCount = response.Data;
-                    console.log(response.success);
 
                     CallChangefunc();
                 }
