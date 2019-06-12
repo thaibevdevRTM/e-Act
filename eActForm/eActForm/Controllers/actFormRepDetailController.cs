@@ -213,12 +213,5 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
-        public ActionResult viewReportActivityBudget()
-        {
-            ReportActivityBudgetModels model = new ReportActivityBudgetModels();
-            model.activityBudgetList = QueryReportBudgetActivity.getReportBudgetActivity();
-
-            return PartialView(model);
-        }
     }
 }

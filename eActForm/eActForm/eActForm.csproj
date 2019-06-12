@@ -180,6 +180,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BusinessLayer\ActFormAppCode.cs" />
     <Compile Include="BusinessLayer\ActivityFormCommandHandler.cs" />
+    <Compile Include="BusinessLayer\ReportSummaryAppCode.cs" />
     <Compile Include="BusinessLayer\ApproveListAppCode.cs" />
     <Compile Include="BusinessLayer\ApproveRepDetailAppCode.cs" />
     <Compile Include="BusinessLayer\BudgetApproveListAppCode.cs" />
@@ -209,7 +210,6 @@
     <Compile Include="BusinessLayer\QueryGetMessage.cs" />
     <Compile Include="BusinessLayer\QueryGetProductCostDetail.cs" />
     <Compile Include="BusinessLayer\AuthenAppCode.cs" />
-    <Compile Include="BusinessLayer\QueryReportBudgetActivity.cs" />
     <Compile Include="BusinessLayer\RepDetailAppCode.cs" />
     <Compile Include="BusinessLayer\SearchAppCode.cs" />
     <Compile Include="BusinessLayer\SignatureAppCode.cs" />
@@ -238,6 +238,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SaleActualController.cs" />
     <Compile Include="Controllers\SignatureController.cs" />
+    <Compile Include="Controllers\summaryReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -252,6 +253,7 @@
     <Compile Include="Models\DocumentsModel.cs" />
     <Compile Include="Models\RepDetailModel.cs" />
     <Compile Include="Models\ReportActivityBudgetModel.cs" />
+    <Compile Include="Models\ReportSummaryModel.cs" />
     <Compile Include="Models\TB_Act_ActivityFormDocNo_Model.cs" />
     <Compile Include="Models\TB_Act_ActivityGroup_Model.cs" />
     <Compile Include="Models\ApproveFlowModel.cs" />
@@ -2274,10 +2276,14 @@
     <Content Include="Views\Documents\reportDetailListsView.cshtml" />
     <Content Include="Views\actFormRepDetail\viewReportActivityBudget.cshtml" />
     <Content Include="Views\actFormRepDetail\repChooseView.cshtml" />
+    <Content Include="Views\summaryReport\Index.cshtml" />
+    <Content Include="Views\summaryReport\viewReportActivityBudget.cshtml" />
+    <Content Include="Views\summaryReport\repSummaryView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
     <Folder Include="App_Data\" />
+    <Folder Include="BusinessLayer\QueryHandler\" />
     <Folder Include="error\" />
     <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
