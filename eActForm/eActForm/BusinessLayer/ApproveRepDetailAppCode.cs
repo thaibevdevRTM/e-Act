@@ -99,19 +99,24 @@ namespace eActForm.BusinessLayer
 
                 if (rtn > 0)
                 {
-                    foreach (RepDetailModel.actFormRepDetailModel item in model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList())
+                    string actIdTemp = "";
+                    foreach (RepDetailModel.actFormRepDetailModel item in model.actFormRepDetailLists)
                     {
-                        SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertRepDetailMapActForm"
-                        , new SqlParameter[] {
-                        new SqlParameter("@id",Guid.NewGuid().ToString())
-                        ,new SqlParameter("@repDetailId",id)
-                        ,new SqlParameter("@actFormId",item)
-                        ,new SqlParameter("@delFlag",false)
-                        ,new SqlParameter("@createdDate",DateTime.Now)
-                        ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
-                        ,new SqlParameter("@updatedDate",DateTime.Now)
-                        ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
-                        });
+                        if (actIdTemp != item.id)
+                        {
+                            SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertRepDetailMapActForm"
+                            , new SqlParameter[] {
+                                new SqlParameter("@id",Guid.NewGuid().ToString())
+                                ,new SqlParameter("@repDetailId",id)
+                                ,new SqlParameter("@actFormId",item.id)
+                                ,new SqlParameter("@delFlag",false)
+                                ,new SqlParameter("@createdDate",DateTime.Now)
+                                ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+                                ,new SqlParameter("@updatedDate",DateTime.Now)
+                                ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                            });
+                        }
+                        actIdTemp = item.id;
                     }
                 }
                 return id;

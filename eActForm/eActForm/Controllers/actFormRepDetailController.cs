@@ -73,11 +73,12 @@ namespace eActForm.Controllers
 
             return RedirectToAction("repChooseView", new { startDate = Request.Form["startDate"] });
         }
-        public ActionResult repChooseView()
+        public ActionResult repChooseView(string startDate)
         {
             RepDetailModel.actFormRepDetails model = null;
             try
             {
+                ViewBag.startDate = startDate;
                 model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
             }
             catch (Exception ex)
@@ -144,7 +145,7 @@ namespace eActForm.Controllers
             try
             {
                 model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
-                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag = false).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
                 ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
             }
             catch (Exception ex)
@@ -163,7 +164,7 @@ namespace eActForm.Controllers
             try
             {
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
-                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag = false).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
                 string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
                 if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId) > 0)
                 {

@@ -122,11 +122,17 @@ namespace eActForm.BusinessLayer
                         if (dr["countAll"].ToString() == dr["countStatusApproved"].ToString())
                         {
                             // all approved then send the email notification to user create
-                            List<ApproveModel.approveDetailModel> createUsers = ActFormAppCode.getUserCreateActForm(actFormId);
-                            strBody = string.Format(ConfigurationManager.AppSettings["emailAllApproveBody"]
-                                , createUsers.FirstOrDefault().empName
-                                , createUsers.FirstOrDefault().activityNo
-                                , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
+                            List<ApproveModel.approveDetailModel> createUsers = (emailType == AppCode.ApproveType.Activity_Form) ? ActFormAppCode.getUserCreateActForm(actFormId)
+                                : RepDetailAppCode.getUserCreateRepDetailForm(actFormId);
+
+                            strBody = (emailType == AppCode.ApproveType.Activity_Form)
+                                ? string.Format(ConfigurationManager.AppSettings["emailAllApproveBody"]
+                                    , createUsers.FirstOrDefault().empName
+                                    , createUsers.FirstOrDefault().activityNo
+                                    , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId))
+                                : string.Format(ConfigurationManager.AppSettings["emailAllApproveRepDetailBody"]
+                                    , createUsers.FirstOrDefault().empName
+                                    , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
 
                             sendEmailActForm(actFormId
                             , createUsers.FirstOrDefault().empEmail

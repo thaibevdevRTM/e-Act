@@ -11,6 +11,32 @@ namespace eActForm.BusinessLayer
 {
     public class RepDetailAppCode
     {
+        public static List<ApproveModel.approveDetailModel> getUserCreateRepDetailForm(string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserCreateRepDetailForm"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveModel.approveDetailModel()
+                             {
+                                 empId = dr["empId"].ToString(),
+                                 empName = dr["empName"].ToString(),
+                                 empEmail = dr["empEmail"].ToString(),
+                                 delFlag = (bool)dr["delFlag"],
+                                 createdDate = (DateTime?)dr["createdDate"],
+                                 createdByUserId = dr["createdByUserId"].ToString(),
+                                 updatedDate = (DateTime?)dr["updatedDate"],
+                                 updatedByUserId = dr["updatedByUserId"].ToString()
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getUserCreateRepDetailForm >>" + ex.Message);
+            }
+        }
+
         public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByActNo(List<RepDetailModel.actFormRepDetailModel> lists, string actNo)
         {
             try
