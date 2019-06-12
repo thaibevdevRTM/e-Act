@@ -209,6 +209,7 @@
     <Compile Include="BusinessLayer\QueryGetMessage.cs" />
     <Compile Include="BusinessLayer\QueryGetProductCostDetail.cs" />
     <Compile Include="BusinessLayer\AuthenAppCode.cs" />
+    <Compile Include="BusinessLayer\QueryReportBudgetActivity.cs" />
     <Compile Include="BusinessLayer\RepDetailAppCode.cs" />
     <Compile Include="BusinessLayer\SearchAppCode.cs" />
     <Compile Include="BusinessLayer\SignatureAppCode.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="Models\DashBoardModel.cs" />
     <Compile Include="Models\DocumentsModel.cs" />
     <Compile Include="Models\RepDetailModel.cs" />
+    <Compile Include="Models\ReportActivityBudgetModel.cs" />
     <Compile Include="Models\TB_Act_ActivityFormDocNo_Model.cs" />
     <Compile Include="Models\TB_Act_ActivityGroup_Model.cs" />
     <Compile Include="Models\ApproveFlowModel.cs" />
@@ -2152,6 +2154,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Documents\reportDetail.cshtml" />
     <Content Include="Views\Documents\reportDetailListsView.cshtml" />
+    <Content Include="Views\actFormRepDetail\viewReportActivityBudget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
