@@ -97,9 +97,8 @@ namespace eActForm.Controllers
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists
                     .Where(r => r.id == actId)
-                    .Select(r => r.delFlag = delFlag
+                    .Select(r => r.delFlag = !delFlag
                     ).ToList();
-                Session["ActFormRepDetail"] = model;
                 result.Success = true;
             }
             catch (Exception ex)
@@ -116,28 +115,6 @@ namespace eActForm.Controllers
         {
             return PartialView(flowModel);
         }
-
-        /// <summary>
-        /// for approve
-        /// </summary>
-        /// <param name="actId"></param>
-        /// <returns></returns>
-        public ActionResult repPreviewListView(string actId)
-        {
-            RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
-            try
-            {
-                model.actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(actId);
-                model.flowList = ApproveFlowAppCode.getFlowByActFormId(actId);
-                Session["ActFormRepDetail"] = model;
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message);
-            }
-
-            return RedirectToAction("repListView", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
-        }
         
         public ActionResult repListView(string startDate)
         {
@@ -145,7 +122,7 @@ namespace eActForm.Controllers
             try
             {
                 model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
-                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
+                //model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
                 ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
             }
             catch (Exception ex)
@@ -189,17 +166,52 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+        /// <summary>
+        /// for approve page
+        /// </summary>
+        /// <param name="actId"></param>
+        /// <returns></returns>
+        public ActionResult repPreviewListView(string actId)
+        {
+            RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
+            try
+            {
+                model.actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(actId);
+                model.flowList = ApproveFlowAppCode.getFlowByActFormId(actId);
+                Session["ActFormRepDetail"] = model;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return RedirectToAction("repListView", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
+        }
+
+        /// <summary>
+        /// for approve page
+        /// </summary>
+        /// <param name="gridHtml"></param>
+        /// <param name="actId"></param>
+        /// <returns></returns>
         [HttpPost]
-        [ValidateInput(false)]
+        [ValidateInput(false)]      
         public JsonResult repDetailGenPDF(string gridHtml, string actId)
         {
             var result = new AjaxResult();
             try
             {
-                var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actId));
-                List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
-                EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail, false);
                 result.Success = true;
+                if ((int)AppCode.ApproveStatus.ไม่อนุมัติ == (int)RepDetailAppCode.getRepDetailStatus(actId))
+                {
+                    EmailAppCodes.sendRejectRepDetail();
+                }
+                else
+                {
+                    var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actId));
+                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                    EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail, false);
+                }
             }
             catch (Exception ex)
             {

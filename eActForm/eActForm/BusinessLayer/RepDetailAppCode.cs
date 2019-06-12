@@ -11,6 +11,21 @@ namespace eActForm.BusinessLayer
 {
     public class RepDetailAppCode
     {
+        public static int getRepDetailStatus(string repDetailId)
+        {
+            try
+            {
+
+                object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getRepDetailStatus"
+                    , new SqlParameter[] { new SqlParameter("@repDetailId", repDetailId) });
+
+                return int.Parse(obj.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getRepDetailStatus >> " + ex.Message);
+            }
+        }
         public static List<ApproveModel.approveDetailModel> getUserCreateRepDetailForm(string actId)
         {
             try

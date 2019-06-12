@@ -44,6 +44,31 @@ namespace eActForm.BusinessLayer
                 ExceptionManager.WriteError("sendRequestCancelToAdmin >>" + ex.Message);
             }
         }
+        
+        public static void sendRejectRepDetail()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserAdmin");
+                string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], "");
+                string strBody = string.Format(ConfigurationManager.AppSettings["emailRejectRepDetailBody"], strLink);
+                string mailTo = "";
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
+                }
+                sendEmail(mailTo
+                    , ConfigurationManager.AppSettings["emailApproveCC"]
+                    , ConfigurationManager.AppSettings["emailRejectSubject"]
+                    , strBody
+                    , null);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("sendRequestCancelToAdmin >>" + ex.Message);
+            }
+        }
         public static void sendReject(string actFormId, AppCode.ApproveType emailType)
         {
             try

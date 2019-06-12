@@ -74,81 +74,84 @@
                                 @{ var index = 1; string strActNo = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0;}
                                 @foreach (var item in Model.actFormRepDetailLists)
                                 {
-                                    <tr class="gradeX">
+                                    if (item.delFlag == false)
+                                    {
+                                        <tr class="gradeX">
 
-                                        @if (item.activityNo == strActNo)
-                                        {
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        }
-                                        else
-                                        {
-                                            <td>@index</td>
-                                            <td>@item.activityNo</td>
-                                            <td>@item.cusNameTH</td>
-                                            if (item.activityPeriodSt != null)
+                                            @if (item.activityNo == strActNo)
                                             {
-                                                <td>@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             }
                                             else
+                                            {
+                                                <td>@index</td>
+                                                <td>@item.activityNo</td>
+                                                <td>@item.cusNameTH</td>
+                                                if (item.activityPeriodSt != null)
+                                                {
+                                                    <td>@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                if (item.activityPeriodEnd != null)
+                                                {
+                                                    <td>@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                if (item.costPeriodSt != null)
+                                                {
+                                                    <td>@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>}
+                                                if (item.costPeriodEnd != null)
+                                                {
+                                                    <td>@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>}
+                                                index++;
+                                            }
+
+                                            <td>@item.productName</td>
+                                            <td>@item.size</td>
+                                            @if (item.activityNo == strActNo)
                                             {
                                                 <td></td>
                                             }
-                                            if (item.activityPeriodEnd != null)
-                                            {
-                                                <td>@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
-                                            }
                                             else
                                             {
-                                                <td></td>
+                                                <td>@item.activityDetail</td>
                                             }
-                                            if (item.costPeriodSt != null)
-                                            {
-                                                <td>@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
-                                            }
-                                            else
-                                            {
-                                                <td></td>}
-                                            if (item.costPeriodEnd != null)
-                                            {
-                                                <td>@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
-                                            }
-                                            else
-                                            {
-                                                <td></td>}
-                                            index++;
-                                        }
 
-                                        <td>@item.productName</td>
-                                        <td>@item.size</td>
-                                        @if (item.activityNo == strActNo)
-                                        {
+                                            <td>@item.typeTheme</td>
+                                            <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
+                                            <td>@string.Format("{0:n2}", item.compensate)</td>
+                                            <td>@string.Format("{0:n2}", item.total)</td>
+                                            <td>@string.Format("{0:n2}", item.normalSale)</td>
+                                            <td>@string.Format("{0:n2}", item.promotionSale)</td>
+
                                             <td></td>
-                                        }
-                                        else
-                                        {
-                                            <td>@item.activityDetail</td>
-                                        }
+                                        </tr>
+                                        strActNo = item.activityNo;
+                                        sumTotal = sumTotal + item.total;
+                                        sumNormalSale = item.normalSale == "" ? sumNormalSale : sumNormalSale + decimal.Parse(item.normalSale);
+                                        sumNormalPromotion = item.promotionSale == "" ? sumNormalPromotion : sumNormalPromotion + decimal.Parse(item.promotionSale);
 
-                                        <td>@item.typeTheme</td>
-                                        <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
-                                        <td>@string.Format("{0:n2}", item.compensate)</td>
-                                        <td>@string.Format("{0:n2}", item.total)</td>
-                                        <td>@string.Format("{0:n2}", item.normalSale)</td>
-                                        <td>@string.Format("{0:n2}", item.promotionSale)</td>
-
-                                        <td></td>
-                                    </tr>
-                                    strActNo = item.activityNo;
-                                    sumTotal = sumTotal + item.total;
-                                    sumNormalSale = item.normalSale == "" ? sumNormalSale : sumNormalSale + decimal.Parse(item.normalSale);
-                                    sumNormalPromotion = item.promotionSale == "" ? sumNormalPromotion : sumNormalPromotion + decimal.Parse(item.promotionSale);
-
+                                    }
                                 }
 
                                 <tr>
@@ -162,6 +165,7 @@
                         </table>
 
                     </div>
+
 
                 }
 

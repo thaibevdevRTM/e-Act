@@ -36,6 +36,20 @@ namespace eActForm.BusinessLayer
                 throw new Exception("updateActRepDetailByApproveDetail >> " + ex.Message);
             }
         }
+        public static int updateActRepDetailByReject(string actId)
+        {
+            try
+            {
+                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusActRepDetailByApproveReject"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actId)
+                    ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("updateActRepDetailByReject >> " + ex.Message);
+            }
+        }
         public static List<RepDetailModel.actApproveRepDetailModel> getApproveRepDetailListsByEmpId()
         {
             try
