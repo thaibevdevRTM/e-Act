@@ -36,6 +36,20 @@ namespace eActForm.BusinessLayer
                 throw new Exception("updateActRepDetailByApproveDetail >> " + ex.Message);
             }
         }
+        public static int updateActRepDetailByReject(string actId)
+        {
+            try
+            {
+                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusActRepDetailByApproveReject"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actId)
+                    ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("updateActRepDetailByReject >> " + ex.Message);
+            }
+        }
         public static List<RepDetailModel.actApproveRepDetailModel> getApproveRepDetailListsByEmpId()
         {
             try
@@ -68,7 +82,7 @@ namespace eActForm.BusinessLayer
                 {
                     return new List<RepDetailModel.actApproveRepDetailModel>();
                 }
-                
+
 
             }
             catch (Exception ex)
@@ -76,12 +90,12 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getApproveRepDetailListsByEmpId >>" + ex.Message);
             }
         }
-        public static string insertActivityRepDetail(string customerId, string productTypeId, string startDate, string endDate)
+        public static string insertActivityRepDetail(string customerId, string productTypeId, string startDate, string endDate, RepDetailModel.actFormRepDetails model)
         {
             try
             {
                 string id = Guid.NewGuid().ToString();
-                SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertActivityRepDetail"
+                int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertActivityRepDetail"
                     , new SqlParameter[] {
                         new SqlParameter("@id",id)
                         ,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.รออนุมัติ)
@@ -96,6 +110,29 @@ namespace eActForm.BusinessLayer
                         ,new SqlParameter("@updatedDate",DateTime.Now)
                         ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
                     });
+
+                if (rtn > 0)
+                {
+                    string actIdTemp = "";
+                    foreach (RepDetailModel.actFormRepDetailModel item in model.actFormRepDetailLists)
+                    {
+                        if (actIdTemp != item.id)
+                        {
+                            SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertRepDetailMapActForm"
+                            , new SqlParameter[] {
+                                new SqlParameter("@id",Guid.NewGuid().ToString())
+                                ,new SqlParameter("@repDetailId",id)
+                                ,new SqlParameter("@actFormId",item.id)
+                                ,new SqlParameter("@delFlag",false)
+                                ,new SqlParameter("@createdDate",DateTime.Now)
+                                ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+                                ,new SqlParameter("@updatedDate",DateTime.Now)
+                                ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                            });
+                        }
+                        actIdTemp = item.id;
+                    }
+                }
                 return id;
             }
             catch (Exception ex)

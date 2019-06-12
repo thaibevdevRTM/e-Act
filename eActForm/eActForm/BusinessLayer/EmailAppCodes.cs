@@ -44,6 +44,31 @@ namespace eActForm.BusinessLayer
                 ExceptionManager.WriteError("sendRequestCancelToAdmin >>" + ex.Message);
             }
         }
+        
+        public static void sendRejectRepDetail()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserAdmin");
+                string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], "");
+                string strBody = string.Format(ConfigurationManager.AppSettings["emailRejectRepDetailBody"], strLink);
+                string mailTo = "";
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
+                }
+                sendEmail(mailTo
+                    , ConfigurationManager.AppSettings["emailApproveCC"]
+                    , ConfigurationManager.AppSettings["emailRejectSubject"]
+                    , strBody
+                    , null);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("sendRequestCancelToAdmin >>" + ex.Message);
+            }
+        }
         public static void sendReject(string actFormId, AppCode.ApproveType emailType)
         {
             try
@@ -122,11 +147,17 @@ namespace eActForm.BusinessLayer
                         if (dr["countAll"].ToString() == dr["countStatusApproved"].ToString())
                         {
                             // all approved then send the email notification to user create
-                            List<ApproveModel.approveDetailModel> createUsers = ActFormAppCode.getUserCreateActForm(actFormId);
-                            strBody = string.Format(ConfigurationManager.AppSettings["emailAllApproveBody"]
-                                , createUsers.FirstOrDefault().empName
-                                , createUsers.FirstOrDefault().activityNo
-                                , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
+                            List<ApproveModel.approveDetailModel> createUsers = (emailType == AppCode.ApproveType.Activity_Form) ? ActFormAppCode.getUserCreateActForm(actFormId)
+                                : RepDetailAppCode.getUserCreateRepDetailForm(actFormId);
+
+                            strBody = (emailType == AppCode.ApproveType.Activity_Form)
+                                ? string.Format(ConfigurationManager.AppSettings["emailAllApproveBody"]
+                                    , createUsers.FirstOrDefault().empName
+                                    , createUsers.FirstOrDefault().activityNo
+                                    , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId))
+                                : string.Format(ConfigurationManager.AppSettings["emailAllApproveRepDetailBody"]
+                                    , createUsers.FirstOrDefault().empName
+                                    , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
 
                             sendEmailActForm(actFormId
                             , createUsers.FirstOrDefault().empEmail

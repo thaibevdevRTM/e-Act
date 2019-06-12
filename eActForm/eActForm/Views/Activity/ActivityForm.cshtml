@@ -13,11 +13,6 @@
 
 <style type="text/css">
 
-    .my-bootbox-class .modal-dialog {
-        width: 400px;
-        font-size: 18px;
-    }
-
     .font8 {
         font-size: 8px;
     }
@@ -657,6 +652,13 @@
         if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
         if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
         if ($("#txtdateActivitySt").val() == "" && $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; }
+        else {
+            var startDate =  $("#txtdateActivitySt").val().split("-");
+            var endDate = $("#txtdateActivityEnd").val().split("-");
+            if (new Date(startDate[2], startDate[1], startDate[0]) >= new Date(endDate[2], endDate[1],endDate[0])) {
+                required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
+            }
+        }
         if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
        
         //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
@@ -676,7 +678,8 @@
                 data: {
                     statusId: 1,
                     Mode: $("#hdMode").val(),
-                    dateDoc: $("#txtdateDoc").val(),                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                    dateDoc: $("#txtdateDoc").val(),
+                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
                     str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
                     str_activityPeriodSt: $("#txtdateActivitySt").val(),
                     str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
