@@ -17,7 +17,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDate"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDetailSummarybyDate"
                       , new SqlParameter[] {
                         new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
@@ -25,7 +25,11 @@ namespace eActForm.BusinessLayer
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ReportSummaryModels.ReportSummaryModel()
                              {
-                                 activitySales = dr["chanelGroup"].ToString(),
+                                 id = Guid.NewGuid().ToString(),
+                                 productType = dr["productTypeTH"].ToString(),
+                                 productTypeId = dr["productTypeId"].ToString(),
+                                 repDetailId = dr["repDetailId"].ToString(),
+                                 activityNo = dr["activityNo"].ToString(),
                                  customerId = dr["customerId"].ToString(),
                                  customerName = dr["cusNameTH"].ToString(),
                                  createdDate = (DateTime?)dr["createdDate"],
@@ -39,11 +43,14 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModel> getReportSummary()
+        public static List<ReportSummaryModel> getReportSummary(string repId)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportBudgetActivity");
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportSummary"
+                     , new SqlParameter[] {
+                        new SqlParameter("@repId",repId)
+                    });
 
                 var result = (from DataRow d in ds.Tables[0].Rows
                               select new ReportSummaryModel()
@@ -52,6 +59,7 @@ namespace eActForm.BusinessLayer
                                   customerName = d["customerName"].ToString(),
                                   activitySales = d["activitySales"].ToString(),
                                   activityId = d["actid"].ToString(),
+                                  repDetailId = d["repDetailId"].ToString(),
                                   est = decimal.Parse(AppCode.checkNullorEmpty(d["est"].ToString())),
                                   crystal = decimal.Parse(AppCode.checkNullorEmpty(d["crystal"].ToString())),
                                   wranger = decimal.Parse(AppCode.checkNullorEmpty(d["wranger"].ToString())),
@@ -72,15 +80,15 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByRepNo(List<ReportSummaryModels.ReportSummaryModel> lists, string repNo)
+        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByProductType(List<ReportSummaryModels.ReportSummaryModel> lists, string producttypeId)
         {
             try
             {
-                return lists.Where(r => r.repDetailId == repNo).ToList();
+                return lists.Where(r => r.productTypeId == producttypeId).ToList();
             }
             catch (Exception ex)
             {
-                throw new Exception("getFilterSummaryDetailByRepNo >>" + ex.Message);
+                throw new Exception("getFilterSummaryDetailByProductType >>" + ex.Message);
             }
         }
 
@@ -92,7 +100,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception("getFilterSummaryDetailByRepNo >>" + ex.Message);
+                throw new Exception("getFilterSummaryDetailByCustomer >>" + ex.Message);
             }
         }
     }

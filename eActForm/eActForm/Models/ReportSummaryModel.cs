@@ -20,7 +20,7 @@ namespace eActForm.Models
 
         public class ReportSummaryModel : ActBaseModel
         {
-
+            public string id { get; set; }
             public string repDetailId { get; set; }
             public string customerId { get; set; }
             public string customerName { get; set; }
@@ -28,6 +28,9 @@ namespace eActForm.Models
             public string activitySalesId { get; set; }
             public string activityId { get; set; }
             public string activityName { get; set; }
+            public string productType { get; set; }
+            public string productTypeId { get; set; }
+            public string activityNo { get; set; }
             [DisplayFormat(DataFormatString = "{0:0.##}", ApplyFormatInEditMode = true)]
             public decimal? est { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]

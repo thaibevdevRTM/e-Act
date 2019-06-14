@@ -238,7 +238,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SaleActualController.cs" />
     <Compile Include="Controllers\SignatureController.cs" />
-    <Compile Include="Controllers\summaryReportController.cs" />
+    <Compile Include="Controllers\SummaryReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2274,11 +2274,11 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Documents\reportDetail.cshtml" />
     <Content Include="Views\Documents\reportDetailListsView.cshtml" />
-    <Content Include="Views\actFormRepDetail\viewReportActivityBudget.cshtml" />
     <Content Include="Views\actFormRepDetail\repChooseView.cshtml" />
     <Content Include="Views\summaryReport\Index.cshtml" />
     <Content Include="Views\summaryReport\viewReportActivityBudget.cshtml" />
     <Content Include="Views\summaryReport\repSummaryView.cshtml" />
+    <Content Include="Views\Shared\_searchForSummaryReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
