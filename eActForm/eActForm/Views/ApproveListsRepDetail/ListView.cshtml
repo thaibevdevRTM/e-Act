@@ -14,6 +14,7 @@
                 <tr style="background-color:#2B5D95;color:#ffffff;">
                     <th></th>
                     <th>Status</th>
+                    <th>Act No.</th>
                     <th>รายงานเดือน</th>
                     <th>Customer</th>
                     <th>Product Type</th>
@@ -30,6 +31,7 @@
                             @Html.ActionLink(" ", "index", "approve", new { actId = item.id ,type=AppCode.ApproveType.Report_Detail}, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
                         </td>
                         <td>@item.statusName</td>
+                        <td>@item.activityNo</td>
                         <td>@{var date = item.startDate == null ? "" : item.startDate.Value.ToString("MMM yyyy");} @date </td>
                         <td>@item.customerName</td>
                         <td>@item.productTypeName</td>

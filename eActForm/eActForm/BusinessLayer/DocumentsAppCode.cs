@@ -14,12 +14,13 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "uspGetActivityRepDetailAll");
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetActivityRepDetailAll");
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new DocumentsModel.actRepDetailModel()
                              {
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),
+                                 activityNo = dr["activityNo"].ToString(),
                                  statusName = dr["statusName"].ToString(),
                                  customerId = dr["customerId"].ToString(),
                                  customerName = dr["customerName"].ToString(),

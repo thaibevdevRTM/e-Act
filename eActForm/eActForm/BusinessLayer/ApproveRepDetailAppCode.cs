@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using Microsoft.ApplicationBlocks.Data;
 using eActForm.Models;
+using eActForm.BusinessLayer;
 namespace eActForm.BusinessLayer
 {
     public class ApproveRepDetailAppCode
@@ -62,6 +63,7 @@ namespace eActForm.BusinessLayer
                                  select new RepDetailModel.actApproveRepDetailModel()
                                  {
                                      id = dr["id"].ToString(),
+                                     activityNo = dr["activityNo"].ToString(),
                                      statusId = dr["statusId"].ToString(),
                                      statusName = dr["statusName"].ToString(),
                                      startDate = dr["startDate"] is DBNull ? null : (DateTime?)dr["startDate"],
@@ -95,10 +97,12 @@ namespace eActForm.BusinessLayer
             try
             {
                 string id = Guid.NewGuid().ToString();
+                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc("repDetail").FirstOrDefault().docNo));
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertActivityRepDetail"
                     , new SqlParameter[] {
                         new SqlParameter("@id",id)
                         ,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.รออนุมัติ)
+                        ,new SqlParameter("@actNo",docNo)
                         ,new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@reference","")
