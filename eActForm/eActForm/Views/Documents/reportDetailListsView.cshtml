@@ -18,6 +18,7 @@
                 <tr style="background-color:#2B5D95;color:#ffffff;">
                     <th width="150" style="text-align:center;">#</th>
                     <th>Status</th>
+                    <th>Act No.</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Customer</th>
@@ -54,6 +55,7 @@
 
                     </td>
                     <td>@item.statusName</td>
+                    <td>@item.activityNo</td>
                     <td>@{var date = item.startDate == null ? "" : item.startDate.Value.ToString("dd/MM/yyyy");} @date </td>
                     <td>@{date = item.endDate == null ? "" : item.endDate.Value.ToString("dd/MM/yyyy");} @date </td>
                     <td>@item.customerName</td>

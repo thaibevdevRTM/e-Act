@@ -36,6 +36,7 @@ namespace eActForm.Models
         {
             public string id { get; set; }
             public string statusId { get; set; }
+            public string activityNo { get; set; }
             public string statusName { get; set; }
             public DateTime? startDate { get; set; }
             public DateTime? endDate { get; set; }
