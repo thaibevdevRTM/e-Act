@@ -16,6 +16,7 @@ namespace eActForm.Models
         {
             public string id { get; set; }
             public string statusId { get; set; }
+            public string activityNo { get; set; }
             public string statusName { get; set; }
             public string customerId { get; set; }
             public string customerName { get; set; }

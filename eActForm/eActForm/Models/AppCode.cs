@@ -45,6 +45,7 @@ namespace eActForm.Models
             , อนุมัติ = 3
             , Success = 4
             , ไม่อนุมัติ = 5
+            , เพิ่มเติม = 7 // for Report Detail
         }
         public enum StatusType
         {

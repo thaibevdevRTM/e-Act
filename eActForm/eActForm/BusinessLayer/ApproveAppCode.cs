@@ -114,7 +114,6 @@ namespace eActForm.BusinessLayer
                 }
                 else if (approveType == AppCode.ApproveType.Report_Detail.ToString())
                 {
-                    //
                     rtn = updateActRepDetailStatus(statusId, actFormId);
                 }
                 return rtn;
@@ -134,7 +133,7 @@ namespace eActForm.BusinessLayer
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
                     // update reject
-                    //rtn += updateActFormWithApproveReject(actFormId);
+                    rtn += ApproveRepDetailAppCode.updateActRepDetailByReject(actFormId);
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {

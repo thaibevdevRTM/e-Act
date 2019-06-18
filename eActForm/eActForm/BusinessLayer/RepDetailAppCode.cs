@@ -11,6 +11,21 @@ namespace eActForm.BusinessLayer
 {
     public class RepDetailAppCode
     {
+        public static int getRepDetailStatus(string repDetailId)
+        {
+            try
+            {
+
+                object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getRepDetailStatus"
+                    , new SqlParameter[] { new SqlParameter("@repDetailId", repDetailId) });
+
+                return int.Parse(obj.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getRepDetailStatus >> " + ex.Message);
+            }
+        }
         public static List<ApproveModel.approveDetailModel> getUserCreateRepDetailForm(string actId)
         {
             try
@@ -52,7 +67,14 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                return lists.Where(r => r.statusId == statusId).ToList();
+                if (statusId == ((int)AppCode.ApproveStatus.เพิ่มเติม).ToString())
+                {
+                    return lists.Where(r => r.createdDate >= r.activityPeriodSt).ToList();
+                }
+                else
+                {
+                    return lists.Where(r => r.statusId == statusId && r.createdDate < r.activityPeriodSt).ToList();
+                }
             }
             catch (Exception ex)
             {
