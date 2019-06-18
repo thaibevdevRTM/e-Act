@@ -161,15 +161,17 @@ namespace eActForm.Controllers
 
                 decimal getPackProduct = QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().unit / QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().pack;
 
-                decimal p_normalGp = AppCode.checkNullorEmpty(saleNormal) == "0" ? 0 : ((decimal.Parse(saleNormal) - ((p_disCount3 * decimal.Parse("1.07")) / getPackProduct))
+                decimal p_normalGp = AppCode.checkNullorEmpty(saleNormal) == "0" ? 0 : 
+                    ((decimal.Parse(saleNormal) - ((p_disCount3 * decimal.Parse("1.07")) / getPackProduct))
                      / decimal.Parse(saleNormal)) * 100;
 
                 p_normalGp = p_normalGp < 0 ? p_normalGp * -1 : p_normalGp;
 
                 decimal p_PromotionCost = AppCode.checkNullorEmpty(model.specialDisc.ToString()) == "0" && AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()) == "0" || p_disCount3 == 0 ? p_disCount3 : (p_disCount3 - (p_disCount3 * (decimal.Parse(model.specialDisc.ToString()) / 100))) - decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
 
-                decimal p_PromotionGp = AppCode.checkNullorEmpty(saleIn) == "0" ? 0 : ((decimal.Parse(saleIn) - (p_PromotionCost * decimal.Parse("1.07")))
-                  / getPackProduct / decimal.Parse(AppCode.checkNullorEmpty(saleIn))) * 100;
+                decimal p_PromotionGp = AppCode.checkNullorEmpty(saleIn) == "0" ? 0 : 
+                    ((decimal.Parse(saleIn) - ((p_PromotionCost * decimal.Parse("1.07")) / getPackProduct )) 
+                    / decimal.Parse(AppCode.checkNullorEmpty(saleIn))) * 100;
 
                 p_PromotionGp = p_PromotionGp > 0 ? p_PromotionGp : p_PromotionGp * -1;
 
