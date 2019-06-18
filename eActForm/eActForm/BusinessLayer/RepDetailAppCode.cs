@@ -67,7 +67,14 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                return lists.Where(r => r.statusId == statusId).ToList();
+                if (statusId == ((int)AppCode.ApproveStatus.เพิ่มเติม).ToString())
+                {
+                    return lists.Where(r => r.createdDate >= r.activityPeriodSt).ToList();
+                }
+                else
+                {
+                    return lists.Where(r => r.statusId == statusId && r.createdDate < r.activityPeriodSt).ToList();
+                }
             }
             catch (Exception ex)
             {

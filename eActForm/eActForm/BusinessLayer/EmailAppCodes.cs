@@ -44,7 +44,7 @@ namespace eActForm.BusinessLayer
                 ExceptionManager.WriteError("sendRequestCancelToAdmin >>" + ex.Message);
             }
         }
-        
+
         public static void sendRejectRepDetail()
         {
             try
@@ -80,15 +80,15 @@ namespace eActForm.BusinessLayer
                     var lists = (from m in models.approveDetailLists
                                  where (m.statusId != "")
                                  select m).ToList();
-                    string strMailTo = "";
+                    string strMailTo = "", strMailCc = "";
                     foreach (ApproveModel.approveDetailModel m in lists)
                     {
-                        strMailTo = (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email
+                        strMailCc += (strMailCc == "") ? m.empEmail : "," + m.empEmail; // get list email
                     }
                     List<ApproveModel.approveDetailModel> createUsers = ActFormAppCode.getUserCreateActForm(actFormId);
                     foreach (ApproveModel.approveDetailModel m in createUsers)
                     {
-                        strMailTo = (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email
+                        strMailTo += (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email
                     }
                     #endregion
 
@@ -103,6 +103,7 @@ namespace eActForm.BusinessLayer
 
                     sendEmailActForm(actFormId
                         , strMailTo
+                        , strMailCc
                         , ConfigurationManager.AppSettings["emailRejectSubject"]
                         , strBody
                         , emailType);
@@ -129,6 +130,7 @@ namespace eActForm.BusinessLayer
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
                             , item.empEmail
+                            , ""
                             , strSubject
                             , strBody
                             , emailType);
@@ -161,6 +163,7 @@ namespace eActForm.BusinessLayer
 
                             sendEmailActForm(actFormId
                             , createUsers.FirstOrDefault().empEmail
+                            , ""
                             , ConfigurationManager.AppSettings["emailAllApprovedSubject"]
                             , strBody
                             , emailType);
@@ -175,10 +178,10 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        private static void sendEmailActForm(string actFormId, string mailTo, string strSubject, string strBody, AppCode.ApproveType emailType)
+        private static void sendEmailActForm(string actFormId, string mailTo, string mailCC, string strSubject, string strBody, AppCode.ApproveType emailType)
         {
             List<Attachment> files = new List<Attachment>();
-            string[] pathFile = new string[10]; 
+            string[] pathFile = new string[10];
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
             pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
                 HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
@@ -186,7 +189,7 @@ namespace eActForm.BusinessLayer
 
             TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
             getImageModel.tbActImageList = QueryGetImageById.GetImage(actFormId);
-            if(getImageModel.tbActImageList.Any())
+            if (getImageModel.tbActImageList.Any())
             {
                 int i = 1;
                 foreach (var item in getImageModel.tbActImageList)
@@ -194,7 +197,7 @@ namespace eActForm.BusinessLayer
                     if (item.extension == ".pdf")
                     {
                         pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-                       
+
                     }
                     i++;
                 }
@@ -209,7 +212,7 @@ namespace eActForm.BusinessLayer
             }
 
             sendEmail(mailTo
-                    , ConfigurationManager.AppSettings["emailApproveCC"]
+                    , mailCC == "" ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC
                     , strSubject
                     , strBody
                     , files);
