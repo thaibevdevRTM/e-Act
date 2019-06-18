@@ -1,122 +1,169 @@
 ﻿
 @model eActForm.Models.ReportSummaryModels
 
-@{
-    /**/
+<div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <div style=""></div>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="Grid" style="width:97%; margin-left:20px;">
 
-    ViewBag.Title = "index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
-<div class="row">
-    <div class="col-md-4 col-xs-12"></div>
-    <div class="col-md-4 col-xs-12" style="padding: 0 30px 10px 30px;">
-        <div class="text-center">
-            <input type="hidden" name="GridHtml" />
-            <button type="submit" class="btn ink-reaction btn-success" id="btnSubmitReport" value="Export" style="width:100%;">
-                <i class="fa check-square-o"></i>&nbsp;Send to Approve
 
-            </button>
+                <div class="row">
+                    <div style="text-align: center;">
+                        บริษัท โมเดิร์นเทรดแมนเนจเม้นท์ จำกัด
+                    </div>
+                    <div style="text-align: center;">
+                        รายละเอียดขออนุมัติงบประมาณจัดกิจกรรมด้านส่งเสริมการขาย
+                    </div>
+                    <div class="center">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <table id="datatable" border="0" style="text-align:center;font-family:Angsana New;font-size:10pt;" class="table table-striped table-bordered dt-responsive nowrap">
+                        <thead>
+                            <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
+                                <th rowspan="3">ลำดับที่</th>
+                                <th rowspan="3" width="80px" style="text-align:center;">ชื่อลูกค้า</th>
+                                <th colspan="1" style="text-align:center;">กลุ่มกิจกรรม</th>
+                                <th colspan="9" style="text-align:center;">ประมาณการค่าใช้จ่าย</th>
+                                <th rowspan="3">หมายเหตุ</th>
+                            </tr>
+                            <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
+                                <th>14 กลุ่ม</th>
+                                <th>Est</th>
+                                <th>Crystal</th>
+                                <th>Wranger</th>
+                                <th>100 Plus</th>
+                                <th>Jubjai</th>
+                                <th>Oishi</th>
+                                <th>Soda</th>
+                                <th>Water</th>
+                                <th>รวม</th>
+                            </tr>
+                        <thead>
+                        <tbody>
+                            @{ int countRow = 1;
+                                string activityId = ""; }
+                            @for (int i = 0; i < Model.activitySummaryList.Count; i++)
+                            {
+                                <tr class="gradeX">
+                                    <td>
+                                        @countRow
+                                    </td>
+                                    <td>
+                                        @if (activityId != Model.activitySummaryList[i].repDetailId)
+                                        {
+                                            @Model.activitySummaryList[i].customerName
+                                        }
+
+                                    </td>
+                                    <td>
+                                        @Model.activitySummaryList[i].activitySales
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(x => x.activitySummaryList[i].est)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(x => x.activitySummaryList[i].crystal)
+                                        @*@Model.activityBudgetList[i].crystal*@
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(x => x.activitySummaryList[i].wranger)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(x => x.activitySummaryList[i].plus100)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(x => x.activitySummaryList[i].jubjai)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(x => x.activitySummaryList[i].oishi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(x => x.activitySummaryList[i].soda)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(x => x.activitySummaryList[i].water)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(x => x.activitySummaryList[i].total)
+                                    </td>
+                                    <td>
+                                        @Model.activitySummaryList[i].remark
+                                    </td>
+                                </tr>
+
+                                if (activityId != Model.activitySummaryList[i].repDetailId)
+                                {
+                                    countRow++;
+                                    activityId = Model.activitySummaryList[i].repDetailId;
+                                }
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="pull-right" style="margin-right:10px;">
+                            @if (Model.activitySummaryList != null && Model.activitySummaryList.Count > 0)
+                            {
+                                @Html.Action("approvePositionSignature", "actFormRepDetail", new { flowModel = Model.flowList })
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-12"></div>
+                    <div class="col-md-4 col-xs-12" style="padding: 0 30px 10px 30px;">
+                        <div class="text-center">
+                            <input type="hidden" name="GridHtml" />
+                            <button type="submit" class="btn ink-reaction btn-success" id="btnSubmitReport" value="Export" style="width:100%;">
+                                <i class="fa check-square-o"></i>&nbsp;Send to Approve
+
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div style="text-align: center;">
-        บริษัท โมเดิร์นเทรดแมนเนจเม้นท์ จำกัด
-    </div>
-    <div style="text-align: center;">
-        รายละเอียดขออนุมัติงบประมาณจัดกิจกรรมด้านส่งเสริมการขาย
-    </div>
-    <div class="center">
 
-    </div>
-</div>
-<div class="row">
-    <table id="datatable" border="0" style="text-align:center;font-family:Angsana New;font-size:10pt;" class="table table-striped table-bordered dt-responsive nowrap">
-        <thead>
-            <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
-                <th rowspan="3">ลำดับที่</th>
-                <th rowspan="3" width="80px" style="text-align:center;">ชื่อลูกค้า</th>
-                <th colspan="1" style="text-align:center;">กลุ่มกิจกรรม</th>
-                <th colspan="9" style="text-align:center;">ประมาณการค่าใช้จ่าย</th>
-                <th rowspan="3">หมายเหตุ</th>
-            </tr>
-            <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
-                <th>14 กลุ่ม</th>
-                <th>Est</th>
-                <th>Crystal</th>
-                <th>Wranger</th>
-                <th>100 Plus</th>
-                <th>Jubjai</th>
-                <th>Oishi</th>
-                <th>Soda</th>
-                <th>Water</th>
-                <th>รวม</th>
-            </tr>
-        <thead>
-        <tbody>
-            @{ int countRow = 1;}
-            @for (int i = 1; i < Model.activitySummaryList.Count; i++)
-            {
-                <tr class="gradeX">
-                    <td>
-                        @i
-                    </td>
-                    <td>
-                        @if (i == 1)
-                        {
-                            @Model.activitySummaryList[i].customerName
-                        }
-                        else if (Model.activitySummaryList[i].activityId != Model.activitySummaryList[i - 1].activityId)
-                        {
-                            @Model.activitySummaryList[i].customerName
-                        }
+<script type="text/javascript">
+            $(function () {
+                $("#btnSubmitReport").click(function () {
+                    $("#previewModal").modal('hide');
+                    $("#WaitDialog").show();
+                    $.ajax({
+                        url: '@Url.Action("repReportSummaryApprove", "SummaryReport")',
+                        data: {
+                            gridHtml: $("#Grid").html(),
+                            customerId: $("#ddlCustomer").val(),
+                            productTypeId: $("#ddlProductType").val(),
+                            startDate: $("#startDate").val(),
+                            endDate: $("#endDate").val()
+                        },
+                        dataType: "json",
+                        type: 'POST'
+                    }).done(function (response) {
+                        $("#WaitDialog").hide();
+                        if (response.Success) {
+                            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+                            }
+                            else {
+                            doMsgFail("ไม่สามารถดำเนินการได้สำเร็จ กรุณาติดต่อ Admin ครับ");
+                            }
+                    });
 
-                    </td>
-                    <td>
-                        @Model.activitySummaryList[i].activitySales
-                    </td>
-                    <td>
-                        @Model.activitySummaryList[i].est
-                    </td>
-                    <td>
-                        @Html.DisplayFor(x => x.activitySummaryList[i].crystal)
-                        @*@Model.activityBudgetList[i].crystal*@
-                    </td>
-                    <td>
-                        @Model.activitySummaryList[i].wranger
-                    </td>
-                    <td>
-                        @Model.activitySummaryList[i].plus100
-                    </td>
-                    <td>
-                        @Model.activitySummaryList[i].jubjai
-                    </td>
-                    <td>
-                        @Model.activitySummaryList[i].oishi
-                    </td>
-                    <td>
-                        @Model.activitySummaryList[i].soda
-                    </td>
-                    <td>
-                        @Model.activitySummaryList[i].water
-                    </td>
-                    <td>
-                        @Model.activitySummaryList[i].total
-                    </td>
-                    <td>
-                        @Model.activitySummaryList[i].remark
-                    </td>
-                </tr>
 
-                if (Model.activitySummaryList[i].activityId != Model.activitySummaryList[i - 1].activityId)
-                {
-                    countRow++;
-                }
-            }
-        </tbody>
-
-    </table>
-</div>
-
+                });
+            });
+</script>

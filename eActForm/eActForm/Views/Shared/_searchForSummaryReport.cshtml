@@ -1,28 +1,6 @@
 ﻿@model eActForm.Models.SearchActivityModels
 
-<div class="form-group">
-    <div class="col-md-6 col-xs-12">
-        <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                Product Type<span class="required"></span>
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.productTypelist, new SelectList(Model.productTypelist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductType", Name = "ddlProductType" })
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-xs-12">
-        <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
-                Customer<span class="required"></span>
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.customerslist, new SelectList(Model.customerslist, "id", "cusNameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCustomer", Name = "ddlCustomer" })
-                <input type="hidden" id="txtchanel" class="form-control textboxcss" readonly>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="form-group">
     <div class="col-md-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">

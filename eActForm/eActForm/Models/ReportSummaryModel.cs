@@ -10,6 +10,7 @@ namespace eActForm.Models
     {
 
         public List<ReportSummaryModel> activitySummaryList { get; set; }
+        public ApproveFlowModel.approveFlowModel flowList { get; set; }
 
         public ReportSummaryModels()
         {
@@ -31,7 +32,7 @@ namespace eActForm.Models
             public string productType { get; set; }
             public string productTypeId { get; set; }
             public string activityNo { get; set; }
-            [DisplayFormat(DataFormatString = "{0:0.##}", ApplyFormatInEditMode = true)]
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? est { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? crystal { get; set; }

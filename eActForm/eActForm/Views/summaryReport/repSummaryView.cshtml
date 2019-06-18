@@ -91,8 +91,8 @@
     }
 </div>
 
-<div class="modal fade" id="previewModal" role="dialog" style="display:none">
-    <div id="divPreview">
+<div class="modal fade" id="previewSummaryModal" role="dialog" style="display:none">
+    <div id="divSummaryPreview">
     </div>
 </div>
 
@@ -113,8 +113,8 @@
 
     $(function () {
         $("#btnSelected").click(function () {
-            $('#divPreview').load('@Url.Action("viewReportActivityBudget", "SummaryReport", new { startDate = @ViewBag.startDate })');
-            $("#previewModal").modal('show');
+            $('#divSummaryPreview').load('@Url.Action("viewReportActivityBudget", "SummaryReport", new { startDate = @ViewBag.startDate })');
+            $("#previewSummaryModal").modal('show');
         });
     });
 

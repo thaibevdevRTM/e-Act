@@ -2,6 +2,7 @@
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -13,6 +14,69 @@ namespace eActForm.BusinessLayer
 {
     public class ReportSummaryAppCode
     {
+
+        public static ApproveFlowModel.approveFlowModel getFlowByActFormId(string actId)
+        {
+            try
+            {
+                ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowMainByActFormId"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApprove()
+                             {
+                                 id = dr["id"].ToString(),
+                                 flowNameTH = dr["flowNameTH"].ToString(),
+                                 cusNameTH = dr["cusNameTH"].ToString(),
+                                 cusNameEN = dr["cusNameEN"].ToString(),
+                                 nameTH = dr["nameTH"].ToString(),
+                             }).ToList();
+                model.flowMain = lists[0];
+                model.flowDetail = getFlowDetailWithApproveSummaryDetail(model.flowMain.id, actId);
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFlowByActFormId >>" + ex.Message);
+            }
+        }
+
+
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailWithApproveSummaryDetail(string flowId, string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveWithStatusDetail"
+                    , new SqlParameter[] {
+                        new SqlParameter("@flowId", flowId)
+                        ,new SqlParameter("@actFormId", actId)
+                    });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApproveDetail()
+                             {
+                                 id = dr["id"].ToString(),
+                                 rangNo = (int)dr["rangNo"],
+                                 empId = dr["empId"].ToString(),
+                                 empEmail = dr["empEmail"].ToString(),
+                                 empFNameTH = dr["empFNameTH"].ToString(),
+                                 empLNameTH = dr["empLNameTH"].ToString(),
+                                 empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
+                                 approveGroupName = dr["approveGroupName"].ToString(),
+                                 approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
+                                 isShowInDoc = (bool)dr["showInDoc"],
+                                 description = dr["description"].ToString(),
+                                 statusId = dr["statusId"].ToString(),
+                                 remark = dr["remark"].ToString(),
+                                 imgSignature = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFlowDetailWithApproveDetail >>" + ex.Message);
+            }
+        }
+
         public static List<ReportSummaryModels.ReportSummaryModel> getSummaryDetailReportByDate(string startDate, string endDate)
         {
             try
@@ -101,6 +165,79 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 throw new Exception("getFilterSummaryDetailByCustomer >>" + ex.Message);
+            }
+        }
+
+        public static string insertActivitySummaryDetail(string customerId, string productTypeId, string startDate, string endDate, ReportSummaryModels model)
+        {
+            try
+            {
+                string id = Guid.NewGuid().ToString();
+                int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertSummaryDetail"
+                    , new SqlParameter[] {
+                        new SqlParameter("@id",id)
+                        ,new SqlParameter("@activityNo","")
+                        ,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.รออนุมัติ)
+                        ,new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
+                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
+                        ,new SqlParameter("@customerId",customerId)
+                        ,new SqlParameter("@productTypeId",productTypeId)
+                        ,new SqlParameter("@delFlag",false)
+                        ,new SqlParameter("@createdDate",DateTime.Now)
+                        ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+                        ,new SqlParameter("@updatedDate",DateTime.Now)
+                        ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                    });
+
+                if (rtn > 0)
+                {
+                    string actIdTemp = "";
+                    foreach (var item in model.activitySummaryList)
+                    {
+                        if (actIdTemp != item.id)
+                        {
+                            SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertSummaryMapForm"
+                            , new SqlParameter[] {
+                                new SqlParameter("@id",Guid.NewGuid().ToString())
+                                ,new SqlParameter("@repDetailId",item.repDetailId)
+                                ,new SqlParameter("@summaryId",id)
+                                ,new SqlParameter("@delFlag",false)
+                                ,new SqlParameter("@createdDate",DateTime.Now)
+                                ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+                                ,new SqlParameter("@updatedDate",DateTime.Now)
+                                ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                            });
+                        }
+                        actIdTemp = item.id;
+                    }
+                }
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("insertActivitySummaryDetail >>" + ex.Message);
+            }
+        }
+
+
+        public static int insertApproveForReportSummaryDetail(string customerId, string productTypeId, string summaryId)
+        {
+            try
+            {
+                int rtn = 0;
+                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowForReportDetail(
+                    ConfigurationManager.AppSettings["subjectSummaryId"]
+                    , customerId
+                    , productTypeId);
+                if (ApproveAppCode.insertApproveByFlow(flowModel, summaryId) > 0)
+                {
+                    rtn = ApproveAppCode.updateApproveWaitingByRangNo(summaryId);
+                }
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("insertApproveForReportSummaryDetail >>" + ex.Message);
             }
         }
     }
