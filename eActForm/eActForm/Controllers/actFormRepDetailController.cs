@@ -19,6 +19,11 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
+            models.approveStatusList.Add(new ApproveModel.approveStatus()
+            { id = "7",
+                nameTH = "เพิ่มเติม",
+                nameEN = "เพิ่มเติม",
+            });
             return View(models);
         }
 

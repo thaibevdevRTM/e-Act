@@ -55,13 +55,13 @@
                                 if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
                                 {
                                     <td>
-                                        <img style="text-align:center;" width="150" height="100" src="@Model.approveDetailLists[index].ImgName" />
+                                        <img style="text-align:center;" width="150" height="90" src="@Model.approveDetailLists[index].ImgName" />
                                     </td>
                                 }
                                 else
                                 {
                                     <td>
-                                        <div style="text-align:center;height:100px;"></div>
+                                        <div style="text-align:center;height:90px;"></div>
                                     </td>
                                 }
                             }
@@ -75,7 +75,7 @@
                             if (item.isShowInDoc)
                             {
                                 <td>
-                                    <div style="text-align:center; margin-top:20px; font-size:12.5px;">@item.empFNameTH @item.empLNameTH</div>
+                                    <div style="text-align:center; margin-top:5px; font-size:12.5px;">@item.empFNameTH @item.empLNameTH</div>
                                 </td>
                             }
                         }
