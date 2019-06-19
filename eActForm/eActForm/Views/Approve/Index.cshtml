@@ -14,102 +14,114 @@
 
 <h2>การอนุมัติ</h2>
 <hr />
-<div class="row">
-    <div class="col-md-4 col-xs-12">
-        <h3>ประวัติการอนุมัติ</h3>
-        <hr />
-        @Html.Action("approveLists", "Approve", Model)
-    </div>
-    <div class="col-md-8 col-xs-12">
-        <h3>เอกสารขออนุมัติ</h3>
-        <hr />
-        @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
 
-        @using (Ajax.BeginForm("insertApprove", "Approve"
-, new AjaxOptions {  HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery"}
-, new { id = "formApprove", @class = "form-horizontal form-label-left" }))
-        {
-            var item = Model.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
-            <h3>อนุมัติ</h3>
+@if (ViewBag.messCannotFindSignature != null)
+{
+    <div class="loading" style="text-align: center;">
+        <img src="~/images/warning_error.png" style="margin-top:100px;width:100px;height:100px;" />
+        <div style="margin-top: 10px; color: white">
+            <p class="text-danger"><h2>ไม่พบลายเซ็นของคุณในระบบ!!! <br />กรุณาเพิ่มลายเซ็นก่อนอนุมัติเอกสาร</h2></p>
+            @Html.ActionLink("เพิ่มลายเซ็นในระบบ Click", "index", "Signature")
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4 col-xs-12">
+            <h3>ประวัติการอนุมัติ</h3>
             <hr />
-            <div class="form-group">
-                <div class="col-md-12 col-xs-12">
-                    <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
-                            เหตุผล(เพิ่มเติม)
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required>
-                                    @if(  item != null && item.Count > 0)
+            @Html.Action("approveLists", "Approve", Model)
+        </div>
+        <div class="col-md-8 col-xs-12">
+            <h3>เอกสารขออนุมัติ</h3>
+            <hr />
+            @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
+
+            @using (Ajax.BeginForm("insertApprove", "Approve"
+    , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }
+    , new { id = "formApprove", @class = "form-horizontal form-label-left" }))
+            {
+                var item = Model.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
+                <h3>อนุมัติ</h3>
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="row">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
+                                เหตุผล(เพิ่มเติม)
+                            </label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required>
+                                    @if (item != null && item.Count > 0)
                                     {
                                         @item.FirstOrDefault().remark.Trim();
                                     }
                             </textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-12 col-xs-12">
-                    <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
-                            สถานะ
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="hidden" id="lblActFormId" name="lblActFormId" value="@actId" />
-                            @if (Model.approveModel != null)
-                            {
-                                <input type="hidden" id="lblApproveId" name="lblApproveId" value="@Model.approveModel.id" />
-                                <input type="hidden" id="lblApproveType" name="lblApproveType" value="@type" />
-                            }
-                            @Html.DropDownListFor(m => m.approveModel.statusId, new SelectList(Model.approveStatusLists, "id", "nameTH"), "-Selected-", new { @class = "form-control", required = "required", id = "ddlStatus", Name = "ddlStatus" })
-                            <script>
+                <div class="form-group">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="row">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
+                                สถานะ
+                            </label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <input type="hidden" id="lblActFormId" name="lblActFormId" value="@actId" />
+                                @if (Model.approveModel != null)
+                                {
+                                    <input type="hidden" id="lblApproveId" name="lblApproveId" value="@Model.approveModel.id" />
+                                    <input type="hidden" id="lblApproveType" name="lblApproveType" value="@type" />
+                                }
+                                @Html.DropDownListFor(m => m.approveModel.statusId, new SelectList(Model.approveStatusLists, "id", "nameTH"), "-Selected-", new { @class = "form-control", required = "required", id = "ddlStatus", Name = "ddlStatus" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="row">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="currentSignature">
+                                ลายเซ็นปัจจุบัน
+                            </label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                @Html.Action("currentSignature", "Signature", new { empId = UtilsAppCode.Session.User.empId })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @if (Model.approveModel.statusId != "2")
+                        {
+                            <h4 class="text-danger text-center">
+                                เอกสารฉับบนี้ได้ถูกอนุมัติเรียบร้อยแล้วครับ
+                            </h4>
+                        }
+                        else if (Model.approveModel.isPermisionApprove)
+                        {
+                            <button type="button" onclick="return confirmQuery();" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                            <a href="@Url.Action("index", "ApproveLists")" class="btn btn-warning pull-right"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                        }
+                        else
+                        {
+                            <h4 class="text-danger text-center">
+                                คุณไม่สามารถอนุมัติเอกสารฉบับนี้ได้<br />
+                                เนื่องจากไม่มีรายชื่ออยู่ในการอนุมัติ<br />
+                                @Html.ActionLink(" สอบถามข้อมูลเพิ่มเติม Click ", "contact", "home")
+                            </h4>
+                        }
+                    </div>
+                </div>
+            }
 
-                            </script>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-12 col-xs-12">
-                    <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="currentSignature">
-                            ลายเซ็นปัจจุบัน
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.Action("currentSignature", "Signature", new { empId = UtilsAppCode.Session.User.empId })
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-3 col-sm-3 col-xs-12"></div>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                    @if (Model.approveModel.statusId != "2")
-                    {
-                        <h4 class="text-danger text-center">
-                            เอกสารฉับบนี้ได้ถูกอนุมัติเรียบร้อยแล้วครับ
-                        </h4>
-                    }
-                    else if (Model.approveModel.isPermisionApprove)
-                    {
-                        <button type="button" onclick="return confirmQuery();" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
-                        <a href="@Url.Action("index", "ApproveLists")" class="btn btn-warning pull-right"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                    }
-                    else
-                    {
-                        <h4 class="text-danger text-center">
-                            คุณไม่สามารถอนุมัติเอกสารฉบับนี้ได้<br />
-                            เนื่องจากไม่มีรายชื่ออยู่ในการอนุมัติ<br />
-                            @Html.ActionLink(" สอบถามข้อมูลเพิ่มเติม Click ", "contact", "home")
-                        </h4>
-                    }
-                </div>
-            </div>
-        }
-
+        </div>
     </div>
-</div>
+}
 
 <div class="modal fade" id="ModalPreviewPDF" style="display:none">
     <div id="divPreviewApprove">
@@ -117,7 +129,7 @@
 </div>
 
 <script>
-    
+
 
     $(document).ready(function () {
         $(".fv").each(function () {
@@ -131,30 +143,45 @@
     });
 
     function confirmQuery() {
-        var mess = $("#ddlStatus option:selected").text()
+        
+        var statusId = $("#ddlStatus").val();
+        var mess = $("#txtRemark").val();
+        if (statusId == "5" && mess == "") {
+            doMsgFail("กรุณาระบุ เหตุผล(เพิ่มเติม) ค่ะ")
+            $("#txtRemark").focus();
+            return false;
+        }
+        else if (statusId == "") {
+            doMsgFail("กรุณาระบุ(สถานะ) ค่ะ")
+            $("#ddlStatus").focus();
+            return false;
+        }
+
+
+        mess = $("#ddlStatus option:selected").text();
         bootbox.confirm({
-            message: "คุณต้องดำเนินการ "+ mess + " ใช่หรือไม่?",
+            message: "คุณต้องดำเนินการ " + mess + " ใช่หรือไม่?",
             buttons: {
                 confirm: {
                     label: 'Yes',
                     className: 'btn-success'
-                },cancel: {
+                }, cancel: {
                     label: 'No',
                     className: 'btn-danger'
                 }
             },
             callback: function (result) {
-                if (result == true) {                    
+                if (result == true) {
                     $("#formApprove").submit();
                 }
             }
 
         });
-        
+
     }
 
     function beginQuery() {
-        
+
     }
 
     function successQuery(response) {
@@ -223,7 +250,7 @@
                 actId: obj
             }
         }).done(function (htmlResponse) {
-            $("#divPreviewApprove").html(htmlResponse);            
+            $("#divPreviewApprove").html(htmlResponse);
             genPdf();
         });
     }

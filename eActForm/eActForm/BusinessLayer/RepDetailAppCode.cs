@@ -11,6 +11,47 @@ namespace eActForm.BusinessLayer
 {
     public class RepDetailAppCode
     {
+        public static int getRepDetailStatus(string repDetailId)
+        {
+            try
+            {
+
+                object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getRepDetailStatus"
+                    , new SqlParameter[] { new SqlParameter("@repDetailId", repDetailId) });
+
+                return int.Parse(obj.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getRepDetailStatus >> " + ex.Message);
+            }
+        }
+        public static List<ApproveModel.approveDetailModel> getUserCreateRepDetailForm(string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserCreateRepDetailForm"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveModel.approveDetailModel()
+                             {
+                                 empId = dr["empId"].ToString(),
+                                 empName = dr["empName"].ToString(),
+                                 empEmail = dr["empEmail"].ToString(),
+                                 delFlag = (bool)dr["delFlag"],
+                                 createdDate = (DateTime?)dr["createdDate"],
+                                 createdByUserId = dr["createdByUserId"].ToString(),
+                                 updatedDate = (DateTime?)dr["updatedDate"],
+                                 updatedByUserId = dr["updatedByUserId"].ToString()
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getUserCreateRepDetailForm >>" + ex.Message);
+            }
+        }
+
         public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByActNo(List<RepDetailModel.actFormRepDetailModel> lists, string actNo)
         {
             try
@@ -26,7 +67,14 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                return lists.Where(r => r.statusId == statusId).ToList();
+                if (statusId == ((int)AppCode.ApproveStatus.เพิ่มเติม).ToString())
+                {
+                    return lists.Where(r => r.createdDate >= r.activityPeriodSt).ToList();
+                }
+                else
+                {
+                    return lists.Where(r => r.statusId == statusId && r.createdDate < r.activityPeriodSt).ToList();
+                }
             }
             catch (Exception ex)
             {
@@ -120,12 +168,12 @@ namespace eActForm.BusinessLayer
                              select new RepDetailModel.actFormRepDetailModel()
                              {
                                  #region detail parse
-                                 id = dr["id"].ToString(),
+                                 id = dr["activityId"].ToString(),
                                  statusId = dr["statusId"].ToString(),
                                  statusName = dr["statusName"].ToString(),
                                  activityNo = dr["activityNo"].ToString(),
                                  documentDate = (DateTime?)dr["documentDate"] ?? null,
-                                 reference = dr["reference"].ToString(),
+                                 //reference = dr["reference"].ToString(),
                                  customerId = dr["customerId"].ToString(),
                                  productCateId = dr["productCateId"].ToString(),
                                  productGroupid = dr["productGroupid"].ToString(),
@@ -134,32 +182,33 @@ namespace eActForm.BusinessLayer
                                  productName = dr["productName"].ToString(),
                                  size = dr["size"].ToString(),
                                  typeTheme = dr["typeTheme"].ToString(),
-                                 normalSale = dr["normalSale"].ToString(),
-                                 promotionSale = dr["promotionSale"].ToString(),
+                                 normalSale = dr["normalCase"].ToString(),
+                                 promotionSale = dr["promotionCase"].ToString(),
                                  total = dr["total"] is DBNull ? 0 : (decimal?)dr["total"],
                                  specialDisc = dr["specialDisc"] is DBNull ? 0 : (decimal?)dr["specialDisc"],
                                  specialDiscBaht = dr["specialDiscBaht"] is DBNull ? 0 : (decimal?)dr["specialDiscBaht"],
                                  promotionCost = dr["promotionCost"] is DBNull ? 0 : (decimal?)dr["promotionCost"],
                                  channelName = dr["channelName"].ToString(),
                                  productTypeId = dr["productTypeId"].ToString(),
-                                 productTypeNameEN = dr["nameEN"].ToString(),
-                                 cusShortName = dr["cusShortName"].ToString(),
-                                 productCategory = dr["productCateText"].ToString(),
-                                 groupName = dr["groupName"].ToString(),
+                                 //productTypeNameEN = dr["nameEN"].ToString(),
+                                 //cusShortName = dr["cusShortName"].ToString(),
+                                 //productCategory = dr["productCateText"].ToString(),
+                                 //groupName = dr["groupName"].ToString(),
                                  activityPeriodSt = dr["activityPeriodSt"] is DBNull ? null : (DateTime?)dr["activityPeriodSt"],
                                  activityPeriodEnd = dr["activityPeriodEnd"] is DBNull ? null : (DateTime?)dr["activityPeriodEnd"],
                                  costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
                                  costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
                                  activityName = dr["activityName"].ToString(),
                                  theme = dr["theme"].ToString(),
-                                 objective = dr["objective"].ToString(),
-                                 trade = dr["trade"].ToString(),
+                                 //objective = dr["objective"].ToString(),
+                                 //trade = dr["trade"].ToString(),
                                  activityDetail = dr["activityDetail"].ToString(),
-                                 delFlag = (bool)dr["delFlag"],
+                                 compensate = dr["compensate"] is DBNull ? 0 : (decimal)dr["compensate"],
+                                 delFlag = false,
                                  createdDate = (DateTime?)dr["createdDate"],
-                                 createdByUserId = dr["createdByUserId"].ToString(),
-                                 updatedDate = (DateTime?)dr["updatedDate"],
-                                 updatedByUserId = dr["updatedByUserId"].ToString(),
+                                 //createdByUserId = dr["createdByUserId"].ToString(),
+                                 //updatedDate = (DateTime?)dr["updatedDate"],
+                                 //updatedByUserId = dr["updatedByUserId"].ToString(),
                                  #endregion
 
                              }).ToList();

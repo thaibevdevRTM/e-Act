@@ -61,31 +61,6 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.6.241.11; Initial Catalog=EActDB-DEV;User ID=rtmdev;password=Thaib" +
-            "evRTM@DB;Max Pool Size=200;")]
-        public string strConn {
-            get {
-                return ((string)(this["strConn"]));
-            }
-            set {
-                this["strConn"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("[e-ActivityForm] แจ้งเอกสารรออนุมัติ จากระบบอัตโนมัติ")]
-        public string strSubject {
-            get {
-                return ((string)(this["strSubject"]));
-            }
-            set {
-                this["strSubject"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("http://203.159.75.75/eact/?s=approve")]
         public string strUrlApprove {
             get {
@@ -110,33 +85,6 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"
-          เรียน {0}
-          <br/><br/>
-          แจ้งเอกสารจากระบบอัตโนมัติ
-          <br/><br/>
-          ท่านมีเอกสาร Activity Form <b>รออนุมัติ</b> จำนวน <b>{1}</b> รายการ
-          <br/>
-          ท่านสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ : <a href='{2}'>more detail click</a> <br/><br/>
-          
-          <br/>จึงเรียนมาเพื่อทราบ
-          <br/>ส่วนงานพัฒนาระบบงานสนับสนุนการขาย-RTM
-          <br/>อีเมล์นี้ถูกสร้างจากระบบอัตโนมัติ ไม่ต้องตอบกลับ
-          <br/>หากท่านต้องการทราบรายละเอียดเพิ่มเติม กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน
-          <br/>เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4580,4607
-          <br/>Hot Line: 063-1970586
-        ")]
-        public string strBody {
-            get {
-                return ((string)(this["strBody"]));
-            }
-            set {
-                this["strBody"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("parnupong.k@thaibev.com")]
         public string strDefaultEmail {
             get {
@@ -144,6 +92,31 @@ namespace eActConsoleService.Properties {
             }
             set {
                 this["strDefaultEmail"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("tanapong.w@Thaibev.com,jitaree.b@thaibev.com,parnupong.k@thaibev.com")]
+        public string emailForDevelopSite {
+            get {
+                return ((string)(this["emailForDevelopSite"]));
+            }
+            set {
+                this["emailForDevelopSite"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.6.241.11; Initial Catalog=EActDB;User ID=rtmdev;password=ThaibevRT" +
+            "M@DB;Max Pool Size=200;")]
+        public string strConn {
+            get {
+                return ((string)(this["strConn"]));
+            }
+            set {
+                this["strConn"] = value;
             }
         }
         
@@ -161,13 +134,25 @@ namespace eActConsoleService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("tanapong.w@Thaibev.com,jitaree.b@thaibev.com,parnupong.k@thaibev.com")]
-        public string emailForDevelopSite {
+        [global::System.Configuration.DefaultSettingValueAttribute("[e-ActivityForm] แจ้งเอกสาร รออนุมัติ จากระบบอัตโนมัติ")]
+        public string strSubject {
             get {
-                return ((string)(this["emailForDevelopSite"]));
+                return ((string)(this["strSubject"]));
             }
             set {
-                this["emailForDevelopSite"] = value;
+                this["strSubject"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"เรียน {0}<br/><br/>แจ้งเอกสารจากระบบอัตโนมัติ<br/><br/>ท่านมีเอกสาร <b>รออนุมัติ</b> จำนวน <b>{1}</b> รายการ<br/>ท่านสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ : <a href={2}>more detail click</a> <br/><br/><br/>จึงเรียนมาเพื่อทราบ          <br/>ส่วนงานพัฒนาระบบงานสนับสนุนการขาย-RTM          <br/>อีเมล์นี้ถูกสร้างจากระบบอัตโนมัติ ไม่ต้องตอบกลับ          <br/>หากท่านต้องการทราบรายละเอียดเพิ่มเติม กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน          <br/>เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4580,4607          <br/>Hot Line: 063-1970586")]
+        public string strBody {
+            get {
+                return ((string)(this["strBody"]));
+            }
+            set {
+                this["strBody"] = value;
             }
         }
     }

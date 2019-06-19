@@ -206,6 +206,7 @@ $(document).ready(function () {
 // iCheck
 $(document).ready(function () {
     if ($("input.flat")[0]) {
+        console.log("iCheckkkkkkkkkkkkkkkkkkkkkkk");
         $(document).ready(function () {
             $('input.flat').iCheck({
                 checkboxClass: 'icheckbox_flat-green',
@@ -4933,11 +4934,10 @@ $(document).ready(function () {
     init_select2();
     init_validator();
     init_DataTables();
-    init_chart_doughnut();
     init_gauge();
-    init_PNotify();
-    init_starrr();
-    init_calendar();
+    //init_PNotify();
+    //init_starrr();
+    //init_calendar();
     init_compose();
     init_CustomNotification();
     init_autosize();

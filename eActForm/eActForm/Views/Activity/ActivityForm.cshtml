@@ -13,11 +13,6 @@
 
 <style type="text/css">
 
-    .my-bootbox-class .modal-dialog {
-        width: 400px;
-        font-size: 18px;
-    }
-
     .font8 {
         font-size: 8px;
     }
@@ -121,12 +116,7 @@
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <div class="row">
-                        @*<label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtchanel">
-                                ช่องทาง (Channel)
-                            </label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                @Html.TextBoxFor(x => x.activityFormModel.chanel, new { @class = "form-control textboxcss", @id = "txtchanel", @readonly = "readonly" })
-                            </div>*@
+                      
                         @Html.HiddenFor(x => x.activityFormModel.chanel, new { @id = "txtchanel" })
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
                             Product category<span class="required">*</span>
@@ -202,7 +192,7 @@
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <div class="radio">
                             <label>
-                                @Html.RadioButtonFor(m => m.activityFormModel.trade, "term", new { @id = "rdbterm" }) ไม่เกิดจาก รายการส่งเสริมการขาย (Trade Term)
+                                @Html.RadioButtonFor(m => m.activityFormModel.trade, "term", new { @id = "rdbterm" }) รายการส่งเสริมการขาย (Trade Term)
                             </label>
                         </div>
                         <div class="radio">
@@ -264,10 +254,7 @@
     </div>
     <div class="col-lg-2 col-xs-2">
     </div>
-    @*<div class="form-group col-lg-2 col-xs-2">
-            ประเภท
-            @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "- เลือกประเภท -", new { @class = "form-control", required = "required", id = "ddlProductBrand" })
-        </div>*@
+   
     <div class="form-group col-lg-2 col-xs-2">
         รสชาติ
         @Html.DropDownListFor(model => model.productSmellLists, new SelectList(Model.productSmellLists, "id", "nameTH"), "- เลือกรสชาติ -", new { @class = "form-control", required = "required", id = "ddlProductSmell" })
@@ -325,8 +312,8 @@
             </div>
         </form>
     </div>
-    <div class="col-md-6">
-        <div id="divgetimage" class="col-lg-12">
+    <div class="col-md-12">
+        <div id="divgetimage" class="col-md-12">
             @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id != null ? Model.activityFormModel.id : "" })
         </div>
     </div>
@@ -356,6 +343,8 @@
 @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
 @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
 <script type="text/javascript">
+       
+
 
        $(document).ready(function () {
            $(".fv").each(function () {
@@ -364,7 +353,6 @@
                    $(this).focus();
                }
            });
-          // $('.field-date').datepicker({ autoclose: true, todayHighlight: true, format: "dd/mm/yyyy" });
 
            ObjModel = {};
            document.getElementById("ddlProductfilter").disabled = true;
@@ -374,6 +362,8 @@
            if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
                setTxtReadOnly();
            }
+
+
     });
 
 
@@ -431,8 +421,6 @@
 
     function onchangeCustomer() {
         ObjModel = {};
-        //CallChangefunc();
-        //callThemedetailcost();
          $("#txtchanel").val('');
          $.ajax({
                 url: '@Url.Action("getChanel", "eAct")',
@@ -500,8 +488,6 @@
     function onchangeCate() {
 
         ObjModel = {};
-        //CallChangefunc();
-        //callThemedetailcost();
         $("#ddlProductBrand").val('');
         $("#ddlProductfilter").val('');
         $("#ddlProductSize").val('');
@@ -532,8 +518,7 @@
                  else {
                      document.getElementById("ddlProductGrp").disabled = true;
                  }
-                 //CallChangefunc();
-                 //callThemedetailcost();
+
 
                 }
          });
@@ -543,8 +528,6 @@
 
     $("#ddlProductGrp").change(function () {
         ObjModel = {};
-        //CallChangefunc();
-        //callThemedetailcost();
 
         var ddlProductBrand = $("#ddlProductBrand");
 
@@ -604,17 +587,10 @@
         var required = "กรุณา ระบุ :<br>";
         var validate = true;
         if ($("#ddlTheme").val() == '') { required += "ประเภทกิจกรรม*<br>"; validate = false; }
-        //if ($("#ddlCustomer").val() == '0') { required += "ลูกค้า(Customer Name)*<br>"; validate = false; }
-        //if ($("#ddlProductGrp").val() == '0') { required += "กลุ่มสินค้า(Product Group)*<br>"; validate = false; }
         if (validate != true) {
             bootbox.alert(required);
             return false;
         }
-        //if ($("#ddlProductBrand").val() == '0') {
-        //    $("#ddlProductBrand").focus();
-        //    bootbox.alert("กรุณา เลือกสินค้า");
-        //    return false;
-        //}
         $("#WaitDialog").show();
          $.ajax({
                 url: '@Url.Action("addItemProduct", "ActivityProductDetail")',
@@ -676,8 +652,15 @@
         if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
         if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
         if ($("#txtdateActivitySt").val() == "" && $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; }
+        else {
+            var startDate =  $("#txtdateActivitySt").val().split("-");
+            var endDate = $("#txtdateActivityEnd").val().split("-");
+            if (new Date(startDate[2], startDate[1], startDate[0]) >= new Date(endDate[2], endDate[1],endDate[0])) {
+                required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
+            }
+        }
         if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
-        //console.log(rowCount);
+       
         //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 
         if (validate == true) {
@@ -695,7 +678,8 @@
                 data: {
                     statusId: 1,
                     Mode: $("#hdMode").val(),
-                    dateDoc: $("#txtdateDoc").val(),                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                    dateDoc: $("#txtdateDoc").val(),
+                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
                     str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
                     str_activityPeriodSt: $("#txtdateActivitySt").val(),
                     str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
@@ -776,7 +760,6 @@
                         type: 'POST',
                     }).done(function (response) {
                         $("#WaitDialog").hide();
-                        console.log(response);
                         if (response.Success) {
                             var url = '@Url.Action("ActivityForm", "activity")';
                             window.location.href = url + "?ActivityId=" + response.ActivityId;
@@ -816,14 +799,18 @@
         $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
         $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", "disabled");
         document.getElementById("divUploadFiles").style.display = "none";
-        if(document.getElementById("iconDelFile") !== null)
-        {
-            document.getElementById("iconDelFile").style.display = "none";
-        }
+       
+        
 
         document.getElementById("rdbterm").disabled = true;
         document.getElementById("rdbOutterm").disabled = true;
-        //$("input.txtnormalGp").attr("disabled", true);
+
+
+        var arrayOfElements = document.getElementsByClassName('divDelImg');
+        var lengthOfArray = arrayOfElements.length;
+        for (var i = 0; i < lengthOfArray; i++) {
+            arrayOfElements[i].style.display = 'none';
+        }
     }
 
 
@@ -880,36 +867,18 @@
 
 <script>
 
+  
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
-        maxFiles: 2,
-        acceptedFiles: "image/jpeg,image/png",
+        maxFiles: 5,
+        acceptedFiles: "image/jpeg,image/jpg,image/png,application/pdf",
         paramName: "file",
         maxFilesize: 10,
-        addRemoveLinks: true,
+        //addRemoveLinks: true,
         init: function () {
-
-             //this.on("maxfilesexceeded", function(file){
-             //      alert("ไม่เกิน 2 รูป!");
-             //});
 
             this.on("complete", function (file) {
                     CallImageView($("#hdActivityId").val());
-
-                    this.on("removedfile", function (file) {
-                        var name = file.name;
-                        $.ajax({
-                            type: 'POST',
-                            url: '@Url.Action("deleteImg", "Activity")',
-                            data: {
-                                name: name,
-                            }
-                        }).done(function (response) {
-
-                            CallImageView($("#hdActivityId").val());
-                        });
-
-                    });
 
                 });
             }
