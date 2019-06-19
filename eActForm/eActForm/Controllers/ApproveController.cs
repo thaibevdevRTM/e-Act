@@ -7,6 +7,7 @@ using System.Configuration;
 using eActForm.BusinessLayer;
 using eActForm.Models;
 using iTextSharp.text;
+using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -19,6 +20,11 @@ namespace eActForm.Controllers
             if (actId == null) return RedirectToAction("index", "Home");
             else
             {
+                ActSignatureModel.SignModels signModels = SignatureAppCode.currentSignatureByEmpId(UtilsAppCode.Session.User.empId);
+                if(signModels.lists == null || signModels.lists.Count == 0)
+                {
+                    ViewBag.messCannotFindSignature = true;
+                }
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
                 models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app).Where(x => x.id == "3" || x.id == "5").ToList();
                 return View(models);
@@ -53,12 +59,6 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-        public ActionResult approvePositionLists(string customerId, string productCatId)
-        {
-            ApproveFlowModel.approveFlowModel model = ApproveFlowAppCode.getFlow(ConfigurationManager.AppSettings["subjectActivityFormId"], customerId, productCatId);
-            return PartialView(model);
-        }
-
         public ActionResult approvePositionSignatureLists(string actId)
         {
             ApproveModel.approveModels models = new ApproveModel.approveModels();
@@ -82,7 +82,7 @@ namespace eActForm.Controllers
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
-
+            activityModel.productImageList = AppCode.writeImagestoFile(Server, QueryGetImageById.GetImage(actId));
             return PartialView(activityModel);
         }
 
@@ -101,6 +101,7 @@ namespace eActForm.Controllers
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
+                    GridHtml = GridHtml.Replace("<br>", "<br/>");
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
                     ApproveAppCode.setCountWatingApprove();

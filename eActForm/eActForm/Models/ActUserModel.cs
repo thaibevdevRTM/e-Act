@@ -66,6 +66,7 @@ namespace eActForm.Models
             public string countWatingActForm { get; set; }
             public string counteatingRepDetail { get; set; }
 			public string countWatingBudgetForm { get; set; }
+            public string exception { get; set; }
 		}
     }
 }

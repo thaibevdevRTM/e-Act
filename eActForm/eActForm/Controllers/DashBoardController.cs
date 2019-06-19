@@ -16,8 +16,19 @@ namespace eActForm.Controllers
             DashBoardModel.infoDashBoardModels model = new DashBoardModel.infoDashBoardModels
             {
                 dashBoardLists = DashBoardAppCode.getInfoDashBoard(),
-                customerSpendingLists = DashBoardAppCode.getInfoGroupCustomerSpending()
+                customerSpendingLists = DashBoardAppCode.getInfoGroupCustomerSpending(),
+                sumSpendingOfYear = DashBoardAppCode.getInfoSumSepndingOfYear(),
             };
+            if (Request.QueryString["s"] != null)
+            {
+                if( Request.QueryString["s"] == AppCode.ApproveEmailype.document.ToString())
+                {
+                    return RedirectToAction("index", "Home", new { actId = Request.QueryString["actId"] });
+                }else if(Request.QueryString["s"] == AppCode.ApproveEmailype.approve.ToString())
+                {
+                    return RedirectToAction("index", "ApproveLists", new { actId = Request.QueryString["actId"] });
+                }
+            }
             return View(model);
         }
         public ActionResult monthTotalSpending()

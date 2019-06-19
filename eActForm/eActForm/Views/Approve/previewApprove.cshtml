@@ -5,35 +5,8 @@
     decimal? costActivity = 0;
     decimal? costProduct = 0;
     decimal? perTotal = 0;
+    decimal? growthPerTotal = 0;
 }
-
-<script type="text/javascript">
-
-
-    function onClickClose() {
-        var url = '@Url.Action("Index", "Approve")';
-        window.location.href = url;
-    }
-
-    function genPdf() {
-            $.ajax({
-            url: '@Url.Action("genPdfApprove", "Approve")',
-            data: {
-                GridHtml: $("#Grid").html(),
-                statusId: $("#ddlStatus").val(),
-                activityId: $("#HdId").val()
-            },
-            dataType: "json",
-            type: 'POST',
-            }).done(function (response) {
-                $("#WaitDialog").hide();
-                console.log("genPdff");
-                console.log('success');
-                 });
-    }
-
-
-</script>
 
 
 
@@ -44,7 +17,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <div style=""></div>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" onclick="onClickClose();" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
             <div id="Grid" style="width:97%; margin-left:20px;">
@@ -126,7 +99,15 @@
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">กลุ่มสินค้า(Product Group)</td>
                             <td></td>
-                            <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.brandName) </td>
+                            @if (string.IsNullOrEmpty(Model.activityFormModel.brandName))
+                            {
+                                <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.productGroupText) </td>
+                            }
+                            else
+                            {
+                                <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.brandName) </td>
+                            }
+
                         </tr>
                         <tr>
                             <td style="height:10px;"></td>
@@ -143,7 +124,7 @@
                                     <td style="text-align:right"></td>
                                 }
                             }
-                            <td style="font-size:12.5px;">ไม่ได้เกิดจาก รายการส่งเสริมการขาย (Trade Term)</td>
+                            <td style="font-size:12.5px;">รายการส่งเสริมการขาย (Trade Term)</td>
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">ระยะเวลากิจกรรม</td>
                             <td></td>
@@ -225,12 +206,24 @@
 
                                 @if (Model.productImageList.Any())
                                 {
-                                    string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
+                                    string url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfiles"].ToString();
                                     foreach (var item in Model.productImageList)
                                     {
-                                        <td width="50%" style="text-align:right">
-                                            <img width="120" height="120" src="@url@item._fileName" />
-                                        </td>
+                                        if (item.extension != ".pdf")
+                                        {
+                                            if (Model.productImageList.Count == 1)
+                                            {
+                                                <td width="50%" style="text-align:right">
+                                                    <img width="220" height="120" src="@string.Format(url, item._fileName)" />
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td width="40%" style="text-align:right;">
+                                                    <img width="130" height="120" src="@string.Format(url, item._fileName)" />
+                                                </td>
+                                            }
+                                        }
                                     }
                                 }
                                 else
@@ -280,6 +273,10 @@
                                     <td style="font-size:12.5px;">Discount %</td>
                                 }
                             }
+                            else
+                            {
+                                <td style="font-size:12.5px;">Discount %</td>
+                            }
                             <td style="font-size:12.5px;">Cost (BHT)</td>
                         </tr>
                         @if (Model.productcostdetaillist1.Any())
@@ -289,18 +286,18 @@
                                 <tr>
                                     @if (item.isShowGroup == true)
                                     {
-                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName) @Html.DisplayFor(m => item.smellName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) Pack(@Html.DisplayFor(m => item.pack)) </td>
-                                    }
-                                    else if (item.isShowGroup == false)
-                                    {
-                                        for (int i = 0; i < @item.detailGroup.Count; i++)
-                                        {
-                                            <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) Pack(@Html.DisplayFor(m => item.pack))</td>
-                                        }
+                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.brandName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) @Html.DisplayFor(m => item.pack) </td>
                                     }
                                     else
                                     {
-                                        <td class="font10 textLeft">@Html.DisplayFor(m => item.productName)</td>
+                                        if (item.detailGroup != null)
+                                        {
+                                            for (int i = 0; i < @item.detailGroup.Count; i++)
+                                            {
+                                                <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) (@Html.DisplayFor(m => item.pack))</td>
+                                            }
+                                        }
+
                                     }
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.disCount1)</td>
@@ -342,8 +339,8 @@
                             <td colspan="5" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
                         </tr>
                         <tr>
-                            <td width="8%" style="font-size:12.5px;">ยอดขายปกติ (Cost)</td>
-                            <td width="8%" style="font-size:12.5px;">ยอดขายข่วงทำกิจกรรม (Case)</td>
+                            <td width="8%" style="font-size:12.5px;">ยอดขายปกติ (Case)</td>
+                            <td width="8%" style="font-size:12.5px;">ยอดขายช่วงทำกิจกรรม (Case)</td>
                             <td width="8%" style="font-size:12.5px;">% Growth</td>
                             <td width="13%" style="font-size:12.5px;">ค่าใช้จ่ายรวม Spending Exp. (Bath)</td>
                             <td width="8%" style="font-size:12.5px;">%:ยอดขาย</td>
@@ -379,6 +376,7 @@
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.perTotal)</td>
                                 </tr>
 
+                                perTotal = item.perTotal == null ? 0 + perTotal : item.perTotal + perTotal;
                                 totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
                                 costProduct = item.normalCost == null ? 0 + costProduct : item.normalCost + costProduct;
                                 costActivity = item.themeCost == null ? 0 + costActivity : item.themeCost + costActivity;
@@ -404,10 +402,10 @@
                                 }
                             </td>
                             <td class="textRight">
-                                @if (costActivity != 0 && costProduct != 0)
+                                @if (totalActCost != 0 && costActivity != 0 && costProduct != 0)
                                 {
-                                    perTotal = (costActivity - costProduct) / costProduct * 100;
-                                    string result = String.Format("{0:n2}%", @perTotal);
+                                    growthPerTotal = (costActivity - costProduct) / costProduct * 100;
+                                    string result = String.Format("{0:n2}%", @growthPerTotal);
                                     @result.ToString();
                                 }
                             </td>
@@ -445,7 +443,7 @@
         <div class="modal-footer">
             <div>
                 <p class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-info pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                    <button id="btnSubmitClose" type="button" class="btn btn-info pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
                 </p>
             </div>
         </div>

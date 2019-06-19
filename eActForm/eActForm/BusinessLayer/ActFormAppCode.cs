@@ -10,13 +10,37 @@ namespace eActForm.BusinessLayer
 {
     public class ActFormAppCode
     {
-        public static int deleteActForm(string actId, string reamrk)
+        public static int updateWaitingCancel(string actId, string remark)
+        {
+            try
+            {
+                int rtn = 0;
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateWaitingCancelFlagActivityForm"
+                    , new SqlParameter[] { new SqlParameter("@actId", actId)
+                    ,new SqlParameter("@remark",remark)
+                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
+                    ,new SqlParameter("@updateDate",DateTime.Now)
+                    });
+
+                if (rtn > 0)
+                {
+                    EmailAppCodes.sendRequestCancelToAdmin(actId);
+                }
+
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static int deleteActForm(string actId, string remark)
         {
             try
             {
                 return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateDelFlagActivityForm"
                     , new SqlParameter[] { new SqlParameter("@actId", actId)
-                    ,new SqlParameter("@remark",reamrk)
+                    ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
@@ -52,7 +76,9 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getUserCreateActForm >>" + ex.Message);
             }
         }
-        public static List<Activity_Model.actForm> getActFormByEmpId(string empId,DateTime startDate, DateTime endDate)
+
+        
+        public static List<Activity_Model.actForm> getActFormByEmpId(string empId, DateTime startDate, DateTime endDate)
         {
             try
             {

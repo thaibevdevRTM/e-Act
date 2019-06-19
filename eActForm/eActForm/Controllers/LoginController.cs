@@ -37,16 +37,18 @@ namespace eActForm.Controllers
                     //UtilsAppCode.Session.User.empId = "11028011";
                     UserAppCode.setRoleUser(UtilsAppCode.Session.User.empId);
                     ApproveAppCode.setCountWatingApprove();
-					BudgetApproveController.setCountWatingApproveBudget();
+                    BudgetApproveController.setCountWatingApproveBudget();
 
-					if (Request.Form["txtParam"] != null && Request.Form["txtParam"] == AppCode.ApproveEmailype.approve.ToString())
+                    if (Request.Form["txtParam"] != null && Request.Form["txtParam"] == AppCode.ApproveEmailype.approve.ToString())
                     {
                         return RedirectToAction("index", "ApproveLists");
                     }
+                    else if (Request.Form["txtParam"] == AppCode.ApproveEmailype.document.ToString())
+                    {
+                        return RedirectToAction("index", "Home", new { actId = Request.Form["txtActId"] });
+                    }
                     else
                     {
-
-
                         return RedirectToAction("index", "DashBoard");
                     }
                 }

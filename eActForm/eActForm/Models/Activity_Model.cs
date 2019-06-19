@@ -118,8 +118,10 @@ namespace eActForm.Models
         public string shortBrand { get; set; }
         public string productCode { get; set; }
         public string productName { get; set; }
+        public string productBrandId { get; set; }
         public string size { get; set; }
         public string smell { get; set; }
+        public string smell_Id { get; set; }
         public string pack { get; set; }
         public string chanel_Id { get; set; }
         public string productCateId { get; set; }

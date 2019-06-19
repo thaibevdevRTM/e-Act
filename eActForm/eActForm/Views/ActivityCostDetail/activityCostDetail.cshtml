@@ -46,54 +46,52 @@
                 foreach (var item in Model.activitydetaillist)
                 {
 
-                    <tr>
-                        <td onclick="onDelActDetail('@item.productGroupId')">
-                            <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
-                            @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
-                        </td>
-                        @if (item.isShowGroup == true)
-                        {
-                            <td class="font10 textLeft">@item.typeTheme</td>
-                        }
-                        else
-                        {
-                            if (item.detailGroup != null)
-                            {
-                                for (int i = 0; i < @item.detailGroup.Count; i++)
-                                {
-                                    <td class="font10 textLeft">@item.detailGroup[i].typeTheme</td>
-                                }
-                            }
-                        }
+        <tr>
+            <td onclick="onDelActDetail('@item.productGroupId')">
+                <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
+                @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
+            </td>
+            @if (item.isShowGroup == true)
+            {
+                <td class="font10 textLeft">@item.typeTheme</td>
+            }
+            else
+            {
+                if (item.detailGroup.Count >= 1)
+                {
+                
+                        <td class="font10 textLeft">@item.detailGroup[0].typeTheme</td>
+                }
+            }
 
-                        @if (item.detailGroup != null && item.detailGroup.Count > 0)
-                        {
-                            <td>@Html.TextBoxFor(model => item.detailGroup[0].productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")" ,style="autofocus = 'autofocus'" })</td>
-                        }
-                        else
-                        {
-                            <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")",style="autofocus = 'autofocus'" })</td>
-                        }
+            @*@if (item.isShowGroup != true)
+            {*@
+                <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
+            @*}
+            else
+            {
+                <td>@Html.TextBoxFor(model => item.brandName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" }) </td>
+            }*@
 
-                        <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")",style="autofocus = 'autofocus'" })</td>
-                        <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")",style="autofocus = 'autofocus'" })</td>
+            <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+            <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")", style = "autofocus = 'autofocus'" })</td>
 
-                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")",style="autofocus = 'autofocus'" })</td>
-                        <td>
-                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")",style="autofocus = 'autofocus'" })
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true,style="autofocus = 'autofocus'" })
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(model => item.LE, "{0:n2}", new { @id = "lblLE_" + index, Name = "lblLE_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")",style="autofocus = 'autofocus'" })
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")",style="autofocus = 'autofocus'" })
-                        </td>
-                        <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")",style="autofocus = 'autofocus'" })</td>
+            <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+            <td>
+                @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")", style = "autofocus = 'autofocus'" })
+            </td>
+            <td>
+                @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true, style = "autofocus = 'autofocus'" })
+            </td>
+            <td>
+                @Html.TextBoxFor(model => item.LE, "{0:n2}", new { @id = "lblLE_" + index, Name = "lblLE_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")", style = "autofocus = 'autofocus'" })
+            </td>
+            <td>
+                @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")", style = "autofocus = 'autofocus'" })
+            </td>
+            <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", style = "autofocus = 'autofocus'" })</td>
 
-                    </tr>
+        </tr>
                     LE = item.LE == null ? 0 + LE : item.LE + LE;
                     total = item.total == null ? 0 + total : item.total + total;
                     normalTotal = item.normalCost == null ? 0 + normalTotal : item.normalCost + normalTotal;

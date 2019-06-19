@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var actId = Request.QueryString["actId"];
 }
-
 <script src="~/Scripts/jquery-1.11.2.min.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -26,7 +26,7 @@
 
 <div class="row tile_count">
     <div id="getQuery" class="col-md-12 col-xs-12">
-        @Html.Action("myDoc", "Home")
+        @Html.Action("myDoc", "Home", new { actId = actId })
     </div>
 </div>
 
@@ -43,7 +43,7 @@
     }
 
     function failureQuery(data) {
-        
+
     }
 
 </script>

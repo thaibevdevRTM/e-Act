@@ -1,18 +1,13 @@
 ﻿@using eActForm.Models
+@using eActForm.BusinessLayer
 @model eActForm.Models.Activity_Model.actForms
-<style type="text/css">
 
-    .my-bootbox-class .modal-dialog {
-        width: 200px;
-        font-size: 18px;
-    }
-</style>
 <script>
     function checkDelete(actId,statusId) {
         var msg = "";
-        if (statusId == "1") {
+        if (statusId == "1" || statusId == "6") {
             // can be delete
-            msg = "คุณต้องการลบเอกสารนี้หรือไม่?"
+            msg = "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
         }
         else {
             // can't delete
@@ -34,6 +29,7 @@
             },
             callback: function (result) {
                 if (result) {
+                    $("#WaitDialog").show();
                     $.ajax({
                         url: '@Url.Action("requestDeleteDoc", "Home")',
                         data: {
@@ -42,6 +38,7 @@
                         },
                     }).done(function (htmlResponse) {
                         $("#getQuery").html(htmlResponse);
+                        $("#WaitDialog").hide();
                     });
                 }
 
@@ -117,7 +114,8 @@
                     <tr class="gradeX">
                         <td width="200">
 
-                            @if (item.statusId == "1" || item.statusId == "5")
+                            @if (item.statusId == "1" || item.statusId == "3" || item.statusId == "5" || 
+                                ( item.statusId =="6" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)))
                             {
                                 <a href="javascript:" target="_blank" onclick="return checkDelete('@item.id','@item.statusId');">
                                     <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;

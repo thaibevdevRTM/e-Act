@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>e-ActForm RTM Sale Support</title>
 
 
     <!-- Bootstrap -->
@@ -14,6 +14,8 @@
     <link href="~/content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Datatables -->
     <link href="~/Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="~/Content/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
     <!---->
     <link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-datepicker/datepicker3.css?1424887858" />
 
@@ -21,31 +23,6 @@
 
     <!-- jQuery -->
     <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
-
-    <style type="text/css">
-
-        .my-bootbox-class .modal-dialog {
-            width: 400px;
-            font-size: 18px;
-            text-align: center;
-        }
-
-        .loading {
-            position: fixed;
-            z-index: 999;
-            height: 2em;
-            width: 2em;
-            overflow: show;
-            margin: auto;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
-            width: 100%;
-            height: 100%;
-        }
-    </style>
 </head>
 <body class="nav-md">
     <div id="WaitDialog" class="loading" style="text-align: center;display:none;">
@@ -119,7 +96,7 @@
             <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    Power by RTM Dev. Team
                 </div>
                 <div class="clearfix"></div>
             </footer>
@@ -136,7 +113,8 @@
     <script src="~/Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <!-- datepicker -->
     <script src="~/Content/vendors/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-
+    <!-- iCheck -->
+    <script src="~/Content/vendors/iCheck/icheck.min.js"></script>
     <!--bootbox-->
     <link href="~/Content/Site.css" rel="stylesheet" />
     <script src="~/Scripts/bootbox.js"></script>
@@ -144,7 +122,39 @@
     <!-- Custom Theme Scripts -->
     <script src="~/Content/vendors/build/js/custom.js"></script>
 
+    <style type="text/css">
+
+        .my-bootbox-class .modal-dialog {
+            width: 400px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .my-bootbox-class .modal-dialog-large {
+            width: 600px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .loading {
+            position: fixed;
+            z-index: 999;
+            height: 2em;
+            width: 2em;
+            overflow: show;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
     <script>
+
         function doMsgSuccess(msg) {
             bootbox.alert("<div class='row'><div class='text-center'><img width='150px' src='../images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>");
         }
@@ -156,11 +166,11 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138769477-1"></script>
     <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-  gtag('config', 'UA-138769477-1');
+        gtag('config', 'UA-138769477-1');
     </script>
 </body>
 </html>

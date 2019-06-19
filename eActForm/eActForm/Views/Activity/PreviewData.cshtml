@@ -25,7 +25,6 @@
             },
             callback: function (result) {
                 if (result == true) {
-                    console.log(result);
                     bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
                     $.ajax({
                         url: '@Url.Action("submitPreview", "Activity")',
@@ -39,7 +38,6 @@
                     }).done(function (response) {
                         var url = '@Url.Action("Index", "Home")';
                         window.location.href = url;
-                        console.log('success');
                     });
                 }
             }
@@ -144,6 +142,7 @@
                             <td style="text-align:right; font-size:12.5px;">กลุ่มสินค้า(Product Group)</td>
                             <td></td>
                             <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.brandName) </td>
+
                         </tr>
                         <tr>
                             <td style="height:10px;"></td>
@@ -160,7 +159,7 @@
                                     <td style="text-align:right"></td>
                                 }
                             }
-                            <td style="font-size:12.5px;">ไม่ได้เกิดจาก รายการส่งเสริมการขาย (Trade Term)</td>
+                            <td style="font-size:12.5px;">รายการส่งเสริมการขาย (Trade Term)</td>
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">ระยะเวลากิจกรรม</td>
                             <td></td>
@@ -242,12 +241,24 @@
 
                                 @if (Model.productImageList.Any())
                                 {
-                                    string url = System.Configuration.ConfigurationManager.AppSettings["rootURL"].ToString();
+                                    string url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfiles"].ToString();
                                     foreach (var item in Model.productImageList)
                                     {
-                                        <td width="50%" style="text-align:right">
-                                            <img width="120" height="120" src="@url@item._fileName" />
-                                        </td>
+                                        if (item.extension != ".pdf")
+                                        {
+                                            if (Model.productImageList.Count == 1)
+                                            {
+                                                <td width="50%" style="text-align:right">
+                                                    <img width="220" height="120" src="@string.Format(url, item._fileName)" />
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td width="40%" style="text-align:right;">
+                                                    <img width="130" height="120" src="@string.Format(url, item._fileName)" />
+                                                </td>
+                                            }
+                                        }
                                     }
                                 }
                                 else
@@ -298,6 +309,10 @@
                                     <td style="font-size:12.5px;">Discount %</td>
                                 }
                             }
+                            else
+                            {
+                                <td style="font-size:12.5px;">Discount %</td>
+                            }
 
                             <td style="font-size:12.5px;">Cost (BHT)</td>
                         </tr>
@@ -320,6 +335,7 @@
                                                 <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) (@Html.DisplayFor(m => item.pack))</td>
                                             }
                                         }
+
                                     }
 
                                     <td class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
@@ -362,7 +378,7 @@
                             <td colspan="5" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
                         </tr>
                         <tr>
-                            <td width="10%" style="font-size:12.5px;">ยอดขายปกติ (Cost)</td>
+                            <td width="10%" style="font-size:12.5px;">ยอดขายปกติ (Case)</td>
                             <td width="10%" style="font-size:12.5px;">ยอดขายข่วงทำกิจกรรม (Case)</td>
                             <td width="10%" style="font-size:12.5px;">% Growth</td>
                             <td width="12%" style="font-size:12.5px;">ค่าใช้จ่ายรวม Spending Exp. (Bath)</td>
@@ -415,7 +431,7 @@
                                 }
                             </td>
                             <td class="textRight">
-                                @if (totalActCost != 0 && costActivity != 0)
+                                @if (totalActCost != 0 && costActivity != 0 && costProduct != 0)
                                 {
                                     growthPerTotal = (costActivity - costProduct) / costProduct * 100;
                                     string result = String.Format("{0:n2}%", @growthPerTotal);
@@ -430,11 +446,11 @@
                                 }
                             </td>
                             <td class="textRight">
-                                @if (perTotal != 0)
-                                {
-                                    string result = String.Format("{0:n2}%", @perTotal);
-                                    @result.ToString();
-                                }
+                                @*@if (perTotal != 0)
+                                    {
+                                        string result = String.Format("{0:n2}%", @perTotal);
+                                        @result.ToString();
+                                    }*@
                             </td>
                         </tr>
 
@@ -472,4 +488,6 @@
         </div>
     </div>
 </div>
+
+
 

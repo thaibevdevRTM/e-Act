@@ -12,6 +12,7 @@ namespace eActForm.Models
         {
             public List<infoDashBoardModel> dashBoardLists { get; set; }
             public List<infoGroupCustomerSpending> customerSpendingLists { get; set; }
+            public List<infoSumSpendindOfTheYear> sumSpendingOfYear { get; set; }
         }
         public class infoDashBoardModel
         {
@@ -32,6 +33,13 @@ namespace eActForm.Models
         {
             public string customerId { get; set; }
             public string customerName { get; set; }
+            public decimal? sumSpending { get; set; }
+        }
+
+        public class infoSumSpendindOfTheYear
+        {
+            public decimal? sumAlcoholSpending { get; set; }
+            public decimal? sumNonAlcoholSpending { get; set; }
             public decimal? sumSpending { get; set; }
         }
     }
