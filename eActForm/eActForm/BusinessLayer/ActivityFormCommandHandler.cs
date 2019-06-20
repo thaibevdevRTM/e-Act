@@ -175,42 +175,7 @@ namespace eActForm.BusinessLayer
       
 
 
-        public static int deleteImg(string fileName, string activityId)
-        {
-
-            int result = 0;
-            try
-            {
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteImgbyactivityIdName"
-                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
-                    ,new SqlParameter("@fileName",fileName)
-                    });
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message + ">> deleteImg");
-            }
-
-            return result;
-        }
-
-        public static int deleteImgById(string id)
-        {
-
-            int result = 0;
-            try
-            {
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteImgbyId"
-                    , new SqlParameter[] {new SqlParameter("@id",id)
-                    });
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message + ">> deleteImg");
-            }
-
-            return result;
-        }
+      
 
 
         public static int deleteActivityOfProductByActivityId(string activityId)

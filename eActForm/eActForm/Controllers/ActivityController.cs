@@ -227,7 +227,7 @@ namespace eActForm.Controllers
         public JsonResult deleteImg(string name)
         {
             var result = new AjaxResult();
-            int resultImg = ActivityFormCommandHandler.deleteImg(name, Session["activityId"].ToString());
+            int resultImg = ImageAppCode.deleteImg(name, Session["activityId"].ToString());
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -236,7 +236,7 @@ namespace eActForm.Controllers
         {
             var result = new AjaxResult();
 
-            int resultImg = ActivityFormCommandHandler.deleteImgById(id);
+            int resultImg = ImageAppCode.deleteImgById(id);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
