@@ -138,6 +138,21 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
+        public ActionResult repListViewGroupBrand(RepDetailModel.actFormRepDetails model,string[] brandId)
+        {
+            RepDetailModel.actFormRepDetails rep = new RepDetailModel.actFormRepDetails();
+            try
+            {
+                rep.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => brandId.Contains(r.brandId)).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(rep);
+        }
+
         [HttpPost]
         [ValidateInput(false)]
         public JsonResult repReportDetailApprove(string gridHtml, string customerId, string productTypeId, string startDate, string endDate)
