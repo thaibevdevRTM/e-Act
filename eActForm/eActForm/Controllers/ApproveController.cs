@@ -82,7 +82,7 @@ namespace eActForm.Controllers
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
-            activityModel.productImageList = QueryGetImageById.GetImage(actId).Where(x => x.extension != ".pdf").ToList();
+            activityModel.productImageList = ImageAppCode.GetImage(actId).Where(x => x.extension != ".pdf").ToList();
 
             return PartialView(activityModel);
         }
@@ -106,7 +106,7 @@ namespace eActForm.Controllers
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPathInsert);
 
                     TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-                    getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId).Where(x => x.extension == ".pdf").ToList();
+                    getImageModel.tbActImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension == ".pdf").ToList();
                     string[] pathFile = new string[getImageModel.tbActImageList.Count + 1];
                     pathFile[0] = Server.MapPath(rootPathInsert);
                     if (getImageModel.tbActImageList.Any())

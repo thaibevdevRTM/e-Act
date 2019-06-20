@@ -107,7 +107,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModel> getReportSummary(string repId)
+        public static ReportSummaryModels getReportSummary(string repId)
         {
             try
             {
@@ -116,10 +116,10 @@ namespace eActForm.BusinessLayer
                         new SqlParameter("@repId",repId)
                     });
 
-                var result = (from DataRow d in ds.Tables[0].Rows
+                var list = (from DataRow d in ds.Tables[0].Rows
                               select new ReportSummaryModel()
                               {
-
+                                  id = Guid.NewGuid().ToString(),
                                   customerName = d["customerName"].ToString(),
                                   activitySales = d["activitySales"].ToString(),
                                   activityId = d["actid"].ToString(),
@@ -133,13 +133,54 @@ namespace eActForm.BusinessLayer
                                   soda = decimal.Parse(AppCode.checkNullorEmpty(d["soda"].ToString())),
                                   water = decimal.Parse(AppCode.checkNullorEmpty(d["water"].ToString())),
                               });
+                List<ReportSummaryModel> groupList = new List<ReportSummaryModel>();
+                groupList = list
+                    .OrderBy(x => x.customerName)
+                    .GroupBy(g => new { g.customerName, g.activitySales })
+                    .Select((group, index) => new ReportSummaryModel
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        customerName = group.First().customerName,
+                        activitySales = group.First().activitySales,
+                        est = group.Sum(s => s.est),
+                        crystal = group.Sum(s => s.crystal),
+                        wranger = group.Sum(s => s.wranger),
+                        plus100 = group.Sum(s => s.plus100),
+                        jubjai = group.Sum(s => s.jubjai),
+                        oishi = group.Sum(s => s.oishi),
+                        soda = group.Sum(s => s.soda),
+                        water = group.Sum(s => s.water),
+                    }).ToList();
 
-                return result.ToList();
+
+                List<ReportSummaryModel> groupActivityList = new List<ReportSummaryModel>();
+                groupActivityList = list
+                    .GroupBy(g => new { g.activitySales })
+                    .Select((group, index) => new ReportSummaryModel
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        activitySales = group.First().activitySales,
+                        est = group.Sum(s => s.est),
+                        crystal = group.Sum(s => s.crystal),
+                        wranger = group.Sum(s => s.wranger),
+                        plus100 = group.Sum(s => s.plus100),
+                        jubjai = group.Sum(s => s.jubjai),
+                        oishi = group.Sum(s => s.oishi),
+                        soda = group.Sum(s => s.soda),
+                        water = group.Sum(s => s.water),
+                    }).ToList();
+
+
+                ReportSummaryModels resultModel = new ReportSummaryModels();
+                resultModel.activitySummaryGroupList = groupList;
+                resultModel.activitySummaryList = list.ToList();
+                resultModel.activitySummaryGroupActivityList = groupActivityList;
+                return resultModel;
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("getReportSummary => " + ex.Message);
-                return new List<ReportSummaryModel>();
+                return new ReportSummaryModels();
             }
         }
 
@@ -173,10 +214,11 @@ namespace eActForm.BusinessLayer
             try
             {
                 string id = Guid.NewGuid().ToString();
+                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc("SummaryDetail").FirstOrDefault().docNo));
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertSummaryDetail"
                     , new SqlParameter[] {
                         new SqlParameter("@id",id)
-                        ,new SqlParameter("@activityNo","")
+                        ,new SqlParameter("@activityNo",docNo)
                         ,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.รออนุมัติ)
                         ,new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
@@ -238,6 +280,48 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 throw new Exception("insertApproveForReportSummaryDetail >>" + ex.Message);
+            }
+        }
+
+        public static List<ReportSummaryModels.actApproveSummaryDetailModel> getApproveSummaryDetailListsByEmpId()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveRepDetailFormByEmpId"
+                    , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    var lists = (from DataRow dr in ds.Tables[0].Rows
+                                 select new ReportSummaryModels.actApproveSummaryDetailModel()
+                                 {
+                                     id = dr["id"].ToString(),
+                                     activityNo = dr["activityNo"].ToString(),
+                                     statusId = dr["statusId"].ToString(),
+                                     statusName = dr["statusName"].ToString(),
+                                     startDate = dr["startDate"] is DBNull ? null : (DateTime?)dr["startDate"],
+                                     endDate = dr["endDate"] is DBNull ? null : (DateTime?)dr["endDate"],
+                                     customerId = dr["customerId"].ToString(),
+                                     productTypeId = dr["productTypeId"].ToString(),
+                                     productTypeName = dr["productTypeName"].ToString(),
+                                     customerName = dr["customerName"].ToString(),
+                                     delFlag = (bool)dr["delFlag"],
+                                     createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
+                                     createdByUserId = dr["createdByUserId"].ToString(),
+                                     updatedDate = dr["updatedDate"] is DBNull ? null : (DateTime?)dr["updatedDate"],
+                                     updatedByUserId = dr["updatedByUserId"].ToString()
+                                 }).ToList();
+                    return lists;
+                }
+                else
+                {
+                    return new List<ReportSummaryModels.actApproveSummaryDetailModel>();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getApproveSummaryDetailListsByEmpId >>" + ex.Message);
             }
         }
     }

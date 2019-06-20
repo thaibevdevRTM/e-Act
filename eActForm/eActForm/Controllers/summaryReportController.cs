@@ -25,18 +25,19 @@ namespace eActForm.Controllers
         {
             string repDetail = "";
             ReportSummaryModels model = new ReportSummaryModels();
-           
+            ReportSummaryModels modelResult = new ReportSummaryModels();
+
             model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
             model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
             if(model.activitySummaryList.Any())
             {
                 repDetail = string.Join(",", model.activitySummaryList.Select(x => x.repDetailId));
-
-                model.activitySummaryList = ReportSummaryAppCode.getReportSummary(repDetail);
+                modelResult = ReportSummaryAppCode.getReportSummary(repDetail);
+                modelResult.flowList = model.flowList;
             }
 
             ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
-            return PartialView(model);
+            return PartialView(modelResult);
         }
 
 
@@ -47,22 +48,19 @@ namespace eActForm.Controllers
             {
                 ReportSummaryModels model = new ReportSummaryModels();
                 model.activitySummaryList = ReportSummaryAppCode.getSummaryDetailReportByDate(Request.Form["startDate"], Request.Form["endDate"]);
-
+                string chk = Request.Form["chk_Approve"];
                 #region filter
-                if (Request.Form["ddlCustomer"] != "")
-                {
-                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByCustomer(model.activitySummaryList, Request.Form["ddlCustomer"]);
-                }
+
                 if (Request.Form["ddlProductType"] != "")
                 {
                     model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByProductType(model.activitySummaryList, Request.Form["ddlProductType"]);
                 }
 
-                if (Request.Form["ddlCustomer"] != "" && Request.Form["ddlProductType"] != "")
+                if (Request.Form["ddlProductType"] != "")
                 {
                     model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
                                     ConfigurationManager.AppSettings["subjectSummaryId"]
-                                    , Request.Form["ddlCustomer"]
+                                    , "B18BB124-0EFC-4D90-BFFD-D333A1F79E32"
                                     , Request.Form["ddlProductType"]);
                 }
                 #endregion
@@ -127,11 +125,11 @@ namespace eActForm.Controllers
                 ReportSummaryModels model = (ReportSummaryModels)Session["SummaryDetailModel"];
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
                 string summaryId = ReportSummaryAppCode.insertActivitySummaryDetail(customerId, productTypeId, startDate, endDate, model);
-                if (ReportSummaryAppCode.insertApproveForReportSummaryDetail(customerId, productTypeId, summaryId) > 0)
+                if (ReportSummaryAppCode.insertApproveForReportSummaryDetail("B18BB124-0EFC-4D90-BFFD-D333A1F79E32", productTypeId, summaryId) > 0)
                 {
-                    var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], summaryId));
+                    var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
-                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Detail, false);
+                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false);
                     result.Success = true;
                 }
                 else

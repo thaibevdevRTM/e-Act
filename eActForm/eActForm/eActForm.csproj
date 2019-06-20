@@ -205,7 +205,7 @@
     <Compile Include="BusinessLayer\QueryGetBudgetApprove.cs" />
     <Compile Include="BusinessLayer\QueryGetChanelNameByCustomerId.cs" />
     <Compile Include="BusinessLayer\QueryGetCostDetailById.cs" />
-    <Compile Include="BusinessLayer\QueryGetImageById.cs" />
+    <Compile Include="BusinessLayer\ImageAppCode.cs" />
     <Compile Include="BusinessLayer\QueryGetInvoiceActivityStstus.cs" />
     <Compile Include="BusinessLayer\QueryGetMessage.cs" />
     <Compile Include="BusinessLayer\QueryGetProductCostDetail.cs" />
@@ -225,6 +225,7 @@
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
     <Compile Include="Controllers\ApproveListsRepDetailController.cs" />
+    <Compile Include="Controllers\ApproveSummaryDetailController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BudgetApproveController.cs" />
     <Compile Include="Controllers\BudgetApproveListController.cs" />
@@ -2279,6 +2280,8 @@
     <Content Include="Views\summaryReport\viewReportActivityBudget.cshtml" />
     <Content Include="Views\summaryReport\repSummaryView.cshtml" />
     <Content Include="Views\Shared\_searchForSummaryReport.cshtml" />
+    <Content Include="Views\ApproveSummaryDetail\Index.cshtml" />
+    <Content Include="Views\ApproveSummaryDetail\ListView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

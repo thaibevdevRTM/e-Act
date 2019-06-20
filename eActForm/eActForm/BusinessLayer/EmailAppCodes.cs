@@ -183,12 +183,27 @@ namespace eActForm.BusinessLayer
             List<Attachment> files = new List<Attachment>();
             string[] pathFile = new string[10];
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            string pathFile = emailType == AppCode.ApproveType.Activity_Form ?
-                HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
-                : HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
+            //pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
+
+            //    HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
+            //    : HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
+
+
+            switch (emailType)
+            {
+                case AppCode.ApproveType.Activity_Form:
+                    pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
+                    break;
+                case AppCode.ApproveType.Report_Detail:
+                    pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
+                    break;
+                case AppCode.ApproveType.Report_Summary:
+                    pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], actFormId));
+                    break;
+            }
 
             TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-            getImageModel.tbActImageList = QueryGetImageById.GetImage(actFormId);
+            getImageModel.tbActImageList = ImageAppCode.GetImage(actFormId);
             if (getImageModel.tbActImageList.Any())
             {
                 int i = 1;

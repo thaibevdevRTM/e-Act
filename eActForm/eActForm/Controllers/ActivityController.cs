@@ -73,7 +73,7 @@ namespace eActForm.Controllers
                 TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
                 if (!string.IsNullOrEmpty(activityId))
                 {
-                    getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId);
+                    getImageModel.tbActImageList = ImageAppCode.GetImage(activityId);
                     return PartialView(getImageModel);
                 }
                 else
@@ -96,7 +96,7 @@ namespace eActForm.Controllers
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
-            activityModel.productImageList = QueryGetImageById.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();
+            activityModel.productImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();
 
             return PartialView(activityModel);
         }
@@ -205,7 +205,7 @@ namespace eActForm.Controllers
                     imageFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                     imageFormModel.updatedDate = DateTime.Now;
 
-                    int resultImg = ActivityFormCommandHandler.insertImageForm(imageFormModel);
+                    int resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
                 }
 
@@ -264,7 +264,7 @@ namespace eActForm.Controllers
 
 
                     TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-                    getImageModel.tbActImageList = QueryGetImageById.GetImage(activityId).Where(x => x.extension == ".pdf").ToList();
+                    getImageModel.tbActImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension == ".pdf").ToList();
                     string[] pathFile = new string[getImageModel.tbActImageList.Count + 1];
                     pathFile[0] = Server.MapPath(rootPathInsert);
                     if (getImageModel.tbActImageList.Any())
