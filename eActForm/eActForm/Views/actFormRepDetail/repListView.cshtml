@@ -71,7 +71,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @{ var index = 1; string strActNo = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0;}
+                                @{ var index = 1; string strActNo = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0;}
                                 @foreach (var item in Model.actFormRepDetailLists)
                                 {
                                     if (item.delFlag == false)
@@ -128,7 +128,7 @@
 
                                             <td>@item.productName</td>
                                             <td>@item.size</td>
-                                            @if (item.activityNo == strActNo)
+                                            @if (item.activityDetail == strActDetail)
                                             {
                                                 <td></td>
                                             }
@@ -146,6 +146,7 @@
 
                                             <td></td>
                                         </tr>
+                                        strActDetail = item.activityDetail;
                                         strActNo = item.activityNo;
                                         sumTotal = sumTotal + item.total;
                                         sumNormalSale = item.normalSale == "" ? sumNormalSale : sumNormalSale + decimal.Parse(item.normalSale);
@@ -182,12 +183,17 @@
 
             </div>
             <div class="row">
-                @if (Model.actFormRepDetailLists[0].productTypeId == "")
+                @if (Model.actFormRepDetailLists[0].productTypeId == "1D1097F4-246F-4DC2-BB69-B7BB6E678299")
                 {
-                    // nonAlcho
-                    // product oisih
 
-                    //
+                    // nonAlcho
+                    // product oisih ,jubjai (9F0725DB-29CC-4569-86C4-3F96724BCB87,7E58F57F-1790-467B-8DA8-90BB7BE5C137)
+                    <div id="divOS">
+                        @Html.Action("repListViewGroupBrand", "actFormRepDetail", new { model = Model, brandId = new string[] { "1D8F1409-9A19-46AC-B1D3-D71919351716", "32459970-AACE-4E67-B58B-F6D786F8D7A1" } })
+                    </div>
+                    <div id="divEst">
+                        @Html.Action("repListViewGroupBrand", "actFormRepDetail", new { model = Model, brandId = new string[] { "32459970-AACE-4E67-B58B-F6D786F8D7A1" } })
+                    </div>
                 }
                 else
                 {
@@ -223,6 +229,7 @@
                         url: '@Url.Action("repReportDetailApprove", "actFormRepDetail")',
                         data: {
                             gridHtml: $("#Grid").html(),
+                            gridOs: $("#divOS").html(),
                             customerId: $("#ddlCustomer").val(),
                             productTypeId: $("#ddlProductType").val(),
                             startDate: $("#startDate").val(),

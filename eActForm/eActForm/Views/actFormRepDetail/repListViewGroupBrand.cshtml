@@ -61,7 +61,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{ var index = 1; string strActNo = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0;}
+                    @{ var index = 1; string strActNo = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0;}
                     @foreach (var item in Model.actFormRepDetailLists)
                     {
                         if (item.delFlag == false)
@@ -118,7 +118,7 @@
 
                                 <td>@item.productName</td>
                                 <td>@item.size</td>
-                                @if (item.activityNo == strActNo)
+                                @if (item.activityDetail == strActDetail)
                                 {
                                     <td></td>
                                 }
@@ -136,6 +136,7 @@
 
                                 <td></td>
                             </tr>
+                            strActDetail = item.activityDetail;
                             strActNo = item.activityNo;
                             sumTotal = sumTotal + item.total;
                             sumNormalSale = item.normalSale == "" ? sumNormalSale : sumNormalSale + decimal.Parse(item.normalSale);

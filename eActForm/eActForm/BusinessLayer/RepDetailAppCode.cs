@@ -7,10 +7,43 @@ using System.Data.SqlClient;
 using Microsoft.ApplicationBlocks.Data;
 using WebLibrary;
 using eActForm.Models;
+using System.Net.Mail;
+using iTextSharp.text;
+using System.Configuration;
+
 namespace eActForm.BusinessLayer
 {
     public class RepDetailAppCode
     {
+        public static void genFilePDFBrandGroup(string actRepDetailId,string gridHtml,string htmlOS, string htmlEst, string htmlWA, string htmlSO)
+        {
+            try
+            {
+                string fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId);
+                var rootPath = HttpContext.Current.Server.MapPath(fileName);
+                List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+
+                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId + "_OS");
+                rootPath = HttpContext.Current.Server.MapPath(fileName);
+                file = AppCode.genPdfFile(htmlOS, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel();
+                imageFormModel.activityId = actRepDetailId;
+                imageFormModel.imageType = AppCode.ApproveType.Report_Detail.ToString();
+                imageFormModel._fileName = fileName;
+                int resultImg = ActivityFormCommandHandler.insertImageForm(imageFormModel);
+
+                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId + "_Est");
+                rootPath = HttpContext.Current.Server.MapPath(fileName);
+                file = AppCode.genPdfFile(htmlEst, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                imageFormModel._fileName = fileName;
+                resultImg = ActivityFormCommandHandler.insertImageForm(imageFormModel);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("genFilePDFBrandGroup >> " + ex.Message);
+            }
+        }
         public static int getRepDetailStatus(string repDetailId)
         {
             try
@@ -206,7 +239,7 @@ namespace eActForm.BusinessLayer
 
                 return lists;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

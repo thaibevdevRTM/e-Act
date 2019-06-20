@@ -20,7 +20,8 @@ namespace eActForm.Controllers
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
             models.approveStatusList.Add(new ApproveModel.approveStatus()
-            { id = "7",
+            {
+                id = "7",
                 nameTH = "เพิ่มเติม",
                 nameEN = "เพิ่มเติม",
             });
@@ -94,7 +95,7 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-        public JsonResult repSetDelFlagRecodeDetail(string actId,bool delFlag)
+        public JsonResult repSetDelFlagRecodeDetail(string actId, bool delFlag)
         {
             var result = new AjaxResult();
             try
@@ -120,7 +121,7 @@ namespace eActForm.Controllers
         {
             return PartialView(flowModel);
         }
-        
+
         public ActionResult repListView(string startDate)
         {
             RepDetailModel.actFormRepDetails model = null;
@@ -138,7 +139,7 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-        public ActionResult repListViewGroupBrand(RepDetailModel.actFormRepDetails model,string[] brandId)
+        public ActionResult repListViewGroupBrand(RepDetailModel.actFormRepDetails model, string[] brandId)
         {
             RepDetailModel.actFormRepDetails rep = new RepDetailModel.actFormRepDetails();
             try
@@ -155,7 +156,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult repReportDetailApprove(string gridHtml, string customerId, string productTypeId, string startDate, string endDate)
+        public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string customerId, string productTypeId, string startDate, string endDate)
         {
             var result = new AjaxResult();
             try
@@ -165,8 +166,7 @@ namespace eActForm.Controllers
                 string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
                 if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId) > 0)
                 {
-                    var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId));
-                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                    RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, "", "", "");
                     EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail, false);
                     Session["ActFormRepDetail"] = null;
                     result.Success = true;
@@ -216,7 +216,7 @@ namespace eActForm.Controllers
         /// <param name="actId"></param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateInput(false)]      
+        [ValidateInput(false)]
         public JsonResult repDetailGenPDF(string gridHtml, string actId)
         {
             var result = new AjaxResult();

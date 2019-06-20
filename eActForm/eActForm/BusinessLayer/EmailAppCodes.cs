@@ -118,7 +118,8 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                List<ApproveModel.approveEmailDetailModel> lists = (emailType == AppCode.ApproveType.Activity_Form) ? getEmailApproveNextLevel(actFormId)
+                List<ApproveModel.approveEmailDetailModel> lists = (emailType == AppCode.ApproveType.Activity_Form) 
+                    ? getEmailApproveNextLevel(actFormId)
                     : getEmailApproveRepDetailNextLevel(actFormId);
                 string strBody = "", strSubject = "";
                 if (lists.Count > 0)
