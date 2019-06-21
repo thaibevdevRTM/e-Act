@@ -1,6 +1,6 @@
 ﻿@using eActForm.BusinessLayer
 @{
-    Layout = null;
+	Layout = null;
 }
 
 <!-- sidebar menu -->
@@ -80,38 +80,38 @@
 							</a>
 						</li>
 					</ul>
-                </li>
-            }
-            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-            {
-                <li>
-                    <a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <li>@Html.ActionLink(" Report Detail", "index", "actFormRepDetail")</li>
-                    </ul>
-                </li>
-            }
-        </ul>
-    </div>
-    <div class="menu_section">
-        <h3>Setting</h3>
-        <ul class="nav side-menu">
-            <li>
-                <a><i class="fa fa-paint-brush"></i> Signature <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
-                    <li>@Html.ActionLink(" Create Signature ", "index", "Signature")</li>
-                </ul>
-            </li>
-            <li>
-                <a><i class="fa fa-sitemap"></i> Help <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
-                    <li>@Html.ActionLink(" Contact ", "contact", "Home")</li>
-                    <li><a href="~/manual/manual_eAct.pdf" target="_blank"> Manual</a></li>
-                </ul>
-            </li>
-            <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> <span class="label label-success pull-right">Coming Soon</span></a></li>
-        </ul>
-    </div>
+				</li>
+			}
+			@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+			{
+				<li>
+					<a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+					<ul class="nav child_menu">
+						<li>@Html.ActionLink(" Report Detail", "index", "actFormRepDetail")</li>
+					</ul>
+				</li>
+			}
+		</ul>
+	</div>
+	<div class="menu_section">
+		<h3>Setting</h3>
+		<ul class="nav side-menu">
+			<li>
+				<a><i class="fa fa-paint-brush"></i> Signature <span class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li>@Html.ActionLink(" Create Signature ", "index", "Signature")</li>
+				</ul>
+			</li>
+			<li>
+				<a><i class="fa fa-sitemap"></i> Help <span class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li>@Html.ActionLink(" Contact ", "contact", "Home")</li>
+					<li><a href="~/manual/manual_eAct.pdf" target="_blank"> Manual</a></li>
+				</ul>
+			</li>
+			<li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> <span class="label label-success pull-right">Coming Soon</span></a></li>
+		</ul>
+	</div>
 
 </div>
 <!-- /sidebar menu -->
