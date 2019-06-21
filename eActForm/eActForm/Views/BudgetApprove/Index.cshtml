@@ -139,16 +139,16 @@
     }
 
 	function successQuery(response) {
+		$("#WaitDialog").show(); 
 		if (response.Success) {
 			var budgetApproveId = $("#HbudgetApproveId").val()
 			callPreviewApprove(budgetApproveId);
-
+			$("#WaitDialog").hide();
 			//genPdfApproveBudget();
         }else {
-            $("#WaitDialog").hide();
+			$("#WaitDialog").hide();
             bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + response.Message);
         }
-
     }
 
 
