@@ -195,7 +195,11 @@ namespace eActForm.BusinessLayer
                 int i = 1;
                 foreach (var item in getImageModel.tbActImageList)
                 {
-                    if (item.extension == ".pdf")
+                    if( item.imageType == AppCode.ApproveType.Report_Detail.ToString())
+                    {
+                        pathFile[i] = HttpContext.Current.Server.MapPath(item._fileName);
+                    }
+                    else if (item.extension == ".pdf")
                     {
                         pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
 

@@ -192,7 +192,10 @@
                         @Html.Action("repListViewGroupBrand", "actFormRepDetail", new { model = Model, brandId = new string[] { "1D8F1409-9A19-46AC-B1D3-D71919351716", "32459970-AACE-4E67-B58B-F6D786F8D7A1" } })
                     </div>
                     <div id="divEst">
-                        @Html.Action("repListViewGroupBrand", "actFormRepDetail", new { model = Model, brandId = new string[] { "32459970-AACE-4E67-B58B-F6D786F8D7A1" } })
+                        @Html.Action("repListViewGroupBrand", "actFormRepDetail", new { model = Model, brandId = new string[] { "9EC1CA68-591D-4B3A-9A65-6509C6ED965E","6B623E91-AE6E-4621-A6CD-3F567D19BC70" } })
+                    </div>
+                    <div id="divWA">                        
+                        @Html.Action("repListViewGroupBrand", "actFormRepDetail", new { model = Model, brandId = new string[] { "3B936397-55EC-475B-9441-5BE7DE1F80F5","2395EA4D-5CD5-4DDB-A7B6-48EF819B99BB" } })
                     </div>
                 }
                 else
@@ -230,6 +233,7 @@
                         data: {
                             gridHtml: $("#Grid").html(),
                             gridOs: $("#divOS").html(),
+                            gridEst: $("#divEst").html(),
                             customerId: $("#ddlCustomer").val(),
                             productTypeId: $("#ddlProductType").val(),
                             startDate: $("#startDate").val(),

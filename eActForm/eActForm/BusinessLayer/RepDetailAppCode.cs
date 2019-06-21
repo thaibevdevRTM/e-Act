@@ -23,7 +23,7 @@ namespace eActForm.BusinessLayer
                 var rootPath = HttpContext.Current.Server.MapPath(fileName);
                 List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId + "_OS");
+                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "OS&JJ_" + actRepDetailId );
                 rootPath = HttpContext.Current.Server.MapPath(fileName);
                 file = AppCode.genPdfFile(htmlOS, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
                 TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel
@@ -34,7 +34,7 @@ namespace eActForm.BusinessLayer
                 };
                 int resultImg = ActivityFormCommandHandler.insertImageForm(imageFormModel);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId + "_Est");
+                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "Est&HP_" + actRepDetailId );
                 rootPath = HttpContext.Current.Server.MapPath(fileName);
                 file = AppCode.genPdfFile(htmlEst, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
                 imageFormModel._fileName = fileName;
