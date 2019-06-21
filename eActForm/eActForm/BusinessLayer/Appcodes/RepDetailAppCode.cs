@@ -32,13 +32,25 @@ namespace eActForm.BusinessLayer
                     imageType = AppCode.ApproveType.Report_Detail.ToString(),
                     _fileName = fileName
                 };
-                int resultImg = ActivityFormCommandHandler.insertImageForm(imageFormModel);
+                int resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
                 fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "Est&HP_" + actRepDetailId );
                 rootPath = HttpContext.Current.Server.MapPath(fileName);
                 file = AppCode.genPdfFile(htmlEst, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
                 imageFormModel._fileName = fileName;
-                resultImg = ActivityFormCommandHandler.insertImageForm(imageFormModel);
+                resultImg = ImageAppCode.insertImageForm(imageFormModel);
+
+                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "WA&CY_" + actRepDetailId);
+                rootPath = HttpContext.Current.Server.MapPath(fileName);
+                file = AppCode.genPdfFile(htmlWA, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                imageFormModel._fileName = fileName;
+                resultImg = ImageAppCode.insertImageForm(imageFormModel);
+
+                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "SO&WR_" + actRepDetailId);
+                rootPath = HttpContext.Current.Server.MapPath(fileName);
+                file = AppCode.genPdfFile(htmlSO, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                imageFormModel._fileName = fileName;
+                resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
             }
             catch (Exception ex)
@@ -46,6 +58,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("genFilePDFBrandGroup >> " + ex.Message);
             }
         }
+
         public static int getRepDetailStatus(string repDetailId)
         {
             try

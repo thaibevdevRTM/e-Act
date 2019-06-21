@@ -158,7 +158,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string gridEst,string gridWA, string customerId, string productTypeId, string startDate, string endDate)
+        public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string gridEst,string gridWA,string gridSO, string customerId, string productTypeId, string startDate, string endDate)
         {
             var result = new AjaxResult();
             try
@@ -168,7 +168,7 @@ namespace eActForm.Controllers
                 string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
                 if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId) > 0)
                 {
-                    RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, gridEst, gridWA, "");
+                    RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, gridEst, gridWA, gridSO);
                     EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail, false);
                     Session["ActFormRepDetail"] = null;
                     result.Success = true;

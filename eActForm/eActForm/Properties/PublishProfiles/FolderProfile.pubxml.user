@@ -88,10 +88,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/03/2018 14:04:42</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
-      <publishTime>06/10/2019 16:24:39</publishTime>
+      <publishTime>06/21/2019 14:51:59</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
-      <publishTime>06/10/2019 16:24:39</publishTime>
+      <publishTime>06/21/2019 14:51:59</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
       <publishTime>01/22/2018 18:40:38</publishTime>
@@ -5785,7 +5785,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/15/2019 10:31:48</publishTime>
     </File>
     <File Include="Scripts/Admin/adminPage.js">
-      <publishTime>06/07/2019 14:26:28</publishTime>
+      <publishTime>05/16/2019 10:12:06</publishTime>
     </File>
     <File Include="Scripts/bootbox.js">
       <publishTime>03/12/2019 09:25:31</publishTime>
@@ -5986,10 +5986,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/19/2019 15:38:52</publishTime>
     </File>
     <File Include="Views/actFormRepDetail/repListView.cshtml">
-      <publishTime>06/20/2019 15:30:15</publishTime>
+      <publishTime>06/21/2019 15:05:53</publishTime>
     </File>
     <File Include="Views/actFormRepDetail/repListViewGroupBrand.cshtml">
-      <publishTime>06/20/2019 14:38:38</publishTime>
+      <publishTime>06/21/2019 14:35:52</publishTime>
     </File>
     <File Include="Views/Activity/activityDetail.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -6022,7 +6022,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/19/2019 15:38:52</publishTime>
     </File>
     <File Include="Views/Admin/Index.cshtml">
-      <publishTime>06/05/2019 14:52:23</publishTime>
+      <publishTime>05/16/2019 10:12:06</publishTime>
     </File>
     <File Include="Views/Admin/ProductDetail.cshtml">
       <publishTime>05/16/2019 10:12:06</publishTime>
@@ -6054,11 +6054,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/ApproveListsRepDetail/ListView.cshtml">
       <publishTime>06/19/2019 15:38:52</publishTime>
     </File>
+    <File Include="Views/ApproveSummaryDetail/Index.cshtml">
+      <publishTime>06/21/2019 14:36:01</publishTime>
+    </File>
+    <File Include="Views/ApproveSummaryDetail/ListView.cshtml">
+      <publishTime>06/21/2019 14:36:01</publishTime>
+    </File>
     <File Include="Views/Budget/activityList.cshtml">
       <publishTime>05/16/2019 10:12:07</publishTime>
     </File>
     <File Include="Views/Budget/activityProduct.cshtml">
-      <publishTime>05/16/2019 10:12:07</publishTime>
+      <publishTime>06/21/2019 14:36:01</publishTime>
     </File>
     <File Include="Views/Budget/activityProductInvoiceEdit.cshtml">
       <publishTime>05/16/2019 10:12:07</publishTime>
@@ -6094,10 +6100,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/09/2019 11:05:42</publishTime>
     </File>
     <File Include="Views/BudgetApprove/Index.cshtml">
-      <publishTime>05/16/2019 10:12:07</publishTime>
+      <publishTime>06/21/2019 14:36:01</publishTime>
     </File>
     <File Include="Views/BudgetApprove/previewApproveBudget.cshtml">
-      <publishTime>05/16/2019 10:12:07</publishTime>
+      <publishTime>06/21/2019 14:36:01</publishTime>
     </File>
     <File Include="Views/BudgetApproveList/budgetApproveList.cshtml">
       <publishTime>05/16/2019 10:12:07</publishTime>
@@ -6165,8 +6171,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Shared/_search.cshtml">
       <publishTime>05/28/2019 09:54:11</publishTime>
     </File>
+    <File Include="Views/Shared/_searchForSummaryReport.cshtml">
+      <publishTime>06/21/2019 14:36:01</publishTime>
+    </File>
     <File Include="Views/Shared/_sidebar.cshtml">
-      <publishTime>06/19/2019 15:38:52</publishTime>
+      <publishTime>06/21/2019 14:36:01</publishTime>
     </File>
     <File Include="Views/Shared/_TopNav.cshtml">
       <publishTime>05/28/2019 09:54:11</publishTime>
@@ -6180,6 +6189,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Signature/listsSignature.cshtml">
       <publishTime>03/12/2019 09:25:32</publishTime>
     </File>
+    <File Include="Views/summaryReport/Index.cshtml">
+      <publishTime>06/21/2019 14:36:01</publishTime>
+    </File>
+    <File Include="Views/summaryReport/repSummaryView.cshtml">
+      <publishTime>06/21/2019 14:36:01</publishTime>
+    </File>
+    <File Include="Views/summaryReport/viewReportActivityBudget.cshtml">
+      <publishTime>06/21/2019 14:36:01</publishTime>
+    </File>
     <File Include="Views/Web.config">
       <publishTime>12/03/2018 14:04:19</publishTime>
     </File>
@@ -6187,7 +6205,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/03/2018 14:04:19</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/21/2019 08:46:49</publishTime>
+      <publishTime>06/21/2019 14:52:01</publishTime>
     </File>
     <File Include="WebForm1.aspx">
       <publishTime>05/15/2019 10:31:48</publishTime>
