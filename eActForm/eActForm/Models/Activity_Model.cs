@@ -90,6 +90,8 @@ namespace eActForm.Models
 
             public decimal? perTotal { get; set; }
             public string createByUserName { get; set; }
+
+            public string brandId { get; set; }
         }
 
     }

@@ -71,7 +71,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @{ var index = 1; string strActNo = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0;}
+                                @{ var index = 1; string strActNo = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0;}
                                 @foreach (var item in Model.actFormRepDetailLists)
                                 {
                                     if (item.delFlag == false)
@@ -128,7 +128,7 @@
 
                                             <td>@item.productName</td>
                                             <td>@item.size</td>
-                                            @if (item.activityNo == strActNo)
+                                            @if (item.activityDetail == strActDetail)
                                             {
                                                 <td></td>
                                             }
@@ -146,6 +146,7 @@
 
                                             <td></td>
                                         </tr>
+                                        strActDetail = item.activityDetail;
                                         strActNo = item.activityNo;
                                         sumTotal = sumTotal + item.total;
                                         sumNormalSale = item.normalSale == "" ? sumNormalSale : sumNormalSale + decimal.Parse(item.normalSale);
@@ -179,6 +180,26 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div class="row">
+                @if (Model.actFormRepDetailLists[0].productTypeId == "1D1097F4-246F-4DC2-BB69-B7BB6E678299")
+                {
+                    // nonAlcho
+                    // product oisih ,jubjai (9F0725DB-29CC-4569-86C4-3F96724BCB87,7E58F57F-1790-467B-8DA8-90BB7BE5C137)
+                    <div id="divOS">
+                        @Html.Action("repListViewGroupBrand", "actFormRepDetail", new { model = Model, brandId = new string[] { "1D8F1409-9A19-46AC-B1D3-D71919351716", "32459970-AACE-4E67-B58B-F6D786F8D7A1" } })
+                    </div>
+                    <div id="divEst">
+                        @Html.Action("repListViewGroupBrand", "actFormRepDetail", new { model = Model, brandId = new string[] { "9EC1CA68-591D-4B3A-9A65-6509C6ED965E", "6B623E91-AE6E-4621-A6CD-3F567D19BC70" } })
+                    </div>
+                    <div id="divWA">
+                        @Html.Action("repListViewGroupBrand", "actFormRepDetail", new { model = Model, brandId = new string[] { "3B936397-55EC-475B-9441-5BE7DE1F80F5", "2395EA4D-5CD5-4DDB-A7B6-48EF819B99BB" } })
+                    </div>
+                    <div id="divSO">
+                        @Html.Action("repListViewGroupBrand", "actFormRepDetail", new { model = Model, brandId = new string[] { "7CA5340A-747B-486C-81C5-D206B081D96A", "BB57DBF4-C281-4F79-9481-2B8A4C53C723" } })
+                    </div>
+                }
             </div>
         </div>
         <div class="modal-footer">
@@ -189,7 +210,6 @@
                         <input type="hidden" name="GridHtml" />
                         <button type="submit" class="btn ink-reaction btn-success" id="btnSubmit" value="Export" style="width:100%;">
                             <i class="fa check-square-o"></i>&nbsp;Send to Approve
-
                         </button>
                     </div>
                 </div>
@@ -209,6 +229,10 @@
                         url: '@Url.Action("repReportDetailApprove", "actFormRepDetail")',
                         data: {
                             gridHtml: $("#Grid").html(),
+                            gridOs: $("#divOS").html(),
+                            gridEst: $("#divEst").html(),
+                            gridWA: $("#divWA").html(),
+                            gridSO: $("#divSO").html(),
                             customerId: $("#ddlCustomer").val(),
                             productTypeId: $("#ddlProductType").val(),
                             startDate: $("#startDate").val(),

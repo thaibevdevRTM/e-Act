@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eActForm.BusinessLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,16 @@ namespace eActForm.Models
         }
         public class ImageModel : ActBaseModel
         {
+            public ImageModel()
+            {
+                _image = new byte[0];
+                extension = ".pdf";
+                delFlag = false;
+                createdByUserId = UtilsAppCode.Session.User.empId;
+                createdDate = DateTime.Now;
+                updatedByUserId = UtilsAppCode.Session.User.empId;
+                updatedDate = DateTime.Now;
+            }
             public string id { get; set; }
             public string activityId { get; set; }
             public string imageType { get; set; }

@@ -7,10 +7,58 @@ using System.Data.SqlClient;
 using Microsoft.ApplicationBlocks.Data;
 using WebLibrary;
 using eActForm.Models;
+using System.Net.Mail;
+using iTextSharp.text;
+using System.Configuration;
+
 namespace eActForm.BusinessLayer
 {
     public class RepDetailAppCode
     {
+        public static void genFilePDFBrandGroup(string actRepDetailId,string gridHtml,string htmlOS, string htmlEst, string htmlWA, string htmlSO)
+        {
+            try
+            {
+                string fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId);
+                var rootPath = HttpContext.Current.Server.MapPath(fileName);
+                List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+
+                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "OS&JJ_" + actRepDetailId );
+                rootPath = HttpContext.Current.Server.MapPath(fileName);
+                file = AppCode.genPdfFile(htmlOS, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel
+                {
+                    activityId = actRepDetailId,
+                    imageType = AppCode.ApproveType.Report_Detail.ToString(),
+                    _fileName = fileName
+                };
+                int resultImg = ImageAppCode.insertImageForm(imageFormModel);
+
+                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "Est&HP_" + actRepDetailId );
+                rootPath = HttpContext.Current.Server.MapPath(fileName);
+                file = AppCode.genPdfFile(htmlEst, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                imageFormModel._fileName = fileName;
+                resultImg = ImageAppCode.insertImageForm(imageFormModel);
+
+                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "WA&CY_" + actRepDetailId);
+                rootPath = HttpContext.Current.Server.MapPath(fileName);
+                file = AppCode.genPdfFile(htmlWA, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                imageFormModel._fileName = fileName;
+                resultImg = ImageAppCode.insertImageForm(imageFormModel);
+
+                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "SO&WR_" + actRepDetailId);
+                rootPath = HttpContext.Current.Server.MapPath(fileName);
+                file = AppCode.genPdfFile(htmlSO, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                imageFormModel._fileName = fileName;
+                resultImg = ImageAppCode.insertImageForm(imageFormModel);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("genFilePDFBrandGroup >> " + ex.Message);
+            }
+        }
+
         public static int getRepDetailStatus(string repDetailId)
         {
             try
@@ -173,7 +221,7 @@ namespace eActForm.BusinessLayer
                                  statusName = dr["statusName"].ToString(),
                                  activityNo = dr["activityNo"].ToString(),
                                  documentDate = (DateTime?)dr["documentDate"] ?? null,
-                                 //reference = dr["reference"].ToString(),
+                                 brandId = dr["brandId"].ToString(),
                                  customerId = dr["customerId"].ToString(),
                                  productCateId = dr["productCateId"].ToString(),
                                  productGroupid = dr["productGroupid"].ToString(),
@@ -190,32 +238,23 @@ namespace eActForm.BusinessLayer
                                  promotionCost = dr["promotionCost"] is DBNull ? 0 : (decimal?)dr["promotionCost"],
                                  channelName = dr["channelName"].ToString(),
                                  productTypeId = dr["productTypeId"].ToString(),
-                                 //productTypeNameEN = dr["nameEN"].ToString(),
-                                 //cusShortName = dr["cusShortName"].ToString(),
-                                 //productCategory = dr["productCateText"].ToString(),
-                                 //groupName = dr["groupName"].ToString(),
                                  activityPeriodSt = dr["activityPeriodSt"] is DBNull ? null : (DateTime?)dr["activityPeriodSt"],
                                  activityPeriodEnd = dr["activityPeriodEnd"] is DBNull ? null : (DateTime?)dr["activityPeriodEnd"],
                                  costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
                                  costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
                                  activityName = dr["activityName"].ToString(),
                                  theme = dr["theme"].ToString(),
-                                 //objective = dr["objective"].ToString(),
-                                 //trade = dr["trade"].ToString(),
                                  activityDetail = dr["activityDetail"].ToString(),
                                  compensate = dr["compensate"] is DBNull ? 0 : (decimal)dr["compensate"],
                                  delFlag = false,
                                  createdDate = (DateTime?)dr["createdDate"],
-                                 //createdByUserId = dr["createdByUserId"].ToString(),
-                                 //updatedDate = (DateTime?)dr["updatedDate"],
-                                 //updatedByUserId = dr["updatedByUserId"].ToString(),
                                  #endregion
 
                              }).ToList();
 
                 return lists;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
