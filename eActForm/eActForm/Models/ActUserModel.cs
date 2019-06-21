@@ -65,7 +65,8 @@ namespace eActForm.Models
             public bool isSuperAdmin { get; set; }
             public string countWatingActForm { get; set; }
             public string counteatingRepDetail { get; set; }
-			public string countWatingBudgetForm { get; set; }
+            public string counteatingSummaryDetail { get; set; }
+            public string countWatingBudgetForm { get; set; }
             public string exception { get; set; }
 		}
     }

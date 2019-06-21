@@ -1,0 +1,130 @@
+﻿
+@using eActForm.Models
+@model eActForm.Models.ReportSummaryModels
+
+<div class="row">
+    <div class="col-md-4 col-xs-12"></div>
+    <div class="col-md-4 col-xs-12" style="padding: 0 30px 10px 30px;">
+        <div class="text-center">
+            <input type="hidden" name="GridHtml" />
+            <button type="submit" class="btn ink-reaction btn-success" id="btnSelected" value="Export" style="width:100%;">
+                <i class="fa check-square-o"></i>&nbsp;Preview to Approve
+
+            </button>
+        </div>
+    </div>
+    <div class="col-md-4 col-xs-12"></div>
+
+</div>
+
+<div class="row">
+    @if (Model.activitySummaryList != null && Model.activitySummaryList.Count > 0)
+    {
+        <div class="col-md-12 col-xs-12">
+            <table>
+                <tr>
+                    <td>
+                        บริษัท โมเดิร์นเทรดแมนเนจเม้นท์ จำกัด
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        รายละเอียดขออนุมัติงบประมาณจัดกิจกรรมด้านส่งเสริมการขาย  @Model.activitySummaryList[0].customerName
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ประจำเดือน @ViewBag.MouthText
+                    </td>
+                </tr>
+            </table>
+
+            <table id="datatable" border="0" class="table table-striped jambo_table bulk_action">
+                <thead>
+                    <tr class="headings" style="text-align:center;">
+                        <th width="70px">#</th>
+                        <th width="70px">ลำดับที่</th>
+                        <th width="80px" style="text-align:center;">เลขที่ RepDetail</th>
+                        <th width="80px" style="text-align:center;">ProductType</th>
+                        <th style="text-align:center;">ชื่อลูกค้า</th>
+                        <th style="text-align:center;">Create Date</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var index = 1; string strActNo = "";
+                    }
+                    @foreach (var item in Model.activitySummaryList)
+                    {
+
+                        if (item.repDetailId != strActNo)
+                        {
+                            <tr class="even pointer">
+                                <td class="a-center ">
+                                    <input type="checkbox" id="chk_@item.repDetailId" checked class="icheckbox_flat-green" onchange="setDelFlagRepDetail('@item.repDetailId');" name="table_records">
+                                </td>
+                                <td class=" ">@index</td>
+                                <td class=" ">@item.activityNo</td>
+                                <td class=" ">@item.productType</td>
+                                <td style="text-align:center;">@item.customerName</td>
+                                @if (item.createdDate != null)
+                                {
+                                    <td width="100px">@item.createdDate.Value.ToString("dd/MM/yyyy")</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+
+                                @{strActNo = item.repDetailId;
+                                    index++;
+                                }
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+
+    }
+</div>
+
+<div class="modal fade" id="previewSummaryModal" role="dialog" style="display:none">
+    <div id="divSummaryPreview">
+    </div>
+</div>
+
+<script type="text/javascript">
+    function setDelFlagRepDetail(repId) {
+        console.log($("#chk_" + repId).is(":checked"));
+        $.ajax({
+            url: '@Url.Action("repSetDelFlagRecodeSummaryDetail", "SummaryReport")',
+            data: {
+                repId: repId,
+                delFlag: $("#chk_" + repId).is(":checked")
+            },
+            dataType: "json",
+            type: 'POST'
+        }).done(function (response) {
+        });
+    }
+
+
+    $('#previewSummaryModal').on('show.bs.modal', function () {
+        $(this).find('.modal-body').css({
+            width: 'auto', //probably not needed
+            height: 'auto', //probably not needed 
+            'max-height': '100%'
+        });
+    });
+
+    $(function () {
+        $("#btnSelected").click(function () {
+            $('#divSummaryPreview').load('@Url.Action("viewReportActivityBudget", "SummaryReport", new { startDate = @ViewBag.startDate })');
+            $("#previewSummaryModal").modal('show');
+        });
+    });
+
+</script>
