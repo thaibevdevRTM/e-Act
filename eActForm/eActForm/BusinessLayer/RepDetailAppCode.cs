@@ -26,10 +26,12 @@ namespace eActForm.BusinessLayer
                 fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId + "_OS");
                 rootPath = HttpContext.Current.Server.MapPath(fileName);
                 file = AppCode.genPdfFile(htmlOS, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
-                TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel();
-                imageFormModel.activityId = actRepDetailId;
-                imageFormModel.imageType = AppCode.ApproveType.Report_Detail.ToString();
-                imageFormModel._fileName = fileName;
+                TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel
+                {
+                    activityId = actRepDetailId,
+                    imageType = AppCode.ApproveType.Report_Detail.ToString(),
+                    _fileName = fileName
+                };
                 int resultImg = ActivityFormCommandHandler.insertImageForm(imageFormModel);
 
                 fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId + "_Est");
