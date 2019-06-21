@@ -553,7 +553,7 @@ namespace eActForm.BusinessLayer
 				: HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId));
 
 			TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-			getImageModel.tbActImageList = QueryGetImageById.GetImage(actFormId);
+			getImageModel.tbActImageList = ImageAppCode.GetImage(actFormId);
 			if (getImageModel.tbActImageList.Any())
 			{
 				int i = 1;
