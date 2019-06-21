@@ -164,10 +164,17 @@ namespace eActForm.Controllers
 					BudgetApproveListController.updateApproveWaitingByRangNo(budget_approve_id);
 
 					var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
-					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+					GridHtml = GridHtml.Replace("<br>", "<br/>");
 
-					//EmailAppCodes.sendApprove(budget_approve_id, AppCode.ApproveType.Activity_Form);
-					EmailAppCodes.sendApproveBudget(budget_approve_id, AppCode.ApproveType.Budget_form);
+					try
+					{
+						AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+					}
+					catch (Exception ex)
+					{
+						AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+					}
+					EmailAppCodes.sendApproveBudget(budget_approve_id, AppCode.ApproveType.Budget_form,false );
 				}
 
 				resultAjax.Success = true;
