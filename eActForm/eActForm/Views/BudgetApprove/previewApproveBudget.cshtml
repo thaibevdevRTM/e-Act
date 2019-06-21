@@ -32,7 +32,7 @@
 
 		function genPdfApproveBudget() {
 		//alert('สลัดผัก genPdfApproveBudget');
-
+			$("#WaitDialog").show();
             $.ajax({
             url: '@Url.Action("genPdfApproveBudget", "BudgetApprove")',
             data: {
