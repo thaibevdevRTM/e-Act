@@ -13,3 +13,4 @@ eActForm/eActConsoleService/obj
 eActForm/web.config*
 eActForm/eActConsoleService/*.config
 eActForm/eActConsoleService/bin
+*.pdf

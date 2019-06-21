@@ -13,6 +13,7 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using WebLibrary;
@@ -119,8 +120,11 @@ namespace eActForm.Models
             List<Attachment> files = new List<Attachment>();
 
             msPreview = GetFileReportTomail_Preview(GridHtml, doc);
-            PreviewBytes = msPreview.ToArray();          
+            PreviewBytes = msPreview.ToArray();
+
+            //save in directory
             File.WriteAllBytes(rootPath, PreviewBytes);
+
 
             if (PreviewBytes.Length != 0)
             {
@@ -132,6 +136,54 @@ namespace eActForm.Models
             return files;
         }
 
+        public static string mergePDF(string rootPathOutput, string[] pathFile)
+        {
+            string result = string.Empty;
+            try
+            {
+                PdfReader reader = null/* TODO Change to default(_) if this is not a reference type */;
+                Document sourceDocument = null/* TODO Change to default(_) if this is not a reference type */;
+                PdfCopy pdfCopyProvider = null/* TODO Change to default(_) if this is not a reference type */;
+                PdfImportedPage importedPage;
+                sourceDocument = new Document();
+                pdfCopyProvider = new PdfCopy(sourceDocument, new System.IO.FileStream(rootPathOutput, System.IO.FileMode.Create));
+                sourceDocument.Open();
+
+
+                for (int f = 0; f <= (pathFile.Length - 1); f++)
+                {
+
+                    int pages = get_pageCcount(pathFile[f]);
+                    reader = new PdfReader(pathFile[f]);
+                    for (int i = 1; i <= pages; i++)
+                    {
+                        importedPage = pdfCopyProvider.GetImportedPage(reader, i);
+                        pdfCopyProvider.AddPage(importedPage);
+                    }
+                    reader.Close();
+                }
+                sourceDocument.Close();
+                result = "success";
+            }
+            catch (Exception ex)
+            {
+                result = "error" + ex.Message;
+            }
+            return result;
+        }
+
+        private static int get_pageCcount(string file)
+        {
+            var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using (StreamReader sr = new StreamReader(fs))
+            {
+                Regex regex = new Regex(@"/Type\s*/Page[^s]");
+                MatchCollection matches = regex.Matches(sr.ReadToEnd());
+                return matches.Count;
+            }
+        }
+
+
         public static MemoryStream genFileToMemoryStream(string pathFile)
         {
             try
@@ -142,6 +194,8 @@ namespace eActForm.Models
                     using (FileStream file = new FileStream(pathFile, FileMode.Open, FileAccess.Read))
                     {
                         file.CopyTo(ms);
+                        file.Dispose();
+                        
                     }
                 }
                 return ms;

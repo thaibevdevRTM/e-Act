@@ -10,6 +10,8 @@ using eActForm.BusinessLayer;
 using eActForm.Models;
 using iTextSharp.text;
 using WebLibrary;
+using static eActForm.Models.ReportActivityBudgetModels;
+
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -244,5 +246,6 @@ namespace eActForm.Controllers
 
             return Json(result);
         }
+
     }
 }
