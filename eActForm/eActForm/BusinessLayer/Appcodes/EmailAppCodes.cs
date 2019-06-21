@@ -240,9 +240,11 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-
-                string strBody = (emailType == AppCode.ApproveType.Activity_Form) ?
-                            string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
+                string strBody = "";
+                switch (emailType)
+                {
+                    case AppCode.ApproveType.Activity_Form:
+                        strBody = string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
                             , item.empPrefix + " " + item.empName //เรียน
                             , AppCode.ApproveStatus.รออนุมัติ.ToString()
                             , emailType.ToString().Replace("_", " ")
@@ -251,17 +253,29 @@ namespace eActForm.BusinessLayer
                             , item.activityNo
                             , String.Format("{0:0,0.00}", item.sumTotal)
                             , item.createBy
-                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId)
-                            ) :
-                            string.Format(ConfigurationManager.AppSettings["emailApproveRepDetailBody"]
+                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId));
+                        break;
+                    case AppCode.ApproveType.Report_Detail:
+                        strBody = string.Format(ConfigurationManager.AppSettings["emailApproveRepDetailBody"]
                             , item.empPrefix + " " + item.empName //เรียน
                             , AppCode.ApproveStatus.รออนุมัติ.ToString()
                             , emailType.ToString().Replace("_", " ")
                             , item.customerName
                             , item.productTypeName
                             , item.createBy
-                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId)
-                            );
+                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId));
+                        break;
+                    case AppCode.ApproveType.Report_Summary:
+                        strBody = string.Format(ConfigurationManager.AppSettings["emailApproveSummaryDetailBody"]
+                            , item.empPrefix + " " + item.empName //เรียน
+                            , AppCode.ApproveStatus.รออนุมัติ.ToString()
+                            , emailType.ToString().Replace("_", " ")
+                            , item.customerName
+                            , item.productTypeName
+                            , item.createBy
+                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId));
+                        break;
+                }
 
                 return strBody;
             }
