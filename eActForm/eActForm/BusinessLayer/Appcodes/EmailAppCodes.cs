@@ -183,12 +183,27 @@ namespace eActForm.BusinessLayer
             List<Attachment> files = new List<Attachment>();
             string[] pathFile = new string[10];
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
-                HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
-                : HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
+            //pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
+
+            //    HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
+            //    : HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
+
+
+            switch (emailType)
+            {
+                case AppCode.ApproveType.Activity_Form:
+                    pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
+                    break;
+                case AppCode.ApproveType.Report_Detail:
+                    pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
+                    break;
+                case AppCode.ApproveType.Report_Summary:
+                    pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], actFormId));
+                    break;
+            }
 
             TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-            getImageModel.tbActImageList = QueryGetImageById.GetImage(actFormId);
+            getImageModel.tbActImageList = ImageAppCode.GetImage(actFormId);
             if (getImageModel.tbActImageList.Any())
             {
                 int i = 1;
@@ -197,7 +212,6 @@ namespace eActForm.BusinessLayer
                     if (item.extension == ".pdf")
                     {
                         pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-
                     }
                     i++;
                 }
@@ -226,9 +240,11 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-
-                string strBody = (emailType == AppCode.ApproveType.Activity_Form) ?
-                            string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
+                string strBody = "";
+                switch (emailType)
+                {
+                    case AppCode.ApproveType.Activity_Form:
+                        strBody = string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
                             , item.empPrefix + " " + item.empName //เรียน
                             , AppCode.ApproveStatus.รออนุมัติ.ToString()
                             , emailType.ToString().Replace("_", " ")
@@ -237,17 +253,29 @@ namespace eActForm.BusinessLayer
                             , item.activityNo
                             , String.Format("{0:0,0.00}", item.sumTotal)
                             , item.createBy
-                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId)
-                            ) :
-                            string.Format(ConfigurationManager.AppSettings["emailApproveRepDetailBody"]
+                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId));
+                        break;
+                    case AppCode.ApproveType.Report_Detail:
+                        strBody = string.Format(ConfigurationManager.AppSettings["emailApproveRepDetailBody"]
                             , item.empPrefix + " " + item.empName //เรียน
                             , AppCode.ApproveStatus.รออนุมัติ.ToString()
                             , emailType.ToString().Replace("_", " ")
                             , item.customerName
                             , item.productTypeName
                             , item.createBy
-                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId)
-                            );
+                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId));
+                        break;
+                    case AppCode.ApproveType.Report_Summary:
+                        strBody = string.Format(ConfigurationManager.AppSettings["emailApproveSummaryDetailBody"]
+                            , item.empPrefix + " " + item.empName //เรียน
+                            , AppCode.ApproveStatus.รออนุมัติ.ToString()
+                            , emailType.ToString().Replace("_", " ")
+                            , item.customerName
+                            , item.productTypeName
+                            , item.createBy
+                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId));
+                        break;
+                }
 
                 return strBody;
             }
@@ -525,7 +553,7 @@ namespace eActForm.BusinessLayer
 				: HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId));
 
 			TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-			getImageModel.tbActImageList = QueryGetImageById.GetImage(actFormId);
+			getImageModel.tbActImageList = ImageAppCode.GetImage(actFormId);
 			if (getImageModel.tbActImageList.Any())
 			{
 				int i = 1;

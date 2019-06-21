@@ -172,71 +172,10 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static int insertImageForm(TB_Act_Image_Model.ImageModel model)
-        {
-            int result = 0;
-            try
-            {
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertImageForm"
-                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityId)
-                    ,new SqlParameter("@imageType",model.imageType)
-                    ,new SqlParameter("@image",model._image)
-                    ,new SqlParameter("@fileName",model._fileName)
-                    ,new SqlParameter("@extension",model.extension)
-                    ,new SqlParameter("@remark",model.remark)
-                    ,new SqlParameter("@delFlag",model.delFlag)
-                    ,new SqlParameter("@createdDate",model.createdDate)
-                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
-                    ,new SqlParameter("@updatedDate",model.updatedDate)
-                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
-
-                    });
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message + ">> insertImageForm");
-            }
-
-            return result;
-        }
+      
 
 
-        public static int deleteImg(string fileName, string activityId)
-        {
-
-            int result = 0;
-            try
-            {
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteImgbyactivityIdName"
-                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
-                    ,new SqlParameter("@fileName",fileName)
-                    });
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message + ">> deleteImg");
-            }
-
-            return result;
-        }
-
-        public static int deleteImgById(string id)
-        {
-
-            int result = 0;
-            try
-            {
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteImgbyId"
-                    , new SqlParameter[] {new SqlParameter("@id",id)
-                    });
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message + ">> deleteImg");
-            }
-
-            return result;
-        }
+      
 
 
         public static int deleteActivityOfProductByActivityId(string activityId)
