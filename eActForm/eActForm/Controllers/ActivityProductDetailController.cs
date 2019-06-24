@@ -189,7 +189,7 @@ namespace eActForm.Controllers
                         r.promotionGp = Math.Round(p_PromotionGp, 3);
                         r.specialDisc = decimal.Parse(AppCode.checkNullorEmpty(model.specialDisc.ToString()));
                         r.specialDiscBaht = decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
-                        r.normalCost = p_disCount3 == 0 ? p_wholeSalesPrice : p_disCount3;
+                        r.normalCost = p_disCount3 == 0 ? model.normalCost : p_disCount3;
                         r.promotionCost = Math.Round(p_PromotionCost, 3);
                         return r;
                     }).ToList();
