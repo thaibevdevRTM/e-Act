@@ -32,6 +32,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("calDiscountProduct >>" + ex.Message);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -43,7 +44,6 @@ namespace eActForm.Controllers
             Activity_Model activityModel = new Activity_Model();
             activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
             activityModel.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).OrderBy(x => x.productName).ToList();
-
             return PartialView(activityModel);
         }
 
@@ -55,8 +55,7 @@ namespace eActForm.Controllers
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
                 if (rowid != null)
                 {
-                    var list = activityModel.productcostdetaillist1.Single(r => r.productGroupId == rowid);
-                    activityModel.productcostdetaillist1.Remove(list);
+                    activityModel.productcostdetaillist1.RemoveAll(r => r.productGroupId == rowid);
                 }
                 else
                 {
@@ -69,6 +68,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("delCostDetail >>" + ex.Message);
                 result.Message = ex.Message;
                 result.Success = false;
             }
@@ -110,7 +110,7 @@ namespace eActForm.Controllers
                     costthememodel.productId = item.productId;
                     costthememodel.activityTypeId = theme;
                     costthememodel.brandName = item.brandName.Trim() + " " + item.size + "ALL(" + item.detailGroup.Count + ") " + item.pack;
-                    costthememodel.productName = item.isShowGroup ? costthememodel.brandName : item.productName + " "+ item.pack;
+                    costthememodel.productName = item.isShowGroup ? costthememodel.brandName : item.productName + " " + item.pack;
                     costthememodel.size = item.size;
                     costthememodel.smellName = item.smellName;
                     costthememodel.smellId = item.smellId;
@@ -135,6 +135,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("addItemProduct >> " + ex.Message);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -161,7 +162,7 @@ namespace eActForm.Controllers
 
                 decimal getPackProduct = QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().unit / QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().pack;
 
-                decimal p_normalGp = AppCode.checkNullorEmpty(saleNormal) == "0" ? 0 : 
+                decimal p_normalGp = AppCode.checkNullorEmpty(saleNormal) == "0" ? 0 :
                     ((decimal.Parse(saleNormal) - ((p_disCount3 * decimal.Parse("1.07")) / getPackProduct))
                      / decimal.Parse(saleNormal)) * 100;
 
@@ -169,8 +170,8 @@ namespace eActForm.Controllers
 
                 decimal p_PromotionCost = AppCode.checkNullorEmpty(model.specialDisc.ToString()) == "0" && AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()) == "0" || p_disCount3 == 0 ? p_disCount3 : (p_disCount3 - (p_disCount3 * (decimal.Parse(model.specialDisc.ToString()) / 100))) - decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
 
-                decimal p_PromotionGp = AppCode.checkNullorEmpty(saleIn) == "0" ? 0 : 
-                    ((decimal.Parse(saleIn) - ((p_PromotionCost * decimal.Parse("1.07")) / getPackProduct )) 
+                decimal p_PromotionGp = AppCode.checkNullorEmpty(saleIn) == "0" ? 0 :
+                    ((decimal.Parse(saleIn) - ((p_PromotionCost * decimal.Parse("1.07")) / getPackProduct))
                     / decimal.Parse(AppCode.checkNullorEmpty(saleIn))) * 100;
 
                 p_PromotionGp = p_PromotionGp > 0 ? p_PromotionGp : p_PromotionGp * -1;
@@ -192,7 +193,7 @@ namespace eActForm.Controllers
                         r.promotionGp = Math.Round(p_PromotionGp, 3);
                         r.specialDisc = decimal.Parse(AppCode.checkNullorEmpty(model.specialDisc.ToString()));
                         r.specialDiscBaht = decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
-                        r.normalCost = p_disCount3 == 0 ? p_wholeSalesPrice : p_disCount3;
+                        r.normalCost = p_disCount3 == 0 ? model.normalCost : p_disCount3;
                         r.promotionCost = Math.Round(p_PromotionCost, 3);
                         return r;
                     }).ToList();
@@ -200,6 +201,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("calProductDetail >> " + ex.Message);
                 success = false;
             }
 
