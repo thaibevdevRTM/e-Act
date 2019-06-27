@@ -204,13 +204,22 @@
         </div>
         <div class="modal-footer">
             <div class="row">
-                <div class="col-md-4 col-xs-12"></div>
-                <div class="col-md-4 col-xs-12" style="padding: 0 30px 10px 30px;">
-                    <div class="text-center">
-                        <input type="hidden" name="GridHtml" />
-                        <button type="submit" class="btn ink-reaction btn-success" id="btnSubmit" value="Export" style="width:100%;">
+                <div class="col-md-6 col-xs-12">
+                    <div class="pull-right">
+                        <button type="button" class="btn ink-reaction btn-primary" id="btnSubmit" value="Export" style="width:100%;">
                             <i class="fa check-square-o"></i>&nbsp;Send to Approve
                         </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="pull-left">
+                        @using (Html.BeginForm("repListViewExportExcel", "actFormRepDetail", FormMethod.Post))
+                        {
+                            <input type="hidden" name="gridHtml" />
+                            <button type="submit" class="btn ink-reaction btn-success" id="btnExportExcel" value="ExportExcel">
+                                <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
+                            </button>
+                        }
                     </div>
                 </div>
                 <div class="col-md-4 col-xs-12"></div>
@@ -221,6 +230,12 @@
 </div>
 
 <script type="text/javascript">
+    $(function () {
+                $("#btnExportExcel").click(function () {
+                    $("input[name='gridHtml']").val($("#Grid").html());
+                });
+    });
+
             $(function () {
                 $("#btnSubmit").click(function () {
                     $("#previewModal").modal('hide');
