@@ -31,5 +31,18 @@ namespace eActForm.Controllers
             }
             return PartialView(model);
         }
+
+        public ActionResult searchActForm()
+        {
+            ReportSummaryModels model = new ReportSummaryModels();
+            model.activitySummaryList = (List<ReportSummaryModels.ReportSummaryModel>)TempData["ApproveFormLists"];
+
+            if (Request.Form["ddlStatus"] != "")
+            {
+                model.activitySummaryList = ReportSummaryAppCode.getFilterFormByStatusId(model.activitySummaryList, int.Parse(Request.Form["ddlStatus"]));
+            }
+            TempData["ApproveSearchResult"] = model.activitySummaryList;
+            return RedirectToAction("ListView");
+        }
     }
 }

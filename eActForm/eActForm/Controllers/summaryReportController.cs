@@ -21,25 +21,54 @@ namespace eActForm.Controllers
             return View(models);
         }
 
-        public ActionResult viewReportActivityBudget(string startDate)
+
+
+        public ActionResult getPreviewSummary(string startDate)
         {
-            string repDetail = "";
-            ReportSummaryModels model = new ReportSummaryModels();
-            ReportSummaryModels modelResult = new ReportSummaryModels();
-
-            model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
-            model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
-            if(model.activitySummaryList.Any())
+           
+            try
             {
-                repDetail = string.Join(",", model.activitySummaryList.Select(x => x.repDetailId));
-                modelResult = ReportSummaryAppCode.getReportSummary(repDetail);
-                modelResult.flowList = model.flowList;
-            }
+                string repDetail = "";
+                ReportSummaryModels model = new ReportSummaryModels();
+                ReportSummaryModels modelResult = new ReportSummaryModels();
 
-            ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
-            return PartialView(modelResult);
+                model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
+                model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
+                if (model.activitySummaryList.Any())
+                {
+                    repDetail = string.Join(",", model.activitySummaryList.Select(x => x.repDetailId));
+                    modelResult = ReportSummaryAppCode.getReportSummary(repDetail);
+                    modelResult.flowList = model.flowList;
+                }
+
+                Session["SummaryDetailModel"] = modelResult;
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+            return RedirectToAction("viewReportSummary", new { startDate = Request.Form["startDate"] });
         }
 
+
+        public ActionResult viewReportSummary(string startDate)
+        {
+            ReportSummaryModels model = null;
+            try
+            {
+
+                ViewBag.startDate = startDate;
+                model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
 
 
         public ActionResult searchActForm()
@@ -80,6 +109,7 @@ namespace eActForm.Controllers
             ReportSummaryModels model = null;
             try
             {
+
                 ViewBag.startDate = startDate;
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
             }
@@ -136,6 +166,56 @@ namespace eActForm.Controllers
                 {
                     result.Success = false;
                     result.Message = AppCode.StrMessFail;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return Json(result);
+        }
+
+
+        public ActionResult summaryApproveListView(string summaryId)
+        {
+            ReportSummaryModels modelResult = new ReportSummaryModels();
+            try
+            {
+                
+                modelResult = ReportSummaryAppCode.getReportSummaryApprove(summaryId);
+                modelResult.flowList = ApproveFlowAppCode.getFlowByActFormId(summaryId);
+                Session["SummaryDetailModel"] = modelResult;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return RedirectToAction("viewReportSummary", new { startDate = modelResult.activitySummaryList.Count > 0 ? modelResult.activitySummaryList[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
+        }
+
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult summaryDetailGenPDF(string gridHtml, string summaryId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                result.Success = true;
+                if ((int)AppCode.ApproveStatus.ไม่อนุมัติ == (int)ReportSummaryAppCode.getsummaryDetailStatus(summaryId))
+                {
+                    EmailAppCodes.sendRejectRepDetail();
+                }
+                else
+                {
+                    var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
+                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                    EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false);
+                    Session["ActFormRepDetail"] = null;
                 }
             }
             catch (Exception ex)
