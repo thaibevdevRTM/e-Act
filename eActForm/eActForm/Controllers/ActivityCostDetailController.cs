@@ -31,8 +31,8 @@ namespace eActForm.Controllers
                 activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
                 if (rowid != null)
                 {
-                    var list = activityModel.activitydetaillist.Single(r => r.productGroupId == rowid);
-                    activityModel.activitydetaillist.Remove(list);
+                    activityModel.activitydetaillist.RemoveAll(r => r.productGroupId == rowid);
+                    //activityModel.activitydetaillist.Remove(list);
                 }
                 else
                 {
