@@ -134,7 +134,7 @@
                                             }
                                             else
                                             {
-                                                <td>@item.activityDetail</td>
+                                                <td>@Html.Raw(item.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))</td>
                                             }
 
                                             <td>@item.typeTheme</td>
