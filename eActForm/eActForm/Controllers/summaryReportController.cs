@@ -88,7 +88,7 @@ namespace eActForm.Controllers
                 if (Request.Form["ddlProductType"] != "")
                 {
                     model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
-                                    ConfigurationManager.AppSettings["subjectSummaryId"]
+                                    "639C73A8-328E-433E-8B12-19B04AC8D61A"
                                     , "B18BB124-0EFC-4D90-BFFD-D333A1F79E32"
                                     , Request.Form["ddlProductType"]);
                 }
@@ -215,7 +215,7 @@ namespace eActForm.Controllers
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
                     EmailAppCodes.sendApprove(summaryId, AppCode.ApproveType.Report_Summary, false);
-                    Session["ActFormRepDetail"] = null;
+                    Session["SummaryDetailModel"] = null;
                 }
             }
             catch (Exception ex)

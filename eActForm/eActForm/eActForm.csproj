@@ -2282,7 +2282,7 @@
     <Content Include="Views\summaryReport\repSummaryView.cshtml" />
     <Content Include="Views\Shared\_searchForSummaryReport.cshtml" />
     <Content Include="Views\ApproveSummaryDetail\Index.cshtml" />
-    <Content Include="Views\ApproveSummaryDetail\ListView.cshtml" />
+    <Content Include="Views\ApproveSummaryDetail\ListViewApprove.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

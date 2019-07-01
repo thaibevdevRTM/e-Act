@@ -44,45 +44,4 @@
 </div>
 
 
-<div class="modal fade" id="ModalPreviewPDF" style="display:none">
-    <div id="divPreviewApprove">
-        @Html.Action("activityPDFView", "ActivityViewer", new { actId = ViewBag.actId })
-    </div>
-</div>
 
-<script>
-    $(document).ready(function () {
-        $('#datatable').DataTable({
-            "columnDefs": [
-                { "orderable": false, "targets": 0 }
-                , { "orderable": false, "targets": 1 }
-                , { "orderable": false, "targets": 2 }
-                , { "orderable": false, "targets": 3 }
-            ],
-            "dom": 'lCfrtip',
-            "order": [],
-            "language": {
-                "lengthMenu": '_MENU_ entries per page',
-                "search": '<i class="fa fa-search"></i>',
-                "paginate": {
-                    "previous": '<i class="fa fa-angle-left"></i>',
-                    "next": '<i class="fa fa-angle-right"></i>'
-                }
-            }
-        });
-
-    })
-
-    function callApproveList(actId) {
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("approveLists", "Home")',
-            data: {
-                actId: actId
-            }
-        }).done(function (response) {
-            $("#divPreviewApprove").html(response)
-            $('#ModalPreviewPDF').modal('show');
-        });
-    }
-</script>

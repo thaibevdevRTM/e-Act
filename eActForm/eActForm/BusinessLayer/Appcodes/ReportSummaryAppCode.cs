@@ -290,7 +290,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<ReportSummaryModels.ReportSummaryModel> getFilterFormByStatusId(List<ReportSummaryModels.ReportSummaryModel> lists, int statusId)
+        public static List<ReportSummaryModels.actApproveSummaryDetailModel> getFilterFormByStatusId(List<ReportSummaryModels.actApproveSummaryDetailModel> lists, int statusId)
         {
             try
             {
@@ -361,7 +361,7 @@ namespace eActForm.BusinessLayer
             {
                 int rtn = 0;
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowForReportDetail(
-                    ConfigurationManager.AppSettings["subjectSummaryId"]
+                    "639C73A8-328E-433E-8B12-19B04AC8D61A"
                     , customerId
                     , productTypeId);
                 if (ApproveAppCode.insertApproveByFlow(flowModel, summaryId) > 0)

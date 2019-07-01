@@ -18,6 +18,7 @@ namespace eActForm.Models
         public ReportSummaryModels()
         {
             activitySummaryList = new List<ReportSummaryModel>();
+            summaryDetailLists = new List<actApproveSummaryDetailModel>();
         }
 
 

@@ -146,6 +146,27 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult updateDataActivity(ActivityForm activityFormModel)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                Activity_Model activityModel = new Activity_Model();
+                activityModel.activityFormModel = activityFormModel;
+
+                int countSuccess = ActivityFormCommandHandler.updateActivityForm(activityModel, Session["activityId"].ToString());
+
+                result.ActivityId = Session["activityId"].ToString();
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult copyAndSaveNewActivityForm(ActivityForm activityFormModel)
         {
             var result = new AjaxResult();

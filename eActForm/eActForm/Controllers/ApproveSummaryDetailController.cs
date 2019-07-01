@@ -17,7 +17,7 @@ namespace eActForm.Controllers
             return View(models);
         }
 
-        public ActionResult ListView()
+        public ActionResult ListViewApprove()
         {
             ReportSummaryModels model = new ReportSummaryModels();
             if (TempData["ApproveSearchResult"] == null)
@@ -35,14 +35,14 @@ namespace eActForm.Controllers
         public ActionResult searchActForm()
         {
             ReportSummaryModels model = new ReportSummaryModels();
-            model.activitySummaryList = (List<ReportSummaryModels.ReportSummaryModel>)TempData["ApproveFormLists"];
+            model.summaryDetailLists = (List<ReportSummaryModels.actApproveSummaryDetailModel>)TempData["ApproveFormLists"];
 
             if (Request.Form["ddlStatus"] != "")
             {
-                model.activitySummaryList = ReportSummaryAppCode.getFilterFormByStatusId(model.activitySummaryList, int.Parse(Request.Form["ddlStatus"]));
+                model.summaryDetailLists = ReportSummaryAppCode.getFilterFormByStatusId(model.summaryDetailLists, int.Parse(Request.Form["ddlStatus"]));
             }
-            TempData["ApproveSearchResult"] = model.activitySummaryList;
-            return RedirectToAction("ListView");
+            TempData["ApproveSearchResult"] = model.summaryDetailLists;
+            return RedirectToAction("ListViewApprove");
         }
     }
 }
