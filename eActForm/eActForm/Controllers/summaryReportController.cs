@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
@@ -68,6 +69,22 @@ namespace eActForm.Controllers
             }
 
             return PartialView(model);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public FileResult repListViewExportExcel(string gridHtml)
+        {
+            try
+            {
+                //RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "DetailReport.xls");
         }
 
 

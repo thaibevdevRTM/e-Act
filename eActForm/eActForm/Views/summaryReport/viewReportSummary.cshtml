@@ -26,24 +26,24 @@
                 <div class="row">
 
                     <table id="datatable1" border="0" style="width:100%; text-align:center;font-family:Angsana New;font-size:10pt;" class="table table-striped table-bordered dt-responsive nowrap">
-                            <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
-                                <th rowspan="2">ลำดับที่</th>
-                                <th colspan="1" style="text-align:center;">กลุ่มกิจกรรม</th>
-                                <th colspan="9" style="text-align:center;">ประมาณการค่าใช้จ่าย</th>
-                                <th rowspan="2">หมายเหตุ</th>
-                            </tr>
-                            <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
-                                <th>14 กลุ่ม</th>
-                                <th>Est</th>
-                                <th>Crystal</th>
-                                <th>Wranger</th>
-                                <th>100 Plus</th>
-                                <th>Jubjai</th>
-                                <th>Oishi</th>
-                                <th>Soda</th>
-                                <th>Water</th>
-                                <th>รวม</th>
-                            </tr>
+                        <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
+                            <th rowspan="2">ลำดับที่</th>
+                            <th colspan="1" style="text-align:center;">กลุ่มกิจกรรม</th>
+                            <th colspan="9" style="text-align:center;">ประมาณการค่าใช้จ่าย</th>
+                            <th rowspan="2">หมายเหตุ</th>
+                        </tr>
+                        <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
+                            <th>14 กลุ่ม</th>
+                            <th>Est</th>
+                            <th>Crystal</th>
+                            <th>Wranger</th>
+                            <th>100 Plus</th>
+                            <th>Jubjai</th>
+                            <th>Oishi</th>
+                            <th>Soda</th>
+                            <th>Water</th>
+                            <th>รวม</th>
+                        </tr>
                         <tbody>
                             @{ int countRowAct = 1;
                                 string activitySales = "";
@@ -239,25 +239,25 @@
 
                 <div class="row">
                     <table id="datatable2" border="0" style="width:100%; text-align:center;font-family:Angsana New;font-size:10pt;" class="table table-striped table-bordered dt-responsive nowrap">
-                            <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
-                                <th rowspan="2">ลำดับที่</th>
-                                <th rowspan="2" width="80px" style="text-align:center;">ชื่อลูกค้า</th>
-                                <th colspan="1" style="text-align:center;">กลุ่มกิจกรรม</th>
-                                <th colspan="9" style="text-align:center;">ประมาณการค่าใช้จ่าย</th>
-                                <th rowspan="2">หมายเหตุ</th>
-                            </tr>
-                            <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
-                                <th>14 กลุ่ม</th>
-                                <th>Est</th>
-                                <th>Crystal</th>
-                                <th>Wranger</th>
-                                <th>100 Plus</th>
-                                <th>Jubjai</th>
-                                <th>Oishi</th>
-                                <th>Soda</th>
-                                <th>Water</th>
-                                <th>รวม</th>
-                            </tr>
+                        <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
+                            <th rowspan="2">ลำดับที่</th>
+                            <th rowspan="2" width="80px" style="text-align:center;">ชื่อลูกค้า</th>
+                            <th colspan="1" style="text-align:center;">กลุ่มกิจกรรม</th>
+                            <th colspan="9" style="text-align:center;">ประมาณการค่าใช้จ่าย</th>
+                            <th rowspan="2">หมายเหตุ</th>
+                        </tr>
+                        <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
+                            <th>14 กลุ่ม</th>
+                            <th>Est</th>
+                            <th>Crystal</th>
+                            <th>Wranger</th>
+                            <th>100 Plus</th>
+                            <th>Jubjai</th>
+                            <th>Oishi</th>
+                            <th>Soda</th>
+                            <th>Water</th>
+                            <th>รวม</th>
+                        </tr>
                         <tbody>
                             @{ int countRow = 1;
                                 string customer = "";}
@@ -353,6 +353,18 @@
                             </button>
                         </div>
                     </div>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="pull-left">
+                            @using (Html.BeginForm("repListViewExportExcel", "actFormRepDetail", FormMethod.Post))
+                            {
+                                <input type="hidden" name="gridHtml" />
+                                <button type="submit" class="btn ink-reaction btn-success" id="btnExportExcel" value="ExportExcel">
+                                    <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
+                                </button>
+                            }
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -361,7 +373,14 @@
 
 
 <script type="text/javascript">
-            $(function () {
+    $(function () {
+        $(function () {
+            $("#btnExportExcel").click(function () {
+                $("input[name='gridHtml']").val($("#Grid").html());
+            });
+        });
+
+
                 $("#btnSubmitReport").click(function () {
                     $("#previewModal").modal('hide');
                     $("#WaitDialog").show();

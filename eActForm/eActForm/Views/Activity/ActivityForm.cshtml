@@ -348,7 +348,7 @@
                 <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
             </div>
         }
-        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+        @if (Model.activityFormModel.statusId == 2 || Model.activityFormModel.statusId == 3)
         {
             <div class="inner">
                 <button id="btnUpdate" type="button" class="btn ink-reaction btn-default" onclick="validateUpdate()">&nbsp;Update</button>

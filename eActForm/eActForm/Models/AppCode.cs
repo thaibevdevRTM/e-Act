@@ -124,6 +124,7 @@ namespace eActForm.Models
             PreviewBytes = msPreview.ToArray();
             //msPreview.Position = 0;
             //save in directory
+            File.Delete(rootPath);
             File.WriteAllBytes(rootPath, PreviewBytes);
 
 
