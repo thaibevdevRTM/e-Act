@@ -73,7 +73,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public FileResult repListViewExportExcel(string gridHtml)
+        public FileResult summaryListViewExportExcel(string gridHtml)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "DetailReport.xls");
+            return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "summaryReport.xls");
         }
 
 
