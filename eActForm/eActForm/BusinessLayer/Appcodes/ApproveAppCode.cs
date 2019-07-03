@@ -23,6 +23,7 @@ namespace eActForm.BusinessLayer
                     {
                         UtilsAppCode.Session.User.countWatingActForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
                         UtilsAppCode.Session.User.counteatingRepDetail = ds.Tables[0].Rows[0]["repFormId"].ToString();
+                        UtilsAppCode.Session.User.counteatingSummaryDetail = ds.Tables[0].Rows[0]["sumFormId"].ToString();
                     }
                 }
             }

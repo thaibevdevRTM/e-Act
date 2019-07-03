@@ -18,6 +18,7 @@ namespace eActForm.Models
         public ReportSummaryModels()
         {
             activitySummaryList = new List<ReportSummaryModel>();
+            summaryDetailLists = new List<actApproveSummaryDetailModel>();
         }
 
 
@@ -34,6 +35,7 @@ namespace eActForm.Models
             public string productType { get; set; }
             public string productTypeId { get; set; }
             public string activityNo { get; set; }
+            public string statusId { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? est { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
@@ -55,12 +57,19 @@ namespace eActForm.Models
             public string remark { get; set; }
         }
 
+        public class actApproveSummaryDetailList
+        {
+            public List<actApproveSummaryDetailModel> summaryDetailLists { get; set; }
+        }
+
         public class actApproveSummaryDetailModel : ActBaseModel
         {
             public string id { get; set; }
             public string statusId { get; set; }
             public string activityNo { get; set; }
             public string statusName { get; set; }
+            public string summaryId { get; set; }
+            public string productname { get; set; }
             public DateTime? startDate { get; set; }
             public DateTime? endDate { get; set; }
             public string customerId { get; set; }

@@ -87,14 +87,14 @@ namespace eActForm.Models
 
                 string path = System.Web.HttpContext.Current.Server.MapPath("~") + "\\Content\\" + "tablethin.css";
                 string readText = System.IO.File.ReadAllText(path);
-
+                
                 //Document pdfDoc = new Document(pageSize, 25, 25, 10, 10);
                 using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
                 {
-
                     pdfDoc.Open();
                     using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
                     {
+                        
                         using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"))))
                         {
                             XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
@@ -107,6 +107,7 @@ namespace eActForm.Models
             catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview");
+                ms.Dispose();
                 return ms;
             }
 
@@ -121,8 +122,9 @@ namespace eActForm.Models
 
             msPreview = GetFileReportTomail_Preview(GridHtml, doc);
             PreviewBytes = msPreview.ToArray();
-
+            //msPreview.Position = 0;
             //save in directory
+            File.Delete(rootPath);
             File.WriteAllBytes(rootPath, PreviewBytes);
 
 

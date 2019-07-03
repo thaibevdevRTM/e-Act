@@ -17,7 +17,7 @@ namespace eActForm.Controllers
             return View(models);
         }
 
-        public ActionResult ListView()
+        public ActionResult ListViewApprove()
         {
             ReportSummaryModels model = new ReportSummaryModels();
             if (TempData["ApproveSearchResult"] == null)
@@ -30,6 +30,19 @@ namespace eActForm.Controllers
                 model.summaryDetailLists = (List<ReportSummaryModels.actApproveSummaryDetailModel>)TempData["ApproveSearchResult"];
             }
             return PartialView(model);
+        }
+
+        public ActionResult searchActForm()
+        {
+            ReportSummaryModels model = new ReportSummaryModels();
+            model.summaryDetailLists = (List<ReportSummaryModels.actApproveSummaryDetailModel>)TempData["ApproveFormLists"];
+
+            if (Request.Form["ddlStatus"] != "")
+            {
+                model.summaryDetailLists = ReportSummaryAppCode.getFilterFormByStatusId(model.summaryDetailLists, int.Parse(Request.Form["ddlStatus"]));
+            }
+            TempData["ApproveSearchResult"] = model.summaryDetailLists;
+            return RedirectToAction("ListViewApprove");
         }
     }
 }

@@ -131,14 +131,8 @@
 
                                             <td>@item.productName</td>
                                             <td>@item.size</td>
-                                            @if (item.activityDetail == strActDetail)
-                                            {
-                                                <td></td>
-                                            }
-                                            else
-                                            {
-                                                <td>@item.activityDetail</td>
-                                            }
+                                            <td>@Html.Raw(item.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))</td>
+
 
                                             <td>@item.typeTheme</td>
                                             <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>

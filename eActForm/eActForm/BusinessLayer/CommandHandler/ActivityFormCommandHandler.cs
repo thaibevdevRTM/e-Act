@@ -136,6 +136,34 @@ namespace eActForm.BusinessLayer
 
         }
 
+
+
+        public static int updateActivityForm(Activity_Model model, string activityId)
+        {
+            int rtn = 0;
+            try
+            {
+                model.activityFormModel.id = activityId;
+                model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodSt) ? (DateTime?)null :
+                 DateTime.ParseExact(model.activityFormModel.str_activityPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodEnd) ? (DateTime?)null :
+                DateTime.ParseExact(model.activityFormModel.str_activityPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                model.activityFormModel.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null :
+                 DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
+                  DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+                model.activityFormModel.updatedDate = DateTime.Now;
+                rtn = updateActivityForm(model.activityFormModel);
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> updateActivityForm");
+                return rtn;
+            }
+        }
+
         public static string genNumberActivity(string activityId)
         {
             try
@@ -172,10 +200,10 @@ namespace eActForm.BusinessLayer
             }
         }
 
-      
 
 
-      
+
+
 
 
         public static int deleteActivityOfProductByActivityId(string activityId)
@@ -248,6 +276,30 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message + ">> insertAllActivity");
+            }
+
+            return result;
+        }
+
+
+        protected static int updateActivityForm(ActivityForm model)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateActivityForm"
+                    , new SqlParameter[] {new SqlParameter("@actId",model.id)
+                    ,new SqlParameter("@activityPeriodST",model.activityPeriodSt)
+                    ,new SqlParameter("@activityPeriodEND",model.activityPeriodEnd)
+                    ,new SqlParameter("@costPeriodST",model.costPeriodSt)
+                    ,new SqlParameter("@costPeriodEND",model.costPeriodEnd)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> updateActivityForm");
             }
 
             return result;
