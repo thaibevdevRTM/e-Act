@@ -40,6 +40,10 @@ namespace eActForm.Controllers
                 {
                     rootPath = ConfigurationManager.AppSettings["rootUploadfiles"];
                 }
+                else if(type == AppCode.ApproveType.Report_Summary.ToString())
+                {
+                    rootPath = ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"];
+                }
                 else
                 {
                     rootPath = ConfigurationManager.AppSettings["rooPdftURL"];

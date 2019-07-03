@@ -143,7 +143,7 @@ else
     });
 
     function confirmQuery() {
-        
+
         var statusId = $("#ddlStatus").val();
         var mess = $("#txtRemark").val();
         if (statusId == "5" && mess == "") {
@@ -190,9 +190,16 @@ else
             if ('@type' == '@AppCode.ApproveType.Activity_Form.ToString()') {
                 callPreviewApprove('@actId');
             }
-            else {
+            else if('@type' == '@AppCode.ApproveType.Report_Detail.ToString()') {
                 callPreviewRepDetailApprove('@actId')
             }
+            else if ('@type' == '@AppCode.ApproveType.Report_Summary.ToString()') {
+
+                console.log('@actId');
+                callPreviewSummaryDetailApprove('@actId')
+            }
+
+
 
 
         }else {
@@ -234,6 +241,41 @@ else
                     },
                     callback: function (result) {
                         var url = '@Url.Action("Index", "ApproveListsRepDetail")';
+                        window.location.href = url;
+                    }
+
+                });
+            });
+        });
+    }
+
+    function callPreviewSummaryDetailApprove(obj) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("summaryApproveListView", "SummaryReport")',
+            data: {
+                summaryId: obj
+            }
+        }).done(function (htmlResponse) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("summaryDetailGenPDF", "SummaryReport")',
+                data: {
+                    gridHtml: htmlResponse
+                    , summaryId: '@actId'
+                }
+            }).done(function (htmlResponse) {
+                $("#WaitDialog").hide();
+                bootbox.confirm({
+                    message: "ดำเนินการเรียบร้อยครับ",
+                    buttons: {
+                        confirm: {
+                            label: 'OK',
+                            className: 'btn-success'
+                        }
+                    },
+                    callback: function (result) {
+                        var url = '@Url.Action("Index", "ApproveSummaryDetail")';
                         window.location.href = url;
                     }
 
