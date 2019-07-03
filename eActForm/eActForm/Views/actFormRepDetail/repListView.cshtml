@@ -42,6 +42,7 @@
                                     <th rowspan="3">ลำดับที่</th>
                                     <th rowspan="3" width="80px" style="text-align:center;">เลขที่ Activity</th>
                                     <th rowspan="3" width="100px" style="text-align:center;">ชื่อลูกค้า</th>
+                                    <th rowspan="3" style="text-align:center;">reference</th>
                                     <th colspan="2" rowspan="2">ระยะเวลากิจกรรม</th>
                                     <th colspan="2" rowspan="2">ระยะเวลาให้ทุน</th>
                                     <th rowspan="3" width="120px" style="text-align:center;">ชื่อสินค้า</th>
@@ -87,12 +88,14 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
                                             }
                                             else
                                             {
                                                 <td>@index</td>
                                                 <td>@item.activityNo</td>
                                                 <td>@item.cusNameTH</td>
+                                                <td>@item.reference</td>
                                                 if (item.activityPeriodSt != null)
                                                 {
                                                     <td>@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
@@ -134,7 +137,7 @@
                                             }
                                             else
                                             {
-                                                <td>@Html.Raw(item.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))</td>
+                                                <td>@item.activityDetail</td>
                                             }
 
                                             <td>@item.typeTheme</td>
@@ -204,15 +207,15 @@
         </div>
         <div class="modal-footer">
             <div class="row">
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-5 col-xs-12">
                     <div class="pull-right">
                         <button type="button" class="btn ink-reaction btn-primary" id="btnSubmit" value="Export" style="width:100%;">
                             <i class="fa check-square-o"></i>&nbsp;Send to Approve
                         </button>
                     </div>
                 </div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="pull-left">
+                <div class="col-md-2 col-xs-12">
+                    <div class="center-block">
                         @using (Html.BeginForm("repListViewExportExcel", "actFormRepDetail", FormMethod.Post))
                         {
                             <input type="hidden" name="gridHtml" />
@@ -222,7 +225,13 @@
                         }
                     </div>
                 </div>
-                <div class="col-md-4 col-xs-12"></div>
+                <div class="col-md-5 col-xs-12">
+                    <div class="pull-left">
+                        <button type="button" class="btn ink-reaction btn-warning" data-dismiss="modal">
+                            <i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel
+                        </button>
+                    </div>
+                </div>
 
             </div>
         </div>

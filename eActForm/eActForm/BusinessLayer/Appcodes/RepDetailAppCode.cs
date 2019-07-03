@@ -217,6 +217,7 @@ namespace eActForm.BusinessLayer
                              {
                                  #region detail parse
                                  id = dr["activityId"].ToString(),
+                                 reference = dr["reference"].ToString(),
                                  statusId = dr["statusId"].ToString(),
                                  statusName = dr["statusName"].ToString(),
                                  activityNo = dr["activityNo"].ToString(),

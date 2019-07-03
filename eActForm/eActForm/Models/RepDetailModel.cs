@@ -26,6 +26,7 @@ namespace eActForm.Models
             public decimal? specialDiscBaht { get; set; }
             public decimal? promotionCost { get; set; }
             public decimal? compensate { get; set; }
+            public string reference { get; set; }
         }
 
         public class actApproveRepDetailModels

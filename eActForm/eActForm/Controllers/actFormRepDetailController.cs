@@ -11,6 +11,7 @@ using eActForm.Models;
 using iTextSharp.text;
 using WebLibrary;
 using static eActForm.Models.ReportActivityBudgetModels;
+using Microsoft.VisualBasic;
 
 namespace eActForm.Controllers
 {
@@ -163,6 +164,7 @@ namespace eActForm.Controllers
             try
             {
                 //RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                //gridHtml = gridHtml.Replace("\n", "<br>");
             }
             catch(Exception ex)
             {
