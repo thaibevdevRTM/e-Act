@@ -249,6 +249,9 @@ namespace eActForm.BusinessLayer
                                  compensate = dr["compensate"] is DBNull ? 0 : (decimal)dr["compensate"],
                                  delFlag = false,
                                  createdDate = (DateTime?)dr["createdDate"],
+                                 perGrowth = dr["growth"] is DBNull ? 0 : (decimal?)dr["growth"],
+                                 perSE = dr["Le"] is DBNull ? 0 : (decimal?)dr["Le"],
+                                 perToSale = dr["perToSale"] is DBNull ? 0 : (decimal?)dr["perToSale"],
                                  #endregion
 
                              }).ToList();
