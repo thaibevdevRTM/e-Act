@@ -14,11 +14,12 @@ namespace eActForm.Models
         public List<ReportSummaryModel> activitySummaryGroupActivityList { get; set; }
         public ApproveFlowModel.approveFlowModel flowList { get; set; }
         public List<actApproveSummaryDetailModel> summaryDetailLists { get; set; }
-
+        public List<salesForecastModel> salesForecastList { get; set; }
         public ReportSummaryModels()
         {
             activitySummaryList = new List<ReportSummaryModel>();
             summaryDetailLists = new List<actApproveSummaryDetailModel>();
+            salesForecastList = new List<salesForecastModel>();
         }
 
 
@@ -36,6 +37,7 @@ namespace eActForm.Models
             public string productTypeId { get; set; }
             public string activityNo { get; set; }
             public string statusId { get; set; }
+            public DateTime? docDate  { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? est { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
@@ -76,6 +78,16 @@ namespace eActForm.Models
             public string customerName { get; set; }
             public string productTypeId { get; set; }
             public string productTypeName { get; set; }
+        }
+
+        public class salesForecastModel : ActBaseModel
+        {
+            public string id { get; set; }
+            public string brandId { get; set; }
+            public string brandName { get; set; }
+            public string year { get; set; }
+            public decimal? price { get; set; }
+            public decimal? FY { get; set; }
         }
     }
 }

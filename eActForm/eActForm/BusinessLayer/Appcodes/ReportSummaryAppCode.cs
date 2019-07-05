@@ -132,6 +132,7 @@ namespace eActForm.BusinessLayer
                                 oishi = decimal.Parse(AppCode.checkNullorEmpty(d["oishi"].ToString())),
                                 soda = decimal.Parse(AppCode.checkNullorEmpty(d["soda"].ToString())),
                                 water = decimal.Parse(AppCode.checkNullorEmpty(d["water"].ToString())),
+                                docDate = (DateTime?)d["documentDate"],
                                 createdDate = (DateTime?)d["createdDate"],
                             });
                 List<ReportSummaryModel> groupList = new List<ReportSummaryModel>();
@@ -174,10 +175,35 @@ namespace eActForm.BusinessLayer
                     }).ToList();
 
 
+                var docMonth = list.Any() ? list.Select(x => x.docDate).FirstOrDefault().Value.ToString("MMM") : "jan";
+                var docYear = list.Any() ? list.Select(x => x.docDate).FirstOrDefault().Value.ToString("YYYY") : DateTime.Now.Year.ToString();
+                DataSet ds1 = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getSalesForecast"
+                     , new SqlParameter[] {
+                        new SqlParameter("@p_year",docYear)
+                    });
+
+                var listForecast = (from DataRow d in ds1.Tables[0].Rows
+                                    select new salesForecastModel()
+                                    {
+                                        id = Guid.NewGuid().ToString(),
+                                        brandId = d["brandId"].ToString(),
+                                        brandName = d["brandName"].ToString(),
+                                        price = decimal.Parse(AppCode.checkNullorEmpty(d[docMonth].ToString())),
+                                        year = d["year"].ToString(),
+                                        FY = decimal.Parse(AppCode.checkNullorEmpty(d["FY"].ToString())),
+                                    });
+
+
+
                 ReportSummaryModels resultModel = new ReportSummaryModels();
                 resultModel.activitySummaryGroupList = groupList;
                 resultModel.activitySummaryList = list.ToList();
                 resultModel.activitySummaryGroupActivityList = groupActivityList;
+                resultModel.salesForecastList = listForecast.ToList();
+
+
+
+
                 return resultModel;
             }
             catch (Exception ex)
@@ -212,7 +238,11 @@ namespace eActForm.BusinessLayer
                                 oishi = decimal.Parse(AppCode.checkNullorEmpty(d["oishi"].ToString())),
                                 soda = decimal.Parse(AppCode.checkNullorEmpty(d["soda"].ToString())),
                                 water = decimal.Parse(AppCode.checkNullorEmpty(d["water"].ToString())),
+                                docDate = (DateTime?)d["documentDate"],
+                                createdDate = (DateTime?)d["createdDate"],
                             });
+
+
                 List<ReportSummaryModel> groupList = new List<ReportSummaryModel>();
                 groupList = list
                     .OrderBy(x => x.customerName)
@@ -234,7 +264,8 @@ namespace eActForm.BusinessLayer
 
 
                 List<ReportSummaryModel> groupActivityList = new List<ReportSummaryModel>();
-                groupActivityList = list
+
+                var sumPrice = list
                     .GroupBy(g => new { g.activitySales })
                     .Select((group, index) => new ReportSummaryModel
                     {
@@ -248,13 +279,115 @@ namespace eActForm.BusinessLayer
                         oishi = group.Sum(s => s.oishi),
                         soda = group.Sum(s => s.soda),
                         water = group.Sum(s => s.water),
+                        total = group.Sum(s => s.est) + group.Sum(s => s.crystal) +
+                        group.Sum(s => s.wranger) +
+                        group.Sum(s => s.plus100) +
+                        group.Sum(s => s.jubjai) +
+                        group.Sum(s => s.oishi) +
+                        group.Sum(s => s.soda) +
+                        group.Sum(s => s.water),
                     }).ToList();
+
+                groupActivityList.AddRange(sumPrice.ToList());
+
+
+                //--------------------------sumPrice----------------------------
+                groupActivityList.Add(new ReportSummaryModel()
+                {
+                    activitySales = "Total",
+                    est = groupActivityList.Sum(s => s.est),
+                    crystal = groupActivityList.Sum(s => s.crystal),
+                    wranger = groupActivityList.Sum(s => s.wranger),
+                    plus100 = groupActivityList.Sum(s => s.plus100),
+                    jubjai = groupActivityList.Sum(s => s.jubjai),
+                    oishi = groupActivityList.Sum(s => s.oishi),
+                    soda = groupActivityList.Sum(s => s.soda),
+                    water = groupActivityList.Sum(s => s.water),
+                    total = groupActivityList.Sum(s => s.est) + groupActivityList.Sum(s => s.crystal)
+                    + groupActivityList.Sum(s => s.wranger)
+                    + groupActivityList.Sum(s => s.plus100)
+                    + groupActivityList.Sum(s => s.jubjai)
+                    + groupActivityList.Sum(s => s.oishi)
+                    + groupActivityList.Sum(s => s.soda)
+                    + groupActivityList.Sum(s => s.water),
+
+                });
+
+                //---------------------------- Add SaleForecast --------------------------
+
+                var docMonth = list.Any() ? list.Select(x => x.docDate).FirstOrDefault().Value.ToString("MMM") : "jan";
+                var docYear = list.Any() ? list.Select(x => x.docDate).FirstOrDefault().Value.ToString("yyyy") : DateTime.Now.Year.ToString();
+
+                DataSet ds1 = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getSalesForecast"
+                     , new SqlParameter[] {
+                        new SqlParameter("@p_year",docYear)
+                    });
+
+                var listForecast = (from DataRow d in ds1.Tables[0].Rows
+                                    select new salesForecastModel()
+                                    {
+                                        id = Guid.NewGuid().ToString(),
+                                        brandId = d["brandId"].ToString(),
+                                        brandName = d["brandName"].ToString(),
+                                        price = decimal.Parse(AppCode.checkNullorEmpty(d[docMonth].ToString())),
+                                        year = d["year"].ToString(),
+                                        FY = decimal.Parse(AppCode.checkNullorEmpty(d["FY"].ToString())),
+                                    });
+
+                groupActivityList.Add(new ReportSummaryModel()
+                {
+                    activitySales = "Sales Forecast",
+                    est = listForecast.Where(x => x.brandId == "9EC1CA68-591D-4B3A-9A65-6509C6ED965E").FirstOrDefault().price,
+                    crystal = listForecast.Where(x => x.brandId == "2395EA4D-5CD5-4DDB-A7B6-48EF819B99BB").FirstOrDefault().price,
+                    wranger = listForecast.Where(x => x.brandId == "BB57DBF4-C281-4F79-9481-2B8A4C53C723").FirstOrDefault().price,
+                    plus100 = listForecast.Where(x => x.brandId == "6B623E91-AE6E-4621-A6CD-3F567D19BC70").FirstOrDefault().price,
+                    jubjai = listForecast.Where(x => x.brandId == "32459970-AACE-4E67-B58B-F6D786F8D7A1").FirstOrDefault().price,
+                    oishi = listForecast.Where(x => x.brandId == "1D8F1409-9A19-46AC-B1D3-D71919351716").FirstOrDefault().price,
+                    soda = listForecast.Where(x => x.brandId == "7CA5340A-747B-486C-81C5-D206B081D96A").FirstOrDefault().price +
+                   listForecast.Where(x => x.brandId == "BC05AADC-A306-4D33-8383-521B8CAB2B2F").FirstOrDefault().price,
+                    water = listForecast.Where(x => x.brandId == "3B936397-55EC-475B-9441-5BE7DE1F80F5").FirstOrDefault().price,
+
+                   total = listForecast.Where(x => x.brandId == "9EC1CA68-591D-4B3A-9A65-6509C6ED965E").FirstOrDefault().price
+                   + listForecast.Where(x => x.brandId == "2395EA4D-5CD5-4DDB-A7B6-48EF819B99BB").FirstOrDefault().price
+                   + listForecast.Where(x => x.brandId == "BB57DBF4-C281-4F79-9481-2B8A4C53C723").FirstOrDefault().price
+                   + listForecast.Where(x => x.brandId == "6B623E91-AE6E-4621-A6CD-3F567D19BC70").FirstOrDefault().price
+                   + listForecast.Where(x => x.brandId == "32459970-AACE-4E67-B58B-F6D786F8D7A1").FirstOrDefault().price
+                   + listForecast.Where(x => x.brandId == "1D8F1409-9A19-46AC-B1D3-D71919351716").FirstOrDefault().price
+                   + listForecast.Where(x => x.brandId == "7CA5340A-747B-486C-81C5-D206B081D96A").FirstOrDefault().price 
+                   + listForecast.Where(x => x.brandId == "BC05AADC-A306-4D33-8383-521B8CAB2B2F").FirstOrDefault().price
+                   + listForecast.Where(x => x.brandId == "3B936397-55EC-475B-9441-5BE7DE1F80F5").FirstOrDefault().price,
+
+                });
+
+                //-----------------------------------------------------------------------------------------
+
+                //-------------------------Add % Forecast----------------------------
+                groupActivityList.Add(new ReportSummaryModel()
+                {
+                    activitySales = "% To sales",
+                    est = (sumPrice.Sum(s => s.est) / listForecast.Where(x => x.brandId == "9EC1CA68-591D-4B3A-9A65-6509C6ED965E").FirstOrDefault().price) * 100,
+                    crystal = (sumPrice.Sum(s => s.crystal) / listForecast.Where(x => x.brandId == "2395EA4D-5CD5-4DDB-A7B6-48EF819B99BB").FirstOrDefault().price) * 100,
+                    wranger = (sumPrice.Sum(s => s.wranger) / listForecast.Where(x => x.brandId == "BB57DBF4-C281-4F79-9481-2B8A4C53C723").FirstOrDefault().price) * 100,
+                    plus100 = (sumPrice.Sum(s => s.plus100) / listForecast.Where(x => x.brandId == "6B623E91-AE6E-4621-A6CD-3F567D19BC70").FirstOrDefault().price) * 100,
+                    jubjai = (sumPrice.Sum(s => s.jubjai) / listForecast.Where(x => x.brandId == "32459970-AACE-4E67-B58B-F6D786F8D7A1").FirstOrDefault().price) * 100,
+                    oishi = (sumPrice.Sum(s => s.oishi) / listForecast.Where(x => x.brandId == "1D8F1409-9A19-46AC-B1D3-D71919351716").FirstOrDefault().price) * 100,
+                    soda = sumPrice.Sum(s => s.soda) / (listForecast.Where(x => x.brandId == "7CA5340A-747B-486C-81C5-D206B081D96A").FirstOrDefault().price +
+                  listForecast.Where(x => x.brandId == "BC05AADC-A306-4D33-8383-521B8CAB2B2F").FirstOrDefault().price) * 100,
+                    water = (sumPrice.Sum(s => s.water) / listForecast.Where(x => x.brandId == "3B936397-55EC-475B-9441-5BE7DE1F80F5").FirstOrDefault().price) * 100,
+                    //total = sumPrice.Sum(s => s.total) / 
+                });
+
+                //-------------------------------------------------------------------
+
 
 
                 ReportSummaryModels resultModel = new ReportSummaryModels();
                 resultModel.activitySummaryGroupList = groupList;
                 resultModel.activitySummaryList = list.ToList();
+
                 resultModel.activitySummaryGroupActivityList = groupActivityList;
+
+
                 return resultModel;
             }
             catch (Exception ex)
