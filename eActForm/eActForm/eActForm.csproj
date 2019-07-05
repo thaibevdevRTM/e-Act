@@ -67,6 +67,7 @@
       <HintPath>..\..\..\..\work\TBWebBackEnd\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -2278,11 +2279,11 @@
     <Content Include="Views\actFormRepDetail\repChooseView.cshtml" />
     <Content Include="Views\actFormRepDetail\repListViewGroupBrand.cshtml" />
     <Content Include="Views\summaryReport\Index.cshtml" />
-    <Content Include="Views\summaryReport\viewReportActivityBudget.cshtml" />
+    <Content Include="Views\summaryReport\viewReportSummary.cshtml" />
     <Content Include="Views\summaryReport\repSummaryView.cshtml" />
     <Content Include="Views\Shared\_searchForSummaryReport.cshtml" />
     <Content Include="Views\ApproveSummaryDetail\Index.cshtml" />
-    <Content Include="Views\ApproveSummaryDetail\ListView.cshtml" />
+    <Content Include="Views\ApproveSummaryDetail\ListViewApprove.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

@@ -1,4 +1,5 @@
-﻿@model eActForm.Models.Activity_Model
+﻿@using eActForm.BusinessLayer
+@model eActForm.Models.Activity_Model
 @{
     ViewBag.Title = "Home Page";
     var mode = Request["mode"] == null ? "" : Request["mode"];
@@ -27,6 +28,15 @@
 
     .textLeft {
         text-align: left;
+    }
+
+    .inner {
+        display: inline-block;
+    }
+
+    #outer {
+        width: 100%;
+        text-align: center;
     }
 </style>
 
@@ -116,7 +126,7 @@
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <div class="row">
-                      
+
                         @Html.HiddenFor(x => x.activityFormModel.chanel, new { @id = "txtchanel" })
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
                             Product category<span class="required">*</span>
@@ -134,7 +144,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
@@ -254,7 +264,7 @@
     </div>
     <div class="col-lg-2 col-xs-2">
     </div>
-   
+
     <div class="form-group col-lg-2 col-xs-2">
         รสชาติ
         @Html.DropDownListFor(model => model.productSmellLists, new SelectList(Model.productSmellLists, "id", "nameTH"), "- เลือกรสชาติ -", new { @class = "form-control", required = "required", id = "ddlProductSmell" })
@@ -321,19 +331,30 @@
 <hr />
 
 <div class="row">
-    <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-5">
+    <div id="outer">
 
-        <p class="d-flex justify-content-center">
-            @if (mode != "")
-            {
+        @if (mode != "")
+        {
+            <div class="inner">
                 <button id="btnSaveAs" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew()">&nbsp;Save As</button>
-            }
+            </div>
+        }
+        <div class="inner">
             <a href="@Url.Action("index", "Home")" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-            @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3)
-            {
+        </div>
+        @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3)
+        {
+            <div class="inner">
                 <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
-            }
-        </p>
+            </div>
+        }
+        @if (Model.activityFormModel.statusId == 2 || Model.activityFormModel.statusId == 3)
+        {
+            <div class="inner">
+                <button id="btnUpdate" type="button" class="btn ink-reaction btn-default" onclick="validateUpdate()">&nbsp;Update</button>
+            </div>
+        }
+
     </div>
 
 </div>
@@ -343,7 +364,7 @@
 @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
 @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
 <script type="text/javascript">
-       
+
 
 
        $(document).ready(function () {
@@ -357,6 +378,7 @@
            ObjModel = {};
            document.getElementById("ddlProductfilter").disabled = true;
            document.getElementById("ddlProductSize").disabled = true;
+
 
 
            if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
@@ -660,7 +682,7 @@
             }
         }
         if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
-       
+
         //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 
         if (validate == true) {
@@ -710,6 +732,52 @@
                 }
             });
     }
+
+
+
+
+    function validateUpdate() {
+        var required = "กรุณา ระบุ :<br>";
+        var validate = true;
+
+        if ($("#txtdateActivitySt").val() == "" && $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; }
+        else {
+            var startDate = $("#txtdateActivitySt").val().split("-");
+            var endDate = $("#txtdateActivityEnd").val().split("-");
+            if (new Date(startDate[2], startDate[1], startDate[0]) >= new Date(endDate[2], endDate[1], endDate[0])) {
+                required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
+            }
+        }
+        if (validate == true) {
+            updateData();
+        }
+        else {
+            bootbox.alert(required)
+        }
+    }
+
+    function updateData() {
+        $("#WaitDialog").show();
+            $.ajax({
+                url: '@Url.Action("updateDataActivity", "Activity")',
+                data: {
+
+                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                    str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
+                    str_activityPeriodSt: $("#txtdateActivitySt").val(),
+                    str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+            }).done(function (response) {
+                if (response.Success) {
+                    $("#WaitDialog").hide();
+                    doMsgSuccess("Update Success");
+                }
+            });
+    }
+
+
 
     function copyAndSaveNew() {
         bootbox.confirm({
@@ -775,42 +843,53 @@
 
     function setTxtReadOnly() {
 
-        document.getElementById("ddlProductfilter").disabled = true;
-        document.getElementById("ddlProductSize").disabled = true;
-        document.getElementById("txtdateDoc").disabled = true;
-        document.getElementById("txtReference").disabled = true;
-        document.getElementById("txtActivityNo").disabled = true;
-        document.getElementById("ddlCustomer").disabled = true;
-        document.getElementById("txtActivityName").disabled = true;
-        document.getElementById("txtchanel").disabled = true;
-        document.getElementById("ddlTheme").disabled = true;
-        document.getElementById("ddlProductBrand").disabled = true;
-        document.getElementById("ddlProductCate").disabled = true;
-        document.getElementById("txtObjective").disabled = true;
-        document.getElementById("ddlProductGrp").disabled = true;
-        document.getElementById("txtdateActivitySt").disabled = true;
-        document.getElementById("txtdateActivityEnd").disabled = true;
-        document.getElementById("txtdateCostPerSt").disabled = true;
-        document.getElementById("txtdateCostPerEnd").disabled = true;
-        document.getElementById("dropzoneJsForm").disabled = true;
-        document.getElementById("txtActivityDetail").disabled = true;
-        document.getElementById("divAddActivityDetail").style.display = "none";
-        document.getElementById("divAddProductCostDetail").style.display = "none";
-        $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
-        $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", "disabled");
-        document.getElementById("divUploadFiles").style.display = "none";
-       
-        
-
-        document.getElementById("rdbterm").disabled = true;
-        document.getElementById("rdbOutterm").disabled = true;
+            document.getElementById("ddlProductfilter").disabled = true;
+            document.getElementById("ddlProductSize").disabled = true;
+            document.getElementById("txtdateDoc").disabled = true;
+            document.getElementById("txtReference").disabled = true;
+            document.getElementById("txtActivityNo").disabled = true;
+            document.getElementById("ddlCustomer").disabled = true;
+            document.getElementById("txtActivityName").disabled = true;
+            document.getElementById("txtchanel").disabled = true;
+            document.getElementById("ddlTheme").disabled = true;
+            document.getElementById("ddlProductBrand").disabled = true;
+            document.getElementById("ddlProductCate").disabled = true;
+            document.getElementById("txtObjective").disabled = true;
+            document.getElementById("ddlProductGrp").disabled = true;
+            document.getElementById("txtdateActivitySt").disabled = true;
+            document.getElementById("txtdateActivityEnd").disabled = true;
+            document.getElementById("txtdateCostPerSt").disabled = true;
+            document.getElementById("txtdateCostPerEnd").disabled = true;
+            document.getElementById("dropzoneJsForm").disabled = true;
+            document.getElementById("txtActivityDetail").disabled = true;
+            document.getElementById("divAddActivityDetail").style.display = "none";
+            document.getElementById("divAddProductCostDetail").style.display = "none";
+            $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
+            $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", "disabled");
+            document.getElementById("divUploadFiles").style.display = "none";
 
 
-        var arrayOfElements = document.getElementsByClassName('divDelImg');
-        var lengthOfArray = arrayOfElements.length;
-        for (var i = 0; i < lengthOfArray; i++) {
-            arrayOfElements[i].style.display = 'none';
+            document.getElementById("rdbterm").disabled = true;
+            document.getElementById("rdbOutterm").disabled = true;
+            document.getElementById("btnUpdate").style.display = "none";
+
+            var arrayOfElements = document.getElementsByClassName('divDelImg');
+            var lengthOfArray = arrayOfElements.length;
+           for (var i = 0; i < lengthOfArray; i++) {
+               arrayOfElements[i].style.display = 'none';
+           }
+
+
+        if ('@UtilsAppCode.Session.User.isAdmin' == 'True' || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
+             document.getElementById("btnUpdate").style.display = "block";
+             document.getElementById("txtdateActivitySt").disabled = false;
+             document.getElementById("txtdateActivityEnd").disabled = false;
+             document.getElementById("txtdateCostPerSt").disabled = false;
+             document.getElementById("txtdateCostPerEnd").disabled = false;
         }
+
+
+
     }
 
 
@@ -867,7 +946,7 @@
 
 <script>
 
-  
+
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
         maxFiles: 5,
@@ -878,10 +957,10 @@
         init: function () {
 
             this.on("complete", function (file) {
-                    CallImageView($("#hdActivityId").val());
+                CallImageView($("#hdActivityId").val());
 
-                });
-            }
+            });
+        }
 
     };
 </script>
