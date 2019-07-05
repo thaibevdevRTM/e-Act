@@ -11,6 +11,7 @@ using eActForm.Models;
 using iTextSharp.text;
 using WebLibrary;
 using static eActForm.Models.ReportActivityBudgetModels;
+using Microsoft.VisualBasic;
 
 namespace eActForm.Controllers
 {
@@ -34,8 +35,10 @@ namespace eActForm.Controllers
         {
             try
             {
-                RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
-                model.actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"]);
+                RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails
+                {
+                    actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"])
+                };
                 if (Request.Form["txtActivityNo"] != "")
                 {
                     model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByActNo(model.actFormRepDetailLists, Request.Form["txtActivityNo"]);
@@ -163,6 +166,7 @@ namespace eActForm.Controllers
             try
             {
                 //RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                //gridHtml = gridHtml.Replace("\n", "<br>");
             }
             catch(Exception ex)
             {

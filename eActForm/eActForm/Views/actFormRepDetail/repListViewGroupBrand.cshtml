@@ -40,8 +40,11 @@
                         <th rowspan="2">กลุ่มกิจกรรม</th>
                         <th rowspan="3">Special Discount (Pro Deal)</th>
                         <th rowspan="3">Compensate (CN)</th>
-                        <th rowspan="3">ประมาณการค่าใช้จ่าย</th>
                         <th colspan="2" width="100px">ประมาณการยอดขาย</th>
+                        <th rowspan="3">%Growth</th>
+                        <th rowspan="3">%SE</th>
+                        <th rowspan="3">ประมาณการค่าใช้จ่าย</th>
+                        <th rowspan="3">%Sale</th>
                         <th rowspan="3">หมายเหตุ</th>
                     </tr>
 
@@ -130,10 +133,12 @@
                                 <td>@item.typeTheme</td>
                                 <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
                                 <td>@string.Format("{0:n2}", item.compensate)</td>
-                                <td>@string.Format("{0:n2}", item.total)</td>
                                 <td>@string.Format("{0:n2}", item.normalSale)</td>
                                 <td>@string.Format("{0:n2}", item.promotionSale)</td>
-
+                                <td>@string.Format("{0:n2}", item.perGrowth)</td>
+                                <td>@string.Format("{0:n2}", item.perSE)</td>
+                                <td>@string.Format("{0:n2}", item.total)</td>
+                                <td>@string.Format("{0:n2}", item.perToSale)</td>
                                 <td></td>
                             </tr>
                             strActDetail = item.activityDetail;
@@ -147,9 +152,12 @@
 
                     <tr>
                         <td colspan="13" style="text-align:right;background-color:#a3d5cf"><h4>รวม : </h4></td>
-                        <td><h5> @string.Format("{0:n2}", sumTotal)</h5></td>
                         <td><h5>@string.Format("{0:n2}", sumNormalSale)</h5></td>
                         <td><h5>@string.Format("{0:n2}", sumNormalPromotion)</h5></td>
+                        <td></td>
+                        <td></td>
+                        <td><h5> @string.Format("{0:n2}", sumTotal)</h5></td>
+                        <td></td>
                         <td></td>
                     </tr>
                 </tbody>

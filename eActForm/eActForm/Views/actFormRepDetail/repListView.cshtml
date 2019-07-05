@@ -42,6 +42,7 @@
                                     <th rowspan="3">ลำดับที่</th>
                                     <th rowspan="3" width="80px" style="text-align:center;">เลขที่ Activity</th>
                                     <th rowspan="3" width="100px" style="text-align:center;">ชื่อลูกค้า</th>
+                                    <th rowspan="3" style="text-align:center;">reference</th>
                                     <th colspan="2" rowspan="2">ระยะเวลากิจกรรม</th>
                                     <th colspan="2" rowspan="2">ระยะเวลาให้ทุน</th>
                                     <th rowspan="3" width="120px" style="text-align:center;">ชื่อสินค้า</th>
@@ -50,8 +51,11 @@
                                     <th rowspan="2">กลุ่มกิจกรรม</th>
                                     <th rowspan="3">Special Discount (Pro Deal)</th>
                                     <th rowspan="3">Compensate (CN)</th>
-                                    <th rowspan="3">ประมาณการค่าใช้จ่าย</th>
                                     <th colspan="2" width="100px">ประมาณการยอดขาย</th>
+                                    <th rowspan="3">%Growth</th>
+                                    <th rowspan="3">%SE</th>
+                                    <th rowspan="3">ประมาณการค่าใช้จ่าย</th>
+                                    <th rowspan="3">%Sale</th>
                                     <th rowspan="3">หมายเหตุ</th>
                                 </tr>
 
@@ -76,70 +80,74 @@
                                 {
                                     if (item.delFlag == false)
                                     {
-                                        <tr class="gradeX">
+                                <tr class="gradeX">
 
-                                            @if (item.activityNo == strActNo)
-                                            {
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            }
-                                            else
-                                            {
-                                                <td>@index</td>
-                                                <td>@item.activityNo</td>
-                                                <td>@item.cusNameTH</td>
-                                                if (item.activityPeriodSt != null)
-                                                {
-                                                    <td>@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
-                                                }
-                                                else
-                                                {
-                                                    <td></td>
-                                                }
-                                                if (item.activityPeriodEnd != null)
-                                                {
-                                                    <td>@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
-                                                }
-                                                else
-                                                {
-                                                    <td></td>
-                                                }
-                                                if (item.costPeriodSt != null)
-                                                {
-                                                    <td>@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
-                                                }
-                                                else
-                                                {
-                                                    <td></td>}
-                                                if (item.costPeriodEnd != null)
-                                                {
-                                                    <td>@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
-                                                }
-                                                else
-                                                {
-                                                    <td></td>}
-                                                index++;
-                                            }
-
-                                            <td>@item.productName</td>
-                                            <td>@item.size</td>
-                                            <td>@Html.Raw(item.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))</td>
-
-
-                                            <td>@item.typeTheme</td>
-                                            <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
-                                            <td>@string.Format("{0:n2}", item.compensate)</td>
-                                            <td>@string.Format("{0:n2}", item.total)</td>
-                                            <td>@string.Format("{0:n2}", item.normalSale)</td>
-                                            <td>@string.Format("{0:n2}", item.promotionSale)</td>
-
+                                    @if (item.activityNo == strActNo)
+                                    {
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@index</td>
+                                        <td>@item.activityNo</td>
+                                        <td>@item.cusNameTH</td>
+                                        <td>@item.reference</td>
+                                        if (item.activityPeriodSt != null)
+                                        {
+                                            <td>@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                        }
+                                        else
+                                        {
                                             <td></td>
-                                        </tr>
+                                        }
+                                        if (item.activityPeriodEnd != null)
+                                        {
+                                            <td>@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        if (item.costPeriodSt != null)
+                                        {
+                                            <td>@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>}
+                                        if (item.costPeriodEnd != null)
+                                        {
+                                            <td>@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>}
+                                        index++;
+                                    }
+
+                                    <td>@item.productName</td>
+                                    <td>@item.size</td>
+                                    <td>@Html.Raw(item.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))</td>
+
+
+                                    <td>@item.typeTheme</td>
+                                    <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
+                                    <td>@string.Format("{0:n2}", item.compensate)</td>
+                                    <td>@string.Format("{0:n2}", item.normalSale)</td>
+                                    <td>@string.Format("{0:n2}", item.promotionSale)</td>
+                                    <td>@string.Format("{0:n2}", item.perGrowth)</td>
+                                    <td>@string.Format("{0:n2}", item.perSE)</td>
+                                    <td>@string.Format("{0:n2}", item.total)</td>
+                                    <td>@string.Format("{0:n2}", item.perToSale)</td>
+                                    <td></td>
+                                </tr>
                                         strActDetail = item.activityDetail;
                                         strActNo = item.activityNo;
                                         sumTotal = sumTotal + item.total;
@@ -149,13 +157,17 @@
                                     }
                                 }
 
-                                <tr>
-                                    <td colspan="13" style="text-align:right;background-color:#a3d5cf"><h4>รวม : </h4></td>
-                                    <td><h5> @string.Format("{0:n2}", sumTotal)</h5></td>
-                                    <td><h5>@string.Format("{0:n2}", sumNormalSale)</h5></td>
-                                    <td><h5>@string.Format("{0:n2}", sumNormalPromotion)</h5></td>
-                                    <td></td>
-                                </tr>
+                            <tr>
+                                <td colspan="13" style="text-align:right;background-color:#a3d5cf"><h4>รวม : </h4></td>
+                                <td></td>
+                                <td><h5>@string.Format("{0:n2}", sumNormalSale)</h5></td>
+                                <td><h5>@string.Format("{0:n2}", sumNormalPromotion)</h5></td>
+                                <td></td>
+                                <td></td>
+                                <td><h5> @string.Format("{0:n2}", sumTotal)</h5></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             </tbody>
                         </table>
 
@@ -198,15 +210,15 @@
         </div>
         <div class="modal-footer">
             <div class="row">
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-5 col-xs-12">
                     <div class="pull-right">
                         <button type="button" class="btn ink-reaction btn-primary" id="btnSubmit" value="Export" style="width:100%;">
                             <i class="fa check-square-o"></i>&nbsp;Send to Approve
                         </button>
                     </div>
                 </div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="pull-left">
+                <div class="col-md-2 col-xs-12">
+                    <div class="center-block">
                         @using (Html.BeginForm("repListViewExportExcel", "actFormRepDetail", FormMethod.Post))
                         {
                             <input type="hidden" name="gridHtml" />
@@ -216,7 +228,13 @@
                         }
                     </div>
                 </div>
-                <div class="col-md-4 col-xs-12"></div>
+                <div class="col-md-5 col-xs-12">
+                    <div class="pull-left">
+                        <button type="button" class="btn ink-reaction btn-warning" data-dismiss="modal">
+                            <i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel
+                        </button>
+                    </div>
+                </div>
 
             </div>
         </div>

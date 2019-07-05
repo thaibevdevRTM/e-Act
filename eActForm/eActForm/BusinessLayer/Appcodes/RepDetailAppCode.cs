@@ -217,6 +217,7 @@ namespace eActForm.BusinessLayer
                              {
                                  #region detail parse
                                  id = dr["activityId"].ToString(),
+                                 reference = dr["reference"].ToString(),
                                  statusId = dr["statusId"].ToString(),
                                  statusName = dr["statusName"].ToString(),
                                  activityNo = dr["activityNo"].ToString(),
@@ -248,6 +249,9 @@ namespace eActForm.BusinessLayer
                                  compensate = dr["compensate"] is DBNull ? 0 : (decimal)dr["compensate"],
                                  delFlag = false,
                                  createdDate = (DateTime?)dr["createdDate"],
+                                 perGrowth = dr["growth"] is DBNull ? 0 : (decimal?)dr["growth"],
+                                 perSE = dr["Le"] is DBNull ? 0 : (decimal?)dr["Le"],
+                                 perToSale = dr["perToSale"] is DBNull ? 0 : (decimal?)dr["perToSale"],
                                  #endregion
 
                              }).ToList();
