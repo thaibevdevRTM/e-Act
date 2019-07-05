@@ -67,12 +67,17 @@ namespace eActForm.BusinessLayer
 								  prd_groupNameTH = d["prd_groupNameTH"].ToString(),
 								  prd_groupShort = d["prd_groupShort"].ToString(),
 
-								  act_activityPeriodSt = !string.IsNullOrEmpty(d["act_activityPeriodSt"].ToString()) ? DateTime.Parse(d["act_activityPeriodSt"].ToString()) : (DateTime?)null,
+								  act_activityPeriodSt = d["act_activityPeriodSt"] is DBNull ? null : (DateTime?)d["act_activityPeriodSt"],
+								  act_activityPeriodEnd = d["act_activityPeriodEnd"] is DBNull ? null : (DateTime?)d["act_activityPeriodEnd"],
+								  act_costPeriodSt = d["act_costPeriodSt"] is DBNull ? null : (DateTime?)d["act_costPeriodSt"],
+								  act_costPeriodEnd = d["act_costPeriodEnd"] is DBNull ? null : (DateTime?)d["act_costPeriodEnd"],
+
+								  //act_activityPeriodSt = !string.IsNullOrEmpty(d["act_activityPeriodSt"].ToString()) ? DateTime.Parse(d["act_activityPeriodSt"].ToString()) : (DateTime?)null,
 								  //act_activityPeriodSt = d["act_activityPeriodSt"].ToString(),
 
-								  act_activityPeriodEnd = !string.IsNullOrEmpty(d["act_activityPeriodEnd"].ToString()) ? DateTime.Parse(d["act_activityPeriodEnd"].ToString()) : (DateTime?)null,
-								  act_costPeriodSt = !string.IsNullOrEmpty(d["act_costPeriodSt"].ToString()) ? DateTime.Parse(d["act_costPeriodSt"].ToString()) : (DateTime?)null,
-								  act_costPeriodEnd = !string.IsNullOrEmpty(d["act_costPeriodEnd"].ToString()) ? DateTime.Parse(d["act_costPeriodEnd"].ToString()) : (DateTime?)null,
+								  //act_activityPeriodEnd = !string.IsNullOrEmpty(d["act_activityPeriodEnd"].ToString()) ? DateTime.Parse(d["act_activityPeriodEnd"].ToString()) : (DateTime?)null,
+								  //act_costPeriodSt = !string.IsNullOrEmpty(d["act_costPeriodSt"].ToString()) ? DateTime.Parse(d["act_costPeriodSt"].ToString()) : (DateTime?)null,
+								  //act_costPeriodEnd = !string.IsNullOrEmpty(d["act_costPeriodEnd"].ToString()) ? DateTime.Parse(d["act_costPeriodEnd"].ToString()) : (DateTime?)null,
 								  act_activityName = d["act_activityName"].ToString(),
 								  act_theme = d["act_activitySales"].ToString(),
 								  //act_themeName = d["act_themeName"].ToString(),
@@ -91,9 +96,14 @@ namespace eActForm.BusinessLayer
 								  //sum_balance_product_inv = d["sum_balance_product_inv"].ToString() == "" ? 0 : decimal.Parse(d["sum_balance_product_inv"].ToString()),
 
 								  //delFlag = bool.Parse(d["delFlag"].ToString()),
-								  act_createdDate = DateTime.Parse(d["act_createdDate"].ToString()),
+
+								  act_createdDate = d["act_createdDate"] is DBNull ? null : (DateTime?)d["act_createdDate"],
+								  act_updatedDate = d["act_updatedDate"] is DBNull ? null : (DateTime?)d["act_updatedDate"],
+
+								  //act_createdDate = DateTime.Parse(d["act_createdDate"].ToString()),
+								  //act_updatedDate = DateTime.Parse(d["act_updatedDate"].ToString()),
+
 								  act_createdByUserId = d["act_createdByUserId"].ToString(),
-								  act_updatedDate = DateTime.Parse(d["act_updatedDate"].ToString()),
 								  act_updatedByUserId = d["act_updatedByUserId"].ToString(),
 
 								  bud_ActivityStatusId = d["bud_ActivityStatusId"].ToString(),
@@ -189,7 +199,9 @@ namespace eActForm.BusinessLayer
 								productBudgetStatusId = d["productBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["productBudgetStatusId"].ToString()),
 								productBudgetStatusNameTH = d["productBudgetStatusNameTH"].ToString(),
 
-								invoiceActionDate = DateTime.Parse(d["invoiceActionDate"].ToString()),
+								//invoiceActionDate = DateTime.Parse(d["invoiceActionDate"].ToString()),
+								invoiceActionDate = d["invoiceActionDate"] is DBNull ? null : (DateTime?)d["invoiceActionDate"],
+
 								invoiceBudgetStatusId = d["invoiceBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceBudgetStatusId"].ToString()),
 								invoiceBudgetStatusNameTH = d["invoiceBudgetStatusNameTH"].ToString(),
 								invoiceSeq = d["invoiceSeq"].ToString() == "" ? 0 : int.Parse(d["invoiceSeq"].ToString()),
