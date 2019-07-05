@@ -15,7 +15,7 @@
 @Html.HiddenFor(x => x.Budget_Activity_Product.activityOfEstimateId, new { @id = "hd_activityOfEstimateId" })
 
 
-@if (Model.Budget_Activity_Invoice.invoiceId.ToString() != "")
+@if (Model.Budget_Activity_Invoice != null)
 {
 	@Html.HiddenFor(x => x.Budget_Activity_Invoice.invoiceId, new { @id = "hd_invoiceId" })
 }
@@ -109,7 +109,7 @@
 							</td>
 
 							<td width="15%" class="font14" style="text-align:right;">
-								@if (Model.Budget_Activity_Invoice.productStandBath.ToString() != "")
+								@if (Model.Budget_Activity_Invoice != null)
 								{
 									string result = String.Format("{0:n2}", Model.Budget_Activity_Invoice.productStandBath);
 									@result.ToString();
@@ -132,7 +132,7 @@
 									}*@
 								&nbsp;
 							</td>
-							@if (Model.Budget_Activity_Invoice.invoiceNo.ToString() != "")
+							@if (Model.Budget_Activity_Invoice != null)
 							{
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceNo)"></td>
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceTotalBath)"></td>
