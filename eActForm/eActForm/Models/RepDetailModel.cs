@@ -26,6 +26,10 @@ namespace eActForm.Models
             public decimal? specialDiscBaht { get; set; }
             public decimal? promotionCost { get; set; }
             public decimal? compensate { get; set; }
+            public string reference { get; set; }
+            public decimal? perGrowth { get; set; }
+            public decimal? perSE { get; set; }
+            public decimal? perToSale { get; set; }
         }
 
         public class actApproveRepDetailModels
@@ -36,6 +40,7 @@ namespace eActForm.Models
         {
             public string id { get; set; }
             public string statusId { get; set; }
+            public string activityNo { get; set; }
             public string statusName { get; set; }
             public DateTime? startDate { get; set; }
             public DateTime? endDate { get; set; }

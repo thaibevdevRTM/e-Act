@@ -34,7 +34,7 @@ namespace eActForm.Controllers
 			try
 			{
 				EmailAppCodes.resendHistory(actId);
-				EmailAppCodes.sendApproveBudget(actId, AppCode.ApproveType.Activity_Form);
+				EmailAppCodes.sendApproveBudget(actId, AppCode.ApproveType.Budget_form, true);
 				result.Success = true;
 			}
 			catch (Exception ex)

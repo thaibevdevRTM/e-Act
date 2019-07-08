@@ -13,10 +13,12 @@ namespace eActForm.Controllers
     {
         public ActionResult activityCostDetail()
         {
-            Activity_Model activityModel = new Activity_Model();
-            activityModel.activitydetaillist = Session["activitydetaillist"] != null
+            Activity_Model activityModel = new Activity_Model
+            {
+                activitydetaillist = Session["activitydetaillist"] != null
                 ? ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"])
-                : new List<CostThemeDetailOfGroupByPrice>();
+                : new List<CostThemeDetailOfGroupByPrice>()
+            };
             Session["activitydetaillist"] = activityModel.activitydetaillist;
 
 
@@ -55,9 +57,12 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                Activity_Model activityModel = new Activity_Model();
+                Activity_Model activityModel = new Activity_Model
+                {
+                    activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]
+                };
                 CostThemeDetailOfGroupByPrice costThemeDetailOfGroupByPriceModel = new CostThemeDetailOfGroupByPrice();
-                activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
+                
 
 
 
@@ -102,9 +107,11 @@ namespace eActForm.Controllers
                 decimal p_perTotal = 0;
                 decimal getPromotionCost = 0;
 
-                Activity_Model activityModel = new Activity_Model();
-                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-                activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
+                Activity_Model activityModel = new Activity_Model
+                {
+                    productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]),
+                    activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]
+                };
 
                 if (activityModel.productcostdetaillist1 != null)
                 {
@@ -154,8 +161,10 @@ namespace eActForm.Controllers
             try
             {
                 decimal p_perTotal = decimal.Parse(perTotal);
-                Activity_Model activityModel = new Activity_Model();
-                activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
+                Activity_Model activityModel = new Activity_Model
+                {
+                    activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]
+                };
                 activityModel.activitydetaillist
                            .Where(r => r.productGroupId != null && r.productGroupId.Equals(productGroupId))
                            .Select(r =>
@@ -194,15 +203,16 @@ namespace eActForm.Controllers
 
             try
             {
-                Activity_Model activityModel = new Activity_Model();
+                Activity_Model activityModel = new Activity_Model
+                {
+                    productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]),
+                    activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]
+                };
 
                 decimal getPromotionCost = 0; 
                 decimal get_PerTotal = 0;
                 decimal p_total = 0;
                 decimal p_LE = decimal.Parse(AppCode.checkNullorEmpty(LE));
-
-                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-                activityModel.activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"];
 
                 if (activityModel.productcostdetaillist1 != null)
                 {

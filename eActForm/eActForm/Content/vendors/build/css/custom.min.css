@@ -1,3 +1,6 @@
+.modal-large{
+    width:1300px;
+}
 .x_title h2, table.tile_info td p {
     white-space: nowrap;
     text-overflow: ellipsis

@@ -29,6 +29,8 @@ namespace eActForm.Controllers
 
 		public PartialViewResult previewBudgetInvoice(string activityId)
 		{
+			 Session["activityId"]= activityId;
+
 			Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
 			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId,null);
 
@@ -137,17 +139,24 @@ namespace eActForm.Controllers
 		public ActionResult activityProduct(string activityId)
 		{
 			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
-			try
+
+			if (activityId == null) { activityId = Session["activityId"].ToString(); }
+
+			if (activityId == null) return RedirectToAction("activityList", "Budget");
+			else
 			{
-				budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", activityId, null,null).ToList();
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+				try
+				{
+					budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", activityId, null, null).ToList();
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+				}
 			}
 			return View(budget_activity);
 		}
-		
+
 		public ActionResult activityList()
 		{
 			//Session["activityId"] = Guid.NewGuid().ToString();
