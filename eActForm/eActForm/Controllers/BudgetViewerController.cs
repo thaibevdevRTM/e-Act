@@ -33,11 +33,11 @@ namespace eActForm.Controllers
 
 			try
 			{
-
-	
-					rootPath = ConfigurationManager.AppSettings["rootBudgetPdftURL"];
-
-
+				rootPath = ConfigurationManager.AppSettings["rootBudgetPdftURL"];
+				if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, budgetApproveId))))
+				{
+					budgetApproveId = "fileNotFound";
+				}
 
 			}
 			catch (Exception ex)

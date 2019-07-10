@@ -156,7 +156,7 @@
     }
 
 	function onSelectInvoice(actId, estId, invId) {
-		var TeamDetailPostBackURL = '/Budget/activityProductInvoiceEdit';
+		//var TeamDetailPostBackURL = '/Budget/activityProductInvoiceEdit';
 		debugger;
 		//var $buttonClicked = $(this);
 		var var_activityId = actId;
@@ -166,7 +166,7 @@
 
 		$.ajax({
 			type: "GET",
-			url: TeamDetailPostBackURL,
+			url:  '@Url.Action("activityProductInvoiceEdit", "Budget")',
 			contentType: "application/json; charset=utf-8",
 			data: {
 				"activityId": var_activityId,
@@ -190,7 +190,7 @@
 
 	function onInvoicePrintPreview(actId) {
 		//var TeamDetailPostBackURL = '/BudgetApprove/previewApproveBudget';
-		var TeamDetailPostBackURL = '/Budget/previewBudgetInvoice';
+		//var TeamDetailPostBackURL = '/Budget/previewBudgetInvoice';
 		debugger;
 		//var $buttonClicked = $(this);
 		var var_activityId = actId;
@@ -198,7 +198,7 @@
 
 		$.ajax({
 			type: "GET",
-			url: TeamDetailPostBackURL,
+			url:  '@Url.Action("previewBudgetInvoice", "Budget")',
 			contentType: "application/json; charset=utf-8",
 			data: {
 				"activityId": var_activityId
