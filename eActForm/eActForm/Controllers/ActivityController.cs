@@ -40,6 +40,7 @@ namespace eActForm.Controllers
             if (UtilsAppCode.Session.User.regionId != "")
             {
                 activityModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.id == UtilsAppCode.Session.User.regionId).ToList();
+                activityModel.activityFormModel.regionId = UtilsAppCode.Session.User.regionId;
             }
             else
             {
