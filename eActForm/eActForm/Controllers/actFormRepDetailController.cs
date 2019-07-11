@@ -21,7 +21,7 @@ namespace eActForm.Controllers
         // GET: actFormRepDetail
         public ActionResult Index()
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
             models.approveStatusList.Add(new ApproveModel.approveStatus()
             {
                 id = "7",

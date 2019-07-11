@@ -10,7 +10,27 @@ namespace eActForm.BusinessLayer
 {
     public class UserAppCode
     {
-         
+        public static List<ActUserModel.UserAuthorized> GetUserAuthorizeds()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserAuthorizedByEmpId"
+                    , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ActUserModel.UserAuthorized
+                             {
+                                 empId = dr["empId"].ToString(),
+                                 customerId = dr["customerId"].ToString(),
+                                 productCateId = dr["productCateId"].ToString(),
+                                 productTypeId = dr["productTypeId"].ToString()
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetUserAuthorizeds>>" + ex.Message);
+            }
+        }
         public static int setRoleUser(string strUserName)
         {
             try
