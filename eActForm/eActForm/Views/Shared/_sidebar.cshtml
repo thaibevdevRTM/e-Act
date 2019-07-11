@@ -1,6 +1,8 @@
 ﻿@using eActForm.BusinessLayer
+@using System.Configuration;
+@using eActForm.Models;
 @{
-	Layout = null;
+    Layout = null;
 }
 
 <!-- sidebar menu -->
@@ -19,7 +21,15 @@
                 <li>
                     <a><i class="fa fa-edit"></i> Activity Forms <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li>@Html.ActionLink(" Activity Form", "ActivityForm", "Activity")</li>
+                        @if (UtilsAppCode.Session.User.isCreator || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.regionId != ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            <li>@Html.ActionLink(" Activity Form", "ActivityForm", "Activity")</li>
+                        }
+
+                        @if (UtilsAppCode.Session.User.isCreator || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.regionId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            <li>@Html.ActionLink(" Activity Form OMT", "ActivityForm_OMT", "Activity")</li>
+                        }
                     </ul>
                 </li>
             }
@@ -37,14 +47,23 @@
                 <li>
                     <a><i class="fa fa-inbox"></i> Documents <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li>@Html.ActionLink(" Documents", "Index", "Home")</li>
+
+                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            <li>@Html.ActionLink(" Documents", "Index", "Home", new { actId = "" , typeForm = Activity_Model.activityType.MT.ToString()},null)</li>
+                        }
+                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            <li>@Html.ActionLink(" Documents OMT", "Index", "Home", new { actId = "" , typeForm = Activity_Model.activityType.OMT.ToString()}, null)</li>
+                        }
+
                         <li>@Html.ActionLink(" Budget", "Index", "BudgetMyDoc")</li>
                         @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                         {
                             <li>@Html.ActionLink(" Report Detail", "reportDetail", "Documents")</li>
                         }
-                            <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
-                        </ul>
+                        <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
+                    </ul>
                 </li>
             }
             @if (UtilsAppCode.Session.User.isApprove || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)

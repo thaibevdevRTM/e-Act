@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using iTextSharp.text;
 using iTextSharp.text.html;
@@ -64,6 +65,43 @@ namespace eActForm.Controllers
             return View(activityModel);
         }
 
+
+        public ActionResult ActivityForm_OMT(string activityId, string mode)
+        {
+            Activity_Model activityModel = new Activity_Model();
+            activityModel.activityFormModel = new ActivityForm();
+            activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
+            activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate();
+            activityModel.regionGroupList = QueryGetAllRegion.getAllRegion();
+            activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                .GroupBy(item => item.activitySales)
+                .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+
+            Session.Remove("productcostdetaillist1");
+            Session.Remove("activitydetaillist");
+
+            if (!string.IsNullOrEmpty(activityId))
+            {
+                Session["activityId"] = activityId;
+                activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+                activityModel.activityFormModel.mode = mode;
+                Session["productcostdetaillist1"] = QueryGetCostDetailById.getcostDetailById(activityId);
+                Session["activitydetaillist"] = QueryGetActivityDetailById.getActivityDetailById(activityId);
+                activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
+                activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
+                activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
+
+            }
+            else
+            {
+                string actId = Guid.NewGuid().ToString();
+                Session["activityId"] = actId;
+                activityModel.activityFormModel.id = actId;
+                activityModel.activityFormModel.mode = mode;
+            }
+
+            return View(activityModel);
+        }
 
 
         public ActionResult ImageList(string activityId)
@@ -272,17 +310,13 @@ namespace eActForm.Controllers
             try
             {
 
-                string genDoc = ActivityFormCommandHandler.genNumberActivity(activityId);
-                countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc);
+                String[] genDoc = ActivityFormCommandHandler.genNumberActivity(activityId);
+                countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc[1]);
                 if (countresult > 0)
                 {
-
-
                     var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
-                    GridHtml1 = GridHtml1.Replace("---", genDoc).Replace("<br>", "<br/>");
+                    GridHtml1 = GridHtml1.Replace("---", genDoc[1]).Replace("<br>", "<br/>");
                     AppCode.genPdfFile(GridHtml1, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
-
-
 
                     TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
                     getImageModel.tbActImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension == ".pdf").ToList();
@@ -307,6 +341,7 @@ namespace eActForm.Controllers
                     }
                 }
                 resultAjax.Success = true;
+                resultAjax.Message = genDoc[1];
             }
             catch (Exception ex)
             {

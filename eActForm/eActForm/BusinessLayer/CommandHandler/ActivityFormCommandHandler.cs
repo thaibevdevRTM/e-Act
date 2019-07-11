@@ -164,30 +164,44 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static string genNumberActivity(string activityId)
+        public static string[] genNumberActivity(string activityId)
         {
             try
             {
-                string result = string.Empty;
-
+ 
+                String[] result = new String[2];
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);
                 if (getActList.Any())
                 {
                     if (getActList.FirstOrDefault().activityNo.ToString() == "---")
                     {
-                        int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id).FirstOrDefault().docNo);
+                        if (getActList.FirstOrDefault().chanel_Id != "")
+                        {
+                            int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id).FirstOrDefault().docNo);
 
-                        result += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
-                        result += getActList.FirstOrDefault().shortBrand.Trim();
-                        result += getActList.FirstOrDefault().chanelShort.Trim();
-                        result += getActList.FirstOrDefault().cusShortName.Trim();
-                        result += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
-                        result += string.Format("{0:0000}", genNumber);
-
+                            result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
+                            result[0] += getActList.FirstOrDefault().shortBrand.Trim();
+                            result[0] += getActList.FirstOrDefault().chanelShort.Trim();
+                            result[0] += getActList.FirstOrDefault().cusShortName.Trim();
+                            result[0] += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
+                            result[0] += string.Format("{0:0000}", genNumber);
+                            result[1] = Activity_Model.activityType.MT.ToString();
+                        }
+                        else
+                        {
+                            int genNumber = int.Parse(getActivityDoc("region").FirstOrDefault().docNo);
+                            result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
+                            result[0] += getActList.FirstOrDefault().shortBrand.Trim();
+                            result[0] += getActList.FirstOrDefault().regionShort.Trim();
+                            result[0] += getActList.FirstOrDefault().cusShortName.Trim();
+                            result[0] += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
+                            result[0] += string.Format("{0:0000}", genNumber);
+                            result[1] = Activity_Model.activityType.MT.ToString();
+                        }
                     }
                     else
                     {
-                        result = getActList.FirstOrDefault().activityNo.ToString();
+                        result[0] = getActList.FirstOrDefault().activityNo.ToString();
                     }
                 }
 

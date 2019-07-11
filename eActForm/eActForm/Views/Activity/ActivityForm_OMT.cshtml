@@ -1,0 +1,1015 @@
+﻿
+@using eActForm.BusinessLayer
+@model eActForm.Models.Activity_Model
+@{
+    ViewBag.Title = "Home Page";
+    var mode = Request["mode"] == null ? "" : Request["mode"];
+}
+<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
+
+<style type="text/css">
+
+    .font8 {
+        font-size: 8px;
+    }
+
+    .font10 {
+        font-size: 10px;
+    }
+
+    .textRight {
+        text-align: right;
+    }
+
+    .textLeft {
+        text-align: left;
+    }
+
+    .inner {
+        display: inline-block;
+    }
+
+    #outer {
+        width: 100%;
+        text-align: center;
+    }
+</style>
+
+
+
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</h4>
+    <p></p>
+</div>
+
+
+<div class="row">
+    <form class="form-horizontal form-label-left" id="demo-form2" novalidate="" data-parsley-validate="">
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12"></div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityNo">
+                        Act No.
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12"></div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                        Document Date<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @if (Model.activityFormModel.documentDate.ToString() != "")
+                        {
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString() })
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-xs-12"></div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReference">
+                            Reference
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(x => x.activityFormModel.reference, new { @class = "form-control textboxcss", @id = "txtReference" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-xs-12"></div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReference">
+                            Region<span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
+                       {
+                           @class = "form-control textboxcss",
+                           id = "ddlRegion"
+                       })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12"></div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtCustomerName">
+                        Customer Name<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.activityFormModel.customerName, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
+                        @Html.HiddenFor(x => x.activityFormModel.customerId, new { id = "customerId" })
+                        @*@Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
+        {
+            @class = "form-control textboxcss",
+        onchange = "onchangeCustomer();",
+            id = "ddlCustomer"
+        })*@
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityName">
+                            ชื่อกิจกรรม <span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+
+                        @Html.HiddenFor(x => x.activityFormModel.chanel, new { @id = "txtchanel" })
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
+                            Product category<span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
+                            {
+                                @class = "form-control textboxcss",
+                                required = "required",
+                           onchange = "onchangeCate();",
+                                id = "ddlProductCate"
+                            })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
+                        ประเภทกิจกรรม<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
+                        {
+                            @class = "form-control textboxcss",
+                          id = "ddlTheme"
+                        })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
+                        Product Group<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.DropDownListFor(model => model.activityFormModel.productGroupId, new SelectList(Model.productGroupList, "id", "groupName", 0), "Please Select", new { @class = "form-control textboxcss", required = "required", id = "ddlProductGrp" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtObjective">
+                            วัตถุประสงค์<span class="required">*</span>
+                        </label>
+
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
+                            Product Brand<span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.DropDownListFor(model => model.activityFormModel.productBrandId, new SelectList(Model.productBrandList, "id", "brandName"), "- เลือกประเภท -", new { @class = "form-control textboxcss", required = "required", id = "ddlProductBrand" })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-xs-12">
+                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="radio">
+                            <label>
+                                @Html.RadioButtonFor(m => m.activityFormModel.trade, "term", new { @id = "rdbterm" }) รายการส่งเสริมการขาย (Trade Term)
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { @id = "rdbOutterm" }) รายการส่งเสริมการขาย (นอก Trade Term)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                            เวลากิจกรรม (Activity Period)<span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt" })
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivityEnd" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                            เวลาการให้ทุนพิเศษ (Cost Period)
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(x => x.activityFormModel.costPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerSt" })
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(x => x.activityFormModel.costPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerEnd" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<hr />
+<div class="row">
+    <div class="col-12">
+        <p class="lead">รายละเอียดของการทำกิจกรรม (Activity Detail)</p>
+    </div>
+    <div class="col-md-6">
+        @Html.TextAreaFor(x => x.activityFormModel.activityDetail, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtActivityDetail" })
+    </div>
+</div>
+<hr />
+<div id="getQuery" class="col-lg-12">
+    @Html.Action("productCostDetail", "ActivityProductDetail")
+</div>
+
+<div class="row" id="divAddProductCostDetail">
+    <div class="col-lg-2 col-xs-2">
+    </div>
+    <div class="col-lg-2 col-xs-2">
+    </div>
+
+    <div class="form-group col-lg-2 col-xs-2">
+        รสชาติ
+        @Html.DropDownListFor(model => model.productSmellLists, new SelectList(Model.productSmellLists, "id", "nameTH"), "- เลือกรสชาติ -", new { @class = "form-control", required = "required", id = "ddlProductSmell" })
+    </div>
+    <div class="form-group col-lg-2 col-xs-2">
+        ขนาด
+        @Html.DropDownListFor(model => model.productlist, new SelectList(Model.productlist, "productCode", "size"), "- เลือกขนาด -", new { @class = "form-control", required = "required", id = "ddlProductSize" })
+    </div>
+    <div class="form-group col-lg-3 col-xs-3">
+        สินค้า
+        @Html.DropDownListFor(model => model.productlist, new SelectList(Model.productlist, "productCode", "productName"), "- เลือกสินค้า -", new { @class = "form-control", required = "required", id = "ddlProductfilter" })
+    </div>
+    <div class="form-group col-lg-1 col-xs-1" onclick="Additem()">
+        <label class="btn ink-reaction btn-danger fa fa-plus" style="margin-top:20px;"></label>
+    </div>
+</div>
+<hr />
+<div id="divgetdetailcost" class="col-lg-12">
+    @Html.Action("activityCostDetail", "ActivityCostDetail")
+</div>
+
+
+<div class="row" id="divAddActivityDetail">
+    <div class="form-group col-lg-8 col-xs-8">
+    </div>
+    <div class="form-group col-lg-3 col-xs-3">
+        <select id="ddlThemeDetail" name="ddlThemeDetail" class="form-control selectpicker" data-container="body" data-live-search="true" data-hide-disabled="true">
+            <option style="color:#0e0d0d;" value="0">Please Select</option>
+            @foreach (var list in Model.activityGroupList)
+            {
+                <option style="color:#0e0d0d;" value="@list.id">@list.activitySales</option>
+            }
+        </select>
+    </div>
+    <div class="form-group col-lg-1 col-xs-1" onclick="AddThemeCost()">
+        <label class="btn ink-reaction btn-danger fa fa-plus"></label>
+    </div>
+</div>
+<hr />
+
+
+<div class="modal fade" id="previewModal" role="dialog" style="display:none">
+    <div id="divPreview">
+    </div>
+</div>
+
+<div class="row" id="divUploadImg">
+    <div class="col-12">
+        <p class="lead">อัพโหลด รูปภาพ</p>
+    </div>
+    <div class="col-md-6" id="divUploadFiles">
+        <form action="@Url.Action("uploadFilesImage", "Activity")" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
+            <div class="dz-message">
+                <span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-12">
+        <div id="divgetimage" class="col-md-12">
+            @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id != null ? Model.activityFormModel.id : "" })
+        </div>
+    </div>
+</div>
+<hr />
+
+<div class="row">
+    <div id="outer">
+
+        @if (mode != "")
+        {
+            <div class="inner">
+                <button id="btnSaveAs" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew()">&nbsp;Save As</button>
+            </div>
+        }
+        <div class="inner">
+            <a href="@Url.Action("index", "Home")" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+        </div>
+        @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3)
+        {
+            <div class="inner">
+                <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
+            </div>
+        }
+        @if (Model.activityFormModel.statusId == 2 || Model.activityFormModel.statusId == 3)
+        {
+            <div class="inner">
+                <button id="btnUpdate" type="button" class="btn ink-reaction btn-default" onclick="validateUpdate()">&nbsp;Update</button>
+            </div>
+        }
+
+    </div>
+
+</div>
+
+<input type="hidden" id="hdcusname">
+@Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
+@Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
+@Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+
+
+           $(".fv").each(function () {
+               var v = $(this).val();
+               if (v == '') {
+                   $(this).focus();
+               }
+           });
+
+           ObjModel = {};
+           document.getElementById("ddlProductfilter").disabled = true;
+           document.getElementById("ddlProductSize").disabled = true;
+
+        if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
+               setTxtReadOnly();
+        }
+
+
+    $("#txtCustomerName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("getCustomerByRegion", "eAct")',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            regionId: $("#ddlRegion").val(),
+                            txtCus: $("#txtCustomerName").val(),
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
+                            }))
+
+                        }
+                    })
+                },
+                minLength: 0,
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) {
+                    }
+                }, select: function (event, ui) {
+                    $("#customerId").val(ui.item.id)
+                }
+            }).focus(function () {
+                $(this).data("uiAutocomplete").search($(this).val());
+            });
+
+
+
+    });
+
+
+    $(function () {
+        $("#txtdateDoc").datepicker({
+            format: 'dd-mm-yyyy'
+        });
+        $("#txtdateActivitySt").datepicker({
+            format: 'dd-mm-yyyy'
+        });
+        $("#txtdateActivityEnd").datepicker({
+            format: 'dd-mm-yyyy'
+        });
+        $("#txtdateCostPerSt").datepicker({
+            format: 'dd-mm-yyyy'
+        });
+        $("#txtdateCostPerEnd").datepicker({
+            format: 'dd-mm-yyyy'
+        });
+
+    });
+
+
+    $("#ddlProductSize").change(function () {
+        var ddlProduct = $("#ddlProductfilter");
+        $.ajax({
+            url: '@Url.Action("getddlProduct", "eAct")',
+            data: {
+                brandId: $("#ddlProductBrand").val(),
+                size: $("#ddlProductSize").val(),
+                smellId: $("#ddlProductSmell").val(),
+                productGroupId: $("#ddlProductGrp").val()
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                if (response.Data.getProductname.length > 0) {
+                    $("#ddlProductfilter option[value !='']").remove();
+                    $.each(response.Data.getProductname, function () {
+                        ddlProduct.append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    document.getElementById("ddlProductfilter").disabled = false;
+                }
+                else {
+                    document.getElementById("ddlProductfilter").disabled = true;
+                }
+            }
+        });
+    });
+
+    function setZero(txtId) {
+        if ($(txtId).val() == "0.00")
+            $(txtId).val("");
+    }
+
+
+    $("#ddlProductBrand").change(function () {
+        fillProductOnChange();
+    });
+
+    $("#ddlProductSmell").change(function () {
+        fillProductOnChange();
+    });
+
+    function fillProductOnChange() {
+        $.ajax({
+            url: '@Url.Action("getProductDetail", "eAct")',
+            data: {
+                brandId: $("#ddlProductBrand").val(),
+                smellId: $("#ddlProductSmell").val(),
+                productGroupId:$("#ddlProductGrp").val()
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                fillDataSizeAndProduct(response);
+            }
+        });
+    }
+
+    function fillDataSizeAndProduct(response) {
+        var ddlProduct = $("#ddlProductfilter");
+        var ddlSize = $("#ddlProductSize");
+        if (response.Data.getProductsize.length > 0) {
+            $("#ddlProductSize option[value !='']").remove();
+            $.each(response.Data.getProductsize, function () {
+                ddlSize.append($("<option></option>").val(this['size']).html(this['size']));
+            });
+            document.getElementById("ddlProductSize").disabled = false;
+        }
+        else {
+            document.getElementById("ddlProductSize").disabled = true;
+        }
+
+        if (response.Data.getProductname.length > 0) {
+            $("#ddlProductfilter option[value !='']").remove();
+            $.each(response.Data.getProductname, function () {
+                ddlProduct.append($("<option></option>").val(this['Value']).html(this['Text']));
+            });
+            document.getElementById("ddlProductfilter").disabled = false;
+        }
+        else {
+            document.getElementById("ddlProductfilter").disabled = true;
+        }
+    }
+
+    function onchangeCate() {
+
+        ObjModel = {};
+        $("#ddlProductBrand").val('');
+        $("#ddlProductfilter").val('');
+        $("#ddlProductSize").val('');
+        $("#ddlProductSmell").val('');
+
+        document.getElementById("ddlProductBrand").disabled = true;
+        document.getElementById("ddlProductfilter").disabled = true;
+        document.getElementById("ddlProductSize").disabled = true;
+
+        var ddlProductGrp = $("#ddlProductGrp");
+
+         $.ajax({
+                url: '@Url.Action("getProductGroup", "eAct")',
+                data: {
+                    cateId: $("#ddlProductCate").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+             success: function (response) {
+
+                 if (response.Data.productGroup.length > 0) {
+                     $("#ddlProductGrp option[value !='']").remove();
+                     $.each(response.Data.productGroup, function () {
+                         ddlProductGrp.append($("<option></option>").val(this['id']).html(this['groupName']));
+                     });
+                     document.getElementById("ddlProductGrp").disabled = false;
+                 }
+                 else {
+                     document.getElementById("ddlProductGrp").disabled = true;
+                 }
+
+
+                }
+         });
+    }
+
+
+
+    $("#ddlProductGrp").change(function () {
+        ObjModel = {};
+
+        var ddlProductBrand = $("#ddlProductBrand");
+
+        $("#ddlProductSmell").val('')
+        $("#ddlProductfilter").val('');
+        $("#ddlProductSize").val('');
+        document.getElementById("ddlProductfilter").disabled = true;
+        document.getElementById("ddlProductSize").disabled = true;
+
+        $.ajax({
+            url: '@Url.Action("getProductBrand", "eAct")',
+            data: {
+                p_groupId: $("#ddlProductGrp").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                if (response.Data.getProductname.length > 0) {
+                    $("#ddlProductBrand option[value !='']").remove();
+                    $.each(response.Data.getProductname, function () {
+                        ddlProductBrand.append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    document.getElementById("ddlProductBrand").disabled = false;
+                }
+                else {
+                    document.getElementById("ddlProductBrand").disabled = true;
+                }
+            }
+        });
+
+         $.ajax({
+            url: '@Url.Action("getProductSmell", "eAct")',
+            data: {
+                productGroupId: $("#ddlProductGrp").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+             success: function (response) {
+                 if (response.Data.length > 0) {
+                     $("#ddlProductSmell option[value !='']").remove();
+                    $.each(response.Data, function () {
+                        $("#ddlProductSmell").append($("<option></option>").val(this['id']).html(this['nameTH']));
+                    });
+                    document.getElementById("ddlProductSmell").disabled = false;
+                }
+                else {
+                    document.getElementById("ddlProductSmell").disabled = true;
+                }
+            }
+        });
+
+    });
+
+
+    function Additem() {
+
+        var required = "กรุณา ระบุ :<br>";
+        var validate = true;
+        if ($("#ddlTheme").val() == '') { required += "ประเภทกิจกรรม*<br>"; validate = false; }
+        if (validate != true) {
+            bootbox.alert(required);
+            return false;
+        }
+        $("#WaitDialog").show();
+         $.ajax({
+                url: '@Url.Action("addItemProduct", "ActivityProductDetail")',
+             data: {
+             productid: $("#ddlProductfilter").val(),
+                 brandid: $("#ddlProductBrand").val(),
+                 smellId: $("#ddlProductSmell").val(),
+                 size: $("#ddlProductSize").val(),
+                 cusid: 'OMT',
+                 theme: $("#ddlTheme").val()
+             },
+                dataType: "json",
+                type: 'POST',
+             success: function (response) {
+                 if (response.Data > 0) {
+
+                     rowCount = response.Data;
+                     CallChangefunc();
+                     callThemedetailcost();
+                 }
+                 else {
+                     bootbox.alert("ไม่พบ สินค้า!");
+                 }
+                 $("#WaitDialog").hide();
+             }
+         });
+    }
+
+    function AddThemeCost() {
+
+        var ddlTheme = document.getElementById("ddlThemeDetail");
+        var txtddlTheme = ddlTheme.options[ddlTheme.selectedIndex].text;
+        if (txtddlTheme == 'Please Select') { bootbox.alert("กรุณา ระบุ ประเภทกิจกรรม");  return false; }
+
+
+        $("#WaitDialog").show();
+         $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("addCostDetailTheme", "ActivityCostDetail")',
+             data: {
+                 themeId: $("#ddlThemeDetail").val(),
+                 txttheme: txtddlTheme,
+            }
+         }).done(function (response) {
+             callThemedetailcost();
+             $("#WaitDialog").hide();
+        });
+    }
+
+
+
+    function validatesubmit() {
+        var required = "กรุณา ระบุ :<br>";
+        var validate = true;
+
+        if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
+        if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
+        if ($("#customerId").val() == "" || $("#txtCustomerName").val() == "") { required += "Customer Name*<br>"; validate = false; }
+        if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
+        if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
+        if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
+        if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
+        if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
+        if ($("#txtdateActivitySt").val() == "" && $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; }
+        else {
+            var startDate =  $("#txtdateActivitySt").val().split("-");
+            var endDate = $("#txtdateActivityEnd").val().split("-");
+            if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1],endDate[0])) {
+                required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
+            }
+        }
+        if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
+
+        //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
+
+        if (validate == true) {
+            SubmitData();
+        }
+        else {
+            bootbox.alert(required)
+        }
+    }
+
+    function SubmitData() {
+        $("#WaitDialog").show();
+            $.ajax({
+                url: '@Url.Action("insertDataActivity", "Activity")',
+                data: {
+                    statusId: 1,
+                    Mode: $("#hdMode").val(),
+                    dateDoc: $("#txtdateDoc").val(),
+                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                    str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
+                    str_activityPeriodSt: $("#txtdateActivitySt").val(),
+                    str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
+                    dateProductlist: $("#txtdateActivitySt").val(),
+                    dateActivitylist: $("#txtdateActivityEnd").val(),
+                    Reference: $("#txtReference").val(),
+                    CustomerId: $("#customerId").val(),
+                    ProductCateId: $("#ddlProductCate").val(),
+                    ProductGroupId: $("#ddlProductGrp").val(),
+                    productBrandId: $("#ddlProductBrand").val(),
+                    ActivityPeriodST: $("#txtdateActivitySt").val(),
+                    ActivityPeriodEnd: $("#txtdateActivityEnd").val(),
+                    CostPeriodST: $("#txtdateCostPerSt").val(),
+                    CostPeriodEnd: $("#txtdateCostPerEnd").val(),
+                    ActivityName: $("#txtActivityName").val(),
+                    Theme: $("#ddlTheme").val(),
+                    Objective: $("#txtObjective").val(),
+                    Trade: $("input[name='activityFormModel.trade']:checked").val(),
+                    ActivityDetail: $("#txtActivityDetail").val(),
+                    activityNo: $("#txtActivityNo").val(),
+                    regionId: $("#ddlRegion").val(),
+                    createdByUserId: $("#hdcreateUser").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+            }).done(function (response) {
+                if (response.Success) {
+                    callPreviewData(response.ActivityId);
+                }
+            });
+    }
+
+
+
+
+    function validateUpdate() {
+        var required = "กรุณา ระบุ :<br>";
+        var validate = true;
+
+        if ($("#txtdateActivitySt").val() == "" && $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; }
+        else {
+            var startDate = $("#txtdateActivitySt").val().split("-");
+            var endDate = $("#txtdateActivityEnd").val().split("-");
+            if (new Date(startDate[2], startDate[1], startDate[0]) >= new Date(endDate[2], endDate[1], endDate[0])) {
+                required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
+            }
+        }
+        if (validate == true) {
+            updateData();
+        }
+        else {
+            bootbox.alert(required)
+        }
+    }
+
+    function updateData() {
+        $("#WaitDialog").show();
+            $.ajax({
+                url: '@Url.Action("updateDataActivity", "Activity")',
+                data: {
+
+                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                    str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
+                    str_activityPeriodSt: $("#txtdateActivitySt").val(),
+                    str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+            }).done(function (response) {
+                if (response.Success) {
+                    $("#WaitDialog").hide();
+                    doMsgSuccess("Update Success");
+                }
+            });
+    }
+
+
+
+    function copyAndSaveNew() {
+        bootbox.confirm({
+            message: "<p class='lead text-center'>คุณต้องการ copy เอกสารเพื่อไปสร้างเอกสารใหม่ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+
+                    console.log($("#customerId").val()+"tttt");
+
+                    $("#WaitDialog").show();
+                    $.ajax({
+                        url: '@Url.Action("copyAndSaveNewActivityForm", "Activity")',
+                        data: {
+                            statusId: 1,
+                            Mode: $("#hdMode").val(),
+                            dateDoc: $("#txtdateDoc").val(),
+                            str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                            str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
+                            str_activityPeriodSt: $("#txtdateActivitySt").val(),
+                            str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
+                            dateProductlist: $("#txtdateActivitySt").val(),
+                            dateActivitylist: $("#txtdateActivityEnd").val(),
+                            Reference: $("#txtReference").val(),
+                            CustomerId: $("#customerId").val(),
+                            customerName: $("#txtCustomerName").val(),
+                            ProductCateId: $("#ddlProductCate").val(),
+                            ProductGroupId: $("#ddlProductGrp").val(),
+                            productBrandId: $("#ddlProductBrand").val(),
+                            ActivityPeriodST: $("#txtdateActivitySt").val(),
+                            ActivityPeriodEnd: $("#txtdateActivityEnd").val(),
+                            CostPeriodST: $("#txtdateCostPerSt").val(),
+                            CostPeriodEnd: $("#txtdateCostPerEnd").val(),
+                            ActivityName: $("#txtActivityName").val(),
+                            Theme: $("#ddlTheme").val(),
+                            Objective: $("#txtObjective").val(),
+                            Trade: $("input[name='activityFormModel.trade']:checked").val(),
+                            ActivityDetail: $("#txtActivityDetail").val(),
+                            regionId: $("#ddlRegion").val(),
+                            activityNo: $("#txtActivityNo").val(),
+
+                        },
+                        dataType: "json",
+                        type: 'POST',
+                    }).done(function (response) {
+                        $("#WaitDialog").hide();
+                        if (response.Success) {
+                            var url = '@Url.Action("ActivityForm_OMT", "activity")';
+                            window.location.href = url + "?ActivityId=" + response.ActivityId;
+                        } else {
+                            doMsgFail(response.Message);
+                        }
+                    });
+                }
+            }
+
+        });
+    }
+
+    function setTxtReadOnly() {
+
+            document.getElementById("ddlProductfilter").disabled = true;
+            document.getElementById("ddlProductSize").disabled = true;
+            document.getElementById("txtdateDoc").disabled = true;
+            document.getElementById("txtReference").disabled = true;
+            document.getElementById("txtActivityNo").disabled = true;
+            document.getElementById("txtActivityName").disabled = true;
+            document.getElementById("txtchanel").disabled = true;
+            document.getElementById("ddlTheme").disabled = true;
+            document.getElementById("ddlProductBrand").disabled = true;
+            document.getElementById("ddlProductCate").disabled = true;
+            document.getElementById("txtObjective").disabled = true;
+            document.getElementById("ddlProductGrp").disabled = true;
+            document.getElementById("txtdateActivitySt").disabled = true;
+            document.getElementById("txtdateActivityEnd").disabled = true;
+            document.getElementById("txtdateCostPerSt").disabled = true;
+            document.getElementById("txtdateCostPerEnd").disabled = true;
+            document.getElementById("dropzoneJsForm").disabled = true;
+            document.getElementById("txtActivityDetail").disabled = true;
+            document.getElementById("divAddActivityDetail").style.display = "none";
+            document.getElementById("divAddProductCostDetail").style.display = "none";
+            $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
+            $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", "disabled");
+            document.getElementById("divUploadFiles").style.display = "none";
+
+
+            document.getElementById("rdbterm").disabled = true;
+            document.getElementById("rdbOutterm").disabled = true;
+            document.getElementById("btnUpdate").style.display = "none";
+
+            var arrayOfElements = document.getElementsByClassName('divDelImg');
+            var lengthOfArray = arrayOfElements.length;
+           for (var i = 0; i < lengthOfArray; i++) {
+               arrayOfElements[i].style.display = 'none';
+           }
+
+
+        if ('@UtilsAppCode.Session.User.isAdmin' == 'True' || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
+             document.getElementById("btnUpdate").style.display = "block";
+             document.getElementById("txtdateActivitySt").disabled = false;
+             document.getElementById("txtdateActivityEnd").disabled = false;
+             document.getElementById("txtdateCostPerSt").disabled = false;
+             document.getElementById("txtdateCostPerEnd").disabled = false;
+        }
+
+
+
+    }
+
+
+      function callPreviewData(obj) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("PreviewData", "Activity")',
+            data: {
+                activityId: obj
+            }
+        }).done(function (htmlResponse) {
+            $("#WaitDialog").hide();
+            $("#divPreview").html(htmlResponse)
+            $('#previewModal').modal('show');
+        });
+    }
+
+
+    function callThemedetailcost(obj) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("activityCostDetail", "ActivityCostDetail")',
+            data: {
+                activityModel: obj
+            }
+        }).done(function (htmlResponse) {
+            $("#divgetdetailcost").html(htmlResponse)
+        });
+    }
+
+    function CallChangefunc(obj) {
+
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("ProductCostdetail", "ActivityProductDetail")',
+            data: { activityModel: obj}
+        }).done(function (htmlResponse) {
+            $("#getQuery").html(htmlResponse)
+        });
+    }
+
+    function CallImageView(obj) {
+
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("ImageList", "Activity")',
+            data: { activityId: obj}
+        }).done(function (htmlResponse) {
+            $("#divgetimage").html(htmlResponse)
+        });
+    }
+
+
+
+</script>
+
+<script>
+
+
+    var fileList = new Array;
+    Dropzone.options.dropzoneJsForm = {
+        maxFiles: 5,
+        acceptedFiles: "image/jpeg,image/jpg,image/png,application/pdf",
+        paramName: "file",
+        maxFilesize: 10,
+        //addRemoveLinks: true,
+        init: function () {
+
+            this.on("complete", function (file) {
+                CallImageView($("#hdActivityId").val());
+
+            });
+        }
+
+    };
+</script>
