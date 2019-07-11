@@ -123,11 +123,11 @@
                             }
                             @if (Model.typeForm == Activity_Model.activityType.MT.ToString())
                             {
-                                @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit , typeForm = Activity_Model.activityType.MT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
                             else if (Model.typeForm == Activity_Model.activityType.OMT.ToString())
                             {
-                                @Html.ActionLink(" ", "ActivityForm_OMT", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit , typeForm = Activity_Model.activityType.OMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
 
                             @if (item.statusId == "2" || item.statusId == "3")

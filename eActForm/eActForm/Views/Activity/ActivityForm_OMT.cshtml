@@ -126,12 +126,7 @@
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.TextBoxFor(x => x.activityFormModel.customerName, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
                         @Html.HiddenFor(x => x.activityFormModel.customerId, new { id = "customerId" })
-                        @*@Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
-        {
-            @class = "form-control textboxcss",
-        onchange = "onchangeCustomer();",
-            id = "ddlCustomer"
-        })*@
+ 
                     </div>
                 </div>
             </div>

@@ -27,17 +27,25 @@ namespace eActForm.Controllers
     public class ActivityController : eActController
     {
 
-        public ActionResult ActivityForm(string activityId, string mode)
+        public ActionResult ActivityForm(string activityId, string mode, string typeForm)
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = new ActivityForm();
             activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
             activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
-
             activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
                 .GroupBy(item => item.activitySales)
                 .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+            if (UtilsAppCode.Session.User.regionId != "")
+            {
+                activityModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.id == UtilsAppCode.Session.User.regionId).ToList();
+            }
+            else
+            {
+                activityModel.regionGroupList = QueryGetAllRegion.getAllRegion();
+            }
+
 
             Session.Remove("productcostdetaillist1");
             Session.Remove("activitydetaillist");
@@ -61,47 +69,12 @@ namespace eActForm.Controllers
                 activityModel.activityFormModel.id = actId;
                 activityModel.activityFormModel.mode = mode;
             }
-
+            activityModel.activityFormModel.typeForm = typeForm;
             return View(activityModel);
         }
 
 
-        public ActionResult ActivityForm_OMT(string activityId, string mode)
-        {
-            Activity_Model activityModel = new Activity_Model();
-            activityModel.activityFormModel = new ActivityForm();
-            activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
-            activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate();
-            activityModel.regionGroupList = QueryGetAllRegion.getAllRegion();
-            activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
-                .GroupBy(item => item.activitySales)
-                .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
-
-            Session.Remove("productcostdetaillist1");
-            Session.Remove("activitydetaillist");
-
-            if (!string.IsNullOrEmpty(activityId))
-            {
-                Session["activityId"] = activityId;
-                activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-                activityModel.activityFormModel.mode = mode;
-                Session["productcostdetaillist1"] = QueryGetCostDetailById.getcostDetailById(activityId);
-                Session["activitydetaillist"] = QueryGetActivityDetailById.getActivityDetailById(activityId);
-                activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
-                activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
-                activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
-
-            }
-            else
-            {
-                string actId = Guid.NewGuid().ToString();
-                Session["activityId"] = actId;
-                activityModel.activityFormModel.id = actId;
-                activityModel.activityFormModel.mode = mode;
-            }
-
-            return View(activityModel);
-        }
+     
 
 
         public ActionResult ImageList(string activityId)

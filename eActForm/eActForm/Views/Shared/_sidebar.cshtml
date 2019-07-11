@@ -23,12 +23,12 @@
                     <ul class="nav child_menu">
                         @if (UtilsAppCode.Session.User.isCreator || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.regionId != ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            <li>@Html.ActionLink(" Activity Form", "ActivityForm", "Activity")</li>
+                            <li>@Html.ActionLink(" Activity Form", "ActivityForm", "Activity" , new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                         }
 
                         @if (UtilsAppCode.Session.User.isCreator || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.regionId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            <li>@Html.ActionLink(" Activity Form OMT", "ActivityForm_OMT", "Activity")</li>
+                            <li>@Html.ActionLink(" Activity Form OMT", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                         }
                     </ul>
                 </li>
@@ -50,11 +50,11 @@
 
                         @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            <li>@Html.ActionLink(" Documents", "Index", "Home", new { actId = "" , typeForm = Activity_Model.activityType.MT.ToString()},null)</li>
+                            <li>@Html.ActionLink(" Documents", "Index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString()},null)</li>
                         }
                         @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            <li>@Html.ActionLink(" Documents OMT", "Index", "Home", new { actId = "" , typeForm = Activity_Model.activityType.OMT.ToString()}, null)</li>
+                            <li>@Html.ActionLink(" Documents OMT", "Index", "Home", new {typeForm = Activity_Model.activityType.OMT.ToString()}, null)</li>
                         }
 
                         <li>@Html.ActionLink(" Budget", "Index", "BudgetMyDoc")</li>

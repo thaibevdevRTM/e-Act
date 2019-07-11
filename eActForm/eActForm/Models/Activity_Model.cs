@@ -170,6 +170,7 @@ namespace eActForm.Models
         public string regionId { get; set; }
         public string regionName { get; set; }
         public string regionShort { get; set; }
+        public string typeForm { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel

@@ -1,4 +1,5 @@
-﻿@using eActForm.BusinessLayer
+﻿@using eActForm.Models
+@using eActForm.BusinessLayer
 @model eActForm.Models.Activity_Model
 @{
     ViewBag.Title = "Home Page";
@@ -11,6 +12,8 @@
 
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
 
 <style type="text/css">
 
@@ -95,6 +98,28 @@
                     </div>
                 </div>
             </div>
+            @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+            {
+                <div class="form-group">
+                    <div class="col-md-6 col-xs-12"></div>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="row">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
+                                Region<span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
+                           {
+                               @class = "form-control textboxcss",
+                               id = "ddlRegion"
+                           })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
         </div>
         <div class="form-group">
             <div class="col-md-6 col-xs-12"></div>
@@ -104,12 +129,22 @@
                         Customer Name<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
+                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
                         {
-                            @class = "form-control textboxcss",
-                        onchange = "onchangeCustomer();",
-                            id = "ddlCustomer"
-                        })
+                            @Html.TextBoxFor(x => x.activityFormModel.customerName, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
+                            @Html.HiddenFor(x => x.activityFormModel.customerId, new { id = "customerId" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
+                       {
+                           @class = "form-control textboxcss",
+                           onchange = "onchangeCustomer();",
+                           id = "ddlCustomer"
+                       })
+                        }
+
+
                     </div>
                 </div>
             </div>
@@ -366,7 +401,6 @@
 <script type="text/javascript">
 
 
-
        $(document).ready(function () {
            $(".fv").each(function () {
                var v = $(this).val();
@@ -381,11 +415,40 @@
 
 
 
+
            if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
                setTxtReadOnly();
            }
 
+            $("#txtCustomerName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("getCustomerByRegion", "eAct")',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            regionId: $("#ddlRegion").val(),
+                            txtCus: $("#txtCustomerName").val(),
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
+                            }))
 
+                        }
+                    })
+                },
+                minLength: 0,
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) {
+                    }
+                }, select: function (event, ui) {
+                    $("#customerId").val(ui.item.id)
+                }
+            }).focus(function () {
+                $(this).data("uiAutocomplete").search($(this).val());
+            });
     });
 
 
@@ -667,6 +730,13 @@
     function validatesubmit() {
         var required = "กรุณา ระบุ :<br>";
         var validate = true;
+
+        if('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
+        {
+             if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
+             if ($("#customerId").val() == "" || $("#txtCustomerName").val() == "") { required += "Customer Name*<br>"; validate = false; }
+        }
+
         if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
         if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
         if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
@@ -695,6 +765,18 @@
 
     function SubmitData() {
         $("#WaitDialog").show();
+
+        var cusId = '';
+        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()')
+        {
+          cusId = $("#ddlCustomer").val()
+        }
+        else if('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
+        {
+             cusId = $("#customerId").val()
+        }
+
+
             $.ajax({
                 url: '@Url.Action("insertDataActivity", "Activity")',
                 data: {
@@ -708,7 +790,7 @@
                     dateProductlist: $("#txtdateActivitySt").val(),
                     dateActivitylist: $("#txtdateActivityEnd").val(),
                     Reference: $("#txtReference").val(),
-                    CustomerId: $("#ddlCustomer").val(),
+                    CustomerId: cusId,
                     ProductCateId: $("#ddlProductCate").val(),
                     ProductGroupId: $("#ddlProductGrp").val(),
                     productBrandId: $("#ddlProductBrand").val(),
@@ -780,6 +862,17 @@
 
 
     function copyAndSaveNew() {
+
+        var cusId = '';
+        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()')
+        {
+         cusId = $("#ddlCustomer").val()
+        }
+        else if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
+        {
+         cusId = $("#customerId").val()
+        }
+
         bootbox.confirm({
             message: "<p class='lead text-center'>คุณต้องการ copy เอกสารเพื่อไปสร้างเอกสารใหม่ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
             buttons: {
@@ -808,7 +901,7 @@
                             dateProductlist: $("#txtdateActivitySt").val(),
                             dateActivitylist: $("#txtdateActivityEnd").val(),
                             Reference: $("#txtReference").val(),
-                            CustomerId: $("#ddlCustomer").val(),
+                            CustomerId: cusId,
                             ProductCateId: $("#ddlProductCate").val(),
                             ProductGroupId: $("#ddlProductGrp").val(),
                             productBrandId: $("#ddlProductBrand").val(),
@@ -821,6 +914,7 @@
                             Objective: $("#txtObjective").val(),
                             Trade: $("input[name='activityFormModel.trade']:checked").val(),
                             ActivityDetail: $("#txtActivityDetail").val(),
+                            regionId: $("#ddlRegion").val(),
                             activityNo: $("#txtActivityNo").val(),
 
                         },
@@ -829,8 +923,14 @@
                     }).done(function (response) {
                         $("#WaitDialog").hide();
                         if (response.Success) {
-                            var url = '@Url.Action("ActivityForm", "activity")';
-                            window.location.href = url + "?ActivityId=" + response.ActivityId;
+                            if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
+                                var url = '@Url.Action("ActivityForm", "activity")';
+                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.OMT.ToString()';
+                            }
+                            else {
+                                  var url = '@Url.Action("ActivityForm", "activity")';
+                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.MT.ToString()';
+                            }
                         } else {
                             doMsgFail(response.Message);
                         }
@@ -941,6 +1041,9 @@
             $("#divgetimage").html(htmlResponse)
         });
     }
+
+
+
 
 </script>
 
