@@ -98,26 +98,25 @@
                     </div>
                 </div>
             </div>
-            @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-            {
-                <div class="form-group">
-                    <div class="col-md-6 col-xs-12"></div>
-                    <div class="col-md-6 col-xs-12">
-                        <div class="row">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
-                                Region<span class="required">*</span>
-                            </label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
-                           {
-                               @class = "form-control textboxcss",
-                               id = "ddlRegion"
-                           })
-                            </div>
+
+            <div class="form-group" id="divRegion">
+                <div class="col-md-6 col-xs-12"></div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
+                            Region<span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
+                       {
+                           @class = "form-control textboxcss",
+                           id = "ddlRegion"
+                       })
                         </div>
                     </div>
                 </div>
-            }
+            </div>
+
 
 
         </div>
@@ -129,20 +128,18 @@
                         Customer Name<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+
+                        @Html.TextBoxFor(x => x.activityFormModel.customerName, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
+                        @Html.HiddenFor(x => x.activityFormModel.customerId, new { id = "customerId" })
+
+
+                        @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.customerName, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
-                            @Html.HiddenFor(x => x.activityFormModel.customerId, new { id = "customerId" })
-                        }
-                        else
-                        {
-                            @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
-                       {
-                           @class = "form-control textboxcss",
-                           onchange = "onchangeCustomer();",
-                           id = "ddlCustomer"
-                       })
-                        }
+                             @class = "form-control textboxcss",
+                             onchange = "onchangeCustomer();",
+                             id = "ddlCustomer"
+                        })
+
 
 
                     </div>
@@ -374,9 +371,17 @@
                 <button id="btnSaveAs" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew()">&nbsp;Save As</button>
             </div>
         }
-        <div class="inner">
-            <a href="@Url.Action("index", "Home")" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-        </div>
+            <div class="inner">
+                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>   
+                }
+
+            </div>
         @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3)
         {
             <div class="inner">
@@ -413,6 +418,16 @@
            document.getElementById("ddlProductfilter").disabled = true;
            document.getElementById("ddlProductSize").disabled = true;
 
+           if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
+               $("#txtCustomerName").show();
+               $("#divRegion").show();
+               $("#ddlCustomer").hide();
+           }
+           else {
+               $("#txtCustomerName").hide();
+               $("#divRegion").hide();
+               $("#ddlCustomer").show();
+           }
 
 
 
@@ -971,6 +986,9 @@
             document.getElementById("txtdateCostPerEnd").disabled = true;
             document.getElementById("dropzoneJsForm").disabled = true;
             document.getElementById("txtActivityDetail").disabled = true;
+            document.getElementById("ddlRegion").disabled = true;
+            document.getElementById("txtCustomerName").disabled = true;
+
             document.getElementById("divAddActivityDetail").style.display = "none";
             document.getElementById("divAddProductCostDetail").style.display = "none";
             $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
@@ -996,7 +1014,6 @@
              document.getElementById("txtdateCostPerSt").disabled = false;
              document.getElementById("txtdateCostPerEnd").disabled = false;
         }
-
 
 
 

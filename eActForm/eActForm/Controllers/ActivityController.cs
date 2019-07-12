@@ -285,11 +285,11 @@ namespace eActForm.Controllers
             {
 
                 String[] genDoc = ActivityFormCommandHandler.genNumberActivity(activityId);
-                countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc[1]);
+                countresult = ActivityFormCommandHandler.updateStatusGenDocActivity(status, activityId, genDoc[0]);
                 if (countresult > 0)
                 {
                     var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
-                    GridHtml1 = GridHtml1.Replace("---", genDoc[1]).Replace("<br>", "<br/>");
+                    GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
                     AppCode.genPdfFile(GridHtml1, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
 
                     TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();

@@ -196,7 +196,7 @@ namespace eActForm.BusinessLayer
                             result[0] += getActList.FirstOrDefault().cusShortName.Trim();
                             result[0] += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
                             result[0] += string.Format("{0:0000}", genNumber);
-                            result[1] = Activity_Model.activityType.MT.ToString();
+                            result[1] = Activity_Model.activityType.OMT.ToString();
                         }
                     }
                     else
