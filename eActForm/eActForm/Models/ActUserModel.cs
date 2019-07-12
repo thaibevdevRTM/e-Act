@@ -7,6 +7,14 @@ namespace eActForm.Models
 {
     public class ActUserModel
     {
+        public class UserAuthorized
+        {
+            public string empId { get; set; }
+            public string regionId { get; set; }
+            public string customerId { get; set; }
+            public string productTypeId { get; set; }
+            public string productCateId { get; set; }
+        }
         public class RequestUsreAPI
         {
             public string username { get; set; }
@@ -23,6 +31,7 @@ namespace eActForm.Models
             public string mess { get; set; }
             public List<User> userModel { get; set; }
         }
+
         public class User
         {
 
