@@ -676,6 +676,15 @@
             bootbox.alert(required);
             return false;
         }
+
+        var customer = "";
+        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
+            customer = "OMT";
+        }
+        else {
+            customer = $("#ddlCustomer").val();
+        }
+
         $("#WaitDialog").show();
          $.ajax({
                 url: '@Url.Action("addItemProduct", "ActivityProductDetail")',
@@ -684,7 +693,7 @@
                  brandid: $("#ddlProductBrand").val(),
                  smellId: $("#ddlProductSmell").val(),
                  size: $("#ddlProductSize").val(),
-                 cusid: $("#ddlCustomer").val(),
+                 cusid: customer,
                  theme: $("#ddlTheme").val()
              },
                 dataType: "json",
@@ -987,6 +996,8 @@
              document.getElementById("txtdateCostPerSt").disabled = false;
              document.getElementById("txtdateCostPerEnd").disabled = false;
         }
+
+
 
 
 
