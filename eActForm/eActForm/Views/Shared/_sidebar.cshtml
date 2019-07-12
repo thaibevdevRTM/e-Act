@@ -1,6 +1,6 @@
 ﻿@using eActForm.BusinessLayer
 @{
-	Layout = null;
+    Layout = null;
 }
 
 <!-- sidebar menu -->
@@ -43,8 +43,8 @@
                         {
                             <li>@Html.ActionLink(" Report Detail", "reportDetail", "Documents")</li>
                         }
-                            <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
-                        </ul>
+                        <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
+                    </ul>
                 </li>
             }
             @if (UtilsAppCode.Session.User.isApprove || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
@@ -91,16 +91,18 @@
                     </ul>
                 </li>
             }
-            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-            {
-                <li>
-                    <a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <li>@Html.ActionLink(" Report Detail", "index", "actFormRepDetail")</li>
+
+            <li>
+                <a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li>@Html.ActionLink(" Report Detail", "index", "actFormRepDetail")</li>
+                    @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                    {
                         <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport")</li>
-                    </ul>
-                </li>
-            }
+                    }
+                </ul>
+            </li>
+
         </ul>
     </div>
     <div class="menu_section">
