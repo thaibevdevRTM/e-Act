@@ -1,4 +1,4 @@
-﻿@using eActForm.Models
+﻿
 @using eActForm.BusinessLayer
 @model eActForm.Models.Activity_Model
 @{
@@ -98,12 +98,11 @@
                     </div>
                 </div>
             </div>
-
-            <div class="form-group" id="divRegion">
+            <div class="form-group">
                 <div class="col-md-6 col-xs-12"></div>
                 <div class="col-md-6 col-xs-12">
                     <div class="row">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReference">
                             Region<span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -116,32 +115,18 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
         <div class="form-group">
             <div class="col-md-6 col-xs-12"></div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtCustomerName">
                         Customer Name<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-
                         @Html.TextBoxFor(x => x.activityFormModel.customerName, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
                         @Html.HiddenFor(x => x.activityFormModel.customerId, new { id = "customerId" })
-
-
-                        @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
-                        {
-                             @class = "form-control textboxcss",
-                             onchange = "onchangeCustomer();",
-                             id = "ddlCustomer"
-                        })
-
-
-
+ 
                     </div>
                 </div>
             </div>
@@ -371,17 +356,9 @@
                 <button id="btnSaveAs" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew()">&nbsp;Save As</button>
             </div>
         }
-            <div class="inner">
-                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                {
-                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                }
-                else
-                {
-                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>   
-                }
-
-            </div>
+        <div class="inner">
+            <a href="@Url.Action("index", "Home")" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+        </div>
         @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3)
         {
             <div class="inner">
@@ -406,7 +383,10 @@
 <script type="text/javascript">
 
 
-       $(document).ready(function () {
+
+    $(document).ready(function () {
+
+
            $(".fv").each(function () {
                var v = $(this).val();
                if (v == '') {
@@ -418,24 +398,12 @@
            document.getElementById("ddlProductfilter").disabled = true;
            document.getElementById("ddlProductSize").disabled = true;
 
-           if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
-               $("#txtCustomerName").show();
-               $("#divRegion").show();
-               $("#ddlCustomer").hide();
-           }
-           else {
-               $("#txtCustomerName").hide();
-               $("#divRegion").hide();
-               $("#ddlCustomer").show();
-           }
-
-
-
-           if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
+        if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
                setTxtReadOnly();
-           }
+        }
 
-            $("#txtCustomerName").autocomplete({
+
+    $("#txtCustomerName").autocomplete({
                 source: function (request, response) {
                     $.ajax({
                         url: '@Url.Action("getCustomerByRegion", "eAct")',
@@ -464,6 +432,9 @@
             }).focus(function () {
                 $(this).data("uiAutocomplete").search($(this).val());
             });
+
+
+
     });
 
 
@@ -519,21 +490,6 @@
             $(txtId).val("");
     }
 
-    function onchangeCustomer() {
-        ObjModel = {};
-         $("#txtchanel").val('');
-         $.ajax({
-                url: '@Url.Action("getChanel", "eAct")',
-                data: {
-                    Id: $("#ddlCustomer").val(),
-                },
-                dataType: "json",
-                type: 'POST',
-             success: function (response) {
-                 $("#txtchanel").val(response.Data.Chanel_group);
-             }
-         });
-    }
 
     $("#ddlProductBrand").change(function () {
         fillProductOnChange();
@@ -691,15 +647,6 @@
             bootbox.alert(required);
             return false;
         }
-
-        var customer = "";
-        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
-            customer = "OMT";
-        }
-        else {
-            customer = $("#ddlCustomer").val();
-        }
-
         $("#WaitDialog").show();
          $.ajax({
                 url: '@Url.Action("addItemProduct", "ActivityProductDetail")',
@@ -708,7 +655,7 @@
                  brandid: $("#ddlProductBrand").val(),
                  smellId: $("#ddlProductSmell").val(),
                  size: $("#ddlProductSize").val(),
-                 cusid: customer,
+                 cusid: 'OMT',
                  theme: $("#ddlTheme").val()
              },
                 dataType: "json",
@@ -755,13 +702,9 @@
         var required = "กรุณา ระบุ :<br>";
         var validate = true;
 
-        if('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
-        {
-             if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
-             if ($("#customerId").val() == "" || $("#txtCustomerName").val() == "") { required += "Customer Name*<br>"; validate = false; }
-        }
-
         if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
+        if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
+        if ($("#customerId").val() == "" || $("#txtCustomerName").val() == "") { required += "Customer Name*<br>"; validate = false; }
         if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
         if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
         if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
@@ -789,18 +732,6 @@
 
     function SubmitData() {
         $("#WaitDialog").show();
-
-        var cusId = '';
-        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()')
-        {
-          cusId = $("#ddlCustomer").val()
-        }
-        else if('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
-        {
-             cusId = $("#customerId").val()
-        }
-
-
             $.ajax({
                 url: '@Url.Action("insertDataActivity", "Activity")',
                 data: {
@@ -814,7 +745,7 @@
                     dateProductlist: $("#txtdateActivitySt").val(),
                     dateActivitylist: $("#txtdateActivityEnd").val(),
                     Reference: $("#txtReference").val(),
-                    CustomerId: cusId,
+                    CustomerId: $("#customerId").val(),
                     ProductCateId: $("#ddlProductCate").val(),
                     ProductGroupId: $("#ddlProductGrp").val(),
                     productBrandId: $("#ddlProductBrand").val(),
@@ -828,6 +759,7 @@
                     Trade: $("input[name='activityFormModel.trade']:checked").val(),
                     ActivityDetail: $("#txtActivityDetail").val(),
                     activityNo: $("#txtActivityNo").val(),
+                    regionId: $("#ddlRegion").val(),
                     createdByUserId: $("#hdcreateUser").val(),
                 },
                 dataType: "json",
@@ -886,17 +818,6 @@
 
 
     function copyAndSaveNew() {
-
-        var cusId = '';
-        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()')
-        {
-         cusId = $("#ddlCustomer").val()
-        }
-        else if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
-        {
-         cusId = $("#customerId").val()
-        }
-
         bootbox.confirm({
             message: "<p class='lead text-center'>คุณต้องการ copy เอกสารเพื่อไปสร้างเอกสารใหม่ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
             buttons: {
@@ -911,6 +832,9 @@
             },
             callback: function (result) {
                 if (result == true) {
+
+                    console.log($("#customerId").val()+"tttt");
+
                     $("#WaitDialog").show();
                     $.ajax({
                         url: '@Url.Action("copyAndSaveNewActivityForm", "Activity")',
@@ -925,7 +849,8 @@
                             dateProductlist: $("#txtdateActivitySt").val(),
                             dateActivitylist: $("#txtdateActivityEnd").val(),
                             Reference: $("#txtReference").val(),
-                            CustomerId: cusId,
+                            CustomerId: $("#customerId").val(),
+                            customerName: $("#txtCustomerName").val(),
                             ProductCateId: $("#ddlProductCate").val(),
                             ProductGroupId: $("#ddlProductGrp").val(),
                             productBrandId: $("#ddlProductBrand").val(),
@@ -947,14 +872,8 @@
                     }).done(function (response) {
                         $("#WaitDialog").hide();
                         if (response.Success) {
-                            if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
-                                var url = '@Url.Action("ActivityForm", "activity")';
-                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.OMT.ToString()';
-                            }
-                            else {
-                                  var url = '@Url.Action("ActivityForm", "activity")';
-                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.MT.ToString()';
-                            }
+                            var url = '@Url.Action("ActivityForm_OMT", "activity")';
+                            window.location.href = url + "?ActivityId=" + response.ActivityId;
                         } else {
                             doMsgFail(response.Message);
                         }
@@ -972,7 +891,6 @@
             document.getElementById("txtdateDoc").disabled = true;
             document.getElementById("txtReference").disabled = true;
             document.getElementById("txtActivityNo").disabled = true;
-            document.getElementById("ddlCustomer").disabled = true;
             document.getElementById("txtActivityName").disabled = true;
             document.getElementById("txtchanel").disabled = true;
             document.getElementById("ddlTheme").disabled = true;
@@ -986,9 +904,6 @@
             document.getElementById("txtdateCostPerEnd").disabled = true;
             document.getElementById("dropzoneJsForm").disabled = true;
             document.getElementById("txtActivityDetail").disabled = true;
-            document.getElementById("ddlRegion").disabled = true;
-            document.getElementById("txtCustomerName").disabled = true;
-
             document.getElementById("divAddActivityDetail").style.display = "none";
             document.getElementById("divAddProductCostDetail").style.display = "none";
             $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
@@ -1014,7 +929,6 @@
              document.getElementById("txtdateCostPerSt").disabled = false;
              document.getElementById("txtdateCostPerEnd").disabled = false;
         }
-
 
 
 
@@ -1069,7 +983,6 @@
             $("#divgetimage").html(htmlResponse)
         });
     }
-
 
 
 

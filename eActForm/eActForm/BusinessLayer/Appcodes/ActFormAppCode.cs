@@ -78,7 +78,7 @@ namespace eActForm.BusinessLayer
         }
 
         
-        public static List<Activity_Model.actForm> getActFormByEmpId(string empId, DateTime startDate, DateTime endDate)
+        public static List<Activity_Model.actForm> getActFormByEmpId(string empId, DateTime startDate, DateTime endDate , string activityType)
         {
             try
             {
@@ -125,6 +125,18 @@ namespace eActForm.BusinessLayer
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
                                  createByUserName = dr["createByUserName"].ToString()
                              }).ToList();
+
+                if(activityType == Activity_Model.activityType.OMT.ToString())
+                {
+                    lists = lists.Where(x => x.channelName == "").ToList();
+                }
+                else
+                {
+                    lists = lists.Where(x => x.channelName != "").ToList();
+                }
+
+
+
                 return lists;
             }
             catch (Exception ex)

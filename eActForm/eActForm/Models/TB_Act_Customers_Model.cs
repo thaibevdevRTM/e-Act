@@ -19,6 +19,7 @@ namespace eActForm.Models
             public string cusShortName { get; set; }
             public string cust { get; set; }
             public string chanel_Id { get; set; }
+            public string regionId { get; set; }
             public string delFlag { get; set; }
             public DateTime createdDate { get; set; }
             public string createdByUserId { get; set; }
