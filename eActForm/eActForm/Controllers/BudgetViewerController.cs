@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
 using System.IO;
+using eActForm.Models;
+using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -21,17 +23,40 @@ namespace eActForm.Controllers
 	
 			//var var_budgetActivityId = BudgetApproveListController.getApproveBudgetId(budgetActivityId);
 			TempData["budgetApproveId"] = budgetApproveId;
+			ViewBag.budgetApproveId = budgetApproveId;
 			return PartialView();
 		}
 
 		public ActionResult getPdfBudget(string budgetApproveId)
 		{
-			var fileStream = new FileStream(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId)),
-											 FileMode.Open,
-											 FileAccess.Read
-										   );
+			string rootPath = "", mapPath = "";
+
+			try
+			{
+				rootPath = ConfigurationManager.AppSettings["rootBudgetPdftURL"];
+				if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, budgetApproveId))))
+				{
+					budgetApproveId = "fileNotFound";
+				}
+
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError(ex.Message);
+			}
+			var fileStream = new FileStream(Server.MapPath(string.Format(rootPath, budgetApproveId)),
+													 FileMode.Open,
+													 FileAccess.Read
+												   );
 			var fsResult = new FileStreamResult(fileStream, "application/pdf");
 			return fsResult;
+
+			//var fileStream = new FileStream(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId)),
+			//								 FileMode.Open,
+			//								 FileAccess.Read
+			//							   );
+			//var fsResult = new FileStreamResult(fileStream, "application/pdf");
+			//return fsResult;
 		}
 
 		//---------------------------------------------------------------------------------------------------

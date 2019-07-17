@@ -14,6 +14,10 @@ namespace eActForm.Models
 		public List<Budget_Activity_Invoice_Att> Budget_Activity_Invoice_list { get; set; }
 		public List<Budget_Invoice_history_Att> Budget_Invoce_History_list { get; set; }
 		public List<Budget_Approve_Detail_Model> Budget_Approve_Detail_list { get; set; }
+
+		public Budget_Activity_Product_Att Budget_Activity_Product { get; set; }
+		public Budget_Activity_Invoice_Att Budget_Activity_Invoice { get; set; }
+
 		//public TB_Bud_ActivityInvoice_Model Bud_ActivityInvoice_Model { get; set; }
 		//public List<Budget_Activity_Product_Att> Budget_Activity_Product_model { get; set; }
 

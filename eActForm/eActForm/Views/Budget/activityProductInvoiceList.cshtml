@@ -54,7 +54,8 @@
 				<div class="col-md-2 col-sm-2 col-xs-12 text-right">
 					@if (Model.Budget_Activity_Product_list.Count > 0)
 					{
-						<a href="javascript:" class="anchorDetail btn ink-reaction btn-group-lg btn-warning fa fa-plus" onclick="javascript:onSelectInvoice('@Model.Budget_Activity_Product_list.ElementAt(0).act_activityId','@Model.Budget_Activity_Product_list.ElementAt(0).activityOfEstimateId','');"> เพิ่มรายการตัดจ่าย</a>
+						<a href="javascript:" class="anchorDetail btn ink-reaction btn-group-lg btn-warning fa fa-plus" 
+                           onclick="javascript:onSelectInvoice('@Model.Budget_Activity_Product_list.ElementAt(0).act_activityId','@Model.Budget_Activity_Product_list.ElementAt(0).activityOfEstimateId','');"> เพิ่มรายการตัดจ่าย</a>
 					}
 				</div>
 			</div>

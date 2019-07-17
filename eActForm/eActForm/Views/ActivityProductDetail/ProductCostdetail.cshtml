@@ -1,4 +1,6 @@
 ﻿@model eActForm.Models.Activity_Model
+@using eActForm.BusinessLayer
+@using System.Configuration;
 @{
     /**/
 
@@ -6,8 +8,11 @@
     decimal? promotionTotal = 0;
     ViewBag.Title = "ProductCostdetail";
     Session["promotionTotal"] = 0;
-  
+
+
 }
+
+
 
 <div class="row">
     <div class="col-12">
@@ -48,7 +53,7 @@
                 var index = 0;
                 foreach (var item in Model.productcostdetaillist1)
                 {
-                   
+
                     <tr>
                         <td onclick="onDelCostDetail('@item.productGroupId')">
                             <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
@@ -62,26 +67,65 @@
                         {
                             if (item.detailGroup.Count >= 1)
                             {
-                               
-                                    <td class="font10 textLeft" onclick="showdetail('@item.productGroupId')"><span role="button">@item.detailGroup[0].productName @item.pack</span></td>
-                                
+
+                                <td class="font10 textLeft" onclick="showdetail('@item.productGroupId')"><span role="button">@item.detailGroup[0].productName @item.pack</span></td>
+
                             }
                         }
 
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
+                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight" })</td>
+                        }
+                        else
+                        {
+                            <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
+                        }
+
                         <td style="text-align:right">@Html.TextBoxFor(model => item.saleNormal, "{0:n2}", new { @id = "saleNormal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(saleNormal_" + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.saleIn, "{0:n2}", new { @id = "saleIn_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(saleIn_" + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.disCount1, "{0:n3}", new { @id = "disCount1_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(disCount1_" + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.disCount2, "{0:n3}", new { @id = "disCount2_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(disCount2_" + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.disCount3, "{0:n3}", new { @id = "disCount3_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(disCount3_" + index + ")" })</td>
                         <td style="text-align:right">
-                            @Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "normalCost_" + index, @class = "form-control textboxcss font10 textRight" })
+                            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                            {
+                                @Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "normalCost_" + index, @class = "form-control textboxcss font10 textRight" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "normalCost_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })
+
+                            }
+
                         </td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp, "{0:n2}%", new { @id = "normalGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @readonly = true })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:n2}%", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @readonly = true })</td>
+                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp, "{0:n2}%", new { @id = "normalGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")" })</td>
+                        }
+                        else
+                        {
+                            <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp, "{0:n2}%", new { @id = "normalGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @readonly = true })</td>
+                        }
+                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:n2}%", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")" })</td>
+                        }
+                        else
+                        {
+                            <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:n2}%", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @readonly = true })</td>
+                        }
+
                         <td style="text-align:right">@Html.TextBoxFor(model => item.specialDiscBaht, "{0:n2}", new { @id = "specialDiscBaht_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(specialDiscBaht_" + index + ")" })</td>
                         <td style="text-align:right">@Html.TextBoxFor(model => item.specialDisc, "{0:n2}", new { @id = "specialDisc_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(specialDisc_" + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => item.promotionCost, "{0:n2}", new { @id = "promotionCost_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
+                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            <td style="text-align:right">@Html.TextBoxFor(model => item.promotionCost, "{0:n2}", new { @id = "promotionCost_" + index, @class = "form-control textboxcss font10 textRight" })</td>
+                        }
+                        else
+                        {
+                            <td style="text-align:right">@Html.TextBoxFor(model => item.promotionCost, "{0:n2}", new { @id = "promotionCost_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
+                        }
                     </tr>
                     promotionTotal = item.promotionCost == null ? 0 + promotionTotal : item.promotionCost + promotionTotal;
 
@@ -90,7 +134,6 @@
                 Session["promotionTotal"] = promotionTotal;
 
             }
-           
 
             <tr>
                 <td>&nbsp;</td>
@@ -120,6 +163,7 @@
 </div>
 <input type="hidden" id="hdPromotionCost" value="@promotionTotal">
 <script>
+
     var rowCount = @Model.productcostdetaillist1.Count
     function calProductDiscount(id, rowIndex) {
         if ($('#wholeSalesPrice_' + rowIndex).val() != "") {
@@ -191,6 +235,9 @@
 
             });
     }
+
+
+
 
 </script>
 

@@ -13,6 +13,7 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using WebLibrary;
@@ -86,14 +87,14 @@ namespace eActForm.Models
 
                 string path = System.Web.HttpContext.Current.Server.MapPath("~") + "\\Content\\" + "tablethin.css";
                 string readText = System.IO.File.ReadAllText(path);
-
+                
                 //Document pdfDoc = new Document(pageSize, 25, 25, 10, 10);
                 using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
                 {
-
                     pdfDoc.Open();
                     using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
                     {
+                        
                         using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"))))
                         {
                             XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
@@ -106,6 +107,7 @@ namespace eActForm.Models
             catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview");
+                ms.Dispose();
                 return ms;
             }
 
@@ -119,8 +121,12 @@ namespace eActForm.Models
             List<Attachment> files = new List<Attachment>();
 
             msPreview = GetFileReportTomail_Preview(GridHtml, doc);
-            PreviewBytes = msPreview.ToArray();          
+            PreviewBytes = msPreview.ToArray();
+            //msPreview.Position = 0;
+            //save in directory
+            File.Delete(rootPath);
             File.WriteAllBytes(rootPath, PreviewBytes);
+
 
             if (PreviewBytes.Length != 0)
             {
@@ -132,6 +138,54 @@ namespace eActForm.Models
             return files;
         }
 
+        public static string mergePDF(string rootPathOutput, string[] pathFile)
+        {
+            string result = string.Empty;
+            try
+            {
+                PdfReader reader = null/* TODO Change to default(_) if this is not a reference type */;
+                Document sourceDocument = null/* TODO Change to default(_) if this is not a reference type */;
+                PdfCopy pdfCopyProvider = null/* TODO Change to default(_) if this is not a reference type */;
+                PdfImportedPage importedPage;
+                sourceDocument = new Document();
+                pdfCopyProvider = new PdfCopy(sourceDocument, new System.IO.FileStream(rootPathOutput, System.IO.FileMode.Create));
+                sourceDocument.Open();
+
+
+                for (int f = 0; f <= (pathFile.Length - 1); f++)
+                {
+
+                    int pages = get_pageCcount(pathFile[f]);
+                    reader = new PdfReader(pathFile[f]);
+                    for (int i = 1; i <= pages; i++)
+                    {
+                        importedPage = pdfCopyProvider.GetImportedPage(reader, i);
+                        pdfCopyProvider.AddPage(importedPage);
+                    }
+                    reader.Close();
+                }
+                sourceDocument.Close();
+                result = "success";
+            }
+            catch (Exception ex)
+            {
+                result = "error" + ex.Message;
+            }
+            return result;
+        }
+
+        private static int get_pageCcount(string file)
+        {
+            var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using (StreamReader sr = new StreamReader(fs))
+            {
+                Regex regex = new Regex(@"/Type\s*/Page[^s]");
+                MatchCollection matches = regex.Matches(sr.ReadToEnd());
+                return matches.Count;
+            }
+        }
+
+
         public static MemoryStream genFileToMemoryStream(string pathFile)
         {
             try
@@ -142,6 +196,8 @@ namespace eActForm.Models
                     using (FileStream file = new FileStream(pathFile, FileMode.Open, FileAccess.Read))
                     {
                         file.CopyTo(ms);
+                        file.Dispose();
+                        
                     }
                 }
                 return ms;

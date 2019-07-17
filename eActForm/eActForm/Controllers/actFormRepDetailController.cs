@@ -10,6 +10,9 @@ using eActForm.BusinessLayer;
 using eActForm.Models;
 using iTextSharp.text;
 using WebLibrary;
+using static eActForm.Models.ReportActivityBudgetModels;
+using Microsoft.VisualBasic;
+
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -18,9 +21,10 @@ namespace eActForm.Controllers
         // GET: actFormRepDetail
         public ActionResult Index()
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
             models.approveStatusList.Add(new ApproveModel.approveStatus()
-            { id = "7",
+            {
+                id = "7",
                 nameTH = "เพิ่มเติม",
                 nameEN = "เพิ่มเติม",
             });
@@ -31,8 +35,10 @@ namespace eActForm.Controllers
         {
             try
             {
-                RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
-                model.actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"]);
+                RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails
+                {
+                    actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"])
+                };
                 if (Request.Form["txtActivityNo"] != "")
                 {
                     model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByActNo(model.actFormRepDetailLists, Request.Form["txtActivityNo"]);
@@ -94,7 +100,7 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-        public JsonResult repSetDelFlagRecodeDetail(string actId,bool delFlag)
+        public JsonResult repSetDelFlagRecodeDetail(string actId, bool delFlag)
         {
             var result = new AjaxResult();
             try
@@ -120,14 +126,13 @@ namespace eActForm.Controllers
         {
             return PartialView(flowModel);
         }
-        
+
         public ActionResult repListView(string startDate)
         {
             RepDetailModel.actFormRepDetails model = null;
             try
             {
                 model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
-                //model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
                 ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
             }
             catch (Exception ex)
@@ -138,20 +143,52 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
+        public ActionResult repListViewGroupBrand(RepDetailModel.actFormRepDetails model, string[] brandId)
+        {
+            RepDetailModel.actFormRepDetails rep = new RepDetailModel.actFormRepDetails();
+            try
+            {
+                rep.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => brandId.Contains(r.brandId)).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(rep);
+        }
+
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult repReportDetailApprove(string gridHtml, string customerId, string productTypeId, string startDate, string endDate)
+        public FileResult repListViewExportExcel(string gridHtml)
+        {
+            try
+            {
+                //RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                //gridHtml = gridHtml.Replace("\n", "<br>");
+            }
+            catch(Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "DetailReport.xls");
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string gridEst,string gridWA,string gridSO, string customerId, string productTypeId, string startDate, string endDate)
         {
             var result = new AjaxResult();
             try
             {
+
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
                 string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
                 if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId) > 0)
                 {
-                    var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId));
-                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                    RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, gridEst, gridWA, gridSO);
                     EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail, false);
                     Session["ActFormRepDetail"] = null;
                     result.Success = true;
@@ -201,7 +238,7 @@ namespace eActForm.Controllers
         /// <param name="actId"></param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateInput(false)]      
+        [ValidateInput(false)]
         public JsonResult repDetailGenPDF(string gridHtml, string actId)
         {
             var result = new AjaxResult();
@@ -229,5 +266,6 @@ namespace eActForm.Controllers
 
             return Json(result);
         }
+
     }
 }

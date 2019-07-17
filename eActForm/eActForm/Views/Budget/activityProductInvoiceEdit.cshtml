@@ -5,16 +5,25 @@
 	//decimal? totalActCost = 0;
 }
 
-<input type="hidden" id="hd_activity">
-@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).act_activityId, new { @id = "hd_activityId" })
-@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).act_activityNo, new { @id = "hd_activityNo" })
-@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).prd_productId, new { @id = "hd_productId" })
-@Html.HiddenFor(x => x.Budget_Activity_Product_list.ElementAt(0).activityOfEstimateId, new { @id = "hd_activityOfEstimateId" })
+<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
 
-@if (Model.Budget_Activity_Invoice_list != null)
+<input type="hidden" id="hd_activity">
+@Html.HiddenFor(x => x.Budget_Activity_Product.act_activityId, new { @id = "hd_activityId" })
+@Html.HiddenFor(x => x.Budget_Activity_Product.act_activityNo, new { @id = "hd_activityNo" })
+@Html.HiddenFor(x => x.Budget_Activity_Product.prd_productId, new { @id = "hd_productId" })
+@Html.HiddenFor(x => x.Budget_Activity_Product.activityOfEstimateId, new { @id = "hd_activityOfEstimateId" })
+
+
+@if (Model.Budget_Activity_Invoice != null)
 {
-	@Html.HiddenFor(x => x.Budget_Activity_Invoice_list.ElementAt(0).invoiceId, new { @id = "hd_invoiceId" })
+	@Html.HiddenFor(x => x.Budget_Activity_Invoice.invoiceId, new { @id = "hd_invoiceId" })
 }
+
+@*@if (Model.Budget_Activity_Invoice_list != null)
+	{
+		@Html.HiddenFor(x => x.Budget_Activity_Invoice_list.ElementAt(0).invoiceId, new { @id = "hd_invoiceId" })
+	}*@
 
 <style>
 	.font14 {
@@ -42,9 +51,9 @@
 					<div style="text-align:left;">
 						<h4>
 							เลขที่กิจกรรมส่งเสริมการขาย :
-							@if (Model.Budget_Activity_Invoice_list != null)
+							@if (Model.Budget_Activity_Product.act_activityNo.ToString() != "")
 							{
-								@Html.DisplayFor(item => Model.Budget_Activity_Invoice_list.ElementAt(0).activityNo)
+								@Html.DisplayFor(x => x.Budget_Activity_Product.act_activityNo)
 							}
 						</h4>
 					</div>
@@ -53,7 +62,12 @@
 						<div style="text-align:left;">
 							<h4>
 								เลขที่ใบแจ้งหนี้ :
-								@Html.DisplayFor(item => Model.Budget_Activity_Invoice_list.ElementAt(0).invoiceNo)
+								@if (Model.Budget_Activity_Invoice.invoiceNo.ToString() != "")
+								{
+									@Html.DisplayFor(x => x.Budget_Activity_Invoice.invoiceNo)
+								}
+
+								@*@Html.DisplayFor(item => Model.Budget_Activity_Invoice_list.ElementAt(0).invoiceNo)*@
 							</h4>
 						</div>
 					}
@@ -83,34 +97,49 @@
 
 						<tr>
 							<td width="10%" class="font14" style="text-align:left;">
-								@if (Model.Budget_Activity_Product_list != null)
+								@if (Model.Budget_Activity_Product.prd_productDetail.ToString() != "")
 								{
-
-									@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).prd_productDetail)
-
+									@Html.DisplayFor(x => x.Budget_Activity_Product.prd_productDetail)
 								}
+
+								@*@if (Model.Budget_Activity_Product_list != null)
+									{
+										@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).prd_productDetail)
+									}*@
 							</td>
 
 							<td width="15%" class="font14" style="text-align:right;">
-								@if (Model.Budget_Activity_Invoice_list != null)
+								@if (Model.Budget_Activity_Invoice != null)
 								{
-									string result = String.Format("{0:n2}", Model.Budget_Activity_Invoice_list.ElementAt(0).productStandBath);
+									string result = String.Format("{0:n2}", Model.Budget_Activity_Invoice.productStandBath);
 									@result.ToString();
 								}
 								else
 								{
-									string result = String.Format("{0:n2}", Model.Budget_Activity_Product_list.ElementAt(0).productBalanceBath);
+									string result = String.Format("{0:n2}", Model.Budget_Activity_Product.productBalanceBath);
 									@result.ToString();
 								}
+
+								@*@if (Model.Budget_Activity_Invoice_list != null)
+									{
+										string result = String.Format("{0:n2}", Model.Budget_Activity_Invoice_list.ElementAt(0).productStandBath);
+										@result.ToString();
+									}
+									else
+									{
+										string result = String.Format("{0:n2}", Model.Budget_Activity_Product_list.ElementAt(0).productBalanceBath);
+										@result.ToString();
+									}*@
 								&nbsp;
 							</td>
-							@if (Model.Budget_Activity_Invoice_list != null)
+							@if (Model.Budget_Activity_Invoice != null)
 							{
-								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice_list.ElementAt(0).invoiceNo)"></td>
-								<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice_list.ElementAt(0).invoiceTotalBath)"></td>
-								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice_list.ElementAt(0).invoiceActionDate)"></td>
+								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceNo)"></td>
+								<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceTotalBath)"></td>
+								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceActionDate)"></td>
 								<td width="10%">
-									@Html.DropDownListFor(item => Model.Budget_Activity_Invoice_list.ElementAt(0).invoiceBudgetStatusId, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", Model.Budget_Activity_Invoice_list.ElementAt(0).invoiceBudgetStatusId), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })
+									@Html.DropDownListFor(item => Model.Budget_Activity_Invoice.invoiceBudgetStatusId, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", Model.Budget_Activity_Invoice.invoiceBudgetStatusId), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })
+									@*@Html.DropDownListFor(item => Model.Budget_Activity_Invoice_list.ElementAt(0).invoiceBudgetStatusId, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", Model.Budget_Activity_Invoice_list.ElementAt(0).invoiceBudgetStatusId), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })*@
 								</td>
 							}
 							else
@@ -146,38 +175,9 @@
 		ObjModel = {};
 	});
 
-	var today = new Date();
-	var dd = String(today.getDate()).padStart(2, '0');
-	var mm = String(today.getMonth() + 1).padStart(2, '0');
-	var yyyy = today.getFullYear();
-
-	today = dd + '-' + mm + '-' + yyyy;
-	document.getElementById("txt_date_action").defaultValue = today;
-
-	$.datetimepicker.setLocale('th');
-	var thaiYear = function (ct) {
-		var leap = 3;
-		var dayWeek = ["พฤ.", "ศ.", "ส.", "อา.", "จ.", "อ.", "พ."];
-		if (ct) {
-			var yearL = new Date(ct).getFullYear();
-			leap = (((yearL % 4 == 0) && (yearL % 100 != 0)) || (yearL % 400 == 0)) ? 2 : 3;
-			if (leap == 2) {
-				dayWeek = ["ศ.", "ส.", "อา.", "จ.", "อ.", "พ.", "พฤ."];
-			}
-		}
-		this.setOptions({
-			i18n: { th: { dayOfWeek: dayWeek } }, dayOfWeekStart: leap,
-		})
-	};
-
-	$("#txt_date_action").datetimepicker({
-		timepicker: false,
-		format: 'd-m-Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000
-		lang: 'th',  // แสดงภาษาไทย
-		onChangeMonth: thaiYear,
-		onShow: thaiYear,
-		//yearOffset: 543,  // ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ
-		closeOnDateSelect: true,
-	}
-	);
+	$(function () {
+		$("#txt_date_action").datepicker({
+			format: 'dd-mm-yyyy'
+		});
+	});
 </script>

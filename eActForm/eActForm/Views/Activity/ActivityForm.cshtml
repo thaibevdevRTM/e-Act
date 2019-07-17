@@ -1,4 +1,6 @@
-﻿@model eActForm.Models.Activity_Model
+﻿@using eActForm.Models
+@using eActForm.BusinessLayer
+@model eActForm.Models.Activity_Model
 @{
     ViewBag.Title = "Home Page";
     var mode = Request["mode"] == null ? "" : Request["mode"];
@@ -10,6 +12,8 @@
 
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
 
 <style type="text/css">
 
@@ -27,6 +31,15 @@
 
     .textLeft {
         text-align: left;
+    }
+
+    .inner {
+        display: inline-block;
+    }
+
+    #outer {
+        width: 100%;
+        text-align: center;
     }
 </style>
 
@@ -85,6 +98,27 @@
                     </div>
                 </div>
             </div>
+
+            <div class="form-group" id="divRegion">
+                <div class="col-md-6 col-xs-12"></div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
+                            Region<span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
+                       {
+                           @class = "form-control textboxcss",
+                           id = "ddlRegion"
+                       })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
         <div class="form-group">
             <div class="col-md-6 col-xs-12"></div>
@@ -94,12 +128,20 @@
                         Customer Name<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
+
+                        @Html.TextBoxFor(x => x.activityFormModel.customerName, new { @class = "form-control textboxcss", @id = "txtCustomerName", @name = "txtCustomerName" })
+                        @Html.HiddenFor(x => x.activityFormModel.customerId, new { id = "customerId" })
+
+
                         @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
                         {
-                            @class = "form-control textboxcss",
-                        onchange = "onchangeCustomer();",
-                            id = "ddlCustomer"
+                             @class = "form-control textboxcss",
+                             onchange = "onchangeCustomer();",
+                             id = "ddlCustomer"
                         })
+
+
+
                     </div>
                 </div>
             </div>
@@ -116,7 +158,7 @@
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <div class="row">
-                      
+
                         @Html.HiddenFor(x => x.activityFormModel.chanel, new { @id = "txtchanel" })
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
                             Product category<span class="required">*</span>
@@ -134,7 +176,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
@@ -254,7 +296,7 @@
     </div>
     <div class="col-lg-2 col-xs-2">
     </div>
-   
+
     <div class="form-group col-lg-2 col-xs-2">
         รสชาติ
         @Html.DropDownListFor(model => model.productSmellLists, new SelectList(Model.productSmellLists, "id", "nameTH"), "- เลือกรสชาติ -", new { @class = "form-control", required = "required", id = "ddlProductSmell" })
@@ -321,19 +363,38 @@
 <hr />
 
 <div class="row">
-    <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-5">
+    <div id="outer">
 
-        <p class="d-flex justify-content-center">
-            @if (mode != "")
-            {
+        @if (mode != "")
+        {
+            <div class="inner">
                 <button id="btnSaveAs" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew()">&nbsp;Save As</button>
-            }
-            <a href="@Url.Action("index", "Home")" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-            @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3)
-            {
+            </div>
+        }
+            <div class="inner">
+                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>   
+                }
+
+            </div>
+        @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3)
+        {
+            <div class="inner">
                 <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
-            }
-        </p>
+            </div>
+        }
+        @if (Model.activityFormModel.statusId == 2 || Model.activityFormModel.statusId == 3)
+        {
+            <div class="inner">
+                <button id="btnUpdate" type="button" class="btn ink-reaction btn-default" onclick="validateUpdate()">&nbsp;Update</button>
+            </div>
+        }
+
     </div>
 
 </div>
@@ -343,7 +404,6 @@
 @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
 @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
 <script type="text/javascript">
-       
 
 
        $(document).ready(function () {
@@ -358,12 +418,52 @@
            document.getElementById("ddlProductfilter").disabled = true;
            document.getElementById("ddlProductSize").disabled = true;
 
+           if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
+               $("#txtCustomerName").show();
+               $("#divRegion").show();
+               $("#ddlCustomer").hide();
+           }
+           else {
+               $("#txtCustomerName").hide();
+               $("#divRegion").hide();
+               $("#ddlCustomer").show();
+           }
+
+
 
            if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
                setTxtReadOnly();
            }
 
+            $("#txtCustomerName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("getCustomerByRegion", "eAct")',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            regionId: $("#ddlRegion").val(),
+                            txtCus: $("#txtCustomerName").val(),
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
+                            }))
 
+                        }
+                    })
+                },
+                minLength: 0,
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) {
+                    }
+                }, select: function (event, ui) {
+                    $("#customerId").val(ui.item.id)
+                }
+            }).focus(function () {
+                $(this).data("uiAutocomplete").search($(this).val());
+            });
     });
 
 
@@ -591,6 +691,15 @@
             bootbox.alert(required);
             return false;
         }
+
+        var customer = "";
+        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
+            customer = "OMT";
+        }
+        else {
+            customer = $("#ddlCustomer").val();
+        }
+
         $("#WaitDialog").show();
          $.ajax({
                 url: '@Url.Action("addItemProduct", "ActivityProductDetail")',
@@ -599,7 +708,7 @@
                  brandid: $("#ddlProductBrand").val(),
                  smellId: $("#ddlProductSmell").val(),
                  size: $("#ddlProductSize").val(),
-                 cusid: $("#ddlCustomer").val(),
+                 cusid: customer,
                  theme: $("#ddlTheme").val()
              },
                 dataType: "json",
@@ -645,6 +754,13 @@
     function validatesubmit() {
         var required = "กรุณา ระบุ :<br>";
         var validate = true;
+
+        if('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
+        {
+             if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
+             if ($("#customerId").val() == "" || $("#txtCustomerName").val() == "") { required += "Customer Name*<br>"; validate = false; }
+        }
+
         if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
         if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
         if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
@@ -655,12 +771,12 @@
         else {
             var startDate =  $("#txtdateActivitySt").val().split("-");
             var endDate = $("#txtdateActivityEnd").val().split("-");
-            if (new Date(startDate[2], startDate[1], startDate[0]) >= new Date(endDate[2], endDate[1],endDate[0])) {
+            if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1],endDate[0])) {
                 required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
             }
         }
         if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
-       
+
         //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 
         if (validate == true) {
@@ -673,6 +789,18 @@
 
     function SubmitData() {
         $("#WaitDialog").show();
+
+        var cusId = '';
+        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()')
+        {
+          cusId = $("#ddlCustomer").val()
+        }
+        else if('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
+        {
+             cusId = $("#customerId").val()
+        }
+
+
             $.ajax({
                 url: '@Url.Action("insertDataActivity", "Activity")',
                 data: {
@@ -686,7 +814,7 @@
                     dateProductlist: $("#txtdateActivitySt").val(),
                     dateActivitylist: $("#txtdateActivityEnd").val(),
                     Reference: $("#txtReference").val(),
-                    CustomerId: $("#ddlCustomer").val(),
+                    CustomerId: cusId,
                     ProductCateId: $("#ddlProductCate").val(),
                     ProductGroupId: $("#ddlProductGrp").val(),
                     productBrandId: $("#ddlProductBrand").val(),
@@ -711,7 +839,64 @@
             });
     }
 
+
+
+
+    function validateUpdate() {
+        var required = "กรุณา ระบุ :<br>";
+        var validate = true;
+
+        if ($("#txtdateActivitySt").val() == "" && $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; }
+        else {
+            var startDate = $("#txtdateActivitySt").val().split("-");
+            var endDate = $("#txtdateActivityEnd").val().split("-");
+            if (new Date(startDate[2], startDate[1], startDate[0]) >= new Date(endDate[2], endDate[1], endDate[0])) {
+                required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
+            }
+        }
+        if (validate == true) {
+            updateData();
+        }
+        else {
+            bootbox.alert(required)
+        }
+    }
+
+    function updateData() {
+        $("#WaitDialog").show();
+            $.ajax({
+                url: '@Url.Action("updateDataActivity", "Activity")',
+                data: {
+
+                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                    str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
+                    str_activityPeriodSt: $("#txtdateActivitySt").val(),
+                    str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+            }).done(function (response) {
+                if (response.Success) {
+                    $("#WaitDialog").hide();
+                    doMsgSuccess("Update Success");
+                }
+            });
+    }
+
+
+
     function copyAndSaveNew() {
+
+        var cusId = '';
+        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()')
+        {
+         cusId = $("#ddlCustomer").val()
+        }
+        else if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
+        {
+         cusId = $("#customerId").val()
+        }
+
         bootbox.confirm({
             message: "<p class='lead text-center'>คุณต้องการ copy เอกสารเพื่อไปสร้างเอกสารใหม่ใช่หรือไม่ <br/> ยืนยัน บันทึกข้อมูล!<p>",
             buttons: {
@@ -740,7 +925,7 @@
                             dateProductlist: $("#txtdateActivitySt").val(),
                             dateActivitylist: $("#txtdateActivityEnd").val(),
                             Reference: $("#txtReference").val(),
-                            CustomerId: $("#ddlCustomer").val(),
+                            CustomerId: cusId,
                             ProductCateId: $("#ddlProductCate").val(),
                             ProductGroupId: $("#ddlProductGrp").val(),
                             productBrandId: $("#ddlProductBrand").val(),
@@ -753,6 +938,7 @@
                             Objective: $("#txtObjective").val(),
                             Trade: $("input[name='activityFormModel.trade']:checked").val(),
                             ActivityDetail: $("#txtActivityDetail").val(),
+                            regionId: $("#ddlRegion").val(),
                             activityNo: $("#txtActivityNo").val(),
 
                         },
@@ -761,8 +947,14 @@
                     }).done(function (response) {
                         $("#WaitDialog").hide();
                         if (response.Success) {
-                            var url = '@Url.Action("ActivityForm", "activity")';
-                            window.location.href = url + "?ActivityId=" + response.ActivityId;
+                            if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
+                                var url = '@Url.Action("ActivityForm", "activity")';
+                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.OMT.ToString()';
+                            }
+                            else {
+                                  var url = '@Url.Action("ActivityForm", "activity")';
+                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.MT.ToString()';
+                            }
                         } else {
                             doMsgFail(response.Message);
                         }
@@ -775,42 +967,57 @@
 
     function setTxtReadOnly() {
 
-        document.getElementById("ddlProductfilter").disabled = true;
-        document.getElementById("ddlProductSize").disabled = true;
-        document.getElementById("txtdateDoc").disabled = true;
-        document.getElementById("txtReference").disabled = true;
-        document.getElementById("txtActivityNo").disabled = true;
-        document.getElementById("ddlCustomer").disabled = true;
-        document.getElementById("txtActivityName").disabled = true;
-        document.getElementById("txtchanel").disabled = true;
-        document.getElementById("ddlTheme").disabled = true;
-        document.getElementById("ddlProductBrand").disabled = true;
-        document.getElementById("ddlProductCate").disabled = true;
-        document.getElementById("txtObjective").disabled = true;
-        document.getElementById("ddlProductGrp").disabled = true;
-        document.getElementById("txtdateActivitySt").disabled = true;
-        document.getElementById("txtdateActivityEnd").disabled = true;
-        document.getElementById("txtdateCostPerSt").disabled = true;
-        document.getElementById("txtdateCostPerEnd").disabled = true;
-        document.getElementById("dropzoneJsForm").disabled = true;
-        document.getElementById("txtActivityDetail").disabled = true;
-        document.getElementById("divAddActivityDetail").style.display = "none";
-        document.getElementById("divAddProductCostDetail").style.display = "none";
-        $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
-        $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", "disabled");
-        document.getElementById("divUploadFiles").style.display = "none";
-       
-        
+            document.getElementById("ddlProductfilter").disabled = true;
+            document.getElementById("ddlProductSize").disabled = true;
+            document.getElementById("txtdateDoc").disabled = true;
+            document.getElementById("txtReference").disabled = true;
+            document.getElementById("txtActivityNo").disabled = true;
+            document.getElementById("ddlCustomer").disabled = true;
+            document.getElementById("txtActivityName").disabled = true;
+            document.getElementById("txtchanel").disabled = true;
+            document.getElementById("ddlTheme").disabled = true;
+            document.getElementById("ddlProductBrand").disabled = true;
+            document.getElementById("ddlProductCate").disabled = true;
+            document.getElementById("txtObjective").disabled = true;
+            document.getElementById("ddlProductGrp").disabled = true;
+            document.getElementById("txtdateActivitySt").disabled = true;
+            document.getElementById("txtdateActivityEnd").disabled = true;
+            document.getElementById("txtdateCostPerSt").disabled = true;
+            document.getElementById("txtdateCostPerEnd").disabled = true;
+            document.getElementById("dropzoneJsForm").disabled = true;
+            document.getElementById("txtActivityDetail").disabled = true;
+            document.getElementById("ddlRegion").disabled = true;
+            document.getElementById("txtCustomerName").disabled = true;
 
-        document.getElementById("rdbterm").disabled = true;
-        document.getElementById("rdbOutterm").disabled = true;
+            document.getElementById("divAddActivityDetail").style.display = "none";
+            document.getElementById("divAddProductCostDetail").style.display = "none";
+            $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
+            $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", "disabled");
+            document.getElementById("divUploadFiles").style.display = "none";
 
 
-        var arrayOfElements = document.getElementsByClassName('divDelImg');
-        var lengthOfArray = arrayOfElements.length;
-        for (var i = 0; i < lengthOfArray; i++) {
-            arrayOfElements[i].style.display = 'none';
+            document.getElementById("rdbterm").disabled = true;
+            document.getElementById("rdbOutterm").disabled = true;
+            document.getElementById("btnUpdate").style.display = "none";
+
+            var arrayOfElements = document.getElementsByClassName('divDelImg');
+            var lengthOfArray = arrayOfElements.length;
+           for (var i = 0; i < lengthOfArray; i++) {
+               arrayOfElements[i].style.display = 'none';
+           }
+
+
+        if ('@UtilsAppCode.Session.User.isAdmin' == 'True' || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
+             document.getElementById("btnUpdate").style.display = "block";
+             document.getElementById("txtdateActivitySt").disabled = false;
+             document.getElementById("txtdateActivityEnd").disabled = false;
+             document.getElementById("txtdateCostPerSt").disabled = false;
+             document.getElementById("txtdateCostPerEnd").disabled = false;
         }
+
+
+
+
     }
 
 
@@ -863,11 +1070,14 @@
         });
     }
 
+
+
+
 </script>
 
 <script>
 
-  
+
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
         maxFiles: 5,
@@ -878,10 +1088,10 @@
         init: function () {
 
             this.on("complete", function (file) {
-                    CallImageView($("#hdActivityId").val());
+                CallImageView($("#hdActivityId").val());
 
-                });
-            }
+            });
+        }
 
     };
 </script>

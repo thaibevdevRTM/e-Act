@@ -54,7 +54,7 @@ namespace eActForm.Controllers
 												 isSendEmail = (bool)dr["isSendEmail"],
 												 remark = dr["remark"].ToString(),
 												 signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
-												 ImgName = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
+												 ImgName = string.Format(ConfigurationManager.AppSettings["rootSignaURL"], dr["empId"].ToString()), //rootgetSignaURL , rootSignaURL
 												 delFlag = (bool)dr["delFlag"],
 												 createdDate = (DateTime?)dr["createdDate"],
 												 createdByUserId = dr["createdByUserId"].ToString(),
@@ -125,7 +125,7 @@ namespace eActForm.Controllers
 		}
 
 
-		public PartialViewResult previewApproveBudget(string budgetApproveId)
+		public PartialViewResult previewApproveBudget(string budgetApproveId , string test)
 		{
 			Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
 			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(null,budgetApproveId);
@@ -174,15 +174,25 @@ namespace eActForm.Controllers
 
 				if (statusId == ConfigurationManager.AppSettings["statusReject"])
 				{
-					//EmailAppCodes.sendReject(budgetApproveId);
 					EmailAppCodes.sendRejectBudget(budgetApproveId, AppCode.ApproveType.Budget_form);
 				}
 				else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
 				{
 					var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
-					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-					EmailAppCodes.sendApproveBudget(budgetApproveId, AppCode.ApproveType.Budget_form);
-					//EmailAppCodes.sendApprove(budgetApproveId, AppCode.ApproveType.Activity_Form);
+					GridHtml = GridHtml.Replace("<br>", "<br/>");
+				
+					try
+					{
+						AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+					}
+					catch (Exception ex)
+					{
+						AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+					}
+
+					EmailAppCodes.sendApproveBudget(budgetApproveId, AppCode.ApproveType.Budget_form,false );
+
+					//ApproveAppCode.setCountWatingApprove();
 				}
 				resultAjax.Success = true;
 			}
@@ -228,12 +238,10 @@ namespace eActForm.Controllers
 					 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateBudgetApprove"
 						, new SqlParameter[] {new SqlParameter("@actFormId",var_budget_approve_id)
 					, new SqlParameter("@empId",UtilsAppCode.Session.User.empId)
-					//, new SqlParameter("@empId","11025855") //70016911 test_emp_id
 					,new SqlParameter("@statusId",statusId)
 					,new SqlParameter("@remark",remark)
 					,new SqlParameter("@updateDate",DateTime.Now)
 					,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
-					//,new SqlParameter("@updateBy","70016911") test_emp_id
 						});
 
 
@@ -241,12 +249,6 @@ namespace eActForm.Controllers
 				{
 					rtn = updateBudgetFormStatus(statusId, var_budget_approve_id);
 				}
-				//else if (approveType == AppCode.ApproveType.Report_Detail.ToString())
-				//{
-				//	//
-				//	rtn = updateActRepDetailStatus(statusId, var_budget_approve_id);
-				//}
-
 				return rtn;
 			}
 			catch (Exception ex)

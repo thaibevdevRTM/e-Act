@@ -3,6 +3,7 @@ eActForm/eActForm/obj/
 eActForm/eActForm/Uploadfiles/
 eActForm/eActForm/error/
 eActForm/eActForm/ActivityFormPdf/
+eActForm/eActForm/ActRepDetail/
 eActForm/eActForm/Properties/PublishProfiles/*
 eActForm/eActForm/signature/
 eActForm/eActConsoleService/obj/*
@@ -12,3 +13,4 @@ eActForm/eActConsoleService/obj
 eActForm/web.config*
 eActForm/eActConsoleService/*.config
 eActForm/eActConsoleService/bin
+*.pdf
