@@ -6,7 +6,7 @@ using System.Linq;
 using System.Configuration;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
-
+using WebLibrary;
 namespace eActForm.BusinessLayer
 {
     public class ApproveFlowAppCode
@@ -39,9 +39,9 @@ namespace eActForm.BusinessLayer
 
         public static ApproveFlowModel.approveFlowModel getFlowForReportDetail(string subId, string customerId, string productTypeId)
         {
+            ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
             try
             {
-                ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowMainForReportDetail"
                     , new SqlParameter[] {new SqlParameter("@subjectId",subId)
                     ,new SqlParameter("@customerId",customerId)
@@ -57,12 +57,12 @@ namespace eActForm.BusinessLayer
                              }).ToList();
                 model.flowMain = lists[0];
                 model.flowDetail = getFlowDetail(model.flowMain.id);
-                return model;
             }
             catch (Exception ex)
             {
-                throw new Exception("getFlowForReportDetail >>" + ex.Message);
+                ExceptionManager.WriteError("getFlowForReportDetail >> flow detail report not found : " + ex.Message);
             }
+            return model;
         }
 
         /// <summary> 
