@@ -202,6 +202,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllProduct.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QuerygetAllProductCate.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllProductGroup.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetAllRegion.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetActivity.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetApprove.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetChanelNameByCustomerId.cs" />
@@ -271,6 +272,7 @@
     <Compile Include="Models\TB_Act_ProductType_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Cate_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Model.cs" />
+    <Compile Include="Models\TB_Act_Region_Model.cs" />
     <Compile Include="Models\TB_Budget_Activity_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForm1.aspx.cs">
@@ -2163,6 +2165,8 @@
     <Content Include="Scripts\jquery-migrate-1.2.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery-ui.css" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.datetimepicker.full.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\popper-utils.js" />
@@ -2284,6 +2288,7 @@
     <Content Include="Views\Shared\_searchForSummaryReport.cshtml" />
     <Content Include="Views\ApproveSummaryDetail\Index.cshtml" />
     <Content Include="Views\ApproveSummaryDetail\ListViewApprove.cshtml" />
+    <Content Include="Views\Activity\ActivityForm_OMT.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

@@ -56,6 +56,9 @@ namespace eActForm.BusinessLayer
                                 case "4":
                                     UtilsAppCode.Session.User.isSuperAdmin = true; break;
                             }
+
+                            UtilsAppCode.Session.User.empCompanyId = dr["companyId"].ToString();
+                            UtilsAppCode.Session.User.regionId = dr["regionId"].ToString();
                         }
                     }
                 }

@@ -83,9 +83,13 @@ namespace eActForm.BusinessLayer
                     lists = lists.Where(x => x.brandId == brandId && x.smellId == smellId).ToList();
                 }
 
+                if(p_customerid != Activity_Model.activityType.OMT.ToString())
+                {
+                    lists = lists.Where(x => x.wholeSalesPrice > 0).ToList();
+                }
+
 
                 groupByPrice = lists.OrderByDescending(o => o.normalCost)
-                    .Where(x => x.wholeSalesPrice > 0)
                     .OrderByDescending(x => x.size)
                     .GroupBy(item => new { item.normalCost, item.size , item.pack  })
                     
