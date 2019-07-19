@@ -68,6 +68,7 @@ namespace eActForm.Controllers
                 Session["activityId"] = actId;
                 activityModel.activityFormModel.id = actId;
                 activityModel.activityFormModel.mode = mode;
+                activityModel.activityFormModel.statusId = 1;
             }
             activityModel.activityFormModel.typeForm = typeForm;
             return View(activityModel);
