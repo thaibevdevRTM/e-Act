@@ -200,7 +200,7 @@ namespace eActForm.BusinessLayer
 								productBudgetStatusNameTH = d["productBudgetStatusNameTH"].ToString(),
 
 								//invoiceActionDate = DateTime.Parse(d["invoiceActionDate"].ToString()),
-								invoiceActionDate = d["invoiceActionDate"] is DBNull ? null : (DateTime?)d["invoiceActionDate"],
+								invoiceActionDate = d["invoiceActionDate"].ToString(), //is DBNull ? null : (DateTime?)d["invoiceActionDate"],
 
 								invoiceBudgetStatusId = d["invoiceBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceBudgetStatusId"].ToString()),
 								invoiceBudgetStatusNameTH = d["invoiceBudgetStatusNameTH"].ToString(),

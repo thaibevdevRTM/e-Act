@@ -136,7 +136,11 @@
 							{
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceNo)"></td>
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceTotalBath)"></td>
-								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceActionDate)"></td>
+								<td width="10%">
+									@*<input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceActionDate)">*@
+									@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txt_date_action" })
+
+								</td>
 								<td width="10%">
 									@Html.DropDownListFor(item => Model.Budget_Activity_Invoice.invoiceBudgetStatusId, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", Model.Budget_Activity_Invoice.invoiceBudgetStatusId), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })
 									@*@Html.DropDownListFor(item => Model.Budget_Activity_Invoice_list.ElementAt(0).invoiceBudgetStatusId, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", Model.Budget_Activity_Invoice_list.ElementAt(0).invoiceBudgetStatusId), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })*@
@@ -146,7 +150,10 @@
 							{
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no"></td>
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht"></td>
-								<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action"></td>
+								<td width="10%">
+									@*<input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action">*@
+									@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txt_date_action" })
+								</td>
 								<td width="10%">
 									@Html.DropDownListFor(item => Model.Budget_Activity_Ststus_list.ElementAt(0).id, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 2), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })
 								</td>
@@ -176,8 +183,17 @@
 	});
 
 	$(function () {
+		debugger;
 		$("#txt_date_action").datepicker({
-			format: 'dd-mm-yyyy'
+			format: 'dd-mm-yyyy',
+			autoclose: true,
 		});
+	
+		if ($("#txt_date_action").val() == "") {
+			//alert("no date selected");
+			$('#txt_date_action').datepicker('setDate', new Date());
+		}
 	});
+
+
 </script>
