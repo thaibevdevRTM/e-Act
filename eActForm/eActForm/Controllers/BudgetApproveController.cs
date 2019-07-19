@@ -192,6 +192,8 @@ namespace eActForm.Controllers
 					//	AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
 					//}
 
+					
+
 					EmailAppCodes.sendApproveBudget(budgetApproveId, AppCode.ApproveType.Budget_form,false );
 
 					//ApproveAppCode.setCountWatingApprove();
