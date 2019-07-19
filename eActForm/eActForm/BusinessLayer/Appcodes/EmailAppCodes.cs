@@ -490,21 +490,21 @@ namespace eActForm.BusinessLayer
 					List<ApproveModel.approveEmailDetailModel> lists =  getEmailApproveNextLevelBudget(actFormId);
 					if (lists.Count > 0)
 					{
-						foreach (ApproveModel.approveEmailDetailModel item in lists)
-						{
-							strBody = getEmailBodyBudget(item, emailType, actFormId);
-							//strBody = string.Format(ConfigurationManager.AppSettings["emailApproveBodyBudget"]);
-							strSubject = ConfigurationManager.AppSettings["emailApprovedSubjectBudget"];
-							strSubject = isResend ? "RE: " + strSubject : strSubject;
-							sendEmailBudgetForm(actFormId
-								, item.empEmail
-								, ""
-								, strSubject
-								, strBody
-								, emailType);
-						}
 
+					foreach (ApproveModel.approveEmailDetailModel item in lists)
+					{
+						strBody = getEmailBody(item, emailType, actFormId);
+						strSubject = ConfigurationManager.AppSettings["emailApprovedSubjectBudget"];
+						strSubject = isResend ? "RE: " + strSubject : strSubject;
+						sendEmailActForm(actFormId
+							, item.empEmail
+							, ""
+							, strSubject
+							, strBody
+							, emailType);
 					}
+
+				}
 				
 
 					// case all updated
@@ -517,23 +517,24 @@ namespace eActForm.BusinessLayer
 						DataRow dr = ds.Tables[0].Rows[0];
 						if (dr["countAll"].ToString() == dr["countStatusApproved"].ToString())
 						{
-							// all approved then send the email notification to user create
-							List<ApproveModel.approveDetailModel> createUsers =  ActFormAppCode.getUserCreateActForm(actFormId);
 
+						// all approved then send the email notification to user create
+						List<ApproveModel.approveDetailModel> createUsers = (emailType == AppCode.ApproveType.Budget_form) ? BudgetApproveController.getUserCreateBudgetForm(actFormId)
+							: RepDetailAppCode.getUserCreateRepDetailForm(actFormId);
 
-						strBody = string.Format(ConfigurationManager.AppSettings["emailAllApproveBody"]
+						strBody =  string.Format(ConfigurationManager.AppSettings["emailAllApproveBodyBudget"]
 								, createUsers.FirstOrDefault().empName
 								, createUsers.FirstOrDefault().activityNo
-								, string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
+								, string.Format(ConfigurationManager.AppSettings["urlDocument_Budget_Form"], actFormId))
+								;
 
-
-							sendEmailBudgetForm(actFormId
-							, createUsers.FirstOrDefault().empEmail
-							, ""
-							, ConfigurationManager.AppSettings["emailApprovedSubjectBudget"]
-							, strBody
-							, emailType);
-						}
+						sendEmailBudgetForm(actFormId
+						, createUsers.FirstOrDefault().empEmail
+						, ""
+						, ConfigurationManager.AppSettings["emailApprovedSubjectBudget"]
+						, strBody
+						, emailType);
+					}
 					}
 
 			}
@@ -619,7 +620,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                string strBody = (emailType == AppCode.ApproveType.Budget_form) ?
+                string strBody = 
                             string.Format(ConfigurationManager.AppSettings["emailApproveBodyBudget"]
                             , item.empPrefix + " " + item.empName //เรียน
                             , AppCode.ApproveStatus.รออนุมัติ.ToString()
@@ -629,17 +630,8 @@ namespace eActForm.BusinessLayer
                             , item.activityNo
                             , String.Format("{0:0,0.00}", item.sumTotal)
                             , item.createBy
-                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId)
-                            ) :
-                            string.Format(ConfigurationManager.AppSettings["emailApproveRepDetailBody"]
-                            , item.empPrefix + " " + item.empName //เรียน
-                            , AppCode.ApproveStatus.รออนุมัติ.ToString()
-                            , emailType.ToString().Replace("_", " ")
-                            , item.customerName
-                            , item.productTypeName
-                            , item.createBy
-                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId)
-                            );
+                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId))
+                            ;
 
                 return strBody;
             }

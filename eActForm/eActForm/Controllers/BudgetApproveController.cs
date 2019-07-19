@@ -54,7 +54,7 @@ namespace eActForm.Controllers
 												 isSendEmail = (bool)dr["isSendEmail"],
 												 remark = dr["remark"].ToString(),
 												 signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
-												 ImgName = string.Format(ConfigurationManager.AppSettings["rootSignaURL"], dr["empId"].ToString()), //rootgetSignaURL , rootSignaURL
+												 ImgName = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()), //rootgetSignaURL , rootSignaURL
 												 delFlag = (bool)dr["delFlag"],
 												 createdDate = (DateTime?)dr["createdDate"],
 												 createdByUserId = dr["createdByUserId"].ToString(),
