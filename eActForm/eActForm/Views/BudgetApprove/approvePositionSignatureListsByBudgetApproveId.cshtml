@@ -29,10 +29,16 @@
 			{
 				if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
 				{
-				<td>
-					<img style="text-align:center;" width="150" height="100" src="@Model.approveDetailLists[index].ImgName" />
-					@*<img style="text-align:center;" width="150" height="100" src="~/signature/11025960.png" />*@
-				</td>
+		<td>
+			@if (Model.approveDetailLists[index].signature.Length > 0)
+			{
+				@*var base64 = Convert.ToBase64String(Model.approveDetailLists[index].signature);
+				var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+				<img src="@imgSrc" class="img-thumbnail" style="text-align:center;margin:auto;" />*@
+
+				<img style="text-align:center;" width="150" height="90" src="@Model.approveDetailLists[index].ImgName" />
+			}
+		</td>
 				}
 				else
 				{
