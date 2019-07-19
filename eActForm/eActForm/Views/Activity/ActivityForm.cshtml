@@ -371,29 +371,28 @@
                 <button id="btnSaveAs" type="button" class="btn ink-reaction btn-info" onclick="copyAndSaveNew()">&nbsp;Save As</button>
             </div>
         }
-            <div class="inner">
-                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                {
-                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-                }
-                else
-                {
-                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>   
-                }
+        <div class="inner">
+            @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+            {
+                <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+            }
+            else
+            {
+                <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+            }
 
-            </div>
-        @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3)
+        </div>
+        @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3 && Model.activityFormModel.statusId != 6 && Model.activityFormModel.statusId != 0)
         {
             <div class="inner">
                 <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
             </div>
         }
-        @if (Model.activityFormModel.statusId == 2 || Model.activityFormModel.statusId == 3)
-        {
-            <div class="inner">
-                <button id="btnUpdate" type="button" class="btn ink-reaction btn-default" onclick="validateUpdate()">&nbsp;Update</button>
-            </div>
-        }
+
+        <div class="inner" id="divbtnUpdate">
+            <button id="btnUpdate" type="button" class="btn ink-reaction btn-default" onclick="validateUpdate()">&nbsp;Update</button>
+        </div>
+
 
     </div>
 
@@ -429,41 +428,48 @@
                $("#ddlCustomer").show();
            }
 
+           if (@Model.activityFormModel.statusId == "2" || @Model.activityFormModel.statusId == "3") {
+               $("#divbtnUpdate").show();
+           }
+           else {
+               $("#divbtnUpdate").hide();
+           }
 
 
-           if (@Model.activityFormModel.statusId == "2" ||  @Model.activityFormModel.statusId == "3") {
+
+           if (@Model.activityFormModel.statusId != "1" ) {
                setTxtReadOnly();
            }
 
             $("#txtCustomerName").autocomplete({
-                source: function (request, response) {
+                   source: function (request, response) {
                     $.ajax({
-                        url: '@Url.Action("getCustomerByRegion", "eAct")',
+                           url: '@Url.Action("getCustomerByRegion", "eAct")',
                         type: "POST",
                         dataType: "json",
                         data: {
-                            regionId: $("#ddlRegion").val(),
+                               regionId: $("#ddlRegion").val(),
                             txtCus: $("#txtCustomerName").val(),
                         },
                         success: function (data) {
-                            response($.map(data, function (item) {
-                                return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
-                            }))
+                                   response($.map(data, function (item) {
+                                       return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
+                                   }))
 
                         }
-                    })
+                           })
                 },
                 minLength: 0,
                 messages: {
-                    noResults: '',
+                       noResults: '',
                     results: function (resultsCount) {
-                    }
-                }, select: function (event, ui) {
+                           }
+                       }, select: function (event, ui) {
                     $("#customerId").val(ui.item.id)
-                }
-            }).focus(function () {
+                           }
+               }).focus(function () {
                 $(this).data("uiAutocomplete").search($(this).val());
-            });
+               });
     });
 
 
