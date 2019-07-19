@@ -411,35 +411,6 @@ namespace eActForm.BusinessLayer
                 ApproveModel.approveModels models = BudgetApproveController.getApproveByBudgetApproveId(actFormId);
                 if (models.approveDetailLists != null && models.approveDetailLists.Count > 0)
                 {
-					//#region get mail to
-					//var lists = (from m in models.approveDetailLists
-					//             where (m.statusId != "")
-					//             select m).ToList();
-					//string strMailTo = "";
-					//foreach (ApproveModel.approveDetailModel m in lists)
-					//{
-					//    strMailTo = (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email
-					//}
-					//List<ApproveModel.approveDetailModel> createUsers = BudgetApproveController.getUserCreateBudgetForm(actFormId);
-					//foreach (ApproveModel.approveDetailModel m in createUsers)
-					//{
-					//    strMailTo = (strMailTo == "") ? m.empEmail : "," + m.empEmail; // get list email
-					//}
-					//#endregion
-
-					//var empUser = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList(); // get current user
-					//string strBody = string.Format(ConfigurationManager.AppSettings["emailRejectBodyBudget"]
-					//    , models.approveModel.actNo
-					//    , empUser.FirstOrDefault().empPrefix + " " + empUser.FirstOrDefault().empName
-					//    , empUser.FirstOrDefault().remark
-					//    );
-
-					//sendEmailBudgetForm(actFormId
-					//    , strMailTo
-					//    , ConfigurationManager.AppSettings["emailRejectSubjectBudget"]
-					//    , strBody
-					//    , emailType);
-
 					#region get mail to
 					var lists = (from m in models.approveDetailLists
 								 where (m.statusId != "")
@@ -496,7 +467,7 @@ namespace eActForm.BusinessLayer
 						strBody = getEmailBody(item, emailType, actFormId);
 						strSubject = ConfigurationManager.AppSettings["emailApprovedSubjectBudget"];
 						strSubject = isResend ? "RE: " + strSubject : strSubject;
-						sendEmailActForm(actFormId
+						sendEmailBudgetForm(actFormId
 							, item.empEmail
 							, ""
 							, strSubject
@@ -574,30 +545,16 @@ namespace eActForm.BusinessLayer
         }
 
 
-        private static void sendEmailBudgetForm(string actFormId, string mailTo, string mailCC, string strSubject, string strBody, AppCode.ApproveType emailType)
+		private static void sendEmailBudgetForm(string actFormId, string mailTo, string mailCC, string strSubject, string strBody, AppCode.ApproveType emailType)
         {
 			List<Attachment> files = new List<Attachment>();
 			string[] pathFile = new string[10];
 			mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-			pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
-				HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId))
-				: HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId));
+			//pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
+			//	HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId))
+			//	: HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId));
 
-			TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-			getImageModel.tbActImageList = ImageAppCode.GetImage(actFormId);
-			if (getImageModel.tbActImageList.Any())
-			{
-				int i = 1;
-				foreach (var item in getImageModel.tbActImageList)
-				{
-					if (item.extension == ".pdf")
-					{
-						pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-
-					}
-					i++;
-				}
-			}
+			pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId));
 
 			foreach (var item in pathFile)
 			{
