@@ -166,14 +166,8 @@ namespace eActForm.Controllers
 					var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
 					GridHtml = GridHtml.Replace("<br>", "<br/>");
 
-					try
-					{
-						AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-					}
-					catch (Exception ex)
-					{
-						AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-					}
+					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+
 					EmailAppCodes.sendApproveBudget(budget_approve_id, AppCode.ApproveType.Budget_form,false );
 				}
 
@@ -351,7 +345,7 @@ namespace eActForm.Controllers
 			}
 			catch (Exception ex)
 			{
-				throw new Exception("getFlow by actFormId >>" + ex.Message);
+				throw new Exception("getFlow Budget By BudgetActivityId >>" + ex.Message);
 			}
 		}
 

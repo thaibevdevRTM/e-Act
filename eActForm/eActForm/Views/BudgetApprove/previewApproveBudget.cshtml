@@ -248,7 +248,6 @@
 										</tr>
 									}
 
-
 									index++;
 									if (index == Model.Budget_Invoce_History_list.Count)
 									{
@@ -274,7 +273,12 @@
 							<table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
 						</div>
 
-						@if (Model.Budget_Approve_detail_list.ElementAt(0).budgetApproveId != null)
+						@*@if (Model.Budget_Activity.budget_id != null)
+		{
+			@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id })
+		}*@
+
+						@if (Model.Budget_Approve_detail_list.Count > 0)
 						{
 							@Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = Model.Budget_Approve_detail_list.ElementAt(0).budgetApproveId })
 						}

@@ -112,7 +112,9 @@ namespace eActForm.Models
 
 			[DataType(DataType.Date)]
 			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-			public DateTime? invoiceActionDate { get; set; }
+			public DateTime? dateInvoiceAction { get; set; }
+			public String invoiceActionDate { get; set; }
+			//public string invoiceActionDate { get; set; }
 			public Int32 invoiceBudgetStatusId { get; set; }
 			public string invoiceBudgetStatusNameTH { get; set; }
 			public Int32 invoiceSeq { get; set; }
