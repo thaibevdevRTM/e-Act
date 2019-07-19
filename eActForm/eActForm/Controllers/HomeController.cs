@@ -82,7 +82,7 @@ namespace eActForm.Controllers
             return RedirectToAction("myDoc");
         }
 
-        public ActionResult searchActForm()
+        public ActionResult searchActForm(string activityType)
         {
             string count = Request.Form.AllKeys.Count().ToString();
             Activity_Model.actForms model;
@@ -90,7 +90,7 @@ namespace eActForm.Controllers
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
             model = new Activity_Model.actForms
             {
-                actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, startDate, endDate , Activity_Model.activityType.MT.ToString())
+                actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, startDate, endDate , activityType)
             };
 
             if (Request.Form["txtActivityNo"] != "")

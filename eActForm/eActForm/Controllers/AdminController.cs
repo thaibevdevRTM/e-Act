@@ -26,17 +26,44 @@ namespace eActForm.Controllers
         public ActionResult ProductDetail()
         {
             TB_Act_Product_Model.ProductList productModel = new TB_Act_Product_Model.ProductList();
-            
-                productModel.productLists = QueryGetAllProduct.getAllProduct("");
+
+            productModel.productLists = QueryGetAllProduct.getAllProduct("");
 
             return PartialView(productModel);
         }
+
+        public ActionResult productPriceDetail(string productcode)
+        {
+            TB_Act_ProductPrice_Model model = new TB_Act_ProductPrice_Model();
+
+            model.ProductPriceList = QueryGetAllPrice.getPriceByProductCode(productcode);
+
+            return PartialView(model);
+        }
+
+
+        public JsonResult onchangePrice(TB_Act_ProductPrice_Model.ProductPrice model)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
 
         public JsonResult checkProduct(string p_productCode)
         {
             var result = new AjaxResult();
             TB_Act_Product_Model.ProductList productModel = new TB_Act_Product_Model.ProductList();
-            if(QueryGetAllProduct.getAllProduct("").Where(x => x.productCode == p_productCode).Any())
+            if (QueryGetAllProduct.getAllProduct("").Where(x => x.productCode == p_productCode).Any())
             {
                 result.Success = true;
             }
@@ -50,7 +77,7 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult addNewProduct(string p_cateId,string p_groupId,string p_brandId,string p_size,string p_pack,string p_productName,string p_productCode)
+        public JsonResult addNewProduct(string p_cateId, string p_groupId, string p_brandId, string p_size, string p_pack, string p_productName, string p_productCode)
         {
             var result = new AjaxResult();
 

@@ -31,7 +31,7 @@
                                 <i class="btn ink-reaction btn-info fa fa-edit"></i>&nbsp;&nbsp;
                             </a>
                         </td>
-                        <td>@item.productCode</td>
+                        <td><a href="javascript:" target="_blank" onclick="callPreviewData('@item.productCode');" style="cursor: pointer;"> @item.productCode </a></td>
                         <td>@item.productCate</td>
                         <td>@item.productGroup</td>
                         <td>@item.brand</td>
@@ -44,3 +44,25 @@
         </table>
     </div>
 </div>
+
+
+<div class="modal fade" id="divPreviewPriceModel" role="dialog" style="display:none">
+    <div id="divPreviewPrice">
+    </div>
+</div>
+
+<script>
+      function callPreviewData(p_productCode) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("productPriceDetail", "Admin")',
+            data: {
+                productcode: p_productCode
+            }
+        }).done(function (htmlResponse) {
+            $("#WaitDialog").hide();
+            $("#divPreviewPrice").html(htmlResponse)
+            $('#divPreviewPriceModel').modal('show');
+        });
+    }
+</script>
