@@ -436,6 +436,7 @@ namespace eActForm.BusinessLayer
 						, strLink
 						);
 
+
 					sendEmailBudgetForm(actFormId
 						, strMailTo
 						, strMailCc
@@ -464,7 +465,7 @@ namespace eActForm.BusinessLayer
 
 					foreach (ApproveModel.approveEmailDetailModel item in lists)
 					{
-						strBody = getEmailBody(item, emailType, actFormId);
+						strBody = getEmailBodyBudget(item, emailType, actFormId);
 						strSubject = ConfigurationManager.AppSettings["emailApprovedSubjectBudget"];
 						strSubject = isResend ? "RE: " + strSubject : strSubject;
 						sendEmailBudgetForm(actFormId
