@@ -29,6 +29,7 @@ namespace eActForm.Controllers
 
         public ActionResult ActivityForm(string activityId, string mode, string typeForm)
         {
+
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = new ActivityForm();
             activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
