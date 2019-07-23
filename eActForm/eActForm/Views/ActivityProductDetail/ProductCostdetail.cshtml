@@ -75,7 +75,7 @@
 
                         @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight" })</td>
+                                <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(wholeSalesPrice_" + index + ")" })</td>
                         }
                         else
                         {

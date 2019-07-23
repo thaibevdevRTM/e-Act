@@ -162,7 +162,7 @@ namespace eActForm.Controllers
                 decimal p_PromotionCost = AppCode.checkNullorEmpty(model.specialDisc.ToString()) == "0" && AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()) == "0" || p_disCount3 == 0 ? p_disCount3 : (p_disCount3 - (p_disCount3 * (decimal.Parse(model.specialDisc.ToString()) / 100))) - decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
 
                 decimal getPackProduct = QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().unit / QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().pack;
-                decimal sNormal = decimal.Parse(saleNormal);/// getPackProduct;
+                decimal sNormal = decimal.Parse(AppCode.checkNullorEmpty(saleNormal));/// getPackProduct;
                 decimal p_normalGp = AppCode.checkNullorEmpty(saleNormal) == "0" ? 0 
                     : ((sNormal - ((p_disCount3 * decimal.Parse("1.07")) / getPackProduct)) / sNormal) * 100;
                 p_normalGp = p_normalGp < 0 ? p_normalGp * -1 : p_normalGp;
@@ -190,7 +190,7 @@ namespace eActForm.Controllers
                         r.promotionGp = Math.Round(p_PromotionGp, 3);
                         r.specialDisc = decimal.Parse(AppCode.checkNullorEmpty(model.specialDisc.ToString()));
                         r.specialDiscBaht = decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
-                        r.normalCost = p_disCount3 == 0 ? model.normalCost : p_disCount3;
+                        r.normalCost = decimal.Parse(AppCode.checkNullorEmpty(normalCost)) == 0 ? p_disCount3 : decimal.Parse(AppCode.checkNullorEmpty(normalCost));
                         r.promotionCost = AppCode.checkNullorEmpty(promotionCost) == "0" ? Math.Round(p_PromotionCost, 3) : decimal.Parse(AppCode.checkNullorEmpty(promotionCost)) ;
                         return r;
                     }).ToList();

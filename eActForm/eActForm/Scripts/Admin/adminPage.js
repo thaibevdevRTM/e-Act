@@ -68,10 +68,10 @@
                         $.each(response.Data.getProductname, function () {
                             ddlProductBrand.append($("<option></option>").val(this['Value']).html(this['Text']));
                         });
-                        //document.getElementById("ddlProductBrand").disabled = false;
+                        document.getElementById("ddlProductBrand").disabled = false;
                     }
                     else {
-                        //document.getElementById("ddlProductBrand").disabled = true;
+                        document.getElementById("ddlProductBrand").disabled = false;
                     }
                 }
             });

@@ -48,7 +48,6 @@ namespace eActForm.Controllers
                 activityModel.regionGroupList = QueryGetAllRegion.getAllRegion();
             }
 
-
             Session.Remove("productcostdetaillist1");
             Session.Remove("activitydetaillist");
 
@@ -74,10 +73,6 @@ namespace eActForm.Controllers
             activityModel.activityFormModel.typeForm = typeForm;
             return View(activityModel);
         }
-
-
-     
-
 
         public ActionResult ImageList(string activityId)
         {
