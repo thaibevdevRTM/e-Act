@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.CommandHandler;
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,8 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                
+
+                //AdminCommandHandler.updatePriceProduct(model);
                 result.Success = true;
             }
             catch (Exception ex)

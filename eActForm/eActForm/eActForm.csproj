@@ -185,6 +185,7 @@
     <Compile Include="BusinessLayer\Appcodes\ApproveListAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ApproveRepDetailAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\BudgetApproveListAppCode.cs" />
+    <Compile Include="BusinessLayer\CommandHandler\AdminCommandHandler.cs" />
     <Compile Include="BusinessLayer\CommandHandler\BudgetFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ProductCommand.cs" />
     <Compile Include="BusinessLayer\Appcodes\DashBoardAppCode.cs" />
