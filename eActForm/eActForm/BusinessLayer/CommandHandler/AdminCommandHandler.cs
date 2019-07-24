@@ -26,11 +26,8 @@ namespace eActForm.BusinessLayer.CommandHandler
                     ,new SqlParameter("@discount2",model.discount2)
                     ,new SqlParameter("@discount3",model.discount3)
                     ,new SqlParameter("@saleNormal",model.saleNormal)
-                    ,new SqlParameter("@delFlag",model.delFlag)
-                    ,new SqlParameter("@createdDate",model.createdDate)
-                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
-                    ,new SqlParameter("@updatedDate",model.updatedDate)
-                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    ,new SqlParameter("@updatedDate",DateTime.Now)
+                    ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
                     });
             }
             catch (Exception ex)
@@ -42,5 +39,5 @@ namespace eActForm.BusinessLayer.CommandHandler
         }
     }
 
-    
+
 }

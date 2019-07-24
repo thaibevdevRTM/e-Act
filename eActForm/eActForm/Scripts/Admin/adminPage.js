@@ -1,6 +1,6 @@
 ﻿var $adminPage = (function () {
     document.getElementById("ddlProductGrp").disabled = false
-    document.getElementById("ddlProductBrand").disabled = true;
+
     'use strict';
    
     return {
@@ -23,7 +23,7 @@
             $("#ddlProductfilter").val('');
             $("#ddlProductSize").val('');
 
-            document.getElementById("ddlProductBrand").disabled = true;
+            //document.getElementById("ddlProductBrand").disabled = true;
             var ddlProductGrp = $("#ddlProductGrp");
 
             $.ajax({
@@ -71,7 +71,7 @@
                         document.getElementById("ddlProductBrand").disabled = false;
                     }
                     else {
-                        document.getElementById("ddlProductBrand").disabled = false;
+                        document.getElementById("ddlProductBrand").disabled = true;
                     }
                 }
             });
