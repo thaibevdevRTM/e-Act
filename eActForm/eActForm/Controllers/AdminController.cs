@@ -43,6 +43,15 @@ namespace eActForm.Controllers
         }
 
 
+        public ActionResult showDetailGroup(string rowId)
+        {
+            Activity_Model activityModel = new Activity_Model();
+            activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+            activityModel.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).OrderBy(x => x.productName).ToList();
+
+            return PartialView(activityModel);
+        }
+
         public JsonResult onchangePrice(TB_Act_ProductPrice_Model.ProductPrice model)
         {
             var result = new AjaxResult();
