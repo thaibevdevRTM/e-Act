@@ -45,6 +45,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("delActCostDetail >> " +ex.Message);
                 result.Message = ex.Message;
                 result.Success = false;
             }
@@ -62,10 +63,6 @@ namespace eActForm.Controllers
                     activitydetaillist = (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]
                 };
                 CostThemeDetailOfGroupByPrice costThemeDetailOfGroupByPriceModel = new CostThemeDetailOfGroupByPrice();
-                
-
-
-
                 ProductCostOfGroupByPrice productcostdetail = new ProductCostOfGroupByPrice();
                 costThemeDetailOfGroupByPriceModel.productGroupId = Guid.NewGuid().ToString();
                 costThemeDetailOfGroupByPriceModel.activityTypeId = themeId;
@@ -73,17 +70,16 @@ namespace eActForm.Controllers
 
                 productcostdetail.id = Guid.NewGuid().ToString();
                 productcostdetail.typeTheme = txttheme;
-
                 costThemeDetailOfGroupByPriceModel.detailGroup = new List<ProductCostOfGroupByPrice>();
                 costThemeDetailOfGroupByPriceModel.detailGroup.Add(productcostdetail);
                 activityModel.activitydetaillist.Add(costThemeDetailOfGroupByPriceModel);
-
 
                 Session["activitydetaillist"] = activityModel.activitydetaillist;
 
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("addCostDetailTheme >> " + ex.Message);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -142,6 +138,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("calPercentSpendingOfSale >> " + ex.Message);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -178,6 +175,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("calSpendingOfSaleChange >> " + ex.Message);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -218,7 +216,7 @@ namespace eActForm.Controllers
                 {
                     if (activityModel.productcostdetaillist1.Where(x => x.productId == productId).Any() && activityModel.productcostdetaillist1.Where(x => x.productId == productId).Any())
                     {
-                        // cal normal spendinf
+                        // cal normal spending
                         decimal getNormalCost = decimal.Parse(AppCode.checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).Any() ?
                             activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).FirstOrDefault().normalCost.ToString() : "0"));
 
@@ -264,6 +262,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("calActivityDetailCost >> " + ex.Message);
                 result.Success = false;
                 result.Message = ex.Message;
             }

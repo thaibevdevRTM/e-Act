@@ -14,6 +14,10 @@ namespace eActForm.Models
 		public List<Budget_Activity_Invoice_Att> Budget_Activity_Invoice_list { get; set; }
 		public List<Budget_Invoice_history_Att> Budget_Invoce_History_list { get; set; }
 		public List<Budget_Approve_Detail_Model> Budget_Approve_Detail_list { get; set; }
+
+		public Budget_Activity_Product_Att Budget_Activity_Product { get; set; }
+		public Budget_Activity_Invoice_Att Budget_Activity_Invoice { get; set; }
+
 		//public TB_Bud_ActivityInvoice_Model Bud_ActivityInvoice_Model { get; set; }
 		//public List<Budget_Activity_Product_Att> Budget_Activity_Product_model { get; set; }
 
@@ -108,7 +112,9 @@ namespace eActForm.Models
 
 			[DataType(DataType.Date)]
 			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-			public DateTime? invoiceActionDate { get; set; }
+			public DateTime? dateInvoiceAction { get; set; }
+			public String invoiceActionDate { get; set; }
+			//public string invoiceActionDate { get; set; }
 			public Int32 invoiceBudgetStatusId { get; set; }
 			public string invoiceBudgetStatusNameTH { get; set; }
 			public Int32 invoiceSeq { get; set; }

@@ -87,12 +87,12 @@
 
 
 <div class="row form-group">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        ProductDetail:
-        @Html.TextBoxFor(x => x.activityFormModel.productName, new { @class = "form-controlMix", @id = "txtProductName", @style = "width:50%;" })
+    <div class="col-md-5 col-sm-12 col-xs-6">
+        ProductDetail:&nbsp;&nbsp;
+        @Html.TextBoxFor(x => x.activityFormModel.productName, new { @class = "form-controlMix", @id = "txtProductName", @style = "width:100%;" })
     </div>
-    <div class="col-md-5 col-sm-12 col-xs-3">
-        ProductCode:
+    <div class="col-md-6 col-sm-12 col-xs-6">
+        ProductCode:&nbsp;&nbsp;
         @Html.TextBoxFor(x => x.activityFormModel.productCode, new { @class = "form-controlMix", @id = "txtProductCode" })
     </div>
 

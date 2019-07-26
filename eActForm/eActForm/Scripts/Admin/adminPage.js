@@ -5,7 +5,7 @@
    
     return {
 
-        editProduct: function (id,productcode, cateid, groupid,brandid,size,pack,productname) {
+        editProduct: function (id, productcode, cateid, groupid, brandid, size, pack, productname) {
 
             document.getElementById("ddlProductCate").value = cateid;
             document.getElementById("ddlProductGrp").value = groupid;
@@ -14,7 +14,7 @@
             $("#txtSize").val(size);
             $("#txtPack").val(pack);
             $("#txtProductName").val(productname);
-     
+
         },
 
         onchangeCate: function () {
@@ -52,33 +52,33 @@
 
 
         onchangeGroup: function () {
-  
-             var ddlProductBrand = $("#ddlProductBrand");
 
-             $.ajax({
-                 url: $adminPage.urlGetBrand,
-                 data: {
-                     p_groupId: $("#ddlProductGrp").val(),
-                 },
-                 dataType: "json",
-                 type: 'POST',
-                 success: function (response) {
-                     if (response.Data.getProductname.length > 0) {
-                         $("#ddlProductBrand option[value !='']").remove();
-                         $.each(response.Data.getProductname, function () {
-                             ddlProductBrand.append($("<option></option>").val(this['Value']).html(this['Text']));
-                         });
-                         //document.getElementById("ddlProductBrand").disabled = false;
-                     }
-                     else {
-                         //document.getElementById("ddlProductBrand").disabled = true;
-                     }
-                 }
-             });
+            var ddlProductBrand = $("#ddlProductBrand");
+
+            $.ajax({
+                url: $adminPage.urlGetBrand,
+                data: {
+                    p_groupId: $("#ddlProductGrp").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+                success: function (response) {
+                    if (response.Data.getProductname.length > 0) {
+                        $("#ddlProductBrand option[value !='']").remove();
+                        $.each(response.Data.getProductname, function () {
+                            ddlProductBrand.append($("<option></option>").val(this['Value']).html(this['Text']));
+                        });
+                        //document.getElementById("ddlProductBrand").disabled = false;
+                    }
+                    else {
+                        //document.getElementById("ddlProductBrand").disabled = true;
+                    }
+                }
+            });
         },
 
 
-        
+
         checkProduct: function () {
 
             $.ajax({
@@ -90,17 +90,17 @@
                 type: 'POST',
                 success: function (response) {
                     if (response.Success == true) {
-                        $adminPage.callInsertProduct("คุณต้องการแก้ไขสินค้า ใช่ หรือ ไม่!","update");
+                        $adminPage.callInsertProduct("คุณต้องการแก้ไขสินค้า ใช่ หรือ ไม่!", "update");
                     }
                     else {
-                        $adminPage.callInsertProduct("คุณต้องการเพิ่ม ใช่ หรือ ไม่!","insert");
+                        $adminPage.callInsertProduct("คุณต้องการเพิ่ม ใช่ หรือ ไม่!", "insert");
                     }
                 }
             });
 
         },
 
-        callInsertProduct: function (msg,type) {
+        callInsertProduct: function (msg, type) {
             bootbox.confirm({
                 message: msg,
                 buttons: {
@@ -162,7 +162,35 @@
             });
         },
 
-     
+
+
+        onchangePrice: function (cusId, rowIndex) {
+
+            var productId = $('#hdProductCode').val();
+            var p_normalCost = $('#normalCost_' + rowIndex).val();
+            var p_wholeSalesPrice = $('#wholeSalesPrice_' + rowIndex).val();
+            var p_discount1 = $('#discount1_' + rowIndex).val();
+            var p_discount2 = $('#discount2_' + rowIndex).val();
+            var p_discount3 = $('#discount3_' + rowIndex).val();
+            var p_saleNormal = $('#saleNormal_' + rowIndex).val();
+            $.ajax({
+                type: 'POST',
+                url: $adminPage.urlOnchangePrice,
+                data: {
+                    customerId: cusId,
+                    productCode: productId,
+                    normalCost: p_normalCost,
+                    wholeSalesPrice: p_wholeSalesPrice,
+                    discount1: p_discount1,
+                    discount2: p_discount2,
+                    discount3: p_discount3,
+                    saleNormal: p_saleNormal
+                }
+            }).done(function (response) {
+                //CallChangefunc();
+            });
+
+        },
 
     }
 })();

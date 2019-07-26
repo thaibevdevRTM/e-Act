@@ -91,7 +91,16 @@
                             <td></td>
                             <td style="text-align:right; font-size:12.5px;">ช่องทาง(Channel)</td>
                             <td></td>
-                            <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.chanel) </td>
+
+                            @if (string.IsNullOrEmpty(Model.activityFormModel.chanel))
+                            {
+                                <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.regionName) </td>
+
+                            }
+                            else
+                            {
+                                <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormModel.chanel) </td>
+                            }
                         </tr>
                         <tr>
                             <td style="font-size:12.5px;">วัตถุประสงค์</td>
@@ -195,6 +204,14 @@
                     <div style="margin-top:5px; font-size:12.5px;">
                         รายละเอียดของการทำกิจกรรม(Activity Detail)
                     </div>
+                    @if (string.IsNullOrEmpty(Model.activityFormModel.chanel) && Model.activityFormModel.txttheme == "FOC")
+                    {
+                        <div>
+                            <p style="font-size:12px;">
+                                @System.Configuration.ConfigurationManager.AppSettings["mssFOCWording"]
+                            </p>
+                        </div>
+                    }
                     <div style="margin-top:15px;">
                         <table style="width:100%">
                             <tr>

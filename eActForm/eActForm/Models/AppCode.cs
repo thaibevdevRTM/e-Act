@@ -30,7 +30,8 @@ namespace eActForm.Models
         {
             approve
                 , document
-        }
+				, budget_form
+		}
         public enum ApproveType
         {
             Activity_Form

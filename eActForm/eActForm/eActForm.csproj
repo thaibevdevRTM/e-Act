@@ -202,6 +202,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllProduct.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QuerygetAllProductCate.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllProductGroup.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetAllRegion.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetActivity.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetApprove.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetChanelNameByCustomerId.cs" />
@@ -271,6 +272,7 @@
     <Compile Include="Models\TB_Act_ProductType_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Cate_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Model.cs" />
+    <Compile Include="Models\TB_Act_Region_Model.cs" />
     <Compile Include="Models\TB_Budget_Activity_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForm1.aspx.cs">
@@ -2153,6 +2155,7 @@
     <Content Include="Content\vendors\iCheck\.bower.json" />
     <Content Include="Content\vendors\iCheck\bower.json" />
     <Content Include="Content\vendors\iCheck\icheck.jquery.json" />
+    <Content Include="ActSummaryDetail\f063c365-1e86-433e-bbb9-1fc6b58a386c.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -2163,6 +2166,8 @@
     <Content Include="Scripts\jquery-migrate-1.2.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery-ui.css" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.datetimepicker.full.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\popper-utils.js" />
@@ -2174,6 +2179,18 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="uploadImages\12f4c0ff-c7ab-4308-b185-d072c9f151c8_72777008-1A93-48E0-A420-357B10696E30.png" />
+    <Content Include="uploadImages\19f467c5-4b1a-4f84-975c-a86a0694f462_63164D1C-469B-431F-8C5B-0EA2544DFEA1.png" />
+    <Content Include="uploadImages\301b51cb-8e48-4ed9-9215-01be74d96c83_05F58F69-427D-4FC5-975F-6C062CC8947A.png" />
+    <Content Include="uploadImages\906d8ed8-3c29-4b83-b206-a21779fd0543_1C07CF3F-C55F-4B43-8B82-57DC79CC2790.png" />
+    <Content Include="uploadImages\afa07bb8-1bed-4412-8d36-58b4d17d8627_166F5EA8-E682-48C8-B90E-40B6B7B99356.png" />
+    <Content Include="uploadImages\b9ab1f32-562f-4e18-8d7b-1f05eed90fc5_0F837F81-A467-4BD0-BDF1-5D31F2F9302B.png" />
+    <Content Include="uploadImages\b9ab1f32-562f-4e18-8d7b-1f05eed90fc5_5B3D18C8-CCE3-486C-8D02-9C76DACA5FB1.png" />
+    <Content Include="uploadImages\c0af9975-9c60-4381-a7ce-d3c4ba31bfa3_FC841C26-146A-4904-9110-D83B24F90323.png" />
+    <Content Include="uploadImages\ccb49ed3-6d09-4ad5-bd68-8304870322c6_89619594-641C-45CE-8565-C95A084B3C93.png" />
+    <Content Include="uploadImages\d46a7752-5fef-49f8-bd39-7bf87baf8c0d_B93DC18F-891F-437E-9B7E-8ED6C2557F9B.png" />
+    <Content Include="uploadImages\e222c8de-3940-4239-ba39-4f86720ec056_3EAAC2C2-7B2E-43E4-81C4-6DFFAE410725.png" />
+    <Content Include="uploadImages\e222c8de-3940-4239-ba39-4f86720ec056_5DB5E9C8-CB07-43FC-B25D-BB26D8C69A39.png" />
     <Content Include="Views\BudgetApproveList\Index.cshtml" />
     <Content Include="Views\BudgetApprove\previewApproveBudget.cshtml" />
     <Content Include="WebForm1.aspx" />
@@ -2284,6 +2301,7 @@
     <Content Include="Views\Shared\_searchForSummaryReport.cshtml" />
     <Content Include="Views\ApproveSummaryDetail\Index.cshtml" />
     <Content Include="Views\ApproveSummaryDetail\ListViewApprove.cshtml" />
+    <Content Include="Views\Admin\productPriceDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
@@ -2292,8 +2310,6 @@
     <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
-    <Folder Include="Views\Base\" />
-    <Folder Include="Views\eAct\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

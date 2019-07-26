@@ -73,8 +73,8 @@
 				<th class="align-content-center font12B" style="text-align:right;">จำนวนเงินที่ตั้ง</th>
 				<th class="align-content-center font12B" style="text-align:center;">เลขที่ใบแจ้งหนี้</th>
 				@*<th class="align-content-center font12B">เลขที่ใบสำคัญจ่าย</th>
-		<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
-		<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>*@
+					<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
+					<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>*@
 				<th class="align-content-center font12B" style="text-align:right;">จำนวนเงินจ่าย</th>
 				<th class="align-content-center font12B" style="text-align:right;">ผลต่าง-บาท</th>
 				<th class="align-content-center font12B" style="text-align:center;">วันที่ทำรายการ</th>
@@ -101,7 +101,7 @@
 					}
 					else if (item.invoiceApproveStatusId == 5)
 					{
-						<div  class="anchorDetail btn ink-reaction btn-sm btn-dark fa fa-edit disabled"></div>
+						<div class="anchorDetail btn ink-reaction btn-sm btn-dark fa fa-edit disabled"></div>
 						<a href="javascript:" target="_blank" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
 							<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
 						</a>
@@ -139,7 +139,9 @@
 						@result.ToString();
 					}
 				</td>
-				<td style="font-size:12.5px;text-align:center;">@Html.DisplayFor(x => item.invoiceActionDate) </td>
+				<td style="font-size:12.5px;text-align:center;">
+					@item.dateInvoiceAction.Value.ToString("dd/MM/yyyy")
+				</td>
 
 				@if (item.invoiceBudgetStatusId == 1)
 				{
@@ -154,18 +156,18 @@
 					<td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.invoiceBudgetStatusNameTH</td>
 				}
 
-					<td style="font-size:12.5px;text-align:center;">
-						@*สถานะการอนุมัติ invoice*@
-						@if (item.invoiceApproveStatusName != null)
+				<td style="font-size:12.5px;text-align:center;">
+					@*สถานะการอนุมัติ invoice*@
+					@if (item.invoiceApproveStatusName != null)
+					{
+						if (item.invoiceApproveStatusId != 1)
 						{
-							if (item.invoiceApproveStatusId != 1)
-							{
-								string result = String.Format("{0:n2}", @item.invoiceApproveStatusName);
-								@result.ToString();
-							}
-
+							string result = String.Format("{0:n2}", @item.invoiceApproveStatusName);
+							@result.ToString();
 						}
-					</td>
+
+					}
+				</td>
 			</tr>
 					index++;
 				}
@@ -173,5 +175,13 @@
 		</tbody>
 		@*------------------------------------------------------------------------------------------------*@
 	</table>
+
+
+	<div class="row">
+		@if (Model.Budget_Activity_Invoice_list.Count != 0)
+		{
+			<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="javascript:onInvoicePrintPreview('@Model.Budget_Activity_Invoice_list.ElementAt(0).activityId');"><i class="fa fa-file-o fa-fw"></i>&nbsp;Preview</button>
+		}
+	</div>
 
 </div>

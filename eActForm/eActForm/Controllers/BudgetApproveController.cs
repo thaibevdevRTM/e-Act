@@ -54,7 +54,7 @@ namespace eActForm.Controllers
 												 isSendEmail = (bool)dr["isSendEmail"],
 												 remark = dr["remark"].ToString(),
 												 signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
-												 ImgName = string.Format(ConfigurationManager.AppSettings["rootSignaURL"], dr["empId"].ToString()), //rootgetSignaURL , rootSignaURL
+												 ImgName = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()), //rootgetSignaURL , rootSignaURL
 												 delFlag = (bool)dr["delFlag"],
 												 createdDate = (DateTime?)dr["createdDate"],
 												 createdByUserId = dr["createdByUserId"].ToString(),
@@ -180,15 +180,19 @@ namespace eActForm.Controllers
 				{
 					var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
 					GridHtml = GridHtml.Replace("<br>", "<br/>");
-				
-					try
-					{
-						AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-					}
-					catch (Exception ex)
-					{
-						AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-					}
+
+					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+
+					//try
+					//{
+					//	AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+					//}
+					//catch (Exception ex)
+					//{
+					//	AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+					//}
+
+					
 
 					EmailAppCodes.sendApproveBudget(budgetApproveId, AppCode.ApproveType.Budget_form,false );
 

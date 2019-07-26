@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -252,8 +253,23 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getCustomerByRegion(string regionId , string txtCus)
+        {
 
-     
+
+            List<TB_Act_Customers_Model.Customers_Model> customerList = new  List<TB_Act_Customers_Model.Customers_Model>();
+            try
+            {
+                 customerList = QueryGetAllCustomers.getAllCustomersRegion().Where(x => x.regionId == regionId && x.cusNameTH.Contains(txtCus)).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCustomerByRegion => " + ex.Message);
+            }
+            return Json(customerList, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }
