@@ -28,7 +28,15 @@
                     <th class="align-content-center font10" rowspan="2" style="width:24%;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</th>
                     <th class="align-content-center font10" rowspan="2" style="width:6%;">Unit</th>
                     <th class="align-content-center font10" rowspan="2" style="width:6%;">Compensate</th>
-                    <th class="align-content-center font10" colspan="6" style="width:49%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
+                    @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                    {
+                        <th class="align-content-center font10" colspan="5" style="width:49%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
+
+                    }
+                    else
+                    {
+                        <th class="align-content-center font10" colspan="6" style="width:49%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
+                    }
                 </tr>
                 <tr>
                     <th class="align-content-center font10">ยอดขายปกติ (Case)</th>
@@ -36,8 +44,11 @@
                     <th class="align-content-center font10">% Growth</th>
                     <th class="align-content-center font10">%SE</th>
                     <th class="align-content-center font10">ค่าใช้จ่ายรวม Spending Exp. (Bath)</th>
-                    <th class="align-content-center font10">% : ยอดขาย</th>
-                </tr>
+                    @if (UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"])
+                    {
+                        <th class="align-content-center font10">% : ยอดขาย</th>
+                    }
+                    </tr>
             </thead>
 
             @if (Model.activitydetaillist != null)
@@ -99,8 +110,14 @@
                         <td>
                             @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")", style = "autofocus = 'autofocus'" })
                         </td>
-                        <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", style = "autofocus = 'autofocus'" })</td>
-
+                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            @Html.HiddenFor(model => item.perTotal, new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", style = "autofocus = 'autofocus'" })
+                        }
+                        else
+                        {
+                            <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", style = "autofocus = 'autofocus'" })</td>
+                        }
                     </tr>
                     LE = item.LE == null ? 0 + LE : item.LE + LE;
                     total = item.total == null ? 0 + total : item.total + total;
@@ -151,15 +168,18 @@
                         }
                     </p>
                 </td>
-                <td>
-                    <p class="text-success textRight">
-                        @if (total != 0)
-                        {
-                            string result = String.Format("{0:n2}", @total);
-                            @result.ToString();
-                        }
-                    </p>
-                </td>
+                @if (UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"])
+                {
+                    <td>
+                        <p class="text-success textRight">
+                            @if (total != 0)
+                            {
+                                string result = String.Format("{0:n2}", @total);
+                                @result.ToString();
+                            }
+                        </p>
+                    </td>
+                }
                 <td>
                     @*<p class="text-success textRight">
                             @if (total != 0 && activityTotal != 0)
