@@ -11,9 +11,10 @@ namespace eActForm.Controllers
 {
     public class ActivityProductDetailController : Controller
     {
-        public ActionResult productCostDetail()
+        public ActionResult productCostDetail(string typeForm)
         {
             Activity_Model activityModel = new Activity_Model();
+            activityModel.activityFormModel.typeForm = typeForm;
             if (Session["productcostdetaillist1"] != null)
             {
                 activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);

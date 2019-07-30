@@ -41,7 +41,7 @@ namespace eActForm.Models
             productBrandList = new List<TB_Act_ProductBrand_Model>();
             productImageList = new List<TB_Act_Image_Model.ImageModel>();
             activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
-
+            activityFormModel = new ActivityForm();
         }
 
         public enum modeForm

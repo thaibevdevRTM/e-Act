@@ -2,8 +2,10 @@
 @using eActForm.BusinessLayer
 @model eActForm.Models.Activity_Model
 @{
-    ViewBag.Title = "Home Page";
-    var mode = Request["mode"] == null ? "" : Request["mode"];
+                /**/
+
+                ViewBag.Title = "Home Page";
+                var mode = Request["mode"] == null ? "" : Request["mode"];
 }
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
@@ -288,7 +290,7 @@
 </div>
 <hr />
 <div id="getQuery" class="col-lg-12">
-    @Html.Action("productCostDetail", "ActivityProductDetail")
+    @Html.Action("productCostDetail", "ActivityProductDetail" , new { typeForm = Model.activityFormModel.typeForm })
 </div>
 
 <div class="row" id="divAddProductCostDetail">
@@ -315,7 +317,7 @@
 </div>
 <hr />
 <div id="divgetdetailcost" class="col-lg-12">
-    @Html.Action("activityCostDetail", "ActivityCostDetail")
+    @Html.Action("activityCostDetail", "ActivityCostDetail", new { typeForm = Model.activityFormModel.typeForm })
 </div>
 
 
@@ -1032,7 +1034,8 @@
             type: 'POST',
             url:  '@Url.Action("PreviewData", "Activity")',
             data: {
-                activityId: obj
+                activityId: obj,
+                typeForm:'@Model.activityFormModel.typeForm'
             }
         }).done(function (htmlResponse) {
             $("#WaitDialog").hide();

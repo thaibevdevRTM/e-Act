@@ -11,7 +11,7 @@ namespace eActForm.Controllers
 {
     public class ActivityCostDetailController : Controller
     {
-        public ActionResult activityCostDetail()
+        public ActionResult activityCostDetail(string typeForm)
         {
             Activity_Model activityModel = new Activity_Model
             {
@@ -19,6 +19,7 @@ namespace eActForm.Controllers
                 ? ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"])
                 : new List<CostThemeDetailOfGroupByPrice>()
             };
+            activityModel.activityFormModel.typeForm = typeForm;
             Session["activitydetaillist"] = activityModel.activitydetaillist;
 
 
