@@ -132,6 +132,7 @@ namespace eActForm.Models
         public string size { get; set; }
         public string smell { get; set; }
         public string smell_Id { get; set; }
+        public string unit { get; set; }
         public string pack { get; set; }
         public string chanel_Id { get; set; }
         public string productCateId { get; set; }

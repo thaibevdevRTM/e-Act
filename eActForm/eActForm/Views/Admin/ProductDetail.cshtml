@@ -16,29 +16,31 @@
                     <th>Brand</th>
                     <th>ProductName</th>
                     <th>Size</th>
+                    <th>Unit</th>
                     <th>Pack</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.productLists)
                 {
-                    <tr class="gradeX">
-                        <td>
-                            <a href="javascript:" target="_blank" onclick="return checkDelete('@item.id');">
-                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;&nbsp;
-                            </a>
-                            <a href="javascript:" target="_blank" onclick="return $adminPage.editProduct('@item.id','@item.productCode','@item.cateId','@item.groupId','@item.brandId','@item.size','@item.pack','@item.productName','@item.smellname','@item.smellId');">
-                                <i class="btn ink-reaction btn-info fa fa-edit"></i>&nbsp;&nbsp;
-                            </a>
-                        </td>
-                        <td><a href="javascript:" target="_blank" onclick="callPreviewData('@item.productCode');" style="cursor: pointer;"> @item.productCode </a></td>
-                        <td>@item.productCate</td>
-                        <td>@item.productGroup</td>
-                        <td>@item.brand</td>
-                        <td>@item.productName</td>
-                        <td>@item.size</td>
-                        <td>@item.pack</td>
-                    </tr>
+                <tr class="gradeX">
+                    <td>
+                        <a href="javascript:" target="_blank" onclick="return checkDelete('@item.id');">
+                            <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;&nbsp;
+                        </a>
+                        <a href="javascript:" target="_blank" onclick="return $adminPage.editProduct('@item.id','@item.productCode','@item.cateId','@item.groupId','@item.brandId','@item.size','@item.pack','@item.productName','@item.smellId','@item.unit');">
+                            <i class="btn ink-reaction btn-info fa fa-edit"></i>&nbsp;&nbsp;
+                        </a>
+                    </td>
+                    <td><a href="javascript:" target="_blank" onclick="callPreviewData('@item.productCode');" style="cursor: pointer;"> @item.productCode </a></td>
+                    <td>@item.productCate</td>
+                    <td>@item.productGroup</td>
+                    <td>@item.brand</td>
+                    <td>@item.productName</td>
+                    <td>@item.size</td>
+                    <td>@item.unit</td>
+                    <td>@item.pack</td>
+                </tr>
                 }
             </tbody>
         </table>

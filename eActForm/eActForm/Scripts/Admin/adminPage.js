@@ -5,15 +5,43 @@
    
     return {
 
-        editProduct: function (id, productcode, cateid, groupid, brandid, size, pack, productname) {
+        editProduct: function (id, productcode, cateid, groupid, brandid, size, pack, productname, smellid,unit) {
 
+            $.ajax({
+                url: $adminPage.urlgetProductSmell,
+                data: {
+                    productGroupId: groupid,
+                },
+                dataType: "json",
+                type: 'POST',
+                success: function (response) {
+                    if (response.Data.length > 0) {
+                        $("#ddlProductSmell option[value !='']").remove();
+                        $.each(response.Data, function () {
+                            $("#ddlProductSmell").append($("<option></option>").val(this['id']).html(this['nameTH']));
+                            document.getElementById("ddlProductSmell").disabled = false;
+                            document.getElementById("ddlProductSmell").value = smellid;
+                        });
+                    }
+                    else {
+                        $("#ddlProductSmell option[value !='']").remove();
+                        document.getElementById("ddlProductSmell").disabled = true;
+                        document.getElementById("ddlProductSmell").value = smellid;
+                    }
+                }
+            });
+
+            
+            document.getElementById("ddlProductSmell").value = smellid;
             document.getElementById("ddlProductCate").value = cateid;
             document.getElementById("ddlProductGrp").value = groupid;
             document.getElementById("ddlProductBrand").value = brandid;
             $("#txtProductCode").val(productcode);
             $("#txtSize").val(size);
+            $("#txtUnit").val(unit);
             $("#txtPack").val(pack);
             $("#txtProductName").val(productname);
+           
 
         },
 
@@ -75,6 +103,28 @@
                     }
                 }
             });
+
+            $.ajax({
+                url: $adminPage.urlgetProductSmell,
+                data: {
+                    productGroupId: $("#ddlProductGrp").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+                success: function (response) {
+                    if (response.Data.length > 0) {
+                        $("#ddlProductSmell option[value !='']").remove();
+                        $.each(response.Data, function () {
+                            $("#ddlProductSmell").append($("<option></option>").val(this['id']).html(this['nameTH']));
+                            document.getElementById("ddlProductSmell").disabled = false;
+                        });
+                    }
+                    else {
+                        $("#ddlProductSmell option[value !='']").remove();
+                        document.getElementById("ddlProductSmell").disabled = true;
+                    }
+                }
+            });
         },
 
 
@@ -90,17 +140,17 @@
                 type: 'POST',
                 success: function (response) {
                     if (response.Success == true) {
-                        $adminPage.callInsertProduct("คุณต้องการแก้ไขสินค้า ใช่ หรือ ไม่!", "update");
+                        $adminPage.callInsertOrUpdateProduct("คุณต้องการแก้ไขสินค้า ใช่ หรือ ไม่!", "update");
                     }
                     else {
-                        $adminPage.callInsertProduct("คุณต้องการเพิ่ม ใช่ หรือ ไม่!", "insert");
+                        $adminPage.callInsertOrUpdateProduct("คุณต้องการเพิ่ม ใช่ หรือ ไม่!", "insert");
                     }
                 }
             });
 
         },
 
-        callInsertProduct: function (msg, type) {
+        callInsertOrUpdateProduct: function (msg, type) {
             bootbox.confirm({
                 message: msg,
                 buttons: {
@@ -122,18 +172,19 @@
                             $.ajax({
                                 url: $adminPage.urlAddProduct,
                                 data: {
-                                    p_cateId: $("#ddlProductCate").val(),
-                                    p_groupId: $("#ddlProductGrp").val(),
-                                    p_brandId: $("#ddlProductBrand").val(),
-                                    p_size: $("#txtSize").val(),
-                                    p_pack: $("#txtPack").val(),
-                                    p_productName: $("#txtProductName").val(),
-                                    p_productCode: $("#txtProductCode").val(),
+                                    cateId: $("#ddlProductCate").val(),
+                                    groupId: $("#ddlProductGrp").val(),
+                                    brandId: $("#ddlProductBrand").val(),
+                                    size: $("#txtSize").val(),
+                                    pack: $("#txtPack").val(),
+                                    unit: $("#txtUnit").val(),
+                                    productName: $("#txtProductName").val(),
+                                    productCode: $("#txtProductCode").val(),
                                 },
                                 dataType: "json",
                                 type: 'POST',
                                 success: function (response) {
-
+                                    window.location.href = $adminPage.urlIndexAdmin;
                                 }
                             });
                         }
@@ -141,18 +192,19 @@
                             $.ajax({
                                 url: $adminPage.urlUpdateProduct,
                                 data: {
-                                    p_cateId: $("#ddlProductCate").val(),
-                                    p_groupId: $("#ddlProductGrp").val(),
-                                    p_brandId: $("#ddlProductBrand").val(),
-                                    p_size: $("#txtSize").val(),
-                                    p_pack: $("#txtPack").val(),
-                                    p_productName: $("#txtProductName").val(),
-                                    p_productCode: $("#txtProductCode").val(),
+                                    cateId: $("#ddlProductCate").val(),
+                                    groupId: $("#ddlProductGrp").val(),
+                                    brandId: $("#ddlProductBrand").val(),
+                                    size: $("#txtSize").val(),
+                                    pack: $("#txtPack").val(),
+                                    unit: $("#txtUnit").val(),
+                                    productName: $("#txtProductName").val(),
+                                    productCode: $("#txtProductCode").val(),
                                 },
                                 dataType: "json",
                                 type: 'POST',
                                 success: function (response) {
-
+                                    window.location.href = $adminPage.urlIndexAdmin;
                                 }
                             });
                         }
@@ -161,7 +213,6 @@
 
             });
         },
-
 
 
         onchangePrice: function (cusId, rowIndex) {

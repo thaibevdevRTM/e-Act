@@ -16,6 +16,7 @@ namespace eActForm.Controllers
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.productBrandList = QueryGetAllBrand.GetAllBrand();
+            activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
             activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup();
             activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
@@ -81,18 +82,22 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult addNewProduct(string p_cateId, string p_groupId, string p_brandId, string p_size, string p_pack, string p_productName, string p_productCode)
+        public JsonResult addNewProduct(TB_Act_Product_Model.Product_Model model)
         {
             var result = new AjaxResult();
 
+
+            result.Code = AdminCommandHandler.insertProduct(model);
+            //add productprice.....
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult updateProduct(string p_cateId, string p_groupId, string p_brandId, string p_size, string p_pack, string p_productName, string p_productCode)
+        public JsonResult updateProduct(TB_Act_Product_Model.Product_Model model)
         {
             var result = new AjaxResult();
 
+            result.Code = AdminCommandHandler.updateProduct(model);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

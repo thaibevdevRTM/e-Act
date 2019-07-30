@@ -61,6 +61,8 @@
     </div>
 
 
+
+
     <div class="col-md-2 col-sm-6 col-xs-2">
         Brand:
         @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "- เลือกประเภท -", new
@@ -70,11 +72,20 @@
           id = "ddlProductBrand"
          })
     </div>
+    <div class="col-md-2 col-sm-6 col-xs-2">
+        รสชาติ:
+        @Html.DropDownListFor(model => model.productSmellLists, new SelectList(Model.productSmellLists, "id", "nameTH"), "- เลือกรสชาติ -", new
+          { @class = "form-control", required = "required", id = "ddlProductSmell" })
+
+    </div>
     <div class="col-md-1 col-sm-6 col-xs-1">
         Size:
         @Html.TextBoxFor(x => x.activityFormModel.size, new { @class = "form-control", @id = "txtSize" })
     </div>
-
+    <div class="col-md-1 col-sm-6 col-xs-1">
+        Unit:
+        @Html.TextBoxFor(x => x.activityFormModel.unit, new { @class = "form-control", @id = "txtUnit" })
+    </div>
     <div class="col-md-1 col-sm-6 col-xs-1">
         Pack:
         @Html.TextBoxFor(x => x.activityFormModel.pack, new { @class = "form-control", @id = "txtPack" })
@@ -115,7 +126,8 @@
             $adminPage.urlAddProduct = '@Url.Action("addNewProduct", "Admin")';
             $adminPage.urlCheckProduct = '@Url.Action("checkProduct", "Admin")';
             $adminPage.urlUpdateProduct = '@Url.Action("updateProduct", "Admin")';
-
+            $adminPage.urlgetProductSmell = '@Url.Action("getProductSmell", "eAct")';
+            $adminPage.urlIndexAdmin = '@Url.Action("Index", "Admin")';
     });
 
 
