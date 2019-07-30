@@ -2303,6 +2303,7 @@
     <Content Include="Views\ApproveSummaryDetail\Index.cshtml" />
     <Content Include="Views\ApproveSummaryDetail\ListViewApprove.cshtml" />
     <Content Include="Views\Admin\productPriceDetail.cshtml" />
+    <Content Include="Views\Shared\_previewActForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

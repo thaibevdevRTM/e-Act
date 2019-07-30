@@ -26,7 +26,6 @@ namespace eActForm.Controllers
     [LoginExpire]
     public class ActivityController : eActController
     {
-
         public ActionResult ActivityForm(string activityId, string mode, string typeForm)
         {
 

@@ -38,8 +38,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
+//url.href.split(/[#\?]+/, 1)[0]; .split('#')[0].split('?')[0]
+var CURRENT_URL = window.location.href,
     $BODY = $('body'),
     $MENU_TOGGLE = $('#menu_toggle'),
     $SIDEBAR_MENU = $('#sidebar-menu'),
@@ -119,6 +119,7 @@ function init_sidebar() {
     $SIDEBAR_MENU.find('a[href="' + CURRENT_URL + '"]').parent('li').addClass('current-page');
 
     $SIDEBAR_MENU.find('a').filter(function () {
+        //console.log(CURRENT_URL);
         return this.href == CURRENT_URL;
     }).parent('li').addClass('current-page').parents('ul').slideDown(function () {
         setContentHeight();
