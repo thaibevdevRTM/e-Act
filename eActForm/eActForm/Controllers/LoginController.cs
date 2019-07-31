@@ -15,7 +15,14 @@ namespace eActForm.Controllers
 
         public ActionResult Maintain()
         {
-            return View();
+            if (!bool.Parse(ConfigurationManager.AppSettings["isMaintainMode"]))
+            {
+                return RedirectToAction("index");
+            }
+            else
+            {
+                return View();
+            }
         }
         public ActionResult Index()
         {
