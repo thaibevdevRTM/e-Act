@@ -74,7 +74,6 @@ namespace eActForm.Controllers
                 costThemeDetailOfGroupByPriceModel.detailGroup = new List<ProductCostOfGroupByPrice>();
                 costThemeDetailOfGroupByPriceModel.detailGroup.Add(productcostdetail);
                 activityModel.activitydetaillist.Add(costThemeDetailOfGroupByPriceModel);
-
                 Session["activitydetaillist"] = activityModel.activitydetaillist;
 
             }

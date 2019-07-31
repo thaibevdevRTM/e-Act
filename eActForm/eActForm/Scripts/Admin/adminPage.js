@@ -79,6 +79,20 @@
         },
 
 
+        onDelProduct: function (productId) {
+            $.ajax({
+                url: $adminPage.urlDelProduct ,
+                data: {
+                    productId: productId,
+                },
+                dataType: "json",
+                type: 'POST',
+                success: function (response) {
+                    window.location.href = $adminPage.urlIndexAdmin;
+                    }
+            });
+        },
+
         onchangeGroup: function () {
 
             var ddlProductBrand = $("#ddlProductBrand");
@@ -140,7 +154,9 @@
                 type: 'POST',
                 success: function (response) {
                     if (response.Success == true) {
+                        console.log($("#ddlProductSmell").val())
                         $adminPage.callInsertOrUpdateProduct("คุณต้องการแก้ไขสินค้า ใช่ หรือ ไม่!", "update");
+
                     }
                     else {
                         $adminPage.callInsertOrUpdateProduct("คุณต้องการเพิ่ม ใช่ หรือ ไม่!", "insert");
@@ -180,6 +196,7 @@
                                     unit: $("#txtUnit").val(),
                                     productName: $("#txtProductName").val(),
                                     productCode: $("#txtProductCode").val(),
+                                    smellId: $("#ddlProductSmell").val(),
                                 },
                                 dataType: "json",
                                 type: 'POST',
@@ -200,6 +217,7 @@
                                     unit: $("#txtUnit").val(),
                                     productName: $("#txtProductName").val(),
                                     productCode: $("#txtProductCode").val(),
+                                    smellId: $("#ddlProductSmell").val(),
                                 },
                                 dataType: "json",
                                 type: 'POST',
@@ -213,6 +231,10 @@
 
             });
         },
+      
+        setComma: function (price) {
+
+        },
 
 
         onchangePrice: function (cusId, rowIndex) {
@@ -224,18 +246,19 @@
             var p_discount2 = $('#discount2_' + rowIndex).val();
             var p_discount3 = $('#discount3_' + rowIndex).val();
             var p_saleNormal = $('#saleNormal_' + rowIndex).val();
+
             $.ajax({
                 type: 'POST',
                 url: $adminPage.urlOnchangePrice,
                 data: {
                     customerId: cusId,
                     productCode: productId,
-                    normalCost: p_normalCost,
-                    wholeSalesPrice: p_wholeSalesPrice,
-                    discount1: p_discount1,
-                    discount2: p_discount2,
-                    discount3: p_discount3,
-                    saleNormal: p_saleNormal
+                    normalCost: p_normalCost.replace(",", ""),
+                    wholeSalesPrice: p_wholeSalesPrice.replace(",", ""),
+                    discount1: p_discount1.replace(",", ""),
+                    discount2: p_discount2.replace(",", ""),
+                    discount3: p_discount3.replace(",", ""),
+                    saleNormal: p_saleNormal.replace(",", ""),
                 }
             }).done(function (response) {
                 //CallChangefunc();

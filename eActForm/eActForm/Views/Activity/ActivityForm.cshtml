@@ -339,7 +339,6 @@
 </div>
 <hr />
 
-
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
     <div id="divPreview">
     </div>
@@ -394,8 +393,6 @@
         <div class="inner" id="divbtnUpdate">
             <button id="btnUpdate" type="button" class="btn ink-reaction btn-default" onclick="validateUpdate()">&nbsp;Update</button>
         </div>
-
-
     </div>
 
 </div>
@@ -717,7 +714,7 @@
                  smellId: $("#ddlProductSmell").val(),
                  size: $("#ddlProductSize").val(),
                  cusid: customer,
-                 theme: $("#ddlTheme").val()
+                 theme: $("#ddlTheme").val(),
              },
                 dataType: "json",
                 type: 'POST',
@@ -891,8 +888,6 @@
             });
     }
 
-
-
     function copyAndSaveNew() {
 
         var cusId = '';
@@ -969,7 +964,6 @@
                     });
                 }
             }
-
         });
     }
 
@@ -1050,7 +1044,8 @@
             type: 'POST',
             url:  '@Url.Action("activityCostDetail", "ActivityCostDetail")',
             data: {
-                activityModel: obj
+                activityModel: obj,
+                typeForm:'@Model.activityFormModel.typeForm',
             }
         }).done(function (htmlResponse) {
             $("#divgetdetailcost").html(htmlResponse)
@@ -1062,7 +1057,10 @@
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("ProductCostdetail", "ActivityProductDetail")',
-            data: { activityModel: obj}
+            data: {
+                activityModel: obj,
+                typeForm:'@Model.activityFormModel.typeForm',
+            }
         }).done(function (htmlResponse) {
             $("#getQuery").html(htmlResponse)
         });

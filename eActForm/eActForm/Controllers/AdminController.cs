@@ -17,6 +17,7 @@ namespace eActForm.Controllers
             Activity_Model activityModel = new Activity_Model();
             activityModel.productBrandList = QueryGetAllBrand.GetAllBrand();
             activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
+
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
             activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup();
             activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
@@ -64,6 +65,24 @@ namespace eActForm.Controllers
         }
 
 
+        public JsonResult delProductAndPrice(string productId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                AdminCommandHandler.delProductMasterAndPrice(productId);
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
         public JsonResult checkProduct(string p_productCode)
         {
             var result = new AjaxResult();
@@ -89,6 +108,17 @@ namespace eActForm.Controllers
 
             result.Code = AdminCommandHandler.insertProduct(model);
             //add productprice.....
+            var getCustomerAll = QueryGetAllCustomers.getAllCustomers();
+            if (getCustomerAll.Any())
+            {
+                int countinsert = 0;
+                foreach (var item in getCustomerAll)
+                {
+                    countinsert = AdminCommandHandler.insertProductPrice(model.productCode, item.id);
+                    countinsert++;
+                }
+            }
+
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -98,6 +128,9 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
 
             result.Code = AdminCommandHandler.updateProduct(model);
+
+            List<TB_Act_ProductPrice_Model.ProductPrice> productPriceList = new List<TB_Act_ProductPrice_Model.ProductPrice>();
+            productPriceList = QueryGetAllPrice.getPriceByProductCode(model.productCode);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

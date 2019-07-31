@@ -38,6 +38,25 @@ namespace eActForm.BusinessLayer.CommandHandler
             return result;
         }
 
+        public static int delProductMasterAndPrice(string productId)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_delProductAndProductPrice"
+                    , new SqlParameter[] {new SqlParameter("@productId",productId)
+                    ,new SqlParameter("@updatedDate",DateTime.Now)
+                    ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> delProductMasterAndPrice");
+            }
+
+            return result;
+        }
+
 
         public static int insertProduct(TB_Act_Product_Model.Product_Model model)
         {
@@ -70,6 +89,8 @@ namespace eActForm.BusinessLayer.CommandHandler
         }
 
 
+
+
         public static int updateProduct(TB_Act_Product_Model.Product_Model model)
         {
             int result = 0;
@@ -98,7 +119,31 @@ namespace eActForm.BusinessLayer.CommandHandler
             return result;
         }
 
-    }
 
+        public static int insertProductPrice(string productCode , string customerId)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertProductPriceMaster"
+                    , new SqlParameter[] {new SqlParameter("@productId",productCode)
+                    , new SqlParameter("@customerId", customerId)
+                    , new SqlParameter("@delFlag", 0)
+                    , new SqlParameter("@createdDate", DateTime.Now)
+                    , new SqlParameter("@createdByUserId", UtilsAppCode.Session.User.empId)
+                    , new SqlParameter("@updatedDate", DateTime.Now)
+                    , new SqlParameter("@updatedByUserId", UtilsAppCode.Session.User.empId)
+                        });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertProductPrice");
+            }
+
+            return result;
+        }
+
+
+    }
 
 }
