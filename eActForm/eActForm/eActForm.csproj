@@ -1972,6 +1972,7 @@
     <Content Include="images\loading.gif" />
     <Content Include="images\logo-ss.png" />
     <Content Include="images\logo_vision2020.png" />
+    <Content Include="images\maintain.png" />
     <Content Include="images\non_al.jpeg" />
     <Content Include="images\warning_error.png" />
     <Content Include="Scripts\Admin\adminPage.js" />
@@ -2304,6 +2305,7 @@
     <Content Include="Views\ApproveSummaryDetail\ListViewApprove.cshtml" />
     <Content Include="Views\Admin\productPriceDetail.cshtml" />
     <Content Include="Views\Shared\_previewActForm.cshtml" />
+    <Content Include="Views\Login\Maintain.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

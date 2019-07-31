@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using eActForm.BusinessLayer;
 using eActForm.Models;
-
+using System.Configuration;
 namespace eActForm.Controllers
 {
     public class BaseController : Controller
@@ -50,12 +50,18 @@ namespace eActForm.Controllers
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-
-            // check  sessions here
-            if (UtilsAppCode.Session.User == null)
+            if (bool.Parse(ConfigurationManager.AppSettings["isMaintainMode"]))
             {
-                filterContext.Result = new RedirectResult("~/Login/Index?" + filterContext.HttpContext.Request.QueryString);
+                filterContext.Result = new RedirectResult("~/Login/Maintain");
                 return;
+            }
+            else
+            {// check  sessions here
+                if (UtilsAppCode.Session.User == null)
+                {
+                    filterContext.Result = new RedirectResult("~/Login/Index?" + filterContext.HttpContext.Request.QueryString);
+                    return;
+                }
             }
 
             base.OnActionExecuting(filterContext);
