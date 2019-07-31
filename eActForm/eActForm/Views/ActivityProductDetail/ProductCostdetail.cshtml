@@ -80,7 +80,7 @@
                     }
                 }
 
-                @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(wholeSalesPrice_" + index + ")" })</td>
                 }
@@ -108,19 +108,19 @@
                 </td>
                 @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
                 {
-                    <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp, "{0:n2}%", new { @id = "normalGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")" })</td>
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp, "{0:n2}", new { @id = "normalGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")" })</td>
                 }
                 else
                 {
-                    <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp, "{0:n2}%", new { @id = "normalGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @readonly = true })</td>
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp, "{0:n2}", new { @id = "normalGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @readonly = true })</td>
                 }
                 @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
                 {
-                    <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:n2}%", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")" })</td>
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:n2}", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")" })</td>
                 }
                 else
                 {
-                    <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:n2}%", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @readonly = true })</td>
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:n2}", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @readonly = true })</td>
                 }
                 @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
                 {

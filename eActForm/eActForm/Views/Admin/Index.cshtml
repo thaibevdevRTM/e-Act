@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
 
 
 <style type="text/css">
@@ -129,7 +129,7 @@
             $adminPage.urlgetProductSmell = '@Url.Action("getProductSmell", "eAct")';
             $adminPage.urlIndexAdmin = '@Url.Action("Index", "Admin")';
             $adminPage.urlDelProduct = '@Url.Action("delProductAndPrice", "Admin")';
-        
+
     });
 
 

@@ -31,10 +31,33 @@
                 }
             });
 
+
+            $.ajax({
+                url: $adminPage.urlGetGroup,
+                data: {
+                    cateId: cateid,
+                },
+                dataType: "json",
+                type: 'POST',
+                success: function (response) {
+
+                    if (response.Data.productGroup.length > 0) {
+                        $("#ddlProductGrp option[value !='']").remove();
+                        $.each(response.Data.productGroup, function () {
+                            $("#ddlProductGrp").append($("<option></option>").val(this['id']).html(this['groupName']));
+                            document.getElementById("ddlProductGrp").value = groupid;
+                        });
+                    }
+                    else {
+                        $("#ddlProductGrp option[value !='']").remove();
+                        document.getElementById("ddlProductGrp").value = groupid;
+                    }
+                  
+
+                }
+            });
             
-            document.getElementById("ddlProductSmell").value = smellid;
             document.getElementById("ddlProductCate").value = cateid;
-            document.getElementById("ddlProductGrp").value = groupid;
             document.getElementById("ddlProductBrand").value = brandid;
             $("#txtProductCode").val(productcode);
             $("#txtSize").val(size);
