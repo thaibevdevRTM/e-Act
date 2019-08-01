@@ -1,4 +1,7 @@
 ﻿@model eActForm.Models.Activity_Model
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@using eActForm.Models;
 @{
     Layout = null;
     decimal? perTotal = 0;
@@ -256,8 +259,11 @@
                     <td style="width:10%;  font-size:12.5px;">Normal</td>
                     <td style="width:10%;  font-size:12.5px;">Normal</td>
                     <td style="width:10%;  font-size:12.5px;">Promotion</td>
-                    <td style="width:10%;  font-size:12.5px;">Special</td>
-                    <td style="width:10%;  font-size:12.5px;">Promotion</td>
+                    @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                    {
+                        <td style="width:10%;  font-size:12.5px;">Special</td>
+                        <td style="width:10%;  font-size:12.5px;">Promotion</td>
+                    }
                 </tr>
                 <tr>
                     <td style="font-size:12.5px;">(1)</td>
@@ -266,23 +272,27 @@
                     <td style="font-size:12.5px;">Cost</td>
                     <td style="font-size:12.5px;">GP%</td>
                     <td style="font-size:12.5px;">GP%</td>
-                    @if (Model.productcostdetaillist1.Any())
+
+                    @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        if (Model.productcostdetaillist1[0].specialDiscBaht != 0)
+                        if (Model.productcostdetaillist1.Any())
                         {
-                            <td style="font-size:12.5px;">Discount Baht</td>
+                            if (Model.productcostdetaillist1[0].specialDiscBaht != 0)
+                            {
+                                <td style="font-size:12.5px;">Discount Baht</td>
+                            }
+                            else
+                            {
+                                <td style="font-size:12.5px;">Discount %</td>
+                            }
                         }
                         else
                         {
                             <td style="font-size:12.5px;">Discount %</td>
                         }
-                    }
-                    else
-                    {
-                        <td style="font-size:12.5px;">Discount %</td>
+                        <td style="font-size:12.5px;">Cost (BHT)</td>
                     }
 
-                    <td style="font-size:12.5px;">Cost (BHT)</td>
                 </tr>
 
                 @if (Model.productcostdetaillist1.Any())
@@ -313,15 +323,19 @@
                             <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
                             <td class="font11 textRight">@Html.DisplayFor(m => item.normalGp)</td>
                             <td class="font11 textRight">@Html.DisplayFor(m => item.promotionGp)</td>
-                            @if (item.specialDiscBaht != 0)
+
+                            @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                             {
-                                <td class="font11 textRight">@Html.DisplayFor(m => item.specialDiscBaht)</td>
+                                if (item.specialDiscBaht != 0)
+                                {
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.specialDiscBaht)</td>
+                                }
+                                else
+                                {
+                                    <td class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
+                                }
+                                <td class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
                             }
-                            else
-                            {
-                                <td class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
-                            }
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
                         </tr>
 
                     }
@@ -343,14 +357,24 @@
                 <tr>
                     <td rowspan="2" width="20%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
                     <td rowspan="2" width="30%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
-                    <td colspan="5" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
+                    @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                    {
+                        <td colspan="5" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
+                    }
+                    else
+                    {
+                        <td colspan="4" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
+                    }
                 </tr>
                 <tr>
                     <td width="10%" style="font-size:12.5px;">ยอดขายปกติ (Case)</td>
                     <td width="10%" style="font-size:12.5px;">ยอดขายข่วงทำกิจกรรม (Case)</td>
                     <td width="10%" style="font-size:12.5px;">% Growth</td>
                     <td width="12%" style="font-size:12.5px;">ค่าใช้จ่ายรวม Spending Exp. (Bath)</td>
-                    <td width="8%" style="font-size:12.5px;">% ยอดขาย</td>
+                    @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                    {
+                        <td width="8%" style="font-size:12.5px;">% ยอดขาย</td>
+                    }
                 </tr>
                 @if (Model.activitydetaillist.Any())
                 {
@@ -371,7 +395,10 @@
                             <td class="font11 textRight">@Html.DisplayFor(m => item.themeCost)</td>
                             <td class="font11 textRight">@string.Format("{0:n2}", item.growth)</td>
                             <td class="font11 textRight">@Html.DisplayFor(m => item.total)</td>
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.perTotal)</td>
+                            @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                            {
+                                <td class="font11 textRight">@Html.DisplayFor(m => item.perTotal)</td>
+                            }
                         </tr>
                         perTotal = item.perTotal == null ? 0 + perTotal : item.perTotal + perTotal;
                         totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
@@ -413,13 +440,17 @@
                             @result.ToString();
                         }
                     </td>
-                    <td class="textRight">
-                        @*@if (perTotal != 0)
-                            {
-                                string result = String.Format("{0:n2}%", @perTotal);
-                                @result.ToString();
-                            }*@
-                    </td>
+                    @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                    {
+                        <td class="textRight">
+                            @*@if (perTotal != 0)
+                                {
+                                    string result = String.Format("{0:n2}%", @perTotal);
+                                    @result.ToString();
+                                }*@
+                        </td>
+                    }
+
                 </tr>
 
             </table>

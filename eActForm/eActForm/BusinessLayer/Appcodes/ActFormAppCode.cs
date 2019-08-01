@@ -123,7 +123,9 @@ namespace eActForm.BusinessLayer
                                  normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
                                  themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
-                                 createByUserName = dr["createByUserName"].ToString()
+                                 createByUserName = dr["createByUserName"].ToString(),
+                                 
+                                 
                              }).ToList();
 
                 if(activityType == Activity_Model.activityType.OMT.ToString())

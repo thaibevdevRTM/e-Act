@@ -57,7 +57,7 @@ namespace eActForm.Controllers
                 var getProductGroup = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId.Trim() == cateId.Trim()).ToList();
                 var resultData = new
                 {
-                    //    productGroup = getProductGroup.GroupBy(item => item.productGroup)
+                    //productGroup = getProductGroup.GroupBy(item => item.productGroup)
                     //.Select(group => new TB_Act_Product_Cate_Model.Product_Cate_Model
                     //{
                     //    id = group.First().id,

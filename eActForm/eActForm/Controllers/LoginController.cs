@@ -13,6 +13,17 @@ namespace eActForm.Controllers
     public class LoginController : Controller
     {
 
+        public ActionResult Maintain()
+        {
+            if (!bool.Parse(ConfigurationManager.AppSettings["isMaintainMode"]))
+            {
+                return RedirectToAction("index");
+            }
+            else
+            {
+                return View();
+            }
+        }
         public ActionResult Index()
         {
             if (TempData["CustomerError"] != null)
