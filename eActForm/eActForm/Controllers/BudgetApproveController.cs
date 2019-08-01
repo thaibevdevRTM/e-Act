@@ -178,26 +178,13 @@ namespace eActForm.Controllers
 				}
 				else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
 				{
-					var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
-					GridHtml = GridHtml.Replace("<br>", "<br/>");
-
-					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-
-					//try
-					//{
-					//	AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-					//}
-					//catch (Exception ex)
-					//{
-					//	AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-					//}
-
-					
-
 					EmailAppCodes.sendApproveBudget(budgetApproveId, AppCode.ApproveType.Budget_form,false );
-
-					//ApproveAppCode.setCountWatingApprove();
 				}
+
+				var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
+				GridHtml = GridHtml.Replace("<br>", "<br/>");
+				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+
 				resultAjax.Success = true;
 			}
 			catch (Exception ex)
