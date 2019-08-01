@@ -128,6 +128,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("genPdfApprove >> " + ex.Message);
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
             }

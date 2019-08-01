@@ -306,7 +306,7 @@ else
         $.ajax({
             url: '@Url.Action("genPdfApprove", "Approve")',
             data: {
-                GridHtml: $("#Grid").html(),
+                GridHtml: $("#Grid1").html(),
                 statusId: $("#ddlStatus").val(),
                 activityId: $("#HdId").val()
             },

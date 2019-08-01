@@ -2,8 +2,10 @@
 @using eActForm.BusinessLayer
 @model eActForm.Models.Activity_Model
 @{
-    ViewBag.Title = "Home Page";
-    var mode = Request["mode"] == null ? "" : Request["mode"];
+                /**/
+
+                ViewBag.Title = "Home Page";
+                var mode = Request["mode"] == null ? "" : Request["mode"];
 }
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
@@ -288,7 +290,7 @@
 </div>
 <hr />
 <div id="getQuery" class="col-lg-12">
-    @Html.Action("productCostDetail", "ActivityProductDetail")
+    @Html.Action("productCostDetail", "ActivityProductDetail" , new { typeForm = Model.activityFormModel.typeForm })
 </div>
 
 <div class="row" id="divAddProductCostDetail">
@@ -315,7 +317,7 @@
 </div>
 <hr />
 <div id="divgetdetailcost" class="col-lg-12">
-    @Html.Action("activityCostDetail", "ActivityCostDetail")
+    @Html.Action("activityCostDetail", "ActivityCostDetail", new { typeForm = Model.activityFormModel.typeForm })
 </div>
 
 
@@ -336,7 +338,6 @@
     </div>
 </div>
 <hr />
-
 
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
     <div id="divPreview">
@@ -392,8 +393,6 @@
         <div class="inner" id="divbtnUpdate">
             <button id="btnUpdate" type="button" class="btn ink-reaction btn-default" onclick="validateUpdate()">&nbsp;Update</button>
         </div>
-
-
     </div>
 
 </div>
@@ -715,7 +714,7 @@
                  smellId: $("#ddlProductSmell").val(),
                  size: $("#ddlProductSize").val(),
                  cusid: customer,
-                 theme: $("#ddlTheme").val()
+                 theme: $("#ddlTheme").val(),
              },
                 dataType: "json",
                 type: 'POST',
@@ -889,8 +888,6 @@
             });
     }
 
-
-
     function copyAndSaveNew() {
 
         var cusId = '';
@@ -967,7 +964,6 @@
                     });
                 }
             }
-
         });
     }
 
@@ -1032,7 +1028,8 @@
             type: 'POST',
             url:  '@Url.Action("PreviewData", "Activity")',
             data: {
-                activityId: obj
+                activityId: obj,
+                typeForm:'@Model.activityFormModel.typeForm'
             }
         }).done(function (htmlResponse) {
             $("#WaitDialog").hide();
@@ -1047,7 +1044,8 @@
             type: 'POST',
             url:  '@Url.Action("activityCostDetail", "ActivityCostDetail")',
             data: {
-                activityModel: obj
+                activityModel: obj,
+                typeForm:'@Model.activityFormModel.typeForm',
             }
         }).done(function (htmlResponse) {
             $("#divgetdetailcost").html(htmlResponse)
@@ -1059,7 +1057,10 @@
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("ProductCostdetail", "ActivityProductDetail")',
-            data: { activityModel: obj}
+            data: {
+                activityModel: obj,
+                typeForm:'@Model.activityFormModel.typeForm',
+            }
         }).done(function (htmlResponse) {
             $("#getQuery").html(htmlResponse)
         });

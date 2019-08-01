@@ -76,3 +76,6 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\ActivityFormP
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\ActRepDetail\fileNotFound.pdf
 D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\WebGrease.dll
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\Antlr3.Runtime.dll
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\Antlr3.Runtime.pdb

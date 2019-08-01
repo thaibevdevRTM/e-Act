@@ -85,6 +85,7 @@ namespace eActForm.Controllers
         public ActionResult searchActForm(string activityType)
         {
             string count = Request.Form.AllKeys.Count().ToString();
+
             Activity_Model.actForms model;
             DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
@@ -93,6 +94,7 @@ namespace eActForm.Controllers
                 actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, startDate, endDate , activityType)
             };
 
+           
             if (Request.Form["txtActivityNo"] != "")
             {
                 model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
@@ -123,6 +125,7 @@ namespace eActForm.Controllers
                 model.actLists = model.actLists.Where(r => r.productGroupid == Request.Form["ddlProductGrp"]).ToList();
             }
 
+            model.typeForm = activityType;
             TempData["SearchDataModel"] = model;
             return RedirectToAction("myDoc");
         }

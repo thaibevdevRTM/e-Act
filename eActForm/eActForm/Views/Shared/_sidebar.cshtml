@@ -21,17 +21,17 @@
                 <li>
                     <a><i class="fa fa-edit"></i> Activity Forms <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                            @if (UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-                            {
-                                <li>@Html.ActionLink(" Activity Form", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-                            }
-                            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-                            {
-                                <li>@Html.ActionLink(" Activity Form OMT", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
+                        @if (UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                        {
+                            <li>@Html.ActionLink(" Activity Form", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                        }
+                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                        {
+                            <li>@Html.ActionLink(" Activity Form OMT", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
 
-                            }
-                        
-                      
+                        }
+
+
                     </ul>
                 </li>
             }
@@ -52,11 +52,11 @@
 
                         @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            <li>@Html.ActionLink(" Documents", "Index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString()},null)</li>
+                            <li>@Html.ActionLink(" Documents", "Index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, new { })</li>
                         }
                         @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            <li>@Html.ActionLink(" Documents OMT", "Index", "Home", new {typeForm = Activity_Model.activityType.OMT.ToString()}, null)</li>
+                            <li>@Html.ActionLink(" Documents OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                         }
 
                         <li>@Html.ActionLink(" Budget", "Index", "BudgetMyDoc")</li>
@@ -135,6 +135,16 @@
                     <li>@Html.ActionLink(" Create Signature ", "index", "Signature")</li>
                 </ul>
             </li>
+            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            {
+                <li>
+                    <a><i class="fa fa-paint-brush"></i> Product Setting <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li>@Html.ActionLink(" Product Setting ", "index", "Admin")</li>
+                    </ul>
+                </li>
+            }
+
             <li>
                 <a><i class="fa fa-sitemap"></i> Help <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
