@@ -61,7 +61,7 @@ namespace eActForm.BusinessLayer
                                  discount1 = d["discount1"] == null ? 0 :decimal.Parse(AppCode.checkNullorEmpty(d["discount1"].ToString())),
                                  discount2 = d["discount2"] == null ? 0 :decimal.Parse(AppCode.checkNullorEmpty(d["discount2"].ToString())),
                                  discount3 = d["discount3"] == null ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["discount3"].ToString())),
-                                 saleNormal = d["normalCost"] == null ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["normalCost"].ToString())),
+                                 saleNormal = d["saleNormal"] == null ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["saleNormal"].ToString())),
                                  updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                              });
                 return lists.ToList();

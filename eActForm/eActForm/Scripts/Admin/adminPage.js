@@ -1,19 +1,70 @@
 ﻿var $adminPage = (function () {
     document.getElementById("ddlProductGrp").disabled = false
-    document.getElementById("ddlProductBrand").disabled = true;
+
     'use strict';
    
     return {
 
-        editProduct: function (id, productcode, cateid, groupid, brandid, size, pack, productname) {
+        editProduct: function (id, productcode, cateid, groupid, brandid, size, pack, productname, smellid,unit) {
 
+            $.ajax({
+                url: $adminPage.urlgetProductSmell,
+                data: {
+                    productGroupId: groupid,
+                },
+                dataType: "json",
+                type: 'POST',
+                success: function (response) {
+                    if (response.Data.length > 0) {
+                        $("#ddlProductSmell option[value !='']").remove();
+                        $.each(response.Data, function () {
+                            $("#ddlProductSmell").append($("<option></option>").val(this['id']).html(this['nameTH']));
+                            document.getElementById("ddlProductSmell").disabled = false;
+                            document.getElementById("ddlProductSmell").value = smellid;
+                        });
+                    }
+                    else {
+                        $("#ddlProductSmell option[value !='']").remove();
+                        document.getElementById("ddlProductSmell").disabled = true;
+                        document.getElementById("ddlProductSmell").value = smellid;
+                    }
+                }
+            });
+
+
+            $.ajax({
+                url: $adminPage.urlGetGroup,
+                data: {
+                    cateId: cateid,
+                },
+                dataType: "json",
+                type: 'POST',
+                success: function (response) {
+
+                    if (response.Data.productGroup.length > 0) {
+                        $("#ddlProductGrp option[value !='']").remove();
+                        $.each(response.Data.productGroup, function () {
+                            $("#ddlProductGrp").append($("<option></option>").val(this['id']).html(this['groupName']));
+                            document.getElementById("ddlProductGrp").value = groupid;
+                        });
+                    }
+                    else {
+                        $("#ddlProductGrp option[value !='']").remove();
+                        document.getElementById("ddlProductGrp").value = groupid;
+                    }
+                  
+
+                }
+            });
+            
             document.getElementById("ddlProductCate").value = cateid;
-            document.getElementById("ddlProductGrp").value = groupid;
             document.getElementById("ddlProductBrand").value = brandid;
             $("#txtProductCode").val(productcode);
             $("#txtSize").val(size);
+            $("#txtUnit").val(unit);
             $("#txtPack").val(pack);
             $("#txtProductName").val(productname);
+           
 
         },
 
@@ -23,7 +74,7 @@
             $("#ddlProductfilter").val('');
             $("#ddlProductSize").val('');
 
-            document.getElementById("ddlProductBrand").disabled = true;
+            //document.getElementById("ddlProductBrand").disabled = true;
             var ddlProductGrp = $("#ddlProductGrp");
 
             $.ajax({
@@ -51,6 +102,20 @@
         },
 
 
+        onDelProduct: function (productId) {
+            $.ajax({
+                url: $adminPage.urlDelProduct ,
+                data: {
+                    productId: productId,
+                },
+                dataType: "json",
+                type: 'POST',
+                success: function (response) {
+                    window.location.href = $adminPage.urlIndexAdmin;
+                    }
+            });
+        },
+
         onchangeGroup: function () {
 
             var ddlProductBrand = $("#ddlProductBrand");
@@ -68,10 +133,32 @@
                         $.each(response.Data.getProductname, function () {
                             ddlProductBrand.append($("<option></option>").val(this['Value']).html(this['Text']));
                         });
-                        //document.getElementById("ddlProductBrand").disabled = false;
+                        document.getElementById("ddlProductBrand").disabled = false;
                     }
                     else {
-                        //document.getElementById("ddlProductBrand").disabled = true;
+                        document.getElementById("ddlProductBrand").disabled = true;
+                    }
+                }
+            });
+
+            $.ajax({
+                url: $adminPage.urlgetProductSmell,
+                data: {
+                    productGroupId: $("#ddlProductGrp").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+                success: function (response) {
+                    if (response.Data.length > 0) {
+                        $("#ddlProductSmell option[value !='']").remove();
+                        $.each(response.Data, function () {
+                            $("#ddlProductSmell").append($("<option></option>").val(this['id']).html(this['nameTH']));
+                            document.getElementById("ddlProductSmell").disabled = false;
+                        });
+                    }
+                    else {
+                        $("#ddlProductSmell option[value !='']").remove();
+                        document.getElementById("ddlProductSmell").disabled = true;
                     }
                 }
             });
@@ -90,17 +177,19 @@
                 type: 'POST',
                 success: function (response) {
                     if (response.Success == true) {
-                        $adminPage.callInsertProduct("คุณต้องการแก้ไขสินค้า ใช่ หรือ ไม่!", "update");
+                        console.log($("#ddlProductSmell").val())
+                        $adminPage.callInsertOrUpdateProduct("คุณต้องการแก้ไขสินค้า ใช่ หรือ ไม่!", "update");
+
                     }
                     else {
-                        $adminPage.callInsertProduct("คุณต้องการเพิ่ม ใช่ หรือ ไม่!", "insert");
+                        $adminPage.callInsertOrUpdateProduct("คุณต้องการเพิ่ม ใช่ หรือ ไม่!", "insert");
                     }
                 }
             });
 
         },
 
-        callInsertProduct: function (msg, type) {
+        callInsertOrUpdateProduct: function (msg, type) {
             bootbox.confirm({
                 message: msg,
                 buttons: {
@@ -122,18 +211,20 @@
                             $.ajax({
                                 url: $adminPage.urlAddProduct,
                                 data: {
-                                    p_cateId: $("#ddlProductCate").val(),
-                                    p_groupId: $("#ddlProductGrp").val(),
-                                    p_brandId: $("#ddlProductBrand").val(),
-                                    p_size: $("#txtSize").val(),
-                                    p_pack: $("#txtPack").val(),
-                                    p_productName: $("#txtProductName").val(),
-                                    p_productCode: $("#txtProductCode").val(),
+                                    cateId: $("#ddlProductCate").val(),
+                                    groupId: $("#ddlProductGrp").val(),
+                                    brandId: $("#ddlProductBrand").val(),
+                                    size: $("#txtSize").val(),
+                                    pack: $("#txtPack").val(),
+                                    unit: $("#txtUnit").val(),
+                                    productName: $("#txtProductName").val(),
+                                    productCode: $("#txtProductCode").val(),
+                                    smellId: $("#ddlProductSmell").val(),
                                 },
                                 dataType: "json",
                                 type: 'POST',
                                 success: function (response) {
-
+                                    window.location.href = $adminPage.urlIndexAdmin;
                                 }
                             });
                         }
@@ -141,18 +232,20 @@
                             $.ajax({
                                 url: $adminPage.urlUpdateProduct,
                                 data: {
-                                    p_cateId: $("#ddlProductCate").val(),
-                                    p_groupId: $("#ddlProductGrp").val(),
-                                    p_brandId: $("#ddlProductBrand").val(),
-                                    p_size: $("#txtSize").val(),
-                                    p_pack: $("#txtPack").val(),
-                                    p_productName: $("#txtProductName").val(),
-                                    p_productCode: $("#txtProductCode").val(),
+                                    cateId: $("#ddlProductCate").val(),
+                                    groupId: $("#ddlProductGrp").val(),
+                                    brandId: $("#ddlProductBrand").val(),
+                                    size: $("#txtSize").val(),
+                                    pack: $("#txtPack").val(),
+                                    unit: $("#txtUnit").val(),
+                                    productName: $("#txtProductName").val(),
+                                    productCode: $("#txtProductCode").val(),
+                                    smellId: $("#ddlProductSmell").val(),
                                 },
                                 dataType: "json",
                                 type: 'POST',
                                 success: function (response) {
-
+                                    window.location.href = $adminPage.urlIndexAdmin;
                                 }
                             });
                         }
@@ -161,7 +254,10 @@
 
             });
         },
+      
+        setComma: function (price) {
 
+        },
 
 
         onchangePrice: function (cusId, rowIndex) {
@@ -173,18 +269,19 @@
             var p_discount2 = $('#discount2_' + rowIndex).val();
             var p_discount3 = $('#discount3_' + rowIndex).val();
             var p_saleNormal = $('#saleNormal_' + rowIndex).val();
+
             $.ajax({
                 type: 'POST',
                 url: $adminPage.urlOnchangePrice,
                 data: {
                     customerId: cusId,
                     productCode: productId,
-                    normalCost: p_normalCost,
-                    wholeSalesPrice: p_wholeSalesPrice,
-                    discount1: p_discount1,
-                    discount2: p_discount2,
-                    discount3: p_discount3,
-                    saleNormal: p_saleNormal
+                    normalCost: p_normalCost.replace(",", ""),
+                    wholeSalesPrice: p_wholeSalesPrice.replace(",", ""),
+                    discount1: p_discount1.replace(",", ""),
+                    discount2: p_discount2.replace(",", ""),
+                    discount3: p_discount3.replace(",", ""),
+                    saleNormal: p_saleNormal.replace(",", ""),
                 }
             }).done(function (response) {
                 //CallChangefunc();
