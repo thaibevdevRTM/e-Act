@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.CommandHandler;
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace eActForm.Controllers
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.productBrandList = QueryGetAllBrand.GetAllBrand();
+            activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
+
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
             activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup();
             activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
@@ -42,12 +45,33 @@ namespace eActForm.Controllers
         }
 
 
+       
+
         public JsonResult onchangePrice(TB_Act_ProductPrice_Model.ProductPrice model)
         {
             var result = new AjaxResult();
             try
             {
-                
+
+                AdminCommandHandler.updatePriceProduct(model);
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult delProductAndPrice(string productId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                AdminCommandHandler.delProductMasterAndPrice(productId);
                 result.Success = true;
             }
             catch (Exception ex)
@@ -77,18 +101,36 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult addNewProduct(string p_cateId, string p_groupId, string p_brandId, string p_size, string p_pack, string p_productName, string p_productCode)
+        public JsonResult addNewProduct(TB_Act_Product_Model.Product_Model model)
         {
             var result = new AjaxResult();
+
+
+            result.Code = AdminCommandHandler.insertProduct(model);
+            //add productprice.....
+            var getCustomerAll = QueryGetAllCustomers.getAllCustomers();
+            if (getCustomerAll.Any())
+            {
+                int countinsert = 0;
+                foreach (var item in getCustomerAll)
+                {
+                    countinsert = AdminCommandHandler.insertProductPrice(model.productCode, item.id);
+                    countinsert++;
+                }
+            }
 
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult updateProduct(string p_cateId, string p_groupId, string p_brandId, string p_size, string p_pack, string p_productName, string p_productCode)
+        public JsonResult updateProduct(TB_Act_Product_Model.Product_Model model)
         {
             var result = new AjaxResult();
 
+            result.Code = AdminCommandHandler.updateProduct(model);
+
+            List<TB_Act_ProductPrice_Model.ProductPrice> productPriceList = new List<TB_Act_ProductPrice_Model.ProductPrice>();
+            productPriceList = QueryGetAllPrice.getPriceByProductCode(model.productCode);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

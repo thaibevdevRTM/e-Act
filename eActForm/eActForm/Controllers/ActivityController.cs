@@ -28,6 +28,7 @@ namespace eActForm.Controllers
     {
         public ActionResult ActivityForm(string activityId, string mode, string typeForm)
         {
+
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = new ActivityForm();
             activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
@@ -45,7 +46,6 @@ namespace eActForm.Controllers
             {
                 activityModel.regionGroupList = QueryGetAllRegion.getAllRegion();
             }
-
 
             Session.Remove("productcostdetaillist1");
             Session.Remove("activitydetaillist");
@@ -73,10 +73,6 @@ namespace eActForm.Controllers
             return View(activityModel);
         }
 
-
-     
-
-
         public ActionResult ImageList(string activityId)
         {
             try
@@ -101,10 +97,11 @@ namespace eActForm.Controllers
 
         }
 
-        public ActionResult PreviewData(string activityId)
+        public ActionResult PreviewData(string activityId,string typeForm)
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+            activityModel.activityFormModel.typeForm = typeForm;
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
             activityModel.productImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();

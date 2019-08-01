@@ -135,6 +135,16 @@
                     <li>@Html.ActionLink(" Create Signature ", "index", "Signature")</li>
                 </ul>
             </li>
+            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            {
+                <li>
+                    <a><i class="fa fa-paint-brush"></i> Product Setting <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li>@Html.ActionLink(" Product Setting ", "index", "Admin")</li>
+                    </ul>
+                </li>
+            }
+
             <li>
                 <a><i class="fa fa-sitemap"></i> Help <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
