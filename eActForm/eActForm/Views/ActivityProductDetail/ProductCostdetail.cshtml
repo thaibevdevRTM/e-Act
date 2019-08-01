@@ -97,11 +97,11 @@
                 <td style="text-align:right">
                     @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
                     {
-                        @Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "normalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")" })
+                        @Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { Style = "background:#c5f0c5;", @id = "normalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")" })
                     }
                     else
                     {
-                        @Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "normalCost_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })
+                        @Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { Style = "background:#c5f0c5;", @id = "normalCost_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })
 
                     }
 

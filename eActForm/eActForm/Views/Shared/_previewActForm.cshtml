@@ -9,6 +9,7 @@
     decimal? costActivity = 0;
     decimal? costProduct = 0;
     decimal? growthPerTotal = 0;
+    decimal? sumGrowth = 0;
 }
 
 <div class="modal-body">
@@ -404,6 +405,7 @@
                         totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
                         costProduct = item.normalCost == null ? 0 + costProduct : item.normalCost + costProduct;
                         costActivity = item.themeCost == null ? 0 + costActivity : item.themeCost + costActivity;
+                        sumGrowth = item.growth == null ? 0 + sumGrowth : item.growth + sumGrowth;
                     }
                 }
 
@@ -426,11 +428,20 @@
                         }
                     </td>
                     <td class="textRight">
-                        @if (totalActCost != 0 && costActivity != 0 && costProduct != 0)
+                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
                         {
-                            growthPerTotal = (costActivity - costProduct) / costProduct * 100;
+                            growthPerTotal = sumGrowth;
                             string result = String.Format("{0:n2}%", @growthPerTotal);
                             @result.ToString();
+                        }
+                        else
+                        {
+                            if (costActivity != 0 && costProduct != 0)
+                            {
+                                growthPerTotal = (costActivity - costProduct) / costProduct * 100;
+                                string result = String.Format("{0:n2}%", @growthPerTotal);
+                                @result.ToString();
+                            }
                         }
                     </td>
                     <td class="textRight">
