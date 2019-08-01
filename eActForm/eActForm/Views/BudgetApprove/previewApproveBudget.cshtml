@@ -31,7 +31,6 @@
     }
 
 		function genPdfApproveBudget() {
-		//alert('สลัดผัก genPdfApproveBudget');
 			$("#WaitDialog").show();
             $.ajax({
             url: '@Url.Action("genPdfApproveBudget", "BudgetApprove")',
@@ -60,7 +59,6 @@
 </style>
 
 @Html.HiddenFor(m => m.Budget_Activity_list.ElementAt(0).budget_id, new { id = "HbudgetId" })
-@*@Html.HiddenFor(m => m.Budget_Approve_detail_list.ElementAt(0).budgetApproveId, new { id = "HbudgetApproveId" })*@
 
 @if (1 == 1)
 {
@@ -131,7 +129,7 @@
 								<td style="text-align:left;">
 									<label> ระยะเวลากิจกรรม (Activity Period) : </label>
 									@*@Model.Budget_Activity_list.ElementAt(0).act_activityPeriodSt.Value.ToString("dd/MM/yyyy")  to  @Model.Budget_Activity_list.ElementAt(0).act_activityPeriodEnd.Value.ToString("dd/MM/yyyy")*@
-									@Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodSt to @Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodEnd
+									@Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodSt.Value.ToString("dd/MM/yyyy") ถึง @Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodEnd.Value.ToString("dd/MM/yyyy")
 								</td>
 								<td style="text-align:right;">
 									<label> ช่องทาง (Channel) : </label> @Model.Budget_Activity_list.ElementAt(0).ch_chanelGroup
@@ -186,7 +184,7 @@
 								<td rowspan="2" style="width:30%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
 								<td colspan="4" style="width:25%; font-size:11px;">จ่ายจริง (Actual)</td>
 
-								<td rowspan="2" style="width:7%; font-size:11px;">ผลต่าง-บาท</td>
+								<td rowspan="2" style="width:7%; font-size:11px;">คงเหลือ</td>
 								<td rowspan="2" style="width:7%; font-size:11px;">วันที่ทำรายการ</td>
 								<td rowspan="2" style="width:10%; font-size:11px;">สถานะ</td>
 								<td rowspan="2" style="width:10%; font-size:11px;">สถานะอนุมัติ</td>
