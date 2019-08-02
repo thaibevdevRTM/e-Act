@@ -124,10 +124,7 @@
 				{
 					<tr class="gradeX">
 						<td style="text-align:center;">
-							@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = item.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
-							<a onclick="callApproveList('@item.budgetApproveId');">
-								<i class="btn ink-reaction btn-dark fa fa-eye"></i>
-							</a>
+
 
 							@if (item.invoiceApproveStatusId == 1) // draff
 							{
@@ -137,12 +134,12 @@
 									<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
 								</a>
 							}
-							else if (item.invoiceApproveStatusId == 5) // reject
+							else
 							{
-								@*<div class="anchorDetail btn ink-reaction btn-sm btn-dark fa fa-edit disabled"></div>
-			<a href="javascript:" target="_blank" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
-				<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-			</a>*@
+								@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = item.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
+								<a onclick="callApproveList('@item.budgetApproveId');">
+									<i class="btn ink-reaction btn-dark fa fa-eye"></i>
+								</a>
 							}
 						</td>
 						<td style="font-size:12.5px;text-align:right;">

@@ -172,6 +172,10 @@ namespace eActForm.Controllers
 			try
 			{
 
+				var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
+				GridHtml = GridHtml.Replace("<br>", "<br/>");
+				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+
 				if (statusId == ConfigurationManager.AppSettings["statusReject"])
 				{
 					EmailAppCodes.sendRejectBudget(budgetApproveId, AppCode.ApproveType.Budget_form);
@@ -181,9 +185,6 @@ namespace eActForm.Controllers
 					EmailAppCodes.sendApproveBudget(budgetApproveId, AppCode.ApproveType.Budget_form,false );
 				}
 
-				var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
-				GridHtml = GridHtml.Replace("<br>", "<br/>");
-				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
 
 				resultAjax.Success = true;
 			}
@@ -206,6 +207,7 @@ namespace eActForm.Controllers
 			{
 				if (updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"]) > 0)
 				{
+					setCountWatingApproveBudget();
 					result.Success = true;
 				}
 				else
