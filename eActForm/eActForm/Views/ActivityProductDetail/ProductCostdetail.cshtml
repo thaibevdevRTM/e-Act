@@ -189,7 +189,7 @@
 <input type="hidden" id="hdPromotionCost" value="@promotionTotal">
 <script>
 
-    var rowCount = @Model.productcostdetaillist1.Count
+    var rowCount = @Model.productcostdetaillist1.Count;
     function calProductDiscount(id, rowIndex) {
         if ($('#wholeSalesPrice_' + rowIndex).val() != "") {
             var productId = $('#hdProductId_' + rowIndex).val();
@@ -204,7 +204,6 @@
             var promotionGP = $('#promotionGp_' + rowIndex).val();
             var specialDisc = $("#specialDisc_" + rowIndex).val();
             var specialDiscBaht = $("#specialDiscBaht_" + rowIndex).val();
-
             $.ajax({
             type: 'POST',
             url:  '@Url.Action("calDiscountProduct", "ActivityProductDetail")',
