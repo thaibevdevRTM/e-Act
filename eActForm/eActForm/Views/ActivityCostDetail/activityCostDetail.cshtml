@@ -96,14 +96,7 @@
                             @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")", style = "autofocus = 'autofocus'" })
                         </td>
                         <td>
-                            @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                            {
-                                @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblGrowth_" + index + ")", style = "autofocus = 'autofocus'" })
-                            }
-                            else
-                            {
-                                @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true, style = "autofocus = 'autofocus'" })
-                            }
+                             @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true, style = "autofocus = 'autofocus'" }) 
                         </td>
                         <td>
                             @Html.TextBoxFor(model => item.LE, "{0:n2}", new { @id = "lblLE_" + index, Name = "lblLE_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")", style = "autofocus = 'autofocus'" })
@@ -272,8 +265,7 @@
         var LE = $("#lblLE_" + rowIndex).val();
         LE = LE == "" ? 0 : LE;
         var productId = $("#hdProductId_" + rowIndex).val();
-        var growth = $("#lblGrowth_" + rowIndex).val();
-        growth = growth == "" ? 0 : growth;
+        
 
         $.ajax({
             type: 'POST',
@@ -287,7 +279,6 @@
                 unit: unit,
                 compensate: compensate,
                 LE: LE,
-                growth: growth,
                 typeForm:'@Model.activityFormModel.typeForm'
             }
         }).done(function (response) {

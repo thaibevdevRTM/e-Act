@@ -241,10 +241,10 @@ namespace eActForm.BusinessLayer
                     {
                         pathFile[i] = HttpContext.Current.Server.MapPath(item._fileName);
                     }
-                    else if (item.extension == ".pdf")
-                    {
-                        pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-                    }
+                    //else if (item.extension == ".pdf")
+                    //{
+                    //    pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
+                    //}
                     i++;
                 }
             }

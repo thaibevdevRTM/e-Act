@@ -195,7 +195,7 @@ namespace eActForm.Controllers
         /// <param name="compensate"></param>
         /// <param name="LE"></param>
         /// <returns></returns>
-        public JsonResult calActivityDetailCost(string name, string productGroupId, string productId, string normalCase, string promotionCase, string unit, string compensate, string LE, string growth, string typeForm)
+        public JsonResult calActivityDetailCost(string name, string productGroupId, string productId, string normalCase, string promotionCase, string unit, string compensate, string LE,  string typeForm)
         {
             var result = new AjaxResult();
 
@@ -227,16 +227,13 @@ namespace eActForm.Controllers
                         if (typeForm == Activity_Model.activityType.OMT.ToString())
                         {
                             p_total = (getNormalCost) * decimal.Parse(promotionCase);
-                            
-                            p_growth = (decimal.Parse(promotionCase) - decimal.Parse(normalCase)) / decimal.Parse(AppCode.checkNullorEmpty(normalCase) == "0" ? "1" : normalCase) * 100;
-                            p_growth = p_growth != decimal.Parse(growth) ? decimal.Parse(growth) : p_growth;
                         }
                         else
                         {
                             p_total = (getNormalCost - getPromotionCost) * decimal.Parse(promotionCase);
-                            p_growth = normalCase == "0" ? 0 : (decimal.Parse(promotionCase) - decimal.Parse(normalCase)) / decimal.Parse(AppCode.checkNullorEmpty(normalCase) == "0" ? "1" : normalCase) * 100;
-
                         }
+
+                        p_growth = normalCase == "0" ? 0 : (decimal.Parse(promotionCase) - decimal.Parse(normalCase)) / decimal.Parse(AppCode.checkNullorEmpty(normalCase) == "0" ? "1" : normalCase) * 100;
                     }
                 }
 
