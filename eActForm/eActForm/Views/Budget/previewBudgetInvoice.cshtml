@@ -173,7 +173,7 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodSt)
 									}
-									 to 
+									 ถึง 
 									@if (Model.Budget_Activity.act_activityPeriodEnd.ToString() != "")
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodEnd)
@@ -259,7 +259,7 @@
 								<td rowspan="2" style="width:30%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
 								<td colspan="4" style="width:25%; font-size:11px;">จ่ายจริง (Actual)</td>
 
-								<td rowspan="2" style="width:7%; font-size:11px;">ผลต่าง-บาท</td>
+								<td rowspan="2" style="width:7%; font-size:11px;">คงเหลือ</td>
 								<td rowspan="2" style="width:7%; font-size:11px;">วันที่ทำรายการ</td>
 								<td rowspan="2" style="width:10%; font-size:11px;">สถานะ</td>
 								<td rowspan="2" style="width:10%; font-size:11px;">สถานะอนุมัติ</td>
@@ -314,7 +314,7 @@
 												<td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
 											}
 
-											@if (item.invoiceApproveStatusId == 2 || item.invoiceApproveStatusId == 5)
+											@if ( item.invoiceApproveStatusId == 1 )
 											{
 												count_wait_approve++;
 											}
@@ -364,7 +364,7 @@
 					<p class="d-flex justify-content-center">
 
 						<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-						@if (count_wait_approve == 0)
+						@if (count_wait_approve > 0)
 						{
 							<button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
 						}
