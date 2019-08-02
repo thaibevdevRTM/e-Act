@@ -155,7 +155,7 @@
 									@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txt_date_action" })
 								</td>
 								<td width="10%">
-									@Html.DropDownListFor(item => Model.Budget_Activity_Ststus_list.ElementAt(0).id, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 2), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })
+									@Html.DropDownListFor(item => Model.Budget_Activity_Ststus_list.ElementAt(0).id, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 2), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" , @onchange = "CallChangefunc(this.value)" } )
 								</td>
 							}
 						</tr>
@@ -195,5 +195,17 @@
 		}
 	});
 
+
+	
+	function CallChangefunc(invoice_type) {
+		if (invoice_type == 3) {
+			document.getElementById("txt_invoice_no").value = "-";
+			document.getElementById("txt_invoice_baht").value = "0";
+		} else {
+			document.getElementById("txt_invoice_no").value = "";
+			document.getElementById("txt_invoice_baht").value = "";
+		}
+		
+	}
 
 </script>
