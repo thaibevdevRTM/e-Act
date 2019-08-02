@@ -155,7 +155,6 @@ namespace eActForm.Controllers
                 var saleIn = model.saleIn.ToString().Replace(",", "");
                 var normalGP = model.normalGp == null ? "" : model.normalGp.ToString().Replace(",", "");
                 var promotionGP = model.promotionGp == null ? "" : model.promotionGp.ToString().Replace(",", "");
-                var promotionCost = model.promotionCost == null ? "" : model.promotionCost.ToString().Replace(",", "");
 
                 decimal p_wholeSalesPrice = AppCode.checkNullorEmpty(wholeSalesPrice) == "0" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(wholeSalesPrice));
                 decimal p_disCount1 = AppCode.checkNullorEmpty(model.disCount1.ToString()) == "0" ? p_wholeSalesPrice : p_wholeSalesPrice - (decimal.Parse(AppCode.checkNullorEmpty(model.disCount1.ToString())));
@@ -192,8 +191,8 @@ namespace eActForm.Controllers
                         r.promotionGp = Math.Round(p_PromotionGp, 3);
                         r.specialDisc = decimal.Parse(AppCode.checkNullorEmpty(model.specialDisc.ToString()));
                         r.specialDiscBaht = decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
-                        r.normalCost = decimal.Parse(AppCode.checkNullorEmpty(normalCost)) == 0 ? p_disCount3 : decimal.Parse(AppCode.checkNullorEmpty(normalCost));
-                        r.promotionCost = AppCode.checkNullorEmpty(promotionCost) == "0" ? Math.Round(p_PromotionCost, 3) : decimal.Parse(AppCode.checkNullorEmpty(promotionCost)) ;
+                        r.normalCost = p_disCount3 == 0 ? model.normalCost : p_disCount3;
+                        r.promotionCost = Math.Round(p_PromotionCost, 3);
                         return r;
                     }).ToList();
                 Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;

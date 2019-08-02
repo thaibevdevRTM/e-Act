@@ -204,7 +204,6 @@
             var promotionGP = $('#promotionGP_' + rowIndex).val();
             var specialDisc = $("#specialDisc_" + rowIndex).val();
             var specialDiscBaht = $("#specialDiscBaht_" + rowIndex).val();
-            var promotionCost = $("#promotionCost_" + rowIndex).val();
 
             $.ajax({
             type: 'POST',
@@ -223,7 +222,6 @@
                  promotionGP: promotionGP,
                  specialDisc: specialDisc,
                  specialDiscBaht: specialDiscBaht,
-                 promotionCost: promotionCost,
             }
          }).done(function (response) {
              CallChangefunc();
