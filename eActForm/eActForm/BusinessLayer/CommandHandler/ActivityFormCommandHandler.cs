@@ -29,7 +29,7 @@ namespace eActForm.BusinessLayer
                    DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                 model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
                    DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                model.activityFormModel.activityNo = !string.IsNullOrEmpty(model.activityFormModel.activityNo) ? model.activityFormModel.activityNo : "";
+                model.activityFormModel.activityNo = model.activityFormModel.activityNo != null ? model.activityFormModel.activityNo : "___";
                 model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
                 model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
@@ -173,7 +173,7 @@ namespace eActForm.BusinessLayer
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);
                 if (getActList.Any())
                 {
-                    if (string.IsNullOrEmpty(getActList.FirstOrDefault().activityNo.ToString()))
+                    if (getActList.FirstOrDefault().activityNo.ToString() == "___")
                     {
                         if (getActList.FirstOrDefault().chanel_Id != "")
                         {

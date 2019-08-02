@@ -200,11 +200,10 @@
             var disCount2 = $('#disCount2_' + rowIndex).val();
             var disCount3 = $('#disCount3_' + rowIndex).val();
             var normalCost = $('#normalCost_' + rowIndex).val();
-            var normalGP = $('#normalGP_' + rowIndex).val();
-            var promotionGP = $('#promotionGP_' + rowIndex).val();
+            var normalGP = $('#normalGp_' + rowIndex).val();
+            var promotionGP = $('#promotionGp_' + rowIndex).val();
             var specialDisc = $("#specialDisc_" + rowIndex).val();
             var specialDiscBaht = $("#specialDiscBaht_" + rowIndex).val();
-            var promotionCost = $("#promotionCost_" + rowIndex).val();
 
             $.ajax({
             type: 'POST',
@@ -212,18 +211,17 @@
              data: {
                  productGroupId: id,
                  productId: productId,
-                 wholeSalesPrice: wholeSalesPrice,
-                 saleNormal: saleNormal,
-                 saleIn: saleIn,
-                 disCount1: disCount1,
-                 disCount2: disCount2,
-                 disCount3: disCount3,
-                 normalCost: normalCost,
-                 normalGP: normalGP,
-                 promotionGP: promotionGP,
-                 specialDisc: specialDisc,
-                 specialDiscBaht: specialDiscBaht,
-                 promotionCost: promotionCost,
+                 wholeSalesPrice: wholeSalesPrice.replace(",", ""),
+                 saleNormal: saleNormal.replace(",", ""),
+                 saleIn: saleIn.replace(",", ""),
+                 disCount1: disCount1.replace(",", ""),
+                 disCount2: disCount2.replace(",", ""),
+                 disCount3: disCount3.replace(",", ""),
+                 normalCost: normalCost.replace(",", ""),
+                 normalGP: normalGP.replace(",", ""),
+                 promotionGP: promotionGP.replace(",", ""),
+                 specialDisc: specialDisc.replace(",", ""),
+                 specialDiscBaht: specialDiscBaht.replace(",", ""),
             }
          }).done(function (response) {
              CallChangefunc();
