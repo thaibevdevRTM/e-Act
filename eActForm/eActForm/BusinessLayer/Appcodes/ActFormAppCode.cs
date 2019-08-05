@@ -78,14 +78,14 @@ namespace eActForm.BusinessLayer
         }
 
         
-        public static List<Activity_Model.actForm> getActFormByEmpId(string empId, DateTime startDate, DateTime endDate , string activityType)
+        public static List<Activity_Model.actForm> getActFormByEmpId(string customerId, DateTime startDate, DateTime endDate , string activityType)
         {
             try
             {
-                string spName = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAll" : "usp_getActivityFormByEmpId";
+                string spName = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAll" : "usp_getActivityFormByCustomerId";
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, spName
                     , new SqlParameter[] {
-                        new SqlParameter("@empId", empId)
+                        new SqlParameter("@customerId", customerId)
                         ,new SqlParameter("@startDate", startDate)
                         ,new SqlParameter("@endDate", endDate)
                     });
