@@ -122,6 +122,7 @@ namespace eActForm.Models
 			public Int32 invoiceApproveStatusId { get; set; }
 			public string invoiceApproveStatusName { get; set; }
 			public string approveInvoiceId { get; set; }
+			public string budgetApproveId { get; set; }
 
 			public Boolean delFlag { get; set; }
 			public DateTime createdDate { get; set; }
@@ -149,6 +150,7 @@ namespace eActForm.Models
 			public decimal productBalanceBath { get; set; } /*ผลต่าง*/
 			public string budgetStatusId { get; set; }
 			public string budgetStatusNameTH { get; set; }
+			
 			//public Int32 invoiceSeq { get; set; }
 
 			//public string invoiceNo { get; set; }

@@ -195,7 +195,7 @@ namespace eActForm.Controllers
         /// <param name="compensate"></param>
         /// <param name="LE"></param>
         /// <returns></returns>
-        public JsonResult calActivityDetailCost(string name, string productGroupId, string productId, string normalCase, string promotionCase, string unit, string compensate, string LE)
+        public JsonResult calActivityDetailCost(string name, string productGroupId, string productId, string normalCase, string promotionCase, string unit, string compensate, string LE,  string typeForm)
         {
             var result = new AjaxResult();
 
@@ -211,6 +211,7 @@ namespace eActForm.Controllers
                 decimal get_PerTotal = 0;
                 decimal p_total = 0;
                 decimal p_LE = decimal.Parse(AppCode.checkNullorEmpty(LE));
+                decimal p_growth = 0;
 
                 if (activityModel.productcostdetaillist1 != null)
                 {
@@ -223,7 +224,16 @@ namespace eActForm.Controllers
                         getPromotionCost = decimal.Parse(AppCode.checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).Any() ?
                             activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).FirstOrDefault().promotionCost.ToString() : "0"));
 
-                        p_total = (getNormalCost - getPromotionCost) * decimal.Parse(promotionCase);
+                        if (typeForm == Activity_Model.activityType.OMT.ToString())
+                        {
+                            p_total = (getNormalCost) * decimal.Parse(promotionCase);
+                        }
+                        else
+                        {
+                            p_total = (getNormalCost - getPromotionCost) * decimal.Parse(promotionCase);
+                        }
+
+                        p_growth = normalCase == "0" ? 0 : (decimal.Parse(promotionCase) - decimal.Parse(normalCase)) / decimal.Parse(AppCode.checkNullorEmpty(normalCase) == "0" ? "1" : normalCase) * 100;
                     }
                 }
 
@@ -233,7 +243,8 @@ namespace eActForm.Controllers
                     p_total = decimal.Parse(promotionCase) * decimal.Parse(unit) * decimal.Parse(compensate);
                     p_total = (p_LE > 0) ? p_total * (p_LE / 100) : p_total;
                 }
-                decimal p_growth = normalCase == "0" ? 0 : (decimal.Parse(promotionCase) - decimal.Parse(normalCase)) / decimal.Parse(AppCode.checkNullorEmpty(normalCase) == "0" ? "1" : normalCase) * 100;
+
+
                 getPromotionCost = getPromotionCost == 0 ? 1 : getPromotionCost;
                 get_PerTotal = p_total == 0 ? 0 : (p_total / (decimal.Parse(promotionCase) * getPromotionCost)) * 100; // % ยอดขายโปโมชั่น
                 

@@ -17,6 +17,7 @@ namespace eActForm.BusinessLayer
 		public static int updateInvoiceProduct(Budget_Activity_Model.Budget_Activity_Invoice_Att model)
 		{
 			int result = 0;
+			model.dateInvoiceAction = DateTime.ParseExact(model.invoiceActionDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
 
 			try
 			{
@@ -34,7 +35,7 @@ namespace eActForm.BusinessLayer
 
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
 					,new SqlParameter("@invoiceTotalBath",model.invoiceTotalBath)
-					,new SqlParameter("@actionDate",model.invoiceActionDate)
+					,new SqlParameter("@actionDate",model.dateInvoiceAction) //invoiceActionDate
 					,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
 					,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
 					});

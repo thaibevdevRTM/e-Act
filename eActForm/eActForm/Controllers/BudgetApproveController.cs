@@ -172,32 +172,20 @@ namespace eActForm.Controllers
 			try
 			{
 
+				var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
+				GridHtml = GridHtml.Replace("<br>", "<br/>");
+				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+
 				if (statusId == ConfigurationManager.AppSettings["statusReject"])
 				{
 					EmailAppCodes.sendRejectBudget(budgetApproveId, AppCode.ApproveType.Budget_form);
 				}
 				else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
 				{
-					var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
-					GridHtml = GridHtml.Replace("<br>", "<br/>");
-
-					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-
-					//try
-					//{
-					//	AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-					//}
-					//catch (Exception ex)
-					//{
-					//	AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
-					//}
-
-					
-
 					EmailAppCodes.sendApproveBudget(budgetApproveId, AppCode.ApproveType.Budget_form,false );
-
-					//ApproveAppCode.setCountWatingApprove();
 				}
+
+
 				resultAjax.Success = true;
 			}
 			catch (Exception ex)
@@ -219,6 +207,7 @@ namespace eActForm.Controllers
 			{
 				if (updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"]) > 0)
 				{
+					setCountWatingApproveBudget();
 					result.Success = true;
 				}
 				else

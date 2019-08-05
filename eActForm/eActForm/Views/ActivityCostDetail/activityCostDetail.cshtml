@@ -12,6 +12,7 @@
     decimal? normalTotal = 0;
     decimal? activityTotal = 0;
     decimal? growthTotal = 0;
+    decimal? sumGrowth = 0;
     decimal? LE = 0;
 
 }
@@ -95,15 +96,7 @@
                             @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")", style = "autofocus = 'autofocus'" })
                         </td>
                         <td>
-                            @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                            {
-                                @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", style = "autofocus = 'autofocus'" })
-                            }
-                            else
-                            {
-                                @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true, style = "autofocus = 'autofocus'" })
-
-                            }
+                             @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true, style = "autofocus = 'autofocus'" }) 
                         </td>
                         <td>
                             @Html.TextBoxFor(model => item.LE, "{0:n2}", new { @id = "lblLE_" + index, Name = "lblLE_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")", style = "autofocus = 'autofocus'" })
@@ -124,6 +117,7 @@
                     total = item.total == null ? 0 + total : item.total + total;
                     normalTotal = item.normalCost == null ? 0 + normalTotal : item.normalCost + normalTotal;
                     activityTotal = item.themeCost == null ? 0 + activityTotal : item.themeCost + activityTotal;
+                    sumGrowth = item.growth == null ? 0 + sumGrowth : item.growth + sumGrowth;
                     index++;
                 }
             }
@@ -151,13 +145,23 @@
                         </td>
                         <td>
                             <p class="text-success textRight">
-                                @if (activityTotal != 0 && normalTotal != 0)
+                                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
                                 {
-                                    growthTotal = (activityTotal - normalTotal) / normalTotal * 100;
+                                    growthTotal = sumGrowth;
                                     string result = String.Format("{0:n2}%", @growthTotal);
                                     @result.ToString();
 
                                 }
+                                else
+                                {
+                                    if (activityTotal != 0 && normalTotal != 0)
+                                    {
+                                        growthTotal = (activityTotal - normalTotal) / normalTotal * 100;
+                                        string result = String.Format("{0:n2}%", @growthTotal);
+                                        @result.ToString();
+                                    }
+                                }
+
                             </p>
                         </td>
                         <td>
@@ -240,6 +244,7 @@
                 productId: productId,
                 total: total,
                 themeCost: themeCost,
+
             }
         }).done(function (response) {
             callThemedetailcost();
@@ -260,6 +265,7 @@
         var LE = $("#lblLE_" + rowIndex).val();
         LE = LE == "" ? 0 : LE;
         var productId = $("#hdProductId_" + rowIndex).val();
+        
 
         $.ajax({
             type: 'POST',
@@ -273,6 +279,7 @@
                 unit: unit,
                 compensate: compensate,
                 LE: LE,
+                typeForm:'@Model.activityFormModel.typeForm'
             }
         }).done(function (response) {
             callThemedetailcost();
