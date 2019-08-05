@@ -60,6 +60,7 @@
                         }
                         else if (response.Message == 'OMT')
                         {
+                            console.log('OMT');
                               var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.OMT.ToString() }, null)';
                             window.location.href = url;
                         }
