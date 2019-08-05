@@ -64,7 +64,7 @@ namespace eActForm.BusinessLayer
                                  saleNormal = d["saleNormal"] == null ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["saleNormal"].ToString())),
                                  updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                              });
-                return lists.ToList();
+                return lists.OrderBy(x => x.customerName).ToList();
             }
             catch (Exception ex)
             {
