@@ -71,7 +71,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (var item in Model.budgetFormLists)
+				@if (Model.budgetFormLists.Count>0)
+				{
+				foreach (var item in Model.budgetFormLists)
 				{
 					<tr class="gradeX">
 						<td>
@@ -110,6 +112,7 @@
 
 						</td>
 					</tr>
+				}
 				}
 			</tbody>
 		</table>

@@ -39,6 +39,8 @@ namespace eActForm.BusinessLayer
 								 productTypeNameEN = dr["productTypeNameEN"].ToString(),
 
 								 cusShortName = dr["cusShortName"].ToString(),
+								 cusNameTH = dr["cusNameTH"].ToString(),
+								 
 								 productCategory = dr["productCateText"].ToString(),
 								 productGroup = dr["productGroupId"].ToString(),
 								 productGroupName = dr["productGroupName"].ToString(),

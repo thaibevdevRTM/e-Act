@@ -32,20 +32,50 @@ namespace eActForm.Controllers
 			return PartialView(models);
 		}
 
-		
+		public ActionResult searchBudgetForm()
+		{
+			string count = Request.Form.AllKeys.Count().ToString();
+			//Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
+			//model.budgetFormLists = QueryGetBudgetApprove.getApproveListsByEmpId(null);
+
+			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
+			model = new Budget_Approve_Detail_Model.budgetForms();
+			model.budgetFormLists = getBudgetListsByEmpId(null);
+
+			if (Request.Form["txtActivityNo"] != "")
+			{
+				model.budgetFormLists = model.budgetFormLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
+			}
+
+			if (Request.Form["ddlStatus"] != "" && Request.Form["ddlStatus"] != "Please Select" )
+			{
+				model.budgetFormLists = model.budgetFormLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
+			}
+
+			if (Request.Form["ddlCustomer"] != "" && Request.Form["ddlCustomer"] != "Please Select")
+			{
+				model.budgetFormLists = model.budgetFormLists.Where(r => r.cusNameTH == Request.Form["ddlCustomer"]).ToList();
+			}
+
+
+			TempData["SearchDataModelBudget"] = model.budgetFormLists;
+			return RedirectToAction("myDocBudget");
+		}
+
 		public ActionResult myDocBudget() // กำลังแก้ ******
 		{
 			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
-			if (TempData["SearchDataModel"] != null)
+			model = new Budget_Approve_Detail_Model.budgetForms();
+
+			if (TempData["SearchDataModelBudget"] != null)
 			{
-				//model = (Activity_Model.actForms)TempData["SearchDataModel"];
-				model.budgetFormLists = (List<Budget_Approve_Detail_Model.budgetForm>)TempData["SearchDataModel"];
+				//model = (Budget_Approve_Detail_Model.budgetForms)TempData["SearchDataModelBudget"];
+				model.budgetFormLists = (List<Budget_Approve_Detail_Model.budgetForm>)TempData["SearchDataModelBudget"];
 			}
 			else
 			{
 				//model = new Activity_Model.actForms();
 				//model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId);
-				model = new Budget_Approve_Detail_Model.budgetForms();
 				model.budgetFormLists = getBudgetListsByEmpId(null);
 			}
 			return PartialView(model);
@@ -78,6 +108,7 @@ namespace eActForm.Controllers
 								 productTypeNameEN = dr["productTypeNameEN"].ToString(),
 
 								 cusShortName = dr["cusShortName"].ToString(),
+								 cusNameTH = dr["cusNameTH"].ToString(),
 								 productCategory = dr["productCateText"].ToString(),
 								 productGroup = dr["productGroupId"].ToString(),
 								 productGroupName = dr["productGroupName"].ToString(),
@@ -120,25 +151,6 @@ namespace eActForm.Controllers
 		}
 
 
-		public ActionResult searchBudgetForm()
-		{
-			string count = Request.Form.AllKeys.Count().ToString();
-			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
-			model.budgetFormLists = QueryGetBudgetApprove.getApproveListsByEmpId(null);
-			//model.budgetFormLists = QueryGetBudgetApprove.getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
 
-			if (Request.Form["txtActivityNo"] != "")
-			{
-				model.budgetFormLists = model.budgetFormLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
-			}
-
-			if (Request.Form["ddlStatus"] != "")
-			{
-				model.budgetFormLists = model.budgetFormLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
-			}
-
-			TempData["SearchDataModel"] = model.budgetFormLists;
-			return RedirectToAction("myDocBudget");
-		}
 	}
 }
