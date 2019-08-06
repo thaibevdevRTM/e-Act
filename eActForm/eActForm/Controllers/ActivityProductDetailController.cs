@@ -150,6 +150,7 @@ namespace eActForm.Controllers
             {
                 decimal fixFormula = (decimal)1.07;
                 decimal getPackProduct = QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().unit / QueryGetAllProduct.getProductById(model.productId).FirstOrDefault().pack;
+                getPackProduct = getPackProduct == 0 ? 1 : getPackProduct;
                 decimal specDisc = decimal.Parse(AppCode.checkNullorEmpty(model.specialDisc.ToString()));
                 decimal specDiscBath = decimal.Parse(AppCode.checkNullorEmpty(model.specialDiscBaht.ToString()));
                 decimal p_wholeSalesPrice = (decimal)model.wholeSalesPrice;

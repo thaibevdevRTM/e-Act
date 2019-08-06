@@ -40,25 +40,35 @@
                 dataType: "json",
                 type: 'POST',
                 success: function (response) {
-
-                    if (response.Data.productGroup.length > 0) {
                         $("#ddlProductGrp option[value !='']").remove();
                         $.each(response.Data.productGroup, function () {
                             $("#ddlProductGrp").append($("<option></option>").val(this['id']).html(this['groupName']));
                             document.getElementById("ddlProductGrp").value = groupid;
                         });
-                    }
-                    else {
-                        $("#ddlProductGrp option[value !='']").remove();
-                        document.getElementById("ddlProductGrp").value = groupid;
-                    }
-                  
+                }
+            });
 
+            var ddlProductBrand = $("#ddlProductBrand");
+            $.ajax({
+                url: $adminPage.urlGetBrand,
+                data: {
+                    p_groupId: groupid,
+                },
+                dataType: "json",
+                type: 'POST',
+                success: function (response) {
+                    
+                        $("#ddlProductBrand option[value !='']").remove();
+                        $.each(response.Data.getProductname, function () {
+                            ddlProductBrand.append($("<option></option>").val(this['Value']).html(this['Text']));
+                        });
+                        document.getElementById("ddlProductBrand").disabled = false;
+                        document.getElementById("ddlProductBrand").value = brandid;  
                 }
             });
             
             document.getElementById("ddlProductCate").value = cateid;
-            document.getElementById("ddlProductBrand").value = brandid;
+            
             $("#txtProductCode").val(productcode);
             $("#txtSize").val(size);
             $("#txtUnit").val(unit);
