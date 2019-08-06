@@ -148,7 +148,6 @@ namespace eActForm.Controllers
 		}
 		//-----------------------------------------------------------------------------------------------------------------
 
-
 		[HttpPost]
 		[ValidateInput(false)]
 		public JsonResult submitPreviewBudget(string GridHtml, string budgetActivityId)
