@@ -46,7 +46,7 @@ namespace eActForm.Controllers
 				//model = new Activity_Model.actForms();
 				//model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId);
 				model = new Budget_Approve_Detail_Model.budgetForms();
-				model.budgetFormLists = getBudgetListsByEmpId(UtilsAppCode.Session.User.empId);
+				model.budgetFormLists = getBudgetListsByEmpId(null);
 			}
 			return PartialView(model);
 		}
@@ -124,7 +124,8 @@ namespace eActForm.Controllers
 		{
 			string count = Request.Form.AllKeys.Count().ToString();
 			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
-			model.budgetFormLists = BudgetApproveListController.getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
+			model.budgetFormLists = QueryGetBudgetApprove.getApproveListsByEmpId(null);
+			//model.budgetFormLists = QueryGetBudgetApprove.getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
 
 			if (Request.Form["txtActivityNo"] != "")
 			{
@@ -139,29 +140,5 @@ namespace eActForm.Controllers
 			TempData["SearchDataModel"] = model.budgetFormLists;
 			return RedirectToAction("myDocBudget");
 		}
-
-		public ActionResult requestDeleteDoc(string actId, string statusId)
-		{
-			//return RedirectToAction("index");
-			AjaxResult result = new AjaxResult();
-			result.Success = false;
-			//if (statusId == "1")
-			//{
-			// Draft
-			if (ActFormAppCode.deleteActForm(actId, "request delete by user") > 0)
-			{
-				result.Success = true;
-				TempData["SearchDataModel"] = null;
-			}
-			//}
-			//else
-			//{
-
-			//}
-
-			return RedirectToAction("myDoc");
-		}
-
-
 	}
 }
