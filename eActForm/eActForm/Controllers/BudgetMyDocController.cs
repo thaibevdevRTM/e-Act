@@ -35,9 +35,6 @@ namespace eActForm.Controllers
 		public ActionResult searchBudgetForm()
 		{
 			string count = Request.Form.AllKeys.Count().ToString();
-			//Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
-			//model.budgetFormLists = QueryGetBudgetApprove.getApproveListsByEmpId(null);
-
 			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
 			model = new Budget_Approve_Detail_Model.budgetForms();
 			model.budgetFormLists = getBudgetListsByEmpId(null);
@@ -47,14 +44,19 @@ namespace eActForm.Controllers
 				model.budgetFormLists = model.budgetFormLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
 			}
 
-			if (Request.Form["ddlStatus"] != "" && Request.Form["ddlStatus"] != "Please Select" )
+			if (Request.Form["ddlStatus"] != "" )
 			{
 				model.budgetFormLists = model.budgetFormLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
 			}
 
-			if (Request.Form["ddlCustomer"] != "" && Request.Form["ddlCustomer"] != "Please Select")
+			if (Request.Form["ddlCustomer"] != "")
 			{
-				model.budgetFormLists = model.budgetFormLists.Where(r => r.cusNameTH == Request.Form["ddlCustomer"]).ToList();
+				model.budgetFormLists = model.budgetFormLists.Where(r => r.customerId == Request.Form["ddlCustomer"]).ToList();
+			}
+
+			if (Request.Form["ddlTheme"] != "")
+			{
+				model.budgetFormLists = model.budgetFormLists.Where(r => r.themeId == Request.Form["ddlTheme"]).ToList();
 			}
 
 
@@ -69,13 +71,10 @@ namespace eActForm.Controllers
 
 			if (TempData["SearchDataModelBudget"] != null)
 			{
-				//model = (Budget_Approve_Detail_Model.budgetForms)TempData["SearchDataModelBudget"];
 				model.budgetFormLists = (List<Budget_Approve_Detail_Model.budgetForm>)TempData["SearchDataModelBudget"];
 			}
 			else
 			{
-				//model = new Activity_Model.actForms();
-				//model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId);
 				model.budgetFormLists = getBudgetListsByEmpId(null);
 			}
 			return PartialView(model);
@@ -118,6 +117,8 @@ namespace eActForm.Controllers
 								 costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
 								 costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
 								 activityName = dr["activityName"].ToString(),
+
+								 themeId = dr["themeId"].ToString(),
 								 theme = dr["theme"].ToString(),
 								 objective = dr["objective"].ToString(),
 								 trade = dr["trade"].ToString(),
@@ -144,7 +145,6 @@ namespace eActForm.Controllers
 			}
 			catch (Exception ex)
 			{
-				//throw new Exception("getApproveListsByStatusId >> " + ex.Message);
 				ExceptionManager.WriteError("getApproveListsByStatusId >> " + ex.Message);
 				return new List<Budget_Approve_Detail_Model.budgetForm>();
 			}

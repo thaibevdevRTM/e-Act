@@ -71,6 +71,7 @@ namespace eActForm.Models
 			public DateTime? costPeriodSt { get; set; }
 			public DateTime? costPeriodEnd { get; set; }
 			public string activityName { get; set; }
+			public string themeId { get; set; }
 			public string theme { get; set; }
 			public string objective { get; set; }
 			public string trade { get; set; }
