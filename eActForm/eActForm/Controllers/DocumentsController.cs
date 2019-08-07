@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using WebLibrary;
 using eActForm.BusinessLayer;
 using eActForm.Models;
+using System.Configuration;
+using iTextSharp.text;
+
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -48,6 +51,28 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError("reportDetailListsView >>" + ex.Message);
             }
             return PartialView(models);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult genPdfApprove(string GridHtml, string statusId, string activityId)
+        {
+            var resultAjax = new AjaxResult();
+            try
+            {
+
+                    var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
+                    GridHtml = GridHtml.Replace("<br>", "<br/>");
+                    AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
+
+                resultAjax.Success = true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("genPdfApprove >> " + ex.Message);
+                resultAjax.Success = false;
+                resultAjax.Message = ex.Message;
+            }
+            return Json(resultAjax, "text/plain");
         }
     }
 }

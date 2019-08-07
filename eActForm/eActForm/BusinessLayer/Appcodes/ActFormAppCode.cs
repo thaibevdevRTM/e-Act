@@ -82,7 +82,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                string spName = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAll" : "usp_getActivityFormByCustomerId";
+                string spName = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAllByCusId" : "usp_getActivityFormByCustomerId";
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, spName
                     , new SqlParameter[] {
                         new SqlParameter("@customerId", customerId)

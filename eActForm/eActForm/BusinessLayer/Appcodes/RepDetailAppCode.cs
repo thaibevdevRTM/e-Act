@@ -100,11 +100,14 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByActNo(List<RepDetailModel.actFormRepDetailModel> lists, string actNo)
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByActNo(RepDetailModel.actFormRepDetails model, string actNo)
         {
             try
             {
-                return lists.Where(r => r.activityNo == actNo).ToList();
+
+                model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.activityNo == actNo).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.activityNo == actNo).ToList();
+                return model;
             }
             catch (Exception ex)
             {
@@ -129,11 +132,13 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByCustomer(List<RepDetailModel.actFormRepDetailModel> lists, string customerId)
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByCustomer(RepDetailModel.actFormRepDetails model, string customerId)
         {
             try
             {
-                return lists.Where(r => r.customerId == customerId).ToList();
+                model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.customerId == customerId).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.customerId == customerId).ToList();
+                return model;
             }
             catch (Exception ex)
             {
@@ -151,11 +156,13 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByProductType(List<RepDetailModel.actFormRepDetailModel> lists, string productType)
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByProductType(RepDetailModel.actFormRepDetails model, string productType)
         {
             try
             {
-                return lists.Where(r => r.productTypeId == productType).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.productTypeId == productType).ToList();
+                model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.productTypeId == productType).ToList();
+                return model;
             }
             catch (Exception ex)
             {
@@ -173,7 +180,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static List<RepDetailModel.actFormRepDetailModel> getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate)
+        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate)
         {
             try
             {
@@ -191,7 +198,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<RepDetailModel.actFormRepDetailModel> getRepDetailReportByCreateDateAndStatusId(string repDetailId)
+        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string repDetailId)
         {
             try
             {
@@ -208,11 +215,12 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        private static List<RepDetailModel.actFormRepDetailModel> dataTableToRepDetailModels(DataSet ds)
+        private static RepDetailModel.actFormRepDetails dataTableToRepDetailModels(DataSet ds)
         {
             try
             {
-                var lists = (from DataRow dr in ds.Tables[0].Rows
+                RepDetailModel.actFormRepDetails actRepModel = new RepDetailModel.actFormRepDetails();
+                actRepModel.actFormRepDetailLists = (from DataRow dr in ds.Tables[0].Rows
                              select new RepDetailModel.actFormRepDetailModel()
                              {
                                  #region detail parse
@@ -231,8 +239,8 @@ namespace eActForm.BusinessLayer
                                  productName = dr["productName"].ToString(),
                                  size = dr["size"].ToString(),
                                  typeTheme = dr["typeTheme"].ToString(),
-                                 normalSale = dr["normalCase"].ToString(),
-                                 promotionSale = dr["promotionCase"].ToString(),
+                                 normalSale = dr["normalCase"] is DBNull ? 0 : (decimal?)dr["normalCase"],
+                                 promotionSale = dr["promotionCase"] is DBNull ? 0 : (decimal?)dr["promotionCase"],
                                  total = dr["total"] is DBNull ? 0 : (decimal?)dr["total"],
                                  specialDisc = dr["specialDisc"] is DBNull ? 0 : (decimal?)dr["specialDisc"],
                                  specialDiscBaht = dr["specialDiscBaht"] is DBNull ? 0 : (decimal?)dr["specialDiscBaht"],
@@ -256,7 +264,61 @@ namespace eActForm.BusinessLayer
 
                              }).ToList();
 
-                return lists;
+                actRepModel.actFormRepDetailGroupLists = actRepModel.actFormRepDetailLists
+                    .GroupBy(item => new {item.activityNo,item.activityDetail
+
+                    , item.productName
+                    , item.typeTheme 
+                    , item.activityPeriodSt 
+                    , item.activityPeriodEnd 
+                    , item.costPeriodSt 
+                    , item.costPeriodEnd})
+                    .Select((group, index) => new RepDetailModel.actFormRepDetailModel
+                    {
+
+                        #region detail parse
+                        id = group.First().id,
+                        reference = group.First().reference,
+                        statusId = group.First().statusId,
+                        statusName = group.First().statusName,
+                        activityNo = group.First().activityNo,
+                        documentDate = group.First().documentDate,
+                        brandId = group.First().brandId,
+                        customerId = group.First().customerId,
+                        productCateId = group.First().productCateId,
+                        productGroupid = group.First().productGroupid,
+                        cusNameTH = group.First().cusNameTH,
+                        productId = group.First().productId,
+                        productName = group.First().productName,
+                        size = group.First().size,
+                        typeTheme = group.First().typeTheme,
+                        normalSale = group.Sum(x => x.normalSale),
+                        promotionSale = group.Sum(x => x.promotionSale),
+                        total = group.Sum(x => x.total),
+                        specialDisc = group.Sum(x => x.specialDisc),
+                        specialDiscBaht = group.Sum(x => x.specialDiscBaht),
+                        promotionCost = group.Sum(x => x.promotionCost),
+                        channelName = group.First().channelName,
+                        productTypeId = group.First().productTypeId,
+                        activityPeriodSt = group.First().activityPeriodSt,
+                        activityPeriodEnd = group.First().activityPeriodEnd,
+                        costPeriodSt = group.First().costPeriodSt,
+                        costPeriodEnd = group.First().costPeriodEnd,
+                        activityName = group.First().activityName,
+                        theme = group.First().theme,
+                        activityDetail = group.First().activityDetail,
+                        compensate = group.Sum(x => x.compensate),
+                        delFlag = group.First().delFlag,
+                        createdDate = group.First().createdDate,
+                        perGrowth = group.Sum(x => x.perGrowth),
+                        perSE = group.Sum(x => x.perSE),
+                        perToSale = group.Sum(x => x.perToSale),
+                        #endregion
+
+
+                    }).ToList();
+
+                return actRepModel;
             }
             catch (Exception ex)
             {

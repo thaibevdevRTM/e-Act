@@ -35,13 +35,13 @@ namespace eActForm.Controllers
         {
             try
             {
-                RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails
-                {
-                    actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"])
-                };
+
+                RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
+                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"]);
+                
                 if (Request.Form["txtActivityNo"] != "")
                 {
-                    model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByActNo(model.actFormRepDetailLists, Request.Form["txtActivityNo"]);
+                    model = RepDetailAppCode.getFilterRepDetailByActNo(model, Request.Form["txtActivityNo"]);
                 }
                 else
                 {
@@ -52,7 +52,7 @@ namespace eActForm.Controllers
                     }
                     if (Request.Form["ddlCustomer"] != "")
                     {
-                        model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByCustomer(model.actFormRepDetailLists, Request.Form["ddlCustomer"]);
+                        model = RepDetailAppCode.getFilterRepDetailByCustomer(model, Request.Form["ddlCustomer"]);
                     }
                     if (Request.Form["ddlTheme"] != "")
                     {
@@ -60,7 +60,7 @@ namespace eActForm.Controllers
                     }
                     if (Request.Form["ddlProductType"] != "")
                     {
-                        model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByProductType(model.actFormRepDetailLists, Request.Form["ddlProductType"]);
+                        model = RepDetailAppCode.getFilterRepDetailByProductType(model, Request.Form["ddlProductType"]);
                     }
                     if (Request.Form["ddlProductGrp"] != "")
                     {
@@ -219,7 +219,7 @@ namespace eActForm.Controllers
             RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
             try
             {
-                model.actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(actId);
+                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(actId);
                 model.flowList = ApproveFlowAppCode.getFlowByActFormId(actId);
                 Session["ActFormRepDetail"] = model;
             }
