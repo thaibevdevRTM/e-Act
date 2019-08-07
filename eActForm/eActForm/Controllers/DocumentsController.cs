@@ -60,7 +60,7 @@ namespace eActForm.Controllers
             try
             {
 
-                    var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
+                    var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId);
                     GridHtml = GridHtml.Replace("<br>", "<br/>");
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
 
