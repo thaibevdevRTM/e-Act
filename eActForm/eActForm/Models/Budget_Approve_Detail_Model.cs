@@ -61,6 +61,8 @@ namespace eActForm.Models
 			public string productTypeId { get; set; }
 			public string productTypeNameEN { get; set; }
 			public string cusShortName { get; set; }
+			public string cusNameTH { get; set; }
+			
 			public string productCategory { get; set; }
 			public string productGroup { get; set; }
 			public string productGroupName { get; set; }
