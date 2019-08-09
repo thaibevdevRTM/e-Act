@@ -171,6 +171,7 @@ namespace eActForm.Models
             catch (Exception ex)
             {
                 result = "error" + ex.Message;
+                ExceptionManager.WriteError(ex.Message + ">> mergePDF");
             }
             return result;
         }
