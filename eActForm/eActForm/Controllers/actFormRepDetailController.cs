@@ -48,7 +48,7 @@ namespace eActForm.Controllers
                     #region filter
                     if (Request.Form["ddlStatus"] != "")
                     {
-                        model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByStatusId(model.actFormRepDetailLists, Request.Form["ddlStatus"]);
+                        model = RepDetailAppCode.getFilterRepDetailByStatusId(model, Request.Form["ddlStatus"]);
                     }
                     if (Request.Form["ddlCustomer"] != "")
                     {
@@ -56,7 +56,7 @@ namespace eActForm.Controllers
                     }
                     if (Request.Form["ddlTheme"] != "")
                     {
-                        model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByActivity(model.actFormRepDetailLists, Request.Form["ddlTheme"]);
+                        model = RepDetailAppCode.getFilterRepDetailByActivity(model, Request.Form["ddlTheme"]);
                     }
                     if (Request.Form["ddlProductType"] != "")
                     {
@@ -64,13 +64,13 @@ namespace eActForm.Controllers
                     }
                     if (Request.Form["ddlProductGrp"] != "")
                     {
-                        model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByProductGroup(model.actFormRepDetailLists, Request.Form["ddlProductGrp"]);
+                        model = RepDetailAppCode.getFilterRepDetailByProductGroup(model, Request.Form["ddlProductGrp"]);
                     }
-                    if (Request.Form["ddlCustomer"] != "" && Request.Form["ddlProductType"] != "")
+                    if (Request.Form["ddlProductType"] != "")
                     {
                         model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
                                         ConfigurationManager.AppSettings["subjectReportDetailId"]
-                                        , Request.Form["ddlCustomer"]
+                                        , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
                                         , Request.Form["ddlProductType"]);
                     }
                     #endregion

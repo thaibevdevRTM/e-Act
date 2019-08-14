@@ -76,7 +76,7 @@ namespace eActForm.Controllers
         }
 
 
-        public ActionResult previewApprove(string actId)
+        public ActionResult previewApprove(string actId, string typeForm)
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();

@@ -114,18 +114,22 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByStatusId(List<RepDetailModel.actFormRepDetailModel> lists, string statusId)
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByStatusId(RepDetailModel.actFormRepDetails model, string statusId)
         {
             try
             {
                 if (statusId == ((int)AppCode.ApproveStatus.เพิ่มเติม).ToString())
                 {
-                    return lists.Where(r => r.createdDate >= r.activityPeriodSt).ToList();
+                    model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.createdDate >= r.activityPeriodSt).ToList();
+                    model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.createdDate >= r.activityPeriodSt).ToList();
                 }
                 else
                 {
-                    return lists.Where(r => r.statusId == statusId && r.createdDate < r.activityPeriodSt).ToList();
+                    model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.statusId == statusId && r.createdDate < r.activityPeriodSt).ToList();
+                    model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.statusId == statusId && r.createdDate < r.activityPeriodSt).ToList();
                 }
+
+                return model;
             }
             catch (Exception ex)
             {
@@ -145,11 +149,13 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByActivity(List<RepDetailModel.actFormRepDetailModel> lists, string activityId)
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByActivity(RepDetailModel.actFormRepDetails model, string activityId)
         {
             try
             {
-                return lists.Where(r => r.theme == activityId).ToList();
+                model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.theme == activityId).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.theme == activityId).ToList();
+                return model;
             }
             catch (Exception ex)
             {
@@ -169,11 +175,13 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByProductType >>" + ex.Message);
             }
         }
-        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByProductGroup(List<RepDetailModel.actFormRepDetailModel> lists, string productGroup)
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByProductGroup(RepDetailModel.actFormRepDetails model, string productGroup)
         {
             try
             {
-                return lists.Where(r => r.productGroupid == productGroup).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.productGroupid == productGroup).ToList();
+                model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.productGroupid == productGroup).ToList();
+                return model;
             }
             catch (Exception ex)
             {
@@ -188,6 +196,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] {
                         new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
+                        ,new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
                     });
 
                 return dataTableToRepDetailModels(ds);
