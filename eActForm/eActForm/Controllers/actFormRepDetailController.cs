@@ -41,7 +41,7 @@ namespace eActForm.Controllers
                 
                 if (Request.Form["txtActivityNo"] != "")
                 {
-                    model = RepDetailAppCode.getFilterRepDetailByActNo(model, Request.Form["txtActivityNo"]);
+                    model = RepDetailAppCode.getFilterRepDetailByActNo(model, Request.Form["txtActivityNo"]);    
                 }
                 else
                 {
@@ -66,15 +66,15 @@ namespace eActForm.Controllers
                     {
                         model = RepDetailAppCode.getFilterRepDetailByProductGroup(model, Request.Form["ddlProductGrp"]);
                     }
-                    if (Request.Form["ddlProductType"] != "")
-                    {
-                        model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                    
+                    #endregion
+                }
+
+                model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
                                         ConfigurationManager.AppSettings["subjectReportDetailId"]
                                         , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
                                         , Request.Form["ddlProductType"]);
-                    }
-                    #endregion
-                }
+
                 Session["ActFormRepDetail"] = model;
             }
             catch (Exception ex)
