@@ -14,7 +14,7 @@ namespace eActForm.Controllers
         // GET: Home
         public ActionResult Index(string actId , string typeForm)
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
             models.typeForm = typeForm;
             return View(models);
         }
