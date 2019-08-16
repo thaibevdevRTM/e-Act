@@ -78,17 +78,31 @@ namespace eActForm.BusinessLayer
         }
 
         
-        public static List<Activity_Model.actForm> getActFormByEmpId(string customerId, DateTime startDate, DateTime endDate , string activityType)
+        public static List<Activity_Model.actForm> getActFormByEmpId(string empId, DateTime startDate, DateTime endDate , string activityType)
         {
             try
             {
-                string spName = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAllByCusId" : "usp_getActivityFormByCustomerId";
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, spName
+                DataSet ds = new DataSet();
+                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                {
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityFormAll"
                     , new SqlParameter[] {
-                        new SqlParameter("@customerId", customerId)
+                        new SqlParameter("@empId", empId)
                         ,new SqlParameter("@startDate", startDate)
                         ,new SqlParameter("@endDate", endDate)
                     });
+                }
+                else
+                {
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityCustomersFormByEmpId"
+                                        , new SqlParameter[] {
+                        new SqlParameter("@empId", empId)
+                        ,new SqlParameter("@startDate", startDate)
+                        ,new SqlParameter("@endDate", endDate)
+                   });
+                }
+                
+                
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new Activity_Model.actForm()
                              {

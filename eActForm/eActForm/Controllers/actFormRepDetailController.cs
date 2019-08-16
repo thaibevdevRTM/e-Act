@@ -175,6 +175,27 @@ namespace eActForm.Controllers
             return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "DetailReport.xls");
         }
 
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public FileResult repListViewExportPDF(string gridHtml)
+        {
+            List<Attachment> file = new List<Attachment>();
+            try
+            {
+                var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"],"");
+                gridHtml = gridHtml.Replace("<br>", "<br/>");
+                file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10),"");
+                
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+            return File(file[0].ContentStream, "application/pdf", "reportDetailPDF.pdf");
+
+        }
+
         [HttpPost]
         [ValidateInput(false)]
         public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string gridEst,string gridWA,string gridSO, string customerId, string productTypeId, string startDate, string endDate)

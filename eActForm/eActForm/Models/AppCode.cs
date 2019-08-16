@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.UI;
 using WebLibrary;
 using static eActForm.Models.TB_Act_Image_Model;
@@ -30,14 +31,14 @@ namespace eActForm.Models
         {
             approve
                 , document
-				, budget_form
-		}
+                , budget_form
+        }
         public enum ApproveType
         {
             Activity_Form
                 , Report_Detail
                 , Report_Summary
-				, Budget_form
+                , Budget_form
         }
         public enum ApproveStatus
         {
@@ -84,18 +85,72 @@ namespace eActForm.Models
                 GridBuilder.Append("</html>");
 
                 GridBuilder.Append(sw.ToString());
-               
+
 
                 string path = System.Web.HttpContext.Current.Server.MapPath("~") + "\\Content\\" + "tablethin.css";
                 string readText = System.IO.File.ReadAllText(path);
-                
+
                 //Document pdfDoc = new Document(pageSize, 25, 25, 10, 10);
                 using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
                 {
                     pdfDoc.Open();
                     using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
                     {
-                        
+
+                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"))))
+                        {
+                            XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
+                        }
+                        pdfDoc.Close();
+                    }
+                }
+                return ms;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview");
+                ms.Dispose();
+                return ms;
+            }
+        }
+
+        public static MemoryStream GetFileStream(string GridHtml, Document pdfDoc)
+        {
+            MemoryStream ms = new MemoryStream();
+            try
+            {
+                //GridHtml = "testt";
+                UserControl LoadControl = new UserControl();
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter myWriter = new HtmlTextWriter(sw);
+                LoadControl.RenderControl(myWriter);
+                StringReader sr = new StringReader(sw.ToString());
+
+
+
+                StringBuilder GridBuilder = new StringBuilder();
+                GridBuilder.Append("<html>");
+                GridBuilder.Append("<style>");
+                GridBuilder.Append(".fontt{font-family:Angsana New;}");
+                GridBuilder.Append("</style>");
+                GridBuilder.Append("<body class=\"fontt\">");
+                GridBuilder.Append(GridHtml);
+                GridBuilder.Append("</body>");
+                GridBuilder.Append("</html>");
+
+                GridBuilder.Append(sw.ToString());
+
+
+                string path = System.Web.HttpContext.Current.Server.MapPath("~") + "\\Content\\" + "tablethin.css";
+                string readText = System.IO.File.ReadAllText(path);
+
+                //Document pdfDoc = new Document(pageSize, 25, 25, 10, 10);
+                using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
+                {
+                    pdfDoc.Open();
+                    using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
+                    {
+
                         using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"))))
                         {
                             XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
@@ -113,6 +168,8 @@ namespace eActForm.Models
             }
 
         }
+
+
         public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath)
         {
             //GridHtml = GridHtml.Replace("\n", "");
@@ -125,8 +182,11 @@ namespace eActForm.Models
             PreviewBytes = msPreview.ToArray();
             //msPreview.Position = 0;
             //save in directory
-            File.Delete(rootPath);
-            File.WriteAllBytes(rootPath, PreviewBytes);
+            if (rootPath != "")
+            {
+                File.Delete(rootPath);
+                File.WriteAllBytes(rootPath, PreviewBytes);
+            }
 
 
             if (PreviewBytes.Length != 0)
@@ -138,6 +198,16 @@ namespace eActForm.Models
 
             return files;
         }
+
+        public static MemoryStream genPdfFileStream(string GridHtml, Document doc)
+        {
+            //GridHtml = GridHtml.Replace("\n", "");
+            MemoryStream msPreview = new MemoryStream();
+            msPreview = GetFileReportTomail_Preview(GridHtml, doc);
+            return msPreview ;
+        }
+
+
 
         public static string mergePDF(string rootPathOutput, string[] pathFile)
         {
@@ -199,7 +269,7 @@ namespace eActForm.Models
                     {
                         file.CopyTo(ms);
                         file.Dispose();
-                        
+
                     }
                 }
                 return ms;

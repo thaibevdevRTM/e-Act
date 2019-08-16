@@ -42,12 +42,12 @@ namespace eActForm.Controllers
 
                 if (TypeForm == Activity_Model.activityType.MT.ToString())
                 {
-                    model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.customerId, DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.MT.ToString());
+                    model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.MT.ToString());
                     model.typeForm = Activity_Model.activityType.MT.ToString();
                 }
                 else
                 {
-                    model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.customerId, DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.OMT.ToString());
+                    model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.OMT.ToString());
                     model.typeForm = Activity_Model.activityType.OMT.ToString();
                 }
 

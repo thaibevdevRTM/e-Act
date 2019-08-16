@@ -294,7 +294,7 @@
 
         <div id="divPDF" class="tabcontent">
             <div class="modal-body">
-                <div id="Grid" class="row" style="background-color:white;">
+                <div id="GridPDF" class="row" style="background-color:white;">
                     @if (Model.actFormRepDetailGroupLists != null && Model.actFormRepDetailGroupLists.Count > 0)
                     {
                         <div class="col-md-12 col-xs-12">
@@ -361,82 +361,82 @@
                                     {
                                         if (item.delFlag == false)
                                         {
-                                    <tr class="gradeX">
+                                            <tr class="gradeX">
 
-                                        @if (item.activityNo == strActNo)
-                                        {
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        }
-                                        else
-                                        {
-                                            <td>@index</td>
-                                            <td>@item.activityNo</td>
-                                            <td>@item.cusNameTH</td>
-                                            <td>@item.reference</td>
-                                            if (item.activityPeriodSt != null)
-                                            {
-                                                <td>@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
-                                            }
-                                            else
-                                            {
+                                                @if (item.activityNo == strActNo)
+                                                {
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@index</td>
+                                                    <td>@item.activityNo</td>
+                                                    <td>@item.cusNameTH</td>
+                                                    <td>@item.reference</td>
+                                                    if (item.activityPeriodSt != null)
+                                                    {
+                                                        <td>@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                    if (item.activityPeriodEnd != null)
+                                                    {
+                                                        <td>@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                    if (item.costPeriodSt != null)
+                                                    {
+                                                        <td>@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>}
+                                                    if (item.costPeriodEnd != null)
+                                                    {
+                                                        <td>@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>}
+                                                    index++;
+                                                }
+
+                                                <td>@item.productName</td>
+                                                <td>@item.size</td>
+                                                @if (item.activityDetail == strActDetail)
+                                                {
+                                                    <td></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Html.Raw(item.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))</td>
+                                                }
+
+
+
+                                                <td>@item.typeTheme</td>
+                                                <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
+                                                <td>@string.Format("{0:n2}", item.compensate)</td>
+                                                <td>@string.Format("{0:n2}", item.normalSale)</td>
+                                                <td>@string.Format("{0:n2}", item.promotionSale)</td>
+                                                <td>@string.Format("{0:n2}", item.perGrowth)</td>
+                                                <td>@string.Format("{0:n2}", item.perSE)</td>
+                                                <td>@string.Format("{0:n2}", item.total)</td>
+                                                <td>@string.Format("{0:n2}", item.perToSale)</td>
                                                 <td></td>
-                                            }
-                                            if (item.activityPeriodEnd != null)
-                                            {
-                                                <td>@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
-                                            }
-                                            else
-                                            {
-                                                <td></td>
-                                            }
-                                            if (item.costPeriodSt != null)
-                                            {
-                                                <td>@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
-                                            }
-                                            else
-                                            {
-                                                <td></td>}
-                                            if (item.costPeriodEnd != null)
-                                            {
-                                                <td>@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
-                                            }
-                                            else
-                                            {
-                                                <td></td>}
-                                            index++;
-                                        }
-
-                                        <td>@item.productName</td>
-                                        <td>@item.size</td>
-                                        @if (item.activityDetail == strActDetail)
-                                        {
-                                            <td></td>
-                                        }
-                                        else
-                                        {
-                                            <td>@Html.Raw(item.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))</td>
-                                        }
-
-
-
-                                        <td>@item.typeTheme</td>
-                                        <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
-                                        <td>@string.Format("{0:n2}", item.compensate)</td>
-                                        <td>@string.Format("{0:n2}", item.normalSale)</td>
-                                        <td>@string.Format("{0:n2}", item.promotionSale)</td>
-                                        <td>@string.Format("{0:n2}", item.perGrowth)</td>
-                                        <td>@string.Format("{0:n2}", item.perSE)</td>
-                                        <td>@string.Format("{0:n2}", item.total)</td>
-                                        <td>@string.Format("{0:n2}", item.perToSale)</td>
-                                        <td></td>
-                                    </tr>
+                                            </tr>
                                             strActDetail = item.activityDetail;
                                             strActNo = item.activityNo;
 
@@ -476,8 +476,8 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
+
                 <div class="row">
                     @if ((UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin) && Model.actFormRepDetailGroupLists[0].productTypeId == ConfigurationManager.AppSettings["productTypeIdNonAlcho"])
                     {
@@ -512,11 +512,11 @@
                     </div>
                     <div class="col-md-2 col-xs-12">
                         <div class="center-block">
-                            @using (Html.BeginForm("repListViewExportExcel", "actFormRepDetail", FormMethod.Post))
+                            @using (Html.BeginForm("repListViewExportPDF", "actFormRepDetail", FormMethod.Post))
                             {
                                 <input type="hidden" name="gridHtml" />
-                                <button type="submit" class="btn ink-reaction btn-success" id="btnExportExcel" value="ExportExcel">
-                                    <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
+                                <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
+                                    <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
                                 </button>
                             }
                         </div>
@@ -559,6 +559,10 @@
                 $("#btnExportExcel").click(function () {
                     $("input[name='gridHtml']").val($("#Grid").html());
                 });
+
+                 $("#btnExportPDF").click(function () {
+                     $("input[name='gridHtml']").val($("#GridPDF").html());
+                 });
     });
 
             $(function () {

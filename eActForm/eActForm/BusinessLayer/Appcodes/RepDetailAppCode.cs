@@ -55,9 +55,10 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception("genFilePDFBrandGroup >> " + ex.Message);
+                throw new Exception("genFilePDF >> " + ex.Message);
             }
         }
+
 
         public static int getRepDetailStatus(string repDetailId)
         {
@@ -195,7 +196,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = new DataSet();
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
-                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDateNew"
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDate"
                     , new SqlParameter[] {
                         new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
@@ -286,14 +287,8 @@ namespace eActForm.BusinessLayer
                              }).ToList();
 
                 actRepModel.actFormRepDetailGroupLists = actRepModel.actFormRepDetailLists
-                    .GroupBy(item => new {item.activityNo,item.activityDetail
-
-                    , item.productName
-                    , item.typeTheme 
-                    , item.activityPeriodSt 
-                    , item.activityPeriodEnd 
-                    , item.costPeriodSt 
-                    , item.costPeriodEnd})
+                    .GroupBy(item => new { item.productGroupid
+                    })
                     .Select((group, index) => new RepDetailModel.actFormRepDetailModel
                     {
 
