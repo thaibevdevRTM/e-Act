@@ -2306,6 +2306,7 @@
     <Content Include="Views\Admin\productPriceDetail.cshtml" />
     <Content Include="Views\Shared\_previewActForm.cshtml" />
     <Content Include="Views\Login\Maintain.cshtml" />
+    <Content Include="Views\Shared\_searchBudget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

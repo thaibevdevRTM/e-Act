@@ -152,7 +152,8 @@
 								<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht"></td>
 								<td width="10%">
 									@*<input class="form-control textboxcss font14" style="text-align:center;" id="txt_date_action">*@
-									@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txt_date_action" })
+									@*@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txt_date_action" })*@
+									@Html.TextBoxFor(x => x.Budget_Activity_Invoice.dateInvoiceAction, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txt_date_action" })
 								</td>
 								<td width="10%">
 									@Html.DropDownListFor(item => Model.Budget_Activity_Ststus_list.ElementAt(0).id, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 2), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" , @onchange = "CallChangefunc(this.value)" } )

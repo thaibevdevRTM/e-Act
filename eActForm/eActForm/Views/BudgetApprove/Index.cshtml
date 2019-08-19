@@ -90,6 +90,8 @@
 				<div class="col-md-3 col-sm-3 col-xs-12"></div>
 				<div class="col-md-9 col-sm-9 col-xs-12">
 
+					@*<button type="submit" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Re Submit</button>*@
+
 					@if (Model.approveModel.statusId != "2")
 					{
 						<h4 class="text-danger text-center">
@@ -99,7 +101,6 @@
 					else if (Model.approveModel.isPermisionApprove)
 					{
 						<button type="submit" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
-
 					}
 					else
 					{

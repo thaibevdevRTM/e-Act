@@ -10,19 +10,19 @@
 
 <h2>My Document (Budget)</h2>
 <hr />
-<div class="row tile_count">
 
+@*<div class="row tile_count">
 	<div class="row tile_count">
 		<div class="col-md-12 col-xs-12">
 			@using (Ajax.BeginForm("searchBudgetForm", "BudgetMyDoc"
-, new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
-, new { id = "form", @class = "form-horizontal form-label-left" }))
+			, new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
+			, new { id = "form", @class = "form-horizontal form-label-left" }))
 			{
-				@RenderPage("~/Views/Shared/_search.cshtml")
+				@RenderPage("~/Views/Shared/_searchBudget.cshtml")
 			}
 		</div>
 	</div>
-</div>
+</div>*@
 
 <div class="row tile_count">
 	<div id="getQuery" class="col-md-12 col-xs-12">
