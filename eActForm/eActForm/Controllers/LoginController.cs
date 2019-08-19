@@ -56,7 +56,11 @@ namespace eActForm.Controllers
                     }
                     else if (Request.Form["txtParam"] == AppCode.ApproveEmailype.document.ToString())
                     {
-                        return RedirectToAction("index", "Home", new { actId = Request.Form["txtActId"] });
+                        return RedirectToAction("index", "Home", new
+                        {
+                            actId = Request.Form["txtActId"],
+                            typeForm = UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] ? Activity_Model.activityType.OMT.ToString() : Activity_Model.activityType.MT.ToString()
+                        });
                     }
                     else
                     {

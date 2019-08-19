@@ -144,8 +144,8 @@
                             strActDetail = item.activityDetail;
                             strActNo = item.activityNo;
                             sumTotal = sumTotal + item.total;
-                            sumNormalSale = item.normalSale == "" ? sumNormalSale : sumNormalSale + decimal.Parse(item.normalSale);
-                            sumNormalPromotion = item.promotionSale == "" ? sumNormalPromotion : sumNormalPromotion + decimal.Parse(item.promotionSale);
+                            sumNormalSale = item.normalSale == 0 ? sumNormalSale : sumNormalSale + item.normalSale;
+                            sumNormalPromotion = item.promotionSale == 0 ? sumNormalPromotion : sumNormalPromotion + item.promotionSale;
 
                         }
                     }

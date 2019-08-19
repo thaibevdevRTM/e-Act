@@ -296,13 +296,7 @@ else
             genPdf();
         });
     }
-
-    function onClickClose() {
-        var url = '@Url.Action("Index", "ApproveLists")';
-        window.location.href = url;
-    }
-
-    function genPdf() {
+        function genPdf() {
         $.ajax({
             url: '@Url.Action("genPdfApprove", "Approve")',
             data: {
@@ -317,6 +311,13 @@ else
             $('#ModalPreviewPDF').modal('show');
         });
     }
+
+    function onClickClose() {
+        var url = '@Url.Action("Index", "ApproveLists")';
+        window.location.href = url;
+    }
+
+
 
 </script>
 

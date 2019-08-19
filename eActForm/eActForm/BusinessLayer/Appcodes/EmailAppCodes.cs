@@ -138,7 +138,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message);
+                ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message +" " + actFormId);
             }
         }
         public static void sendApprove(string actFormId, AppCode.ApproveType emailType, bool isResend)
@@ -449,7 +449,7 @@ namespace eActForm.BusinessLayer
 			}
 			catch (Exception ex)
 			{
-				ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message);
+				ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message + " " + actFormId);
 			}
 		}
 
