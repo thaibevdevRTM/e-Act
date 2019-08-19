@@ -14,7 +14,7 @@ namespace eActForm.Controllers
         // GET: Home
         public ActionResult Index(string actId , string typeForm)
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
             models.typeForm = typeForm;
             return View(models);
         }
@@ -91,7 +91,7 @@ namespace eActForm.Controllers
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
             model = new Activity_Model.actForms
             {
-                actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, startDate, endDate , activityType)
+                actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.customerId, startDate, endDate , activityType)
             };
 
            

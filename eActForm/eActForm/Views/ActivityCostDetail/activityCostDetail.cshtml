@@ -234,7 +234,9 @@
         var total = 0;
         if (checktotal == true) {
             total = $("#lblTotal_" + rowIndex).val();
+            total = total == "" ? 0 : total;
             perTotal = $('#lblPerTotal_' + rowIndex).val();
+            perTotal = perTotal == "" ? 0 : perTotal;
         }
         $.ajax({
             type: 'POST',
