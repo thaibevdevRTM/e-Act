@@ -87,8 +87,7 @@ namespace eActForm.BusinessLayer
                 {
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityFormAll"
                     , new SqlParameter[] {
-                        new SqlParameter("@empId", empId)
-                        ,new SqlParameter("@startDate", startDate)
+                        new SqlParameter("@startDate", startDate)
                         ,new SqlParameter("@endDate", endDate)
                     });
                 }
