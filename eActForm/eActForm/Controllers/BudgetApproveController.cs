@@ -129,7 +129,8 @@ namespace eActForm.Controllers
 		{
 			Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
 			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(null,budgetApproveId);
-			Budget_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, null, null, budgetApproveId);
+			//Budget_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, null, null, budgetApproveId);
+			Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, null, null, budgetApproveId).FirstOrDefault();
 			Budget_Model.Budget_Approve_detail_list = QueryGetBudgetApprove.getBudgetApproveId(budgetApproveId);
 			return PartialView(Budget_Model);
 

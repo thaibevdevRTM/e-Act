@@ -64,7 +64,8 @@ namespace eActForm.Controllers
 			return RedirectToAction("myDocBudget");
 		}
 
-		public ActionResult myDocBudget() // กำลังแก้ ******
+		
+		public ActionResult myDocBudget() 
 		{
 			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
 			model = new Budget_Approve_Detail_Model.budgetForms();
