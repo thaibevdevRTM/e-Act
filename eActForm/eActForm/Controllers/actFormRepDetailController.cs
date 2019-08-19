@@ -110,6 +110,11 @@ namespace eActForm.Controllers
                     .Where(r => r.id == actId)
                     .Select(r => r.delFlag = !delFlag
                     ).ToList();
+
+                model.actFormRepDetailGroupLists
+                    .Where(r => r.id == actId)
+                    .Select(r => r.delFlag = !delFlag
+                    ).ToList();
                 result.Success = true;
             }
             catch (Exception ex)
