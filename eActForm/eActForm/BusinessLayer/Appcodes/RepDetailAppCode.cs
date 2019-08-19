@@ -287,7 +287,7 @@ namespace eActForm.BusinessLayer
                              }).ToList();
 
                 actRepModel.actFormRepDetailGroupLists = actRepModel.actFormRepDetailLists
-                    .GroupBy(item => new { item.productGroupid
+                    .GroupBy(item => new {item.activityNo, item.productGroupid
                     })
                     .Select((group, index) => new RepDetailModel.actFormRepDetailModel
                     {
