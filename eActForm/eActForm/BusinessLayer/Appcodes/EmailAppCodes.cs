@@ -500,7 +500,7 @@ namespace eActForm.BusinessLayer
 
 						sendEmailBudgetForm(actFormId
 						, createUsers.FirstOrDefault().empEmail
-						, ""
+						,""
 						, ConfigurationManager.AppSettings["emailApprovedSubjectBudget"]
 						, strBody
 						, emailType);
@@ -562,7 +562,7 @@ namespace eActForm.BusinessLayer
 			}
 
 			sendEmail(mailTo
-					, mailCC == "" ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC
+					, mailCC == "" ? ConfigurationManager.AppSettings["emailBudgetApproveCC"] : mailCC
 					, strSubject
 					, strBody
 					, files);

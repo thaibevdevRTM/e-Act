@@ -58,7 +58,7 @@
 	}
 </style>
 
-@Html.HiddenFor(m => m.Budget_Activity_list.ElementAt(0).budget_id, new { id = "HbudgetId" })
+@Html.HiddenFor(m => m.Budget_Activity.budget_id, new { id = "HbudgetId" })
 
 @if (1 == 1)
 {
@@ -84,7 +84,7 @@
 					</style>
 
 					<div>
-						<div style="text-align:center;"><h5>รายละเอียดค่าใช้จ่าย ตั้งจ่ายจริง </h5></div>
+						<div style="text-align:center;"><h5>รายละเอียดตัดจ่ายจริง </h5></div>
 					</div>
 
 					<div>
@@ -102,14 +102,22 @@
 							<tr>
 								<td style="text-align:left;"></td>
 								<td style="text-align:right;">
-									<label> Activity No : </label> @Model.Budget_Activity_list.ElementAt(0).act_activityNo
+									<label> Activity No : </label>
+									@if (Model.Budget_Activity.act_activityNo.ToString() != "")
+									{
+										@Html.DisplayFor(x => x.Budget_Activity.act_activityNo)
+									}
 								</td>
 							</tr>
 
 
 							<tr>
 								<td style="text-align:left">
-									<label> ชื่อกิจกรรม (Activity Name) : </label> @Model.Budget_Activity_list.ElementAt(0).act_activityName
+									<label> ชื่อกิจกรรม (Activity Name) : </label>
+									@if (Model.Budget_Activity.act_activityName.ToString() != "")
+									{
+										@Html.DisplayFor(x => x.Budget_Activity.act_activityName)
+									}
 								</td>
 								<td style="text-align:right;">
 									<label> Document Date : </label> <span id="docDate"></span>
@@ -118,37 +126,72 @@
 
 							<tr>
 								<td style="text-align:left;">
-									<label> Theme : </label>  @Model.Budget_Activity_list.ElementAt(0).act_theme
+									<label> Theme : </label>
+									@if (Model.Budget_Activity.act_theme.ToString() != "")
+									{
+										@Html.DisplayFor(x => x.Budget_Activity.act_theme)
+									}
 								</td>
 								<td style="text-align:right;">
-									<label> ลูกค้า (Customer Name) : </label>  @Model.Budget_Activity_list.ElementAt(0).cus_cusShortName
+									<label> ลูกค้า (Customer Name) : </label>
+									@if (Model.Budget_Activity.cus_cusShortName.ToString() != "")
+									{
+										@Html.DisplayFor(x => x.Budget_Activity.cus_cusShortName)
+									}
 								</td>
 							</tr>
 
 							<tr>
 								<td style="text-align:left;">
 									<label> ระยะเวลากิจกรรม (Activity Period) : </label>
-									@*@Model.Budget_Activity_list.ElementAt(0).act_activityPeriodSt.Value.ToString("dd/MM/yyyy")  to  @Model.Budget_Activity_list.ElementAt(0).act_activityPeriodEnd.Value.ToString("dd/MM/yyyy")*@
-									@Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodSt.Value.ToString("dd/MM/yyyy") ถึง @Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodEnd.Value.ToString("dd/MM/yyyy")
+									@if (Model.Budget_Activity.act_activityPeriodSt.ToString() != "")
+									{
+										@Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodSt)
+									}
+									ถึง
+									@if (Model.Budget_Activity.act_activityPeriodEnd.ToString() != "")
+									{
+										@Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodEnd)
+									}
 								</td>
 								<td style="text-align:right;">
-									<label> ช่องทาง (Channel) : </label> @Model.Budget_Activity_list.ElementAt(0).ch_chanelGroup
+									<label> ช่องทาง (Channel) : </label>
+									@if (Model.Budget_Activity.ch_chanelGroup.ToString() != "")
+									{
+										@Html.DisplayFor(x => x.Budget_Activity.ch_chanelGroup)
+									}
 								</td>
 							</tr>
 
 							<tr>
 								<td style="text-align:left;">
 									<label> ระยะเวลาการให้ทุนพิเศษ (Cast Period) : </label>
-									@*@Model.Budget_Activity_list.ElementAt(0).act_costPeriodSt.Value.ToString("dd/MM/yyyy")  to  @Model.Budget_Activity_list.ElementAt(0).act_costPeriodEnd .Value.ToString("dd/MM/yyyy")*@
+									@if (Model.Budget_Activity.act_costPeriodSt.ToString() != "")
+									{
+										@Html.DisplayFor(x => x.Budget_Activity.act_costPeriodSt)
+									}
+
+									@if (Model.Budget_Activity.act_costPeriodEnd.ToString() != "")
+									{
+										@Html.DisplayFor(x => x.Budget_Activity.act_costPeriodEnd)
+									}
 								</td>
 								<td style="text-align:right;">
-									<label> กลุ่มสินค้า (Product Group) : </label> @Model.Budget_Activity_list.ElementAt(0).prd_groupShort
+									<label> กลุ่มสินค้า (Product Group) : </label>
+									@if (Model.Budget_Activity.prd_groupShort.ToString() != "")
+									{
+										@Html.DisplayFor(x => x.Budget_Activity.prd_groupShort)
+									}
 								</td>
 							</tr>
 
 							<tr>
 								<td style="text-align:left;">
-									<label> วัตถุประสงค์ (Objective) : </label>  @Model.Budget_Activity_list.ElementAt(0).act_objective
+									<label> วัตถุประสงค์ (Objective) : </label>
+									@if (Model.Budget_Activity.act_objective.ToString() != "")
+									{
+										@Html.DisplayFor(x => x.Budget_Activity.act_objective)
+									}
 								</td>
 								<td style="text-align:right;"></td>
 							</tr>
@@ -181,13 +224,13 @@
 						<table class="tablethin" style="width:100%; text-align:center; border-color:gray;" border="1" cellpadding="0" cellspacing="0">
 							<tr>
 								<td rowspan="2" style="width:10%; font-size:11px;">ประเภทกิจกรรม</td>
-								<td rowspan="2" style="width:30%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
-								<td colspan="4" style="width:25%; font-size:11px;">จ่ายจริง (Actual)</td>
+								<td rowspan="2" style="width:25%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
+								<td colspan="4" style="width:35%; font-size:11px;">จ่ายจริง (Actual)</td>
 
 								<td rowspan="2" style="width:7%; font-size:11px;">คงเหลือ</td>
 								<td rowspan="2" style="width:7%; font-size:11px;">วันที่ทำรายการ</td>
-								<td rowspan="2" style="width:10%; font-size:11px;">สถานะ</td>
-								<td rowspan="2" style="width:10%; font-size:11px;">สถานะอนุมัติ</td>
+								<td rowspan="2" style="width:7%; font-size:11px;">สถานะ</td>
+								<td rowspan="2" style="width:7%; font-size:11px;">สถานะอนุมัติ</td>
 							</tr>
 							<tr>
 								<td style="font-size:11px;">จำนวนเงินที่ตั้ง</td>
@@ -270,11 +313,6 @@
 						<div>
 							<table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
 						</div>
-
-						@*@if (Model.Budget_Activity.budget_id != null)
-		{
-			@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id })
-		}*@
 
 						@if (Model.Budget_Approve_detail_list.Count > 0)
 						{
