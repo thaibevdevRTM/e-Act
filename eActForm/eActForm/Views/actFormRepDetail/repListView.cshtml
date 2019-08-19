@@ -504,7 +504,7 @@
                         <div class="pull-right">
                             @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                             {
-                                <button type="button" class="btn ink-reaction btn-primary" id="btnSubmit" value="Export" style="width:100%;">
+                                <button type="button" class="btn ink-reaction btn-primary" id="btnSubmitPDF" value="Export" style="width:100%;">
                                     <i class="fa check-square-o"></i>&nbsp;Send to Approve
                                 </button>
                             }
@@ -573,6 +573,40 @@
                         url: '@Url.Action("repReportDetailApprove", "actFormRepDetail")',
                         data: {
                             gridHtml: $("#Grid").html(),
+                            gridOs: $("#divOS").html(),
+                            gridEst: $("#divEst").html(),
+                            gridWA: $("#divWA").html(),
+                            gridSO: $("#divSO").html(),
+                            customerId: $("#ddlCustomer").val(),
+                            productTypeId: $("#ddlProductType").val(),
+                            startDate: $("#startDate").val(),
+                            endDate: $("#endDate").val()
+                        },
+                        dataType: "json",
+                        type: 'POST'
+                    }).done(function (response) {
+                        $("#WaitDialog").hide();
+                        if (response.Success) {
+                            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+                            $("#chooseRepDetailView").html("");
+                            }
+                            else {
+                            doMsgFail("ไม่สามารถดำเนินการได้สำเร็จ กรุณาติดต่อ Admin ครับ");
+                            }
+                    });
+                });
+            });
+
+
+
+    $(function () {
+                $("#btnSubmitPDF").click(function () {
+                    $("#previewModal").modal('hide');
+                    $("#WaitDialog").show();
+                    $.ajax({
+                        url: '@Url.Action("repReportDetailApprove", "actFormRepDetail")',
+                        data: {
+                            gridHtml: $("#GridPDF").html(),
                             gridOs: $("#divOS").html(),
                             gridEst: $("#divEst").html(),
                             gridWA: $("#divWA").html(),
