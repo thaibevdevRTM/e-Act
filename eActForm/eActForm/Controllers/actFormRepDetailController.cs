@@ -153,7 +153,8 @@ namespace eActForm.Controllers
             RepDetailModel.actFormRepDetails rep = new RepDetailModel.actFormRepDetails();
             try
             {
-                rep.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => brandId.Contains(r.brandId)).ToList();
+                rep.actFormRepDetailLists = model.actFormRepDetailGroupLists.Where(r => brandId.Contains(r.brandId)).ToList();
+
             }
             catch (Exception ex)
             {
