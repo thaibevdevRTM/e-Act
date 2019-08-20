@@ -36,18 +36,9 @@
 
 </div>
 
-<div class="form-group">
-	<div class="row">
-		<div class="col-md-12 col-xs-12">
-			<div class="row">
-				@*<div class="col-md-10 col-sm-10 col-xs-12">
-						<h5><strong>Activity No : </strong>@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo)</h5>
-					</div>*@
-				<div class="col-md-2 col-sm-2 col-xs-12 text-right">
 
-				</div>
-			</div>
-		</div>
+	<div class="row">
+
 
 		<div class="col-md-12 col-xs-12">
 			<div class="row">
@@ -93,9 +84,7 @@
 			</div>
 		</div>
 	</div>
-</div>
 
-<div class="row">
 	<table class="table table-bordered" id="content">
 		<thead class="thead-dark">
 			<tr>
@@ -211,17 +200,17 @@
 		@*------------------------------------------------------------------------------------------------*@
 	</table>
 
+	
 
-	<div class="row">
-		@if (Model.Budget_Activity_Invoice_list.Count != 0)
-		{
-			<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="javascript:onInvoicePrintPreview('@Model.Budget_Activity_Invoice_list.ElementAt(0).activityId');"><i class="fa fa-file-o fa-fw"></i>&nbsp;Preview</button>
-		}
-	</div>
+	@if (Model.Budget_Activity_Invoice_list.Count != 0)
+	{
+		<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="javascript:onInvoicePrintPreview('@Model.Budget_Activity_Invoice_list.ElementAt(0).activityId');"><i class="fa fa-file-o fa-fw"></i>&nbsp;Preview</button>
+	}
+
 
 	<div class="modal fade" id="modalmyDocBudgetList" role="dialog" style="display:none">
 		<div id="divModalmyDocBudgetList">
 		</div>
 	</div>
 
-</div>
+
