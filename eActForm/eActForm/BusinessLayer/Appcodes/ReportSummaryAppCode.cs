@@ -187,7 +187,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static ReportSummaryModels getReportSummary(string repId)
+        public static ReportSummaryModels getReportSummary(string repId,string txtDate)
         {
             try
             {
@@ -212,10 +212,10 @@ namespace eActForm.BusinessLayer
                                 oishi = decimal.Parse(AppCode.checkNullorEmpty(d["oishi"].ToString())),
                                 soda = decimal.Parse(AppCode.checkNullorEmpty(d["soda"].ToString())),
                                 water = decimal.Parse(AppCode.checkNullorEmpty(d["water"].ToString())),
-                            });
+                            }).OrderBy(x => x.activitySales).ToList();
                 List<ReportSummaryModel> groupList = new List<ReportSummaryModel>();
                 groupList = list
-                    .OrderBy(x => x.customerName)
+                    .OrderByDescending(x => x.rowNo)
                     .GroupBy(g => new { g.customerName, g.activitySales })
                     .Select((group, index) => new ReportSummaryModel
                     {
@@ -249,6 +249,41 @@ namespace eActForm.BusinessLayer
                         soda = group.Sum(s => s.soda),
                         water = group.Sum(s => s.water),
                     }).ToList();
+
+
+
+                string txtMonth = DateTime.ParseExact(txtDate, "MM/dd/yyyy", null).ToString("MMM").ToLower();
+                string txtYear = DateTime.ParseExact(txtDate, "MM/dd/yyyy", null).ToString("yyyy");
+                DataSet ds1 = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_get_SaleForcast"
+                    , new SqlParameter[] {
+                        new SqlParameter("@year",txtYear)
+                    });
+                var listForSale = (from DataRow d in ds1.Tables[0].Rows
+                                   select new ReportSummaryModel()
+                                   {
+                                       id = d["id"].ToString(),
+                                       brandId = d["brandId"].ToString(),
+                                       month = decimal.Parse(AppCode.checkNullorEmpty(d[txtMonth].ToString())),
+
+                                   }).OrderBy(x => x.activitySales).ToList();
+
+              
+
+                //add Sales Forecast
+                groupActivityList.Add(new ReportSummaryModel
+                {
+                    id = Guid.NewGuid().ToString(),
+                    activitySales = "Sales Forecast",
+                    est = listForSale.Where(x => x.brandId.Equals("9EC1CA68-591D-4B3A-9A65-6509C6ED965E")).FirstOrDefault().month,
+                    crystal = listForSale.Where(x => x.brandId.Equals("2395EA4D-5CD5-4DDB-A7B6-48EF819B99BB")).FirstOrDefault().month,
+                    wranger = listForSale.Where(x => x.brandId.Equals("BB57DBF4-C281-4F79-9481-2B8A4C53C723")).FirstOrDefault().month,
+                    plus100 = listForSale.Where(x => x.brandId.Equals("6B623E91-AE6E-4621-A6CD-3F567D19BC70")).FirstOrDefault().month,
+                    jubjai = listForSale.Where(x => x.brandId.Equals("32459970-AACE-4E67-B58B-F6D786F8D7A1")).FirstOrDefault().month,
+                    oishi = listForSale.Where(x => x.brandId.Equals("1D8F1409-9A19-46AC-B1D3-D71919351716")).FirstOrDefault().month,
+                    soda = listForSale.Where(x => x.brandId.Equals("BC05AADC-A306-4D33-8383-521B8CAB2B2F")).FirstOrDefault().month +
+                          listForSale.Where(x => x.brandId.Equals("7CA5340A-747B-486C-81C5-D206B081D96A")).FirstOrDefault().month,
+                    water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
+                });
 
 
                 ReportSummaryModels resultModel = new ReportSummaryModels();

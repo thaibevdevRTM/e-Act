@@ -32,18 +32,20 @@ namespace eActForm.Controllers
                 string repDetail = "";
                 ReportSummaryModels model = new ReportSummaryModels();
                 ReportSummaryModels modelResult = new ReportSummaryModels();
+                
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
 
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
                 if (model.activitySummaryList.Any())
                 {
                     repDetail = string.Join(",", model.activitySummaryList.Select(x => x.repDetailId));
-                    modelResult = ReportSummaryAppCode.getReportSummary(repDetail);
+                    modelResult = ReportSummaryAppCode.getReportSummary(repDetail, startDate);
                     modelResult.flowList = model.flowList;
                 }
 
                 Session["SummaryDetailModel"] = modelResult;
-                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+                
 
             }
             catch (Exception ex)

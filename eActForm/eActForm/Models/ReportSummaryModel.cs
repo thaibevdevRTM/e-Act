@@ -36,6 +36,9 @@ namespace eActForm.Models
             public string productTypeId { get; set; }
             public string activityNo { get; set; }
             public string statusId { get; set; }
+            public string brandId { get; set; }
+            public string year { get; set; }
+            public decimal? month { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? est { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
@@ -55,6 +58,7 @@ namespace eActForm.Models
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? total { get; set; }
             public string remark { get; set; }
+            public int rowNo   { get; set; }
         }
 
         public class actApproveSummaryDetailList

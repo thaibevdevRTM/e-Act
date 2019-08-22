@@ -70,10 +70,13 @@ namespace eActForm.Controllers
                     #endregion
                 }
 
-                model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
-                                        ConfigurationManager.AppSettings["subjectReportDetailId"]
-                                        , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
-                                        , Request.Form["ddlProductType"]);
+                if (model.actFormRepDetailGroupLists.Any())
+                {
+                    model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                                            ConfigurationManager.AppSettings["subjectReportDetailId"]
+                                            , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
+                                            , Request.Form["ddlProductType"]);
+                }
 
                 Session["ActFormRepDetail"] = model;
             }
