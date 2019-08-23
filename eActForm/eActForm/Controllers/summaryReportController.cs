@@ -26,13 +26,13 @@ namespace eActForm.Controllers
 
         public ActionResult getPreviewSummary(string startDate)
         {
-           
+
             try
             {
                 string repDetail = "";
                 ReportSummaryModels model = new ReportSummaryModels();
                 ReportSummaryModels modelResult = new ReportSummaryModels();
-                
+
                 ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
 
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
@@ -45,7 +45,7 @@ namespace eActForm.Controllers
                 }
 
                 Session["SummaryDetailModel"] = modelResult;
-                
+
 
             }
             catch (Exception ex)
@@ -99,7 +99,7 @@ namespace eActForm.Controllers
                 string chk = Request.Form["chk_Approve"];
                 #region filter
 
-                
+
                 if (Request.Form["txtRepDetailNo"] != "")
                 {
                     model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByRepDetailNo(model.activitySummaryList, Request.Form["txtRepDetailNo"]);
@@ -109,9 +109,12 @@ namespace eActForm.Controllers
                     model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByProductType(model.activitySummaryList, Request.Form["ddlProductType"]);
                 }
 
-                if(chk == "true")
+                if (chk == "true")
                 {
-
+                    model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                                   "639C73A8-328E-433E-8B12-19B04AC8D61A"
+                                   , "B18BB124-0EFC-4D90-BFFD-D333A1F79E32"
+                                   , Request.Form["ddlProductType"]);
                 }
                 else
                 {
@@ -132,6 +135,24 @@ namespace eActForm.Controllers
             return RedirectToAction("repSummaryView", new { startDate = Request.Form["startDate"] });
         }
 
+        public ActionResult IndexViewStatus()
+        {
+            ReportSummaryModels model = new ReportSummaryModels();
+            try
+            {
+                
+                model.summaryDetailLists = ReportSummaryAppCode.getStatusSummaryDetailByDate(Request.Form["startDate"], Request.Form["endDate"]);
+                Session["SummaryStatusDetailModel"] = model;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return RedirectToAction("SummaryStatusView");
+        }
+
+
         public ActionResult repSummaryView(string startDate)
         {
             ReportSummaryModels model = null;
@@ -140,6 +161,22 @@ namespace eActForm.Controllers
 
                 ViewBag.startDate = startDate;
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
+
+
+        public ActionResult summaryStatusView()
+        {
+            ReportSummaryModels model = new ReportSummaryModels();
+            try
+            {
+                model = (ReportSummaryModels)Session["SummaryStatusDetailModel"] ?? new ReportSummaryModels();
             }
             catch (Exception ex)
             {
@@ -212,7 +249,7 @@ namespace eActForm.Controllers
             ReportSummaryModels modelResult = new ReportSummaryModels();
             try
             {
-                
+
                 modelResult = ReportSummaryAppCode.getReportSummaryApprove(summaryId);
                 modelResult.flowList = ApproveFlowAppCode.getFlowByActFormId(summaryId);
                 Session["SummaryDetailModel"] = modelResult;

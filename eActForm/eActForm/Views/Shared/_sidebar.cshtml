@@ -120,6 +120,7 @@
                     @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                     {
                         <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport")</li>
+                        <li>@Html.ActionLink(" View Status", "viewStatus", "SummaryReport")</li>
                     }
                 </ul>
             </li>

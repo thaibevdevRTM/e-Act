@@ -101,6 +101,11 @@
 
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        document.getElementById("divStatus").style.display = "none";
+    });
+
+
     function setDelFlagRepDetail(repId) {
         console.log($("#chk_" + repId).is(":checked"));
         $.ajax({

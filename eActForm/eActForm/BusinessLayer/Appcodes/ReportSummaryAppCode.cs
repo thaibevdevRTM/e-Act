@@ -217,7 +217,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static ReportSummaryModels getReportSummary(string repId,string txtDate)
+        public static ReportSummaryModels getReportSummary(string repId, string txtDate)
         {
             try
             {
@@ -297,7 +297,7 @@ namespace eActForm.BusinessLayer
 
                                    }).OrderBy(x => x.activitySales).ToList();
 
-              
+
 
                 //add Sales Forecast
                 groupActivityList.Add(new ReportSummaryModel
@@ -354,7 +354,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        
+
 
         public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByCustomer(List<ReportSummaryModels.ReportSummaryModel> lists, string cusId)
         {
@@ -478,6 +478,40 @@ namespace eActForm.BusinessLayer
                                      createdByUserId = dr["createdByUserId"].ToString(),
                                      updatedDate = dr["updatedDate"] is DBNull ? null : (DateTime?)dr["updatedDate"],
                                      updatedByUserId = dr["updatedByUserId"].ToString()
+                                 }).ToList();
+                    return lists;
+                }
+                else
+                {
+                    return new List<ReportSummaryModels.actApproveSummaryDetailModel>();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getApproveSummaryDetailListsByEmpId >>" + ex.Message);
+            }
+        }
+
+        public static List<ReportSummaryModels.actApproveSummaryDetailModel> getStatusSummaryDetailByDate(string startDate, string endDate)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getStatusSummaryReport"
+                    , new SqlParameter[] { new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
+                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null)) });
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    var lists = (from DataRow dr in ds.Tables[0].Rows
+                                 select new ReportSummaryModels.actApproveSummaryDetailModel()
+                                 {
+                                     id = dr["id"].ToString(),
+                                     statusName = dr["txtstatus"].ToString(),
+                                     productTypeName = dr["txtproductType"].ToString(),
+                                     activityNo = dr["activityNo"].ToString(),
+                                     createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
+                                     createdByUserId = dr["createdByUserId"].ToString(),
                                  }).ToList();
                     return lists;
                 }
