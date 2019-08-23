@@ -332,7 +332,7 @@ namespace eActForm.BusinessLayer
                         #endregion
 
 
-                    }).ToList();
+                    }).OrderBy(x => x.activityNo).ToList();
 
                 return actRepModel;
             }

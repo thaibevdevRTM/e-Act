@@ -36,6 +36,7 @@ namespace eActForm.Models
             public string productTypeId { get; set; }
             public string activityNo { get; set; }
             public string statusId { get; set; }
+            public string status { get; set; }
             public string brandId { get; set; }
             public string year { get; set; }
             public decimal? month { get; set; }

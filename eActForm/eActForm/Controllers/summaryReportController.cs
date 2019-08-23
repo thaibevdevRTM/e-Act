@@ -99,12 +99,21 @@ namespace eActForm.Controllers
                 string chk = Request.Form["chk_Approve"];
                 #region filter
 
+                
+                if (Request.Form["txtRepDetailNo"] != "")
+                {
+                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByRepDetailNo(model.activitySummaryList, Request.Form["txtRepDetailNo"]);
+                }
                 if (Request.Form["ddlProductType"] != "")
                 {
                     model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByProductType(model.activitySummaryList, Request.Form["ddlProductType"]);
                 }
 
-                if (Request.Form["ddlProductType"] != "")
+                if(chk == "true")
+                {
+
+                }
+                else
                 {
                     model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
                                     "639C73A8-328E-433E-8B12-19B04AC8D61A"

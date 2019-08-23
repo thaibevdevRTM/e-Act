@@ -15,6 +15,36 @@ namespace eActForm.BusinessLayer
     public class ReportSummaryAppCode
     {
 
+
+        public static int updateSummaryReportWithApproveDetail(string repDetailId)
+        {
+            try
+            {
+                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusActSummaryDetailByApproveSummaryDetail"
+                    , new SqlParameter[] { new SqlParameter("@repDetailId", repDetailId)
+                    ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("updateSummaryReportWithApproveDetail >> " + ex.Message);
+            }
+        }
+        public static int updateSummaryReportWithApproveReject(string repDetailId)
+        {
+            try
+            {
+                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateStatusSummaryDetailByApproveReject"
+                    , new SqlParameter[] { new SqlParameter("@repDetailId", repDetailId)
+                    ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)});
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("updateSummaryReportWithApproveReject >> " + ex.Message);
+            }
+        }
+
         public static ApproveFlowModel.approveFlowModel getFlowByActFormId(string actId)
         {
             try
@@ -311,6 +341,20 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterSummaryDetailByProductType >>" + ex.Message);
             }
         }
+
+        public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByRepDetailNo(List<ReportSummaryModels.ReportSummaryModel> lists, string txtRepDetailNo)
+        {
+            try
+            {
+                return lists.Where(r => r.activityNo.Contains(txtRepDetailNo)).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFilterSummaryDetailByRepDetailNo >>" + ex.Message);
+            }
+        }
+
+        
 
         public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByCustomer(List<ReportSummaryModels.ReportSummaryModel> lists, string cusId)
         {
