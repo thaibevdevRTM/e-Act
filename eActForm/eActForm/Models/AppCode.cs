@@ -26,6 +26,8 @@ namespace eActForm.Models
     {
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
+        public static string nonAL = "1D1097F4-246F-4DC2-BB69-B7BB6E678299";
+        public static string AL = "FC696EB5-B058-445E-B605-977C5067AEBA";
 
         public enum ApproveEmailype
         {
@@ -54,6 +56,7 @@ namespace eActForm.Models
             app, // approve
             doc // document
         }
+
 
         public static string checkNullorEmpty(string p)
         {
@@ -204,7 +207,7 @@ namespace eActForm.Models
             //GridHtml = GridHtml.Replace("\n", "");
             MemoryStream msPreview = new MemoryStream();
             msPreview = GetFileReportTomail_Preview(GridHtml, doc);
-            return msPreview ;
+            return msPreview;
         }
 
 

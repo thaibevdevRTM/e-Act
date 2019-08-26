@@ -212,7 +212,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-
+                gridHtml = gridHtml.Replace("<br>", "<br/>");
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
                 string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
@@ -282,7 +282,7 @@ namespace eActForm.Controllers
                 else
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actId));
-                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                     EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail, false);
                     Session["ActFormRepDetail"] = null;
                 }

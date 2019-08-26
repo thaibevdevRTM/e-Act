@@ -64,6 +64,10 @@
                         {
                             <li>@Html.ActionLink(" Report Detail", "reportDetail", "Documents")</li>
                         }
+                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                        {
+                            <li>@Html.ActionLink(" Report Summary", "IndexDoc", "SummaryReport")</li>
+                        }
                         <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
                     </ul>
                 </li>
@@ -119,8 +123,7 @@
                     <li>@Html.ActionLink(" Report Detail", "index", "actFormRepDetail")</li>
                     @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                     {
-                        <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport")</li>
-                        <li>@Html.ActionLink(" View Status", "viewStatus", "SummaryReport")</li>
+                        <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport")</li>  
                     }
                 </ul>
             </li>

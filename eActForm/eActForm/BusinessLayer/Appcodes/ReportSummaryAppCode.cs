@@ -494,13 +494,13 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ReportSummaryModels.actApproveSummaryDetailModel> getStatusSummaryDetailByDate(string startDate, string endDate)
+        public static List<ReportSummaryModels.actApproveSummaryDetailModel> getDocumentSummaryDetailByDate(DateTime startDate, DateTime endDate)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getStatusSummaryReport"
-                    , new SqlParameter[] { new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null)) });
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDocumentSummaryReportByDate"
+                    , new SqlParameter[] { new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate) });
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     var lists = (from DataRow dr in ds.Tables[0].Rows
@@ -508,6 +508,7 @@ namespace eActForm.BusinessLayer
                                  {
                                      id = dr["id"].ToString(),
                                      statusName = dr["txtstatus"].ToString(),
+                                     statusId = dr["statusid"].ToString(),
                                      productTypeName = dr["txtproductType"].ToString(),
                                      activityNo = dr["activityNo"].ToString(),
                                      createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
@@ -524,7 +525,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception("getApproveSummaryDetailListsByEmpId >>" + ex.Message);
+                throw new Exception("getDocumentSummaryDetailByDate >>" + ex.Message);
             }
         }
 
