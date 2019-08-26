@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using eActForm.Models;
 using eActForm.BusinessLayer;
 using System.Configuration;
+using System.IO;
+
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -19,7 +21,9 @@ namespace eActForm.Controllers
             return View(model);
         }
 
-        public ActionResult createSignature(ActSignatureModel.SignModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult createSignature(ActSignatureModel.SignModel model , IEnumerable<HttpPostedFileBase> files)
         {
             model.id = Guid.NewGuid().ToString();
             model.createdByUserId = UtilsAppCode.Session.User.empId;
@@ -28,6 +32,10 @@ namespace eActForm.Controllers
             model.updatedDate = DateTime.Now;
             List<ActSignatureModel.SignModel> list = new List<ActSignatureModel.SignModel>();
             list.Add(model);
+            var f = files.ToList();
+            MemoryStream target = new MemoryStream();
+           f[0].InputStream.CopyTo(target);
+            list[0].signature = target.ToArray();
             int rtn = SignatureAppCode.signatureInsert(AppCode.ToDataTable(list));
             if (rtn > 0)
             {
