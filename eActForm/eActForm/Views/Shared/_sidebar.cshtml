@@ -39,9 +39,20 @@
             {
                 <li>
                     <a><i class="fa fa-bar-chart-o"></i> Budget Forms <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <li>@Html.ActionLink(" Budget Form", "activityList", "Budget")</li>
-                    </ul>
+					<ul class="nav child_menu">
+						<li>
+							<a href="@Url.Action("activityList", "Budget")">
+								Budget Form
+							</a>
+						</li>
+
+						@*<li>
+							<a href="@Url.Action("manageInvoiceIndex", "Budget")">
+								Manage Invoice
+							</a>
+						</li>*@
+
+					</ul>
                 </li>
             }
             @if (UtilsAppCode.Session.User.isCreator || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
@@ -63,6 +74,10 @@
                         @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                         {
                             <li>@Html.ActionLink(" Report Detail", "reportDetail", "Documents")</li>
+                        }
+                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                        {
+                            <li>@Html.ActionLink(" Report Summary", "IndexDoc", "SummaryReport")</li>
                         }
                         <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
                     </ul>
@@ -119,7 +134,7 @@
                     <li>@Html.ActionLink(" Report Detail", "index", "actFormRepDetail")</li>
                     @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                     {
-                        <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport")</li>
+                        <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport")</li>  
                     }
                 </ul>
             </li>

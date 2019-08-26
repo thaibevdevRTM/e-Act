@@ -129,7 +129,8 @@ namespace eActForm.Controllers
 		{
 			Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
 			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(null,budgetApproveId);
-			Budget_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, null, null, budgetApproveId);
+			//Budget_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, null, null, budgetApproveId);
+			Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, null, null, budgetApproveId).FirstOrDefault();
 			Budget_Model.Budget_Approve_detail_list = QueryGetBudgetApprove.getBudgetApproveId(budgetApproveId);
 			return PartialView(Budget_Model);
 
@@ -192,6 +193,7 @@ namespace eActForm.Controllers
 			{
 				resultAjax.Success = false;
 				resultAjax.Message = ex.Message;
+				ExceptionManager.WriteError("genPdfApproveBudget => " + ex.Message);
 			}
 			return Json(resultAjax, "text/plain");
 		}
@@ -271,7 +273,7 @@ namespace eActForm.Controllers
 			}
 			catch (Exception ex)
 			{
-				throw new Exception(ex.Message);
+				throw new Exception("updateBudgetFormStatus >> " + ex.Message);
 			}
 		}
 
@@ -328,7 +330,7 @@ namespace eActForm.Controllers
 			}
 			catch (Exception ex)
 			{
-				throw new Exception("getUserCreateActForm >>" + ex.Message);
+				throw new Exception("getUserCreateBudgetForm >>" + ex.Message);
 			}
 		}
 

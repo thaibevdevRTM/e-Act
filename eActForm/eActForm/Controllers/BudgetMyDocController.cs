@@ -32,21 +32,51 @@ namespace eActForm.Controllers
 			return PartialView(models);
 		}
 
+		public ActionResult searchBudgetForm()
+		{
+			string count = Request.Form.AllKeys.Count().ToString();
+			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
+			model = new Budget_Approve_Detail_Model.budgetForms();
+			model.budgetFormLists = getBudgetListsByEmpId(null);
+
+			if (Request.Form["txtActivityNo"] != "")
+			{
+				model.budgetFormLists = model.budgetFormLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
+			}
+
+			if (Request.Form["ddlStatus"] != "" )
+			{
+				model.budgetFormLists = model.budgetFormLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
+			}
+
+			if (Request.Form["ddlCustomer"] != "")
+			{
+				model.budgetFormLists = model.budgetFormLists.Where(r => r.customerId == Request.Form["ddlCustomer"]).ToList();
+			}
+
+			if (Request.Form["ddlTheme"] != "")
+			{
+				model.budgetFormLists = model.budgetFormLists.Where(r => r.themeId == Request.Form["ddlTheme"]).ToList();
+			}
+
+
+			TempData["SearchDataModelBudget"] = model.budgetFormLists;
+			return RedirectToAction("myDocBudget");
+		}
+
 		
-		public ActionResult myDocBudget() // กำลังแก้ ******
+		public ActionResult myDocBudget() 
 		{
 			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
-			if (TempData["SearchDataModel"] != null)
+			model = new Budget_Approve_Detail_Model.budgetForms();
+
+			if (TempData["SearchDataModelBudget"] != null)
 			{
-				//model = (Activity_Model.actForms)TempData["SearchDataModel"];
-				model.budgetFormLists = (List<Budget_Approve_Detail_Model.budgetForm>)TempData["SearchDataModel"];
+				model.budgetFormLists = (List<Budget_Approve_Detail_Model.budgetForm>)TempData["SearchDataModelBudget"];
 			}
 			else
 			{
-				//model = new Activity_Model.actForms();
-				//model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId);
-				model = new Budget_Approve_Detail_Model.budgetForms();
-				model.budgetFormLists = getBudgetListsByEmpId(UtilsAppCode.Session.User.empId);
+				model.budgetFormLists = getBudgetListsByEmpId(null);
 			}
 			return PartialView(model);
 		}
@@ -78,6 +108,7 @@ namespace eActForm.Controllers
 								 productTypeNameEN = dr["productTypeNameEN"].ToString(),
 
 								 cusShortName = dr["cusShortName"].ToString(),
+								 cusNameTH = dr["cusNameTH"].ToString(),
 								 productCategory = dr["productCateText"].ToString(),
 								 productGroup = dr["productGroupId"].ToString(),
 								 productGroupName = dr["productGroupName"].ToString(),
@@ -87,6 +118,8 @@ namespace eActForm.Controllers
 								 costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
 								 costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
 								 activityName = dr["activityName"].ToString(),
+
+								 themeId = dr["themeId"].ToString(),
 								 theme = dr["theme"].ToString(),
 								 objective = dr["objective"].ToString(),
 								 trade = dr["trade"].ToString(),
@@ -113,54 +146,11 @@ namespace eActForm.Controllers
 			}
 			catch (Exception ex)
 			{
-				//throw new Exception("getApproveListsByStatusId >> " + ex.Message);
 				ExceptionManager.WriteError("getApproveListsByStatusId >> " + ex.Message);
 				return new List<Budget_Approve_Detail_Model.budgetForm>();
 			}
 		}
 
-
-		public ActionResult searchBudgetForm()
-		{
-			string count = Request.Form.AllKeys.Count().ToString();
-			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
-			model.budgetFormLists = BudgetApproveListController.getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
-
-			if (Request.Form["txtActivityNo"] != "")
-			{
-				model.budgetFormLists = model.budgetFormLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
-			}
-
-			if (Request.Form["ddlStatus"] != "")
-			{
-				model.budgetFormLists = model.budgetFormLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
-			}
-
-			TempData["SearchDataModel"] = model.budgetFormLists;
-			return RedirectToAction("myDocBudget");
-		}
-
-		public ActionResult requestDeleteDoc(string actId, string statusId)
-		{
-			//return RedirectToAction("index");
-			AjaxResult result = new AjaxResult();
-			result.Success = false;
-			//if (statusId == "1")
-			//{
-			// Draft
-			if (ActFormAppCode.deleteActForm(actId, "request delete by user") > 0)
-			{
-				result.Success = true;
-				TempData["SearchDataModel"] = null;
-			}
-			//}
-			//else
-			//{
-
-			//}
-
-			return RedirectToAction("myDoc");
-		}
 
 
 	}

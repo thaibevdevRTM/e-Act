@@ -19,40 +19,37 @@
 
 @Html.HiddenFor(x => x.Budget_Activity_list.ElementAt(0).act_form_id, new { @id = "hd_activityId" })
 
-<div id="divPreviewProductList">
+<div class="row">
+	<div id="divPreviewProductList">
+
+	</div>
 </div>
 
 <hr />
 
-<div id="divPreviewInvoiceList">
+<div class="row">
+	<div id="divPreviewInvoiceList">
 
+	</div>
+
+	<div class="btn btn-sm ink-reaction pull-left btn-dark"> <i class="fa fa-arrow-left fa-fw"></i> @Html.ActionLink("ย้อนกลับ", "activityList", "Budget", new { style = "color:white" })</div>
 </div>
 
-<div id='myModalInvoice' class="modal fade" role="dialog">
-	<div id='myModalInvoiceContent'></div>
-</div>
+	<div id='myModalInvoice' class="modal fade" role="dialog">
+		<div id='myModalInvoiceContent'></div>
+	</div>
+
+	<div id='myModalInvoicePreview' class="modal fade" role="dialog">
+		<div id='myModalInvoicePreviewContent'></div>
+	</div>
 
 
-@*<div class="row">
-	@if (Model.Budget_Activity_list.ElementAt(0).bud_ActivityStatusId != "1")
-	{
-		<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="javascript:onInvoicePrintPreview('@Model.Budget_Activity_list.ElementAt(0).act_form_id');"><i class="fa fa-file-o fa-fw"></i>&nbsp;Preview</button>
-	}
-</div>*@
-
-<hr />
-<br />
-
-<div id='myModalInvoicePreview' class="modal fade" role="dialog">
-	<div id='myModalInvoicePreviewContent'></div>
-</div>
-
-
-<script>
+	<script>
 
 	$('document').ready(function () {
 		callProductList($("#hd_activityId").val());
 	});
+
 
 	function callProductList(activityId) {
         $.ajax({
@@ -83,7 +80,7 @@
 		}
 
 	function submitInvoice() {
-		
+
 		var var_activityId = $("#hd_activityId").val();
 		var var_activityOfEstimateId = $("#hd_activityOfEstimateId").val();
 
@@ -186,7 +183,7 @@
 			},
 			datatype: "json",
 			success: function (data) {
-	
+
 				$('#myModalInvoiceContent').html(data);
 				$('#myModalInvoice').modal(options);
 				$('#myModalInvoice').modal('show');
@@ -200,9 +197,6 @@
 	}
 
 	function onInvoicePrintPreview(actId) {
-		//var TeamDetailPostBackURL = '/BudgetApprove/previewApproveBudget';
-		//var TeamDetailPostBackURL = '/Budget/previewBudgetInvoice';
-		debugger;
 		//var $buttonClicked = $(this);
 		var var_activityId = actId;
 		var options = { "backdrop": "static", keyboard: true };
@@ -229,4 +223,4 @@
 		//callInvoiceList(var_activityId, var_estId);
 	}
 
-</script>
+	</script>

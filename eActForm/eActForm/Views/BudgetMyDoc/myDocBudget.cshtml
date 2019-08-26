@@ -8,47 +8,6 @@
 	}
 </style>
 <script>
-    function checkDelete(actId,statusId) {
-        var msg = "";
-        if (statusId == "1") {
-            // can be delete
-            msg = "คุณต้องการลบเอกสารนี้หรือไม่?"
-        }
-        else {
-            // can't delete
-            msg = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ <br/> ท่านต้องการยกเลิกเอกสารหรือไม่ค่ะ?";
-        }
-
-        bootbox.confirm({
-            title: "Confirm Message",
-            message: msg,
-            buttons: {
-                confirm: {
-                    label: "Yes",
-                    className: "btn-success"
-                },
-                cancel: {
-                    label: "No",
-                    className: "btn-danger"
-                }
-            },
-            callback: function (result) {
-                if (result) {
-                    $.ajax({
-                        url: '@Url.Action("requestDeleteDoc", "BudgetMyDoc")',
-                        data: {
-                            actId: actId,
-                            statusId: statusId,
-                        },
-                    }).done(function (htmlResponse) {
-                        $("#getQuery").html(htmlResponse);
-                    });
-                }
-
-            }
-        });
-    }
-
 
       function callApproveList(actId) {
         $.ajax({
@@ -112,7 +71,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (var item in Model.budgetFormLists)
+				@if (Model.budgetFormLists.Count>0)
+				{
+				foreach (var item in Model.budgetFormLists)
 				{
 					<tr class="gradeX">
 						<td>
@@ -151,6 +112,7 @@
 
 						</td>
 					</tr>
+				}
 				}
 			</tbody>
 		</table>

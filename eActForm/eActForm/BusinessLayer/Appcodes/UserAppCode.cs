@@ -59,6 +59,7 @@ namespace eActForm.BusinessLayer
 
                             UtilsAppCode.Session.User.empCompanyId = dr["companyId"].ToString();
                             UtilsAppCode.Session.User.regionId = dr["regionId"].ToString();
+                            UtilsAppCode.Session.User.customerId = dr["customerId"].ToString();
                         }
                     }
                 }

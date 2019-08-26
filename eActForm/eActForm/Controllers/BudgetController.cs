@@ -33,12 +33,7 @@ namespace eActForm.Controllers
 
 			Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
 			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId,null);
-
-			//Budget_Model.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, null, null);
-			//Budget_Model.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null,null);
-
 			Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null).FirstOrDefault();
-			Budget_Model.Budget_Approve_detail_list = QueryGetBudgetApprove.getBudgetApproveId(activityId);
 			return PartialView(Budget_Model);
 
 			//budgetApproveId
@@ -170,8 +165,110 @@ namespace eActForm.Controllers
 			budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", null,null,null).ToList();
 			return View(budget_activity);
 		}
+
+		//----- invoice file upload --------------------------------------------------------------//
+		public ActionResult manageInvoiceIndex(String budgetApproveId)
+		{
+			return View();
+		}
+
+		public ActionResult manageInvoiceList(String budgetApproveId, String activityNo, String createdByUserId)
+		{
+			try
+			{
+				TB_Bud_Image_Model.BudImageModels getBudImageModel = new TB_Bud_Image_Model.BudImageModels();
+				getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(budgetApproveId, activityNo, createdByUserId);
+				return PartialView(getBudImageModel);
+
+				//if (!string.IsNullOrEmpty(budgetApproveId))
+				//{
+				//	//getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(budgetApproveId, activityNo, createdByUserId);
+				//	//return PartialView(getBudImageModel);
+				//}
+				//else
+				//{
+				//	//getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(null);
+				//	//return PartialView(getBudImageModel);
+				//}
+
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("BudgetImageList => " + ex.Message);
+			}
+
+			return PartialView();
+		}
+
+		public PartialViewResult manageInvoiceView()
+		{
+			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
+			budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", null, null, null).ToList();
+			return PartialView(budget_activity);
+		}
+
+
+		[HttpPost]
+		public ActionResult manageInvoiceUpload()
+		{
+			var result = new AjaxResult();
+			try
+			{
+				byte[] binData = null;
+				TB_Bud_Image_Model.BudImageModel imageFormModel = new TB_Bud_Image_Model.BudImageModel();
+				foreach (string UploadedImage in Request.Files)
+				{
+					HttpPostedFileBase httpPostedFile = Request.Files[UploadedImage];
+
+					string resultFilePath = "";
+					string extension = Path.GetExtension(httpPostedFile.FileName);
+					int indexGetFileName = httpPostedFile.FileName.LastIndexOf('.');
+					var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + DateTime.Now.ToString("ddMMyyHHmm") + extension;
+					string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootUploadfilesBudget"].ToString(), _fileName));
+					resultFilePath = UploadDirectory;
+					BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
+					binData = b.ReadBytes(0);
+					httpPostedFile.SaveAs(resultFilePath);
+
+					imageFormModel._image = binData;
+					imageFormModel.imageType = "UploadFile";
+					imageFormModel._fileName = _fileName.ToLower();
+					imageFormModel.extension = extension.ToLower();
+					imageFormModel.remark = "";
+					imageFormModel.delFlag = false;
+					imageFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
+					imageFormModel.createdDate = DateTime.Now;
+					imageFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+					imageFormModel.updatedDate = DateTime.Now;
+
+
+					int resultImg = ImageAppCodeBudget.insertImageBudget(imageFormModel);
+
+				}
+
+				//manageInvoiceList(null);
+				//result.ActivityId = Session["activityId"].ToString();
+				result.Success = true;
+			}
+			catch (Exception ex)
+			{
+				result.Message = ex.Message;
+				result.Success = false;
+				ExceptionManager.WriteError("manageInvoiceUpload => " + ex.Message);
+			}
+
+			return Json(result, JsonRequestBehavior.AllowGet);
+		}
+
+		public JsonResult manageInvoiceDelete(string id)
+		{
+			var result = new AjaxResult();
+
+			int resultImg = ImageAppCodeBudget.deleteImageBudgetById(id);
+
+			return Json(result, JsonRequestBehavior.AllowGet);
+		}
+
+
 	}
-
-
-
 }

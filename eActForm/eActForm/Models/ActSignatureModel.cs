@@ -16,6 +16,8 @@ namespace eActForm.Models
             public string id { get; set; }
             public string empId { get; set; }
             public byte[] signature { get; set; }
+
+            public List<HttpPostedFileBase> InputFile { get; set; }
         }
     }
 }

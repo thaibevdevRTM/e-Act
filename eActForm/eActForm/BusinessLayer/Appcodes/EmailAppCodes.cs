@@ -138,7 +138,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message);
+                ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message +" " + actFormId);
             }
         }
         public static void sendApprove(string actFormId, AppCode.ApproveType emailType, bool isResend)
@@ -449,7 +449,7 @@ namespace eActForm.BusinessLayer
 			}
 			catch (Exception ex)
 			{
-				ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message);
+				ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message + " " + actFormId);
 			}
 		}
 
@@ -500,7 +500,7 @@ namespace eActForm.BusinessLayer
 
 						sendEmailBudgetForm(actFormId
 						, createUsers.FirstOrDefault().empEmail
-						, ""
+						,""
 						, ConfigurationManager.AppSettings["emailApprovedSubjectBudget"]
 						, strBody
 						, emailType);
@@ -534,6 +534,7 @@ namespace eActForm.BusinessLayer
 								  activityNo = dr["activityNo"].ToString(),
 								  sumTotal = dr["sumTotal"] is DBNull ? 0 : (decimal)dr["sumTotal"],
 								  createBy = dr["createBy"].ToString(),
+								  createdByUserId = dr["createdByUserId"].ToString(),
 							  }).ToList();
 				return models;
 			}
@@ -549,9 +550,6 @@ namespace eActForm.BusinessLayer
 			List<Attachment> files = new List<Attachment>();
 			string[] pathFile = new string[10];
 			mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-			//pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
-			//	HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId))
-			//	: HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId));
 
 			pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId));
 
@@ -564,7 +562,7 @@ namespace eActForm.BusinessLayer
 			}
 
 			sendEmail(mailTo
-					, mailCC == "" ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC
+					, mailCC == "" ? ConfigurationManager.AppSettings["emailBudgetApproveCC"] : mailCC
 					, strSubject
 					, strBody
 					, files);

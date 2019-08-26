@@ -76,7 +76,7 @@ namespace eActForm.Controllers
         }
 
 
-        public ActionResult previewApprove(string actId)
+        public ActionResult previewApprove(string actId, string typeForm)
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
@@ -101,7 +101,7 @@ namespace eActForm.Controllers
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
-                    var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
+                    var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId+"_");
                     GridHtml = GridHtml.Replace("<br>", "<br/>");
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
 

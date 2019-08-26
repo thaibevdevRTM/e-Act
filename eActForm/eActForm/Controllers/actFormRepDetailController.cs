@@ -35,46 +35,49 @@ namespace eActForm.Controllers
         {
             try
             {
-                RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails
-                {
-                    actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"])
-                };
+
+                RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
+                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"]);
+                
                 if (Request.Form["txtActivityNo"] != "")
                 {
-                    model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByActNo(model.actFormRepDetailLists, Request.Form["txtActivityNo"]);
+                    model = RepDetailAppCode.getFilterRepDetailByActNo(model, Request.Form["txtActivityNo"]);    
                 }
                 else
                 {
                     #region filter
                     if (Request.Form["ddlStatus"] != "")
                     {
-                        model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByStatusId(model.actFormRepDetailLists, Request.Form["ddlStatus"]);
+                        model = RepDetailAppCode.getFilterRepDetailByStatusId(model, Request.Form["ddlStatus"]);
                     }
                     if (Request.Form["ddlCustomer"] != "")
                     {
-                        model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByCustomer(model.actFormRepDetailLists, Request.Form["ddlCustomer"]);
+                        model = RepDetailAppCode.getFilterRepDetailByCustomer(model, Request.Form["ddlCustomer"]);
                     }
                     if (Request.Form["ddlTheme"] != "")
                     {
-                        model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByActivity(model.actFormRepDetailLists, Request.Form["ddlTheme"]);
+                        model = RepDetailAppCode.getFilterRepDetailByActivity(model, Request.Form["ddlTheme"]);
                     }
                     if (Request.Form["ddlProductType"] != "")
                     {
-                        model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByProductType(model.actFormRepDetailLists, Request.Form["ddlProductType"]);
+                        model = RepDetailAppCode.getFilterRepDetailByProductType(model, Request.Form["ddlProductType"]);
                     }
                     if (Request.Form["ddlProductGrp"] != "")
                     {
-                        model.actFormRepDetailLists = RepDetailAppCode.getFilterRepDetailByProductGroup(model.actFormRepDetailLists, Request.Form["ddlProductGrp"]);
+                        model = RepDetailAppCode.getFilterRepDetailByProductGroup(model, Request.Form["ddlProductGrp"]);
                     }
-                    if (Request.Form["ddlCustomer"] != "" && Request.Form["ddlProductType"] != "")
-                    {
-                        model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
-                                        ConfigurationManager.AppSettings["subjectReportDetailId"]
-                                        , Request.Form["ddlCustomer"]
-                                        , Request.Form["ddlProductType"]);
-                    }
+                    
                     #endregion
                 }
+
+                if (model.actFormRepDetailGroupLists.Any())
+                {
+                    model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                                            ConfigurationManager.AppSettings["subjectReportDetailId"]
+                                            , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
+                                            , Request.Form["ddlProductType"]);
+                }
+
                 Session["ActFormRepDetail"] = model;
             }
             catch (Exception ex)
@@ -107,6 +110,11 @@ namespace eActForm.Controllers
             {
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists
+                    .Where(r => r.id == actId)
+                    .Select(r => r.delFlag = !delFlag
+                    ).ToList();
+
+                model.actFormRepDetailGroupLists
                     .Where(r => r.id == actId)
                     .Select(r => r.delFlag = !delFlag
                     ).ToList();
@@ -148,7 +156,8 @@ namespace eActForm.Controllers
             RepDetailModel.actFormRepDetails rep = new RepDetailModel.actFormRepDetails();
             try
             {
-                rep.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => brandId.Contains(r.brandId)).ToList();
+                rep.actFormRepDetailLists = model.actFormRepDetailGroupLists.Where(r => brandId.Contains(r.brandId)).ToList();
+
             }
             catch (Exception ex)
             {
@@ -175,6 +184,27 @@ namespace eActForm.Controllers
             return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "DetailReport.xls");
         }
 
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public FileResult repListViewExportPDF(string gridHtml)
+        {
+            List<Attachment> file = new List<Attachment>();
+            try
+            {
+                var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"],"");
+                gridHtml = gridHtml.Replace("<br>", "<br/>");
+                file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10),"");
+                
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+            return File(file[0].ContentStream, "application/pdf", "reportDetailPDF.pdf");
+
+        }
+
         [HttpPost]
         [ValidateInput(false)]
         public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string gridEst,string gridWA,string gridSO, string customerId, string productTypeId, string startDate, string endDate)
@@ -182,7 +212,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-
+                gridHtml = gridHtml.Replace("<br>", "<br/>");
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
                 string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
@@ -219,7 +249,7 @@ namespace eActForm.Controllers
             RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
             try
             {
-                model.actFormRepDetailLists = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(actId);
+                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(actId);
                 model.flowList = ApproveFlowAppCode.getFlowByActFormId(actId);
                 Session["ActFormRepDetail"] = model;
             }
@@ -252,7 +282,7 @@ namespace eActForm.Controllers
                 else
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actId));
-                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                     EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail, false);
                     Session["ActFormRepDetail"] = null;
                 }

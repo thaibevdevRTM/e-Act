@@ -77,18 +77,20 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        
-        public static List<Activity_Model.actForm> getActFormByEmpId(string empId, DateTime startDate, DateTime endDate , string activityType)
+
+        public static List<Activity_Model.actForm> getActFormByEmpId(DateTime startDate, DateTime endDate, string activityType)
         {
             try
             {
-                string spName = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAll" : "usp_getActivityFormByEmpId";
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, spName
-                    , new SqlParameter[] {
-                        new SqlParameter("@empId", empId)
+                string strCall = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAll" : "usp_getActivityCustomersFormByEmpId";
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
+                , new SqlParameter[] {
+                         new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
                         ,new SqlParameter("@startDate", startDate)
                         ,new SqlParameter("@endDate", endDate)
-                    });
+                });
+
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new Activity_Model.actForm()
                              {
@@ -124,11 +126,11 @@ namespace eActForm.BusinessLayer
                                  themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
                                  createByUserName = dr["createByUserName"].ToString(),
-                                 
-                                 
+
+
                              }).ToList();
 
-                if(activityType == Activity_Model.activityType.OMT.ToString())
+                if (activityType == Activity_Model.activityType.OMT.ToString())
                 {
                     lists = lists.Where(x => x.channelName == "").ToList();
                 }

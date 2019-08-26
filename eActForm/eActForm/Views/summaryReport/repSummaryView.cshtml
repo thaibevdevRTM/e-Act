@@ -45,6 +45,7 @@
                             <th width="70px">#</th>
                             <th width="70px">ลำดับที่</th>
                             <th width="80px" style="text-align:center;">เลขที่ RepDetail</th>
+                            <th width="80px" style="text-align:center;">Status</th>
                             <th width="80px" style="text-align:center;">ProductType</th>
                             <th style="text-align:center;">ชื่อลูกค้า</th>
                             <th style="text-align:center;">Create Date</th>
@@ -59,27 +60,28 @@
 
                             if (item.repDetailId != strActNo)
                             {
-                                <tr class="even pointer">
-                                    <td class="a-center ">
-                                        <input type="checkbox" id="chk_@item.repDetailId" checked class="icheckbox_flat-green" onchange="setDelFlagRepDetail('@item.repDetailId');" name="table_records">
-                                    </td>
-                                    <td class=" ">@index</td>
-                                    <td class=" ">@item.activityNo</td>
-                                    <td class=" ">@item.productType</td>
-                                    <td style="text-align:center;">@item.customerName</td>
-                                    @if (item.createdDate != null)
-                                    {
-                                        <td width="100px">@item.createdDate.Value.ToString("dd/MM/yyyy")</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
+                        <tr class="even pointer">
+                            <td class="a-center ">
+                                <input type="checkbox" id="chk_@item.repDetailId" checked class="icheckbox_flat-green" onchange="setDelFlagRepDetail('@item.repDetailId');" name="table_records">
+                            </td>
+                            <td class=" ">@index</td>
+                            <td class=" ">@item.activityNo</td>
+                            <td class=" ">@item.status</td>
+                            <td class=" ">@item.productType</td>
+                            <td style="text-align:center;">@item.customerName</td>
+                            @if (item.createdDate != null)
+                            {
+                                <td width="100px">@item.createdDate.Value.ToString("dd/MM/yyyy")</td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
 
-                                    @{strActNo = item.repDetailId;
-                                        index++;
-                                    }
-                                </tr>
+                            @{strActNo = item.repDetailId;
+                                index++;
+                            }
+                        </tr>
                             }
                         }
 
@@ -99,6 +101,11 @@
 
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        document.getElementById("divStatus").style.display = "none";
+    });
+
+
     function setDelFlagRepDetail(repId) {
         console.log($("#chk_" + repId).is(":checked"));
         $.ajax({

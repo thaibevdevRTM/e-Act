@@ -14,7 +14,7 @@ namespace eActForm.Controllers
         // GET: Home
         public ActionResult Index(string actId , string typeForm)
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
             models.typeForm = typeForm;
             return View(models);
         }
@@ -42,12 +42,12 @@ namespace eActForm.Controllers
 
                 if (TypeForm == Activity_Model.activityType.MT.ToString())
                 {
-                    model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.MT.ToString());
+                    model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.MT.ToString());
                     model.typeForm = Activity_Model.activityType.MT.ToString();
                 }
                 else
                 {
-                    model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.OMT.ToString());
+                    model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.OMT.ToString());
                     model.typeForm = Activity_Model.activityType.OMT.ToString();
                 }
 
@@ -91,7 +91,7 @@ namespace eActForm.Controllers
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
             model = new Activity_Model.actForms
             {
-                actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, startDate, endDate , activityType)
+                actLists = ActFormAppCode.getActFormByEmpId(startDate, endDate , activityType)
             };
 
            
