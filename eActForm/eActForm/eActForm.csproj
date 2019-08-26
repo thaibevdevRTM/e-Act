@@ -2307,6 +2307,8 @@
     <Content Include="Views\Shared\_previewActForm.cshtml" />
     <Content Include="Views\Login\Maintain.cshtml" />
     <Content Include="Views\Shared\_searchBudget.cshtml" />
+    <Content Include="Views\summaryReport\IndexDoc.cshtml" />
+    <Content Include="Views\summaryReport\ListDoc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

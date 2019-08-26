@@ -53,17 +53,15 @@
                         dataType: "json",
                         type: 'POST',
                     }).done(function (response) {
-                        console.log(response.Message);
                         if (response.Message == 'MT') {
                             var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.MT.ToString() }, null)';
                             window.location.href = url;
                         }
-                        else if (response.Message == 'OMT')
-                        {
-                            console.log('OMT');
-                              var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.OMT.ToString() }, null)';
+                        else{
+                            var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.OMT.ToString() }, null)';
                             window.location.href = url;
                         }
+
 
                     });
                 }

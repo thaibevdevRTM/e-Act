@@ -465,17 +465,19 @@
 
 
                     }
-
-                    <div class="row">
-                        <div class="col-md-12 col-xs-12">
-                            <div class="pull-right" style="margin-right:10px;">
-                                @if (Model.actFormRepDetailGroupLists != null && Model.actFormRepDetailGroupLists.Count > 0)
-                                {
-                                    @Html.Action("approvePositionSignature", "actFormRepDetail", new { flowModel = Model.flowList })
-                                }
+                    @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                    {
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12">
+                                <div class="pull-right" style="margin-right:10px;">
+                                    @if (Model.actFormRepDetailGroupLists != null && Model.actFormRepDetailGroupLists.Count > 0)
+                                    {
+                                        @Html.Action("approvePositionSignature", "actFormRepDetail", new { flowModel = Model.flowList })
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
 
                 <div class="row">

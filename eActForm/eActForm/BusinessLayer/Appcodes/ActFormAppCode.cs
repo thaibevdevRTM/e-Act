@@ -78,7 +78,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<Activity_Model.actForm> getActFormByEmpId(string empId, DateTime startDate, DateTime endDate, string activityType)
+        public static List<Activity_Model.actForm> getActFormByEmpId(DateTime startDate, DateTime endDate, string activityType)
         {
             try
             {
@@ -86,12 +86,10 @@ namespace eActForm.BusinessLayer
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
                 , new SqlParameter[] {
-                         new SqlParameter("@empId", empId)
+                         new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
                         ,new SqlParameter("@startDate", startDate)
                         ,new SqlParameter("@endDate", endDate)
                 });
-
-
 
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new Activity_Model.actForm()

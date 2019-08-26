@@ -70,10 +70,13 @@ namespace eActForm.Controllers
                     #endregion
                 }
 
-                model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
-                                        ConfigurationManager.AppSettings["subjectReportDetailId"]
-                                        , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
-                                        , Request.Form["ddlProductType"]);
+                if (model.actFormRepDetailGroupLists.Any())
+                {
+                    model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                                            ConfigurationManager.AppSettings["subjectReportDetailId"]
+                                            , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
+                                            , Request.Form["ddlProductType"]);
+                }
 
                 Session["ActFormRepDetail"] = model;
             }
@@ -107,6 +110,11 @@ namespace eActForm.Controllers
             {
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists
+                    .Where(r => r.id == actId)
+                    .Select(r => r.delFlag = !delFlag
+                    ).ToList();
+
+                model.actFormRepDetailGroupLists
                     .Where(r => r.id == actId)
                     .Select(r => r.delFlag = !delFlag
                     ).ToList();
@@ -148,7 +156,8 @@ namespace eActForm.Controllers
             RepDetailModel.actFormRepDetails rep = new RepDetailModel.actFormRepDetails();
             try
             {
-                rep.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => brandId.Contains(r.brandId)).ToList();
+                rep.actFormRepDetailLists = model.actFormRepDetailGroupLists.Where(r => brandId.Contains(r.brandId)).ToList();
+
             }
             catch (Exception ex)
             {
@@ -203,7 +212,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-
+                gridHtml = gridHtml.Replace("<br>", "<br/>");
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
                 string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
@@ -273,7 +282,7 @@ namespace eActForm.Controllers
                 else
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actId));
-                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                     EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail, false);
                     Session["ActFormRepDetail"] = null;
                 }
