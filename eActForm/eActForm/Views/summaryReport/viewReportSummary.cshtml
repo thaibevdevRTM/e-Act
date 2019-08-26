@@ -138,75 +138,13 @@
 
                                 </tr>
 
-                                if (activitySales != Model.activitySummaryGroupList[i].activitySales)
+                                if (activitySales != Model.activitySummaryGroupActivityList[i].activitySales)
                                 {
                                     countRowAct++;
 
                                 }
                             }
 
-                            <tr class="gradeX">
-                                <td></td>
-                                <td>
-                                    Total
-                                </td>
-                                <td>
-                                    @{
-                                        string totalEst = String.Format("{0:n2}", @sumEst);
-                                        @totalEst.ToString();
-                                    }
-
-                                </td>
-                                <td>
-                                    @{
-                                        string totalCrystal = String.Format("{0:n2}", @sumCrystal);
-                                        @totalCrystal.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string totalWranger = String.Format("{0:n2}", @sumWranger);
-                                        @totalWranger.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string totalPlus100 = String.Format("{0:n2}", @sumPlus100);
-                                        @totalPlus100.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string totalJubjai = String.Format("{0:n2}", @sumJubjai);
-                                        @totalJubjai.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string totalOishi = String.Format("{0:n2}", @sumOishi);
-                                        @totalOishi.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string totalSoda = String.Format("{0:n2}", @sumSoda);
-                                        @totalSoda.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string totalWater = String.Format("{0:n2}", @sumWater);
-                                        @totalWater.ToString();
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                                        string totalAllAct_Str = String.Format("{0:n2}", @totalAllAct);
-                                        @totalAllAct_Str;
-                                    }
-                                </td>
-                                <td></td>
-                            </tr>
                         </tbody>
 
                     </table>
@@ -260,64 +198,90 @@
                         </tr>
                         <tbody>
                             @{ int countRow = 1;
-                                string customer = "";}
-                            @for (int i = 0; i < Model.activitySummaryGroupList.Count; i++)
+                                string customer = "";
+                            }
+
+                            @foreach (var item in Model.activitySummaryGroupList)
                             {
+
                                 <tr class="gradeX">
                                     <td>
-                                        @if (customer != Model.activitySummaryGroupList[i].customerName)
+                                        @if (customer != item.customerName)
                                         {
                                             @countRow
                                             countRow++;
                                         }
                                     </td>
                                     <td>
-                                        @if (customer != Model.activitySummaryGroupList[i].customerName)
+                                        @if (customer != item.customerName)
                                         {
-                                            @Html.DisplayFor(x => x.activitySummaryGroupList[i].customerName)
-                                            customer = Model.activitySummaryGroupList[i].customerName;
+                                            @item.customerName
+                                            customer = item.customerName;
                                         }
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(x => x.activitySummaryGroupList[i].activitySales)
+                                        @item.activitySales
                                     </td>
+                                    <td>
+                                        @{
+                                            string sumAGEst = String.Format("{0:n2}", @item.est);
+                                            @sumAGEst.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string sumAGcrystal = String.Format("{0:n2}", @item.crystal);
+                                            @sumAGcrystal.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string sumAGwranger = String.Format("{0:n2}", @item.wranger);
+                                            @sumAGwranger.ToString();
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            string sumAGplus100 = String.Format("{0:n2}", @item.plus100);
+                                            @sumAGplus100.ToString();
+                                        }
 
-                                    <td>
-
-                                        @Html.DisplayFor(x => x.activitySummaryGroupList[i].est)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(x => x.activitySummaryGroupList[i].crystal)
+                                        @{
+                                            string sumAGjubjai = String.Format("{0:n2}", @item.jubjai);
+                                            @sumAGjubjai.ToString();
+                                        }
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(x => x.activitySummaryGroupList[i].wranger)
+                                        @{
+                                            string sumAGoishi = String.Format("{0:n2}", @item.oishi);
+                                            @sumAGoishi.ToString();
+                                        }
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(x => x.activitySummaryGroupList[i].plus100)
+                                        @{
+                                            string sumAGsoda = String.Format("{0:n2}", @item.soda);
+                                            @sumAGsoda.ToString();
+                                        }
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(x => x.activitySummaryGroupList[i].jubjai)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(x => x.activitySummaryGroupList[i].oishi)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(x => x.activitySummaryGroupList[i].soda)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(x => x.activitySummaryGroupList[i].water)
+                                        @{
+                                            string sumAGwater = String.Format("{0:n2}", @item.water);
+                                            @sumAGwater.ToString();
+                                        }
                                     </td>
                                     <td>
                                         @{
                                             decimal? total = 0;
-                                            total = Model.activitySummaryGroupList[i].est +
-                                                    Model.activitySummaryGroupList[i].crystal +
-                                                    Model.activitySummaryGroupList[i].wranger +
-                                                    Model.activitySummaryGroupList[i].plus100 +
-                                                    Model.activitySummaryGroupList[i].jubjai +
-                                                    Model.activitySummaryGroupList[i].oishi +
-                                                    Model.activitySummaryGroupList[i].soda +
-                                                    Model.activitySummaryGroupList[i].water;
+                                            total = item.est +
+                                                    item.crystal +
+                                                    item.wranger +
+                                                    item.plus100 +
+                                                    item.jubjai +
+                                                    item.oishi +
+                                                    item.soda +
+                                                    item.water;
 
                                             string result = String.Format("{0:n2}", @total);
                                             @result.ToString();
@@ -325,7 +289,7 @@
                                         }
                                     </td>
                                     <td>
-                                        @Model.activitySummaryGroupList[i].remark
+                                        @item.remark
                                     </td>
 
                                 </tr>
@@ -335,6 +299,7 @@
                                 //    countRow++;
                                 //    customer = Model.activitySummaryGroupList[i].customerName;
                                 //}
+
                             }
                         </tbody>
 
