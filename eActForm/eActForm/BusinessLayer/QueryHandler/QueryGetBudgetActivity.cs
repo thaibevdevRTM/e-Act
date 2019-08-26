@@ -34,7 +34,7 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-		public static List<TB_Budget_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId)
+		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId)
 		{
 			try
 			{
@@ -46,7 +46,7 @@ namespace eActForm.BusinessLayer
 				 );
 
 				var result = (from DataRow d in ds.Tables[0].Rows
-							  select new TB_Budget_Activity_Model.Budget_Activity_Att()
+							  select new TB_Bud_Activity_Model.Budget_Activity_Att()
 							  {
 								  budget_id = d["budget_Id"].ToString(),
 								  act_form_id = d["act_form_id"].ToString(),
@@ -105,7 +105,7 @@ namespace eActForm.BusinessLayer
 			catch (Exception ex)
 			{
 				ExceptionManager.WriteError("getActivityByApproveStatusId => " + ex.Message);
-				return new List<TB_Budget_Activity_Model.Budget_Activity_Att>();
+				return new List<TB_Bud_Activity_Model.Budget_Activity_Att>();
 			}
 		}
 

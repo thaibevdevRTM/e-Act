@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace eActForm.Models
 {
-	public class TB_Budget_Activity_Model
+	public class TB_Bud_Activity_Model
 	{
 
 		public class Budget_Activity_Att
