@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using static eActForm.Models.TB_Budget_Activity_Model;
+using static eActForm.Models.TB_Bud_Activity_Model;
 //using static eActForm.Models.Budget_Approve_Detail_Model;
 
 namespace eActForm.Models
 {
 	public class Budget_Activity_Model
 	{
+
+		public List<TB_Bud_Image_Model.BudImageModel> Budget_ImageList { get; set; }
+
 		public List<Budget_Activity_Att> Budget_Activity_list { get; set; }
 		public List<Budget_Activity_Status_Att> Budget_Activity_Ststus_list { get; set; }
 		public List<Budget_Activity_Product_Att> Budget_Activity_Product_list { get; set; }
@@ -17,9 +20,6 @@ namespace eActForm.Models
 
 		public Budget_Activity_Product_Att Budget_Activity_Product { get; set; }
 		public Budget_Activity_Invoice_Att Budget_Activity_Invoice { get; set; }
-
-		//public TB_Bud_ActivityInvoice_Model Bud_ActivityInvoice_Model { get; set; }
-		//public List<Budget_Activity_Product_Att> Budget_Activity_Product_model { get; set; }
 
 		public class Budget_Invoice_history_Att
 		{
