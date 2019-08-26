@@ -2312,6 +2312,8 @@
     <Content Include="Views\Shared\_searchBudget.cshtml" />
     <Content Include="Views\Budget\manageInvoiceIndex.cshtml" />
     <Content Include="Views\Budget\manageInvoiceView.cshtml" />
+    <Content Include="Views\summaryReport\IndexDoc.cshtml" />
+    <Content Include="Views\summaryReport\ListDoc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

@@ -2,6 +2,7 @@
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -202,6 +203,8 @@ namespace eActForm.BusinessLayer
                     else
                     {
                         result[0] = getActList.FirstOrDefault().activityNo.ToString();
+                        result[1] = UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] ? Activity_Model.activityType.OMT.ToString() : Activity_Model.activityType.MT.ToString();
+
                     }
                 }
 
