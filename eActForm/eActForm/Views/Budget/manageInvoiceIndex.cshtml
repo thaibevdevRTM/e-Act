@@ -1,0 +1,137 @@
+﻿@using eActForm.Models
+@using eActForm.BusinessLayer
+@model eActForm.Models.Budget_Activity_Model
+
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+	//var var_budgetApproveId = Request.QueryString["budgetApproveId"];
+	//var type = Request.QueryString["type"];
+}
+
+<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
+
+<style type="text/css">
+
+	.font8 {
+		font-size: 8px;
+	}
+
+	.font10 {
+		font-size: 10px;
+	}
+
+	.textRight {
+		text-align: right;
+	}
+
+	.textLeft {
+		text-align: left;
+	}
+
+	.inner {
+		display: inline-block;
+	}
+
+	#outer {
+		width: 100%;
+		text-align: center;
+	}
+</style>
+
+<script>
+
+	$('document').ready(function () {
+		//callProductList($("#hd_activityId").val());
+		callManageInvoiceList();
+	});
+
+	var fileList = new Array;
+	Dropzone.options.dropzoneJsForm = {
+		maxFiles: 5,
+		acceptedFiles: "image/jpeg,image/jpg,image/png,application/pdf",
+		paramName: "file",
+		maxFilesize: 10,
+		//addRemoveLinks: true,
+		init: function () {
+
+			this.on("complete", function (file) {
+
+				callManageInvoiceList($("#hdActivityId").val());
+				this.removeFile(file);
+			});
+		}
+
+	};
+
+	function callManageInvoiceList(activityId) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("manageInvoiceList", "Budget")',
+            data: {
+				activityId: activityId
+            }
+        }).done(function (htmlResponse) {
+			$("#divManageInvoiceList").html(htmlResponse);
+        });
+	}
+
+	function callManageInvoiceView(activityId) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("manageInvoiceView", "Budget")',
+            data: {
+				activityId: activityId
+            }
+        }).done(function (htmlResponse) {
+			$("#divManageInvoiceView").html(htmlResponse);
+        });
+	}
+
+</script>
+
+<div class="alert alert-success" role="alert">
+	<h4 class="alert-heading">รายการใบแจ้งหนี้ (Invoice)</h4>
+	<p></p>
+</div>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<div id="divManageInvoiceList">
+
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+
+		<div class="row" id="divUploadImg">
+			<div class="col-12">
+				<p class="lead">อัพโหลด รูปภาพ</p>
+			</div>
+			<div class="col-md-12" id="divUploadFiles">
+				<form action="@Url.Action("manageInvoiceUpload", "Budget")" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
+					<div class="dz-message">
+						<span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div id="divManageInvoiceView">
+
+		</div>
+	</div>
+</div>
+
