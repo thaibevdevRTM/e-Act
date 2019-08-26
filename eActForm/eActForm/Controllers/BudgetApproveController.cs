@@ -193,6 +193,7 @@ namespace eActForm.Controllers
 			{
 				resultAjax.Success = false;
 				resultAjax.Message = ex.Message;
+				ExceptionManager.WriteError("genPdfApproveBudget => " + ex.Message);
 			}
 			return Json(resultAjax, "text/plain");
 		}
@@ -272,7 +273,7 @@ namespace eActForm.Controllers
 			}
 			catch (Exception ex)
 			{
-				throw new Exception(ex.Message);
+				throw new Exception("updateBudgetFormStatus >> " + ex.Message);
 			}
 		}
 
@@ -329,7 +330,7 @@ namespace eActForm.Controllers
 			}
 			catch (Exception ex)
 			{
-				throw new Exception("getUserCreateActForm >>" + ex.Message);
+				throw new Exception("getUserCreateBudgetForm >>" + ex.Message);
 			}
 		}
 
