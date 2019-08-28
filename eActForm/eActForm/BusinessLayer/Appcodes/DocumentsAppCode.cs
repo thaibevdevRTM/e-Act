@@ -10,11 +10,13 @@ namespace eActForm.BusinessLayer
 {
     public class DocumentsAppCode
     {
-        public static List<DocumentsModel.actRepDetailModel> getActRepDetailLists()
+        public static List<DocumentsModel.actRepDetailModel> getActRepDetailLists(DateTime startDate, DateTime endDate)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetActivityRepDetailAll");
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetActivityRepDetailAll"
+                     , new SqlParameter[] { new SqlParameter("@startDate",startDate)
+                        ,new SqlParameter("@endDate",endDate) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new DocumentsModel.actRepDetailModel()
                              {
@@ -41,5 +43,9 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
+
+
+
+
     }
 }

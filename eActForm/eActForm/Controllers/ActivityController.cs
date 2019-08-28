@@ -22,7 +22,7 @@ namespace eActForm.Controllers
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = new ActivityForm();
             activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
-            activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
+            activityModel.customerslist = QueryGetAllCustomers.getCustomersByEmpId();
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
             activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
                 .GroupBy(item => item.activitySales)

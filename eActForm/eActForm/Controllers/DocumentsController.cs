@@ -36,13 +36,69 @@ namespace eActForm.Controllers
             return View();
         }
 
+        public ActionResult searchActForm()
+        {
+            DocumentsModel.actRepDetailModels models = new DocumentsModel.actRepDetailModels();
+            try
+            {
+                DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
+                DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
+                models.actRepDetailLists = DocumentsAppCode.getActRepDetailLists(startDate, endDate);
+
+                if (Request.Form["txtActivityNo"] != "")
+                {
+                    models.actRepDetailLists = models.actRepDetailLists.Where(x => x.activityNo == Request.Form["txtActivityNo"]).ToList();
+                }
+                else
+                {
+                    #region filter
+                    if (Request.Form["ddlStatus"] != "")
+                    {
+                        models.actRepDetailLists = models.actRepDetailLists.Where(x => x.statusId == Request.Form["ddlStatus"]).ToList();
+                    }
+                    if (Request.Form["ddlCustomer"] != "")
+                    {
+                        models.actRepDetailLists = models.actRepDetailLists.Where(x => x.customerId == Request.Form["ddlCustomer"]).ToList();
+                    }
+                  
+                    if (Request.Form["ddlProductType"] != "")
+                    {
+                        models.actRepDetailLists = models.actRepDetailLists.Where(x => x.productTypeId == Request.Form["ddlProductType"]).ToList();
+                    }
+                   
+
+                    #endregion
+                }
+
+
+
+                TempData["SearchDataRepDetail"] = models.actRepDetailLists;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return RedirectToAction("reportDetailListsView");
+        }
+
         public ActionResult reportDetailListsView()
         {
             DocumentsModel.actRepDetailModels models = new DocumentsModel.actRepDetailModels();
             try
             {
+                if (TempData["SearchDataRepDetail"] != null)
+                {
+                    models.actRepDetailLists = (List<DocumentsModel.actRepDetailModel>)TempData["SearchDataRepDetail"];
+                }
+                else
+                {
+                    models.actRepDetailLists = DocumentsAppCode.getActRepDetailLists(DateTime.Now.AddDays(-15), DateTime.Now);
 
-                models.actRepDetailLists = DocumentsAppCode.getActRepDetailLists();
+                }
+
+                TempData["SearchDataModelSummary"] = null;
+                return PartialView(models);
 
             }
             catch (Exception ex)

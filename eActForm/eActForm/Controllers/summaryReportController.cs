@@ -26,7 +26,7 @@ namespace eActForm.Controllers
 
         public ActionResult getPreviewSummary(string startDate)
         {
-
+            string redirect = "";
             try
             {
                 string repDetail = "";
@@ -37,12 +37,24 @@ namespace eActForm.Controllers
 
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
+                repDetail = string.Join(",", model.activitySummaryList.Select(x => x.repDetailId));
+                
                 if (model.activitySummaryList.Any())
                 {
-                    repDetail = string.Join(",", model.activitySummaryList.Select(x => x.repDetailId));
-                    modelResult = ReportSummaryAppCode.getReportSummary(repDetail, startDate);
-                    modelResult.flowList = model.flowList;
+                    if (model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.nonAL)
+                    {
+                        modelResult = ReportSummaryAppCode.getReportSummary(repDetail, startDate);
+                        modelResult.producttype_id = AppCode.nonAL;
+                        redirect = "viewReportSummary";
+                    }
+                    else
+                    {
+                        modelResult = ReportSummaryAppCode.getReportSummaryAlcohol(repDetail, startDate);
+                        modelResult.producttype_id = AppCode.AL;
+                        redirect = "viewReportSummaryAlcohol";
+                    }
                 }
+                modelResult.flowList = model.flowList;
 
                 Session["SummaryDetailModel"] = modelResult;
 
@@ -52,7 +64,9 @@ namespace eActForm.Controllers
             {
                 ExceptionManager.WriteError(ex.Message);
             }
-            return RedirectToAction("viewReportSummary", new { startDate = Request.Form["startDate"] });
+
+
+            return RedirectToAction(redirect, new { startDate = Request.Form["startDate"] });
         }
 
 
@@ -72,6 +86,25 @@ namespace eActForm.Controllers
 
             return PartialView(model);
         }
+
+
+        public ActionResult viewReportSummaryAlcohol(string startDate)
+        {
+            ReportSummaryModels model = null;
+            try
+            {
+
+                ViewBag.startDate = startDate;
+                model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
+
 
         [HttpPost]
         [ValidateInput(false)]
