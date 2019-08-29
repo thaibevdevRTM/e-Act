@@ -2314,6 +2314,8 @@
     <Content Include="Views\Budget\manageInvoiceView.cshtml" />
     <Content Include="Views\summaryReport\IndexDoc.cshtml" />
     <Content Include="Views\summaryReport\ListDoc.cshtml" />
+    <Content Include="Views\BudgetViewer\invoicePDFView.cshtml" />
+    <Content Include="Views\Budget\manageInvoiceEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

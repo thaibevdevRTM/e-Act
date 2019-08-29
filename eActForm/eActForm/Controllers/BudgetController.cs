@@ -172,25 +172,13 @@ namespace eActForm.Controllers
 			return View();
 		}
 
-		public ActionResult manageInvoiceList(String budgetApproveId, String activityNo, String createdByUserId)
+		public ActionResult manageInvoiceList(String imageId ,String budgetApproveId, String activityNo, String createdByUserId)
 		{
 			try
 			{
 				TB_Bud_Image_Model.BudImageModels getBudImageModel = new TB_Bud_Image_Model.BudImageModels();
-				getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(budgetApproveId, activityNo, createdByUserId);
+				getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(imageId, budgetApproveId, activityNo, createdByUserId);
 				return PartialView(getBudImageModel);
-
-				//if (!string.IsNullOrEmpty(budgetApproveId))
-				//{
-				//	//getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(budgetApproveId, activityNo, createdByUserId);
-				//	//return PartialView(getBudImageModel);
-				//}
-				//else
-				//{
-				//	//getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(null);
-				//	//return PartialView(getBudImageModel);
-				//}
-
 			}
 			catch (Exception ex)
 			{
@@ -200,11 +188,12 @@ namespace eActForm.Controllers
 			return PartialView();
 		}
 
-		public PartialViewResult manageInvoiceView()
+		public PartialViewResult manageInvoiceView(string imageId)
 		{
-			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
-			budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", null, null, null).ToList();
-			return PartialView(budget_activity);
+			TB_Bud_Image_Model.BudImageModel getBudImageModel = new TB_Bud_Image_Model.BudImageModel();
+			getBudImageModel = ImageAppCodeBudget.getImageBudget(imageId,null,null,null).FirstOrDefault();
+
+			return PartialView(getBudImageModel);
 		}
 
 
@@ -263,12 +252,48 @@ namespace eActForm.Controllers
 		public JsonResult manageInvoiceDelete(string id)
 		{
 			var result = new AjaxResult();
+			var empId = UtilsAppCode.Session.User.empId;
 
-			int resultImg = ImageAppCodeBudget.deleteImageBudgetById(id);
+			int resultImg = ImageAppCodeBudget.deleteImageBudgetById(id, empId);
 
 			return Json(result, JsonRequestBehavior.AllowGet);
 		}
 
+		public PartialViewResult manageInvoiceEdit(string imageId)
+		{
+			TB_Bud_Image_Model.BudImageModel getBudImageModel = new TB_Bud_Image_Model.BudImageModel();
+			getBudImageModel = ImageAppCodeBudget.getImageBudget(imageId, null, null, null).FirstOrDefault();
+
+			return PartialView(getBudImageModel);
+		}
+
+		public JsonResult manageInvoiceEditSubmit(string id,string invoiceNo , string remark)
+		{
+			var resultAjax = new AjaxResult();
+			try
+			{
+
+				TB_Bud_Image_Model.BudImageModel budgetInvoiceModel = new TB_Bud_Image_Model.BudImageModel();
+				budgetInvoiceModel.id = id;
+				budgetInvoiceModel.invoiceNo = invoiceNo;
+				budgetInvoiceModel.remark = remark;
+
+				budgetInvoiceModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+				budgetInvoiceModel.updatedDate = DateTime.Now;
+
+				//update image invoice
+				int countSuccess = ImageAppCodeBudget.updateImageBudget(budgetInvoiceModel);
+
+				//resultAjax.ActivityId = Session["activityId"].ToString();
+				resultAjax.Success = true;
+			}
+			catch (Exception ex)
+			{
+				resultAjax.Success = false;
+				resultAjax.Message = ex.Message;
+			}
+			return Json(resultAjax, "text/plain");
+		}
 
 	}
 }

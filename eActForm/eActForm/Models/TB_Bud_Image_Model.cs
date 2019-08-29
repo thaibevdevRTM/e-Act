@@ -37,6 +37,11 @@ namespace eActForm.Models
 			public string budgetActivityId { get; set; }
 			public string activityNo { get; set; }
 
+			public int count_budgetApproveId { get; set; }
+			public int count_budgetActivityId { get; set; }
+			public int count_activityNo { get; set; }
+
+			public string invoiceNo { get; set; }
 		}
 	}
 }
