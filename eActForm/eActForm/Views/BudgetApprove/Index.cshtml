@@ -43,7 +43,7 @@
 							เหตุผล(เพิ่มเติม)
 						</label>
 						<div class="col-md-9 col-sm-9 col-xs-12">
-							<textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required>
+							<textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50">
                                     @if(  item != null && item.Count > 0)
                                     {
                                         @item.FirstOrDefault().remark.Trim();
@@ -90,7 +90,7 @@
 				<div class="col-md-3 col-sm-3 col-xs-12"></div>
 				<div class="col-md-9 col-sm-9 col-xs-12">
 
-					@*<button type="submit" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Re Submit</button>*@
+					<button type="submit" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Re Submit</button>
 
 					@if (Model.approveModel.statusId != "2")
 					{
@@ -100,7 +100,7 @@
 					}
 					else if (Model.approveModel.isPermisionApprove)
 					{
-						<button type="submit" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+						<button type="submit" class="btn btn-success pull-right" onclick="onSubmit();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
 					}
 					else
 					{
@@ -128,7 +128,6 @@
     $("#txtRemark").val('');
 
     function beginQuery() {
-
         $(".fv").each(function () {
             var v = $(this).val();
             if (v == '') {
@@ -138,6 +137,16 @@
 
         $("#WaitDialog").show();
     }
+
+	function onSubmit() {
+		var ddlStatus = $("#ddlStatus").val()
+
+		if (ddlStatus == 5) {
+			document.getElementById("txtRemark").required = true;
+		} else {
+			document.getElementById("txtRemark").required = false;
+		}
+	}
 
 	function successQuery(response) {
 		$("#WaitDialog").show(); 
@@ -154,7 +163,6 @@
 
 
 	function callPreviewApprove(obj) {
-
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("previewApproveBudget", "BudgetApprove")',
@@ -167,9 +175,6 @@
 			genPdfApproveBudget();
         });
     }
-
-
-
 
 	function failureQuery(data) {
 		bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);

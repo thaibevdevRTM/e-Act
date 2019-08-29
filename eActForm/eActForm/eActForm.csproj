@@ -180,6 +180,7 @@
     <Compile Include="App_Start\FontAwesomeBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BusinessLayer\Appcodes\ActFormAppCode.cs" />
+    <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\Appcodes\ReportSummaryAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ApproveListAppCode.cs" />
@@ -274,7 +275,8 @@
     <Compile Include="Models\TB_Act_Product_Cate_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Model.cs" />
     <Compile Include="Models\TB_Act_Region_Model.cs" />
-    <Compile Include="Models\TB_Budget_Activity_Model.cs" />
+    <Compile Include="Models\TB_Bud_Activity_Model.cs" />
+    <Compile Include="Models\TB_Bud_Image_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -2195,6 +2197,7 @@
     <Content Include="uploadImages\e222c8de-3940-4239-ba39-4f86720ec056_5DB5E9C8-CB07-43FC-B25D-BB26D8C69A39.png" />
     <Content Include="Views\BudgetApproveList\Index.cshtml" />
     <Content Include="Views\BudgetApprove\previewApproveBudget.cshtml" />
+    <Content Include="Views\Budget\manageInvoiceList.cshtml" />
     <Content Include="WebForm1.aspx" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -2307,6 +2310,8 @@
     <Content Include="Views\Shared\_previewActForm.cshtml" />
     <Content Include="Views\Login\Maintain.cshtml" />
     <Content Include="Views\Shared\_searchBudget.cshtml" />
+    <Content Include="Views\Budget\manageInvoiceIndex.cshtml" />
+    <Content Include="Views\Budget\manageInvoiceView.cshtml" />
     <Content Include="Views\summaryReport\IndexDoc.cshtml" />
     <Content Include="Views\summaryReport\ListDoc.cshtml" />
     <Content Include="Views\summaryReport\viewReportSummaryAlcohol.cshtml" />
