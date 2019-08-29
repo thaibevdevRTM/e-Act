@@ -41,7 +41,7 @@ namespace eActForm.Controllers
                 
                 if (Request.Form["txtActivityNo"] != "")
                 {
-                    model = RepDetailAppCode.getFilterRepDetailByActNo(model, Request.Form["txtActivityNo"]);    
+                    model.actFormRepDetailLists = model.actFormRepDetailLists.Where(x => x.activityNo == Request.Form["txtActivityNo"]).ToList();    
                 }
                 else
                 {
