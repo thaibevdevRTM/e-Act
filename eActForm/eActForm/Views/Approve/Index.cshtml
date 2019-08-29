@@ -148,6 +148,12 @@ else
         });
         $("#txtRemark").val('');
 
+        var arrayOfElements = document.getElementsByClassName('divDelImg');
+        var lengthOfArray = arrayOfElements.length;
+        for (var i = 0; i < lengthOfArray; i++) {
+            arrayOfElements[i].style.display = 'none';
+        }
+
     });
 
     function confirmQuery() {

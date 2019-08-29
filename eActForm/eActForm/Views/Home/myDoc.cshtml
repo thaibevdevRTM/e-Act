@@ -115,7 +115,7 @@
                         <td width="200">
                             @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                             {
-                                <a href="javascript:" target="_blank" onclick="return callPreviewApprove('@item.id','@item.statusId','@Model.typeForm');">
+                                <a href="javascript:" onclick="return callPreviewApprove('@item.id','@item.statusId','@Model.typeForm');">
                                     <i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
                                 </a>
                             }

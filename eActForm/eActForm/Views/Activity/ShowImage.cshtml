@@ -9,35 +9,38 @@
 
 <div class="modal-body">
     <div id="GridImg" style="width:97%; margin-left:20px;">
+       
         @if (Model.productImageList.Any())
         {
-            <table>
-                <tr style="margin-top:100px;">
-                    @foreach (var item in Model.productImageList)
+            <table >
+                <tbody>
+                    <tr>
+                        <td colspan="3" align="center">
+                            <label style="font-size:36px;">รูปภาพ</label>
+                        </td>
+                    </tr>
+                    @for (int index = 0; index < Model.productImageList.Count; index++)
                     {
-
-
-                        if (item.extension != ".pdf")
+                        if (Model.productImageList[index].extension != ".pdf")
                         {
+                            <tr style="height:400;">
 
-                            if (Model.productImageList.Count == 1)
-                            {
-                                <td style="text-align:center">
-                                    <img width="300" height="300" src="@string.Format(url, item._fileName)" />
-                                </td>
-                            }
-                            else
-                            {
                                 <td style="text-align:center;">
-                                    <img width="300" height="300" src="@string.Format(url, item._fileName)" />
+                                    <img  width="300" src="@string.Format(url, Model.productImageList[index]._fileName)" />
                                 </td>
-                            }
-                            <td width="50px;"></td>
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                @if (index + 1 < Model.productImageList.Count)
+                                {
+                                    index++;
+                                    <td style="text-align:center">
+                                        <img width="300" src="@string.Format(url, Model.productImageList[index]._fileName)" />
+                                    </td>
+                                }
 
+                            </tr>
                         }
-
                     }
-                </tr>
+                </tbody>
             </table>
         }
     </div>
