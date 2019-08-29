@@ -38,10 +38,10 @@ namespace eActForm.Controllers
 
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
                 model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"]);
-                
+
                 if (Request.Form["txtActivityNo"] != "")
                 {
-                    model.actFormRepDetailLists = model.actFormRepDetailLists.Where(x => x.activityNo == Request.Form["txtActivityNo"]).ToList();    
+                    model = RepDetailAppCode.getFilterRepDetailByActNo(model, Request.Form["txtActivityNo"]);
                 }
                 else
                 {

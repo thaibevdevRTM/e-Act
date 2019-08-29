@@ -14,9 +14,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetActivityRepDetailAll"
-                     , new SqlParameter[] { new SqlParameter("@startDate",startDate)
-                        ,new SqlParameter("@endDate",endDate) });
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetActivityRepDetailAll");
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new DocumentsModel.actRepDetailModel()
                              {

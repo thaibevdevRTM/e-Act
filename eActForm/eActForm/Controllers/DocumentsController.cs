@@ -24,7 +24,7 @@ namespace eActForm.Controllers
         {
             try
             {
-                SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
+                SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
                 return View(models);
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace eActForm.Controllers
 
                 if (Request.Form["txtActivityNo"] != "")
                 {
-                    models.actRepDetailLists = models.actRepDetailLists.Where(x => x.activityNo == Request.Form["txtActivityNo"]).ToList();
+                    models.actRepDetailLists = models.actRepDetailLists.Where(x => x.id == RepDetailAppCode.getRepdetailByActNo(Request.Form["txtActivityNo"].ToString())).ToList();
                 }
                 else
                 {
