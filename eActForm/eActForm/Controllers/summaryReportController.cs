@@ -340,19 +340,20 @@ namespace eActForm.Controllers
 
             if (Request.Form["txtRepDetailNo"] != "")
             {
-                modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
+                modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.summaryId == ReportSummaryAppCode.getSummaryIdByRepdetail(Request.Form["txtRepDetailNo"].ToString())).ToList();
             }
-
-            if (Request.Form["ddlStatus"] != "")
+            else
             {
-                modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
-            }
+                if (Request.Form["ddlStatus"] != "")
+                {
+                    modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
+                }
 
-            if (Request.Form["ddlProductType"] != "")
-            {
-                modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
+                if (Request.Form["ddlProductType"] != "")
+                {
+                    modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
+                }
             }
-
             TempData["SearchDataModelSummary"] = modelResult;
             return RedirectToAction("ListDoc");
         }

@@ -9,39 +9,43 @@
 
 <div class="modal-body">
     <div id="GridImg" style="width:97%; margin-left:20px;">
-       
-        @if (Model.productImageList.Any())
+        @if (Model.productImageList.Where(x => x.extension != ".pdf").AsEnumerable().Any())
         {
-            <table >
-                <tbody>
-                    <tr>
-                        <td colspan="3" align="center">
-                            <label style="font-size:36px;">รูปภาพ</label>
-                        </td>
-                    </tr>
-                    @for (int index = 0; index < Model.productImageList.Count; index++)
-                    {
-                        if (Model.productImageList[index].extension != ".pdf")
-                        {
-                            <tr style="height:400;">
+            <div style="page-break-before:always">&nbsp;</div>
 
-                                <td style="text-align:center;">
-                                    <img  width="300" src="@string.Format(url, Model.productImageList[index]._fileName)" />
-                                </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                @if (index + 1 < Model.productImageList.Count)
-                                {
-                                    index++;
-                                    <td style="text-align:center">
+            if (Model.productImageList.Any())
+            {
+                <table>
+                    <tbody>
+                        <tr>
+                            <td colspan="3" align="center">
+                                <label style="font-size:36px;">รูปภาพ</label>
+                            </td>
+                        </tr>
+                        @for (int index = 0; index < Model.productImageList.Count; index++)
+                        {
+                            if (Model.productImageList[index].extension != ".pdf")
+                            {
+                                <tr style="height:400;">
+
+                                    <td style="text-align:center;">
                                         <img width="300" src="@string.Format(url, Model.productImageList[index]._fileName)" />
                                     </td>
-                                }
+                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    @if (index + 1 < Model.productImageList.Count)
+                                    {
+                                        index++;
+                                        <td style="text-align:center">
+                                            <img width="300" src="@string.Format(url, Model.productImageList[index]._fileName)" />
+                                        </td>
+                                    }
 
-                            </tr>
+                                </tr>
+                            }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            }
         }
     </div>
 </div>
