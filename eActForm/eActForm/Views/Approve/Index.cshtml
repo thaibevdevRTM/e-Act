@@ -303,7 +303,8 @@ else
             type: 'POST',
             url: '@Url.Action("previewApprove", "Approve")',
             data: {
-                actId: obj
+                actId: obj,
+                typeForm: '@Model.typeForm.ToString()',
             }
         }).done(function (htmlResponse) {
             $("#divPreviewApprove").html(htmlResponse);
@@ -314,7 +315,7 @@ else
         $.ajax({
             url: '@Url.Action("genPdfApprove", "Approve")',
             data: {
-                GridHtml: $("#Grid1").html(),
+                GridHtml: $("#Grid1").html() + $("#GridImg").html(),
                 statusId: $("#ddlStatus").val(),
                 activityId: $("#HdId").val()
             },
