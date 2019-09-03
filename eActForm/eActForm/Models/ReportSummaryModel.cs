@@ -12,14 +12,17 @@ namespace eActForm.Models
         public List<ReportSummaryModel> activitySummaryList { get; set; }
         public List<ReportSummaryModel> activitySummaryGroupList { get; set; }
         public List<ReportSummaryModel> activitySummaryGroupActivityList { get; set; }
+        public List<ReportSummaryModel> activitySummaryForecastList { get; set; }
         public ApproveFlowModel.approveFlowModel flowList { get; set; }
         public List<actApproveSummaryDetailModel> summaryDetailLists { get; set; }
+        public string producttype_id { get; set; }
 
         public ReportSummaryModels()
         {
             activitySummaryList = new List<ReportSummaryModel>();
             summaryDetailLists = new List<actApproveSummaryDetailModel>();
-        }
+            activitySummaryForecastList = new List<ReportSummaryModel>();
+    }
 
 
         public class ReportSummaryModel : ActBaseModel
@@ -57,6 +60,29 @@ namespace eActForm.Models
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? water { get; set; }
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? beer { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? changclassic { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? federbrau { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? archa { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? whitespirits { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? brownspirits { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? hongthong { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? blend285 { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? sangsom { get; set; }
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+            public decimal? readytodrink { get; set; }
+
+
+
+            [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? total { get; set; }
             public string remark { get; set; }
             public int rowNo   { get; set; }
@@ -81,6 +107,7 @@ namespace eActForm.Models
             public string customerName { get; set; }
             public string productTypeId { get; set; }
             public string productTypeName { get; set; }
+            public string createName { get; set; }
         }
     }
 }

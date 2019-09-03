@@ -13,6 +13,14 @@
 
         @RenderPage("~/Views/Shared/_previewActForm.cshtml")
 
+
+
+        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+        {
+            <div style="page-break-before:always">&nbsp;</div>
+            @RenderPage("~/Views/Activity/ShowImage.cshtml")
+        }
+
         <div class="modal-footer">
             <div>
                 <p class="d-flex justify-content-center">
@@ -46,7 +54,7 @@
                     $.ajax({
                         url: '@Url.Action("submitPreview", "Activity")',
                         data: {
-                            GridHtml1: $("#Grid1").html(),
+                            GridHtml1: $("#Grid1").html() + $("#GridImg").html(),
                             status: 2,
                             activityId: $("#HdId").val(),
                         },

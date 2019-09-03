@@ -237,6 +237,24 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static string getRepdetailByActNo(string actNo)
+        {
+          
+            try
+            {
+                object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getRepDetailIdByActNo"
+                    , new SqlParameter[] { new SqlParameter("@actNo", actNo) });
+
+                return obj.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getRepDetailReportByCreateDateAndStatusId >>" + ex.Message);
+            }
+        }
+
         private static RepDetailModel.actFormRepDetails dataTableToRepDetailModels(DataSet ds)
         {
             try
