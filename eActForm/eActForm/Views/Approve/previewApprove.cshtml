@@ -1,4 +1,6 @@
-﻿@model eActForm.Models.Activity_Model
+﻿@using eActForm.Models
+@using eActForm.BusinessLayer
+@model eActForm.Models.Activity_Model
 
 @Html.HiddenFor(m => m.activityFormModel.id, new { id = "HdId" })
 
@@ -10,6 +12,13 @@
             <button type="button" class="close" onclick="onClickClose();" data-dismiss="modal">&times;</button>
         </div>
         @RenderPage("~/Views/Shared/_previewActForm.cshtml")
+
+
+        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+        {
+            <div style="page-break-before:always">&nbsp;</div>
+            @RenderPage("~/Views/Activity/ShowImage.cshtml")
+        }
         <div class="modal-footer">
             <div>
                 <p class="d-flex justify-content-center">

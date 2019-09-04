@@ -83,7 +83,7 @@ namespace eActForm.Controllers
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
             activityModel.productImageList = ImageAppCode.GetImage(actId).Where(x => x.extension != ".pdf").ToList();
-
+            activityModel.activityFormModel.typeForm = typeForm;
             return PartialView(activityModel);
         }
 

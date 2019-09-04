@@ -211,6 +211,7 @@ namespace eActForm.BusinessLayer
             List<Attachment> files = new List<Attachment>();
             string[] pathFile = new string[10];
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
+            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailCC;
             //pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
 
             //    HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
