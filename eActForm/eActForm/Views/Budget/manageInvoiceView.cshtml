@@ -1,1 +1,19 @@
-﻿view
+﻿@model eActForm.Models.TB_Bud_Image_Model.BudImageModel
+@{
+	//Layout = null;
+	//Layout = "~/Views/Shared/_BlankLayout.cshtml";
+	ViewBag.Title = "";
+	var url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfilesBudget"].ToString();
+}
+
+
+@if (Model.id != null)
+{
+<div class="col-12">
+
+	<h4> เลขที่ใบแจ้งหนี้ : @Model.invoiceNo </h4>
+	<h5> ชื่อไฟล์ : @Model._fileName </h5>
+</div>
+	@Html.Action("invoicePDFView", "BudgetViewer", new { fileName = Model._fileName })
+
+}
