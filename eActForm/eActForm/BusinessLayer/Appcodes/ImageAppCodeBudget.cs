@@ -12,12 +12,13 @@ namespace eActForm.BusinessLayer
 {
 	public class ImageAppCodeBudget
 	{
-		public static List<TB_Bud_Image_Model.BudImageModel> getImageBudget(string imageId ,string budgetApproveId, String activityNo, String createdByUserId)
+		public static List<TB_Bud_Image_Model.BudImageModel> getImageBudget(string imageId , string imageInvoiceNo, string budgetApproveId, String activityNo, String createdByUserId)
 		{
 			try
 			{
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetImage"
 					, new SqlParameter("@imageId", imageId)
+					, new SqlParameter("@imageInvoiceNo", imageInvoiceNo)
 					, new SqlParameter("@budgetApproveId", budgetApproveId)
 					, new SqlParameter("@activityNo", activityNo)
 					, new SqlParameter("@createdByUserId", createdByUserId)
