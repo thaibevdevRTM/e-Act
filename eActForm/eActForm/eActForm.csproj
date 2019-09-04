@@ -2318,23 +2318,6 @@
     <Content Include="Views\Budget\manageInvoiceEdit.cshtml" />
     <Content Include="Views\summaryReport\viewReportSummaryAlcohol.cshtml" />
     <Content Include="Views\Activity\ShowImage.cshtml" />
-    <Content Include="UploadfilesBudget\Test Invoice No01_0309191150.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No01_2708191026.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No01_2908191435.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No02_0309191150.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No02_2708191026.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No03_0309191150.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No03_2708191026.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No04_0309191150.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No04_2708191049.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No05_0209191413.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No05_2708191042.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No05_2708191044.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No05_2708191049.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No05_2708191642.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No05_2908191337.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No05_2908191340.pdf" />
-    <Content Include="UploadfilesBudget\Test Invoice No05_2908191531.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
@@ -2342,6 +2325,7 @@
     <Folder Include="error\" />
     <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
+    <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
   </ItemGroup>
   <ItemGroup>
