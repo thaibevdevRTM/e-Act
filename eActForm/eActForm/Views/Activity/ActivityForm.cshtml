@@ -349,7 +349,7 @@
         <p class="lead">อัพโหลด รูปภาพ</p>
     </div>
     <div class="col-md-6" id="divUploadFiles">
-        <form action="@Url.Action("uploadFilesImage", "Activity")" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
+        <form action="@Url.Action("uploadFilesImage", "Activity", new { actId = Model.activityFormModel.id})" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
             <div class="dz-message">
                 <span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
             </div>
@@ -725,6 +725,7 @@
                  size: $("#ddlProductSize").val(),
                  cusid: customer,
                  theme: $("#ddlTheme").val(),
+                 actId: '@Model.activityFormModel.id',
              },
                 dataType: "json",
                 type: 'POST',
@@ -732,8 +733,8 @@
                  if (response.Data > 0) {
 
                      rowCount = response.Data;
-                     CallChangefunc();
-                     callThemedetailcost();
+                     CallChangefunc(response.ActivityId);
+                     callThemedetailcost(response.ActivityId);
                  }
                  else {
                      bootbox.alert("ไม่พบ สินค้า!");
@@ -757,6 +758,7 @@
              data: {
                  themeId: $("#ddlThemeDetail").val(),
                  txttheme: txtddlTheme,
+                 actId:'@Model.activityFormModel.id',
             }
          }).done(function (response) {
              callThemedetailcost();
@@ -775,9 +777,10 @@
              if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
              if ($("#customerId").val() == "" || $("#txtCustomerName").val() == "") { required += "Customer Name*<br>"; validate = false; }
         }
-
+        
         if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
         if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
+        if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; }
         if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
         if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
         if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
@@ -844,6 +847,7 @@
                     ActivityDetail: $("#txtActivityDetail").val(),
                     activityNo: $("#txtActivityNo").val(),
                     createdByUserId: $("#hdcreateUser").val(),
+                    id:'@Model.activityFormModel.id',
                 },
                 dataType: "json",
                 type: 'POST',
@@ -887,6 +891,7 @@
                     str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
                     str_activityPeriodSt: $("#txtdateActivitySt").val(),
                     str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
+                    id:'@Model.activityFormModel.id',
                 },
                 dataType: "json",
                 type: 'POST',
@@ -1098,27 +1103,28 @@
     }
 
 
-    function callThemedetailcost(obj) {
+    function callThemedetailcost(actId) {
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("activityCostDetail", "ActivityCostDetail")',
             data: {
-                activityModel: obj,
-                typeForm:'@Model.activityFormModel.typeForm',
+
+                typeForm: '@Model.activityFormModel.typeForm',
+                actId: actId,
             }
         }).done(function (htmlResponse) {
             $("#divgetdetailcost").html(htmlResponse)
         });
     }
 
-    function CallChangefunc(obj) {
+    function CallChangefunc(actId) {
 
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("ProductCostdetail", "ActivityProductDetail")',
             data: {
-                activityModel: obj,
-                typeForm:'@Model.activityFormModel.typeForm',
+                typeForm: '@Model.activityFormModel.typeForm',
+                actId: actId,
             }
         }).done(function (htmlResponse) {
             $("#getQuery").html(htmlResponse)

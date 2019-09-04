@@ -204,6 +204,7 @@
             var promotionGP = $('#promotionGp_' + rowIndex).val();
             var specialDisc = $("#specialDisc_" + rowIndex).val();
             var specialDiscBaht = $("#specialDiscBaht_" + rowIndex).val();
+
             $.ajax({
             type: 'POST',
             url:  '@Url.Action("calDiscountProduct", "ActivityProductDetail")',
@@ -221,9 +222,11 @@
                  promotionGP: promotionGP.replace(",", ""),
                  specialDisc: specialDisc.replace(",", ""),
                  specialDiscBaht: specialDiscBaht.replace(",", ""),
+                 activityId : '@Model.activityFormModel.id',
+
             }
          }).done(function (response) {
-             CallChangefunc();
+             CallChangefunc('@Model.activityFormModel.id');
         });
 
         }
@@ -234,7 +237,8 @@
             type: 'POST',
             url:  '@Url.Action("showDetailGroup", "ActivityProductDetail")',
             data: {
-                rowId: rowId
+                rowId: rowId,
+                actId: '@Model.activityFormModel.id',
             }
         }).done(function (response) {
             $("#divModalProductDetaillist").html(response)
@@ -249,6 +253,7 @@
             url: '@Url.Action("delCostDetail", "ActivityProductDetail")',
             data: {
                 rowid: id,
+                id: '@Model.activityFormModel.id',
             },
             dataType: "json",
             type: 'POST',

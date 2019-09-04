@@ -219,6 +219,8 @@
             data: {
                 productGroupId: id,
                 perTotal: perTotal,
+                actId:'@Model.activityFormModel.id',
+
             }
         }).done(function (response) {
             callThemedetailcost();
@@ -246,6 +248,7 @@
                 productId: productId,
                 total: total,
                 themeCost: themeCost,
+                actId:'@Model.activityFormModel.id'
 
             }
         }).done(function (response) {
@@ -281,10 +284,11 @@
                 unit: unit,
                 compensate: compensate,
                 LE: LE,
-                typeForm:'@Model.activityFormModel.typeForm'
+                typeForm: '@Model.activityFormModel.typeForm',
+                actId : '@Model.activityFormModel.id'
             }
         }).done(function (response) {
-            callThemedetailcost();
+            callThemedetailcost('@Model.activityFormModel.id');
         });
 
     }
@@ -294,11 +298,12 @@
             url: '@Url.Action("delActCostDetail", "ActivityCostDetail")',
             data: {
                 rowid: id,
+                actId:'@Model.activityFormModel.id'
             },
             dataType: "json",
             type: 'POST',
             success: function (response) {
-                callThemedetailcost();
+                callThemedetailcost('@Model.activityFormModel.id');
             }
         });
     }
