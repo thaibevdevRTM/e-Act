@@ -103,6 +103,8 @@ namespace eActForm.Models
 			public decimal productStandBath { get; set; }
 
 			public string paymentNo { get; set; }
+						
+			public string budgetImageId { get; set; }
 			public string invoiceNo { get; set; }
 			public decimal saleActCase { get; set; }
 			public decimal saleActBath { get; set; }
