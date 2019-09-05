@@ -21,7 +21,7 @@ namespace eActForm.Controllers
             Activity_Model activityModel = new Activity_Model();
             try
             {
-                TempData.Clear();
+
                 activityModel.activityFormModel = new ActivityForm();
                 activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
                 activityModel.customerslist = QueryGetAllCustomers.getCustomersByEmpId();
@@ -48,7 +48,7 @@ namespace eActForm.Controllers
                     activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
                     activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
                     activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
-                    TempData["actForm"+activityId] = activityModel;
+                    TempData["actForm"+ activityId] = activityModel;
                 }
                 else
                 {
@@ -58,6 +58,7 @@ namespace eActForm.Controllers
                     activityModel.activityFormModel.statusId = 1;
                 }
                 activityModel.activityFormModel.typeForm = typeForm;
+                TempData.Keep();
 
             }
             catch(Exception ex)
@@ -132,11 +133,10 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                Activity_Model activityModel = TempData["actForm"+ activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"];
-                activityModel.activityFormModel = activityFormModel;
-                int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, activityFormModel.id);
 
-                result.ActivityId = activityFormModel.id;
+                Activity_Model activityModel = TempData["actForm"+ activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ activityFormModel.id];
+                activityModel.activityFormModel =  activityFormModel;
+                int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, activityFormModel.id);
                 TempData.Keep();
                 result.Success = true;
             }

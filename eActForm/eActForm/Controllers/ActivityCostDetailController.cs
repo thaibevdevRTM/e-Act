@@ -20,12 +20,12 @@ namespace eActForm.Controllers
             return PartialView(activityModel);
         }
 
-        public JsonResult delActCostDetail(string rowid,string actId, Activity_Model activityModel)
+        public JsonResult delActCostDetail(string rowid,string actId)
         {
             var result = new AjaxResult();
             try
             {
-                activityModel = (Activity_Model)TempData["actForm"+ activityModel.activityFormModel.id];
+                Activity_Model activityModel = (Activity_Model)TempData["actForm"+ actId];
                 if (rowid != null)
                 {
                     activityModel.activitydetaillist.RemoveAll(r => r.productGroupId == rowid);

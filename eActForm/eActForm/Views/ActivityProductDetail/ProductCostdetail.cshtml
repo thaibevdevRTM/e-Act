@@ -258,9 +258,7 @@
             dataType: "json",
             type: 'POST',
                 success: function (response) {
-                    rowCount = response.Data;
-
-                    CallChangefunc();
+                    CallChangefunc('@Model.activityFormModel.id');
                 }
 
             });

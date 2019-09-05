@@ -290,7 +290,7 @@
 </div>
 <hr />
 <div id="getQuery" class="col-lg-12">
-    @Html.Action("productCostDetail", "ActivityProductDetail", new { typeForm = Model.activityFormModel.typeForm })
+    @Html.Action("productCostDetail", "ActivityProductDetail", new { typeForm = Model.activityFormModel.typeForm , actId = Model.activityFormModel.id })
 </div>
 
 <div class="row" id="divAddProductCostDetail">
@@ -317,7 +317,7 @@
 </div>
 <hr />
 <div id="divgetdetailcost" class="col-lg-12">
-    @Html.Action("activityCostDetail", "ActivityCostDetail", new { typeForm = Model.activityFormModel.typeForm })
+    @Html.Action("activityCostDetail", "ActivityCostDetail", new { typeForm = Model.activityFormModel.typeForm , actId = Model.activityFormModel.id })
 </div>
 
 
@@ -357,7 +357,7 @@
     </div>
     <div class="col-md-12">
         <div id="divgetimage" class="col-md-12">
-            @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id != null ? Model.activityFormModel.id : "" })
+            @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id})
         </div>
     </div>
 </div>
@@ -761,7 +761,7 @@
                  actId:'@Model.activityFormModel.id',
             }
          }).done(function (response) {
-             callThemedetailcost();
+             callThemedetailcost('@Model.activityFormModel.id');
              $("#WaitDialog").hide();
         });
     }
@@ -853,7 +853,7 @@
                 type: 'POST',
             }).done(function (response) {
                 if (response.Success) {
-                    callPreviewData(response.ActivityId);
+                    callPreviewData('@Model.activityFormModel.id');
                 }
             });
     }
