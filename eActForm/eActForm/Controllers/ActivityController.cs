@@ -274,7 +274,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult submitPreview(string GridHtml1, string status, string activityId)
+        public async System.Threading.Tasks.Task<JsonResult> submitPreview(string GridHtml1, string status, string activityId)
         {
             var resultAjax = new AjaxResult();
             int countresult = 0;
@@ -308,7 +308,7 @@ namespace eActForm.Controllers
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                     {
                         ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                        EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
+                        var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
                     }
                 }
                 resultAjax.Success = true;
