@@ -634,7 +634,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("Email sendApproveBudgetForm >> " + ex.Message);
+                ExceptionManager.WriteError("Email sendApproveBudget >> " + ex.Message);
                 throw new Exception("sendApproveBudgetForm" + ex.Message);
             }
         }
