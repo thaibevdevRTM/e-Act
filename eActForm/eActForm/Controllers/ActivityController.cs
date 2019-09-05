@@ -48,7 +48,7 @@ namespace eActForm.Controllers
                     activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
                     activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
                     activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
-                    TempData["actForm"+ activityId] = activityModel;
+                    TempData["actForm" + activityId] = activityModel;
                 }
                 else
                 {
@@ -61,7 +61,7 @@ namespace eActForm.Controllers
                 TempData.Keep();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("ActivityForm => " + ex.Message);
             }
@@ -92,7 +92,7 @@ namespace eActForm.Controllers
 
         }
 
-        public ActionResult PreviewData(string activityId,string typeForm)
+        public ActionResult PreviewData(string activityId, string typeForm)
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
@@ -134,9 +134,18 @@ namespace eActForm.Controllers
             try
             {
 
-                Activity_Model activityModel = TempData["actForm"+ activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ activityFormModel.id];
-                activityModel.activityFormModel =  activityFormModel;
-                int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, activityFormModel.id);
+                Activity_Model activityModel = TempData["actForm" + activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + activityFormModel.id];
+                activityModel.activityFormModel = activityFormModel;
+                string statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
+                if (statusId == "1" || statusId == "5")
+                {
+                    int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, activityFormModel.id);
+                }
+                else
+                {
+                    result.MessageCode = "001";
+                }
+
                 TempData.Keep();
                 result.Success = true;
             }
@@ -179,7 +188,7 @@ namespace eActForm.Controllers
             {
                 string actId = Guid.NewGuid().ToString();
                 Activity_Model activityModel = new Activity_Model();
-                activityModel = (Activity_Model)TempData["actForm"+ actId];
+                activityModel = (Activity_Model)TempData["actForm" + actId];
                 activityModel.activityFormModel = activityFormModel;
                 activityModel.activityFormModel.activityNo = "";
                 activityModel.activityFormModel.dateDoc = DateTime.Now.ToString("dd-MM-yyyy");
@@ -231,7 +240,7 @@ namespace eActForm.Controllers
                     imageFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                     imageFormModel.updatedDate = DateTime.Now;
                     int resultImg = ImageAppCode.insertImageForm(imageFormModel);
-                  
+
                 }
 
                 result.ActivityId = actId;
@@ -318,7 +327,7 @@ namespace eActForm.Controllers
             }
             return Json(resultAjax, "text/plain");
         }
-        
+
     }
 }
 

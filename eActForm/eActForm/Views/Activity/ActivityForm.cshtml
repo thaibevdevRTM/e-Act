@@ -854,7 +854,13 @@
                 type: 'POST',
             }).done(function (response) {
                 if (response.Success) {
-                    callPreviewData('@Model.activityFormModel.id');
+                    if (response.MessageCode == "001") {
+                        bootbox.alert("กรุณาทำรายการใหม่ เอกสารฉบับนี้ ส่งอนุมัติ ไปแล้ว");  
+                    }
+                    else {
+                           callPreviewData('@Model.activityFormModel.id');
+                    }
+                    $("#WaitDialog").hide();
                 }
             });
     }

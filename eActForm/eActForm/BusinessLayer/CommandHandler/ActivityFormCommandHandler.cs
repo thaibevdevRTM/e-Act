@@ -443,6 +443,23 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static string getStatusActivity(string actId)
+        {
+            try
+            {
+                object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCheckStatusActivity"
+                    , new SqlParameter[] { new SqlParameter("@actId", actId) });
+
+                return obj.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getStatusActivity >>" + ex.Message);
+            }
+        }
+
     }
 
 }
