@@ -23,8 +23,8 @@ namespace eActForm.BusinessLayer
                 var rootPath = HttpContext.Current.Server.MapPath(fileName);
                 List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "OS&JJ_" + actRepDetailId );
-                rootPath = HttpContext.Current.Server.MapPath(fileName);
+                fileName =  "OS&JJ_" + actRepDetailId;
+                rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], fileName));
                 file = AppCode.genPdfFile(htmlOS, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                 TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel
                 {
@@ -34,20 +34,20 @@ namespace eActForm.BusinessLayer
                 };
                 int resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "Est&HP_" + actRepDetailId );
-                rootPath = HttpContext.Current.Server.MapPath(fileName);
+                fileName = "Est&HP_" + actRepDetailId;
+                rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], fileName));
                 file = AppCode.genPdfFile(htmlEst, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                 imageFormModel._fileName = fileName;
                 resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "WA&CY_" + actRepDetailId);
-                rootPath = HttpContext.Current.Server.MapPath(fileName);
+                fileName = "WA&CY_" + actRepDetailId;
+                rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], fileName));
                 file = AppCode.genPdfFile(htmlWA, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                 imageFormModel._fileName = fileName;
                 resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "SO&WR_" + actRepDetailId);
-                rootPath = HttpContext.Current.Server.MapPath(fileName);
+                fileName = "SO&WR_" + actRepDetailId;
+                rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], fileName));
                 file = AppCode.genPdfFile(htmlSO, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                 imageFormModel._fileName = fileName;
                 resultImg = ImageAppCode.insertImageForm(imageFormModel);

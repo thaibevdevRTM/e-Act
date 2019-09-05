@@ -138,16 +138,110 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message +" " + actFormId);
+                ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message + " " + actFormId);
             }
         }
+
+        public static async Task<string> sendApproveAsync(string actFormId, AppCode.ApproveType emailType, bool isResend)
+        {
+            try
+            {
+                List<ApproveModel.approveEmailDetailModel> lists = new List<ApproveModel.approveEmailDetailModel>();
+
+                switch (emailType)
+                {
+                    case AppCode.ApproveType.Activity_Form:
+                        lists = getEmailApproveNextLevel(actFormId);
+                        break;
+                    case AppCode.ApproveType.Report_Detail:
+                        lists = getEmailApproveRepDetailNextLevel(actFormId);
+                        break;
+                    case AppCode.ApproveType.Report_Summary:
+                        lists = getEmailApproveSummaryNextLevel(actFormId);
+                        break;
+                }
+
+
+                string strBody = "", strSubject = "";
+                if (lists.Count > 0)
+                {
+                    foreach (ApproveModel.approveEmailDetailModel item in lists)
+                    {
+                        strBody = getEmailBody(item, emailType, actFormId);
+                        strSubject = ConfigurationManager.AppSettings["emailApproveSubject"];
+                        strSubject = isResend ? "RE: " + strSubject : strSubject;
+                        sendEmailActForm(actFormId
+                            , item.empEmail
+                            , ""
+                            , strSubject
+                            , strBody
+                            , emailType);
+                    }
+                }
+                else
+                {
+                    // case all updated
+                    DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountStatusApproveDetail"
+                        , new SqlParameter[] {new SqlParameter("@actFormId",actFormId)
+                        ,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.อนุมัติ)});
+
+                    if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
+                    {
+                        DataRow dr = ds.Tables[0].Rows[0];
+                        if (dr["countAll"].ToString() == dr["countStatusApproved"].ToString())
+                        {
+                            // all approved then send the email notification to user create
+                            List<ApproveModel.approveDetailModel> createUsers = (emailType == AppCode.ApproveType.Activity_Form) ? ActFormAppCode.getUserCreateActForm(actFormId)
+                                : RepDetailAppCode.getUserCreateRepDetailForm(actFormId);
+
+                            strBody = (emailType == AppCode.ApproveType.Activity_Form)
+                                ? string.Format(ConfigurationManager.AppSettings["emailAllApproveBody"]
+                                    , createUsers.FirstOrDefault().empName
+                                    , createUsers.FirstOrDefault().activityNo
+                                    , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId))
+                                : string.Format(ConfigurationManager.AppSettings["emailAllApproveRepDetailBody"]
+                                    , createUsers.FirstOrDefault().empName
+                                    , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
+
+                            sendEmailActForm(actFormId
+                            , createUsers.FirstOrDefault().empEmail
+                            , ""
+                            , ConfigurationManager.AppSettings["emailAllApprovedSubject"]
+                            , strBody
+                            , emailType);
+                        }
+                    }
+                }
+
+                return "";
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message);
+                throw new Exception("sendEmailApprove" + ex.Message);
+            }
+        }
+
         public static void sendApprove(string actFormId, AppCode.ApproveType emailType, bool isResend)
         {
             try
             {
-                List<ApproveModel.approveEmailDetailModel> lists = (emailType == AppCode.ApproveType.Activity_Form) 
-                    ? getEmailApproveNextLevel(actFormId)
-                    : getEmailApproveRepDetailNextLevel(actFormId);
+                List<ApproveModel.approveEmailDetailModel> lists = new List<ApproveModel.approveEmailDetailModel>();
+
+                switch (emailType)
+                {
+                    case AppCode.ApproveType.Activity_Form:
+                        lists = getEmailApproveNextLevel(actFormId);
+                        break;
+                    case AppCode.ApproveType.Report_Detail:
+                        lists = getEmailApproveRepDetailNextLevel(actFormId);
+                        break;
+                    case AppCode.ApproveType.Report_Summary:
+                        lists = getEmailApproveSummaryNextLevel(actFormId);
+                        break;
+                }
+
+
                 string strBody = "", strSubject = "";
                 if (lists.Count > 0)
                 {
@@ -238,7 +332,7 @@ namespace eActForm.BusinessLayer
                 int i = 1;
                 foreach (var item in getImageModel.tbActImageList)
                 {
-                    if( item.imageType == AppCode.ApproveType.Report_Detail.ToString())
+                    if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
                     {
                         pathFile[i] = HttpContext.Current.Server.MapPath(item._fileName);
                     }
@@ -292,6 +386,7 @@ namespace eActForm.BusinessLayer
                         strBody = string.Format(ConfigurationManager.AppSettings["emailApproveRepDetailBody"]
                             , item.empPrefix + " " + item.empName //เรียน
                             , AppCode.ApproveStatus.รออนุมัติ.ToString()
+                            , item.activityNo
                             , emailType.ToString().Replace("_", " ")
                             , item.customerName
                             , item.productTypeName
@@ -302,6 +397,7 @@ namespace eActForm.BusinessLayer
                         strBody = string.Format(ConfigurationManager.AppSettings["emailApproveSummaryDetailBody"]
                             , item.empPrefix + " " + item.empName //เรียน
                             , AppCode.ApproveStatus.รออนุมัติ.ToString()
+                            , item.activityNo
                             , emailType.ToString().Replace("_", " ")
                             , item.createBy
                             , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId));
@@ -358,6 +454,33 @@ namespace eActForm.BusinessLayer
                                   empName = dr["empName"].ToString(),
                                   productTypeName = dr["productTypeName"].ToString(),
                                   customerName = dr["customerName"].ToString(),
+                                  activityNo = dr["activityNo"].ToString(),
+                                  createBy = dr["createBy"].ToString(),
+                              }).ToList();
+                return models;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getEmailNextLevel >> " + ex.Message);
+            }
+        }
+
+        private static List<ApproveModel.approveEmailDetailModel> getEmailApproveSummaryNextLevel(string actFormId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveSummaryNextLevel"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
+
+                var models = (from DataRow dr in ds.Tables[0].Rows
+                              select new ApproveModel.approveEmailDetailModel()
+                              {
+                                  empEmail = dr["empEmail"].ToString(),
+                                  empPrefix = dr["empPrefix"].ToString(),
+                                  empName = dr["empName"].ToString(),
+                                  productTypeName = dr["productTypeName"].ToString(),
+                                  customerName = dr["customerName"].ToString(),
+                                  activityNo = dr["activityNo"].ToString(),
                                   createBy = dr["createBy"].ToString(),
                               }).ToList();
                 return models;

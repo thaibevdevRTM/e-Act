@@ -618,6 +618,24 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static string getSummaryIdByRepdetail(string repDetailId)
+        {
+
+            try
+            {
+                object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getSummaryIdByRepdetail"
+                    , new SqlParameter[] { new SqlParameter("@repDetailId", repDetailId) });
+
+                return obj.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getSummaryIdByRepdetail >>" + ex.Message);
+            }
+        }
+
         public static List<ReportSummaryModels.actApproveSummaryDetailModel> getDocumentSummaryDetailByDate(DateTime startDate, DateTime endDate)
         {
             try
@@ -631,12 +649,14 @@ namespace eActForm.BusinessLayer
                                  select new ReportSummaryModels.actApproveSummaryDetailModel()
                                  {
                                      id = dr["id"].ToString(),
+                                     summaryId = dr["summaryDetailId"].ToString(),
                                      statusName = dr["txtstatus"].ToString(),
                                      statusId = dr["statusid"].ToString(),
                                      productTypeName = dr["txtproductType"].ToString(),
                                      activityNo = dr["activityNo"].ToString(),
                                      createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
                                      createdByUserId = dr["createdByUserId"].ToString(),
+                                     createName = dr["createByUserName"].ToString(),
                                  }).ToList();
                     return lists;
                 }

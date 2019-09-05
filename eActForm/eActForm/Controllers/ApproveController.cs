@@ -20,13 +20,31 @@ namespace eActForm.Controllers
             if (actId == null) return RedirectToAction("index", "Home");
             else
             {
+                
                 ActSignatureModel.SignModels signModels = SignatureAppCode.currentSignatureByEmpId(UtilsAppCode.Session.User.empId);
-                if(signModels.lists == null || signModels.lists.Count == 0)
+                if (signModels.lists == null || signModels.lists.Count == 0)
                 {
                     ViewBag.messCannotFindSignature = true;
                 }
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
                 models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app).Where(x => x.id == "3" || x.id == "5").ToList();
+
+                List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
+                if (getActList.Any())
+                {
+                    if (getActList.FirstOrDefault().chanel_Id != "")
+                    {
+                        models.typeForm = Activity_Model.activityType.MT.ToString();
+                    }
+                    else
+                    {
+                        models.typeForm = Activity_Model.activityType.OMT.ToString();
+                    }
+
+                }
+
+
+
                 return View(models);
             }
         }
@@ -101,7 +119,7 @@ namespace eActForm.Controllers
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
-                    var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId+"_");
+                    var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
                     GridHtml = GridHtml.Replace("<br>", "<br/>");
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
 
