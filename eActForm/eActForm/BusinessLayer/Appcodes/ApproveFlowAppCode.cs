@@ -87,7 +87,7 @@ namespace eActForm.BusinessLayer
                 if (lists.Count > 0)
                 {
                     model.flowMain = lists[0];
-                    model.flowDetail = getFlowDetail(model.flowMain.id);
+                    model.flowDetail = getFlowDetail(model.flowMain.id, actFormId);
                 }
                 return model;
             }
@@ -166,6 +166,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFlowDetailWithApproveDetail >>" + ex.Message);
             }
         }
+
         public static List<ApproveFlowModel.flowApproveDetail> getFlowDetail(string flowId)
         {
             try
@@ -194,5 +195,36 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFlowDetail >>" + ex.Message);
             }
         }
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetail(string flowId, string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveDetailForActForm"
+                    , new SqlParameter[] { new SqlParameter("@flowId", flowId)
+                                            , new SqlParameter("@actFormId",actId)
+                    });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApproveDetail()
+                             {
+                                 id = dr["id"].ToString(),
+                                 rangNo = (int)dr["rangNo"],
+                                 empId = dr["empId"].ToString(),
+                                 empEmail = dr["empEmail"].ToString(),
+                                 empFNameTH = dr["empFNameTH"].ToString(),
+                                 empLNameTH = dr["empLNameTH"].ToString(),
+                                 empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
+                                 approveGroupName = dr["approveGroupName"].ToString(),
+                                 approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
+                                 isShowInDoc = (bool)dr["showInDoc"],
+                                 description = dr["description"].ToString(),
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFlowDetail >>" + ex.Message);
+            }
+        }
+
     }
 }
