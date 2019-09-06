@@ -12,6 +12,43 @@ namespace eActForm.BusinessLayer
 {
 	public class ImageAppCodeBudget
 	{
+
+		public static List<TB_Bud_Image_Model.BudImageModel> getImageBudgetByApproveId( string budgetApproveId)
+		{
+			try
+			{
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetImageByApproveId"
+					, new SqlParameter("@budgetApproveId", budgetApproveId)
+					//, new SqlParameter("@activityNo", activityNo)
+					//, new SqlParameter("@createdByUserId", createdByUserId)
+					);
+				var lists = (from DataRow d in ds.Tables[0].Rows
+							 select new TB_Bud_Image_Model.BudImageModel()
+							 {
+								 id = d["imageId"].ToString(),
+
+								 invoiceNo = (d["invoiceNo"].ToString() == null || d["invoiceNo"] is DBNull) ? "" : d["invoiceNo"].ToString(),
+								 imageType = d["imageType"].ToString(),
+								 _image = (d["_image"] == null || d["_image"] is DBNull) ? new byte[0] : (byte[])d["_image"],
+								 _fileName = d["_fileName"].ToString(),
+								 extension = d["extension"].ToString(),
+								 remark = d["remark"].ToString(),
+								 delFlag = bool.Parse(d["delFlag"].ToString()),
+								 createdDate = DateTime.Parse(d["createdDate"].ToString()),
+								 createdByUserId = d["createdByUserId"].ToString(),
+								 updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
+								 updatedByUserId = d["updatedByUserId"].ToString(),
+							 });
+				return lists.ToList();
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("getImage getImageBudgetByApproveId => " + ex.Message);
+				return new List<TB_Bud_Image_Model.BudImageModel>();
+			}
+		}
+
+
 		public static List<TB_Bud_Image_Model.BudImageModel> getImageBudget(string imageId , string imageInvoiceNo, string budgetApproveId, String activityNo, String createdByUserId)
 		{
 			try

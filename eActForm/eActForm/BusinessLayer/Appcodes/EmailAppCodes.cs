@@ -686,11 +686,40 @@ namespace eActForm.BusinessLayer
 			{
 				List<Attachment> files = new List<Attachment>();
 				string[] pathFile = new string[10];
-				mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
+				string[] pathFileAtt = new string[10];
 
-				pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId));
+				mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
+				mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailCC;
+			
+				foreach (var item in pathFile)
+				{
+					if (System.IO.File.Exists(item))
+					{
+						pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId)); ;
+					}
+				}
+
+				TB_Bud_Image_Model.BudImageModels getBudgetImageModel = new TB_Bud_Image_Model.BudImageModels();
+				getBudgetImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(actFormId);
+				if (getBudgetImageModel.tbBudImageList.Any())
+				{
+					int i = 1;
+					foreach (var item in getBudgetImageModel.tbBudImageList)
+					{
+						pathFileAtt[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));  
+						i++;
+					}
+				}
 
 				foreach (var item in pathFile)
+				{
+					if (System.IO.File.Exists(item))
+					{
+						files.Add(new Attachment(item, new ContentType("application/pdf")));
+					}
+				}
+
+				foreach (var item in pathFileAtt)
 				{
 					if (System.IO.File.Exists(item))
 					{
