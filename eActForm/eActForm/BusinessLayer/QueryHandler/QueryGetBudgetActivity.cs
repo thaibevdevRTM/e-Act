@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId)
+		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId, string companyTH)
 		{
 			try
 			{
@@ -41,7 +41,8 @@ namespace eActForm.BusinessLayer
 				 , new SqlParameter("@act_approveStatusId", act_approveStatusId)
 				 , new SqlParameter("@act_activityId", act_activityId)
 				 , new SqlParameter("@act_activityNo", act_activityNo)
-				  , new SqlParameter("@budgetApproveId", budgetApproveId)
+				 , new SqlParameter("@budgetApproveId", budgetApproveId)
+				 , new SqlParameter("@companyTH", companyTH)
 				 );
 
 				var result = (from DataRow d in ds.Tables[0].Rows

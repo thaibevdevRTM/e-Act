@@ -33,7 +33,7 @@ namespace eActForm.Controllers
 
 			Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
 			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId,null);
-			Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null).FirstOrDefault();
+			Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null,null).FirstOrDefault();
 			return PartialView(Budget_Model);
 
 			//budgetApproveId
@@ -202,7 +202,7 @@ namespace eActForm.Controllers
 			{
 				try
 				{
-					budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", activityId, null, null).ToList();
+					budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", activityId, null, null,null).ToList();
 				}
 				catch (Exception ex)
 				{
@@ -212,11 +212,11 @@ namespace eActForm.Controllers
 			return View(budget_activity);
 		}
 
-		public ActionResult activityList()
+		public ActionResult activityList(string typeForm)
 		{
 			//Session["activityId"] = Guid.NewGuid().ToString();
 			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
-			budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", null,null,null).ToList();
+			budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", null,null,null, typeForm).ToList();
 			return View(budget_activity);
 		}
 
