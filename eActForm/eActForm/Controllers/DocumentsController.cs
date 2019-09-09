@@ -69,9 +69,6 @@ namespace eActForm.Controllers
 
                     #endregion
                 }
-
-
-
                 TempData["SearchDataRepDetail"] = models.actRepDetailLists;
             }
             catch (Exception ex)
