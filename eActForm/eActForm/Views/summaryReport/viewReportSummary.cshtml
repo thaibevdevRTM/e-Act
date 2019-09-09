@@ -526,7 +526,7 @@
                 </div>
                 <div class="col-md-4 col-xs-12">
                     <div class="pull-left">
-                        @using (Html.BeginForm("repListViewExportExcel", "actFormRepDetail", FormMethod.Post))
+                        @using (Html.BeginForm("summaryListViewExportExcel", "SummaryReport", FormMethod.Post))
                         {
                             <input type="hidden" name="gridHtml" />
                             <button type="submit" class="btn ink-reaction btn-success" id="btnExportExcel" value="ExportExcel">

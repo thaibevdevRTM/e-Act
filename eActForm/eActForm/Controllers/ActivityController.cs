@@ -24,7 +24,16 @@ namespace eActForm.Controllers
 
                 activityModel.activityFormModel = new ActivityForm();
                 activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
-                activityModel.customerslist = QueryGetAllCustomers.getCustomersByEmpId();
+
+                if (typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    activityModel.customerslist = QueryGetAllCustomers.getCustomersOMT();
+                }
+                else
+                {
+                    activityModel.customerslist = QueryGetAllCustomers.getCustomersMT();
+                }
+
                 activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
                 activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
                     .GroupBy(item => item.activitySales)
@@ -41,6 +50,7 @@ namespace eActForm.Controllers
 
                 if (!string.IsNullOrEmpty(activityId))
                 {
+
                     activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
                     activityModel.activityFormModel.mode = mode;
                     activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
@@ -133,11 +143,11 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-
+                string statusId = "";
                 Activity_Model activityModel = TempData["actForm" + activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + activityFormModel.id];
                 activityModel.activityFormModel = activityFormModel;
-                string statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
-                if (statusId == "1" || statusId == "5")
+                 statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
+                if (statusId == "1" || statusId == "5" || statusId == "")
                 {
                     int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, activityFormModel.id);
                 }
@@ -188,7 +198,7 @@ namespace eActForm.Controllers
             {
                 string actId = Guid.NewGuid().ToString();
                 Activity_Model activityModel = new Activity_Model();
-                activityModel = (Activity_Model)TempData["actForm" + actId];
+                activityModel = (Activity_Model)TempData["actForm" + activityFormModel.id];
                 activityModel.activityFormModel = activityFormModel;
                 activityModel.activityFormModel.activityNo = "";
                 activityModel.activityFormModel.dateDoc = DateTime.Now.ToString("dd-MM-yyyy");
