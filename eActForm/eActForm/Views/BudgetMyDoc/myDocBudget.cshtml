@@ -77,20 +77,14 @@
 				{
 					<tr class="gradeX">
 						<td>
-							@*<a href="javascript:" target="_blank" onclick="return checkDelete('@item.budgetApproveId','@item.statusId');">
-								<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-							</a>*@
-							@*@Html.ActionLink(" ", "ActivityForm", "Activity", new { budgetApproveId = item.budgetApproveId, mode = Activity_Model.modeForm.edit }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })*@
+
 							@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = item.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
-
-
 							<a onclick="callApproveList('@item.budgetApproveId');">
 								<i class="btn ink-reaction btn-dark fa fa-eye"></i>
 							</a>
 
 							@if (item.statusId == "2")
 							{
-
 								<a onclick="resendApprove('@item.budgetApproveId');">
 									<i class="btn ink-reaction btn-info fa fa-send-o"></i>
 								</a>

@@ -27,7 +27,7 @@ namespace eActForm.Controllers
 	public class BudgetController : Controller
 	{
 
-		public PartialViewResult previewBudgetInvoice(string activityId)
+		public PartialViewResult previewBudgetInvoice(string activityId )
 		{
 			 Session["activityId"]= activityId;
 
@@ -88,32 +88,7 @@ namespace eActForm.Controllers
 
 
 		//---------------------------------------------------------------------------------------
-
-
-		//public PartialViewResult activityProductInvoiceEdit(string activityId, string activityOfEstimateId, string invoiceId)
-		//{
-		//	if (!string.IsNullOrEmpty(invoiceId))
-		//	{// for edit invoice 
-		//		Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
-		//		Budget_Activity.Budget_Activity_Product = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId).FirstOrDefault(); 
-		//		Budget_Activity.Budget_Activity_Invoice = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, invoiceId).FirstOrDefault(); 
-		//		Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
-
-		//		Budget_Activity.Budget_ImageList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null);
-		//		return PartialView("activityProductInvoiceEdit", Budget_Activity);
-		//	}
-		//	else
-		//	{// for insert invoice
-		//		Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
-		//		Budget_Activity.Budget_Activity_Product = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId).FirstOrDefault();
-		//		Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
-
-		//		Budget_Activity.Budget_ImageList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null);
-		//		return PartialView("activityProductInvoiceEdit", Budget_Activity);
-		//	}
-		//}
-
-		public PartialViewResult activityProductInvoiceEdit(string activityId, string activityOfEstimateId, string invoiceId)
+		public PartialViewResult activityProductInvoiceEdit(string activityId, string activityOfEstimateId, string invoiceId , string company)
 		{
 			if (!string.IsNullOrEmpty(invoiceId))
 			{// for edit invoice 
@@ -124,7 +99,7 @@ namespace eActForm.Controllers
 
 				Budget_Activity.Budget_Count_Wait_Approve = QueryGetBudgetActivity.getBudgetActivityWaitApprove(activityId).FirstOrDefault();
 
-				Budget_Activity.Budget_ImageList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null);
+				Budget_Activity.Budget_ImageList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null, company);
 				return PartialView(Budget_Activity);
 			}
 			else
@@ -135,40 +110,16 @@ namespace eActForm.Controllers
 
 				Budget_Activity.Budget_Count_Wait_Approve = QueryGetBudgetActivity.getBudgetActivityWaitApprove(activityId).FirstOrDefault();
 
-				//Budget_Activity.Budget_Activity_Invoice = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, null, null).FirstOrDefault();
+				Budget_Activity.Budget_ImageList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null, company);
 				return PartialView(Budget_Activity);
 			}
 		}
 
-		//public static void getCountWatingApproveBudgetByActId()
-		//{
-		//	try
-		//	{
-		//		if (UtilsAppCode.Session.User != null)
-		//		{
-		//			DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetCountWatingApproveByEmpId"
-		//				, new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
-
-		//			UtilsAppCode.Session.User.countWatingBudgetForm = "";
-		//			if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-		//			{
-		//				UtilsAppCode.Session.User.countWatingBudgetForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
-		//			}
-		//		}
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		throw new Exception("setCountWatingApproveBudget >>" + ex.Message);
-		//	}
-		//}
-
-		public PartialViewResult activityProductInvoiceList(string activityId , string activityOfEstimateId)
+		public PartialViewResult activityProductInvoiceList(string activityId , string activityOfEstimateId )
 		{
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-			budget_activity_model.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId,  activityOfEstimateId);
+			budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, null).FirstOrDefault();
 			budget_activity_model.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, null);
-			budget_activity_model.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
-
 			budget_activity_model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault(); ;
 
 			return PartialView(budget_activity_model);
@@ -226,7 +177,8 @@ namespace eActForm.Controllers
 			List<TB_Bud_Image_Model.BudImageModel> imgInvoiceList = new List<TB_Bud_Image_Model.BudImageModel>();
 			try
 			{
-				imgInvoiceList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null).Where(x => x.invoiceNo.Contains(imgInvoiceNo)).ToList();
+				var Key_company = Session["budget_Key_company"].ToString();
+				imgInvoiceList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null, Key_company).Where(x => x.invoiceNo.Contains(imgInvoiceNo) ).ToList();
 			}
 			catch (Exception ex)
 			{
@@ -237,17 +189,17 @@ namespace eActForm.Controllers
 		}
 
 
-		public ActionResult manageInvoiceIndex(String budgetApproveId)
+		public ActionResult manageInvoiceIndex(String companyTH)
 		{
 			return View();
 		}
 
-		public ActionResult manageInvoiceList(String imageId , String imageInvoiceNo, String budgetApproveId, String activityNo, String createdByUserId)
+		public ActionResult manageInvoiceList(String imageId , String imageInvoiceNo, String budgetApproveId, String activityNo, String createdByUserId, String companyTH)
 		{
 			try
 			{
 				TB_Bud_Image_Model.BudImageModels getBudImageModel = new TB_Bud_Image_Model.BudImageModels();
-				getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(imageId, imageInvoiceNo, budgetApproveId, activityNo, createdByUserId);
+				getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(imageId, imageInvoiceNo, budgetApproveId, activityNo, createdByUserId, companyTH);
 				return PartialView(getBudImageModel);
 			}
 			catch (Exception ex)
@@ -261,14 +213,14 @@ namespace eActForm.Controllers
 		public PartialViewResult manageInvoiceView(string imageId)
 		{
 			TB_Bud_Image_Model.BudImageModel getBudImageModel = new TB_Bud_Image_Model.BudImageModel();
-			getBudImageModel = ImageAppCodeBudget.getImageBudget(imageId,null,null,null,null).FirstOrDefault();
+			getBudImageModel = ImageAppCodeBudget.getImageBudget(imageId,null,null,null,null,null).FirstOrDefault();
 
 			return PartialView(getBudImageModel);
 		}
 
 
 		[HttpPost]
-		public ActionResult manageInvoiceUpload()
+		public ActionResult manageInvoiceUpload(String company)
 		{
 			var result = new AjaxResult();
 			try
@@ -294,6 +246,11 @@ namespace eActForm.Controllers
 					imageFormModel._fileName = _fileName.ToLower();
 					imageFormModel.extension = extension.ToLower();
 					imageFormModel.remark = "";
+
+					imageFormModel.company = "";
+					if (company == "MT") { imageFormModel.company = "5600"; };
+					if (company == "OMT") { imageFormModel.company = "5601"; };
+					
 					imageFormModel.delFlag = false;
 					imageFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
 					imageFormModel.createdDate = DateTime.Now;
@@ -332,7 +289,7 @@ namespace eActForm.Controllers
 		public PartialViewResult manageInvoiceEdit(string imageId)
 		{
 			TB_Bud_Image_Model.BudImageModel getBudImageModel = new TB_Bud_Image_Model.BudImageModel();
-			getBudImageModel = ImageAppCodeBudget.getImageBudget(imageId,null, null, null, null).FirstOrDefault();
+			getBudImageModel = ImageAppCodeBudget.getImageBudget(imageId,null, null, null, null,null).FirstOrDefault();
 
 			return PartialView(getBudImageModel);
 		}

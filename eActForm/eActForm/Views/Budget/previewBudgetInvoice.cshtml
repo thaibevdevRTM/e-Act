@@ -40,26 +40,13 @@
             url: '@Url.Action("submitPreviewBudget", "BudgetApproveList")',
             data: {
 				GridHtml: $("#GridPDF").html(),
-				budgetActivityId: $("#HbudgetId").val()
+				budgetActivityId: $("#HbudgetId").val(),
+				companyEN: $("#HcompanyEN").val()
             },
             dataType: "json",
             type: 'POST',
 			});
 	}
-
-	@*function refreshApproveBudget() {
-            $.ajax({
-            url: '@Url.Action("previewApproveBudget", "BudgetApprove")',
-            data: {
-				budgetActivityId: $("#HbudgetId").val()
-            },
-            dataType: "json",
-            type: 'POST',
-            }).done(function (response) {
-                $("#WaitDialog").hide();
-                console.log('success');
-                 });
-	}*@
 </script>
 
 <style type="text/css">
@@ -71,8 +58,7 @@
 </style>
 
 @Html.HiddenFor(m => m.Budget_Activity.budget_id, new { id = "HbudgetId" })
-@*@Html.HiddenFor(m => m.Budget_Activity_list.ElementAt(0).budget_id, new { id = "HbudgetId" })*@
-@*@Html.HiddenFor(m => m.Budget_Approve_detail_list.ElementAt(0).budgetApproveId, new { id = "HbudgetApproveId" })*@
+@Html.HiddenFor(m => m.Budget_Activity.act_companyEN, new { id = "HcompanyEN" })
 
 @if (1 == 1)
 {
@@ -84,7 +70,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<div style=""></div>
-				<button type="button" class="close" data-dismiss="modal" >&times;</button>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
 			<div class="modal-body">
@@ -122,8 +108,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityNo)
 									}
-
-									@*@Model.Budget_Activity_list.ElementAt(0).act_activityNo*@
 								</td>
 							</tr>
 
@@ -135,7 +119,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityName)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).act_activityName*@
 								</td>
 								<td style="text-align:right;">
 									<label> Document Date : </label> <span id="docDate"></span>
@@ -149,7 +132,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_theme)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).act_theme*@
 								</td>
 								<td style="text-align:right;">
 									<label> ลูกค้า (Customer Name) : </label>
@@ -157,7 +139,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.cus_cusShortName)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).cus_cusShortName*@
 								</td>
 							</tr>
 
@@ -168,14 +149,11 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodSt)
 									}
-									 ถึง 
+									ถึง
 									@if (Model.Budget_Activity.act_activityPeriodEnd.ToString() != "")
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodEnd)
 									}
-
-									@*@Model.Budget_Activity_list.ElementAt(0).act_activityPeriodSt.Value.ToString("dd/MM/yyyy")  to  @Model.Budget_Activity_list.ElementAt(0).act_activityPeriodEnd.Value.ToString("dd/MM/yyyy")*@
-									@*@Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodSt to @Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodEnd*@
 								</td>
 								<td style="text-align:right;">
 									<label> ช่องทาง (Channel) : </label>
@@ -183,7 +161,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.ch_chanelGroup)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).ch_chanelGroup*@
 								</td>
 							</tr>
 
@@ -199,7 +176,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_costPeriodEnd)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).act_costPeriodSt.Value.ToString("dd/MM/yyyy")  to  @Model.Budget_Activity_list.ElementAt(0).act_costPeriodEnd .Value.ToString("dd/MM/yyyy")*@
 								</td>
 								<td style="text-align:right;">
 									<label> กลุ่มสินค้า (Product Group) : </label>
@@ -207,7 +183,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_brandName)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).prd_groupShort*@
 								</td>
 							</tr>
 
@@ -218,7 +193,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_objective)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).act_objective*@
 								</td>
 								<td style="text-align:right;"></td>
 							</tr>
@@ -309,7 +283,7 @@
 												<td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
 											}
 
-											@if ( item.invoiceApproveStatusId == 1 )
+											@if (item.invoiceApproveStatusId == 1)
 											{
 												count_wait_approve++;
 											}
@@ -343,14 +317,9 @@
 
 						@if (Model.Budget_Activity.budget_id != null)
 						{
-							@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id })
-							@*@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity_list.ElementAt(0).budget_id })*@
+							@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
 						}
-
-
 					</div>
-
-
 				</div>
 			</div>
 
@@ -365,11 +334,7 @@
 						}
 					</p>
 				</div>
-
 			</div>
-
-
-
 		</div>
 	</div>
 }

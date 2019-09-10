@@ -49,7 +49,7 @@ namespace eActForm.BusinessLayer
 		}
 
 
-		public static List<TB_Bud_Image_Model.BudImageModel> getImageBudget(string imageId , string imageInvoiceNo, string budgetApproveId, String activityNo, String createdByUserId)
+		public static List<TB_Bud_Image_Model.BudImageModel> getImageBudget(string imageId , string imageInvoiceNo, string budgetApproveId, string activityNo, string createdByUserId , string company)
 		{
 			try
 			{
@@ -59,6 +59,7 @@ namespace eActForm.BusinessLayer
 					, new SqlParameter("@budgetApproveId", budgetApproveId)
 					, new SqlParameter("@activityNo", activityNo)
 					, new SqlParameter("@createdByUserId", createdByUserId)
+					, new SqlParameter("@company", company)
 					);
 				var lists = (from DataRow d in ds.Tables[0].Rows
 							 select new TB_Bud_Image_Model.BudImageModel()
@@ -75,15 +76,12 @@ namespace eActForm.BusinessLayer
 								 _fileName = d["_fileName"].ToString(),
 								 extension = d["extension"].ToString(),
 								 remark = d["remark"].ToString(),
+								 company = d["company"].ToString(),
 								 delFlag = bool.Parse(d["delFlag"].ToString()),
 								 createdDate = DateTime.Parse(d["createdDate"].ToString()),
 								 createdByUserId = d["createdByUserId"].ToString(),
 								 updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
 								 updatedByUserId = d["updatedByUserId"].ToString(),
-
-								 //budgetActivityId = d["budgetActivityId"].ToString(),
-								 //budgetApproveId = d["budgetApproveId"].ToString(),
-								 //activityNo = (d["activityNo"].ToString() == null || d["activityNo"] is DBNull) ? "" : d["activityNo"].ToString(),
 
 							 });
 				return lists.ToList();
@@ -106,6 +104,7 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@fileName",model._fileName)
 					,new SqlParameter("@extension",model.extension)
 					,new SqlParameter("@remark",model.remark)
+					,new SqlParameter("@company",model.company)
 					,new SqlParameter("@delFlag",model.delFlag)
 					,new SqlParameter("@createdDate",model.createdDate)
 					,new SqlParameter("@createdByUserId",model.createdByUserId)

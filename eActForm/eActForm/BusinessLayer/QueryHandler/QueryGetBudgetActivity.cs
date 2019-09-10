@@ -55,6 +55,8 @@ namespace eActForm.BusinessLayer
 								  act_reference = d["act_reference"].ToString(),
 								  act_customerId = d["act_customerId"].ToString(),
 
+								  act_companyEN = d["act_companyEN"].ToString(),
+
 								  cus_cusShortName = d["cus_cusShortName"].ToString(),
 								  cus_cusNameEN = d["cus_cusNameEN"].ToString(),
 								  cus_cusNameTH = d["cus_cusNameTH"].ToString(),

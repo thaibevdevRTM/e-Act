@@ -587,7 +587,7 @@ namespace eActForm.BusinessLayer
 				List<ApproveModel.approveEmailDetailModel> lists = getEmailApproveNextLevelBudget(actFormId);
 				if (lists.Count > 0)
 				{
-					slog = "process 1";
+					slog = "process 1 actFormId => " + actFormId;
 					foreach (ApproveModel.approveEmailDetailModel item in lists)
 					{
 						strBody = getEmailBodyBudget(item, emailType, actFormId);
@@ -600,24 +600,25 @@ namespace eActForm.BusinessLayer
 							, strBody
 							, emailType);
 					}
-					slog = "process 2";
+					slog = "process 2 lists =>" + lists.Count.ToString();
 				}
 				else
 				{
-					slog = "process 3";
+					slog = "process 3 lists.Count == 0 ";
 					// case all updated
 					DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountStatusApproveDetail"
 						, new SqlParameter[] {new SqlParameter("@actFormId",actFormId)
 						,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.อนุมัติ)});
 
-					slog = "process 4";
+					slog = "process 4 =>" + ds.Tables[0].Rows.Count.ToString();
+
 					if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
 					{
-						slog = "process 5";
 						DataRow dr = ds.Tables[0].Rows[0];
 						if (dr["countAll"].ToString() == dr["countStatusApproved"].ToString())
 						{
-							slog = "process 6";
+							slog = "process 6 =>" + dr["countAll"].ToString();
+
 							//all approved then send the email notification to user create
 							List<ApproveModel.approveDetailModel> createUsers = BudgetApproveController.getUserCreateBudgetForm(actFormId);
 							strBody = string.Format(ConfigurationManager.AppSettings["emailAllApproveBodyBudget"]
@@ -626,7 +627,13 @@ namespace eActForm.BusinessLayer
 									, string.Format(ConfigurationManager.AppSettings["urlDocument_Budget_Form"], actFormId))
 									;
 
-							slog = "process 7";
+							slog = "process 7 =>" + ConfigurationManager.AppSettings["emailAllApproveBodyBudget"];
+							slog = "process 8" + createUsers.FirstOrDefault().empName;
+							slog = "process 9" + createUsers.FirstOrDefault().activityNo;
+							slog = "process 10" + ConfigurationManager.AppSettings["urlDocument_Budget_Form"];
+							slog = "process 11" + actFormId;
+							slog = "process 12" + ConfigurationManager.AppSettings["emailApprovedSubjectBudget"];
+							slog = "process 13" + emailType;
 
 							sendEmailBudgetForm(actFormId
 							, createUsers.FirstOrDefault().empEmail
@@ -635,7 +642,7 @@ namespace eActForm.BusinessLayer
 							, strBody
 							, emailType);
 
-							slog = "process 8";
+							slog = "process 14";
 
 						}
 					}

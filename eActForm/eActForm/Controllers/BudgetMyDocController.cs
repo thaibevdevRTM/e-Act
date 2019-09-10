@@ -6,9 +6,6 @@ using System.Data.SqlClient;
 using Microsoft.ApplicationBlocks.Data;
 using eActForm.BusinessLayer;
 using eActForm.Models;
-using iTextSharp.text;
-using System.IO;
-using System.Configuration;
 using System.Web.Mvc;
 using WebLibrary;
 namespace eActForm.Controllers
@@ -28,7 +25,6 @@ namespace eActForm.Controllers
 		{
 			var result = new AjaxResult();
 			ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
-			//models.approveStatusLists = ApproveAppCode.getApproveStatus();
 			return PartialView(models);
 		}
 
@@ -37,7 +33,18 @@ namespace eActForm.Controllers
 			string count = Request.Form.AllKeys.Count().ToString();
 			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
 			model = new Budget_Approve_Detail_Model.budgetForms();
-			model.budgetFormLists = getBudgetListsByEmpId(null);
+
+			if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+			{
+				model.budgetFormLists = getBudgetListsByEmpId(null, null);
+			}
+			else
+			{
+				string companyEN = "MT";
+				if (UtilsAppCode.Session.User.empCompanyId == "5601") { companyEN = "OMT"; } ;
+
+				model.budgetFormLists = getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN);
+			}
 
 			if (Request.Form["txtActivityNo"] != "")
 			{
@@ -65,7 +72,7 @@ namespace eActForm.Controllers
 		}
 
 		
-		public ActionResult myDocBudget() 
+		public ActionResult myDocBudget(string companyEN) 
 		{
 			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
 			model = new Budget_Approve_Detail_Model.budgetForms();
@@ -76,30 +83,34 @@ namespace eActForm.Controllers
 			}
 			else
 			{
-				model.budgetFormLists = getBudgetListsByEmpId(null);
+				if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+				{
+					model.budgetFormLists = getBudgetListsByEmpId(null, companyEN);
+				} else {
+					model.budgetFormLists = getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN);
+				}
 			}
 			return PartialView(model);
 		}
 
-		public static List<Budget_Approve_Detail_Model.budgetForm> getBudgetListsByEmpId(string empId)
+		public static List<Budget_Approve_Detail_Model.budgetForm> getBudgetListsByEmpId(string empId , string companyEN)
 		{
 			try
 			{
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFormByEmpId"
-					, new SqlParameter[] { new SqlParameter("@empId", empId) });
+					, new SqlParameter[] {
+					new SqlParameter("@empId", empId),
+					new SqlParameter("@companyEN", companyEN)
+					});
 				var lists = (from DataRow dr in ds.Tables[0].Rows
 							 select new Budget_Approve_Detail_Model.budgetForm()
 							 {
-								 activityId = dr["ActivityFormId"].ToString(),
 								 statusId = dr["statusId"].ToString(),
 								 statusName = dr["statusName"].ToString(),
 								 activityNo = dr["activityNo"].ToString(),
 
-								 regApproveId = dr["regApproveId"].ToString(),
-								 regApproveFlowId = dr["regApproveFlowId"].ToString(),
 								 budgetApproveId = dr["budgetApproveId"].ToString(),
 								 documentDate = dr["documentDate"] is DBNull ? null : (DateTime?)dr["documentDate"],
-
 
 								 reference = dr["reference"].ToString(),
 								 customerId = dr["customerId"].ToString(),
@@ -126,11 +137,8 @@ namespace eActForm.Controllers
 								 activityDetail = dr["activityDetail"].ToString(),
 
 								 budgetActivityId = dr["budgetActivityId"].ToString(),
-								 //budgetApproveId = dr["budgetApproveId"].ToString(),
 								 approveId = dr["approveId"].ToString(),
-								 //approveDetailId = dr["approveDetailId"].ToString(),
 
-								 //delFlag = (bool)dr["delFlag"],
 								 createdDate = (DateTime?)dr["createdDate"],
 								 createdByUserId = dr["createdByUserId"].ToString(),
 								 updatedDate = (DateTime?)dr["updatedDate"],
