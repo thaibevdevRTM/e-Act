@@ -27,10 +27,10 @@
                             {
                                 if (Model.productImageList.Where(x => x.extension.ToLower() == ".jpg" || x.extension.ToLower() == ".png").AsEnumerable().Count() == 1)
                                 {
-                                    <tr style="max-height:700px">
+                                    <tr style="max-height:600px">
 
                                         <td style="text-align:center;">
-                                            <img width="650" src="@string.Format(url, Model.productImageList[index]._fileName)" />
+                                            <img width="650" height="800" src="@string.Format(url, Model.productImageList[index]._fileName)" />
                                         </td>
                                         <td></td>
                                         <td></td>

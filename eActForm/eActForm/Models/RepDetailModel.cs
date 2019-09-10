@@ -13,6 +13,8 @@ namespace eActForm.Models
             public ApproveFlowModel.approveFlowModel flowList { get; set; }
             public List<actFormRepDetailModel> actFormRepDetailGroupLists { get; set; }
 
+            public string setShowPDF { get; set; }
+
         }
         public class actFormRepDetailModel : Activity_Model.actForm
         {

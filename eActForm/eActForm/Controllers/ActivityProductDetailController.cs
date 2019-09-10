@@ -119,6 +119,7 @@ namespace eActForm.Controllers
                 //calculate Cost GP
                 foreach (var item in productlist.productcostdetaillist1)
                 {
+                    item.activityId = actId;
                     bool calSuccess = calProductDetail(item);
                 }
                 TempData["actForm"+ actId] = activityModel;
@@ -182,7 +183,7 @@ namespace eActForm.Controllers
                         r.promotionCost = Math.Round(p_PromotionCost, 3);
                         return r;
                     }).ToList();
-                TempData["actForm"+ model.activityId] = activityModel;
+                TempData["actForm" + model.activityId] = activityModel;
                 TempData.Keep();
             }
             catch (Exception ex)
