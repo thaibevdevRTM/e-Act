@@ -87,13 +87,39 @@ namespace eActForm.BusinessLayer
                 if (lists.Count > 0)
                 {
                     model.flowMain = lists[0];
-                    model.flowDetail = getFlowDetail(model.flowMain.id, actFormId);
+                    string checkFlowApprove = checkFlowBeforeByActId(actFormId);
+                    if (!string.IsNullOrEmpty(checkFlowApprove))
+                    {
+                        model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
+                    }
+                    else
+                    {
+                        model.flowDetail = getFlowDetail(model.flowMain.id, actFormId);
+                    }
+
                 }
                 return model;
             }
             catch (Exception ex)
             {
                 throw new Exception("getFlow by actFormId >>" + ex.Message);
+            }
+        }
+
+        public static string checkFlowBeforeByActId(string actFormId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_CheckFlowHistoryByActFormId"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
+
+                return ds.Tables[0].Rows[0]["flowId"].ToString();
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw new Exception("checkFlowBeforeByActId >>" + ex.Message);
             }
         }
 

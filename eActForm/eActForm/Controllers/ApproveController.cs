@@ -42,7 +42,10 @@ namespace eActForm.Controllers
                     }
 
                 }
-
+                else
+                {
+                    models.typeForm = "";
+                }
 
 
                 return View(models);

@@ -151,6 +151,23 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
+
+        public ActionResult repPreviewForApprove(string startDate)
+        {
+            RepDetailModel.actFormRepDetails model = null;
+            try
+            {
+                model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
+
         public ActionResult repListViewGroupBrand(RepDetailModel.actFormRepDetails model, string[] brandId)
         {
             RepDetailModel.actFormRepDetails rep = new RepDetailModel.actFormRepDetails();
@@ -258,7 +275,7 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return RedirectToAction("repListView", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
+            return RedirectToAction("repPreviewForApprove", new {startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
         }
 
         /// <summary>
