@@ -153,7 +153,7 @@
 
 	@if (Model.Budget_Activity_Invoice_list.Count != 0)
 	{
-		<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="javascript:onInvoicePrintPreview('@Model.Budget_Activity_Invoice_list.ElementAt(0).activityId');"><i class="fa fa-file-o fa-fw"></i>&nbsp;Preview</button>
+		<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="javascript:onInvoicePrintPreview('@Model.Budget_Activity.act_form_id','@Model.Budget_Activity.act_companyEN');"><i class="fa fa-file-o fa-fw"></i>&nbsp;Preview</button>
 	}
 
 
