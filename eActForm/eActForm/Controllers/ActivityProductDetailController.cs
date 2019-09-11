@@ -11,15 +11,13 @@ namespace eActForm.Controllers
 {
     public class ActivityProductDetailController : Controller
     {
-        public ActionResult productCostDetail(string typeForm)
+        public ActionResult productCostDetail(string typeForm,string actId)
         {
-            Activity_Model activityModel = new Activity_Model();
-            activityModel.activityFormModel.typeForm = typeForm;
-            if (Session["productcostdetaillist1"] != null)
-            {
-                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-            }
 
+            Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ actId];
+            activityModel.activityFormModel.typeForm = typeForm;
+            activityModel.activityFormModel.id = actId;
+            TempData.Keep();
             return PartialView(activityModel);
         }
 
@@ -39,21 +37,20 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult showDetailGroup(string rowId)
+        public ActionResult showDetailGroup(string rowId , string actId)
         {
-            Activity_Model activityModel = new Activity_Model();
-            activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-            activityModel.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).OrderBy(x => x.productName).ToList();
+            Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+actId];
+            activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).OrderBy(x => x.productName).ToList();
 
             return PartialView(activityModel);
         }
 
-        public JsonResult delCostDetail(string rowid, Activity_Model activityModel)
+        public JsonResult delCostDetail(string rowid, string id)
         {
             var result = new AjaxResult();
             try
             {
-                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                Activity_Model activityModel = TempData["actForm" + id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ id];
                 if (rowid != null)
                 {
                     var list = activityModel.productcostdetaillist1.Single(r => r.productGroupId == rowid);
@@ -64,7 +61,8 @@ namespace eActForm.Controllers
                     activityModel.productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
                 }
 
-                Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
+                TempData["actForm"+ activityModel.activityFormModel.id] = activityModel;
+                TempData.Keep();
                 result.Data = activityModel.productcostdetaillist1.Count;
                 result.Success = true;
             }
@@ -83,19 +81,13 @@ namespace eActForm.Controllers
             , string smellId
             , string size
             , string cusid
-            , string theme)
+            , string theme
+            ,string actId)
         {
             var result = new AjaxResult();
             try
             {
-                Activity_Model activityModel = new Activity_Model();
-                activityModel.productcostdetaillist1 = Session["productcostdetaillist1"] == null ? new List<ProductCostOfGroupByPrice>()
-                    : ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]); ;
-
-                activityModel.activitydetaillist = Session["activitydetaillist"] == null ? new List<CostThemeDetailOfGroupByPrice>()
-                    : (List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]; ;
-
-
+                Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ actId];
                 var productlist = new Activity_Model();
                 productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme);
                 activityModel.productcostdetaillist1.AddRange(productlist.productcostdetaillist1);
@@ -106,6 +98,7 @@ namespace eActForm.Controllers
                 foreach (var item in productlist.productcostdetaillist1)
                 {
                     costthememodel = new CostThemeDetailOfGroupByPrice();
+                    costthememodel.activityId = actId;
                     costthememodel.productGroupId = item.productGroupId;
                     costthememodel.typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == theme).FirstOrDefault().activitySales;
                     costthememodel.productId = item.productId;
@@ -123,16 +116,16 @@ namespace eActForm.Controllers
                     i++;
                 }
 
-                Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
                 //calculate Cost GP
                 foreach (var item in productlist.productcostdetaillist1)
                 {
+                    item.activityId = actId;
                     bool calSuccess = calProductDetail(item);
                 }
-                Session["activitydetaillist"] = activityModel.activitydetaillist;
-
+                TempData["actForm"+ actId] = activityModel;
                 result.Data = productlist.productcostdetaillist1.Count;
-
+                result.ActivityId = actId;
+                TempData.Keep();
             }
             catch (Exception ex)
             {
@@ -171,7 +164,7 @@ namespace eActForm.Controllers
                 p_PromotionGp = p_PromotionGp > 0 ? p_PromotionGp : p_PromotionGp * -1;
 
                 Activity_Model activityModel = new Activity_Model();
-                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
+                activityModel = (Activity_Model)TempData["actForm"+ model.activityId];
                 activityModel.productcostdetaillist1
                     .Where(r => r.productGroupId != null && r.productGroupId.Equals(model.productGroupId))
                     .Select(r =>
@@ -190,7 +183,8 @@ namespace eActForm.Controllers
                         r.promotionCost = Math.Round(p_PromotionCost, 3);
                         return r;
                     }).ToList();
-                //Session["productcostdetaillist1"] = activityModel.productcostdetaillist1;
+                TempData["actForm" + model.activityId] = activityModel;
+                TempData.Keep();
             }
             catch (Exception ex)
             {
