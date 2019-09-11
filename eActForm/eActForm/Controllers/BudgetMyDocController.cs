@@ -8,6 +8,20 @@ using eActForm.BusinessLayer;
 using eActForm.Models;
 using System.Web.Mvc;
 using WebLibrary;
+using System.Configuration;
+using iTextSharp.text;
+
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Web;
+//using System.Web.Mvc;
+//using WebLibrary;
+//using eActForm.BusinessLayer;
+//using eActForm.Models;
+//using System.Configuration;
+
+
 namespace eActForm.Controllers
 {
 	[LoginExpire]
@@ -159,7 +173,46 @@ namespace eActForm.Controllers
 			}
 		}
 
+		[HttpPost]
+		[ValidateInput(false)]
+		public JsonResult genPdfApprove(string GridHtml, string statusId, string budgetApproveId)
+		{
+			var resultAjax = new AjaxResult();
+			try
+			{
 
+				var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId);
+				GridHtml = GridHtml.Replace("<br>", "<br/>");
+				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
+
+				//TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
+				//getImageModel.tbActImageList = ImageAppCode.GetImage(budgetApproveId).Where(x => x.extension == ".pdf").ToList();
+				//string[] pathFile = new string[getImageModel.tbActImageList.Count + 1];
+				//pathFile[0] = Server.MapPath(rootPathInsert);
+
+
+				//if (getImageModel.tbActImageList.Any())
+				//{
+				//	int i = 1;
+				//	foreach (var item in getImageModel.tbActImageList)
+				//	{
+				//		pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
+				//		i++;
+				//	}
+				//}
+
+				//var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
+				//var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+				resultAjax.Success = true;
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("genPdfApprove >> " + ex.Message);
+				resultAjax.Success = false;
+				resultAjax.Message = ex.Message;
+			}
+			return Json(resultAjax, "text/plain");
+		}
 
 	}
 }
