@@ -557,13 +557,13 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static int insertApproveForReportSummaryDetail(string customerId, string productTypeId, string summaryId)
+        public static int insertApproveForReportSummaryDetail(string subId, string customerId, string productTypeId, string summaryId)
         {
             try
             {
                 int rtn = 0;
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowForReportDetail(
-                    "639C73A8-328E-433E-8B12-19B04AC8D61A"
+                    subId
                     , customerId
                     , productTypeId);
                 if (ApproveAppCode.insertApproveByFlow(flowModel, summaryId) > 0)
@@ -653,6 +653,7 @@ namespace eActForm.BusinessLayer
                                      statusName = dr["txtstatus"].ToString(),
                                      statusId = dr["statusid"].ToString(),
                                      productTypeName = dr["txtproductType"].ToString(),
+                                     productTypeId = dr["productTypeId"].ToString(),
                                      activityNo = dr["activityNo"].ToString(),
                                      createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
                                      createdByUserId = dr["createdByUserId"].ToString(),
