@@ -274,6 +274,8 @@
 											<td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
 											<td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
 
+											@*status == 1 Draft
+											status == 2 รออนุมัติ*@
 											@if (item.invoiceApproveStatusId == 1)
 											{
 												<td style="text-align:center;font-size:12px;"></td>
@@ -283,7 +285,7 @@
 												<td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
 											}
 
-											@if (item.invoiceApproveStatusId == 1)
+											@if (item.invoiceApproveStatusId == 2)
 											{
 												count_wait_approve++;
 											}
@@ -328,7 +330,7 @@
 					<p class="d-flex justify-content-center">
 
 						<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-						@if (count_wait_approve > 0)
+						@if (count_wait_approve == 0)
 						{
 							<button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
 						}
