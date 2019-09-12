@@ -52,7 +52,7 @@
 		}
 	</style>
 
-	@if (Model.Budget_Count_Wait_Approve.count_wait_approve > 0)
+	@if (Model.Budget_Count_Wait_Approve.count_wait_approve > 9999)
 	{
 
 	}
@@ -177,7 +177,7 @@
 
 				<p></p>
 				<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
-
+				<button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
 				<div>
 					<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color:white; width:100%;"><tr><td>&nbsp;</td></tr></table>
 				</div>
@@ -253,5 +253,15 @@
 			document.getElementById("txt_invoice_baht").value = "";
 		}
 	}
+
+	function refreshInvoice() {
+
+		//alert(date);
+		document.getElementById("txt_invoice_no").value = "";
+		document.getElementById("txt_invoice_baht").value = "";
+		$('#txt_date_action').datepicker().datepicker('setDate', 'today');
+
+	}
+
 
 	</script>
