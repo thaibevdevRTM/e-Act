@@ -591,7 +591,6 @@ namespace eActForm.BusinessLayer
 
 		public static void sendApproveBudget(string actFormId, AppCode.ApproveType emailType, bool isResend)
 		{
-			string slog = "begin";
 			try
 			{
 				string strBody = "", strSubject = ""  ;
@@ -599,7 +598,6 @@ namespace eActForm.BusinessLayer
 				List<ApproveModel.approveEmailDetailModel> lists = getEmailApproveNextLevelBudget(actFormId);
 				if (lists.Count > 0)
 				{
-					slog = "process 1 actFormId => " + actFormId;
 					foreach (ApproveModel.approveEmailDetailModel item in lists)
 					{
 						strBody = getEmailBodyBudget(item, emailType, actFormId);
@@ -612,37 +610,22 @@ namespace eActForm.BusinessLayer
 							, strBody
 							, emailType);
 					}
-					slog = "process 2 lists =>" + lists.Count.ToString();
 				}
 				else
 				{
-					slog = "process 3 lists.Count == 0 ";
 					// case all updated
 					DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountStatusApproveDetail"
 						, new SqlParameter[] {new SqlParameter("@actFormId",actFormId)
 						,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.อนุมัติ)});
-
-					slog = "process 4 =>" + ds.Tables[0].Rows.Count.ToString();
 
 					if (ds.Tables != null && ds.Tables[0].Rows.Count > 0)
 					{
 						DataRow dr = ds.Tables[0].Rows[0];
 						if (dr["countAll"].ToString() == dr["countStatusApproved"].ToString())
 						{
-							slog = "process 6 =>" + dr["countAll"].ToString();
-
 
 							//all approved then send the email notification to user create
 							List<ApproveModel.approveDetailModel> createUsers = BudgetApproveController.getUserCreateBudgetForm(actFormId);
-
-							slog = slog + " process 7 =>" + ConfigurationManager.AppSettings["emailAllApproveBodyBudget"];
-							slog = slog + " process 8 =>" + createUsers.FirstOrDefault().empName;
-							slog = slog + " process 9 =>" + createUsers.FirstOrDefault().activityNo;
-							slog = slog + " process 10 =>" + ConfigurationManager.AppSettings["urlDocument_Budget_Form"];
-							slog = slog + " process 11 =>" + actFormId;
-							slog = slog + " process 12 =>" + ConfigurationManager.AppSettings["emailApprovedSubjectBudget"];
-							slog = slog + " process 13 =>" + emailType;
-							ExceptionManager.WriteError("Email sendApproveBudgetForm >> " + slog);
 
 							strBody = string.Format(ConfigurationManager.AppSettings["emailAllApproveBodyBudget"]
 									, createUsers.FirstOrDefault().empName
@@ -656,17 +639,13 @@ namespace eActForm.BusinessLayer
 							, ConfigurationManager.AppSettings["emailApprovedSubjectBudget"]
 							, strBody
 							, emailType);
-
-							slog = "process 14";
-
 						}
 					}
 				}
-				slog = "process 15 end";
 			}
 			catch (Exception ex)
 			{
-				ExceptionManager.WriteError("Email sendApproveBudgetForm >> " + ex.Message + actFormId + slog);
+				ExceptionManager.WriteError("Email sendApproveBudgetForm >> " + ex.Message + actFormId );
 				throw new Exception("Email sendApproveBudgetForm" + ex.Message);
 			}
 		}
@@ -706,26 +685,15 @@ namespace eActForm.BusinessLayer
 			
 			try
 			{
-				string logs = "";
-				
+							
 				List<Attachment> files = new List<Attachment>();
 				string[] pathFile = new string[10];
 				string[] pathFileAtt = new string[10];
 
-				logs = "Begin sendEmailBudgetForm";
-				ExceptionManager.WriteError("Email sendApproveBudgetForm >> " + logs);
-
 				mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
 				mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailCC;
 
-				logs = "mailTo =>" + mailTo;
-				logs = logs + "mailCc =>" + mailCC;
-				ExceptionManager.WriteError("Email sendApproveBudgetForm >> " + logs);
-
 				pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId)); ;
-
-				logs = "pathFile[0] =>" + pathFile[0];
-				ExceptionManager.WriteError("Email sendApproveBudgetForm >> " + logs);
 
 				foreach (var item in pathFile)
 				{
@@ -735,25 +703,25 @@ namespace eActForm.BusinessLayer
 					}
 				}
 
-				//TB_Bud_Image_Model.BudImageModels getBudgetImageModel = new TB_Bud_Image_Model.BudImageModels();
-				//getBudgetImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(actFormId);
-				//if (getBudgetImageModel.tbBudImageList.Any())
-				//{
-				//	int i = 1;
-				//	foreach (var item in getBudgetImageModel.tbBudImageList)
-				//	{
-				//		pathFileAtt[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));  
-				//		i++;
-				//	}
-				//}
+				TB_Bud_Image_Model.BudImageModels getBudgetImageModel = new TB_Bud_Image_Model.BudImageModels();
+				getBudgetImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(actFormId);
+				if (getBudgetImageModel.tbBudImageList.Any())
+				{
+					int i = 1;
+					foreach (var item in getBudgetImageModel.tbBudImageList)
+					{
+						pathFileAtt[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));
+						i++;
+					}
+				}
 
-				//foreach (var item in pathFileAtt)
-				//{
-				//	if (System.IO.File.Exists(item))
-				//	{
-				//		files.Add(new Attachment(item, new ContentType("application/pdf")));
-				//	}
-				//}
+				foreach (var item in pathFileAtt)
+				{
+					if (System.IO.File.Exists(item))
+					{
+						files.Add(new Attachment(item, new ContentType("application/pdf")));
+					}
+				}
 
 				sendEmail(mailTo
 						, mailCC == "" ? ConfigurationManager.AppSettings["emailBudgetApproveCC"] : mailCC
