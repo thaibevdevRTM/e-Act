@@ -254,13 +254,8 @@
 		}
 	}
 
-	function refreshInvoice() {
-
-		//alert(date);
-		document.getElementById("txt_invoice_no").value = "";
-		document.getElementById("txt_invoice_baht").value = "";
-		$('#txt_date_action').datepicker().datepicker('setDate', 'today');
-
+	function refreshInvoice() {	
+		callInvoiceList($('#hd_activityId').val(), $("#hd_activityOfEstimateId").val());
 	}
 
 
