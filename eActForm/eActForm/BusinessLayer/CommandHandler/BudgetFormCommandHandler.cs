@@ -29,10 +29,10 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@productId",model.productId)
 					,new SqlParameter("@activityOfEstimateId",model.activityOfEstimateId)
 					,new SqlParameter("@paymentNo",model.paymentNo)
-					
-					//รอเพิ่ม invoiceProductStatusId จาก ddlStatus ใน store procedure
-					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
 
+					,new SqlParameter("@budgetImageId",model.budgetImageId)
+
+					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
 					,new SqlParameter("@invoiceTotalBath",model.invoiceTotalBath)
 					,new SqlParameter("@actionDate",model.dateInvoiceAction) //invoiceActionDate
@@ -64,10 +64,9 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@productId",model.productId)
 					,new SqlParameter("@activityOfEstimateId",model.activityOfEstimateId)
 					,new SqlParameter("@paymentNo",model.paymentNo)
-					
-					//รอเพิ่ม invoiceProductStatusId จาก ddlStatus ใน store procedure
-					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
+					,new SqlParameter("@budgetImageId",model.budgetImageId)
 
+					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
 					,new SqlParameter("@invoiceTotalBath",model.invoiceTotalBath)
 					//,new SqlParameter("@actionDate",model.invoiceActionDate)

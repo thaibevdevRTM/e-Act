@@ -10,7 +10,6 @@ eActForm/eActConsoleService/obj/*
 eActForm/Properties/PublishProfiles/*
 eActForm/eActForm/Properties/PublishProfiles/*
 eActForm/eActConsoleService/obj
-eActForm/web.config*
 eActForm/eActConsoleService/*.config
 eActForm/eActConsoleService/bin
 *.pdf

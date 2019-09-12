@@ -2,6 +2,8 @@
 @{
 	ViewBag.Title = "Home Page Activity Budget";
 	Layout = "~/Views/Shared/_Layout.cshtml";
+	var var_companyEN = Request.QueryString["typeForm"];
+	Session["budget_Key_company"] = var_companyEN;
 }
 
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
@@ -61,9 +63,7 @@
 					<td>
 						@using (Html.BeginForm("Index", "Home"))
 						{
-							@*@Html.ActionLink(" ", "EditForm", "Budget", new { activityId = item.act_form_id, activityNo = item.act_activityNo }, new { @class = "btn ink-reaction btn-default fa fa-search" });*@
-							@Html.ActionLink(" ", "activityProduct", "Budget", new { activityId = item.act_form_id, activityNo = item.act_activityNo }, new { @class = "btn ink-reaction btn-default fa fa-search" });
-							@*@Html.ActionLink(" ", "budgetApprove", "BudgetApprove", new { activityId = item.act_form_id, activityNo = item.act_activityNo }, new { @class = "btn ink-reaction btn-default fa fa-print" });*@
+							@Html.ActionLink(" ", "activityProduct", "Budget", new { activityId = item.act_form_id, activityNo = item.act_activityNo, companyEN = var_companyEN }, new { @class = "btn ink-reaction btn-default fa fa-search" });
 						}
 					</td>
 
