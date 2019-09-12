@@ -720,7 +720,7 @@ namespace eActForm.BusinessLayer
 				mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailCC;
 
 				logs = "mailTo =>" + mailTo;
-				logs = "mailCc =>" + mailCC;
+				logs = logs + "mailCc =>" + mailCC;
 				ExceptionManager.WriteError("Email sendApproveBudgetForm >> " + logs);
 
 				pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId)); ;
