@@ -698,13 +698,9 @@ namespace eActForm.BusinessLayer
 				mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
 				mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailCC;
 			
-				foreach (var item in pathFile)
-				{
-					if (System.IO.File.Exists(item))
-					{
-						pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId)); ;
-					}
-				}
+
+				pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId)); ;
+
 
 				TB_Bud_Image_Model.BudImageModels getBudgetImageModel = new TB_Bud_Image_Model.BudImageModels();
 				getBudgetImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(actFormId);
