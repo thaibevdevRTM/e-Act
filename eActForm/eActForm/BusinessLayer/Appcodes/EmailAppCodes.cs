@@ -644,7 +644,6 @@ namespace eActForm.BusinessLayer
 							slog = slog + " process 13 =>" + emailType;
 							ExceptionManager.WriteError("Email sendApproveBudgetForm >> " + slog);
 
-
 							strBody = string.Format(ConfigurationManager.AppSettings["emailAllApproveBodyBudget"]
 									, createUsers.FirstOrDefault().empName
 									, createUsers.FirstOrDefault().activityNo
