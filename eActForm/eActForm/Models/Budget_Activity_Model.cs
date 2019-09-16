@@ -9,6 +9,9 @@ namespace eActForm.Models
 	public class Budget_Activity_Model
 	{
 
+
+		
+
 		public List<TB_Bud_Image_Model.BudImageModel> Budget_ImageList { get; set; }
 
 		public List<Budget_Activity_Att> Budget_Activity_list { get; set; }
@@ -18,8 +21,12 @@ namespace eActForm.Models
 		public List<Budget_Invoice_history_Att> Budget_Invoce_History_list { get; set; }
 		public List<Budget_Approve_Detail_Model> Budget_Approve_Detail_list { get; set; }
 
+		public Budget_Activity_Att Budget_Activity { get; set; }
 		public Budget_Activity_Product_Att Budget_Activity_Product { get; set; }
 		public Budget_Activity_Invoice_Att Budget_Activity_Invoice { get; set; }
+
+		public Budget_Count_Wait_Approve_Att Budget_Count_Wait_Approve { get; set; }
+		public Budget_Activity_Last_Approve_Att Budget_Activity_Last_Approve { get; set; }
 
 		public class Budget_Invoice_history_Att
 		{
@@ -82,8 +89,15 @@ namespace eActForm.Models
 
 		}
 
+		public enum budgetType
+		{
+			OMT,
+			MT
+		}
+
 		public class Budget_Activity_Invoice_Att
 		{
+			public string typeForm { get; set; }
 
 			public string invoiceId { get; set; }
 			public string activityId { get; set; }
@@ -99,6 +113,8 @@ namespace eActForm.Models
 			public decimal productStandBath { get; set; }
 
 			public string paymentNo { get; set; }
+						
+			public string budgetImageId { get; set; }
 			public string invoiceNo { get; set; }
 			public decimal saleActCase { get; set; }
 			public decimal saleActBath { get; set; }
@@ -123,7 +139,7 @@ namespace eActForm.Models
 			public string invoiceApproveStatusName { get; set; }
 			public string approveInvoiceId { get; set; }
 			public string budgetApproveId { get; set; }
-
+			
 			public Boolean delFlag { get; set; }
 			public DateTime createdDate { get; set; }
 			public string createdByUserId { get; set; }
@@ -143,31 +159,14 @@ namespace eActForm.Models
 			public decimal normalCost { get; set; }
 			public decimal themeCost { get; set; }
 			public decimal totalCost { get; set; }
-			//public string invoiceId { get; set; }
-			//public string invoiceNo { get; set; }
 			public decimal invoiceTotalBath { get; set; }       /*จำนวนเงินจ่าย*/
-			//public decimal productStandBath { get; set; } /*ยอดยกมา มันก็เท่ากับผลต่างไง*/
 			public decimal productBalanceBath { get; set; } /*ผลต่าง*/
 			public string budgetStatusId { get; set; }
 			public string budgetStatusNameTH { get; set; }
 			
-			//public Int32 invoiceSeq { get; set; }
-
-			//public string invoiceNo { get; set; }
-			//public Int32 invoiceSeq { get; set; }
-			//public string paymentNo { get; set; }		/*ใบสำคัญจ่าย*/
-			//public decimal saleActCase { get; set; }	/*ยอดขายช่วงทำกิจกรรม case*/
-			//public decimal saleActBath { get; set; }	/*ยอดขายช่วงทำกิจกรรม bath*/
-			//public decimal invTotalBath { get; set; }	/*จำนวนเงินจ่าย*/
-			//public decimal balanceBath { get; set; }	/*ผลต่าง*/
-
 			[DataType(DataType.Date)]
 			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
 			public DateTime? invActionDate { get; set; } /*วันที่ทำรายการ*/
-
-			//public string invoiceBudgetStatusId { get; set; }
-			//public string invoiceBudgetStatusNameTH { get; set; }
-
 		}
 
 		public class Budget_Activity_Status_Att
@@ -196,6 +195,18 @@ namespace eActForm.Models
 			public string nameEN { get; set; }
 			public string nameTH { get; set; }
 			public string description { get; set; }
+		}
+
+		public class Budget_Count_Wait_Approve_Att
+		{
+			public string activityId { get; set; }
+			public Int32 count_wait_approve { get; set; }
+		}
+
+		public class Budget_Activity_Last_Approve_Att
+		{
+			public string budgetActivityId { get; set; }
+			public string budgetApproveId { get; set; }
 		}
 
 	}

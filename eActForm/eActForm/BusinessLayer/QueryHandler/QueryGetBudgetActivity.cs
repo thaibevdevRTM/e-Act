@@ -11,7 +11,6 @@ namespace eActForm.BusinessLayer
 {
 	public class QueryGetBudgetActivity
 	{
-
 		public static List<Budget_Activity_Model.Budget_Activity_Status_Att> getBudgetActivityStatus()
 		{
 			try
@@ -34,7 +33,7 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId)
+		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId, string companyTH)
 		{
 			try
 			{
@@ -42,7 +41,8 @@ namespace eActForm.BusinessLayer
 				 , new SqlParameter("@act_approveStatusId", act_approveStatusId)
 				 , new SqlParameter("@act_activityId", act_activityId)
 				 , new SqlParameter("@act_activityNo", act_activityNo)
-				  , new SqlParameter("@budgetApproveId", budgetApproveId)
+				 , new SqlParameter("@budgetApproveId", budgetApproveId)
+				 , new SqlParameter("@companyTH", companyTH)
 				 );
 
 				var result = (from DataRow d in ds.Tables[0].Rows
@@ -54,6 +54,8 @@ namespace eActForm.BusinessLayer
 								  act_activityNo = d["act_activityNo"].ToString(),
 								  act_reference = d["act_reference"].ToString(),
 								  act_customerId = d["act_customerId"].ToString(),
+
+								  act_companyEN = d["act_companyEN"].ToString(),
 
 								  cus_cusShortName = d["cus_cusShortName"].ToString(),
 								  cus_cusNameEN = d["cus_cusNameEN"].ToString(),
@@ -149,9 +151,6 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-
-
-
 		public static List<Budget_Activity_Model.Budget_Activity_Invoice_Att> getBudgetActivityInvoice(string activityId, string activityOfEstimateId, string invoiceId)
 		{
 			try
@@ -212,5 +211,60 @@ namespace eActForm.BusinessLayer
 				return new List<Budget_Activity_Model.Budget_Activity_Invoice_Att>();
 			}
 		}
+
+		public static List<Budget_Activity_Model.Budget_Count_Wait_Approve_Att> getBudgetActivityWaitApprove(string act_activityId)
+		{
+			try
+			{
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetCountWatingApproveByActivityId"
+				 , new SqlParameter("@activityId", act_activityId)
+				 //, new SqlParameter("@productID", prd_productID)
+				 //, new SqlParameter("@activityOfEstimateID", act_activityOfEstimateId)
+				 );
+
+				var result = (from DataRow d in ds.Tables[0].Rows
+							  select new Budget_Activity_Model.Budget_Count_Wait_Approve_Att()
+							  {
+								  activityId = d["activityId"].ToString(),
+								  count_wait_approve = d["count_wait_approve"].ToString() == "" ? 0 : int.Parse(d["count_wait_approve"].ToString()),
+							  });
+
+				return result.ToList();
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("getBudgetActivityWaitApprove => " + ex.Message);
+				return new List<Budget_Activity_Model.Budget_Count_Wait_Approve_Att>();
+			}
+		}
+
+
+		public static List<Budget_Activity_Model.Budget_Activity_Last_Approve_Att> getBudgetActivityLastApprove(string act_activityId)
+		{
+			try
+			{
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetApproveLastId"
+				 , new SqlParameter("@activityId", act_activityId)
+				 //, new SqlParameter("@productID", prd_productID)
+				 //, new SqlParameter("@activityOfEstimateID", act_activityOfEstimateId)
+				 );
+
+				var result = (from DataRow d in ds.Tables[0].Rows
+							  select new Budget_Activity_Model.Budget_Activity_Last_Approve_Att()
+							  {
+								  budgetActivityId = d["budgetActivityId"].ToString(),
+								  budgetApproveId = d["budgetApproveId"].ToString(),
+							  });
+
+				return result.ToList();
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("getBudgetActivityLastApprove => " + ex.Message);
+				return new List<Budget_Activity_Model.Budget_Activity_Last_Approve_Att>();
+			}
+		}
+
+
 	}
 }

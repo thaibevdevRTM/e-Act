@@ -44,9 +44,6 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-
-       
-
         public JsonResult onchangePrice(TB_Act_ProductPrice_Model.ProductPrice model)
         {
             var result = new AjaxResult();

@@ -19,48 +19,48 @@
                 <thead>
                     <tr class="headings" style="text-align:center;">
                         <th width="70px">#</th>
-                        <th width="80px" style="text-align:center;">เลขที่ RepDetail</th>
+                        <th width="80px" style="text-align:center;">เลขที่ Summary</th>
                         <th width="80px" style="text-align:center;">Status</th>
                         <th width="80px" style="text-align:center;">ProductType</th>
-                        <th style="text-align:center;">Create Date</th>
+                        <th width="80px" style="text-align:center;">Create Date</th>
+                        <th width="80px" style="text-align:center;">Create By</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    @{ var index = 1;
-                    }
+
                     @foreach (var item in Model.summaryDetailLists)
                     {
-                        <tr class="even pointer">
-                            <td class="a-center ">
-                                @if (item.statusId == "1" || item.statusId == "3" || item.statusId == "5" ||
-                                (item.statusId == "6" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)))
-                                {
-                                    <a href="javascript:" target="_blank" onclick="return checkDelete('@item.id','@item.statusId');">
-                                        <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-                                    </a>
-                                }
-                                @if (item.statusId == "2" || item.statusId == "3")
-                                {
-                                    @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
-                                }
-                                <a onclick="callApproveList('@item.id');">
-                                    <i class="btn ink-reaction btn-dark fa fa-eye"></i>
+                    <tr class="even pointer">
+                        <td class="a-center ">
+                            @if (item.statusId == "1" || item.statusId == "3" || item.statusId == "5" ||
+                            (item.statusId == "6" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)))
+                            {
+                                <a href="javascript:" target="_blank" onclick="return checkDelete('@item.id','@item.statusId');">
+                                    <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
                                 </a>
-                            </td>
-                            <td class=" ">@item.activityNo</td>
-                            <td class=" ">@item.statusName</td>
-                            <td class=" ">@item.productTypeName</td>
-                            @if (item.createdDate != null)
-                            {
-                                <td width="100px">@item.createdDate.Value.ToString("dd/MM/yyyy")</td>
                             }
-                            else
+                            @if (item.statusId == "2" || item.statusId == "3")
                             {
-                                <td></td>
+                                @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
                             }
-
-                        </tr>
+                            <a onclick="callApproveList('@item.id');">
+                                <i class="btn ink-reaction btn-dark fa fa-eye"></i>
+                            </a>
+                        </td>
+                        <td style="text-align:center">@item.activityNo</td>
+                        <td style="text-align:center">@item.statusName</td>
+                        <td style="text-align:center">@item.productTypeName</td>
+                        @if (item.createdDate != null)
+                        {
+                            <td class=" " style="text-align:center">@item.createdDate.Value.ToString("dd/MM/yyyy")</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td class=" " style="text-align:center">@item.createName</td>
+                    </tr>
 
                     }
 

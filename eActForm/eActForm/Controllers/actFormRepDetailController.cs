@@ -19,9 +19,21 @@ namespace eActForm.Controllers
     public class actFormRepDetailController : Controller
     {
         // GET: actFormRepDetail
-        public ActionResult Index()
+        public ActionResult Index(string typeForm)
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            {
+                if (typeForm == Activity_Model.activityType.MT.ToString())
+                {
+                    models.customerslist = QueryGetAllCustomers.getCustomersMT();
+                }
+                else
+                {
+                    models.customerslist = QueryGetAllCustomers.getCustomersOMT();
+                }
+            }
+
             models.approveStatusList.Add(new ApproveModel.approveStatus()
             {
                 id = "7",
@@ -38,10 +50,10 @@ namespace eActForm.Controllers
 
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
                 model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"]);
-                
+
                 if (Request.Form["txtActivityNo"] != "")
                 {
-                    model = RepDetailAppCode.getFilterRepDetailByActNo(model, Request.Form["txtActivityNo"]);    
+                    model = RepDetailAppCode.getFilterRepDetailByActNo(model, Request.Form["txtActivityNo"]);
                 }
                 else
                 {
@@ -136,6 +148,23 @@ namespace eActForm.Controllers
         }
 
         public ActionResult repListView(string startDate)
+        {
+            RepDetailModel.actFormRepDetails model = null;
+            try
+            {
+                model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
+
+
+        public ActionResult repPreviewForApprove(string startDate)
         {
             RepDetailModel.actFormRepDetails model = null;
             try
@@ -258,7 +287,7 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return RedirectToAction("repListView", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
+            return RedirectToAction("repPreviewForApprove", new {startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
         }
 
         /// <summary>

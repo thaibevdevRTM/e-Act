@@ -2,12 +2,20 @@
 @model eActForm.Models.Budget_Activity_Model
 @{
 	ViewBag.Title = "Edit Page";
+	var var_companyEN = Request.QueryString["companyEN"];
 }
+
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="~/Scripts/dropzone/dropzone.min.js"></script>
-<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
 
 <style type="text/css">
 
@@ -27,26 +35,26 @@
 
 <hr />
 
+<div id='myModalInvoiceContent'></div>
+
+
 <div class="row">
 	<div id="divPreviewInvoiceList">
 
 	</div>
 
-	<div class="btn btn-sm ink-reaction pull-left btn-dark"> <i class="fa fa-arrow-left fa-fw"></i> @Html.ActionLink("ย้อนกลับ", "activityList", "Budget", new { style = "color:white" })</div>
+	<div class="btn btn-sm ink-reaction pull-left btn-dark"> <i class="fa fa-arrow-left fa-fw"></i> @Html.ActionLink("ย้อนกลับ", "activityList", "Budget", new { @typeForm = var_companyEN },new { style = "color:white" })</div>
 </div>
 
-	<div id='myModalInvoice' class="modal fade" role="dialog">
-		<div id='myModalInvoiceContent'></div>
-	</div>
-
-	<div id='myModalInvoicePreview' class="modal fade" role="dialog">
-		<div id='myModalInvoicePreviewContent'></div>
-	</div>
+<div id='myModalInvoicePreview' class="modal fade" role="dialog">
+	<div id='myModalInvoicePreviewContent'></div>
+</div>
 
 
-	<script>
+<script>
 
 	$('document').ready(function () {
+		//alert('test ==>' +  '@var_companyEN');
 		callProductList($("#hd_activityId").val());
 	});
 
@@ -74,10 +82,33 @@
         }).done(function (htmlResponse) {
 			$("#divPreviewInvoiceList").html(htmlResponse);
 
-			var elmnt = document.getElementById("divPreviewInvoiceList");
-			elmnt.scrollIntoView();
+			//var elmnt = document.getElementById("divPreviewInvoiceList");
+			//elmnt.scrollIntoView();
+
+			onSelectInvoice(activityId, activityOfEstimateId);
         });
 		}
+
+	function onSelectInvoice(actId, estId, invId) {
+
+		var var_activityId = actId;
+		var var_estId = estId;
+		var var_invoiceId = invId;
+
+		$.ajax({
+			type: "GET",
+			url:  '@Url.Action("activityProductInvoiceEdit", "Budget")',
+			contentType: "application/json; charset=utf-8",
+			data: {
+				"activityId": var_activityId,
+				"activityOfEstimateId": var_estId,
+				"invoiceId": var_invoiceId,
+				"company": '@var_companyEN'
+			}
+		}).done(function (htmlResponse) {
+			$("#myModalInvoiceContent").html(htmlResponse);
+		});;
+	}
 
 	function submitInvoice() {
 
@@ -101,6 +132,7 @@
 					budgetInvoiceModel: ObjModel,
 					Id: $("#hd_invoiceId").val(),
 					activityId: $("#hd_activityId").val(),
+					budgetImageId: $("#imgInvoiceId").val(),
 					activityNo: $("#hd_activityNo").val(),
 					productId: $("#hd_productId").val(),
 					activityOfEstimateId: $("#hd_activityOfEstimateId").val(),
@@ -163,43 +195,13 @@
         });
     }
 
-	function onSelectInvoice(actId, estId, invId) {
-		//var TeamDetailPostBackURL = '/Budget/activityProductInvoiceEdit';
-		debugger;
+	function onInvoicePrintPreview(actId,companyEN) {
 		//var $buttonClicked = $(this);
 		var var_activityId = actId;
-		var var_estId = estId;
-		var var_invoiceId = invId;
+		var var_company = companyEN;
 		var options = { "backdrop": "static", keyboard: true };
 
-		$.ajax({
-			type: "GET",
-			url:  '@Url.Action("activityProductInvoiceEdit", "Budget")',
-			contentType: "application/json; charset=utf-8",
-			data: {
-				"activityId": var_activityId,
-				"activityOfEstimateId": var_estId,
-				"invoiceId": var_invoiceId
-			},
-			datatype: "json",
-			success: function (data) {
-
-				$('#myModalInvoiceContent').html(data);
-				$('#myModalInvoice').modal(options);
-				$('#myModalInvoice').modal('show');
-
-			},
-			error: function () {
-				alert("Dynamic content load failed.");
-			}
-		});
-		//callInvoiceList(var_activityId, var_estId);
-	}
-
-	function onInvoicePrintPreview(actId) {
-		//var $buttonClicked = $(this);
-		var var_activityId = actId;
-		var options = { "backdrop": "static", keyboard: true };
+		
 
 		$.ajax({
 			type: "GET",
@@ -217,10 +219,9 @@
 
 			},
 			error: function () {
-				alert("Dynamic content load failed.");
+				alert("ไม่พบสายการอนุมัติ กรุณาตรวจสอบ");
 			}
 		});
-		//callInvoiceList(var_activityId, var_estId);
 	}
 
-	</script>
+</script>

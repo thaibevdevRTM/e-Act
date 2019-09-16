@@ -26,7 +26,7 @@ namespace eActForm.Controllers
 
         public ActionResult getPreviewSummary(string startDate)
         {
-
+            string redirect = "";
             try
             {
                 string repDetail = "";
@@ -37,12 +37,26 @@ namespace eActForm.Controllers
 
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
+                repDetail = string.Join(",", model.activitySummaryList.Select(x => x.repDetailId));
+                
                 if (model.activitySummaryList.Any())
                 {
-                    repDetail = string.Join(",", model.activitySummaryList.Select(x => x.repDetailId));
-                    modelResult = ReportSummaryAppCode.getReportSummary(repDetail, startDate);
-                    modelResult.flowList = model.flowList;
+                    if (model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.nonAL)
+                    {
+                        modelResult = ReportSummaryAppCode.getReportSummary(repDetail, startDate);
+                        modelResult.producttype_id = AppCode.nonAL;
+                        redirect = "viewReportSummary";
+                    }
+                    else
+                    {
+                        modelResult = ReportSummaryAppCode.getReportSummaryAlcohol(repDetail, startDate);
+                        modelResult.producttype_id = AppCode.AL;
+                        redirect = "viewReportSummaryAlcohol";
+                    }
                 }
+                modelResult.subId = model.subId;
+                modelResult.cusId = model.cusId;
+                modelResult.flowList = model.flowList;
 
                 Session["SummaryDetailModel"] = modelResult;
 
@@ -52,7 +66,9 @@ namespace eActForm.Controllers
             {
                 ExceptionManager.WriteError(ex.Message);
             }
-            return RedirectToAction("viewReportSummary", new { startDate = Request.Form["startDate"] });
+
+
+            return RedirectToAction(redirect, new { startDate = Request.Form["startDate"] });
         }
 
 
@@ -72,6 +88,25 @@ namespace eActForm.Controllers
 
             return PartialView(model);
         }
+
+
+        public ActionResult viewReportSummaryAlcohol(string startDate)
+        {
+            ReportSummaryModels model = null;
+            try
+            {
+
+                ViewBag.startDate = startDate;
+                model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
+
 
         [HttpPost]
         [ValidateInput(false)]
@@ -113,15 +148,19 @@ namespace eActForm.Controllers
                 {
                     if (Request.Form["ddlProductType"] == AppCode.nonAL)
                     {
+                        model.subId = "8D527314-6D2D-45AF-995F-54144A705BBD";
+                        model.producttype_id = AppCode.nonAL;
                         model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
-                                    "8D527314-6D2D-45AF-995F-54144A705BBD"
+                                      model.subId
                                     , ""
                                     , AppCode.nonAL);
                     }
                     else
                     {
+                        model.subId = "8D527314-6D2D-45AF-995F-54144A705BBD";
+                        model.producttype_id = AppCode.AL;
                         model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
-                                    "8D527314-6D2D-45AF-995F-54144A705BBD"
+                                    model.subId
                                     , ""
                                     , AppCode.AL);
                     }
@@ -130,19 +169,24 @@ namespace eActForm.Controllers
                 {
                     if (Request.Form["ddlProductType"] == AppCode.nonAL)
                     {
+                        model.subId = "8D527314-6D2D-45AF-995F-54B44A705BBD";
+                        model.producttype_id = AppCode.nonAL;
                         model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
-                                    "8D527314-6D2D-45AF-995F-54B44A705BBD"
+                                    model.subId
                                     , ""
                                     , AppCode.nonAL);
                     }
                     else
                     {
+                        model.subId = "8D527314-6D2D-45AF-995F-54B44A705BBD";
+                        model.producttype_id = AppCode.AL;
                         model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
-                                    "8D527314-6D2D-45AF-995F-54B44A705BBD"
+                                    model.subId
                                     , ""
                                     , AppCode.AL);
                     }
                 }
+                model.cusId = "";
                 #endregion
 
                 Session["SummaryDetailModel"] = model;
@@ -207,8 +251,8 @@ namespace eActForm.Controllers
             {
                 ReportSummaryModels model = (ReportSummaryModels)Session["SummaryDetailModel"];
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
-                string summaryId = ReportSummaryAppCode.insertActivitySummaryDetail(customerId, productTypeId, startDate, endDate, model);
-                if (ReportSummaryAppCode.insertApproveForReportSummaryDetail("B18BB124-0EFC-4D90-BFFD-D333A1F79E32", productTypeId, summaryId) > 0)
+                string summaryId = ReportSummaryAppCode.insertActivitySummaryDetail(model.cusId, model.producttype_id, startDate, endDate, model);
+                if (ReportSummaryAppCode.insertApproveForReportSummaryDetail(model.subId , model.cusId, model.producttype_id, summaryId) > 0)
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
@@ -307,19 +351,16 @@ namespace eActForm.Controllers
 
             if (Request.Form["txtRepDetailNo"] != "")
             {
-                modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
+                modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.summaryId == ReportSummaryAppCode.getSummaryIdByRepdetail(Request.Form["txtRepDetailNo"].ToString())).ToList();
             }
-
-            if (Request.Form["ddlStatus"] != "")
+            else
             {
-                modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
+               
+                if (Request.Form["ddlProductType"] != "")
+                {
+                    modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
+                }
             }
-
-            if (Request.Form["ddlProductType"] != "")
-            {
-                modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
-            }
-
             TempData["SearchDataModelSummary"] = modelResult;
             return RedirectToAction("ListDoc");
         }
@@ -337,7 +378,7 @@ namespace eActForm.Controllers
               
             }
 
-            TempData["SearchDataModelSummary"] = null;
+            TempData.Clear();
             return PartialView(modelResult);
         }
     }

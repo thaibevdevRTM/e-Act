@@ -39,20 +39,34 @@
             {
                 <li>
                     <a><i class="fa fa-bar-chart-o"></i> Budget Forms <span class="fa fa-chevron-down"></span></a>
-					<ul class="nav child_menu">
-						<li>
-							<a href="@Url.Action("activityList", "Budget")">
-								Budget Form
-							</a>
-						</li>
+                    <ul class="nav child_menu">
 
-						@*<li>
-							<a href="@Url.Action("manageInvoiceIndex", "Budget")">
-								Manage Invoice
-							</a>
-						</li>*@
 
-					</ul>
+                        <li>
+                            <a href="@Url.Action("activityList", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
+                                Budget Form
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
+                                Manage Invoice
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("activityList", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
+                                Budget Form OMT
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
+                                Manage Invoice OMT
+                            </a>
+                        </li>
+
+                    </ul>
                 </li>
             }
             @if (UtilsAppCode.Session.User.isCreator || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
@@ -70,14 +84,22 @@
                             <li>@Html.ActionLink(" Documents OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                         }
 
-                        <li>@Html.ActionLink(" Budget", "Index", "BudgetMyDoc")</li>
+                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            <li>@Html.ActionLink(" Budget", "Index", "BudgetMyDoc", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() }, null)</li>
+                        }
+                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            <li>@Html.ActionLink(" Budget OMT", "Index", "BudgetMyDoc", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() }, null)</li>
+                        }
+
                         @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                         {
-                            <li>@Html.ActionLink(" Report Detail", "reportDetail", "Documents")</li>
+                            <li>@Html.ActionLink(" Report Detail", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                         }
                         @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                         {
-                            <li>@Html.ActionLink(" Report Summary", "IndexDoc", "SummaryReport")</li>
+                            <li>@Html.ActionLink(" Report Summary", "IndexDoc", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                         }
                         <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
                     </ul>
@@ -131,10 +153,10 @@
             <li>
                 <a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                    <li>@Html.ActionLink(" Report Detail", "index", "actFormRepDetail")</li>
+                    <li>@Html.ActionLink(" Report Detail", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                     @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                     {
-                        <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport")</li>  
+                        <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                     }
                 </ul>
             </li>

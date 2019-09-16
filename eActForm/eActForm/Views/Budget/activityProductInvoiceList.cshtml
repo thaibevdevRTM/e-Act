@@ -1,13 +1,14 @@
 ﻿@model eActForm.Models.Budget_Activity_Model
 @{
 	ViewBag.Title = "";
+
+	var last = Model.Budget_Activity_Last_Approve;
 }
 
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="~/Scripts/dropzone/dropzone.min.js"></script>
-<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+
 
 <style type="text/css">
 
@@ -37,65 +38,12 @@
 </div>
 
 
-	<div class="row">
-
-
-		<div class="col-md-12 col-xs-12">
-			<div class="row">
-				<div class="col-md-10 col-sm-10 col-xs-12">
-					<h5><strong>ประเภทกิจกรรม : </strong>@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_typeTheme)</h5>
-				</div>
-				<div class="col-md-2 col-sm-2 col-xs-12 text-right">
-
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-12 col-xs-12">
-			<div class="row">
-				<div class="col-md-10 col-sm-10 col-xs-12">
-					<h5><strong>กลุ่มสินค้า/ชื่อสินค้า : </strong>@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).prd_productDetail)</h5>
-				</div>
-				<div class="col-md-2 col-sm-2 col-xs-12 text-right">
-					@if (Model.Budget_Activity_Product_list.Count > 0)
-					{
-						var count_wait_approve = 0;
-
-						if (Model.Budget_Activity_Invoice_list.Count > 0)
-						{
-
-							foreach (var item in Model.Budget_Activity_Invoice_list)
-							{
-								if (item.invoiceApproveStatusId == 2)
-								{
-									count_wait_approve++;
-								}
-							}
-						}
-
-						if (Model.Budget_Activity_Invoice_list.Count <= 0 || count_wait_approve == 0)
-						{
-							<a href="javascript:" class="anchorDetail btn ink-reaction btn-group-lg btn-warning fa fa-plus"
-							   onclick="javascript:onSelectInvoice('@Model.Budget_Activity_Product_list.ElementAt(0).act_activityId','@Model.Budget_Activity_Product_list.ElementAt(0).activityOfEstimateId','');">เพิ่มรายการตัดจ่าย</a>
-						}
-					}
-
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<table class="table table-bordered" id="content">
 		<thead class="thead-dark">
 			<tr>
-				<th class="align-content-center font12B" style="width:10%;"></th>
-				@*<th class="align-content-center font12B" style="width:10%;">ประเภทกิจกรรม</th>*@
-				@*<th class="align-content-center font12B" style="width:30%;">กลุ่มสินค้า/ชื่อสินค้า</th>*@
+				<th class="align-content-center font12B" style="width:15%;"></th>
 				<th class="align-content-center font12B" style="text-align:right;">จำนวนเงินที่ตั้ง</th>
 				<th class="align-content-center font12B" style="text-align:center;">เลขที่ใบแจ้งหนี้</th>
-				@*<th class="align-content-center font12B">เลขที่ใบสำคัญจ่าย</th>
-					<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
-					<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>*@
 				<th class="align-content-center font12B" style="text-align:right;">จำนวนเงินจ่าย</th>
 				<th class="align-content-center font12B" style="text-align:right;">คงเหลือ</th>
 				<th class="align-content-center font12B" style="text-align:center;">วันที่ทำรายการ</th>
@@ -112,24 +60,22 @@
 				foreach (var item in Model.Budget_Activity_Invoice_list)
 				{
 					<tr class="gradeX">
-						<td style="text-align:center;">
+						<td style="text-align:left;">
 
+							<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+							<a onclick="callApproveList('@item.budgetApproveId');"> <i class="btn ink-reaction btn-dark fa fa-eye"></i> </a>
 
 							@if (item.invoiceApproveStatusId == 1) // draff
 							{
-
-								<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
 								<a href="javascript:" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
 									<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
 								</a>
 							}
 							else
 							{
-								@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = item.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
-								<a onclick="callApproveList('@item.budgetApproveId');">
-									<i class="btn ink-reaction btn-dark fa fa-eye"></i>
-								</a>
+								@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = last.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
 							}
+
 						</td>
 						<td style="font-size:12.5px;text-align:right;">
 							@if (item.productStandBath != null)
@@ -204,7 +150,7 @@
 
 	@if (Model.Budget_Activity_Invoice_list.Count != 0)
 	{
-		<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="javascript:onInvoicePrintPreview('@Model.Budget_Activity_Invoice_list.ElementAt(0).activityId');"><i class="fa fa-file-o fa-fw"></i>&nbsp;Preview</button>
+		<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="javascript:onInvoicePrintPreview('@Model.Budget_Activity.act_form_id','@Model.Budget_Activity.act_companyEN');"><i class="fa fa-file-o fa-fw"></i>&nbsp;Preview</button>
 	}
 
 

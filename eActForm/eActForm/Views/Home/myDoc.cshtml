@@ -86,7 +86,7 @@
 
     </div>
     <div class="col-md-12 col-xs-12">
-
+        <a class="btn ink-reaction glyphicon glyphicon-retweet" href="#"></a>คือ Regen PDF
         <a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>คือ Delete
         <a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit
         <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
@@ -115,7 +115,7 @@
                         <td width="200">
                             @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                             {
-                                <a href="javascript:" target="_blank" onclick="return callPreviewApprove('@item.id','@item.statusId');">
+                                <a href="javascript:" onclick="return callPreviewApprove('@item.id','@item.statusId','@Model.typeForm');">
                                     <i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
                                 </a>
                             }
@@ -205,12 +205,13 @@
         $("#WaitDialog").show();
     }
 
-    function callPreviewApprove(actId, statusId) {
+    function callPreviewApprove(actId, statusId,typeForm) {
         $.ajax({
             type: 'POST',
             url: '@Url.Action("previewApprove", "Approve")',
             data: {
-                actId: actId
+                actId: actId,
+                typeForm: typeForm
             }
         }).done(function (htmlResponse) {
             genPdf(actId, statusId, htmlResponse);

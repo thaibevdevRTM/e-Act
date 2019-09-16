@@ -10,7 +10,7 @@ namespace eActForm.BusinessLayer
 {
     public class DocumentsAppCode
     {
-        public static List<DocumentsModel.actRepDetailModel> getActRepDetailLists()
+        public static List<DocumentsModel.actRepDetailModel> getActRepDetailLists(DateTime startDate, DateTime endDate)
         {
             try
             {
@@ -41,5 +41,9 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
+
+
+
+
     }
 }

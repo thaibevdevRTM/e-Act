@@ -230,6 +230,7 @@ namespace eActForm.BusinessLayer
                             select new ReportSummaryModel()
                             {
                                 id = Guid.NewGuid().ToString(),
+                                productTypeId = AppCode.nonAL,
                                 customerName = d["customerName"].ToString(),
                                 activitySales = d["activitySales"].ToString(),
                                 activityId = d["actid"].ToString(),
@@ -300,7 +301,8 @@ namespace eActForm.BusinessLayer
 
 
                 //add Sales Forecast
-                groupActivityList.Add(new ReportSummaryModel
+             
+                var forecastlist = (new ReportSummaryModel
                 {
                     id = Guid.NewGuid().ToString(),
                     activitySales = "Sales Forecast",
@@ -315,11 +317,12 @@ namespace eActForm.BusinessLayer
                     water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
                 });
 
-
                 ReportSummaryModels resultModel = new ReportSummaryModels();
                 resultModel.activitySummaryGroupList = groupList;
                 resultModel.activitySummaryList = list.ToList();
                 resultModel.activitySummaryGroupActivityList = groupActivityList;
+                resultModel.activitySummaryForecastList.Add(forecastlist);
+
                 return resultModel;
             }
             catch (Exception ex)
@@ -329,6 +332,126 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static ReportSummaryModels getReportSummaryAlcohol(string repId, string txtDate)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportSummaryAlcohol"
+                     , new SqlParameter[] {
+                        new SqlParameter("@repId",repId)
+                    });
+
+                var list = (from DataRow d in ds.Tables[0].Rows
+                            select new ReportSummaryModel()
+                            {
+                                id = Guid.NewGuid().ToString(),
+                                productTypeId = AppCode.AL,
+                                customerName = d["customerName"].ToString(),
+                                activitySales = d["activitySales"].ToString(),
+                                activityId = d["actid"].ToString(),
+                                repDetailId = d["repDetailId"].ToString(),
+                                beer = decimal.Parse(AppCode.checkNullorEmpty(d["beer"].ToString())),
+                                changclassic = decimal.Parse(AppCode.checkNullorEmpty(d["changclassic"].ToString())),
+                                federbrau = decimal.Parse(AppCode.checkNullorEmpty(d["federbrau"].ToString())),
+                                archa = decimal.Parse(AppCode.checkNullorEmpty(d["archa"].ToString())),
+                                whitespirits = decimal.Parse(AppCode.checkNullorEmpty(d["whitespirits"].ToString())),
+                                brownspirits = decimal.Parse(AppCode.checkNullorEmpty(d["brownspirits"].ToString())),
+                                hongthong = decimal.Parse(AppCode.checkNullorEmpty(d["hongthong"].ToString())),
+                                blend285 = decimal.Parse(AppCode.checkNullorEmpty(d["blend285"].ToString())),
+                                sangsom = decimal.Parse(AppCode.checkNullorEmpty(d["sangsom"].ToString())),
+                                readytodrink = decimal.Parse(AppCode.checkNullorEmpty(d["readytodrink"].ToString())),
+                            }).OrderBy(x => x.activitySales).ToList();
+                List<ReportSummaryModel> groupList = new List<ReportSummaryModel>();
+                groupList = list
+                    .OrderByDescending(x => x.rowNo)
+                    .GroupBy(g => new { g.customerName, g.activitySales })
+                    .Select((group, index) => new ReportSummaryModel
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        customerName = group.First().customerName,
+                        activitySales = group.First().activitySales,
+                        beer = group.Sum(s => s.beer),
+                        changclassic = group.Sum(s => s.changclassic),
+                        federbrau = group.Sum(s => s.federbrau),
+                        archa = group.Sum(s => s.archa),
+                        whitespirits = group.Sum(s => s.whitespirits),
+                        brownspirits = group.Sum(s => s.brownspirits),
+                        hongthong = group.Sum(s => s.hongthong),
+                        blend285 = group.Sum(s => s.blend285),
+                        sangsom = group.Sum(s => s.sangsom),
+                        readytodrink = group.Sum(s => s.readytodrink),
+                    }).ToList();
+
+
+                List<ReportSummaryModel> groupActivityList = new List<ReportSummaryModel>();
+                groupActivityList = list
+                    .GroupBy(g => new { g.activitySales })
+                    .Select((group, index) => new ReportSummaryModel
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        activitySales = group.First().activitySales,
+                        beer = group.Sum(s => s.beer),
+                        changclassic = group.Sum(s => s.changclassic),
+                        federbrau = group.Sum(s => s.federbrau),
+                        archa = group.Sum(s => s.archa),
+                        whitespirits = group.Sum(s => s.whitespirits),
+                        brownspirits = group.Sum(s => s.brownspirits),
+                        hongthong = group.Sum(s => s.hongthong),
+                        blend285 = group.Sum(s => s.blend285),
+                        sangsom = group.Sum(s => s.sangsom),
+                        readytodrink = group.Sum(s => s.readytodrink),
+                    }).ToList();
+
+
+
+                string txtMonth = DateTime.ParseExact(txtDate, "MM/dd/yyyy", null).ToString("MMM").ToLower();
+                string txtYear = DateTime.ParseExact(txtDate, "MM/dd/yyyy", null).ToString("yyyy");
+                DataSet ds1 = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_get_SaleForcast"
+                    , new SqlParameter[] {
+                        new SqlParameter("@year",txtYear)
+                    });
+                var listForSale = (from DataRow d in ds1.Tables[0].Rows
+                                   select new ReportSummaryModel()
+                                   {
+                                       id = d["id"].ToString(),
+                                       brandId = d["brandId"].ToString(),
+                                       month = decimal.Parse(AppCode.checkNullorEmpty(d[txtMonth].ToString())),
+
+                                   }).OrderBy(x => x.activitySales).ToList();
+
+
+
+                //add Sales Forecast
+                var forecastlist = (new ReportSummaryModel
+                {
+                    id = Guid.NewGuid().ToString(),
+                    activitySales = "Sales Forecast",
+                    est = listForSale.Where(x => x.brandId.Equals("9EC1CA68-591D-4B3A-9A65-6509C6ED965E")).FirstOrDefault().month,
+                    crystal = listForSale.Where(x => x.brandId.Equals("2395EA4D-5CD5-4DDB-A7B6-48EF819B99BB")).FirstOrDefault().month,
+                    wranger = listForSale.Where(x => x.brandId.Equals("BB57DBF4-C281-4F79-9481-2B8A4C53C723")).FirstOrDefault().month,
+                    plus100 = listForSale.Where(x => x.brandId.Equals("6B623E91-AE6E-4621-A6CD-3F567D19BC70")).FirstOrDefault().month,
+                    jubjai = listForSale.Where(x => x.brandId.Equals("32459970-AACE-4E67-B58B-F6D786F8D7A1")).FirstOrDefault().month,
+                    oishi = listForSale.Where(x => x.brandId.Equals("1D8F1409-9A19-46AC-B1D3-D71919351716")).FirstOrDefault().month,
+                    soda = listForSale.Where(x => x.brandId.Equals("BC05AADC-A306-4D33-8383-521B8CAB2B2F")).FirstOrDefault().month +
+                          listForSale.Where(x => x.brandId.Equals("7CA5340A-747B-486C-81C5-D206B081D96A")).FirstOrDefault().month,
+                    water = listForSale.Where(x => x.brandId.Equals("3B936397-55EC-475B-9441-5BE7DE1F80F5")).FirstOrDefault().month,
+                });
+                groupList.Add(forecastlist);
+
+                ReportSummaryModels resultModel = new ReportSummaryModels();
+                resultModel.activitySummaryGroupList = groupList;
+                resultModel.activitySummaryList = list.ToList();
+                resultModel.activitySummaryGroupActivityList = groupActivityList;
+                resultModel.activitySummaryForecastList.Add(forecastlist);
+                return resultModel;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getReportSummary => " + ex.Message);
+                return new ReportSummaryModels();
+            }
+        }
 
         public static List<ReportSummaryModels.ReportSummaryModel> getFilterSummaryDetailByProductType(List<ReportSummaryModels.ReportSummaryModel> lists, string producttypeId)
         {
@@ -434,13 +557,13 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static int insertApproveForReportSummaryDetail(string customerId, string productTypeId, string summaryId)
+        public static int insertApproveForReportSummaryDetail(string subId, string customerId, string productTypeId, string summaryId)
         {
             try
             {
                 int rtn = 0;
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowForReportDetail(
-                    "639C73A8-328E-433E-8B12-19B04AC8D61A"
+                    subId
                     , customerId
                     , productTypeId);
                 if (ApproveAppCode.insertApproveByFlow(flowModel, summaryId) > 0)
@@ -473,6 +596,7 @@ namespace eActForm.BusinessLayer
                                      startDate = dr["startDate"] is DBNull ? null : (DateTime?)dr["startDate"],
                                      activityNo = dr["actNo"].ToString(),
                                      endDate = dr["endDate"] is DBNull ? null : (DateTime?)dr["endDate"],
+                                     createName = dr["createByName"].ToString(),
                                      delFlag = (bool)dr["delFlag"],
                                      createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
                                      createdByUserId = dr["createdByUserId"].ToString(),
@@ -494,6 +618,24 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static string getSummaryIdByRepdetail(string repDetailId)
+        {
+
+            try
+            {
+                object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getSummaryIdByRepdetail"
+                    , new SqlParameter[] { new SqlParameter("@repDetailId", repDetailId) });
+
+                return obj.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getSummaryIdByRepdetail >>" + ex.Message);
+            }
+        }
+
         public static List<ReportSummaryModels.actApproveSummaryDetailModel> getDocumentSummaryDetailByDate(DateTime startDate, DateTime endDate)
         {
             try
@@ -507,12 +649,15 @@ namespace eActForm.BusinessLayer
                                  select new ReportSummaryModels.actApproveSummaryDetailModel()
                                  {
                                      id = dr["id"].ToString(),
+                                     summaryId = dr["summaryDetailId"].ToString(),
                                      statusName = dr["txtstatus"].ToString(),
                                      statusId = dr["statusid"].ToString(),
                                      productTypeName = dr["txtproductType"].ToString(),
+                                     productTypeId = dr["productTypeId"].ToString(),
                                      activityNo = dr["activityNo"].ToString(),
                                      createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
                                      createdByUserId = dr["createdByUserId"].ToString(),
+                                     createName = dr["createByUserName"].ToString(),
                                  }).ToList();
                     return lists;
                 }

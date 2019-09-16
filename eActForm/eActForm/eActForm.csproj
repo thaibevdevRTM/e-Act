@@ -2314,6 +2314,11 @@
     <Content Include="Views\Budget\manageInvoiceView.cshtml" />
     <Content Include="Views\summaryReport\IndexDoc.cshtml" />
     <Content Include="Views\summaryReport\ListDoc.cshtml" />
+    <Content Include="Views\BudgetViewer\invoicePDFView.cshtml" />
+    <Content Include="Views\Budget\manageInvoiceEdit.cshtml" />
+    <Content Include="Views\summaryReport\viewReportSummaryAlcohol.cshtml" />
+    <Content Include="Views\Activity\ShowImage.cshtml" />
+    <Content Include="Views\actFormRepDetail\repPreviewForApprove.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
@@ -2321,6 +2326,7 @@
     <Folder Include="error\" />
     <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
+    <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
   </ItemGroup>
   <ItemGroup>
