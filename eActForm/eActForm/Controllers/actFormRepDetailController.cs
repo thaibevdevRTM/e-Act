@@ -19,9 +19,21 @@ namespace eActForm.Controllers
     public class actFormRepDetailController : Controller
     {
         // GET: actFormRepDetail
-        public ActionResult Index()
+        public ActionResult Index(string typeForm)
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            {
+                if (typeForm == Activity_Model.activityType.MT.ToString())
+                {
+                    models.customerslist = QueryGetAllCustomers.getCustomersMT();
+                }
+                else
+                {
+                    models.customerslist = QueryGetAllCustomers.getCustomersOMT();
+                }
+            }
+
             models.approveStatusList.Add(new ApproveModel.approveStatus()
             {
                 id = "7",
