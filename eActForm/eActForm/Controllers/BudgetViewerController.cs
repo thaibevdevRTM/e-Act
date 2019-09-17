@@ -36,7 +36,7 @@ namespace eActForm.Controllers
 				rootPath = ConfigurationManager.AppSettings["rootBudgetPdftURL"];
 				if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, budgetApproveId))))
 				{
-					budgetApproveId = "fileNotFound";
+					budgetApproveId = "fileNotFound.pdf";
 				}
 
 			}
@@ -73,7 +73,7 @@ namespace eActForm.Controllers
 				rootPath = ConfigurationManager.AppSettings["rootUploadfilesBudget"];
 				if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, fileName))))
 				{
-					fileName = "fileNotFound";
+					fileName = "fileNotFound.pdf";
 				}
 
 			}
