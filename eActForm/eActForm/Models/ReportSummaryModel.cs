@@ -16,7 +16,8 @@ namespace eActForm.Models
         public ApproveFlowModel.approveFlowModel flowList { get; set; }
         public List<actApproveSummaryDetailModel> summaryDetailLists { get; set; }
         public string producttype_id { get; set; }
-
+        public string subId { get; set; }
+        public string cusId { get; set; }
         public ReportSummaryModels()
         {
             activitySummaryList = new List<ReportSummaryModel>();

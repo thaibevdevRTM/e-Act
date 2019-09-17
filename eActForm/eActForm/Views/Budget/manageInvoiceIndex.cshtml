@@ -5,24 +5,17 @@
 	ViewBag.Title = "Index";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 
-	var url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfilesBudget"].ToString();
-
-	//var var_budgetApproveId = Request.QueryString["budgetApproveId"];
-	//var type = Request.QueryString["type"];
+	//var var_urlUploadfilesBudget = System.Configuration.ConfigurationManager.AppSettings["urlUploadfilesBudget"].ToString();
+	var var_companyEN = Request.QueryString["typeForm"];
 }
 
-<!-- Custom Theme Scripts -->
-@*<script src="~/Content/vendors/build/js/custom.min.js"></script>*@
-
-@*<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.datetimepicker.full.js"></script>*@
+<script src="~/Scripts/jquery-1.11.2.min.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
-<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-ui.js"></script>
+
 
 <style type="text/css">
 
@@ -66,11 +59,9 @@
 
 		</div>
 	</div>
-
-		@*<div id="divManageInvoiceList_XX">
-				@Html.Action("manageInvoiceList", "Budget")
-		</div>*@
 </div>
+
+
 
 <hr />
 
@@ -87,7 +78,7 @@
 			<p class="lead">อัพโหลด รูปภาพ</p>
 		</div>
 		<div class="col-md-12" id="divUploadFiles">
-			<form action="@Url.Action("manageInvoiceUpload", "Budget")" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
+			<form action="@Url.Action("manageInvoiceUpload", "Budget", new { company = var_companyEN })" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
 				<div class="dz-message">
 					<span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
 				</div>
@@ -103,10 +94,9 @@
 </div>
 
 
-	<script>
+<script>
 
 	$('document').ready(function () {
-		//callProductList($("#hd_activityId").val());
 		callManageInvoiceList();
 	});
 
@@ -122,27 +112,20 @@
 
 			this.on("complete", function (file) {
 				 $("#WaitDialog").show();
-				callManageInvoiceList($("#hdActivityId").val());// refresh ตัวบน
+				callManageInvoiceList();
 				this.removeFile(file);
 				$("#WaitDialog").hide();
-				// refresh ตัวล่างแต่ order หาย
-				@*$.ajax({
-					url: '@Url.Action("manageInvoiceList", "Budget")',
-					success: function (data) {
-						//$("#divManageInvoiceList_XX").html(data);
-					}
-				})*@
 			});
 		}
 
 	};
 
-	function callManageInvoiceList(activityId) {
+	function callManageInvoiceList() {
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("manageInvoiceList", "Budget")',
             data: {
-				activityId: activityId
+				companyTH: '@(var_companyEN)'
             }
         }).done(function (htmlResponse) {
 			$("#divManageInvoiceList").html(htmlResponse);
@@ -189,8 +172,7 @@
 						},
 						success: function (response) {
 							console.log(response.success);
-							callManageInvoiceList($("#hdActivityId").val());
-							//window.location.reload()
+							callManageInvoiceList();
 						}
 
 					})
@@ -225,9 +207,8 @@
 		});
 		}
 
-		
-	function submitManageInvoiceUpdate() {
 
+	function submitManageInvoiceUpdate() {
 		//var var_imageId = $("#hd_imageId").val();
 		//alert(var_imageId);
 
@@ -242,8 +223,8 @@
 				type: 'POST',
 				success: function (response) {
 					$('#myModalInvoice').modal('hide');
-					callManageInvoiceList(null);
+					callManageInvoiceList();
 				}
 			})
 	}
-	</script>
+</script>

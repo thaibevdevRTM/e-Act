@@ -44,6 +44,7 @@ namespace eActForm.Controllers
                 {
                     rootPath = ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"];
                 }
+           
                 else
                 {
                     rootPath = ConfigurationManager.AppSettings["rooPdftURL"];
