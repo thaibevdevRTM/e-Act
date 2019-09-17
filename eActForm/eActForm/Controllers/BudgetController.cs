@@ -4,19 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.ApplicationBlocks.Data;
 using eActForm.BusinessLayer;
 using eActForm.Models;
-using iTextSharp.text;
-using iTextSharp.text.html;
-using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
-using iTextSharp.tool.xml;
 using System.Configuration;
 using System.IO;
-using System.Net.Mail;
-using System.Net.Mime;
-using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
 using WebLibrary;
@@ -45,9 +37,10 @@ namespace eActForm.Controllers
 		public JsonResult submitInvoice(Budget_Activity_Model.Budget_Activity_Invoice_Att budgetInvoiceModel)
 		{
 			var resultAjax = new AjaxResult();
+			//int count_invo = 0;
 			try
 			{
-
+				
 				if (budgetInvoiceModel.invoiceId == null)
 				{
 					// insert invoice
@@ -57,6 +50,19 @@ namespace eActForm.Controllers
 				{
 					//update invoice
 					int countSuccess = BudgetFormCommandHandler.updateInvoiceProduct(budgetInvoiceModel);
+				}
+
+
+				TB_Bud_Image_Model.BudImageModels getBudImageModel = new TB_Bud_Image_Model.BudImageModels();
+				getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(budgetInvoiceModel.budgetImageId, null, null, null, null, null);
+
+				if (getBudImageModel.tbBudImageList.Any()) // True, the list is not empty
+				{
+					if (getBudImageModel.tbBudImageList.ElementAtOrDefault(0).count_activityNo > 1 )
+					{
+						resultAjax.Code = 2;
+						resultAjax.Message = getBudImageModel.tbBudImageList.ElementAtOrDefault(0).invoiceNo;
+					}
 				}
 
 				//resultAjax.ActivityId = Session["activityId"].ToString();

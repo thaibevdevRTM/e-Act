@@ -30,7 +30,7 @@
         window.location.href = url;
     }
 
-		function genPdfApproveBudget() {
+	function genPdfApproveBudget() {
 			$("#WaitDialog").show();
             $.ajax({
             url: '@Url.Action("genPdfApproveBudget", "BudgetApprove")',

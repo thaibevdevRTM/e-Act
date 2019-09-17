@@ -141,15 +141,16 @@
 					invoiceTotalBath: $("#txt_invoice_baht").val().replace(/,/g, ''),
 					invoiceActionDate: $("#txt_date_action").val(),
 					invoiceBudgetStatusId: $("#ddlStatus").val(),
+					count_invoice: "1",
 				},
 				dataType: "json",
 				type: 'POST',
-				success: function (response) {
-
-					$('#myModalInvoice').modal('hide');
+				success: function (result) {
+					
+					alert(result.Message );
+					
 					callProductList(var_activityId);
 					callInvoiceList(var_activityId, var_activityOfEstimateId);
-					console.log(response.success);
 				}
 			})
 
