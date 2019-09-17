@@ -146,9 +146,16 @@
 				dataType: "json",
 				type: 'POST',
 				success: function (result) {
-					
-					alert(result.Message );
-					
+
+					if (result.Message != null) {
+					var msg = "";
+					msg = "<h4>เอกสารใบแจ้งหนี้หมายเลข <b style='color:red'> " + result.Message + "</b> มีการตัดจ่ายแล้ว </h4>";
+					bootbox.alert({
+						title: "แจ้งเตือน" ,
+						message: msg
+					});
+					}
+
 					callProductList(var_activityId);
 					callInvoiceList(var_activityId, var_activityOfEstimateId);
 				}
