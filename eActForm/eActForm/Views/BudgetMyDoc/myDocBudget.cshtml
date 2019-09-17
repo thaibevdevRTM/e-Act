@@ -1,4 +1,5 @@
 ﻿@using eActForm.Models
+@using eActForm.BusinessLayer
 @model eActForm.Models.Budget_Approve_Detail_Model.budgetForms
 <style type="text/css">
 
@@ -8,47 +9,6 @@
 	}
 </style>
 <script>
-    function checkDelete(actId,statusId) {
-        var msg = "";
-        if (statusId == "1") {
-            // can be delete
-            msg = "คุณต้องการลบเอกสารนี้หรือไม่?"
-        }
-        else {
-            // can't delete
-            msg = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ <br/> ท่านต้องการยกเลิกเอกสารหรือไม่ค่ะ?";
-        }
-
-        bootbox.confirm({
-            title: "Confirm Message",
-            message: msg,
-            buttons: {
-                confirm: {
-                    label: "Yes",
-                    className: "btn-success"
-                },
-                cancel: {
-                    label: "No",
-                    className: "btn-danger"
-                }
-            },
-            callback: function (result) {
-                if (result) {
-                    $.ajax({
-                        url: '@Url.Action("requestDeleteDoc", "BudgetMyDoc")',
-                        data: {
-                            actId: actId,
-                            statusId: statusId,
-                        },
-                    }).done(function (htmlResponse) {
-                        $("#getQuery").html(htmlResponse);
-                    });
-                }
-
-            }
-        });
-    }
-
 
       function callApproveList(actId) {
         $.ajax({
@@ -91,9 +51,9 @@
 	<div class="col-md-12 col-xs-12">
 
 
-		
+
 		@*<a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>คือ Delete
-		<a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit*@
+			<a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit*@
 		<a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
 		<a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>คือ History Approve
 		<a class="btn ink-reaction btn-info fa fa-send-o" href="#"></a>คือ Resend Email
@@ -112,45 +72,49 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (var item in Model.budgetFormLists)
+				@if (Model.budgetFormLists.Count > 0)
 				{
-					<tr class="gradeX">
-						<td>
-							@*<a href="javascript:" target="_blank" onclick="return checkDelete('@item.budgetApproveId','@item.statusId');">
-								<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-							</a>*@
-							@*@Html.ActionLink(" ", "ActivityForm", "Activity", new { budgetApproveId = item.budgetApproveId, mode = Activity_Model.modeForm.edit }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })*@
-							@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = item.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
+					foreach (var item in Model.budgetFormLists)
+					{
+						<tr class="gradeX">
+							<td>
 
+								@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+								{
+									<a href="javascript:" onclick="return callPreviewApprove('@item.budgetApproveId','@item.statusId');">
+										<i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
+									</a>
+								}
 
-							<a onclick="callApproveList('@item.budgetApproveId');">
-								<i class="btn ink-reaction btn-dark fa fa-eye"></i>
-							</a>
-
-							@if (item.statusId == "2")
-							{
-
-								<a onclick="resendApprove('@item.budgetApproveId');">
-									<i class="btn ink-reaction btn-info fa fa-send-o"></i>
+								@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = item.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
+								<a onclick="callApproveList('@item.budgetApproveId');">
+									<i class="btn ink-reaction btn-dark fa fa-eye"></i>
 								</a>
-							}
 
-						</td>
-						<td>@item.statusName</td>
-						<td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
-						<td>@item.activityNo</td>
-						<td>@item.activityName</td>
-						<td>@item.cusShortName</td>
-						<td>@item.productCategory</td>
-						<td align="right">
-							@if (@item.totalInvoiceApproveBath != 0)
-							{
-								string result = String.Format("{0:n2}", @item.totalInvoiceApproveBath);
-								@result.ToString();
-							}
+								@if (item.statusId == "2")
+								{
+									<a onclick="resendApprove('@item.budgetApproveId');">
+										<i class="btn ink-reaction btn-info fa fa-send-o"></i>
+									</a>
+								}
 
-						</td>
-					</tr>
+							</td>
+							<td>@item.statusName</td>
+							<td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
+							<td>@item.activityNo</td>
+							<td>@item.activityName</td>
+							<td>@item.cusShortName</td>
+							<td>@item.productCategory</td>
+							<td align="right">
+								@if (@item.totalInvoiceApproveBath != 0)
+								{
+									string result = String.Format("{0:n2}", @item.totalInvoiceApproveBath);
+									@result.ToString();
+								}
+
+							</td>
+						</tr>
+					}
 				}
 			</tbody>
 		</table>
@@ -182,6 +146,32 @@
 	});
 	function waitpopup() {
 		$("#WaitDialog").show();
+	}
+
+	 function callPreviewApprove(actId, statusId) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("previewApproveBudget", "BudgetApprove")',
+            data: {
+				budgetApproveId: actId
+            }
+        }).done(function (htmlResponse) {
+            genPdf(actId, statusId, htmlResponse);
+        });
+    }
+    function genPdf(actId, statusId, htmlResponse) {
+        $.ajax({
+            url: '@Url.Action("genPdfApprove", "BudgetMyDoc")',
+            data: {
+                GridHtml: htmlResponse,
+                statusId: statusId,
+				budgetApproveId: actId,
+            },
+            dataType: "json",
+            type: 'POST',
+        }).done(function (response) {
+            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+        });
 	}
 
 </script>

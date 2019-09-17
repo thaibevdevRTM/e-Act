@@ -11,6 +11,10 @@ namespace eActForm.Models
         {
             public List<actFormRepDetailModel> actFormRepDetailLists { get; set; }
             public ApproveFlowModel.approveFlowModel flowList { get; set; }
+            public List<actFormRepDetailModel> actFormRepDetailGroupLists { get; set; }
+
+            public string setShowPDF { get; set; }
+
         }
         public class actFormRepDetailModel : Activity_Model.actForm
         {
@@ -19,8 +23,8 @@ namespace eActForm.Models
             public string productName { get; set; }
             public string size { get; set; }
             public string typeTheme { get; set; }
-            public string normalSale { get; set; }
-            public string promotionSale { get; set; }
+            public decimal? normalSale { get; set; }
+            public decimal? promotionSale { get; set; }
             public decimal? total { get; set; }
             public decimal? specialDisc { get; set; }
             public decimal? specialDiscBaht { get; set; }

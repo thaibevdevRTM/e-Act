@@ -13,6 +13,17 @@
 
         @RenderPage("~/Views/Shared/_previewActForm.cshtml")
 
+
+
+         
+        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+        {
+            <div style="page-break-before:always">&nbsp;</div>
+            
+            @RenderPage("~/Views/Activity/ShowImage.cshtml")
+            
+        }
+        
         <div class="modal-footer">
             <div>
                 <p class="d-flex justify-content-center">
@@ -42,30 +53,39 @@
             },
             callback: function (result) {
                 if (result == true) {
+                    var htmlstr = "";
+                    if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
+                    {
+                        htmlstr = $("#Grid1").html() + $("#GridImg").html();
+                    }
+                    else
+                    {
+                        htmlstr = $("#Grid1").html();
+                    }
+
                     bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
                     $.ajax({
-                        url: '@Url.Action("submitPreview", "Activity")',
+                    url: '@Url.Action("submitPreview", "Activity")',
                         data: {
-                            GridHtml1: $("#Grid1").html(),
+                            GridHtml1: htmlstr,
                             status: 2,
                             activityId: $("#HdId").val(),
                         },
                         dataType: "json",
                         type: 'POST',
                     }).done(function (response) {
-                        console.log(response.Message);
                         if (response.Message == 'MT') {
                             var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.MT.ToString() }, null)';
                             window.location.href = url;
                         }
-                        else if (response.Message == 'OMT')
-                        {
-                              var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.OMT.ToString() }, null)';
+                        else{
+                            var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.OMT.ToString() }, null)';
                             window.location.href = url;
                         }
 
+
                     });
-                }
+                    }
             }
 
         });

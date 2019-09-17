@@ -91,10 +91,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/12/2019 10:55:30</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
-      <publishTime>07/31/2019 16:07:26</publishTime>
+      <publishTime>09/13/2019 09:18:57</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
-      <publishTime>07/31/2019 16:07:26</publishTime>
+      <publishTime>09/13/2019 09:18:57</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
       <publishTime>03/12/2019 10:55:49</publishTime>
@@ -133,7 +133,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/12/2019 10:55:52</publishTime>
     </File>
     <File Include="bin/Microsoft.Exchange.WebServices.dll">
-      <publishTime>07/10/2019 17:02:43</publishTime>
+      <publishTime>09/05/2019 11:39:02</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>03/12/2019 10:55:53</publishTime>
@@ -316,10 +316,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/12/2019 10:55:54</publishTime>
     </File>
     <File Include="bin/WebLibrary.dll">
-      <publishTime>06/18/2019 16:32:06</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="bin/WebLibrary.pdb">
-      <publishTime>07/10/2019 17:02:44</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Content/bootstrap-grid.css">
       <publishTime>03/12/2019 10:55:30</publishTime>
@@ -5775,6 +5775,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="images/logo_vision2020.png">
       <publishTime>03/12/2019 10:55:50</publishTime>
     </File>
+    <File Include="images/maintain.png">
+      <publishTime>07/31/2019 16:09:14</publishTime>
+    </File>
     <File Include="images/non_al.jpeg">
       <publishTime>03/12/2019 10:55:50</publishTime>
     </File>
@@ -5788,7 +5791,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/21/2019 09:42:45</publishTime>
     </File>
     <File Include="Scripts/Admin/adminPage.js">
-      <publishTime>07/31/2019 16:06:49</publishTime>
+      <publishTime>08/15/2019 11:02:37</publishTime>
     </File>
     <File Include="Scripts/bootbox.js">
       <publishTime>03/12/2019 10:55:47</publishTime>
@@ -6025,22 +6028,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/21/2019 09:42:45</publishTime>
     </File>
     <File Include="Views/actFormRepDetail/index.cshtml">
-      <publishTime>07/23/2019 11:40:47</publishTime>
+      <publishTime>08/26/2019 13:46:16</publishTime>
     </File>
     <File Include="Views/actFormRepDetail/repChooseView.cshtml">
       <publishTime>06/18/2019 16:32:06</publishTime>
     </File>
     <File Include="Views/actFormRepDetail/repListView.cshtml">
-      <publishTime>07/18/2019 10:02:30</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/actFormRepDetail/repListViewGroupBrand.cshtml">
-      <publishTime>07/05/2019 09:19:13</publishTime>
+      <publishTime>08/19/2019 08:59:36</publishTime>
+    </File>
+    <File Include="Views/actFormRepDetail/repPreviewForApprove.cshtml">
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Activity/activityDetail.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Activity/ActivityForm.cshtml">
-      <publishTime>07/31/2019 14:36:28</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Activity/ActivityForm_OMT.cshtml">
       <publishTime>07/17/2019 10:50:47</publishTime>
@@ -6052,31 +6058,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/04/2019 15:24:53</publishTime>
     </File>
     <File Include="Views/Activity/PreviewData.cshtml">
-      <publishTime>07/30/2019 14:43:51</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Activity/ProductCostdetail.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
+    <File Include="Views/Activity/ShowImage.cshtml">
+      <publishTime>09/12/2019 15:58:26</publishTime>
+    </File>
     <File Include="Views/ActivityCostDetail/activityCostDetail.cshtml">
-      <publishTime>07/31/2019 14:36:28</publishTime>
+      <publishTime>09/13/2019 09:01:16</publishTime>
     </File>
     <File Include="Views/ActivityProductDetail/ProductCostdetail.cshtml">
-      <publishTime>07/31/2019 15:37:33</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/ActivityProductDetail/showDetailGroup.cshtml">
-      <publishTime>07/31/2019 14:36:28</publishTime>
+      <publishTime>07/31/2019 16:08:49</publishTime>
     </File>
     <File Include="Views/ActivityViewer/activityPDFView.cshtml">
       <publishTime>06/12/2019 10:20:16</publishTime>
     </File>
     <File Include="Views/Admin/Index.cshtml">
-      <publishTime>07/31/2019 15:40:34</publishTime>
+      <publishTime>08/15/2019 11:02:37</publishTime>
     </File>
     <File Include="Views/Admin/ProductDetail.cshtml">
-      <publishTime>07/31/2019 14:36:28</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Admin/productPriceDetail.cshtml">
-      <publishTime>07/31/2019 14:36:28</publishTime>
+      <publishTime>07/31/2019 16:08:49</publishTime>
     </File>
     <File Include="Views/Approve/approveLists.cshtml">
       <publishTime>05/21/2019 09:42:44</publishTime>
@@ -6088,10 +6097,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/18/2019 16:32:06</publishTime>
     </File>
     <File Include="Views/Approve/Index.cshtml">
-      <publishTime>07/30/2019 14:43:51</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Approve/previewApprove.cshtml">
-      <publishTime>07/30/2019 14:43:51</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/ApproveLists/index.cshtml">
       <publishTime>07/18/2019 10:01:05</publishTime>
@@ -6106,34 +6115,46 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/27/2019 10:51:51</publishTime>
     </File>
     <File Include="Views/ApproveSummaryDetail/Index.cshtml">
-      <publishTime>07/03/2019 10:30:01</publishTime>
+      <publishTime>08/23/2019 09:28:45</publishTime>
     </File>
     <File Include="Views/ApproveSummaryDetail/ListView.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/ApproveSummaryDetail/ListViewApprove.cshtml">
-      <publishTime>07/03/2019 10:30:01</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Budget/activityList.cshtml">
-      <publishTime>05/21/2019 09:42:44</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Budget/activityProduct.cshtml">
-      <publishTime>07/23/2019 11:40:47</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Budget/activityProductInvoiceEdit.cshtml">
-      <publishTime>07/19/2019 13:19:27</publishTime>
+      <publishTime>09/13/2019 09:01:34</publishTime>
     </File>
     <File Include="Views/Budget/activityProductInvoiceList.cshtml">
-      <publishTime>07/23/2019 11:40:47</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Budget/activityProductList.cshtml">
-      <publishTime>04/09/2019 11:05:42</publishTime>
+      <publishTime>08/02/2019 09:23:10</publishTime>
     </File>
     <File Include="Views/Budget/EditForm.cshtml">
       <publishTime>04/04/2019 15:57:14</publishTime>
     </File>
+    <File Include="Views/Budget/manageInvoiceEdit.cshtml">
+      <publishTime>09/12/2019 15:58:26</publishTime>
+    </File>
+    <File Include="Views/Budget/manageInvoiceIndex.cshtml">
+      <publishTime>09/12/2019 15:58:26</publishTime>
+    </File>
+    <File Include="Views/Budget/manageInvoiceList.cshtml">
+      <publishTime>09/12/2019 15:58:26</publishTime>
+    </File>
+    <File Include="Views/Budget/manageInvoiceView.cshtml">
+      <publishTime>09/12/2019 15:58:26</publishTime>
+    </File>
     <File Include="Views/Budget/PreviewBudgetInvoice.cshtml">
-      <publishTime>07/18/2019 10:02:09</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/BudgetApprove/approveLists.cshtml">
       <publishTime>05/21/2019 09:42:45</publishTime>
@@ -6154,10 +6175,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/04/2019 11:05:42</publishTime>
     </File>
     <File Include="Views/BudgetApprove/Index.cshtml">
-      <publishTime>06/21/2019 14:19:50</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/BudgetApprove/previewApproveBudget.cshtml">
-      <publishTime>07/19/2019 13:19:28</publishTime>
+      <publishTime>08/29/2019 08:49:49</publishTime>
     </File>
     <File Include="Views/BudgetApproveList/budgetApproveList.cshtml">
       <publishTime>05/21/2019 09:42:45</publishTime>
@@ -6166,16 +6187,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/21/2019 09:42:45</publishTime>
     </File>
     <File Include="Views/BudgetMyDoc/Index.cshtml">
-      <publishTime>05/21/2019 09:42:45</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/BudgetMyDoc/myDocBudget.cshtml">
-      <publishTime>05/21/2019 09:42:45</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/BudgetMyDoc/myDocBudgetList.cshtml">
-      <publishTime>05/21/2019 09:42:45</publishTime>
+      <publishTime>08/29/2019 08:49:49</publishTime>
     </File>
     <File Include="Views/BudgetViewer/activityPDFView.cshtml">
       <publishTime>05/21/2019 09:42:45</publishTime>
+    </File>
+    <File Include="Views/BudgetViewer/invoicePDFView.cshtml">
+      <publishTime>09/12/2019 15:58:26</publishTime>
+    </File>
+    <File Include="Views/BudgetViewer/invoicePDFView.cshtml">
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/DashBoard/Index.cshtml">
       <publishTime>07/18/2019 14:18:14</publishTime>
@@ -6184,13 +6211,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/12/2019 10:55:48</publishTime>
     </File>
     <File Include="Views/Documents/reportDetail.cshtml">
-      <publishTime>05/31/2019 10:21:58</publishTime>
+      <publishTime>08/28/2019 16:10:26</publishTime>
     </File>
     <File Include="Views/Documents/reportDetailListsView.cshtml">
       <publishTime>06/18/2019 16:32:06</publishTime>
     </File>
     <File Include="Views/Documents/reportDetail.cshtml">
-      <publishTime>05/31/2019 10:21:58</publishTime>
+      <publishTime>08/28/2019 16:10:26</publishTime>
     </File>
     <File Include="Views/Documents/reportDetailListsView.cshtml">
       <publishTime>06/18/2019 16:32:06</publishTime>
@@ -6205,10 +6232,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/18/2019 16:27:14</publishTime>
     </File>
     <File Include="Views/Home/myDoc.cshtml">
-      <publishTime>07/18/2019 10:02:09</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Login/index.cshtml">
       <publishTime>05/21/2019 09:42:16</publishTime>
+    </File>
+    <File Include="Views/Login/Maintain.cshtml">
+      <publishTime>07/31/2019 16:09:14</publishTime>
     </File>
     <File Include="Views/SaleActual/Sale.cshtml">
       <publishTime>03/12/2019 10:55:48</publishTime>
@@ -6217,22 +6247,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/12/2019 10:55:48</publishTime>
     </File>
     <File Include="Views/Shared/_BlankLayout.cshtml">
-      <publishTime>03/12/2019 10:55:48</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>06/12/2019 10:20:16</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Shared/_previewActForm.cshtml">
-      <publishTime>07/31/2019 14:36:28</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Shared/_search.cshtml">
       <publishTime>05/28/2019 09:50:50</publishTime>
     </File>
+    <File Include="Views/Shared/_searchBudget.cshtml">
+      <publishTime>08/19/2019 14:06:21</publishTime>
+    </File>
     <File Include="Views/Shared/_searchForSummaryReport.cshtml">
-      <publishTime>06/21/2019 14:19:40</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Shared/_sidebar.cshtml">
-      <publishTime>07/31/2019 14:50:20</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Shared/_TopNav.cshtml">
       <publishTime>05/28/2019 09:50:50</publishTime>
@@ -6244,19 +6277,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/12/2019 10:55:48</publishTime>
     </File>
     <File Include="Views/Signature/listsSignature.cshtml">
-      <publishTime>03/12/2019 10:55:48</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/summaryReport/Index.cshtml">
-      <publishTime>06/21/2019 14:19:40</publishTime>
+      <publishTime>08/23/2019 09:25:48</publishTime>
+    </File>
+    <File Include="Views/summaryReport/IndexDoc.cshtml">
+      <publishTime>08/26/2019 13:46:16</publishTime>
+    </File>
+    <File Include="Views/summaryReport/ListDoc.cshtml">
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/summaryReport/repSummaryView.cshtml">
-      <publishTime>07/18/2019 10:02:09</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/summaryReport/viewReportActivityBudget.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/summaryReport/viewReportSummary.cshtml">
-      <publishTime>07/18/2019 10:02:09</publishTime>
+      <publishTime>09/12/2019 15:58:26</publishTime>
+    </File>
+    <File Include="Views/summaryReport/viewReportSummaryAlcohol.cshtml">
+      <publishTime>09/12/2019 15:58:26</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>03/12/2019 10:55:48</publishTime>
@@ -6265,10 +6307,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/12/2019 10:55:48</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/31/2019 15:37:50</publishTime>
+      <publishTime>09/13/2019 09:18:59</publishTime>
     </File>
     <File Include="WebForm1.aspx">
-      <publishTime>07/03/2019 10:30:01</publishTime>
+      <publishTime>08/28/2019 13:41:13</publishTime>
     </File>
   </ItemGroup>
 </Project>

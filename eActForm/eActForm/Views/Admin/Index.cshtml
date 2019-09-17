@@ -90,9 +90,7 @@
         Pack:
         @Html.TextBoxFor(x => x.activityFormModel.pack, new { @class = "form-control", @id = "txtPack" })
     </div>
-    <div class="form-group col-md-2 col-sm-12 col-xs-2" onclick="return $adminPage.checkProduct();">
-        <label class="btn ink-reaction btn-success fa fa-plus" style="margin-top:20px; font-size:20px;"></label>
-    </div>
+
 
 </div>
 
@@ -107,6 +105,11 @@
         @Html.TextBoxFor(x => x.activityFormModel.productCode, new { @class = "form-controlMix", @id = "txtProductCode" })
     </div>
 
+</div>
+<div class="row form-group">
+    <div  align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="return $adminPage.checkProduct();">
+        <label class="btn ink-reaction btn-success fa fa-plus" style="margin-top:20px; font-size:15px; width:100%" >AddOrEdit</label>
+    </div>
 </div>
 
 <hr />

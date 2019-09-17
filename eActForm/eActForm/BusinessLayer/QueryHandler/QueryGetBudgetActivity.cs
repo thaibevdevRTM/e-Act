@@ -11,7 +11,6 @@ namespace eActForm.BusinessLayer
 {
 	public class QueryGetBudgetActivity
 	{
-
 		public static List<Budget_Activity_Model.Budget_Activity_Status_Att> getBudgetActivityStatus()
 		{
 			try
@@ -34,7 +33,7 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-		public static List<TB_Budget_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId)
+		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId, string companyTH)
 		{
 			try
 			{
@@ -42,11 +41,12 @@ namespace eActForm.BusinessLayer
 				 , new SqlParameter("@act_approveStatusId", act_approveStatusId)
 				 , new SqlParameter("@act_activityId", act_activityId)
 				 , new SqlParameter("@act_activityNo", act_activityNo)
-				  , new SqlParameter("@budgetApproveId", budgetApproveId)
+				 , new SqlParameter("@budgetApproveId", budgetApproveId)
+				 , new SqlParameter("@companyTH", companyTH)
 				 );
 
 				var result = (from DataRow d in ds.Tables[0].Rows
-							  select new TB_Budget_Activity_Model.Budget_Activity_Att()
+							  select new TB_Bud_Activity_Model.Budget_Activity_Att()
 							  {
 								  budget_id = d["budget_Id"].ToString(),
 								  act_form_id = d["act_form_id"].ToString(),
@@ -54,6 +54,8 @@ namespace eActForm.BusinessLayer
 								  act_activityNo = d["act_activityNo"].ToString(),
 								  act_reference = d["act_reference"].ToString(),
 								  act_customerId = d["act_customerId"].ToString(),
+
+								  act_companyEN = d["act_companyEN"].ToString(),
 
 								  cus_cusShortName = d["cus_cusShortName"].ToString(),
 								  cus_cusNameEN = d["cus_cusNameEN"].ToString(),
@@ -67,20 +69,18 @@ namespace eActForm.BusinessLayer
 								  prd_groupNameTH = d["prd_groupNameTH"].ToString(),
 								  prd_groupShort = d["prd_groupShort"].ToString(),
 
+								  act_brandNameTH = d["act_brandNameTH"].ToString(),
+								  act_brandName = d["act_brandName"].ToString(),
+								  act_shortBrand = d["act_shortBrand"].ToString(),
+
 								  act_activityPeriodSt = d["act_activityPeriodSt"] is DBNull ? null : (DateTime?)d["act_activityPeriodSt"],
 								  act_activityPeriodEnd = d["act_activityPeriodEnd"] is DBNull ? null : (DateTime?)d["act_activityPeriodEnd"],
 								  act_costPeriodSt = d["act_costPeriodSt"] is DBNull ? null : (DateTime?)d["act_costPeriodSt"],
 								  act_costPeriodEnd = d["act_costPeriodEnd"] is DBNull ? null : (DateTime?)d["act_costPeriodEnd"],
 
-								  //act_activityPeriodSt = !string.IsNullOrEmpty(d["act_activityPeriodSt"].ToString()) ? DateTime.Parse(d["act_activityPeriodSt"].ToString()) : (DateTime?)null,
-								  //act_activityPeriodSt = d["act_activityPeriodSt"].ToString(),
-
-								  //act_activityPeriodEnd = !string.IsNullOrEmpty(d["act_activityPeriodEnd"].ToString()) ? DateTime.Parse(d["act_activityPeriodEnd"].ToString()) : (DateTime?)null,
-								  //act_costPeriodSt = !string.IsNullOrEmpty(d["act_costPeriodSt"].ToString()) ? DateTime.Parse(d["act_costPeriodSt"].ToString()) : (DateTime?)null,
-								  //act_costPeriodEnd = !string.IsNullOrEmpty(d["act_costPeriodEnd"].ToString()) ? DateTime.Parse(d["act_costPeriodEnd"].ToString()) : (DateTime?)null,
 								  act_activityName = d["act_activityName"].ToString(),
 								  act_theme = d["act_activitySales"].ToString(),
-								  //act_themeName = d["act_themeName"].ToString(),
+
 								  act_objective = d["act_objective"].ToString(),
 								  act_trade = d["act_trade"].ToString(),
 								  act_activityDetail = d["act_activityDetail"].ToString(),
@@ -91,17 +91,8 @@ namespace eActForm.BusinessLayer
 								  act_total_invoive = d["act_total_invoive"].ToString() == "" ? 0 : decimal.Parse(d["act_total_invoive"].ToString()),
 								  act_balance = d["act_balance"].ToString() == "" ? 0 : decimal.Parse(d["act_balance"].ToString()),
 
-								  //sum_cost_product_inv = d["sum_cost_product_inv"].ToString() == "" ? 0 : decimal.Parse(d["sum_cost_product_inv"].ToString()),
-								  //sum_total_invoice = d["sum_total_invoice"].ToString() == "" ? 0 : decimal.Parse(d["sum_total_invoice"].ToString()),
-								  //sum_balance_product_inv = d["sum_balance_product_inv"].ToString() == "" ? 0 : decimal.Parse(d["sum_balance_product_inv"].ToString()),
-
-								  //delFlag = bool.Parse(d["delFlag"].ToString()),
-
 								  act_createdDate = d["act_createdDate"] is DBNull ? null : (DateTime?)d["act_createdDate"],
 								  act_updatedDate = d["act_updatedDate"] is DBNull ? null : (DateTime?)d["act_updatedDate"],
-
-								  //act_createdDate = DateTime.Parse(d["act_createdDate"].ToString()),
-								  //act_updatedDate = DateTime.Parse(d["act_updatedDate"].ToString()),
 
 								  act_createdByUserId = d["act_createdByUserId"].ToString(),
 								  act_updatedByUserId = d["act_updatedByUserId"].ToString(),
@@ -116,7 +107,7 @@ namespace eActForm.BusinessLayer
 			catch (Exception ex)
 			{
 				ExceptionManager.WriteError("getActivityByApproveStatusId => " + ex.Message);
-				return new List<TB_Budget_Activity_Model.Budget_Activity_Att>();
+				return new List<TB_Bud_Activity_Model.Budget_Activity_Att>();
 			}
 		}
 
@@ -160,9 +151,6 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-
-
-
 		public static List<Budget_Activity_Model.Budget_Activity_Invoice_Att> getBudgetActivityInvoice(string activityId, string activityOfEstimateId, string invoiceId)
 		{
 			try
@@ -201,7 +189,7 @@ namespace eActForm.BusinessLayer
 
 								//invoiceActionDate = DateTime.Parse(d["invoiceActionDate"].ToString()),
 								invoiceActionDate = d["invoiceActionDate"].ToString(), //is DBNull ? null : (DateTime?)d["invoiceActionDate"],
-								dateInvoiceAction = d["invoiceActionDate"] is DBNull ? null : (DateTime?)d["invoiceActionDate"],
+								dateInvoiceAction = d["dateInvoiceAction"] is DBNull ? null : (DateTime?)d["dateInvoiceAction"],
 								  
 
 								invoiceBudgetStatusId = d["invoiceBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceBudgetStatusId"].ToString()),
@@ -223,5 +211,60 @@ namespace eActForm.BusinessLayer
 				return new List<Budget_Activity_Model.Budget_Activity_Invoice_Att>();
 			}
 		}
+
+		public static List<Budget_Activity_Model.Budget_Count_Wait_Approve_Att> getBudgetActivityWaitApprove(string act_activityId)
+		{
+			try
+			{
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetCountWatingApproveByActivityId"
+				 , new SqlParameter("@activityId", act_activityId)
+				 //, new SqlParameter("@productID", prd_productID)
+				 //, new SqlParameter("@activityOfEstimateID", act_activityOfEstimateId)
+				 );
+
+				var result = (from DataRow d in ds.Tables[0].Rows
+							  select new Budget_Activity_Model.Budget_Count_Wait_Approve_Att()
+							  {
+								  activityId = d["activityId"].ToString(),
+								  count_wait_approve = d["count_wait_approve"].ToString() == "" ? 0 : int.Parse(d["count_wait_approve"].ToString()),
+							  });
+
+				return result.ToList();
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("getBudgetActivityWaitApprove => " + ex.Message);
+				return new List<Budget_Activity_Model.Budget_Count_Wait_Approve_Att>();
+			}
+		}
+
+
+		public static List<Budget_Activity_Model.Budget_Activity_Last_Approve_Att> getBudgetActivityLastApprove(string act_activityId)
+		{
+			try
+			{
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetApproveLastId"
+				 , new SqlParameter("@activityId", act_activityId)
+				 //, new SqlParameter("@productID", prd_productID)
+				 //, new SqlParameter("@activityOfEstimateID", act_activityOfEstimateId)
+				 );
+
+				var result = (from DataRow d in ds.Tables[0].Rows
+							  select new Budget_Activity_Model.Budget_Activity_Last_Approve_Att()
+							  {
+								  budgetActivityId = d["budgetActivityId"].ToString(),
+								  budgetApproveId = d["budgetApproveId"].ToString(),
+							  });
+
+				return result.ToList();
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("getBudgetActivityLastApprove => " + ex.Message);
+				return new List<Budget_Activity_Model.Budget_Activity_Last_Approve_Att>();
+			}
+		}
+
+
 	}
 }

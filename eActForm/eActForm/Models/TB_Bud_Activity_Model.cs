@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace eActForm.Models
 {
-	public class TB_Budget_Activity_Model
+	public class TB_Bud_Activity_Model
 	{
 
 		public class Budget_Activity_Att
 		{
+
 			public string budget_id { get; set; }
 			public string act_form_id { get; set; }
 			public int act_approveStatusId { get; set; }
@@ -19,6 +20,8 @@ namespace eActForm.Models
 			public DateTime? act_documentDate { get; set; }
 			public string act_reference { get; set; }
 			public string act_customerId { get; set; }
+
+			public string act_companyEN { get; set; }
 
 			public string cus_cusShortName { get; set; }
 			public string cus_cusNameEN { get; set; }
@@ -31,6 +34,10 @@ namespace eActForm.Models
 			public string prd_groupName { get; set; }
 			public string prd_groupNameTH { get; set; }
 			public string prd_groupShort { get; set; }
+
+			public string act_brandNameTH { get; set; }
+			public string act_brandName { get; set; }
+			public string act_shortBrand { get; set; }
 
 			[DataType(DataType.Date)]
 			[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]

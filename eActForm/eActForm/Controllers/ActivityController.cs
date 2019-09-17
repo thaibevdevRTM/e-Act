@@ -2,23 +2,13 @@
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using iTextSharp.text;
-using iTextSharp.text.html;
-using iTextSharp.text.html.simpleparser;
-using iTextSharp.text.pdf;
-using iTextSharp.tool.xml;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net.Mail;
-using System.Net.Mime;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 using WebLibrary;
 
 namespace eActForm.Controllers
@@ -28,48 +18,63 @@ namespace eActForm.Controllers
     {
         public ActionResult ActivityForm(string activityId, string mode, string typeForm)
         {
-
             Activity_Model activityModel = new Activity_Model();
-            activityModel.activityFormModel = new ActivityForm();
-            activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
-            activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
-            activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
-            activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
-                .GroupBy(item => item.activitySales)
-                .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
-            if (UtilsAppCode.Session.User.regionId != "")
+            try
             {
-                activityModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.id == UtilsAppCode.Session.User.regionId).ToList();
-                activityModel.activityFormModel.regionId = UtilsAppCode.Session.User.regionId;
-            }
-            else
-            {
-                activityModel.regionGroupList = QueryGetAllRegion.getAllRegion();
-            }
 
-            Session.Remove("productcostdetaillist1");
-            Session.Remove("activitydetaillist");
+                activityModel.activityFormModel = new ActivityForm();
+                activityModel.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
 
-            if (!string.IsNullOrEmpty(activityId))
-            {
-                Session["activityId"] = activityId;
-                activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-                activityModel.activityFormModel.mode = mode;
-                Session["productcostdetaillist1"] = QueryGetCostDetailById.getcostDetailById(activityId);
-                Session["activitydetaillist"] = QueryGetActivityDetailById.getActivityDetailById(activityId);
-                activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
-                activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
-                activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
+                if (typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    activityModel.customerslist = QueryGetAllCustomers.getCustomersOMT();
+                }
+                else
+                {
+                    activityModel.customerslist = QueryGetAllCustomers.getCustomersMT();
+                }
+
+                activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
+                activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                    .GroupBy(item => item.activitySales)
+                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+                if (UtilsAppCode.Session.User.regionId != "")
+                {
+                    activityModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.id == UtilsAppCode.Session.User.regionId).ToList();
+                    activityModel.activityFormModel.regionId = UtilsAppCode.Session.User.regionId;
+                }
+                else
+                {
+                    activityModel.regionGroupList = QueryGetAllRegion.getAllRegion();
+                }
+
+                if (!string.IsNullOrEmpty(activityId))
+                {
+
+                    activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+                    activityModel.activityFormModel.mode = mode;
+                    activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
+                    activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
+                    activityModel.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activityModel.activityFormModel.productGroupId);
+                    activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
+                    activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
+                    TempData["actForm" + activityId] = activityModel;
+                }
+                else
+                {
+                    string actId = Guid.NewGuid().ToString();
+                    activityModel.activityFormModel.id = actId;
+                    activityModel.activityFormModel.mode = mode;
+                    activityModel.activityFormModel.statusId = 1;
+                }
+                activityModel.activityFormModel.typeForm = typeForm;
+                TempData.Keep();
+
             }
-            else
+            catch (Exception ex)
             {
-                string actId = Guid.NewGuid().ToString();
-                Session["activityId"] = actId;
-                activityModel.activityFormModel.id = actId;
-                activityModel.activityFormModel.mode = mode;
-                activityModel.activityFormModel.statusId = 1;
+                ExceptionManager.WriteError("ActivityForm => " + ex.Message);
             }
-            activityModel.activityFormModel.typeForm = typeForm;
             return View(activityModel);
         }
 
@@ -97,7 +102,7 @@ namespace eActForm.Controllers
 
         }
 
-        public ActionResult PreviewData(string activityId,string typeForm)
+        public ActionResult PreviewData(string activityId, string typeForm)
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
@@ -127,6 +132,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
+                ExceptionManager.WriteError("getPreviewData => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -137,19 +143,27 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                Activity_Model activityModel = new Activity_Model();
+                string statusId = "";
+                Activity_Model activityModel = TempData["actForm" + activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + activityFormModel.id];
                 activityModel.activityFormModel = activityFormModel;
-                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-                activityModel.activitydetaillist = ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]);
-                int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, Session["activityId"].ToString());
+                 statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
+                if (statusId == "1" || statusId == "5" || statusId == "")
+                {
+                    int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, activityFormModel.id);
+                }
+                else
+                {
+                    result.MessageCode = "001";
+                }
 
-                result.ActivityId = Session["activityId"].ToString();
+                TempData.Keep();
                 result.Success = true;
             }
             catch (Exception ex)
             {
                 result.Success = false;
                 result.Message = ex.Message;
+                ExceptionManager.WriteError("insertDataActivity => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -162,15 +176,17 @@ namespace eActForm.Controllers
                 Activity_Model activityModel = new Activity_Model();
                 activityModel.activityFormModel = activityFormModel;
 
-                int countSuccess = ActivityFormCommandHandler.updateActivityForm(activityModel, Session["activityId"].ToString());
+                int countSuccess = ActivityFormCommandHandler.updateActivityForm(activityModel, activityFormModel.id);
 
-                result.ActivityId = Session["activityId"].ToString();
+                result.ActivityId = activityFormModel.id;
+                TempData.Keep();
                 result.Success = true;
             }
             catch (Exception ex)
             {
                 result.Success = false;
                 result.Message = ex.Message;
+                ExceptionManager.WriteError("updateDataActivity => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -182,13 +198,12 @@ namespace eActForm.Controllers
             {
                 string actId = Guid.NewGuid().ToString();
                 Activity_Model activityModel = new Activity_Model();
+                activityModel = (Activity_Model)TempData["actForm" + activityFormModel.id];
                 activityModel.activityFormModel = activityFormModel;
                 activityModel.activityFormModel.activityNo = "";
                 activityModel.activityFormModel.dateDoc = DateTime.Now.ToString("dd-MM-yyyy");
-                activityModel.productcostdetaillist1 = ((List<ProductCostOfGroupByPrice>)Session["productcostdetaillist1"]);
-                activityModel.activitydetaillist = ((List<CostThemeDetailOfGroupByPrice>)Session["activitydetaillist"]);
                 int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, actId);
-
+                TempData.Keep();
                 result.ActivityId = actId;
                 result.Success = true;
             }
@@ -196,13 +211,14 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
+                ExceptionManager.WriteError("copyAndSaveNewActivityForm => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
 
         [HttpPost]
-        public ActionResult uploadFilesImage()
+        public ActionResult uploadFilesImage(string actId)
         {
             var result = new AjaxResult();
             try
@@ -223,7 +239,7 @@ namespace eActForm.Controllers
                     binData = b.ReadBytes(0);
                     httpPostedFile.SaveAs(resultFilePath);
 
-                    imageFormModel.activityId = Session["activityId"].ToString();
+                    imageFormModel.activityId = actId;
                     imageFormModel._image = binData;
                     imageFormModel.imageType = "UploadFile";
                     imageFormModel._fileName = _fileName.ToLower();
@@ -233,12 +249,12 @@ namespace eActForm.Controllers
                     imageFormModel.createdDate = DateTime.Now;
                     imageFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                     imageFormModel.updatedDate = DateTime.Now;
-
                     int resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
                 }
 
-                result.ActivityId = Session["activityId"].ToString();
+                result.ActivityId = actId;
+                TempData.Keep();
                 result.Success = true;
             }
             catch (Exception ex)
@@ -256,8 +272,8 @@ namespace eActForm.Controllers
         public JsonResult deleteImg(string name)
         {
             var result = new AjaxResult();
-            int resultImg = ImageAppCode.deleteImg(name, Session["activityId"].ToString());
-
+            int resultImg = ImageAppCode.deleteImg(name, TempData["activityId"].ToString());
+            TempData.Keep();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -273,7 +289,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult submitPreview(string GridHtml1, string status, string activityId)
+        public async System.Threading.Tasks.Task<JsonResult> submitPreview(string GridHtml1, string status, string activityId)
         {
             var resultAjax = new AjaxResult();
             int countresult = 0;
@@ -307,7 +323,7 @@ namespace eActForm.Controllers
                     if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                     {
                         ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                        EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
+                        var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
                     }
                 }
                 resultAjax.Success = true;
@@ -317,15 +333,11 @@ namespace eActForm.Controllers
             {
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("submitPreview => " + ex.Message);
             }
             return Json(resultAjax, "text/plain");
         }
 
-      
-
-
-        
     }
 }
 

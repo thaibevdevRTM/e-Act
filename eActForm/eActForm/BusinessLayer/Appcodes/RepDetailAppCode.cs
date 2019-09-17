@@ -21,11 +21,11 @@ namespace eActForm.BusinessLayer
             {
                 string fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId);
                 var rootPath = HttpContext.Current.Server.MapPath(fileName);
-                List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "OS&JJ_" + actRepDetailId );
-                rootPath = HttpContext.Current.Server.MapPath(fileName);
-                file = AppCode.genPdfFile(htmlOS, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                fileName =  "OS&JJ_" + actRepDetailId;
+                rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], fileName));
+                file = AppCode.genPdfFile(htmlOS, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                 TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel
                 {
                     activityId = actRepDetailId,
@@ -34,30 +34,31 @@ namespace eActForm.BusinessLayer
                 };
                 int resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "Est&HP_" + actRepDetailId );
-                rootPath = HttpContext.Current.Server.MapPath(fileName);
-                file = AppCode.genPdfFile(htmlEst, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                fileName = "Est&HP_" + actRepDetailId;
+                rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], fileName));
+                file = AppCode.genPdfFile(htmlEst, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                 imageFormModel._fileName = fileName;
                 resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "WA&CY_" + actRepDetailId);
-                rootPath = HttpContext.Current.Server.MapPath(fileName);
-                file = AppCode.genPdfFile(htmlWA, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                fileName = "WA&CY_" + actRepDetailId;
+                rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], fileName));
+                file = AppCode.genPdfFile(htmlWA, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                 imageFormModel._fileName = fileName;
                 resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "SO&WR_" + actRepDetailId);
-                rootPath = HttpContext.Current.Server.MapPath(fileName);
-                file = AppCode.genPdfFile(htmlSO, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                fileName = "SO&WR_" + actRepDetailId;
+                rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], fileName));
+                file = AppCode.genPdfFile(htmlSO, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                 imageFormModel._fileName = fileName;
                 resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
             }
             catch (Exception ex)
             {
-                throw new Exception("genFilePDFBrandGroup >> " + ex.Message);
+                throw new Exception("genFilePDF >> " + ex.Message);
             }
         }
+
 
         public static int getRepDetailStatus(string repDetailId)
         {
@@ -100,88 +101,116 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByActNo(List<RepDetailModel.actFormRepDetailModel> lists, string actNo)
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByActNo(RepDetailModel.actFormRepDetails model, string actNo)
         {
             try
             {
-                return lists.Where(r => r.activityNo == actNo).ToList();
+
+                model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.activityNo == actNo).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.activityNo == actNo).ToList();
+                return model;
             }
             catch (Exception ex)
             {
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByStatusId(List<RepDetailModel.actFormRepDetailModel> lists, string statusId)
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByStatusId(RepDetailModel.actFormRepDetails model, string statusId)
         {
             try
             {
                 if (statusId == ((int)AppCode.ApproveStatus.เพิ่มเติม).ToString())
                 {
-                    return lists.Where(r => r.createdDate >= r.activityPeriodSt).ToList();
+                    model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.createdDate >= r.activityPeriodSt).ToList();
+                    model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.createdDate >= r.activityPeriodSt).ToList();
                 }
                 else
                 {
-                    return lists.Where(r => r.statusId == statusId && r.createdDate < r.activityPeriodSt).ToList();
+                    model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.statusId == statusId && r.createdDate < r.activityPeriodSt).ToList();
+                    model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.statusId == statusId && r.createdDate < r.activityPeriodSt).ToList();
                 }
+
+                return model;
             }
             catch (Exception ex)
             {
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByCustomer(List<RepDetailModel.actFormRepDetailModel> lists, string customerId)
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByCustomer(RepDetailModel.actFormRepDetails model, string customerId)
         {
             try
             {
-                return lists.Where(r => r.customerId == customerId).ToList();
+                model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.customerId == customerId).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.customerId == customerId).ToList();
+                return model;
             }
             catch (Exception ex)
             {
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByActivity(List<RepDetailModel.actFormRepDetailModel> lists, string activityId)
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByActivity(RepDetailModel.actFormRepDetails model, string activityId)
         {
             try
             {
-                return lists.Where(r => r.theme == activityId).ToList();
+                model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.theme == activityId).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.theme == activityId).ToList();
+                return model;
             }
             catch (Exception ex)
             {
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByProductType(List<RepDetailModel.actFormRepDetailModel> lists, string productType)
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByProductType(RepDetailModel.actFormRepDetails model, string productType)
         {
             try
             {
-                return lists.Where(r => r.productTypeId == productType).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.productTypeId == productType).ToList();
+                model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.productTypeId == productType).ToList();
+                return model;
             }
             catch (Exception ex)
             {
                 throw new Exception("getFilterRepDetailByProductType >>" + ex.Message);
             }
         }
-        public static List<RepDetailModel.actFormRepDetailModel> getFilterRepDetailByProductGroup(List<RepDetailModel.actFormRepDetailModel> lists, string productGroup)
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByProductGroup(RepDetailModel.actFormRepDetails model, string productGroup)
         {
             try
             {
-                return lists.Where(r => r.productGroupid == productGroup).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.productGroupid == productGroup).ToList();
+                model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.productGroupid == productGroup).ToList();
+                return model;
             }
             catch (Exception ex)
             {
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static List<RepDetailModel.actFormRepDetailModel> getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate)
+        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDate"
+                DataSet ds = new DataSet();
+                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                {
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDate"
                     , new SqlParameter[] {
                         new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
-                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
+                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
                     });
+                }
+                else
+                {
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDateAndEmp"
+                    , new SqlParameter[] {
+                        new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
+                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
+                        ,new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
+                    });
+                }
 
                 return dataTableToRepDetailModels(ds);
             }
@@ -191,7 +220,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<RepDetailModel.actFormRepDetailModel> getRepDetailReportByCreateDateAndStatusId(string repDetailId)
+        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string repDetailId)
         {
             try
             {
@@ -208,11 +237,30 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        private static List<RepDetailModel.actFormRepDetailModel> dataTableToRepDetailModels(DataSet ds)
+
+        public static string getRepdetailByActNo(string actNo)
+        {
+          
+            try
+            {
+                object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getRepDetailIdByActNo"
+                    , new SqlParameter[] { new SqlParameter("@actNo", actNo) });
+
+                return obj.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getRepDetailReportByCreateDateAndStatusId >>" + ex.Message);
+            }
+        }
+
+        private static RepDetailModel.actFormRepDetails dataTableToRepDetailModels(DataSet ds)
         {
             try
             {
-                var lists = (from DataRow dr in ds.Tables[0].Rows
+                RepDetailModel.actFormRepDetails actRepModel = new RepDetailModel.actFormRepDetails();
+                actRepModel.actFormRepDetailLists = (from DataRow dr in ds.Tables[0].Rows
                              select new RepDetailModel.actFormRepDetailModel()
                              {
                                  #region detail parse
@@ -231,8 +279,8 @@ namespace eActForm.BusinessLayer
                                  productName = dr["productName"].ToString(),
                                  size = dr["size"].ToString(),
                                  typeTheme = dr["typeTheme"].ToString(),
-                                 normalSale = dr["normalCase"].ToString(),
-                                 promotionSale = dr["promotionCase"].ToString(),
+                                 normalSale = dr["normalCase"] is DBNull ? 0 : (decimal?)dr["normalCase"],
+                                 promotionSale = dr["promotionCase"] is DBNull ? 0 : (decimal?)dr["promotionCase"],
                                  total = dr["total"] is DBNull ? 0 : (decimal?)dr["total"],
                                  specialDisc = dr["specialDisc"] is DBNull ? 0 : (decimal?)dr["specialDisc"],
                                  specialDiscBaht = dr["specialDiscBaht"] is DBNull ? 0 : (decimal?)dr["specialDiscBaht"],
@@ -256,7 +304,55 @@ namespace eActForm.BusinessLayer
 
                              }).ToList();
 
-                return lists;
+                actRepModel.actFormRepDetailGroupLists = actRepModel.actFormRepDetailLists
+                    .GroupBy(item => new {item.activityNo, item.productGroupid
+                    })
+                    .Select((group, index) => new RepDetailModel.actFormRepDetailModel
+                    {
+
+                        #region detail parse
+                        id = group.First().id,
+                        reference = group.First().reference,
+                        statusId = group.First().statusId,
+                        statusName = group.First().statusName,
+                        activityNo = group.First().activityNo,
+                        documentDate = group.First().documentDate,
+                        brandId = group.First().brandId,
+                        customerId = group.First().customerId,
+                        productCateId = group.First().productCateId,
+                        productGroupid = group.First().productGroupid,
+                        cusNameTH = group.First().cusNameTH,
+                        productId = group.First().productId,
+                        productName = group.First().productName,
+                        size = group.First().size,
+                        typeTheme = group.First().typeTheme,
+                        normalSale = group.Sum(x => x.normalSale),
+                        promotionSale = group.Sum(x => x.promotionSale),
+                        total = group.Sum(x => x.total),
+                        specialDisc = group.Sum(x => x.specialDisc),
+                        specialDiscBaht = group.Sum(x => x.specialDiscBaht),
+                        promotionCost = group.Sum(x => x.promotionCost),
+                        channelName = group.First().channelName,
+                        productTypeId = group.First().productTypeId,
+                        activityPeriodSt = group.First().activityPeriodSt,
+                        activityPeriodEnd = group.First().activityPeriodEnd,
+                        costPeriodSt = group.First().costPeriodSt,
+                        costPeriodEnd = group.First().costPeriodEnd,
+                        activityName = group.First().activityName,
+                        theme = group.First().theme,
+                        activityDetail = group.First().activityDetail,
+                        compensate = group.Sum(x => x.compensate),
+                        delFlag = group.First().delFlag,
+                        createdDate = group.First().createdDate,
+                        perGrowth = group.Sum(x => x.perGrowth),
+                        perSE = group.Sum(x => x.perSE),
+                        perToSale = group.Sum(x => x.perToSale),
+                        #endregion
+
+
+                    }).OrderBy(x => x.activityNo).ToList();
+
+                return actRepModel;
             }
             catch (Exception ex)
             {

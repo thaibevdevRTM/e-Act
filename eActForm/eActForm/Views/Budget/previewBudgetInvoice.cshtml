@@ -24,11 +24,6 @@
 		document.getElementById("docDate").innerHTML = d + "/" + m + "/" + y;
 	}
 
-    function onClickClose() {
-        var url = '@Url.Action("activityProduct", "Budget")';
-        window.location.href = url;
-    }
-
 	function onClickSubmitApprove() {
 		$("#WaitDialog").show();
 		submitApproveBudget();
@@ -45,25 +40,12 @@
             url: '@Url.Action("submitPreviewBudget", "BudgetApproveList")',
             data: {
 				GridHtml: $("#GridPDF").html(),
-				budgetActivityId: $("#HbudgetId").val()
+				budgetActivityId: $("#HbudgetId").val(),
+				companyEN: $("#HcompanyEN").val()
             },
             dataType: "json",
             type: 'POST',
 			});
-	}
-
-	function refreshApproveBudget() {
-            $.ajax({
-            url: '@Url.Action("previewApproveBudget", "BudgetApprove")',
-            data: {
-				budgetActivityId: $("#HbudgetId").val()
-            },
-            dataType: "json",
-            type: 'POST',
-            }).done(function (response) {
-                $("#WaitDialog").hide();
-                console.log('success');
-                 });
 	}
 </script>
 
@@ -76,8 +58,7 @@
 </style>
 
 @Html.HiddenFor(m => m.Budget_Activity.budget_id, new { id = "HbudgetId" })
-@*@Html.HiddenFor(m => m.Budget_Activity_list.ElementAt(0).budget_id, new { id = "HbudgetId" })*@
-@*@Html.HiddenFor(m => m.Budget_Approve_detail_list.ElementAt(0).budgetApproveId, new { id = "HbudgetApproveId" })*@
+@Html.HiddenFor(m => m.Budget_Activity.act_companyEN, new { id = "HcompanyEN" })
 
 @if (1 == 1)
 {
@@ -89,7 +70,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<div style=""></div>
-				<button type="button" class="close" data-dismiss="modal" onclick="onClickClose()">&times;</button>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
 			<div class="modal-body">
@@ -103,7 +84,7 @@
 					</style>
 
 					<div>
-						<div style="text-align:center;"><h5>รายละเอียดค่าใช้จ่าย ตั้งจ่ายจริง </h5></div>
+						<div style="text-align:center;"><h5>รายละเอียดตัดจ่ายจริง</h5></div>
 					</div>
 
 					<div>
@@ -127,8 +108,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityNo)
 									}
-
-									@*@Model.Budget_Activity_list.ElementAt(0).act_activityNo*@
 								</td>
 							</tr>
 
@@ -140,7 +119,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityName)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).act_activityName*@
 								</td>
 								<td style="text-align:right;">
 									<label> Document Date : </label> <span id="docDate"></span>
@@ -154,7 +132,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_theme)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).act_theme*@
 								</td>
 								<td style="text-align:right;">
 									<label> ลูกค้า (Customer Name) : </label>
@@ -162,7 +139,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.cus_cusShortName)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).cus_cusShortName*@
 								</td>
 							</tr>
 
@@ -173,14 +149,11 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodSt)
 									}
-									 ถึง 
+									ถึง
 									@if (Model.Budget_Activity.act_activityPeriodEnd.ToString() != "")
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodEnd)
 									}
-
-									@*@Model.Budget_Activity_list.ElementAt(0).act_activityPeriodSt.Value.ToString("dd/MM/yyyy")  to  @Model.Budget_Activity_list.ElementAt(0).act_activityPeriodEnd.Value.ToString("dd/MM/yyyy")*@
-									@*@Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodSt to @Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodEnd*@
 								</td>
 								<td style="text-align:right;">
 									<label> ช่องทาง (Channel) : </label>
@@ -188,7 +161,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.ch_chanelGroup)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).ch_chanelGroup*@
 								</td>
 							</tr>
 
@@ -204,15 +176,13 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_costPeriodEnd)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).act_costPeriodSt.Value.ToString("dd/MM/yyyy")  to  @Model.Budget_Activity_list.ElementAt(0).act_costPeriodEnd .Value.ToString("dd/MM/yyyy")*@
 								</td>
 								<td style="text-align:right;">
 									<label> กลุ่มสินค้า (Product Group) : </label>
 									@if (Model.Budget_Activity.prd_groupShort.ToString() != "")
 									{
-										@Html.DisplayFor(x => x.Budget_Activity.prd_groupShort)
+										@Html.DisplayFor(x => x.Budget_Activity.act_brandName)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).prd_groupShort*@
 								</td>
 							</tr>
 
@@ -223,7 +193,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_objective)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).act_objective*@
 								</td>
 								<td style="text-align:right;"></td>
 							</tr>
@@ -256,13 +225,13 @@
 						<table class="tablethin" style="width:100%; text-align:center; border-color:gray;" border="1" cellpadding="0" cellspacing="0">
 							<tr>
 								<td rowspan="2" style="width:10%; font-size:11px;">ประเภทกิจกรรม</td>
-								<td rowspan="2" style="width:30%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
-								<td colspan="4" style="width:25%; font-size:11px;">จ่ายจริง (Actual)</td>
+								<td rowspan="2" style="width:25%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
+								<td colspan="4" style="width:35%; font-size:11px;">จ่ายจริง (Actual)</td>
 
 								<td rowspan="2" style="width:7%; font-size:11px;">คงเหลือ</td>
 								<td rowspan="2" style="width:7%; font-size:11px;">วันที่ทำรายการ</td>
-								<td rowspan="2" style="width:10%; font-size:11px;">สถานะ</td>
-								<td rowspan="2" style="width:10%; font-size:11px;">สถานะอนุมัติ</td>
+								<td rowspan="2" style="width:7%; font-size:11px;">สถานะ</td>
+								<td rowspan="2" style="width:7%; font-size:11px;">สถานะอนุมัติ</td>
 							</tr>
 							<tr>
 								<td style="font-size:11px;">จำนวนเงินที่ตั้ง</td>
@@ -305,6 +274,8 @@
 											<td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
 											<td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
 
+											@*status == 1 Draft
+											status == 2 รออนุมัติ*@
 											@if (item.invoiceApproveStatusId == 1)
 											{
 												<td style="text-align:center;font-size:12px;"></td>
@@ -314,7 +285,7 @@
 												<td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
 											}
 
-											@if ( item.invoiceApproveStatusId == 1 )
+											@if (item.invoiceApproveStatusId == 2)
 											{
 												count_wait_approve++;
 											}
@@ -348,14 +319,9 @@
 
 						@if (Model.Budget_Activity.budget_id != null)
 						{
-							@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id })
-							@*@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity_list.ElementAt(0).budget_id })*@
+							@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
 						}
-
-
 					</div>
-
-
 				</div>
 			</div>
 
@@ -364,17 +330,13 @@
 					<p class="d-flex justify-content-center">
 
 						<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-						@if (count_wait_approve > 0)
+						@if (count_wait_approve == 0)
 						{
 							<button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
 						}
 					</p>
 				</div>
-
 			</div>
-
-
-
 		</div>
 	</div>
 }

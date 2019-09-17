@@ -79,3 +79,5 @@ D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\WebGrease.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\Antlr3.Runtime.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\Antlr3.Runtime.pdb
+D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
+D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb

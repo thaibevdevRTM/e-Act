@@ -39,6 +39,14 @@ else
             <hr />
             @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
 
+
+            <div class="col-md-12">
+                <div id="divgetimage" class="col-md-12">
+                    @Html.Action("ImageList", "Activity", new { activityId = actId != null ? actId : "" })
+                </div>
+            </div>
+
+
             @using (Ajax.BeginForm("insertApprove", "Approve"
     , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }
     , new { id = "formApprove", @class = "form-horizontal form-label-left" }))
@@ -130,7 +138,6 @@ else
 
 <script>
 
-
     $(document).ready(function () {
         $(".fv").each(function () {
             var v = $(this).val();
@@ -139,6 +146,12 @@ else
             }
         });
         $("#txtRemark").val('');
+
+        var arrayOfElements = document.getElementsByClassName('divDelImg');
+        var lengthOfArray = arrayOfElements.length;
+        for (var i = 0; i < lengthOfArray; i++) {
+            arrayOfElements[i].style.display = 'none';
+        }
 
     });
 
@@ -289,24 +302,19 @@ else
             type: 'POST',
             url: '@Url.Action("previewApprove", "Approve")',
             data: {
-                actId: obj
+                actId: obj,
+                typeForm: '@Model.typeForm.ToString()',
             }
         }).done(function (htmlResponse) {
             $("#divPreviewApprove").html(htmlResponse);
             genPdf();
         });
     }
-
-    function onClickClose() {
-        var url = '@Url.Action("Index", "ApproveLists")';
-        window.location.href = url;
-    }
-
-    function genPdf() {
+        function genPdf() {
         $.ajax({
             url: '@Url.Action("genPdfApprove", "Approve")',
             data: {
-                GridHtml: $("#Grid1").html(),
+                GridHtml: $("#Grid1").html() + $("#GridImg").html(),
                 statusId: $("#ddlStatus").val(),
                 activityId: $("#HdId").val()
             },
@@ -317,6 +325,13 @@ else
             $('#ModalPreviewPDF').modal('show');
         });
     }
+
+    function onClickClose() {
+        var url = '@Url.Action("Index", "ApproveLists")';
+        window.location.href = url;
+    }
+
+
 
 </script>
 

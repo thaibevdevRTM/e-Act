@@ -54,9 +54,7 @@ namespace eActForm.Controllers
 			if (TempData["ApproveSearchResult"] == null)
 			{
 				model = new Budget_Approve_Detail_Model.budgetForms();
-
-				//UtilsAppCode.Session.User.empId = "11025855"; // empid for test approve modele test_emp_id
-				model.budgetFormLists = getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
+				model.budgetFormLists = QueryGetBudgetApprove.getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
 				TempData["ApproveFormLists"] = model.budgetFormLists;
 				model.budgetFormLists = getFilterFormByStatusId(model.budgetFormLists, (int)AppCode.ApproveStatus.รออนุมัติ);
 			}
@@ -65,74 +63,6 @@ namespace eActForm.Controllers
 				model.budgetFormLists = (List<Budget_Approve_Detail_Model.budgetForm>)TempData["ApproveSearchResult"];
 			}
 			return PartialView(model);
-		}
-
-		public static List<Budget_Approve_Detail_Model.budgetForm> getApproveListsByEmpId(string empId)
-		{
-			try
-			{
-				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveBudgetByEmpId"
-					, new SqlParameter[] { new SqlParameter("@empId", empId) });
-				var lists = (from DataRow dr in ds.Tables[0].Rows
-							 select new Budget_Approve_Detail_Model.budgetForm()
-							 {
-								 activityId = dr["ActivityFormId"].ToString(),
-								 statusId = dr["statusId"].ToString(),
-								 statusName = dr["statusName"].ToString(),
-								 activityNo = dr["activityNo"].ToString(),
-
-								 regApproveId = dr["regApproveId"].ToString(),
-								 regApproveFlowId = dr["regApproveFlowId"].ToString(),
-								 budgetApproveId = dr["budgetApproveId"].ToString(),
-								 documentDate = dr["documentDate"] is DBNull ? null : (DateTime?)dr["documentDate"],
-								 
-
-								 reference = dr["reference"].ToString(),
-								 customerId = dr["customerId"].ToString(),
-								 channelName = dr["channelName"].ToString(),
-								 productTypeId = dr["productTypeId"].ToString(),
-								 productTypeNameEN = dr["productTypeNameEN"].ToString(),
-
-								 cusShortName = dr["cusShortName"].ToString(),
-								 productCategory = dr["productCateText"].ToString(),
-								 productGroup = dr["productGroupId"].ToString(),
-								 productGroupName = dr["productGroupName"].ToString(),
-
-								 activityPeriodSt = dr["activityPeriodSt"] is DBNull ? null : (DateTime?)dr["activityPeriodSt"],
-								 activityPeriodEnd = dr["activityPeriodEnd"] is DBNull ? null : (DateTime?)dr["activityPeriodEnd"],
-								 costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
-								 costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
-								 activityName = dr["activityName"].ToString(),
-								 theme = dr["theme"].ToString(),
-								 objective = dr["objective"].ToString(),
-								 trade = dr["trade"].ToString(),
-								 activityDetail = dr["activityDetail"].ToString(),
-
-								 budgetActivityId = dr["budgetActivityId"].ToString(),
-								 //budgetApproveId = dr["budgetApproveId"].ToString(),
-								 approveId = dr["approveId"].ToString(),
-								 approveDetailId = dr["approveDetailId"].ToString(),
-
-								 //delFlag = (bool)dr["delFlag"],
-								 createdDate = (DateTime?)dr["createdDate"],
-								 createdByUserId = dr["createdByUserId"].ToString(),
-								 updatedDate = (DateTime?)dr["updatedDate"],
-								 updatedByUserId = dr["updatedByUserId"].ToString(),
-
-								 normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
-								 themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
-								 totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
-								 totalInvoiceApproveBath = dr["totalInvoiceApproveBath"] is DBNull ? 0 : (decimal?)dr["totalInvoiceApproveBath"]
-
-							 }).ToList();
-				return lists;
-			}
-			catch (Exception ex)
-			{
-				//throw new Exception("getApproveListsByStatusId >> " + ex.Message);
-				ExceptionManager.WriteError("getApproveListsByStatusId >> " + ex.Message);
-				return new List<Budget_Approve_Detail_Model.budgetForm>();
-			}
 		}
 
 		public static List<Budget_Approve_Detail_Model.budgetForm> getFilterFormByStatusId(List<Budget_Approve_Detail_Model.budgetForm> lists, int statusId)
@@ -148,17 +78,16 @@ namespace eActForm.Controllers
 		}
 		//-----------------------------------------------------------------------------------------------------------------
 
-
 		[HttpPost]
 		[ValidateInput(false)]
-		public JsonResult submitPreviewBudget(string GridHtml, string budgetActivityId)
+		public JsonResult submitPreviewBudget(string GridHtml, string budgetActivityId, string companyEN)
 		{
 			
 			var resultAjax = new AjaxResult();
 			try
 			{
 				var budget_approve_id = "";
-				if (BudgetApproveListController.insertApproveForBudgetForm(budgetActivityId) > 0) //usp_insertApproveDetail
+				if (BudgetApproveListController.insertApproveForBudgetForm(budgetActivityId, companyEN) > 0) //usp_insertApproveDetail
 				{
 					budget_approve_id = getApproveBudgetId(budgetActivityId);
 					BudgetApproveListController.updateApproveWaitingByRangNo(budget_approve_id);
@@ -182,7 +111,7 @@ namespace eActForm.Controllers
 			return Json(resultAjax, "text/plain");
 		}
 
-		public static int insertApproveForBudgetForm(string budgetActivityId)
+		public static int insertApproveForBudgetForm(string budgetActivityId , string companyEN)
 		{
 			try
 			{
@@ -191,9 +120,16 @@ namespace eActForm.Controllers
 
 				if (BudgetApproveController.getApproveByBudgetApproveId(budget_approve_id).approveDetailLists.Count == 0)
 				{
-					//ApproveFlowModel.approveFlowModel flowModel = getFlowIdBudget(ConfigurationManager.AppSettings["subjectBudgetFormId"], budgetActivityId);
-					ApproveFlowModel.approveFlowModel flowModel = getFlowIdBudgetByBudgetActivityId(ConfigurationManager.AppSettings["subjectBudgetFormId"], budgetActivityId);
-					return insertApproveByFlowBudget(flowModel, budget_approve_id);
+					if (companyEN == "MT")
+					{
+						ApproveFlowModel.approveFlowModel flowModel = getFlowIdBudgetByBudgetActivityId(ConfigurationManager.AppSettings["subjectBudgetFormId"], budgetActivityId);
+						return insertApproveByFlowBudget(flowModel, budget_approve_id);
+					}
+					else
+					{
+						ApproveFlowModel.approveFlowModel flowModel = getFlowIdBudgetByBudgetActivityIdOMT(ConfigurationManager.AppSettings["subjectBudgetFormId"], budgetActivityId);
+						return insertApproveByFlowBudget(flowModel, budget_approve_id);
+					}
 				}
 				else return 999; // alredy approve
 			}
@@ -213,7 +149,6 @@ namespace eActForm.Controllers
 				, new SqlParameter[] 
 				{
 				 new SqlParameter("@budgetActivityId", budgetActivityId)
-				 //,new SqlParameter("@createdByUserId", "70016911") //test_emp_id
 				,new SqlParameter("@createdByUserId", UtilsAppCode.Session.User.empId) 
 				});
 
@@ -239,7 +174,6 @@ namespace eActForm.Controllers
 				model.delFlag = false;
 				model.createdDate = DateTime.Now;
 				model.createdByUserId = UtilsAppCode.Session.User.empId; 
-				//model.createdByUserId = "70016911"; //test_emp_id
 				model.updatedDate = DateTime.Now;
 				model.updatedByUserId = UtilsAppCode.Session.User.empId;
 				list.Add(model);
@@ -263,10 +197,8 @@ namespace eActForm.Controllers
 							,new SqlParameter("@delFlag",false)
 							,new SqlParameter("@createdDate",DateTime.Now)
 							,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
-							//,new SqlParameter("@createdByUserId","70016911")test_emp_id
 							,new SqlParameter("@updatedDate",DateTime.Now)
 							,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
-							//,new SqlParameter("@updatedByUserId","'70016911'")test_emp_id
 						});
 				}
 
@@ -287,7 +219,6 @@ namespace eActForm.Controllers
 					, new SqlParameter[] {new SqlParameter("@rangNo",1)
 					,new SqlParameter("@actId", budgetId)
 					,new SqlParameter("@updateBy", UtilsAppCode.Session.User.empId)
-					//,new SqlParameter("@updateBy", "70016911") test_emp_id
 					,new SqlParameter("@updateDate", DateTime.Now)
 					});
 			}
@@ -331,6 +262,36 @@ namespace eActForm.Controllers
 						  new SqlParameter("@subId",subId)
 						, new SqlParameter("@budgetActivityId",budgetActivityId)
 					});
+
+				var lists = (from DataRow dr in ds.Tables[0].Rows
+							 select new ApproveFlowModel.flowApprove()
+							 {
+								 id = dr["id"].ToString(),
+							 }).ToList();
+				if (lists.Count > 0)
+				{
+					model.flowMain = lists[0];
+					model.flowDetail = getFlowDetailBudget(model.flowMain.id);
+				}
+				return model;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("getFlow Budget By BudgetActivityId >>" + ex.Message);
+			}
+		}
+
+		public static ApproveFlowModel.approveFlowModel getFlowIdBudgetByBudgetActivityIdOMT(string subId, string budgetActivityId)
+		{
+			try
+			{
+				ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowByBudgetActivtyIdOMT"
+					, new SqlParameter[] {
+						  new SqlParameter("@subId",subId)
+						, new SqlParameter("@budgetActivityId",budgetActivityId)
+					});
+
 				var lists = (from DataRow dr in ds.Tables[0].Rows
 							 select new ApproveFlowModel.flowApprove()
 							 {
@@ -355,7 +316,6 @@ namespace eActForm.Controllers
 			{
 				ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowIdByBudgetApproveId"
-					//DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowIdByBudgetActivityId"
 					, new SqlParameter[] {
 						new SqlParameter("@budgetApproveId",budget_approve_id)
 					});

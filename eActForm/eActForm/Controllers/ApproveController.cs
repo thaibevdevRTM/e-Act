@@ -20,13 +20,34 @@ namespace eActForm.Controllers
             if (actId == null) return RedirectToAction("index", "Home");
             else
             {
+                
                 ActSignatureModel.SignModels signModels = SignatureAppCode.currentSignatureByEmpId(UtilsAppCode.Session.User.empId);
-                if(signModels.lists == null || signModels.lists.Count == 0)
+                if (signModels.lists == null || signModels.lists.Count == 0)
                 {
                     ViewBag.messCannotFindSignature = true;
                 }
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
                 models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app).Where(x => x.id == "3" || x.id == "5").ToList();
+
+                List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
+                if (getActList.Any())
+                {
+                    if (getActList.FirstOrDefault().chanel_Id != "")
+                    {
+                        models.typeForm = Activity_Model.activityType.MT.ToString();
+                    }
+                    else
+                    {
+                        models.typeForm = Activity_Model.activityType.OMT.ToString();
+                    }
+
+                }
+                else
+                {
+                    models.typeForm = "";
+                }
+
+
                 return View(models);
             }
         }
@@ -76,14 +97,14 @@ namespace eActForm.Controllers
         }
 
 
-        public ActionResult previewApprove(string actId)
+        public ActionResult previewApprove(string actId, string typeForm)
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
             activityModel.productImageList = ImageAppCode.GetImage(actId).Where(x => x.extension != ".pdf").ToList();
-
+            activityModel.activityFormModel.typeForm = typeForm;
             return PartialView(activityModel);
         }
 

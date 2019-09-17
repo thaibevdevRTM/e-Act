@@ -2,6 +2,7 @@
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -28,8 +29,8 @@ namespace eActForm.BusinessLayer
                 model.activityFormModel.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null :
                    DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                 model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
-                   DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture); ;
-                model.activityFormModel.activityNo = model.activityFormModel.activityNo != null ? model.activityFormModel.activityNo : "---";
+                   DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                model.activityFormModel.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo ;
                 model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
                 model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
@@ -202,6 +203,8 @@ namespace eActForm.BusinessLayer
                     else
                     {
                         result[0] = getActList.FirstOrDefault().activityNo.ToString();
+                        result[1] = UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] ? Activity_Model.activityType.OMT.ToString() : Activity_Model.activityType.MT.ToString();
+
                     }
                 }
 
@@ -438,6 +441,26 @@ namespace eActForm.BusinessLayer
                 ExceptionManager.WriteError("getAllProductCate => " + ex.Message);
                 return new List<TB_Act_ActivityFormDocNo_Model>();
             }
+        }
+
+
+        public static string getStatusActivity(string actId)
+        {
+            string result = "";
+            try
+            {
+                object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCheckStatusActivity"
+                    , new SqlParameter[] { new SqlParameter("@actId", actId) });
+                result = obj.ToString();
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                return result = "";
+                throw new Exception("getStatusActivity >>" + ex.Message);
+            }
+
         }
 
     }

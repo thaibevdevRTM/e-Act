@@ -117,11 +117,41 @@ namespace eActForm.BusinessLayer
                 {
                     rtn = updateActRepDetailStatus(statusId, actFormId);
                 }
+                else if (approveType == AppCode.ApproveType.Report_Summary.ToString())
+                {
+                    rtn = updateSummaryDetailStatus(statusId, actFormId);
+                }
+
                 return rtn;
             }
             catch (Exception ex)
             {
                 throw new Exception("updateApprove >> " + ex.Message);
+            }
+        }
+
+        private static int updateSummaryDetailStatus(string statusId, string actFormId)
+        {
+            try
+            {
+                int rtn = 0;
+                // update activity form
+                if (statusId == ConfigurationManager.AppSettings["statusReject"])
+                {
+                    // update reject
+                    rtn += ReportSummaryAppCode.updateSummaryReportWithApproveReject(actFormId);
+                }
+                else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
+                {
+                    // update approve
+                    rtn += ReportSummaryAppCode.updateSummaryReportWithApproveDetail(actFormId);
+
+                }
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
@@ -202,6 +232,9 @@ namespace eActForm.BusinessLayer
                 throw new Exception("updateActFormWithApproveDetail >> " + ex.Message);
             }
         }
+
+        
+
 
         /// <summary>
         /// for Activity Form
