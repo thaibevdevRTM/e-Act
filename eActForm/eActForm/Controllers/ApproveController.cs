@@ -116,12 +116,12 @@ namespace eActForm.Controllers
 
         public ActionResult getApproveComment(string actId, string actTypeName)
         {
-            ApproveModel.approveDetailModel model = null;
+            ApproveModel.approveModels model = new ApproveModel.approveModels();
             try
             {
                 if (actTypeName == "FOC" && ConfigurationManager.AppSettings["empIdShowAtCommentApproved"].Contains(UtilsAppCode.Session.User.empId))
                 {
-                    model = ApproveAppCode.getRemarkApprovedByEmpId(actId, UtilsAppCode.Session.User.empId);
+                    model.approveDetailLists = ApproveAppCode.getRemarkApprovedByEmpId(actId, UtilsAppCode.Session.User.empId);
                 }
             }
             catch (Exception ex)
