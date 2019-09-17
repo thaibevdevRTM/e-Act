@@ -40,9 +40,11 @@ namespace eActForm.Controllers
         public ActionResult showDetailGroup(string rowId , string actId)
         {
             Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+actId];
-            activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).OrderBy(x => x.productName).ToList();
+            Activity_Model ShowList_Product = new Activity_Model();
+            ShowList_Product.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).OrderBy(x => x.productName).ToList();
 
-            return PartialView(activityModel);
+            TempData.Keep();
+            return PartialView(ShowList_Product);
         }
 
         public JsonResult delCostDetail(string rowid, string id)
