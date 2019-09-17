@@ -20,7 +20,7 @@ namespace eActForm.Controllers
             if (actId == null) return RedirectToAction("index", "Home");
             else
             {
-                
+
                 ActSignatureModel.SignModels signModels = SignatureAppCode.currentSignatureByEmpId(UtilsAppCode.Session.User.empId);
                 if (signModels.lists == null || signModels.lists.Count == 0)
                 {
@@ -70,6 +70,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("insertApprove >>" + ex.Message);
                 result.Message = ex.Message;
             }
             return Json(result);
@@ -91,6 +92,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("approvePositionSignatureLists >>" + ex.Message);
                 TempData["approvePositionSignatureError"] = AppCode.StrMessFail + ex.Message;
             }
             return PartialView(models);
@@ -100,12 +102,36 @@ namespace eActForm.Controllers
         public ActionResult previewApprove(string actId, string typeForm)
         {
             Activity_Model activityModel = new Activity_Model();
-            activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
-            activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
-            activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
-            activityModel.productImageList = ImageAppCode.GetImage(actId).Where(x => x.extension != ".pdf").ToList();
-            activityModel.activityFormModel.typeForm = typeForm;
+            try
+            {
+                activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
+                activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
+                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
+                activityModel.productImageList = ImageAppCode.GetImage(actId).Where(x => x.extension != ".pdf").ToList();
+                activityModel.activityFormModel.typeForm = typeForm;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("previewApprove >>" + ex.Message);
+            }
             return PartialView(activityModel);
+        }
+
+        public ActionResult getApproveComment(string actId, string actTypeName)
+        {
+            ApproveModel.approveModels model = new ApproveModel.approveModels();
+            try
+            {
+                if (actTypeName == "FOC" && ConfigurationManager.AppSettings["empIdShowAtCommentApproved"].Contains(UtilsAppCode.Session.User.empId))
+                {
+                    model.approveDetailLists = ApproveAppCode.getRemarkApprovedByEmpId(actId, UtilsAppCode.Session.User.empId);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getApproveComment >>" + ex.Message);
+            }
+            return PartialView(model);
         }
 
 
