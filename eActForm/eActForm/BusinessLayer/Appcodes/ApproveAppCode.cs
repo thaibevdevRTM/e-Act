@@ -33,13 +33,13 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static ApproveModel.approveDetailModel getRemarkApprovedByEmpId(string actId, string empId)
+        public static List<ApproveModel.approveDetailModel> getRemarkApprovedByEmpId(string actId, string empId)
         {
             try
             {
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
                 var empUser = models.approveDetailLists.Where(r => r.empId == empId).ToList();
-                return empUser.Count > 0 ? empUser[0] : null;
+                return empUser;
             }
             catch (Exception ex)
             {
