@@ -309,19 +309,31 @@ namespace eActForm.Controllers
 			return PartialView(getBudImageModel);
 		}
 
-		public JsonResult manageInvoiceEditSubmit(string id,string invoiceNo , string remark)
+		public JsonResult manageInvoiceEditSubmit(string id,string invoiceNo , string remark , string companyEN)
 		{
 			var resultAjax = new AjaxResult();
 			try
 			{
-
 				TB_Bud_Image_Model.BudImageModel budgetInvoiceModel = new TB_Bud_Image_Model.BudImageModel();
 				budgetInvoiceModel.id = id;
 				budgetInvoiceModel.invoiceNo = invoiceNo;
 				budgetInvoiceModel.remark = remark;
-
+				budgetInvoiceModel.company = companyEN;
 				budgetInvoiceModel.updatedByUserId = UtilsAppCode.Session.User.empId;
 				budgetInvoiceModel.updatedDate = DateTime.Now;
+
+				TB_Bud_Image_Model.BudImageModels getBudImageModel = new TB_Bud_Image_Model.BudImageModels();
+				getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(null, budgetInvoiceModel.invoiceNo, null, null, null, budgetInvoiceModel.company);
+				if (getBudImageModel.tbBudImageList.Any())
+				{
+					resultAjax.Code = 2;
+					resultAjax.Message = getBudImageModel.tbBudImageList.ElementAtOrDefault(0).invoiceNo;
+				}
+				else
+				{
+					resultAjax.Code = 0;
+					resultAjax.Message = null;
+				}
 
 				//update image invoice
 				int countSuccess = ImageAppCodeBudget.updateImageBudget(budgetInvoiceModel);

@@ -81,7 +81,7 @@
 
 								@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
 								{
-									<a href="javascript:" onclick="return callPreviewApprove('@item.budgetApproveId','@item.statusId');">
+									<a href="javascript:" onclick="return CallReBudgetApprovePdf('@item.budgetApproveId','@item.statusId');">
 										<i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
 									</a>
 								}
@@ -148,17 +148,18 @@
 		$("#WaitDialog").show();
 	}
 
-	 function callPreviewApprove(actId, statusId) {
+	function CallReBudgetApprovePdf(actId, statusId) {
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("previewApproveBudget", "BudgetApprove")',
+            url: '@Url.Action("regenBudgetApprovePdf", "BudgetViewer")',
             data: {
 				budgetApproveId: actId
             }
         }).done(function (htmlResponse) {
             genPdf(actId, statusId, htmlResponse);
         });
-    }
+	}
+
     function genPdf(actId, statusId, htmlResponse) {
         $.ajax({
             url: '@Url.Action("genPdfApprove", "BudgetMyDoc")',

@@ -75,7 +75,7 @@
 	<div id="divUploadImg" class="col-md-6">
 
 		<div class="col-12">
-			<p class="lead">อัพโหลด รูปภาพ</p>
+			<p class="lead">อัพโหลดใบแจ้งหนี้ (pdf)</p>
 		</div>
 		<div class="col-md-12" id="divUploadFiles">
 			<form action="@Url.Action("manageInvoiceUpload", "Budget", new { company = var_companyEN })" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
@@ -218,11 +218,22 @@
 					id: $("#hd_imageId").val(),
 					invoiceNo: $("#txt_invoice_no").val(),
 					remark: $("#txt_remark").val(),
+					companyEN: '@(var_companyEN)',
 				},
 				dataType: "json",
 				type: 'POST',
-				success: function (response) {
+				success: function (result) {
 					$('#myModalInvoice').modal('hide');
+
+					if (result.Message != null) {
+						var msg = "";
+						msg = "<h5>หมายเลขใบแจ้งหนี้ <b style='color:red'> " + result.Message + "</b> ซ้ำ </h5>";
+						bootbox.alert({
+							title: "แจ้งเตือน",
+							message: msg
+						});
+					}
+
 					callManageInvoiceList();
 				}
 			})
