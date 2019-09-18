@@ -33,19 +33,48 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static ApproveModel.approveDetailModel getRemarkApprovedByEmpId(string actId, string empId)
+        public static string getEmailCCByActId(string actId , string status)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmailCC"
+                     , new SqlParameter[] { new SqlParameter("@actId", actId)
+                     ,new SqlParameter("@status",status) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveModel.approveDetailModel()
+                             {
+                                 empEmail = dr["empEmail"].ToString()
+                             }).ToList();
+
+                string emailCC = "";
+                if (lists.Any())
+                {
+                    emailCC = (string.Join(",", lists.Select(x => x.empEmail.ToString()).ToArray()));
+                }
+
+                return emailCC;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getEmailCCByActId >> " + ex.Message);
+            }
+        }
+
+        public static List<ApproveModel.approveDetailModel> getRemarkApprovedByEmpId(string actId, string empId)
         {
             try
             {
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
                 var empUser = models.approveDetailLists.Where(r => r.empId == empId).ToList();
-                return empUser.Count > 0 ? empUser[0] : null;
+                return empUser;
             }
             catch (Exception ex)
             {
                 throw new Exception("getRemarkApprovedByEmpId >> " + ex.Message);
             }
         }
+
+
         public static List<ApproveModel.approveWaitingModel> getAllWaitingApproveGroupByEmpId()
         {
             try

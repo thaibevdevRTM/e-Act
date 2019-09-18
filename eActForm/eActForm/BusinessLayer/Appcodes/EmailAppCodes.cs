@@ -252,7 +252,7 @@ namespace eActForm.BusinessLayer
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
                             , item.empEmail
-                            , ""
+                            , ApproveAppCode.getEmailCCByActId(actFormId, "")
                             , strSubject
                             , strBody
                             , emailType);
@@ -285,7 +285,7 @@ namespace eActForm.BusinessLayer
 
                             sendEmailActForm(actFormId
                             , createUsers.FirstOrDefault().empEmail
-                            , ""
+                            , ApproveAppCode.getEmailCCByActId(actFormId,"3")
                             , ConfigurationManager.AppSettings["emailAllApprovedSubject"]
                             , strBody
                             , emailType);
