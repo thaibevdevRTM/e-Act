@@ -60,7 +60,7 @@ namespace eActForm.Models
 
         public static string checkNullorEmpty(string p)
         {
-            return p == "" || p == null || p == "0" || p == "0.00" || p == "0.000" || p == "0.0000" ? "0" : p;
+            return p == "" || p == null || p == "0" || p == "0.00" || p == "0.000" || p == "0.0000" || p == "0.00000" ? "0" : p;
         }
 
         public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc)

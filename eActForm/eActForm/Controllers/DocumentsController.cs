@@ -20,11 +20,22 @@ namespace eActForm.Controllers
             return View();
         }
 
-        public ActionResult reportDetail()
+        public ActionResult reportDetail(string typeForm)
         {
             try
             {
                 SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                {
+                    if (typeForm == Activity_Model.activityType.MT.ToString())
+                    {
+                        models.customerslist = QueryGetAllCustomers.getCustomersMT();
+                    }
+                    else
+                    {
+                        models.customerslist = QueryGetAllCustomers.getCustomersOMT();
+                    }
+                }
                 return View(models);
             }
             catch (Exception ex)

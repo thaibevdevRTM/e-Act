@@ -32,6 +32,20 @@ namespace eActForm.BusinessLayer
                 throw new Exception("setCountWatingApprove >>" + ex.Message);
             }
         }
+
+        public static List<ApproveModel.approveDetailModel> getRemarkApprovedByEmpId(string actId, string empId)
+        {
+            try
+            {
+                ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
+                var empUser = models.approveDetailLists.Where(r => r.empId == empId).ToList();
+                return empUser;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getRemarkApprovedByEmpId >> " + ex.Message);
+            }
+        }
         public static List<ApproveModel.approveWaitingModel> getAllWaitingApproveGroupByEmpId()
         {
             try
@@ -233,7 +247,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        
+
 
 
         /// <summary>
@@ -412,7 +426,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static int clearStatusApproveAndInsertHistory(string activityId )
+        public static int clearStatusApproveAndInsertHistory(string activityId)
         {
             int result = 0;
             try
