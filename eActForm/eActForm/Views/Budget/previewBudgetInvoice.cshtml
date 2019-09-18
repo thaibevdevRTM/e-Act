@@ -9,20 +9,20 @@
 <script type="text/javascript">
 
 	$('document').ready(function () {
-		showCurrentDate();
+		//showCurrentDate();
 	});
 
-	function showCurrentDate() {
-		n = new Date();
-		y = n.getFullYear();
-		m = n.getMonth() + 1;
-		d = n.getDate();
+	//function showCurrentDate() {
+	//	n = new Date();
+	//	y = n.getFullYear();
+	//	m = n.getMonth() + 1;
+	//	d = n.getDate();
 
-		if (m < 10) { m = '0' + m }
-		if (d < 10) { d = '0' + d }
+	//	if (m < 10) { m = '0' + m }
+	//	if (d < 10) { d = '0' + d }
 
-		document.getElementById("docDate").innerHTML = d + "/" + m + "/" + y;
-	}
+	//	document.getElementById("docDate").innerHTML = d + "/" + m + "/" + y;
+	//}
 
 	function onClickSubmitApprove() {
 		$("#WaitDialog").show();
@@ -121,7 +121,8 @@
 									}
 								</td>
 								<td style="text-align:right;">
-									<label> Document Date : </label> <span id="docDate"></span>
+									<label> Document Date : </label>
+									@Html.Label("docDate", DateTime.Now.ToString("dd-MM-yyyy"))
 								</td>
 							</tr>
 
