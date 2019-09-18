@@ -53,16 +53,25 @@ namespace eActForm.Controllers
 				}
 
 
-				TB_Bud_Image_Model.BudImageModels getBudImageModel = new TB_Bud_Image_Model.BudImageModels();
-				getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(budgetInvoiceModel.budgetImageId, null, null, null, null, null);
+				
 
-				if (getBudImageModel.tbBudImageList.Any()) // True, the list is not empty
+				if (budgetInvoiceModel.budgetImageId != null)
 				{
-					if (getBudImageModel.tbBudImageList.ElementAtOrDefault(0).count_activityNo > 1 )
+					TB_Bud_Image_Model.BudImageModels getBudImageModel = new TB_Bud_Image_Model.BudImageModels();
+					getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(budgetInvoiceModel.budgetImageId, null, null, null, null, null);
+					if (getBudImageModel.tbBudImageList.Any()) // True, the list is not empty
 					{
-						resultAjax.Code = 2;
-						resultAjax.Message = getBudImageModel.tbBudImageList.ElementAtOrDefault(0).invoiceNo;
+						if (getBudImageModel.tbBudImageList.ElementAtOrDefault(0).count_activityNo > 1)
+						{
+							resultAjax.Code = 2;
+							resultAjax.Message = getBudImageModel.tbBudImageList.ElementAtOrDefault(0).invoiceNo;
+						}
 					}
+				}
+				else
+				{
+					resultAjax.Code = 0;
+					resultAjax.Message = null;
 				}
 
 				//resultAjax.ActivityId = Session["activityId"].ToString();
