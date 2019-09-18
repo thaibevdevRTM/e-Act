@@ -181,28 +181,35 @@ namespace eActForm.Controllers
 			try
 			{
 
-				var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId);
+				var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId + "_");
 				GridHtml = GridHtml.Replace("<br>", "<br/>");
 				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
 
-				//TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-				//getImageModel.tbActImageList = ImageAppCode.GetImage(budgetApproveId).Where(x => x.extension == ".pdf").ToList();
-				//string[] pathFile = new string[getImageModel.tbActImageList.Count + 1];
-				//pathFile[0] = Server.MapPath(rootPathInsert);
+				TB_Bud_Image_Model.BudImageModels getBudgetImageModel = new TB_Bud_Image_Model.BudImageModels();
+				getBudgetImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budgetApproveId);
 
+				string[] pathFile = new string[getBudgetImageModel.tbBudImageList.Count + 1];
+				pathFile[0] = Server.MapPath(rootPathInsert);
 
-				//if (getImageModel.tbActImageList.Any())
-				//{
-				//	int i = 1;
-				//	foreach (var item in getImageModel.tbActImageList)
-				//	{
-				//		pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-				//		i++;
-				//	}
-				//}
+				if (getBudgetImageModel.tbBudImageList.Any())
+				{
+					int i = 1;
+					foreach (var item in getBudgetImageModel.tbBudImageList)
+					{
+						if (System.IO.File.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName))))
+						{
+							pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));
+						}
+						else {
+							pathFile = pathFile.Where((val, idx) => idx != i).ToArray();
+						}
+						i++;
+					}
+				}
 
-				//var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
-				//var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+				var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
+				var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+
 				resultAjax.Success = true;
 			}
 			catch (Exception ex)
