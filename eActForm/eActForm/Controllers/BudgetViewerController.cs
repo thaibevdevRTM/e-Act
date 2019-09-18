@@ -17,7 +17,7 @@ namespace eActForm.Controllers
             return View();
         }
 
-		public ActionResult activityPDFView(string budgetApproveId)
+		public ActionResult activityPDFView(string budgetApproveId )
 		{
 	
 			//var var_budgetActivityId = BudgetApproveListController.getApproveBudgetId(budgetActivityId);
@@ -26,11 +26,14 @@ namespace eActForm.Controllers
 			return PartialView();
 		}
 
-		public PartialViewResult regenBudgetApprovePdf(string budgetApproveId)
+		public PartialViewResult regenBudgetApprovePdf(string budgetApproveId, string activityId)
 		{
 			Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
 			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(null, budgetApproveId);
-			Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, null, null, budgetApproveId, null).FirstOrDefault();
+			//Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, null, null, budgetApproveId, null).FirstOrDefault();
+
+			Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, null).FirstOrDefault();
+
 			Budget_Model.Budget_Approve_detail_list = QueryGetBudgetApprove.getBudgetApproveId(budgetApproveId);
 			return PartialView(Budget_Model);
 
@@ -39,30 +42,30 @@ namespace eActForm.Controllers
 
 		}
 
-		//public ActionResult getPdfBudget(string budgetApproveId)
-		//{
-		//	string rootPath = "", mapPath = "";
+		public ActionResult getPdfBudget(string budgetApproveId)
+		{
+			string rootPath = "", mapPath = "";
 
-		//	try
-		//	{
-		//		rootPath = ConfigurationManager.AppSettings["rootBudgetPdftURL"];
-		//		if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, budgetApproveId))))
-		//		{
-		//			budgetApproveId = "fileNotFound";
-		//		}
+			try
+			{
+				rootPath = ConfigurationManager.AppSettings["rootBudgetPdftURL"];
+				if (!System.IO.File.Exists(Server.MapPath(string.Format(rootPath, budgetApproveId))))
+				{
+					budgetApproveId = "fileNotFound";
+				}
 
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		ExceptionManager.WriteError(ex.Message);
-		//	}
-		//	var fileStream = new FileStream(Server.MapPath(string.Format(rootPath, budgetApproveId)),
-		//											 FileMode.Open,
-		//											 FileAccess.Read
-		//										   );
-		//	var fsResult = new FileStreamResult(fileStream, "application/pdf");
-		//	return fsResult;
-		//}
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError(ex.Message);
+			}
+			var fileStream = new FileStream(Server.MapPath(string.Format(rootPath, budgetApproveId)),
+													 FileMode.Open,
+													 FileAccess.Read
+												   );
+			var fsResult = new FileStreamResult(fileStream, "application/pdf");
+			return fsResult;
+		}
 
 		//---------------------------------------------------------------------------------------------------
 

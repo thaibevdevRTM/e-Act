@@ -7,49 +7,6 @@
 	Layout = null;
 }
 
-<script type="text/javascript">
-
-	$('document').ready(function () {
-		//showCurrentDate();
-	});
-
-	//function showCurrentDate() {
-	//	n = new Date();
-	//	y = n.getFullYear();
-	//	m = n.getMonth() + 1;
-	//	d = n.getDate();
-
-	//	if (m < 10) { m = '0' + m }
-	//	if (d < 10) { d = '0' + d }
-
-	//	document.getElementById("docDate").innerHTML = d + "/" + m + "/" + y;
-	//}
-
-    function onClickClose() {
-        var url = '@Url.Action("index", "BudgetApproveList")';
-        window.location.href = url;
-    }
-
-	function genPdfApproveBudget() {
-			$("#WaitDialog").show();
-            $.ajax({
-            url: '@Url.Action("genPdfApproveBudget", "BudgetApprove")',
-            data: {
-				GridHtml: $("#GridPDFApprove").html(),
-                statusId: $("#ddlStatus").val(),
-				budgetApproveId: $("#HbudgetApproveId").val()
-            },
-            dataType: "json",
-            type: 'POST',
-            }).done(function (response) {
-                $("#WaitDialog").hide();
-                console.log("genPdff");
-                console.log('success');
-                 });
-	}
-
-</script>
-
 <style type="text/css">
 
 	.my-bootbox-class .modal-dialog {

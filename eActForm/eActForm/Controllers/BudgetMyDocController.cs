@@ -121,6 +121,7 @@ namespace eActForm.Controllers
 							 {
 								 statusId = dr["statusId"].ToString(),
 								 statusName = dr["statusName"].ToString(),
+								 activityId = dr["activityId"].ToString(),
 								 activityNo = dr["activityNo"].ToString(),
 
 								 budgetApproveId = dr["budgetApproveId"].ToString(),
@@ -175,7 +176,7 @@ namespace eActForm.Controllers
 
 		[HttpPost]
 		[ValidateInput(false)]
-		public JsonResult genPdfApprove(string GridHtml, string statusId, string budgetApproveId)
+		public JsonResult genPdfApprove(string GridHtml, string statusId, string budgetApproveId, string activityId)
 		{
 			var resultAjax = new AjaxResult();
 			try
