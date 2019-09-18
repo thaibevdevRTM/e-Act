@@ -33,13 +33,12 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static string getEmailCCByActId(string actId , string status)
+        public static string getEmailCCByActId(string actId)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmailCC"
-                     , new SqlParameter[] { new SqlParameter("@actId", actId)
-                     ,new SqlParameter("@status",status) });
+                     , new SqlParameter[] { new SqlParameter("@actId", actId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveModel.approveDetailModel()
                              {

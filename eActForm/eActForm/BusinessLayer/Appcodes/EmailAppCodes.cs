@@ -252,7 +252,7 @@ namespace eActForm.BusinessLayer
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
                             , item.empEmail
-                            , ApproveAppCode.getEmailCCByActId(actFormId, "")
+                            , ""
                             , strSubject
                             , strBody
                             , emailType);
@@ -285,7 +285,7 @@ namespace eActForm.BusinessLayer
 
                             sendEmailActForm(actFormId
                             , createUsers.FirstOrDefault().empEmail
-                            , ApproveAppCode.getEmailCCByActId(actFormId,"3")
+                            , ApproveAppCode.getEmailCCByActId(actFormId)
                             , ConfigurationManager.AppSettings["emailAllApprovedSubject"]
                             , strBody
                             , emailType);
@@ -304,8 +304,9 @@ namespace eActForm.BusinessLayer
         {
             List<Attachment> files = new List<Attachment>();
             string[] pathFile = new string[10];
+            mailCC = mailCC != "" ? ","+mailCC: "";
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailCC;
+            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] + mailCC : mailCC;
             //pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
 
             //    HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
@@ -351,6 +352,7 @@ namespace eActForm.BusinessLayer
                     files.Add(new Attachment(item, new ContentType("application/pdf")));
                 }
             }
+
 
             sendEmail(mailTo
                     , mailCC == "" ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC
