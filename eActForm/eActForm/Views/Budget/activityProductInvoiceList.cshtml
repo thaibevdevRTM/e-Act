@@ -63,7 +63,7 @@
 						<td style="text-align:left;">
 
 							<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-							<a onclick="callApproveList('@item.budgetApproveId');"> <i class="btn ink-reaction btn-dark fa fa-eye"></i> </a>
+							<a onclick="callApproveList('@last.budgetApproveId');"> <i class="btn ink-reaction btn-dark fa fa-eye"></i> </a>
 
 							@if (item.invoiceApproveStatusId == 1) // draff
 							{

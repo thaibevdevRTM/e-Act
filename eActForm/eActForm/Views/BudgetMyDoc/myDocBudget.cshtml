@@ -126,7 +126,7 @@
 	</div>
 </div>
 
-<div class="modal fade" id="ModalPreviewPDF" style="display:none">
+<div id="ModalPreviewPDF" style="display:none">
 	<div id="divRegenBudgetApprovePdf">
 	</div>
 </div>
@@ -155,9 +155,7 @@
 	}
 
 	function CallReBudgetApprovePdf(budgetapproveId, activityId, statusId) {
-		alert(activityId);
-
-        $.ajax({
+		$.ajax({
             type: 'POST',
             url: '@Url.Action("regenBudgetApprovePdf", "BudgetViewer")',
             data: {
