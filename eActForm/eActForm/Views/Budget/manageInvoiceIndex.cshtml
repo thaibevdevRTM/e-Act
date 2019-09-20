@@ -10,11 +10,18 @@
 }
 
 <script src="~/Scripts/jquery-1.11.2.min.js"></script>
-<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+
+<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
 
 
 <style type="text/css">
@@ -120,6 +127,7 @@
 
 	};
 
+
 	function callManageInvoiceList() {
         $.ajax({
             type: 'POST',
@@ -129,12 +137,13 @@
             }
         }).done(function (htmlResponse) {
 			$("#divManageInvoiceList").html(htmlResponse);
-			var elmnt = document.getElementById("divManageInvoiceList");
-			elmnt.scrollIntoView();
+			//var elmnt = document.getElementById("divManageInvoiceList");
+			//elmnt.scrollIntoView();
         });
 	}
 
 	function callManageInvoiceView(id) {
+		
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("manageInvoiceView", "Budget")',
@@ -219,6 +228,9 @@
 					invoiceNo: $("#txt_invoice_no").val(),
 					remark: $("#txt_remark").val(),
 					companyEN: '@(var_companyEN)',
+					regionId: $("#txt_region_id").val(),
+					customerId: $("#txt_customer_id").val(),
+
 				},
 				dataType: "json",
 				type: 'POST',

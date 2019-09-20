@@ -32,7 +32,14 @@ namespace eActForm.Models
 			public string extension { get; set; }
 			public string remark { get; set; }
 			public string typeFiles { get; set; }
+
+			public string companyId { get; set; }
+			public string regionId { get; set; }
+			public string customerId { get; set; }
+
 			public string company { get; set; }
+			public string regionName { get; set; }
+			public string customerName { get; set; }
 
 			public string budgetApproveId { get; set; }
 			public string budgetActivityId { get; set; }
