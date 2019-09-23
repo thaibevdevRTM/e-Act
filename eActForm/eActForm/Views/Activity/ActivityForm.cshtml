@@ -290,7 +290,7 @@
 </div>
 <hr />
 <div id="getQuery" class="col-lg-12">
-    @Html.Action("productCostDetail", "ActivityProductDetail", new { typeForm = Model.activityFormModel.typeForm , actId = Model.activityFormModel.id })
+    @Html.Action("productCostDetail", "ActivityProductDetail", new { typeForm = Model.activityFormModel.typeForm, actId = Model.activityFormModel.id })
 </div>
 
 <div class="row" id="divAddProductCostDetail">
@@ -317,7 +317,7 @@
 </div>
 <hr />
 <div id="divgetdetailcost" class="col-lg-12">
-    @Html.Action("activityCostDetail", "ActivityCostDetail", new { typeForm = Model.activityFormModel.typeForm , actId = Model.activityFormModel.id })
+    @Html.Action("activityCostDetail", "ActivityCostDetail", new { typeForm = Model.activityFormModel.typeForm, actId = Model.activityFormModel.id })
 </div>
 
 
@@ -357,7 +357,7 @@
     </div>
     <div class="col-md-12">
         <div id="divgetimage" class="col-md-12">
-            @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id})
+            @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id })
         </div>
     </div>
 </div>
@@ -383,8 +383,8 @@
             }
 
         </div>
-        @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3 && Model.activityFormModel.statusId != 6 && Model.activityFormModel.statusId != 0 
-            && Model.activityFormModel.createdByUserId == UtilsAppCode.Session.User.empId || string.IsNullOrEmpty(Model.activityFormModel.createdByUserId) )
+        @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3 && Model.activityFormModel.statusId != 6 && Model.activityFormModel.statusId != 0
+            && Model.activityFormModel.createdByUserId == UtilsAppCode.Session.User.empId || string.IsNullOrEmpty(Model.activityFormModel.createdByUserId))
         {
             <div class="inner">
                 <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
@@ -414,6 +414,7 @@
            });
 
            ObjModel = {};
+           fillProductOnChange();
            document.getElementById("ddlProductfilter").disabled = true;
            document.getElementById("ddlProductSize").disabled = true;
 
@@ -436,7 +437,7 @@
            }
 
 
-           if (@Model.activityFormModel.statusId != "1" && @Model.activityFormModel.statusId != "5"
+           if (@Model.activityFormModel.statusId != "1" || @Model.activityFormModel.statusId != "5"
                || '@Model.activityFormModel.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
                setTxtReadOnly();
            }
@@ -446,8 +447,6 @@
                setTxtUnReadOnly();
            }
 
-
-           
 
 
 
@@ -778,7 +777,7 @@
              if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
              if ($("#customerId").val() == "" || $("#txtCustomerName").val() == "") { required += "Customer Name*<br>"; validate = false; }
         }
-        
+
         if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
         if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
         if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; }
@@ -856,7 +855,7 @@
             }).done(function (response) {
                 if (response.Success) {
                     if (response.MessageCode == "001") {
-                        bootbox.alert("กรุณาทำรายการใหม่ เอกสารฉบับนี้ ส่งอนุมัติ ไปแล้ว");  
+                        bootbox.alert("กรุณาทำรายการใหม่ เอกสารฉบับนี้ ส่งอนุมัติ ไปแล้ว");
                     }
                     else {
                            callPreviewData('@Model.activityFormModel.id');
@@ -1025,11 +1024,19 @@
             document.getElementById("rdbOutterm").disabled = true;
             document.getElementById("btnUpdate").style.display = "none";
 
-            var arrayOfElements = document.getElementsByClassName('divDelImg');
-            var lengthOfArray = arrayOfElements.length;
-           for (var i = 0; i < lengthOfArray; i++) {
-               arrayOfElements[i].style.display = 'none';
-           }
+        var arrayOfElements = document.getElementsByClassName('divDelImg');
+        var lengthOfArray = arrayOfElements.length;
+        for (var i = 0; i < lengthOfArray; i++) {
+            arrayOfElements[i].style.display = 'none';
+        }
+
+
+        if ('@Model.activityFormModel.statusId' == '5') {
+            document.getElementById("divAddActivityDetail").style.display = "block";
+            document.getElementById("divAddProductCostDetail").style.display = "block";
+            $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", false);
+            $("#tbl_productDetail").find("input,button,textarea,select").attr("disabled", false);
+        }
 
 
         if ('@UtilsAppCode.Session.User.isAdmin' == 'True' || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
@@ -1044,7 +1051,7 @@
 
      function setTxtUnReadOnly() {
 
-            document.getElementById("ddlProductfilter").disabled = false;
+         document.getElementById("ddlProductfilter").disabled = false;
          document.getElementById("ddlProductSize").disabled = false;
          document.getElementById("txtdateDoc").disabled = false;
          document.getElementById("txtReference").disabled = false;
@@ -1077,11 +1084,11 @@
          document.getElementById("rdbOutterm").disabled = false;
          document.getElementById("btnUpdate").style.display = "block";
 
-            var arrayOfElements = document.getElementsByClassName('divDelImg');
-            var lengthOfArray = arrayOfElements.length;
-           for (var i = 0; i < lengthOfArray; i++) {
-               arrayOfElements[i].style.display = 'block';
-           }
+         var arrayOfElements = document.getElementsByClassName('divDelImg');
+         var lengthOfArray = arrayOfElements.length;
+         for (var i = 0; i < lengthOfArray; i++) {
+             arrayOfElements[i].style.display = 'block';
+         }
 
 
           document.getElementById("btnUpdate").style.display = "block";
@@ -1089,7 +1096,7 @@
           document.getElementById("txtdateActivityEnd").disabled = false;
           document.getElementById("txtdateCostPerSt").disabled = false;
           document.getElementById("txtdateCostPerEnd").disabled = false;
-        
+
 
     }
 

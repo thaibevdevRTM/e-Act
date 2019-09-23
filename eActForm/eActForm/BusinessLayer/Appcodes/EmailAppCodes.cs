@@ -306,7 +306,7 @@ namespace eActForm.BusinessLayer
             string[] pathFile = new string[10];
             mailCC = mailCC != "" ? ","+mailCC: "";
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] + mailCC : mailCC;
+            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailCC;
             //pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
 
             //    HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
