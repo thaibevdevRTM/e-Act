@@ -1,4 +1,4 @@
-﻿@model eActForm.Models.TB_Bud_Image_Model.BudImageModels
+﻿@model eActForm.Models.TB_Bud_Image_Model
 @{
 	ViewBag.Title = "";
 }
@@ -22,7 +22,7 @@
 	@*@if (Model.tbBudImageList != null)
 		{*@
 	<tbody>
-		@foreach (var item in Model.tbBudImageList)
+		@foreach (var item in Model.BudImageList)
 		{
 			<tr class="gradeX">
 				<td class="text-left">

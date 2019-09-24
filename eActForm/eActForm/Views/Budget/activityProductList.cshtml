@@ -5,108 +5,146 @@
 
 
 <div class="alert alert-success" role="alert">
-	<h4 class="alert-heading">
-		แบบฟอร์มรายละเอียดค่าใช้จ่ายตั้งจ่ายจริง  กิจกรรมเลขที่ :
-		@if (Model.Budget_Activity_Product_list.Count > 0)
+
+	@*@if (Model.Budget_Activity_Product_list.Count > 0)
 		{
 			@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo)
-		}
+		}*@
+
+
+	@if (Model.Budget_Activity.act_activityNo != null)
+	{
+	<h4 class="alert-heading text-center">
+		แบบฟอร์มรายละเอียดค่าใช้จ่ายตั้งจ่ายจริง เลขที่กิจกรรม : @Html.DisplayFor(item => Model.Budget_Activity.act_activityNo)
 	</h4>
-	<p></p>
+
+	@*<div class="row">
+			<table class="table" id="datatable">
+				<thead class="thead-dark">
+					<tr class="gradeX" >
+						<th class="font12B" style="width:25%;text-align:center;">เลขที่กิจกรรม</th>
+						<th class="font12B" style="text-align:center;">จำนวนเงินที่ตั้ง</th>
+						<th class="font12B" style="text-align:center;">จำนวนเงินจ่าย(รวม)</th>
+						<th class="font12B" style="text-align:center;">คงเหลือ(รวม)</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td style="font-size:12.5px;">
+							@Html.DisplayFor(item => Model.Budget_Activity.act_activityNo)
+						</td>
+						<td style="font-size:12.5px;">
+							@Html.DisplayFor(item => Model.Budget_Activity.act_totalCost)
+						</td>
+						<td style="font-size:12.5px;">
+							@Html.DisplayFor(item => Model.Budget_Activity.act_total_invoive)
+						</td>
+						<td style="font-size:12.5px;">
+							@Html.DisplayFor(item => Model.Budget_Activity.act_balance)
+						</td>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>*@
+
+	}
+
 </div>
 
-<table class="table table-striped table-hover" id="datatable">
-	<thead class="thead-dark">
-		<tr class="gradeX" style="background-color:#2B5D95;color:#ffffff;">
-			<th class="align-content-center font12B"></th>
-			<th class="align-content-center font12B" style="width:15%;">ประเภทกิจกรรม</th>
-			<th class="align-content-center font12B" style="width:25%;">กลุ่มสินค้า/ชื่อสินค้า</th>
-			<th class="font12B" style="text-align:right;">จำนวนเงินที่ตั้ง</th>
-			@*<th class="align-content-center font12B">เลขที่ใบแจ้งหนี้</th>*@
-			@*<th class="align-content-center font12B">เลขที่ใบสำคัญจ่าย</th>
-				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
-				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>*@
-			<th class="font12B" style="text-align:right;">จำนวนเงินจ่าย(รวม)</th>
-			<th class="font12B" style="text-align:right;">คงเหลือ</th>
-			@*<th class="align-content-center font12B" >วันที่ทำรายการ</th>*@
-			<th class="align-content-center font12B" style="width:10%;">สถานะ</th>
-		</tr>
-	</thead>
-
-	<tbody>
-		@if (Model.Budget_Activity_Product_list.Count > 0)
-		{
-			var index = 0;
-			foreach (var item in Model.Budget_Activity_Product_list)
-			{
-				<tr class="gradeX">
-					<td>
-						<a href="javascript:" class="btn ink-reaction btn-success fa fa-search" onclick="javascript:callInvoiceList('@item.act_activityId','@item.activityOfEstimateId');"></a>
-					</td>
-
-					<td style="font-size:12.5px;">@item.act_typeTheme</td>
-					<td style="font-size:12.5px;">@item.prd_productDetail</td>
-					<td style="font-size:12.5px;text-align:right;">
-						@if (item.totalCost != 0)
-						{
-							string result = String.Format("{0:n2}", @item.totalCost);
-							@result.ToString();
-						}
-					</td>
-					@*------  display when have invoice row ---------*@
-					<td style="font-size:12.5px;text-align:right;">
-						@*จำนวนเงินจ่าย*@
-						@if (item.totalCost != 0)
-						{
-							string result = String.Format("{0:n2}", @item.invoiceTotalBath);
-							@result.ToString();
-						}
-					</td>
-
-					<td style="font-size:12.5px;text-align:right;">
-						@*ผลต่าง-บาท*@
-						@if (item.totalCost != 0)
-						{
-							string result = String.Format("{0:n2}", @item.productBalanceBath);
-							@result.ToString();
-						}
-					</td>
-					@*--------------------------------------------------*@
-
-					@if (item.budgetStatusId == "1")
-					{
-						<td style="font-size:12.5px;text-align:center; color:firebrick;">@item.budgetStatusNameTH</td>
-					}
-					else if (item.budgetStatusId == "2")
-					{
-						<td style="font-size:12.5px;text-align:center; color:darkorange;">@item.budgetStatusNameTH</td>
-					}
-					else
-					{
-						<td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.budgetStatusNameTH</td>
-					}
+		<table class="table table-striped table-hover" id="datatable">
+			<thead class="thead-dark">
+				<tr class="gradeX" style="background-color:#2B5D95;color:#ffffff;">
+					<th class="align-content-center font12B"></th>
+					<th class="align-content-center font12B" style="width:15%;">ประเภทกิจกรรม</th>
+					<th class="align-content-center font12B" style="width:25%;">กลุ่มสินค้า/ชื่อสินค้า</th>
+					<th class="font12B" style="text-align:right;">จำนวนเงินที่ตั้ง</th>
+					@*<th class="align-content-center font12B">เลขที่ใบแจ้งหนี้</th>*@
+					@*<th class="align-content-center font12B">เลขที่ใบสำคัญจ่าย</th>
+						<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
+						<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>*@
+					<th class="font12B" style="text-align:right;">จำนวนเงินจ่าย(รวม)</th>
+					<th class="font12B" style="text-align:right;">คงเหลือ</th>
+					@*<th class="align-content-center font12B" >วันที่ทำรายการ</th>*@
+					<th class="align-content-center font12B" style="width:10%;">สถานะ</th>
 				</tr>
-				index++;
-			}
-		}
-	</tbody>
-</table>
+			</thead>
 
-<script>
-	$('document').ready(function () {
+			<tbody>
+				@if (Model.Budget_Activity_Product_list.Count > 0)
+				{
+					var index = 0;
+					foreach (var item in Model.Budget_Activity_Product_list)
+					{
+						<tr class="gradeX">
+							<td>
+								<a href="javascript:" class="btn ink-reaction btn-success fa fa-search" onclick="javascript:callInvoiceList('@item.act_activityId','@item.activityOfEstimateId');"></a>
+							</td>
 
-		$('tr').click(function () {
+							<td style="font-size:12.5px;">@item.act_typeTheme</td>
+							<td style="font-size:12.5px;">@item.prd_productDetail</td>
+							<td style="font-size:12.5px;text-align:right;">
+								@if (item.totalCost != 0)
+								{
+									string result = String.Format("{0:n2}", @item.totalCost);
+									@result.ToString();
+								}
+							</td>
+							@*------  display when have invoice row ---------*@
+							<td style="font-size:12.5px;text-align:right;">
+								@*จำนวนเงินจ่าย*@
+								@if (item.totalCost != 0)
+								{
+									string result = String.Format("{0:n2}", @item.invoiceTotalBath);
+									@result.ToString();
+								}
+							</td>
 
-			$('tr').removeClass('info');
-			$(this).addClass('info');
+							<td style="font-size:12.5px;text-align:right;">
+								@*ผลต่าง-บาท*@
+								@if (item.totalCost != 0)
+								{
+									string result = String.Format("{0:n2}", @item.productBalanceBath);
+									@result.ToString();
+								}
+							</td>
+							@*--------------------------------------------------*@
+
+							@if (item.budgetStatusId == "1")
+							{
+								<td style="font-size:12.5px;text-align:center; color:firebrick;">@item.budgetStatusNameTH</td>
+							}
+							else if (item.budgetStatusId == "2")
+							{
+								<td style="font-size:12.5px;text-align:center; color:darkorange;">@item.budgetStatusNameTH</td>
+							}
+							else
+							{
+								<td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.budgetStatusNameTH</td>
+							}
+						</tr>
+						index++;
+					}
+				}
+			</tbody>
+		</table>
+
+		<script>
+			$('document').ready(function () {
+
+				$('tr').click(function () {
+
+					$('tr').removeClass('info');
+					$(this).addClass('info');
 
 
-			var id = $(this).data('id');
-			$('.links a').each(function () {
-				this.href = this.href.split("cshtml")[0] + "cshtml/" + id;
+					var id = $(this).data('id');
+					$('.links a').each(function () {
+						this.href = this.href.split("cshtml")[0] + "cshtml/" + id;
+					});
+
+				});
 			});
-
-		});
-	});
-</script>
+		</script>
 

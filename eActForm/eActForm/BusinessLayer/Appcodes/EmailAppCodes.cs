@@ -632,6 +632,7 @@ namespace eActForm.BusinessLayer
 									, createUsers.FirstOrDefault().activityNo
 									, string.Format(ConfigurationManager.AppSettings["urlDocument_Budget_Form"]))
 									;
+							//http://localhost:61263/Budget/activityProduct?activityId=b8ba880d-2f45-491d-b041-87921fb21ed9&activityNo=SBSUEDD620057&companyEN=OMT
 
 							sendEmailBudgetForm(actFormId
 							, createUsers.FirstOrDefault().empEmail
@@ -703,12 +704,12 @@ namespace eActForm.BusinessLayer
 					}
 				}
 
-				TB_Bud_Image_Model.BudImageModels getBudgetImageModel = new TB_Bud_Image_Model.BudImageModels();
-				getBudgetImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(actFormId);
-				if (getBudgetImageModel.tbBudImageList.Any())
+				TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
+				getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(actFormId);
+				if (getBudgetImageModel.BudImageList.Any())
 				{
 					int i = 1;
-					foreach (var item in getBudgetImageModel.tbBudImageList)
+					foreach (var item in getBudgetImageModel.BudImageList)
 					{
 						pathFileAtt[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));
 						i++;

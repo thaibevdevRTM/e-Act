@@ -8,10 +8,16 @@ namespace eActForm.Models
 {
 	public class TB_Bud_Image_Model
 	{
-		public class BudImageModels
-		{
-			public List<BudImageModel> tbBudImageList { get; set; }
-		}
+		//public class BudImageModels
+		//{
+
+
+		//}
+
+		public List<BudImageModel> BudImageList { get; set; }
+		public List<TB_Act_Region_Model> RegionList { get; set; }
+		public BudImageModel BudImage { get; set; }
+		public List<TB_Act_Customers_Model.Customers_Model> CustomerList { get; set; }
 
 		public class BudImageModel : ActBaseModel
 		{

@@ -58,14 +58,14 @@ namespace eActForm.Controllers
 
 				if (budgetInvoiceModel.budgetImageId != null)
 				{
-					TB_Bud_Image_Model.BudImageModels getBudImageModel = new TB_Bud_Image_Model.BudImageModels();
-					getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(budgetInvoiceModel.budgetImageId, null, null, null, null, null);
-					if (getBudImageModel.tbBudImageList.Any()) // True, the list is not empty
+					TB_Bud_Image_Model getBudImageModel = new TB_Bud_Image_Model();
+					getBudImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(budgetInvoiceModel.budgetImageId, null, null, null, null, null);
+					if (getBudImageModel.BudImageList.Any()) // True, the list is not empty
 					{
-						if (getBudImageModel.tbBudImageList.ElementAtOrDefault(0).count_activityNo > 1)
+						if (getBudImageModel.BudImageList.ElementAtOrDefault(0).count_activityNo > 1)
 						{
 							resultAjax.Code = 2;
-							resultAjax.Message = getBudImageModel.tbBudImageList.ElementAtOrDefault(0).invoiceNo;
+							resultAjax.Message = getBudImageModel.BudImageList.ElementAtOrDefault(0).invoiceNo;
 						}
 					}
 				}
@@ -138,7 +138,7 @@ namespace eActForm.Controllers
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
 			budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, null).FirstOrDefault();
 			budget_activity_model.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, null);
-			budget_activity_model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault(); ;
+			budget_activity_model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault(); 
 
 			return PartialView(budget_activity_model);
 		}
@@ -149,8 +149,9 @@ namespace eActForm.Controllers
 			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
 			try
 			{
+				budget_activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, null).FirstOrDefault(); ;
 				budget_activity.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, null);
-				budget_activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();	
+				budget_activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
 			} catch (Exception ex)
 			{
 				Console.WriteLine(ex.Message);
@@ -207,27 +208,7 @@ namespace eActForm.Controllers
 			return Json(imgInvoiceList, JsonRequestBehavior.AllowGet);
 		}
 
-		public JsonResult getCustomerInvoice(string customerTH, string companyEN , string regionId)
-		{
-			List<TB_Act_Customers_Model.Customers_Model> customerList = new List<TB_Act_Customers_Model.Customers_Model>();
-			try
-			{
-				if (companyEN == "MT")
-				{
-					customerList = QueryGetAllCustomers.getCustomersMT().Where(x => x.cusNameTH.Contains(customerTH)).ToList();
-				}
-				else
-				{
-					customerList = QueryGetAllCustomers.getAllCustomersRegion().Where(x => x.regionId == regionId && x.cusNameTH.Contains(customerTH)).ToList();
-				}
-			}
-			catch (Exception ex)
-			{
-				ExceptionManager.WriteError("getInvoiceCustomer => " + ex.Message);
-			}
-
-			return Json(customerList, JsonRequestBehavior.AllowGet);
-		}
+		
 
 		public JsonResult getRegionInvoice(string nameEN)
 		{
@@ -254,9 +235,9 @@ namespace eActForm.Controllers
 		{
 			try
 			{
-				TB_Bud_Image_Model.BudImageModels getBudImageModel = new TB_Bud_Image_Model.BudImageModels();
-				getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(imageId, imageInvoiceNo, budgetApproveId, activityNo, createdByUserId, companyTH);
-				return PartialView(getBudImageModel);
+				TB_Bud_Image_Model budgetImageModel = new TB_Bud_Image_Model();
+				budgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(imageId, imageInvoiceNo, budgetApproveId, activityNo, createdByUserId, companyTH);
+				return PartialView(budgetImageModel);
 			}
 			catch (Exception ex)
 			{
@@ -266,12 +247,41 @@ namespace eActForm.Controllers
 			return PartialView();
 		}
 
+		public JsonResult getCustomerInvoice(string customerTH, string companyEN, string regionId)
+		{
+			List<TB_Act_Customers_Model.Customers_Model> customerList = new List<TB_Act_Customers_Model.Customers_Model>();
+			try
+			{
+				if (companyEN == "MT")
+				{
+					customerList = QueryGetAllCustomers.getCustomersMT().Where(x => x.cusNameTH.Contains(customerTH)).ToList();
+				}
+				else
+				{
+					customerList = QueryGetAllCustomers.getAllCustomersRegion().Where(x => x.regionId == regionId).ToList();
+				}
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("getInvoiceCustomer => " + ex.Message);
+			}
+
+			return Json(customerList, JsonRequestBehavior.AllowGet);
+		}
+
 		public PartialViewResult manageInvoiceView(string imageId)
 		{
-			TB_Bud_Image_Model.BudImageModel getBudImageModel = new TB_Bud_Image_Model.BudImageModel();
-			getBudImageModel = ImageAppCodeBudget.getImageBudget(imageId,null,null,null,null,null).FirstOrDefault();
-
-			return PartialView(getBudImageModel);
+			TB_Bud_Image_Model budgetImageModel = new TB_Bud_Image_Model();
+			try
+			{
+				budgetImageModel.BudImage = ImageAppCodeBudget.getImageBudget(imageId, null, null, null, null, null).FirstOrDefault();
+				budgetImageModel.RegionList = QueryGetAllRegion.getAllRegion().ToList();
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("manageInvoiceView => " + ex.Message);
+			}
+			return PartialView(budgetImageModel);
 		}
 
 
@@ -367,12 +377,12 @@ namespace eActForm.Controllers
 				budgetInvoiceModel.updatedByUserId = UtilsAppCode.Session.User.empId;
 				budgetInvoiceModel.updatedDate = DateTime.Now;
 
-				TB_Bud_Image_Model.BudImageModels getBudImageModel = new TB_Bud_Image_Model.BudImageModels();
-				getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(null, budgetInvoiceModel.invoiceNo,null , null, null, budgetInvoiceModel.company);
-				if (getBudImageModel.tbBudImageList.Any())
+				TB_Bud_Image_Model getBudImageModel = new TB_Bud_Image_Model();
+				getBudImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(null, budgetInvoiceModel.invoiceNo,null , null, null, budgetInvoiceModel.company);
+				if (getBudImageModel.BudImageList.Any())
 				{
 					resultAjax.Code = 2;
-					resultAjax.Message = getBudImageModel.tbBudImageList.ElementAtOrDefault(0).invoiceNo;
+					resultAjax.Message = getBudImageModel.BudImageList.ElementAtOrDefault(0).invoiceNo;
 				}
 				else
 				{
