@@ -81,7 +81,7 @@
 
 								@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
 								{
-									<a href="javascript:" onclick="return callPreviewApprove('@item.budgetApproveId','@item.statusId');">
+									<a href="javascript:" onclick="return CallReBudgetApprovePdf('@item.budgetApproveId','@item.activityId','@item.statusId');">
 										<i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
 									</a>
 								}
@@ -121,10 +121,16 @@
 
 	</div>
 </div>
-<div class="modal fade" id="modalmyDocBudgetList" role="dialog" style="display:none">
+<div class="modal fade" id="modalmyDocBudgetList" role="dialog" >
 	<div id="divModalmyDocBudgetList">
 	</div>
 </div>
+
+<div id="ModalPreviewPDF" style="display:none">
+	<div id="divRegenBudgetApprovePdf">
+	</div>
+</div>
+
 <script>
 	$(document).ready(function () {
 		$('#datatable').DataTable({
@@ -148,24 +154,27 @@
 		$("#WaitDialog").show();
 	}
 
-	 function callPreviewApprove(actId, statusId) {
-        $.ajax({
+	function CallReBudgetApprovePdf(budgetapproveId, activityId, statusId) {
+		$.ajax({
             type: 'POST',
-            url: '@Url.Action("previewApproveBudget", "BudgetApprove")',
+            url: '@Url.Action("regenBudgetApprovePdf", "BudgetViewer")',
             data: {
-				budgetApproveId: actId
+				budgetApproveId: budgetapproveId,
+				activityId: activityId
             }
         }).done(function (htmlResponse) {
-            genPdf(actId, statusId, htmlResponse);
+			genPdf(budgetapproveId, activityId,statusId, htmlResponse);
         });
-    }
-    function genPdf(actId, statusId, htmlResponse) {
+	}
+
+	function genPdf(budgetapproveId, activityId, statusId, htmlResponse) {
         $.ajax({
             url: '@Url.Action("genPdfApprove", "BudgetMyDoc")',
             data: {
                 GridHtml: htmlResponse,
                 statusId: statusId,
-				budgetApproveId: actId,
+				budgetApproveId: budgetapproveId,
+				activityId: activityId,
             },
             dataType: "json",
             type: 'POST',

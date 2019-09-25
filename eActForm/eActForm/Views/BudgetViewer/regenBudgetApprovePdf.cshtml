@@ -7,49 +7,6 @@
 	Layout = null;
 }
 
-<script type="text/javascript">
-
-	$('document').ready(function () {
-		//showCurrentDate();
-	});
-
-	//function showCurrentDate() {
-	//	n = new Date();
-	//	y = n.getFullYear();
-	//	m = n.getMonth() + 1;
-	//	d = n.getDate();
-
-	//	if (m < 10) { m = '0' + m }
-	//	if (d < 10) { d = '0' + d }
-
-	//	document.getElementById("docDate").innerHTML = d + "/" + m + "/" + y;
-	//}
-
-    function onClickClose() {
-        var url = '@Url.Action("index", "BudgetApproveList")';
-        window.location.href = url;
-    }
-
-	function genPdfApproveBudget() {
-			$("#WaitDialog").show();
-            $.ajax({
-            url: '@Url.Action("genPdfApproveBudget", "BudgetApprove")',
-            data: {
-				GridHtml: $("#GridPDFApprove").html(),
-                statusId: $("#ddlStatus").val(),
-				budgetApproveId: $("#HbudgetApproveId").val()
-            },
-            dataType: "json",
-            type: 'POST',
-            }).done(function (response) {
-                $("#WaitDialog").hide();
-                console.log("genPdff");
-                console.log('success');
-                 });
-	}
-
-</script>
-
 <style type="text/css">
 
 	.my-bootbox-class .modal-dialog {
@@ -66,7 +23,7 @@
 
 
 
-	<div class="modal-dialog modal-lg" style="width:95%;">
+	<div class="modal-dialog modal-lg" style="width:100%;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<div style=""></div>
@@ -74,7 +31,7 @@
 			</div>
 
 			<div class="modal-body">
-				<div id="GridPDFApprove" style="width:97%; margin-left:10px;">
+				<div id="GridPDFApprove" style="width:100%; margin-left:10px;">
 					<style>
 						.cssborderbottom {
 							border-bottom-width: 1px;
@@ -127,7 +84,7 @@
 
 							<tr>
 								<td style="text-align:left;">
-									<label>ประเภทกิจกรรม (Theme) : </label>
+									<label> ประเภทกิจกรรม (Theme) : </label>
 									@if (Model.Budget_Activity.act_theme.ToString() != "")
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_theme)

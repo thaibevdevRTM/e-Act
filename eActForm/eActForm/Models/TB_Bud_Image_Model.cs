@@ -8,10 +8,16 @@ namespace eActForm.Models
 {
 	public class TB_Bud_Image_Model
 	{
-		public class BudImageModels
-		{
-			public List<BudImageModel> tbBudImageList { get; set; }
-		}
+		//public class BudImageModels
+		//{
+
+
+		//}
+
+		public List<BudImageModel> BudImageList { get; set; }
+		public List<TB_Act_Region_Model> RegionList { get; set; }
+		public BudImageModel BudImage { get; set; }
+		public List<TB_Act_Customers_Model.Customers_Model> CustomerList { get; set; }
 
 		public class BudImageModel : ActBaseModel
 		{
@@ -32,7 +38,14 @@ namespace eActForm.Models
 			public string extension { get; set; }
 			public string remark { get; set; }
 			public string typeFiles { get; set; }
+
+			public string companyId { get; set; }
+			public string regionId { get; set; }
+			public string customerId { get; set; }
+
 			public string company { get; set; }
+			public string regionName { get; set; }
+			public string customerName { get; set; }
 
 			public string budgetApproveId { get; set; }
 			public string budgetActivityId { get; set; }
