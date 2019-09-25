@@ -493,14 +493,14 @@ namespace eActForm.BusinessLayer
 
         public static void sendEmail(string mailTo, string cc, string subject, string body, List<Attachment> files)
         {
-			string slog = "";
-			slog = "begin sendEmail ";
-			slog = slog + "emailFrom=>" + ConfigurationManager.AppSettings["emailFrom"];
-			slog = slog + "emailFromPass=>" + ConfigurationManager.AppSettings["emailFromPass"];
-			slog = slog + "mailTo=>" + mailTo;
-			slog = slog + "subject=>" + subject;
-			slog = slog + "cc=>" + cc;
-			ExceptionManager.WriteError("sendEmail >> " + slog);
+			//string slog = "";
+			//slog = "begin sendEmail ";
+			//slog = slog + "emailFrom=>" + ConfigurationManager.AppSettings["emailFrom"];
+			//slog = slog + "emailFromPass=>" + ConfigurationManager.AppSettings["emailFromPass"];
+			//slog = slog + "mailTo=>" + mailTo;
+			//slog = slog + "subject=>" + subject;
+			//slog = slog + "cc=>" + cc;
+			//ExceptionManager.WriteError("sendEmail >> " + slog);
 
 			GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
             GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
@@ -513,8 +513,8 @@ namespace eActForm.BusinessLayer
             mailer.IsHtml = true;
             mailer.Send();
 
-			slog = "mailer.Send() => ok";
-			ExceptionManager.WriteError("sendEmail=> " + slog);
+			//slog = "mailer.Send() => ok";
+			//ExceptionManager.WriteError("sendEmail=> " + slog);
 		}
 
         public static void resendHistory(string actId)
@@ -614,6 +614,8 @@ namespace eActForm.BusinessLayer
 				else
 				{
 					// case all updated
+					
+
 					DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountStatusApproveDetail"
 						, new SqlParameter[] {new SqlParameter("@actFormId",actFormId)
 						,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.อนุมัติ)});
@@ -624,15 +626,20 @@ namespace eActForm.BusinessLayer
 						if (dr["countAll"].ToString() == dr["countStatusApproved"].ToString())
 						{
 
+							Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
+							budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, null, null, actFormId, null).FirstOrDefault();
+
+							string var_link = "";
+							var_link = "activityProduct?activityId=" + budget_activity_model.Budget_Activity.act_form_id + "&activityNo=" + budget_activity_model.Budget_Activity.act_activityNo + "&companyEN=" + budget_activity_model.Budget_Activity.act_companyEN;
+
 							//all approved then send the email notification to user create
 							List<ApproveModel.approveDetailModel> createUsers = BudgetApproveController.getUserCreateBudgetForm(actFormId);
 
 							strBody = string.Format(ConfigurationManager.AppSettings["emailAllApproveBodyBudget"]
 									, createUsers.FirstOrDefault().empName
 									, createUsers.FirstOrDefault().activityNo
-									, string.Format(ConfigurationManager.AppSettings["urlDocument_Budget_Form"]))
+									, string.Format(ConfigurationManager.AppSettings["urlDocument_Budget_Form"], var_link))
 									;
-							//http://localhost:61263/Budget/activityProduct?activityId=b8ba880d-2f45-491d-b041-87921fb21ed9&activityNo=SBSUEDD620057&companyEN=OMT
 
 							sendEmailBudgetForm(actFormId
 							, createUsers.FirstOrDefault().empEmail
