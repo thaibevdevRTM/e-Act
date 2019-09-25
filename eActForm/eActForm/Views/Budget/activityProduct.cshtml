@@ -141,15 +141,23 @@
 					invoiceTotalBath: $("#txt_invoice_baht").val().replace(/,/g, ''),
 					invoiceActionDate: $("#txt_date_action").val(),
 					invoiceBudgetStatusId: $("#ddlStatus").val(),
+					count_invoice: "1",
 				},
 				dataType: "json",
 				type: 'POST',
-				success: function (response) {
+				success: function (result) {
 
-					$('#myModalInvoice').modal('hide');
+					if (result.Message != null) {
+					var msg = "";
+					msg = "<h5>เอกสารใบแจ้งหนี้หมายเลข <b style='color:red'> " + result.Message + "</b> มีการตัดจ่ายแล้ว </h5>";
+					bootbox.alert({
+						title: "แจ้งเตือน" ,
+						message: msg
+					});
+					}
+
 					callProductList(var_activityId);
 					callInvoiceList(var_activityId, var_activityOfEstimateId);
-					console.log(response.success);
 				}
 			})
 

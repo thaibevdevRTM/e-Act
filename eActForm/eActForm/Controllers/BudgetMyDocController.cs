@@ -121,6 +121,7 @@ namespace eActForm.Controllers
 							 {
 								 statusId = dr["statusId"].ToString(),
 								 statusName = dr["statusName"].ToString(),
+								 activityId = dr["activityId"].ToString(),
 								 activityNo = dr["activityNo"].ToString(),
 
 								 budgetApproveId = dr["budgetApproveId"].ToString(),
@@ -175,34 +176,41 @@ namespace eActForm.Controllers
 
 		[HttpPost]
 		[ValidateInput(false)]
-		public JsonResult genPdfApprove(string GridHtml, string statusId, string budgetApproveId)
+		public JsonResult genPdfApprove(string GridHtml, string statusId, string budgetApproveId, string activityId)
 		{
 			var resultAjax = new AjaxResult();
 			try
 			{
 
-				var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId);
+				var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId + "_");
 				GridHtml = GridHtml.Replace("<br>", "<br/>");
 				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
 
-				//TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-				//getImageModel.tbActImageList = ImageAppCode.GetImage(budgetApproveId).Where(x => x.extension == ".pdf").ToList();
-				//string[] pathFile = new string[getImageModel.tbActImageList.Count + 1];
-				//pathFile[0] = Server.MapPath(rootPathInsert);
+				TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
+				getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budgetApproveId);
 
+				string[] pathFile = new string[getBudgetImageModel.BudImageList.Count + 1];
+				pathFile[0] = Server.MapPath(rootPathInsert);
 
-				//if (getImageModel.tbActImageList.Any())
-				//{
-				//	int i = 1;
-				//	foreach (var item in getImageModel.tbActImageList)
-				//	{
-				//		pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-				//		i++;
-				//	}
-				//}
+				if (getBudgetImageModel.BudImageList.Any())
+				{
+					int i = 1;
+					foreach (var item in getBudgetImageModel.BudImageList)
+					{
+						if (System.IO.File.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName))))
+						{
+							pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));
+						}
+						else {
+							pathFile = pathFile.Where((val, idx) => idx != i).ToArray();
+						}
+						i++;
+					}
+				}
 
-				//var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
-				//var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+				var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId));
+				var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+
 				resultAjax.Success = true;
 			}
 			catch (Exception ex)

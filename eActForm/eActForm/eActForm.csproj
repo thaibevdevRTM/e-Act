@@ -2318,7 +2318,9 @@
     <Content Include="Views\Budget\manageInvoiceEdit.cshtml" />
     <Content Include="Views\summaryReport\viewReportSummaryAlcohol.cshtml" />
     <Content Include="Views\Activity\ShowImage.cshtml" />
+    <Content Include="Views\Approve\getApproveComment.cshtml" />
     <Content Include="Views\actFormRepDetail\repPreviewForApprove.cshtml" />
+    <Content Include="Views\BudgetViewer\regenBudgetApprovePdf.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

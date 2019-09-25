@@ -89,15 +89,43 @@ namespace eActForm.Controllers
 				var budget_approve_id = "";
 				if (BudgetApproveListController.insertApproveForBudgetForm(budgetActivityId, companyEN) > 0) //usp_insertApproveDetail
 				{
-					budget_approve_id = getApproveBudgetId(budgetActivityId);
+					budget_approve_id = getApproveBudgetId(budgetActivityId); // get last approve id
 					BudgetApproveListController.updateApproveWaitingByRangNo(budget_approve_id);
 
-					var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
+					var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id + "_");
 					GridHtml = GridHtml.Replace("<br>", "<br/>");
+			
+					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
+					
+					TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
+					getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budget_approve_id);
 
-					AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), rootPath);
+					string[] pathFile = new string[getBudgetImageModel.BudImageList.Count + 1];
+					pathFile[0] = Server.MapPath(rootPathInsert);
+
+					if (getBudgetImageModel.BudImageList.Any())
+					{
+						int i = 1;
+						foreach (var item in getBudgetImageModel.BudImageList)
+						{
+							if (System.IO.File.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName))))
+							{
+								pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));
+							}
+							else
+							{
+								pathFile = pathFile.Where((val, idx) => idx != i).ToArray();
+							}
+							i++;
+						}
+					}
+
+					var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
+					var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
 
 					EmailAppCodes.sendApproveBudget(budget_approve_id, AppCode.ApproveType.Budget_form,false );
+					BudgetApproveController.setCountWatingApproveBudget();
+					
 				}
 
 				resultAjax.Success = true;

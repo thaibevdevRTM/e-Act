@@ -4,19 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.ApplicationBlocks.Data;
 using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
-using iTextSharp.text;
-using iTextSharp.text.html;
-using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
-using iTextSharp.tool.xml;
 using System.Configuration;
 using System.IO;
-using System.Net.Mail;
-using System.Net.Mime;
-using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
 using WebLibrary;
@@ -45,9 +38,10 @@ namespace eActForm.Controllers
 		public JsonResult submitInvoice(Budget_Activity_Model.Budget_Activity_Invoice_Att budgetInvoiceModel)
 		{
 			var resultAjax = new AjaxResult();
+			//int count_invo = 0;
 			try
 			{
-
+				
 				if (budgetInvoiceModel.invoiceId == null)
 				{
 					// insert invoice
@@ -57,6 +51,28 @@ namespace eActForm.Controllers
 				{
 					//update invoice
 					int countSuccess = BudgetFormCommandHandler.updateInvoiceProduct(budgetInvoiceModel);
+				}
+
+
+				
+
+				if (budgetInvoiceModel.budgetImageId != null)
+				{
+					TB_Bud_Image_Model getBudImageModel = new TB_Bud_Image_Model();
+					getBudImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(budgetInvoiceModel.budgetImageId, null, null, null, null, null);
+					if (getBudImageModel.BudImageList.Any()) // True, the list is not empty
+					{
+						if (getBudImageModel.BudImageList.ElementAtOrDefault(0).count_activityNo > 1)
+						{
+							resultAjax.Code = 2;
+							resultAjax.Message = getBudImageModel.BudImageList.ElementAtOrDefault(0).invoiceNo;
+						}
+					}
+				}
+				else
+				{
+					resultAjax.Code = 0;
+					resultAjax.Message = null;
 				}
 
 				//resultAjax.ActivityId = Session["activityId"].ToString();
@@ -93,6 +109,7 @@ namespace eActForm.Controllers
 			if (!string.IsNullOrEmpty(invoiceId))
 			{// for edit invoice 
 				Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
+				Budget_Activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, null).FirstOrDefault();
 				Budget_Activity.Budget_Activity_Product = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId).FirstOrDefault();
 				Budget_Activity.Budget_Activity_Invoice = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, invoiceId).FirstOrDefault();
 				Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
@@ -105,6 +122,7 @@ namespace eActForm.Controllers
 			else
 			{// for insert invoice
 				Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
+				Budget_Activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, null).FirstOrDefault();
 				Budget_Activity.Budget_Activity_Product = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId).FirstOrDefault();
 				Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
 
@@ -120,7 +138,7 @@ namespace eActForm.Controllers
 			Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
 			budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, null).FirstOrDefault();
 			budget_activity_model.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, null);
-			budget_activity_model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault(); ;
+			budget_activity_model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault(); 
 
 			return PartialView(budget_activity_model);
 		}
@@ -131,8 +149,9 @@ namespace eActForm.Controllers
 			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
 			try
 			{
+				budget_activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, null).FirstOrDefault(); ;
 				budget_activity.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, null);
-				budget_activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();	
+				budget_activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
 			} catch (Exception ex)
 			{
 				Console.WriteLine(ex.Message);
@@ -172,20 +191,38 @@ namespace eActForm.Controllers
 		}
 
 		//----- invoice file upload --------------------------------------------------------------//
-		public JsonResult getImageInvoice(string imgInvoiceNo)
+		public JsonResult getImageInvoice(string imgInvoiceNo , string companyEN)
 		{
 			List<TB_Bud_Image_Model.BudImageModel> imgInvoiceList = new List<TB_Bud_Image_Model.BudImageModel>();
 			try
 			{
-				var Key_company = Session["budget_Key_company"].ToString();
-				imgInvoiceList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null, Key_company).Where(x => x.invoiceNo.Contains(imgInvoiceNo) ).ToList();
+				//var test = companyEN;
+				//var Key_company = Session["budget_Key_company"].ToString();
+				imgInvoiceList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null, companyEN).Where(x => x.invoiceNo.Contains(imgInvoiceNo) ).ToList();
 			}
 			catch (Exception ex)
 			{
-				ExceptionManager.WriteError("BudgetImageList => " + ex.Message);
+				ExceptionManager.WriteError("getImageInvoice => " + ex.Message);
 			}
 
 			return Json(imgInvoiceList, JsonRequestBehavior.AllowGet);
+		}
+
+		
+
+		public JsonResult getRegionInvoice(string nameEN)
+		{
+			List<TB_Act_Region_Model> regionList = new List<TB_Act_Region_Model>();
+			try
+			{
+				regionList = QueryGetAllRegion.getAllRegion().Where(x => x.name.Contains(nameEN)).ToList(); ;
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("getRegionInvoice => " + ex.Message);
+			}
+
+			return Json(regionList, JsonRequestBehavior.AllowGet);
 		}
 
 
@@ -198,9 +235,9 @@ namespace eActForm.Controllers
 		{
 			try
 			{
-				TB_Bud_Image_Model.BudImageModels getBudImageModel = new TB_Bud_Image_Model.BudImageModels();
-				getBudImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudget(imageId, imageInvoiceNo, budgetApproveId, activityNo, createdByUserId, companyTH);
-				return PartialView(getBudImageModel);
+				TB_Bud_Image_Model budgetImageModel = new TB_Bud_Image_Model();
+				budgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(imageId, imageInvoiceNo, budgetApproveId, activityNo, createdByUserId, companyTH);
+				return PartialView(budgetImageModel);
 			}
 			catch (Exception ex)
 			{
@@ -210,12 +247,41 @@ namespace eActForm.Controllers
 			return PartialView();
 		}
 
+		public JsonResult getCustomerInvoice(string customerTH, string companyEN, string regionId)
+		{
+			List<TB_Act_Customers_Model.Customers_Model> customerList = new List<TB_Act_Customers_Model.Customers_Model>();
+			try
+			{
+				if (companyEN == "MT")
+				{
+					customerList = QueryGetAllCustomers.getCustomersMT().Where(x => x.cusNameTH.Contains(customerTH)).ToList();
+				}
+				else
+				{
+					customerList = QueryGetAllCustomers.getAllCustomersRegion().Where(x => x.regionId == regionId).ToList();
+				}
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("getInvoiceCustomer => " + ex.Message);
+			}
+
+			return Json(customerList, JsonRequestBehavior.AllowGet);
+		}
+
 		public PartialViewResult manageInvoiceView(string imageId)
 		{
-			TB_Bud_Image_Model.BudImageModel getBudImageModel = new TB_Bud_Image_Model.BudImageModel();
-			getBudImageModel = ImageAppCodeBudget.getImageBudget(imageId,null,null,null,null,null).FirstOrDefault();
-
-			return PartialView(getBudImageModel);
+			TB_Bud_Image_Model budgetImageModel = new TB_Bud_Image_Model();
+			try
+			{
+				budgetImageModel.BudImage = ImageAppCodeBudget.getImageBudget(imageId, null, null, null, null, null).FirstOrDefault();
+				budgetImageModel.RegionList = QueryGetAllRegion.getAllRegion().ToList();
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("manageInvoiceView => " + ex.Message);
+			}
+			return PartialView(budgetImageModel);
 		}
 
 
@@ -294,19 +360,35 @@ namespace eActForm.Controllers
 			return PartialView(getBudImageModel);
 		}
 
-		public JsonResult manageInvoiceEditSubmit(string id,string invoiceNo , string remark)
+		public JsonResult manageInvoiceEditSubmit(string id,string invoiceNo , string remark , string companyEN , string regionId , string customerId)
 		{
 			var resultAjax = new AjaxResult();
 			try
 			{
-
 				TB_Bud_Image_Model.BudImageModel budgetInvoiceModel = new TB_Bud_Image_Model.BudImageModel();
 				budgetInvoiceModel.id = id;
 				budgetInvoiceModel.invoiceNo = invoiceNo;
 				budgetInvoiceModel.remark = remark;
+				budgetInvoiceModel.company = companyEN;
+
+				budgetInvoiceModel.regionId = regionId;
+				budgetInvoiceModel.customerId = customerId;
 
 				budgetInvoiceModel.updatedByUserId = UtilsAppCode.Session.User.empId;
 				budgetInvoiceModel.updatedDate = DateTime.Now;
+
+				TB_Bud_Image_Model getBudImageModel = new TB_Bud_Image_Model();
+				getBudImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(null, budgetInvoiceModel.invoiceNo,null , null, null, budgetInvoiceModel.company);
+				if (getBudImageModel.BudImageList.Any())
+				{
+					resultAjax.Code = 2;
+					resultAjax.Message = getBudImageModel.BudImageList.ElementAtOrDefault(0).invoiceNo;
+				}
+				else
+				{
+					resultAjax.Code = 0;
+					resultAjax.Message = null;
+				}
 
 				//update image invoice
 				int countSuccess = ImageAppCodeBudget.updateImageBudget(budgetInvoiceModel);

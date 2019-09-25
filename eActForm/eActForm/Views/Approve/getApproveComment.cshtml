@@ -1,0 +1,10 @@
+﻿@model eActForm.Models.ApproveModel.approveModels
+<table>
+    @foreach (var item in Model.approveDetailLists)
+    {
+        <tr>
+            <td align="center">@item.empName : </td>
+            <td align="left">@item.remark</td>
+        </tr>
+    }
+</table>

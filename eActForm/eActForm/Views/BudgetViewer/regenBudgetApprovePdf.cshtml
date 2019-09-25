@@ -1,53 +1,11 @@
 ﻿@*@model eActForm.Models.Budget_Activity_Model*@
 
+@using eActForm.BusinessLayer;
 @using eActForm.Models
 @model eActForm.Models.Budget_Approve_Detail_Model
 @{
 	Layout = null;
 }
-
-<script type="text/javascript">
-
-	$('document').ready(function () {
-		//showCurrentDate();
-	});
-
-	//function showCurrentDate() {
-	//	n = new Date();
-	//	y = n.getFullYear();
-	//	m = n.getMonth() + 1;
-	//	d = n.getDate();
-
-	//	if (m < 10) { m = '0' + m }
-	//	if (d < 10) { d = '0' + d }
-
-	//	document.getElementById("docDate").innerHTML = d + "/" + m + "/" + y;
-	//}
-
-	function onClickSubmitApprove() {
-		$("#WaitDialog").show();
-		submitApproveBudget();
-		$("#WaitDialog").hide();
-		bootbox.alert("ดำเนินการเรียบร้อยแล้ว", function () {
-			var url = '@Url.Action("activityProduct", "Budget")';
-			window.location.href = url;
-		});
-
-	}
-
-	function submitApproveBudget() {
-            $.ajax({
-            url: '@Url.Action("submitPreviewBudget", "BudgetApproveList")',
-            data: {
-				GridHtml: $("#GridPDF").html(),
-				budgetActivityId: $("#HbudgetId").val(),
-				companyEN: $("#HcompanyEN").val()
-            },
-            dataType: "json",
-            type: 'POST',
-			});
-	}
-</script>
 
 <style type="text/css">
 
@@ -58,7 +16,6 @@
 </style>
 
 @Html.HiddenFor(m => m.Budget_Activity.budget_id, new { id = "HbudgetId" })
-@Html.HiddenFor(m => m.Budget_Activity.act_companyEN, new { id = "HcompanyEN" })
 
 @if (1 == 1)
 {
@@ -66,15 +23,15 @@
 
 
 
-	<div class="modal-dialog modal-lg" style="width:95%;">
+	<div class="modal-dialog modal-lg" style="width:100%;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<div style=""></div>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" onclick="onClickClose()">&times;</button>
 			</div>
 
 			<div class="modal-body">
-				<div id="GridPDF" style="width:97%; margin-left:10px;">
+				<div id="GridPDFApprove" style="width:100%; margin-left:10px;">
 					<style>
 						.cssborderbottom {
 							border-bottom-width: 1px;
@@ -84,7 +41,7 @@
 					</style>
 
 					<div>
-						<div style="text-align:center;"><h5>รายละเอียดตัดจ่ายจริง</h5></div>
+						<div style="text-align:center;"><h5>รายละเอียดตัดจ่ายจริง </h5></div>
 					</div>
 
 					<div>
@@ -103,7 +60,6 @@
 								<td style="text-align:left;"></td>
 								<td style="text-align:right;">
 									<label> Activity No : </label>
-
 									@if (Model.Budget_Activity.act_activityNo.ToString() != "")
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityNo)
@@ -226,8 +182,8 @@
 						<table class="tablethin" style="width:100%; text-align:center; border-color:gray;" border="1" cellpadding="0" cellspacing="0">
 							<tr>
 								<td rowspan="2" style="width:10%; font-size:11px;">ประเภทกิจกรรม</td>
-								<td rowspan="2" style="width:25%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
-								<td colspan="4" style="width:35%; font-size:11px;">จ่ายจริง (Actual)</td>
+								<td rowspan="2" style="width:20%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
+								<td colspan="4" style="width:40%; font-size:11px;">จ่ายจริง (Actual)</td>
 
 								<td rowspan="2" style="width:7%; font-size:11px;">คงเหลือ</td>
 								<td rowspan="2" style="width:7%; font-size:11px;">วันที่ทำรายการ</td>
@@ -275,8 +231,6 @@
 											<td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
 											<td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
 
-											@*status == 1 Draft
-											status == 2 รออนุมัติ*@
 											@if (item.invoiceApproveStatusId == 1)
 											{
 												<td style="text-align:center;font-size:12px;"></td>
@@ -286,7 +240,7 @@
 												<td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
 											}
 
-											@if (item.invoiceApproveStatusId == 2)
+											@if (item.invoiceApproveStatusId == 2 || item.invoiceApproveStatusId == 5)
 											{
 												count_wait_approve++;
 											}
@@ -318,11 +272,15 @@
 							<table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
 						</div>
 
-						@if (Model.Budget_Activity.budget_id != null)
+						@if (Model.Budget_Approve_detail_list.Count > 0)
 						{
-							@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
+							@Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = Model.Budget_Approve_detail_list.ElementAt(0).budgetApproveId })
 						}
+
+
 					</div>
+
+
 				</div>
 			</div>
 
@@ -331,13 +289,13 @@
 					<p class="d-flex justify-content-center">
 
 						<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-						@if (count_wait_approve == 0)
-						{
-							<button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
-						}
 					</p>
 				</div>
+
 			</div>
+
+
+
 		</div>
 	</div>
 }

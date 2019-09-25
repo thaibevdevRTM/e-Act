@@ -39,6 +39,9 @@
 @Html.HiddenFor(x => x.Budget_Activity_Product.act_activityId, new { @id = "hd_activityId" })
 @Html.HiddenFor(x => x.Budget_Activity_Product.act_activityNo, new { @id = "hd_activityNo" })
 @Html.HiddenFor(x => x.Budget_Activity_Product.activityOfEstimateId, new { @id = "hd_activityOfEstimateId" })
+@Html.HiddenFor(x => x.Budget_Activity.act_companyEN, new { @id = "hd_company" })
+
+
 
 
 @if (Model.Budget_Activity_Invoice != null)
@@ -46,152 +49,152 @@
 	@Html.HiddenFor(x => x.Budget_Activity_Invoice.invoiceId, new { @id = "hd_invoiceId" })
 }
 
-	<style>
-		.font14 {
-			font-size: 14px;
-		}
-	</style>
-
-	@if (Model.Budget_Count_Wait_Approve.count_wait_approve > 0)
-	{
-
+<style>
+	.font14 {
+		font-size: 14px;
 	}
-	else
-	{
+</style>
 
-		<div class="row">
+@if (Model.Budget_Count_Wait_Approve.count_wait_approve > 0)
+{
 
-			<div>
+}
+else
+{
+
+	<div class="row">
+
+		<div>
+			<div style="text-align:left;">
+				<h5><strong>รายละเอียดค่าใช้จ่าย (Cost)</strong></h5>
+
+				<h5>
+					ประเภทกิจกรรม :
+					@if (Model.Budget_Activity_Product.act_typeTheme.ToString() != "")
+					{
+						@Html.DisplayFor(x => x.Budget_Activity_Product.act_typeTheme)
+					}
+
+				</h5>
+
+				<h5>
+					กลุ่มสินค้า/ชื่อสินค้า :
+					@if (Model.Budget_Activity_Product.prd_productDetail.ToString() != "")
+					{
+						@Html.DisplayFor(x => x.Budget_Activity_Product.prd_productDetail)
+					}
+				</h5>
+
+			</div>
+			@if (Model.Budget_Activity_Invoice_list != null)
+			{
 				<div style="text-align:left;">
-					<h5><strong>รายละเอียดค่าใช้จ่าย (Cost)</strong></h5>
-
-					<h5>
-						ประเภทกิจกรรม :
-						@if (Model.Budget_Activity_Product.act_typeTheme.ToString() != "")
+					<h4>
+						เลขที่ใบแจ้งหนี้ :
+						@if (Model.Budget_Activity_Invoice.invoiceNo.ToString() != "")
 						{
-							@Html.DisplayFor(x => x.Budget_Activity_Product.act_typeTheme)
+							@Html.DisplayFor(x => x.Budget_Activity_Invoice.invoiceNo)
 						}
+					</h4>
+				</div>
+			}
+		</div>
 
-					</h5>
+		<div>
+			<table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+				<tr>
+					<td rowspan="2" width="30%" class="font14">กลุ่มสินค้า/ชื่อสินค้า/Remark</td>
+					<td colspan="5" class="font14">ค่าใช้จ่ายจริง (Estimate)</td>
+				</tr>
+				<tr>
+					<td width="10%" class="font14">จำนวนเงินที่ตั้ง</td>
+					<td width="10%" class="font14">เลขที่ใบแจ้งหนี้</td>
+					<td width="10%" class="font14">จำนวนเงินจ่าย</td>
+					<td width="10%" class="font14">วันที่ทำกิจกรรม</td>
+					<td width="10%" class="font14">สถานะ</td>
+				</tr>
 
-					<h5>
-						กลุ่มสินค้า/ชื่อสินค้า :
+				<tr>
+					<td width="10%" class="font14" style="text-align:left;">
 						@if (Model.Budget_Activity_Product.prd_productDetail.ToString() != "")
 						{
 							@Html.DisplayFor(x => x.Budget_Activity_Product.prd_productDetail)
 						}
-					</h5>
+					</td>
 
-				</div>
-				@if (Model.Budget_Activity_Invoice_list != null)
-				{
-					<div style="text-align:left;">
-						<h4>
-							เลขที่ใบแจ้งหนี้ :
-							@if (Model.Budget_Activity_Invoice.invoiceNo.ToString() != "")
-							{
-								@Html.DisplayFor(x => x.Budget_Activity_Invoice.invoiceNo)
-							}
-						</h4>
-					</div>
-				}
-			</div>
-
-			<div>
-				<table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
-					<tr>
-						<td rowspan="2" width="30%" class="font14">กลุ่มสินค้า/ชื่อสินค้า/Remark</td>
-						<td colspan="5" class="font14">ค่าใช้จ่ายจริง (Estimate)</td>
-					</tr>
-					<tr>
-						<td width="10%" class="font14">จำนวนเงินที่ตั้ง</td>
-						<td width="10%" class="font14">เลขที่ใบแจ้งหนี้</td>
-						<td width="10%" class="font14">จำนวนเงินจ่าย</td>
-						<td width="10%" class="font14">วันที่ทำกิจกรรม</td>
-						<td width="10%" class="font14">สถานะ</td>
-					</tr>
-
-					<tr>
-						<td width="10%" class="font14" style="text-align:left;">
-							@if (Model.Budget_Activity_Product.prd_productDetail.ToString() != "")
-							{
-								@Html.DisplayFor(x => x.Budget_Activity_Product.prd_productDetail)
-							}
-						</td>
-
-						<td width="15%" class="font14" style="text-align:right;">
-							@if (Model.Budget_Activity_Invoice != null)
-							{
-								string result = String.Format("{0:n2}", Model.Budget_Activity_Invoice.productStandBath);
-								@result.ToString();
-							}
-							else
-							{
-								string result = String.Format("{0:n2}", Model.Budget_Activity_Product.productBalanceBath);
-								@result.ToString();
-							}
-
-							&nbsp;
-						</td>
+					<td width="15%" class="font14" style="text-align:right;">
 						@if (Model.Budget_Activity_Invoice != null)
 						{
-							@*<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceNo)"></td>*@
-							<td width="10%">
-
-								@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceNo, new { @class = "form-control textboxcss", @id = "txt_invoice_no", @name = "txt_invoice_no" })
-								@Html.HiddenFor(x => x.Budget_Activity_Invoice.invoiceId, new { id = "imgInvoiceId" })
-
-							</td>
-
-							<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceTotalBath)"></td>
-							<td width="10%">
-
-
-								@if (Model.Budget_Activity_Invoice.invoiceActionDate.ToString() != "")
-								{
-									@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txt_date_action" })
-								}
-
-							</td>
-							<td width="10%">
-								@Html.DropDownListFor(item => Model.Budget_Activity_Invoice.invoiceBudgetStatusId, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", Model.Budget_Activity_Invoice.invoiceBudgetStatusId), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })
-							</td>
+							string result = String.Format("{0:n2}", Model.Budget_Activity_Invoice.productStandBath);
+							@result.ToString();
 						}
 						else
 						{
-							<td width="10%">
-								@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceNo, new { @class = "form-control textboxcss", @id = "txt_invoice_no", @name = "txt_invoice_no" })
-								@Html.HiddenFor(x => x.Budget_Activity_Invoice.invoiceId, new { id = "imgInvoiceId" })
-							</td>
-							<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht"></td>
-							<td width="10%">
-								@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txt_date_action", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString() })
-
-							</td>
-							<td width="10%">
-								@Html.DropDownListFor(item => Model.Budget_Activity_Ststus_list.ElementAt(0).id, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 2), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", @onchange = "CallChangefunc(this.value)" })
-							</td>
+							string result = String.Format("{0:n2}", Model.Budget_Activity_Product.productBalanceBath);
+							@result.ToString();
 						}
-					</tr>
-				</table>
 
-				<p></p>
-				<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
-				<button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
-				<div>
-					<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color:white; width:100%;"><tr><td>&nbsp;</td></tr></table>
-				</div>
+						&nbsp;
+					</td>
+					@if (Model.Budget_Activity_Invoice != null)
+					{
+						@*<td width="10%"><input class="form-control textboxcss font14" style="text-align:center;" id="txt_invoice_no" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceNo)"></td>*@
+						<td width="10%">
+
+							@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceNo, new { @class = "form-control textboxcss", @id = "txt_invoice_no", @name = "txt_invoice_no" })
+							@Html.HiddenFor(x => x.Budget_Activity_Invoice.invoiceId, new { id = "imgInvoiceId" })
+
+						</td>
+
+						<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceTotalBath)"></td>
+						<td width="10%">
 
 
+							@if (Model.Budget_Activity_Invoice.invoiceActionDate.ToString() != "")
+							{
+								@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txt_date_action" })
+							}
 
+						</td>
+						<td width="10%">
+							@Html.DropDownListFor(item => Model.Budget_Activity_Invoice.invoiceBudgetStatusId, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", Model.Budget_Activity_Invoice.invoiceBudgetStatusId), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })
+						</td>
+					}
+					else
+					{
+						<td width="10%">
+							@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceNo, new { @class = "form-control textboxcss", @id = "txt_invoice_no", @name = "txt_invoice_no" })
+							@Html.HiddenFor(x => x.Budget_Activity_Invoice.invoiceId, new { id = "imgInvoiceId" })
+						</td>
+						<td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht"></td>
+						<td width="10%">
+							@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txt_date_action", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString() })
+
+						</td>
+						<td width="10%">
+							@Html.DropDownListFor(item => Model.Budget_Activity_Ststus_list.ElementAt(0).id, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 2), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", @onchange = "CallChangefunc(this.value)" })
+						</td>
+					}
+				</tr>
+			</table>
+
+			<p></p>
+			<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+			<button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
+			<div>
+				<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color:white; width:100%;"><tr><td>&nbsp;</td></tr></table>
 			</div>
+
+
 
 		</div>
 
-	}
+	</div>
+
+}
 
 
-	<script type="text/javascript">
+<script type="text/javascript">
 	$(document).ready(function () {
 		ObjModel = {};
 
@@ -209,7 +212,7 @@
                         dataType: "json",
                         data: {
 							imgInvoiceNo: $("#txt_invoice_no").val(),
-							//company = $("#hd_company").val(),
+							companyEN: $("#hd_company").val(),
                         },
 						success: function (data) {
 							response($.map(data, function (item) {
@@ -254,9 +257,9 @@
 		}
 	}
 
-	function refreshInvoice() {	
+	function refreshInvoice() {
 		callInvoiceList($('#hd_activityId').val(), $("#hd_activityOfEstimateId").val());
 	}
 
 
-	</script>
+</script>
