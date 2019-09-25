@@ -488,9 +488,6 @@
         <div>
             @if (Model.activityFormModel != null)
             {
-                <div style="margin-bottom:10px;">
-                    หมายเหตุ
-                </div>
                 @Html.Action("getApproveComment", "Approve", new { actId = Model.activityFormModel.id, actTypeName = Model.activityFormModel.txttheme })
             }
         </div>

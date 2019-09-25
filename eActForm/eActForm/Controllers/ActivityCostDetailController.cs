@@ -217,7 +217,7 @@ namespace eActForm.Controllers
                             p_total = (getNormalCost - getPromotionCost) * decimal.Parse(promotionCase);
                         }
 
-                        p_growth = normalCase == "0" ? 0 : (decimal.Parse(promotionCase) - decimal.Parse(normalCase)) / decimal.Parse(AppCode.checkNullorEmpty(normalCase) == "0" ? "1" : normalCase) * 100;
+                        p_growth = AppCode.checkNullorEmpty(normalCase) == "0" ? 0 : (decimal.Parse(promotionCase) - decimal.Parse(normalCase)) / decimal.Parse(AppCode.checkNullorEmpty(normalCase) == "0" ? "1" : normalCase) * 100;
                     }
                 }
 
