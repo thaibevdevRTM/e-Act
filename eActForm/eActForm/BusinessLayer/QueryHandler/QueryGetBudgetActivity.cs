@@ -252,10 +252,9 @@ namespace eActForm.BusinessLayer
 				var result = (from DataRow d in ds.Tables[0].Rows
 							  select new Budget_Activity_Model.Budget_Activity_Last_Approve_Att()
 							  {
-								  budgetActivityId = d["budgetActivityId"].ToString(),
-								  budgetApproveId = d["budgetApproveId"].ToString(),
+								  budgetActivityId = d["budgetActivityId"] is DBNull ? "" : d["budgetActivityId"].ToString(),
+								  budgetApproveId = d["budgetApproveId"] is DBNull ? "" : d["budgetApproveId"].ToString(),
 							  });
-
 				return result.ToList();
 			}
 			catch (Exception ex)

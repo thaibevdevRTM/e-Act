@@ -76,7 +76,15 @@ namespace eActForm.BusinessLayer
 								 _fileName = d["_fileName"].ToString(),
 								 extension = d["extension"].ToString(),
 								 remark = d["remark"].ToString(),
+
+								 companyId = d["companyId"].ToString(),
+								 regionId = d["regionId"].ToString(),
+								 customerId = d["customerId"].ToString(),
+
 								 company = d["company"].ToString(),
+								 regionName = d["regionName"].ToString(),
+								 customerName = d["cusNameTH"].ToString(),
+
 								 delFlag = bool.Parse(d["delFlag"].ToString()),
 								 createdDate = DateTime.Parse(d["createdDate"].ToString()),
 								 createdByUserId = d["createdByUserId"].ToString(),
@@ -129,6 +137,7 @@ namespace eActForm.BusinessLayer
 				result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateBudgetImage"
 					, new SqlParameter[] {new SqlParameter("@id",model.id)
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
+					,new SqlParameter("@customerId",model.customerId)
 					,new SqlParameter("@remark",model.remark)
 					,new SqlParameter("@updatedByUserId",model.updatedByUserId)
 

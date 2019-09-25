@@ -121,6 +121,7 @@ namespace eActForm.Controllers
 							 {
 								 statusId = dr["statusId"].ToString(),
 								 statusName = dr["statusName"].ToString(),
+								 activityId = dr["activityId"].ToString(),
 								 activityNo = dr["activityNo"].ToString(),
 
 								 budgetApproveId = dr["budgetApproveId"].ToString(),
@@ -175,7 +176,7 @@ namespace eActForm.Controllers
 
 		[HttpPost]
 		[ValidateInput(false)]
-		public JsonResult genPdfApprove(string GridHtml, string statusId, string budgetApproveId)
+		public JsonResult genPdfApprove(string GridHtml, string statusId, string budgetApproveId, string activityId)
 		{
 			var resultAjax = new AjaxResult();
 			try
@@ -185,16 +186,16 @@ namespace eActForm.Controllers
 				GridHtml = GridHtml.Replace("<br>", "<br/>");
 				AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
 
-				TB_Bud_Image_Model.BudImageModels getBudgetImageModel = new TB_Bud_Image_Model.BudImageModels();
-				getBudgetImageModel.tbBudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budgetApproveId);
+				TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
+				getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budgetApproveId);
 
-				string[] pathFile = new string[getBudgetImageModel.tbBudImageList.Count + 1];
+				string[] pathFile = new string[getBudgetImageModel.BudImageList.Count + 1];
 				pathFile[0] = Server.MapPath(rootPathInsert);
 
-				if (getBudgetImageModel.tbBudImageList.Any())
+				if (getBudgetImageModel.BudImageList.Any())
 				{
 					int i = 1;
-					foreach (var item in getBudgetImageModel.tbBudImageList)
+					foreach (var item in getBudgetImageModel.BudImageList)
 					{
 						if (System.IO.File.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName))))
 						{
