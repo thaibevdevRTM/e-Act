@@ -1,5 +1,6 @@
 ﻿
 @model eActForm.Models.Budget_Activity_Model
+@using eActForm.BusinessLayer
 @{
 	Layout = null;
 
@@ -36,13 +37,12 @@
 
 
 <input type="hidden" id="hd_activity">
+@Html.HiddenFor(x => x.Budget_Activity.act_customerId, new { @id = "hd_act_customerId" })
+
 @Html.HiddenFor(x => x.Budget_Activity_Product.act_activityId, new { @id = "hd_activityId" })
 @Html.HiddenFor(x => x.Budget_Activity_Product.act_activityNo, new { @id = "hd_activityNo" })
 @Html.HiddenFor(x => x.Budget_Activity_Product.activityOfEstimateId, new { @id = "hd_activityOfEstimateId" })
 @Html.HiddenFor(x => x.Budget_Activity.act_companyEN, new { @id = "hd_company" })
-
-
-
 
 @if (Model.Budget_Activity_Invoice != null)
 {
@@ -55,7 +55,7 @@
 	}
 </style>
 
-@if (Model.Budget_Count_Wait_Approve.count_wait_approve > 0)
+@if (Model.Budget_Count_Wait_Approve.count_wait_approve > 0 && UtilsAppCode.Session.User.empId != "70016911")
 {
 
 }
@@ -213,6 +213,7 @@ else
                         data: {
 							imgInvoiceNo: $("#txt_invoice_no").val(),
 							companyEN: $("#hd_company").val(),
+							customerId: $("#hd_act_customerId").val(),
                         },
 						success: function (data) {
 							response($.map(data, function (item) {

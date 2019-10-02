@@ -152,13 +152,17 @@
 
             <li>
                 <a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
-                    <li>@Html.ActionLink(" Report Detail", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-                    @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-                    {
-                        <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-                    }
-                </ul>
+				<ul class="nav child_menu">
+					<li>@Html.ActionLink(" Report Detail", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+					@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+					{
+						<li>@Html.ActionLink(" Report Summary", "index", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+					}
+					@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+					{
+						<li>@Html.ActionLink(" Report Budget Activity", "RptBudgetActivityIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+					}
+				</ul>
             </li>
 
         </ul>

@@ -80,9 +80,16 @@
 				<td align="left"> <h5>ลูกค้า : </h5></td>
 
 				<td>
-					@Html.TextBoxFor(item => item.BudImage.customerName, new { @class = "form-control wide-nolimit", @id = "txt_customer", @name = "txt_customer" })
-					@Html.HiddenFor(item => item.BudImage.customerId, new { id = "txt_customer_id" })
-
+					@if (Model.CustomerList != null)
+					{
+					@Html.DropDownListFor(x => x.BudImage.customerId, new SelectList(Model.CustomerList, "id", "cusNameTH", 0), "Please Select", new
+					{
+							@class = "form-control textboxcss wide-nolimit",
+							id = "ddlCustomer"
+					})
+					}
+					@*@Html.TextBoxFor(item => item.BudImage.customerName, new { @class = "form-control wide-nolimit", @id = "txt_customer", @name = "txt_customer" })
+					@Html.HiddenFor(item => item.BudImage.customerId, new { id = "txt_customer_id" })*@
 				</td>
 
 
@@ -125,71 +132,36 @@
 }
 
 <script type="text/javascript">
-		$(document).ready(function () {
+	$(document).ready(function () {
 		ObjModel = {};
-
-			$("#txt_customer").autocomplete({
-                   source: function (request, response) {
-                    $.ajax({
-                        url: '@Url.Action("getCustomerInvoice", "Budget")',
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-							customerTH: $("#txt_customer").val(),
-							companyEN: $("#hd_company").val(),
-							regionId: $("#ddlRegion").val(),
-                        },
-						success: function (data) {
-							response($.map(data, function (item) {
-								return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
-                                   }))
-
-                        }
-                           })
-                },
-                minLength: 0,
-                messages: {
-                       noResults: '',
-                    results: function (resultsCount) {
-                           }
-                       }, select: function (event, ui) {
-					$("#txt_customer_id").val(ui.item.id)
-                           }
-            }).focus(function () {
-                $(this).data("uiAutocomplete").search($(this).val());
-				});
-
-			//-----------------------------------------------------------------------------------
-
-			@*$("#txt_region").autocomplete({
-                   source: function (request, response) {
-                    $.ajax({
-                        url: '@Url.Action("getRegionInvoice", "Budget")',
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-							nameEN: $("#txt_region").val(),
-                        },
-						success: function (data) {
-							response($.map(data, function (item) {
-								return { label: item.name, value: item.name, id: item.id };
-                                   }))
-
-                        }
-                           })
-                },
-                minLength: 0,
-                messages: {
-                       noResults: '',
-                    results: function (resultsCount) {
-                           }
-                       }, select: function (event, ui) {
-					$("#txt_region_id").val(ui.item.id)
-                           }
-            }).focus(function () {
-                $(this).data("uiAutocomplete").search($(this).val());
-				});*@
 	});
+
+	$("#ddlRegion").change(function () {
+		var ddlFillCustomer = $("#ddlCustomer");
+        $.ajax({
+            url: '@Url.Action("getCustomerInvoice", "Budget")',
+            data: {
+				regionId: $("#ddlRegion").val(),
+				comapnyEN: $("#hd_company").val()
+            },
+            dataType: "json",
+            type: 'POST',
+			success: function (response) {
+				if (response.Data.getCustomerName.length > 0) {
+					$("#ddlCustomer option[value !='']").remove();
+					$.each(response.Data.getCustomerName, function () {
+						ddlFillCustomer.append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+					//document.getElementById("ddlCustomer").disabled = false;
+                }
+				else {
+					//document.getElementById("ddlCustomer").disabled = true;
+                }
+            }
+        });
+	});
+
+	
 
 	function refreshInvoice() {
 		callManageInvoiceList();

@@ -49,7 +49,7 @@ namespace eActForm.BusinessLayer
 		}
 
 
-		public static List<TB_Bud_Image_Model.BudImageModel> getImageBudget(string imageId , string imageInvoiceNo, string budgetApproveId, string activityNo, string createdByUserId , string company)
+		public static List<TB_Bud_Image_Model.BudImageModel> getImageBudget(string imageId , string imageInvoiceNo, string budgetApproveId, string activityNo, string createdByUserId , string company, string customerId)
 		{
 			try
 			{
@@ -60,6 +60,7 @@ namespace eActForm.BusinessLayer
 					, new SqlParameter("@activityNo", activityNo)
 					, new SqlParameter("@createdByUserId", createdByUserId)
 					, new SqlParameter("@company", company)
+					, new SqlParameter("@customerId", customerId)
 					);
 				var lists = (from DataRow d in ds.Tables[0].Rows
 							 select new TB_Bud_Image_Model.BudImageModel()
