@@ -189,14 +189,15 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate)
+        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate, string typeForm)
         {
             try
             {
                 DataSet ds = new DataSet();
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
-                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDate"
+                    string stored = typeForm == Activity_Model.activityType.MT.ToString() ? "usp_getReportDetailByCreateDate" : "usp_getReportDetailOMTByCreateDate";
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored
                     , new SqlParameter[] {
                         new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))

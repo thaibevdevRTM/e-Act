@@ -22,6 +22,7 @@ namespace eActForm.Controllers
         public ActionResult Index(string typeForm)
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            ViewBag.TypeForm = typeForm;
             if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 if (typeForm == Activity_Model.activityType.MT.ToString())
@@ -34,6 +35,7 @@ namespace eActForm.Controllers
                 }
             }
 
+
             models.approveStatusList.Add(new ApproveModel.approveStatus()
             {
                 id = "7",
@@ -43,13 +45,16 @@ namespace eActForm.Controllers
             return View(models);
         }
 
-        public ActionResult searchActForm()
+        public ActionResult searchActForm(string typeForm)
         {
             try
             {
 
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
-                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"]);
+              
+                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"] , typeForm);
+                
+              
 
                 if (Request.Form["txtActivityNo"] != "")
                 {
