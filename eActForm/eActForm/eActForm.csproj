@@ -226,6 +226,7 @@
     <Compile Include="Controllers\ActivityProductDetailController.cs" />
     <Compile Include="Controllers\ActivityViewerController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminUserController.cs" />
     <Compile Include="Controllers\AjaxResult.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
@@ -2327,6 +2328,7 @@
     <Content Include="Views\BudgetReport\RptBudgetActivityIndex.cshtml" />
     <Content Include="Views\BudgetReport\searchRptBudgetActivity.cshtml" />
     <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
+    <Content Include="Views\AdminUser\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
