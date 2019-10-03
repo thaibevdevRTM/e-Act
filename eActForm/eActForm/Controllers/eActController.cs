@@ -253,6 +253,29 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getCustomerByCompany(string companyId, string txtCus)
+        {
+
+
+            List<TB_Act_Customers_Model.Customers_Model> customerList = new List<TB_Act_Customers_Model.Customers_Model>();
+            try
+            {
+                if (companyId == "5600")
+                {
+                    customerList = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameTH.Contains(txtCus)).ToList();
+                }
+                else
+                {
+                    customerList = QueryGetAllCustomers.getAllCustomersRegion().Where(x => x.cusNameTH.Contains(txtCus)).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCustomerByRegion => " + ex.Message);
+            }
+            return Json(customerList, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult getCustomerByRegion(string regionId , string txtCus)
         {
 

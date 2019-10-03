@@ -225,6 +225,7 @@
     <Compile Include="Controllers\ActivityProductDetailController.cs" />
     <Compile Include="Controllers\ActivityViewerController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminUserController.cs" />
     <Compile Include="Controllers\AjaxResult.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
@@ -2320,6 +2321,7 @@
     <Content Include="Views\Activity\ShowImage.cshtml" />
     <Content Include="Views\Approve\getApproveComment.cshtml" />
     <Content Include="Views\actFormRepDetail\repPreviewForApprove.cshtml" />
+    <Content Include="Views\AdminUser\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
