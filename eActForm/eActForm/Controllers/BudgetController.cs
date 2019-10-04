@@ -368,7 +368,8 @@ namespace eActForm.Controllers
 								{
 									writer.CloseStream = false;
 									doc.Open();
-									image.SetAbsolutePosition(0, 0);
+									//image.SetAbsolutePosition(0, 0);
+									image.SetAbsolutePosition((PageSize.A4.Width - image.ScaledWidth) / 2, (PageSize.A4.Height - image.ScaledHeight) / 2);
 									writer.DirectContent.AddImage(image);
 									doc.Close();
 								}
