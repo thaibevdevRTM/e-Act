@@ -266,7 +266,7 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    customerList = QueryGetAllCustomers.getAllCustomersRegion().Where(x => x.cusNameTH.Contains(txtCus)).ToList();
+                    customerList = QueryGetAllCustomers.getCustomersOMT().Where(x => x.cusNameTH.Contains(txtCus)).ToList();
                 }
             }
             catch (Exception ex)
@@ -279,11 +279,10 @@ namespace eActForm.Controllers
         public JsonResult getCustomerByRegion(string regionId , string txtCus)
         {
 
-
             List<TB_Act_Customers_Model.Customers_Model> customerList = new  List<TB_Act_Customers_Model.Customers_Model>();
             try
             {
-                 customerList = QueryGetAllCustomers.getAllCustomersRegion().Where(x => x.regionId == regionId && x.cusNameTH.Contains(txtCus)).ToList();
+                 customerList = QueryGetAllCustomers.getCustomersOMT().Where(x => x.regionId == regionId && x.cusNameTH.Contains(txtCus)).ToList();
 
             }
             catch (Exception ex)
