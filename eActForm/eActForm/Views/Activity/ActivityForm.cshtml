@@ -745,11 +745,17 @@
     }
 
     function AddThemeCost() {
-
+        var validate = true;
+        var required = "กรุณา ระบุ :<br>";
         var ddlTheme = document.getElementById("ddlThemeDetail");
         var txtddlTheme = ddlTheme.options[ddlTheme.selectedIndex].text;
-        if (txtddlTheme == 'Please Select') { bootbox.alert("กรุณา ระบุ ประเภทกิจกรรม");  return false; }
+        if (txtddlTheme == 'Please Select') { bootbox.alert("กรุณา ระบุ ประเภทกิจกรรม"); validate = false; }
+        if ($("#ddlProductBrand").val() == '') { required += "กรุณา Brand*<br>"; validate = false; }
 
+        if (validate != true) {
+            bootbox.alert(required);
+            return false;
+        }
 
         $("#WaitDialog").show();
          $.ajax({
@@ -758,7 +764,8 @@
              data: {
                  themeId: $("#ddlThemeDetail").val(),
                  txttheme: txtddlTheme,
-                 actId:'@Model.activityFormModel.id',
+                 actId: '@Model.activityFormModel.id',
+                 brandId: $("#ddlProductBrand").val(),
             }
          }).done(function (response) {
              callThemedetailcost('@Model.activityFormModel.id');

@@ -206,7 +206,7 @@ namespace eActForm.Models
         public string pack { get; set; }
         public string smellName { get; set; }
         public Boolean isShowGroup { get; set; }
-
+        public string IO { get; set; }
         public int rowNo { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
@@ -296,6 +296,9 @@ namespace eActForm.Models
         public decimal? LE { get; set; }
         public Boolean isShowGroup { get; set; }
         public int rowNo { get; set; }
+        public string digitGroup { get; set; }
+        public string digitSubGroup { get; set; }
+        public string IO { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public ProductCostOfGroupByPrice()

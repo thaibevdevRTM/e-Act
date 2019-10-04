@@ -148,5 +148,35 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getActFormByEmpId >> " + ex.Message);
             }
         }
+
+        public static string getDigitGroup(string activityTypeId)
+        {
+            try
+            {
+                string result = "";
+                result = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == activityTypeId).FirstOrDefault().digit_Group;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getDigitGroup >>" + ex.Message);
+            }
+        }
+
+        public static string getDigitRunnigGroup(string brandId)
+        {
+            try
+            {
+                string result = "";
+                result = QueryGetAllBrand.GetAllBrand().Where(x => x.id == brandId).FirstOrDefault().digit_IO;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getDigitGroup >>" + ex.Message);
+            }
+        }
+
+
     }
 }
