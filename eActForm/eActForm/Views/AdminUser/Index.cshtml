@@ -11,7 +11,7 @@
 <div id='dialogDiv' class='modal hide fade in'>
     <div id='dialogContent'></div>
 </div>
-@using (Html.BeginForm("insertUsers", "AdminUsers", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("insertUsers", "AdminUsers", FormMethod.Post, new {@class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
 
     <div class="row">
@@ -130,7 +130,7 @@
     </div>
 }
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
         $(document).ready(function () {
             $('#datatable').DataTable({
@@ -171,11 +171,12 @@
                     }
                 }, select: function (event, ui) {
                     $("#txtCustomerIds").val($("#txtCustomerIds").val() + "," + ui.item.id);
-                    $("#divCustLists").append("<li>"+ ui.item.label +"</li>");
+                    $("#divCustLists").append("<label id='"+ "lb" + ui.item.id + "' class='custLi'>" + ui.item.label + "<span class='close' onclick=javascript:onclickDelCusList('"+ui.item.id+"');>x</span></label>");
                 }
             }).focus(function () {
                 $(this).data("uiAutocomplete").search($(this).val());
             });
+
 
 
             $("#empId").autocomplete({
@@ -239,6 +240,24 @@
         });
 
 
+
+
+        function onclickDelCusList(id) {
+
+            var elements = document.getElementsByClassName("custLi");
+            var i;
+            for (i = 0; i < elements.length; i++) {
+                // modify as you want
+                console.log(elements);
+            }
+
+            //var elem = document.getElementById("lb"+ id);
+            //elem.remove();
+           
+          
+
+    }
+
         function onEditData(row) {
 
             $.ajax({
@@ -265,4 +284,4 @@
 
 
 
-</script>
+    </script>

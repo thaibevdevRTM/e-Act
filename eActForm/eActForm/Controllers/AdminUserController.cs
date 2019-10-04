@@ -14,5 +14,11 @@ namespace eActForm.Controllers
         {
             return View();
         }
+
+
+        public ActionResult IinsertUsersndex()
+        {
+            return View();
+        }
     }
 }

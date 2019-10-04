@@ -279,7 +279,6 @@ namespace eActForm.Controllers
         public JsonResult getCustomerByRegion(string regionId , string txtCus)
         {
 
-
             List<TB_Act_Customers_Model.Customers_Model> customerList = new  List<TB_Act_Customers_Model.Customers_Model>();
             try
             {
