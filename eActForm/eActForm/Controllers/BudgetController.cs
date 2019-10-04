@@ -277,7 +277,7 @@ namespace eActForm.Controllers
 				}
 				else
 				{
-					customerList = QueryGetAllCustomers.getAllCustomersRegion().Where(x => x.regionId == regionId).ToList();
+					customerList = QueryGetAllCustomers.getCustomersOMT().Where(x => x.regionId == regionId).ToList();
 
 					var resultData = new
 					{
@@ -312,7 +312,7 @@ namespace eActForm.Controllers
 				}
 				else
 				{
-					budgetImageModel.CustomerList = QueryGetAllCustomers.getAllCustomersRegion().Where(x => x.regionId == budgetImageModel.BudImage.regionId).ToList();
+					budgetImageModel.CustomerList = QueryGetAllCustomers.getCustomersOMT().Where(x => x.regionId == budgetImageModel.BudImage.regionId).ToList();
 				}
 
 			}

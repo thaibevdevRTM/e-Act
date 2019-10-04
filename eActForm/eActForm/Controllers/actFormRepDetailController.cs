@@ -31,7 +31,7 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    models.customerslist = QueryGetAllCustomers.getCustomersOMT();
+                    models.customerslist = QueryGetAllCustomers.getAllRegion();
                 }
             }
 
@@ -67,10 +67,19 @@ namespace eActForm.Controllers
                     {
                         model = RepDetailAppCode.getFilterRepDetailByStatusId(model, Request.Form["ddlStatus"]);
                     }
+                    
                     if (Request.Form["ddlCustomer"] != "")
                     {
-                        model = RepDetailAppCode.getFilterRepDetailByCustomer(model, Request.Form["ddlCustomer"]);
+                        if (typeForm == Activity_Model.activityType.MT.ToString())
+                        {
+                            model = RepDetailAppCode.getFilterRepDetailByCustomer(model, Request.Form["ddlCustomer"]);
+                        }
+                        else
+                        {
+                            model = RepDetailAppCode.getFilterRepDetailByRegion(model, Request.Form["ddlCustomer"]);
+                        }
                     }
+
                     if (Request.Form["ddlTheme"] != "")
                     {
                         model = RepDetailAppCode.getFilterRepDetailByActivity(model, Request.Form["ddlTheme"]);
