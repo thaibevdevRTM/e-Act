@@ -37,7 +37,7 @@
 
 	function submitApproveBudget() {
             $.ajax({
-            url: '@Url.Action("submitPreviewBudget", "BudgetApproveList")',
+            url: '@Url.Action("submitPreviewBudget", "BudgetApprove")',
             data: {
 				GridHtml: $("#GridPDF").html(),
 				budgetActivityId: $("#HbudgetId").val(),

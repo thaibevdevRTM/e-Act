@@ -35,40 +35,49 @@
                     </ul>
                 </li>
             }
-            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-            {
-                <li>
+
+             <li>
                     <a><i class="fa fa-bar-chart-o"></i> Budget Forms <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
+					<ul class="nav child_menu">
 
+						@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+						{
+							<li>
+								<a href="@Url.Action("activityList", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
+									Budget Form
+								</a>
+							</li>
+						}
 
-                        <li>
-                            <a href="@Url.Action("activityList", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
-                                Budget Form
-                            </a>
-                        </li>
+						@if ((UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+						{
+							<li>
+								<a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
+									Manage Invoice
+								</a>
+							</li>
+						}
 
-                        <li>
-                            <a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
-                                Manage Invoice
-                            </a>
-                        </li>
+						@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+						{
+							<li>
+								<a href="@Url.Action("activityList", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
+									Budget Form OMT
+								</a>
+							</li>
+						}
 
-                        <li>
-                            <a href="@Url.Action("activityList", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
-                                Budget Form OMT
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
-                                Manage Invoice OMT
-                            </a>
-                        </li>
-
-                    </ul>
+						@if ((UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+						{
+							<li>
+								<a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
+									Manage Invoice OMT
+								</a>
+							</li>
+						}
+						</ul>
                 </li>
-            }
+            
             @if (UtilsAppCode.Session.User.isCreator || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>

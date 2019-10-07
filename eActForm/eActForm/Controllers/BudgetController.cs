@@ -53,9 +53,6 @@ namespace eActForm.Controllers
 					int countSuccess = BudgetFormCommandHandler.updateInvoiceProduct(budgetInvoiceModel);
 				}
 
-
-				
-
 				if (budgetInvoiceModel.budgetImageId != null)
 				{
 					TB_Bud_Image_Model getBudImageModel = new TB_Bud_Image_Model();
@@ -115,7 +112,6 @@ namespace eActForm.Controllers
 				Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
 
 				Budget_Activity.Budget_Count_Wait_Approve = QueryGetBudgetActivity.getBudgetActivityWaitApprove(activityId).FirstOrDefault();
-
 				Budget_Activity.Budget_ImageList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null, company,null);
 
 				return PartialView(Budget_Activity);
@@ -128,7 +124,6 @@ namespace eActForm.Controllers
 				Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
 
 				Budget_Activity.Budget_Count_Wait_Approve = QueryGetBudgetActivity.getBudgetActivityWaitApprove(activityId).FirstOrDefault();
-
 				Budget_Activity.Budget_ImageList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null, company, null);
 				return PartialView(Budget_Activity);
 			}
@@ -228,22 +223,6 @@ namespace eActForm.Controllers
 			return Json(regionList, JsonRequestBehavior.AllowGet);
 		}
 
-		//public JsonResult getCustomerInvoice(string nameEN,string companyEN)
-		//{
-		//	List<TB_Act_Customers_Model> customerList = new List<TB_Act_Customers_Model>();
-		//	try
-		//	{
-		//		customerList = QueryGetAllCustomers.getAllCustomersRegion()
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		ExceptionManager.WriteError("getCustomerInvoice => " + ex.Message);
-		//	}
-
-		//	return Json(customerList, JsonRequestBehavior.AllowGet);
-		//}
-
-
 		public ActionResult manageInvoiceIndex(String companyTH)
 		{
 			return View();
@@ -253,6 +232,10 @@ namespace eActForm.Controllers
 		{
 			try
 			{
+				if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+				{
+					createdByUserId = null;
+				}
 				TB_Bud_Image_Model budgetImageModel = new TB_Bud_Image_Model();
 				budgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(imageId, imageInvoiceNo, budgetApproveId, activityNo, createdByUserId, companyTH,null);
 				return PartialView(budgetImageModel);
@@ -338,8 +321,11 @@ namespace eActForm.Controllers
 
 					string resultFilePath = "";
 					string extension = Path.GetExtension(httpPostedFile.FileName);
-					int indexGetFileName = httpPostedFile.FileName.LastIndexOf('.');
-					var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + DateTime.Now.ToString("ddMMyyHHmm") + extension;
+					string strDateTime = DateTime.Now.ToString("ddMMyyHHmmssff");
+					//int indexGetFileName = httpPostedFile.FileName.LastIndexOf('.');
+
+					int indexGetFileName = 10;
+					var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + strDateTime + extension;
 					string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootUploadfilesBudget"].ToString(), _fileName));
 
 					if (extension == ".pdf")
@@ -362,14 +348,15 @@ namespace eActForm.Controllers
 						iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(UploadDirectory);
 						using (FileStream fs = new FileStream(UploadDirectory_pdf, FileMode.Create, FileAccess.Write, FileShare.None))
 						{
-							using (Document doc = new Document(PageSize.A4, 10, 10, 10, 10))
+							//using (Document doc = new Document(PageSize.A4, 10, 10, 10, 10))
+							using (Document doc = new Document(PageSize.A4, 0, 0, 0, 0))
 							{
 								using (PdfWriter writer = PdfWriter.GetInstance(doc, fs))
 								{
 									writer.CloseStream = false;
 									doc.Open();
-									//image.SetAbsolutePosition(0, 0);
-									image.SetAbsolutePosition((PageSize.A4.Width - image.ScaledWidth) / 2, (PageSize.A4.Height - image.ScaledHeight) / 2);
+									image.ScaleToFit(PageSize.A4.Width, PageSize.A4.Height);
+									image.SetAbsolutePosition((PageSize.A4.Width - image.ScaledWidth) / 2, (PageSize.A4.Height - image.ScaledHeight));
 									writer.DirectContent.AddImage(image);
 									doc.Close();
 								}
@@ -446,7 +433,7 @@ namespace eActForm.Controllers
 				budgetInvoiceModel.updatedDate = DateTime.Now;
 
 				TB_Bud_Image_Model getBudImageModel = new TB_Bud_Image_Model();
-				getBudImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(null, budgetInvoiceModel.invoiceNo,null , null, null, budgetInvoiceModel.company,null);
+				getBudImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(null, budgetInvoiceModel.invoiceNo,null , null, null , budgetInvoiceModel.company, customerId);
 				if (getBudImageModel.BudImageList.Any())
 				{
 					resultAjax.Code = 2;
