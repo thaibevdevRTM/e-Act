@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data;
-using System.Data.SqlClient;
 using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using iTextSharp.text.pdf;
+using iTextSharp.text;
 using System.Configuration;
 using System.IO;
 using System.Web.Mvc;
-using System.Web.UI;
 using WebLibrary;
+
 
 namespace eActForm.Controllers
 {
@@ -341,30 +341,59 @@ namespace eActForm.Controllers
 					int indexGetFileName = httpPostedFile.FileName.LastIndexOf('.');
 					var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + DateTime.Now.ToString("ddMMyyHHmm") + extension;
 					string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootUploadfilesBudget"].ToString(), _fileName));
-					resultFilePath = UploadDirectory;
-					BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
-					binData = b.ReadBytes(0);
-					httpPostedFile.SaveAs(resultFilePath);
+
+					if (extension == ".pdf")
+					{
+						resultFilePath = UploadDirectory;
+						BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
+						binData = b.ReadBytes(0);
+						httpPostedFile.SaveAs(resultFilePath);
+					}
+					else
+					{
+						resultFilePath = UploadDirectory;
+						BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
+						binData = b.ReadBytes(0);
+						httpPostedFile.SaveAs(resultFilePath);
+
+						// convert image to pdf
+						string UploadDirectory_pdf = "";
+						UploadDirectory_pdf = UploadDirectory.Replace(extension, ".pdf");
+						iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(UploadDirectory);
+						using (FileStream fs = new FileStream(UploadDirectory_pdf, FileMode.Create, FileAccess.Write, FileShare.None))
+						{
+							using (Document doc = new Document(PageSize.A4, 10, 10, 10, 10))
+							{
+								using (PdfWriter writer = PdfWriter.GetInstance(doc, fs))
+								{
+									writer.CloseStream = false;
+									doc.Open();
+									//image.SetAbsolutePosition(0, 0);
+									image.SetAbsolutePosition((PageSize.A4.Width - image.ScaledWidth) / 2, (PageSize.A4.Height - image.ScaledHeight) / 2);
+									writer.DirectContent.AddImage(image);
+									doc.Close();
+								}
+							}
+						}
+					}
 
 					imageFormModel._image = binData;
 					imageFormModel.imageType = "UploadFile";
-					imageFormModel._fileName = _fileName.ToLower();
-					imageFormModel.extension = extension.ToLower();
+					imageFormModel._fileName = _fileName.ToLower().Replace(extension, ".pdf");
+					imageFormModel.extension = ".pdf";
 					imageFormModel.remark = "";
 
 					imageFormModel.company = "";
 					if (company == "MT") { imageFormModel.company = "5600"; };
 					if (company == "OMT") { imageFormModel.company = "5601"; };
-					
+
 					imageFormModel.delFlag = false;
 					imageFormModel.createdByUserId = UtilsAppCode.Session.User.empId;
 					imageFormModel.createdDate = DateTime.Now;
 					imageFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
 					imageFormModel.updatedDate = DateTime.Now;
 
-
 					int resultImg = ImageAppCodeBudget.insertImageBudget(imageFormModel);
-
 				}
 
 				//manageInvoiceList(null);

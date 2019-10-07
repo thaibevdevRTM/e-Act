@@ -105,7 +105,9 @@ namespace eActForm.Controllers
 				ExceptionManager.WriteError(ex.Message);
 			}
 
-			return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "DetailReport.xls");
+			string createDate = "";
+			createDate = DateTime.Today.ToString("yyyyMMdd");
+			return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "BudgetReport_" + createDate + ".xls");
 		}
 
 
