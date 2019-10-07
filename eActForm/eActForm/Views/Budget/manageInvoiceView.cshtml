@@ -68,7 +68,7 @@
 					<td align="left"> <h5>Region : </h5></td>
 
 					<td>
-						@Html.DropDownListFor(x => x.BudImage.regionId, new SelectList(Model.RegionList, "id", "descTh", 0), "Please Select", new
+						@Html.DropDownListFor(x => x.BudImage.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
 						{
 							 @class = "form-control textboxcss wide-nolimit",
 							 id = "ddlRegion"

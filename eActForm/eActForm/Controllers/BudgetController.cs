@@ -289,6 +289,16 @@ namespace eActForm.Controllers
 			{
 				budgetImageModel.BudImage = ImageAppCodeBudget.getImageBudget(imageId, null, null, null, null, null,null).FirstOrDefault();
 				budgetImageModel.RegionList = QueryGetAllRegion.getAllRegion().ToList();
+				if (UtilsAppCode.Session.User.regionId != "")
+				{
+					budgetImageModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.id == UtilsAppCode.Session.User.regionId).ToList();
+					//budgetImageModel.activityFormModel.regionId = UtilsAppCode.Session.User.regionId;
+				}
+				else
+				{
+					budgetImageModel.regionGroupList = QueryGetAllRegion.getAllRegion();
+				}
+				
 				if (budgetImageModel.BudImage.company == "MT")
 				{
 					budgetImageModel.CustomerList = QueryGetAllCustomers.getCustomersMT().ToList();

@@ -19,6 +19,8 @@ namespace eActForm.Models
 		public BudImageModel BudImage { get; set; }
 		public List<TB_Act_Customers_Model.Customers_Model> CustomerList { get; set; }
 
+		public List<TB_Act_Region_Model> regionGroupList { get; set; }
+
 		public class BudImageModel : ActBaseModel
 		{
 			public BudImageModel()
