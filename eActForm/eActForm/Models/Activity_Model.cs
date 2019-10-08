@@ -240,7 +240,7 @@ namespace eActForm.Models
         public string smellName { get; set; }
         public string productDetail { get; set; }
         public Boolean isShowGroup { get; set; }
-
+        public string IO { get; set; }
         public int rowNo { get; set; }
     }
 
@@ -298,7 +298,7 @@ namespace eActForm.Models
         public int rowNo { get; set; }
         public string digitGroup { get; set; }
         public string digitSubGroup { get; set; }
-        public string IO { get; set; }
+        public string EO { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public ProductCostOfGroupByPrice()

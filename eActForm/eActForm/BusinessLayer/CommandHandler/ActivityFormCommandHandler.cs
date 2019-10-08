@@ -101,6 +101,7 @@ namespace eActForm.BusinessLayer
                         costThemeDetail.unit = item.unit;
                         costThemeDetail.compensate = item.compensate;
                         costThemeDetail.LE = item.LE;
+                        costThemeDetail.IO = item.IO;
                         costThemeDetail.rowNo = insertIndex;
                         costThemeDetail.delFlag = item.delFlag;
                         costThemeDetail.isShowGroup = item.isShowGroup;
@@ -342,6 +343,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@unit",model.unit)
                     ,new SqlParameter("@compensate",model.compensate)
                     ,new SqlParameter("@le",model.LE)
+                    ,new SqlParameter("@IO",model.IO)
                     ,new SqlParameter("@total",model.total)
                     ,new SqlParameter("@perTotal",model.perTotal)
                     ,new SqlParameter("@isShowGroup",model.isShowGroup)

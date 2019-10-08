@@ -64,9 +64,9 @@ namespace eActForm.Controllers
 
                 productcostdetail.id = Guid.NewGuid().ToString();
                 productcostdetail.typeTheme = txttheme;
-                productcostdetail.IO = "56SO" + DateTime.Now.Year.ToString().Substring(2) + ActFormAppCode.getDigitGroup(themeId) + ActFormAppCode.getDigitRunnigGroup(brandId);
                 costThemeDetailOfGroupByPriceModel.detailGroup = new List<ProductCostOfGroupByPrice>();
                 costThemeDetailOfGroupByPriceModel.detailGroup.Add(productcostdetail);
+                costThemeDetailOfGroupByPriceModel.IO = "56SO" + DateTime.Now.Year.ToString().Substring(2) + ActFormAppCode.getDigitGroup(themeId) + ActFormAppCode.getDigitRunnigGroup(brandId);
                 activityModel.activitydetaillist.Add(costThemeDetailOfGroupByPriceModel);
                 TempData["actForm"+ actId] = activityModel;
                 TempData.Keep();

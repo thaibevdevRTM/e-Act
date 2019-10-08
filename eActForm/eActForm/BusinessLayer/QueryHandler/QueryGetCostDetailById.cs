@@ -47,6 +47,7 @@ namespace eActForm.BusinessLayer
                                   promotionCost = d["promotionCost"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["promotionCost"].ToString())),
                                   isShowGroup = bool.Parse(d["isShowGroup"].ToString()),
                                   rowNo = int.Parse(d["rowNo"].ToString()),
+                                  EO = d["EO"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),
