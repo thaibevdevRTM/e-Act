@@ -43,99 +43,109 @@
 
 @if (Model.Report_Budget_Activity_List != null)
 {
-<div class="row">
-	<div id="GridPDF">
-		<table class="table table-hover border-dark" id="datatable">
-			<thead>
-				<tr style="background-color:#2B5D95;color:#ffffff;">
-					<td> no.</td>
-					<td style="text-align:left;"> company </td>
-					<td style="text-align:left;" class="text-hide"> channelName </td>
-					<td style="text-align:left;"> เลขที่กิจกรรม </td>
-					<td style="text-align:left;" class="text-hide"> Sub Code </td>
-					<td style="text-align:left;" class="text-hide"> ชื่อกิจกรรม </td>
-					<td style="text-align:left;"> กลุ่มสินค้า </td>
-					<td style="text-align:left;"> Theme </td>
-					<td style="text-align:left;" class="text-hide"> ลูกค้า </td>
-					<td style="text-align:left;" class="text-hide"> รายละเอียด </td>
-					<td style="text-align:left;" class="text-hide"> รายละเอียด (50) </td>
-					<td style="text-align:left;" class="text-hide"> จำนวนอักษร </td>
-					<td style="text-align:left;" class="text-hide"> ระยะเวลาการทำกิจกรรม </td>
-					<td style="text-align:left;" class="text-hide"> ระยะเวลาการให้ทุน </td>
-					<td style="text-align:center;"> วันที่ทำรายการ </td>
-					<td style="text-align:right;"> ยอดยกมา </td>
-					<td style="text-align:right;"> ยอดคงเหลือ </td>
-					<td style="text-align:left;" class="text-hide"> สถานะ </td>
-					<td style="text-align:left;" class="text-hide"> วันที่ทำรายการ (ตัดจ่าย) </td>
-					<td style="text-align:left;"> สถานะกิจกรรม </td>
-					<td style="text-align:center;" class="text-hide"> รหัสผู้สร้างกิจกรรม </td>
-					<td style="text-align:left;" class="text-hide"> ชื่อผู้สร้างกิจกรรม </td>
-				</tr>
-			</thead>
-			@{ var index = 1; string strActNo = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0;}
-			@foreach (var item in Model.Report_Budget_Activity_List)
-			{
-			<tr class="gradeX">
-				<td>@index</td>
-				<td>@item.company</td>
-				<td class="text-hide">@item.channelName </td>
-				<td>@item.act_activityNo </td>
-				<td class="text-hide">@item.sub_code </td>
-				<td class="text-hide">@item.act_activityName </td>
-				<td>@item.brandName </td>
-				<td>@item.Theme </td>
-				<td class="text-hide">@item.cus_cusNameTH </td>
-				<td class="text-hide">@item.prd_productDetail </td>
-				<td class="text-hide">@item.prd_productDetail50 </td>
 
-				<td class="text-hide">
-					@if (@item.prd_productDetailCount != null)
-					{
-						int temp = index + 1;
-						string result = string.Concat("=LEN(K", temp.ToString(),")");
-						@result.ToString();
-					}
-				</td>
-				
-				@*<td class="text-hide">@item.prd_productDetailCount </td>*@
-				<td class="text-hide">@item.activity_Period </td>
-				<td class="text-hide">@item.activity_costPeriod </td>
-				<td>@item.actCreatedDate </td>
-
-				<td>
-					@if (@item.activityTotalBath != null)
-					{
-						string result = String.Format("{0:n2}", @item.activityTotalBath);
-						@result.ToString();
-					}
-				</td>
-
-				<td>
-					@if (@item.activityBalanceBath != null)
-					{
-						string result = String.Format("{0:n2}", @item.activityBalanceBath);
-						@result.ToString();
-					}
-				</td>
-				<td class="text-hide">@item.productBudgetStatusNameTH </td>
-				<td class="text-hide">@item.invoiceCreatedDate</td>
-				<td>@item.act_status </td>
-				<td class="text-hide">@item.actForm_CreatedByUserId </td">
-				<td class="text-hide">@item.actForm_CreatedByName </td>
-			</tr>
-				index++;
-			}
-		</table>
-	</div>
-</div>
-
-	<div>
+	<div class="row">
 		<p class="d-flex justify-content-center">
 			@using (Html.BeginForm("viewExportExcel", "BudgetReport", FormMethod.Post))
 			{
+				<input type="hidden" name="gridHtmlTop" />
+				<button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcelTop" value="ExportExcel">
+					<i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
+				</button>
+			}
+		</p>
+	</div>
 
+	<div class="row">
+		<div id="GridPDF">
+			<table class="table table-hover border-dark" id="datatable">
+				<thead>
+					<tr style="background-color:#2B5D95;color:#ffffff;">
+						<td> no.</td>
+						<td style="text-align:left;"> company </td>
+						<td style="text-align:left;" class="text-hide"> channelName </td>
+						<td style="text-align:left;"> เลขที่กิจกรรม </td>
+						<td style="text-align:left;" class="text-hide"> Sub Code </td>
+						<td style="text-align:left;" class="text-hide"> ชื่อกิจกรรม </td>
+						<td style="text-align:left;"> กลุ่มสินค้า </td>
+						<td style="text-align:left;"> Theme </td>
+						<td style="text-align:left;" class="text-hide"> ลูกค้า </td>
+						<td style="text-align:left;" class="text-hide"> รายละเอียด </td>
+						<td style="text-align:left;" class="text-hide"> รายละเอียด (50) </td>
+						<td style="text-align:left;" class="text-hide"> จำนวนอักษร </td>
+						<td style="text-align:left;" class="text-hide"> ระยะเวลาการทำกิจกรรม </td>
+						<td style="text-align:left;" class="text-hide"> ระยะเวลาการให้ทุน </td>
+						<td style="text-align:center;"> วันที่ทำรายการ </td>
+						<td style="text-align:right;"> ยอดยกมา </td>
+						<td style="text-align:right;"> ยอดคงเหลือ </td>
+						<td style="text-align:left;" class="text-hide"> สถานะ </td>
+						<td style="text-align:left;" class="text-hide"> วันที่ทำรายการ (ตัดจ่าย) </td>
+						<td style="text-align:left;"> สถานะกิจกรรม </td>
+						<td style="text-align:center;" class="text-hide"> รหัสผู้สร้างกิจกรรม </td>
+						<td style="text-align:left;" class="text-hide"> ชื่อผู้สร้างกิจกรรม </td>
+					</tr>
+				</thead>
+				@{ var index = 1; string strActNo = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0;}
+				@foreach (var item in Model.Report_Budget_Activity_List)
+				{
+					<tr class="gradeX">
+						<td>@index</td>
+						<td>@item.company</td>
+						<td class="text-hide">@item.channelName </td>
+						<td>@item.act_activityNo </td>
+						<td class="text-hide">@item.sub_code </td>
+						<td class="text-hide">@item.act_activityName </td>
+						<td>@item.brandName </td>
+						<td>@item.Theme </td>
+						<td class="text-hide">@item.cus_cusNameTH </td>
+						<td class="text-hide">@item.prd_productDetail </td>
+						<td class="text-hide">@item.prd_productDetail50 </td>
 
+						<td class="text-hide">
+							@if (@item.prd_productDetailCount != null)
+							{
+								int temp = index + 1;
+								string result = string.Concat("=LEN(K", temp.ToString(), ")");
+								@result.ToString();
+							}
+						</td>
 
+						@*<td class="text-hide">@item.prd_productDetailCount </td>*@
+						<td class="text-hide">@item.activity_Period </td>
+						<td class="text-hide">@item.activity_costPeriod </td>
+						<td>@item.actCreatedDate </td>
+
+						<td>
+							@if (@item.activityTotalBath != null)
+							{
+								string result = String.Format("{0:n2}", @item.activityTotalBath);
+								@result.ToString();
+							}
+						</td>
+
+						<td>
+							@if (@item.activityBalanceBath != null)
+							{
+								string result = String.Format("{0:n2}", @item.activityBalanceBath);
+								@result.ToString();
+							}
+						</td>
+						<td class="text-hide">@item.productBudgetStatusNameTH </td>
+						<td class="text-hide">@item.invoiceCreatedDate</td>
+						<td>@item.act_status </td>
+						<td class="text-hide">@item.actForm_CreatedByUserId </td">
+						<td class="text-hide">@item.actForm_CreatedByName </td>
+					</tr>
+					index++;
+				}
+			</table>
+		</div>
+	</div>
+
+	<div class="row">
+		<p class="d-flex justify-content-center">
+			@using (Html.BeginForm("viewExportExcel", "BudgetReport", FormMethod.Post))
+			{
 				<input type="hidden" name="gridHtml" />
 				<button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
 					<i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
@@ -147,13 +157,36 @@
 
 	//------------------------------------------------------------------------------------------------
 
-	<div> <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table> </div>
+	<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
 
 }
 
 <script type="text/javascript">
+	//$(document).ready(function () {
+	//	$('#datatable').DataTable({
+	//		"columnDefs": [
+	//			{ "orderable": true, "targets": 0 }
+	//			, { "orderable": true, "targets": 1 }
+	//		],
+	//		"dom": 'lCfrtip',
+	//		"order": [],
+	//		"language": {
+	//			"lengthMenu": '_MENU_ entries per page',
+	//			"search": '<i class="fa fa-search"></i>',
+	//			"paginate": {
+	//				"previous": '<i class="fa fa-angle-left"></i>',
+	//				"next": '<i class="fa fa-angle-right"></i>'
+	//			}
+	//		}
+	//	});
+
+	//})
 
 	$(function () {
+		$("#btnExportExcelTop").click(function () {
+			$("input[name='gridHtmlTop']").val($("#GridPDF").html());
+		});
+
 		$("#btnExportExcel").click(function () {
 			$("input[name='gridHtml']").val($("#GridPDF").html());
 		});
@@ -163,22 +196,5 @@
 		});
 	});
 
-	//	$(document).ready(function () {
-	//		$('#datatable').DataTable({
-	//			"columnDefs": [
-	//				{ "orderable": false, "targets": 0 }
-	//			],
-	//			"dom": 'lCfrtip',
-	//			"order": [],
-	//			"language": {
-	//				"lengthMenu": '_MENU_ entries per page',
-	//				"search": '<i class="fa fa-search"></i>',
-	//				"paginate": {
-	//					"previous": '<i class="fa fa-angle-left"></i>',
-	//					"next": '<i class="fa fa-angle-right"></i>'
-	//				}
-	//			}
-	//		});
 
-	//});
 </script>
