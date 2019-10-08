@@ -330,12 +330,34 @@
 				<div>
 					<p class="d-flex justify-content-center">
 
-						<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+						<button type="button" class="btn btn-sm btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
 						@if (count_wait_approve == 0)
 						{
-							<button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
+							<button type="button" class="btn btn-sm btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
 						}
 					</p>
+				</div>
+
+
+				@*<div>
+					<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: lightgray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+				</div>*@
+
+				<div class="row" style="width:97%; margin-left:10px;">
+					@if (Model.Budget_Invoice_list.Any())
+					{
+						<br />
+						<div style="text-align:left;"><h5>รายการเอกสารแนบ (@Model.Budget_Invoice_list.Count รายการ) </h5></div>
+						<br />
+
+						foreach (var item in Model.Budget_Invoice_list)
+						{
+							<div class="col-md-6">
+								<div style="text-align:right;"><h5>เลขที่ใบแจ้งหนี้ @item.invoiceNo</h5></div>
+								@Html.Action("invoicePDFView", "BudgetViewer", new { fileName = item._fileName })
+							</div>
+						}
+					}
 				</div>
 			</div>
 		</div>

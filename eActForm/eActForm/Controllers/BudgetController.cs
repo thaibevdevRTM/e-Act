@@ -23,10 +23,26 @@ namespace eActForm.Controllers
 		public PartialViewResult previewBudgetInvoice(string activityId )
 		{
 			 Session["activityId"]= activityId;
+			string var_actNo = "";
 
 			Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
 			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId,null);
 			Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null,null).FirstOrDefault();
+
+			var_actNo = Budget_Model.Budget_Activity.act_activityNo;
+			Budget_Model.Budget_Invoice_list = ImageAppCodeBudget.getImageBudget(null,null,null, var_actNo,null,null,null);
+
+			List<TB_Bud_Image_Model.BudImageModel> Result = new List<TB_Bud_Image_Model.BudImageModel>();
+			foreach (var inv_his in Budget_Model.Budget_Invoce_History_list)
+			{
+				if (inv_his.invoiceApproveStatusId == 1 || inv_his.invoiceApproveStatusId == 2) // draft or wait
+				{
+					Result.AddRange(Budget_Model.Budget_Invoice_list.FindAll(x => x.invoiceNo.Contains(inv_his.invoiceNo)));
+				}
+			}
+			Budget_Model.Budget_Invoice_list.Clear();
+			Budget_Model.Budget_Invoice_list = Result.Distinct().ToList();
+
 			return PartialView(Budget_Model);
 
 			//budgetApproveId
@@ -192,8 +208,6 @@ namespace eActForm.Controllers
 			List<TB_Bud_Image_Model.BudImageModel> imgInvoiceList = new List<TB_Bud_Image_Model.BudImageModel>();
 			try
 			{
-				//var test = companyEN;
-				//var Key_company = Session["budget_Key_company"].ToString();
 				imgInvoiceList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null, companyEN, customerId)
 					.Where(x => x.invoiceNo.Contains(imgInvoiceNo) )
 					.ToList();
@@ -205,8 +219,6 @@ namespace eActForm.Controllers
 
 			return Json(imgInvoiceList, JsonRequestBehavior.AllowGet);
 		}
-
-		
 
 		public JsonResult getRegionInvoice(string nameEN)
 		{
@@ -334,7 +346,7 @@ namespace eActForm.Controllers
 					string strDateTime = DateTime.Now.ToString("ddMMyyHHmmssff");
 					//int indexGetFileName = httpPostedFile.FileName.LastIndexOf('.');
 
-					int indexGetFileName = 10;
+					int indexGetFileName = 10; // limit file name 10 char
 					var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + strDateTime + extension;
 					string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootUploadfilesBudget"].ToString(), _fileName));
 
