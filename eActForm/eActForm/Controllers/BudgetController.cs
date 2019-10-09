@@ -37,17 +37,14 @@ namespace eActForm.Controllers
 			{
 				if (inv_his.invoiceApproveStatusId == 1 || inv_his.invoiceApproveStatusId == 2) // draft or wait
 				{
-					Result.AddRange(Budget_Model.Budget_Invoice_list.FindAll(x => x.invoiceNo.Contains(inv_his.invoiceNo)));
+					Result.Add(Budget_Model.Budget_Invoice_list.Find(x => (x.invoiceNo == inv_his.invoiceNo )));
 				}
 			}
+			Result.RemoveAll(item => item == null);
 			Budget_Model.Budget_Invoice_list.Clear();
 			Budget_Model.Budget_Invoice_list = Result.Distinct().ToList();
 
 			return PartialView(Budget_Model);
-
-			//budgetApproveId
-			//activityId
-
 		}
 
 
@@ -170,9 +167,7 @@ namespace eActForm.Controllers
 			}
 			return PartialView(budget_activity);
 		}
-		//----------------------------------------------------------------------------------------
-
-
+		
 		public ActionResult activityProduct(string activityId)
 		{
 			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
@@ -196,7 +191,6 @@ namespace eActForm.Controllers
 
 		public ActionResult activityList(string typeForm)
 		{
-			//Session["activityId"] = Guid.NewGuid().ToString();
 			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
 			budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", null,null,null, typeForm).ToList();
 			return View(budget_activity);
@@ -304,7 +298,6 @@ namespace eActForm.Controllers
 				if (UtilsAppCode.Session.User.regionId != "")
 				{
 					budgetImageModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.id == UtilsAppCode.Session.User.regionId).ToList();
-					//budgetImageModel.activityFormModel.regionId = UtilsAppCode.Session.User.regionId;
 				}
 				else
 				{
@@ -344,9 +337,11 @@ namespace eActForm.Controllers
 					string resultFilePath = "";
 					string extension = Path.GetExtension(httpPostedFile.FileName);
 					string strDateTime = DateTime.Now.ToString("ddMMyyHHmmssff");
-					//int indexGetFileName = httpPostedFile.FileName.LastIndexOf('.');
-
+					int tmpFileNameIndex = httpPostedFile.FileName.LastIndexOf('.');
 					int indexGetFileName = 10; // limit file name 10 char
+
+					if (tmpFileNameIndex < 10) { indexGetFileName = tmpFileNameIndex; }
+
 					var _fileName = Path.GetFileName(httpPostedFile.FileName.Substring(0, indexGetFileName)) + "_" + strDateTime + extension;
 					string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootUploadfilesBudget"].ToString(), _fileName));
 
