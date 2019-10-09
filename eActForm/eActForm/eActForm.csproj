@@ -254,6 +254,7 @@
     <Compile Include="Models\Activity_Model.cs" />
     <Compile Include="Models\ActSignatureModel.cs" />
     <Compile Include="Models\ActUserModel.cs" />
+    <Compile Include="Models\AdminUserModel.cs" />
     <Compile Include="Models\AppCode.cs" />
     <Compile Include="Models\Budget_Activity_Model.cs" />
     <Compile Include="Models\Budget_Approve_Detail_Model.cs" />

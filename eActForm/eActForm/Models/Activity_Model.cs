@@ -27,7 +27,7 @@ namespace eActForm.Models
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
         public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
-
+        
         public Activity_Model()
         {
             productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();

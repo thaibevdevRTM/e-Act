@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eActForm.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,7 +17,7 @@ namespace eActForm.Controllers
         }
 
 
-        public ActionResult InsertUsersndex()
+        public ActionResult insertUsers(List<AdminUserModel.AdminUserModels> model)
         {
             return View();
         }
