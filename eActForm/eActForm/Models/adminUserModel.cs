@@ -9,9 +9,9 @@ namespace eActForm.Models
     {
         public class AdminUserModels
         {
-            public string custLi { get; set; }
-            public string chkProductType { get; set; }
-            public string chkRole { get; set; }
+            public List<string> custLi { get; set; }
+            public List<string> chkProductType { get; set; }
+            public List<string> chkRole { get; set; }
             
         }
     }

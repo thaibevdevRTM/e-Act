@@ -51,7 +51,9 @@
             <div class="col-md-2 control-label">
             </div>
             <div class="col-md-10">
-                <div id="divCustLists"></div>
+                <div id="divCustLists">
+                   
+                </div>
             </div>
 
         </div>
@@ -60,46 +62,46 @@
 
     <div class="form-group">
         <div class="col-md-2 control-label">
-            <label class="radio">
+            <label>
                 Role :
             </label>
         </div>
         <div class="col-md-2">
             <div>
-                <input type="checkbox" name="model[0].chkRole" value="1">
+                <input type="checkbox" name="model.chkRole" value="1">
                 creater
             </div>
             <div>
-                <input type="checkbox" name="model[1].chkRole" value="2">
-                approve                                      
-            </div>                                           
-            <div>                                            
-                <input type="checkbox" name="model[2].chkRole" value="3">
-                admin                                         
-            </div>                                            
-            <div>                                             
-                <input type="checkbox" name="model[3].chkRole" value="4">
-                superAdmin                                    
-            </div>                                            
-            <div>                                             
-                <input type="checkbox" name="model[4].chkRole" value="5">
+                <input type="checkbox" name="model.chkRole" value="2">
+                approve                                   
+            </div>                                        
+            <div>                                         
+                <input type="checkbox" name="model.chkRole" value="3">
+                admin                                      
+            </div>                                         
+            <div>                                          
+                <input type="checkbox" name="model.chkRole" value="4">
+                superAdmin                                 
+            </div>                                         
+            <div>                                          
+                <input type="checkbox" name="model.chkRole" value="5">
                 adminOMT
             </div>
         </div>
 
 
         <div class="col-md-2 control-label">
-            <label class="radio">
+            <label>
                 ProductType :
             </label>
         </div>
         <div class="col-md-2">
             <div>
-                <input type="checkbox" name="model[0].chkProductType" value="1D1097F4-246F-4DC2-BB69-B7BB6E678299">
+                <input type="checkbox" name="model.chkProductType" value="1D1097F4-246F-4DC2-BB69-B7BB6E678299">
                 Non-Alcohol
             </div>
             <div>
-                <input type="checkbox" name="model[1].chkProductType" value="FC696EB5-B058-445E-B605-977C5067AEBA">
+                <input type="checkbox" name="model.chkProductType" value="FC696EB5-B058-445E-B605-977C5067AEBA">
                 Alcohol
             </div>
         </div>
@@ -181,7 +183,7 @@
                     }
                 }, select: function (event, ui) {
                     $("#txtCustomerIds").val($("#txtCustomerIds").val() + "," + ui.item.id);
-                    $("#divCustLists").append("<div id='" + "div" + ui.item.id + "' class='clscustLi' ><input type='hidden' name='model[" + index + "].custLi' value='" + ui.item.id + "'/>" + ui.item.label + "  <br/></div>");
+                    $("#divCustLists").append("<div id='" + "div" + ui.item.id + "' ><input type='text' name='model.custLi[0]' value='" + ui.item.id + "'/>" + ui.item.label + "  <br/></div>");
                     index++;
                 }
             }).focus(function () {
@@ -213,7 +215,7 @@
                     }
                 }, select: function (event, ui) {
                     $("#txtCustomerIds").val($("#txtCustomerIds").val() + "," + ui.item.id);
-                    $("#divCustLists").append("<div id='" + "div" + ui.item.id + "' class='clscustLi' ><input type='hidden' name='model[" + index + "].custLi' value='" + ui.item.id + "'/>" + ui.item.label + " <br/></div>");
+                    $("#divCustLists").append("<div id='divSubCust'><input type='hidden' name='model.custLi' value='" + ui.item.id + "'/>" + ui.item.label + " <br/></div>");
                     index++;
                 }
             }).focus(function () {
@@ -285,16 +287,9 @@
 
         function onclickClearCusList() {
 
-
-            var elements = document.getElementsByClassName("clscustLi");
-            var i;
-            for (i = 0; i < elements.length; i++) {
-                if (i == index) {
-                    elements[i].parentNode.removeChild(elements[i]);
-                }
-            }
-
-    }
+            $('#divSubCust').remove();
+          
+        }
 
         function onEditData(row) {
 
