@@ -11,37 +11,41 @@
 <div id='dialogDiv' class='modal hide fade in'>
     <div id='dialogContent'></div>
 </div>
-@using (Html.BeginForm("insertUsers", "AdminUser", FormMethod.Post, new {@class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("insertUsers", "AdminUser", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
 
- 
-    <div class="row">
-        <div class="form-group">
-            <div class="col-md-2 control-label">
-                Company :
-            </div>
-            <div class="col-md-4">
-                <select class="form-control" id="ddlCompany" name="ddlCompany" required="required">
-                    <option value="">-Selected-</option>
-                    <option value="5600">MTM</option>
-                    <option value="5601">OMT</option>
-                </select>
-            </div>
 
+<div class="row">
+    <div class="form-group">
+        <div class="col-md-2 control-label">
+            EmpCode :
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control" required="required" id="txtEmpCode" name="txtEmpCode" />
         </div>
 
-        <div class="form-group">
-            <div class="col-md-2 control-label">
-                Customer :
-            </div>
-            <div class="col-md-4">
-                <input type="text" class="form-control" required="required" id="txtCustomer" name="txtCustomer"  />
-                <input type="hidden" class="form-control" required="required" id="txtCustomerIds" name="txtCustomerIds" />
-            </div>
-
+        <div class="col-md-2 control-label">
+            Company :
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" id="ddlCompany" name="ddlCompany" required="required">
+                <option value="">-Selected-</option>
+                <option value="5600">MTM</option>
+                <option value="5601">OMT</option>
+            </select>
         </div>
     </div>
 
+    <div class="form-group">
+        <div class="col-md-2 control-label">
+            Customer :
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control" required="required" id="txtCustomer" name="txtCustomer" />
+            <input type="hidden" class="form-control" required="required" id="txtCustomerIds" name="txtCustomerIds" />
+            <button type="button" onclick="javascript:onclickClearCusList()">Clear</button>
+        </div>
+    </div>
     <div class="row">
         <div class="form-group">
             <div class="col-md-2 control-label">
@@ -52,6 +56,60 @@
 
         </div>
     </div>
+
+
+    <div class="form-group">
+        <div class="col-md-2 control-label">
+            <label class="radio">
+                Role :
+            </label>
+        </div>
+        <div class="col-md-2">
+            <div>
+                <input type="checkbox" name="model[0].chkRole" value="1">
+                creater
+            </div>
+            <div>
+                <input type="checkbox" name="model[1].chkRole" value="2">
+                approve                                      
+            </div>                                           
+            <div>                                            
+                <input type="checkbox" name="model[2].chkRole" value="3">
+                admin                                         
+            </div>                                            
+            <div>                                             
+                <input type="checkbox" name="model[3].chkRole" value="4">
+                superAdmin                                    
+            </div>                                            
+            <div>                                             
+                <input type="checkbox" name="model[4].chkRole" value="5">
+                adminOMT
+            </div>
+        </div>
+
+
+        <div class="col-md-2 control-label">
+            <label class="radio">
+                ProductType :
+            </label>
+        </div>
+        <div class="col-md-2">
+            <div>
+                <input type="checkbox" name="model[0].chkProductType" value="1D1097F4-246F-4DC2-BB69-B7BB6E678299">
+                Non-Alcohol
+            </div>
+            <div>
+                <input type="checkbox" name="model[1].chkProductType" value="FC696EB5-B058-445E-B605-977C5067AEBA">
+                Alcohol
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+   
 
     <div class="row text-center">
         <button type="submit" class="btn ink-reaction btn-primary"><i class="fa fa-search fa-fw"></i>&nbsp;Submit</button>
@@ -75,13 +133,12 @@
                     <th>Create Date</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>
+            <tbody></tbody>
         </table>
     </div>
 }
 
-    <script type="text/javascript">
+<script type="text/javascript">
         var index = 0;
         $(document).ready(function () {
             $('#datatable').DataTable({
@@ -95,6 +152,40 @@
                         "next": '<i class="fa fa-angle-right"></i>'
                     }
                 }
+            });
+
+
+
+            $("#txtCustomer").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("getCustomerByCompany", "eAct")',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            companyId: $("#ddlCompany").val(),
+                            txtCus: $("#txtCustomer").val(),
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
+                            }))
+
+                        }
+                    })
+                },
+                minLength: 0,
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) {
+                    }
+                }, select: function (event, ui) {
+                    $("#txtCustomerIds").val($("#txtCustomerIds").val() + "," + ui.item.id);
+                    $("#divCustLists").append("<div id='" + "div" + ui.item.id + "' class='clscustLi' ><input type='hidden' name='model[" + index + "].custLi' value='" + ui.item.id + "'/>" + ui.item.label + "  <br/></div>");
+                    index++;
+                }
+            }).focus(function () {
+                $(this).data("uiAutocomplete").search($(this).val());
             });
 
             $("#txtCustomer").autocomplete({
@@ -122,7 +213,7 @@
                     }
                 }, select: function (event, ui) {
                     $("#txtCustomerIds").val($("#txtCustomerIds").val() + "," + ui.item.id);
-                    $("#divCustLists").append("<div id='" + "div" + ui.item.id + "' ><input type='hidden' name='model[" + index + "].custLi' value='" + ui.item.id + "'/>" + ui.item.label + " <span class='close' onclick=javascript:onclickDelCusList('" + ui.item.id + "');>x</span> <br/></div>");
+                    $("#divCustLists").append("<div id='" + "div" + ui.item.id + "' class='clscustLi' ><input type='hidden' name='model[" + index + "].custLi' value='" + ui.item.id + "'/>" + ui.item.label + " <br/></div>");
                     index++;
                 }
             }).focus(function () {
@@ -192,13 +283,17 @@
         });
 
 
+        function onclickClearCusList() {
 
 
-        function onclickDelCusList(id) {
-           
-            var elem = document.getElementById("div"+ id);
-            elem.remove();
-           
+            var elements = document.getElementsByClassName("clscustLi");
+            var i;
+            for (i = 0; i < elements.length; i++) {
+                if (i == index) {
+                    elements[i].parentNode.removeChild(elements[i]);
+                }
+            }
+
     }
 
         function onEditData(row) {
@@ -227,4 +322,4 @@
 
 
 
-    </script>
+</script>
