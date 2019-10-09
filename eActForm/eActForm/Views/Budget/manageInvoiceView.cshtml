@@ -47,6 +47,8 @@
 	//------------------------------------------------------------------------------------------------
 	@Html.HiddenFor(item => @Model.BudImage.id, new { @id = "hd_imageId" })
 
+	<div class="row text-center" ></div>
+
 	<div>
 		<table class="tablethin" style="width:100%;" border="0" cellpadding="0" cellspacing="0">
 			<tr>
@@ -66,7 +68,7 @@
 					<td align="left"> <h5>Region : </h5></td>
 
 					<td>
-						@Html.DropDownListFor(x => x.BudImage.regionId, new SelectList(Model.RegionList, "id", "descTh", 0), "Please Select", new
+						@Html.DropDownListFor(x => x.BudImage.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
 						{
 							 @class = "form-control textboxcss wide-nolimit",
 							 id = "ddlRegion"
@@ -163,9 +165,6 @@
 
 	
 
-	function refreshInvoice() {
-		callManageInvoiceList();
-		$("#divManageInvoiceView").html("");
-	}
+	
 
 </script>
