@@ -304,7 +304,8 @@
                             customerId: $("#ddlCustomer").val(),
                             productTypeId: $("#ddlProductType").val(),
                             startDate: $("#startDate").val(),
-                            endDate: $("#endDate").val()
+                            endDate: $("#endDate").val(),
+                            typeForm:"@Model.typeForm",
                         },
                         dataType: "json",
                         type: 'POST'
@@ -338,7 +339,8 @@
                             customerId: $("#ddlCustomer").val(),
                             productTypeId: $("#ddlProductType").val(),
                             startDate: $("#startDate").val(),
-                            endDate: $("#endDate").val()
+                            endDate: $("#endDate").val(),
+                            typeForm: "@Model.typeForm",
                         },
                         dataType: "json",
                         type: 'POST'

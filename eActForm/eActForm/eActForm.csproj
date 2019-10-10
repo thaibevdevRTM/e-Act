@@ -180,6 +180,7 @@
     <Compile Include="App_Start\FontAwesomeBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BusinessLayer\Appcodes\ActFormAppCode.cs" />
+    <Compile Include="BusinessLayer\Appcodes\AdminUserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\Appcodes\ReportSummaryAppCode.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="Models\Activity_Model.cs" />
     <Compile Include="Models\ActSignatureModel.cs" />
     <Compile Include="Models\ActUserModel.cs" />
+    <Compile Include="Models\AdminUserModel.cs" />
     <Compile Include="Models\AppCode.cs" />
     <Compile Include="Models\Budget_Activity_Model.cs" />
     <Compile Include="Models\Budget_Approve_Detail_Model.cs" />
