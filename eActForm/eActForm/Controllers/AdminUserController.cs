@@ -14,7 +14,10 @@ namespace eActForm.Controllers
         // GET: AdminUser
         public ActionResult Index()
         {
+
+
             return View();
+
         }
 
 

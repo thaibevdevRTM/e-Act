@@ -1,4 +1,5 @@
 ﻿@using eActForm.BusinessLayer
+
 @{
     ViewBag.Title = "index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,7 +16,7 @@
 
     <div class="row tile_count">
         <div class="col-md-12 col-xs-12">
-            @using (Ajax.BeginForm("searchActForm", "actFormRepDetail" , new {typeForm = @ViewBag.TypeForm }
+            @using (Ajax.BeginForm("searchActForm", "actFormRepDetail", new { typeForm = @ViewBag.TypeForm }
 , new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
 , new { id = "form", @class = "form-horizontal form-label-left" }))
             {
