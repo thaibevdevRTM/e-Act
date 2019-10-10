@@ -54,5 +54,30 @@ namespace eActForm.BusinessLayer.Appcodes
 
             return result;
         }
+
+
+        public static string getAllUserRole(string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAllUserRole"
+                     , new SqlParameter[] { new SqlParameter("@actId", actId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new AdminUserModel.UserList()
+                             {
+                                 empId = dr["empid"].ToString(),
+                                 userName = dr["empid"].ToString(),
+                             }).ToList();
+
+              
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getEmailCCByActId >> " + ex.Message);
+            }
+        }
+
     }
 }

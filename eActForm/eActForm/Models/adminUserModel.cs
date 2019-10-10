@@ -14,5 +14,12 @@ namespace eActForm.Models
             public List<string> chkRole { get; set; }
             
         }
+
+        public class UserList
+        {
+            public string empId { get; set; }
+            public string userName { get; set; }
+
+        }
     }
 }

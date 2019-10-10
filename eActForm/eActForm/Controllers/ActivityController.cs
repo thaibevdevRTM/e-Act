@@ -66,7 +66,9 @@ namespace eActForm.Controllers
                     activityModel.activityFormModel.id = actId;
                     activityModel.activityFormModel.mode = mode;
                     activityModel.activityFormModel.statusId = 1;
+                    TempData["actForm" + actId] = activityModel;
                 }
+
                 activityModel.activityFormModel.typeForm = typeForm;
                 TempData.Keep();
 
