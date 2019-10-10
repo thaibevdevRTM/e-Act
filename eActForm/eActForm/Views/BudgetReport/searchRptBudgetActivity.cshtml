@@ -1,12 +1,14 @@
 ﻿
 @model eActForm.Models.Budget_Report_Model.Report_Budget_Activity
 @{
-	/**/
+				/**/
 
-	//Layout = null;
-	//Layout = "~/Views/Shared/_BlankLayout.cshtml";
-	ViewBag.Title = "";
-	//var url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfilesBudget"].ToString();
+				/**/
+
+				//Layout = null;
+				//Layout = "~/Views/Shared/_BlankLayout.cshtml";
+				ViewBag.Title = "";
+				//var url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfilesBudget"].ToString();
 }
 
 <style type="text/css">
@@ -48,8 +50,8 @@
 		<p class="d-flex justify-content-center">
 			@using (Html.BeginForm("viewExportExcel", "BudgetReport", FormMethod.Post))
 			{
-				<input type="hidden" name="gridHtmlTop" />
-				<button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcelTop" value="ExportExcel">
+				<input type="hidden" name="gridHtml" />
+				<button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
 					<i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
 				</button>
 			}
@@ -142,17 +144,7 @@
 		</div>
 	</div>
 
-	<div class="row">
-		<p class="d-flex justify-content-center">
-			@using (Html.BeginForm("viewExportExcel", "BudgetReport", FormMethod.Post))
-			{
-				<input type="hidden" name="gridHtml" />
-				<button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
-					<i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
-				</button>
-			}
-		</p>
-	</div>
+
 
 
 	//------------------------------------------------------------------------------------------------
@@ -183,10 +175,6 @@
 	//})
 
 	$(function () {
-		$("#btnExportExcelTop").click(function () {
-			$("input[name='gridHtmlTop']").val($("#GridPDF").html());
-		});
-
 		$("#btnExportExcel").click(function () {
 			$("input[name='gridHtml']").val($("#GridPDF").html());
 		});
