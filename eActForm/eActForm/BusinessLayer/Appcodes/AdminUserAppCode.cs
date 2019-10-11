@@ -56,26 +56,69 @@ namespace eActForm.BusinessLayer.Appcodes
         }
 
 
-        public static string getAllUserRole(string actId)
+        public static List<AdminUserModel.User> getAllUserRole()
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAllUserRole"
-                     , new SqlParameter[] { new SqlParameter("@actId", actId) });
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAllUserRole");
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new AdminUserModel.UserList()
+                             select new AdminUserModel.User()
                              {
                                  empId = dr["empid"].ToString(),
-                                 userName = dr["empid"].ToString(),
+                                 userName = dr["empFNameTH"].ToString(),
+                                 userLName = dr["empLNameTH"].ToString(),
                              }).ToList();
 
-              
-
-                return null;
+                return lists;
             }
             catch (Exception ex)
             {
-                throw new Exception("getEmailCCByActId >> " + ex.Message);
+                throw new Exception("getAllUserRole >> " + ex.Message);
+            }
+        }
+
+        public static List<AdminUserModel.User> getUserRoleByEmpId(string empId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserRoleByEmpId"
+                    , new SqlParameter[] { new SqlParameter("@empId", empId) });
+            var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new AdminUserModel.User()
+                             {
+                                 empId = dr["empId"].ToString(),
+                                 roleId = dr["roleId"].ToString()
+                             }).ToList();
+
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getUserRoleByEmpId >> " + ex.Message);
+            }
+        }
+
+        public static List<AdminUserModel.Customer> getcustomerRoleByEmpId(string empId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getcustomerRoleByEmpId"
+                    , new SqlParameter[] { new SqlParameter("@empId", empId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new AdminUserModel.Customer()
+                             {
+                                 cusId = dr["customerId"].ToString(),
+                                 customerName = dr["cusName"].ToString(),
+                                 productTypeId = dr["productTypeId"].ToString(),
+                                 companyId = dr["companyId"].ToString(),
+
+                             }).ToList();
+
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getcustomerRoleByEmpId >> " + ex.Message);
             }
         }
 

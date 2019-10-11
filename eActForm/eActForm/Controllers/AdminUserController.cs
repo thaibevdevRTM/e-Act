@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -14,9 +15,11 @@ namespace eActForm.Controllers
         // GET: AdminUser
         public ActionResult Index()
         {
+            AdminUserModel adminUserModel = new AdminUserModel();
+            adminUserModel.userLists = AdminUserAppCode.getAllUserRole();
 
 
-            return View();
+            return View(adminUserModel);
 
         }
 
@@ -46,5 +49,38 @@ namespace eActForm.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public JsonResult getUserRoleByEmpId(string empId)
+        {
+
+            AdminUserModel userModel = new AdminUserModel();
+            var result = new AjaxResult();
+            try
+            {
+                userModel.userLists = AdminUserAppCode.getUserRoleByEmpId(empId);
+                userModel.customerLists = AdminUserAppCode.getcustomerRoleByEmpId(empId);
+                var resultData = new
+                {
+                    userLists = userModel.userLists,
+                    customerLists = userModel.customerLists.GroupBy(grp => grp.cusId).Select(group => new
+                    {
+                        cusId = group.First().cusId,
+                        customerName = group.First().customerName
+                    }).ToList(),
+                    productTypeList = userModel.customerLists,
+                    companyId = userModel.customerLists.FirstOrDefault().companyId,
+                    empId = userModel.userLists.FirstOrDefault().empId
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("getUserRoleByEmpId => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
