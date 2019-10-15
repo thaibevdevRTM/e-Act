@@ -41,6 +41,8 @@ namespace eActForm.Controllers
                         models.typeForm = Activity_Model.activityType.OMT.ToString();
                     }
 
+
+
                 }
                 else
                 {
@@ -116,6 +118,10 @@ namespace eActForm.Controllers
             }
             return PartialView(activityModel);
         }
+
+
+
+
 
         public ActionResult getApproveComment(string actId, string actTypeName)
         {

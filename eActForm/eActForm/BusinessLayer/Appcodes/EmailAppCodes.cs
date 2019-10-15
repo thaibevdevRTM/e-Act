@@ -285,7 +285,7 @@ namespace eActForm.BusinessLayer
 
                             sendEmailActForm(actFormId
                             , createUsers.FirstOrDefault().empEmail
-                            , ""
+                            , ApproveAppCode.getEmailCCByActId(actFormId)
                             , ConfigurationManager.AppSettings["emailAllApprovedSubject"]
                             , strBody
                             , emailType);
@@ -304,6 +304,7 @@ namespace eActForm.BusinessLayer
         {
             List<Attachment> files = new List<Attachment>();
             string[] pathFile = new string[10];
+            mailCC = mailCC != "" ? ","+mailCC: "";
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
             mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailCC;
             //pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
@@ -351,6 +352,7 @@ namespace eActForm.BusinessLayer
                     files.Add(new Attachment(item, new ContentType("application/pdf")));
                 }
             }
+
 
             sendEmail(mailTo
                     , mailCC == "" ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC

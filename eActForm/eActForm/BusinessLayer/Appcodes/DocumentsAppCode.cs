@@ -10,11 +10,12 @@ namespace eActForm.BusinessLayer
 {
     public class DocumentsAppCode
     {
-        public static List<DocumentsModel.actRepDetailModel> getActRepDetailLists(DateTime startDate, DateTime endDate)
+        public static List<DocumentsModel.actRepDetailModel> getActRepDetailLists(DateTime startDate, DateTime endDate, string typeForm)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetActivityRepDetailAll");
+                string stored = typeForm == Activity_Model.activityType.MT.ToString() ? "usp_GetActivityRepDetailAll" : "usp_GetActivityRepDetailOMTAll";
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored);
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new DocumentsModel.actRepDetailModel()
                              {

@@ -9,159 +9,177 @@
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
     <div class="menu_section">
         <h3>General</h3>
-        <ul class="nav side-menu">
-            <li>
-                <a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
-                    <li>@Html.ActionLink(" DashBoard ", "Index", "DashBoard")</li>
-                </ul>
-            </li>
-            @if (UtilsAppCode.Session.User.isCreator || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-            {
-                <li>
-                    <a><i class="fa fa-edit"></i> Activity Forms <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        @if (UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-                        {
-                            <li>@Html.ActionLink(" Activity Form", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-                        }
-                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-                        {
-                            <li>@Html.ActionLink(" Activity Form OMT", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
+		<ul class="nav side-menu">
+			<li>
+				<a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li>@Html.ActionLink(" DashBoard ", "Index", "DashBoard")</li>
+				</ul>
+			</li>
+			@if (UtilsAppCode.Session.User.isCreator || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+			{
+				<li>
+					<a><i class="fa fa-edit"></i> Activity Forms <span class="fa fa-chevron-down"></span></a>
+					<ul class="nav child_menu">
+						@if (UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+						{
+							<li>@Html.ActionLink(" Activity Form", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+						}
+						@if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+						{
+							<li>@Html.ActionLink(" Activity Form OMT", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
 
-                        }
-
-
-                    </ul>
-                </li>
-            }
-            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-            {
-                <li>
-                    <a><i class="fa fa-bar-chart-o"></i> Budget Forms <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
+						}
 
 
-                        <li>
-                            <a href="@Url.Action("activityList", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
-                                Budget Form
-                            </a>
-                        </li>
+					</ul>
+				</li>
+			}
 
-                        <li>
-                            <a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
-                                Manage Invoice
-                            </a>
-                        </li>
+			@if (UtilsAppCode.Session.User.isCreator || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+			{ 
+				<li>
+					<a><i class="fa fa-bar-chart-o"></i> Budget Forms <span class="fa fa-chevron-down"></span></a>
+					<ul class="nav child_menu">
 
-                        <li>
-                            <a href="@Url.Action("activityList", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
-                                Budget Form OMT
-                            </a>
-                        </li>
+						@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+						{
+							<li>
+								<a href="@Url.Action("activityList", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
+									Budget Form
+								</a>
+							</li>
+						}
 
-                        <li>
-                            <a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
-                                Manage Invoice OMT
-                            </a>
-                        </li>
+						@if ((UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+						{
+							<li>
+								<a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
+									Manage Invoice
+								</a>
+							</li>
+						}
 
-                    </ul>
-                </li>
-            }
-            @if (UtilsAppCode.Session.User.isCreator || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-            {
-                <li>
-                    <a><i class="fa fa-inbox"></i> Documents <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
+						@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+						{
+							<li>
+								<a href="@Url.Action("activityList", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
+									Budget Form OMT
+								</a>
+							</li>
+						}
 
-                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"])
-                        {
-                            <li>@Html.ActionLink(" Documents", "Index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, new { })</li>
-                        }
-                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
-                        {
-                            <li>@Html.ActionLink(" Documents OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
-                        }
+						@if ((UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+						{
+							<li>
+								<a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
+									Manage Invoice OMT
+								</a>
+							</li>
+						}
+					</ul>
+				</li>
+			}
 
-                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"])
-                        {
-                            <li>@Html.ActionLink(" Budget", "Index", "BudgetMyDoc", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() }, null)</li>
-                        }
-                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
-                        {
-                            <li>@Html.ActionLink(" Budget OMT", "Index", "BudgetMyDoc", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() }, null)</li>
-                        }
+			@if (UtilsAppCode.Session.User.isCreator || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+			{
+				<li>
+					<a><i class="fa fa-inbox"></i> Documents <span class="fa fa-chevron-down"></span></a>
+					<ul class="nav child_menu">
 
-                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-                        {
-                            <li>@Html.ActionLink(" Report Detail", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-                        }
-                        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-                        {
-                            <li>@Html.ActionLink(" Report Summary", "IndexDoc", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-                        }
-                        <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
-                    </ul>
-                </li>
-            }
-            @if (UtilsAppCode.Session.User.isApprove || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-            {
-                <li>
-                    <a><i class="fa fa-edit"></i> Approve <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <li>
-                            <a href="@Url.Action("Index", "ApproveLists")">
-                                Approve Form
-                                @if (UtilsAppCode.Session.User.countWatingActForm != "0")
-                                {
-                                    <span class='badge bg-green'>@UtilsAppCode.Session.User.countWatingActForm</span>
-                                }
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index", "ApproveListsRepDetail")">
-                                Approve Report Detail
-                                @if (UtilsAppCode.Session.User.counteatingRepDetail != "0")
-                                {
-                                    <span class='badge bg-green'>@UtilsAppCode.Session.User.counteatingRepDetail</span>
-                                }
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index", "ApproveSummaryDetail")">
-                                Approve Summary Report
-                                @if (UtilsAppCode.Session.User.counteatingSummaryDetail != "0")
-                                {
-                                    <span class='badge bg-green'>@UtilsAppCode.Session.User.counteatingSummaryDetail</span>
-                                }
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index", "BudgetApproveList")">
-                                Budget
-                                @if (UtilsAppCode.Session.User.countWatingBudgetForm != "0")
-                                {
-                                    <span class='badge bg-green'>@UtilsAppCode.Session.User.countWatingBudgetForm</span>
-                                }
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            }
+						@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"])
+						{
+							<li>@Html.ActionLink(" Documents", "Index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, new { })</li>
+						}
+						@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+						{
+							<li>@Html.ActionLink(" Documents OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
+						}
 
-            <li>
-                <a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
-                    <li>@Html.ActionLink(" Report Detail", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-                    @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-                    {
-                        <li>@Html.ActionLink(" Report Summary", "index", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-                    }
-                </ul>
-            </li>
+						@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"])
+						{
+							<li>@Html.ActionLink(" Budget", "Index", "BudgetMyDoc", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() }, null)</li>
+						}
+						@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+						{
+							<li>@Html.ActionLink(" Budget OMT", "Index", "BudgetMyDoc", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() }, null)</li>
+						}
 
-        </ul>
+						@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+						{
+							<li>@Html.ActionLink(" Report Detail MT", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+							<li>@Html.ActionLink(" Report Detail OMT", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
+						}
+						@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+						{
+							<li>@Html.ActionLink(" Report Summary", "IndexDoc", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+						}
+						<!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
+					</ul>
+				</li>
+			}
+			@if (UtilsAppCode.Session.User.isApprove || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+			{
+				<li>
+					<a><i class="fa fa-edit"></i> Approve <span class="fa fa-chevron-down"></span></a>
+					<ul class="nav child_menu">
+						<li>
+							<a href="@Url.Action("Index", "ApproveLists")">
+								Approve Form
+								@if (UtilsAppCode.Session.User.countWatingActForm != "0")
+								{
+									<span class='badge bg-green'>@UtilsAppCode.Session.User.countWatingActForm</span>
+								}
+							</a>
+						</li>
+						<li>
+							<a href="@Url.Action("Index", "ApproveListsRepDetail")">
+								Approve Report Detail
+								@if (UtilsAppCode.Session.User.counteatingRepDetail != "0")
+								{
+									<span class='badge bg-green'>@UtilsAppCode.Session.User.counteatingRepDetail</span>
+								}
+							</a>
+						</li>
+						<li>
+							<a href="@Url.Action("Index", "ApproveSummaryDetail")">
+								Approve Summary Report
+								@if (UtilsAppCode.Session.User.counteatingSummaryDetail != "0")
+								{
+									<span class='badge bg-green'>@UtilsAppCode.Session.User.counteatingSummaryDetail</span>
+								}
+							</a>
+						</li>
+						<li>
+							<a href="@Url.Action("Index", "BudgetApproveList")">
+								Budget
+								@if (UtilsAppCode.Session.User.countWatingBudgetForm != "0")
+								{
+									<span class='badge bg-green'>@UtilsAppCode.Session.User.countWatingBudgetForm</span>
+								}
+							</a>
+						</li>
+					</ul>
+				</li>
+			}
+
+			<li>
+				<a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li>@Html.ActionLink(" Report Detail MT", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+					<li>@Html.ActionLink(" Report Detail OMT", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
+					@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+					{
+						<li>@Html.ActionLink(" Report Summary", "index", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+					}
+					@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+					{
+						<li>@Html.ActionLink(" Report Budget Activity", "RptBudgetActivityIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+					}
+				</ul>
+			</li>
+
+		</ul>
     </div>
     <div class="menu_section">
         <h3>Setting</h3>

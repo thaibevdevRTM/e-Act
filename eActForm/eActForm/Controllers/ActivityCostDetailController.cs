@@ -49,7 +49,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult addCostDetailTheme(string themeId, string txttheme,string actId)
+        public JsonResult addCostDetailTheme(string themeId, string txttheme,string actId ,string brandId)
         {
             var result = new AjaxResult();
             try
@@ -66,6 +66,7 @@ namespace eActForm.Controllers
                 productcostdetail.typeTheme = txttheme;
                 costThemeDetailOfGroupByPriceModel.detailGroup = new List<ProductCostOfGroupByPrice>();
                 costThemeDetailOfGroupByPriceModel.detailGroup.Add(productcostdetail);
+                costThemeDetailOfGroupByPriceModel.IO = "56SO" + DateTime.Now.Year.ToString().Substring(2) + ActFormAppCode.getDigitGroup(themeId) + ActFormAppCode.getDigitRunnigGroup(brandId);
                 activityModel.activitydetaillist.Add(costThemeDetailOfGroupByPriceModel);
                 TempData["actForm"+ actId] = activityModel;
                 TempData.Keep();

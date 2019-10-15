@@ -144,15 +144,29 @@ namespace eActForm.BusinessLayer
                 throw new Exception("insertActivityRepDetail >>" + ex.Message);
             }
         }
-        public static int insertApproveForReportDetail(string customerId, string productTypeId, string actId)
+        public static int insertApproveForReportDetail(string customerId, string productTypeId, string actId,string typeForm)
         {
             try
             {
                 int rtn = 0;
-                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowForReportDetail(
+                ApproveFlowModel.approveFlowModel flowModel = new ApproveFlowModel.approveFlowModel();
+
+                if (typeForm == Activity_Model.activityType.MT.ToString())
+                {
+                    flowModel = ApproveFlowAppCode.getFlowForReportDetail(
                     ConfigurationManager.AppSettings["subjectReportDetailId"]
                     , customerId
                     , productTypeId);
+                }
+                else
+                {
+                    flowModel = ApproveFlowAppCode.getFlowForReportDetailOMT(
+                   ConfigurationManager.AppSettings["subjectReportDetailId"]
+                   , customerId
+                   , productTypeId);
+                }
+
+
                 if (ApproveAppCode.insertApproveByFlow(flowModel, actId) > 0)
                 {
                     rtn = ApproveAppCode.updateApproveWaitingByRangNo(actId);

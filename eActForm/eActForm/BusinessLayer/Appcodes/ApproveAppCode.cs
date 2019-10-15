@@ -33,6 +33,32 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static string getEmailCCByActId(string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmailCC"
+                     , new SqlParameter[] { new SqlParameter("@actId", actId)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveModel.approveDetailModel()
+                             {
+                                 empEmail = dr["empEmail"].ToString()
+                             }).ToList();
+
+                string emailCC = "";
+                if (lists.Any())
+                {
+                    emailCC = (string.Join(",", lists.Select(x => x.empEmail.ToString()).ToArray()));
+                }
+
+                return emailCC;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getEmailCCByActId >> " + ex.Message);
+            }
+        }
+
         public static List<ApproveModel.approveDetailModel> getRemarkApprovedByEmpId(string actId, string empId)
         {
             try
@@ -46,6 +72,8 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getRemarkApprovedByEmpId >> " + ex.Message);
             }
         }
+
+
         public static List<ApproveModel.approveWaitingModel> getAllWaitingApproveGroupByEmpId()
         {
             try

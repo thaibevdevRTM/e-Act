@@ -150,6 +150,20 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
+
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByRegion(RepDetailModel.actFormRepDetails model, string regionId)
+        {
+            try
+            {
+                model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.regionId == regionId).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.regionId == regionId).ToList();
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
+            }
+        }
         public static RepDetailModel.actFormRepDetails getFilterRepDetailByActivity(RepDetailModel.actFormRepDetails model, string activityId)
         {
             try
@@ -189,14 +203,15 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate)
+        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate, string typeForm)
         {
             try
             {
                 DataSet ds = new DataSet();
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
-                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDate"
+                    string stored = typeForm == Activity_Model.activityType.MT.ToString() ? "usp_getReportDetailByCreateDate" : "usp_getReportDetailOMTByCreateDate";
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored
                     , new SqlParameter[] {
                         new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
@@ -272,6 +287,7 @@ namespace eActForm.BusinessLayer
                                  documentDate = (DateTime?)dr["documentDate"] ?? null,
                                  brandId = dr["brandId"].ToString(),
                                  customerId = dr["customerId"].ToString(),
+                                 regionId = dr["regionId"].ToString(),
                                  productCateId = dr["productCateId"].ToString(),
                                  productGroupid = dr["productGroupid"].ToString(),
                                  cusNameTH = dr["cusNameTH"].ToString(),
@@ -319,6 +335,7 @@ namespace eActForm.BusinessLayer
                         documentDate = group.First().documentDate,
                         brandId = group.First().brandId,
                         customerId = group.First().customerId,
+                        regionId = group.First().regionId,
                         productCateId = group.First().productCateId,
                         productGroupid = group.First().productGroupid,
                         cusNameTH = group.First().cusNameTH,

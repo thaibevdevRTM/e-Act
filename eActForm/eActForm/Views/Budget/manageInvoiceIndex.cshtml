@@ -1,6 +1,5 @@
-﻿
+﻿@using eActForm.BusinessLayer
 @model eActForm.Models.Budget_Activity_Model
-
 @{
 	ViewBag.Title = "Index";
 	Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,7 +9,6 @@
 }
 
 <script src="~/Scripts/jquery-1.11.2.min.js"></script>
-
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
 
@@ -19,10 +17,8 @@
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
-
 <link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-ui.js"></script>
-
 
 <style type="text/css">
 
@@ -53,6 +49,7 @@
 </style>
 
 
+@Html.HiddenFor(x => UtilsAppCode.Session.User.empId, new { @id = "hd_createUserId" })
 
 <div class="alert alert-success" role="alert">
 	<h4 class="alert-heading">รายการใบแจ้งหนี้ (Invoice)</h4>
@@ -80,9 +77,8 @@
 	</div>
 
 	<div id="divUploadImg" class="col-md-6">
-
 		<div class="col-12">
-			<p class="lead">อัพโหลดใบแจ้งหนี้ (pdf)</p>
+			<p class="lead">อัพโหลดใบแจ้งหนี้ (pdf,jpg)</p>
 		</div>
 		<div class="col-md-12" id="divUploadFiles">
 			<form action="@Url.Action("manageInvoiceUpload", "Budget", new { company = var_companyEN })" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
@@ -91,9 +87,7 @@
 				</div>
 			</form>
 		</div>
-
 	</div>
-
 </div>
 
 <div id='myModalInvoice' class="modal fade" role="dialog">
@@ -110,8 +104,8 @@
 	var fileList = new Array;
 	Dropzone.options.dropzoneJsForm = {
 		maxFiles: 5,
-		//acceptedFiles: "image/jpeg,image/jpg,image/png,application/pdf",
-		acceptedFiles: "application/pdf",
+		acceptedFiles: "image/jpeg,image/jpg,image/png,application/pdf",
+		//acceptedFiles: "application/pdf",
 		paramName: "file",
 		maxFilesize: 10,
 		//addRemoveLinks: true,
@@ -124,16 +118,15 @@
 				$("#WaitDialog").hide();
 			});
 		}
-
 	};
-
 
 	function callManageInvoiceList() {
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("manageInvoiceList", "Budget")',
             data: {
-				companyTH: '@(var_companyEN)'
+				companyTH: '@(var_companyEN)',
+				createdByUserId: $("#hd_createUserId").val()
             }
         }).done(function (htmlResponse) {
 			$("#divManageInvoiceList").html(htmlResponse);
@@ -143,7 +136,6 @@
 	}
 
 	function callManageInvoiceView(id) {
-		
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("manageInvoiceView", "Budget")',
@@ -182,6 +174,7 @@
 						success: function (response) {
 							console.log(response.success);
 							callManageInvoiceList();
+							$("#divManageInvoiceView").html("");
 						}
 
 					})
@@ -189,7 +182,6 @@
             }
         });
 	}
-
 
 	function onClickManageInvoiceEdit(id) {
 		var imageId = id;
@@ -214,40 +206,51 @@
 				alert("Dynamic content load failed.");
 			}
 		});
-		}
+	}
 
+	function refreshInvoice() {
+		callManageInvoiceList();
+		$("#divManageInvoiceView").html("");
+	}
 
 	function submitManageInvoiceUpdate() {
 		//var var_imageId = $("#hd_imageId").val();
 		//alert(var_imageId);
+		$.ajax({
+			url: '@Url.Action("manageInvoiceEditSubmit", "Budget")',
+			data: {
+				id: $("#hd_imageId").val(),
+				invoiceNo: $("#txt_invoice_no").val(),
+				remark: $("#txt_remark").val(),
+				companyEN: '@(var_companyEN)',
+				regionId: $("#txt_region_id").val(),
+				customerId: $("#ddlCustomer").val(),
 
-			$.ajax({
-				url: '@Url.Action("manageInvoiceEditSubmit", "Budget")',
-				data: {
-					id: $("#hd_imageId").val(),
-					invoiceNo: $("#txt_invoice_no").val(),
-					remark: $("#txt_remark").val(),
-					companyEN: '@(var_companyEN)',
-					regionId: $("#txt_region_id").val(),
-					customerId: $("#txt_customer_id").val(),
+			},
+			dataType: "json",
+			type: 'POST',
+			success: function (result) {
+				$('#myModalInvoice').modal('hide');
 
-				},
-				dataType: "json",
-				type: 'POST',
-				success: function (result) {
-					$('#myModalInvoice').modal('hide');
-
-					if (result.Message != null) {
-						var msg = "";
-						msg = "<h5>หมายเลขใบแจ้งหนี้ <b style='color:red'> " + result.Message + "</b> ซ้ำ </h5>";
-						bootbox.alert({
-							title: "แจ้งเตือน",
-							message: msg
-						});
-					}
-
-					callManageInvoiceList();
+				if (result.Message != null) {
+					var msg = "";
+					msg = "<div class='row text-center'> <h5>หมายเลขใบแจ้งหนี้ <b style='color:red'> " + result.Message + "</b> ซ้ำ (บันทึกข้อมูลเรียบร้อยแล้ว) </h5> </div>";
+					bootbox.alert({
+						title: "แจ้งเตือน",
+						message: msg
+					});
+				} else {
+					var msg = "";
+					msg = "<div class='row text-center'> <h5>บันทึกข้อมูล เรียบร้อยแล้ว </h5> </div>";
+					bootbox.alert({
+						title: "แจ้งเตือน",
+						message: msg
+					});
 				}
-			})
+
+				callManageInvoiceList();
+				//$("#divManageInvoiceView").html("");
+			}
+		})
 	}
 </script>

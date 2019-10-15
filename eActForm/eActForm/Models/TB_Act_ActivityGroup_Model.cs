@@ -11,6 +11,8 @@ namespace eActForm.Models
         public string activitySales { get; set; }
         public string activityAccount { get; set; }
         public string gl { get; set; }
+        public string digit_Group { get; set; }
+        public string digit_SubGroup { get; set; }
         public bool delFlag { get; set; }
         public DateTime createdDate { get; set; }
         public string createdByUserId { get; set; }

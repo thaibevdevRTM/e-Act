@@ -1,10 +1,20 @@
 ﻿@model eActForm.Models.ApproveModel.approveModels
-<table>
-    @foreach (var item in Model.approveDetailLists)
-    {
-        <tr>
-            <td align="center">@item.empName : </td>
-            <td align="left">@item.remark</td>
-        </tr>
-    }
-</table>
+@if (Model.approveDetailLists != null && Model.approveDetailLists.Count() > 0)
+{
+    <div style="margin-bottom:10px;">
+        หมายเหตุ
+    </div>
+    <table>
+        <tr><td></td><td></td></tr>
+        @foreach (var item in Model.approveDetailLists)
+        {
+            if (@item.remark != "")
+            {
+                <tr>
+                    <td align="center">@item.empName : </td>
+                    <td align="left">@item.remark</td>
+                </tr>
+            }
+        }
+    </table>
+}

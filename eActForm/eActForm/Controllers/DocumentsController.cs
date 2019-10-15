@@ -25,6 +25,7 @@ namespace eActForm.Controllers
             try
             {
                 SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+                ViewBag.TypeForm = typeForm;
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
                     if (typeForm == Activity_Model.activityType.MT.ToString())
@@ -47,14 +48,14 @@ namespace eActForm.Controllers
             return View();
         }
 
-        public ActionResult searchActForm()
+        public ActionResult searchActForm(string typeForm)
         {
             DocumentsModel.actRepDetailModels models = new DocumentsModel.actRepDetailModels();
             try
             {
                 DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
                 DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
-                models.actRepDetailLists = DocumentsAppCode.getActRepDetailLists(startDate, endDate);
+                models.actRepDetailLists = DocumentsAppCode.getActRepDetailLists(startDate, endDate, typeForm);
 
                 if (Request.Form["txtActivityNo"] != "")
                 {
@@ -90,7 +91,7 @@ namespace eActForm.Controllers
             return RedirectToAction("reportDetailListsView");
         }
 
-        public ActionResult reportDetailListsView()
+        public ActionResult reportDetailListsView(string typeForm)
         {
             DocumentsModel.actRepDetailModels models = new DocumentsModel.actRepDetailModels();
             try
@@ -101,13 +102,10 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    models.actRepDetailLists = DocumentsAppCode.getActRepDetailLists(DateTime.Now.AddDays(-15), DateTime.Now);
-
+                    models.actRepDetailLists = DocumentsAppCode.getActRepDetailLists(DateTime.Now.AddDays(-15), DateTime.Now, typeForm);
                 }
-
                 TempData["SearchDataModelSummary"] = null;
                 return PartialView(models);
-
             }
             catch (Exception ex)
             {
@@ -123,7 +121,6 @@ namespace eActForm.Controllers
             var resultAjax = new AjaxResult();
             try
             {
-
                 var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId+"_");
                 GridHtml = GridHtml.Replace("<br>", "<br/>");
                 AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));

@@ -180,6 +180,7 @@
     <Compile Include="App_Start\FontAwesomeBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BusinessLayer\Appcodes\ActFormAppCode.cs" />
+    <Compile Include="BusinessLayer\Appcodes\AdminUserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\Appcodes\ReportSummaryAppCode.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllRegion.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetActivity.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetApprove.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetReport.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetChanelNameByCustomerId.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetCostDetailById.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCode.cs" />
@@ -225,6 +227,7 @@
     <Compile Include="Controllers\ActivityProductDetailController.cs" />
     <Compile Include="Controllers\ActivityViewerController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminUserController.cs" />
     <Compile Include="Controllers\AjaxResult.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
@@ -235,6 +238,7 @@
     <Compile Include="Controllers\BudgetApproveListController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
     <Compile Include="Controllers\BudgetMyDocController.cs" />
+    <Compile Include="Controllers\BudgetReportController.cs" />
     <Compile Include="Controllers\BudgetViewerController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
@@ -251,9 +255,11 @@
     <Compile Include="Models\Activity_Model.cs" />
     <Compile Include="Models\ActSignatureModel.cs" />
     <Compile Include="Models\ActUserModel.cs" />
+    <Compile Include="Models\AdminUserModel.cs" />
     <Compile Include="Models\AppCode.cs" />
     <Compile Include="Models\Budget_Activity_Model.cs" />
     <Compile Include="Models\Budget_Approve_Detail_Model.cs" />
+    <Compile Include="Models\Budget_Report_Model.cs" />
     <Compile Include="Models\DashBoardModel.cs" />
     <Compile Include="Models\DocumentsModel.cs" />
     <Compile Include="Models\RepDetailModel.cs" />
@@ -2321,6 +2327,10 @@
     <Content Include="Views\Approve\getApproveComment.cshtml" />
     <Content Include="Views\actFormRepDetail\repPreviewForApprove.cshtml" />
     <Content Include="Views\BudgetViewer\regenBudgetApprovePdf.cshtml" />
+    <Content Include="Views\BudgetReport\RptBudgetActivityIndex.cshtml" />
+    <Content Include="Views\BudgetReport\searchRptBudgetActivity.cshtml" />
+    <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
+    <Content Include="Views\AdminUser\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
