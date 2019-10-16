@@ -177,9 +177,12 @@ namespace eActForm.BusinessLayer
 								totalCost = d["totalCost"].ToString() == "" ? 0 : decimal.Parse(d["totalCost"].ToString()),
 								productStandBath = d["productStandBath"].ToString() == "" ? 0 : decimal.Parse(d["productStandBath"].ToString()),
 
-								//paymentNo = d["paymentNo"].ToString(),
-								//saleActCase = d["saleActCase"].ToString(),
-								//saleActBath = d["saleActBath"].ToString(),
+								  //paymentNo = d["paymentNo"].ToString(),
+								  //saleActCase = d["saleActCase"].ToString(),
+								  //saleActBath = d["saleActBath"].ToString(),
+
+								budgetImageId = d["budgetImageId"].ToString(),
+								actCustomerId = d["act_customerId"].ToString(),
 
 								invoiceNo = d["invoiceNo"].ToString(),
 								invoiceTotalBath = d["invoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invoiceTotalBath"].ToString()),
@@ -190,7 +193,6 @@ namespace eActForm.BusinessLayer
 								//invoiceActionDate = DateTime.Parse(d["invoiceActionDate"].ToString()),
 								invoiceActionDate = d["invoiceActionDate"].ToString(), //is DBNull ? null : (DateTime?)d["invoiceActionDate"],
 								dateInvoiceAction = d["dateInvoiceAction"] is DBNull ? null : (DateTime?)d["dateInvoiceAction"],
-								  
 
 								invoiceBudgetStatusId = d["invoiceBudgetStatusId"].ToString() == "" ? 0 : int.Parse(d["invoiceBudgetStatusId"].ToString()),
 								invoiceBudgetStatusNameTH = d["invoiceBudgetStatusNameTH"].ToString(),

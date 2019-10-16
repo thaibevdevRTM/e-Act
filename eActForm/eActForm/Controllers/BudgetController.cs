@@ -66,10 +66,24 @@ namespace eActForm.Controllers
 					int countSuccess = BudgetFormCommandHandler.updateInvoiceProduct(budgetInvoiceModel);
 				}
 
-				if (budgetInvoiceModel.budgetImageId != null)
+				//if (budgetInvoiceModel.budgetImageId != null)
+				//{
+				//	TB_Bud_Image_Model getBudImageModel = new TB_Bud_Image_Model();
+				//	getBudImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(budgetInvoiceModel.budgetImageId, null, null, null, null, null, null);
+				//	if (getBudImageModel.BudImageList.Any()) // True, the list is not empty
+				//	{
+				//		if (getBudImageModel.BudImageList.ElementAtOrDefault(0).count_activityNo > 1)
+				//		{
+				//			resultAjax.Code = 2;
+				//			resultAjax.Message = getBudImageModel.BudImageList.ElementAtOrDefault(0).invoiceNo;
+				//		}
+				//	}
+				//}
+
+				if (string.IsNullOrEmpty(budgetInvoiceModel.invoiceNo) == false )
 				{
 					TB_Bud_Image_Model getBudImageModel = new TB_Bud_Image_Model();
-					getBudImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(budgetInvoiceModel.budgetImageId, null, null, null, null, null,null);
+					getBudImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(null, budgetInvoiceModel.invoiceNo, null, null, null, null, budgetInvoiceModel.actCustomerId);
 					if (getBudImageModel.BudImageList.Any()) // True, the list is not empty
 					{
 						if (getBudImageModel.BudImageList.ElementAtOrDefault(0).count_activityNo > 1)
@@ -125,8 +139,6 @@ namespace eActForm.Controllers
 				Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
 
 				Budget_Activity.Budget_Count_Wait_Approve = QueryGetBudgetActivity.getBudgetActivityWaitApprove(activityId).FirstOrDefault();
-				Budget_Activity.Budget_ImageList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null, company,null);
-
 				return PartialView(Budget_Activity);
 			}
 			else
@@ -137,7 +149,6 @@ namespace eActForm.Controllers
 				Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
 
 				Budget_Activity.Budget_Count_Wait_Approve = QueryGetBudgetActivity.getBudgetActivityWaitApprove(activityId).FirstOrDefault();
-				Budget_Activity.Budget_ImageList = ImageAppCodeBudget.getImageBudget(null, null, null, null, null, company, null);
 				return PartialView(Budget_Activity);
 			}
 		}
