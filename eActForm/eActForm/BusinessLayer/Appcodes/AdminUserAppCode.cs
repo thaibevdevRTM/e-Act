@@ -32,6 +32,24 @@ namespace eActForm.BusinessLayer.Appcodes
             return result;
         }
 
+        public static int delUserandAuthorByEmpId(string empId)
+        {
+            int result = 0;
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_delUserandAuthorByEmpId"
+                    , new SqlParameter[] {new SqlParameter("@empId",empId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> delUserandAuthorByEmpId");
+            }
+
+            return result;
+        }
+
 
         public static int insertAuthorized(string empId, string companyId ,string customerId, string productTypeId)
         {
@@ -87,7 +105,8 @@ namespace eActForm.BusinessLayer.Appcodes
                              select new AdminUserModel.User()
                              {
                                  empId = dr["empId"].ToString(),
-                                 roleId = dr["roleId"].ToString()
+                                 roleId = dr["roleId"].ToString(),
+                                 companyId = dr["empCompanyId"].ToString(),
                              }).ToList();
 
                 return lists;

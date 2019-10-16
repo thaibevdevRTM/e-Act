@@ -26,26 +26,34 @@ namespace eActForm.Controllers
 
         public ActionResult insertUsers(AdminUserModel.AdminUserModels model)
         {
-            //Insert Role User
-            if (model.chkRole.Any())
+            try
             {
-                foreach (var item in model.chkRole)
+                //clear user before insert
+                AdminUserAppCode.delUserandAuthorByEmpId(Request.Form["txtEmpCode"]);
+                //Insert Role User
+                if (model.chkRole.Any())
                 {
-                    AdminUserAppCode.insertRole(Request.Form["txtEmpCode"], item);
-                }
-            }
-
-            if (model.chkProductType.Any())
-            {
-                foreach (var item in model.chkProductType)
-                {
-                    foreach (var itemCust in model.custLi)
+                    foreach (var item in model.chkRole)
                     {
-                        AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], Request.Form["ddlCompany"], itemCust, item);
+                        AdminUserAppCode.insertRole(Request.Form["txtEmpCode"], item);
+                    }
+                }
+
+                if (model.chkProductType.Any())
+                {
+                    foreach (var item in model.chkProductType)
+                    {
+                        foreach (var itemCust in model.custLi)
+                        {
+                            AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], Request.Form["ddlCompany"], itemCust, item);
+                        }
                     }
                 }
             }
-
+            catch(Exception ex)
+            {
+                ExceptionManager.WriteError("insertUsers => " + ex.Message);
+            }
 
             return RedirectToAction("Index");
         }
@@ -66,9 +74,9 @@ namespace eActForm.Controllers
                     {
                         cusId = group.First().cusId,
                         customerName = group.First().customerName
-                    }).ToList(),
+                    }).OrderBy(x => x.customerName).ToList(),
                     productTypeList = userModel.customerLists,
-                    companyId = userModel.customerLists.FirstOrDefault().companyId,
+                    companyId = userModel.customerLists.Any()? userModel.customerLists.FirstOrDefault().companyId: userModel.userLists.FirstOrDefault().companyId,
                     empId = userModel.userLists.FirstOrDefault().empId
                 };
                 result.Data = resultData;
@@ -78,6 +86,24 @@ namespace eActForm.Controllers
                 result.Success = false;
                 result.Message = ex.Message;
                 ExceptionManager.WriteError("getUserRoleByEmpId => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        public JsonResult delUserandAuthor(string empId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                result.Code = AdminUserAppCode.delUserandAuthorByEmpId(empId);
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("delUserandAuthor => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }

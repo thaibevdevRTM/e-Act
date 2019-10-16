@@ -42,7 +42,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ProductCostOfGroupByPrice> getProductcostdetail(string brandId, string smellId, string size, string p_customerid, string p_productId, string p_theme)
+        public static List<ProductCostOfGroupByPrice> getProductcostdetail(string brandId, string smellId, string size, string p_customerid, string p_productId, string p_theme,string typeForm)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace eActForm.BusinessLayer
                     lists = lists.Where(x => x.brandId == brandId && x.smellId == smellId).ToList();
                 }
 
-                if(p_customerid != Activity_Model.activityType.OMT.ToString())
+                if(typeForm != Activity_Model.activityType.OMT.ToString())
                 {
                     lists = lists.Where(x => x.wholeSalesPrice > 0).ToList();
                 }

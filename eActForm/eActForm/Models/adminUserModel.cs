@@ -33,6 +33,7 @@ namespace eActForm.Models
             public string userLName { get; set; }
             public string teamName { get; set; }
             public string roleId { get; set; }
+            public string companyId { get; set; }
         }
 
         public class Customer

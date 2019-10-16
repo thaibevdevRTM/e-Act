@@ -41,9 +41,8 @@
                 Customer :
             </div>
             <div class="col-md-4">
-                <input type="text" class="form-control" required="required" id="txtCustomer" name="txtCustomer" />
-                <input type="hidden" class="form-control" required="required" id="txtCustomerIds" name="txtCustomerIds" />
-                <button type="button" onclick="javascript:onclickClearCusList()">Clear</button>
+                <input type="text" class="form-control"  id="txtCustomer" name="txtCustomer" />
+                <input type="hidden" class="form-control"  id="txtCustomerIds" name="txtCustomerIds" />
             </div>
         </div>
         <div class="row">
@@ -137,7 +136,7 @@
                 {
                     <tr>
                         <td style="text-align:center">
-                            <a href="javascript:" onclick="checkDelete();">
+                            <a href="javascript:" onclick="onClickDel('@item.empId');">
                                 <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
                             </a>
                             <a href="javascript:" onclick="onClickEdit('@item.empId');">
@@ -191,7 +190,6 @@
                             response($.map(data, function (item) {
                                 return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
                             }))
-
                         }
                     })
                 },
@@ -202,39 +200,7 @@
                     }
                 }, select: function (event, ui) {
                     $("#txtCustomerIds").val($("#txtCustomerIds").val() + "," + ui.item.id);
-                    $("#divCustLists").append("<div id='" + "div" + ui.item.id + "' ><input type='text' name='model.custLi[0]' value='" + ui.item.id + "'/>" + ui.item.label + "  <br/></div>");
-                    index++;
-                }
-            }).focus(function () {
-                $(this).data("uiAutocomplete").search($(this).val());
-            });
-
-            $("#txtCustomer").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: '@Url.Action("getCustomerByCompany", "eAct")',
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-                            companyId: $("#ddlCompany").val(),
-                            txtCus: $("#txtCustomer").val(),
-                        },
-                        success: function (data) {
-                            response($.map(data, function (item) {
-                                return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
-                            }))
-
-                        }
-                    })
-                },
-                minLength: 0,
-                messages: {
-                    noResults: '',
-                    results: function (resultsCount) {
-                    }
-                }, select: function (event, ui) {
-                    $("#txtCustomerIds").val($("#txtCustomerIds").val() + "," + ui.item.id);
-                    $("#divCustLists").append("<div id='divSubCust'><input type='hidden' name='model.custLi' value='" + ui.item.id + "'/>" + ui.item.label + " <br/></div>");
+                    $("#divCustLists").append("<div id='" + ui.item.id + "' ><span class='pull-left close' onclick=javascript:onclickDelCusList('" + ui.item.id + "');>x</span><input type='hidden' name='model.custLi' value='" + ui.item.id + "'/>" + ui.item.label + " <br/></div>");
                     index++;
                 }
             }).focus(function () {
@@ -243,27 +209,11 @@
         });
 
 
-
-
-
-        function onclickClearCusList() {
-
-            $('#divSubCust').remove();
-
+        function onclickDelCusList(id) {
+            document.getElementById(id).remove();
         }
 
         function onClickEdit(empId) {
-
-            console.log(empId);
-            //var chkCreater = document.getElementById("creater");
-            //if (chkCreater.checked) {
-            //    console.log('check');
-            //    document.getElementById("admin").checked = true;
-            //}
-            //else {
-            //    console.log('Uncheck');
-
-            //}
 
             $("#divCustLists").html("");
             $.ajax({
@@ -277,10 +227,10 @@
                     $("#ddlCompany").val(response.Data.companyId);
                     $("#txtEmpCode").val(response.Data.empId);
                     if (response.Data.customerLists.length > 0) {
-                       
+
                         $.each(response.Data.customerLists, function () {
-                           
-                            $("#divCustLists").append("<div id='divSubCust'><input type='hidden' name='model.custLi' value='" + this['cusId'] + "'/>" + this['customerName'] + " <br/></div>");
+
+                            $("#divCustLists").append("<div id='" + this['cusId'] +"'> <span class='pull-left close' onclick=javascript:onclickDelCusList('" + this['cusId'] + "');>x</span><input type='hidden' name='model.custLi' value='" + this['cusId'] + "'/>" + this['customerName'] + " <br/></div>");
 
                             $.each(response.Data.productTypeList, function () {
                                 switch (this['productTypeId']) {
@@ -293,33 +243,48 @@
                                 }
                             });
                         });
-
-                        $.each(response.Data.userLists, function () {
-                            switch (this['roleId']) {
-                                case '1':
-                                    document.getElementById("creater").checked = true;
-                                    break;
-                                case '2':
-                                    document.getElementById("approve").checked = true;
-                                    break;
-                                case '3':
-                                    document.getElementById("admin").checked = true;
-                                    break;
-                                case '4':
-                                    document.getElementById("superAdmin").checked = true;
-                                    break;
-                                case '5':
-                                    document.getElementById("adminOMT").checked = true;
-                                    break;
-                            }
-                        });
                     }
 
+                    $.each(response.Data.userLists, function () {
+                        switch (this['roleId']) {
+                            case '1':
+                                document.getElementById("creater").checked = true;
+                                break;
+                            case '2':
+                                document.getElementById("approve").checked = true;
+                                break;
+                            case '3':
+                                document.getElementById("admin").checked = true;
+                                break;
+                            case '4':
+                                document.getElementById("superAdmin").checked = true;
+                                break;
+                            case '5':
+                                document.getElementById("adminOMT").checked = true;
+                                break;
+                        }
+                    });
                 }
             });
     }
 
-    
+    function onClickDel(empId) {
+        $.ajax({
+            url: '@Url.Action("delUserandAuthor", "AdminUser")',
+            data: {
+                empId: empId,
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                if (response.Code > 0) {
+                    bootbox.alert('Success')
+                    window.open('@Url.Action("Index", "AdminUser")');
+                }
+            }
+        });
+    }
+
 
 
 </script>

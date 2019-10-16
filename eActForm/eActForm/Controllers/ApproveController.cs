@@ -131,6 +131,8 @@ namespace eActForm.Controllers
                 if (actTypeName == "FOC" && ConfigurationManager.AppSettings["empIdShowAtCommentApproved"].Contains(UtilsAppCode.Session.User.empId))
                 {
                     model.approveDetailLists = ApproveAppCode.getRemarkApprovedByEmpId(actId, UtilsAppCode.Session.User.empId);
+                    ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
+                    model.approveFlowDetail = flowModel.flowDetail.Where(x => x.empId == UtilsAppCode.Session.User.empId).ToList();
                 }
             }
             catch (Exception ex)

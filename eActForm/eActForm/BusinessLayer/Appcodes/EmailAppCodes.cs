@@ -283,12 +283,12 @@ namespace eActForm.BusinessLayer
                                     , createUsers.FirstOrDefault().empName
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
 
-                            sendEmailActForm(actFormId
-                            , createUsers.FirstOrDefault().empEmail
-                            , ApproveAppCode.getEmailCCByActId(actFormId)
-                            , ConfigurationManager.AppSettings["emailAllApprovedSubject"]
-                            , strBody
-                            , emailType);
+                            //sendEmailActForm(actFormId
+                            //, createUsers.FirstOrDefault().empEmail
+                            //, ApproveAppCode.getEmailCCByActId(actFormId)
+                            //, ConfigurationManager.AppSettings["emailAllApprovedSubject"]
+                            //, strBody
+                            //, emailType);
                         }
                     }
                 }
