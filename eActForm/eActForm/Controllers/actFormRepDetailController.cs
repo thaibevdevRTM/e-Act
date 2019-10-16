@@ -51,10 +51,9 @@ namespace eActForm.Controllers
             {
 
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
-              
                 model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"] , typeForm);
-                
-              
+                model.typeForm = typeForm;
+
 
                 if (Request.Form["txtActivityNo"] != "")
                 {
@@ -98,10 +97,21 @@ namespace eActForm.Controllers
 
                 if (model.actFormRepDetailGroupLists.Any())
                 {
-                    model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
-                                            ConfigurationManager.AppSettings["subjectReportDetailId"]
-                                            , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
-                                            , Request.Form["ddlProductType"]);
+
+                    if (typeForm == Activity_Model.activityType.MT.ToString())
+                    {
+                        model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                                                ConfigurationManager.AppSettings["subjectReportDetailId"]
+                                                , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
+                                                , Request.Form["ddlProductType"]);
+                    }
+                    else
+                    {
+                        model.flowList = ApproveFlowAppCode.getFlowForReportDetailOMT(
+                                                ConfigurationManager.AppSettings["subjectReportDetailId"]
+                                                , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
+                                                , Request.Form["ddlProductType"]);
+                    }
                 }
 
                 Session["ActFormRepDetail"] = model;
@@ -250,7 +260,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string gridEst,string gridWA,string gridSO, string customerId, string productTypeId, string startDate, string endDate)
+        public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string gridEst,string gridWA,string gridSO, string customerId, string productTypeId, string startDate, string endDate,string typeForm)
         {
             var result = new AjaxResult();
             try
@@ -259,7 +269,7 @@ namespace eActForm.Controllers
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
                 string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
-                if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId) > 0)
+                if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId,typeForm) > 0)
                 {
                     RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, gridEst, gridWA, gridSO);
                     EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail, false);

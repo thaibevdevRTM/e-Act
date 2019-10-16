@@ -65,6 +65,34 @@ namespace eActForm.BusinessLayer
             return model;
         }
 
+
+        public static ApproveFlowModel.approveFlowModel getFlowForReportDetailOMT(string subId, string customerId, string productTypeId)
+        {
+            ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowMainForReportDetailOMT"
+                    , new SqlParameter[] {new SqlParameter("@subjectId",subId)
+                    ,new SqlParameter("@regionId","6F5FB6D8-4910-4EC7-839F-62665C96357C")
+                    ,new SqlParameter("@productTypeId",productTypeId)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApprove()
+                             {
+                                 id = dr["id"].ToString(),
+                                 flowNameTH = dr["flowNameTH"].ToString(),
+                                 cusNameTH = dr["cusNameTH"].ToString(),
+                                 cusNameEN = dr["cusNameEN"].ToString(),
+                                 nameTH = dr["nameTH"].ToString(),
+                             }).ToList();
+                model.flowMain = lists[0];
+                model.flowDetail = getFlowDetail(model.flowMain.id);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getFlowForReportDetailOMT >> flow detail report not found : " + ex.Message);
+            }
+            return model;
+        }
         /// <summary> 
         /// get flow for type the activity form
         /// </summary>
