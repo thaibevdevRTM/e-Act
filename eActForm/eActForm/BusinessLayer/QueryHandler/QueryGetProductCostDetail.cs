@@ -42,16 +42,28 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ProductCostOfGroupByPrice> getProductcostdetail(string brandId, string smellId, string size, string p_customerid, string p_productId, string p_theme,string typeForm)
+        public static List<ProductCostOfGroupByPrice> getProductcostdetail(string brandId, string smellId, string size, string p_customerid, string p_productId, string p_theme, string typeForm)
         {
             try
             {
                 List<ProductCostOfGroupByPrice> groupByPrice = new List<ProductCostOfGroupByPrice>();
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getProductcost"
-                     , new SqlParameter("@p_brand", brandId)
-                     , new SqlParameter("@smellId", smellId)
-                     , new SqlParameter("@p_size", size)
-                     , new SqlParameter("@p_customerid", p_customerid));
+                DataSet ds;
+                if (typeForm == Activity_Model.activityType.MT.ToString())
+                {
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getProductcost"
+                        , new SqlParameter("@p_brand", brandId)
+                        , new SqlParameter("@smellId", smellId)
+                        , new SqlParameter("@p_size", size)
+                        , new SqlParameter("@p_customerid", p_customerid));
+                }
+                else
+                {
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getProductcostOMT"
+                        , new SqlParameter("@p_brand", brandId)
+                        , new SqlParameter("@smellId", smellId)
+                        , new SqlParameter("@p_size", size)
+                        , new SqlParameter("@p_customerid", p_customerid));
+                }
 
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new ProductCostOfGroupByPrice()
@@ -83,16 +95,15 @@ namespace eActForm.BusinessLayer
                     lists = lists.Where(x => x.brandId == brandId && x.smellId == smellId).ToList();
                 }
 
-                if(typeForm != Activity_Model.activityType.OMT.ToString())
+                if (typeForm != Activity_Model.activityType.OMT.ToString())
                 {
                     lists = lists.Where(x => x.wholeSalesPrice > 0).ToList();
                 }
 
-
                 groupByPrice = lists.OrderByDescending(o => o.normalCost)
                     .OrderByDescending(x => x.size)
-                    .GroupBy(item => new { item.normalCost, item.size , item.pack  })
-                    
+                    .GroupBy(item => new { item.normalCost, item.size, item.pack })
+
                .Select((group, index) => new ProductCostOfGroupByPrice
                {
                    productGroupId = Guid.NewGuid().ToString(),
