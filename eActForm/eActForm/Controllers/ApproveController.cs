@@ -128,11 +128,13 @@ namespace eActForm.Controllers
             ApproveModel.approveModels model = new ApproveModel.approveModels();
             try
             {
-                if (actTypeName == "FOC" && ConfigurationManager.AppSettings["empIdShowAtCommentApproved"].Contains(UtilsAppCode.Session.User.empId))
+                //add Condition Admin For Regen PDF
+                if (actTypeName == "FOC" && ConfigurationManager.AppSettings["empIdShowAtCommentApproved"].Contains(UtilsAppCode.Session.User.empId) 
+                    || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdmin)
                 {
-                    model.approveDetailLists = ApproveAppCode.getRemarkApprovedByEmpId(actId, UtilsAppCode.Session.User.empId);
+                    model.approveDetailLists = ApproveAppCode.getRemarkApprovedByEmpId(actId, ConfigurationManager.AppSettings["empIdShowAtCommentApproved"]);
                     ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
-                    model.approveFlowDetail = flowModel.flowDetail.Where(x => x.empId == UtilsAppCode.Session.User.empId).ToList();
+                    model.approveFlowDetail = flowModel.flowDetail.Where(x => x.empId == ConfigurationManager.AppSettings["empIdShowAtCommentApproved"]).ToList();
                 }
             }
             catch (Exception ex)

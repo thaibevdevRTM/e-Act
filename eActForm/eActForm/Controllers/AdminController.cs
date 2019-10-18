@@ -114,8 +114,7 @@ namespace eActForm.Controllers
                     countinsert = AdminCommandHandler.insertProductPrice(model.productCode, item.id);
                     countinsert++;
                 }
-                //add productprice OMT
-                countinsert = AdminCommandHandler.insertProductPrice(model.productCode, "OMT");
+
             }
 
             
