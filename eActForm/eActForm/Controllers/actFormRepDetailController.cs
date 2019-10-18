@@ -23,17 +23,16 @@ namespace eActForm.Controllers
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
             ViewBag.TypeForm = typeForm;
-            if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+
+            if (typeForm == Activity_Model.activityType.MT.ToString())
             {
-                if (typeForm == Activity_Model.activityType.MT.ToString())
-                {
-                    models.customerslist = QueryGetAllCustomers.getCustomersMT();
-                }
-                else
-                {
-                    models.customerslist = QueryGetAllCustomers.getAllRegion();
-                }
+                models.customerslist = QueryGetAllCustomers.getCustomersMT();
             }
+            else
+            {
+                models.customerslist = QueryGetAllCustomers.getAllRegion();
+            }
+
 
 
             models.approveStatusList.Add(new ApproveModel.approveStatus()
@@ -51,7 +50,7 @@ namespace eActForm.Controllers
             {
 
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
-                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"] , typeForm);
+                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"], typeForm);
                 model.typeForm = typeForm;
 
 
@@ -66,7 +65,7 @@ namespace eActForm.Controllers
                     {
                         model = RepDetailAppCode.getFilterRepDetailByStatusId(model, Request.Form["ddlStatus"]);
                     }
-                    
+
                     if (Request.Form["ddlCustomer"] != "")
                     {
                         if (typeForm == Activity_Model.activityType.MT.ToString())
@@ -91,7 +90,7 @@ namespace eActForm.Controllers
                     {
                         model = RepDetailAppCode.getFilterRepDetailByProductGroup(model, Request.Form["ddlProductGrp"]);
                     }
-                    
+
                     #endregion
                 }
 
@@ -229,7 +228,7 @@ namespace eActForm.Controllers
                 //RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
                 //gridHtml = gridHtml.Replace("\n", "<br>");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message);
             }
@@ -245,10 +244,10 @@ namespace eActForm.Controllers
             List<Attachment> file = new List<Attachment>();
             try
             {
-                var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"],"");
+                var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], "");
                 gridHtml = gridHtml.Replace("<br>", "<br/>");
-                file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10),"");
-                
+                file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), "");
+
             }
             catch (Exception ex)
             {
@@ -260,7 +259,7 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string gridEst,string gridWA,string gridSO, string customerId, string productTypeId, string startDate, string endDate,string typeForm)
+        public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string gridEst, string gridWA, string gridSO, string customerId, string productTypeId, string startDate, string endDate, string typeForm)
         {
             var result = new AjaxResult();
             try
@@ -269,7 +268,7 @@ namespace eActForm.Controllers
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
                 string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
-                if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId,typeForm) > 0)
+                if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId, typeForm) > 0)
                 {
                     RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, gridEst, gridWA, gridSO);
                     EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail, false);
@@ -311,7 +310,7 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return RedirectToAction("repPreviewForApprove", new {startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
+            return RedirectToAction("repPreviewForApprove", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
         }
 
         /// <summary>
