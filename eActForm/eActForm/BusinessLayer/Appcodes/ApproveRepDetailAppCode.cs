@@ -106,7 +106,7 @@ namespace eActForm.BusinessLayer
                         ,new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@reference","")
-                        ,new SqlParameter("@customerId",customerId)
+                        ,new SqlParameter("@customerId",model.actFormRepDetailLists.FirstOrDefault().customerId)
                         ,new SqlParameter("@productTypeId",productTypeId)
                         ,new SqlParameter("@delFlag",false)
                         ,new SqlParameter("@createdDate",DateTime.Now)
