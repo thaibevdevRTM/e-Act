@@ -33,16 +33,21 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId, string companyTH)
+		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId, string companyTH,string act_createdDateStart , string act_createdDateEnd , string act_budgetStatusIdIn)
 		{
 			try
 			{
+				//act_budgetStatusIdIn =null;
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivity"
 				 , new SqlParameter("@act_approveStatusId", act_approveStatusId)
 				 , new SqlParameter("@act_activityId", act_activityId)
 				 , new SqlParameter("@act_activityNo", act_activityNo)
 				 , new SqlParameter("@budgetApproveId", budgetApproveId)
 				 , new SqlParameter("@companyTH", companyTH)
+
+				 , new SqlParameter("@act_createdDateStart", act_createdDateStart)
+				 , new SqlParameter("@act_createdDateEnd", act_createdDateEnd)
+				 , new SqlParameter("@act_budgetStatusIdIn", act_budgetStatusIdIn)
 				 );
 
 				var result = (from DataRow d in ds.Tables[0].Rows
@@ -106,7 +111,7 @@ namespace eActForm.BusinessLayer
 			}
 			catch (Exception ex)
 			{
-				ExceptionManager.WriteError("getActivityByApproveStatusId => " + ex.Message);
+				ExceptionManager.WriteError("getBudgetActivity => " + ex.Message);
 				return new List<TB_Bud_Activity_Model.Budget_Activity_Att>();
 			}
 		}
