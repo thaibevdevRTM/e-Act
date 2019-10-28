@@ -91,7 +91,7 @@ namespace eActForm.BusinessLayer
 
                 groupByPrice = lists.OrderByDescending(o => o.normalCost)
                     .OrderByDescending(x => x.size)
-                    .GroupBy(item => new { item.normalCost, item.size , item.pack  })
+                    .GroupBy(item => new { item.wholeSalesPrice, item.size , item.pack  })
                     
                .Select((group, index) => new ProductCostOfGroupByPrice
                {
