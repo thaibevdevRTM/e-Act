@@ -2331,6 +2331,7 @@
     <Content Include="Views\BudgetReport\searchRptBudgetActivity.cshtml" />
     <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
     <Content Include="Views\AdminUser\Index.cshtml" />
+    <Content Include="Views\Shared\_searchReportDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
