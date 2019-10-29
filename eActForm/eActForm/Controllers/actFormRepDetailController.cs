@@ -144,16 +144,21 @@ namespace eActForm.Controllers
             try
             {
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
-                model.actFormRepDetailLists
-                    .Where(r => r.id == actId)
-                    .Select(r => r.delFlag = !delFlag
-                    ).ToList();
+                if (actId == "All")
+                {
+                    model.actFormRepDetailGroupLists.Select(r => r.delFlag = !delFlag
+                        ).ToList();
+                    result.Code = 001;
+                }
+                else
+                {
+                    model.actFormRepDetailGroupLists
+                        .Where(r => r.id == actId)
+                        .Select(r => r.delFlag = !delFlag
+                        ).ToList();
+                }
+                result.Success = delFlag;
 
-                model.actFormRepDetailGroupLists
-                    .Where(r => r.id == actId)
-                    .Select(r => r.delFlag = !delFlag
-                    ).ToList();
-                result.Success = true;
             }
             catch (Exception ex)
             {

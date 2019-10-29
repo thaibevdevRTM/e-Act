@@ -311,7 +311,7 @@ namespace eActForm.BusinessLayer
                                  theme = dr["theme"].ToString(),
                                  activityDetail = dr["activityDetail"].ToString(),
                                  compensate = dr["compensate"] is DBNull ? 0 : (decimal)dr["compensate"],
-                                 delFlag = false,
+                                 delFlag = true,
                                  createdDate = (DateTime?)dr["createdDate"],
                                  perGrowth = dr["growth"] is DBNull ? 0 : (decimal?)dr["growth"],
                                  perSE = dr["Le"] is DBNull ? 0 : (decimal?)dr["Le"],
