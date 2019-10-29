@@ -235,20 +235,6 @@ namespace eActForm.Controllers
 					int countSuccess = BudgetFormCommandHandler.updateInvoiceProduct(budgetInvoiceModel);
 				}
 
-				//if (budgetInvoiceModel.budgetImageId != null)
-				//{
-				//	TB_Bud_Image_Model getBudImageModel = new TB_Bud_Image_Model();
-				//	getBudImageModel.BudImageList = ImageAppCodeBudget.getImageBudget(budgetInvoiceModel.budgetImageId, null, null, null, null, null, null);
-				//	if (getBudImageModel.BudImageList.Any()) // True, the list is not empty
-				//	{
-				//		if (getBudImageModel.BudImageList.ElementAtOrDefault(0).count_activityNo > 1)
-				//		{
-				//			resultAjax.Code = 2;
-				//			resultAjax.Message = getBudImageModel.BudImageList.ElementAtOrDefault(0).invoiceNo;
-				//		}
-				//	}
-				//}
-
 				if (string.IsNullOrEmpty(budgetInvoiceModel.invoiceNo) == false )
 				{
 					TB_Bud_Image_Model getBudImageModel = new TB_Bud_Image_Model();
@@ -279,12 +265,12 @@ namespace eActForm.Controllers
 			return Json(resultAjax, "text/plain");
 		}
 		
-		public JsonResult delInvoiceDetail(string actId,  string estId, string invId)
+		public JsonResult delInvoiceDetail(string actId,  string estId, string invId , string delType)
 		{
 			var result = new AjaxResult();
 			try
 			{		
-				int countSuccess = BudgetFormCommandHandler.deleteInvoiceProduct(actId, estId, invId);
+				int countSuccess = BudgetFormCommandHandler.deleteInvoiceProduct(actId, estId, invId, delType);
 				result.Success = true;
 			}
 			catch (Exception ex)
@@ -341,6 +327,7 @@ namespace eActForm.Controllers
 				budget_activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null, null, null, null, null).FirstOrDefault(); ;
 				budget_activity.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, null);
 				budget_activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
+				budget_activity.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
 			} catch (Exception ex)
 			{
 				Console.WriteLine(ex.Message);
