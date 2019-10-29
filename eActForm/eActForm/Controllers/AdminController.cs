@@ -104,7 +104,7 @@ namespace eActForm.Controllers
 
 
             result.Code = AdminCommandHandler.insertProduct(model);
-            //add productprice.....
+            //add productprice MT
             var getCustomerAll = QueryGetAllCustomers.getAllCustomers();
             if (getCustomerAll.Any())
             {
@@ -114,7 +114,11 @@ namespace eActForm.Controllers
                     countinsert = AdminCommandHandler.insertProductPrice(model.productCode, item.id);
                     countinsert++;
                 }
+
             }
+
+            
+
 
 
             return Json(result, JsonRequestBehavior.AllowGet);

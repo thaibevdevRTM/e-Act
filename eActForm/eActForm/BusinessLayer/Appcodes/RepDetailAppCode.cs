@@ -357,7 +357,7 @@ namespace eActForm.BusinessLayer
                         costPeriodEnd = group.First().costPeriodEnd,
                         activityName = group.First().activityName,
                         theme = group.First().theme,
-                        activityDetail = group.First().activityDetail,
+                        activityDetail =  group.First().activityDetail,
                         compensate = group.Sum(x => x.compensate),
                         delFlag = group.First().delFlag,
                         createdDate = group.First().createdDate,
