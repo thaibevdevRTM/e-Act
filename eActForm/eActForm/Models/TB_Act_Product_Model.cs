@@ -34,6 +34,7 @@ namespace eActForm.Models
             public string productCate { get; set; }
             public string productGroup { get; set; }
             public string groupId { get; set; }
+            public string digit_IO { get; set; }
         }
 
         public class ProductList

@@ -35,6 +35,7 @@ namespace eActForm.Controllers
 
 
 
+
             models.approveStatusList.Add(new ApproveModel.approveStatus()
             {
                 id = "7",
@@ -108,7 +109,7 @@ namespace eActForm.Controllers
                     {
                         model.flowList = ApproveFlowAppCode.getFlowForReportDetailOMT(
                                                 ConfigurationManager.AppSettings["subjectReportDetailId"]
-                                                , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
+                                                , Request.Form["ddlCustomer"]
                                                 , Request.Form["ddlProductType"]);
                     }
                 }

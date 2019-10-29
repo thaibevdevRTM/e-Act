@@ -91,16 +91,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/12/2019 10:55:30</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
-      <publishTime>10/18/2019 14:19:40</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
       <publishTime>10/18/2019 14:19:40</publishTime>
-    </File>
-    <File Include="bin/itextsharp.dll">
-      <publishTime>03/12/2019 10:55:49</publishTime>
-    </File>
-    <File Include="bin/itextsharp.xmlworker.dll">
-      <publishTime>03/12/2019 10:55:49</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>03/12/2019 10:55:50</publishTime>
@@ -6037,10 +6030,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/15/2019 09:20:04</publishTime>
     </File>
     <File Include="Views/actFormRepDetail/repListViewGroupBrand.cshtml">
-      <publishTime>08/19/2019 08:59:36</publishTime>
+      <publishTime>10/29/2019 11:13:47</publishTime>
     </File>
     <File Include="Views/actFormRepDetail/repPreviewForApprove.cshtml">
-      <publishTime>09/16/2019 11:08:25</publishTime>
+      <publishTime>10/21/2019 15:48:20</publishTime>
     </File>
     <File Include="Views/Activity/activityDetail.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
