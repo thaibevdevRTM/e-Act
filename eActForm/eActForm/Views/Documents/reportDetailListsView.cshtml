@@ -18,7 +18,7 @@
                 <tr style="background-color:#2B5D95;color:#ffffff;">
                     <th width="150" style="text-align:center;">#</th>
                     <th>Status</th>
-                    <th>Act No.</th>
+                    <th>Detail No.</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Customer</th>
@@ -55,7 +55,9 @@
 
                     </td>
                     <td>@item.statusName</td>
-                    <td>@item.activityNo</td>
+                    <td>
+                        <a href="javascript:" onclick="callPreviewAct('@item.activityNo');" style="cursor: pointer;"> @item.activityNo </a>
+                    </td>
                     <td>@{var date = item.startDate == null ? "" : item.startDate.Value.ToString("dd/MM/yyyy");} @date </td>
                     <td>@{date = item.endDate == null ? "" : item.endDate.Value.ToString("dd/MM/yyyy");} @date </td>
                     <td>@item.customerName</td>
@@ -73,6 +75,12 @@
     <div id="divModalApprovelist">
     </div>
 </div>
+
+<div class="modal fade" id="divPreviewPriceModel" role="dialog" style="display:none">
+    <div id="divPreviewPrice">
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         $('#datatable').DataTable({
@@ -108,6 +116,21 @@
         }).done(function (response) {
             $("#divModalApprovelist").html(response)
             $('#modalApprovelist').modal('show');
+        });
+    }
+
+
+    function callPreviewAct(p_activityNo) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("actDetail", "actFormRepDetail")',
+            data: {
+                activityNo: p_activityNo
+            }
+        }).done(function (htmlResponse) {
+            $("#WaitDialog").hide();
+            $("#divPreviewPrice").html(htmlResponse)
+            $('#divPreviewPriceModel').modal('show');
         });
     }
 
