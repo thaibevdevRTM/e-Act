@@ -52,7 +52,7 @@ namespace eActForm.Controllers
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
                 model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"], typeForm);
                 model.typeForm = typeForm;
-
+                model.dateReport = Request.Form["reportDate"];
 
                 if (Request.Form["txtActivityNo"] != "")
                 {
@@ -120,14 +120,14 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return RedirectToAction("repChooseView", new { startDate = Request.Form["startDate"] });
+            return RedirectToAction("repChooseView", new { startDate = Request.Form["reportDate"] });
         }
         public ActionResult repChooseView(string startDate)
         {
             RepDetailModel.actFormRepDetails model = null;
             try
             {
-                ViewBag.startDate = startDate;
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
                 model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
             }
             catch (Exception ex)
@@ -175,13 +175,13 @@ namespace eActForm.Controllers
             return PartialView(flowModel);
         }
 
-        public ActionResult repListView(string startDate)
+        public ActionResult repListView()
         {
             RepDetailModel.actFormRepDetails model = null;
             try
             {
                 model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
-                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+                ViewBag.MouthText = DateTime.ParseExact(model.dateReport, "MM/dd/yyyy", null).ToString("MMM yyyy");
             }
             catch (Exception ex)
             {

@@ -157,7 +157,7 @@
 
     $(function () {
         $("#btnSelected").click(function () {
-            $('#divPreview').load('@Url.Action("repListView", "actFormRepDetail", new { startDate = @ViewBag.startDate })');
+            $('#divPreview').load('@Url.Action("repListView", "actFormRepDetail" )');
             $("#previewModal").modal('show');
         });
     });
