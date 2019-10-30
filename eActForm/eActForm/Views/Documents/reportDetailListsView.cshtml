@@ -56,7 +56,7 @@
                     </td>
                     <td>@item.statusName</td>
                     <td>
-                        <a href="javascript:" onclick="callPreviewAct('@item.activityNo');" style="cursor: pointer;"> @item.activityNo </a>
+                        <a href="javascript:" onclick="callPreviewAct('@item.id');" style="cursor: pointer;"> @item.activityNo </a>
                     </td>
                     <td>@{var date = item.startDate == null ? "" : item.startDate.Value.ToString("dd/MM/yyyy");} @date </td>
                     <td>@{date = item.endDate == null ? "" : item.endDate.Value.ToString("dd/MM/yyyy");} @date </td>
@@ -76,8 +76,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="divPreviewPriceModel" role="dialog" style="display:none">
-    <div id="divPreviewPrice">
+<div class="modal fade" id="divPreviewActModel" role="dialog" style="display:none">
+    <div id="divPreviewAct">
     </div>
 </div>
 
@@ -121,16 +121,17 @@
 
 
     function callPreviewAct(p_activityNo) {
+        console.log(p_activityNo);
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("actDetail", "actFormRepDetail")',
+            url:  '@Url.Action("actDetail", "Documents")',
             data: {
-                activityNo: p_activityNo
+                repId: p_activityNo
             }
         }).done(function (htmlResponse) {
             $("#WaitDialog").hide();
-            $("#divPreviewPrice").html(htmlResponse)
-            $('#divPreviewPriceModel').modal('show');
+            $("#divPreviewAct").html(htmlResponse)
+            $('#divPreviewActModel').modal('show');
         });
     }
 

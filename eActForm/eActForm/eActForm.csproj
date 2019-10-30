@@ -2332,6 +2332,7 @@
     <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
     <Content Include="Views\AdminUser\Index.cshtml" />
     <Content Include="Views\Shared\_searchReportDetail.cshtml" />
+    <Content Include="Views\Documents\actDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />

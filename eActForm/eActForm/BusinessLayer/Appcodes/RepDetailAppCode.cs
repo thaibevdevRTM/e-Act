@@ -377,5 +377,28 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static List<RepDetailModel.actApproveRepDetailModel> getActNoByRepId(string repId)
+        {
+
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActNoByRepId"
+                    , new SqlParameter[] { new SqlParameter("@repId", repId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new RepDetailModel.actApproveRepDetailModel()
+                             {
+                                 activityNo = dr["activityNo"].ToString(),
+
+                             }).ToList();
+                return lists;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getActNoByRepId >>" + ex.Message);
+            }
+        }
+
     }
 }
