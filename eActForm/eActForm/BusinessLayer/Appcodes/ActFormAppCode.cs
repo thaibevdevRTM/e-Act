@@ -163,12 +163,12 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static string getDigitRunnigGroup(string brandId)
+        public static string getDigitRunnigGroup(string productId)
         {
             try
             {
                 string result = "";
-                result = QueryGetAllBrand.GetAllBrand().Where(x => x.id == brandId).FirstOrDefault().digit_IO;
+                result = QueryGetAllProduct.getProductById(productId).FirstOrDefault().digit_IO;
                 return result;
             }
             catch (Exception ex)

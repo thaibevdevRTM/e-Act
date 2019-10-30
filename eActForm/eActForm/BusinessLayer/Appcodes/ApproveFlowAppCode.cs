@@ -73,7 +73,7 @@ namespace eActForm.BusinessLayer
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowMainForReportDetailOMT"
                     , new SqlParameter[] {new SqlParameter("@subjectId",subId)
-                    ,new SqlParameter("@regionId","6F5FB6D8-4910-4EC7-839F-62665C96357C")
+                    ,new SqlParameter("@customerId",customerId)
                     ,new SqlParameter("@productTypeId",productTypeId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApprove()

@@ -84,14 +84,15 @@ namespace eActForm.Controllers
             , string size
             , string cusid
             , string theme
-            ,string actId)
+            ,string actId
+            ,string typeForm)
         {
             var result = new AjaxResult();
             try
             {
                 Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ actId];
                 var productlist = new Activity_Model();
-                productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme);
+                productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme, typeForm);
                 activityModel.productcostdetaillist1.AddRange(productlist.productcostdetaillist1);
 
 
@@ -114,7 +115,7 @@ namespace eActForm.Controllers
                     costthememodel.unit = item.unit;
                     costthememodel.isShowGroup = item.isShowGroup;
                     costthememodel.detailGroup = item.detailGroup;
-                    costthememodel.IO = "56SO" + DateTime.Now.Year.ToString().Substring(2) + ActFormAppCode.getDigitGroup(theme) + ActFormAppCode.getDigitRunnigGroup(item.brandId);  
+                    costthememodel.IO = "56SO" + DateTime.Now.Year.ToString().Substring(2) + ActFormAppCode.getDigitGroup(theme) + ActFormAppCode.getDigitRunnigGroup(item.productId);  
                     activityModel.activitydetaillist.Add(costthememodel);
                     i++;
                 }

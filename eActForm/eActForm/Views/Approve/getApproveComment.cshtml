@@ -1,20 +1,39 @@
 ﻿@model eActForm.Models.ApproveModel.approveModels
+
 @if (Model.approveDetailLists != null && Model.approveDetailLists.Count() > 0)
 {
-    <div style="margin-bottom:10px;">
-        หมายเหตุ
-    </div>
-    <table>
-        <tr><td></td><td></td></tr>
-        @foreach (var item in Model.approveDetailLists)
+
+    <br />
+
+    foreach (var item in Model.approveDetailLists)
+    {
+
+        if (@item.remark != "")
         {
-            if (@item.remark != "")
-            {
+            <table class="tablethin" border="1" cellpadding="0" cellspacing="0" width="100%">
+                <tr><td></td><td></td></tr>
                 <tr>
-                    <td align="center">@item.empName : </td>
-                    <td align="left">@item.remark</td>
+                    <td>
+                        <div style="height:70px; font-size:12.5px; margin-top:10px; margin-left:20px;">
+                            หมายเหตุ : @item.remark
+                        </div>
+                    </td>
                 </tr>
-            }
+                <tr>
+
+                    @foreach (var itemm in Model.approveFlowDetail)
+                    {
+                        <td>
+                            <div style="text-align:center; margin-top:10px; font-size:12.5px;">@itemm.empFNameTH @itemm.empLNameTH</div>
+                            <div style="text-align:center; height:30px; font-size:12.5px;">@itemm.empPositionTitleTH</div>
+                        </td>
+                    }
+
+                </tr>
+            </table>
         }
-    </table>
+
+    }
+
+
 }
