@@ -159,6 +159,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
+                return "";
                 throw new Exception("getDigitGroup >>" + ex.Message);
             }
         }
@@ -173,7 +174,8 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception("getDigitGroup >>" + ex.Message);
+                return "";
+                throw new Exception("getDigitRunnigGroup >>" + ex.Message);
             }
         }
 
