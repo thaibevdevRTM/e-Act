@@ -18,8 +18,13 @@ namespace eActForm.Controllers
 	[LoginExpire]
 	public class BudgetReportController : Controller
     {
-        // GET: BudgetReport
-        public ActionResult RptBudgetActivityIndex()
+		// GET: BudgetReport
+		public ActionResult Index()
+		{
+			return View();
+		}
+
+		public ActionResult RptBudgetActivityIndex()
         {
 			SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
 			return View(models);
