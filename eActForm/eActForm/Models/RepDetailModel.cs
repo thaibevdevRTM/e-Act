@@ -14,6 +14,7 @@ namespace eActForm.Models
             public List<actFormRepDetailModel> actFormRepDetailGroupLists { get; set; }
             public string typeForm { get; set; }
             public string setShowPDF { get; set; }
+            public string dateReport { get; set; }
 
         }
         public class actFormRepDetailModel : Activity_Model.actForm
