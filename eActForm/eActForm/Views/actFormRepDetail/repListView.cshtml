@@ -50,7 +50,7 @@
                                         <th rowspan="3">ขนาด</th>
                                         <th rowspan="3" width="100px" style="text-align:center;">รายละเอียดกิจกรรม</th>
                                         <th rowspan="2">กลุ่มกิจกรรม</th>
-                                        <th rowspan="3">Special Discount (Pro Deal)</th>
+                                        <th colspan="2" rowspan="2">Special Discount (Pro Deal)</th>
                                         <th rowspan="3">Compensate (CN)</th>
                                         <th colspan="2" width="100px">ประมาณการยอดขาย</th>
                                         <th rowspan="3">%Growth</th>
@@ -70,6 +70,8 @@
                                         <th width="50px">วันเริ่มต้น</th>
                                         <th width="50px">วันสิ้นสุด</th>
                                         <th>14 กลุ่ม</th>
+                                        <th>Baht</th>
+                                        <th>%</th>
                                         <th>กล่อง</th>
                                         <th>กล่อง</th>
 
@@ -149,7 +151,8 @@
 
 
                                                 <td>@item.theme</td>
-                                                <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
+                                                <td>@{ var discount = item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
+                                                <td>@{ var discountP = item.specialDisc; } @string.Format("{0:n2}", discountP)</td>
                                                 <td>@string.Format("{0:n2}", item.compensate)</td>
                                                 <td>@string.Format("{0:n2}", item.normalSale)</td>
                                                 <td>@string.Format("{0:n2}", item.promotionSale)</td>
@@ -170,7 +173,7 @@
                                     }
 
                                     <tr>
-                                        <td colspan="13" style="text-align:right;background-color:#a3d5cf"><h4>รวม : </h4></td>
+                                        <td colspan="14" style="text-align:right;background-color:#a3d5cf"><h4>รวม : </h4></td>
                                         <td></td>
                                         <td><h5>@string.Format("{0:n2}", sumNormalSale)</h5></td>
                                         <td><h5>@string.Format("{0:n2}", sumNormalPromotion)</h5></td>
