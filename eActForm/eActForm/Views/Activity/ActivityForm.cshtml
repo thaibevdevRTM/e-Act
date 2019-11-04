@@ -1052,8 +1052,12 @@
             document.getElementById("txtActivityDetail").disabled = false;
             document.getElementById("txtActivityName").disabled = false;
             document.getElementById("txtReference").disabled = false;
-
-            
+            document.getElementById("divUploadFiles").style.display = "block";
+            var arrayOfElements = document.getElementsByClassName('divDelImg');
+            var lengthOfArray = arrayOfElements.length;
+            for (var i = 0; i < lengthOfArray; i++) {
+                arrayOfElements[i].style.display = 'block';
+            }
         }
 
 
