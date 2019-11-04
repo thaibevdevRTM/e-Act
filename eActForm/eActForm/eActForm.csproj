@@ -2331,13 +2331,8 @@
     <Content Include="Views\BudgetReport\searchRptBudgetActivity.cshtml" />
     <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
     <Content Include="Views\AdminUser\Index.cshtml" />
-    <Content Include="Views\Shared\_searchReportDetail.cshtml" />
     <Content Include="Views\Documents\actDetail.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ActBudget\" />
-    <Folder Include="App_Data\" />
-    <Folder Include="error\" />
     <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
