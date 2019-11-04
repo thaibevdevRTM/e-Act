@@ -113,16 +113,36 @@
 
 
         onDelProduct: function (productId) {
-            $.ajax({
-                url: $adminPage.urlDelProduct ,
-                data: {
-                    productId: productId,
-                },
-                dataType: "json",
-                type: 'POST',
-                success: function (response) {
-                    window.location.href = $adminPage.urlIndexAdmin;
+            bootbox.confirm({
+                message: "คุณต้องการ ลบ ProductCode : " + productId + " ใช่หรือไม่ ?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
                     }
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        if (result) {
+                            $("#WaitDialog").show();
+                            $.ajax({
+                                url: $adminPage.urlDelProduct,
+                                data: {
+                                    productId: productId,
+                                },
+                                dataType: "json",
+                                type: 'POST',
+                            }).done(function (response) {
+                                window.location.href = $adminPage.urlIndexAdmin;
+                            });
+                        }
+
+                    }
+                }
             });
         },
 
