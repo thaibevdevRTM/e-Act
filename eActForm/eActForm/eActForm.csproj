@@ -2331,31 +2331,16 @@
     <Content Include="Views\BudgetReport\searchRptBudgetActivity.cshtml" />
     <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
     <Content Include="Views\AdminUser\Index.cshtml" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
     <Content Include="Views\Budget\activityIndex.cshtml" />
-=======
-=======
->>>>>>> parent of 93f561d... Merge branch 'develops' into sprint_24
     <Content Include="Views\Shared\_searchReportDetail.cshtml" />
     <Content Include="Views\Documents\actDetail.cshtml" />
->>>>>>> parent of 93f561d... Merge branch 'develops' into sprint_24
-=======
     <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
     <Content Include="Views\Budget\activityIndex.cshtml" />
->>>>>>> parent of fc12fdb... Merge pull request #125 from thaibevdevRTM/sprint_24
-=======
     <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
     <Content Include="Views\Budget\activityIndex.cshtml" />
->>>>>>> parent of fc12fdb... Merge pull request #125 from thaibevdevRTM/sprint_24
-=======
     <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
     <Content Include="Views\Budget\activityIndex.cshtml" />
->>>>>>> parent of fc12fdb... Merge pull request #125 from thaibevdevRTM/sprint_24
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ActBudget\" />
