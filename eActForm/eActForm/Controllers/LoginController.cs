@@ -45,7 +45,6 @@ namespace eActForm.Controllers
                 if (response != null && response.userModel.Count > 0)
                 {
                     UtilsAppCode.Session.User = response.userModel[0];
-                    bool checkInsert = UserAppCode.checkUserDBAuthen();
                     //UtilsAppCode.Session.User.empId = "11028011";
                     UserAppCode.setRoleUser(UtilsAppCode.Session.User.empId);
                     ApproveAppCode.setCountWatingApprove();
