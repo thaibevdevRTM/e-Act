@@ -115,10 +115,7 @@ namespace eActForm.Controllers
                     costthememodel.unit = item.unit;
                     costthememodel.isShowGroup = item.isShowGroup;
                     costthememodel.detailGroup = item.detailGroup;
-                    if (ActFormAppCode.getDigitGroup(theme) != "")
-                    {
-                        costthememodel.IO = "56S0" + DateTime.Now.Year.ToString().Substring(2) + ActFormAppCode.getDigitGroup(theme) + ActFormAppCode.getDigitRunnigGroup(item.productId);
-                    }
+                    costthememodel.IO = "56SO" + DateTime.Now.Year.ToString().Substring(2) + ActFormAppCode.getDigitGroup(theme) + ActFormAppCode.getDigitRunnigGroup(item.productId);  
                     activityModel.activitydetaillist.Add(costthememodel);
                     i++;
                 }
