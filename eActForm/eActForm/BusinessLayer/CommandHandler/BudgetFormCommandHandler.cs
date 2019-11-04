@@ -83,7 +83,7 @@ namespace eActForm.BusinessLayer
 			return result;
 		}
 
-		public static int deleteInvoiceProduct(string activityId,string estimateId, string invoiceId , string delType)
+		public static int deleteInvoiceProduct(string activityId,string estimateId, string invoiceId)
 		//public static int deleteInvoiceProduct(string activityId, string estimateId, string invoiceNo)
 		{
 
@@ -96,7 +96,6 @@ namespace eActForm.BusinessLayer
 					, new SqlParameter[] {new SqlParameter("@activityId",activityId)
 					,new SqlParameter("@activityOfEstimateId",estimateId)
 					,new SqlParameter("@invoiceId",invoiceId)
-					,new SqlParameter("@delType",delType)
 					});
 			}
 			catch (Exception ex)
@@ -108,6 +107,5 @@ namespace eActForm.BusinessLayer
 		}
 
 
-	
 	}
 }
