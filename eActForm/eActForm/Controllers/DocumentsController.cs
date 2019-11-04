@@ -8,6 +8,7 @@ using eActForm.BusinessLayer;
 using eActForm.Models;
 using System.Configuration;
 using iTextSharp.text;
+using static eActForm.Models.RepDetailModel;
 
 namespace eActForm.Controllers
 {
@@ -150,5 +151,22 @@ namespace eActForm.Controllers
             }
             return Json(resultAjax, "text/plain");
         }
-    }
+
+
+        public ActionResult actDetail(string repId)
+        {
+            actApproveRepDetailModels model = new actApproveRepDetailModels();
+            try
+            {
+                model.repDetailLists = RepDetailAppCode.getActNoByRepId(repId);
+                return PartialView(model);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("actDetail >> " + ex.Message);
+            }
+           
+            return PartialView(model);
+        }
+    } 
 }
