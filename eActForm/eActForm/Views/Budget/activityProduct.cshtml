@@ -43,16 +43,11 @@
 
 	</div>
 
-	<div class="btn btn-sm ink-reaction pull-left btn-dark"> <i class="fa fa-arrow-left fa-fw"></i> @Html.ActionLink("ย้อนกลับ", "activityIndex", "Budget", new { @typeForm = var_companyEN }, new { style = "color:white" })</div>
+	<div class="btn btn-sm ink-reaction pull-left btn-dark"> <i class="fa fa-arrow-left fa-fw"></i> @Html.ActionLink("ย้อนกลับ", "activityList", "Budget", new { @typeForm = var_companyEN },new { style = "color:white" })</div>
 </div>
 
 <div id='myModalInvoicePreview' class="modal fade" role="dialog">
 	<div id='myModalInvoicePreviewContent'></div>
-</div>
-
-<div class="modal fade" id="modalmyDocBudgetList" role="dialog" style="display:none">
-	<div id="divModalmyDocBudgetList">
-	</div>
 </div>
 
 
@@ -63,18 +58,6 @@
 		callProductList($("#hd_activityId").val());
 	});
 
-	function callApproveList(actId) {
-        $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("myDocBudgetList", "BudgetMyDoc")',
-			data: {
-			actId: actId
-			}
-			}).done(function (response) {
-			$("#divModalmyDocBudgetList").html(response)
-			$('#modalmyDocBudgetList').modal('show');
-			});
-	}
 
 	function callProductList(activityId) {
         $.ajax({
@@ -220,55 +203,13 @@
         });
     }
 
-	function onCancel(actId,estId,invId,invNo) {
-        var msg = "";
-		// can be delete
-		msg = "คุณต้องการยกเลิกเอกสาร " + invNo + " นี้หรือไม่?";
-        bootbox.confirm({
-            title: "Confirm Message",
-            message: msg,
-            buttons: {
-                confirm: {
-                    label: "Yes",
-                    className: "btn-success"
-                },
-                cancel: {
-                    label: "No",
-                    className: "btn-danger"
-                }
-            },
-			callback: function (result) {
-                if (result) {
-                    $.ajax({
-                        url: '@Url.Action("delInvoiceDetail", "Budget")',
-                        data: {
-                            actId: actId,
-							estId: estId,
-							invId: invId,
-							delType: "cancel",
-						},
-						success: function (response) {
-							console.log(response.success);
-							callProductList(actId);
-							callInvoiceList(actId, estId);
-							//window.location.reload()
-						}
-
-					})
-                }
-            }
-        });
-	}
-
-	
-
 	function onInvoicePrintPreview(actId,companyEN) {
 		//var $buttonClicked = $(this);
 		var var_activityId = actId;
 		var var_company = companyEN;
 		var options = { "backdrop": "static", keyboard: true };
 
-
+		
 
 		$.ajax({
 			type: "GET",

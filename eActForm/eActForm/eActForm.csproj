@@ -2331,6 +2331,9 @@
     <Content Include="Views\BudgetReport\searchRptBudgetActivity.cshtml" />
     <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
     <Content Include="Views\AdminUser\Index.cshtml" />
+    <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
+    <Content Include="Views\Budget\activityIndex.cshtml" />
+    <Content Include="Views\Shared\_searchReportDetail.cshtml" />
     <Content Include="Views\Documents\actDetail.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\MenuList\activityForm.cshtml" />
