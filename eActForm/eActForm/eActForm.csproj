@@ -2337,10 +2337,20 @@
     <Content Include="Views\Documents\actDetail.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\MenuList\activityForm.cshtml" />
+    <Content Include="Views\MenuList\budget.cshtml" />
+    <Content Include="Views\MenuList\document.cshtml" />
+    <Content Include="Views\MenuList\approve.cshtml" />
+    <Content Include="Views\MenuList\report.cshtml" />
+    <Content Include="Views\MenuList\dashboard.cshtml" />
+    <Content Include="Views\MenuList\signature.cshtml" />
+    <Content Include="Views\MenuList\admin.cshtml" />
+    <Content Include="Views\MenuList\contact.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
