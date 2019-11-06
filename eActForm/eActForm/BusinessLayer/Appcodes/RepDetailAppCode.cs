@@ -311,7 +311,7 @@ namespace eActForm.BusinessLayer
                                  theme = dr["theme"].ToString(),
                                  activityDetail = dr["activityDetail"].ToString(),
                                  compensate = dr["compensate"] is DBNull ? 0 : (decimal)dr["compensate"],
-                                 delFlag = true,
+                                 delFlag = false,
                                  createdDate = (DateTime?)dr["createdDate"],
                                  perGrowth = dr["growth"] is DBNull ? 0 : (decimal?)dr["growth"],
                                  perSE = dr["Le"] is DBNull ? 0 : (decimal?)dr["Le"],
@@ -374,29 +374,6 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }
-        }
-
-        public static List<RepDetailModel.actApproveRepDetailModel> getActNoByRepId(string repId)
-        {
-
-            try
-            {
-
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActNoByRepId"
-                    , new SqlParameter[] { new SqlParameter("@repId", repId) });
-                var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new RepDetailModel.actApproveRepDetailModel()
-                             {
-                                 activityNo = dr["activityNo"].ToString(),
-
-                             }).ToList();
-                return lists;
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("getActNoByRepId >>" + ex.Message);
             }
         }
 
