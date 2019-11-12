@@ -115,6 +115,7 @@ namespace eActForm.Models
 			public string paymentNo { get; set; }
 						
 			public string budgetImageId { get; set; }
+			public string actCustomerId { get; set; }
 			public string invoiceNo { get; set; }
 			public decimal saleActCase { get; set; }
 			public decimal saleActBath { get; set; }
