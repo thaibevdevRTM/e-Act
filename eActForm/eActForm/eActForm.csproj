@@ -2331,14 +2331,26 @@
     <Content Include="Views\BudgetReport\searchRptBudgetActivity.cshtml" />
     <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
     <Content Include="Views\AdminUser\Index.cshtml" />
-    <Content Include="Views\Documents\actDetail.cshtml" />
+    <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
+    <Content Include="Views\Budget\activityIndex.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ActBudget\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="error\" />
     <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
