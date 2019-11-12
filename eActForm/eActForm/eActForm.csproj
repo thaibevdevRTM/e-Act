@@ -2334,21 +2334,23 @@
     <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
     <Content Include="Views\AdminUser\Index.cshtml" />
     <Content Include="Views\Documents\actDetail.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Views\MenuList\activityForm.cshtml" />
+    <Content Include="Views\MenuList\budget.cshtml" />
+    <Content Include="Views\MenuList\document.cshtml" />
+    <Content Include="Views\MenuList\approve.cshtml" />
+    <Content Include="Views\MenuList\report.cshtml" />
+    <Content Include="Views\MenuList\dashboard.cshtml" />
+    <Content Include="Views\MenuList\signature.cshtml" />
+    <Content Include="Views\MenuList\admin.cshtml" />
+    <Content Include="Views\MenuList\contact.cshtml" />
+    <Content Include="Views\Shared\_searchReportDetail.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="error\" />
     <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
