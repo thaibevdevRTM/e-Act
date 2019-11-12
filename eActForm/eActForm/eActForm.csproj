@@ -2203,7 +2203,9 @@
     <Content Include="uploadImages\e222c8de-3940-4239-ba39-4f86720ec056_5DB5E9C8-CB07-43FC-B25D-BB26D8C69A39.png" />
     <Content Include="Views\BudgetApproveList\Index.cshtml" />
     <Content Include="Views\BudgetApprove\previewApproveBudget.cshtml" />
+    <Content Include="Views\Budget\activityIndex.cshtml" />
     <Content Include="Views\Budget\manageInvoiceList.cshtml" />
+    <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
     <Content Include="WebForm1.aspx" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -2331,22 +2333,7 @@
     <Content Include="Views\BudgetReport\searchRptBudgetActivity.cshtml" />
     <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
     <Content Include="Views\AdminUser\Index.cshtml" />
-    <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
-    <Content Include="Views\Budget\activityIndex.cshtml" />
     <Content Include="Views\Documents\actDetail.cshtml" />
-    <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
-    <Content Include="Views\Budget\activityIndex.cshtml" />
-    <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
-    <Content Include="Views\Budget\activityIndex.cshtml" />
-    <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
-    <Content Include="Views\Budget\activityIndex.cshtml" />
-  </ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="error\" />
-    <Folder Include="obj\Release\" />
-    <Folder Include="signatureFile\" />
-    <Folder Include="UploadfilesBudget\" />
-    <Folder Include="Uploadfiles\ActivityForm\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -2358,6 +2345,14 @@
   <ItemGroup>
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="error\" />
+    <Folder Include="obj\Release\" />
+    <Folder Include="signatureFile\" />
+    <Folder Include="UploadfilesBudget\" />
+    <Folder Include="Uploadfiles\ActivityForm\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
