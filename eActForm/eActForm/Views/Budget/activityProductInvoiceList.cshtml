@@ -26,21 +26,6 @@
 	}
 </style>
 
-<script>
-      function callApproveList(actId) {
-        $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("myDocBudgetList", "BudgetMyDoc")',
-			data: {
-			actId: actId
-			}
-			}).done(function (response) {
-			$("#divModalmyDocBudgetList").html(response)
-			$('#modalmyDocBudgetList').modal('show');
-			});
-			}
-</script>
-
 <div class="alert-link" role="alert">
 
 </div>
@@ -49,7 +34,7 @@
 <table class="table table-bordered" id="content">
 	<thead class="thead-dark">
 		<tr>
-			<th class="align-content-center font12B" style="width:15%;"></th>
+			<th class="align-content-center font12B" style="width:10%;"></th>
 			<th class="align-content-center font12B" style="text-align:right;">จำนวนเงินที่ตั้ง</th>
 			<th class="align-content-center font12B" style="text-align:center;">เลขที่ใบแจ้งหนี้</th>
 			<th class="align-content-center font12B" style="text-align:right;">จำนวนเงินจ่าย</th>
@@ -71,11 +56,11 @@
 					<td style="text-align:left;">
 
 						<a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-						<a onclick="callApproveList('@(last == null ? "" : last.budgetApproveId)');"> <i class="btn ink-reaction btn-dark fa fa-eye"></i> </a>
+						@*<a onclick="callApproveList('@(last == null ? "" : last.budgetApproveId)');"> <i class="btn ink-reaction btn-dark fa fa-eye"></i> </a>*@
 
-						@*<a href="javascript:" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
-								<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-							</a>*@
+		@*<a href="javascript:" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
+			<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+		</a>*@
 
 						@if (item.invoiceApproveStatusId == 1) // draff
 						{
@@ -85,7 +70,11 @@
 						}
 						else
 						{
-							@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = last.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
+							<a href="javascript:" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
+								<i class="btn ink-reaction btn-warning fa fa-reply"></i>&nbsp;
+							</a>
+
+							@*@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = last.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })*@
 						}
 
 					</td>
@@ -166,9 +155,9 @@
 }
 
 
-<div class="modal fade" id="modalmyDocBudgetList" role="dialog" style="display:none">
+@*<div class="modal fade" id="modalmyDocBudgetList" role="dialog" style="display:none">
 	<div id="divModalmyDocBudgetList">
 	</div>
-</div>
+</div>*@
 
 
