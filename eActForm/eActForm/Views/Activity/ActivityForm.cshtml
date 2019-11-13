@@ -283,9 +283,9 @@
                 <div class="col-md-6 col-xs-12">
                     <div class="row">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            @Html.CheckBoxFor(m => m.activityFormModel.chkAddIO) Add
+                            @Html.CheckBoxFor(m => m.activityFormModel.chkAddIO , new { id = "chkAddIO", onchange = "OnChangeChkIO(this)" }) IO,Claim
                         </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div id="divIO" class="col-md-9 col-sm-9 col-xs-12">
                             <label class="control-label col-md-1 col-sm-1 col-xs-12">
                                 IO
                             </label>
@@ -300,9 +300,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
 
-                    </div>
                 </div>
             </div>
         </div>
@@ -446,6 +444,7 @@
            fillProductOnChange();
            document.getElementById("ddlProductfilter").disabled = true;
            document.getElementById("ddlProductSize").disabled = true;
+           document.getElementById("divIO").style.display = "none";
 
            if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
                $("#txtCustomerName").show();
@@ -628,6 +627,8 @@
             document.getElementById("ddlProductfilter").disabled = true;
         }
     }
+
+
 
     function onchangeCate() {
 
@@ -885,7 +886,10 @@
                     ActivityDetail: $("#txtActivityDetail").val(),
                     activityNo: $("#txtActivityNo").val(),
                     createdByUserId: $("#hdcreateUser").val(),
-                    id:'@Model.activityFormModel.id',
+                    id: '@Model.activityFormModel.id',
+                    chkAddIO: $("input[name='activityFormModel.chkAddIO']:checked").val(),
+                    actIO: $("#txtActIO").val(),
+                    actClaim: $("#txtActClaim").val(),
                 },
                 dataType: "json",
                 type: 'POST',
@@ -1002,7 +1006,10 @@
                             ActivityDetail: $("#txtActivityDetail").val(),
                             regionId: $("#ddlRegion").val(),
                             activityNo: $("#txtActivityNo").val(),
-                            id:'@Model.activityFormModel.id',
+                            id: '@Model.activityFormModel.id',
+                            chkAddIO: $("input[name='activityFormModel.chkAddIO']:checked").val(),
+                            actIO: $("#txtActIO").val(),
+                            actClaim: $("#txtActClaim").val(),
                         },
                         dataType: "json",
                         type: 'POST',
@@ -1206,7 +1213,14 @@
         });
     }
 
-
+    function OnChangeChkIO(element) {
+        if (element.checked) {
+            document.getElementById("divIO").style.display = "block";
+        }
+        else {
+            document.getElementById("divIO").style.display = "none";
+        }
+    }
 
 
 </script>
