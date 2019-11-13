@@ -1,0 +1,235 @@
+﻿@using eActForm.Models
+@using eActForm.BusinessLayer
+@model eActForm.Models.Activity_Model.actForms
+
+<script>
+    function checkDelete(actId,statusId) {
+        var msg = "";
+        if (statusId == "1" || statusId == "6") {
+            // can be delete
+            msg = "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
+        }
+        else {
+            // can't delete
+            msg = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ <br/> ท่านต้องการยกเลิกเอกสารหรือไม่ค่ะ?";
+        }
+
+        bootbox.confirm({
+            title: "Confirm Message",
+            message: msg,
+            buttons: {
+                confirm: {
+                    label: "Yes",
+                    className: "btn-success"
+                },
+                cancel: {
+                    label: "No",
+                    className: "btn-danger"
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $("#WaitDialog").show();
+                    $.ajax({
+                        url: '@Url.Action("requestDeleteDoc", "Home")',
+                        data: {
+                            actId: actId,
+                            statusId: statusId,
+                        },
+                    }).done(function (htmlResponse) {
+                        $("#getQuery").html(htmlResponse);
+                        $("#WaitDialog").hide();
+                    });
+                }
+
+            }
+        });
+    }
+
+
+      function callApproveList(actId) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("approveLists", "Home")',
+            data: {
+                actId: actId
+            }
+        }).done(function (response) {
+            $("#divModalApprovelist").html(response)
+            $('#modalApprovelist').modal('show');
+        });
+    }
+
+    function resendApprove(actId) {
+        $("#WaitDialog").show();
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("resendApprove", "Base")',
+            data: {
+                actId: actId
+            }
+        }).done(function (response) {
+            $("#WaitDialog").hide();
+            if (response.Success) {
+                doMsgSuccess("ดำเนินการเรียบร้อยครับ")
+            } else {
+                doMsgFail(response.Message);
+            }
+        });
+      }
+
+
+</script>
+<div class="row">
+
+    <div class="col-md-12 col-xs-12">
+
+    </div>
+    <div class="col-md-12 col-xs-12">
+        <a class="btn ink-reaction glyphicon glyphicon-retweet" href="#"></a>คือ Regen PDF
+        <a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>คือ Delete
+        <a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit
+        <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
+        <a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>คือ History Approve
+        <a class="btn ink-reaction btn-info fa fa-send-o" href="#"></a>คือ Resend Email
+
+        <table id="datatable" class="table table-striped table-hover">
+            <thead>
+                <tr style="background-color:#2B5D95;color:#ffffff;">
+                    <th width="150" style="text-align:center;">#</th>
+                    <th>Status</th>
+                    <th>Doc.Date</th>
+                    <th>Act.No</th>
+                    <th width="150">Act.Name</th>
+                    <th>Customer</th>
+                    <th>Category</th>
+                    <th width="80">Cost</th>
+                    <th width="80">Create Date</th>
+                    <th width="80">Create By</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.actLists)
+                {
+                    <tr class="gradeX">
+                        <td width="200">
+                            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                            {
+                                <a href="javascript:" onclick="return callPreviewApprove('@item.id','@item.statusId','@Model.typeForm');">
+                                    <i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
+                                </a>
+                            }
+                            @if (item.statusId == "1" || item.statusId == "3" || item.statusId == "5" ||
+                                (item.statusId == "6" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)))
+                            {
+                                <a href="javascript:" onclick="return checkDelete('@item.id','@item.statusId');">
+                                    <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                                </a>
+                            }
+                            @if (Model.typeForm == Activity_Model.activityType.MT.ToString())
+                            {
+                                @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.MT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
+                            else if (Model.typeForm == Activity_Model.activityType.OMT.ToString())
+                            {
+                                @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.OMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
+
+                            @if (item.statusId == "2" || item.statusId == "3")
+                            {
+                                @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
+                            }
+
+                            <a onclick="callApproveList('@item.id');">
+                                <i class="btn ink-reaction btn-dark fa fa-eye"></i>
+                            </a>
+
+                            @if (item.statusId == "2")
+                            {
+
+                                <a onclick="resendApprove('@item.id');">
+                                    <i class="btn ink-reaction btn-info fa fa-send-o"></i>
+                                </a>
+                            }
+
+                        </td>
+                        <td>@item.statusName</td>
+                        <td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
+                        <td>@item.activityNo</td>
+                        <td>@item.activityName</td>
+                        <td>@item.cusShortName</td>
+                        <td>@item.productCategory</td>
+                        <td>
+
+                            @if (@item.totalCost != 0)
+                            {
+                                string result = String.Format("{0:n2}", @item.totalCost);
+                                @result.ToString();
+                            }
+                        </td>
+                        <td>@{ date = item.createdDate == null ? "" : item.createdDate.Value.ToString("dd/MM/yyyy");} @date</td>
+                        <td>@item.createByUserName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div class="modal fade" id="modalApprovelist" role="dialog" style="display:none">
+    <div id="divModalApprovelist">
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": 0 },
+                { "orderable": false, "targets": 3 },
+                { "orderable": false, "targets": 4 }
+            ],
+            "dom": 'lCfrtip',
+            "order": [],
+            "language": {
+                "lengthMenu": '_MENU_ entries per page',
+                "search": '<i class="fa fa-search"></i>',
+                "paginate": {
+                    "previous": '<i class="fa fa-angle-left"></i>',
+                    "next": '<i class="fa fa-angle-right"></i>'
+                }
+            }
+        });
+
+    });
+    function waitpopup() {
+        $("#WaitDialog").show();
+    }
+
+    function callPreviewApprove(actId, statusId,typeForm) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("previewApprove", "Approve")',
+            data: {
+                actId: actId,
+                typeForm: typeForm
+            }
+        }).done(function (htmlResponse) {
+            genPdf(actId, statusId, htmlResponse);
+        });
+    }
+    function genPdf(actId, statusId, htmlResponse) {
+        $.ajax({
+            url: '@Url.Action("genPdfApprove", "Documents")',
+            data: {
+                GridHtml: htmlResponse,
+                statusId: statusId,
+                activityId: actId,
+            },
+            dataType: "json",
+            type: 'POST',
+        }).done(function (response) {
+            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+        });
+    }
+
+</script>

@@ -1,0 +1,170 @@
+﻿
+@model eActForm.Models.TB_Bud_Image_Model
+@{
+	/**/
+
+	//Layout = null;
+	//Layout = "~/Views/Shared/_BlankLayout.cshtml";
+	ViewBag.Title = "";
+	//var url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfilesBudget"].ToString();
+}
+
+<style type="text/css">
+
+	.font8 {
+		font-size: 8px;
+	}
+
+	.font10 {
+		font-size: 10px;
+	}
+
+	.textRight {
+		text-align: right;
+	}
+
+	.textLeft {
+		text-align: left;
+	}
+
+	.inner {
+		display: inline-block;
+	}
+
+	.wide-nolimit {
+		max-width: 100%;
+	}
+
+	#outer {
+		width: 100%;
+		text-align: center;
+	}
+</style>
+
+@if (Model.BudImage.id != null)
+{
+
+	//------------------------------------------------------------------------------------------------
+	@Html.HiddenFor(item => @Model.BudImage.id, new { @id = "hd_imageId" })
+
+	<div class="row text-center" ></div>
+
+	<div>
+		<table class="tablethin" style="width:100%;" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="5%"> &nbsp; &nbsp;</td>
+				<td style="width:20%;text-align:left;"> <h5>ชื่อไฟล์ : </h5></td>
+
+				<td style="width:100%;text-align:left;">
+					@Html.DisplayFor(item => @Model.BudImage._fileName, new { @id = "txt_fileName" })
+					@Html.HiddenFor(item => @Model.BudImage.company, new { @id = "hd_company" })
+				</td>
+			</tr>
+
+			@if (@Model.BudImage.company == "OMT")
+			{
+				<tr>
+					<td> </td>
+					<td align="left"> <h5>Region : </h5></td>
+
+					<td>
+						@Html.DropDownListFor(x => x.BudImage.regionId, new SelectList(Model.regionGroupList, "id", "descTh", 0), "Please Select", new
+						{
+							 @class = "form-control textboxcss wide-nolimit",
+							 id = "ddlRegion"
+						})
+					</td>
+				</tr>
+			}
+
+			<tr>
+				<td> </td>
+				<td align="left"> <h5>ลูกค้า : </h5></td>
+
+				<td>
+					@if (Model.CustomerList != null)
+					{
+					@Html.DropDownListFor(x => x.BudImage.customerId, new SelectList(Model.CustomerList, "id", "cusNameTH", 0), "Please Select", new
+					{
+							@class = "form-control textboxcss wide-nolimit",
+							id = "ddlCustomer"
+					})
+					}
+					@*@Html.TextBoxFor(item => item.BudImage.customerName, new { @class = "form-control wide-nolimit", @id = "txt_customer", @name = "txt_customer" })
+					@Html.HiddenFor(item => item.BudImage.customerId, new { id = "txt_customer_id" })*@
+				</td>
+
+
+			</tr>
+
+			<tr>
+				<td></td>
+				<td> <h5>เลขที่ใบแจ้งหนี้ : </h5></td>
+				<td>
+					@Html.TextBoxFor(item => item.BudImage.invoiceNo, new { @class = "form-control textboxcss wide-nolimit", @id = "txt_invoice_no" })
+				</td>
+			</tr>
+
+			<tr>
+				<td> </td>
+				<td> <h5>หมายเหตุ : </h5></td>
+
+				<td>
+					@Html.TextBoxFor(item => item.BudImage.remark, new { @class = "form-control textboxcss wide-nolimit", @id = "txt_remark" })
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div>
+		<p class="d-flex justify-content-center">
+			<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitManageInvoiceUpdate();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+			<button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
+
+		</p>
+	</div>
+
+
+	//------------------------------------------------------------------------------------------------
+
+	<div> <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table> </div>
+
+	@Html.Action("invoicePDFView", "BudgetViewer", new { fileName = Model.BudImage._fileName })
+
+}
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		ObjModel = {};
+	});
+
+	$("#ddlRegion").change(function () {
+		var ddlFillCustomer = $("#ddlCustomer");
+        $.ajax({
+            url: '@Url.Action("getCustomerInvoice", "Budget")',
+            data: {
+				regionId: $("#ddlRegion").val(),
+				comapnyEN: $("#hd_company").val()
+            },
+            dataType: "json",
+            type: 'POST',
+			success: function (response) {
+				if (response.Data.getCustomerName.length > 0) {
+					$("#ddlCustomer option[value !='']").remove();
+					$.each(response.Data.getCustomerName, function () {
+						ddlFillCustomer.append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+					//document.getElementById("ddlCustomer").disabled = false;
+                }
+				else {
+					//document.getElementById("ddlCustomer").disabled = true;
+                }
+            }
+        });
+	});
+
+	
+
+	
+
+</script>
