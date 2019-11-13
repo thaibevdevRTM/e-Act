@@ -32,14 +32,13 @@
                         <th rowspan="3">ลำดับที่</th>
                         <th rowspan="3" width="80px" style="text-align:center;">เลขที่ Activity</th>
                         <th rowspan="3" width="100px" style="text-align:center;">ชื่อลูกค้า</th>
-                        <th rowspan="3" style="text-align:center;">reference</th>
                         <th colspan="2" rowspan="2">ระยะเวลากิจกรรม</th>
                         <th colspan="2" rowspan="2">ระยะเวลาให้ทุน</th>
                         <th rowspan="3" width="120px" style="text-align:center;">ชื่อสินค้า</th>
                         <th rowspan="3">ขนาด</th>
                         <th rowspan="3" width="100px" style="text-align:center;">รายละเอียดกิจกรรม</th>
                         <th rowspan="2">กลุ่มกิจกรรม</th>
-                        <th colspan="2" rowspan="2">Special Discount (Pro Deal)</th>
+                        <th rowspan="3">Special Discount (Pro Deal)</th>
                         <th rowspan="3">Compensate (CN)</th>
                         <th colspan="2" width="100px">ประมาณการยอดขาย</th>
                         <th rowspan="3">%Growth</th>
@@ -59,8 +58,6 @@
                         <th width="50px">วันเริ่มต้น</th>
                         <th width="50px">วันสิ้นสุด</th>
                         <th>14 กลุ่ม</th>
-                        <th>Baht</th>
-                        <th>%</th>
                         <th>กล่อง</th>
                         <th>กล่อง</th>
 
@@ -83,14 +80,12 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
                                 }
                                 else
                                 {
                                     <td>@index</td>
                                     <td>@item.activityNo</td>
                                     <td>@item.cusNameTH</td>
-                                    <td>@item.reference</td>
                                     if (item.activityPeriodSt != null)
                                     {
                                         <td>@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
@@ -113,16 +108,14 @@
                                     }
                                     else
                                     {
-                                        <td></td>
-}
+                                        <td></td>}
                                     if (item.costPeriodEnd != null)
                                     {
                                         <td>@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
                                     }
                                     else
                                     {
-                                        <td></td>
-}
+                                        <td></td>}
                                     index++;
                                 }
 
@@ -138,8 +131,7 @@
                                 }
 
                                 <td>@item.typeTheme</td>
-                                <td>@{ var discount = item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
-                                <td>@{ var discountP = item.specialDisc; } @string.Format("{0:n2}", discountP)</td>
+                                <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
                                 <td>@string.Format("{0:n2}", item.compensate)</td>
                                 <td>@string.Format("{0:n2}", item.normalSale)</td>
                                 <td>@string.Format("{0:n2}", item.promotionSale)</td>
@@ -159,8 +151,7 @@
                     }
 
                     <tr>
-                        <td colspan="14" style="text-align:right;background-color:#a3d5cf"><h4>รวม : </h4></td>
-                        <td></td>
+                        <td colspan="13" style="text-align:right;background-color:#a3d5cf"><h4>รวม : </h4></td>
                         <td><h5>@string.Format("{0:n2}", sumNormalSale)</h5></td>
                         <td><h5>@string.Format("{0:n2}", sumNormalPromotion)</h5></td>
                         <td></td>
@@ -168,7 +159,6 @@
                         <td><h5> @string.Format("{0:n2}", sumTotal)</h5></td>
                         <td></td>
                         <td></td>
-
                     </tr>
                 </tbody>
             </table>
