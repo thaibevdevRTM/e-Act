@@ -1,6 +1,0 @@
-
-Log Entry : 
-09/04/2019 09:50:55
- IP :  ::1 
-Error in: http://localhost:61263/Budget/activityList. Error Message:getActivityByApproveStatusId => Connection Timeout Expired.  The timeout period elapsed while attempting to consume the pre-login handshake acknowledgement.  This could be because the pre-login handshake failed or the server was unable to respond back in time.  The duration spent while attempting to connect to this server was - [Pre-Login] initialization=210; handshake=14939; 
-__________________________

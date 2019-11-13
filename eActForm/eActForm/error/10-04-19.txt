@@ -1,6 +1,0 @@
-
-Log Entry : 
-10/04/2019 10:37:43
- IP :  ::1 
-Error in: http://localhost:61263/BudgetApprove/budgetApproveList. Error Message:getBudgetApproveList => Column 'nameTH' does not belong to table Table.
-__________________________
