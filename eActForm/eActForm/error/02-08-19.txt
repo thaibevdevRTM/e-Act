@@ -1,0 +1,138 @@
+
+Log Entry : 
+02-08-2019 08:48:28
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 08:52:06
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 08:52:18
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 08:55:55
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 09:06:53
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 09:06:53
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 09:09:02
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 09:18:14
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 09:18:14
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 09:19:58
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 09:28:44
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 09:28:44
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 09:29:58
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 09:29:58
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 09:34:28
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 09:34:28
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 10:54:17
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/delInvoiceDetail?actId=56d4220e-bd84-4791-a55a-f95e6fbf6328&estId=1BA941B5-9885-4EC9-B299-31139117A442&invId=706A1643-483C-47BB-A6DE-CC17DB01A38D. Error Message:A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)>> usp_deleteBudgetActivityInvoice
+__________________________
+
+Log Entry : 
+02-08-2019 10:54:17
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProductList. Error Message:getActivityByApproveStatusId => A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+__________________________
+
+Log Entry : 
+02-08-2019 10:54:17
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProductList. Error Message:getBudgetActivityStatus => A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+__________________________
+
+Log Entry : 
+02-08-2019 10:54:17
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProduct?activityId=56d4220e-bd84-4791-a55a-f95e6fbf6328&activityNo=SBEHPBC621545. Error Message:getActivityByApproveStatusId => A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+__________________________
+
+Log Entry : 
+02-08-2019 12:08:52
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 12:08:52
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+02-08-2019 12:11:01
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________

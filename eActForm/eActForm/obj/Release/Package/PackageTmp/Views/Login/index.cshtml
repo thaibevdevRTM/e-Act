@@ -1,0 +1,64 @@
+﻿@{
+    Layout = "~/Views/Shared/_BlankLayout.cshtml";
+    var s = Request["s"] != null ? Request["s"] : "" ;
+    var actId = Request["actId"] != null ? Request["actId"] : "" ;
+}
+<body class="login">
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
+
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+
+                    @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.AntiForgeryToken()
+                                <h1>Login Activity Form</h1>
+                                <div>
+                                    <input type="hidden" name="txtParam" id="txtParam" value="@s" />
+                                    <input type="hidden" name="txtActId" id="txtActId" value="@actId" />
+                                    <input type="text" name="txtUserName" class="form-control" placeholder="Username" required="" />
+                                </div>
+                                <div>
+                                    <input type="password" name="txtPassword" class="form-control" placeholder="Password" required="" />
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="text-center">
+
+                                            <input type="submit" value="Log in" class="btn btn-success submit" style="text-align:center;" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="clearfix"></div>
+                                    <div class="separator">
+                                        <p class="text-danger">@Html.ValidationMessage("CustomerError")</p>
+                                        <p class="change_link">
+                                            New to site?
+                                            <a href="#signup" class="to_register"> Create Account </a>
+                                        </p>
+
+                                        <div class="clearfix"></div>
+                                        <br />
+
+                                        <div>
+                                            <h1> RTM Sale Support</h1>
+                                            <p>©2019 All Rights Reserved. Thaibev RTM Develop Team. Privacy and Terms</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </section>
+            </div>
+        </div>
+    </div>
+</body>

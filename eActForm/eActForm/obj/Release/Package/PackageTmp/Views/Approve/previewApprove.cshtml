@@ -1,0 +1,22 @@
+﻿@model eActForm.Models.Activity_Model
+
+@Html.HiddenFor(m => m.activityFormModel.id, new { id = "HdId" })
+
+<div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <div style=""></div>
+            <button type="button" class="close" onclick="onClickClose();" data-dismiss="modal">&times;</button>
+        </div>
+        @RenderPage("~/Views/Shared/_previewActForm.cshtml")
+        <div class="modal-footer">
+            <div>
+                <p class="d-flex justify-content-center">
+                    <button id="btnSubmitClose" type="button" class="btn btn-info pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+

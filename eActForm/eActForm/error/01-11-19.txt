@@ -1,0 +1,36 @@
+
+Log Entry : 
+01-11-2019 09:35:33
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+01-11-2019 09:35:33
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.D9D43395-BFB6-4881-AFD8-D082321803FC
+__________________________
+
+Log Entry : 
+01-11-2019 09:35:33
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+01-11-2019 09:36:41
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+01-11-2019 09:36:41
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.D9D43395-BFB6-4881-AFD8-D082321803FC
+__________________________
+
+Log Entry : 
+01-11-2019 09:36:41
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________

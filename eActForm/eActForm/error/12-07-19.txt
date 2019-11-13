@@ -1,0 +1,30 @@
+
+Log Entry : 
+12/07/2019 09:46:40
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+12/07/2019 09:46:40
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+12/07/2019 09:48:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+12/07/2019 09:48:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+12/07/2019 09:49:00
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________

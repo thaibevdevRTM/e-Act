@@ -1,0 +1,11 @@
+
+Log Entry : 
+29-10-2019 16:07:11
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/submitInvoice. Error Message:The cursor is READ ONLY.
+The cursor is READ ONLY.
+The cursor is READ ONLY.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.>> usp_updateBudgetActivityInvoice
+__________________________

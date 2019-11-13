@@ -1,0 +1,72 @@
+
+Log Entry : 
+18-09-2019 09:43:39
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+18-09-2019 09:53:54
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+18-09-2019 09:56:04
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+18-09-2019 09:58:27
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+18-09-2019 10:02:06
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+18-09-2019 10:04:08
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+18-09-2019 11:47:18
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+18-09-2019 12:01:42
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+18-09-2019 13:23:35
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+18-09-2019 13:25:05
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+18-09-2019 13:26:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+18-09-2019 13:36:14
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________

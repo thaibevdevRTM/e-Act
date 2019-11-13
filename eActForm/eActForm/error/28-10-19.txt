@@ -1,0 +1,90 @@
+
+Log Entry : 
+28-10-2019 13:42:25
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityIndex?typeForm=MT. Error Message:getActivityByApproveStatusId => Procedure or function usp_getBudgetActivity has too many arguments specified.
+__________________________
+
+Log Entry : 
+28-10-2019 13:42:52
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:getActivityByApproveStatusId => Procedure or function usp_getBudgetActivity has too many arguments specified.
+__________________________
+
+Log Entry : 
+28-10-2019 14:08:15
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+28-10-2019 14:08:58
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+28-10-2019 14:09:28
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+28-10-2019 14:14:15
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+28-10-2019 14:14:42
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+28-10-2019 14:18:37
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+28-10-2019 14:33:56
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+28-10-2019 14:34:06
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+28-10-2019 14:34:43
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+28-10-2019 14:36:58
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+28-10-2019 14:38:19
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+28-10-2019 14:39:25
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+28-10-2019 14:40:09
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/searchBudgetActivityForm. Error Message:searchBudgetActivityForm --> Object reference not set to an instance of an object.
+__________________________

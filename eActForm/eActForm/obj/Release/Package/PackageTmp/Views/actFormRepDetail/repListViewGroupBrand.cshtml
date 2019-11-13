@@ -1,0 +1,171 @@
+﻿@using eActForm.Models
+@model eActForm.Models.RepDetailModel.actFormRepDetails
+
+
+
+
+<div class="row" style="background-color:white;">
+    @if (Model.actFormRepDetailLists != null && Model.actFormRepDetailLists.Count > 0)
+    {
+        <div class="col-md-12 col-xs-12">
+            <table>
+                <tr>
+                    <td>
+                        บริษัท โมเดิร์นเทรดแมนเนจเม้นท์ จำกัด
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        รายละเอียดขออนุมัติงบประมาณจัดกิจกรรมด้านส่งเสริมการขาย  @Model.actFormRepDetailLists[0].cusNameTH
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ประจำเดือน @ViewBag.MouthText
+                    </td>
+                </tr>
+            </table>
+
+            <table id="datatable" border="0" style="text-align:center;font-family:Angsana New;font-size:10pt;" class="table table-striped table-bordered dt-responsive nowrap">
+                <thead>
+                    <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
+                        <th rowspan="3">ลำดับที่</th>
+                        <th rowspan="3" width="80px" style="text-align:center;">เลขที่ Activity</th>
+                        <th rowspan="3" width="100px" style="text-align:center;">ชื่อลูกค้า</th>
+                        <th colspan="2" rowspan="2">ระยะเวลากิจกรรม</th>
+                        <th colspan="2" rowspan="2">ระยะเวลาให้ทุน</th>
+                        <th rowspan="3" width="120px" style="text-align:center;">ชื่อสินค้า</th>
+                        <th rowspan="3">ขนาด</th>
+                        <th rowspan="3" width="100px" style="text-align:center;">รายละเอียดกิจกรรม</th>
+                        <th rowspan="2">กลุ่มกิจกรรม</th>
+                        <th rowspan="3">Special Discount (Pro Deal)</th>
+                        <th rowspan="3">Compensate (CN)</th>
+                        <th colspan="2" width="100px">ประมาณการยอดขาย</th>
+                        <th rowspan="3">%Growth</th>
+                        <th rowspan="3">%SE</th>
+                        <th rowspan="3">ประมาณการค่าใช้จ่าย</th>
+                        <th rowspan="3">%Sale</th>
+                        <th rowspan="3">หมายเหตุ</th>
+                    </tr>
+
+                    <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
+                        <th>ยอดขายก่อนจัดกิจกรรม</th>
+                        <th>ยอดขายช่วงจัดกิจกรรม</th>
+                    </tr>
+                    <tr style="background-color:#2B5D95;color:#ffffff;text-align:center;">
+                        <th width="50px">วันเริ่มต้น</th>
+                        <th width="50px">วันสิ้นสุด</th>
+                        <th width="50px">วันเริ่มต้น</th>
+                        <th width="50px">วันสิ้นสุด</th>
+                        <th>14 กลุ่ม</th>
+                        <th>กล่อง</th>
+                        <th>กล่อง</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var index = 1; string strActNo = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0;}
+                    @foreach (var item in Model.actFormRepDetailLists)
+                    {
+                        if (item.delFlag == false)
+                        {
+                            <tr class="gradeX">
+
+                                @if (item.activityNo == strActNo)
+                                {
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@index</td>
+                                    <td>@item.activityNo</td>
+                                    <td>@item.cusNameTH</td>
+                                    if (item.activityPeriodSt != null)
+                                    {
+                                        <td>@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    if (item.activityPeriodEnd != null)
+                                    {
+                                        <td>@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    if (item.costPeriodSt != null)
+                                    {
+                                        <td>@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>}
+                                    if (item.costPeriodEnd != null)
+                                    {
+                                        <td>@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>}
+                                    index++;
+                                }
+
+                                <td>@item.productName</td>
+                                <td>@item.size</td>
+                                @if (item.activityDetail == strActDetail)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@item.activityDetail</td>
+                                }
+
+                                <td>@item.typeTheme</td>
+                                <td>@{ var discount = (item.specialDiscBaht == 0) ? item.specialDisc : item.specialDiscBaht; } @string.Format("{0:n2}", discount)</td>
+                                <td>@string.Format("{0:n2}", item.compensate)</td>
+                                <td>@string.Format("{0:n2}", item.normalSale)</td>
+                                <td>@string.Format("{0:n2}", item.promotionSale)</td>
+                                <td>@string.Format("{0:n2}", item.perGrowth)</td>
+                                <td>@string.Format("{0:n2}", item.perSE)</td>
+                                <td>@string.Format("{0:n2}", item.total)</td>
+                                <td>@string.Format("{0:n2}", item.perToSale)</td>
+                                <td></td>
+                            </tr>
+                            strActDetail = item.activityDetail;
+                            strActNo = item.activityNo;
+                            sumTotal = sumTotal + item.total;
+                            sumNormalSale = item.normalSale == 0 ? sumNormalSale : sumNormalSale + item.normalSale;
+                            sumNormalPromotion = item.promotionSale == 0 ? sumNormalPromotion : sumNormalPromotion + item.promotionSale;
+
+                        }
+                    }
+
+                    <tr>
+                        <td colspan="13" style="text-align:right;background-color:#a3d5cf"><h4>รวม : </h4></td>
+                        <td><h5>@string.Format("{0:n2}", sumNormalSale)</h5></td>
+                        <td><h5>@string.Format("{0:n2}", sumNormalPromotion)</h5></td>
+                        <td></td>
+                        <td></td>
+                        <td><h5> @string.Format("{0:n2}", sumTotal)</h5></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+    }
+
+</div>

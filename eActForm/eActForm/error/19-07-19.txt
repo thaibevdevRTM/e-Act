@@ -1,0 +1,264 @@
+
+Log Entry : 
+19/07/2019 08:54:28
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19/07/2019 08:54:28
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19/07/2019 08:55:01
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+19-07-2019 09:07:50
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 09:07:50
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 09:09:00
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendRejectActForm >>Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 10:12:26
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 10:12:26
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 10:13:18
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+19-07-2019 10:16:17
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 10:16:17
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 10:16:39
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+19-07-2019 10:22:20
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 10:22:20
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 10:22:49
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+19-07-2019 10:34:46
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+19-07-2019 10:38:17
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 10:38:17
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 10:38:43
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Object reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+19-07-2019 10:41:53
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 10:41:53
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 10:56:09
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 10:56:09
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 11:05:01
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 14:17:30
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 14:17:30
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:16:35
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:16:35
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:25:24
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendRejectActForm >>Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:32:30
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:32:30
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:33:59
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendRejectActForm >>Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:42:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:42:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:50:23
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:50:23
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:52:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:52:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:56:13
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:56:13
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 15:57:35
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendRejectActForm >>Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 16:01:54
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 16:01:54
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+19-07-2019 16:03:01
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________

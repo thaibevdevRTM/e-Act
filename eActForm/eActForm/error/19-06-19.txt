@@ -1,0 +1,48 @@
+
+Log Entry : 
+19/06/2019 15:50:47
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProductList. Error Message:getActivityByApproveStatusId => Must declare the scalar variable "@activityOfEstimateId".
+__________________________
+
+Log Entry : 
+19/06/2019 16:01:44
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProductList. Error Message:getActivityByApproveStatusId => Must declare the scalar variable "@activityOfEstimateId".
+__________________________
+
+Log Entry : 
+19/06/2019 16:03:30
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProductList. Error Message:getActivityByApproveStatusId => Must declare the scalar variable "@activityOfEstimateId".
+__________________________
+
+Log Entry : 
+19/06/2019 16:05:42
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProductList. Error Message:getActivityByApproveStatusId => Must declare the scalar variable "@activityOfEstimateId".
+__________________________
+
+Log Entry : 
+19/06/2019 16:06:47
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProductList. Error Message:getActivityByApproveStatusId => Must declare the scalar variable "@activityOfEstimateId".
+__________________________
+
+Log Entry : 
+19/06/2019 16:09:48
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProductList. Error Message:getActivityByApproveStatusId => Must declare the scalar variable "@activityOfEstimateId".
+__________________________
+
+Log Entry : 
+19/06/2019 16:21:18
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/submitInvoice. Error Message:Invalid object name 'EActDB-DEV.dbo.TB_Act_ActivityOfEstimate'.>> usp_insertBudgetActivityInvoice
+__________________________
+
+Log Entry : 
+19/06/2019 16:25:31
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/submitInvoice. Error Message:Invalid object name 'EActDB-DEV.dbo.TB_Act_ActivityOfEstimate'.>> usp_insertBudgetActivityInvoice
+__________________________

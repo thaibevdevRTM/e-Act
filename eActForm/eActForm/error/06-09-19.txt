@@ -1,0 +1,246 @@
+
+Log Entry : 
+06-09-2019 11:16:20
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/getImageInvoice. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 11:16:26
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/getImageInvoice. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 11:55:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+06-09-2019 11:55:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.CEEB61CE-3615-4F9B-933D-3EA8B57A7CF2process 1
+__________________________
+
+Log Entry : 
+06-09-2019 11:55:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+06-09-2019 11:56:42
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+06-09-2019 11:56:42
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.CEEB61CE-3615-4F9B-933D-3EA8B57A7CF2process 1
+__________________________
+
+Log Entry : 
+06-09-2019 11:56:42
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+06-09-2019 12:25:25
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+06-09-2019 12:25:25
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.CEEB61CE-3615-4F9B-933D-3EA8B57A7CF2process 1
+__________________________
+
+Log Entry : 
+06-09-2019 12:25:25
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+06-09-2019 12:29:39
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+06-09-2019 12:29:39
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.CEEB61CE-3615-4F9B-933D-3EA8B57A7CF2process 1
+__________________________
+
+Log Entry : 
+06-09-2019 12:29:39
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+06-09-2019 12:41:30
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+06-09-2019 12:41:30
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.07CA5BED-3FFD-4AF7-8E8B-00114C98E848process 1
+__________________________
+
+Log Entry : 
+06-09-2019 12:41:30
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+06-09-2019 12:49:31
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+06-09-2019 12:49:31
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.6B368BF6-EB7C-4450-8B07-E341C3E20975process 1
+__________________________
+
+Log Entry : 
+06-09-2019 12:49:31
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+06-09-2019 12:55:06
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+06-09-2019 12:55:06
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.694FEF12-55F6-4E0C-BCB8-C18EF2461A48process 1
+__________________________
+
+Log Entry : 
+06-09-2019 12:55:06
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+06-09-2019 14:12:42
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/manageInvoiceList. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 14:12:49
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/manageInvoiceList. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 14:12:50
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/manageInvoiceList. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 14:12:50
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/manageInvoiceList. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 14:12:56
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/manageInvoiceList. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 14:14:21
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/manageInvoiceList. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 14:14:27
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/manageInvoiceList. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 14:14:27
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/manageInvoiceList. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 14:14:28
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/manageInvoiceList. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 14:14:30
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/manageInvoiceList. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 14:16:55
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/manageInvoiceList. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 14:59:50
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/manageInvoiceList. Error Message:getImage budget => Conversion failed when converting from a character string to uniqueidentifier.
+__________________________
+
+Log Entry : 
+06-09-2019 16:27:19
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+06-09-2019 16:27:19
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.413BD6AC-E233-4A3E-BA90-7BD5B3CAD2B9process 1
+__________________________
+
+Log Entry : 
+06-09-2019 16:27:19
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+06-09-2019 16:28:27
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+06-09-2019 16:28:27
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.413BD6AC-E233-4A3E-BA90-7BD5B3CAD2B9process 7
+__________________________
+
+Log Entry : 
+06-09-2019 16:28:27
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________

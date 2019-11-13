@@ -1,0 +1,216 @@
+
+Log Entry : 
+04-09-2019 07:47:26
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 07:47:26
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 08:42:07
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendRejectActForm >>Failure sending mail. D45A11C9-7C6B-47CC-8E43-824DFCAB6345
+__________________________
+
+Log Entry : 
+04-09-2019 08:52:42
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 08:52:42
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 08:53:35
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendRejectActForm >>Failure sending mail. 07021071-78E1-4284-B230-25C4FA51ABAE
+__________________________
+
+Log Entry : 
+04-09-2019 08:54:29
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 08:54:29
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 08:55:38
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 08:55:38
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 08:59:44
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:sendRejectActForm >>Failure sending mail. 30E39EC1-6B29-41A7-ADEA-0FFDBFA3A074
+__________________________
+
+Log Entry : 
+04-09-2019 12:23:31
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 12:23:31
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 12:27:48
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 12:27:48
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 13:56:43
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProductInvoiceList. Error Message:getBudgetActivityLastApprove => Column 'activityId' does not belong to table Table.
+__________________________
+
+Log Entry : 
+04-09-2019 13:57:17
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProductInvoiceList. Error Message:getBudgetActivityLastApprove => Column 'activityId' does not belong to table Table.
+__________________________
+
+Log Entry : 
+04-09-2019 13:59:27
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProductInvoiceList. Error Message:getBudgetActivityLastApprove => Column 'budgetApproveId' does not belong to table Table.
+__________________________
+
+Log Entry : 
+04-09-2019 14:04:33
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 14:04:33
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:16:44
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:16:44
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:20:49
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:20:49
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:21:47
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:21:47
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:23:38
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:23:38
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:24:40
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:24:40
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:25:33
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:25:33
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:26:32
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:26:32
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:46:36
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-09-2019 17:46:36
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:genPdfApproveBudget => sendApproveBudgetFormFailure sending mail.
+__________________________

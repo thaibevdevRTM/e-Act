@@ -1,0 +1,84 @@
+﻿@model eActForm.Models.SearchActivityModels
+
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityNo">
+                Act No.
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <input type="text" id="txtActivityNo" name="txtActivityNo" class="form-control textboxcss">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
+                Status
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                @Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">
+            Start date
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <input type="text" name="startDate" id="startDate" value="@DateTime.Now.AddDays(-90).ToString("MM/dd/yyyy")" class="form-control fv">
+        </div>
+
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="endDate">
+            End date
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <input type="text" name="endDate" id="endDate" value="@DateTime.Now.ToString("MM/dd/yyyy")" class="form-control fv">
+        </div>
+
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
+                Customer<span class="required"></span>
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                @Html.DropDownListFor(model => model.customerslist, new SelectList(Model.customerslist, "id", "cusNameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCustomer", Name = "ddlCustomer" })
+                <input type="hidden" id="txtchanel" class="form-control textboxcss" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
+            Activity Type<span class="required"></span>
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            @Html.DropDownListFor(model => model.activityGroupList, new SelectList(Model.activityGroupList, "id", "activitySales"), "Please Select", new { @class = "form-control textboxcss", id = "ddlTheme", Name = "ddlTheme" })
+        </div>
+    </div>
+</div>
+
+<hr />
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <a href="#" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                <button type="submit" class="btn btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#startDate").datepicker();
+        $("#endDate").datepicker();
+    });
+</script>

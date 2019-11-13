@@ -1,0 +1,73 @@
+﻿@model eActForm.Models.ApproveFlowModel.approveFlowModel
+
+<div class="row">
+    @if (Model.flowDetail != null)
+    {
+        <div class="text-center">
+            <table style="text-align:center;width:100%;" border="0" cellpadding="5" cellspacing="5">
+                <tr>
+
+                    @foreach (var item in Model.flowDetail)
+                    {
+                        if (item.isShowInDoc)
+                        {
+                            <td style="width:150px;">
+                                <div style="font-size:12.5px;">
+                                    @item.approveGroupName
+                                </div>
+                                <div style="font-size:12.5px;">
+                                    (@item.approveGroupNameEN)
+                                </div>
+                            </td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    @foreach (var item in Model.flowDetail)
+                    {
+                        if (item.isShowInDoc)
+                        {
+                            if (item.statusId == "3")
+                            {
+                                <td>
+                                    <img style="text-align:center;" width="150" height="100" src="@item.imgSignature" />
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <div style="text-align:center;height:100px;"></div>
+                                </td>
+                            }
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    @foreach (var item in Model.flowDetail)
+                    {
+                        if (item.isShowInDoc)
+                        {
+                            <td>
+                                <div style="text-align:center; margin-top:20px; font-size:12.5px;">@item.empFNameTH @item.empLNameTH</div>
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @foreach (var item in Model.flowDetail)
+                    {
+                        if (item.isShowInDoc)
+                        {
+                            <td>
+                                <div style="text-align:center; height:50px; font-size:12.5px;">@item.empPositionTitleTH</div>
+                            </td>
+                        }
+                    }
+                </tr>
+
+            </table>
+        </div>
+    }
+</div>

@@ -1,0 +1,43 @@
+
+Log Entry : 
+02/05/2019 10:42:21
+ IP :  ::1 
+Error in: http://localhost:61263/Activity/submitPreview. Error Message:Email sendApproveActForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02/05/2019 10:42:21
+ IP :  ::1 
+Error in: http://localhost:61263/Activity/submitPreview. Error Message:sendEmailApproveFailure sending mail.
+__________________________
+
+Log Entry : 
+02/05/2019 11:38:10
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityList. Error Message:getActivityByApproveStatusId => Cannot open database "EActDB-dev" requested by the login. The login failed.
+Login failed for user 'RTMDEV'.
+__________________________
+
+Log Entry : 
+02/05/2019 12:00:34
+ IP :  ::1 
+Error in: http://localhost:61263/Activity/submitPreview. Error Message:Email sendApproveActForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02/05/2019 12:00:34
+ IP :  ::1 
+Error in: http://localhost:61263/Activity/submitPreview. Error Message:sendEmailApproveFailure sending mail.
+__________________________
+
+Log Entry : 
+02/05/2019 12:29:48
+ IP :  ::1 
+Error in: http://localhost:61263/Activity/submitPreview. Error Message:Email sendApproveActForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+02/05/2019 12:29:48
+ IP :  ::1 
+Error in: http://localhost:61263/Activity/submitPreview. Error Message:sendEmailApproveFailure sending mail.
+__________________________

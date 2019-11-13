@@ -1,0 +1,60 @@
+
+Log Entry : 
+04/07/2019 10:38:07
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04/07/2019 10:38:07
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApproveList/submitPreviewBudget. Error Message:sendApproveBudgetFormFailure sending mail.
+__________________________
+
+Log Entry : 
+04/07/2019 10:39:18
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04/07/2019 10:42:21
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Email sendApproveBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04/07/2019 15:43:05
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/previewBudgetInvoice?activityId=e67d956c-72d1-446d-a368-68532dc1b12b. Error Message:getBudgetActivityApprove => Specified cast is not valid.
+__________________________
+
+Log Entry : 
+04/07/2019 15:43:21
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/previewBudgetInvoice?activityId=e67d956c-72d1-446d-a368-68532dc1b12b. Error Message:getBudgetActivityApprove => Specified cast is not valid.
+__________________________
+
+Log Entry : 
+04/07/2019 15:43:48
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/previewBudgetInvoice?activityId=e67d956c-72d1-446d-a368-68532dc1b12b. Error Message:getBudgetActivityApprove => Specified cast is not valid.
+__________________________
+
+Log Entry : 
+04/07/2019 16:43:54
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/previewBudgetInvoice?activityId=e67d956c-72d1-446d-a368-68532dc1b12b. Error Message:getBudgetActivityApprove => Specified cast is not valid.
+__________________________
+
+Log Entry : 
+04/07/2019 16:44:21
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/previewBudgetInvoice?activityId=e67d956c-72d1-446d-a368-68532dc1b12b. Error Message:getBudgetActivityApprove => Specified cast is not valid.
+__________________________
+
+Log Entry : 
+04/07/2019 16:45:54
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/previewBudgetInvoice?activityId=e67d956c-72d1-446d-a368-68532dc1b12b. Error Message:getBudgetActivityApprove => Specified cast is not valid.
+__________________________

@@ -1,0 +1,12 @@
+
+Log Entry : 
+28/03/2019 17:12:59
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityList. Error Message:getActivityByApproveStatusId => Connection Timeout Expired.  The timeout period elapsed while attempting to consume the pre-login handshake acknowledgement.  This could be because the pre-login handshake failed or the server was unable to respond back in time.  The duration spent while attempting to connect to this server was - [Pre-Login] initialization=221; handshake=14926; 
+__________________________
+
+Log Entry : 
+28/03/2019 17:13:32
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/EditForm?activityId=f91d5f98-0443-4761-9ea2-eb6b8a58f94a&activityNo=WBSHPMK190080. Error Message:getActivityByApproveStatusId => Procedure or function 'usp_getBudgetActivityProduct' expects parameter '@activityOfEstimateID', which was not supplied.
+__________________________

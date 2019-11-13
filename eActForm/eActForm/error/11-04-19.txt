@@ -1,0 +1,48 @@
+
+Log Entry : 
+11/04/2019 16:04:27
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityList. Error Message:getActivityByApproveStatusId => A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+__________________________
+
+Log Entry : 
+11/04/2019 16:36:09
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityProduct?activityId=6ce93ae9-b6ad-4bc5-9a58-f22c10deed41&activityNo=WBSHPMK190076. Error Message:getActivityByApproveStatusId => A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+__________________________
+
+Log Entry : 
+11/04/2019 16:36:25
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityInvoicePreviewList?activityId=6ce93ae9-b6ad-4bc5-9a58-f22c10deed41. Error Message:getBudgetActivityApprove => A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+__________________________
+
+Log Entry : 
+11/04/2019 16:36:25
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityInvoicePreviewList?activityId=6ce93ae9-b6ad-4bc5-9a58-f22c10deed41. Error Message:getActivityByApproveStatusId => A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+__________________________
+
+Log Entry : 
+11/04/2019 16:48:10
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityList. Error Message:getActivityByApproveStatusId => A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+__________________________
+
+Log Entry : 
+11/04/2019 16:48:33
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+11/04/2019 16:51:34
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+11/04/2019 16:53:36
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/genPdfApprove. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________

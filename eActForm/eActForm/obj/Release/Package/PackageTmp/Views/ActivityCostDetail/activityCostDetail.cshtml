@@ -1,0 +1,306 @@
+﻿@model eActForm.Models.Activity_Model
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@using eActForm.Models;
+@{
+    /**/
+
+    /**/
+
+    Layout = null;
+    decimal? total = 0;
+    decimal? normalTotal = 0;
+    decimal? activityTotal = 0;
+    decimal? growthTotal = 0;
+    decimal? sumGrowth = 0;
+    decimal? LE = 0;
+
+}
+
+<div class="row">
+    <div class="col-12">
+        <p class="lead">รายละเอียดค่าใช้จ่าย (Cost)</p>
+    </div>
+    <div class="col-12">
+        <table class="table table-bordered" id="tbl_activityDetail">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="align-content-center font10" rowspan="2" width="10px" onclick="onDelActDetail();"> <button class="btn ink-reaction btn-danger fa fa-trash-o"></button></th>
+                    <th class="align-content-center font10" rowspan="2" style="width:15%;">ประเภทกิจกรรม</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:24%;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:6%;">Unit</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:6%;">Compensate</th>
+                    @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                    {
+                        <th class="align-content-center font10" colspan="5" style="width:49%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
+
+                    }
+                    else
+                    {
+                        <th class="align-content-center font10" colspan="6" style="width:49%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
+                    }
+                </tr>
+                <tr>
+                    <th class="align-content-center font10">ยอดขายปกติ (Case)</th>
+                    <th class="align-content-center font10">ยอดขายข่วงทำกิจกรรม (Case)</th>
+                    <th class="align-content-center font10">% Growth</th>
+                    <th class="align-content-center font10">%SE</th>
+                    <th class="align-content-center font10">ค่าใช้จ่ายรวม Spending Exp. (Bath)</th>
+                    @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                    {
+                        <th class="align-content-center font10">% : ยอดขาย</th>
+                    }
+                </tr>
+            </thead>
+
+            @if (Model.activitydetaillist != null)
+            {
+                var index = 0;
+                total = 0;
+
+                foreach (var item in Model.activitydetaillist)
+                {
+
+                    <tr>
+                        <td onclick="onDelActDetail('@item.productGroupId')">
+                            <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
+                            @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
+                        </td>
+                        @if (item.isShowGroup == true)
+                        {
+                            <td class="font10 textLeft">@item.typeTheme</td>
+                        }
+                        else
+                        {
+                            if (item.detailGroup.Count >= 1)
+                            {
+
+                                <td class="font10 textLeft">@item.detailGroup[0].typeTheme</td>
+                            }
+                        }
+
+                        @*@if (item.isShowGroup != true)
+                            {*@
+                        <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        @*}
+                            else
+                            {
+                                <td>@Html.TextBoxFor(model => item.brandName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" }) </td>
+                            }*@
+
+                        <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+
+                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        <td>
+                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")", style = "autofocus = 'autofocus'" })
+                        </td>
+                        <td>
+                             @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true, style = "autofocus = 'autofocus'" }) 
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => item.LE, "{0:n2}", new { @id = "lblLE_" + index, Name = "lblLE_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")", style = "autofocus = 'autofocus'" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")", style = "autofocus = 'autofocus'" })
+                        </td>
+                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                        {
+                            @Html.HiddenFor(model => item.perTotal, new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", style = "autofocus = 'autofocus'" })
+                        }
+                        else
+                        {
+                            <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", style = "autofocus = 'autofocus'" })</td>
+                        }
+                    </tr>
+                    LE = item.LE == null ? 0 + LE : item.LE + LE;
+                    total = item.total == null ? 0 + total : item.total + total;
+                    normalTotal = item.normalCost == null ? 0 + normalTotal : item.normalCost + normalTotal;
+                    activityTotal = item.themeCost == null ? 0 + activityTotal : item.themeCost + activityTotal;
+                    sumGrowth = item.growth == null ? 0 + sumGrowth : item.growth + sumGrowth;
+                    index++;
+                }
+            }
+
+                    <tr>
+
+                        <td colspan="5" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
+                        <td>
+                            <p class="text-success textRight">
+                                @if (normalTotal != 0)
+                                {
+                                    string result = String.Format("{0:n2}", @normalTotal);
+                                    @result.ToString();
+                                }
+                            </p>
+                        </td>
+                        <td>
+                            <p class="text-success textRight">
+                                @if (activityTotal != 0)
+                                {
+                                    string result = String.Format("{0:n2}", @activityTotal);
+                                    @result.ToString();
+                                }
+                            </p>
+                        </td>
+                        <td>
+                            <p class="text-success textRight">
+                                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                                {
+                                    growthTotal = sumGrowth;
+                                    string result = String.Format("{0:n2}%", @growthTotal);
+                                    @result.ToString();
+
+                                }
+                                else
+                                {
+                                    if (activityTotal != 0 && normalTotal != 0)
+                                    {
+                                        growthTotal = (activityTotal - normalTotal) / normalTotal * 100;
+                                        string result = String.Format("{0:n2}%", @growthTotal);
+                                        @result.ToString();
+                                    }
+                                }
+
+                            </p>
+                        </td>
+                        <td>
+                            <p class="text-success textRight">
+                                @if (LE != 0)
+                                {
+                                    string result = String.Format("{0:n2}%", @LE);
+                                    @result.ToString();
+                                }
+                            </p>
+                        </td>
+                        @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                        {
+                            <td>
+                                <p class="text-success textRight">
+                                    @if (total != 0)
+                                    {
+                                        string result = String.Format("{0:n2}", @total);
+                                        @result.ToString();
+                                    }
+                                </p>
+                            </td>
+                        }
+                        <td>
+                            @*<p class="text-success textRight">
+                @if (total != 0 && activityTotal != 0)
+                {
+                    perTotal = total / (activityTotal * Convert.ToDecimal(promotioncost == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
+                    string result = String.Format("{0:n2}", @perTotal);
+                    @result.ToString();
+                }
+            </p>*@
+                        </td>
+                    </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    function setZero(txtId) {
+        if ($(txtId).val() == "0.00") {
+            $(txtId).val("");
+        }
+    }
+
+    // case %Spending of sale Change
+    function calGrowthPerTotal(id, rowIndex, checktotal) {
+        var perTotal = 0;
+        if (checktotal == true) {
+            perTotal = $('#lblPerTotal_' + rowIndex).val();
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("calSpendingOfSaleChange", "ActivityCostDetail")',
+            data: {
+                productGroupId: id,
+                perTotal: perTotal,
+            }
+        }).done(function (response) {
+            callThemedetailcost();
+        });
+    }
+
+    // case spending input change
+    function calGrowthTotal(id, rowIndex, checktotal) {
+
+        var themeCost = $('#lblThemeCost_' + rowIndex).val();
+        themeCost = themeCost == "" ? 0 : themeCost;
+        var productId = $("#hdProductId_" + rowIndex).val();
+        var total = 0;
+        if (checktotal == true) {
+            total = $("#lblTotal_" + rowIndex).val();
+            total = total == "" ? 0 : total;
+            perTotal = $('#lblPerTotal_' + rowIndex).val();
+            perTotal = perTotal == "" ? 0 : perTotal;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("calPercentSpendingOfSale", "ActivityCostDetail")',
+            data: {
+                productGroupId: id,
+                productId: productId,
+                total: total,
+                themeCost: themeCost,
+
+            }
+        }).done(function (response) {
+            callThemedetailcost();
+        });
+    }
+
+    // case all input change
+    function calActivityDetailCost(id, rowIndex, checktotal) {
+        var name = $('#lblProductName_' + rowIndex).val();
+        var normalCost = $('#lblNormalCost_' + rowIndex).val();
+        normalCost = normalCost == "" ? 0 : normalCost;
+        var themeCost = $('#lblThemeCost_' + rowIndex).val();
+        themeCost = themeCost == "" ? 0 : themeCost;
+        var unit = $("#lblUnit_" + rowIndex).val();
+        unit = unit == "" ? 0 : unit;
+        var compensate = $("#lblCompensate_" + rowIndex).val();
+        compensate = compensate == "" ? 0 : compensate;
+        var LE = $("#lblLE_" + rowIndex).val();
+        LE = LE == "" ? 0 : LE;
+        var productId = $("#hdProductId_" + rowIndex).val();
+        
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("calActivityDetailCost", "ActivityCostDetail")',
+            data: {
+                name: name,
+                productGroupId: id,
+                productId: productId,
+                normalCase: normalCost,
+                promotionCase: themeCost,
+                unit: unit,
+                compensate: compensate,
+                LE: LE,
+                typeForm:'@Model.activityFormModel.typeForm'
+            }
+        }).done(function (response) {
+            callThemedetailcost();
+        });
+
+    }
+    function onDelActDetail(id) {
+
+        $.ajax({
+            url: '@Url.Action("delActCostDetail", "ActivityCostDetail")',
+            data: {
+                rowid: id,
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                callThemedetailcost();
+            }
+        });
+    }
+
+</script>

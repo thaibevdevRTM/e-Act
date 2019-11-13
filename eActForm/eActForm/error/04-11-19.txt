@@ -1,0 +1,120 @@
+
+Log Entry : 
+04-11-2019 09:17:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+04-11-2019 09:17:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.5003A98A-1ED2-42C0-96EE-BB68E23DE761
+__________________________
+
+Log Entry : 
+04-11-2019 09:17:19
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-11-2019 09:40:02
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+04-11-2019 09:40:02
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.9FD6B434-4B02-4B29-81FE-71E7F65831B8
+__________________________
+
+Log Entry : 
+04-11-2019 09:40:02
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-11-2019 10:00:00
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> Object reference not set to an instance of an object.6B85128F-BF34-4A7A-910B-249B327BCE3A
+__________________________
+
+Log Entry : 
+04-11-2019 10:00:00
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetFormObject reference not set to an instance of an object.
+__________________________
+
+Log Entry : 
+04-11-2019 10:12:10
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+04-11-2019 10:12:10
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.005EFF0E-91C2-4BE0-BE8A-3958AF786495
+__________________________
+
+Log Entry : 
+04-11-2019 10:12:10
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-11-2019 10:16:09
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+04-11-2019 10:16:10
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.CB8D9F35-84B8-46EA-B664-0505DE1666C5
+__________________________
+
+Log Entry : 
+04-11-2019 10:16:10
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-11-2019 10:40:38
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+04-11-2019 10:40:38
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.DF0AC48D-D0E7-4525-B14A-87215D4284E3
+__________________________
+
+Log Entry : 
+04-11-2019 10:40:38
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________
+
+Log Entry : 
+04-11-2019 10:42:53
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:sendEmailBudgetForm >> Failure sending mail. : mailto >> parnupong.k@thaibev.com,tanapong.w@thaibev.com,jitaree.b@thaibev.com,surachat.j@thaibev.com
+__________________________
+
+Log Entry : 
+04-11-2019 10:42:53
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetForm >> sendEmailBudgetForm >> Failure sending mail.8ECC78F1-76EE-4464-BBE8-773FCB560818
+__________________________
+
+Log Entry : 
+04-11-2019 10:42:53
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:Email sendApproveBudgetFormsendEmailBudgetForm >> Failure sending mail.
+__________________________

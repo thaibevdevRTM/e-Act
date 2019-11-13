@@ -1,0 +1,36 @@
+
+Log Entry : 
+23/04/2019 08:33:23
+ IP :  ::1 
+Error in: http://localhost:61263/Budget/activityList. Error Message:getActivityByApproveStatusId => Connection Timeout Expired.  The timeout period elapsed while attempting to consume the pre-login handshake acknowledgement.  This could be because the pre-login handshake failed or the server was unable to respond back in time.  The duration spent while attempting to connect to this server was - [Pre-Login] initialization=248; handshake=14907; 
+__________________________
+
+Log Entry : 
+23/04/2019 08:34:56
+ IP :  ::1 
+Error in: http://localhost:61263/. Error Message:getAllCustomers => Connection Timeout Expired.  The timeout period elapsed while attempting to consume the pre-login handshake acknowledgement.  This could be because the pre-login handshake failed or the server was unable to respond back in time.  The duration spent while attempting to connect to this server was - [Pre-Login] initialization=205; handshake=14947; 
+__________________________
+
+Log Entry : 
+23/04/2019 08:34:56
+ IP :  ::1 
+Error in: http://localhost:61263/. Error Message:getAllProductCate => Connection Timeout Expired.  The timeout period elapsed while attempting to consume the pre-login handshake acknowledgement.  This could be because the pre-login handshake failed or the server was unable to respond back in time.  The duration spent while attempting to connect to this server was - [Pre-Login] initialization=205; handshake=14947; 
+__________________________
+
+Log Entry : 
+23/04/2019 08:34:56
+ IP :  ::1 
+Error in: http://localhost:61263/. Error Message:getAllProductCate => Connection Timeout Expired.  The timeout period elapsed while attempting to consume the pre-login handshake acknowledgement.  This could be because the pre-login handshake failed or the server was unable to respond back in time.  The duration spent while attempting to connect to this server was - [Pre-Login] initialization=205; handshake=14947; 
+__________________________
+
+Log Entry : 
+23/04/2019 08:34:56
+ IP :  ::1 
+Error in: http://localhost:61263/. Error Message:getAllActivityGroup => Connection Timeout Expired.  The timeout period elapsed while attempting to consume the pre-login handshake acknowledgement.  This could be because the pre-login handshake failed or the server was unable to respond back in time.  The duration spent while attempting to connect to this server was - [Pre-Login] initialization=205; handshake=14947; 
+__________________________
+
+Log Entry : 
+23/04/2019 18:22:12
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/submitPreviewBudget. Error Message:insertApproveBudget >> getFlow by actFormId >>Invalid column name 'approveStatusId'.
+__________________________

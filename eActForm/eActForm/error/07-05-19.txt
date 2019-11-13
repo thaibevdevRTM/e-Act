@@ -1,0 +1,84 @@
+
+Log Entry : 
+07/05/2019 12:31:07
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc. Error Message:getApproveListsByStatusId >> Column 'statusId' does not belong to table Table.
+__________________________
+
+Log Entry : 
+07/05/2019 12:31:15
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc. Error Message:getApproveListsByStatusId >> Column 'statusId' does not belong to table Table.
+__________________________
+
+Log Entry : 
+07/05/2019 12:32:31
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc. Error Message:getApproveListsByStatusId >> Column 'statusId' does not belong to table Table.
+__________________________
+
+Log Entry : 
+07/05/2019 12:32:36
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc. Error Message:getApproveListsByStatusId >> Column 'approveId' does not belong to table Table.
+__________________________
+
+Log Entry : 
+07/05/2019 12:34:02
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc. Error Message:getApproveListsByStatusId >> Column 'approveId' does not belong to table Table.
+__________________________
+
+Log Entry : 
+07/05/2019 12:34:06
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetMyDoc. Error Message:getApproveListsByStatusId >> Column 'approveId' does not belong to table Table.
+__________________________
+
+Log Entry : 
+07/05/2019 16:19:05
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:The document has no pages.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+07/05/2019 16:27:22
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:The document has no pages.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+07/05/2019 16:40:17
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+07/05/2019 16:43:55
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+07/05/2019 16:44:52
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+07/05/2019 17:10:44
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+07/05/2019 17:14:44
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
+
+Log Entry : 
+07/05/2019 17:17:22
+ IP :  ::1 
+Error in: http://localhost:61263/BudgetApprove/genPdfApproveBudget. Error Message:Cannot access a closed Stream.>> GetFileReportTomail_Preview
+__________________________
