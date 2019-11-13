@@ -20,7 +20,8 @@
         </tr>
         <tr>
             <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                <div id="divHeadCompany" runat="server" style="width: 100%; text-align: left;">
+                <div style="height:5px;"></div>
+                <div style="width: 100%; text-align: left;">
                     &nbsp;ค่าใช้จ่ายในการทำกิจกรรม..........................จำนวนเงิน............บาท
                     <br />
                     &nbsp;รายละเอียดงบประมาณ
@@ -28,8 +29,48 @@
             </td>
         </tr>
         <tr style="border-bottom:none;">
-            <td style="margin-left:25px;">
+            <td>
+                <div style="height:5px;"></div>
                 @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/activityDetails.cshtml")
+            </td>
+        </tr>
+        <tr style="border-bottom:none;">
+            <td>
+                <div style="height:5px;"></div>
+                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/activityBudgetDetails.cshtml")
+            </td>
+        </tr>
+        <tr style="border-bottom:none;">
+            <td>
+                <div style="height:20px;"></div>
+                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/lastwordForFYI.cshtml")
+            </td>
+        </tr>
+        <tr>
+            <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+                <div style="height:5px;"></div>
+                <div style="width: 100%; text-align: left;">
+                    &nbsp;หมายเหตุ...............................................
+                    <br />
+                    &nbsp;..............................................................
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                <div style="height:5px;"></div>
+                <div style="width: 100%; text-align: left;">
+                    @*@if (Model.activityFormModel != null)
+        {
+            @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
+        }*@
+                    &nbsp;รอลายเซ็นมาแสดง
+                </div>
+            </td>
+        </tr>
+        <tr style="border-bottom:none;">
+            <td>
+                &nbsp;<br />
             </td>
         </tr>
     </table>
