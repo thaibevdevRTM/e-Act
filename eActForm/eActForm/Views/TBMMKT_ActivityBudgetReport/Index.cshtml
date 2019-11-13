@@ -1,25 +1,70 @@
 ﻿
+<div id="GridPDF" style="width:97%; margin-left:20px;">
+    <table style="width: 100%;border: 1px solid black; border-collapse: collapse;" id="tabel_report" runat="server">
+        <tr>
+            <td>
+                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/headerCompany.cshtml")
+            </td>
+        </tr>
+        <tr>
+            <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
+                    ขออนุมัติงบประมาณกิจกรรม.....................
+                </div>
+            </td>
+        </tr>
+        <tr style="border: 1px solid black; border-collapse: collapse;border-bottom:none;">
+            <td>
+                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/headerDetails.cshtml")
+            </td>
+        </tr>
+        <tr>
+            <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                <div id="divHeadCompany" runat="server" style="width: 100%; text-align: left;">
+                    &nbsp;ค่าใช้จ่ายในการทำกิจกรรม..........................จำนวนเงิน............บาท
+                    <br />
+                    &nbsp;รายละเอียดงบประมาณ
+                </div>
+            </td>
+        </tr>
+        <tr style="border-bottom:none;">
+            <td style="margin-left:25px;">
+                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/activityDetails.cshtml")
+            </td>
+        </tr>
+    </table>
 
-<table style="width: 100%;border: 1px solid black; border-collapse: collapse;" id="tabel_report" runat="server">
-    <tr>
-        <td>
-            @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/headerCompany.cshtml")
-        </td>
-    </tr>
-    <tr style="border: 1px solid black; border-collapse: collapse;border-bottom:none;">
-        <td>
-            <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
-                ขออนุมัติงบประมาณกิจกรรม.....................
-            </div>
-        </td>
-    </tr>
-    <tr style="border: 1px solid black; border-collapse: collapse;border-bottom:none;">
-        <td>
-            @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/headerDetails.cshtml")
-        </td>
-    </tr>
-</table>
+</div>
+<div class="center-block">
+    @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
+    {
+        <input type="hidden" name="gridHtml" />
+        <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
+            <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
+        </button>
+    }
+</div>
+
+<script>
+    $("#btnExportPDF").click(function () {
+        $("input[name='gridHtml']").val($("#GridPDF").html());
+    });
 
 
+    @*$("#btnSubmit").click(function () {
 
 
+        $.ajax({
+            url: '@Url.Action("printDoc", "TBMMKT_ActivityBudgetReport")',
+            data: {
+                gridHtml: $("#Grid").html(),
+            },
+            dataType: "json",
+            type: 'POST',
+        }).done(function (response) {
+
+
+        });
+    });*@
+
+</script>
