@@ -244,7 +244,13 @@ namespace eActForm.BusinessLayer
                         new SqlParameter("@repDetailId",repDetailId)
                     });
 
-                return dataTableToRepDetailModels(ds);
+                RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
+                model = dataTableToRepDetailModels(ds);
+                model.actFormRepDetailGroupLists.Select(r => r.delFlag = false
+                        ).ToList();
+                model.actFormRepDetailLists.Select(r => r.delFlag = false
+                        ).ToList();
+                return model;
             }
             catch (Exception ex)
             {

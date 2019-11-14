@@ -237,10 +237,11 @@ else
         }).done(function (htmlResponse) {
             $.ajax({
                 type: 'POST',
+                dataType: "html",
                 url: '@Url.Action("repDetailGenPDF", "actFormRepDetail")',
                 data: {
                     gridHtml: htmlResponse
-                    , actId: '@actId'
+                  , actId: '@actId'
                 }
             }).done(function (htmlResponse) {
                 $("#WaitDialog").hide();
