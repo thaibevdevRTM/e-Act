@@ -43,9 +43,16 @@ namespace eActForm.Controllers
                 {
                     foreach (var item in model.chkProductType)
                     {
-                        foreach (var itemCust in model.custLi)
+                        if (model.custLi == null)
                         {
-                            AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], Request.Form["ddlCompany"], itemCust, item);
+                            AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], Request.Form["ddlCompany"], null, item);
+                        }
+                        else
+                        {
+                            foreach (var itemCust in model.custLi)
+                            {
+                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], Request.Form["ddlCompany"], itemCust, item);
+                            }
                         }
                     }
                 }
