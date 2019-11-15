@@ -165,14 +165,15 @@ namespace eActForm.BusinessLayer
 
         public static string getDigitRunnigGroup(string productId)
         {
+            string result = "";
             try
-            {
-                string result = "";
+            {    
                 result = QueryGetAllProduct.getProductById(productId).FirstOrDefault().digit_IO;
                 return result;
             }
             catch (Exception ex)
             {
+                return result;
                 throw new Exception("getDigitGroup >>" + ex.Message);
             }
         }

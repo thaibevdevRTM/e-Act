@@ -149,11 +149,19 @@ namespace eActForm.Controllers
                 {
                     model.actFormRepDetailGroupLists.Select(r => r.delFlag = !delFlag
                         ).ToList();
+
+                    model.actFormRepDetailLists.Select(r => r.delFlag = !delFlag
+                        ).ToList();
                     result.Code = 001;
                 }
                 else
                 {
                     model.actFormRepDetailGroupLists
+                        .Where(r => r.id == actId)
+                        .Select(r => r.delFlag = !delFlag
+                        ).ToList();
+
+                    model.actFormRepDetailLists
                         .Where(r => r.id == actId)
                         .Select(r => r.delFlag = !delFlag
                         ).ToList();
@@ -183,6 +191,23 @@ namespace eActForm.Controllers
             {
                 model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
                 ViewBag.MouthText = DateTime.ParseExact(model.dateReport, "MM-yyyy", null).ToString("MMM yyyy");
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
+
+
+        public ActionResult repPreviewForApproveDetail(string startDate)
+        {
+            RepDetailModel.actFormRepDetails model = null;
+            try
+            {
+                model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
             }
             catch (Exception ex)
             {
@@ -316,7 +341,7 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return RedirectToAction("repPreviewForApprove", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
+            return RedirectToAction("repPreviewForApproveDetail", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
         }
 
         /// <summary>
