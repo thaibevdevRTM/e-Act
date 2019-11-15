@@ -120,7 +120,7 @@
                                 </a>
                             }
                             @if (item.statusId == "1" || item.statusId == "3" || item.statusId == "5" ||
-                                (item.statusId == "6" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)))
+                                (item.statusId == "6" && (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)))
                             {
                                 <a href="javascript:" onclick="return checkDelete('@item.id','@item.statusId');">
                                     <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
