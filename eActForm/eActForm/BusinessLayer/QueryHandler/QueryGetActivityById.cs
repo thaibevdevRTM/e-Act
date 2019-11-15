@@ -55,7 +55,7 @@ namespace eActForm.BusinessLayer
                                   objective = d["objective"].ToString(),
                                   trade = d["trade"].ToString(),
                                   activityDetail = d["activityDetail"].ToString(),
-                                  chkAddIO = bool.Parse(d["chkAddIO"].ToString()),
+                                  chkAddIO = !string.IsNullOrEmpty(d["chkAddIO"].ToString()) ? bool.Parse(d["chkAddIO"].ToString()) : false,
                                   actClaim = d["actClaim"].ToString(),
                                   actIO = d["actIO"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
