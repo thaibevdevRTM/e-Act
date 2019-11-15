@@ -432,19 +432,24 @@
 <script type="text/javascript">
 
 
-       $(document).ready(function () {
-           $(".fv").each(function () {
-               var v = $(this).val();
-               if (v == '') {
-                   $(this).focus();
-               }
-           });
+    $(document).ready(function () {
+        $(".fv").each(function () {
+            var v = $(this).val();
+            if (v == '') {
+                $(this).focus();
+            }
+        });
 
-           ObjModel = {};
-           fillProductOnChange();
-           document.getElementById("ddlProductfilter").disabled = true;
-           document.getElementById("ddlProductSize").disabled = true;
-           document.getElementById("divIO").style.display = "none";
+        ObjModel = {};
+        fillProductOnChange();
+        document.getElementById("ddlProductfilter").disabled = true;
+        document.getElementById("ddlProductSize").disabled = true;
+
+        if ($("input[name='activityFormModel.chkAddIO']:checked").val() == true) { 
+            document.getElementById("divIO").style.display = "block";
+        }
+
+
 
            if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
                $("#txtCustomerName").show();
@@ -509,6 +514,14 @@
                });
     });
 
+    function OnChangeChkIO(element) {
+        if (element.checked) {
+            document.getElementById("divIO").style.display = "block";
+        }
+        else {
+            document.getElementById("divIO").style.display = "none";
+        }
+    }
 
     $(function () {
         $("#txtdateDoc").datepicker({
@@ -1213,14 +1226,7 @@
         });
     }
 
-    function OnChangeChkIO(element) {
-        if (element.checked) {
-            document.getElementById("divIO").style.display = "block";
-        }
-        else {
-            document.getElementById("divIO").style.display = "none";
-        }
-    }
+   
 
 
 </script>
