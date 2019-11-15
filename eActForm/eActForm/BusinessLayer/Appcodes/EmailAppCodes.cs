@@ -595,7 +595,7 @@ namespace eActForm.BusinessLayer
 		{
 			try
 			{
-				string strBody = "", strSubject = ""  ;
+				string strBody = "", strSubject = "";
 
 				List<ApproveModel.approveEmailDetailModel> lists = getEmailApproveNextLevelBudget(actFormId);
 				if (lists.Count > 0)
@@ -616,7 +616,7 @@ namespace eActForm.BusinessLayer
 				else
 				{
 					// case all updated
-					
+
 
 					DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountStatusApproveDetail"
 						, new SqlParameter[] {new SqlParameter("@actFormId",actFormId)
@@ -655,7 +655,7 @@ namespace eActForm.BusinessLayer
 			}
 			catch (Exception ex)
 			{
-				ExceptionManager.WriteError("Email sendApproveBudgetForm >> " + ex.Message + actFormId );
+				ExceptionManager.WriteError("Email sendApproveBudgetForm >> " + ex.Message + actFormId);
 				throw new Exception("Email sendApproveBudgetForm" + ex.Message);
 			}
 		}
@@ -692,10 +692,10 @@ namespace eActForm.BusinessLayer
 
 		private static void sendEmailBudgetForm(string actFormId, string mailTo, string mailCC, string strSubject, string strBody, AppCode.ApproveType emailType)
 		{
-			
+
 			try
 			{
-							
+
 				List<Attachment> files = new List<Attachment>();
 				string[] pathFile = new string[10];
 				string[] pathFileAtt = new string[10];
@@ -742,7 +742,7 @@ namespace eActForm.BusinessLayer
 			}
 			catch (Exception ex)
 			{
-				ExceptionManager.WriteError("sendEmailBudgetForm >> " + ex.Message + " : mailto >> " + mailTo );
+				ExceptionManager.WriteError("sendEmailBudgetForm >> " + ex.Message + " : mailto >> " + mailTo);
 				throw new Exception("sendEmailBudgetForm >> " + ex.Message);
 			}
 		}
@@ -769,7 +769,7 @@ namespace eActForm.BusinessLayer
 			}
 			catch (Exception ex)
 			{
-				ExceptionManager.WriteError("getEmailBodyBudget >> " + ex.Message );
+				ExceptionManager.WriteError("getEmailBodyBudget >> " + ex.Message);
 				throw new Exception(ex.Message);
 			}
 		}
