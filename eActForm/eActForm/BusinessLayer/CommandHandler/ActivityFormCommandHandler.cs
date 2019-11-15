@@ -157,7 +157,10 @@ namespace eActForm.BusinessLayer
                   DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                 model.activityFormModel.updatedDate = DateTime.Now;
+
+
                 rtn = updateActivityForm(model.activityFormModel);
+                rtn = updateClaimForm(model.activityFormModel);
                 return rtn;
             }
             catch (Exception ex)
@@ -351,6 +354,28 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message + ">> updateActivityForm");
+            }
+
+            return result;
+        }
+
+        protected static int updateClaimForm(ActivityForm model)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateActivityClaim"
+                    , new SqlParameter[] {new SqlParameter("@actId",model.id)
+                    ,new SqlParameter("@chkAddIO",model.chkAddIO)
+                    ,new SqlParameter("@actCliam",model.actClaim)
+                    ,new SqlParameter("@actIO",model.actIO)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> updateClaimForm");
             }
 
             return result;
