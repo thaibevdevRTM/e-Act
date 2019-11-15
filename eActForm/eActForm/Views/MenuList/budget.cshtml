@@ -16,7 +16,7 @@
                 </li>
             }
 
-            @if ((UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            @if ((UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>
                     <a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
@@ -25,7 +25,7 @@
                 </li>
             }
 
-            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            @if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>
                     <a href="@Url.Action("activityIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
@@ -34,7 +34,7 @@
                 </li>
             }
 
-            @if ((UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            @if ((UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] && UtilsAppCode.Session.User.isCreator) || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>
                     <a href="@Url.Action("manageInvoiceIndex", "Budget", new { typeForm = Budget_Activity_Model.budgetType.OMT.ToString() })">
