@@ -11,7 +11,7 @@
 <div id='dialogDiv' class='modal hide fade in'>
     <div id='dialogContent'></div>
 </div>
-@using (Html.BeginForm("insertUsers", "AdminUser", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("insertUsers", "AdminUser", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" ,onsubmit = "validateForm(event)" }))
 {
 
 
@@ -159,7 +159,11 @@
 }
 
 <script type="text/javascript">
-        var index = 0;
+    var index = 0;
+    function validateForm(event) {
+        console.log(event);
+        return false;
+    }
         $(document).ready(function () {
             $('#datatable').DataTable({
                 "dom": 'lCfrtip',
