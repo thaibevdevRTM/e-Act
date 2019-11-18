@@ -322,6 +322,31 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult reGenReportDetail(string gridHtml, string actRepDetailId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                gridHtml = gridHtml.Replace("<br>", "<br/>");
+                RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
+
+
+                RepDetailAppCode.reGenPDFReportDetail(actRepDetailId, gridHtml);
+                Session["ActFormRepDetail"] = null;
+                result.Success = true;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return Json(result);
+        }
         /// <summary>
         /// for approve page
         /// </summary>
