@@ -172,6 +172,9 @@ namespace eActForm.Models
         public string regionName { get; set; }
         public string regionShort { get; set; }
         public string typeForm { get; set; }
+        public Boolean chkAddIO { get; set; }
+        public string actIO { get; set; }
+        public string actClaim { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel
