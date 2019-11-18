@@ -1031,11 +1031,11 @@
             document.getElementById("rdbOutterm").disabled = true;
             document.getElementById("btnUpdate").style.display = "none";
 
-        var arrayOfElements = document.getElementsByClassName('divDelImg');
-        var lengthOfArray = arrayOfElements.length;
-        for (var i = 0; i < lengthOfArray; i++) {
-            arrayOfElements[i].style.display = 'none';
-        }
+             var arrayOfElements = document.getElementsByClassName('divDelImg');
+             var lengthOfArray = arrayOfElements.length;
+             for (var i = 0; i < lengthOfArray; i++) {
+                 arrayOfElements[i].style.display = 'none';
+             }
 
 
         if ('@Model.activityFormModel.statusId' == '5') {
@@ -1052,7 +1052,11 @@
             document.getElementById("txtActivityName").disabled = false;
             document.getElementById("txtReference").disabled = false;
 
-            
+            var arrayOfElements = document.getElementsByClassName('divDelImg');
+            var lengthOfArray = arrayOfElements.length;
+            for (var i = 0; i < lengthOfArray; i++) {
+                arrayOfElements[i].style.display = 'block';
+            }     
         }
 
 

@@ -26,7 +26,8 @@ namespace eActForm.Controllers
             try
             {
                 SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
-                ViewBag.TypeForm = typeForm;
+                models.typeForm = typeForm;
+               // ViewBag.TypeForm = typeForm;
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
                     if (typeForm == Activity_Model.activityType.MT.ToString())
