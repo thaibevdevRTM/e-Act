@@ -294,7 +294,7 @@
             success: function (response) {
                 if (response.Code > 0) {
                     bootbox.alert('Success')
-                    window.open('@Url.Action("Index", "AdminUser")');
+                    window.location.href = "/AdminUser/Index";
                 }
             }
         });
