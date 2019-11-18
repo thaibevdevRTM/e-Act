@@ -1107,6 +1107,11 @@
             document.getElementById("txtActIO").disabled = false;
             document.getElementById("txtActClaim").disabled = false;
 
+            var arrayOfElements = document.getElementsByClassName('divDelImg');
+            var lengthOfArray = arrayOfElements.length;
+            for (var i = 0; i < lengthOfArray; i++) {
+                arrayOfElements[i].style.display = 'block';
+            }
         }
 
 
