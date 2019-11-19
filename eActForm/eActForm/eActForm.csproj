@@ -248,11 +248,13 @@
     <Compile Include="Controllers\SaleActualController.cs" />
     <Compile Include="Controllers\SignatureController.cs" />
     <Compile Include="Controllers\SummaryReportController.cs" />
+    <Compile Include="Controllers\TBMMKT_ActivityBudgetInputController.cs" />
     <Compile Include="Controllers\TBMMKT_ActivityBudgetReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ActBaseModel.cs" />
+    <Compile Include="Models\Activity_TBMMKT_Model.cs" />
     <Compile Include="Models\Activity_Model.cs" />
     <Compile Include="Models\ActSignatureModel.cs" />
     <Compile Include="Models\ActUserModel.cs" />
@@ -2352,6 +2354,12 @@
     <Content Include="Views\TBMMKT_ActivityBudgetReport\activityDetails.cshtml" />
     <Content Include="Views\TBMMKT_ActivityBudgetReport\activityBudgetDetails.cshtml" />
     <Content Include="Views\TBMMKT_ActivityBudgetReport\lastwordForFYI.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\activityBudgetDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\activityDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\headerCompany.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\headerDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\Index.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\lastwordForFYI.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

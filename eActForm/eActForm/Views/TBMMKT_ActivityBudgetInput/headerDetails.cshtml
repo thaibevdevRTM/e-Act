@@ -1,0 +1,92 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+<div id="divHeaderDetails" runat="server" style="width: 100%;">
+    <table style="width: 100%;" id="tabelHeaderDetails" runat="server">
+        <tr>
+            <td style="width: 15%;border-style: solid;border-width: 1px 0.5px 0px 0.5px; border-collapse: collapse;border-left:none;border-top:none;">
+                &nbsp;วันที่เสนอกิจกรรม
+            </td>
+            <td colspan="3" style="border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;border-top:none;">
+                @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "", @id = "txtdateDoc" })
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 15%;border-style: solid;border-width: 1px 0.5px 0px 0.5px; border-collapse: collapse;border-left:none;">
+                &nbsp;ชื่อผู้เสนอกิจกรรม
+            </td>
+            <td style="width: 55%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;">
+                @UtilsAppCode.Session.User.empFNameTH  @UtilsAppCode.Session.User.empLNameTH
+            </td>
+            <td style="width: 10%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
+                &nbsp;เบอร์โทรศัพท์
+            </td>
+            <td style="width: 20%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
+                @Html.TextBoxFor(x => x.TB_Act_ActivityForm_DetailOther.activityTel, new { @class = "", @id = "txtactivityTel" })
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 15%;border-style: solid;border-width: 1px 0.5px 0px 0.5px; border-collapse: collapse;border-left:none;">
+                &nbsp;สินค้า
+            </td>
+            <td style="width: 55%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;">
+                @Html.TextBoxFor(x => x.TB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "", @id = "txtactivityProduct" })
+            </td>
+            <td style="width: 10%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
+                &nbsp;เอกสารเลขที่
+            </td>
+            <td style="width: 20%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
+                @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "", @id = "txtActivityNo", @readonly = "readonly" })
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 15%;border-style: solid;border-width: 1px 0.5px 0px 0.5px; border-collapse: collapse;border-left:none;">
+                &nbsp;ชื่อกิจกรรม
+            </td>
+            <td style="width: 55%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;">
+                @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "", @id = "txtActivityName" })
+            </td>
+            <td style="width: 10%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
+                &nbsp;EO
+            </td>
+            <td style="width: 20%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
+                @Html.TextBoxFor(x => x.TB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "txtEO" })
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 15%;border-style: solid;border-width: 1px 0.5px 0px 0.5px; border-collapse: collapse;border-left:none;border-bottom:none;">
+                &nbsp;เริ่มกิจกรรม
+            </td>
+            <td colspan="3" style="width: 55%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;border-bottom:none;">
+                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "", id = "txtdateActivitySt" })&nbsp;ถึง&nbsp;@Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "", id = "txtdateActivityEnd" })
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 15%;border-style: solid;border-width: 1px 0.5px 0px 0px; border-collapse: collapse;border-left:none;border-bottom:none;vertical-align:top;">
+                &nbsp;วัตถุประสงค์
+            </td>
+            <td colspan="3" style="width: 55%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;border-bottom:none;">
+                @Html.TextAreaFor(x => x.activityFormModel.objective, new { @class = "", @id = "txtObjective" })
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 15%;border-style: solid;border-width: 1px 0.5px 0px 0px; border-collapse: collapse;border-left:none;border-bottom:none;vertical-align:top;">
+                &nbsp;เอกสารแนบ
+            </td>
+            <td colspan="3" style="width: 55%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;border-bottom:none;">
+                <div class="" id="divUploadFiles">
+                    <form action="@Url.Action("uploadFilesImage", "Activity", new { actId = Model.activityFormModel.id})" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
+                        <div class="dz-message">
+                            <span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-12">
+                    <div id="divgetimage" class="col-md-12">
+                        @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id })
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>
