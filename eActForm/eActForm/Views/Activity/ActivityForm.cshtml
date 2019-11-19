@@ -249,13 +249,10 @@
                     </div>
                     <div class="row">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            @Html.CheckBoxFor(m => m.activityFormModel.chkAddIO, new { id = "chkAddIO", onchange = "OnChangeChkIO(this)" }) IO,Claim
+                            @Html.CheckBoxFor(m => m.activityFormModel.chkAddIO, new { id = "chkAddIO", onchange = "OnChangeChkIO(this)" }) IO
                         </label>
-                        <div id="divIO" class="col-md-9 col-sm-9 col-xs-12">
-                            <label class="control-label col-md-1 col-sm-1 col-xs-12">
-                                IO
-                            </label>
-                            <div class="col-md-5 col-sm-5 col-xs-12">
+                        <div id="divIO" class="col-md-9 col-sm-9 col-xs-12" style="margin-left:-10px">
+                            <div class="col-md-5 col-sm-5 col-xs-12" >
                                 @Html.TextBoxFor(x => x.activityFormModel.actIO, new { @class = "form-control textboxcss", id = "txtActIO" })
                             </div>
                             <label class="control-label col-md-2 col-sm-2 col-xs-12">
