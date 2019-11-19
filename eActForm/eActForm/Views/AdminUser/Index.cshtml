@@ -281,25 +281,44 @@
                     });
                 }
             });
-    }
+        }
+
 
     function onClickDel(empId) {
-        $.ajax({
-            url: '@Url.Action("delUserandAuthor", "AdminUser")',
-            data: {
-                empId: empId,
+        bootbox.confirm({
+            message: "คุณต้องการ ลบ User : " + empId + " ใช่หรือไม่ ?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
             },
-            dataType: "json",
-            type: 'POST',
-            success: function (response) {
-                if (response.Code > 0) {
-                    bootbox.alert('Success')
-                    window.location.href = "/AdminUser/Index";
+            callback: function (result) {
+                if (result == true) {
+                    if (result) {
+                        $("#WaitDialog").show();
+                        $.ajax({
+                            url: '@Url.Action("delUserandAuthor", "AdminUser")',
+                            data: {
+                                empId: empId,
+                            },
+                            dataType: "json",
+                            type: 'POST',
+                        }).done(function (response) {
+                            if (response.Code > 0) {
+                                bootbox.alert('Success')
+                                window.location.href = '@Url.Action("Index", "AdminUser")';
+                            }
+                        });
+                    }
+
                 }
             }
         });
     }
-
-
 
 </script>
