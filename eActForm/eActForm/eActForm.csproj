@@ -221,6 +221,7 @@
     <Compile Include="BusinessLayer\Appcodes\SignatureAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UtilsAppCode.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetSelectBrandOrChannel.cs" />
     <Compile Include="Controllers\actFormRepDetailController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\ActivityCostDetailController.cs" />
@@ -2366,6 +2367,8 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="BusinessLayer\Tbmmkt\Appcodes\" />
+    <Folder Include="BusinessLayer\Tbmmkt\CommandHandler\" />
     <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />

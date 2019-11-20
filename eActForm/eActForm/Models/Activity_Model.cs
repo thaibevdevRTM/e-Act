@@ -214,6 +214,7 @@ namespace eActForm.Models
         {
             detailGroup = new List<ProductCostOfGroupByPrice>();
         }
+       
     }
 
     public class CostThemeDetail : ActBaseModel

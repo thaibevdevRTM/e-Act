@@ -9,6 +9,98 @@
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
 <link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-ui.js"></script>
+<style>
+    .cssTableTDTextCenter {
+        max-width: none;
+        text-align: center;
+        width: 100%;
+    }
+    .cssTableTDTextLeft {
+        max-width:none;
+        text-align: left;
+        width: 100%;
+    }
+    .cssTableTDDetailNumber{
+        text-align:right;
+        width:100%;
+    }
+</style>
+<div id="divconditionFlow" class="form-group" style="width:97%; margin-left:20px;">
+    <div class="col-md-12 col-xs-12">
+        <div class="row">
+            <div style="display:inline-block;">
+                <label class="control-label" for="ddlRegion">
+                    Condition Flow<span class="required">:&nbsp;</span>
+                </label>
+                @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.TB_Act_ActivityForm_SelectBrandOrChannel, "val", "txt", 0), "", new
+                {
+                    @class = "",
+                    id = "ddlChannelOrBrand"
+                })
+                <script>
+
+                    $(function () {
+                        $("#divBrand").hide();
+                        $("#divChannel").hide();
+                        $("#GridPDF").hide();
+                    });
+
+                    $("#ddlChannelOrBrand").change(function () {
+                        if ($("#ddlChannelOrBrand").val() == "Channel") {
+                            $("#divChannel").show();
+                            $("#divBrand").hide();
+                        }
+                        else if ($("#ddlChannelOrBrand").val() == "Brand") {
+                            $("#divBrand").show();
+                            $("#divChannel").hide();
+                        }
+                        else {
+                            $("#divBrand").hide();
+                            $("#divChannel").hide();
+                            $("#GridPDF").hide();
+                        }
+                    });
+                </script>
+            </div>
+            <div id="divChannel" style="display:inline-block;">
+                <label class="control-label" for="ddlChannel">
+                    &nbsp;Choose Channel<span class="required">:&nbsp;</span>
+                </label>
+                @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.TB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
+                {
+                    @class = "",
+                    id = "ddlChannel"
+                })
+            </div>
+            <div id="divBrand" style="display:inline-block;">
+                <label class="control-label" for="ddlBrand">
+                    &nbsp;Choose Brand<span class="required">*</span>
+                </label>
+                @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.TB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
+                {
+                    @class = "",
+                    id = "ddlBrand"
+                })
+            </div>
+            <script>
+                $("#ddlChannel").change(function () {
+                    if ($("#ddlChannelOrBrand").val() != "" && $(this).find("option:selected").text() != "") {
+                        $("#GridPDF").show();
+                    } else {
+                        $("#GridPDF").hide();
+                    }
+                });
+                $("#ddlBrand").change(function () {
+                    if ($("#ddlChannelOrBrand").val() != "" && $(this).find("option:selected").text() != "") {
+                        $("#GridPDF").show();
+                    } else {
+                        $("#GridPDF").hide();
+                    }
+                });
+            </script>
+        </div>
+    </div>
+</div>
 <div id="GridPDF" style="width:97%; margin-left:20px;">
     <table style="width: 100%;border: 1px solid black; border-collapse: collapse;" id="tabel_report" runat="server">
         <tr>
@@ -60,9 +152,8 @@
             <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
                 <div style="height:5px;"></div>
                 <div style="width: 100%; text-align: left;">
-                    &nbsp;หมายเหตุ...............................................
+                    &nbsp;หมายเหตุ @Html.TextBoxFor(x => x.remark, new { @class = "", @id = "txtremark" })
                     <br />
-                    &nbsp;..............................................................
                 </div>
             </td>
         </tr>
@@ -89,15 +180,15 @@
     </table>
 
 </div>
-<div class="center-block">
-    @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
-    {
-        <input type="hidden" name="gridHtml" />
-        <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
-            <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
-        </button>
-    }
-</div>
+@*<div class="center-block">
+        @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
+        {
+            <input type="hidden" name="gridHtml" />
+            <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
+                <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
+            </button>
+        }
+    </div>*@
 @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
 @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
 @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
@@ -105,7 +196,6 @@
     $("#btnExportPDF").click(function () {
         $("input[name='gridHtml']").val($("#GridPDF").html());
     });
-
 
     $(function () {
         $("#txtdateDoc").datepicker({

@@ -1,4 +1,8 @@
-﻿<div id="divHeaderDetails" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+
+<div id="divHeaderDetails" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
     รูปแบบการดำเนินการ
     <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelHeaderDetails" runat="server">
         <tr style="background-color:#2f74b5;color:white;height:25px;">
@@ -7,23 +11,24 @@
             <th style="width: 65%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Activity</th>
             <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Amount</th>
         </tr>
-        @for (int i = 0; i <= 7; i++)
-        {
-            <tr>
-                <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                    &nbsp;
-                </td>
-                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    &nbsp;
-                </td>
-                <td style="width: 65%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    &nbsp;
-                </td>
-                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                    &nbsp;
-                </td>
-            </tr>
-        }
+        @foreach (var item in Model.List_TB_Act_ActivityLayout)
+    {
+        <tr>
+            <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                @Html.HiddenFor(model => item.id, new { id = "hidid" })
+                @Html.TextBoxFor(model => item.no, new { @class = "cssTableTDTextCenter", @id = "txtno" })
+            </td>
+            <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                @Html.TextBoxFor(model => item.io, new { @class = "cssTableTDTextCenter", @id = "txtio" })
+            </td>
+            <td style="width: 65%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                @Html.TextBoxFor(model => item.activity, new { @class = "cssTableTDTextLeft", @id = "txtactivity" })
+            </td>
+            <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                @Html.TextBoxFor(model => item.amount, new { @class = "cssTableTDDetailNumber", @id = "txtamount" })
+            </td>
+        </tr>
+}
         <tr>
             <td colspan="3" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                 TOTAL&nbsp;

@@ -44,6 +44,11 @@ namespace eActForm.Controllers
                 //    activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getAllRegion();
                 //}
 
+
+                activity_TBMMKT_Model.TB_Act_ProductBrand_Model = QueryGetAllBrand.GetAllBrand();
+                activity_TBMMKT_Model.TB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel();
+                activity_TBMMKT_Model.TB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
+
                 if (!string.IsNullOrEmpty(activityId))
                 {
 
@@ -62,6 +67,32 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     //activity_TBMMKT_Model.activityFormModel.mode = mode;
                     //activity_TBMMKT_Model.activityFormModel.statusId = 1;
+
+                    //===mock uat====
+                    List<CostThemeDetailOfGroupByPriceTBMMKT> CostThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>
+                {
+                    new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
+                    ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
+                    ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
+                    ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
+                    ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
+                    ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
+                    ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
+                };
+                    List<TB_Act_ActivityLayout> List_TB_Act_ActivityLayout = new List<TB_Act_ActivityLayout>
+                {
+                    new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
+                    ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
+                    ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
+                    ,new TB_Act_ActivityLayout() {id="", no = "", io = "", activity = "",amount = 0 }
+                    ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
+                    ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
+                    ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
+                };
+                    activity_TBMMKT_Model.CostThemeDetailOfGroupByPriceTBMMKT = CostThemeDetailOfGroupByPriceTBMMKT;
+                    activity_TBMMKT_Model.List_TB_Act_ActivityLayout = List_TB_Act_ActivityLayout;
+                    //=END==mock uat====
+
                     TempData["actForm" + actId] = activity_TBMMKT_Model;
                 }
 
@@ -75,7 +106,8 @@ namespace eActForm.Controllers
             return View(activity_TBMMKT_Model);
         }
 
-        public JsonResult insertDataActivity(ActivityFormTBMMKT activityFormTBMMKT)
+
+        public JsonResult insertDataActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             var result = new AjaxResult();
             //try
