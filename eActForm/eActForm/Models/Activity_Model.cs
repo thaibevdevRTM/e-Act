@@ -175,6 +175,7 @@ namespace eActForm.Models
         public Boolean chkAddIO { get; set; }
         public string actIO { get; set; }
         public string actClaim { get; set; }
+        public string companyId { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel

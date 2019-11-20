@@ -36,6 +36,7 @@ namespace eActForm.BusinessLayer
                 model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                 model.activityFormModel.updatedDate = DateTime.Now;
+                model.activityFormModel.companyId = UtilsAppCode.Session.User.empCompanyId;
                 rtn = insertActivityForm(model.activityFormModel);
                 rtnIO = insertCliamIO(model.activityFormModel);
 
@@ -289,6 +290,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@objective",model.objective)
                     ,new SqlParameter("@trade",model.trade)
                     ,new SqlParameter("@activityDetail",model.activityDetail)
+                    ,new SqlParameter("@companyId",model.companyId)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
