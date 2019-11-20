@@ -24,6 +24,7 @@ namespace eActForm.Models
             public string ProductTypeName { get; set; }
             public DateTime? startDate { get; set; }
             public DateTime? endDate { get; set; }
+            public string typeForm { get; set; }
         }
     }
 }

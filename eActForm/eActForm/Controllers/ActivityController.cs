@@ -59,6 +59,7 @@ namespace eActForm.Controllers
                     activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
                     activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
                     TempData["actForm" + activityId] = activityModel;
+                    ViewBag.chkClaim = activityModel.activityFormModel.chkAddIO;
                 }
                 else
                 {

@@ -15,6 +15,20 @@ namespace eActForm.BusinessLayer
 {
     public class RepDetailAppCode
     {
+        public static void reGenPDFReportDetail(string actRepDetailId, string gridHtml)
+        {
+            try
+            {
+                string fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId);
+                var rootPath = HttpContext.Current.Server.MapPath(fileName);
+                List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("genFilePDF >> " + ex.Message);
+            }
+        }
+
         public static void genFilePDFBrandGroup(string actRepDetailId, string gridHtml, string htmlOS, string htmlEst, string htmlWA, string htmlSO)
         {
             try
@@ -327,7 +341,8 @@ namespace eActForm.BusinessLayer
                                                      }).ToList();
 
                 actRepModel.actFormRepDetailGroupLists = actRepModel.actFormRepDetailLists
-                    .GroupBy(item => new {
+                    .GroupBy(item => new
+                    {
                         item.activityNo,
                         item.productGroupid
                     })
