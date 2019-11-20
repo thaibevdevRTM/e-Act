@@ -10,8 +10,7 @@ using static eActForm.Models.TB_Act_Product_Model;
 namespace eActForm.Models
 {
     public class Activity_TBMMKT_Model : Activity_Model
-    {
-        public string remark { get; set; }
+    {        
         public TB_Act_ActivityForm_DetailOther TB_Act_ActivityForm_DetailOther { get; set; }
         public List<TB_Act_Chanel_Model.Chanel_Model> TB_Act_Chanel_Model { get; set; }
         public List<TB_Act_ProductBrand_Model> TB_Act_ProductBrand_Model { get; set; }
@@ -22,13 +21,14 @@ namespace eActForm.Models
 
     public class ActivityFormTBMMKT : ActivityForm
     {
-        
+
+    
     }
 
     public class TB_Act_ActivityForm_DetailOther
     {
         public string Id { get; set; }
-        public string activityNo { get; set; }
+        public string activityId { get; set; }
         public string activityProduct { get; set; }
         public string activityTel { get; set; }
         public string EO { get; set; }

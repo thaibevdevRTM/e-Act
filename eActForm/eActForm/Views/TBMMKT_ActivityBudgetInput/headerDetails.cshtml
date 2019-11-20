@@ -68,25 +68,6 @@
                 @Html.TextAreaFor(x => x.activityFormModel.objective, new { @class = "", @id = "txtObjective" })
             </td>
         </tr>
-        <tr>
-            <td style="width: 15%;border-style: solid;border-width: 1px 0.5px 0px 0px; border-collapse: collapse;border-left:none;border-bottom:none;vertical-align:top;">
-                &nbsp;เอกสารแนบ
-            </td>
-            <td colspan="3" style="width: 55%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;border-bottom:none;">
-                <div class="" id="divUploadFiles">
-                    <form action="@Url.Action("uploadFilesImage", "Activity", new { actId = Model.activityFormModel.id})" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
-                        <div class="dz-message">
-                            <span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-12">
-                    <div id="divgetimage" class="col-md-12">
-                        @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id })
-                    </div>
-                </div>
-            </td>
-        </tr>
     </table>
 
 </div>

@@ -107,34 +107,35 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult insertDataActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public ActionResult insertDataActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            
             var result = new AjaxResult();
-            //try
-            //{
-            //    string statusId = "";
-            //    Activity_Model activityModel = TempData["actForm" + activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + activityFormModel.id];
-            //    activityModel.activityFormModel = activityFormModel;
-            //    statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
-            //    if (statusId == "1" || statusId == "5" || statusId == "")
-            //    {
-            //        int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, activityFormModel.id);
-            //    }
-            //    else
-            //    {
-            //        result.MessageCode = "001";
-            //    }
+            try
+            {
+                string statusId = "";
+                //Activity_Model activityModel = TempData["actForm" + activity_TBMMKT_Model.activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + activity_TBMMKT_Model.activityFormModel.id];
+                //activityModel.activityFormModel = activityFormModel;
+                statusId = ActivityFormCommandHandler.getStatusActivity(activity_TBMMKT_Model.activityFormModel.id);
+                if (statusId == "1" || statusId == "5" || statusId == "")
+                {
+                    int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
+                }
+                else
+                {
+                    result.MessageCode = "001";
+                }
 
-            //    TempData.Keep();
-            //    result.Success = true;
-            //}
-            //catch (Exception ex)
-            //{
-            //    result.Success = false;
-            //    result.Message = ex.Message;
-            //    ExceptionManager.WriteError("insertDataActivity => " + ex.Message);
-            //}
-            return Json(result, JsonRequestBehavior.AllowGet);
+                TempData.Keep();
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("insertDataActivityTBMMKT => " + ex.Message);
+            }
+            return View(activity_TBMMKT_Model);
         }
 
     }

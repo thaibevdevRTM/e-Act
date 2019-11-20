@@ -15,183 +15,174 @@
         text-align: center;
         width: 100%;
     }
+
     .cssTableTDTextLeft {
-        max-width:none;
+        max-width: none;
         text-align: left;
         width: 100%;
     }
-    .cssTableTDDetailNumber{
-        text-align:right;
-        width:100%;
+
+    .cssTableTDDetailNumber {
+        text-align: right;
+        width: 100%;
     }
 </style>
-<div id="divconditionFlow" class="form-group" style="width:97%; margin-left:20px;">
-    <div class="col-md-12 col-xs-12">
-        <div class="row">
-            <div style="display:inline-block;">
-                <label class="control-label" for="ddlRegion">
-                    Condition Flow<span class="required">:&nbsp;</span>
-                </label>
-                @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.TB_Act_ActivityForm_SelectBrandOrChannel, "val", "txt", 0), "", new
-                {
-                    @class = "",
-                    id = "ddlChannelOrBrand"
-                })
-                <script>
+@using (Html.BeginForm("insertDataActivity", "TBMMKT_ActivityBudgetInput", FormMethod.Post, new { id = "divconditionFlow", @class = "form-horizontal", role = "form" }))
+{
 
-                    $(function () {
-                        $("#divBrand").hide();
-                        $("#divChannel").hide();
-                        $("#GridPDF").hide();
-                    });
-
-                    $("#ddlChannelOrBrand").change(function () {
-                        if ($("#ddlChannelOrBrand").val() == "Channel") {
-                            $("#divChannel").show();
-                            $("#divBrand").hide();
-                        }
-                        else if ($("#ddlChannelOrBrand").val() == "Brand") {
-                            $("#divBrand").show();
-                            $("#divChannel").hide();
-                        }
-                        else {
-                            $("#divBrand").hide();
-                            $("#divChannel").hide();
-                            $("#GridPDF").hide();
-                        }
-                    });
-                </script>
-            </div>
-            <div id="divChannel" style="display:inline-block;">
-                <label class="control-label" for="ddlChannel">
-                    &nbsp;Choose Channel<span class="required">:&nbsp;</span>
-                </label>
-                @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.TB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
-                {
-                    @class = "",
-                    id = "ddlChannel"
-                })
-            </div>
-            <div id="divBrand" style="display:inline-block;">
-                <label class="control-label" for="ddlBrand">
-                    &nbsp;Choose Brand<span class="required">*</span>
-                </label>
-                @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.TB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
-                {
-                    @class = "",
-                    id = "ddlBrand"
-                })
-            </div>
-            <script>
-                $("#ddlChannel").change(function () {
-                    if ($("#ddlChannelOrBrand").val() != "" && $(this).find("option:selected").text() != "") {
-                        $("#GridPDF").show();
-                    } else {
-                        $("#GridPDF").hide();
-                    }
-                });
-                $("#ddlBrand").change(function () {
-                    if ($("#ddlChannelOrBrand").val() != "" && $(this).find("option:selected").text() != "") {
-                        $("#GridPDF").show();
-                    } else {
-                        $("#GridPDF").hide();
-                    }
-                });
-            </script>
-        </div>
-    </div>
-</div>
-<div id="GridPDF" style="width:97%; margin-left:20px;">
-    <table style="width: 100%;border: 1px solid black; border-collapse: collapse;" id="tabel_report" runat="server">
-        <tr>
-            <td>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerCompany.cshtml")
-            </td>
-        </tr>
-        <tr>
-            <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
-                    ขออนุมัติงบประมาณกิจกรรม.....................
-                </div>
-            </td>
-        </tr>
-        <tr style="border: 1px solid black; border-collapse: collapse;border-bottom:none;">
-            <td>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerDetails.cshtml")
-            </td>
-        </tr>
-        <tr>
-            <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                <div style="height:5px;"></div>
-                <div style="width: 100%; text-align: left;">
-                    &nbsp;ค่าใช้จ่ายในการทำกิจกรรม..........................จำนวนเงิน............บาท
-                    <br />
-                    &nbsp;รายละเอียดงบประมาณ
-                </div>
-            </td>
-        </tr>
-        <tr style="border-bottom:none;">
-            <td>
-                <div style="height:5px;"></div>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/activityDetails.cshtml")
-            </td>
-        </tr>
-        <tr style="border-bottom:none;">
-            <td>
-                <div style="height:5px;"></div>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/activityBudgetDetails.cshtml")
-            </td>
-        </tr>
-        <tr style="border-bottom:none;">
-            <td>
-                <div style="height:20px;"></div>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/lastwordForFYI.cshtml")
-            </td>
-        </tr>
-        <tr>
-            <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
-                <div style="height:5px;"></div>
-                <div style="width: 100%; text-align: left;">
-                    &nbsp;หมายเหตุ @Html.TextBoxFor(x => x.remark, new { @class = "", @id = "txtremark" })
-                    <br />
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="height:150px;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                <div style="height:5px;"></div>
-                <div style="width: 100%; text-align: left;">
-                    @*@if (Model.activityFormModel != null)
-                        {
-                            @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
-                        }*@
-                    &nbsp;
-                    <div class="inner">
-                        <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
+    <div id="GridPDF" style="width:97%; margin-left:20px;">
+        <table style="width: 100%;border: 1px solid black; border-collapse: collapse;" id="tabel_report" runat="server">
+            <tr>
+                <td>
+                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerCompany.cshtml")
+                </td>
+            </tr>
+            <tr>
+                <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                    <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
+                        ขออนุมัติงบประมาณกิจกรรม.....................
                     </div>
-                </div>
-            </td>
-        </tr>
-        <tr style="border-bottom:none;">
-            <td>
-                &nbsp;<br />
-            </td>
-        </tr>
-    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                    <div id="divHeadCompany" runat="server" style="width: 100%; align-content: left; text-align: left;">
+                        <div style="display:inline-block;">
+                            <label class="control-label" for="ddlRegion">
+                                &nbsp;Condition Flow<span class="required">:&nbsp;</span>
+                            </label>
+                            @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.TB_Act_ActivityForm_SelectBrandOrChannel, "val", "txt", 0), "", new
+                            {
+                                @class = "",
+                                id = "ddlChannelOrBrand"
+                            })
+                            <script>
+                                $(function () {
+                                    //ทำหลังLoadหน้่าเว็บเสร็จ
+                                });
 
-</div>
-@*<div class="center-block">
-        @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
-        {
-            <input type="hidden" name="gridHtml" />
-            <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
-                <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
-            </button>
-        }
-    </div>*@
-@Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
-@Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
-@Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
+                                $("#ddlChannelOrBrand").change(function () {
+                                    if ($("#ddlChannelOrBrand").val() == "Channel") {
+                                        $('#divChannel').css('display', 'inline-block');
+                                        $("#divBrand").hide();
+                                    }
+                                    else if ($("#ddlChannelOrBrand").val() == "Brand") {
+                                        $('#divBrand').css('display', 'inline-block');
+                                        $("#divChannel").hide();
+                                    }
+                                    else {
+                                        $("#divBrand").hide();
+                                        $("#divChannel").hide();
+                                    }
+                                });
+                            </script>
+                        </div>
+                        <div id="divChannel" style="display:none;">
+                            <label class="control-label" for="ddlChannel">
+                                &nbsp;Choose Channel<span class="required">:&nbsp;</span>
+                            </label>
+                            @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.TB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
+                            {
+                                @class = "",
+                                id = "ddlChannel"
+                            })
+                        </div>
+                        <div id="divBrand" style="display:none;">
+                            <label class="control-label" for="ddlBrand">
+                                &nbsp;Choose Brand<span class="required">*</span>
+                            </label>
+                            @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.TB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
+                            {
+                                @class = "",
+                                id = "ddlBrand"
+                            })
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="border: 1px solid black; border-collapse: collapse;border-bottom:none;">
+                <td>
+                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerDetails.cshtml")
+                </td>
+            </tr>
+            <tr>
+                <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                    <div style="height:5px;"></div>
+                    <div style="width: 100%; text-align: left;">
+                        &nbsp;ค่าใช้จ่ายในการทำกิจกรรม..........................จำนวนเงิน............บาท
+                        <br />
+                        &nbsp;รายละเอียดงบประมาณ
+                    </div>
+                </td>
+            </tr>
+            <tr style="border-bottom:none;">
+                <td>
+                    <div style="height:5px;"></div>
+                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/activityDetails.cshtml")
+                </td>
+            </tr>
+            <tr style="border-bottom:none;">
+                <td>
+                    <div style="height:5px;"></div>
+                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/activityBudgetDetails.cshtml")
+                </td>
+            </tr>
+            <tr style="border-bottom:none;">
+                <td>
+                    <div style="height:20px;"></div>
+                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/lastwordForFYI.cshtml")
+                </td>
+            </tr>
+            <tr>
+                <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+                    <div style="height:5px;"></div>
+                    <div style="width: 100%; text-align: left;padding-left:15px;">
+                        หมายเหตุ @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "cssTableTDTextLeft", @id = "txtremark" })
+                        <br />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="height:50px;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                    <div style="height:5px;"></div>
+                    <div style="width: 100%; text-align: left;">
+                        @*@if (Model.activityFormModel != null)
+                            {
+                                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
+                            }*@
+                        &nbsp;
+                        <div class="inner" style="padding-left:15px;">
+                            <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="border-bottom:none;">
+                <td>
+                    &nbsp;<br />
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    @*<div class="center-block">
+            @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
+            {
+                <input type="hidden" name="gridHtml" />
+                <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
+                    <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
+                </button>
+            }
+        </div>*@
+    @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
+    @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
+    @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
+
+}
+<div style="height:5px;"></div>
+@RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
+
+
 <script>
     $("#btnExportPDF").click(function () {
         $("input[name='gridHtml']").val($("#GridPDF").html());
@@ -259,7 +250,7 @@
     function SubmitData()
     {
         $("#WaitDialog").show();
-
+        $("#divconditionFlow").submit();
         @*var cusId = '';
         if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()')
         {
@@ -271,7 +262,7 @@
         }*@
 
 
-            $.ajax({
+            @*$.ajax({
                 url: '@Url.Action("insertDataActivity", "TBMMKT_ActivityBudgetInput")',
                 data: {
                     //statusId: 1,
@@ -299,7 +290,7 @@
                     //ActivityDetail: $("#txtActivityDetail").val(),
                     //activityNo: $("#txtActivityNo").val(),
                     //createdByUserId: $("#hdcreateUser").val(),
-                    //id:'@Model.activityFormModel.id',
+                    //id:'Model.activityFormModel.id',
                 },
                 dataType: "json",
                 type: 'POST',
@@ -313,7 +304,7 @@
                     }
                     $("#WaitDialog").hide();
                 }
-            });
+            });*@
     }
 
 
