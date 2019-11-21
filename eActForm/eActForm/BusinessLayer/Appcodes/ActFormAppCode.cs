@@ -82,7 +82,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                string strCall = UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAll" : "usp_getActivityCustomersFormByEmpId";
+                string strCall = UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAll" : "usp_getActivityCustomersFormByEmpId";
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
                 , new SqlParameter[] {
@@ -165,14 +165,15 @@ namespace eActForm.BusinessLayer
 
         public static string getDigitRunnigGroup(string productId)
         {
+            string result = "";
             try
-            {
-                string result = "";
+            {    
                 result = QueryGetAllProduct.getProductById(productId).FirstOrDefault().digit_IO;
                 return result;
             }
             catch (Exception ex)
             {
+                return result;
                 throw new Exception("getDigitGroup >>" + ex.Message);
             }
         }

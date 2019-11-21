@@ -17,6 +17,7 @@ namespace eActForm.BusinessLayer
         public static int insertAllActivity(Activity_Model model, string activityId)
         {
             int rtn = 0;
+            int rtnIO = 0;
             try
             {
 
@@ -36,7 +37,7 @@ namespace eActForm.BusinessLayer
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                 model.activityFormModel.updatedDate = DateTime.Now;
                 rtn = insertActivityForm(model.activityFormModel);
-
+                rtnIO = insertCliamIO(model.activityFormModel);
 
                 int insertIndex = 1;
                 List<ProductCostOfGroupByPrice> insertProductlist = new List<ProductCostOfGroupByPrice>();
@@ -156,7 +157,10 @@ namespace eActForm.BusinessLayer
                   DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                 model.activityFormModel.updatedDate = DateTime.Now;
+
+
                 rtn = updateActivityForm(model.activityFormModel);
+                rtn = updateClaimForm(model.activityFormModel);
                 return rtn;
             }
             catch (Exception ex)
@@ -299,6 +303,38 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
+        protected static int insertCliamIO(ActivityForm model)
+        {
+            int result = 0;
+            try
+            {
+
+                if(model.chkAddIO == false)
+                {
+                    model.actClaim = "";
+                    model.actIO = "";
+                }
+
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertClaimIO"
+                    , new SqlParameter[] {new SqlParameter("@actId",model.id)
+                     ,new SqlParameter("@claim",model.actClaim)
+                    ,new SqlParameter("@IO",model.actIO)
+                    ,new SqlParameter("@checkbox",model.chkAddIO)
+                    ,new SqlParameter("@delFlag",model.delFlag)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertCliamIO");
+            }
+
+            return result;
+        }
+
 
         protected static int updateActivityForm(ActivityForm model)
         {
@@ -318,6 +354,28 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message + ">> updateActivityForm");
+            }
+
+            return result;
+        }
+
+        protected static int updateClaimForm(ActivityForm model)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateActivityClaim"
+                    , new SqlParameter[] {new SqlParameter("@actId",model.id)
+                    ,new SqlParameter("@chkAddIO",model.chkAddIO)
+                    ,new SqlParameter("@actCliam",model.actClaim)
+                    ,new SqlParameter("@actIO",model.actIO)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> updateClaimForm");
             }
 
             return result;

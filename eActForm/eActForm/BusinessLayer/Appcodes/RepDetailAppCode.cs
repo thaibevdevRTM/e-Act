@@ -15,6 +15,20 @@ namespace eActForm.BusinessLayer
 {
     public class RepDetailAppCode
     {
+        public static void reGenPDFReportDetail(string actRepDetailId, string gridHtml)
+        {
+            try
+            {
+                string fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId);
+                var rootPath = HttpContext.Current.Server.MapPath(fileName);
+                List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("genFilePDF >> " + ex.Message);
+            }
+        }
+
         public static void genFilePDFBrandGroup(string actRepDetailId, string gridHtml, string htmlOS, string htmlEst, string htmlWA, string htmlSO)
         {
             try
@@ -208,7 +222,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 DataSet ds = new DataSet();
-                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminOMT)
                 {
                     string stored = typeForm == Activity_Model.activityType.MT.ToString() ? "usp_getReportDetailByCreateDate" : "usp_getReportDetailOMTByCreateDate";
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored
@@ -244,7 +258,13 @@ namespace eActForm.BusinessLayer
                         new SqlParameter("@repDetailId",repDetailId)
                     });
 
-                return dataTableToRepDetailModels(ds);
+                RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
+                model = dataTableToRepDetailModels(ds);
+                model.actFormRepDetailGroupLists.Select(r => r.delFlag = false
+                        ).ToList();
+                model.actFormRepDetailLists.Select(r => r.delFlag = false
+                        ).ToList();
+                return model;
             }
             catch (Exception ex)
             {
@@ -321,7 +341,8 @@ namespace eActForm.BusinessLayer
                                                      }).ToList();
 
                 actRepModel.actFormRepDetailGroupLists = actRepModel.actFormRepDetailLists
-                    .GroupBy(item => new {
+                    .GroupBy(item => new
+                    {
                         item.activityNo,
                         item.productGroupid
                     })
