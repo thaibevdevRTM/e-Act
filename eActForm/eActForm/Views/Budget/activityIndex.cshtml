@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
 	ViewBag.Title = "activityIndex";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 	var var_companyEN = Request.QueryString["typeForm"];
@@ -10,41 +9,41 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <style type="text/css">
-	.my-bootbox-class .modal-dialog {
-		width: 400px;
-		font-size: 18px;
-	}
+    .my-bootbox-class .modal-dialog {
+        width: 400px;
+        font-size: 18px;
+    }
 </style>
 
 <div class="alert alert-success" role="alert">
-	<h4 class="alert-heading">แบบฟอร์มรายละเอียดค่าใช้จ่าย ตั้งจ่ายจริง</h4>
+    <h4 class="alert-heading">แบบฟอร์มรายละเอียดค่าใช้จ่าย ตั้งจ่ายจริง</h4>
 </div>
 
 <div class="row tile_count">
-	<div class="row tile_count">
-		<div class="col-md-12 col-xs-12">
-			@using (Ajax.BeginForm("searchBudgetActivityForm", "Budget"
-			, new { typeForm = @ViewBag.TypeForm }
-			, new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
-			, new { id = "form", @class = "form-horizontal form-label-left" }))
-			{
-				@RenderPage("~/Views/Shared/_searchBudgetActivity.cshtml")
-			}
-		</div>
-	</div>
+    <div class="row tile_count">
+        <div class="col-md-12 col-xs-12">
+            @using (Ajax.BeginForm("searchBudgetActivityForm", "Budget"
+            , new { typeForm = @ViewBag.TypeForm }
+            , new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
+            , new { id = "form", @class = "form-horizontal form-label-left" }))
+            {
+            @RenderPage("~/Views/Shared/_searchBudgetActivity.cshtml")
+            }
+        </div>
+    </div>
 </div>
 
 <div class="row tile_count">
-	<div id="getQuery" class="col-md-12 col-xs-12">
-		@Html.Action("activityList", "Budget")
-	</div>
+    <div id="getQuery" class="col-md-12 col-xs-12">
+        @Html.Action("activityList", "Budget")
+    </div>
 </div>
 
 <script type="text/javascript">
 	$(document).ready(function () {
 		removeComapny();
 	})
-	
+
     function beginQuery() {
 		$("#getQuery").fadeOut(300);
     }

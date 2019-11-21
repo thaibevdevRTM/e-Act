@@ -1,4 +1,5 @@
 ﻿@using eActForm.Models
+@using eActForm.BusinessLayer
 @model eActForm.Models.DocumentsModel.actRepDetailModels
 
 <div class="row">
@@ -33,7 +34,12 @@
                     <tr class="gradeX">
                         <td width="200">
 
-
+                            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                            {
+                                <a href="javascript:" onclick="return callPreviewApprove('@item.id');">
+                                    <i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
+                                </a>
+                            }
                             <a href="javascript:" target="_blank" onclick="return checkDelete('@item.id','@item.statusId');">
                                 <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
                             </a>
@@ -132,6 +138,31 @@
             $("#WaitDialog").hide();
             $("#divPreviewAct").html(htmlResponse)
             $('#divPreviewActModel').modal('show');
+        });
+    }
+
+    function callPreviewApprove(actId) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("repPreviewListView", "actFormRepDetail")',
+            data: {
+                actId: actId,
+            }
+        }).done(function (htmlResponse) {
+            genPdf(actId, htmlResponse);
+        });
+    }
+    function genPdf(actId, htmlResponse) {
+        $.ajax({
+            url: '@Url.Action("reGenReportDetail", "actFormRepDetail")',
+            data: {
+                GridHtml: htmlResponse,
+                actRepDetailId: actId,
+            },
+            dataType: "json",
+            type: 'POST',
+        }).done(function (response) {
+            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
         });
     }
 
