@@ -87,7 +87,7 @@ namespace eActForm.Controllers
             , string theme
             ,string actId
             ,string typeForm
-            ,string docDate)
+            ,string dateActivitySt)
         {
             var result = new AjaxResult();
             try
@@ -120,7 +120,7 @@ namespace eActForm.Controllers
                     if (ActFormAppCode.getDigitGroup(theme) != "")
                     {
                         
-                        DateTime getDoc = DateTime.ParseExact(docDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                        DateTime getDoc = DateTime.ParseExact(dateActivitySt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                         string getYear = getDoc.Month > 9 ? getDoc.AddYears(1).ToString("yy") : getDoc.Year.ToString().Substring(2);
                         costthememodel.IO = "56S0" + getYear + ActFormAppCode.getDigitGroup(theme) + ActFormAppCode.getDigitRunnigGroup(item.productId);
                     }

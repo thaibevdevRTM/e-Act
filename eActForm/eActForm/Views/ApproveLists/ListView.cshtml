@@ -89,6 +89,11 @@
 
     })
 
+    function setFlagAll(ele) {
+        var chkAll = ele.checked ? true : false;
+        $("input[name='chk_approve']:checkbox").prop('checked', chkAll);
+    }
+
     function submitApprove() {
         var favorite = [];
         var valChk = []; 
@@ -98,12 +103,6 @@
             submitApprove(favorite[favorite.length - 1]);
         });
     }
-
-    function setFlagAll(ele) {
-        var chkAll = ele.checked ? true : false;
-        $("input[name='chk_approve']:checkbox").prop('checked', chkAll);
-    }
-
     function submitApprove(actId) {
         $.ajax({
             type: 'POST',
