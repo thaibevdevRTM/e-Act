@@ -25,33 +25,18 @@
 	//}
 
 	function onClickSubmitApprove() {
-		@*$("#WaitDialog").show();
+		//$("#WaitDialog").show();
 		submitApproveBudget();
-		$("#WaitDialog").hide();
-		bootbox.alert("ดำเนินการเรียบร้อยแล้ว", function () {
-			var url = '@Url.Action("activityProduct", "Budget")';
-			window.location.href = url;
-		});*@
-
+		var url = '@Url.Action("activityProduct", "Budget")';
+		window.location.href = url;
+		bootbox.alert("ดำเนินการเรียบร้อยแล้ว");
+		//$("#WaitDialog").hide();
+		
 		//---------------------------------------------------------------
+		//var var_activityId = $("#hd_activityId").val();
+		//var var_activityOfEstimateId = $("#hd_activityOfEstimateId").val();
 
-		var var_activityId = $("#hd_activityId").val();
-		var var_activityOfEstimateId = $("#hd_activityOfEstimateId").val();
-
-		submitApproveBudget();
-
-		$.ajax({
-        type: 'POST',
-        url:  '@Url.Action("activityProductInvoiceList", "Budget")',
-        data: {
-			activityId: var_activityId,
-			activityOfEstimateId: var_activityOfEstimateId
-        }
-		}).done(function (htmlResponse) {
-			//alert("สลัดผัก");
-			$("#divPreviewInvoiceList").html(htmlResponse);
-			});
-
+		//submitApproveBudget();
 		//---------------------------------------------------------------
 	}
 

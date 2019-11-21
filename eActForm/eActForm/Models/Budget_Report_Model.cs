@@ -16,6 +16,14 @@ namespace eActForm.Models
 		{
 			public string company { get; set; }
 			public string channelName { get; set; }
+
+			public string reportMMYY { get; set; }
+			public string claim_actStatus { get; set; }
+			public string claim_shareStatus { get; set; }
+			public string claim_actValue { get; set; }
+			public string claim_actIO { get; set; }
+			public string product_IO { get; set; }
+			
 			public string act_activityNo { get; set; }
 			public string sub_code { get; set; }
 			public string act_activityName { get; set; }
