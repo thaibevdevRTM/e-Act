@@ -78,6 +78,31 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        public JsonResult insertApprove(string actId, string status, string approveType)
+        {
+            var result = new AjaxResult();
+            result.Success = false;
+            try
+            {
+                if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"]) > 0)
+                {
+                    result.Success = true;
+                }
+                else
+                {
+                    result.Message = AppCode.StrMessFail;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("insertApprove >>" + ex.Message);
+                result.Message = ex.Message;
+            }
+            return Json(result);
+        }
+
+
         public ActionResult approveLists(ApproveModel.approveModels models)
         {
             return PartialView(models);

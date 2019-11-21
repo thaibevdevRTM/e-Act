@@ -95,7 +95,7 @@
         $.each($("input[name='chk_approve']:checked"), function () {
             favorite.push($(this).val());
             console.log(favorite[favorite.length-1]);
-
+            submitApprove(favorite[favorite.length - 1]);
         });
     }
 
@@ -104,10 +104,23 @@
         $("input[name='chk_approve']:checkbox").prop('checked', chkAll);
     }
 
+    function submitApprove(actId) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("insertApprove", "Approve")',
+            data: {
+                actId: actId,
+                status: '3',
+                approveType: '@AppCode.ApproveType.Activity_Form.ToString()'
+            }
+        }).done(function () {
+            callPreviewApprove(actId);
+        });
+    }
     function callPreviewApprove(actId) {
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("repPreviewListView", "actFormRepDetail")',
+            url: '@Url.Action("previewApprove", "Approve")',
             data: {
                 actId: actId,
             }
@@ -117,10 +130,11 @@
     }
     function genPdf(actId, htmlResponse) {
         $.ajax({
-            url: '@Url.Action("reGenReportDetail", "actFormRepDetail")',
+            url: '@Url.Action("genPdfApprove", "Approve")',
             data: {
                 GridHtml: htmlResponse,
-                actRepDetailId: actId,
+                statusId: '3',
+                activityId: actId,
             },
             dataType: "json",
             type: 'POST',

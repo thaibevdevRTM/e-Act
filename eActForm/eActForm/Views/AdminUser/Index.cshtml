@@ -29,18 +29,11 @@
                 Company :
             </div>
             <div class="col-md-4">
-                @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
-                {
-                    @class = "form-control textboxcss",
-                    onchange = "onchangeCustomer();",
-                    id = "ddlCustomer"
-                })
-
+            
                 <select class="form-control" id="ddlCompany" name="ddlCompany" required>
                     <option value="">-Selected-</option>
                     <option value="5600">MTM</option>
                     <option value="5601">OMT</option>
-
                     <option value="3030">TBM</option>
 
                 </select>
@@ -96,6 +89,10 @@
                 <div>
                     <input id="adminOMT" type="checkbox" name="model.chkRole" value="5">
                     adminOMT
+                </div>
+                <div>
+                    <input id="adminTBM" type="checkbox" name="model.chkRole" value="6">
+                    adminTBM
                 </div>
             </div>
 
