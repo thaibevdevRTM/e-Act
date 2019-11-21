@@ -6,6 +6,8 @@ using System.Web;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System.Data.SqlClient;
+using eActForm.BusinessLayer.Appcodes;
+
 namespace eActForm.BusinessLayer
 {
     public class ActFormAppCode
@@ -78,17 +80,39 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<Activity_Model.actForm> getActFormByEmpId(DateTime startDate, DateTime endDate, string activityType)
+        public static List<Activity_Model.actForm> getActFormByEmpId(DateTime startDate, DateTime endDate)
         {
             try
             {
-                string strCall = UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAll" : "usp_getActivityCustomersFormByEmpId";
+                string strCall = "";
+                if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || 
+                    UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
+                {
+                    strCall = "usp_getActivityFormAll";
+                }
+                else
+                {
+                    switch (BaseAppCodes.getCompanyTypForm())
+                    {
+                        case Activity_Model.activityType.MT:
+                            strCall = "usp_getActivityCustomersFormByEmpId";
+                            break;
+                        case Activity_Model.activityType.TBM:
+                            strCall = "usp_tbm_getActivityFormByEmpId";
+                            break;
+                        default:
+                            strCall = "usp_getActivityCustomersFormByEmpId";
+                            break;
+                    }
+                }
+
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
                 , new SqlParameter[] {
                          new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
                         ,new SqlParameter("@startDate", startDate)
                         ,new SqlParameter("@endDate", endDate)
+                        ,new SqlParameter("@companyId", UtilsAppCode.Session.User.empCompanyId)
                 });
 
                 var lists = (from DataRow dr in ds.Tables[0].Rows
@@ -130,15 +154,7 @@ namespace eActForm.BusinessLayer
 
                              }).ToList();
 
-                if (activityType == Activity_Model.activityType.OMT.ToString())
-                {
-                    lists = lists.Where(x => x.channelName == "").ToList();
-                }
-                else
-                {
-                    lists = lists.Where(x => x.channelName != "").ToList();
-                }
-
+               
 
 
                 return lists;

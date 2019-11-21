@@ -181,6 +181,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BusinessLayer\Appcodes\ActFormAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\AdminUserAppCode.cs" />
+    <Compile Include="BusinessLayer\Appcodes\BaseAppCodes.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\Appcodes\ReportSummaryAppCode.cs" />
@@ -1990,6 +1991,7 @@
     <Content Include="images\non_al.jpeg" />
     <Content Include="images\warning_error.png" />
     <Content Include="Scripts\Admin\adminPage.js" />
+    <Content Include="Scripts\Approve\RepDetailApproves.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
