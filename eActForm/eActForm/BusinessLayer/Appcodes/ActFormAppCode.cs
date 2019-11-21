@@ -84,7 +84,29 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                string strCall = UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin ? "usp_getActivityFormAll" : "usp_getActivityCustomersFormByEmpId";
+                string strCall = "";
+                if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || 
+                    UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
+                {
+                    strCall = "usp_getActivityFormAll";
+                }
+                else
+                {
+                    switch (BaseAppCodes.getCompanyTypForm())
+                    {
+                        case Activity_Model.activityType.MT:
+                            strCall = "usp_getActivityCustomersFormByEmpId";
+                            break;
+                        case Activity_Model.activityType.TBM:
+                            strCall = "usp_tbm_getActivityFormByEmpId";
+                            break;
+                        default:
+                            strCall = "usp_getActivityCustomersFormByEmpId";
+                            break;
+                    }
+                }
+
+
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
                 , new SqlParameter[] {
                          new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
