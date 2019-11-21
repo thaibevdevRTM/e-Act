@@ -40,7 +40,7 @@
             <tr>
                 <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
                     <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
-                        ขออนุมัติงบประมาณกิจกรรม.....................
+                        ขออนุมัติงบประมาณกิจกรรม.....................@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })                        
                     </div>
                 </td>
             </tr>
@@ -51,7 +51,7 @@
                             <label class="control-label" for="ddlRegion">
                                 &nbsp;Condition Flow<span class="required">:&nbsp;</span>
                             </label>
-                            @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.TB_Act_ActivityForm_SelectBrandOrChannel, "val", "txt", 0), "", new
+                            @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "val", "txt", 0), "", new
                             {
                                 @class = "",
                                 id = "ddlChannelOrBrand"
@@ -64,24 +64,27 @@
                                 $("#ddlChannelOrBrand").change(function () {
                                     if ($("#ddlChannelOrBrand").val() == "Channel") {
                                         $('#divChannel').css('display', 'inline-block');
+                                        $("#divSubject").css('display', 'inline-block');
                                         $("#divBrand").hide();
                                     }
                                     else if ($("#ddlChannelOrBrand").val() == "Brand") {
                                         $('#divBrand').css('display', 'inline-block');
+                                        $("#divSubject").css('display', 'inline-block');
                                         $("#divChannel").hide();
                                     }
                                     else {
                                         $("#divBrand").hide();
                                         $("#divChannel").hide();
+                                        $("#divSubject").hide();
                                     }
                                 });
                             </script>
                         </div>
                         <div id="divChannel" style="display:none;">
                             <label class="control-label" for="ddlChannel">
-                                &nbsp;Choose Channel<span class="required">:&nbsp;</span>
+                                &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
                             </label>
-                            @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.TB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
+                            @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
                             {
                                 @class = "",
                                 id = "ddlChannel"
@@ -89,14 +92,25 @@
                         </div>
                         <div id="divBrand" style="display:none;">
                             <label class="control-label" for="ddlBrand">
-                                &nbsp;Choose Brand<span class="required">*</span>
+                                &nbsp;เลือก Brand<span class="required"></span>
                             </label>
-                            @Html.DropDownListFor(x => x.activityFormModel.regionId, new SelectList(Model.TB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
+                            @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
                             {
                                 @class = "",
                                 id = "ddlBrand"
                             })
                         </div>
+                        <div id="divSubject" style="display:none;">
+                            <label class="control-label" for="ddlBrand">
+                                &nbsp;เรื่อง <span class="required"></span>
+                            </label>
+                            @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
+                            {
+                                @class = "",
+                                id = "ddlSubject"
+                            })
+                        </div>
+
                     </div>
                 </td>
             </tr>

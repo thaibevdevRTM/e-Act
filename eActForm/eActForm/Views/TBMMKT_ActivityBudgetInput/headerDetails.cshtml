@@ -21,7 +21,7 @@
                 &nbsp;เบอร์โทรศัพท์
             </td>
             <td style="width: 20%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
-                @Html.TextBoxFor(x => x.TB_Act_ActivityForm_DetailOther.activityTel, new { @class = "", @id = "txtactivityTel" })
+                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "", @id = "txtactivityTel" })
             </td>
         </tr>
         <tr>
@@ -29,7 +29,7 @@
                 &nbsp;สินค้า
             </td>
             <td style="width: 55%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;">
-                @Html.TextBoxFor(x => x.TB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "", @id = "txtactivityProduct" })
+                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "", @id = "txtactivityProduct" })
             </td>
             <td style="width: 10%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
                 &nbsp;เอกสารเลขที่
@@ -49,7 +49,7 @@
                 &nbsp;EO
             </td>
             <td style="width: 20%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
-                @Html.TextBoxFor(x => x.TB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "txtEO" })
+                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "txtEO" })
             </td>
         </tr>
         <tr>
@@ -57,7 +57,7 @@
                 &nbsp;เริ่มกิจกรรม
             </td>
             <td colspan="3" style="width: 55%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;border-bottom:none;">
-                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "", id = "txtdateActivitySt" })&nbsp;ถึง&nbsp;@Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "", id = "txtdateActivityEnd" })
+                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "", id = "txtdateActivitySt" })&nbsp;ถึง&nbsp;@Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "", id = "txtactivityPeriodEnd" })
             </td>
         </tr>
         <tr>

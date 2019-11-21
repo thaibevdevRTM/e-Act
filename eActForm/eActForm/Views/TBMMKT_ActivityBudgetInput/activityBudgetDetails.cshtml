@@ -6,32 +6,33 @@
     <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelHeaderDetails" runat="server">
         <tr style="background-color:#2f74b5;color:white;height:25px;">
             <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">IO</th>
-            <th style="width: 50%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Description</th>
-            <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">QTY</th>
-            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Unit Price</th>
-            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Amount</th>
+            <th style="width: 50%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายละเอียด</th>
+            <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
+            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย</th>
+            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงินรวม</th>
         </tr>
-
-        @foreach (var item in Model.CostThemeDetailOfGroupByPriceTBMMKT)
+        @{ var index = 0;}
+        @foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
         {
             <tr>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                    @Html.HiddenFor(model => item.id, new { id = "hidid" })
-                    @Html.TextBoxFor(model => item.IO, new { @class = "cssTableTDTextCenter", @id = "txtIO" })
+                    <input type="hidden" value="@item.id" id="costThemeDetailOfGroupByPriceTBMMKT[@index].id" name="costThemeDetailOfGroupByPriceTBMMKT[@index].id" class="cssTableTDTextCenter" />
+                    <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class="cssTableTDTextCenter"  />
                 </td>
                 <td style="width: 50%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    @Html.TextBoxFor(model => item.productDetail, new { @class = "cssTableTDTextLeft", @id = "txtproductDetail " })
+                    <input type="text" value="@item.productDetail" id="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" name="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" class="cssTableTDTextLeft" />
                 </td>
                 <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    @Html.TextBoxFor(model => item.unit, new { @class = "cssTableTDDetailNumber", @id = "txtunit" })
+                    <input type="text" value="@item.unit" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" class="cssTableTDTextCenter" />
                 </td>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    @Html.TextBoxFor(model => item.unitPrice, new { @class = "cssTableTDDetailNumber", @id = "txtunitPrice" })
+                    <input type="text" value="@item.unitPrice" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" class="cssTableTDDetailNumber" />
                 </td>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                    @Html.TextBoxFor(model => item.total, new { @class = "cssTableTDDetailNumber", @id = "txttotal" })
+                    <input type="text" value="@item.total" id="costThemeDetailOfGroupByPriceTBMMKT[@index].total" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="cssTableTDDetailNumber" />
                 </td>
             </tr>
+            index++;
         }
         <tr>
             <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">

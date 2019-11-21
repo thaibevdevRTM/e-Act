@@ -45,9 +45,10 @@ namespace eActForm.Controllers
                 //}
 
 
-                activity_TBMMKT_Model.TB_Act_ProductBrand_Model = QueryGetAllBrand.GetAllBrand();
-                activity_TBMMKT_Model.TB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel();
-                activity_TBMMKT_Model.TB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
+                activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrand.GetAllBrand();
+                activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel();
+                activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
+                activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetAllQueryGetSelectAllTB_Reg_Subject().Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId).ToList();
 
                 if (!string.IsNullOrEmpty(activityId))
                 {
@@ -69,28 +70,24 @@ namespace eActForm.Controllers
                     //activity_TBMMKT_Model.activityFormModel.statusId = 1;
 
                     //===mock uat====
-                    List<CostThemeDetailOfGroupByPriceTBMMKT> CostThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>
-                {
+                    List<CostThemeDetailOfGroupByPriceTBMMKT> CostThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>{
                     new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
                     ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
                     ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
                     ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
                     ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
                     ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
-                    ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
-                };
-                    List<TB_Act_ActivityLayout> List_TB_Act_ActivityLayout = new List<TB_Act_ActivityLayout>
-                {
+                    ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }};
+                    List<TB_Act_ActivityLayout> List_TB_Act_ActivityLayout = new List<TB_Act_ActivityLayout>{
                     new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
                     ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
                     ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
                     ,new TB_Act_ActivityLayout() {id="", no = "", io = "", activity = "",amount = 0 }
                     ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
                     ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
-                    ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
-                };
-                    activity_TBMMKT_Model.CostThemeDetailOfGroupByPriceTBMMKT = CostThemeDetailOfGroupByPriceTBMMKT;
-                    activity_TBMMKT_Model.List_TB_Act_ActivityLayout = List_TB_Act_ActivityLayout;
+                    ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }};
+                    activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = CostThemeDetailOfGroupByPriceTBMMKT;
+                    activity_TBMMKT_Model.list_TB_Act_ActivityLayout = List_TB_Act_ActivityLayout;
                     //=END==mock uat====
 
                     TempData["actForm" + actId] = activity_TBMMKT_Model;
@@ -109,8 +106,7 @@ namespace eActForm.Controllers
 
         public ActionResult insertDataActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            
-            var result = new AjaxResult();
+
             try
             {
                 string statusId = "";
@@ -123,19 +119,17 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    result.MessageCode = "001";
+                  
                 }
 
                 TempData.Keep();
-                result.Success = true;
             }
             catch (Exception ex)
             {
-                result.Success = false;
-                result.Message = ex.Message;
                 ExceptionManager.WriteError("insertDataActivityTBMMKT => " + ex.Message);
             }
-            return View(activity_TBMMKT_Model);
+
+            return RedirectToAction("index", new { activityId= activity_TBMMKT_Model.activityFormModel.id, mode="edit", typeForm="" });
         }
 
     }

@@ -222,6 +222,7 @@
     <Compile Include="BusinessLayer\Appcodes\UserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UtilsAppCode.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetSelectAllTB_Reg_Subject.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetSelectBrandOrChannel.cs" />
     <Compile Include="Controllers\actFormRepDetailController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
