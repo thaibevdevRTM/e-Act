@@ -2375,6 +2375,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BusinessLayer\Tbmmkt\Appcodes\" />
+    <Folder Include="error\" />
     <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />

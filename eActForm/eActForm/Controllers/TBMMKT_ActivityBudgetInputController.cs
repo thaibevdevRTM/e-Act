@@ -9,6 +9,7 @@ using WebLibrary;
 
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public class TBMMKT_ActivityBudgetInputController : Controller
     {
         // GET: TBMMKT_ActivityBudgetInput
@@ -104,9 +105,9 @@ namespace eActForm.Controllers
         }
 
 
-        public ActionResult insertDataActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public JsonResult insertDataActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-
+            var result = new AjaxResult();
             try
             {
                 string statusId = "";
@@ -121,15 +122,17 @@ namespace eActForm.Controllers
                 {
                   
                 }
-
-                TempData.Keep();
+                result.Data = activity_TBMMKT_Model.activityFormModel.id;
+                result.Success = true;
             }
             catch (Exception ex)
             {
+                result.Success = false;
+                result.Message = ex.Message;
                 ExceptionManager.WriteError("insertDataActivityTBMMKT => " + ex.Message);
             }
 
-            return RedirectToAction("index", new { activityId= activity_TBMMKT_Model.activityFormModel.id, mode="edit", typeForm="" });
+            return Json(result);
         }
 
     }

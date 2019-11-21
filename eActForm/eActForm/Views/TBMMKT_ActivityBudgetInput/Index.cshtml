@@ -27,27 +27,57 @@
         width: 100%;
     }
 </style>
-@using (Html.BeginForm("insertDataActivity", "TBMMKT_ActivityBudgetInput", FormMethod.Post, new { id = "divconditionFlow", @class = "form-horizontal", role = "form" }))
+@using (Ajax.BeginForm("insertDataActivity", "TBMMKT_ActivityBudgetInput"
+                            , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }
+                            , new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
 {
 
     <div id="GridPDF" style="width:97%; margin-left:20px;">
+
+
         <table style="width: 100%;border: 1px solid black; border-collapse: collapse;" id="tabel_report" runat="server">
+
+
             <tr>
+
+
                 <td>
                     @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerCompany.cshtml")
                 </td>
+
+
             </tr>
+
+
             <tr>
+
+
                 <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+
+
                     <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
-                        ขออนุมัติงบประมาณกิจกรรม.....................@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })                        
+                        ขออนุมัติงบประมาณกิจกรรม.....................@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
                     </div>
+
+
                 </td>
+
+
             </tr>
+
+
             <tr>
+
+
                 <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+
+
                     <div id="divHeadCompany" runat="server" style="width: 100%; align-content: left; text-align: left;">
+
+
                         <div style="display:inline-block;">
+
+
                             <label class="control-label" for="ddlRegion">
                                 &nbsp;Condition Flow<span class="required">:&nbsp;</span>
                             </label>
@@ -197,6 +227,11 @@
 @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
 
 
+<div class="modal fade" id="previewModal" role="dialog" style="display:none">
+    <div id="divPreview">
+    </div>
+</div>
+
 <script>
     $("#btnExportPDF").click(function () {
         $("input[name='gridHtml']").val($("#GridPDF").html());
@@ -319,6 +354,32 @@
                     $("#WaitDialog").hide();
                 }
             });*@
+    }
+
+    function beginQuery() {
+
+    }
+
+    function successQuery(data) {
+        console.log('success');
+        console.log(data);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
+            data: {
+            }
+        }).done(function (htmlResponse) {
+            $("#WaitDialog").hide();
+            $("#divPreview").html(htmlResponse)
+            $('#previewModal').modal('show');
+        });
+
+    }
+
+    function failureQuery(data) {
+        console.log('fail');
+        console.log(data);
     }
 
 

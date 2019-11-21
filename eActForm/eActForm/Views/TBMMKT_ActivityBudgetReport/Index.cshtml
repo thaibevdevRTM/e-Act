@@ -1,89 +1,108 @@
-﻿
-<div id="GridPDF" style="width:97%; margin-left:20px;">
-    <table style="width: 100%;border: 1px solid black; border-collapse: collapse;" id="tabel_report" runat="server">
-        <tr>
-            <td>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/headerCompany.cshtml")
-            </td>
-        </tr>
-        <tr>
-            <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
-                    ขออนุมัติงบประมาณกิจกรรม.....................
-                </div>
-            </td>
-        </tr>
-        <tr style="border: 1px solid black; border-collapse: collapse;border-bottom:none;">
-            <td>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/headerDetails.cshtml")
-            </td>
-        </tr>
-        <tr>
-            <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                <div style="height:5px;"></div>
-                <div style="width: 100%; text-align: left;">
-                    &nbsp;ค่าใช้จ่ายในการทำกิจกรรม..........................จำนวนเงิน............บาท
-                    <br />
-                    &nbsp;รายละเอียดงบประมาณ
-                </div>
-            </td>
-        </tr>
-        <tr style="border-bottom:none;">
-            <td>
-                <div style="height:5px;"></div>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/activityDetails.cshtml")
-            </td>
-        </tr>
-        <tr style="border-bottom:none;">
-            <td>
-                <div style="height:5px;"></div>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/activityBudgetDetails.cshtml")
-            </td>
-        </tr>
-        <tr style="border-bottom:none;">
-            <td>
-                <div style="height:20px;"></div>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/lastwordForFYI.cshtml")
-            </td>
-        </tr>
-        <tr>
-            <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
-                <div style="height:5px;"></div>
-                <div style="width: 100%; text-align: left;">
-                    &nbsp;หมายเหตุ...............................................
-                    <br />
-                    &nbsp;..............................................................
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="height:150px;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                <div style="height:5px;"></div>
-                <div style="width: 100%; text-align: left;">
-                    @*@if (Model.activityFormModel != null)
-        {
-            @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
-        }*@
-                    &nbsp;รอลายเซ็นมาแสดง
-                </div>
-            </td>
-        </tr>
-        <tr style="border-bottom:none;">
-            <td>
-                &nbsp;<br />
-            </td>
-        </tr>
-    </table>
+﻿<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div style=""></div>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
 
-</div>
-<div class="center-block">
-    @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
-    {
-        <input type="hidden" name="gridHtml" />
-        <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
-            <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
-        </button>
-    }
+            <div id="GridPDF" style="width:97%; margin-left:20px;">
+                <table style="width: 100%;border: 1px solid black; border-collapse: collapse;" id="tabel_report" runat="server">
+                    <tr>
+                        <td>
+                            @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/headerCompany.cshtml")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                            <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
+                                ขออนุมัติงบประมาณกิจกรรม.....................
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border: 1px solid black; border-collapse: collapse;border-bottom:none;">
+                        <td>
+                            @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/headerDetails.cshtml")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                            <div style="height:5px;"></div>
+                            <div style="width: 100%; text-align: left;">
+                                &nbsp;ค่าใช้จ่ายในการทำกิจกรรม..........................จำนวนเงิน............บาท
+                                <br />
+                                &nbsp;รายละเอียดงบประมาณ
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom:none;">
+                        <td>
+                            <div style="height:5px;"></div>
+                            @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/activityDetails.cshtml")
+                        </td>
+                    </tr>
+                    <tr style="border-bottom:none;">
+                        <td>
+                            <div style="height:5px;"></div>
+                            @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/activityBudgetDetails.cshtml")
+                        </td>
+                    </tr>
+                    <tr style="border-bottom:none;">
+                        <td>
+                            <div style="height:20px;"></div>
+                            @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/lastwordForFYI.cshtml")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+                            <div style="height:5px;"></div>
+                            <div style="width: 100%; text-align: left;">
+                                &nbsp;หมายเหตุ...............................................
+                                <br />
+                                &nbsp;..............................................................
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:150px;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                            <div style="height:5px;"></div>
+                            <div style="width: 100%; text-align: left;">
+                                @*@if (Model.activityFormModel != null)
+                            {
+                                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
+                            }*@
+                                &nbsp;รอลายเซ็นมาแสดง
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom:none;">
+                        <td>
+                            &nbsp;<br />
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <div>
+                    <p class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                        <button type="button" class="btn ink-reaction btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                    </p>
+                </div>
+
+            </div>
+            <div class="center-block">
+                @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
+        {
+            <input type="hidden" name="gridHtml" />
+            <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
+                <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
+            </button>
+}
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
