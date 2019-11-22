@@ -36,6 +36,7 @@ namespace eActForm.Models
             public string statusId { get; set; }
             public string remark;
             public string imgSignature { get; set; }
+            public bool? isApproved { get; set; }
         }
     }
 }
