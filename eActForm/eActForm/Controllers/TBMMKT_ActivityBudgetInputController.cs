@@ -23,16 +23,19 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
                 activity_TBMMKT_Model.activityFormModel.mode = mode;
 
-                activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrand.GetAllBrand();
-                activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel();
-                activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
-                activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetAllQueryGetSelectAllTB_Reg_Subject().Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId).ToList();
-
                 if (!string.IsNullOrEmpty(activityId))
                 {
 
-                    //activity_TBMMKT_Model.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();                  
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+
+                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
+                    {
+                        activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Brand";
+                    }
+                    else//Channel
+                    {
+                        activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Channel";
+                    }
 
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
                 }
@@ -64,7 +67,12 @@ namespace eActForm.Controllers
 
                     TempData["actForm" + actId] = activity_TBMMKT_Model;
                 }
-               
+
+                activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrand.GetAllBrand();
+                activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel();
+                activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
+                activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetAllQueryGetSelectAllTB_Reg_Subject().Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId).ToList();
+
                 TempData.Keep();
             }
             catch (Exception ex)
@@ -90,7 +98,7 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                  
+
                 }
                 result.Data = activity_TBMMKT_Model.activityFormModel.id;
                 result.Success = true;

@@ -67,17 +67,11 @@
 
 
             <tr>
-
-
                 <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-
-
                     <div id="divHeadCompany" runat="server" style="width: 100%; align-content: left; text-align: left;">
-
-
+                        @*@if (Model.activityFormTBMMKT.selectedBrandOrChannel != null)
+                            {*@
                         <div style="display:inline-block;">
-
-
                             <label class="control-label" for="ddlRegion">
                                 &nbsp;Condition Flow<span class="required">:&nbsp;</span>
                             </label>
@@ -86,29 +80,51 @@
                                 @class = "",
                                 id = "ddlChannelOrBrand"
                             })
-                            <script>
-                                $(function () {
-                                    //ทำหลังLoadหน้่าเว็บเสร็จ
-                                });
 
-                                $("#ddlChannelOrBrand").change(function () {
-                                    if ($("#ddlChannelOrBrand").val() == "Channel") {
-                                        $('#divChannel').css('display', 'inline-block');
-                                        $("#divSubject").css('display', 'inline-block');
-                                        $("#divBrand").hide();
+                            <script>
+                                    function processDropdownConditionFlow() {
+                                        if ($("#ddlChannelOrBrand").val() == "Channel") {
+                                            $('#divChannel').css('display', 'inline-block');
+                                            $("#divSubject").css('display', 'inline-block');
+                                            $("#divBrand").hide();
+                                        }
+                                        else if ($("#ddlChannelOrBrand").val() == "Brand") {
+                                            $('#divBrand').css('display', 'inline-block');
+                                            $("#divSubject").css('display', 'inline-block');
+                                            $("#divChannel").hide();
+                                        }
+                                        else {
+                                            $("#divBrand").hide();
+                                            $("#divChannel").hide();
+                                            $("#divSubject").hide();
+                                        }
                                     }
-                                    else if ($("#ddlChannelOrBrand").val() == "Brand") {
-                                        $('#divBrand').css('display', 'inline-block');
-                                        $("#divSubject").css('display', 'inline-block');
-                                        $("#divChannel").hide();
-                                    }
-                                    else {
-                                        $("#divBrand").hide();
-                                        $("#divChannel").hide();
-                                        $("#divSubject").hide();
-                                    }
-                                });
+
+                                    $(function () {
+                                        //ทำหลังLoadหน้่าเว็บเสร็จ
+                                        var p_subjectId = "@Model.tB_Act_ActivityForm_DetailOther.SubjectId";
+                                        var p_productBrandId = "@Model.tB_Act_ActivityForm_DetailOther.productBrandId";
+                                        var p_channelId = "@Model.tB_Act_ActivityForm_DetailOther.channelId";
+                                        if (p_subjectId != "")
+                                         {
+                                            $("#divSubject").css('display', 'inline-block');
+                                            $("#ddlSubject").val(p_subjectId);
+                                        }
+                                        if (p_productBrandId != "") {
+                                            $("#divBrand").css('display', 'inline-block');
+                                            $("#ddlBrand").val(p_productBrandId);
+                                        }
+                                        if (p_channelId != "") {
+                                            $("#divChannel").css('display', 'inline-block');
+                                            $("#ddlChannel").val(p_channelId);
+                                        }
+                                     });
+
+                                    $("#ddlChannelOrBrand").change(function () {
+                                        processDropdownConditionFlow();
+                                    });
                             </script>
+
                         </div>
                         <div id="divChannel" style="display:none;">
                             <label class="control-label" for="ddlChannel">
@@ -140,7 +156,7 @@
                                 id = "ddlSubject"
                             })
                         </div>
-
+                        @*}*@
                     </div>
                 </td>
             </tr>
