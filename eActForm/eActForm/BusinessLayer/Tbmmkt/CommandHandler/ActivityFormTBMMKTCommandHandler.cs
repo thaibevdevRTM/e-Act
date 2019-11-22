@@ -21,6 +21,7 @@ namespace eActForm.BusinessLayer
             {
 
                 model.activityFormModel.id = activityId;
+                model.activityFormModel.statusId = 1;
                 model.activityFormModel.documentDate = model.activityFormModel.documentDate;
                 model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.activityPeriodSt.ToString()) ? (DateTime?)null :model.activityFormModel.activityPeriodSt;
                 model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.activityPeriodEnd.ToString()) ? (DateTime?)null :model.activityFormModel.activityPeriodEnd;
@@ -336,13 +337,13 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@activityPeriodEND",model.activityPeriodEnd)
                     ,new SqlParameter("@activityName",model.activityName)
                     ,new SqlParameter("@objective",model.objective)
-                    ,new SqlParameter("@companyId",model.companyId)
-                    ,new SqlParameter("@remark",model.remark)
+                    ,new SqlParameter("@companyId",model.companyId)                    
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    ,new SqlParameter("@remark",model.remark)
                     });
             }
             catch (Exception ex)

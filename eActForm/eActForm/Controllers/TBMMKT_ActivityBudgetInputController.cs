@@ -15,7 +15,7 @@ namespace eActForm.Controllers
         // GET: TBMMKT_ActivityBudgetInput
         public ActionResult Index(string activityId, string mode, string typeForm)
         {
-            activityId = "51f08411-39d0-4702-9410-79f77cddb22a";
+            //activityId = "51f08411-39d0-4702-9410-79f77cddb22a";
 
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             try
@@ -61,6 +61,14 @@ namespace eActForm.Controllers
                     ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
                     ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }
                     ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }};
+                    TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = tB_Act_ActivityForm_DetailOther;
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId = "";
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId = "";
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId = "";
+                    ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
+                    activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
+                    activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "";
                     activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = CostThemeDetailOfGroupByPriceTBMMKT;
                     activity_TBMMKT_Model.list_TB_Act_ActivityLayout = List_TB_Act_ActivityLayout;
                     //=END==mock data for first input=====

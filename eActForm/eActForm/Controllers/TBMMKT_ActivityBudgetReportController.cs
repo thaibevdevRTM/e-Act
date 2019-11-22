@@ -18,7 +18,7 @@ namespace eActForm.Controllers
         // GET: TBMMKT_ActivityBudgetReport
         public ActionResult Index(string activityId)
         {
-            activityId = "51f08411-39d0-4702-9410-79f77cddb22a";
+            //activityId = "51f08411-39d0-4702-9410-79f77cddb22a";
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             if (!string.IsNullOrEmpty(activityId))
             {
