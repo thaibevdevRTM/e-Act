@@ -1,12 +1,12 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
-<div id="divtabelAttach" runat="server" style="width: 97%;margin-left:20px;padding-left:15px;">
+<div id="divtabelAttach" runat="server" style="width: 97%;border-style: solid;border-width: 0px 1px 0px 1px;margin-left:20px;padding-left:15px;">
     <table style="width: 100%;" id="tabelAttach" runat="server">
         <tr>
-            <td style="width: 5%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-left:none;border-bottom:none;vertical-align:top;">
-                &nbsp;เอกสารแนบ
+            <td style="width: 15%;">
+                &nbsp;
             </td>
-            <td style="width: 55%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;border-bottom:none;">
+            <td style="width: 85%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;border-bottom:none;">
                 <div class="" id="divUploadFiles">
                     <form action="@Url.Action("uploadFilesImage", "Activity", new { actId = Model.activityFormModel.id})" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
                         <div class="dz-message">

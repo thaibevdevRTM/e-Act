@@ -14,7 +14,7 @@ namespace eActForm.BusinessLayer
 {
     public class ActivityFormTBMMKTCommandHandler
     {
-        public static int insertAllActivity(Activity_TBMMKT_Model model, string activityId)
+            public static int insertAllActivity(Activity_TBMMKT_Model model, string activityId)
         {
             int rtn = 0;
             try
@@ -43,21 +43,21 @@ namespace eActForm.BusinessLayer
                     TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
                     tB_Act_ActivityForm_DetailOther.Id = Guid.NewGuid().ToString();
                     tB_Act_ActivityForm_DetailOther.activityId = activityId;
-                    tB_Act_ActivityForm_DetailOther.BrandOrChannel = model.activityFormTBMMKT.selectedBrandOrChannel;
-                    string BrandOrChannelID = "";
+
                     if (model.activityFormTBMMKT.selectedBrandOrChannel == "Brand")
                     {
-                        BrandOrChannelID = model.activityFormTBMMKT.BrandlId;
+                        tB_Act_ActivityForm_DetailOther.productBrandId = model.activityFormTBMMKT.BrandlId;
                     }
                     else if (model.activityFormTBMMKT.selectedBrandOrChannel == "Channel")
                     {
-                        BrandOrChannelID = model.activityFormTBMMKT.channelId;
+                        tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId;
                     }
-                    tB_Act_ActivityForm_DetailOther.BrandOrChannelID = BrandOrChannelID;
+                    
                     tB_Act_ActivityForm_DetailOther.SubjectId = model.activityFormTBMMKT.SubjectId;
                     tB_Act_ActivityForm_DetailOther.activityProduct = model.tB_Act_ActivityForm_DetailOther.activityProduct;
                     tB_Act_ActivityForm_DetailOther.activityTel = model.tB_Act_ActivityForm_DetailOther.activityTel;
                     tB_Act_ActivityForm_DetailOther.EO = model.tB_Act_ActivityForm_DetailOther.EO;
+                    tB_Act_ActivityForm_DetailOther.descAttach = model.tB_Act_ActivityForm_DetailOther.descAttach;
                     tB_Act_ActivityForm_DetailOther.delFlag = false;
                     tB_Act_ActivityForm_DetailOther.createdByUserId = model.activityFormModel.createdByUserId;
                     tB_Act_ActivityForm_DetailOther.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -138,7 +138,31 @@ namespace eActForm.BusinessLayer
 
         }
 
+        public static Activity_TBMMKT_Model getDataForEditActivity(string activityId)
+        {
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            try
+            {
+                activity_TBMMKT_Model.activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(activityId).FirstOrDefault(); // TB_Act_ActivityForm
+                activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther
+                activity_TBMMKT_Model.list_TB_Act_ActivityLayout = QueryGetActivityLayoutByActivityId.getByActivityId(activityId); // TB_Act_ActivityForm_DetailOther
+                activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
 
+                Decimal? totalCostThisActivity = 0;
+                foreach (var item in activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT)
+                {
+                    totalCostThisActivity += item.total;
+                }
+
+                activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> getDataForEditActivityTBMMKT");
+            }
+            return activity_TBMMKT_Model;
+        }
 
         public static int updateActivityForm(Activity_Model model, string activityId)
         {
@@ -362,12 +386,13 @@ namespace eActForm.BusinessLayer
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertTB_Act_ActivityForm_DetailOther"
                     , new SqlParameter[] {new SqlParameter("@id",model.Id)
                     ,new SqlParameter("@activityId",model.activityId)
-                    ,new SqlParameter("@BrandOrChannel",model.BrandOrChannel)
-                    ,new SqlParameter("@BrandOrChannelID",model.BrandOrChannelID)
+                    ,new SqlParameter("@productBrandId",model.productBrandId)
+                    ,new SqlParameter("@channelId",model.channelId)
                     ,new SqlParameter("@SubjectId",model.SubjectId)
                     ,new SqlParameter("@activityProduct",model.activityProduct)
                     ,new SqlParameter("@activityTel",model.activityTel)
                     ,new SqlParameter("@EO",model.EO)
+                    ,new SqlParameter("@descAttach",model.descAttach)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)

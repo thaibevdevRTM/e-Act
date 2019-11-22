@@ -223,6 +223,10 @@
     <Compile Include="BusinessLayer\Appcodes\UserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UtilsAppCode.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityByIdTBMMKT.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityEstimateByActivityId.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityLayoutByActivityId.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityFormDetailOtherByActivityId.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetSelectAllTB_Reg_Subject.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetSelectBrandOrChannel.cs" />
     <Compile Include="Controllers\actFormRepDetailController.cs" />

@@ -1,4 +1,6 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer;
+using eActForm.Models;
+using eActForm.Models;
 using iTextSharp.text;
 using System;
 using System.Collections.Generic;
@@ -14,12 +16,17 @@ namespace eActForm.Controllers
     public class TBMMKT_ActivityBudgetReportController : Controller
     {
         // GET: TBMMKT_ActivityBudgetReport
-        public ActionResult Index()
+        public ActionResult Index(string activityId)
         {
-            return View();
-        }
+            activityId = "51f08411-39d0-4702-9410-79f77cddb22a";
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            if (!string.IsNullOrEmpty(activityId))
+            {
+                activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+            }
 
-        
+            return View(activity_TBMMKT_Model);
+        }
 
         [HttpPost]
         [ValidateInput(false)]

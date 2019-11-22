@@ -15,36 +15,13 @@ namespace eActForm.Controllers
         // GET: TBMMKT_ActivityBudgetInput
         public ActionResult Index(string activityId, string mode, string typeForm)
         {
+            activityId = "51f08411-39d0-4702-9410-79f77cddb22a";
+
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             try
             {
-
-                //activity_TBMMKT_Model.activityFormModel = new ActivityForm();
-                //activity_TBMMKT_Model.productSmellLists = new List<TB_Act_Product_Model.ProductSmellModel>();
-
-                //if (typeForm == Activity_Model.activityType.OMT.ToString())
-                //{
-                //    activity_TBMMKT_Model.customerslist = QueryGetAllCustomers.getCustomersOMT();
-                //}
-                //else
-                //{
-                //    activity_TBMMKT_Model.customerslist = QueryGetAllCustomers.getCustomersMT();
-                //}
-
-                //activity_TBMMKT_Model.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
-                //activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
-                //    .GroupBy(item => item.activitySales)
-                //    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
-                //if (UtilsAppCode.Session.User.regionId != "")
-                //{
-                //    activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.id == UtilsAppCode.Session.User.regionId).ToList();
-                //    activity_TBMMKT_Model.activityFormModel.regionId = UtilsAppCode.Session.User.regionId;
-                //}
-                //else
-                //{
-                //    activity_TBMMKT_Model.regionGroupList = QueryGetAllRegion.getAllRegion();
-                //}
-
+                activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
+                activity_TBMMKT_Model.activityFormModel.mode = mode;
 
                 activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrand.GetAllBrand();
                 activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel();
@@ -54,23 +31,17 @@ namespace eActForm.Controllers
                 if (!string.IsNullOrEmpty(activityId))
                 {
 
-                    activity_TBMMKT_Model.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-                    activity_TBMMKT_Model.activityFormModel.mode = mode;
-                    //activity_TBMMKT_Model.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
-                    //activity_TBMMKT_Model.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
-                    //activity_TBMMKT_Model.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activity_TBMMKT_Model.activityFormModel.productGroupId);
-                    //activity_TBMMKT_Model.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activity_TBMMKT_Model.activityFormModel.productGroupId).ToList();
-                    //activity_TBMMKT_Model.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activity_TBMMKT_Model.activityFormModel.productCateId).ToList();
+                    //activity_TBMMKT_Model.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();                  
+                    activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
                 }
                 else
                 {
                     string actId = Guid.NewGuid().ToString();
                     activity_TBMMKT_Model.activityFormModel.id = actId;
-                    //activity_TBMMKT_Model.activityFormModel.mode = mode;
-                    //activity_TBMMKT_Model.activityFormModel.statusId = 1;
 
-                    //===mock uat====
+                    //===mock data for first input====
                     List<CostThemeDetailOfGroupByPriceTBMMKT> CostThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>{
                     new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
                     ,new CostThemeDetailOfGroupByPriceTBMMKT() { id="",IO = "", productDetail = "", unit = 0,unitPrice = 0,total=0 }
@@ -89,12 +60,11 @@ namespace eActForm.Controllers
                     ,new TB_Act_ActivityLayout() { id="",no = "", io = "", activity = "",amount = 0 }};
                     activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = CostThemeDetailOfGroupByPriceTBMMKT;
                     activity_TBMMKT_Model.list_TB_Act_ActivityLayout = List_TB_Act_ActivityLayout;
-                    //=END==mock uat====
+                    //=END==mock data for first input=====
 
                     TempData["actForm" + actId] = activity_TBMMKT_Model;
                 }
-
-                activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
+               
                 TempData.Keep();
             }
             catch (Exception ex)

@@ -19,6 +19,9 @@ namespace eActForm.Models
         public List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT { get; set; }
         public List<TB_Act_ActivityLayout> list_TB_Act_ActivityLayout { get; set; }
         public List<TB_Reg_Subject> tB_Reg_Subject { get; set; }
+        public string createdByName { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalCostThisActivity { get; set; }
 
     }
 
@@ -28,6 +31,7 @@ namespace eActForm.Models
         public string channelId { get; set; }
         public string BrandlId { get; set; }
         public string SubjectId { get; set; }
+        public string createdByName { get; set; }
     }
 
     public class TB_Reg_Subject
@@ -48,12 +52,13 @@ namespace eActForm.Models
     {
         public string Id { get; set; }
         public string activityId { get; set; }
-        public string BrandOrChannel { get; set; }
-        public string BrandOrChannelID { get; set; }
+        public string channelId { get; set; }
+        public string productBrandId { get; set; }
         public string SubjectId { get; set; }
         public string activityProduct { get; set; }
         public string activityTel { get; set; }
         public string EO { get; set; }
+        public string descAttach { get; set; }
         public Boolean delFlag { get; set; }
         public DateTime? createdDate { get; set; }
         public string createdByUserId { get; set; }
