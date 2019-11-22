@@ -13,6 +13,7 @@ using WebLibrary;
 
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public class TBMMKT_ActivityBudgetReportController : Controller
     {
         // GET: TBMMKT_ActivityBudgetReport

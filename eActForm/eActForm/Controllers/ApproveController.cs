@@ -83,13 +83,13 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-        public ActionResult approvePositionSignatureLists(string actId)
+        public ActionResult approvePositionSignatureLists(string actId, string subId)
         {
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
             {
                 models = ApproveAppCode.getApproveByActFormId(actId);
-                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
+                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
                 models.approveFlowDetail = flowModel.flowDetail;
             }
             catch (Exception ex)
@@ -99,7 +99,6 @@ namespace eActForm.Controllers
             }
             return PartialView(models);
         }
-
 
         public ActionResult previewApprove(string actId, string typeForm)
         {
