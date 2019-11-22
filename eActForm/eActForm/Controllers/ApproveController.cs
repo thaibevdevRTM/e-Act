@@ -79,13 +79,13 @@ namespace eActForm.Controllers
         }
 
         [HttpPost]
-        public JsonResult insertApprove(string actId, string status, string approveType)
+        public JsonResult selectApprove(string actId, string status, string approveType)
         {
             var result = new AjaxResult();
             result.Success = false;
             try
             {
-                if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"]) > 0)
+                if (ApproveAppCode.updateApprove(actId, status, "", approveType) > 0)
                 {
                     result.Success = true;
                 }

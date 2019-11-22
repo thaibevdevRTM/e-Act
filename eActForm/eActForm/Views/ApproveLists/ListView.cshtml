@@ -106,7 +106,7 @@
     function submitApprove(actId) {
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("insertApprove", "Approve")',
+            url: '@Url.Action("selectApprove", "Approve")',
             data: {
                 actId: actId,
                 status: '3',
