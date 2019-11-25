@@ -186,6 +186,11 @@ namespace eActForm.BusinessLayer
                         {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id).FirstOrDefault().docNo);
 
+                            string getYear = getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9 ? 
+                                getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(543).ToString("yy") 
+                              : getActList.FirstOrDefault().activityPeriodSt.Value.Year.ToString().Substring(2);
+
+
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().chanelShort.Trim();
