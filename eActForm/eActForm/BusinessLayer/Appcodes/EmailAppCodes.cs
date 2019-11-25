@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
                     mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
-                }                
+                }
 
                 sendEmail(mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]
