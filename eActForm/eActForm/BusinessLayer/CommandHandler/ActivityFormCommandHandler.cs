@@ -182,20 +182,19 @@ namespace eActForm.BusinessLayer
                 {
                     if (getActList.FirstOrDefault().activityNo.ToString() == "---")
                     {
+                        string getYear = getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9 ?
+                                new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2)
+                              : new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
+
                         if (getActList.FirstOrDefault().chanel_Id != "")
                         {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id).FirstOrDefault().docNo);
-
-                            string getYear = getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9 ? 
-                                getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(543).ToString("yy") 
-                              : getActList.FirstOrDefault().activityPeriodSt.Value.Year.ToString().Substring(2);
-
 
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().chanelShort.Trim();
                             result[0] += getActList.FirstOrDefault().cusShortName.Trim();
-                            result[0] += getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(543).ToString("yy");
+                            result[0] += getYear;
                             //result[0] += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
                             result[0] += string.Format("{0:0000}", genNumber);
                             result[1] = Activity_Model.activityType.MT.ToString();
@@ -207,7 +206,7 @@ namespace eActForm.BusinessLayer
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().regionShort.Trim();
                             result[0] += getActList.FirstOrDefault().cusShortName.Trim();
-                            result[0] += getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(543).ToString("yy");
+                            result[0] += getYear;
                             result[0] += string.Format("{0:0000}", genNumber);
                             result[1] = Activity_Model.activityType.OMT.ToString();
                         }
