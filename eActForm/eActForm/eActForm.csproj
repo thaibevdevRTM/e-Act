@@ -181,6 +181,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BusinessLayer\Appcodes\ActFormAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\AdminUserAppCode.cs" />
+    <Compile Include="BusinessLayer\Appcodes\BaseAppCodes.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\Appcodes\ReportSummaryAppCode.cs" />
@@ -221,6 +222,13 @@
     <Compile Include="BusinessLayer\Appcodes\SignatureAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UtilsAppCode.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityByIdTBMMKT.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityEstimateByActivityId.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityLayoutByActivityId.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityFormDetailOtherByActivityId.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetSelectAllTB_Reg_Subject.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetSelectBrandOrChannel.cs" />
     <Compile Include="Controllers\actFormRepDetailController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\ActivityCostDetailController.cs" />
@@ -248,10 +256,13 @@
     <Compile Include="Controllers\SaleActualController.cs" />
     <Compile Include="Controllers\SignatureController.cs" />
     <Compile Include="Controllers\SummaryReportController.cs" />
+    <Compile Include="Controllers\TBMMKT_ActivityBudgetInputController.cs" />
+    <Compile Include="Controllers\TBMMKT_ActivityBudgetReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ActBaseModel.cs" />
+    <Compile Include="Models\Activity_TBMMKT_Model.cs" />
     <Compile Include="Models\Activity_Model.cs" />
     <Compile Include="Models\ActSignatureModel.cs" />
     <Compile Include="Models\ActUserModel.cs" />
@@ -1984,6 +1995,7 @@
     <Content Include="images\non_al.jpeg" />
     <Content Include="images\warning_error.png" />
     <Content Include="Scripts\Admin\adminPage.js" />
+    <Content Include="Scripts\Approve\RepDetailApproves.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -2345,14 +2357,31 @@
     <Content Include="Views\MenuList\admin.cshtml" />
     <Content Include="Views\MenuList\contact.cshtml" />
     <Content Include="Views\Shared\_searchReportDetail.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\headerCompany.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\Index.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\headerDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\activityDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\activityBudgetDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\lastwordForFYI.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\activityBudgetDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\activityDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\headerCompany.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\headerDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\Index.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\lastwordForFYI.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\attachOutFormTag.cshtml" />
     <Content Include="Views\Shared\_PreviewForApproveDetail.cshtml" />
     <Content Include="Views\actFormRepDetail\repPreviewForApproveDetail.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\previewActBudget.cshtml" />
+    <Content Include="Views\Shared\_previewActFormBudget.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="BusinessLayer\Tbmmkt\Appcodes\" />
+    <Folder Include="error\" />
     <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />

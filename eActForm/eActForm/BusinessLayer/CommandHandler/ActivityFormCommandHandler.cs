@@ -31,11 +31,12 @@ namespace eActForm.BusinessLayer
                    DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                 model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
                    DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                model.activityFormModel.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo ;
+                model.activityFormModel.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
                 model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
                 model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                 model.activityFormModel.updatedDate = DateTime.Now;
+                model.activityFormModel.companyId = UtilsAppCode.Session.User.empCompanyId;
                 rtn = insertActivityForm(model.activityFormModel);
                 rtnIO = insertCliamIO(model.activityFormModel);
 
@@ -185,11 +186,17 @@ namespace eActForm.BusinessLayer
                         {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id).FirstOrDefault().docNo);
 
+                            string getYear = getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9 ? 
+                                getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(543).ToString("yy") 
+                              : getActList.FirstOrDefault().activityPeriodSt.Value.Year.ToString().Substring(2);
+
+
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().chanelShort.Trim();
                             result[0] += getActList.FirstOrDefault().cusShortName.Trim();
-                            result[0] += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
+                            result[0] += getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(543).ToString("yy");
+                            //result[0] += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
                             result[0] += string.Format("{0:0000}", genNumber);
                             result[1] = Activity_Model.activityType.MT.ToString();
                         }
@@ -200,7 +207,7 @@ namespace eActForm.BusinessLayer
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().regionShort.Trim();
                             result[0] += getActList.FirstOrDefault().cusShortName.Trim();
-                            result[0] += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
+                            result[0] += getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(543).ToString("yy");
                             result[0] += string.Format("{0:0000}", genNumber);
                             result[1] = Activity_Model.activityType.OMT.ToString();
                         }
@@ -288,6 +295,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@objective",model.objective)
                     ,new SqlParameter("@trade",model.trade)
                     ,new SqlParameter("@activityDetail",model.activityDetail)
+                    ,new SqlParameter("@companyId",model.companyId)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)

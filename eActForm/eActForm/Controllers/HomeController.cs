@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Configuration;
 using eActForm.Models;
 using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -41,7 +42,7 @@ namespace eActForm.Controllers
 
 
 
-        public ActionResult myDoc(string actId, string TypeForm)
+        public ActionResult myDoc(string actId)
         {
             Activity_Model.actForms model;
             if (TempData["SearchDataModel"] != null)
@@ -51,17 +52,8 @@ namespace eActForm.Controllers
             else
             {
                 model = new Activity_Model.actForms();
-
-                if (TypeForm == Activity_Model.activityType.MT.ToString())
-                {
-                    model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.MT.ToString());
-                    model.typeForm = Activity_Model.activityType.MT.ToString();
-                }
-                else
-                {
-                    model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.OMT.ToString());
-                    model.typeForm = Activity_Model.activityType.OMT.ToString();
-                }
+                model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-15), DateTime.Now);
+                model.typeForm = BaseAppCodes.getCompanyTypForm().ToString();
 
                 if (actId != null && actId != "")
                 {
@@ -103,7 +95,7 @@ namespace eActForm.Controllers
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
             model = new Activity_Model.actForms
             {
-                actLists = ActFormAppCode.getActFormByEmpId(startDate, endDate, activityType)
+                actLists = ActFormAppCode.getActFormByEmpId(startDate, endDate)
             };
 
 

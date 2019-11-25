@@ -78,18 +78,43 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        public JsonResult selectApprove(string actId, string status, string approveType)
+        {
+            var result = new AjaxResult();
+            result.Success = false;
+            try
+            {
+                if (ApproveAppCode.updateApprove(actId, status, "", approveType) > 0)
+                {
+                    result.Success = true;
+                }
+                else
+                {
+                    result.Message = AppCode.StrMessFail;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("insertApprove >>" + ex.Message);
+                result.Message = ex.Message;
+            }
+            return Json(result);
+        }
+
+
         public ActionResult approveLists(ApproveModel.approveModels models)
         {
             return PartialView(models);
         }
 
-        public ActionResult approvePositionSignatureLists(string actId)
+        public ActionResult approvePositionSignatureLists(string actId, string subId)
         {
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
             {
                 models = ApproveAppCode.getApproveByActFormId(actId);
-                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
+                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
                 models.approveFlowDetail = flowModel.flowDetail;
             }
             catch (Exception ex)
@@ -100,9 +125,10 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-
         public ActionResult previewApprove(string actId, string typeForm)
         {
+
+
             Activity_Model activityModel = new Activity_Model();
             try
             {

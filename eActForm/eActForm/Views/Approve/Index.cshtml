@@ -11,6 +11,7 @@
 <script src="~/Scripts/jquery-1.11.2.min.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/Approve/RepDetailApproves.js"></script>
 
 <h2>การอนุมัติ</h2>
 <hr />
@@ -227,41 +228,6 @@ else
     }
 
 
-    function callPreviewRepDetailApprove(obj) {
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("repPreviewListView", "actFormRepDetail")',
-            data: {
-                actId: obj
-            }
-        }).done(function (htmlResponse) {
-            $.ajax({
-                type: 'POST',
-                dataType: "html",
-                url: '@Url.Action("repDetailGenPDF", "actFormRepDetail")',
-                data: {
-                    gridHtml: htmlResponse
-                  , actId: '@actId'
-                }
-            }).done(function (htmlResponse) {
-                $("#WaitDialog").hide();
-                bootbox.confirm({
-                    message: "ดำเนินการเรียบร้อยครับ",
-                    buttons: {
-                        confirm: {
-                            label: 'OK',
-                            className: 'btn-success'
-                        }
-                    },
-                    callback: function (result) {
-                        var url = '@Url.Action("Index", "ApproveListsRepDetail")';
-                        window.location.href = url;
-                    }
-
-                });
-            });
-        });
-    }
 
     function callPreviewSummaryDetailApprove(obj) {
         $.ajax({
@@ -299,17 +265,38 @@ else
     }
 
     function callPreviewApprove(obj) {
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("previewApprove", "Approve")',
-            data: {
-                actId: obj,
-                typeForm: '@Model.typeForm.ToString()',
-            }
-        }).done(function (htmlResponse) {
-            $("#divPreviewApprove").html(htmlResponse);
-            genPdf();
-        });
+
+        if ('@UtilsAppCode.Session.User.empCompanyId' == '3030') {
+
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("previewActBudget", "TBMMKT_ActivityBudgetReport")',
+                data: {
+                    activityId: obj,
+                    typeForm: '@Model.typeForm.ToString()',
+                }
+            }).done(function (htmlResponse) {
+                $("#divPreviewApprove").html(htmlResponse);
+                genPdf();
+            });
+
+        }
+        else {
+
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("previewApprove", "Approve")',
+                data: {
+                    actId: obj,
+                    typeForm: '@Model.typeForm.ToString()',
+                }
+            }).done(function (htmlResponse) {
+                $("#divPreviewApprove").html(htmlResponse);
+                genPdf();
+            });
+
+        }
+
     }
         function genPdf() {
         $.ajax({
@@ -333,6 +320,42 @@ else
     }
 
 
+    
+    @*function callPreviewRepDetailApprove(obj) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("repPreviewListView", "actFormRepDetail")',
+            data: {
+                actId: obj
+            }
+        }).done(function (htmlResponse) {
+            $.ajax({
+                type: 'POST',
+                dataType: "html",
+                url: '@Url.Action("repDetailGenPDF", "actFormRepDetail")',
+                data: {
+                    gridHtml: htmlResponse
+                  , actId: '@actId'
+                }
+            }).done(function (htmlResponse) {
+                $("#WaitDialog").hide();
+                bootbox.confirm({
+                    message: "ดำเนินการเรียบร้อยครับ",
+                    buttons: {
+                        confirm: {
+                            label: 'OK',
+                            className: 'btn-success'
+                        }
+                    },
+                    callback: function (result) {
+                        var url = '@Url.Action("Index", "ApproveListsRepDetail")';
+                        window.location.href = url;
+                    }
+
+                });
+            });
+        });
+    }*@
 
 </script>
 
