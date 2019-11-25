@@ -1,0 +1,92 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.Models;
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div style=""></div>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+
+
+            @RenderPage("~/Views/Shared/_previewActFormBudget.cshtml")
+
+
+            <div class="modal-footer">
+                <div>
+                    <p class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                        <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                    </p>
+                </div>
+
+            </div>
+            <div class="center-block">
+                @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
+        {
+            <input type="hidden" name="gridHtml" />
+            <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
+                <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
+            </button>
+}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+        $("#btnExportPDF").click(function () {
+            $("input[name='gridHtml']").val($("#Grid1").html());
+    });
+
+    function submitPreview() {
+
+        bootbox.confirm({
+            message: "ยืนยัน บันทึกข้อมูล!",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+                    var htmlstr = "";
+
+
+
+
+                    htmlstr = $("#Grid1").html();
+
+                    bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
+                    $.ajax({
+                    url: '@Url.Action("submitPreview", "Activity")',
+                        data: {
+                            GridHtml1: htmlstr,
+                            status: 2,
+                            activityId: '@Model.Activity_TBMMKT_Model.id',
+                        },
+                        dataType: "json",
+                        type: 'POST',
+                    }).done(function (response) {
+
+                        console.log(response);
+                        var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.TBM.ToString() }, null)';
+                            window.location.href = url;
+
+
+                    });
+                    }
+            }
+
+        });
+    }
+</script>

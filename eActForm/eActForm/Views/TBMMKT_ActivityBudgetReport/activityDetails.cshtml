@@ -1,0 +1,38 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+<div id="divHeaderDetails" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
+    รูปแบบการดำเนินการ
+    <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelHeaderDetails" runat="server">
+        <tr style="background-color:#2f74b5;color:white;height:25px;">
+            <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ลำดับ</th>
+            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
+            <th style="width: 65%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรม</th>
+            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงินรวม</th>
+        </tr>
+        @foreach (var item in Model.list_TB_Act_ActivityLayout)
+        {
+            <tr>
+                <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                    @item.no
+                </td>
+                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    @item.io
+                </td>
+                <td style="width: 65%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    @item.activity
+                </td>
+                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                    @item.amount
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="3" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                TOTAL&nbsp;
+            </td>
+            <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                @Model.totalCostThisActivity.Value.ToString("#,###.00")&nbsp;
+            </td>
+        </tr>
+    </table>
+
+</div>

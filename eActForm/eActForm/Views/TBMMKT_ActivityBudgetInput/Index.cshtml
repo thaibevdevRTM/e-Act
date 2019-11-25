@@ -1,0 +1,437 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+
+<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
+<style>
+    .cssTableTDTextCenter {
+        max-width: none;
+        text-align: center;
+        width: 100%;
+    }
+
+    .cssTableTDTextLeft {
+        max-width: none;
+        text-align: left;
+        width: 100%;
+    }
+
+    .cssTableTDDetailNumber {
+        text-align: right;
+        width: 100%;
+    }
+</style>
+@using (Ajax.BeginForm("insertDataActivity", "TBMMKT_ActivityBudgetInput"
+                            , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }
+                            , new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
+{
+
+    <div id="GridPDF" style="width:97%; margin-left:20px;">
+
+
+        <table style="width: 100%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;" id="tabel_report" runat="server">
+
+
+            <tr>
+
+
+                <td>
+                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerCompany.cshtml")
+                </td>
+
+
+            </tr>
+
+
+            <tr>
+
+
+                <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+
+
+                    <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
+                        ขออนุมัติงบประมาณกิจกรรม.....................@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
+                    </div>
+
+
+                </td>
+
+
+            </tr>
+
+
+            <tr>
+                <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                    <div id="divHeadCompany" runat="server" style="width: 100%; align-content: left; text-align: left;">
+                        @*@if (Model.activityFormTBMMKT.selectedBrandOrChannel != null)
+                            {*@
+                        <div style="display:inline-block;">
+                            <label class="control-label" for="ddlRegion">
+                                &nbsp;Condition Flow<span class="required">:&nbsp;</span>
+                            </label>
+                            @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "val", "txt", ""), "", new
+                            {
+                                @class = "",
+                                id = "ddlChannelOrBrand"
+                            })
+
+                            <script>
+                                    function processDropdownConditionFlow() {
+                                        if ($("#ddlChannelOrBrand").val() == "Channel") {
+                                            $('#divChannel').css('display', 'inline-block');
+                                            $("#divSubject").css('display', 'inline-block');
+                                            $("#divBrand").hide();
+                                        }
+                                        else if ($("#ddlChannelOrBrand").val() == "Brand") {
+                                            $('#divBrand').css('display', 'inline-block');
+                                            $("#divSubject").css('display', 'inline-block');
+                                            $("#divChannel").hide();
+                                        }
+                                        else {
+                                            $("#divBrand").hide();
+                                            $("#divChannel").hide();
+                                            $("#divSubject").hide();
+                                        }
+                                    }
+
+                                    $(function () {
+                                        //ทำหลังLoadหน้่าเว็บเสร็จ
+                                        var p_subjectId = "@Model.tB_Act_ActivityForm_DetailOther.SubjectId";
+                                        var p_productBrandId = "@Model.tB_Act_ActivityForm_DetailOther.productBrandId";
+                                        var p_channelId = "@Model.tB_Act_ActivityForm_DetailOther.channelId";
+                                        if (p_subjectId != "")
+                                         {
+                                            $("#divSubject").css('display', 'inline-block');
+                                            $("#ddlSubject").val(p_subjectId);
+                                        }
+                                        if (p_productBrandId != "") {
+                                            $("#divBrand").css('display', 'inline-block');
+                                            $("#ddlBrand").val(p_productBrandId);
+                                        }
+                                        if (p_channelId != "") {
+                                            $("#divChannel").css('display', 'inline-block');
+                                            $("#ddlChannel").val(p_channelId);
+                                        }
+                                     });
+
+                                    $("#ddlChannelOrBrand").change(function () {
+                                        processDropdownConditionFlow();
+                                    });
+                            </script>
+
+                        </div>
+                        <div id="divChannel" style="display:none;">
+                            <label class="control-label" for="ddlChannel">
+                                &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
+                            </label>
+                            @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
+                            {
+                                @class = "",
+                                id = "ddlChannel"
+                            })
+                        </div>
+                        <div id="divBrand" style="display:none;">
+                            <label class="control-label" for="ddlBrand">
+                                &nbsp;เลือก Brand<span class="required"></span>
+                            </label>
+                            @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
+                            {
+                                @class = "",
+                                id = "ddlBrand"
+                            })
+                        </div>
+                        <div id="divSubject" style="display:none;">
+                            <label class="control-label" for="ddlBrand">
+                                &nbsp;เรื่อง <span class="required"></span>
+                            </label>
+                            @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
+                            {
+                                @class = "",
+                                id = "ddlSubject"
+                            })
+                        </div>
+                        @*}*@
+                    </div>
+                </td>
+            </tr>
+            <tr style="border: 1px solid black; border-collapse: collapse;border-bottom:none;">
+                <td>
+                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerDetails.cshtml")
+                </td>
+            </tr>
+            <tr>
+                <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                    <div style="height:5px;"></div>
+                    <div style="width: 100%; text-align: left;">
+                        &nbsp;ค่าใช้จ่ายในการทำกิจกรรม..........................จำนวนเงิน............บาท
+                        <br />
+                        &nbsp;รายละเอียดงบประมาณ
+                    </div>
+                </td>
+            </tr>
+            <tr style="border-bottom:none;">
+                <td>
+                    <div style="height:5px;"></div>
+                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/activityDetails.cshtml")
+                </td>
+            </tr>
+            <tr style="border-bottom:none;">
+                <td>
+                    <div style="height:5px;"></div>
+                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/activityBudgetDetails.cshtml")
+                </td>
+            </tr>
+            <tr style="border-bottom:none;">
+                <td>
+                    <div style="height:20px;"></div>
+                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/lastwordForFYI.cshtml")
+                </td>
+            </tr>
+            <tr>
+                <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+                    <div style="height:5px;"></div>
+                    <div style="width: 100%; text-align: left;padding-left:15px;">
+                        หมายเหตุ @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "cssTableTDTextLeft", @id = "txtremark" })
+                        <br />
+                    </div>
+                </td>
+            </tr>
+            @*<tr>
+                    <td style="height:50px;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                        <div style="height:5px;"></div>
+                        <div style="width: 100%; text-align: left;">
+                            @if (Model.activityFormModel != null)
+                            {
+                                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
+                            }
+                            &nbsp;
+                            <div class="inner" style="padding-left:15px;">
+                                <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>*@
+            <tr style="border-bottom:none;">
+                <td>
+                    &nbsp;<br />
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    @*<div class="center-block">
+            @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
+            {
+                <input type="hidden" name="gridHtml" />
+                <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
+                    <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
+                </button>
+            }
+        </div>*@
+    @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
+    @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
+    @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
+
+
+    <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 1px 0px 1px;margin-left:20px;padding-left:15px;">
+        <table style="width: 100%;" id="tabelAttach" runat="server">
+            <tr>
+                <td style="width: 15%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-left:none;border-bottom:none;vertical-align:top;">&nbsp;เอกสารแนบ</td>
+                <td>
+                    @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.descAttach, new { @class = "", @id = "txtdescAttach" })
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+}
+
+@RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
+
+<div style="height:5px;"></div>
+
+<div style="margin-left:25px;">
+    <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
+</div>
+<div class="modal fade" id="previewModal" role="dialog" style="display:none">
+    <div id="divPreview">
+    </div>
+</div>
+
+<script>
+    $("#btnExportPDF").click(function () {
+        $("input[name='gridHtml']").val($("#GridPDF").html());
+    });
+
+    $(function () {
+        $("#txtdateDoc").datepicker();
+        $("#txtdateActivitySt").datepicker();
+        $("#txtactivityPeriodEnd").datepicker();
+        $("#txtdateCostPerSt").datepicker();
+        $("#txtdateCostPerEnd").datepicker();
+
+    });
+
+
+    function validatesubmit() {
+        var validate = true;
+        @*var required = "กรุณา ระบุ :<br>";
+
+
+       if('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
+        {
+             if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
+             if ($("#customerId").val() == "" || $("#txtCustomerName").val() == "") { required += "Customer Name*<br>"; validate = false; }
+        }
+
+        if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
+        if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
+        if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; }
+        if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
+        if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
+        if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
+        if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม *<br>"; validate = false; }
+        if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
+        if ($("#txtdateActivitySt").val() == "" && $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; }
+        else {
+            var startDate =  $("#txtdateActivitySt").val().split("-");
+            var endDate = $("#txtdateActivityEnd").val().split("-");
+            if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1],endDate[0])) {
+                required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
+            }
+        }
+        if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }*@
+
+        //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
+
+        if (validate == true) {
+            SubmitData();
+        }
+        else {
+            bootbox.alert(required)
+        }
+    }
+
+    function SubmitData()
+    {
+        $("#WaitDialog").show();
+        $("#divconditionFlow").submit();
+        @*var cusId = '';
+        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()')
+        {
+          cusId = $("#ddlCustomer").val()
+        }
+        else if('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
+        {
+             cusId = $("#customerId").val()
+        }*@
+
+
+            @*$.ajax({
+                url: '@Url.Action("insertDataActivity", "TBMMKT_ActivityBudgetInput")',
+                data: {
+                    //statusId: 1,
+                    //Mode: $("#hdMode").val(),
+                    dateDoc: $("#txtdateDoc").val(),
+                    //str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                    //str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
+                    //str_activityPeriodSt: $("#txtdateActivitySt").val(),
+                    //str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
+                    //dateProductlist: $("#txtdateActivitySt").val(),
+                    //dateActivitylist: $("#txtdateActivityEnd").val(),
+                    //Reference: $("#txtReference").val(),
+                    //CustomerId: cusId,
+                    //ProductCateId: $("#ddlProductCate").val(),
+                    //ProductGroupId: $("#ddlProductGrp").val(),
+                    //productBrandId: $("#ddlProductBrand").val(),
+                    //ActivityPeriodST: $("#txtdateActivitySt").val(),
+                    //ActivityPeriodEnd: $("#txtdateActivityEnd").val(),
+                    //CostPeriodST: $("#txtdateCostPerSt").val(),
+                    //CostPeriodEnd: $("#txtdateCostPerEnd").val(),
+                    //ActivityName: $("#txtActivityName").val(),
+                    //Theme: $("#ddlTheme").val(),
+                    //Objective: $("#txtObjective").val(),
+                    //Trade: $("input[name='activityFormModel.trade']:checked").val(),
+                    //ActivityDetail: $("#txtActivityDetail").val(),
+                    //activityNo: $("#txtActivityNo").val(),
+                    //createdByUserId: $("#hdcreateUser").val(),
+                    //id:'Model.activityFormModel.id',
+                },
+                dataType: "json",
+                type: 'POST',
+            }).done(function (response) {
+                if (response.Success) {
+                    if (response.MessageCode == "001") {
+                        bootbox.alert("กรุณาทำรายการใหม่ เอกสารฉบับนี้ ส่งอนุมัติ ไปแล้ว");
+                    }
+                    else {
+                           callPreviewData('@Model.activityFormModel.id');
+                    }
+                    $("#WaitDialog").hide();
+                }
+            });*@
+    }
+
+    function beginQuery() {
+
+    }
+
+    function successQuery(data) {
+        console.log('success');
+        console.log(data);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
+            data: { activityId: '@Model.activityFormModel.id' }
+        }).done(function (htmlResponse) {
+            $("#WaitDialog").hide();
+            $("#divPreview").html(htmlResponse)
+            $('#previewModal').modal('show');
+        });
+
+    }
+
+    function failureQuery(data) {
+        console.log('fail');
+        console.log(data);
+    }
+
+
+    var fileList = new Array;
+    Dropzone.options.dropzoneJsForm = {
+        maxFiles: 5,
+        acceptedFiles: "",
+        paramName: "file",
+        maxFilesize: 10,
+        //addRemoveLinks: true,
+        init: function () {
+
+            this.on("complete", function (file) {
+                console.log($("#hdActivityId").val());
+                CallImageView($("#hdActivityId").val());
+
+            });
+        }
+
+    };
+
+    function CallImageView(obj) {
+        console.log(obj);
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("ImageList", "Activity")',
+            data: { activityId: obj}
+        }).done(function (htmlResponse) {
+            $("#divgetimage").html(htmlResponse)
+        });
+    }
+
+</script>

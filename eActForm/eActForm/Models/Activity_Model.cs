@@ -26,8 +26,8 @@ namespace eActForm.Models
         public ActivityForm activityFormModel { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
         public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
-        public List<TB_Act_Region_Model> regionGroupList { get; set; }
-        
+        public List<TB_Act_Region_Model> regionGroupList { get; set; }       
+
         public Activity_Model()
         {
             productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
@@ -53,7 +53,8 @@ namespace eActForm.Models
         public enum activityType
         {
             OMT,
-            MT
+            MT,
+            TBM
         }
 
 
@@ -99,6 +100,7 @@ namespace eActForm.Models
             public string createByUserName { get; set; }
             public string regionId { get; set; }
             public string brandId { get; set; }
+            
         }
 
     }
@@ -172,6 +174,8 @@ namespace eActForm.Models
         public string regionName { get; set; }
         public string regionShort { get; set; }
         public string typeForm { get; set; }
+        public string remark { get; set; }
+        public string companyId { get; set; }
         public Boolean chkAddIO { get; set; }
         public string actIO { get; set; }
         public string actClaim { get; set; }
@@ -218,6 +222,7 @@ namespace eActForm.Models
         {
             detailGroup = new List<ProductCostOfGroupByPrice>();
         }
+       
     }
 
     public class CostThemeDetail : ActBaseModel

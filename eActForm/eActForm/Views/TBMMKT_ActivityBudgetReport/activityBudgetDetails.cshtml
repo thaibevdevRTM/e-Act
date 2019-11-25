@@ -1,0 +1,42 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+<div id="divHeaderDetails" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
+    รายละเอียดงบประมาณ
+    <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelHeaderDetails" runat="server">
+        <tr style="background-color:#2f74b5;color:white;height:25px;">
+            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">IO</th>
+            <th style="width: 50%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายละเอียด</th>
+            <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
+            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย</th>
+            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงินรวม</th>
+        </tr>
+        @foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
+        {
+            <tr>
+                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                    @item.IO
+                </td>
+                <td style="width: 50%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    @item.productDetail
+                </td>
+                <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    @item.unit
+                </td>
+                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    @item.unitPrice
+                </td>
+                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                    @item.total
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                TOTAL&nbsp;
+            </td>
+            <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                @Model.totalCostThisActivity.Value.ToString("#,###.00")&nbsp;
+            </td>
+        </tr>
+    </table>
+
+</div>
