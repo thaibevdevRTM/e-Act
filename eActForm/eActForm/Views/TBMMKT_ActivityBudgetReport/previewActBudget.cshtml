@@ -1,0 +1,31 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.Models;
+
+@Html.HiddenFor(m => m.activityFormTBMMKT.id, new { id = "HdId" })
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div style=""></div>
+            <button type="button" class="close" onclick="onClickClose();" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+
+            @RenderPage("~/Views/Shared/_previewActFormBudget.cshtml")
+
+        </div>
+        <div class="modal-footer">
+            <div>
+                <p class="d-flex justify-content-center">
+                    <button id="btnSubmitClose" type="button" class="btn btn-info pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
