@@ -29,6 +29,17 @@ namespace eActForm.Controllers
             return View(activity_TBMMKT_Model);
         }
 
+        public ActionResult previewActBudget(string activityId)
+        {
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            if (!string.IsNullOrEmpty(activityId))
+            {
+                activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+            }
+
+            return PartialView(activity_TBMMKT_Model);
+        }
+
         [HttpPost]
         [ValidateInput(false)]
         public FileResult printDoc(string gridHtml)
