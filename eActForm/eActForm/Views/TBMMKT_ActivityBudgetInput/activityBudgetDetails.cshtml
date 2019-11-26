@@ -33,48 +33,42 @@
                     <input type="text" value="@item.unitPrice" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" class="form-control textboxcss text-right txtUnitPrice_@index" />
                 </td>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                    <input type="hidden" value="@item.total" id="costThemeDetailOfGroupByPriceTBMMKT[@index].total" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="form-control textboxcss text-right hidtotal_@index" />
                     <input type="text" readonly="readonly" value="@item.total" id="costThemeDetailOfGroupByPriceTBMMKT[@index].total" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="form-control textboxcss text-right txttotal_@index" />
                     <script>
                          $(".txtUnit_@index").blur(function () {
                             var v_unitRow = 0.00;
                             var v_unitpriceRow = 0.00;
                             var v_totalRow = 0.00;
-                            if ($(".txtUnit_@index").val() != "" && parseFloat($(".txtUnit_@index").val()) != "0") {
-                                v_unitRow = parseFloat($(".txtUnit_@index").val().replace(",", ""));
+                             if ($(".txtUnit_@index").val() != "" && $(".txtUnit_@index").val() != "0.00" && $(".txtUnit_@index").val() != "0") {
+                                v_unitRow = parseFloat($(".txtUnit_@index").val());
                             }
-                            if ($(".txtUnitPrice_@index").val() != "" && parseFloat($(".txtUnitPrice_@index").val()) != "0") {
-                                v_unitpriceRow = parseFloat($(".txtUnitPrice_@index").val().replace(",", ""));
+                             if ($(".txtUnitPrice_@index").val() != "" && $(".txtUnitPrice_@index").val() != "0.00" && $(".txtUnitPrice_@index").val() != "0") {
+                                v_unitpriceRow = parseFloat($(".txtUnitPrice_@index").val());
                             }
-                            v_totalRow = (v_unitRow * v_unitpriceRow);
-                            $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                             v_totalRow = (v_unitRow * v_unitpriceRow);
 
-                            var totalAll = 0.00;
-                            var rowCount = $('#tabelHeaderDetails tr.tagCountRowinTable').length;
-                            for (i = 0; i < rowCount; i++) {
-                                totalAll += parseFloat($(".txttotal_" + i.toString()).val().replace(",", ""));
-                            }
-                            $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').toString());
+                            $(".hidtotal_@index").val(v_totalRow.toFixed(2));
+                             $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+
+                             sumall();
                         });
 
                         $(".txtUnitPrice_@index").blur(function () {
                             var v_unitRow = 0.00;
                             var v_unitpriceRow = 0.00;
                             var v_totalRow = 0.00;
-                            if ($(".txtUnit_@index").val() != "" && parseFloat($(".txtUnit_@index").val()) != "0") {
-                                v_unitRow = parseFloat($(".txtUnit_@index").val().replace(",", ""));
+                            if ($(".txtUnit_@index").val() != "" && $(".txtUnit_@index").val() != "0.00" && $(".txtUnit_@index").val() != "0") {
+                                v_unitRow = parseFloat($(".txtUnit_@index").val());
                             }
-                            if ($(".txtUnitPrice_@index").val() != "" && parseFloat($(".txtUnitPrice_@index").val()) != "0") {
-                                v_unitpriceRow = parseFloat($(".txtUnitPrice_@index").val().replace(",", ""));
+                            if ($(".txtUnitPrice_@index").val() != "" && $(".txtUnitPrice_@index").val() != "0.00" && $(".txtUnitPrice_@index").val() != "0") {
+                                v_unitpriceRow = parseFloat($(".txtUnitPrice_@index").val());
                             }
                             v_totalRow = (v_unitRow * v_unitpriceRow);
-                            $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 
-                            var totalAll = 0.00;
-                            var rowCount = $('#tabelHeaderDetails tr.tagCountRowinTable').length;
-                            for (i = 0; i < rowCount; i++) {
-                                totalAll += parseFloat($(".txttotal_" + i.toString()).val().replace(",", ""));
-                            }
-                            $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').toString());
+                            $(".hidtotal_@index").val(v_totalRow.toFixed(2));
+                            $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                            sumall();
                         });
                     </script>
                 </td>
@@ -90,4 +84,17 @@
             </td>
         </tr>
     </table>
+    <script>
+        function sumall() {
+            var totalAll = 0.00;
+            var rowCount = parseInt($('#tabelHeaderDetails tr.tagCountRowinTable').length);
+           
+            for (i = 0; i < rowCount; i++) {                
+                var rowtotal = parseFloat($(".hidtotal_" + i.toString()).val());
+                totalAll = totalAll + rowtotal;
+            }
+
+            $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        }
+    </script>
 </div>

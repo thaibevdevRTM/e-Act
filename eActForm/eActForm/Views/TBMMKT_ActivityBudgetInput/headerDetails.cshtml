@@ -102,8 +102,7 @@
                             <div class="form-group">
                                 <div class="col-md-5 col-sm-5 col-xs-12">
                                     <div class="row">
-                                        @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "width:140px;" })
-
+                                        @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "width:140px;" })
                                     </div>
                                 </div>
                                 <label class="control-label col-md-1 col-xs-12">
@@ -111,10 +110,7 @@
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="row">
-
-                                        @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;" })
-
-
+                                        @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;" })                                        
                                     </div>
                                 </div>
                             </div>
@@ -141,17 +137,3 @@
     </table>
 
 </div>
-<script type="text/javascript">
-
-    $(function () {
-        $("#txtdateDoc").datepicker({
-            format: 'dd-mm-yyyy'
-        });
-        $("#txtdateActivitySt").datepicker({
-            format: 'dd-mm-yyyy'
-        });
-        $("#txtactivityPeriodEnd").datepicker({
-            format: 'dd-mm-yyyy'
-        });
-    });
-</script>
