@@ -211,11 +211,17 @@ namespace eActForm.BusinessLayer
                         }
                         else
                         {
-                            int genNumber = int.Parse(getActivityDoc("running_TBM").FirstOrDefault().docNo);
 
+                            int genNumber = int.Parse(getActivityDoc("running_TBM").FirstOrDefault().docNo);
+                            var model = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId);
+
+                            result[0] += !string.IsNullOrEmpty(model.FirstOrDefault().channelId) ? 
+                                QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(model.FirstOrDefault().channelId)).FirstOrDefault().no_tbmmkt 
+                                : QueryGetAllBrand.GetAllBrand().Where(x => x.id.Equals(model.FirstOrDefault().productBrandId)).FirstOrDefault().no_tbmmkt;
+                            result[0] += getActList.FirstOrDefault().documentDate.Value.Year.ToString();
                             result[0] += "/";
-                            result[0] += getActList.FirstOrDefault().documentDate.Value.ToString().Substring(2, 2);
-                            
+                            result[0] += string.Format("{0:0000}", genNumber); ;
+                            result[1] = Activity_Model.activityType.TBM.ToString();
 
                         }
                     }
@@ -513,10 +519,12 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllProductCate => " + ex.Message);
+                ExceptionManager.WriteError("getActivityDoc => " + ex.Message);
                 return new List<TB_Act_ActivityFormDocNo_Model>();
             }
         }
+
+
 
 
         public static string getStatusActivity(string actId)

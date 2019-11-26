@@ -25,6 +25,8 @@ namespace eActForm.BusinessLayer
                                  cust = d["cust"].ToString(),
                                  tradingPartner = d["tradingPartner"].ToString(),
                                  delFlag = d["delFlag"].ToString(),
+                                 no_tbmmkt = d["no_tbmmkt"].ToString(),
+                                 typeChannel = d["typeChannel"].ToString(),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),
                                  updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
