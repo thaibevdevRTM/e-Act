@@ -1,128 +1,157 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
 <div id="divHeaderDetails" runat="server" style="width: 100%;">
+
     <table style="width: 100%;" id="tabelHeaderDetails" runat="server">
+
+
         <tr>
-            <td class="text-right" style="width: 15%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-left:none;border-top:none;">
-                &nbsp;
-                <label class="control-label">วันที่เสนอกิจกรรม : </label>
-            </td>
-            <td colspan="3" style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;border-top:none;">
-                @Html.TextBoxFor(x => x.activityFormModel.documentDate, new { @class = "form-control textboxcss", @id = "txtdateDoc", style = "width:280px;" })
-                <div style="height:5px;"></div>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-right" style="width: 15%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-left:none;">
-                &nbsp;<label class="control-label">ชื่อผู้เสนอกิจกรรม : </label>
-            </td>
-            <td style="width: 25%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;">
-                <label class="form-control textboxcss" style="width:280px;">@UtilsAppCode.Session.User.empFNameTH  @UtilsAppCode.Session.User.empLNameTH </label>
-                <div style="height:5px;"></div>
-            </td>
-            <td class="text-right" style="width: 10%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
-                &nbsp;<label class="control-label">เบอร์โทรศัพท์ : </label>
-            </td>
-            <td style="width: 20%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
-                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss", @id = "txtactivityTel" })
-                <div style="height:5px;"></div>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-right" style="width: 15%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-left:none;">
-                &nbsp;<label class="control-label">สินค้า :</label>
-            </td>
-            <td style="width: 25%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;">
-                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtactivityProduct", style = "width:280px;" })
-                <div style="height:5px;"></div>
-            </td>
-            <td class="text-right" style="width: 10%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
-                &nbsp;<label class="control-label">เอกสารเลขที่ :</label>
-            </td>
-            <td style="width: 20%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
-                @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
-                <div style="height:5px;"></div>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-right" style="width: 15%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-left:none;">
-                &nbsp;<label class="control-label">ชื่อกิจกรรม : </label>
-            </td>
-            <td style="width: 25%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;">
-                @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", style = "width:280px;" })
-                <div style="height:5px;"></div>
-            </td>
-            <td class="text-right" style="width: 10%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
-                &nbsp;<label class="control-label">EO :</label>
-            </td>
-            <td style="width: 20%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
-                @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "form-control textboxcss", @id = "txtEO" })
-                <div style="height:5px;"></div>
-            </td>
+            <td>
+                <div class="form-group">
 
+                    <label class="control-label col-md-2 col-xs-12">
+                        วันที่เสนอกิจกรรม :
+                    </label>
 
-
-
-            @*<td colspan="3">
-
-                               <div class="col-md-6 ol-xs-12">
-                                <div class="col-sm-5">
-                                    @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName" })
-
-
-                                </div>
-                                <div class="col-sm-2">EO                    </div>
-                                <div class="col-sm-5">
-                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "form-control textboxcss", @id = "txtEO" })
-
-
-                                </div>
-
-                </div>
-
-                            </td>*@
-
-        </tr>
-        <tr>
-            <td class="text-right" style="width: 15%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-left:none;border-bottom:none;">
-                &nbsp;<label class="control-label">เริ่มกิจกรรม : </label>
-            </td>
-            <td colspan="3" style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;border-bottom:none; text-align :left ;">
-                @*@Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt" })
-                    &nbsp;ถึง&nbsp;
-                    @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd" })*@
-
-
-                <div class="col-12">
-                    <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="col-md-10 col-xs-12">
                         <div class="row">
-                            @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "width:280px;" })
-                        </div>
-                    </div>
-                    <div class="col-md-2 col-sm-2 col-xs-12 text-center">ถึง</div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="row">
-                            @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:280px;" })
+                            @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", style = "width:320px;" })
                         </div>
                     </div>
                 </div>
 
 
+                <div class="form-group">
 
+                    <label class="control-label col-md-2 col-xs-12">
+                        ชื่อผู้เสนอกิจกรรม :
+                    </label>
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="row">
+                            <label class="form-control textboxcss" style="width:320px;">@UtilsAppCode.Session.User.empFNameTH  @UtilsAppCode.Session.User.empLNameTH </label>
+                        </div>
+                    </div>
+
+                    <label class="control-label col-md-2 col-xs-12">
+                        เบอร์โทรศัพท์ :
+                    </label>
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="row">
+                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss", @id = "txtactivityTel", style = "width:320px;" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <label class="control-label col-md-2 col-xs-12">
+                        สินค้า :
+                    </label>
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="row">
+                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtactivityProduct", style = "width:320px;" })
+                        </div>
+                    </div>
+
+                    <label class="control-label col-md-2 col-xs-12">
+                        เอกสารเลขที่ :
+                    </label>
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="row">
+                            @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly", style = "width:320px;" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <label class="control-label col-md-2 col-xs-12">
+                        ชื่อกิจกรรม :
+                    </label>
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="row">
+                            @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", style = "width:320px;" })
+                        </div>
+                    </div>
+
+                    <label class="control-label col-md-2 col-xs-12">
+                        EO :
+                    </label>
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="row">
+                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "form-control textboxcss", @id = "txtEO", style = "width:320px;" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+
+                    <label class="control-label col-md-2 col-xs-12">
+                        เริ่มกิจกรรม :
+                    </label>
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-5 col-sm-5 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "width:140px;" })
+
+                                    </div>
+                                </div>
+                                <label class="control-label col-md-1 col-xs-12">
+                                    ถึง
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="row">
+
+                                        @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;" })
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12"></div>
+                </div>
+
+                <div class="form-group">
+
+                    <label class="control-label col-md-2 col-xs-12">
+                        วัตถุประสงค์ :
+                    </label>
+
+                    <div class="col-md-10 col-xs-12">
+                        <div class="row">
+                            @Html.TextAreaFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+                        </div>
+                    </div>
             </td>
 
         </tr>
-        <tr>
-            <td class="text-right" style="width: 15%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-left:none;border-bottom:none;vertical-align:top;">
-                <label class="control-label">วัตถุประสงค์ : </label>
-                
-            </td>
-            <td colspan="3" style="width: 25%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;border-bottom:none;">
-                <div style="height:5px;"></div>
-                @Html.TextAreaFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
-                <div style="height:15px;"></div>
-            </td>
-        </tr>
+
     </table>
 
 </div>
+<script type="text/javascript">
+
+    $(function () {
+        $("#txtdateDoc").datepicker({
+            format: 'dd-mm-yyyy'
+        });
+        $("#txtdateActivitySt").datepicker({
+            format: 'dd-mm-yyyy'
+        });
+        $("#txtactivityPeriodEnd").datepicker({
+            format: 'dd-mm-yyyy'
+        });
+    });
+</script>
