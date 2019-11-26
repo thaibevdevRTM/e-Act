@@ -22,10 +22,12 @@
                     @item.unit
                 </td>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    @item.unitPrice
+                    @*@item.unitPrice*@
+                    @string.Format("{0:#,0.00}", @item.unitPrice)
+                  
                 </td>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                    @item.total
+                    @string.Format("{0:#,0.00}", @item.total)
                 </td>
             </tr>
         }

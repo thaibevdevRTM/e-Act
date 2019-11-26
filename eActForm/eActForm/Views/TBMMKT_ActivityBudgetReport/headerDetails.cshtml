@@ -56,7 +56,9 @@
                 &nbsp;เริ่มกิจกรรม
             </td>
             <td colspan="3" style="width: 55%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;border-bottom:none;">
-                &nbsp;@Html.DisplayFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "", id = "lbldateActivitySt" })&nbsp;ถึง&nbsp;@Html.DisplayFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "", id = "lblactivityPeriodEnd" })
+
+             @Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy") &nbsp;ถึง&nbsp;@Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy")
+                @*&nbsp;@Html.DisplayFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "", id = "lbldateActivitySt" })&nbsp;ถึง&nbsp;@Html.DisplayFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "", id = "lblactivityPeriodEnd" })*@
             </td>
         </tr>
         <tr>
