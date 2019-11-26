@@ -68,6 +68,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "";
                     activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = costThemeDetailOfGroupByPriceTBMMKT;
                     //activity_TBMMKT_Model.list_TB_Act_ActivityLayout = List_TB_Act_ActivityLayout;
+                    activity_TBMMKT_Model.totalCostThisActivity = decimal.Parse("0.00");
                     //=END==mock data for first input=====
 
                     TempData["actForm" + actId] = activity_TBMMKT_Model;
