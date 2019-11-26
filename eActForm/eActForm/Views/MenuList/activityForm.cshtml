@@ -6,19 +6,19 @@
     <a><i class="fa fa-edit"></i> Activity Forms <span class="fa fa-chevron-down"></span></a>
     <ul class="nav child_menu">
         @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-    {
-        <li>@Html.ActionLink(" Activity Form", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-}
+        {
+            <li>@Html.ActionLink(" Activity Form", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+        }
         @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
-    {
-        <li>@Html.ActionLink(" Activity Form OMT", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
+        {
+            <li>@Html.ActionLink(" Activity Form OMT", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
 
-}
+        }
         @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
-    {
-        <li>@Html.ActionLink(" Activity Form", "Index", "TBMMKT_ActivityBudgetInput", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)</li>
+        {
+            <li>@Html.ActionLink(" Activity Form", "Index", "TBMMKT_ActivityBudgetInput", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)</li>
 
-}
+        }
     </ul>
 
 </li>
