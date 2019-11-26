@@ -274,6 +274,8 @@
 
 <script>
 
+    //$("#GridPDF :input").prop("disabled", true);
+
     if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
         var arrayOfElements = document.getElementsByClassName('clstxtIO');
         var lengthOfArray = arrayOfElements.length;
@@ -281,9 +283,8 @@
             arrayOfElements[i].disabled = 'disabled';
         }
     }
-   
 
-    //$("#divHeaderDetailsCost :input").prop("disabled", true);
+      
 
 
     $("#btnExportPDF").click(function () {
