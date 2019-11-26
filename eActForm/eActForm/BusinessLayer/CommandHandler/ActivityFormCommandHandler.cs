@@ -186,6 +186,11 @@ namespace eActForm.BusinessLayer
                                 new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2)
                               : new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
 
+                        if(getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_TBM"])
+                        {
+
+                        }
+
                         if (getActList.FirstOrDefault().chanel_Id != "")
                         {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id).FirstOrDefault().docNo);
