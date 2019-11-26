@@ -17,7 +17,7 @@
                 <li>@Html.ActionLink(" Activity Form OMT", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
 
             }
-            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
+            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] || UtilsAppCode.Session.User.isAdminTBM)
             {
                 <li>@Html.ActionLink(" Activity Form TBM", "Index", "TBMMKT_ActivityBudgetInput", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)</li>
 

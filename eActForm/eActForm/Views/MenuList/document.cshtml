@@ -8,8 +8,18 @@
     <li>
         <a><i class="fa fa-inbox"></i> Documents <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
-
-            <li>@Html.ActionLink(" Documents", "Index", "Home")</li>
+            @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
+            {
+                <li>@Html.ActionLink(" Documents", "Index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+            }
+            @if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+            {
+                <li>@Html.ActionLink(" Documents OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
+            }
+            @if (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
+            {
+                <li>@Html.ActionLink(" Documents TBM", "Index", "Home", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)</li>
+            }
 
             @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
             {
