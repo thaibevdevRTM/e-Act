@@ -22,31 +22,28 @@
                 </td>
                 <td style="width: 10%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                     <input type="text" value="@item.activityTypeId" id="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId" name="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId" class="form-control textboxcss" />
-                    @*@Html.DropDownListFor(x => item.activityTypeId, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "", new
-                        {
-                            @class = "form-control selectpicker",
-                            id = "ddlTypeActivity"
-                        })*@
+                    @Html.DropDownListFor(x => item.activityTypeId, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "", new
+               {
+                   @class = "form-control selectpicker",
+                   id = "ddlTypeActivity",
+                   @name = "costThemeDetailOfGroupByPriceTBMMKT["+ index + "].activityTypeId"
+               })
 
-                    <select class="form-control selectpicker" id="ddlTypeActivity" name="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId">
-                        @*<option value=""></option>
-                            <option selected="selected" value=""></option>
-                            <option value="Channel">Channel</option>
-                            <option value="Brand">Brand</option>*@
+                    @*<select class="form-control selectpicker" id="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId" name="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId">
                         <option value=""></option>
                         @foreach (var itemSelect in Model.activityGroupList)
                         {
-                            if (itemSelect.id == item.activityTypeId)
+                            if (itemSelect.activityTypeId == item.activityTypeId)
                             {
-                                <option selected="selected" value="@itemSelect.id">@itemSelect.activitySales</option>
+                                <option selected="selected" value="@itemSelect.activityTypeId">@itemSelect.activitySales</option>
                             }
                             else
                             {
-                                <option value="@itemSelect.id">@itemSelect.activitySales</option>
+                                <option value="@itemSelect.activityTypeId">@itemSelect.activitySales</option>
                             }
 
                         }
-                    </select>
+                    </select>*@
 
                 </td>
                 <td style="width: 40%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">

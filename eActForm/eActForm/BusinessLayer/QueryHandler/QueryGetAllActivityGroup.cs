@@ -20,6 +20,7 @@ namespace eActForm.BusinessLayer
                              select new TB_Act_ActivityGroup_Model()
                              {
                                  id = d["id"].ToString(),
+                                 activityTypeId = d["id"].ToString(),
                                  activitySales = d["activitySales"].ToString(),
                                  activityAccount = d["activityAccount"].ToString(),
                                  gl = d["gl"].ToString(),

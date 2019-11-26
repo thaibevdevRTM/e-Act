@@ -94,7 +94,6 @@ namespace eActForm.Models
     {
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? unitPrice { get; set; }
-        public string id { get; set; }
     }
 
 

@@ -8,6 +8,7 @@ namespace eActForm.Models
     public class TB_Act_ActivityGroup_Model
     {
         public string id { get; set; }
+        public string activityTypeId { get; set; }
         public string activitySales { get; set; }
         public string activityAccount { get; set; }
         public string gl { get; set; }
