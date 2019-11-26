@@ -12,5 +12,6 @@ namespace eActForm.Models
         public string productGroupId { get; set; }
         public string digit_IO { get; set; }
         public string digit_EO { get; set; }
+        public string no_tbmmkt { get; set; }
     }
 }
