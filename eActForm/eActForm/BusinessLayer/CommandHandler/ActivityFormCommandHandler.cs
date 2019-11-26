@@ -186,12 +186,7 @@ namespace eActForm.BusinessLayer
                                 new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2)
                               : new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
 
-                        if(getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_TBM"])
-                        {
-
-                        }
-
-                        if (getActList.FirstOrDefault().chanel_Id != "")
+                        if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
                         {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id).FirstOrDefault().docNo);
 
@@ -200,13 +195,12 @@ namespace eActForm.BusinessLayer
                             result[0] += getActList.FirstOrDefault().chanelShort.Trim();
                             result[0] += getActList.FirstOrDefault().cusShortName.Trim();
                             result[0] += getYear;
-                            //result[0] += new ThaiBuddhistCalendar().GetYear(DateTime.Now).ToString().Substring(2, 2);
                             result[0] += string.Format("{0:0000}", genNumber);
                             result[1] = Activity_Model.activityType.MT.ToString();
                         }
-                        else
+                        else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            int genNumber = int.Parse(getActivityDoc("region").FirstOrDefault().docNo);
+                            int genNumber = int.Parse(getActivityDoc("running_OMT").FirstOrDefault().docNo);
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().regionShort.Trim();
@@ -214,6 +208,15 @@ namespace eActForm.BusinessLayer
                             result[0] += getYear;
                             result[0] += string.Format("{0:0000}", genNumber);
                             result[1] = Activity_Model.activityType.OMT.ToString();
+                        }
+                        else
+                        {
+                            int genNumber = int.Parse(getActivityDoc("running_TBM").FirstOrDefault().docNo);
+
+                            result[0] += "/";
+                            result[0] += getActList.FirstOrDefault().documentDate.Value.ToString().Substring(2, 2);
+                            
+
                         }
                     }
                     else
