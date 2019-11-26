@@ -57,7 +57,9 @@
 
                     <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
                      
-                        ขออนุมัติงบประมาณกิจกรรม.....................@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
+                        ขออนุมัติงบประมาณกิจกรรม.....................
+                        <br />@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
+                        <br />@Html.TextBoxFor(x => x.activityFormModel.mode, new { @class = "", @id = "txtmode" })
                     </div>
 
 
