@@ -19,9 +19,7 @@ namespace eActForm.Controllers
 
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             try
-            {
-                activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
-                activity_TBMMKT_Model.activityFormModel.mode = mode;                                
+            {                             
 
                 if (!string.IsNullOrEmpty(activityId))
                 {
@@ -41,12 +39,13 @@ namespace eActForm.Controllers
                 }
                 else
                 {
+                    mode = "new";
                     string actId = Guid.NewGuid().ToString();
                     activity_TBMMKT_Model.activityFormModel.id = actId;
 
                     //===mock data for first input====
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
-                    for (int i = 0; i <= 15; i++)
+                    for (int i = 0; i < 14; i++)
                     {
                         costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { id = "", IO = "", activityTypeId = "", productDetail = "", unit = 0, unitPrice = 0, total = 0 });
                     }
@@ -79,6 +78,8 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
                 activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetAllQueryGetSelectAllTB_Reg_Subject().Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId).ToList();
                 activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "tbmmkt_ChooseActivityOrDetail").ToList();
+                activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
+                activity_TBMMKT_Model.activityFormModel.mode = mode;
 
                 TempData.Keep();
             }

@@ -21,42 +21,50 @@
                     <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class="form-control textboxcss" />
                 </td>
                 <td style="width: 10%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    <input type="text" value="@item.activityTypeId" id="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId" name="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId" class="form-control textboxcss" />
-                    @Html.DropDownListFor(x => item.activityTypeId, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "", new
-               {
-                   @class = "form-control selectpicker",
-                   id = "ddlTypeActivity",
-                   @name = "costThemeDetailOfGroupByPriceTBMMKT["+ index + "].activityTypeId"
-               })
-
-                    @*<select class="form-control selectpicker" id="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId" name="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId">
-                        <option value=""></option>
-                        @foreach (var itemSelect in Model.activityGroupList)
-                        {
-                            if (itemSelect.activityTypeId == item.activityTypeId)
-                            {
-                                <option selected="selected" value="@itemSelect.activityTypeId">@itemSelect.activitySales</option>
-                            }
-                            else
-                            {
-                                <option value="@itemSelect.activityTypeId">@itemSelect.activitySales</option>
-                            }
-
-                        }
-                    </select>*@
-
+                    @Html.DropDownList("costThemeDetailOfGroupByPriceTBMMKT[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control selectpicker" })
                 </td>
                 <td style="width: 40%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                     <input type="text" value="@item.productDetail" id="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" name="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" class="form-control textboxcss" />
                 </td>
                 <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    <input type="text" value="@item.unit" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" class="form-control textboxcss" />
+                    <input type="text" value="@item.unit" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" class="form-control textboxcss ddlunit_@index" />
+                    <script>
+                        $(".ddlunit_@index").blur(function () {
+                            var v_unitRow = 0.00;
+                            var v_unitpriceRow = 0.00;
+                            var v_totalRow = 0.00;
+                            if ($(".ddlunit_@index").val() != "" && parseFloat($(".ddlunit_@index").val()) != "0") {
+                                v_unitRow = parseFloat($(".ddlunit_@index").val());
+                            }
+                            if ($(".ddlunitPrice_@index").val() != "" && parseFloat($(".ddlunitPrice_@index").val()) != "0") {
+                                v_unitpriceRow = parseFloat($(".ddlunitPrice_@index").val());
+                            }
+                            v_totalRow = (v_unitRow * v_unitpriceRow);
+                            $(".ddltotal_@index").val(v_totalRow); 
+                            calTotal();
+                        });
+                    </script>
                 </td>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    <input type="text" value="@item.unitPrice" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" class="form-control textboxcss text-right" />
+                    <input type="text" value="@item.unitPrice" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" class="form-control textboxcss text-right ddlunitPrice_@index" />
+                    <script>
+                        $(".ddlunitPrice_@index").blur(function () {
+                            var v_unitRow = 0.00;
+                            var v_unitpriceRow = 0.00;
+                            var v_totalRow = 0.00;
+                            if ($(".ddlunit_@index").val() != "" && parseFloat($(".ddlunit_@index").val()) != "0") {
+                                v_unitRow = parseFloat($(".ddlunit_@index").val());
+                            }
+                            if ($(".ddlunitPrice_@index").val() != "" && parseFloat($(".ddlunitPrice_@index").val()) != "0") {
+                                v_unitpriceRow = parseFloat($(".ddlunitPrice_@index").val());
+                            }
+                            v_totalRow = (v_unitRow * v_unitpriceRow);
+                            $(".ddltotal_@index").val(v_totalRow);                            
+                        });
+                    </script>
                 </td>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                    <input type="text" value="@item.total" id="costThemeDetailOfGroupByPriceTBMMKT[@index].total" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="form-control textboxcss text-right" />
+                    <input type="text" readonly="readonly" value="@item.total" id="costThemeDetailOfGroupByPriceTBMMKT[@index].total" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="form-control textboxcss text-right ddltotal_@index" />
                 </td>
             </tr>
             index++;
@@ -70,5 +78,10 @@
             </td>
         </tr>
     </table>
-
+    <script>
+        function calTotal() {
+            var rowCount = $('#tabelHeaderDetails >tr').lenght();
+            alert(rowCount);
+        }
+    </script>
 </div>
