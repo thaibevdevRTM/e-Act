@@ -24,6 +24,7 @@ namespace eActForm.BusinessLayer
                                  chanelGroup = d["chanelGroup"].ToString(),
                                  cust = d["cust"].ToString(),
                                  tradingPartner = d["tradingPartner"].ToString(),
+                                 no_tbmmkt = d["no_tbmmkt"].ToString(),
                                  delFlag = d["delFlag"].ToString(),
                                  no_tbmmkt = d["no_tbmmkt"].ToString(),
                                  typeChannel = d["typeChannel"].ToString(),

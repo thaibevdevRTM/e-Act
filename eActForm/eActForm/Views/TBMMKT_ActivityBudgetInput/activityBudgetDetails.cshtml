@@ -6,7 +6,8 @@
     <table class="table table-bordered" id="tabelHeaderDetails" runat="server">
         <tr style="background-color:#2f74b5;color:white;height:25px;">
             <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">IO</th>
-            <th style="width: 50%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายละเอียด</th>
+            <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>
+            <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรมหรือรายละเอียด</th>
             <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
             <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย</th>
             <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงินรวม</th>
@@ -16,26 +17,52 @@
         {
             <tr>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                    <input type="hidden" value="@item.id" id="costThemeDetailOfGroupByPriceTBMMKT[@index].id" name="costThemeDetailOfGroupByPriceTBMMKT[@index].id" class = "form-control textboxcss"  />
-                    <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class = "form-control textboxcss"  />
+                    <input type="hidden" value="@item.id" id="costThemeDetailOfGroupByPriceTBMMKT[@index].id" name="costThemeDetailOfGroupByPriceTBMMKT[@index].id" class="form-control textboxcss" />
+                    <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class="form-control textboxcss" />
                 </td>
-                <td style="width: 50%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    <input type="text" value="@item.productDetail" id="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" name="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" class = "form-control textboxcss" />
+                <td style="width: 10%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    <input type="text" value="@item.activityTypeId" id="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId" name="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId" class="form-control textboxcss" />
+                    @Html.DropDownListFor(x => item.activityTypeId, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "", new
+               {
+                   @class = "form-control selectpicker",
+                   id = "ddlTypeActivity",
+                   @name = "costThemeDetailOfGroupByPriceTBMMKT["+ index + "].activityTypeId"
+               })
+
+                    @*<select class="form-control selectpicker" id="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId" name="costThemeDetailOfGroupByPriceTBMMKT[@index].activityTypeId">
+                        <option value=""></option>
+                        @foreach (var itemSelect in Model.activityGroupList)
+                        {
+                            if (itemSelect.activityTypeId == item.activityTypeId)
+                            {
+                                <option selected="selected" value="@itemSelect.activityTypeId">@itemSelect.activitySales</option>
+                            }
+                            else
+                            {
+                                <option value="@itemSelect.activityTypeId">@itemSelect.activitySales</option>
+                            }
+
+                        }
+                    </select>*@
+
+                </td>
+                <td style="width: 40%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    <input type="text" value="@item.productDetail" id="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" name="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" class="form-control textboxcss" />
                 </td>
                 <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    <input type="text" value="@item.unit" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" class = "form-control textboxcss" />
+                    <input type="text" value="@item.unit" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" class="form-control textboxcss" />
                 </td>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    <input type="text" value="@item.unitPrice" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" class = "form-control textboxcss text-right" />
+                    <input type="text" value="@item.unitPrice" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" class="form-control textboxcss text-right" />
                 </td>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                    <input type="text" value="@item.total" id="costThemeDetailOfGroupByPriceTBMMKT[@index].total" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class = "form-control textboxcss text-right" />
+                    <input type="text" value="@item.total" id="costThemeDetailOfGroupByPriceTBMMKT[@index].total" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="form-control textboxcss text-right" />
                 </td>
             </tr>
             index++;
         }
         <tr>
-            <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+            <td colspan="5" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                 TOTAL&nbsp;
             </td>
             <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
