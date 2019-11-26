@@ -1,4 +1,5 @@
 ﻿@model eActForm.Models.AdminUserModel
+@using eActForm.BusinessLayer
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -28,6 +29,7 @@
                 Company :
             </div>
             <div class="col-md-4">
+
                 <select class="form-control" id="ddlCompany" name="ddlCompany" required>
                     <option value="">-Selected-</option>
                     <option value="5600">MTM</option>
@@ -170,7 +172,7 @@
             $.each($("input[name='model.chkProductType']:checked"), function(){
                 favorite.push($(this).val());
             });
-       
+
 
         if (favorite.length > 0 && $("#ddlCompany").val() != "") {
             $("#frmAdminUser").submit();
@@ -286,25 +288,44 @@
                     });
                 }
             });
-    }
+        }
+
 
     function onClickDel(empId) {
-        $.ajax({
-            url: '@Url.Action("delUserandAuthor", "AdminUser")',
-            data: {
-                empId: empId,
+        bootbox.confirm({
+            message: "คุณต้องการ ลบ User : " + empId + " ใช่หรือไม่ ?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
             },
-            dataType: "json",
-            type: 'POST',
-            success: function (response) {
-                if (response.Code > 0) {
-                    bootbox.alert('Success')
-                    window.location.href = "/AdminUser/Index";
+            callback: function (result) {
+                if (result == true) {
+                    if (result) {
+                        $("#WaitDialog").show();
+                        $.ajax({
+                            url: '@Url.Action("delUserandAuthor", "AdminUser")',
+                            data: {
+                                empId: empId,
+                            },
+                            dataType: "json",
+                            type: 'POST',
+                        }).done(function (response) {
+                            if (response.Code > 0) {
+                                bootbox.alert('Success')
+                                window.location.href = '@Url.Action("Index", "AdminUser")';
+                            }
+                        });
+                    }
+
                 }
             }
         });
     }
-
-
 
 </script>
