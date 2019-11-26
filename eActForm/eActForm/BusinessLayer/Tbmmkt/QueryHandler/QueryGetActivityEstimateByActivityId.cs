@@ -24,11 +24,12 @@ namespace eActForm.BusinessLayer
                               {
                                   id = d["id"].ToString(),
                                   activityId = d["activityId"].ToString(),
+                                  activityTypeId = d["activityTypeId"].ToString(),
                                   productDetail = d["productDetail"].ToString(),                                
                                   unit = int.Parse(d["unit"].ToString()),
                                   unitPrice = Decimal.Parse(d["unitPrice"].ToString()),
                                   total =  Decimal.Parse(d["total"].ToString()),
-                                  IO = d["IO"].ToString(),
+                                  IO = d["IO"].ToString(),                                 
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),
