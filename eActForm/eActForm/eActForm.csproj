@@ -2168,9 +2168,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="manual\manual_eAct.pdf" />
-    <Content Include="ActivityFormPdf\fileNotFound.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="ActRepDetail\fileNotFound.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2380,6 +2377,7 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ActivityFormPdf\" />
     <Folder Include="BusinessLayer\Tbmmkt\Appcodes\" />
     <Folder Include="error\" />
     <Folder Include="obj\Release\" />

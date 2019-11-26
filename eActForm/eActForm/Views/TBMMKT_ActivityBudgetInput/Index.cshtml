@@ -35,7 +35,7 @@
     <div id="GridPDF" style="width:97%; margin-left:20px;">
 
 
-        <table style="width: 100%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;" id="tabel_report" runat="server">
+        <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
 
 
             <tr>
@@ -56,6 +56,7 @@
 
 
                     <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
+                     
                         ขออนุมัติงบประมาณกิจกรรม.....................@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
                     </div>
 
@@ -77,7 +78,7 @@
                             </label>
                             @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "val", "txt", ""), "", new
                             {
-                                @class = "",
+                                @class = "form-control selectpicker",
                                 id = "ddlChannelOrBrand"
                             })
 
@@ -132,7 +133,7 @@
                             </label>
                             @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
                             {
-                                @class = "",
+                                @class = "form-control selectpicker",
                                 id = "ddlChannel"
                             })
                         </div>
@@ -142,7 +143,7 @@
                             </label>
                             @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
                             {
-                                @class = "",
+                                @class = "form-control selectpicker",
                                 id = "ddlBrand"
                             })
                         </div>
@@ -152,16 +153,18 @@
                             </label>
                             @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
                             {
-                                @class = "",
+                                @class = "form-control selectpicker",
                                 id = "ddlSubject"
                             })
                         </div>
                         @*}*@
                     </div>
+                    <div style="height:10px;"></div>
                 </td>
             </tr>
-            <tr style="border: 1px solid black; border-collapse: collapse;border-bottom:none;">
+            <tr style="border: 0px solid black; border-collapse: collapse;border-bottom:none;">
                 <td>
+                  
                     @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerDetails.cshtml")
                 </td>
             </tr>
@@ -197,7 +200,8 @@
                 <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
                     <div style="height:5px;"></div>
                     <div style="width: 100%; text-align: left;padding-left:15px;">
-                        หมายเหตุ @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "cssTableTDTextLeft", @id = "txtremark" })
+                        หมายเหตุ @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control textboxcss", @id = "txtremark" })
+                        @*cssTableTDTextLeft*@
                         <br />
                     </div>
                 </td>
@@ -239,12 +243,13 @@
     @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
 
 
-    <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 1px 0px 1px;margin-left:20px;padding-left:15px;">
+    <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px;margin-left:20px;padding-left:15px;">
         <table style="width: 100%;" id="tabelAttach" runat="server">
             <tr>
                 <td style="width: 15%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-left:none;border-bottom:none;vertical-align:top;">&nbsp;เอกสารแนบ</td>
                 <td>
-                    @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.descAttach, new { @class = "", @id = "txtdescAttach" })
+                 <div style="height:15px;"></div>    @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.descAttach, new { @class = "form-control textboxcss", @id = "txtdescAttach" })
+                    <div style="height:10px;"></div>
                 </td>
             </tr>
         </table>
@@ -257,7 +262,7 @@
 
 <div style="height:5px;"></div>
 
-<div style="margin-left:25px;">
+<div style="margin-left:25px;" class="text-center">
     <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
 </div>
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
