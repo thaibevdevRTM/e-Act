@@ -49,8 +49,10 @@
                     <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
 
                         ขออนุมัติงบประมาณกิจกรรม.....................
-                        <br />@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
-                        <br />@Html.TextBoxFor(x => x.activityFormModel.mode, new { @class = "", @id = "txtmode" })
+                        <div id="forDev" style="display:none;">
+                            <br />@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
+                            <br />@Html.TextBoxFor(x => x.activityFormModel.mode, new { @class = "", @id = "txtmode" })
+                        </div>
                     </div>
 
                 </td>
@@ -118,6 +120,7 @@
                                             $("#divChannel").css('display', 'inline-block');
                                             $("#ddlChannel").val(p_channelId);
                                         }
+                                        processDropdownConditionFlow();
                                      });
 
                                     $("#ddlChannelOrBrand").change(function () {
@@ -311,7 +314,10 @@
 <div style="height:5px;"></div>
 
 <div style="margin-left:25px;" class="text-center">
-    <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
+    @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
+    {
+        <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
+    }
 </div>
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
     <div id="divPreview">

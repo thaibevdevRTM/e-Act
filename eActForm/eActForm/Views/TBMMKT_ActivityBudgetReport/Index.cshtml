@@ -6,6 +6,7 @@
         <div class="modal-header">
             <div style=""></div>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
+            @*@Html.ActionLink(" ", "Index", "TBMMKT_ActivityBudgetInput", new { activityId = Model.activityFormModel.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })*@
         </div>
         <div class="modal-body">
 
@@ -17,6 +18,7 @@
                 <div>
                     <p class="d-flex justify-content-center">
                         <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                        @*@Html.ActionLink(" ", "Index", "TBMMKT_ActivityBudgetInput", new { activityId = Model.activityFormModel.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })*@
                         <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
                     </p>
                 </div>

@@ -17,7 +17,7 @@
                         <div class="col-md-1 divDelImg">
                             <span id="iconDelFile" class="close" onclick="javascript:onclickDelImage('@item.id');">&times;</span>
                         </div>
-                        <img src="@string.Format(url,item._fileName)" id="catImage" width="100px" height="100px" />
+                        <a href="@string.Format(url,item._fileName)" target="_blank"><img src="@string.Format(url,item._fileName)" id="catImage" width="100px" height="100px" /></a>
                     </div>
                 </div>
             }
