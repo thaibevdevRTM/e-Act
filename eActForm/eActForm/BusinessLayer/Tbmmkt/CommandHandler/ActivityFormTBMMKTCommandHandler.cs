@@ -14,7 +14,7 @@ namespace eActForm.BusinessLayer
 {
     public class ActivityFormTBMMKTCommandHandler
     {
-            public static int insertAllActivity(Activity_TBMMKT_Model model, string activityId)
+        public static int insertAllActivity(Activity_TBMMKT_Model model, string activityId)
         {
             int rtn = 0;
             try
@@ -23,8 +23,8 @@ namespace eActForm.BusinessLayer
                 model.activityFormModel.id = activityId;
                 model.activityFormModel.statusId = 1;
                 model.activityFormModel.documentDate = model.activityFormModel.documentDate;
-                model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.activityPeriodSt.ToString()) ? (DateTime?)null :model.activityFormModel.activityPeriodSt;
-                model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.activityPeriodEnd.ToString()) ? (DateTime?)null :model.activityFormModel.activityPeriodEnd;
+                model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.activityPeriodSt.ToString()) ? (DateTime?)null : model.activityFormModel.activityPeriodSt;
+                model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.activityPeriodEnd.ToString()) ? (DateTime?)null : model.activityFormModel.activityPeriodEnd;
                 model.activityFormModel.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
                 model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
                 model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -53,7 +53,7 @@ namespace eActForm.BusinessLayer
                     {
                         tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId;
                     }
-                    
+
                     tB_Act_ActivityForm_DetailOther.SubjectId = model.activityFormTBMMKT.SubjectId;
                     tB_Act_ActivityForm_DetailOther.activityProduct = model.tB_Act_ActivityForm_DetailOther.activityProduct;
                     tB_Act_ActivityForm_DetailOther.activityTel = model.tB_Act_ActivityForm_DetailOther.activityTel;
@@ -338,7 +338,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@activityPeriodEND",model.activityPeriodEnd)
                     ,new SqlParameter("@activityName",model.activityName)
                     ,new SqlParameter("@objective",model.objective)
-                    ,new SqlParameter("@companyId",model.companyId)                    
+                    ,new SqlParameter("@companyId",model.companyId)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
@@ -567,6 +567,57 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getStatusActivity >>" + ex.Message);
             }
 
+        }
+
+        public static int updateIOActivity(Activity_TBMMKT_Model model, string activityId)
+        {
+            int rtn = 0;
+            try
+            {
+                int insertIndex = 1;
+
+                if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
+                {               
+                    foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
+                    {
+                        CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
+                        costThemeDetail.id = item.id;// ไท่แน่ใจค่าจะมาหรือป่าว                       
+                        costThemeDetail.IO = item.IO;
+                        costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                        costThemeDetail.updatedDate = DateTime.Now;
+                        rtn += usp_updateIOActivity(costThemeDetail);
+                        insertIndex++;
+                    }
+                }
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> updateIOActivity");
+                return rtn;
+            }
+
+
+        }
+
+        protected static int usp_updateIOActivity(CostThemeDetailOfGroupByPriceTBMMKT model)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateIOActivity"
+                    , new SqlParameter[] {new SqlParameter("@id",model.id)
+                    ,new SqlParameter("@IO",model.IO)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> usp_UpdateIOActivity");
+            }
+
+            return result;
         }
 
     }

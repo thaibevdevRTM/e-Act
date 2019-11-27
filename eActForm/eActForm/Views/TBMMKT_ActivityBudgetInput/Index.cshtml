@@ -70,8 +70,6 @@
                                 {*@
 
                             <label class="control-label col-md-1 col-xs-12"></label>
-
-
                             <div class="col-md-2  col-xs-12 ">
                                 <div style="display:inline-block;">
                                     <label class="control-label" for="ddlRegion">
@@ -174,7 +172,6 @@
                                 </div>*@
 
                         </div>
-
                     </div>
                 </td>
             </tr>
@@ -361,6 +358,17 @@
 
         if (validate == true) {
             SubmitData();
+        }
+        else {
+            bootbox.alert(required)
+        }
+    }
+
+    function validateUpdate() {
+        var validate = true;
+
+        if (validate == true) {
+
         }
         else {
             bootbox.alert(required)
