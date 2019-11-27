@@ -366,9 +366,7 @@
 
 @if (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2)
 {
-    <div style="margin-left:25px;" class="text-center">
-        <button id="btnUpdate" type="button" class="btn ink-reaction btn-danger" onclick="validateUpdate()">&nbsp;Update</button>
-    </div>
+
 }
 
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
@@ -413,16 +411,7 @@
         }
     }
 
-    function validateUpdate() {
-        var validate = true;
-
-        if (validate == true) {
-
-        }
-        else {
-            bootbox.alert(required)
-        }
-    }
+    
 
     function SubmitData()
     {
