@@ -19,7 +19,6 @@ namespace eActForm.BusinessLayer
                     customerslist = QueryGetAllCustomers.getCustomersByEmpId().Where(x => x.cusNameEN != "").ToList(),
                     productTypelist = QuerygetAllProductCate.getProductTypeByEmpId(),
                     activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
-                    .Where(x => x.activityCondition.Equals("mtm".ToLower()))
                    .GroupBy(item => item.activitySales)
                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList()
                 };
