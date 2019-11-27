@@ -101,16 +101,9 @@ namespace eActForm.Controllers
 
                 statusId = ActivityFormCommandHandler.getStatusActivity(activity_TBMMKT_Model.activityFormModel.id);
                 activity_TBMMKT_Model.activityFormTBMMKT.statusId =  int.Parse(statusId);
-                //if (statusId == "1" || statusId == "5" || statusId == "")
-                //{
-                //    int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
-                //}
-                //else
-                //{
-
-                //}
+                
                 int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
-
+              
                 result.Data = activity_TBMMKT_Model.activityFormModel.id;
                 result.Success = true;
             }
