@@ -15,7 +15,8 @@
         @{ var index = 0;}
         @foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
         {
-            <tr class="tagCountRowinTable">
+            <tr>
+
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
                     <input type="hidden" value="@item.id" id="costThemeDetailOfGroupByPriceTBMMKT[@index].id" name="costThemeDetailOfGroupByPriceTBMMKT[@index].id" class="form-control textboxcss" />
                     <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class="form-control textboxcss clstxtIO" readonly="readonly" />
@@ -37,43 +38,42 @@
                     <input type="hidden" value="@item.total" id="costThemeDetailOfGroupByPriceTBMMKT[@index].total" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="form-control textboxcss text-right hidtotal_@index" />
                     @Html.TextBoxFor(x => item.total, "{0:n2}", new { @id = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].total", Name = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].total", @class = "form-control textboxcss text-right txttotal_" + index, @readonly = "readonly" })
                     <script>
-                         $(".txtUnit_@index").blur(function () {
+                        $(".ddlunit_@index").blur(function () {
                             var v_unitRow = 0.00;
                             var v_unitpriceRow = 0.00;
                             var v_totalRow = 0.00;
-                             if ($(".txtUnit_@index").val() != "" && $(".txtUnit_@index").val() != "0.00" && $(".txtUnit_@index").val() != "0") {
-                                v_unitRow = parseFloat($(".txtUnit_@index").val().replace(",",""));
+                            if ($(".ddlunit_@index").val() != "" && parseFloat($(".ddlunit_@index").val()) != "0") {
+                                v_unitRow = parseFloat($(".ddlunit_@index").val());
                             }
-                             if ($(".txtUnitPrice_@index").val() != "" && $(".txtUnitPrice_@index").val() != "0.00" && $(".txtUnitPrice_@index").val() != "0") {
-                                 v_unitpriceRow = parseFloat($(".txtUnitPrice_@index").val().replace(",", ""));
-                            }
-                             v_totalRow = (v_unitRow * v_unitpriceRow);
-
-                            $(".hidtotal_@index").val(v_totalRow.toFixed(2));
-                             $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-
-                             sumall();
-                        });
-
-                        $(".txtUnitPrice_@index").blur(function () {
-                            var v_unitRow = 0.00;
-                            var v_unitpriceRow = 0.00;
-                            var v_totalRow = 0.00;
-                            if ($(".txtUnit_@index").val() != "" && $(".txtUnit_@index").val() != "0.00" && $(".txtUnit_@index").val() != "0") {
-                                v_unitRow = parseFloat($(".txtUnit_@index").val().replace(",", ""));
-                            }
-                            if ($(".txtUnitPrice_@index").val() != "" && $(".txtUnitPrice_@index").val() != "0.00" && $(".txtUnitPrice_@index").val() != "0") {
-                                v_unitpriceRow = parseFloat($(".txtUnitPrice_@index").val().replace(",", ""));
+                            if ($(".ddlunitPrice_@index").val() != "" && parseFloat($(".ddlunitPrice_@index").val()) != "0") {
+                                v_unitpriceRow = parseFloat($(".ddlunitPrice_@index").val());
                             }
                             v_totalRow = (v_unitRow * v_unitpriceRow);
-
-                            $(".hidtotal_@index").val(v_totalRow.toFixed(2));
-                            $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                            sumall();
+                            $(".ddltotal_@index").val(v_totalRow); 
+                            calTotal();
                         });
-
-
                     </script>
+                </td>
+                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    <input type="text" value="@item.unitPrice" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" class="form-control textboxcss text-right ddlunitPrice_@index" />
+                    <script>
+                        $(".ddlunitPrice_@index").blur(function () {
+                            var v_unitRow = 0.00;
+                            var v_unitpriceRow = 0.00;
+                            var v_totalRow = 0.00;
+                            if ($(".ddlunit_@index").val() != "" && parseFloat($(".ddlunit_@index").val()) != "0") {
+                                v_unitRow = parseFloat($(".ddlunit_@index").val());
+                            }
+                            if ($(".ddlunitPrice_@index").val() != "" && parseFloat($(".ddlunitPrice_@index").val()) != "0") {
+                                v_unitpriceRow = parseFloat($(".ddlunitPrice_@index").val());
+                            }
+                            v_totalRow = (v_unitRow * v_unitpriceRow);
+                            $(".ddltotal_@index").val(v_totalRow);                            
+                        });
+                    </script>
+                </td>
+                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                    <input type="text" readonly="readonly" value="@item.total" id="costThemeDetailOfGroupByPriceTBMMKT[@index].total" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="form-control textboxcss text-right ddltotal_@index" />
                 </td>
             </tr>
             index++;
@@ -88,16 +88,9 @@
         </tr>
     </table>
     <script>
-        function sumall() {
-            var totalAll = 0.00;
-            var rowCount = parseInt($('#tabelHeaderDetails tr.tagCountRowinTable').length);
-
-            for (i = 0; i < rowCount; i++) {
-                var rowtotal = parseFloat($(".hidtotal_" + i.toString()).val().replace(",", ""));
-                totalAll = totalAll + rowtotal;
-            }
-
-            $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        function calTotal() {
+            var rowCount = $('#tabelHeaderDetails >tr').lenght();
+            alert(rowCount);
         }
     </script>
 </div>
