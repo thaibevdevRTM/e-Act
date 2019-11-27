@@ -11,23 +11,50 @@
         </tr>
         @foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
         {
-            <tr>
-                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                    @item.IO
-                </td>
-                <td style="width: 50%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    @item.productDetail
-                </td>
-                <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    @item.unit
-                </td>
-                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    @item.unitPrice
-                </td>
-                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                    @item.total
-                </td>
-            </tr>
+            if (item.productDetail != "")
+            {
+                <tr>
+                    <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                        @item.IO
+                    </td>
+                    <td style="width: 50%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;padding-left:5px;">
+                        @item.productDetail
+                    </td>
+                    @if (item.unit != 0)
+                    {
+                        <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            @item.unit
+                        </td>
+                    }
+                    else
+                    {
+                        <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;"></td>
+                    }
+
+                    @if (item.unitPrice != 0)
+                    {
+                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            @string.Format("{0:#,0.00}", @item.unitPrice)
+                        </td>
+                    }
+                    else
+                    {
+                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;"></td>
+                    }
+
+                    @if (item.total != 0)
+                    {
+                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                            @string.Format("{0:#,0.00}", @item.total)
+                        </td>
+                    }
+                    else
+                    {
+                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;"></td>
+                    }
+
+                </tr>
+            }
         }
         <tr>
             <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
@@ -37,6 +64,7 @@
                 @Model.totalCostThisActivity.Value.ToString("#,###.00")&nbsp;
             </td>
         </tr>
+
     </table>
 
 </div>

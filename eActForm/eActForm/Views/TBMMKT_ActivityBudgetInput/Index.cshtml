@@ -37,37 +37,39 @@
 
         <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
 
-
             <tr>
-
-
                 <td>
                     @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerCompany.cshtml")
                 </td>
-
-
             </tr>
 
 
             <tr>
-
-
-                <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-
-
+                <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
                     <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
 
                         ขออนุมัติงบประมาณกิจกรรม.....................
-                        <br />@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
-                        <br />@Html.TextBoxFor(x => x.activityFormModel.mode, new { @class = "", @id = "txtmode" })
+                        <div id="forDev" style="display:none;">
+                            <br />@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
+                            <br />@Html.TextBoxFor(x => x.activityFormModel.mode, new { @class = "", @id = "txtmode" })
+                        </div>
                     </div>
 
-
                 </td>
-
-
             </tr>
 
+            <tr>
+                <td style=" text-align:center;  border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+
+                    <div class="form-group">
+                        <div class="col-12  text-center">
+
+                            @*<div class="row text-center"> </div>
+                                <div id="divHeadCompany" runat="server" style="width: 100%; align-content: left; text-align: center;">
+                            *@  @*@if (Model.activityFormTBMMKT.selectedBrandOrChannel != null)
+                                {*@
+
+                            <label class="control-label col-md-1 col-xs-12"></label>
 
             <tr>
                 <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
@@ -84,7 +86,18 @@
                            id = "ddlChannelOrBrand"
                        })
 
-                            <script>
+                            <div class="col-md-2  col-xs-12 ">
+                                <div style="display:inline-block;">
+                                    <label class="control-label" for="ddlRegion">
+                                        &nbsp;Condition Flow<span class="required">:&nbsp;</span>
+                                    </label>
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "val", "txt", ""), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlChannelOrBrand"
+                                    })
+
+                                    <script>
                                     function processDropdownConditionFlow() {
                                         if ($("#ddlChannelOrBrand").val() == "Channel") {
                                             $('#divChannel').css('display', 'inline-block');
@@ -121,12 +134,58 @@
                                             $("#divChannel").css('display', 'inline-block');
                                             $("#ddlChannel").val(p_channelId);
                                         }
+                                        processDropdownConditionFlow();
                                      });
 
                                     $("#ddlChannelOrBrand").change(function () {
                                         processDropdownConditionFlow();
                                     });
-                            </script>
+                                    </script>
+
+                                </div>
+                            </div>
+                            <div class="col-md-2   col-xs-12 ">
+                                <div id="divChannel" style="display:block;">
+                                    <label class="control-label" for="ddlChannel">
+                                        &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
+                                    </label>
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlChannel"
+                                    })
+                                </div>
+                                <div id="divBrand" style="display:none;">
+                                    <label class="control-label" for="ddlBrand">
+                                        &nbsp;เลือก Brand<span class="required"></span>
+                                    </label>
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlBrand"
+                                    })
+                                </div>
+
+                            </div>
+                            <div class="col-md-4  col-xs-12 ">
+                                <div id="divSubject" style="display:block;">
+                                    <label class="control-label" for="ddlBrand">
+                                        &nbsp;เรื่อง <span class="required"></span>
+                                    </label>
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlSubject"
+                                    })
+                                </div>
+
+                            </div>
+                            <label class="control-label col-md-1 col-xs-12"></label>
+
+                            @*}*@
+
+                            @*<div style="height:15px;"></div>
+                                </div>*@
 
                         </div>
                         <div id="divChannel" style="display:none;">
@@ -161,22 +220,24 @@
                         </div>
                         @*}*@
                     </div>
-                    <div style="height:10px;"></div>
                 </td>
             </tr>
             <tr style="border: 0px solid black; border-collapse: collapse;border-bottom:none;">
                 <td>
-
-                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerDetails.cshtml")
+                    <div class="row">
+                        <div class="col-12">
+                            @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerDetails.cshtml")
+                        </div>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
                     <div style="height:5px;"></div>
                     <div style="width: 100%; text-align: left;">
-                        &nbsp;ค่าใช้จ่ายในการทำกิจกรรม..........................จำนวนเงิน............บาท
-                        <br />
-                        &nbsp;รายละเอียดงบประมาณ
+                        @*&nbsp;ค่าใช้จ่ายในการทำกิจกรรม..........................จำนวนเงิน............บาท
+                            <br />
+                            &nbsp;รายละเอียดงบประมาณ*@
                     </div>
                 </td>
             </tr>
@@ -192,20 +253,37 @@
                     @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/activityBudgetDetails.cshtml")
                 </td>
             </tr>
+
+            <tr>
+                <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+                    @*<div style="height:5px;"></div>
+                        <div style="width: 100%; text-align: left;padding-left:15px;">
+                            หมายเหตุ @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control textboxcss", @id = "txtremark" })
+                            cssTableTDTextLeft
+                            <br />
+                        </div>*@
+
+                    <div style="height:10px;"></div>
+                    <div class="form-group">
+
+                        <label class="control-label col-md-2 col-xs-12">
+                            หมายเหตุ :
+                        </label>
+
+                        <div class="col-md-10 col-xs-12">
+                            <div class="row">
+                                @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control textboxcss", @id = "txtremark" })
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+
             <tr style="border-bottom:none;">
                 <td>
                     <div style="height:20px;"></div>
                     @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/lastwordForFYI.cshtml")
-                </td>
-            </tr>
-            <tr>
-                <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
-                    <div style="height:5px;"></div>
-                    <div style="width: 100%; text-align: left;padding-left:15px;">
-                        หมายเหตุ @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control textboxcss", @id = "txtremark" })
-                        @*cssTableTDTextLeft*@
-                        <br />
-                    </div>
                 </td>
             </tr>
             @*<tr>
@@ -225,9 +303,11 @@
                 </tr>*@
             <tr style="border-bottom:none;">
                 <td>
-                    &nbsp;<br />
+                    &nbsp;<br /><br />
                 </td>
             </tr>
+
+
         </table>
 
     </div>
@@ -245,16 +325,29 @@
     @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
 
 
-    <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px;margin-left:20px;padding-left:15px;">
-        <table style="width: 100%;" id="tabelAttach" runat="server">
-            <tr>
-                <td style="width: 15%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-left:none;border-bottom:none;vertical-align:top;">&nbsp;เอกสารแนบ</td>
-                <td>
-                    <div style="height:15px;"></div>    @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.descAttach, new { @class = "form-control textboxcss", @id = "txtdescAttach" })
-                    <div style="height:10px;"></div>
-                </td>
-            </tr>
-        </table>
+    <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px; margin-left:20px;">
+        @*<table style="width: 100%;" id="tabelAttach" runat="server">padding-left:15px;
+                <tr>
+                    <td style="width: 15%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-left:none;border-bottom:none;vertical-align:top;">&nbsp;เอกสารแนบ</td>
+                    <td>
+                        <div style="height:15px;"></div>    @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.descAttach, new { @class = "form-control textboxcss", @id = "txtdescAttach" })
+                        <div style="height:10px;"></div>
+                    </td>
+                </tr>
+            </table>*@
+
+        <div class="form-group">
+            <label class="control-label col-md-2 col-xs-12">
+                เอกสารแนบ :
+            </label>
+
+            <div class="col-md-10 col-xs-12">
+                <div class="row">
+                    @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.descAttach, new { @class = "form-control textboxcss", @id = "txtdescAttach" })
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
@@ -265,7 +358,10 @@
 <div style="height:5px;"></div>
 
 <div style="margin-left:25px;" class="text-center">
-    <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
+    @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
+    {
+        <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
+    }
 </div>
 
 <div style="margin-left:25px;" class="text-center">
@@ -301,8 +397,6 @@
         $("#txtdateDoc").datepicker();
         $("#txtdateActivitySt").datepicker();
         $("#txtactivityPeriodEnd").datepicker();
-        $("#txtdateCostPerSt").datepicker();
-        $("#txtdateCostPerEnd").datepicker();
 
     });
 

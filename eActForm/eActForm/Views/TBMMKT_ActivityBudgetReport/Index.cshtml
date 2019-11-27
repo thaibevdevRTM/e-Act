@@ -2,7 +2,7 @@
 @using eActForm.Models;
 
 <div class="modal-dialog modal-lg">
-<!-- Modal content-->
+    <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">
             <div style=""></div>
@@ -12,20 +12,29 @@
         @RenderPage("~/Views/Shared/_previewActFormBudget.cshtml")
 
 
+
         <div class="modal-footer">
             <div>
                 <p class="d-flex justify-content-center">
                     <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
                     <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                    @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
+                    {
+                        <input type="hidden" name="gridHtml" />
+                        <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
+                            <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
+                        </button>
+                    }
                 </p>
             </div>
 
         </div>
+        <div class="center-block">
+
+        </div>
+
     </div>
 </div>
-
-
-
 
 <script>
 

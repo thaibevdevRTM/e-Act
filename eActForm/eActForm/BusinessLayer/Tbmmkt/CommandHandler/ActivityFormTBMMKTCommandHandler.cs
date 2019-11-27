@@ -448,15 +448,15 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@activityTypeId",model.activityTypeId)
                     ,new SqlParameter("@productDetail",model.productDetail)
                     ,new SqlParameter("@IO",model.IO)
-                    ,new SqlParameter("@total",model.total)
+                    ,new SqlParameter("@total",decimal.Parse(string.Format("{0:00000}", model.total)))
                     ,new SqlParameter("@rowNo",model.rowNo)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
-                    ,new SqlParameter("@unit",model.unit)
-                    ,new SqlParameter("@unitPrice",model.unitPrice)
+                    ,new SqlParameter("@unit",Convert.ToInt32(model.unit))
+                    ,new SqlParameter("@unitPrice", decimal.Parse(string.Format("{0:00000}", model.unitPrice)))
                     });
             }
             catch (Exception ex)
