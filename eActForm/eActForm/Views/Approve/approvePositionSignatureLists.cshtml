@@ -86,12 +86,11 @@
                         if (item.isShowInDoc)
                         {
                             <td>
-                                <div style="text-align:center; height:50px; font-size:12.5px;">@item.empPositionTitleTH.Replace("และ","<br/>และ")</div>
+                                <div style="text-align:center; height:50px; font-size:12.5px;">@Html.Raw(item.empPositionTitleTH)</div>
                             </td>
                         }
                     }
                 </tr>
-
             </table>
         }
     }

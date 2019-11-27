@@ -27,9 +27,7 @@
         width: 100%;
     }
 </style>
-@using (Ajax.BeginForm("insertDataActivity", "TBMMKT_ActivityBudgetInput"
-                                                                                                                , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }
-                                                                                                                , new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
+@using (Ajax.BeginForm("insertDataActivity", "TBMMKT_ActivityBudgetInput", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
 {
 
     <div id="GridPDF" style="width:97%; margin-left:20px;">
@@ -44,11 +42,9 @@
             </tr>
 
 
-            <tr>
+            @*<tr>
                 <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
                     <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
-
-                        ขออนุมัติงบประมาณกิจกรรม.....................
                         <div id="forDev" style="display:none;">
                             <br />@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
                             <br />@Html.TextBoxFor(x => x.activityFormModel.mode, new { @class = "", @id = "txtmode" })
@@ -56,7 +52,7 @@
                     </div>
 
                 </td>
-            </tr>
+            </tr>*@
 
             <tr>
                 <td style=" text-align:center;  border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
@@ -235,27 +231,6 @@
 
             <tr style="border-bottom:none;">
                 <td>
-                    <div style="height:20px;"></div>
-                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/lastwordForFYI.cshtml")
-                </td>
-            </tr>
-            @*<tr>
-                    <td style="height:50px;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                        <div style="height:5px;"></div>
-                        <div style="width: 100%; text-align: left;">
-                            @if (Model.activityFormModel != null)
-                            {
-                                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
-                            }
-                            &nbsp;
-                            <div class="inner" style="padding-left:15px;">
-                                <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>*@
-            <tr style="border-bottom:none;">
-                <td>
                     &nbsp;<br /><br />
                 </td>
             </tr>
@@ -264,31 +239,13 @@
         </table>
 
     </div>
-    @*<div class="center-block">
-            @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
-            {
-                <input type="hidden" name="gridHtml" />
-                <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
-                    <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
-                </button>
-            }
-        </div>*@
+
     @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
     @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
     @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
 
 
     <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px; margin-left:20px;">
-        @*<table style="width: 100%;" id="tabelAttach" runat="server">padding-left:15px;
-                <tr>
-                    <td style="width: 15%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-left:none;border-bottom:none;vertical-align:top;">&nbsp;เอกสารแนบ</td>
-                    <td>
-                        <div style="height:15px;"></div>    @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.descAttach, new { @class = "form-control textboxcss", @id = "txtdescAttach" })
-                        <div style="height:10px;"></div>
-                    </td>
-                </tr>
-            </table>*@
-
         <div class="form-group">
             <label class="control-label col-md-2 col-xs-12">
                 เอกสารแนบ :
@@ -310,17 +267,10 @@
 
 <div style="height:5px;"></div>
 
-@if (Model.activityFormModel.mode == "new" || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
+@if (Model.activityFormModel.mode == "new" || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5 || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM))
 {
     <div style="margin-left:25px;" class="text-center">
-        <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
-    </div>
-}
-
-@if (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2)
-{
-    <div style="margin-left:25px;" class="text-center">
-        <button id="btnUpdate" type="button" class="btn ink-reaction btn-danger" onclick="validateUpdate()">&nbsp;Update</button>
+        <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save</button>
     </div>
 }
 
