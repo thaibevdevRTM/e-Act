@@ -9,84 +9,10 @@
         </div>
         <div class="modal-body">
 
-            <div id="GridPDFF" style="width:97%; margin-left:20px;">
-                <table style="width: 100%;border: 1px solid black; border-collapse: collapse;" id="tabel_report" runat="server">
-                    <tr>
-                        <td>
-                            @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/headerCompany.cshtml")
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                            <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
-                                ขออนุมัติงบประมาณกิจกรรม @Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "txtActivityName" })
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="border: 1px solid black; border-collapse: collapse;border-bottom:none;">
-                        <td>
-                            @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/headerDetails.cshtml")
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                            <div style="height:5px;"></div>
-                            <div style="width: 100%; text-align: left;">
-                                &nbsp;ค่าใช้จ่ายในการทำกิจกรรม @Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "lblActivityName" }) จำนวนเงิน @Model.totalCostThisActivity.Value.ToString("#,###.00") บาท
-                                <br />
-                                &nbsp;รายละเอียดงบประมาณ
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="border-bottom:none;">
-                        <td>
-                            <div style="height:5px;"></div>
-                            @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/activityDetails.cshtml")
-                        </td>
-                    </tr>
-                    <tr style="border-bottom:none;">
-                        <td>
-                            <div style="height:5px;"></div>
-                            @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/activityBudgetDetails.cshtml")
-                        </td>
-                    </tr>
-                    <tr style="border-bottom:none;">
-                        <td>
-                            <div style="height:20px;"></div>
-                            @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/lastwordForFYI.cshtml")
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
-                            <div style="height:5px;"></div>
-                            <div style="width: 100%; text-align: left;">
-                                &nbsp;หมายเหตุ
-                                <br />
-                                &nbsp;@Html.Raw(Model.activityFormTBMMKT.remark.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="height:150px;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                            <div style="height:5px;"></div>
-                            <div style="width: 100%; text-align: left;">
-                                <div style="margin-bottom:10px;">
-                                    @if (Model.activityFormModel != null)
-                                    {
-                                        @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id, subId = Model.tB_Act_ActivityForm_DetailOther.SubjectId })
-                                    }
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="border-bottom:none;">
-                        <td>
-                            &nbsp;<br />
-                        </td>
-                    </tr>
-                </table>
 
-            </div>
+            @RenderPage("~/Views/Shared/_previewActFormBudget.cshtml")
+
+
             <div class="modal-footer">
                 <div>
                     <p class="d-flex justify-content-center">
@@ -98,12 +24,12 @@
             </div>
             <div class="center-block">
                 @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
-                {
-                    <input type="hidden" name="gridHtml" />
-                    <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
-                        <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
-                    </button>
-                }
+        {
+            <input type="hidden" name="gridHtml" />
+            <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
+                <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
+            </button>
+}
             </div>
         </div>
     </div>
@@ -114,7 +40,7 @@
 <script>
 
         $("#btnExportPDF").click(function () {
-            $("input[name='gridHtml']").val($("#GridPDFF").html());
+            $("input[name='gridHtml']").val($("#Grid1").html());
     });
 
     function submitPreview() {
@@ -138,7 +64,7 @@
 
 
 
-                    htmlstr = $("#GridPDFF").html();
+                    htmlstr = $("#Grid1").html();
 
                     bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
                     $.ajax({
@@ -146,7 +72,7 @@
                         data: {
                             GridHtml1: htmlstr,
                             status: 2,
-                            activityId: '@Model.activityFormModel.id',
+                            activityId: '@Model.activityFormTBMMKT.id',
                         },
                         dataType: "json",
                         type: 'POST',

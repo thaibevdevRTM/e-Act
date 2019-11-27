@@ -265,17 +265,38 @@ else
     }
 
     function callPreviewApprove(obj) {
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("previewApprove", "Approve")',
-            data: {
-                actId: obj,
-                typeForm: '@Model.typeForm.ToString()',
-            }
-        }).done(function (htmlResponse) {
-            $("#divPreviewApprove").html(htmlResponse);
-            genPdf();
-        });
+
+        if ('@UtilsAppCode.Session.User.empCompanyId' == '3030') {
+
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("previewActBudget", "TBMMKT_ActivityBudgetReport")',
+                data: {
+                    activityId: obj,
+                    typeForm: '@Model.typeForm.ToString()',
+                }
+            }).done(function (htmlResponse) {
+                $("#divPreviewApprove").html(htmlResponse);
+                genPdf();
+            });
+
+        }
+        else {
+
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("previewApprove", "Approve")',
+                data: {
+                    actId: obj,
+                    typeForm: '@Model.typeForm.ToString()',
+                }
+            }).done(function (htmlResponse) {
+                $("#divPreviewApprove").html(htmlResponse);
+                genPdf();
+            });
+
+        }
+
     }
         function genPdf() {
         $.ajax({

@@ -2168,9 +2168,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="manual\manual_eAct.pdf" />
-    <Content Include="ActivityFormPdf\fileNotFound.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="ActRepDetail\fileNotFound.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2372,12 +2369,15 @@
     <Content Include="Views\TBMMKT_ActivityBudgetInput\attachOutFormTag.cshtml" />
     <Content Include="Views\Shared\_PreviewForApproveDetail.cshtml" />
     <Content Include="Views\actFormRepDetail\repPreviewForApproveDetail.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\previewActBudget.cshtml" />
+    <Content Include="Views\Shared\_previewActFormBudget.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ActivityFormPdf\" />
     <Folder Include="BusinessLayer\Tbmmkt\Appcodes\" />
     <Folder Include="error\" />
     <Folder Include="obj\Release\" />
