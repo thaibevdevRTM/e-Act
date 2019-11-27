@@ -19,7 +19,7 @@ namespace eActForm.Controllers
 
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             try
-            {                             
+            {
 
                 if (!string.IsNullOrEmpty(activityId))
                 {
@@ -121,5 +121,25 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+
+        public JsonResult updateDataIOActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                int countSuccess = ActivityFormTBMMKTCommandHandler.updateIOActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
+                result.Data = activity_TBMMKT_Model.activityFormModel.id;
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError("updateDataIOActivityTBMMKT => " + ex.Message);
+            }
+
+            return Json(result);
+        }
     }
 }
