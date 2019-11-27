@@ -66,22 +66,6 @@
                                 {*@
 
                             <label class="control-label col-md-1 col-xs-12"></label>
-
-            <tr>
-                <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                    <div id="divHeadCompany" runat="server" style="width: 100%; align-content: left; text-align: left;">
-                        @*@if (Model.activityFormTBMMKT.selectedBrandOrChannel != null)
-                            {*@
-                        <div style="display:inline-block;">
-                            <label class="control-label" for="ddlRegion">
-                                &nbsp;Condition Flow<span class="required">:&nbsp;</span>
-                            </label>
-                            @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "val", "txt", ""), "", new
-                       {
-                           @class = "form-control selectpicker",
-                           id = "ddlChannelOrBrand"
-                       })
-
                             <div class="col-md-2  col-xs-12 ">
                                 <div style="display:inline-block;">
                                     <label class="control-label" for="ddlRegion">
@@ -184,37 +168,6 @@
                                 </div>*@
 
                         </div>
-                        <div id="divChannel" style="display:none;">
-                            <label class="control-label" for="ddlChannel">
-                                &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
-                            </label>
-                            @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
-                       {
-                           @class = "form-control selectpicker",
-                           id = "ddlChannel"
-                       })
-                        </div>
-                        <div id="divBrand" style="display:none;">
-                            <label class="control-label" for="ddlBrand">
-                                &nbsp;เลือก Brand<span class="required"></span>
-                            </label>
-                            @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
-                       {
-                           @class = "form-control selectpicker",
-                           id = "ddlBrand"
-                       })
-                        </div>
-                        <div id="divSubject" style="display:none;">
-                            <label class="control-label" for="ddlBrand">
-                                &nbsp;เรื่อง <span class="required"></span>
-                            </label>
-                            @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
-                       {
-                           @class = "form-control selectpicker",
-                           id = "ddlSubject"
-                       })
-                        </div>
-                        @*}*@
                     </div>
                 </td>
             </tr>
@@ -360,6 +313,13 @@
     </div>
 }
 
+@*@if (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2)
+    {
+        <div style="margin-left:25px;" class="text-center">
+            <button id="btnUpdate" type="button" class="btn ink-reaction btn-danger" onclick="validateUpdate()">&nbsp;Update</button>
+        </div>
+    }*@
+
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
     <div id="divPreview">
     </div>
@@ -402,7 +362,16 @@
         }
     }
 
-    
+    function validateUpdate() {
+        var validate = true;
+
+        if (validate == true) {
+
+        }
+        else {
+            bootbox.alert(required)
+        }
+    }
 
     function SubmitData()
     {
