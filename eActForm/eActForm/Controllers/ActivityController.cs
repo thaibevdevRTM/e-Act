@@ -36,6 +36,7 @@ namespace eActForm.Controllers
 
                 activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
                 activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                    .Where(x => x.activityCondition.Equals("mtm".ToLower()))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
                 if (UtilsAppCode.Session.User.regionId != "")

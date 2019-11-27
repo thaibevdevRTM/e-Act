@@ -26,7 +26,7 @@
 
 <div class="row tile_count">
     <div id="getQuery" class="col-md-12 col-xs-12">
-        @Html.Action("myDoc", "Home")
+        @Html.Action("myDoc", "Home", new { actId = actId , typeForm = Model.typeForm })
     </div>
 </div>
 

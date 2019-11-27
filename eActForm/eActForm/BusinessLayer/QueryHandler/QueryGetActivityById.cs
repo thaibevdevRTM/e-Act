@@ -58,6 +58,7 @@ namespace eActForm.BusinessLayer
                                   chkAddIO = !string.IsNullOrEmpty(d["chkAddIO"].ToString()) ? bool.Parse(d["chkAddIO"].ToString()) : false,
                                   actClaim = d["actClaim"].ToString(),
                                   actIO = d["actIO"].ToString(),
+                                  companyId = d["companyId"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),

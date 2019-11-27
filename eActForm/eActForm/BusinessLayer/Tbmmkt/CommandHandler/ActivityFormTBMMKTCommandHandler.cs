@@ -71,31 +71,31 @@ namespace eActForm.BusinessLayer
                 }
 
 
-                insertIndex = 1;
-                if (model.list_TB_Act_ActivityLayout != null)
-                {
-                    rtn += deleteusp_deleteTB_Act_ActivityLayout(activityId);
-                    foreach (var item in model.list_TB_Act_ActivityLayout.ToList())
-                    {
+                //insertIndex = 1;
+                //if (model.list_TB_Act_ActivityLayout != null)
+                //{
+                //    rtn += deleteusp_deleteTB_Act_ActivityLayout(activityId);
+                //    foreach (var item in model.list_TB_Act_ActivityLayout.ToList())
+                //    {
 
-                        TB_Act_ActivityLayout tB_Act_ActivityLayout = new TB_Act_ActivityLayout();
-                        tB_Act_ActivityLayout.id = Guid.NewGuid().ToString();
-                        tB_Act_ActivityLayout.activityId = activityId;
-                        tB_Act_ActivityLayout.no = insertIndex.ToString();
-                        tB_Act_ActivityLayout.io = item.io;
-                        tB_Act_ActivityLayout.activity = item.activity;
-                        tB_Act_ActivityLayout.amount = item.amount;                       
-                        tB_Act_ActivityLayout.delFlag = false;
-                        tB_Act_ActivityLayout.createdByUserId = model.activityFormModel.createdByUserId;
-                        tB_Act_ActivityLayout.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                        tB_Act_ActivityLayout.updatedByUserId = UtilsAppCode.Session.User.empId;
-                        tB_Act_ActivityLayout.updatedDate = DateTime.Now;
+                //        TB_Act_ActivityLayout tB_Act_ActivityLayout = new TB_Act_ActivityLayout();
+                //        tB_Act_ActivityLayout.id = Guid.NewGuid().ToString();
+                //        tB_Act_ActivityLayout.activityId = activityId;
+                //        tB_Act_ActivityLayout.no = insertIndex.ToString();
+                //        tB_Act_ActivityLayout.io = item.io;
+                //        tB_Act_ActivityLayout.activity = item.activity;
+                //        tB_Act_ActivityLayout.amount = item.amount;                       
+                //        tB_Act_ActivityLayout.delFlag = false;
+                //        tB_Act_ActivityLayout.createdByUserId = model.activityFormModel.createdByUserId;
+                //        tB_Act_ActivityLayout.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                //        tB_Act_ActivityLayout.updatedByUserId = UtilsAppCode.Session.User.empId;
+                //        tB_Act_ActivityLayout.updatedDate = DateTime.Now;
 
-                        rtn += usp_insertusp_insertTB_Act_ActivityLayout(tB_Act_ActivityLayout);
+                //        rtn += usp_insertusp_insertTB_Act_ActivityLayout(tB_Act_ActivityLayout);
 
-                        insertIndex++;
-                    }
-                }
+                //        insertIndex++;
+                //    }
+                //}
 
 
 
@@ -109,6 +109,7 @@ namespace eActForm.BusinessLayer
                         CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
                         costThemeDetail.id = Guid.NewGuid().ToString();
                         costThemeDetail.activityId = activityId;
+                        costThemeDetail.activityTypeId = item.activityTypeId;
                         costThemeDetail.productDetail = item.productDetail;
                         costThemeDetail.total = item.total;
                         costThemeDetail.IO = item.IO;
@@ -147,7 +148,7 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(activityId).FirstOrDefault(); // TB_Act_ActivityForm
                 activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther
-                activity_TBMMKT_Model.list_TB_Act_ActivityLayout = QueryGetActivityLayoutByActivityId.getByActivityId(activityId); // TB_Act_ActivityForm_DetailOther
+                //activity_TBMMKT_Model.list_TB_Act_ActivityLayout = QueryGetActivityLayoutByActivityId.getByActivityId(activityId); // TB_Act_ActivityForm_DetailOther
                 activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
 
                 Decimal? totalCostThisActivity = 0;
@@ -444,17 +445,18 @@ namespace eActForm.BusinessLayer
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertCostThemeDetail"
                     , new SqlParameter[] {new SqlParameter("@id",model.id)
                     ,new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@activityTypeId",model.activityTypeId)
                     ,new SqlParameter("@productDetail",model.productDetail)
                     ,new SqlParameter("@IO",model.IO)
-                    ,new SqlParameter("@total",model.total)
+                    ,new SqlParameter("@total",decimal.Parse(string.Format("{0:00000}", model.total)))
                     ,new SqlParameter("@rowNo",model.rowNo)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
-                    ,new SqlParameter("@unit",model.unit)
-                    ,new SqlParameter("@unitPrice",model.unitPrice)
+                    ,new SqlParameter("@unit",Convert.ToInt32(model.unit))
+                    ,new SqlParameter("@unitPrice", decimal.Parse(string.Format("{0:00000}", model.unitPrice)))
                     });
             }
             catch (Exception ex)
