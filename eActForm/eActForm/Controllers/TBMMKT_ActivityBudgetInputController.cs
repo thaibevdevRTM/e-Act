@@ -98,17 +98,19 @@ namespace eActForm.Controllers
             try
             {
                 string statusId = "";
-                //Activity_Model activityModel = TempData["actForm" + activity_TBMMKT_Model.activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + activity_TBMMKT_Model.activityFormModel.id];
-                //activityModel.activityFormModel = activityFormModel;
-                statusId = ActivityFormCommandHandler.getStatusActivity(activity_TBMMKT_Model.activityFormModel.id);
-                if (statusId == "1" || statusId == "5" || statusId == "")
-                {
-                    int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
-                }
-                else
-                {
 
-                }
+                statusId = ActivityFormCommandHandler.getStatusActivity(activity_TBMMKT_Model.activityFormModel.id);
+                activity_TBMMKT_Model.activityFormTBMMKT.statusId =  int.Parse(statusId);
+                //if (statusId == "1" || statusId == "5" || statusId == "")
+                //{
+                //    int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
+                //}
+                //else
+                //{
+
+                //}
+                int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
+
                 result.Data = activity_TBMMKT_Model.activityFormModel.id;
                 result.Success = true;
             }
