@@ -308,8 +308,18 @@
 
         });
 
-        function validatesubmit() {
-            var validate = true;
+    function validatesubmit() {
+
+        var required = "กรุณา ระบุ :<br>";
+        var validate = true;
+
+        if ($("#ddlChannelOrBrand").val() == "") { required += "Document Date<br>"; validate = false; }
+        if ($("#ddlChannel").val() == "" && $("#ddlBrand").val() == "") { required += "BrandหรือChannel<br>"; validate = false; }
+        if ($("#ddlSubject").val() == "") { required += "เรื่อง<br>"; validate = false; }
+
+        if ($("#txtdateDoc").val() == "") { required += "Document Date<br>"; validate = false; }
+        if ($("#txtdateActivitySt").val() == "") { required += "วันที่เริ่มกิจกรรม<br>"; validate = false; }
+        if ($("#txtactivityPeriodEnd").val() == "") { required += "วันที่สิ้นสุดกิจกรรม<br>"; validate = false; }
 
             if (validate == true) {
                 SubmitData();
