@@ -1,5 +1,5 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
-
+@using eActForm.BusinessLayer
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
@@ -319,12 +319,32 @@
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
     }
 </div>
+
+<div style="margin-left:25px;" class="text-center">
+    <button id="btnUpdate" type="button" class="btn ink-reaction btn-danger" onclick="validateUpdate()">&nbsp;Update</button>
+</div>
+
+
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
     <div id="divPreview">
     </div>
 </div>
 
 <script>
+
+    //$("#GridPDF :input").prop("disabled", true);
+
+    if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
+        var arrayOfElements = document.getElementsByClassName('clstxtIO');
+        var lengthOfArray = arrayOfElements.length;
+        for (var i = 0; i < lengthOfArray; i++) {
+            arrayOfElements[i].disabled = 'disabled';
+        }
+    }
+
+
+
+
     $("#btnExportPDF").click(function () {
         $("input[name='gridHtml']").val($("#GridPDF").html());
     });
@@ -336,37 +356,8 @@
 
     });
 
-
     function validatesubmit() {
         var validate = true;
-        @*var required = "กรุณา ระบุ :<br>";
-
-
-       if('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
-        {
-             if ($("#ddlRegion").val() == "") { required += "Region*<br>"; validate = false; }
-             if ($("#customerId").val() == "" || $("#txtCustomerName").val() == "") { required += "Customer Name*<br>"; validate = false; }
-        }
-
-        if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
-        if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
-        if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; }
-        if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
-        if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
-        if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
-        if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม *<br>"; validate = false; }
-        if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
-        if ($("#txtdateActivitySt").val() == "" && $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; }
-        else {
-            var startDate =  $("#txtdateActivitySt").val().split("-");
-            var endDate = $("#txtdateActivityEnd").val().split("-");
-            if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1],endDate[0])) {
-                required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
-            }
-        }
-        if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }*@
-
-        //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 
         if (validate == true) {
             SubmitData();
@@ -380,60 +371,7 @@
     {
         $("#WaitDialog").show();
         $("#divconditionFlow").submit();
-        @*var cusId = '';
-        if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()')
-        {
-          cusId = $("#ddlCustomer").val()
-        }
-        else if('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
-        {
-             cusId = $("#customerId").val()
-        }*@
 
-
-            @*$.ajax({
-                url: '@Url.Action("insertDataActivity", "TBMMKT_ActivityBudgetInput")',
-                data: {
-                    //statusId: 1,
-                    //Mode: $("#hdMode").val(),
-                    dateDoc: $("#txtdateDoc").val(),
-                    //str_costPeriodSt: $("#txtdateCostPerSt").val(),
-                    //str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
-                    //str_activityPeriodSt: $("#txtdateActivitySt").val(),
-                    //str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
-                    //dateProductlist: $("#txtdateActivitySt").val(),
-                    //dateActivitylist: $("#txtdateActivityEnd").val(),
-                    //Reference: $("#txtReference").val(),
-                    //CustomerId: cusId,
-                    //ProductCateId: $("#ddlProductCate").val(),
-                    //ProductGroupId: $("#ddlProductGrp").val(),
-                    //productBrandId: $("#ddlProductBrand").val(),
-                    //ActivityPeriodST: $("#txtdateActivitySt").val(),
-                    //ActivityPeriodEnd: $("#txtdateActivityEnd").val(),
-                    //CostPeriodST: $("#txtdateCostPerSt").val(),
-                    //CostPeriodEnd: $("#txtdateCostPerEnd").val(),
-                    //ActivityName: $("#txtActivityName").val(),
-                    //Theme: $("#ddlTheme").val(),
-                    //Objective: $("#txtObjective").val(),
-                    //Trade: $("input[name='activityFormModel.trade']:checked").val(),
-                    //ActivityDetail: $("#txtActivityDetail").val(),
-                    //activityNo: $("#txtActivityNo").val(),
-                    //createdByUserId: $("#hdcreateUser").val(),
-                    //id:'Model.activityFormModel.id',
-                },
-                dataType: "json",
-                type: 'POST',
-            }).done(function (response) {
-                if (response.Success) {
-                    if (response.MessageCode == "001") {
-                        bootbox.alert("กรุณาทำรายการใหม่ เอกสารฉบับนี้ ส่งอนุมัติ ไปแล้ว");
-                    }
-                    else {
-                           callPreviewData('@Model.activityFormModel.id');
-                    }
-                    $("#WaitDialog").hide();
-                }
-            });*@
     }
 
     function beginQuery() {

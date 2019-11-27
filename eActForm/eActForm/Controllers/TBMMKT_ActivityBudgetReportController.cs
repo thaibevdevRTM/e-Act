@@ -26,7 +26,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
             }
 
-            return View(activity_TBMMKT_Model);
+            return PartialView(activity_TBMMKT_Model);
         }
 
         public ActionResult previewActBudget(string activityId)

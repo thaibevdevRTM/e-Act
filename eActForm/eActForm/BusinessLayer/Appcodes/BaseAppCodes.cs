@@ -8,7 +8,7 @@ namespace eActForm.BusinessLayer.Appcodes
 {
     public class BaseAppCodes
     {
-        public static Activity_Model.activityType getCompanyTypForm()
+        public static Activity_Model.activityType getCompanyTypeForm()
         {
             try
             {
@@ -28,6 +28,35 @@ namespace eActForm.BusinessLayer.Appcodes
                 else
                 {
                     return Activity_Model.activityType.MT;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static string getCompanyIdByactivityType(string actType)
+        {
+            try
+            {
+
+                if (actType == Activity_Model.activityType.MT.ToString())
+                {
+                    return ConfigurationManager.AppSettings["companyId_MT"].ToString();
+                }
+                else if (actType == Activity_Model.activityType.OMT.ToString())
+                {
+                    return ConfigurationManager.AppSettings["companyId_OMT"].ToString();
+                }
+                else if (actType == Activity_Model.activityType.TBM.ToString())
+                {
+                    return ConfigurationManager.AppSettings["companyId_TBM"].ToString();
+                }
+                else
+                {
+                    return ConfigurationManager.AppSettings["companyId_MT"].ToString();
                 }
 
             }

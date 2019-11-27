@@ -15,12 +15,12 @@
 
 
 
-         
+
         @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
         {
             @RenderPage("~/Views/Activity/ShowImage.cshtml")
         }
-        
+
         <div class="modal-footer">
             <div>
                 <p class="d-flex justify-content-center">
@@ -79,10 +79,8 @@
                             var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.OMT.ToString() }, null)';
                             window.location.href = url;
                         }
-
-
                     });
-                    }
+                }
             }
 
         });

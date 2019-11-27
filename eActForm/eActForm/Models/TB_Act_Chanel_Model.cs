@@ -17,6 +17,7 @@ namespace eActForm.Models
             public string cust { get; set; }
             public string tradingPartner { get; set; }
             public string no_tbmmkt { get; set; }
+            public string typeChannel { get; set; }
             public string delFlag { get; set; }
             public DateTime createdDate { get; set; }
             public string createdByUserId { get; set; }
