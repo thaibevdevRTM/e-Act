@@ -70,8 +70,6 @@
                                 {*@
 
                             <label class="control-label col-md-1 col-xs-12"></label>
-
-
                             <div class="col-md-2  col-xs-12 ">
                                 <div style="display:inline-block;">
                                     <label class="control-label" for="ddlRegion">
@@ -174,7 +172,6 @@
                                 </div>*@
 
                         </div>
-
                     </div>
                 </td>
             </tr>
@@ -313,17 +310,19 @@
 
 <div style="height:5px;"></div>
 
-<div style="margin-left:25px;" class="text-center">
-    @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
-    {
+@if (Model.activityFormModel.mode == "new" || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
+{
+    <div style="margin-left:25px;" class="text-center">
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
-    }
-</div>
+    </div>
+}
 
-<div style="margin-left:25px;" class="text-center">
-    <button id="btnUpdate" type="button" class="btn ink-reaction btn-danger" onclick="validateUpdate()">&nbsp;Update</button>
-</div>
-
+@if (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2)
+{
+    <div style="margin-left:25px;" class="text-center">
+        <button id="btnUpdate" type="button" class="btn ink-reaction btn-danger" onclick="validateUpdate()">&nbsp;Update</button>
+    </div>
+}
 
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
     <div id="divPreview">
@@ -361,6 +360,17 @@
 
         if (validate == true) {
             SubmitData();
+        }
+        else {
+            bootbox.alert(required)
+        }
+    }
+
+    function validateUpdate() {
+        var validate = true;
+
+        if (validate == true) {
+
         }
         else {
             bootbox.alert(required)
