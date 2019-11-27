@@ -28,7 +28,7 @@
     }
 </style>
 @using (Ajax.BeginForm("insertDataActivity", "TBMMKT_ActivityBudgetInput"
-                            , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }
+                            , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery($(this))", OnSuccess = "successQuery", OnFailure = "failureQuery" ,InsertionMode = InsertionMode.Replace}
                             , new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
 {
 
@@ -379,8 +379,8 @@
             });*@
     }
 
-    function beginQuery() {
-
+    function beginQuery(value) {
+        console.log(value);
     }
 
     function successQuery(data) {

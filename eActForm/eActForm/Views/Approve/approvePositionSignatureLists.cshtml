@@ -86,7 +86,7 @@
                         if (item.isShowInDoc)
                         {
                             <td>
-                                <div style="text-align:center; height:50px; font-size:12.5px;">@item.empPositionTitleTH</div>
+                                <div style="text-align:center; height:50px; font-size:12.5px;">@item.empPositionTitleTH.Replace("และ","<br/>และ")</div>
                             </td>
                         }
                     }
