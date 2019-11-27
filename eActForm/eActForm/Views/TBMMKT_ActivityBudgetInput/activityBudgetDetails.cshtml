@@ -18,7 +18,15 @@
             <tr class="tagCountRowinTable">
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
                     <input type="hidden" value="@item.id" id="costThemeDetailOfGroupByPriceTBMMKT[@index].id" name="costThemeDetailOfGroupByPriceTBMMKT[@index].id" class="form-control textboxcss" />
-                    <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class="form-control textboxcss clstxtIO" readonly="readonly" />
+                    @if (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)
+                    {
+                        <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class="form-control textboxcss clstxtIO" />
+                    }
+                    else
+                    {
+                        <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class="form-control textboxcss clstxtIO" readonly="readonly" />
+                    }
+
                 </td>
                 <td style="width: 10%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                     @Html.DropDownList("costThemeDetailOfGroupByPriceTBMMKT[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control selectpicker" })

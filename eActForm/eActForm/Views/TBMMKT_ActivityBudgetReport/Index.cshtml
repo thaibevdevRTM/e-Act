@@ -17,7 +17,7 @@
             <div>
                 <p class="d-flex justify-content-center">
                     <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-                    @if (Model.activityFormTBMMKT.statusId == 1 && Model.activityFormTBMMKT.statusId == 5)
+                    @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5 )
                     {
                         <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
                     }

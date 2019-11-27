@@ -43,16 +43,16 @@
 
 
             @*<tr>
-                <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                    <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
-                        <div id="forDev" style="display:none;">
-                            <br />@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
-                            <br />@Html.TextBoxFor(x => x.activityFormModel.mode, new { @class = "", @id = "txtmode" })
+                    <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                        <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
+                            <div id="forDev" style="display:none;">
+                                <br />@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
+                                <br />@Html.TextBoxFor(x => x.activityFormModel.mode, new { @class = "", @id = "txtmode" })
+                            </div>
                         </div>
-                    </div>
 
-                </td>
-            </tr>*@
+                    </td>
+                </tr>*@
 
             <tr>
                 <td style=" text-align:center;  border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
@@ -281,75 +281,78 @@
 
 <script>
 
-    //$("#GridPDF :input").prop("disabled", true);
-
-    if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
-        var arrayOfElements = document.getElementsByClassName('clstxtIO');
-        var lengthOfArray = arrayOfElements.length;
-        for (var i = 0; i < lengthOfArray; i++) {
-            arrayOfElements[i].disabled = 'disabled';
+       if('@Model.activityFormTBMMKT.statusId' == '2' && '@UtilsAppCode.Session.User.isAdminTBM' == "False")
+        {
+            $("#GridPDF :input").prop("disabled", true);
         }
-    }
+
+        if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
+            var arrayOfElements = document.getElementsByClassName('clstxtIO');
+            var lengthOfArray = arrayOfElements.length;
+            for (var i = 0; i < lengthOfArray; i++) {
+                arrayOfElements[i].disabled = 'disabled';
+            }
+        }
 
 
 
 
     $("#btnExportPDF").click(function () {
         $("input[name='gridHtml']").val($("#GridPDF").html());
-    });
+        });
 
     $(function () {
         $("#txtdateDoc").datepicker();
         $("#txtdateActivitySt").datepicker();
         $("#txtactivityPeriodEnd").datepicker();
 
-    });
+        });
 
-    function validatesubmit() {
-        var validate = true;
+        function validatesubmit() {
+            var validate = true;
 
-        if (validate == true) {
-            SubmitData();
+            if (validate == true) {
+                SubmitData();
+            }
+            else {
+                bootbox.alert(required)
+            }
         }
-        else {
-            bootbox.alert(required)
+
+        function validateUpdate() {
+            var validate = true;
+
+            if (validate == true) {
+
+            }
+            else {
+                bootbox.alert(required)
+            }
         }
-    }
 
-    function validateUpdate() {
-        var validate = true;
-
-        if (validate == true) {
-
-        }
-        else {
-            bootbox.alert(required)
-        }
-    }
-
-    function SubmitData()
-    {
+        function SubmitData()
+        {
         $("#WaitDialog").show();
         $("#divconditionFlow").submit();
 
-    }
+        }
 
-    function beginQuery() {
+        function beginQuery() {
 
-    }
+        }
 
-    function successQuery(data) {
-        console.log('success');
-        console.log(data);
+        function successQuery(data) {
+            console.log('success');
+            console.log(data);
 
         $.ajax({
-            type: 'POST',
+                type: 'POST',
             url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
             data: { activityId: '@Model.activityFormModel.id' }
-        }).done(function (htmlResponse) {
+            }).done(function (htmlResponse) {
             $("#WaitDialog").hide();
             $("#divPreview").html(htmlResponse)
-            $('#previewModal').modal('show');
+                $('#previewModal').modal('show');
         });
 
     }
@@ -369,24 +372,24 @@
         //addRemoveLinks: true,
         init: function () {
 
-            this.on("complete", function (file) {
-                console.log($("#hdActivityId").val());
-                CallImageView($("#hdActivityId").val());
+        this.on("complete", function (file) {
+            console.log($("#hdActivityId").val());
+            CallImageView($("#hdActivityId").val());
 
-            });
-        }
-
-    };
-
-    function CallImageView(obj) {
-        console.log(obj);
-        $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("ImageList", "Activity")',
-            data: { activityId: obj}
-        }).done(function (htmlResponse) {
-            $("#divgetimage").html(htmlResponse)
         });
     }
+
+};
+
+function CallImageView(obj) {
+    console.log(obj);
+        $.ajax({
+        type: 'POST',
+            url:  '@Url.Action("ImageList", "Activity")',
+            data: { activityId: obj}
+    }).done(function (htmlResponse) {
+            $("#divgetimage").html(htmlResponse)
+        });
+}
 
 </script>
