@@ -15,7 +15,7 @@
 
                     <div class="col-md-10 col-xs-12">
                         <div class="row">
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", style = "width:320px;" })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", style = "width:320px;" })
                         </div>
                     </div>
                 </div>
@@ -26,13 +26,22 @@
                     <label class="control-label col-md-2 col-xs-12">
                         ชื่อผู้เสนอกิจกรรม :
                     </label>
-
-                    <div class="col-md-4 col-xs-12">
-                        <div class="row">
-                            <label class="form-control textboxcss" style="width:320px;">@UtilsAppCode.Session.User.empFNameTH  @UtilsAppCode.Session.User.empLNameTH </label>
+                    @if (Model.activityFormModel.mode == "new")
+                    {
+                        <div class="col-md-4 col-xs-12">
+                            <div class="row">
+                                <label class="form-control textboxcss" style="width:320px;">@UtilsAppCode.Session.User.empFNameTH  @UtilsAppCode.Session.User.empLNameTH </label>
+                            </div>
                         </div>
-                    </div>
-
+                    }
+                    else
+                    {
+                        <div class="col-md-4 col-xs-12">
+                            <div class="row">
+                                @Html.TextBoxFor(x => x.activityFormTBMMKT.createdByName, new { @class = "form-control textboxcss", @id = "lblcreatedByName" })
+                            </div>
+                        </div>
+                    }
                     <label class="control-label col-md-2 col-xs-12">
                         เบอร์โทรศัพท์ :
                     </label>
@@ -110,7 +119,7 @@
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="row">
-                                        @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;" })                                        
+                                        @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;" })
                                     </div>
                                 </div>
                             </div>

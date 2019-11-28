@@ -92,7 +92,7 @@ namespace eActForm.Controllers
         }
 
         [HttpPost] //post method
-        [ValidateAntiForgeryToken] // prevents cross site attacks
+        [ValidateAntiForgeryToken] // prevents cross site attacks ต้องใส่   @Html.AntiForgeryToken() ในหน้า เว็บด้วย
         [ValidateInput(false)]
         public JsonResult insertDataActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
@@ -102,7 +102,15 @@ namespace eActForm.Controllers
                 string statusId = "";
 
                 statusId = ActivityFormCommandHandler.getStatusActivity(activity_TBMMKT_Model.activityFormModel.id);
-                activity_TBMMKT_Model.activityFormTBMMKT.statusId =  int.Parse(statusId);
+                if (statusId == "")
+                {
+                    activity_TBMMKT_Model.activityFormTBMMKT.statusId = 1;
+                }
+                else
+                {
+                    activity_TBMMKT_Model.activityFormTBMMKT.statusId = int.Parse(statusId);
+                }
+               
                 
                 int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
               

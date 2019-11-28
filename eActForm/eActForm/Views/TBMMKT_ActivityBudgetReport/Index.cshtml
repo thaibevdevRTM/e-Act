@@ -16,19 +16,25 @@
         <div class="modal-footer">
             <div>
                 <p class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-                    @if (Model.activityFormTBMMKT.statusId == 1 && Model.activityFormTBMMKT.statusId == 5)
-                    {
-                        <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
-                    }
+                    <div style="display:inline-block;">
+                        @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
+                        {
+                            <input type="hidden" name="gridHtml" />
+                            <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
+                        }
+                    </div>
+                    <div style="display:inline-block;">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                    </div>
+                    <div style="display:inline-block;">
 
-                    @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
-                    {
-                        <input type="hidden" name="gridHtml" />
-                        <button type="submit" class="btn ink-reaction btn-success" id="btnExportPDF" value="ExportPDF">
-                            <i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF
-                        </button>
-                    }
+                        @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
+                        {
+                            <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                        }
+                    </div>
+
+
                 </p>
             </div>
 
@@ -62,14 +68,9 @@
             },
             callback: function (result) {
                 if (result == true) {
+                    $("#WaitDialog").show();
                     var htmlstr = "";
-
-
-
-
                     htmlstr = $("#Grid1").html();
-
-                    bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
                     $.ajax({
                     url: '@Url.Action("submitPreview", "Activity")',
                         data: {
