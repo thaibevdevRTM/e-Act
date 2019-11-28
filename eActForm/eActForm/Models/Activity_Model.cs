@@ -221,10 +221,10 @@ namespace eActForm.Models
         {
             detailGroup = new List<ProductCostOfGroupByPrice>();
         }
-       
+
     }
 
-    public class CostThemeDetail : ActBaseModel
+        public class CostThemeDetail : ActBaseModel
     {
         public string id { get; set; }
         public string productGroupId { get; set; }

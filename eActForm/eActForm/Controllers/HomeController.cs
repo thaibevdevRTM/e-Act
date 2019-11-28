@@ -42,7 +42,7 @@ namespace eActForm.Controllers
 
 
 
-        public ActionResult myDoc(string actId)
+        public ActionResult myDoc(string actId , string typeForm)
         {
             Activity_Model.actForms model;
             if (TempData["SearchDataModel"] != null)
@@ -52,8 +52,8 @@ namespace eActForm.Controllers
             else
             {
                 model = new Activity_Model.actForms();
-                model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-15), DateTime.Now);
-                model.typeForm = BaseAppCodes.getCompanyTypForm().ToString();
+                model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-15), DateTime.Now, typeForm);
+                model.typeForm = typeForm;
 
                 if (actId != null && actId != "")
                 {
@@ -95,7 +95,7 @@ namespace eActForm.Controllers
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
             model = new Activity_Model.actForms
             {
-                actLists = ActFormAppCode.getActFormByEmpId(startDate, endDate)
+                actLists = ActFormAppCode.getActFormByEmpId(startDate, endDate,"")
             };
 
 

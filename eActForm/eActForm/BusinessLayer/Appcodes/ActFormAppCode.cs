@@ -80,39 +80,38 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<Activity_Model.actForm> getActFormByEmpId(DateTime startDate, DateTime endDate)
+        public static List<Activity_Model.actForm> getActFormByEmpId(DateTime startDate, DateTime endDate, string typeForm)
         {
             try
             {
                 string strCall = "";
-                if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || 
-                    UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
+
+                if(typeForm == Activity_Model.activityType.MT.ToString())
                 {
-                    strCall = "usp_getActivityFormAll";
+                    strCall = "usp_getActivityCustomersFormByEmpId";
+                }
+                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    strCall = "usp_tbm_getActivityFormByEmpId";
                 }
                 else
                 {
-                    switch (BaseAppCodes.getCompanyTypForm())
-                    {
-                        case Activity_Model.activityType.MT:
-                            strCall = "usp_getActivityCustomersFormByEmpId";
-                            break;
-                        case Activity_Model.activityType.TBM:
-                            strCall = "usp_tbm_getActivityFormByEmpId";
-                            break;
-                        default:
-                            strCall = "usp_getActivityCustomersFormByEmpId";
-                            break;
-                    }
+                    strCall = "usp_tbm_getActivityFormByEmpId";
                 }
 
+
+                if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin ||
+                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
+                {
+                    strCall = "usp_getActivityFormAll";
+                }
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
                 , new SqlParameter[] {
                          new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
                         ,new SqlParameter("@startDate", startDate)
                         ,new SqlParameter("@endDate", endDate)
-                        ,new SqlParameter("@companyId", UtilsAppCode.Session.User.empCompanyId)
+                        ,new SqlParameter("@companyId",BaseAppCodes.getCompanyIdByactivityType(typeForm))
                 });
 
                 var lists = (from DataRow dr in ds.Tables[0].Rows
@@ -154,7 +153,7 @@ namespace eActForm.BusinessLayer
 
                              }).ToList();
 
-               
+
 
 
                 return lists;
@@ -183,7 +182,7 @@ namespace eActForm.BusinessLayer
         {
             string result = "";
             try
-            {    
+            {
                 result = QueryGetAllProduct.getProductById(productId).FirstOrDefault().digit_IO;
                 return result;
             }
