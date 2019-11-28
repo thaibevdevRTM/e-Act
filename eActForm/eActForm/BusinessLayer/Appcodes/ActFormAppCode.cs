@@ -65,6 +65,7 @@ namespace eActForm.BusinessLayer
                                  empName = dr["empName"].ToString(),
                                  empEmail = dr["empEmail"].ToString(),
                                  activityNo = dr["activityNo"].ToString(),
+                                 companyName = dr["companyName"].ToString(),
                                  delFlag = (bool)dr["delFlag"],
                                  createdDate = (DateTime?)dr["createdDate"],
                                  createdByUserId = dr["createdByUserId"].ToString(),
