@@ -480,7 +480,7 @@ namespace eActForm.Controllers
 							,new SqlParameter("@isSendEmail",false)
 							,new SqlParameter("@remark","")
 
-							,new SqlParameter("@isApproved","1") 
+							,new SqlParameter("@isApproved",true) 
 							
 							,new SqlParameter("@delFlag",false)
 							,new SqlParameter("@createdDate",DateTime.Now)
