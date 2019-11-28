@@ -2,8 +2,7 @@
 @model eActForm.Models.Activity_TBMMKT_Model
 
 <div id="divHeaderDetailsCost" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
-    รายละเอียดงบประมาณ
-    <table class="table table-bordered" id="tabelHeaderDetails" runat="server">
+        <table class="table table-bordered" id="tabelHeaderDetails" runat="server">
         <tr style="background-color:#2f74b5;color:white;height:25px;">
             <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">IO</th>
             <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>
@@ -36,8 +35,9 @@
                 <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                     <input type="text" value="@item.unit" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" class="form-control textboxcss txtUnit_@index" />
                 </td>
-                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">                    
-                    <input type="text" value="@item.unitPrice" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" class="form-control textboxcss txtUnitPrice_@index" />
+                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    @*<input type="text" value="@item.unitPrice" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unitPrice" class="form-control textboxcss txtUnitPrice_@index" />*@
+                    @Html.TextBoxFor(x => item.unitPrice, "{0:n2}", new { @id = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].unitPrice", Name = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].unitPrice", @class = "form-control textboxcss text-right txtUnitPrice_" + index})
                 </td>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                     <input type="hidden" value="@item.total" id="costThemeDetailOfGroupByPriceTBMMKT[@index].total" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="form-control textboxcss text-right hidtotal_@index" />
