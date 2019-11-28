@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        @if (UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
         {
             <div class="row">
                 <div class="col-md-12">

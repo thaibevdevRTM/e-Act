@@ -91,7 +91,9 @@ namespace eActForm.Controllers
             return View(activity_TBMMKT_Model);
         }
 
-
+        [HttpPost] //post method
+        [ValidateAntiForgeryToken] // prevents cross site attacks ต้องใส่   @Html.AntiForgeryToken() ในหน้า เว็บด้วย
+        [ValidateInput(false)]
         public JsonResult insertDataActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             var result = new AjaxResult();
