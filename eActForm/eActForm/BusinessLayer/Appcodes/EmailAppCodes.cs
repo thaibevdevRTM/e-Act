@@ -335,10 +335,19 @@ namespace eActForm.BusinessLayer
                 int i = 1;
                 foreach (var item in getImageModel.tbActImageList)
                 {
-                    if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
+                    if(UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
                     {
-                        pathFile[i] = HttpContext.Current.Server.MapPath(item._fileName);
+                        pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
                     }
+                    else
+                    {
+                        if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
+                        {
+                            pathFile[i] = HttpContext.Current.Server.MapPath(item._fileName);
+                        }
+                    }
+
+
                     //else if (item.extension == ".pdf")
                     //{
                     //    pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
@@ -351,7 +360,7 @@ namespace eActForm.BusinessLayer
             {
                 if (System.IO.File.Exists(item))
                 {
-                    files.Add(new Attachment(item, new ContentType("application/pdf")));
+                    files.Add(new Attachment(item));
                 }
             }
 
