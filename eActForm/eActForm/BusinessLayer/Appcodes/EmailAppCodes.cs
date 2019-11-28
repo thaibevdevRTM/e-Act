@@ -375,6 +375,7 @@ namespace eActForm.BusinessLayer
                 switch (emailType)
                 {
                     case AppCode.ApproveType.Activity_Form:
+                        var models = ActFormAppCode.getUserCreateActForm(actId);
                         strBody = string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
                             , item.empPrefix + " " + item.empName //เรียน
                             , AppCode.ApproveStatus.รออนุมัติ.ToString()
@@ -383,6 +384,7 @@ namespace eActForm.BusinessLayer
                             , item.activitySales
                             , item.activityNo
                             , String.Format("{0:0,0.00}", item.sumTotal)
+                            , (models != null && models.Count > 0) ? models[0].companyName : ""
                             , item.createBy
                             , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId));
                         break;
