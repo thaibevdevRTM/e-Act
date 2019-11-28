@@ -61,6 +61,7 @@ namespace eActForm.Models
             public byte[] signature { get; set; }
             public string activityNo { get; set; }
             public bool? isApprove { get; set; }
+            public string companyName { get; set; }
         }
         public class approveStatus : ActBaseModel
         {
