@@ -68,9 +68,10 @@
             },
             callback: function (result) {
                 if (result == true) {
-                    bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
+                    
                     var htmlstr = "";
                     htmlstr = $("#Grid1").html();
+                    bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
                     $.ajax({
                     url: '@Url.Action("submitPreview", "Activity")',
                         data: {
