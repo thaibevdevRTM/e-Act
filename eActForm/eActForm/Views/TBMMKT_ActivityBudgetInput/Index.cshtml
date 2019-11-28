@@ -262,7 +262,7 @@
     </div>
 
 
-    <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px; margin-left:20px;">
+    @*<div id="divCancel" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px; margin-left:20px;">
         <div class="form-group">
             <div class="col-md-12 col-xs-12">
                 <div class="row" style="text-align:center;">
@@ -270,19 +270,22 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 }
 
 @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
 
 <div style="height:5px;"></div>
 
-@if (Model.activityFormModel.mode == "new" || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5 || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM))
-{
-    <div style="margin-left:25px;" class="text-center">
+
+<div style="margin-left:25px;" class="text-center">
+    @if (Model.activityFormModel.mode == "new" || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5 || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM))
+    {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save</button>
-    </div>
-}
+    }
+    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+</div>
+
 
 
 
