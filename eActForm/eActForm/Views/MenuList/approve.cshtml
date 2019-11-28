@@ -1,4 +1,5 @@
 ﻿@using eActForm.BusinessLayer
+@using System.Configuration;
 @if (UtilsAppCode.Session.User.isApprove || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
 {
     <li>
@@ -13,33 +14,37 @@
                     }
                 </a>
             </li>
-            <li>
-                <a href="@Url.Action("Index", "ApproveListsRepDetail")">
-                    Approve Report Detail
-                    @if (UtilsAppCode.Session.User.counteatingRepDetail != "0")
-                    {
-                        <span class='badge bg-green'>@UtilsAppCode.Session.User.counteatingRepDetail</span>
-                    }
-                </a>
-            </li>
-            <li>
-                <a href="@Url.Action("Index", "ApproveSummaryDetail")">
-                    Approve Summary Report
-                    @if (UtilsAppCode.Session.User.counteatingSummaryDetail != "0")
-                    {
-                        <span class='badge bg-green'>@UtilsAppCode.Session.User.counteatingSummaryDetail</span>
-                    }
-                </a>
-            </li>
-            <li>
-                <a href="@Url.Action("Index", "BudgetApproveList")">
-                    Budget
-                    @if (UtilsAppCode.Session.User.countWatingBudgetForm != "0")
-                    {
-                        <span class='badge bg-green'>@UtilsAppCode.Session.User.countWatingBudgetForm</span>
-                    }
-                </a>
-            </li>
+            @if (UtilsAppCode.Session.User.isSuperAdmin ||
+                UtilsAppCode.Session.User.isApprove && UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+            {
+                <li>
+                    <a href="@Url.Action("Index", "ApproveListsRepDetail")">
+                        Approve Report Detail
+                        @if (UtilsAppCode.Session.User.counteatingRepDetail != "0")
+                        {
+                            <span class='badge bg-green'>@UtilsAppCode.Session.User.counteatingRepDetail</span>
+                        }
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "ApproveSummaryDetail")">
+                        Approve Summary Report
+                        @if (UtilsAppCode.Session.User.counteatingSummaryDetail != "0")
+                        {
+                            <span class='badge bg-green'>@UtilsAppCode.Session.User.counteatingSummaryDetail</span>
+                        }
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "BudgetApproveList")">
+                        Budget
+                        @if (UtilsAppCode.Session.User.countWatingBudgetForm != "0")
+                        {
+                            <span class='badge bg-green'>@UtilsAppCode.Session.User.countWatingBudgetForm</span>
+                        }
+                    </a>
+                </li>
+            }
         </ul>
     </li>
 }

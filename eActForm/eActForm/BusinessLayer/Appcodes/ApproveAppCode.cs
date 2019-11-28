@@ -151,17 +151,18 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                         });
 
-                if (approveType == AppCode.ApproveType.Activity_Form.ToString())
-                {
-                    rtn = updateActFormStatus(statusId, actFormId);
-                }
-                else if (approveType == AppCode.ApproveType.Report_Detail.ToString())
+               if (approveType == AppCode.ApproveType.Report_Detail.ToString())
                 {
                     rtn = updateActRepDetailStatus(statusId, actFormId);
                 }
                 else if (approveType == AppCode.ApproveType.Report_Summary.ToString())
                 {
                     rtn = updateSummaryDetailStatus(statusId, actFormId);
+                }
+                else
+                {
+                    // default Activity Form
+                    rtn = updateActFormStatus(statusId, actFormId);
                 }
 
                 return rtn;
@@ -344,6 +345,7 @@ namespace eActForm.BusinessLayer
                             ,new SqlParameter("@statusId","")
                             ,new SqlParameter("@isSendEmail",false)
                             ,new SqlParameter("@remark","")
+                            ,new SqlParameter("@isApproved",m.isApproved)
                             ,new SqlParameter("@delFlag",false)
                             ,new SqlParameter("@createdDate",DateTime.Now)
                             ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
@@ -382,6 +384,7 @@ namespace eActForm.BusinessLayer
                                                  remark = dr["remark"].ToString(),
                                                  signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
                                                  ImgName = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
+                                                 isApprove = (bool)dr["isApproved"],
                                                  delFlag = (bool)dr["delFlag"],
                                                  createdDate = (DateTime?)dr["createdDate"],
                                                  createdByUserId = dr["createdByUserId"].ToString(),

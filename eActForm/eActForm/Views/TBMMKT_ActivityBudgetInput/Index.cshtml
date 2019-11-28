@@ -1,0 +1,392 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer
+<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
+<style>
+    .cssTableTDTextCenter {
+        max-width: none;
+        text-align: center;
+        width: 100%;
+    }
+
+    .cssTableTDTextLeft {
+        max-width: none;
+        text-align: left;
+        width: 100%;
+    }
+
+    .cssTableTDDetailNumber {
+        text-align: right;
+        width: 100%;
+    }
+</style>
+@using (Ajax.BeginForm("insertDataActivity", "TBMMKT_ActivityBudgetInput", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
+{
+
+    <div id="GridPDF" style="width:97%; margin-left:20px;">
+
+
+        <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
+
+            <tr>
+                <td>
+                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerCompany.cshtml")
+                </td>
+            </tr>
+
+
+            @*<tr>
+                <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                    <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
+                        <div id="forDev" style="display:none;">
+                            <br />@Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "", @id = "txtActivityId" })
+                            <br />@Html.TextBoxFor(x => x.activityFormModel.mode, new { @class = "", @id = "txtmode" })
+                        </div>
+                    </div>
+
+                </td>
+            </tr>*@
+
+            <tr>
+                <td style=" text-align:center;  border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+
+                    <div class="form-group">
+                        <div class="col-12  text-center">
+
+                            @*<div class="row text-center"> </div>
+                                <div id="divHeadCompany" runat="server" style="width: 100%; align-content: left; text-align: center;">
+                            *@  @*@if (Model.activityFormTBMMKT.selectedBrandOrChannel != null)
+                                {*@
+
+                            <label class="control-label col-md-1 col-xs-12"></label>
+                            <div class="col-md-2  col-xs-12 ">
+                                <div style="display:inline-block;">
+                                    <label class="control-label" for="ddlRegion">
+                                        &nbsp;Condition Flow<span class="required">:&nbsp;</span>
+                                    </label>
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "val", "txt", ""), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlChannelOrBrand"
+                                    })
+
+                                    <script>
+                                    function processDropdownConditionFlow() {
+                                        if ($("#ddlChannelOrBrand").val() == "Channel") {
+                                            $('#divChannel').css('display', 'inline-block');
+                                            $("#divSubject").css('display', 'inline-block');
+                                            $("#divBrand").hide();
+                                        }
+                                        else if ($("#ddlChannelOrBrand").val() == "Brand") {
+                                            $('#divBrand').css('display', 'inline-block');
+                                            $("#divSubject").css('display', 'inline-block');
+                                            $("#divChannel").hide();
+                                        }
+                                        else {
+                                            $("#divBrand").hide();
+                                            $("#divChannel").hide();
+                                            $("#divSubject").hide();
+                                        }
+                                    }
+
+                                    $(function () {
+                                        //ทำหลังLoadหน้่าเว็บเสร็จ
+                                        var p_subjectId = "@Model.tB_Act_ActivityForm_DetailOther.SubjectId";
+                                        var p_productBrandId = "@Model.tB_Act_ActivityForm_DetailOther.productBrandId";
+                                        var p_channelId = "@Model.tB_Act_ActivityForm_DetailOther.channelId";
+                                        if (p_subjectId != "")
+                                         {
+                                            $("#divSubject").css('display', 'inline-block');
+                                            $("#ddlSubject").val(p_subjectId);
+                                        }
+                                        if (p_productBrandId != "") {
+                                            $("#divBrand").css('display', 'inline-block');
+                                            $("#ddlBrand").val(p_productBrandId);
+                                        }
+                                        if (p_channelId != "") {
+                                            $("#divChannel").css('display', 'inline-block');
+                                            $("#ddlChannel").val(p_channelId);
+                                        }
+                                        processDropdownConditionFlow();
+                                     });
+
+                                    $("#ddlChannelOrBrand").change(function () {
+                                        processDropdownConditionFlow();
+                                    });
+                                    </script>
+
+                                </div>
+                            </div>
+                            <div class="col-md-2   col-xs-12 ">
+                                <div id="divChannel" style="display:block;">
+                                    <label class="control-label" for="ddlChannel">
+                                        &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
+                                    </label>
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlChannel"
+                                    })
+                                </div>
+                                <div id="divBrand" style="display:none;">
+                                    <label class="control-label" for="ddlBrand">
+                                        &nbsp;เลือก Brand<span class="required"></span>
+                                    </label>
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlBrand"
+                                    })
+                                </div>
+
+                            </div>
+                            <div class="col-md-4  col-xs-12 ">
+                                <div id="divSubject" style="display:block;">
+                                    <label class="control-label" for="ddlBrand">
+                                        &nbsp;เรื่อง <span class="required"></span>
+                                    </label>
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlSubject"
+                                    })
+                                </div>
+
+                            </div>
+                            <label class="control-label col-md-1 col-xs-12"></label>
+
+                            @*}*@
+
+                            @*<div style="height:15px;"></div>
+                                </div>*@
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="border: 0px solid black; border-collapse: collapse;border-bottom:none;">
+                <td>
+                    <div class="row">
+                        <div class="col-12">
+                            @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/headerDetails.cshtml")
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                    <div style="height:5px;"></div>
+                    <div style="width: 100%; text-align: left;">
+                        @*&nbsp;ค่าใช้จ่ายในการทำกิจกรรม..........................จำนวนเงิน............บาท
+                            <br />
+                            &nbsp;รายละเอียดงบประมาณ*@
+                    </div>
+                </td>
+            </tr>
+            @*<tr style="border-bottom:none;">
+                    <td>
+                        <div style="height:5px;"></div>
+                        @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/activityDetails.cshtml")
+                    </td>
+                </tr>*@
+            <tr style="border-bottom:none;">
+                <td>
+                    <div style="height:5px;"></div>
+                    @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/activityBudgetDetails.cshtml")
+                </td>
+            </tr>
+
+            <tr>
+                <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+                    @*<div style="height:5px;"></div>
+                        <div style="width: 100%; text-align: left;padding-left:15px;">
+                            หมายเหตุ @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control textboxcss", @id = "txtremark" })
+                            cssTableTDTextLeft
+                            <br />
+                        </div>*@
+
+                    <div style="height:10px;"></div>
+                    <div class="form-group">
+
+                        <label class="control-label col-md-2 col-xs-12">
+                            หมายเหตุ :
+                        </label>
+
+                        <div class="col-md-10 col-xs-12">
+                            <div class="row">
+                                @Html.TextAreaFor(x => x.activityFormModel.remark, new { @class = "form-control textboxcss", @id = "txtremark" })
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+
+            <tr style="border-bottom:none;">
+                <td>
+                    &nbsp;<br /><br />
+                </td>
+            </tr>
+
+
+        </table>
+
+    </div>
+
+    @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
+    @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
+    @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
+
+
+    <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px; margin-left:20px;">
+        <div class="form-group">
+            <label class="control-label col-md-2 col-xs-12">
+                เอกสารแนบ :
+            </label>
+
+            <div class="col-md-10 col-xs-12">
+                <div class="row">
+                    @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.descAttach, new { @class = "form-control textboxcss", @id = "txtdescAttach" })
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+}
+
+@RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
+
+<div style="height:5px;"></div>
+
+@if (Model.activityFormModel.mode == "new" || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5 || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM))
+{
+    <div style="margin-left:25px;" class="text-center">
+        <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save</button>
+    </div>
+}
+
+<div class="modal fade" id="previewModal" role="dialog" style="display:none">
+    <div id="divPreview">
+    </div>
+</div>
+
+<script>
+
+    //$("#GridPDF :input").prop("disabled", true);
+
+    if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
+        var arrayOfElements = document.getElementsByClassName('clstxtIO');
+        var lengthOfArray = arrayOfElements.length;
+        for (var i = 0; i < lengthOfArray; i++) {
+            arrayOfElements[i].disabled = 'disabled';
+        }
+    }
+
+
+
+
+    $("#btnExportPDF").click(function () {
+        $("input[name='gridHtml']").val($("#GridPDF").html());
+    });
+
+    $(function () {
+        $("#txtdateDoc").datepicker();
+        $("#txtdateActivitySt").datepicker();
+        $("#txtactivityPeriodEnd").datepicker();
+
+    });
+
+    function validatesubmit() {
+        var validate = true;
+
+        if (validate == true) {
+            SubmitData();
+        }
+        else {
+            bootbox.alert(required)
+        }
+    }
+
+    function validateUpdate() {
+        var validate = true;
+
+        if (validate == true) {
+
+        }
+        else {
+            bootbox.alert(required)
+        }
+    }
+
+    function SubmitData()
+    {
+        $("#WaitDialog").show();
+        $("#divconditionFlow").submit();
+
+    }
+
+    function beginQuery(value) {
+        console.log(value);
+    }
+
+    function successQuery(data) {
+        console.log('success');
+        console.log(data);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
+            data: { activityId: '@Model.activityFormModel.id' }
+        }).done(function (htmlResponse) {
+            $("#WaitDialog").hide();
+            $("#divPreview").html(htmlResponse)
+            $('#previewModal').modal('show');
+        });
+
+    }
+
+    function failureQuery(data) {
+        console.log('fail');
+        console.log(data);
+    }
+
+
+    var fileList = new Array;
+    Dropzone.options.dropzoneJsForm = {
+        maxFiles: 5,
+        acceptedFiles: "",
+        paramName: "file",
+        maxFilesize: 10,
+        //addRemoveLinks: true,
+        init: function () {
+
+            this.on("complete", function (file) {
+                console.log($("#hdActivityId").val());
+                CallImageView($("#hdActivityId").val());
+
+            });
+        }
+
+    };
+
+    function CallImageView(obj) {
+        console.log(obj);
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("ImageList", "Activity")',
+            data: { activityId: obj}
+        }).done(function (htmlResponse) {
+            $("#divgetimage").html(htmlResponse)
+        });
+    }
+
+</script>

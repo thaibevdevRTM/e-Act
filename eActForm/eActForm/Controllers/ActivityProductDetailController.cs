@@ -3,6 +3,7 @@ using eActForm.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -85,7 +86,8 @@ namespace eActForm.Controllers
             , string cusid
             , string theme
             ,string actId
-            ,string typeForm)
+            ,string typeForm
+            ,string dateActivitySt)
         {
             var result = new AjaxResult();
             try
@@ -117,7 +119,10 @@ namespace eActForm.Controllers
                     costthememodel.detailGroup = item.detailGroup;
                     if (ActFormAppCode.getDigitGroup(theme) != "")
                     {
-                        costthememodel.IO = "56S0" + DateTime.Now.Year.ToString().Substring(2) + ActFormAppCode.getDigitGroup(theme) + ActFormAppCode.getDigitRunnigGroup(item.productId);
+                        
+                        DateTime getDoc = DateTime.ParseExact(dateActivitySt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                        string getYear = getDoc.Month > 9 ? getDoc.AddYears(1).ToString("yy") : getDoc.Year.ToString().Substring(2);
+                        costthememodel.IO = "56S0" + getYear + ActFormAppCode.getDigitGroup(theme) + ActFormAppCode.getDigitRunnigGroup(item.productId);
                     }
                     activityModel.activitydetaillist.Add(costthememodel);
                     i++;

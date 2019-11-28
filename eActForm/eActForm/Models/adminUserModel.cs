@@ -12,6 +12,7 @@ namespace eActForm.Models
         public List<User> userRoleLists { get; set; }
         public List<Customer> customerLists { get; set; }
         
+
         public AdminUserModel()
         {
             userLists = new List<User>();

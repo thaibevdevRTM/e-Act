@@ -222,7 +222,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 DataSet ds = new DataSet();
-                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminOMT)
                 {
                     string stored = typeForm == Activity_Model.activityType.MT.ToString() ? "usp_getReportDetailByCreateDate" : "usp_getReportDetailOMTByCreateDate";
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored

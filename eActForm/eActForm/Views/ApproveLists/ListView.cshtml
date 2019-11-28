@@ -7,12 +7,14 @@
 
     </div>
     <div class="col-md-12 col-xs-12">
-        <a class="btn ink-reaction btn-info fa fa-search" href="#"></a>คือ View
-        <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" href="#"></a>คือ Approve
+        @*<a class="btn ink-reaction btn-success fa fa-thumbs-o-up" style="width:150px; height:40px" onclick="submitApprove();"> Approve </a>*@
 
         <table id="datatable" class="table table-striped table-hover">
             <thead>
                 <tr style="background-color:#2B5D95;color:#ffffff;">
+                    <th width="20">
+                        @*<input type="checkbox" id="chk_All" class="icheckbox_flat-green" onchange="setFlagAll(this);" name="table_records">*@
+                    </th>
                     <th></th>
                     <th>Status</th>
                     <th>Doc.Date</th>
@@ -28,6 +30,9 @@
                 @foreach (var item in Model.actLists)
                 {
                     <tr class="gradeX">
+                        <td class="a-center ">
+                            @*<input type="checkbox" id="chk_@item.id"  class="icheckbox_flat-green" value="@item.id" name="chk_approve" >*@
+                        </td>
                         <td>
                             @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
                             <a onclick="callApproveList('@item.id');">
@@ -39,14 +44,14 @@
                         <td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
                         <td>@item.activityNo</td>
                         <td>@item.objective</td>
-                        <td align="center">@string.Format("{0:n2}",item.themeCost)</td>
+                        <td align="center">@string.Format("{0:n2}", item.themeCost)</td>
                         <td align="center">@string.Format("{0:n2}", @item.totalCost)</td>
                         <td align="center">
                             @string.Format("{0:n2}", @item.perTotal)
                         </td>
                         <td>@item.createByUserName</td>
-                </tr>
-            }
+                    </tr>
+                }
             </tbody>
         </table>
 
@@ -83,6 +88,60 @@
         });
 
     })
+
+    function setFlagAll(ele) {
+        var chkAll = ele.checked ? true : false;
+        $("input[name='chk_approve']:checkbox").prop('checked', chkAll);
+    }
+
+    function submitApprove() {
+        var favorite = [];
+        var valChk = []; 
+        $.each($("input[name='chk_approve']:checked"), function () {
+            favorite.push($(this).val());
+            console.log(favorite[favorite.length-1]);
+            submitApprove(favorite[favorite.length - 1]);
+        });
+    }
+    function submitApprove(actId) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("selectApprove", "Approve")',
+            data: {
+                actId: actId,
+                status: '3',
+                approveType: '@AppCode.ApproveType.Activity_Form.ToString()'
+            }
+        }).done(function () {
+            callPreviewApprove(actId);
+        });
+    }
+    function callPreviewApprove(actId) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("previewApprove", "Approve")',
+            data: {
+                actId: actId,
+            }
+        }).done(function (htmlResponse) {
+            genPdf(actId, htmlResponse);
+        });
+    }
+    function genPdf(actId, htmlResponse) {
+        $.ajax({
+            url: '@Url.Action("genPdfApprove", "Approve")',
+            data: {
+                GridHtml: htmlResponse,
+                statusId: '3',
+                activityId: actId,
+            },
+            dataType: "json",
+            type: 'POST',
+        }).done(function (response) {
+            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+        });
+    }
+
 
     function callApproveList(actId) {
         $.ajax({

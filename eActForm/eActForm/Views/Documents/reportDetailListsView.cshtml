@@ -112,7 +112,7 @@
         $("#WaitDialog").show();
         }
 
-          function callApproveList(actId) {
+    function callApproveList(actId) {
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("approveLists", "Home")',
@@ -127,7 +127,6 @@
 
 
     function callPreviewAct(p_activityNo) {
-        console.log(p_activityNo);
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("actDetail", "Documents")',
