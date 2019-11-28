@@ -270,7 +270,7 @@ else
 
              $.ajax({
                 type: 'POST',
-                url: '@Url.Action("previewActBudget", "TBMMKT_ActivityBudgetReport")',
+                url: '@Url.Action("previewActBudget", "Approve")',
                 data: {
                     activityId: obj,
                     typeForm: '@Model.typeForm.ToString()',
@@ -298,11 +298,19 @@ else
         }
 
     }
-        function genPdf() {
+    function genPdf() {
+        var htmlImg = '';
+        if ($("#GridImg").html().text() === 'undefined') {
+            htmlImg = '';
+        }
+        else {
+            htmlImg = $("#GridImg").html();
+        }
+
         $.ajax({
             url: '@Url.Action("genPdfApprove", "Approve")',
             data: {
-                GridHtml: $("#Grid1").html() + $("#GridImg").html(),
+                GridHtml: $("#Grid1").html() + htmlImg,
                 statusId: $("#ddlStatus").val(),
                 activityId: $("#HdId").val()
             },

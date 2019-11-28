@@ -147,7 +147,16 @@ namespace eActForm.Controllers
 
 
 
+        public ActionResult previewActBudget(string activityId)
+        {
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            if (!string.IsNullOrEmpty(activityId))
+            {
+                activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+            }
 
+            return PartialView(activity_TBMMKT_Model);
+        }
 
         public ActionResult getApproveComment(string actId, string actTypeName)
         {

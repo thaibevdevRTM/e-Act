@@ -47,7 +47,7 @@
     });
 
     function submitPreview() {
-
+        
         bootbox.confirm({
             message: "ยืนยัน บันทึกข้อมูล!",
             buttons: {
@@ -62,14 +62,9 @@
             },
             callback: function (result) {
                 if (result == true) {
+                    $("#WaitDialog").show();
                     var htmlstr = "";
-
-
-
-
                     htmlstr = $("#Grid1").html();
-
-                    bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
                     $.ajax({
                     url: '@Url.Action("submitPreview", "Activity")',
                         data: {
