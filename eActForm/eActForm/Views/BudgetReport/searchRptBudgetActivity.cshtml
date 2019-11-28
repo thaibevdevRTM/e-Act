@@ -65,12 +65,21 @@
 					<tr style="background-color:#2B5D95;color:#ffffff;">
 						<td> no.</td>
 						<td style="text-align:left;"> company </td>
-						<td style="text-align:left;" class="text-hide"> channelName </td>
+
+						<td style="text-align:left;" class="text-hide"> เดือน-ปี </td>			@*2019-11-21*@
+
 						<td style="text-align:left;"> เลขที่กิจกรรม </td>
 						<td style="text-align:left;" class="text-hide"> Sub Code </td>
+
+						<td style="text-align:left;" class="text-hide"> เคลม Product </td>	@*2019-11-21*@
+						<td style="text-align:left;" class="text-hide"> ปันส่วน </td>			@*2019-11-21*@
+						<td style="text-align:left;" class="text-hide"> เคลม(%) </td>		@*2019-11-21*@
+						<td style="text-align:left;" class="text-hide"> เคลม IO </td>		@*2019-11-21*@
+						<td style="text-align:left;" class="text-hide"> เลข IO </td>			@*2019-11-21*@
+
 						<td style="text-align:left;" class="text-hide"> ชื่อกิจกรรม </td>
 						<td style="text-align:left;"> กลุ่มสินค้า </td>
-						<td style="text-align:left;"> Theme </td>
+						<td style="text-align:left;"> ประเภทกิจกรรม </td>
 						<td style="text-align:left;" class="text-hide"> ลูกค้า </td>
 						<td style="text-align:left;" class="text-hide"> รายละเอียด </td>
 						<td style="text-align:left;" class="text-hide"> รายละเอียด (50) </td>
@@ -90,54 +99,59 @@
 				@{ var index = 1; string strActNo = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0;}
 				@foreach (var item in Model.Report_Budget_Activity_List)
 				{
-					<tr class="gradeX">
-						<td>@index</td>
-						<td>@item.company</td>
-						<td class="text-hide">@item.channelName </td>
-						<td>@item.act_activityNo </td>
-						<td class="text-hide">@item.sub_code </td>
-						<td class="text-hide">@item.act_activityName </td>
-						<td>@item.brandName </td>
-						<td>@item.Theme </td>
-						<td class="text-hide">@item.cus_cusNameTH </td>
-						<td class="text-hide">@item.prd_productDetail </td>
-						<td class="text-hide">@item.prd_productDetail50 </td>
+				<tr class="gradeX">
+					<td>@index</td>
+					<td>@item.company</td>
+					<td class="text-hide">@item.reportMMYY </td>		@*2019-11-21*@
+					<td>@item.act_activityNo </td>
+					<td class="text-hide">@item.sub_code </td>
+					<td class="text-hide">@item.claim_actStatus </td>	 @*2019-11-21*@
+					<td class="text-hide">@item.claim_shareStatus </td>	 @*2019-11-21*@
+					<td class="text-hide">@item.claim_actValue </td>	 @*2019-11-21*@
+					<td class="text-hide">@item.claim_actIO </td>	 @*2019-11-21*@
+					<td class="text-hide">@item.product_IO </td>	 @*2019-11-21*@
+					<td class="text-hide">@item.act_activityName </td>
+					<td>@item.brandName </td>
+					<td>@item.Theme </td>
+					<td class="text-hide">@item.cus_cusNameTH </td>
+					<td class="text-hide">@item.prd_productDetail </td>
+					<td class="text-hide">@item.prd_productDetail50 </td>
 
-						<td class="text-hide">
-							@if (@item.prd_productDetailCount != null)
-							{
-								int temp = index + 1;
-								string result = string.Concat("=LEN(K", temp.ToString(), ")");
-								@result.ToString();
-							}
-						</td>
+					<td class="text-hide">
+						@if (@item.prd_productDetailCount != null)
+						{
+							int temp = index + 1;
+							string result = string.Concat("=LEN(P", temp.ToString(), ")");
+							@result.ToString();
+						}
+					</td>
 
-						@*<td class="text-hide">@item.prd_productDetailCount </td>*@
-						<td class="text-hide">@item.activity_Period </td>
-						<td class="text-hide">@item.activity_costPeriod </td>
-						<td>@item.actCreatedDate </td>
+					@*<td class="text-hide">@item.prd_productDetailCount </td>*@
+					<td class="text-hide">@item.activity_Period </td>
+					<td class="text-hide">@item.activity_costPeriod </td>
+					<td>@item.actCreatedDate </td>
 
-						<td>
-							@if (@item.activityTotalBath != null)
-							{
-								string result = String.Format("{0:n2}", @item.activityTotalBath);
-								@result.ToString();
-							}
-						</td>
+					<td>
+						@if (@item.activityTotalBath != null)
+						{
+							string result = String.Format("{0:n2}", @item.activityTotalBath);
+							@result.ToString();
+						}
+					</td>
 
-						<td>
-							@if (@item.activityBalanceBath != null)
-							{
-								string result = String.Format("{0:n2}", @item.activityBalanceBath);
-								@result.ToString();
-							}
-						</td>
-						<td class="text-hide">@item.productBudgetStatusNameTH </td>
-						<td class="text-hide">@item.invoiceCreatedDate</td>
-						<td>@item.act_status </td>
-						<td class="text-hide">@item.actForm_CreatedByUserId </td">
-						<td class="text-hide">@item.actForm_CreatedByName </td>
-					</tr>
+					<td>
+						@if (@item.activityBalanceBath != null)
+						{
+							string result = String.Format("{0:n2}", @item.activityBalanceBath);
+							@result.ToString();
+						}
+					</td>
+					<td class="text-hide">@item.productBudgetStatusNameTH </td>
+					<td class="text-hide">@item.invoiceCreatedDate</td>
+					<td> @item.act_status </td>
+					<td class="text-hide">@item.actForm_CreatedByUserId </td>
+					<td class="text-hide">@item.actForm_CreatedByName </td>
+				</tr>
 					index++;
 				}
 			</table>

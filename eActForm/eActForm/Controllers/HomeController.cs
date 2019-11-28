@@ -52,7 +52,7 @@ namespace eActForm.Controllers
             else
             {
                 model = new Activity_Model.actForms();
-                model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-15), DateTime.Now, typeForm);
+                model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-7), DateTime.Now, typeForm);
                 model.typeForm = typeForm;
 
                 if (actId != null && actId != "")
