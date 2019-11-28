@@ -479,6 +479,9 @@ namespace eActForm.Controllers
 							,new SqlParameter("@statusId","")
 							,new SqlParameter("@isSendEmail",false)
 							,new SqlParameter("@remark","")
+
+							,new SqlParameter("@isApproved","1") 
+							
 							,new SqlParameter("@delFlag",false)
 							,new SqlParameter("@createdDate",DateTime.Now)
 							,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)

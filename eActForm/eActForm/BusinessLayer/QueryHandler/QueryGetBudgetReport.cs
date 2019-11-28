@@ -28,6 +28,14 @@ namespace eActForm.BusinessLayer.QueryHandler
 							  {
 								  company = d["company"].ToString(),
 								  channelName = d["channelName"].ToString(),
+
+								  reportMMYY = d["reportMMYY"].ToString(),
+								  claim_actStatus = d["claim_actStatus"].ToString(),
+								  claim_shareStatus = d["claim_shareStatus"].ToString(),
+								  claim_actValue = d["claim_actValue"].ToString(),
+								  claim_actIO = d["claim_actIO"].ToString(),
+								  product_IO = d["product_IO"].ToString(),
+
 								  act_activityNo = d["act_activityNo"].ToString(),
 								  sub_code = d["sub_code"].ToString(),
 								  act_activityName = d["act_activityName"].ToString(),
