@@ -21,7 +21,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                if(model.activityFormModel.mode == "edit" && model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)//ถ้าเป็น บัญชีเข้ามาเพื่อกรอก IO
+                if (model.activityFormModel.mode == "edit" && model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)//ถ้าเป็น บัญชีเข้ามาเพื่อกรอก IO
                 {
 
                     insertIndex = 1;
@@ -75,7 +75,7 @@ namespace eActForm.BusinessLayer
                     model.activityFormModel.companyId = UtilsAppCode.Session.User.empCompanyId;
                     model.activityFormModel.remark = model.activityFormModel.remark;
                     rtn = insertActivityForm(model.activityFormModel);
-                  
+
                     if (model.tB_Act_ActivityForm_DetailOther != null)
                     {
                         rtn += deleteusp_deleteTB_Act_ActivityForm_DetailOther(activityId);
@@ -455,6 +455,10 @@ namespace eActForm.BusinessLayer
         protected static int usp_insertusp_insertTB_Act_ActivityLayout(TB_Act_ActivityLayout model)
         {
             int result = 0;
+            if (model.io == null)
+            {
+                model.io = "";
+            }
             try
             {
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertTB_Act_ActivityLayout"
@@ -482,6 +486,17 @@ namespace eActForm.BusinessLayer
         protected static int insertEstimate(CostThemeDetailOfGroupByPriceTBMMKT model)
         {
             int result = 0;
+
+            if (model.IO == null)
+            {
+                model.IO = "";
+            }
+
+            if (model.unitPrice == null)
+            {
+                model.unitPrice = 0;
+            }
+
             try
             {
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertCostThemeDetail"
@@ -619,7 +634,7 @@ namespace eActForm.BusinessLayer
                 int insertIndex = 1;
 
                 if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
-                {               
+                {
                     foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
                     {
                         CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
