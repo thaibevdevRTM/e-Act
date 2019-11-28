@@ -351,21 +351,41 @@
 
         }
 
-        function successQuery(data) {
-            console.log('success');
-            console.log(data);
+    function successQuery(data) {
+        console.log('success');
+        console.log(data);
 
         $.ajax({
-                type: 'POST',
+            type: 'POST',
             url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
             data: { activityId: '@Model.activityFormModel.id' }
-            }).done(function (htmlResponse) {
-            $("#WaitDialog").hide();
-            $("#divPreview").html(htmlResponse)
+        }).done(function (htmlResponse) {
+
+            $.ajax({
+                url: '@Url.Action("genPdfApprove", "Documents")',
+                data: {
+                    GridHtml: htmlResponse,
+                    statusId: '',
+                    activityId: '@Model.activityFormModel.id',
+                },
+                dataType: "json",
+                type: 'POST',
+            }).done(function (response) {
+                $("#WaitDialog").hide();
+                $("#divPreview").html(htmlResponse)
                 $('#previewModal').modal('show');
+            });
         });
 
     }
+
+     function genPdf() {
+       
+    }
+
+
+
+ 
 
     function failureQuery(data) {
         console.log('fail');
