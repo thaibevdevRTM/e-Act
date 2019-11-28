@@ -1994,6 +1994,7 @@
     <Content Include="images\maintain.png" />
     <Content Include="images\non_al.jpeg" />
     <Content Include="images\warning_error.png" />
+    <Content Include="images\xlx.png" />
     <Content Include="Scripts\Admin\adminPage.js" />
     <Content Include="Scripts\Approve\RepDetailApproves.js" />
     <Content Include="Scripts\bootbox.js" />
@@ -2369,7 +2370,7 @@
     <Content Include="Views\TBMMKT_ActivityBudgetInput\attachOutFormTag.cshtml" />
     <Content Include="Views\Shared\_PreviewForApproveDetail.cshtml" />
     <Content Include="Views\actFormRepDetail\repPreviewForApproveDetail.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetReport\previewActBudget.cshtml" />
+    <Content Include="Views\Approve\previewActBudget.cshtml" />
     <Content Include="Views\Shared\_previewActFormBudget.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
