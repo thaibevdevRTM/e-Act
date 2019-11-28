@@ -92,7 +92,7 @@ namespace eActForm.Controllers
         }
 
         [HttpPost] //post method
-        [ValidateAntiForgeryToken] // prevents cross site attacks
+        [ValidateAntiForgeryToken] // prevents cross site attacks ต้องใส่   @Html.AntiForgeryToken() ในหน้า เว็บด้วย
         [ValidateInput(false)]
         public JsonResult insertDataActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {

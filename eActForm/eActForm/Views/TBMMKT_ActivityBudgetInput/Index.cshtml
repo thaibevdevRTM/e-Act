@@ -27,9 +27,10 @@
         width: 100%;
     }
 </style>
+
 @using (Ajax.BeginForm("insertDataActivity", "TBMMKT_ActivityBudgetInput", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
 {
-
+    @Html.AntiForgeryToken()
     <div id="GridPDF" style="width:97%; margin-left:20px;">
 
 
@@ -313,13 +314,13 @@
         var required = "กรุณา ระบุ :<br>";
         var validate = true;
 
-        if ($("#ddlChannelOrBrand").val() == "") { required += "Document Date<br>"; validate = false; }
-        if ($("#ddlChannel").val() == "" && $("#ddlBrand").val() == "") { required += "BrandหรือChannel<br>"; validate = false; }
-        if ($("#ddlSubject").val() == "") { required += "เรื่อง<br>"; validate = false; }
+        if ($("#ddlChannelOrBrand").val() == "") { required += "Document Date*<br>"; validate = false; }
+        if ($("#ddlChannel").val() == "" && $("#ddlBrand").val() == "") { required += "BrandหรือChannel*<br>"; validate = false; }
+        if ($("#ddlSubject").val() == "") { required += "เรื่อง*<br>"; validate = false; }
 
-        if ($("#txtdateDoc").val() == "") { required += "Document Date<br>"; validate = false; }
-        if ($("#txtdateActivitySt").val() == "") { required += "วันที่เริ่มกิจกรรม<br>"; validate = false; }
-        if ($("#txtactivityPeriodEnd").val() == "") { required += "วันที่สิ้นสุดกิจกรรม<br>"; validate = false; }
+        if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
+        if ($("#txtdateActivitySt").val() == "") { required += "วันที่เริ่มกิจกรรม*<br>"; validate = false; }
+        if ($("#txtactivityPeriodEnd").val() == "") { required += "วันที่สิ้นสุดกิจกรรม*<br>"; validate = false; }
 
             if (validate == true) {
                 SubmitData();
@@ -329,23 +330,12 @@
             }
         }
 
-        function validateUpdate() {
-            var validate = true;
-
-            if (validate == true) {
-
-            }
-            else {
-                bootbox.alert(required)
-            }
-        }
-
-        function SubmitData()
-        {
+    function SubmitData() {
+        console.log("submit");
         $("#WaitDialog").show();
         $("#divconditionFlow").submit();
 
-        }
+    }
 
         function beginQuery() {
 
@@ -380,12 +370,12 @@
     }
 
      function genPdf() {
-       
+
     }
 
 
 
- 
+
 
     function failureQuery(data) {
         console.log('fail');
