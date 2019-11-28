@@ -1994,6 +1994,7 @@
     <Content Include="images\maintain.png" />
     <Content Include="images\non_al.jpeg" />
     <Content Include="images\warning_error.png" />
+    <Content Include="images\xlx.png" />
     <Content Include="Scripts\Admin\adminPage.js" />
     <Content Include="Scripts\Approve\RepDetailApproves.js" />
     <Content Include="Scripts\bootbox.js" />

@@ -208,18 +208,35 @@
         $("#WaitDialog").show();
     }
 
-    function callPreviewApprove(actId, statusId,typeForm) {
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("previewApprove", "Approve")',
-            data: {
-                actId: actId,
-                typeForm: typeForm
-            }
-        }).done(function (htmlResponse) {
-            genPdf(actId, statusId, htmlResponse);
-        });
+    function callPreviewApprove(actId, statusId, typeForm) {
+
+        if (typeForm == '@Activity_Model.activityType.MT.ToString()' || typeForm == '@Activity_Model.activityType.OMT.ToString()') {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("previewApprove", "Approve")',
+                data: {
+                    actId: actId,
+                    typeForm: typeForm
+                }
+            }).done(function (htmlResponse) {
+                genPdf(actId, statusId, htmlResponse);
+            });
+        }
+        else {
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
+                data: {
+                    actId: actId,
+                    typeForm: typeForm
+                }
+            }).done(function (htmlResponse) {
+                genPdfTBM(actId, statusId, htmlResponse, typeForm);
+            });
+        }
     }
+
+
     function genPdf(actId, statusId, htmlResponse) {
         $.ajax({
             url: '@Url.Action("genPdfApprove", "Documents")',
@@ -234,5 +251,22 @@
             doMsgSuccess("ดำเนินการเรียบร้อยครับ");
         });
     }
+
+     function genPdfTBM(actId, statusId, htmlResponse) {
+        $.ajax({
+            url: '@Url.Action("genPdfApprove", "Documents")',
+            data: {
+                GridHtml: htmlResponse,
+                statusId: statusId,
+                activityId: actId,
+            },
+            dataType: "json",
+            type: 'POST',
+        }).done(function (response) {
+            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+        });
+    }
+
+   
 
 </script>

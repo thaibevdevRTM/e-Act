@@ -6,11 +6,11 @@
 
 <div class="row">
 
-    @if (Model.tbActImageList != null)
+    @if (Model.tbActImageList.Any())
     {
         foreach (var item in Model.tbActImageList)
         {
-            if (item.extension != ".pdf")
+            if (item.extension.ToLower() == ".jpeg" || item.extension.ToLower() == ".jpg" || item.extension.ToLower() == ".jpeg")
             {
                 <div class="col-md-2">
                     <div>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             }
-            else
+            else if (item.extension.ToLower() == ".pdf")
             {
                 <div class="col-md-2">
                     <div>
@@ -31,13 +31,24 @@
                         <img src="~/images/adobe-acrobat-pdf-file-512.png" width="100px" height="100px" />
                     </div>
                     <div>
-                        <a href="@Url.Action("getPDF", "ActivityViewer", new { actId = item._fileName ,type= @item.imageType })" target="_blank">@item._fileName</a>
+                        <a href="@Url.Action("getPDF", "ActivityViewer", new { actId = item._fileName ,type= @item.imageType , extension = item.extension})" target="_blank">@item._fileName</a>
                     </div>
                 </div>
-
             }
-
-
+            else
+            {
+                <div class="col-md-2">
+                    <div>
+                        <div class="col-md-1 divDelImg">
+                            <span id="iconDelFile1" class="close" onclick="javascript:onclickDelImage('@item.id');">&times;</span>
+                        </div>
+                        <img src="~/images/xlx.png" width="100px" height="100px" />
+                    </div>
+                    <div>
+                        <a href="@Url.Action("getPDF", "ActivityViewer", new { actId = item._fileName ,type= @item.imageType, extension = item.extension })" target="_blank">@item._fileName</a>
+                    </div>
+                </div>
+            }
         }
     }
 
