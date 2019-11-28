@@ -68,7 +68,7 @@
             },
             callback: function (result) {
                 if (result == true) {
-                    $("#WaitDialog").show();
+                    bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
                     var htmlstr = "";
                     htmlstr = $("#Grid1").html();
                     $.ajax({
