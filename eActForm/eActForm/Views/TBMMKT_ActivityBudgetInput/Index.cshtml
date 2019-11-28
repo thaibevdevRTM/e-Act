@@ -1,5 +1,6 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
+@using eActForm.Models
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
@@ -258,10 +259,18 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 
+    <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px; margin-left:20px;">
+        <div class="form-group">
+            <div class="col-md-12 col-xs-12">
+                <div class="row" style="text-align:center;">
+                    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
@@ -275,6 +284,9 @@
     </div>
 }
 
+
+
+
 <div class="modal fade" id="previewModal" role="dialog" style="display:none">
     <div id="divPreview">
     </div>
@@ -282,9 +294,10 @@
 
 <script>
 
-       if('@Model.activityFormTBMMKT.statusId' == '2' && '@UtilsAppCode.Session.User.isAdminTBM' == "False")
+       if(('@Model.activityFormTBMMKT.statusId' == '2' && '@UtilsAppCode.Session.User.isAdminTBM' == "False") || ('@Model.activityFormTBMMKT.statusId' == '3'))
         {
-            $("#GridPDF :input").prop("disabled", true);
+           $("#GridPDF :input").prop("disabled", true);
+           $("#txtdescAttach").prop("disabled", true);
         }
 
         if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
