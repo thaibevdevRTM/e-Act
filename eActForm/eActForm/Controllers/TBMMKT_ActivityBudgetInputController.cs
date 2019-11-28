@@ -91,7 +91,9 @@ namespace eActForm.Controllers
             return View(activity_TBMMKT_Model);
         }
 
-
+        [HttpPost] //post method
+        [ValidateAntiForgeryToken] // prevents cross site attacks
+        [ValidateInput(false)]
         public JsonResult insertDataActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             var result = new AjaxResult();
