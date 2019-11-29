@@ -569,7 +569,7 @@ namespace eActForm.BusinessLayer
                     #endregion
 
                     var empUser = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList(); // get current user
-                    string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Budget_Form"]);
+                    string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Budget_Form"], actFormId);
                     string strBody = string.Format(ConfigurationManager.AppSettings["emailRejectBodyBudget"]
                         , models.approveModel.actNo
                         , empUser.FirstOrDefault().empPrefix + " " + empUser.FirstOrDefault().empName
