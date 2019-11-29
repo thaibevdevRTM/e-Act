@@ -54,14 +54,14 @@
                         {
                             if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
                             {
-                                <td>
-                                    <img style="text-align:center;" width="140" height="90" src="@Model.approveDetailLists[index].ImgName" />
+                                <td height="85">
+                                    <img style="text-align:center;" width="135" height="80" src="@Model.approveDetailLists[index].ImgName" />
                                 </td>
                             }
                             else
                             {
                                 <td>
-                                    <div style="text-align:center;height:90px;"></div>
+                                    <div style="text-align:center;height:80px;"></div>
                                 </td>
                             }
                         }

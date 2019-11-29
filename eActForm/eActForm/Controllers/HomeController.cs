@@ -95,36 +95,36 @@ namespace eActForm.Controllers
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
             model = new Activity_Model.actForms
             {
-                actLists = ActFormAppCode.getActFormByEmpId(startDate, endDate,"")
+                actLists = ActFormAppCode.getActFormByEmpId(startDate, endDate, activityType)
             };
 
 
-            if (Request.Form["txtActivityNo"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["txtActivityNo"]))
             {
                 model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
             }
 
-            if (Request.Form["ddlStatus"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlStatus"]))
             {
                 model.actLists = model.actLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
             }
 
-            if (Request.Form["ddlCustomer"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlCustomer"]))
             {
                 model.actLists = model.actLists.Where(r => r.customerId == Request.Form["ddlCustomer"]).ToList();
             }
 
-            if (Request.Form["ddlTheme"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlTheme"]))
             {
                 model.actLists = model.actLists.Where(r => r.theme == Request.Form["ddlTheme"]).ToList();
             }
 
-            if (Request.Form["ddlProductType"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlProductType"]))
             {
                 model.actLists = model.actLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
             }
 
-            if (Request.Form["ddlProductGrp"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlProductGrp"]))
             {
                 model.actLists = model.actLists.Where(r => r.productGroupid == Request.Form["ddlProductGrp"]).ToList();
             }
