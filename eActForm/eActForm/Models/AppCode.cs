@@ -80,7 +80,7 @@ namespace eActForm.Models
                 StringBuilder GridBuilder = new StringBuilder();
                 GridBuilder.Append("<html>");
                 GridBuilder.Append("<style>");
-                GridBuilder.Append(".fontt{font-family:Angsana New;}");
+                GridBuilder.Append(".fontt{font-family:TH SarabunPSK;}");
                 GridBuilder.Append("</style>");
                 GridBuilder.Append("<body class=\"fontt\">");
                 GridBuilder.Append(GridHtml);
@@ -88,7 +88,6 @@ namespace eActForm.Models
                 GridBuilder.Append("</html>");
 
                 GridBuilder.Append(sw.ToString());
-
 
                 string path = System.Web.HttpContext.Current.Server.MapPath("~") + "\\Content\\" + "tablethin.css";
                 string readText = System.IO.File.ReadAllText(path);
