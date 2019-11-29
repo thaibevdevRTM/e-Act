@@ -900,6 +900,7 @@
                     chkAddIO: $("input[name='activityFormModel.chkAddIO']:checked").val(),
                     actIO: $("#txtActIO").val(),
                     actClaim: $("#txtActClaim").val(),
+                    typeForm:'@Model.activityFormModel.typeForm',
                 },
                 dataType: "json",
                 type: 'POST',
