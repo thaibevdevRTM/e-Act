@@ -2,11 +2,10 @@
 using eActForm.Models;
 using iTextSharp.text;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -16,7 +15,16 @@ namespace eActForm.Controllers
     {
         [HttpPost]
         [ValidateInput(false)]
-        public async Task<JsonResult> doApprove(string GridHtml, string statusId, string activityId)
+        public JsonResult doApprove(string gridHtml, string statusId, string activityId)
+        {
+            var resultAjax = new AjaxResult();
+
+            HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(gridHtml, statusId, activityId));
+
+            return Json(resultAjax, "text/plain");
+        }
+
+        private async Task<AjaxResult> doGenFile(string GridHtml, string statusId, string activityId)
         {
             var resultAjax = new AjaxResult();
             try
@@ -30,10 +38,10 @@ namespace eActForm.Controllers
                     var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
                     GridHtml = GridHtml.Replace("<br>", "<br/>");
                     GridHtml = GridHtml.Replace("undefined", "");
-                    AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
+                    AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert), Server.MapPath("~"));
 
                     TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-                    getImageModel.tbActImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension == ".pdf").ToList();
+                    getImageModel.tbActImageList = ImageAppCode.GetImage(activityId, ".pdf");
                     string[] pathFile = new string[getImageModel.tbActImageList.Count + 1];
                     pathFile[0] = Server.MapPath(rootPathInsert);
                     if (getImageModel.tbActImageList.Any())
@@ -59,8 +67,10 @@ namespace eActForm.Controllers
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
             }
-            return Json(resultAjax, "text/plain");
+
+            return resultAjax;
         }
+
 
         // GET: ApiApprove
         public ActionResult Index()

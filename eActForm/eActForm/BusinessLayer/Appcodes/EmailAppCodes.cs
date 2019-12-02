@@ -12,6 +12,7 @@ using eActForm.Controllers;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 
 namespace eActForm.BusinessLayer
 {
@@ -309,22 +310,17 @@ namespace eActForm.BusinessLayer
             mailCC = mailCC != "" ? "," + mailCC : "";
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
             mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailCC;
-            //pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
-
-            //    HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
-            //    : HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
-
 
             switch (emailType)
             {
                 case AppCode.ApproveType.Activity_Form:
-                    pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
+                    pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
                     break;
                 case AppCode.ApproveType.Report_Detail:
-                    pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
+                    pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
                     break;
                 case AppCode.ApproveType.Report_Summary:
-                    pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], actFormId));
+                    pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], actFormId));
                     break;
             }
 
@@ -335,23 +331,27 @@ namespace eActForm.BusinessLayer
                 int i = 1;
                 foreach (var item in getImageModel.tbActImageList)
                 {
-                    if(UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
+                    //=== use case this background service (bg service cannot get data session)===
+                    string companyId = ""; 
+                    try
                     {
-                        pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
+                        companyId = UtilsAppCode.Session.User.empCompanyId;
+                    }
+                    catch {
+                        companyId = QueryGetActivityById.getActivityById(actFormId)[0].companyId;
+                    }
+                    // ==================================================
+                    if(companyId == ConfigurationManager.AppSettings["companyId_TBM"])
+                    {
+                        pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
                     }
                     else
                     {
                         if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
                         {
-                            pathFile[i] = HttpContext.Current.Server.MapPath(item._fileName);
+                            pathFile[i] = HostingEnvironment.MapPath(item._fileName);
                         }
                     }
-
-
-                    //else if (item.extension == ".pdf")
-                    //{
-                    //    pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-                    //}
                     i++;
                 }
             }
