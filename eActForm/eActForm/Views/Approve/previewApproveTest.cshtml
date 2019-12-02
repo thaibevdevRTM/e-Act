@@ -1,0 +1,13 @@
+﻿@using eActForm.Models
+@using eActForm.BusinessLayer
+@model eActForm.Models.Activity_Model
+
+
+@RenderPage("~/Views/Shared/_previewActForm.cshtml")
+
+
+@if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+{
+    @RenderPage("~/Views/Activity/ShowImage.cshtml")
+}
+

@@ -237,6 +237,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminUserController.cs" />
     <Compile Include="Controllers\AjaxResult.cs" />
+    <Compile Include="Controllers\API\ApiApproveController.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
     <Compile Include="Controllers\ApproveListsRepDetailController.cs" />
@@ -2372,6 +2373,7 @@
     <Content Include="Views\actFormRepDetail\repPreviewForApproveDetail.cshtml" />
     <Content Include="Views\Approve\previewActBudget.cshtml" />
     <Content Include="Views\Shared\_previewActFormBudget.cshtml" />
+    <Content Include="Views\Approve\previewApproveTest.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
@@ -2385,6 +2387,7 @@
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
+    <Folder Include="Views\ApiApprove\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

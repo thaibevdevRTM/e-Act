@@ -145,6 +145,25 @@ namespace eActForm.Controllers
             return PartialView(activityModel);
         }
 
+        public ActionResult previewApproveTest(string actId, string typeForm)
+        {
+
+
+            Activity_Model activityModel = new Activity_Model();
+            try
+            {
+                activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
+                activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
+                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
+                activityModel.productImageList = ImageAppCode.GetImage(actId).Where(x => x.extension != ".pdf").ToList();
+                activityModel.activityFormModel.typeForm = typeForm;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("previewApproveTest >>" + ex.Message);
+            }
+            return PartialView(activityModel);
+        }
 
 
         public ActionResult previewActBudget(string activityId)
