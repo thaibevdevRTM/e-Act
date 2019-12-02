@@ -276,8 +276,10 @@ else
                     typeForm: '@Model.typeForm.ToString()',
                 }
             }).done(function (htmlResponse) {
-                $("#divPreviewApprove").html(htmlResponse);
-                genPdf();
+                //$("#divPreviewApprove").html(htmlResponse);
+                //genPdf();
+                $("#dataFromPDF").val(htmlResponse);
+                genFileActForm();
             });
 
         }
@@ -294,87 +296,46 @@ else
                 //$("#divPreviewApprove").html(htmlResponse);
                 //$("#WaitDialog").hide();
                 $("#dataFromPDF").val(htmlResponse);
-
-                $.ajax({
-                    url: '@Url.Action("doApprove", "ApiApprove")',
-                    data: {
-                        gridHtml: $("#dataFromPDF").val(),
-                        statusId: $("#ddlStatus").val(),
-                        activityId: '@actId' //$("#HdId").val()
-                    },
-                    async: true,
-                    dataType: "json",
-                    type: 'POST',
-                }).done(function (reponse) {
-                    console.log(reponse);
-
-                    bootbox.confirm({
-                        message: "ดำเนินการเรียบร้อยครับ",
-                        buttons: {
-                            confirm: {
-                                label: 'OK',
-                                className: 'btn-success'
-                            }
-                        },
-                        callback: function (result) {
-
-                            var url = '@Url.Action("Index", "ApproveLists")';
-                            window.location.replace(url);// = url;
-
-
-                        }
-                    });
-
-                });
-
+                genFileActForm();
             });
 
         }
 
     }
 
-    function onClickClose() {
-        var url = '@Url.Action("Index", "ApproveLists")';
-        window.location.href = url;
+    function genFileActForm() {
+        $.ajax({
+            url: '@Url.Action("doApprove", "ApiApprove")',
+            data: {
+                gridHtml: $("#dataFromPDF").val(),
+                statusId: $("#ddlStatus").val(),
+                activityId: '@actId' //$("#HdId").val()
+            },
+            async: true,
+            dataType: "json",
+            type: 'POST',
+        }).done(function (reponse) {
+            console.log(reponse);
+
+            bootbox.confirm({
+                message: "ดำเนินการเรียบร้อยครับ",
+                buttons: {
+                    confirm: {
+                        label: 'OK',
+                        className: 'btn-success'
+                    }
+                },
+                callback: function (result) {
+
+                    var url = '@Url.Action("Index", "ApproveLists")';
+                    window.location.replace(url);// = url;
+
+                }
+            });
+
+        });
     }
 
-
-
-    @*function callPreviewRepDetailApprove(obj) {
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("repPreviewListView", "actFormRepDetail")',
-            data: {
-                actId: obj
-            }
-        }).done(function (htmlResponse) {
-            $.ajax({
-                type: 'POST',
-                dataType: "html",
-                url: '@Url.Action("repDetailGenPDF", "actFormRepDetail")',
-                data: {
-                    gridHtml: htmlResponse
-                  , actId: '@actId'
-                }
-            }).done(function (htmlResponse) {
-                $("#WaitDialog").hide();
-                bootbox.confirm({
-                    message: "ดำเนินการเรียบร้อยครับ",
-                    buttons: {
-                        confirm: {
-                            label: 'OK',
-                            className: 'btn-success'
-                        }
-                    },
-                    callback: function (result) {
-                        var url = '@Url.Action("Index", "ApproveListsRepDetail")';
-                        window.location.href = url;
-                    }
-
-                });
-            });
-        });
-    }*@
 
 </script>
 

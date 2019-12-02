@@ -99,7 +99,13 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static void sendReject(string actFormId, AppCode.ApproveType emailType)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actFormId"></param>
+        /// <param name="emailType"></param>
+        /// <param name="currentEmpId"> fixed support API Background Service </param>
+        public static void sendReject(string actFormId, AppCode.ApproveType emailType ,string currentEmpId)
         {
             try
             {
@@ -122,7 +128,7 @@ namespace eActForm.BusinessLayer
                     }
                     #endregion
 
-                    var empUser = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList(); // get current user
+                    var empUser = models.approveDetailLists.Where(r => r.empId == currentEmpId).ToList(); // get current user
                     string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId);
                     string strBody = string.Format(ConfigurationManager.AppSettings["emailRejectBody"]
                         , models.approveModel.actNo

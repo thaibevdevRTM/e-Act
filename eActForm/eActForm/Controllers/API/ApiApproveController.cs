@@ -19,26 +19,37 @@ namespace eActForm.Controllers
         {
             var resultAjax = new AjaxResult();
 
-            HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(gridHtml, statusId, activityId));
+            string empId = UtilsAppCode.Session.User.empId;
+            ApproveAppCode.setCountWatingApprove();
+            HostingEnvironment.QueueBackgroundWorkItem(c => doGenFile(gridHtml, empId, statusId, activityId));
 
             return Json(resultAjax, "text/plain");
         }
 
-        private async Task<AjaxResult> doGenFile(string GridHtml, string statusId, string activityId)
+        /// <summary>
+        /// ******* BackGround Service can't  use session ************
+        /// </summary>
+        /// <param name="gridHtml"></param>
+        /// <param name="empId"></param>
+        /// <param name="statusId"></param>
+        /// <param name="activityId"></param>
+        /// <returns></returns>
+        private async Task<AjaxResult> doGenFile(string gridHtml, string empId, string statusId, string activityId)
         {
             var resultAjax = new AjaxResult();
             try
             {
+
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
-                    EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form);
+                    EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, empId);
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
                     var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
-                    GridHtml = GridHtml.Replace("<br>", "<br/>");
-                    GridHtml = GridHtml.Replace("undefined", "");
-                    AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert), Server.MapPath("~"));
+                    gridHtml = gridHtml.Replace("<br>", "<br/>");
+                    gridHtml = gridHtml.Replace("undefined", "");
+                    AppCode.genPdfFile(gridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert), Server.MapPath("~"));
 
                     TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
                     getImageModel.tbActImageList = ImageAppCode.GetImage(activityId, ".pdf");
@@ -57,7 +68,6 @@ namespace eActForm.Controllers
                     var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
 
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
-                    ApproveAppCode.setCountWatingApprove();
                 }
                 resultAjax.Success = true;
             }

@@ -27,6 +27,12 @@ namespace eActForm.BusinessLayer
                         UtilsAppCode.Session.User.counteatingRepDetail = ds.Tables[0].Rows[0]["repFormId"].ToString();
                         UtilsAppCode.Session.User.counteatingSummaryDetail = ds.Tables[0].Rows[0]["sumFormId"].ToString();
                     }
+                    else
+                    {
+                        UtilsAppCode.Session.User.countWatingActForm = "0";
+                        UtilsAppCode.Session.User.counteatingRepDetail = "0";
+                        UtilsAppCode.Session.User.counteatingSummaryDetail = "0";
+                    }
                 }
             }
             catch (Exception ex)
