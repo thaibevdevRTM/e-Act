@@ -19,73 +19,109 @@ namespace eActForm.Controllers
 	public class BudgetReportController : Controller
     {
 		// GET: BudgetReport
+
+		public static SearchBudgetActivityModels getMasterDataForSearch(string TypeForm)
+		{
+			try
+			{
+				SearchBudgetActivityModels models = new SearchBudgetActivityModels();
+				models.approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app);
+				models.productGroupList = QueryGetAllProductGroup.getAllProductGroup().ToList();
+				models.productTypelist = QuerygetAllProductCate.getAllProductType().ToList();
+				models.budgetStstuslist = QueryGetBudgetActivity.getBudgetActivityStatus().ToList();
+				models.budgetStstuslist = models.budgetStstuslist.Where(r => r.id != "4" && r.id != "5").ToList();
+
+				models.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+				.GroupBy(item => item.activitySales)
+				.Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+
+				if (TypeForm == Activity_Model.activityType.MT.ToString())
+				{
+					models.customerslist = QueryGetAllCustomers.getCustomersMT().ToList();
+				}
+				else if (TypeForm == Activity_Model.activityType.OMT.ToString())
+				{
+					models.customerslist = QueryGetAllCustomers.getCustomersOMT().ToList();
+				}
+
+				return models;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("getMasterDataForSearch >>" + ex.Message);
+			}
+		}
+
 		public ActionResult Index()
 		{
 			return View();
 		}
 
-		public ActionResult RptBudgetActivityIndex()
+		public ActionResult reportBudgetActivityIndex(string TypeForm)
         {
-			SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
+			SearchBudgetActivityModels models = getMasterDataForSearch(TypeForm);
 			return View(models);
         }
 
-		public ActionResult searchRptBudgetActivity()
+		public ActionResult reportBudgetActivityListView(string typeForm)
 		{
 			Budget_Report_Model.Report_Budget_Activity model = new Budget_Report_Model.Report_Budget_Activity();
 			try
 			{
-				string act_createdDateStart = null ;
-				string act_createdDateEnd = null;
-				string act_formType = null;
+				string startDate = null ;
+				string endDate = null;
+				string actNo = null;
+				string actStatus = null;
+				string actProductType = null;
 
-				//RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
-				//model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"]);
+				#region filter
 
 				if (Request.Form["chk_all"] != null && Request.Form["chk_all"] == "true")
 				{
-					act_createdDateStart = null;
-					act_createdDateEnd = null;
+					startDate = Request.Form["startDate"];
+					endDate = Request.Form["endDate"];
 				}
-				else
+
+				actNo = Request["txtActivityNo"] == null ? null : Request["txtActivityNo"];
+				actStatus = Request["ddlStatus"] == null ? null : Request["ddlStatus"];
+				
+
+				model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(actStatus, actNo, typeForm, startDate, endDate);
+
+				//----------------------------------------------
+
+				if (String.IsNullOrEmpty(Request.Form["ddlCustomer"]) != true)
 				{
-					act_createdDateStart = Request.Form["startDate"]; 
-					act_createdDateEnd = Request.Form["endDate"];
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.cus_id == Request.Form["ddlCustomer"]).ToList();
 				}
 
-				if (Request.Form["ddlFormType"] != "" && Request.Form["ddlFormType"] != "Select All")
+				if (String.IsNullOrEmpty(Request.Form["ddlTheme"]) != true)
 				{
-					act_formType = Request.Form["ddlFormType"];
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.Theme == Request.Form["ddlTheme"]).ToList();
 				}
 
+				if (String.IsNullOrEmpty( Request.Form["ddlProductType"]) != true && Request.Form["ddlProductType"] != "," )
+				{
+					actProductType = Request["ddlProductType"];
+					actProductType = actProductType.Replace(",", "");
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.prd_typeId == actProductType).ToList();
+				}
 
-					//	#region filter
-					//	if (Request.Form["ddlFormType"] != "")
-					//	{
-					//		model = RepDetailAppCode.getFilterRepDetailByStatusId(model, Request.Form["ddlStatus"]);
-					//	}
-					//	if (Request.Form["ddlCustomer"] != "")
-					//	{
-					//		model = RepDetailAppCode.getFilterRepDetailByCustomer(model, Request.Form["ddlCustomer"]);
-					//	}
-					//	if (Request.Form["ddlTheme"] != "")
-					//	{
-					//		model = RepDetailAppCode.getFilterRepDetailByActivity(model, Request.Form["ddlTheme"]);
-					//	}
-					//	if (Request.Form["ddlProductType"] != "")
-					//	{
-					//		model = RepDetailAppCode.getFilterRepDetailByProductType(model, Request.Form["ddlProductType"]);
-					//	}
-					//	if (Request.Form["ddlProductGrp"] != "")
-					//	{
-					//		model = RepDetailAppCode.getFilterRepDetailByProductGroup(model, Request.Form["ddlProductGrp"]);
-					//	}
+				if (string.IsNullOrEmpty(Request.Form["ddlProductGrp"]) != true )
+				{
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.prd_groupId == Request.Form["ddlProductGrp"]).ToList();
+				}
 
-					//	#endregion
-					//}
+				if (string.IsNullOrEmpty(Request.Form["ddlBudgetStatus"]) != true)
+				{
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.productBudgetStatusGroupId == Request.Form["ddlBudgetStatus"]).ToList();
+				}
 
-					model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(null, null, act_formType, act_createdDateStart, act_createdDateEnd);
-
+				if (UtilsAppCode.Session.User.isAdminOMT == false && UtilsAppCode.Session.User.isAdmin == false && UtilsAppCode.Session.User.isSuperAdmin == false)
+				{
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.actForm_CreatedByUserId == UtilsAppCode.Session.User.empId).ToList();
+				}
+				#endregion
 			}
 			catch (Exception ex)
 			{

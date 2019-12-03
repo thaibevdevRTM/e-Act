@@ -2,15 +2,24 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using static eActForm.Models.TB_Bud_Activity_Model;
+using static eActForm.Models.TB_Act_Customers_Model;
 //using static eActForm.Models.Budget_Approve_Detail_Model;
 
 namespace eActForm.Models
 {
+	public class SearchBudgetActivityModels
+	{
+		public List<Customers_Model> customerslist { get; set; }
+		public List<TB_Act_ProductType_Model> productTypelist { get; set; }
+		public List<TB_Act_ProductGroup_Model> productGroupList { get; set; }
+		public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
+		public List<ApproveModel.approveStatus> approveStatusList { get; set; }
+		public List<Budget_Activity_Model.Budget_Activity_Status_Att> budgetStstuslist { get; set; }
+		public string typeForm { get; set; }
+	}
+
 	public class Budget_Activity_Model
 	{
-
-
-		
 
 		public List<TB_Bud_Image_Model.BudImageModel> Budget_ImageList { get; set; }
 
@@ -27,6 +36,8 @@ namespace eActForm.Models
 
 		public Budget_Count_Wait_Approve_Att Budget_Count_Wait_Approve { get; set; }
 		public Budget_Activity_Last_Approve_Att Budget_Activity_Last_Approve { get; set; }
+
+
 
 		public class Budget_Invoice_history_Att
 		{
