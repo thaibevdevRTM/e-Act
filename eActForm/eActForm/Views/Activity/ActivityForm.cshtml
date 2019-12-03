@@ -78,7 +78,7 @@
                         }
                         else
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString(), autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString(), @readonly=true , autocomplete = "off" })
                         }
                     </div>
                 </div>
@@ -520,9 +520,9 @@
     }
 
     $(function () {
-        $("#txtdateDoc").datepicker({
-            format: 'dd-mm-yyyy'
-        });
+        //$("#txtdateDoc").datepicker({
+        //    format: 'dd-mm-yyyy'
+        //});
         $("#txtdateActivitySt").datepicker({
             format: 'dd-mm-yyyy'
         });
