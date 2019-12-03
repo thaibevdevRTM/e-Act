@@ -22,7 +22,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                //ExceptionManager.WriteError("getImage => " + ex.Message);
+                //ExceptionManager.WriteError("getImage => " + ex.Message); // background service use this
                 return new List<TB_Act_Image_Model.ImageModel>();
             }
         }

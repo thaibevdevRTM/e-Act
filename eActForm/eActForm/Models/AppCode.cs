@@ -226,6 +226,11 @@ namespace eActForm.Models
 
         }
 
+        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath)
+        {
+            return genPdfFile(GridHtml, doc, rootPath, HttpContext.Current.Server.MapPath("~"));
+        }
+
         public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath,string serverMapPath)
         {
             //GridHtml = GridHtml.Replace("\n", "");
@@ -255,34 +260,7 @@ namespace eActForm.Models
             return files;
         }
 
-        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath)
-        {
-            //GridHtml = GridHtml.Replace("\n", "");
-            ContentType xlsxContent = new ContentType("application/pdf");
-            MemoryStream msPreview = new MemoryStream();
-            byte[] PreviewBytes = new byte[0];
-            List<Attachment> files = new List<Attachment>();
 
-            msPreview = GetFileReportTomail_Preview(GridHtml, doc, HttpContext.Current.Server.MapPath("~"));
-            PreviewBytes = msPreview.ToArray();
-            //msPreview.Position = 0;
-            //save in directory
-            if (rootPath != "")
-            {
-                File.Delete(rootPath);
-                File.WriteAllBytes(rootPath, PreviewBytes);
-            }
-
-
-            if (PreviewBytes.Length != 0)
-            {
-                Attachment data_RepCashofSale = new Attachment(new MemoryStream(PreviewBytes), xlsxContent);
-                data_RepCashofSale.ContentDisposition.FileName = "eActForm.pdf";
-                files.Add(data_RepCashofSale);
-            }
-
-            return files;
-        }
 
         public static MemoryStream genPdfFileStream(string GridHtml, Document doc)
         {
