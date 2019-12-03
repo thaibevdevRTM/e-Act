@@ -2340,8 +2340,7 @@
     <Content Include="Views\Approve\getApproveComment.cshtml" />
     <Content Include="Views\actFormRepDetail\repPreviewForApprove.cshtml" />
     <Content Include="Views\BudgetViewer\regenBudgetApprovePdf.cshtml" />
-    <Content Include="Views\BudgetReport\RptBudgetActivityIndex.cshtml" />
-    <Content Include="Views\BudgetReport\searchRptBudgetActivity.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetActivityListView.cshtml" />
     <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
     <Content Include="Views\AdminUser\Index.cshtml" />
     <Content Include="Views\Documents\actDetail.cshtml" />
@@ -2373,6 +2372,7 @@
     <Content Include="Views\actFormRepDetail\repPreviewForApproveDetail.cshtml" />
     <Content Include="Views\Approve\previewActBudget.cshtml" />
     <Content Include="Views\Shared\_previewActFormBudget.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetActivityIndex.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
