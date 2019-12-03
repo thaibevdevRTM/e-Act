@@ -1988,6 +1988,7 @@
     <Content Include="images\al.jpeg" />
     <Content Include="images\blank.png" />
     <Content Include="images\checkmark.gif" />
+    <Content Include="images\favicon.ico" />
     <Content Include="images\icon_ref.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\logo-ss.png" />
