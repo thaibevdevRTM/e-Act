@@ -27,71 +27,207 @@
             <div><p class="warning"><h4>ตรวจสอบไม่พบ flow อนุมัติ <br /> กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน<br /> เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4607,4580</h4> </p></div>
         }
         else
-        {<table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
-                <tr>
+        {
 
-                    @foreach (var item in Model.approveFlowDetail)
-                    {
-                        if (item.isShowInDoc)
-                        {
-                            <td style="width:140px;">
-                                <div style="font-size:12.5px;">
-                                    @item.approveGroupName
-                                </div>
-                                <div style="font-size:12.5px;">
-                                    (@item.approveGroupNameEN)
-                                </div>
-                            </td>
-                        }
-                    }
-                </tr>
+            @Grid1();
+            var haveShowNameGreatherThanFive = 0;
+            foreach (var item in Model.approveFlowDetail)
+            {
+                if (item.isShowInDoc)
+                {
+                    haveShowNameGreatherThanFive += 1;
+                }
+            }
+            if (haveShowNameGreatherThanFive > 5)
+            {
+                @Grid2();
+            }
 
-                <tr>
-                    @{ var index = 0;}
-                    @foreach (var item in Model.approveFlowDetail)
-                    {
-                        if (item.isShowInDoc)
-                        {
-                            if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
-                            {
-                                <td>
-                                    <img style="text-align:center;" width="140" height="90" src="@Model.approveDetailLists[index].ImgName" />
-                                </td>
-                            }
-                            else
-                            {
-                                <td>
-                                    <div style="text-align:center;height:90px;"></div>
-                                </td>
-                            }
-                        }
-                        index++;
-                    }
-                </tr>
-
-                <tr>
-                    @foreach (var item in Model.approveFlowDetail)
-                    {
-                        if (item.isShowInDoc)
-                        {
-                            <td>
-                                <div style="text-align:center; margin-top:5px; font-size:12.5px;">@item.empFNameTH @item.empLNameTH</div>
-                            </td>
-                        }
-                    }
-                </tr>
-                <tr>
-                    @foreach (var item in Model.approveFlowDetail)
-                    {
-                        if (item.isShowInDoc)
-                        {
-                            <td>
-                                <div style="text-align:center; height:50px; font-size:12.5px;">@Html.Raw(item.empPositionTitleTH)</div>
-                            </td>
-                        }
-                    }
-                </tr>
-            </table>
         }
     }
 </div>
+
+
+@helper Grid1()
+{
+    
+    <table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
+        <tr>
+            @{ int count = 0;
+                string yu = "คุณ";}
+            @foreach (var item in Model.approveFlowDetail)
+            {
+                if (count < 6)
+                {
+                    if (item.isShowInDoc)
+                    {
+                        <td style="width:140px;">
+                            <div style="font-size:12.5px;">
+                                @item.approveGroupName
+                            </div>
+                            <div style="font-size:12.5px;">
+                                (@item.approveGroupNameEN)
+                            </div>
+                        </td>
+                    }
+                }
+                count++;
+            }
+        </tr>
+
+        <tr>
+            @{ var index = 0;
+                count = 0;}
+            @foreach (var item in Model.approveFlowDetail)
+            {
+                if (count < 6)
+                {
+                    if (item.isShowInDoc)
+                    {
+                        if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
+                        {
+                            <td height="85">
+                                <img style="text-align:center;" width="135" height="80" src="@Model.approveDetailLists[index].ImgName" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <div style="text-align:center;height:80px;"></div>
+                            </td>
+                        }
+                    }
+                }
+                count++;
+                index++;
+            }
+        </tr>
+
+        <tr>
+            @{ count = 0;}
+            @foreach (var item in Model.approveFlowDetail)
+            {
+                if (count < 6)
+                {
+                    if (item.isShowInDoc)
+                    {
+                        <td>
+                            <div style="text-align:center; margin-top:5px; font-size:12.5px;">@yu@item.empFNameTH @item.empLNameTH</div>
+                        </td>
+                    }
+                }
+                count++;
+            }
+        </tr>
+        <tr>
+            @{ count = 0;}
+            @foreach (var item in Model.approveFlowDetail)
+            {
+                if (count < 6)
+                {
+                    if (item.isShowInDoc)
+                    {
+                        <td>
+                            <div style="text-align:center; height:50px; font-size:12.5px;">@Html.Raw(item.empPositionTitleTH)</div>
+                        </td>
+                    }
+                }
+                count++;
+            }
+        </tr>
+    </table>
+}
+
+
+@helper Grid2()
+{
+    <table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
+        <tr>
+            @{ int countisShowInDoc = 0;
+                string yu = "คุณ";}
+            @foreach (var item in Model.approveFlowDetail)
+            {
+                if (item.isShowInDoc)
+                {
+                    countisShowInDoc++;
+                    if (countisShowInDoc >= 6)
+                    {
+                        <td style="width:140px;">
+                            <div style="font-size:12.5px;">
+                                @item.approveGroupName
+                            </div>
+                            <div style="font-size:12.5px;">
+                                (@item.approveGroupNameEN)
+                            </div>
+                        </td>                        
+                    }                    
+                }
+            }
+        </tr>
+
+        <tr>
+            @{ //var index = 6;
+                countisShowInDoc = 0;}
+            @foreach (var item in Model.approveFlowDetail)
+            {
+                if (item.isShowInDoc)
+                {
+                    countisShowInDoc++;
+                    if (countisShowInDoc >= 6)
+                    {
+                        if (Model.approveDetailLists != null && Model.approveDetailLists.Count > countisShowInDoc && Model.approveDetailLists[countisShowInDoc].empId == item.empId && Model.approveDetailLists[countisShowInDoc].statusId == "3")
+                        {
+                            <td height="85">
+                                <img style="text-align:center;" width="135" height="80" src="@Model.approveDetailLists[countisShowInDoc].ImgName" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <div style="text-align:center;height:80px;"></div>
+                            </td>
+                        }
+                    }                    
+                }
+
+                //index++;
+            }
+        </tr>
+
+        <tr>
+            @{ countisShowInDoc = 0;}
+            @foreach (var item in Model.approveFlowDetail)
+            {
+                if (item.isShowInDoc)
+                {
+                    countisShowInDoc++;
+                    if (countisShowInDoc >= 6)
+                    {
+                        <td>
+                            <div style="text-align:center; margin-top:5px; font-size:12.5px;">@yu@item.empFNameTH @item.empLNameTH</div>
+                        </td>
+                    }
+                    
+                }
+
+            }
+        </tr>
+        <tr>
+            @{ countisShowInDoc = 0;}
+            @foreach (var item in Model.approveFlowDetail)
+            {
+                if (item.isShowInDoc)
+                {
+                    countisShowInDoc++;
+                    if (countisShowInDoc >= 6)
+                    {
+                        <td>
+                            <div style="text-align:center; height:50px; font-size:12.5px;">@Html.Raw(item.empPositionTitleTH)</div>
+                        </td>
+                    }
+                    
+                }
+            }
+        </tr>
+    </table>
+}

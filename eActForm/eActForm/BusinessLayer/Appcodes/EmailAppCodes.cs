@@ -12,6 +12,7 @@ using eActForm.Controllers;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 
 namespace eActForm.BusinessLayer
 {
@@ -98,7 +99,13 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static void sendReject(string actFormId, AppCode.ApproveType emailType)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actFormId"></param>
+        /// <param name="emailType"></param>
+        /// <param name="currentEmpId"> fixed support API Background Service </param>
+        public static void sendReject(string actFormId, AppCode.ApproveType emailType ,string currentEmpId)
         {
             try
             {
@@ -121,7 +128,7 @@ namespace eActForm.BusinessLayer
                     }
                     #endregion
 
-                    var empUser = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList(); // get current user
+                    var empUser = models.approveDetailLists.Where(r => r.empId == currentEmpId).ToList(); // get current user
                     string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId);
                     string strBody = string.Format(ConfigurationManager.AppSettings["emailRejectBody"]
                         , models.approveModel.actNo
@@ -309,22 +316,17 @@ namespace eActForm.BusinessLayer
             mailCC = mailCC != "" ? "," + mailCC : "";
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
             mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailCC;
-            //pathFile[0] = emailType == AppCode.ApproveType.Activity_Form ?
-
-            //    HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId))
-            //    : HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
-
 
             switch (emailType)
             {
                 case AppCode.ApproveType.Activity_Form:
-                    pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
+                    pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
                     break;
                 case AppCode.ApproveType.Report_Detail:
-                    pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
+                    pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
                     break;
                 case AppCode.ApproveType.Report_Summary:
-                    pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], actFormId));
+                    pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], actFormId));
                     break;
             }
 
@@ -335,23 +337,27 @@ namespace eActForm.BusinessLayer
                 int i = 1;
                 foreach (var item in getImageModel.tbActImageList)
                 {
-                    if(UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
+                    //=== use case this background service (bg service cannot get data session)===
+                    string companyId = ""; 
+                    try
                     {
-                        pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
+                        companyId = UtilsAppCode.Session.User.empCompanyId;
+                    }
+                    catch {
+                        companyId = QueryGetActivityById.getActivityById(actFormId)[0].companyId;
+                    }
+                    // ==================================================
+                    if(companyId == ConfigurationManager.AppSettings["companyId_TBM"])
+                    {
+                        pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
                     }
                     else
                     {
                         if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
                         {
-                            pathFile[i] = HttpContext.Current.Server.MapPath(item._fileName);
+                            pathFile[i] = HostingEnvironment.MapPath(item._fileName);
                         }
                     }
-
-
-                    //else if (item.extension == ".pdf")
-                    //{
-                    //    pathFile[i] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-                    //}
                     i++;
                 }
             }

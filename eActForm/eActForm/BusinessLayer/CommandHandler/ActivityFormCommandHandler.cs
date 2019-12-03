@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace eActForm.BusinessLayer
                 model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                 model.activityFormModel.updatedDate = DateTime.Now;
-                model.activityFormModel.companyId = UtilsAppCode.Session.User.empCompanyId;
+                model.activityFormModel.companyId = BaseAppCodes.getCompanyIdByactivityType(model.activityFormModel.typeForm);
                 rtn = insertActivityForm(model.activityFormModel);
                 rtnIO = insertCliamIO(model.activityFormModel);
 
