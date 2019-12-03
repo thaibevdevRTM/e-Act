@@ -63,6 +63,60 @@ namespace eActForm.Models
             return p == "" || p == null || p == "0" || p == "0.00" || p == "0.000" || p == "0.0000" || p == "0.00000" ? "0" : p;
         }
 
+        public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc,string serverMapPath)
+        {
+            MemoryStream ms = new MemoryStream();
+            try
+            {
+
+                UserControl LoadControl = new UserControl();
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter myWriter = new HtmlTextWriter(sw);
+                LoadControl.RenderControl(myWriter);
+                StringReader sr = new StringReader(sw.ToString());
+
+
+
+                StringBuilder GridBuilder = new StringBuilder();
+                GridBuilder.Append("<html>");
+                GridBuilder.Append("<style>");
+                GridBuilder.Append(".fontt{font-family:TH SarabunPSK;}");
+                GridBuilder.Append("</style>");
+                GridBuilder.Append("<body class=\"fontt\">");
+                GridBuilder.Append(GridHtml);
+                GridBuilder.Append("</body>");
+                GridBuilder.Append("</html>");
+
+                GridBuilder.Append(sw.ToString());
+
+
+                string path = serverMapPath + "\\Content\\" + "tablethin.css";
+                string readText = System.IO.File.ReadAllText(path);
+
+                //Document pdfDoc = new Document(pageSize, 25, 25, 10, 10);
+                using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
+                {
+                    pdfDoc.Open();
+                    using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
+                    {
+
+                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"))))
+                        {
+                            XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
+                        }
+                        pdfDoc.Close();
+                    }
+                }
+                return ms;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview");
+                ms.Dispose();
+                return ms;
+            }
+        }
+
         public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc)
         {
             MemoryStream ms = new MemoryStream();
@@ -80,7 +134,7 @@ namespace eActForm.Models
                 StringBuilder GridBuilder = new StringBuilder();
                 GridBuilder.Append("<html>");
                 GridBuilder.Append("<style>");
-                GridBuilder.Append(".fontt{font-family:Angsana New;}");
+                GridBuilder.Append(".fontt{font-family:TH SarabunPSK;}");
                 GridBuilder.Append("</style>");
                 GridBuilder.Append("<body class=\"fontt\">");
                 GridBuilder.Append(GridHtml);
@@ -172,8 +226,12 @@ namespace eActForm.Models
 
         }
 
-
         public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath)
+        {
+            return genPdfFile(GridHtml, doc, rootPath, HttpContext.Current.Server.MapPath("~"));
+        }
+
+        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath,string serverMapPath)
         {
             //GridHtml = GridHtml.Replace("\n", "");
             ContentType xlsxContent = new ContentType("application/pdf");
@@ -181,7 +239,7 @@ namespace eActForm.Models
             byte[] PreviewBytes = new byte[0];
             List<Attachment> files = new List<Attachment>();
 
-            msPreview = GetFileReportTomail_Preview(GridHtml, doc);
+            msPreview = GetFileReportTomail_Preview(GridHtml, doc, serverMapPath);
             PreviewBytes = msPreview.ToArray();
             //msPreview.Position = 0;
             //save in directory
@@ -201,6 +259,8 @@ namespace eActForm.Models
 
             return files;
         }
+
+
 
         public static MemoryStream genPdfFileStream(string GridHtml, Document doc)
         {

@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.ApplicationBlocks.Data;
 using eActForm.Models;
 using System.Configuration;
+
 namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
+      
+
         public static void setCountWatingApprove()
         {
             try
@@ -24,6 +26,12 @@ namespace eActForm.BusinessLayer
                         UtilsAppCode.Session.User.countWatingActForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
                         UtilsAppCode.Session.User.counteatingRepDetail = ds.Tables[0].Rows[0]["repFormId"].ToString();
                         UtilsAppCode.Session.User.counteatingSummaryDetail = ds.Tables[0].Rows[0]["sumFormId"].ToString();
+                    }
+                    else
+                    {
+                        UtilsAppCode.Session.User.countWatingActForm = "0";
+                        UtilsAppCode.Session.User.counteatingRepDetail = "0";
+                        UtilsAppCode.Session.User.counteatingSummaryDetail = "0";
                     }
                 }
             }
