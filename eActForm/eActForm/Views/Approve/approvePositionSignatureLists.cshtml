@@ -53,7 +53,7 @@
 
         <table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
             <tr>
-                @{ int countisShowInDoc = 0; 
+                @{ int countisShowInDoc = 0;
                     string yu = "คุณ";}
                 @foreach (var item in Model.approveFlowDetail)
                 {
@@ -76,7 +76,7 @@
             </tr>
 
             <tr>
-                @{  int index = 0;
+                @{ int index = 0;
                     countisShowInDoc = 0;}
                 @foreach (var item in Model.approveFlowDetail)
                 {
@@ -85,13 +85,33 @@
                         countisShowInDoc++;
                         if (countisShowInDoc <= 5)
                         {
-                            if (Model.approveDetailLists != null && Model.approveDetailLists.Count > countisShowInDoc && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
+                            @*if (Model.approveDetailLists != null && Model.approveDetailLists.Count > countisShowInDoc && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
+                                {
+                                    <td height="85">
+                                        <img style="text-align:center;" width="135" height="80" src="@Model.approveDetailLists[index].ImgName" />
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <div style="text-align:center;height:80px;"></div>
+                                    </td>
+                                }*@
+                            int writeoneHit = 0;
+                            foreach (var itemFlowByDoc in Model.approveDetailLists)
                             {
-                                <td height="85">
-                                    <img style="text-align:center;" width="135" height="80" src="@Model.approveDetailLists[index].ImgName" />
-                                </td>
+                                if (writeoneHit == 0)
+                                {
+                                    if (itemFlowByDoc.empId == item.empId && itemFlowByDoc.statusId == "3")
+                                    {
+                                        <td height="85">
+                                            <img style="text-align:center;" width="135" height="80" src="@itemFlowByDoc.ImgName" />
+                                        </td>
+                                        writeoneHit += 1;
+                                    }
+                                }
                             }
-                            else
+                            if (writeoneHit == 0)
                             {
                                 <td>
                                     <div style="text-align:center;height:80px;"></div>
@@ -147,7 +167,7 @@
     {
         <table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
             <tr>
-                @{ int countisShowInDoc = 0; 
+                @{ int countisShowInDoc = 0;
                     string yu = "คุณ";}
                 @foreach (var item in Model.approveFlowDetail)
                 {
@@ -170,7 +190,7 @@
             </tr>
 
             <tr>
-                @{  int index = 0;
+                @{ int index = 0;
                     countisShowInDoc = 0;}
                 @foreach (var item in Model.approveFlowDetail)
                 {
@@ -179,13 +199,33 @@
                         countisShowInDoc++;
                         if (countisShowInDoc >= 6)
                         {
-                            if (Model.approveDetailLists != null && Model.approveDetailLists.Count > countisShowInDoc && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
+                            @*if (Model.approveDetailLists != null && Model.approveDetailLists.Count > countisShowInDoc && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3")
+                                {
+                                    <td height="85">
+                                        <img style="text-align:center;" width="135" height="80" src="@Model.approveDetailLists[index].ImgName" />
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <div style="text-align:center;height:80px;"></div>
+                                    </td>
+                                }*@
+                            int writeoneHit = 0;
+                            foreach (var itemFlowByDoc in Model.approveDetailLists)
                             {
-                                <td height="85">
-                                    <img style="text-align:center;" width="135" height="80" src="@Model.approveDetailLists[index].ImgName" />
-                                </td>
+                                if (writeoneHit == 0)
+                                {
+                                    if (itemFlowByDoc.empId == item.empId && itemFlowByDoc.statusId == "3")
+                                    {
+                                        <td height="85">
+                                            <img style="text-align:center;" width="135" height="80" src="@itemFlowByDoc.ImgName" />
+                                        </td>
+                                        writeoneHit += 1;
+                                    }
+                                }
                             }
-                            else
+                            if (writeoneHit == 0)
                             {
                                 <td>
                                     <div style="text-align:center;height:80px;"></div>
