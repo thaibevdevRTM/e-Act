@@ -1029,13 +1029,13 @@
                     }).done(function (response) {
                         $("#WaitDialog").hide();
                         if (response.Success) {
-                            if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
+                            if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()') {
                                 var url = '@Url.Action("ActivityForm", "activity")';
-                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.OMT.ToString()';
+                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.MT.ToString()';
                             }
                             else {
-                                  var url = '@Url.Action("ActivityForm", "activity")';
-                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.MT.ToString()';
+                                var url = '@Url.Action("ActivityForm", "activity")';
+                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.OMT.ToString()';
                             }
                         } else {
                             doMsgFail(response.Message);

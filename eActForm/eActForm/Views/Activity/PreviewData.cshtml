@@ -71,11 +71,11 @@
                         dataType: "json",
                         type: 'POST',
                     }).done(function (response) {
-                        if (response.Message == 'MT') {
+                        if (response.Message == '@Activity_Model.activityType.MT.ToString()') {
                             var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.MT.ToString() }, null)';
                             window.location.href = url;
                         }
-                        else{
+                        else {
                             var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.OMT.ToString() }, null)';
                             window.location.href = url;
                         }
