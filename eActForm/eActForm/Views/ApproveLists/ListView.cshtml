@@ -10,21 +10,25 @@
         <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" href="#"></a>คือ Approve
     </div>
     <div class="col-md-12 col-xs-12">
-        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
-        {
-            <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" style="width:150px; height:35px" onclick="submitApprove();"> Approve </a>
-        }
+
 
         <table id="datatable" class="table table-striped table-hover">
             <thead>
                 <tr style="background-color:#2B5D95;color:#ffffff;">
-                    <th width="20">
-                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
-                        {
+                    @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
+                    {
+                        <th width="20">
                             <input type="checkbox" id="chk_All" class="icheckbox_flat-green" onchange="setFlagAll(this);" name="table_records">
-                        }
                         </th>
-                    <th></th>
+
+                        <th>
+                            <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" style="width:150px; height:35px" onclick="submitApprove();"> Approve </a>
+                        </th>
+                    }
+                    else
+                    {
+                        <th></th>
+                    }
                     <th>Status</th>
                     <th>Doc.Date</th>
                     <th>Act.No</th>
@@ -39,12 +43,14 @@
                 @foreach (var item in Model.actLists)
                 {
                     <tr class="gradeX">
-                        <td class="a-center ">
-                            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
-                            {
+                        @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
+                        {
+                            <td class="a-center ">
+
                                 <input type="checkbox" id="chk_@item.id" class="icheckbox_flat-green" value="@item.id" name="chk_approve">
-                            }
+
                             </td>
+                        }
                         <td>
                             @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-search", target = "_blank" })
                             <a onclick="callApproveList('@item.id');">
@@ -108,16 +114,43 @@
 
     function submitApprove() {
         var favorite = [];
-        var valChk = [];
         $.each($("input[name='chk_approve']:checked"), function () {
             favorite.push($(this).val());
             console.log(favorite[favorite.length-1]);
-            callPreviewApprove(favorite[favorite.length - 1]);
-        }).done(function () {
-            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
-        });;
+            insertApprove(favorite[favorite.length - 1]);
+        }).promise().done(function () {
+           bootbox.confirm({
+                message: "ดำเนินการเรียบร้อยครับ",
+                buttons: {
+                    confirm: {
+                        label: 'OK',
+                        className: 'btn-success'
+                    }
+                },
+                callback: function (result) {
+
+                    var url = '@Url.Action("Index", "ApproveLists")';
+                    window.location.replace(url);// = url;
+
+                }
+            });
+        });
     }
-   
+
+    function insertApprove(actId) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("insertApproveList", "ApproveLists")',
+            data: {
+                actId: actId,
+                status: '3',
+                approveType:'@AppCode.ApproveType.Activity_Form',
+            }
+        }).done(function (result) {
+            callPreviewApprove(actId)
+        });
+    }
+
     function callPreviewApprove(actId) {
         $.ajax({
             type: 'POST',
@@ -131,18 +164,19 @@
             sentApprove_GenPdf(actId);
         });
     }
+
     function sentApprove_GenPdf(actId) {
         $.ajax({
             url: '@Url.Action("doApprove", "ApiApprove")',
             data: {
-                GridHtml: $("#dataFromPDF").val(),
+                GridHtml: $("#dataFromAct").val(),
                 statusId: '3',
                 activityId: actId,
             },
             dataType: "json",
             type: 'POST',
         }).done(function (response) {
-            
+
         });
     }
 
