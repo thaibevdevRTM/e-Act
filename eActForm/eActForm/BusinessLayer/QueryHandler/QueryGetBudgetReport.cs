@@ -41,15 +41,28 @@ namespace eActForm.BusinessLayer.QueryHandler
 								  act_activityName = d["act_activityName"].ToString(),
 								  brandName = d["brandName"].ToString(),
 								  Theme = d["Theme"].ToString(),
+
+								  cus_id = d["cus_id"].ToString(),
+								  cus_regionId = d["cus_regionId"].ToString(),
 								  cus_cusNameTH = d["cus_cusNameTH"].ToString(),
+								  cus_cusNameEN = d["cus_cusNameEN"].ToString(),
+
+								  prd_typeId = d["prd_typeId"].ToString(),
+								  prd_groupId = d["prd_groupId"].ToString(),
 								  prd_productDetail = d["prd_productDetail"].ToString(),
 								  prd_productDetail50 = d["prd_productDetail50"].ToString(),
 								  prd_productDetailCount = int.Parse(d["prd_productDetailCount"].ToString()),
+
 								  activity_Period = d["activity_Period"].ToString(),
 								  activity_costPeriod = d["activity_costPeriod"].ToString(),
 								  actCreatedDate = d["actCreatedDate"].ToString(),
+
 								  activityTotalBath = d["activityTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["activityTotalBath"].ToString()),
+								  activityInvoiceTotalBath = d["activityInvoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["activityInvoiceTotalBath"].ToString()),
 								  activityBalanceBath = d["activityBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["activityBalanceBath"].ToString()),
+
+								  productBudgetStatusGroupId = d["productBudgetStatusGroupId"].ToString(),
+								  ProductBudgetStatusId = d["ProductBudgetStatusId"].ToString(),
 								  productBudgetStatusNameTH = d["productBudgetStatusNameTH"].ToString(),
 								  invoiceCreatedDate = d["invoiceCreatedDate"].ToString(),
 								  act_status = d["act_status"].ToString(),
