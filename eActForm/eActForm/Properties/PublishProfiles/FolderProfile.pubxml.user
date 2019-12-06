@@ -6246,6 +6246,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/BudgetReport/reportBudgetActivityListView.cshtml">
       <publishTime>12/04/2019 13:47:01</publishTime>
     </File>
+    <File Include="Views/BudgetReport/reportBudgetActivityIndex.cshtml">
+      <publishTime>12/03/2019 14:46:27</publishTime>
+    </File>
+    <File Include="Views/BudgetReport/reportBudgetActivityListView.cshtml">
+      <publishTime>12/03/2019 14:46:27</publishTime>
+    </File>
     <File Include="Views/BudgetReport/RptBudgetActivityIndex.cshtml">
       <publishTime>11/12/2019 14:57:42</publishTime>
     </File>
