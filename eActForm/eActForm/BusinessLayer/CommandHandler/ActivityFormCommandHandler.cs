@@ -104,7 +104,12 @@ namespace eActForm.BusinessLayer
                         costThemeDetail.unit = item.unit;
                         costThemeDetail.compensate = item.compensate;
                         costThemeDetail.LE = item.LE;
-                        costThemeDetail.IO = item.IO;
+
+                        DateTime getDoc = DateTime.Parse(model.activityFormModel.activityPeriodSt.ToString());
+                        string getYear = getDoc.Month > 9 ? getDoc.AddYears(1).ToString("yy") : getDoc.Year.ToString().Substring(2);
+                        costThemeDetail.IO = "56S0" + getYear + ActFormAppCode.getDigitGroup(item.activityTypeId) + ActFormAppCode.getDigitRunnigGroup(item.productId);
+
+                        //costThemeDetail.IO = item.IO;
                         costThemeDetail.rowNo = insertIndex;
                         costThemeDetail.delFlag = item.delFlag;
                         costThemeDetail.isShowGroup = item.isShowGroup;

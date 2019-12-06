@@ -22,7 +22,7 @@
                         </th>
 
                         <th>
-                            <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" style="width:150px; height:35px" onclick="submitApprove();"> Approve </a>
+                            <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" style="width:100px; height:25px; margin-bottom:1px" onclick="submitApprove();"> Approve </a>
                         </th>
                     }
                     else
@@ -114,28 +114,48 @@
 
     function submitApprove() {
         var favorite = [];
-        $.each($("input[name='chk_approve']:checked"), function () {
-            favorite.push($(this).val());
-            console.log(favorite[favorite.length-1]);
-            insertApprove(favorite[favorite.length - 1]);
-        }).promise().done(function () {
-           bootbox.confirm({
-                message: "ดำเนินการเรียบร้อยครับ",
-                buttons: {
-                    confirm: {
-                        label: 'OK',
-                        className: 'btn-success'
+        var countDoc = document.querySelectorAll("input[name='chk_approve']:checked").length
+        console.log(countDoc);
+
+        if (countDoc > 0) {
+            $.each($("input[name='chk_approve']:checked"), function () {
+
+                favorite.push($(this).val());
+                insertApprove(favorite[favorite.length - 1]);
+
+            }).promise().done(function () {
+                bootbox.confirm({
+                    title: "",
+                    message: "ยืนยันการอนุมัติเอกสาร จำนวน : " + countDoc + " ฉบับ",
+                    buttons: {
+                        cancel: {
+                            label: '<i class="fa fa-times"></i> Cancel'
+                        },
+                        confirm: {
+                            label: '<i class="fa fa-check"></i> Confirm',
+                            className: 'btn-success'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            bootbox.alert({
+                                message: "<div class= 'row' > <div class='text-center'><img width='150px' src='../images/checkmark.gif' class='text-center' /><br />อนุมัติเรียบร้อย</div></div>",
+                                callback: function () {
+                                    var url = '@Url.Action("Index", "ApproveLists")';
+                                    window.location.replace(url);
+                                }
+                            })
+                        }
+     
                     }
-                },
-                callback: function (result) {
-
-                    var url = '@Url.Action("Index", "ApproveLists")';
-                    window.location.replace(url);// = url;
-
-                }
+                });
             });
-        });
+        }
+        else {
+            doAlert('กรุณาเลือกรายการ อนุมัติ');
+        }     
     }
+
 
     function insertApprove(actId) {
         $.ajax({

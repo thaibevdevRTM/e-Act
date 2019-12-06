@@ -74,7 +74,7 @@
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @if (Model.activityFormModel.documentDate.ToString() != "")
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" , autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" , @readonly = true , autocomplete = "off" })
                         }
                         else
                         {
