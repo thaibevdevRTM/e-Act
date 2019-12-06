@@ -15,12 +15,12 @@
 
 
 
-         
+
         @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
         {
             @RenderPage("~/Views/Activity/ShowImage.cshtml")
         }
-        
+
         <div class="modal-footer">
             <div>
                 <p class="d-flex justify-content-center">
@@ -53,14 +53,14 @@
                     var htmlstr = "";
                     if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
                     {
-                        htmlstr = $("#Grid1").html() + $("#GridImg").html();
+                        htmlstr = $("#divForm").html() + $("#GridImg").html();
                     }
                     else
                     {
-                        htmlstr = $("#Grid1").html();
+                        htmlstr = $("#divForm").html();
                     }
 
-                    bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
+                    doLoading("Loading....");
                     $.ajax({
                     url: '@Url.Action("submitPreview", "Activity")',
                         data: {
@@ -71,18 +71,16 @@
                         dataType: "json",
                         type: 'POST',
                     }).done(function (response) {
-                        if (response.Message == 'MT') {
+                        if (response.Message == '@Activity_Model.activityType.MT.ToString()') {
                             var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.MT.ToString() }, null)';
                             window.location.href = url;
                         }
-                        else{
+                        else {
                             var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.OMT.ToString() }, null)';
                             window.location.href = url;
                         }
-
-
                     });
-                    }
+                }
             }
 
         });

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Configuration;
 using eActForm.Models;
 using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -41,7 +42,7 @@ namespace eActForm.Controllers
 
 
 
-        public ActionResult myDoc(string actId, string TypeForm)
+        public ActionResult myDoc(string actId , string typeForm)
         {
             Activity_Model.actForms model;
             if (TempData["SearchDataModel"] != null)
@@ -51,17 +52,8 @@ namespace eActForm.Controllers
             else
             {
                 model = new Activity_Model.actForms();
-
-                if (TypeForm == Activity_Model.activityType.MT.ToString())
-                {
-                    model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.MT.ToString());
-                    model.typeForm = Activity_Model.activityType.MT.ToString();
-                }
-                else
-                {
-                    model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.OMT.ToString());
-                    model.typeForm = Activity_Model.activityType.OMT.ToString();
-                }
+                model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-7), DateTime.Now, typeForm);
+                model.typeForm = typeForm;
 
                 if (actId != null && actId != "")
                 {
@@ -107,32 +99,32 @@ namespace eActForm.Controllers
             };
 
 
-            if (Request.Form["txtActivityNo"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["txtActivityNo"]))
             {
                 model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
             }
 
-            if (Request.Form["ddlStatus"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlStatus"]))
             {
                 model.actLists = model.actLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
             }
 
-            if (Request.Form["ddlCustomer"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlCustomer"]))
             {
                 model.actLists = model.actLists.Where(r => r.customerId == Request.Form["ddlCustomer"]).ToList();
             }
 
-            if (Request.Form["ddlTheme"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlTheme"]))
             {
                 model.actLists = model.actLists.Where(r => r.theme == Request.Form["ddlTheme"]).ToList();
             }
 
-            if (Request.Form["ddlProductType"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlProductType"]))
             {
                 model.actLists = model.actLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
             }
 
-            if (Request.Form["ddlProductGrp"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlProductGrp"]))
             {
                 model.actLists = model.actLists.Where(r => r.productGroupid == Request.Form["ddlProductGrp"]).ToList();
             }

@@ -12,6 +12,7 @@ using iTextSharp.text;
 using WebLibrary;
 using static eActForm.Models.ReportActivityBudgetModels;
 using Microsoft.VisualBasic;
+using static eActForm.Models.RepDetailModel;
 
 namespace eActForm.Controllers
 {
@@ -53,7 +54,7 @@ namespace eActForm.Controllers
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
                 model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"], typeForm);
                 model.typeForm = typeForm;
-
+                model.dateReport = Request.Form["reportDate"];
 
                 if (Request.Form["txtActivityNo"] != "")
                 {
@@ -121,14 +122,14 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return RedirectToAction("repChooseView", new { startDate = Request.Form["startDate"] });
+            return RedirectToAction("repChooseView", new { startDate = Request.Form["reportDate"] });
         }
         public ActionResult repChooseView(string startDate)
         {
             RepDetailModel.actFormRepDetails model = null;
             try
             {
-                ViewBag.startDate = startDate;
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM-yyyy", null).ToString("MMM yyyy");
                 model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
             }
             catch (Exception ex)
@@ -145,16 +146,29 @@ namespace eActForm.Controllers
             try
             {
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
-                model.actFormRepDetailLists
-                    .Where(r => r.id == actId)
-                    .Select(r => r.delFlag = !delFlag
-                    ).ToList();
+                if (actId == "All")
+                {
+                    model.actFormRepDetailGroupLists.Select(r => r.delFlag = !delFlag
+                        ).ToList();
 
-                model.actFormRepDetailGroupLists
-                    .Where(r => r.id == actId)
-                    .Select(r => r.delFlag = !delFlag
-                    ).ToList();
-                result.Success = true;
+                    model.actFormRepDetailLists.Select(r => r.delFlag = !delFlag
+                        ).ToList();
+                    result.Code = 001;
+                }
+                else
+                {
+                    model.actFormRepDetailGroupLists
+                        .Where(r => r.id == actId)
+                        .Select(r => r.delFlag = !delFlag
+                        ).ToList();
+
+                    model.actFormRepDetailLists
+                        .Where(r => r.id == actId)
+                        .Select(r => r.delFlag = !delFlag
+                        ).ToList();
+                }
+                result.Success = delFlag;
+
             }
             catch (Exception ex)
             {
@@ -171,7 +185,24 @@ namespace eActForm.Controllers
             return PartialView(flowModel);
         }
 
-        public ActionResult repListView(string startDate)
+        public ActionResult repListView()
+        {
+            RepDetailModel.actFormRepDetails model = null;
+            try
+            {
+                model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                ViewBag.MouthText = DateTime.ParseExact(model.dateReport, "MM-yyyy", null).ToString("MMM yyyy");
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
+
+
+        public ActionResult repPreviewForApproveDetail(string startDate)
         {
             RepDetailModel.actFormRepDetails model = null;
             try
@@ -292,6 +323,31 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult reGenReportDetail(string gridHtml, string actRepDetailId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                gridHtml = gridHtml.Replace("<br>", "<br/>");
+                RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
+
+
+                RepDetailAppCode.reGenPDFReportDetail(actRepDetailId, gridHtml);
+                Session["ActFormRepDetail"] = null;
+                result.Success = true;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return Json(result);
+        }
         /// <summary>
         /// for approve page
         /// </summary>
@@ -311,7 +367,7 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return RedirectToAction("repPreviewForApprove", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
+            return RedirectToAction("repPreviewForApproveDetail", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
         }
 
         /// <summary>
@@ -349,6 +405,8 @@ namespace eActForm.Controllers
 
             return Json(result);
         }
+
+
 
     }
 }

@@ -13,7 +13,7 @@
 }
 
 <div class="modal-body">
-    <div id="Grid1" style="width:97%; margin-left:20px;">
+    <div id="divForm" style="width:97%; margin-left:20px;">
         <style>
             .cssborderbottom {
                 border-bottom-width: 1px;
@@ -481,7 +481,7 @@
         <div style="margin-bottom:10px;">
             @if (Model.activityFormModel != null)
             {
-                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
+                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id,subId = ConfigurationManager.AppSettings["subjectActivityFormId"] })
             }
         </div>
 

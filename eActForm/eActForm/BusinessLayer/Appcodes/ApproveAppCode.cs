@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.ApplicationBlocks.Data;
 using eActForm.Models;
 using System.Configuration;
+
 namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
+      
+
         public static void setCountWatingApprove()
         {
             try
@@ -24,6 +26,12 @@ namespace eActForm.BusinessLayer
                         UtilsAppCode.Session.User.countWatingActForm = ds.Tables[0].Rows[0]["actFormId"].ToString();
                         UtilsAppCode.Session.User.counteatingRepDetail = ds.Tables[0].Rows[0]["repFormId"].ToString();
                         UtilsAppCode.Session.User.counteatingSummaryDetail = ds.Tables[0].Rows[0]["sumFormId"].ToString();
+                    }
+                    else
+                    {
+                        UtilsAppCode.Session.User.countWatingActForm = "0";
+                        UtilsAppCode.Session.User.counteatingRepDetail = "0";
+                        UtilsAppCode.Session.User.counteatingSummaryDetail = "0";
                     }
                 }
             }
@@ -151,17 +159,18 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                         });
 
-                if (approveType == AppCode.ApproveType.Activity_Form.ToString())
-                {
-                    rtn = updateActFormStatus(statusId, actFormId);
-                }
-                else if (approveType == AppCode.ApproveType.Report_Detail.ToString())
+               if (approveType == AppCode.ApproveType.Report_Detail.ToString())
                 {
                     rtn = updateActRepDetailStatus(statusId, actFormId);
                 }
                 else if (approveType == AppCode.ApproveType.Report_Summary.ToString())
                 {
                     rtn = updateSummaryDetailStatus(statusId, actFormId);
+                }
+                else
+                {
+                    // default Activity Form
+                    rtn = updateActFormStatus(statusId, actFormId);
                 }
 
                 return rtn;
@@ -344,6 +353,7 @@ namespace eActForm.BusinessLayer
                             ,new SqlParameter("@statusId","")
                             ,new SqlParameter("@isSendEmail",false)
                             ,new SqlParameter("@remark","")
+                            ,new SqlParameter("@isApproved",m.isApproved)
                             ,new SqlParameter("@delFlag",false)
                             ,new SqlParameter("@createdDate",DateTime.Now)
                             ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
@@ -382,6 +392,7 @@ namespace eActForm.BusinessLayer
                                                  remark = dr["remark"].ToString(),
                                                  signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
                                                  ImgName = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
+                                                 isApprove = (bool)dr["isApproved"],
                                                  delFlag = (bool)dr["delFlag"],
                                                  createdDate = (DateTime?)dr["createdDate"],
                                                  createdByUserId = dr["createdByUserId"].ToString(),

@@ -1,4 +1,6 @@
-﻿@model eActForm.Models.SearchActivityModels
+﻿@using eActForm.BusinessLayer;
+
+@model eActForm.Models.SearchActivityModels
 @{
     ViewBag.Title = "ApproveList";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -32,6 +34,10 @@
 
 
 <script type="text/javascript">
+    
+    $(document).ready(function () {
+        $('#txtApproveCount').val('@UtilsAppCode.Session.User.countWatingActForm')
+    })
 
     function beginQuery() {
         if ($("#ddlStatus").val() == "" && $("#txtActivityNo").val() == "") {

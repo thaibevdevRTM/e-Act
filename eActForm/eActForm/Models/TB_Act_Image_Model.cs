@@ -6,23 +6,27 @@ using System.Web;
 
 namespace eActForm.Models
 {
-    public class TB_Act_Image_Model 
+    public class TB_Act_Image_Model
     {
         public class ImageModels
         {
-           public List<ImageModel> tbActImageList { get; set; }
+            public List<ImageModel> tbActImageList { get; set; }
         }
         public class ImageModel : ActBaseModel
         {
             public ImageModel()
             {
-                _image = new byte[0];
-                extension = ".pdf";
-                delFlag = false;
-                createdByUserId = UtilsAppCode.Session.User.empId;
-                createdDate = DateTime.Now;
-                updatedByUserId = UtilsAppCode.Session.User.empId;
-                updatedDate = DateTime.Now;
+                try
+                {
+                    _image = new byte[0];
+                    extension = ".pdf";
+                    delFlag = false;
+                    createdByUserId = UtilsAppCode.Session.User.empId;
+                    createdDate = DateTime.Now;
+                    updatedByUserId = UtilsAppCode.Session.User.empId;
+                    updatedDate = DateTime.Now;
+                }
+                catch { }
             }
             public string id { get; set; }
             public string activityId { get; set; }

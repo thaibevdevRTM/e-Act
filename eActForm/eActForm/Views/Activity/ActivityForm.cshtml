@@ -27,10 +27,6 @@
         font-size: 10px;
     }
 
-    .textRight {
-        text-align: right;
-    }
-
     .textLeft {
         text-align: left;
     }
@@ -78,11 +74,11 @@
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @if (Model.activityFormModel.documentDate.ToString() != "")
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" , @readonly = true , autocomplete = "off" })
                         }
                         else
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString() })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd-MM-yyyy"), @readonly=true , autocomplete = "off" })
                         }
                     </div>
                 </div>
@@ -95,7 +91,7 @@
                             Reference
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.reference, new { @class = "form-control textboxcss", @id = "txtReference" })
+                            @Html.TextBoxFor(x => x.activityFormModel.reference, new { @class = "form-control textboxcss", @id = "txtReference", autocomplete = "off" })
                         </div>
                     </div>
                 </div>
@@ -136,11 +132,11 @@
 
 
                         @Html.DropDownListFor(x => x.activityFormModel.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
-                        {
-                             @class = "form-control textboxcss",
-                             onchange = "onchangeCustomer();",
-                             id = "ddlCustomer"
-                        })
+                   {
+                       @class = "form-control textboxcss",
+                       onchange = "onchangeCustomer();",
+                       id = "ddlCustomer"
+                   })
 
 
 
@@ -154,7 +150,7 @@
                             ชื่อกิจกรรม <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName" })
+                            @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", autocomplete = "off" })
                         </div>
                     </div>
                 </div>
@@ -167,12 +163,12 @@
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             @Html.DropDownListFor(x => x.activityFormModel.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
-                            {
-                                @class = "form-control textboxcss",
-                                required = "required",
+                       {
+                           @class = "form-control textboxcss",
+                           required = "required",
                            onchange = "onchangeCate();",
-                                id = "ddlProductCate"
-                            })
+                           id = "ddlProductCate"
+                       })
                         </div>
 
                     </div>
@@ -187,10 +183,10 @@
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
-                        {
-                            @class = "form-control textboxcss",
-                          id = "ddlTheme"
-                        })
+                   {
+                       @class = "form-control textboxcss",
+                       id = "ddlTheme"
+                   })
                     </div>
                 </div>
             </div>
@@ -212,7 +208,7 @@
                         </label>
 
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+                            @Html.TextBoxFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective", autocomplete = "off" })
                         </div>
                     </div>
                 </div>
@@ -231,17 +227,38 @@
             </div>
             <div class="form-group">
                 <div class="col-md-6 col-xs-12">
-                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        <div class="radio">
-                            <label>
-                                @Html.RadioButtonFor(m => m.activityFormModel.trade, "term", new { @id = "rdbterm" }) รายการส่งเสริมการขาย (Trade Term)
-                            </label>
+                    <div class="row">
+                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="radio">
+                                <label>
+                                    @Html.RadioButtonFor(m => m.activityFormModel.trade, "term", new { @id = "rdbterm" }) รายการส่งเสริมการขาย (Trade Term)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { @id = "rdbOutterm" }) รายการส่งเสริมการขาย (นอก Trade Term)
+                                </label>
+                            </div>
                         </div>
-                        <div class="radio">
-                            <label>
-                                @Html.RadioButtonFor(m => m.activityFormModel.trade, "outterm", new { @id = "rdbOutterm" }) รายการส่งเสริมการขาย (นอก Trade Term)
+                    </div>
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            @Html.CheckBoxFor(m => m.activityFormModel.chkAddIO, new { id = "chkAddIO", onchange = "OnChangeChkIO(this)" }) IO
+                        </label>
+                        <div id="divIO" class="col-md-9 col-sm-9 col-xs-12" style="margin-left:-10px">
+                            <div class="col-md-5 col-sm-5 col-xs-12">
+                                @Html.TextBoxFor(x => x.activityFormModel.actIO, new { @class = "form-control textboxcss", id = "txtActIO", autocomplete = "off" })
+                            </div>
+                            <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                                Claim
+                            </label>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                @Html.TextBoxFor(x => x.activityFormModel.actClaim, new { @class = "form-control textboxcss", id = "txtActClaim", @type = "number", autocomplete = "off" })
+                            </div>
+                            <label class="control-label col-md-1 col-sm-1 col-xs-12">
+                                %
                             </label>
                         </div>
                     </div>
@@ -253,10 +270,10 @@
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt" })
+                                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", autocomplete = "off" })
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivityEnd" })
+                                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivityEnd", autocomplete = "off" })
                             </div>
                         </div>
                     </div>
@@ -266,16 +283,16 @@
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(x => x.activityFormModel.costPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerSt" })
+                                @Html.TextBoxFor(x => x.activityFormModel.costPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerSt", autocomplete = "off" })
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(x => x.activityFormModel.costPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerEnd" })
+                                @Html.TextBoxFor(x => x.activityFormModel.costPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerEnd", autocomplete = "off" })
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+          
         </div>
     </form>
 </div>
@@ -349,7 +366,7 @@
         <p class="lead">อัพโหลด รูปภาพ</p>
     </div>
     <div class="col-md-6" id="divUploadFiles">
-        <form action="@Url.Action("uploadFilesImage", "Activity", new { actId = Model.activityFormModel.id})" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
+        <form action="@Url.Action("uploadFilesImage", "Activity", new { actId = Model.activityFormModel.id })" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
             <div class="dz-message">
                 <span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
             </div>
@@ -384,7 +401,7 @@
 
         </div>
         @if (Model.activityFormModel.statusId != 2 && Model.activityFormModel.statusId != 3 && Model.activityFormModel.statusId != 6 && Model.activityFormModel.statusId != 0
-            && Model.activityFormModel.createdByUserId == UtilsAppCode.Session.User.empId || string.IsNullOrEmpty(Model.activityFormModel.createdByUserId))
+    && Model.activityFormModel.createdByUserId == UtilsAppCode.Session.User.empId || string.IsNullOrEmpty(Model.activityFormModel.createdByUserId))
         {
             <div class="inner">
                 <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save Draft</button>
@@ -402,27 +419,39 @@
 @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
 @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
 @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
+
 <script type="text/javascript">
 
 
-       $(document).ready(function () {
-           $(".fv").each(function () {
-               var v = $(this).val();
-               if (v == '') {
-                   $(this).focus();
-               }
-           });
+    $(document).ready(function () {
+        $(".fv").each(function () {
+            var v = $(this).val();
+            if (v == '') {
+                $(this).focus();
+            }
+        });
 
-           ObjModel = {};
-           fillProductOnChange();
-           document.getElementById("ddlProductfilter").disabled = true;
-           document.getElementById("ddlProductSize").disabled = true;
+        ObjModel = {};
+        fillProductOnChange();
+        document.getElementById("ddlProductfilter").disabled = true;
+        document.getElementById("ddlProductSize").disabled = true;
+
+
+        var chkClaim = '@ViewBag.chkClaim'
+        if (chkClaim == 'True') {
+            document.getElementById("divIO").style.display = "block";
+        }
+        else {
+            document.getElementById("divIO").style.display = "none";
+        }
+
+
 
            if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
                $("#txtCustomerName").show();
                $("#divRegion").show();
                $("#ddlCustomer").hide();
-           }
+            }
            else {
                $("#txtCustomerName").hide();
                $("#divRegion").hide();
@@ -451,41 +480,49 @@
 
 
             $("#txtCustomerName").autocomplete({
-                   source: function (request, response) {
+            source: function (request, response) {
                     $.ajax({
-                           url: '@Url.Action("getCustomerByRegion", "eAct")',
+                    url: '@Url.Action("getCustomerByRegion", "eAct")',
                         type: "POST",
                         dataType: "json",
                         data: {
-                               regionId: $("#ddlRegion").val(),
+                        regionId: $("#ddlRegion").val(),
                                txtCus: $("#txtCustomerName").val(),
                         },
                         success: function (data) {
-                                   response($.map(data, function (item) {
-                                       return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
-                                   }))
+                            response($.map(data, function (item) {
+                                return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
+                            }))
 
                         }
-                           })
+                    })
                 },
                 minLength: 0,
                 messages: {
-                       noResults: '',
+                noResults: '',
                     results: function (resultsCount) {
-                           }
-                       }, select: function (event, ui) {
+                    }
+                }, select: function (event, ui) {
                     $("#customerId").val(ui.item.id)
                            }
-               }).focus(function () {
+            }).focus(function () {
                 $(this).data("uiAutocomplete").search($(this).val());
-               });
+            });
     });
 
+    function OnChangeChkIO(element) {
+        if (element.checked) {
+            document.getElementById("divIO").style.display = "block";
+        }
+        else {
+            document.getElementById("divIO").style.display = "none";
+        }
+    }
 
     $(function () {
-        $("#txtdateDoc").datepicker({
-            format: 'dd-mm-yyyy'
-        });
+        //$("#txtdateDoc").datepicker({
+        //    format: 'dd-mm-yyyy'
+        //});
         $("#txtdateActivitySt").datepicker({
             format: 'dd-mm-yyyy'
         });
@@ -599,6 +636,8 @@
             document.getElementById("ddlProductfilter").disabled = true;
         }
     }
+
+
 
     function onchangeCate() {
 
@@ -727,6 +766,7 @@
                  theme: $("#ddlTheme").val(),
                  actId: '@Model.activityFormModel.id',
                  typeForm: '@Model.activityFormModel.typeForm',
+                 dateActivitySt: $("#txtdateActivitySt").val(),
              },
                 dataType: "json",
                 type: 'POST',
@@ -856,7 +896,11 @@
                     ActivityDetail: $("#txtActivityDetail").val(),
                     activityNo: $("#txtActivityNo").val(),
                     createdByUserId: $("#hdcreateUser").val(),
-                    id:'@Model.activityFormModel.id',
+                    id: '@Model.activityFormModel.id',
+                    chkAddIO: $("input[name='activityFormModel.chkAddIO']:checked").val(),
+                    actIO: $("#txtActIO").val(),
+                    actClaim: $("#txtActClaim").val(),
+                    typeForm:'@Model.activityFormModel.typeForm',
                 },
                 dataType: "json",
                 type: 'POST',
@@ -901,11 +945,13 @@
             $.ajax({
                 url: '@Url.Action("updateDataActivity", "Activity")',
                 data: {
-
                     str_costPeriodSt: $("#txtdateCostPerSt").val(),
                     str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
                     str_activityPeriodSt: $("#txtdateActivitySt").val(),
                     str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
+                    chkAddIO: $("input[name='activityFormModel.chkAddIO']:checked").val(),
+                    actIO: $("#txtActIO").val(),
+                    actClaim: $("#txtActClaim").val(),
                     id:'@Model.activityFormModel.id',
                 },
                 dataType: "json",
@@ -973,20 +1019,23 @@
                             ActivityDetail: $("#txtActivityDetail").val(),
                             regionId: $("#ddlRegion").val(),
                             activityNo: $("#txtActivityNo").val(),
-                            id:'@Model.activityFormModel.id',
+                            id: '@Model.activityFormModel.id',
+                            chkAddIO: $("input[name='activityFormModel.chkAddIO']:checked").val(),
+                            actIO: $("#txtActIO").val(),
+                            actClaim: $("#txtActClaim").val(),
                         },
                         dataType: "json",
                         type: 'POST',
                     }).done(function (response) {
                         $("#WaitDialog").hide();
                         if (response.Success) {
-                            if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
+                            if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()') {
                                 var url = '@Url.Action("ActivityForm", "activity")';
-                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.OMT.ToString()';
+                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.MT.ToString()';
                             }
                             else {
-                                  var url = '@Url.Action("ActivityForm", "activity")';
-                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.MT.ToString()';
+                                var url = '@Url.Action("ActivityForm", "activity")';
+                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.OMT.ToString()';
                             }
                         } else {
                             doMsgFail(response.Message);
@@ -1020,7 +1069,8 @@
             document.getElementById("txtActivityDetail").disabled = true;
             document.getElementById("ddlRegion").disabled = true;
             document.getElementById("txtCustomerName").disabled = true;
-
+            document.getElementById("txtActIO").disabled = true;
+            document.getElementById("txtActClaim").disabled = true;
             document.getElementById("divAddActivityDetail").style.display = "none";
             document.getElementById("divAddProductCostDetail").style.display = "none";
             $("#tbl_activityDetail").find("input,button,textarea,select").attr("disabled", "disabled");
@@ -1032,11 +1082,11 @@
             document.getElementById("rdbOutterm").disabled = true;
             document.getElementById("btnUpdate").style.display = "none";
 
-        var arrayOfElements = document.getElementsByClassName('divDelImg');
-        var lengthOfArray = arrayOfElements.length;
-        for (var i = 0; i < lengthOfArray; i++) {
-            arrayOfElements[i].style.display = 'none';
-        }
+             var arrayOfElements = document.getElementsByClassName('divDelImg');
+             var lengthOfArray = arrayOfElements.length;
+             for (var i = 0; i < lengthOfArray; i++) {
+                 arrayOfElements[i].style.display = 'none';
+             }
 
 
         if ('@Model.activityFormModel.statusId' == '5') {
@@ -1052,8 +1102,14 @@
             document.getElementById("txtActivityDetail").disabled = false;
             document.getElementById("txtActivityName").disabled = false;
             document.getElementById("txtReference").disabled = false;
-
-            
+            document.getElementById("txtActIO").disabled = false;
+            document.getElementById("txtActClaim").disabled = false;
+            document.getElementById("divUploadFiles").style.display = "block";
+            var arrayOfElements = document.getElementsByClassName('divDelImg');
+            var lengthOfArray = arrayOfElements.length;
+            for (var i = 0; i < lengthOfArray; i++) {
+                arrayOfElements[i].style.display = 'block';
+            }
         }
 
 
@@ -1065,6 +1121,12 @@
              document.getElementById("txtdateCostPerEnd").disabled = false;
         }
 
+        if ( '@Model.activityFormModel.createdByUserId' == '@UtilsAppCode.Session.User.empId') {
+             document.getElementById("btnUpdate").style.display = "block";
+             document.getElementById("divIO").disabled = false;
+            document.getElementById("txtActIO").disabled = false;
+            document.getElementById("txtActClaim").disabled = false;
+        }
     }
 
 
@@ -1093,6 +1155,8 @@
          document.getElementById("txtActivityDetail").disabled = false;
          document.getElementById("ddlRegion").disabled = false;
          document.getElementById("txtCustomerName").disabled = false;
+         document.getElementById("txtActIO").disabled = false;
+         document.getElementById("txtActClaim").disabled = false;
 
          document.getElementById("divAddActivityDetail").style.display = "block";
          document.getElementById("divAddProductCostDetail").style.display = "block";
@@ -1188,7 +1252,7 @@
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
         maxFiles: 5,
-        acceptedFiles: "image/jpeg,image/jpg,image/png,application/pdf",
+        acceptedFiles: "image/jpeg,image/jpg,image/png,application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         paramName: "file",
         maxFilesize: 10,
         //addRemoveLinks: true,

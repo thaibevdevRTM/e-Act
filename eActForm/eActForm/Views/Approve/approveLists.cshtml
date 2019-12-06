@@ -15,16 +15,24 @@
             <tr class="gradeX">
                 <td>@item.rangNo</td>
                 <td>@item.empName</td>
-                <td>@{ var status = item.statusId == "" ? "ยังไม่อนุมัติ" : item.statusName;} @status</td>
-                <td>@{ var date = item.statusId == "3" || item.statusId == "5" ? item.updatedDate.Value.ToString("dd/MM/yyyy HH:mm") : "" ;} @date</td>
                 <td>
-                    @if (@item.remark != "")
-                    {
-                        <a class="btn ink-reaction btn-danger fa fa-search" onclick="onShowRemark('@item.remark');"></a>
-                    }
-                </td>
-            </tr>
-        }
+                    @{ var status = item.statusId == "" ? "ยังไม่อนุมัติ" : item.statusName;
+
+                        if (item.isApprove == false)
+                        {
+                            status = "เรียน เพื่อทราบ";
+                        }
+                } @status
+            </td>
+            <td>@{ var date = item.statusId == "3" || item.statusId == "5" ? item.updatedDate.Value.ToString("dd/MM/yyyy HH:mm") : "";} @date</td>
+            <td>
+                @if (@item.remark != "")
+                {
+                    <a class="btn ink-reaction btn-danger fa fa-search" onclick="onShowRemark('@item.remark');"></a>
+                }
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
 

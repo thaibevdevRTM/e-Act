@@ -12,6 +12,20 @@ namespace eActForm.BusinessLayer
 {
     public class ImageAppCode 
     {
+        public static List<TB_Act_Image_Model.ImageModel> GetImage(string activityId,string type)
+        {
+            try
+            {
+                List<TB_Act_Image_Model.ImageModel> lists = GetImage(activityId);
+                if (lists == null) return null;
+                else return lists.Where(x => x.extension == type).ToList();
+            }
+            catch (Exception ex)
+            {
+                //ExceptionManager.WriteError("getImage => " + ex.Message); // background service use this
+                return new List<TB_Act_Image_Model.ImageModel>();
+            }
+        }
         public static List<TB_Act_Image_Model.ImageModel> GetImage(string activityId)
         {
             try
@@ -37,7 +51,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getImage => " + ex.Message);
+               // ExceptionManager.WriteError("getImage => " + ex.Message);
                 return new List<TB_Act_Image_Model.ImageModel>();
             }
         }

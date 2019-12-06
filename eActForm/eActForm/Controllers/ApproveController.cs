@@ -8,6 +8,7 @@ using eActForm.BusinessLayer;
 using eActForm.Models;
 using iTextSharp.text;
 using WebLibrary;
+using eActForm.BusinessLayer.Appcodes;
 
 namespace eActForm.Controllers
 {
@@ -32,17 +33,9 @@ namespace eActForm.Controllers
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
                 if (getActList.Any())
                 {
-                    if (getActList.FirstOrDefault().chanel_Id != "")
-                    {
-                        models.typeForm = Activity_Model.activityType.MT.ToString();
-                    }
-                    else
-                    {
-                        models.typeForm = Activity_Model.activityType.OMT.ToString();
-                    }
 
-
-
+                    models.typeForm = BaseAppCodes.getCompanyTypeForm().ToString();
+                   
                 }
                 else
                 {
@@ -78,18 +71,43 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        public JsonResult selectApprove(string actId, string status, string approveType)
+        {
+            var result = new AjaxResult();
+            result.Success = false;
+            try
+            {
+                if (ApproveAppCode.updateApprove(actId, status, "", approveType) > 0)
+                {
+                    result.Success = true;
+                }
+                else
+                {
+                    result.Message = AppCode.StrMessFail;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("insertApprove >>" + ex.Message);
+                result.Message = ex.Message;
+            }
+            return Json(result);
+        }
+
+
         public ActionResult approveLists(ApproveModel.approveModels models)
         {
             return PartialView(models);
         }
 
-        public ActionResult approvePositionSignatureLists(string actId)
+        public ActionResult approvePositionSignatureLists(string actId, string subId)
         {
             ApproveModel.approveModels models = new ApproveModel.approveModels();
             try
             {
                 models = ApproveAppCode.getApproveByActFormId(actId);
-                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(ConfigurationManager.AppSettings["subjectActivityFormId"], actId);
+                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
                 models.approveFlowDetail = flowModel.flowDetail;
             }
             catch (Exception ex)
@@ -100,9 +118,10 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-
         public ActionResult previewApprove(string actId, string typeForm)
         {
+
+
             Activity_Model activityModel = new Activity_Model();
             try
             {
@@ -119,9 +138,16 @@ namespace eActForm.Controllers
             return PartialView(activityModel);
         }
 
+        public ActionResult previewActBudget(string activityId)
+        {
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            if (!string.IsNullOrEmpty(activityId))
+            {
+                activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+            }
 
-
-
+            return PartialView(activity_TBMMKT_Model);
+        }
 
         public ActionResult getApproveComment(string actId, string actTypeName)
         {
@@ -154,12 +180,13 @@ namespace eActForm.Controllers
             {
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
-                    EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form);
+                    EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form , UtilsAppCode.Session.User.empId);
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
                     var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
                     GridHtml = GridHtml.Replace("<br>", "<br/>");
+                    GridHtml = GridHtml.Replace("undefined", "");
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
 
                     TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
