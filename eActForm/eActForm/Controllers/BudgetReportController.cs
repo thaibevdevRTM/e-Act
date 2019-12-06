@@ -18,7 +18,6 @@ namespace eActForm.Controllers
 	[LoginExpire]
 	public class BudgetReportController : Controller
     {
-		// GET: BudgetReport
 
 		public static SearchBudgetActivityModels getMasterDataForSearch(string TypeForm)
 		{
@@ -56,7 +55,82 @@ namespace eActForm.Controllers
 		{
 			return View();
 		}
+		
+		//------------- report account SE ---------------------------------------------------------|
+		public ActionResult reportBudgetAccSeIndex(string TypeForm)
+		{
+			SearchBudgetActivityModels models = getMasterDataForSearch(TypeForm);
+			return View(models);
+		}
 
+		public ActionResult reportBudgetAccSeListView(string typeForm)
+		{
+			Budget_Report_Model.Report_Budget_Activity model = new Budget_Report_Model.Report_Budget_Activity();
+			try
+			{
+				string startDate = null;
+				string endDate = null;
+				string actNo = null;
+				string actStatus = null;
+				string actProductType = null;
+
+				#region filter
+
+				if (Request.Form["chk_all"] != null && Request.Form["chk_all"] == "true")
+				{
+					startDate = Request.Form["startDate"];
+					endDate = Request.Form["endDate"];
+				}
+
+				actNo = Request["txtActivityNo"] == null ? null : Request["txtActivityNo"];
+				actStatus = Request["ddlStatus"] == null ? null : Request["ddlStatus"];
+
+
+				model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(actStatus, actNo, typeForm, startDate, endDate);
+
+				//----------------------------------------------
+
+				if (String.IsNullOrEmpty(Request.Form["ddlCustomer"]) != true)
+				{
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.cus_id == Request.Form["ddlCustomer"]).ToList();
+				}
+
+				if (String.IsNullOrEmpty(Request.Form["ddlTheme"]) != true)
+				{
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.Theme == Request.Form["ddlTheme"]).ToList();
+				}
+
+				if (String.IsNullOrEmpty(Request.Form["ddlProductType"]) != true && Request.Form["ddlProductType"] != ",")
+				{
+					actProductType = Request["ddlProductType"];
+					actProductType = actProductType.Replace(",", "");
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.prd_typeId == actProductType).ToList();
+				}
+
+				if (string.IsNullOrEmpty(Request.Form["ddlProductGrp"]) != true)
+				{
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.prd_groupId == Request.Form["ddlProductGrp"]).ToList();
+				}
+
+				if (string.IsNullOrEmpty(Request.Form["ddlBudgetStatus"]) != true)
+				{
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.productBudgetStatusGroupId == Request.Form["ddlBudgetStatus"]).ToList();
+				}
+
+				if (UtilsAppCode.Session.User.isAdminOMT == false && UtilsAppCode.Session.User.isAdmin == false && UtilsAppCode.Session.User.isSuperAdmin == false)
+				{
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.actForm_CreatedByUserId == UtilsAppCode.Session.User.empId).ToList();
+				}
+				#endregion
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("searchRptBudgetActivity => " + ex.Message);
+			}
+			return PartialView(model);
+		}
+
+		//------------- report budget acctivity ----------------------------------------------------|
 		public ActionResult reportBudgetActivityIndex(string TypeForm)
         {
 			SearchBudgetActivityModels models = getMasterDataForSearch(TypeForm);
@@ -129,9 +203,8 @@ namespace eActForm.Controllers
 			}
 			return PartialView(model);
 		}
-	
 
-
+		//------------- export to excel ------------------------------------------------------------|
 		[HttpPost]
 		[ValidateInput(false)]
 		public FileResult viewExportExcel(string gridHtml)

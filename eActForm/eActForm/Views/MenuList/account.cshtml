@@ -1,0 +1,23 @@
+﻿@using eActForm.BusinessLayer
+@using eActForm.Models;
+@using System.Configuration;
+
+@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin
+	|| UtilsAppCode.Session.User.isCreator)
+{
+	<li>
+		<a><i class="fa fa-calculator"></i> Account <span class="fa fa-chevron-down"></span></a>
+		<ul class="nav child_menu">
+			@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+			{
+				<li>@Html.ActionLink(" Report Activity SE MT", "reportBudgetAccSeIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+			}
+
+			@if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
+			{
+				<li>@Html.ActionLink(" Report Activity SE OMT", "reportBudgetAccSeIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
+			}
+
+		</ul>
+	</li>
+}
