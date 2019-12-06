@@ -74,11 +74,11 @@
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @if (Model.activityFormModel.documentDate.ToString() != "")
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" , autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" , @readonly = true , autocomplete = "off" })
                         }
                         else
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString(), autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString(), @readonly=true , autocomplete = "off" })
                         }
                     </div>
                 </div>
@@ -520,9 +520,9 @@
     }
 
     $(function () {
-        $("#txtdateDoc").datepicker({
-            format: 'dd-mm-yyyy'
-        });
+        //$("#txtdateDoc").datepicker({
+        //    format: 'dd-mm-yyyy'
+        //});
         $("#txtdateActivitySt").datepicker({
             format: 'dd-mm-yyyy'
         });
@@ -1029,13 +1029,13 @@
                     }).done(function (response) {
                         $("#WaitDialog").hide();
                         if (response.Success) {
-                            if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.OMT.ToString()') {
+                            if ('@Model.activityFormModel.typeForm' == '@Activity_Model.activityType.MT.ToString()') {
                                 var url = '@Url.Action("ActivityForm", "activity")';
-                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.OMT.ToString()';
+                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.MT.ToString()';
                             }
                             else {
-                                  var url = '@Url.Action("ActivityForm", "activity")';
-                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.MT.ToString()';
+                                var url = '@Url.Action("ActivityForm", "activity")';
+                                window.location.href = url + "?ActivityId=" + response.ActivityId + "&typeForm=" + '@Activity_Model.activityType.OMT.ToString()';
                             }
                         } else {
                             doMsgFail(response.Message);

@@ -8,6 +8,7 @@ using eActForm.BusinessLayer;
 using eActForm.Models;
 using iTextSharp.text;
 using WebLibrary;
+using eActForm.BusinessLayer.Appcodes;
 
 namespace eActForm.Controllers
 {
@@ -32,17 +33,9 @@ namespace eActForm.Controllers
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
                 if (getActList.Any())
                 {
-                    if (getActList.FirstOrDefault().chanel_Id != "")
-                    {
-                        models.typeForm = Activity_Model.activityType.MT.ToString();
-                    }
-                    else
-                    {
-                        models.typeForm = Activity_Model.activityType.OMT.ToString();
-                    }
 
-
-
+                    models.typeForm = BaseAppCodes.getCompanyTypeForm().ToString();
+                   
                 }
                 else
                 {
