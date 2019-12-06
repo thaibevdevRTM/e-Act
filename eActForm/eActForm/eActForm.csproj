@@ -1988,6 +1988,7 @@
     <Content Include="images\al.jpeg" />
     <Content Include="images\blank.png" />
     <Content Include="images\checkmark.gif" />
+    <Content Include="images\favicon.ico" />
     <Content Include="images\icon_ref.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\logo-ss.png" />
@@ -1998,7 +1999,11 @@
     <Content Include="images\xlx.png" />
     <Content Include="Scripts\Admin\adminPage.js" />
     <Content Include="Scripts\Approve\RepDetailApproves.js" />
+    <Content Include="Scripts\bootbox.all.js" />
+    <Content Include="Scripts\bootbox.all.min.js" />
     <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.locales.js" />
+    <Content Include="Scripts\bootbox.locales.min.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

@@ -272,7 +272,7 @@
     <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
     @if (Model.activityFormModel.mode == "new" || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5 || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM))
     {
-        <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()">&nbsp;Save</button>
+        <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
     }
 </div>
 
@@ -320,13 +320,18 @@
         var required = "กรุณา ระบุ :<br>";
         var validate = true;
 
-        if ($("#ddlChannelOrBrand").val() == "") { required += "Document Date*<br>"; validate = false; }
+        if ($("#ddlChannelOrBrand").val() == "") { required += "Condition Flow*<br>"; validate = false; }
         if ($("#ddlChannel").val() == "" && $("#ddlBrand").val() == "") { required += "BrandหรือChannel*<br>"; validate = false; }
         if ($("#ddlSubject").val() == "") { required += "เรื่อง*<br>"; validate = false; }
 
         if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
+        if ($("#txtactivityTel").val() == "") { required += "เบอร์โทรศัพท์*<br>"; validate = false; }
+        if ($("#txtactivityProduct").val() == "") { required += "สินค้า*<br>"; validate = false; }
+        if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
+        if ($("#txtEO").val() == "") { required += "EO*<br>"; validate = false; }        
         if ($("#txtdateActivitySt").val() == "") { required += "วันที่เริ่มกิจกรรม*<br>"; validate = false; }
         if ($("#txtactivityPeriodEnd").val() == "") { required += "วันที่สิ้นสุดกิจกรรม*<br>"; validate = false; }
+        if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
 
             if (validate == true) {
                 SubmitData();

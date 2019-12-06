@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using eActForm.Models;
 using eActForm.BusinessLayer;
+using WebLibrary;
+
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -70,6 +72,30 @@ namespace eActForm.Controllers
 
             TempData["ApproveSearchResult"] = model.actLists;
             return RedirectToAction("ListView");
+        }
+
+        [HttpPost]
+        public JsonResult insertApproveList(string actId,string status,string approveType)
+        {
+            var result = new AjaxResult();
+            result.Success = false;
+            try
+            {
+                if (ApproveAppCode.updateApprove(actId, status, "", approveType) > 0)
+                {
+                    result.Success = true;
+                }
+                else
+                {
+                    result.Message = AppCode.StrMessFail;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("insertApprove >>" + ex.Message);
+                result.Message = ex.Message;
+            }
+            return Json(result);
         }
     }
 }
