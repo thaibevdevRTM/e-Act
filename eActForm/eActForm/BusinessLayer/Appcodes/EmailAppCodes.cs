@@ -315,7 +315,7 @@ namespace eActForm.BusinessLayer
             string[] pathFile = new string[10];
             mailCC = mailCC != "" ? "," + mailCC : "";
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailCC;
+            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC;
 
             switch (emailType)
             {
@@ -531,7 +531,7 @@ namespace eActForm.BusinessLayer
             mailer.Subject = subject;
             mailer.Body = body;
             mailer.p_Attachment = files;
-            mailer.CC = cc;
+            if (!string.IsNullOrEmpty(cc)) { mailer.CC = cc; }
             mailer.IsHtml = true;
             mailer.Send();
 
@@ -721,7 +721,7 @@ namespace eActForm.BusinessLayer
                 string[] pathFileAtt = new string[10];
 
                 mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-                mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailCC;
+                mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC;
 
                 pathFile[0] = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], actFormId)); ;
 
