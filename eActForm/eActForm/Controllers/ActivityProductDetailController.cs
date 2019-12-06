@@ -32,6 +32,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("calDiscountProduct >>" + ex.Message);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -56,8 +57,7 @@ namespace eActForm.Controllers
                 Activity_Model activityModel = TempData["actForm" + id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ id];
                 if (rowid != null)
                 {
-                    var list = activityModel.productcostdetaillist1.Single(r => r.productGroupId == rowid);
-                    activityModel.productcostdetaillist1.Remove(list);
+                    activityModel.productcostdetaillist1.RemoveAll(r => r.productGroupId == rowid);
                 }
                 else
                 {
@@ -71,6 +71,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("delCostDetail >>" + ex.Message);
                 result.Message = ex.Message;
                 result.Success = false;
             }
@@ -141,6 +142,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionManager.WriteError("addItemProduct >> " + ex.Message);
                 result.Success = false;
                 result.Message = ex.Message;
             }
