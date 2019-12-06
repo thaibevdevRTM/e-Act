@@ -78,7 +78,7 @@
                         }
                         else
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString(), @readonly=true , autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd-MM-yyyy"), @readonly=true , autocomplete = "off" })
                         }
                     </div>
                 </div>
