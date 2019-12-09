@@ -16,11 +16,11 @@
             {
                 <table>
                     <tbody>
-                        <tr>
+                        @*<tr>
                             <td colspan="3" align="center">
                                 <label style="font-size:36px;">รูปภาพ</label>
                             </td>
-                        </tr>
+                        </tr>*@
                         @for (int index = 0; index < Model.productImageList.Count; index++)
                         {
                             if (Model.productImageList[index].extension != ".pdf")
@@ -30,7 +30,7 @@
                                     <tr>
 
                                         <td style="text-align:center;">
-                                            <img width="650" src="@string.Format(url, Model.productImageList[index]._fileName)" />
+                                            <img style="max-height:800px; min-height:500px; max-width:650px; min-width:200px;" src="@string.Format(url, Model.productImageList[index]._fileName)" />
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -41,7 +41,6 @@
                                 else
                                 {
                                     <tr style="height:400px;">
-
                                         <td style="text-align:center;">
                                             <img width="300" src="@string.Format(url, Model.productImageList[index]._fileName)" />
                                         </td>
@@ -53,7 +52,6 @@
                                                 <img width="300" src="@string.Format(url, Model.productImageList[index]._fileName)" />
                                             </td>
                                         }
-
                                     </tr>
                                 }
                             }
