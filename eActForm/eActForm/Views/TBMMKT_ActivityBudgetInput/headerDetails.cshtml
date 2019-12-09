@@ -125,7 +125,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-xs-12"></div>
+                    <label class="control-label col-md-2 col-xs-12">
+                        Budget Number :
+                    </label>
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="row">
+                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.BudgetNumber, new { @class = "form-control textboxcss", @id = "txtBudgetNumber", style = "width:320px;" })
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
