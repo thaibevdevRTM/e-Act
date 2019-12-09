@@ -150,6 +150,9 @@ namespace eActForm.Controllers
 
 				#region filter
 
+				//startDate = Request.Form["startDate"];
+				//endDate = Request.Form["endDate"];
+
 				if (Request.Form["chk_all"] != null && Request.Form["chk_all"] == "true")
 				{
 					startDate = Request.Form["startDate"];
@@ -171,7 +174,7 @@ namespace eActForm.Controllers
 
 				if (String.IsNullOrEmpty(Request.Form["ddlTheme"]) != true)
 				{
-					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.Theme == Request.Form["ddlTheme"]).ToList();
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.themeId == Request.Form["ddlTheme"]).ToList();
 				}
 
 				if (String.IsNullOrEmpty( Request.Form["ddlProductType"]) != true && Request.Form["ddlProductType"] != "," )
