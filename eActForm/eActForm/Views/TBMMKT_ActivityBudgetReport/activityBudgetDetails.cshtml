@@ -34,18 +34,7 @@
                     @if (item.unitPrice != 0)
                     {
                         <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="hidden" value="@item.QtyName" id="costThemeDetailOfGroupByPriceTBMMKT[@index].QtyName" name="costThemeDetailOfGroupByPriceTBMMKT[@index].QtyName" class="form-control textboxcss text-right hidQtyName_@index" />
-                            <script>
-                                if ($(".hidQtyName_@index").val() == '')
-                                 {
-                                    $("#lblQtyName_@index").text("บาท");
-                                }
-                                else
-                                {
-                                    $("#lblQtyName_@index").text("บาท/");
-                                }
-                            </script>
-                            @string.Format("{0:#,0.00}", @item.unitPrice) <label id="lblQtyName_@index" style="font-weight:normal;"></label>@item.QtyName
+                            @item.unitPriceDisplayReport
                         </td>
                     }
                     else
