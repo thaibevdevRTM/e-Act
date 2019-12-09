@@ -28,6 +28,7 @@ namespace eActForm.BusinessLayer
                                   productDetail = d["productDetail"].ToString(),                                
                                   unit = int.Parse(d["unit"].ToString()),
                                   unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
+                                  unitPriceDisplay = d["unitPrice"].ToString() == "" ? "0.00" : string.Format("{0:n2}", decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString()))),
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
                                   IO = d["IO"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),

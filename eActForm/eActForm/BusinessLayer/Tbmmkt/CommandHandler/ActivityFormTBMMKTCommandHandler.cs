@@ -176,8 +176,8 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                     costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
                     costThemeDetail.updatedDate = DateTime.Now;
-                    costThemeDetail.unit = item.unit;
-                    costThemeDetail.unitPrice = item.unitPrice;
+                    costThemeDetail.unit = item.unit; 
+                    costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",",""));
                     costThemeDetail.QtyName = item.QtyName;
 
                     rtn += insertEstimate(costThemeDetail);
