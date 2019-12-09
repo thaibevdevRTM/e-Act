@@ -1248,7 +1248,7 @@
 
 <script>
 
-
+    var maxImageHeight = 800;
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
         maxFiles: 5,
@@ -1258,11 +1258,25 @@
         //addRemoveLinks: true,
         init: function () {
 
+           
+
+            this.on("thumbnail", function (file) {
+                if (file.height > maxImageHeight) {
+                    file.rejectDimensions()
+                    alert("ความสูง ไม่เกิน 800 px ");
+                }
+                else {
+                    file.acceptDimensions();
+                }
+            });
+
             this.on("complete", function (file) {
                 CallImageView($("#hdActivityId").val());
-
             });
+        },
+        accept: function (file, done) {
+            file.acceptDimensions = function () { done(); };
+            file.rejectDimensions = function () { done("Image width or height too big."); };
         }
-
     };
 </script>
