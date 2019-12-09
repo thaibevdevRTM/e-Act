@@ -175,6 +175,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
+                return "";
                 throw new Exception("getDigitGroup >>" + ex.Message);
             }
         }

@@ -81,7 +81,10 @@ namespace eActConsoleService
             mailer.ToEmail = mailTo;
             mailer.Subject = subject;
             mailer.Body = body;
-            mailer.CC = cc;
+            if (!string.IsNullOrEmpty(cc))
+            {
+                mailer.CC = cc;
+            }
             mailer.IsHtml = true;
             mailer.Send();
         }

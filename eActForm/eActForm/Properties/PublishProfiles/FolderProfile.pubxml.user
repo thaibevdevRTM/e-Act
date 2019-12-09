@@ -6409,8 +6409,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/summaryReport/ListDoc.cshtml">
       <publishTime>09/16/2019 11:08:25</publishTime>
     </File>
-    <File Include="Views/summaryReport/repSummaryView.cshtml">
-      <publishTime>09/16/2019 11:08:25</publishTime>
+    <File Include="Views/summaryReport/IndexDoc.cshtml">
+      <publishTime>08/26/2019 13:46:16</publishTime>
+    </File>
+    <File Include="Views/summaryReport/ListDoc.cshtml">
       <publishTime>09/16/2019 11:08:25</publishTime>
     </File>
     <File Include="Views/summaryReport/repSummaryView.cshtml">
@@ -6420,10 +6422,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/summaryReport/viewReportSummary.cshtml">
-      <publishTime>09/16/2019 11:08:25</publishTime>
-    </File>
-    <File Include="Views/summaryReport/viewReportSummaryAlcohol.cshtml">
-      <publishTime>09/16/2019 11:08:25</publishTime>
       <publishTime>09/16/2019 11:08:25</publishTime>
     </File>
     <File Include="Views/summaryReport/viewReportSummaryAlcohol.cshtml">
