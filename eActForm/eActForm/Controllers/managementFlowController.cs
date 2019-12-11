@@ -1,4 +1,6 @@
-﻿using System;
+﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +13,10 @@ namespace eActForm.Controllers
         // GET: managementFlow
         public ActionResult Index()
         {
-            return View();
+            ManagementFlow_Model model = new ManagementFlow_Model();
+            model.companyList = managementFlowAppCode.getCompany();
+
+            return View(model);
         }
     }
 }

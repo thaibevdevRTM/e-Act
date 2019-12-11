@@ -3,6 +3,7 @@ using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using WebLibrary;
@@ -15,7 +16,9 @@ namespace eActForm.BusinessLayer.QueryHandler
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAllTOtherMaster");
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAllTOtherMaster"
+                    , new SqlParameter("@type", type)
+                    , new SqlParameter("@subType", subtype));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Act_Other_Model()
                              {

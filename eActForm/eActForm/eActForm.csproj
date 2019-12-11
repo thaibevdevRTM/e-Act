@@ -183,6 +183,7 @@
     <Compile Include="BusinessLayer\Appcodes\AdminUserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\BaseAppCodes.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
+    <Compile Include="BusinessLayer\Appcodes\managementFlowAppCode.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\Appcodes\ReportSummaryAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ApproveListAppCode.cs" />
@@ -294,7 +295,6 @@
     <Compile Include="Models\TB_Act_ProductGroup_Model.cs" />
     <Compile Include="Models\TB_Act_ProductPrice_Model.cs" />
     <Compile Include="Models\TB_Act_ProductType_Model.cs" />
-    <Compile Include="Models\TB_Act_Product_Cate_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Model.cs" />
     <Compile Include="Models\TB_Act_Region_Model.cs" />
     <Compile Include="Models\TB_Bud_Activity_Model.cs" />

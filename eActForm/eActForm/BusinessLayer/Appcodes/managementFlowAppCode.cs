@@ -1,0 +1,48 @@
+﻿using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace eActForm.BusinessLayer.Appcodes
+{
+    public class managementFlowAppCode
+    {
+        public static List<TB_Act_Other_Model> getCompany()
+        {
+            return QueryOtherMaster.getOhterMaster("company", "");
+        }
+
+        public static List<TB_Reg_Subject_Model> getSubject(string companyId)
+        {
+            return QueryGetSubject.getAllSubject().Where(x => x.companyId.Equals(companyId)).ToList();
+        }
+
+        public static List<TB_Act_Other_Model> getLimit()
+        {
+            return QueryOtherMaster.getOhterMaster("limitFlow", "");
+        }
+
+        public static List<TB_Act_Customers_Model.Customers_Model> getCustomer(string companyId)
+        {
+            return QueryGetAllCustomers.getAllCustomers().Where(x => x.companyId.ToLower().Equals(companyId)).ToList();
+        }
+
+        public static List<TB_Act_ProductCate_Model> getProductCate(string companyId)
+        {
+            return QuerygetAllProductCate.getAllProductCate();
+        }
+
+        public static List<TB_Act_Chanel_Model.Chanel_Model> getChanel(string typeChanel)
+        {
+            return QueryGetAllChanel.getAllChanel().Where(x => x.typeChannel.Equals(typeChanel)).ToList();
+        }
+
+        public static List<TB_Act_ProductBrand_Model> getProductBrand(string typeChanel)
+        {
+            return QueryGetAllBrand.GetAllBrand().Where(x => x.no_tbmmkt != null).ToList();
+        }
+
+    }
+}
