@@ -22,38 +22,28 @@
 
 </div>
 
-<div class="row">
-    <div id="getQuery" class="col-lg-12">
-        @Html.Action("getDataList", "ManagementFlow")
+<div class="col-md-12">
+    <div id="divgetimage" class="col-md-12">
+        @Html.Action("getDataList", "ManagementFlow");
     </div>
 </div>
 
 
 <script>
     $("#ddlCompany").change(function () {
-        var ddlProduct = $("#ddlCompany");
         $.ajax({
             url: '@Url.Action("getddlProduct", "eAct")',
             data: {
-                brandId: $("#ddlProductBrand").val(),
-                size: $("#ddlProductSize").val(),
-                smellId: $("#ddlProductSmell").val(),
-                productGroupId: $("#ddlProductGrp").val()
+                companyId: $("#ddlCompany").val(),
             },
             dataType: "json",
             type: 'POST',
             success: function (response) {
-                if (response.Data.getProductname.length > 0) {
-                    $("#ddlProductfilter option[value !='']").remove();
-                    $.each(response.Data.getProductname, function () {
-                        ddlProduct.append($("<option></option>").val(this['Value']).html(this['Text']));
-                    });
-                    document.getElementById("ddlProductfilter").disabled = false;
-                }
-                else {
-                    document.getElementById("ddlProductfilter").disabled = true;
-                }
+                $("#divDrop").html(htmlResponse)
             }
         });
     });
+
+
+
 </script>
