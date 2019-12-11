@@ -1,0 +1,42 @@
+﻿@model eActForm.Models.ManagementFlow_Model
+
+
+<div class="form-group">
+
+    <div class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Subject</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlSubject" })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Customer</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.customerList, new SelectList(Model.customerList, "id", "cusNameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCustomer" })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Limit</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "id", "displayVal"), "Please Select", new { @class = "form-control textboxcss", id = "ddlLimit" })
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Cate</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.cateList, new SelectList(Model.cateList, "id", "cateName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCate" })
+        </div>
+    </div>
+
+
+</div>
+

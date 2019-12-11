@@ -15,35 +15,33 @@
         <div class="col-md-4">
         </div>
         <div class="col-md-4 col-sm-6 col-xs-12 ">
-            @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "id", "displayVal"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCompany" })
+            @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCompany" })
         </div>
     </div>
 
-
 </div>
-
+<hr />
 <div class="col-md-12">
-    <div id="divgetimage" class="col-md-12">
-        @Html.Action("getDataList", "ManagementFlow");
+    <div id="divDrop" class="col-md-12">  
     </div>
 </div>
 
 
 <script>
     $("#ddlCompany").change(function () {
-        $.ajax({
-            url: '@Url.Action("getddlProduct", "eAct")',
-            data: {
-                companyId: $("#ddlCompany").val(),
-            },
-            dataType: "json",
-            type: 'POST',
-            success: function (response) {
-                $("#divDrop").html(htmlResponse)
-            }
-        });
+          CallDropView($("#ddlCompany").val());
     });
 
+    function CallDropView(obj) {
+
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("dropDetail", "ManagementFlow")',
+            data: { companyId: obj}
+        }).done(function (htmlResponse) {
+            $("#divDrop").html(htmlResponse)
+        });
+    }
 
 
 </script>

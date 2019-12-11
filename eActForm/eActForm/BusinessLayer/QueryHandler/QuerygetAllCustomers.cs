@@ -116,6 +116,7 @@ namespace eActForm.BusinessLayer
                              {
                                  id = d["id"].ToString(),
                                  cusTrading = d["cusTrading"].ToString(),
+                                 companyId = d["companyId"].ToString(),
                                  cusNameTH = d["cusNameTH"].ToString(),
                                  cusNameEN = d["cusNameEN"].ToString(),
                                  cusShortName = d["cusShortName"].ToString(),

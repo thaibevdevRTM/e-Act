@@ -2,6 +2,7 @@
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -16,7 +17,8 @@ namespace eActForm.BusinessLayer.Appcodes
 
         public static List<TB_Reg_Subject_Model> getSubject(string companyId)
         {
-            return QueryGetSubject.getAllSubject().Where(x => x.companyId.Equals(companyId)).ToList();
+            if(companyId == "5601") { companyId = "5600"; }
+            return QueryGetSubject.getAllSubject().Where(x => x.companyId.Contains(companyId)).ToList();
         }
 
         public static List<TB_Act_Other_Model> getLimit()
@@ -26,7 +28,15 @@ namespace eActForm.BusinessLayer.Appcodes
 
         public static List<TB_Act_Customers_Model.Customers_Model> getCustomer(string companyId)
         {
-            return QueryGetAllCustomers.getAllCustomers().Where(x => x.companyId.ToLower().Equals(companyId)).ToList();
+            if (companyId == ConfigurationManager.AppSettings["companyId_MT"])
+            {
+                return QueryGetAllCustomers.getCustomersMT();
+            }
+            else
+            {
+                return QueryGetAllCustomers.getCustomersOMT();
+
+            }
         }
 
         public static List<TB_Act_ProductCate_Model> getProductCate(string companyId)
@@ -39,7 +49,7 @@ namespace eActForm.BusinessLayer.Appcodes
             return QueryGetAllChanel.getAllChanel().Where(x => x.typeChannel.Equals(typeChanel)).ToList();
         }
 
-        public static List<TB_Act_ProductBrand_Model> getProductBrand(string typeChanel)
+        public static List<TB_Act_ProductBrand_Model> getProductBrand()
         {
             return QueryGetAllBrand.GetAllBrand().Where(x => x.no_tbmmkt != null).ToList();
         }
