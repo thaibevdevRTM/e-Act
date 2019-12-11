@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using iTextSharp.text;
@@ -8,6 +9,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -240,11 +242,26 @@ namespace eActForm.Controllers
                     string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootUploadfiles"].ToString(), _fileName));
                     resultFilePath = UploadDirectory;
                     BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
-                    binData = b.ReadBytes(0);
-                    httpPostedFile.SaveAs(resultFilePath);
+                    if (BaseAppCodes.ValidateExtension(extension))
+                    {
+                        WebImage img = new WebImage(httpPostedFile.InputStream);
+                        if (img.Height > 700)
+                        {
+                            img.Resize(525, 700);
+                            img.Save(UploadDirectory);
+                        }
+                        else
+                        {
+                            httpPostedFile.SaveAs(UploadDirectory);
+                        }
+                    }
+                    else
+                    {
+                        httpPostedFile.SaveAs(UploadDirectory);
+                    }
 
                     imageFormModel.activityId = actId;
-                    imageFormModel._image = binData;
+                    imageFormModel._image = b.ReadBytes(0); ;
                     imageFormModel.imageType = "UploadFile";
                     imageFormModel._fileName = _fileName.ToLower();
                     imageFormModel.extension = extension.ToLower();
