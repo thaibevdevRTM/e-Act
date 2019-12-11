@@ -1,4 +1,5 @@
 ﻿@model eActForm.Models.AdminUserModel
+@using eActForm.BusinessLayer
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,7 +12,7 @@
 <div id='dialogDiv' class='modal hide fade in'>
     <div id='dialogContent'></div>
 </div>
-@using (Html.BeginForm("insertUsers", "AdminUser", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("insertUsers", "AdminUser", FormMethod.Post, new { id = "frmAdminUser", @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
 
 
@@ -28,10 +29,12 @@
                 Company :
             </div>
             <div class="col-md-4">
-                <select class="form-control" id="ddlCompany" name="ddlCompany" required="required">
+
+                <select class="form-control" id="ddlCompany" name="ddlCompany" required>
                     <option value="">-Selected-</option>
                     <option value="5600">MTM</option>
                     <option value="5601">OMT</option>
+                    <option value="3030">TBM</option>
                 </select>
             </div>
         </div>
@@ -41,8 +44,8 @@
                 Customer :
             </div>
             <div class="col-md-4">
-                <input type="text" class="form-control"  id="txtCustomer" name="txtCustomer" />
-                <input type="hidden" class="form-control"  id="txtCustomerIds" name="txtCustomerIds" />
+                <input type="text" class="form-control" id="txtCustomer" name="txtCustomer" />
+                <input type="hidden" class="form-control" id="txtCustomerIds" name="txtCustomerIds" />
             </div>
         </div>
         <div class="row">
@@ -86,6 +89,10 @@
                     <input id="adminOMT" type="checkbox" name="model.chkRole" value="5">
                     adminOMT
                 </div>
+                <div>
+                    <input id="adminTBM" type="checkbox" name="model.chkRole" value="6">
+                    adminTBM
+                </div>
             </div>
 
 
@@ -113,7 +120,7 @@
 
 
     <div class="row text-center">
-        <button type="submit" class="btn ink-reaction btn-primary"><i class="fa fa-search fa-fw"></i>&nbsp;Submit</button>
+        <button type="button" onclick="return validateForm();" class="btn ink-reaction btn-primary"><i class="fa fa-search fa-fw"></i>&nbsp;Submit</button>
     </div>
 
 
@@ -159,7 +166,22 @@
 }
 
 <script type="text/javascript">
-        var index = 0;
+    var index = 0;
+    function validateForm() {
+       var favorite = [];
+            $.each($("input[name='model.chkProductType']:checked"), function(){
+                favorite.push($(this).val());
+            });
+
+
+        if (favorite.length > 0 && $("#ddlCompany").val() != "") {
+            $("#frmAdminUser").submit();
+        }
+        else {
+            doMsgFail("กรุณาระบุ <br/>ProductType<br/>,Company");
+            return false;
+        }
+    }
         $(document).ready(function () {
             $('#datatable').DataTable({
                 "dom": 'lCfrtip',
@@ -262,29 +284,51 @@
                             case '5':
                                 document.getElementById("adminOMT").checked = true;
                                 break;
+                            case '6':
+                                document.getElementById("adminTBM").checked = true;
+                                break;
                         }
                     });
                 }
             });
-    }
+        }
+
 
     function onClickDel(empId) {
-        $.ajax({
-            url: '@Url.Action("delUserandAuthor", "AdminUser")',
-            data: {
-                empId: empId,
+        bootbox.confirm({
+            message: "คุณต้องการ ลบ User : " + empId + " ใช่หรือไม่ ?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
             },
-            dataType: "json",
-            type: 'POST',
-            success: function (response) {
-                if (response.Code > 0) {
-                    bootbox.alert('Success')
-                    window.open('@Url.Action("Index", "AdminUser")');
+            callback: function (result) {
+                if (result == true) {
+                    if (result) {
+                        $("#WaitDialog").show();
+                        $.ajax({
+                            url: '@Url.Action("delUserandAuthor", "AdminUser")',
+                            data: {
+                                empId: empId,
+                            },
+                            dataType: "json",
+                            type: 'POST',
+                        }).done(function (response) {
+                            if (response.Code > 0) {
+                                bootbox.alert('Success')
+                                window.location.href = '@Url.Action("Index", "AdminUser")';
+                            }
+                        });
+                    }
+
                 }
             }
         });
     }
-
-
 
 </script>

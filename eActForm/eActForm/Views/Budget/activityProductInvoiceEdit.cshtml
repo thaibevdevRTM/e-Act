@@ -55,12 +55,7 @@
 	}
 </style>
 
-@if (Model.Budget_Count_Wait_Approve.count_wait_approve > 0 && UtilsAppCode.Session.User.empId != "70016911")
-{
 
-}
-else
-{
 
 	<div class="row">
 
@@ -179,8 +174,15 @@ else
 			</table>
 
 			<p></p>
-			<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
-			<button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
+
+			@if (Model.Budget_Count_Wait_Approve.count_wait_approve > 0 )
+			{
+
+			}
+			else {
+				<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+				<button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
+			}
 			<div>
 				<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color:white; width:100%;"><tr><td>&nbsp;</td></tr></table>
 			</div>
@@ -191,7 +193,7 @@ else
 
 	</div>
 
-}
+
 
 
 <script type="text/javascript">

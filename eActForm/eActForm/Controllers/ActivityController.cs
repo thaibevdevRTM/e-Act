@@ -36,6 +36,7 @@ namespace eActForm.Controllers
 
                 activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
                 activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                    .Where(x => x.activityCondition.Equals("mtm".ToLower()))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
                 if (UtilsAppCode.Session.User.regionId != "")
@@ -59,6 +60,7 @@ namespace eActForm.Controllers
                     activityModel.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activityModel.activityFormModel.productGroupId).ToList();
                     activityModel.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activityModel.activityFormModel.productCateId).ToList();
                     TempData["actForm" + activityId] = activityModel;
+                    ViewBag.chkClaim = activityModel.activityFormModel.chkAddIO;
                 }
                 else
                 {

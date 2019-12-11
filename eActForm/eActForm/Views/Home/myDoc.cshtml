@@ -120,7 +120,7 @@
                                 </a>
                             }
                             @if (item.statusId == "1" || item.statusId == "3" || item.statusId == "5" ||
-                                (item.statusId == "6" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)))
+(item.statusId == "6" && (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin)))
                             {
                                 <a href="javascript:" onclick="return checkDelete('@item.id','@item.statusId');">
                                     <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
@@ -134,7 +134,10 @@
                             {
                                 @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.OMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
-
+                            else if (Model.typeForm == Activity_Model.activityType.TBM.ToString())
+                            {
+                                @Html.ActionLink(" ", "Index", "TBMMKT_ActivityBudgetInput", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
                                 @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
@@ -205,18 +208,35 @@
         $("#WaitDialog").show();
     }
 
-    function callPreviewApprove(actId, statusId,typeForm) {
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("previewApprove", "Approve")',
-            data: {
-                actId: actId,
-                typeForm: typeForm
-            }
-        }).done(function (htmlResponse) {
-            genPdf(actId, statusId, htmlResponse);
-        });
+    function callPreviewApprove(actId, statusId, typeForm) {
+
+        if (typeForm == '@Activity_Model.activityType.MT.ToString()' || typeForm == '@Activity_Model.activityType.OMT.ToString()') {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("previewApprove", "Approve")',
+                data: {
+                    actId: actId,
+                    typeForm: typeForm
+                }
+            }).done(function (htmlResponse) {
+                genPdf(actId, statusId, htmlResponse);
+            });
+        }
+        else {
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
+                data: {
+                    activityId: actId,
+                    typeForm: typeForm
+                }
+            }).done(function (htmlResponse) {
+                genPdf(actId, statusId, htmlResponse);
+            });
+        }
     }
+
+
     function genPdf(actId, statusId, htmlResponse) {
         $.ajax({
             url: '@Url.Action("genPdfApprove", "Documents")',
@@ -231,5 +251,8 @@
             doMsgSuccess("ดำเนินการเรียบร้อยครับ");
         });
     }
+
+   
+   
 
 </script>

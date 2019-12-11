@@ -24,7 +24,9 @@ body {
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select{
-    max-width: 280px;
+    /*max-width: 280px;*/
+    margin-left:2px;
+    margin-right:2px;
 }
 
 
