@@ -31,6 +31,7 @@ namespace eActForm.BusinessLayer
                                   activityTel = d["activityTel"].ToString(),
                                   EO = d["EO"].ToString(),
                                   descAttach = d["descAttach"].ToString(),
+                                  BudgetNumber = d["BudgetNumber"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),

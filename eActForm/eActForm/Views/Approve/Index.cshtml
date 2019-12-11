@@ -204,11 +204,12 @@ else
             if ('@type' == '@AppCode.ApproveType.Activity_Form.ToString()') {
                 callPreviewApprove('@actId');
             }
-            else if('@type' == '@AppCode.ApproveType.Report_Detail.ToString()') {
+            else if ('@type' == '@AppCode.ApproveType.Report_Detail.ToString()') {
+                 $("#WaitDialog").show();
                 callPreviewRepDetailApprove('@actId')
             }
             else if ('@type' == '@AppCode.ApproveType.Report_Summary.ToString()') {
-
+                $("#WaitDialog").show();
                 console.log('@actId');
                 callPreviewSummaryDetailApprove('@actId')
             }
@@ -245,21 +246,8 @@ else
                     , summaryId: '@actId'
                 }
             }).done(function (htmlResponse) {
-                $("#WaitDialog").hide();
-                bootbox.confirm({
-                    message: "ดำเนินการเรียบร้อยครับ",
-                    buttons: {
-                        confirm: {
-                            label: 'OK',
-                            className: 'btn-success'
-                        }
-                    },
-                    callback: function (result) {
-                        var url = '@Url.Action("Index", "ApproveSummaryDetail")';
-                        window.location.href = url;
-                    }
-
-                });
+                var url = '@Url.Action("Index", "ApproveSummaryDetail")';
+                doMsgSuccessAction("เรียบร้อย",url);
             });
         });
     }
@@ -303,6 +291,30 @@ else
 
     }
 
+     function callPreviewRepDetailApprove(obj) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("repPreviewListView", "actFormRepDetail")',
+            data: {
+                actId: obj
+            }
+        }).done(function (htmlResponse) {
+            $.ajax({
+                type: 'POST',
+                dataType: "html",
+                url: '@Url.Action("repDetailGenPDF", "actFormRepDetail")',
+                data: {
+                    gridHtml: htmlResponse
+                    , actId: '@actId'
+                }
+            }).done(function (htmlResponse) {
+                $("#WaitDialog").hide();
+                var url = '@Url.Action("Index", "ApproveListsRepDetail")';
+                doMsgSuccessAction('อนุมัติเรียบร้อย',url);
+            })
+        });
+    } 
+
     function genFileActForm() {
         $.ajax({
             url: '@Url.Action("doApprove", "ApiApprove")',
@@ -311,7 +323,7 @@ else
                 statusId: $("#ddlStatus").val(),
                 activityId: '@actId' //$("#HdId").val()
             },
-            async: true,
+            async: true, 
             dataType: "json",
             type: 'POST',
         }).done(function (reponse) {
