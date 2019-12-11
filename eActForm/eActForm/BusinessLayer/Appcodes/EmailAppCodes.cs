@@ -227,7 +227,7 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message);
-                throw new Exception("sendEmailApprove" + ex.Message);
+                throw new Exception("sendEmailApprove " + ex.Message);
             }
         }
 
@@ -314,8 +314,8 @@ namespace eActForm.BusinessLayer
             List<Attachment> files = new List<Attachment>();
             string[] pathFile = new string[10];
             mailCC = mailCC != "" ? "," + mailCC : "";
-            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC;
+            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
+            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;
 
             switch (emailType)
             {
@@ -372,7 +372,7 @@ namespace eActForm.BusinessLayer
 
 
             sendEmail(mailTo
-                    , mailCC == "" ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC
+                    , mailCC
                     , strSubject
                     , strBody
                     , files);
@@ -531,9 +531,13 @@ namespace eActForm.BusinessLayer
             mailer.Subject = subject;
             mailer.Body = body;
             mailer.p_Attachment = files;
-            if (!string.IsNullOrEmpty(cc)) { mailer.CC = cc; }
+            if (!String.IsNullOrEmpty(cc)) {
+                mailer.CC = cc;
+            }
+            
             mailer.IsHtml = true;
             mailer.Send();
+           
 
             //slog = "mailer.Send() => ok";
             //ExceptionManager.WriteError("sendEmail=> " + slog);

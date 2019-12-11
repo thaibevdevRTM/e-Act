@@ -180,6 +180,16 @@
                 closeButton: false
         }
 
+        function doMsgSuccessAction(msg,action) {
+            bootbox.alert({
+                message: "<div class='row'><div class='text-center'><img width='150px' src='~/images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>",
+                callback: function () {
+                    var url = action;
+                    window.location.href = url;
+                }
+            });
+        }
+
 
 
     </script>

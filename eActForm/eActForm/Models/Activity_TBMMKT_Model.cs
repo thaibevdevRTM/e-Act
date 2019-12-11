@@ -21,8 +21,7 @@ namespace eActForm.Models
         public List<TB_Reg_Subject> tB_Reg_Subject { get; set; }
         public string createdByName { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
-        public decimal? totalCostThisActivity { get; set; }
-
+        public decimal? totalCostThisActivity { get; set; }        
     }
 
     public class ActivityFormTBMMKT : ActivityForm
@@ -64,6 +63,7 @@ namespace eActForm.Models
         public string createdByUserId { get; set; }
         public DateTime? updatedDate { get; set; }
         public string updatedByUserId { get; set; }
+        public string BudgetNumber { get; set; }
     }
 
 
@@ -94,6 +94,9 @@ namespace eActForm.Models
     {
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? unitPrice { get; set; }
+        public string unitPriceDisplay { get; set; }
+        public string unitPriceDisplayReport { get; set; }
+        public string QtyName { get; set; }
     }
 
 
