@@ -928,7 +928,7 @@
         else {
             var startDate = $("#txtdateActivitySt").val().split("-");
             var endDate = $("#txtdateActivityEnd").val().split("-");
-            if (new Date(startDate[2], startDate[1], startDate[0]) >= new Date(endDate[2], endDate[1], endDate[0])) {
+            if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1], endDate[0])) {
                 required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
             }
         }
@@ -1257,26 +1257,9 @@
         maxFilesize: 10,
         //addRemoveLinks: true,
         init: function () {
-
-           
-
-            this.on("thumbnail", function (file) {
-                if (file.height > maxImageHeight) {
-                    file.rejectDimensions()
-                    alert("ความสูง ไม่เกิน 800 px ");
-                }
-                else {
-                    file.acceptDimensions();
-                }
-            });
-
             this.on("complete", function (file) {
                 CallImageView($("#hdActivityId").val());
             });
         },
-        accept: function (file, done) {
-            file.acceptDimensions = function () { done(); };
-            file.rejectDimensions = function () { done("Image width or height too big."); };
-        }
     };
 </script>
