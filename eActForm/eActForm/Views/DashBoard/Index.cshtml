@@ -13,42 +13,54 @@
 <div class="row" role="main">
     <div class="col-md-12">
         <div class="row top_tiles">
-            @*@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
-    {
-        <li>@Html.ActionLink(" Documents", "Index", "Home", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-}
-            @if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
-    {
-        <li>@Html.ActionLink(" Documents OMT", "Index", "Home", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
-}
-            @if (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
-    {
-        <li>@Html.ActionLink(" Documents TBM", "Index", "Home", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)</li>
-}*@
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
-                    <div class="count">@Model.dashBoardLists[0].countCreated</div>
-                    <h3>เอกสารทั้งหมด</h3>
-                    <p>จำนวนเอกสารที่คุณสร้าง</p>
+            @{
+                var linkWebDocument = "";
+                var linkWebWaitApprove = "ApproveLists?fromPage=DashboardPage&StatusApprove=2";
+                var linkWebSuccessApprove = "ApproveLists?fromPage=DashboardPage&StatusApprove=3";
+            }
+            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
+            {
+                linkWebDocument = ("Home?typeForm=" + Activity_Model.activityType.MT.ToString());
+            }
+            else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+            {
+
+                linkWebDocument = ("Home?typeForm=" + Activity_Model.activityType.OMT.ToString());
+            }
+            else
+            {
+                linkWebDocument = ("Home?typeForm=" + Activity_Model.activityType.TBM.ToString());
+            }
+            <a href="@linkWebDocument">
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
+                        <div class="count">@Model.dashBoardLists[0].countCreated</div>
+                        <h3>เอกสารทั้งหมด</h3>
+                        <p>จำนวนเอกสารที่คุณสร้าง</p>
+                    </div>
                 </div>
-            </div>
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-comments-o"></i></div>
-                    <div class="count">@Model.dashBoardLists[0].countWaitingApprove</div>
-                    <h3>รออนุมัติ</h3>
-                    <p>จำนวนเอกสารที่รอการอนุมติ</p>
+            </a>
+            <a href="@linkWebWaitApprove">
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-comments-o"></i></div>
+                        <div class="count">@Model.dashBoardLists[0].countWaitingApprove</div>
+                        <h3>รออนุมัติ</h3>
+                        <p>จำนวนเอกสารที่รอการอนุมติ</p>
+                    </div>
                 </div>
-            </div>
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-check-square-o"></i></div>
-                    <div class="count">@Model.dashBoardLists[0].countApprove</div>
-                    <h3>อนุมัติ</h3>
-                    <p>จำนวนเอกสารที่ได้รับการอนุมติเรียบร้อย</p>
+            </a>
+            <a href="@linkWebSuccessApprove">
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-check-square-o"></i></div>
+                        <div class="count">@Model.dashBoardLists[0].countApprove</div>
+                        <h3>อนุมัติ</h3>
+                        <p>จำนวนเอกสารที่ได้รับการอนุมติเรียบร้อย</p>
+                    </div>
                 </div>
-            </div>
+            </a>
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
