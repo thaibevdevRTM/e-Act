@@ -928,7 +928,7 @@
         else {
             var startDate = $("#txtdateActivitySt").val().split("-");
             var endDate = $("#txtdateActivityEnd").val().split("-");
-            if (new Date(startDate[2], startDate[1], startDate[0]) >= new Date(endDate[2], endDate[1], endDate[0])) {
+            if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1], endDate[0])) {
                 required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
             }
         }
@@ -1248,7 +1248,7 @@
 
 <script>
 
-
+    var maxImageHeight = 800;
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
         maxFiles: 5,
@@ -1257,12 +1257,9 @@
         maxFilesize: 10,
         //addRemoveLinks: true,
         init: function () {
-
             this.on("complete", function (file) {
                 CallImageView($("#hdActivityId").val());
-
             });
-        }
-
+        },
     };
 </script>

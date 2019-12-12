@@ -1,13 +1,14 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 <div id="divHeaderDetails" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
-        <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelHeaderDetails" runat="server">
+    <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelHeaderDetails" runat="server">
         <tr style="background-color:#2f74b5;color:white;height:25px;">
             <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">IO</th>
             <th style="width: 50%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายละเอียด</th>
             <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
-            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย</th>
-            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงินรวม</th>
+            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
+            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</th>
         </tr>
+        @{ var index = 0;}
         @foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
         {
             if (item.productDetail != "")
@@ -22,7 +23,7 @@
                     @if (item.unit != 0)
                     {
                         <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            @item.unit
+                            @item.unit @item.QtyName
                         </td>
                     }
                     else
@@ -33,7 +34,7 @@
                     @if (item.unitPrice != 0)
                     {
                         <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            @string.Format("{0:#,0.00}", @item.unitPrice) บาท/หน่วย
+                            @item.unitPriceDisplay
                         </td>
                     }
                     else
@@ -51,13 +52,13 @@
                     {
                         <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;"></td>
                     }
-
                 </tr>
             }
+            index++;
         }
         <tr>
             <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                TOTAL&nbsp;
+                จำนวนเงินรวม(บาท)&nbsp;
             </td>
             <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
                 @Model.totalCostThisActivity.Value.ToString("#,##0.00")&nbsp;
