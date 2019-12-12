@@ -17,10 +17,10 @@
                 <table>
                     <tbody>
                         @*<tr>
-                            <td colspan="3" align="center">
-                                <label style="font-size:36px;">รูปภาพ</label>
-                            </td>
-                        </tr>*@
+                                <td colspan="3" align="center">
+                                    <label style="font-size:36px;">รูปภาพ</label>
+                                </td>
+                            </tr>*@
                         @for (int index = 0; index < Model.productImageList.Count; index++)
                         {
                             if (Model.productImageList[index].extension != ".pdf")
@@ -28,14 +28,13 @@
                                 if (Model.productImageList.Where(x => x.extension.ToLower() == ".jpg" || x.extension.ToLower() == ".png").AsEnumerable().Count() == 1)
                                 {
                                     <tr>
-
                                         <td style="text-align:center;">
-                                            <img style="max-height:800px; min-height:500px; max-width:650px; min-width:200px;" src="@string.Format(url, Model.productImageList[index]._fileName)" />
+                                            <div>
+                                                <img width="500" src="@string.Format(url, Model.productImageList[index]._fileName)" />
+                                            </div>
                                         </td>
                                         <td></td>
                                         <td></td>
-                                     
-
                                     </tr>
                                 }
                                 else

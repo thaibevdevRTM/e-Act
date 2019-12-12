@@ -242,24 +242,8 @@ namespace eActForm.Controllers
                     string UploadDirectory = Server.MapPath(string.Format(System.Configuration.ConfigurationManager.AppSettings["rootUploadfiles"].ToString(), _fileName));
                     resultFilePath = UploadDirectory;
                     BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
-                    if (BaseAppCodes.ValidateExtension(extension))
-                    {
-                        WebImage img = new WebImage(httpPostedFile.InputStream);
-                        if (img.Height > 700 || img.Width > 600)
-                        {
-                            img.Resize(550, 700);
-                            img.Save(UploadDirectory);
-                        }
-                        else
-                        {
-                            img.Save(UploadDirectory);
-                        }
-                    }
-                    else
-                    {
-                        httpPostedFile.SaveAs(UploadDirectory);
-                    }
-
+                    httpPostedFile.SaveAs(UploadDirectory);
+                    
                     imageFormModel.activityId = actId;
                     imageFormModel._image = b.ReadBytes(0); 
                     imageFormModel.imageType = "UploadFile";
