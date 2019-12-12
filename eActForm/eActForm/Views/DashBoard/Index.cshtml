@@ -15,21 +15,36 @@
         <div class="row top_tiles">
             @{
                 var linkWebDocument = "";
-                var linkWebWaitApprove = "ApproveLists?fromPage=DashboardPage&StatusApprove=2";
-                var linkWebSuccessApprove = "ApproveLists?fromPage=DashboardPage&StatusApprove=3";
+                var linkWebWaitApprove = "";
+                var linkWebSuccessApprove = "";
+
+                if (UtilsAppCode.Session.User.isApprove)
+                {
+                    linkWebWaitApprove = "ApproveLists?fromPage=DashboardPage&StatusApprove=2";
+                    linkWebSuccessApprove = "ApproveLists?fromPage=DashboardPage&StatusApprove=3";
+                }
+                else
+                {
+                    linkWebWaitApprove = "#";
+                    linkWebSuccessApprove = "#";
+                }
             }
-            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
+            @if (UtilsAppCode.Session.User.isCreator && UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
             {
                 linkWebDocument = ("Home?typeForm=" + Activity_Model.activityType.MT.ToString());
             }
-            else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+            else if (UtilsAppCode.Session.User.isCreator && UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
             {
 
                 linkWebDocument = ("Home?typeForm=" + Activity_Model.activityType.OMT.ToString());
             }
-            else
+            else if (UtilsAppCode.Session.User.isCreator)
             {
                 linkWebDocument = ("Home?typeForm=" + Activity_Model.activityType.TBM.ToString());
+            }
+            else
+            {
+                linkWebDocument = "#";
             }
             <a href="@linkWebDocument">
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
