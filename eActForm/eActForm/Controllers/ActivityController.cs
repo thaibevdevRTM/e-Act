@@ -245,14 +245,14 @@ namespace eActForm.Controllers
                     if (BaseAppCodes.ValidateExtension(extension))
                     {
                         WebImage img = new WebImage(httpPostedFile.InputStream);
-                        if (img.Height > 700)
+                        if (img.Height > 700 || img.Width > 600)
                         {
-                            img.Resize(525, 700);
+                            img.Resize(550, 700);
                             img.Save(UploadDirectory);
                         }
                         else
                         {
-                            httpPostedFile.SaveAs(UploadDirectory);
+                            img.Save(UploadDirectory);
                         }
                     }
                     else
@@ -261,7 +261,7 @@ namespace eActForm.Controllers
                     }
 
                     imageFormModel.activityId = actId;
-                    imageFormModel._image = b.ReadBytes(0); ;
+                    imageFormModel._image = b.ReadBytes(0); 
                     imageFormModel.imageType = "UploadFile";
                     imageFormModel._fileName = _fileName.ToLower();
                     imageFormModel.extension = extension.ToLower();
