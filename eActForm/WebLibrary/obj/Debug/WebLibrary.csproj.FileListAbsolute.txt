@@ -1,0 +1,8 @@
+D:\thaibev\MAS_WebAPI\WebLibrary\bin\Debug\WebLibrary.dll
+D:\thaibev\MAS_WebAPI\WebLibrary\bin\Debug\WebLibrary.pdb
+D:\thaibev\MAS_WebAPI\WebLibrary\bin\Debug\Microsoft.Exchange.WebServices.dll
+D:\thaibev\MAS_WebAPI\WebLibrary\bin\Debug\Microsoft.Exchange.WebServices.xml
+D:\thaibev\MAS_WebAPI\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
+D:\thaibev\MAS_WebAPI\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
+D:\thaibev\MAS_WebAPI\WebLibrary\obj\Debug\WebLibrary.dll
+D:\thaibev\MAS_WebAPI\WebLibrary\obj\Debug\WebLibrary.pdb
