@@ -38,5 +38,11 @@ namespace eActForm.Controllers
             }
             return PartialView(model);
         }
+
+        public JsonResult getDataList()
+        {
+
+
+        }
     }
 }

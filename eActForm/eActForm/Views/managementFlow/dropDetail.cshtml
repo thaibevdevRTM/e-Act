@@ -58,7 +58,65 @@
 </div>
 
 <div class="row form-group" style="text-align:center;">
-    <p class="d-flex justify-content-center" >
+    <p class="d-flex justify-content-center">
         <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
     </p>
 </div>
+
+<div class="box-body">
+    <div id="Grid"></div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(function () {
+
+        var dataManager = ej.DataManager({
+            url: '@Url.Action("getDataList", "ManagementFlow")',
+            adaptor: new ej.WebApiAdaptor(),
+            offline: true
+        });
+
+        dataManager.ready.done(function (e) {
+            $("#Grid").ejGrid({
+                dataSource: ej.DataManager({
+                    json: e.result,
+                    adaptor: new ej.remoteSaveAdaptor(),
+                    insertUrl: "/api/Warehouse/Insert",
+                    updateUrl: "/api/Warehouse/Update",
+                    removeUrl: "/api/Warehouse/Remove",
+                }),
+                toolbarSettings: {
+                    showToolbar: true,
+                    toolbarItems: ["add", "edit", "delete", "update", "cancel", "search", "printGrid"]
+                },
+                editSettings: {
+                    allowEditing: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                    showDeleteConfirmDialog: true,
+                    editMode: "dialog"
+                },
+                isResponsive: true,
+                enableResponsiveRow: true,
+                allowSorting: true,
+                allowSearching: true,
+                allowFiltering: true,
+                filterSettings: {
+                    filterType: "excel",
+                    maxFilterChoices: 100,
+                    enableCaseSensitivity: false
+                },
+                allowPaging: true,
+                pageSettings: { pageSize: 10, printMode: ej.Grid.PrintMode.CurrentPage },
+                columns: [
+                    { field: "WarehouseId", headerText: 'Warehouse Id', isPrimaryKey: true, isIdentity: true, visible: false },
+                    { field: "WarehouseName", headerText: 'Warehouse Name', validationRules: { required: true } },
+
+                ],
+                actionComplete: "complete",
+            });
+        });
+
+</script>
