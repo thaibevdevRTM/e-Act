@@ -6,3 +6,9 @@ D:\thaibev\MAS_WebAPI\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.dll
 D:\thaibev\MAS_WebAPI\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.xml
 D:\thaibev\MAS_WebAPI\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
 D:\thaibev\MAS_WebAPI\WebLibrary\obj\Release\WebLibrary.csprojAssemblyReference.cache
+D:\project\GitHub\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.dll
+D:\project\GitHub\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.pdb
+D:\project\GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csprojAssemblyReference.cache
+D:\project\GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CoreCompileInputs.cache
+D:\project\GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
+D:\project\GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
