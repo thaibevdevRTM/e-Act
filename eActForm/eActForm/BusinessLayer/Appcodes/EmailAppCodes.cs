@@ -109,7 +109,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actFormId);
+                ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actFormId, currentEmpId);
                 if (models.approveDetailLists != null && models.approveDetailLists.Count > 0)
                 {
                     #region get mail to

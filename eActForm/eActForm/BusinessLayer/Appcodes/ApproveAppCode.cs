@@ -369,8 +369,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
-
-        public static ApproveModel.approveModels getApproveByActFormId(string actFormId)
+        public static ApproveModel.approveModels getApproveByActFormId(string actFormId,string empId)
         {
             try
             {
@@ -407,7 +406,7 @@ namespace eActForm.BusinessLayer
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveByActFormId"
                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
-                    var empDetail = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList(); //
+                    var empDetail = models.approveDetailLists.Where(r => r.empId == empId).ToList(); //
                     var lists = (from DataRow dr in ds.Tables[0].Rows
                                  select new ApproveModel.approveModel()
                                  {
@@ -421,7 +420,7 @@ namespace eActForm.BusinessLayer
                                      createdByUserId = dr["createdByUserId"].ToString(),
                                      updatedDate = (DateTime?)dr["updatedDate"],
                                      updatedByUserId = dr["updatedByUserId"].ToString(),
-                                     isPermisionApprove = getPremisionApproveByEmpid(models.approveDetailLists, UtilsAppCode.Session.User.empId)
+                                     isPermisionApprove = getPremisionApproveByEmpid(models.approveDetailLists, empId)
                                  }).ToList();
 
                     models.approveModel = lists[0];
@@ -429,6 +428,17 @@ namespace eActForm.BusinessLayer
                 }
 
                 return models;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getCountApproveByActFormId >>" + ex.Message);
+            }
+        }
+        public static ApproveModel.approveModels getApproveByActFormId(string actFormId)
+        {
+            try
+            {
+                return getApproveByActFormId(actFormId, UtilsAppCode.Session.User.empId);
             }
             catch (Exception ex)
             {
