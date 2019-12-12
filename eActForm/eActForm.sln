@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2018
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eActForm", "eActForm\eActForm.csproj", "{F2ED982E-1CCB-455B-AB47-758AEC9C6A25}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eActConsoleService", "eActConsoleService\eActConsoleService.csproj", "{A9699C55-EC59-446E-BFFB-98E0FF3805E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebLibrary", "WebLibrary\WebLibrary.csproj", "{915AE4CE-4607-4E97-9329-2F6D8B5C4569}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A9699C55-EC59-446E-BFFB-98E0FF3805E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9699C55-EC59-446E-BFFB-98E0FF3805E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9699C55-EC59-446E-BFFB-98E0FF3805E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{915AE4CE-4607-4E97-9329-2F6D8B5C4569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{915AE4CE-4607-4E97-9329-2F6D8B5C4569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{915AE4CE-4607-4E97-9329-2F6D8B5C4569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{915AE4CE-4607-4E97-9329-2F6D8B5C4569}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
