@@ -28,20 +28,30 @@
 
 
 <script>
+
+
     $("#ddlCompany").change(function () {
-          CallDropView($("#ddlCompany").val());
-    });
-
-    function CallDropView(obj) {
-
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("dropDetail", "ManagementFlow")',
-            data: { companyId: obj}
+            url: '@Url.Action("dropDetail", "ManagementFlow")',
+            data: { companyId: $("#ddlCompany").val() }
         }).done(function (htmlResponse) {
-            $("#divDrop").html(htmlResponse)
+            $("#divDrop").html(htmlResponse);
+            setShowDrop();
         });
+    });
+  
+
+    function setShowDrop() {
+        if ($("#ddlCompany").val() == '5600' || $("#ddlCompany").val() == '5601') {
+            document.getElementById("divTBM").style.display = "none";
+        }
+        else {
+            document.getElementById("divTBM").style.display = "block";
+        }
+
     }
+
 
 
 </script>

@@ -1,7 +1,7 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
 
 
-<div class="form-group">
+<div class="row form-group">
 
     <div class="col-md-3">
         <div class="col-md-12 col-xs-12">
@@ -36,7 +36,29 @@
             @Html.DropDownListFor(model => model.cateList, new SelectList(Model.cateList, "id", "cateName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCate" })
         </div>
     </div>
-
-
 </div>
 
+<div id="divTBM" class="row form-group">
+    <div class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Brand</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlBrand" })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Chanel</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.chanelList, new SelectList(Model.chanelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control textboxcss", id = "ddlChanelGroup" })
+        </div>
+    </div>
+</div>
+
+<div class="row form-group" style="text-align:center;">
+    <p class="d-flex justify-content-center" >
+        <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+    </p>
+</div>
