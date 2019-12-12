@@ -137,10 +137,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="WebLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\MAS_WebAPI\WebLibrary\bin\Release\WebLibrary.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Diagnostics.DiagnosticSource">
@@ -2394,6 +2390,12 @@
     <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
     <Folder Include="Views\ApiApprove\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebLibrary\WebLibrary.csproj">
+      <Project>{915ae4ce-4607-4e97-9329-2f6d8b5c4569}</Project>
+      <Name>WebLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
