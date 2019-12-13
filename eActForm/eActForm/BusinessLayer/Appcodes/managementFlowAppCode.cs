@@ -54,7 +54,8 @@ namespace eActForm.BusinessLayer.Appcodes
             return QueryGetAllBrand.GetAllBrand().Where(x => x.no_tbmmkt != null).ToList();
         }
 
-        public static 
+
+
 
     }
 }

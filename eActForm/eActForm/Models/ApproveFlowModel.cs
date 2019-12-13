@@ -23,12 +23,15 @@ namespace eActForm.Models
         public class flowApproveDetail : ActBaseModel
         {
             public string id { get; set; }
+            public string companyId { get; set; }
+            public string flowId { get; set; }
             public int? rangNo { get; set; }
             public string empId { get; set; }
             public string empEmail { get; set; }
             public string empFNameTH { get; set; }
             public string empLNameTH { get; set; }
             public string empPositionTitleTH { get; set; }
+            public string approveGroupId { get; set; }
             public string approveGroupName { get; set; }
             public string approveGroupNameEN { get; set; }
             public bool isShowInDoc { get; set; }

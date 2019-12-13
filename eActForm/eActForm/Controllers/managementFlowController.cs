@@ -1,4 +1,5 @@
-﻿using eActForm.BusinessLayer.Appcodes;
+﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
@@ -39,9 +40,19 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-        public JsonResult getDataList()
+        public JsonResult getApproveFlowDataList()
         {
+            var result = new AjaxResult();
+            try
+            {
+                //var result = ApproveFlowAppCode.getFlowApproveGroupByType();
+            }
+            catch(Exception ex)
+            {
 
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
 
         }
     }

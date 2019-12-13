@@ -70,10 +70,10 @@
 
 
 <script type="text/javascript">
-    $(function () {
+    function submitPreview() {
 
         var dataManager = ej.DataManager({
-            url: '@Url.Action("getDataList", "ManagementFlow")',
+            url: '@Url.Action("getApproveFlowDataList", "ManagementFlow")',
             adaptor: new ej.WebApiAdaptor(),
             offline: true
         });
@@ -82,7 +82,8 @@
             $("#Grid").ejGrid({
                 dataSource: ej.DataManager({
                     json: e.result,
-                    adaptor: new ej.remoteSaveAdaptor(),
+                    adaptor: new ej.remoteSaveAdaptor(), 
+                    
                     insertUrl: "/api/Warehouse/Insert",
                     updateUrl: "/api/Warehouse/Update",
                     removeUrl: "/api/Warehouse/Remove",
@@ -118,5 +119,6 @@
                 actionComplete: "complete",
             });
         });
+    }
 
 </script>
