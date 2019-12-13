@@ -1,26 +1,6 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.ActSignatureModel.SignModels
-  <!--  <div class="row">
-        @using (Html.BeginForm("createSignature", "Signature",FormMethod.Post ,new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            <h3>ลายเซ็นปัจจุบัน</h3>
-            <hr />
-            <div class="col-md-6 col-xs-6">
-                <div class="text-center">
-                    @if (Model.lists != null && Model.lists.Count > 0)
-                    {
-                        var base64 = Convert.ToBase64String(Model.lists[0].signature);
-                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                        <img src="@imgSrc" class="img-thumbnail" />
-                    }
-                    else
-                    {
-                        <img src="~/images/blank.png" class="img-thumbnail" />
-                    }
-                    <p style="text-align:center">@TempData["empName"]</p>
-                    <p style="text-align:center">@TempData["positionTitle"]</p>
-                </div>-->
+
 <div class="row">
     @using (Ajax.BeginForm("createSignature", "Signature", new AjaxOptions() { HttpMethod = "Post", LoadingElementId = "WaitDialog" }, new { id = "form" }))
     {
@@ -43,7 +23,7 @@
             </div>
         </div>
         <div class="col-md-6 col-xs-6">
-            <div class="signature-pad text-center">
+            @*<div class="signature-pad text-center">
                 <canvas class="panel panel-default center-block"></canvas>
                 @if (Model.lists.Count > 0)
                 {
@@ -58,7 +38,7 @@
                     <i class="fa fa fa-recycle fa-fw"></i>&nbsp;Clear
                 </button>
                 <button type="submit" class="btn btn-success btn-sm btn-clear-canvas"><i class="fa fa fa-check fa-fw"></i>&nbsp;Create</button>
-            </div>
+            </div>*@
             <div class="col-md-6 col-xs-6">
                 <div class="signature-pad text-center">
                     <canvas class="panel panel-default center-block"></canvas>
@@ -79,41 +59,43 @@
                 </div>
 
             </div>
-        }
-        <div class="row">
-            <h3>ประวัติ</h3>
-            <hr />
-            <table id="datatable" class="table table-striped table-hover">
-                <thead>
-                    <tr style="background-color:#2B5D95;color:#ffffff;">
-                        <th>รหัสพนักงาน</th>
-                        <th>ลายเซ็น</th>
-                        <th>User Create</th>
-                        <th>Create Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.lists != null)
-                    {
-                        foreach (var item in Model.lists)
+            }
+            <div class="row">
+                <h3>ประวัติ</h3>
+                <hr />
+                <table id="datatable" class="table table-striped table-hover">
+                    <thead>
+                        <tr style="background-color:#2B5D95;color:#ffffff;">
+                            <th>รหัสพนักงาน</th>
+                            <th>ลายเซ็น</th>
+                            <th>User Create</th>
+                            <th>Create Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.lists != null)
                         {
+                            foreach (var item in Model.lists)
+                            {
 
-                            <tr class="gradeX">
-                                <td>@item.empId</td>
-                                <td>
-                                    @if (item.signature.Length > 0)
-                                    {
-                                        var base64 = Convert.ToBase64String(item.signature);
-                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                        <img src="@imgSrc" class="img-thumbnail" style="text-align:center;margin:auto;" />
-                                    }
-                                </td>
-                                <td>@item.createdByUserId </td>
-                                <td>@item.createdDate </td>
-                            </tr>
+                                <tr class="gradeX">
+                                    <td>@item.empId</td>
+                                    <td>
+                                        @if (item.signature.Length > 0)
+                                        {
+                                            var base64 = Convert.ToBase64String(item.signature);
+                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                            <img src="@imgSrc" class="img-thumbnail" style="text-align:center;margin:auto;" />
+                                        }
+                                    </td>
+                                    <td>@item.createdByUserId </td>
+                                    <td>@item.createdDate </td>
+                                </tr>
+                            }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    }
+</div>
