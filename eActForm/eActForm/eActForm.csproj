@@ -137,10 +137,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="WebLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\MAS_WebAPI\WebLibrary\bin\Release\WebLibrary.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Diagnostics.DiagnosticSource">
@@ -180,6 +176,9 @@
     <Compile Include="App_Start\FontAwesomeBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BusinessLayer\Appcodes\ActFormAppCode.cs" />
+    <Compile Include="BusinessLayer\Appcodes\AdminUserAppCode.cs" />
+    <Compile Include="BusinessLayer\Appcodes\BaseAppCodes.cs" />
+    <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\Appcodes\ReportSummaryAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ApproveListAppCode.cs" />
@@ -206,6 +205,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllRegion.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetActivity.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetApprove.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetReport.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetChanelNameByCustomerId.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetCostDetailById.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCode.cs" />
@@ -218,13 +218,22 @@
     <Compile Include="BusinessLayer\Appcodes\SignatureAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UtilsAppCode.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityByIdTBMMKT.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityEstimateByActivityId.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityLayoutByActivityId.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityFormDetailOtherByActivityId.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetSelectAllTB_Reg_Subject.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetSelectBrandOrChannel.cs" />
     <Compile Include="Controllers\actFormRepDetailController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\ActivityCostDetailController.cs" />
     <Compile Include="Controllers\ActivityProductDetailController.cs" />
     <Compile Include="Controllers\ActivityViewerController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminUserController.cs" />
     <Compile Include="Controllers\AjaxResult.cs" />
+    <Compile Include="Controllers\API\ApiApproveController.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
     <Compile Include="Controllers\ApproveListsRepDetailController.cs" />
@@ -234,6 +243,7 @@
     <Compile Include="Controllers\BudgetApproveListController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
     <Compile Include="Controllers\BudgetMyDocController.cs" />
+    <Compile Include="Controllers\BudgetReportController.cs" />
     <Compile Include="Controllers\BudgetViewerController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
@@ -243,16 +253,21 @@
     <Compile Include="Controllers\SaleActualController.cs" />
     <Compile Include="Controllers\SignatureController.cs" />
     <Compile Include="Controllers\SummaryReportController.cs" />
+    <Compile Include="Controllers\TBMMKT_ActivityBudgetInputController.cs" />
+    <Compile Include="Controllers\TBMMKT_ActivityBudgetReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ActBaseModel.cs" />
+    <Compile Include="Models\Activity_TBMMKT_Model.cs" />
     <Compile Include="Models\Activity_Model.cs" />
     <Compile Include="Models\ActSignatureModel.cs" />
     <Compile Include="Models\ActUserModel.cs" />
+    <Compile Include="Models\AdminUserModel.cs" />
     <Compile Include="Models\AppCode.cs" />
     <Compile Include="Models\Budget_Activity_Model.cs" />
     <Compile Include="Models\Budget_Approve_Detail_Model.cs" />
+    <Compile Include="Models\Budget_Report_Model.cs" />
     <Compile Include="Models\DashBoardModel.cs" />
     <Compile Include="Models\DocumentsModel.cs" />
     <Compile Include="Models\RepDetailModel.cs" />
@@ -274,7 +289,8 @@
     <Compile Include="Models\TB_Act_Product_Cate_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Model.cs" />
     <Compile Include="Models\TB_Act_Region_Model.cs" />
-    <Compile Include="Models\TB_Budget_Activity_Model.cs" />
+    <Compile Include="Models\TB_Bud_Activity_Model.cs" />
+    <Compile Include="Models\TB_Bud_Image_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -1968,6 +1984,7 @@
     <Content Include="images\al.jpeg" />
     <Content Include="images\blank.png" />
     <Content Include="images\checkmark.gif" />
+    <Content Include="images\favicon.ico" />
     <Content Include="images\icon_ref.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\logo-ss.png" />
@@ -1975,8 +1992,14 @@
     <Content Include="images\maintain.png" />
     <Content Include="images\non_al.jpeg" />
     <Content Include="images\warning_error.png" />
+    <Content Include="images\xlx.png" />
     <Content Include="Scripts\Admin\adminPage.js" />
+    <Content Include="Scripts\Approve\RepDetailApproves.js" />
+    <Content Include="Scripts\bootbox.all.js" />
+    <Content Include="Scripts\bootbox.all.min.js" />
     <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.locales.js" />
+    <Content Include="Scripts\bootbox.locales.min.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -2148,9 +2171,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="manual\manual_eAct.pdf" />
-    <Content Include="ActivityFormPdf\fileNotFound.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="ActRepDetail\fileNotFound.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2195,6 +2215,9 @@
     <Content Include="uploadImages\e222c8de-3940-4239-ba39-4f86720ec056_5DB5E9C8-CB07-43FC-B25D-BB26D8C69A39.png" />
     <Content Include="Views\BudgetApproveList\Index.cshtml" />
     <Content Include="Views\BudgetApprove\previewApproveBudget.cshtml" />
+    <Content Include="Views\Budget\activityIndex.cshtml" />
+    <Content Include="Views\Budget\manageInvoiceList.cshtml" />
+    <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
     <Content Include="WebForm1.aspx" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -2307,25 +2330,72 @@
     <Content Include="Views\Shared\_previewActForm.cshtml" />
     <Content Include="Views\Login\Maintain.cshtml" />
     <Content Include="Views\Shared\_searchBudget.cshtml" />
+    <Content Include="Views\Budget\manageInvoiceIndex.cshtml" />
+    <Content Include="Views\Budget\manageInvoiceView.cshtml" />
+    <Content Include="Views\summaryReport\IndexDoc.cshtml" />
+    <Content Include="Views\summaryReport\ListDoc.cshtml" />
+    <Content Include="Views\BudgetViewer\invoicePDFView.cshtml" />
+    <Content Include="Views\Budget\manageInvoiceEdit.cshtml" />
+    <Content Include="Views\summaryReport\viewReportSummaryAlcohol.cshtml" />
+    <Content Include="Views\Activity\ShowImage.cshtml" />
+    <Content Include="Views\Approve\getApproveComment.cshtml" />
+    <Content Include="Views\actFormRepDetail\repPreviewForApprove.cshtml" />
+    <Content Include="Views\BudgetViewer\regenBudgetApprovePdf.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetActivityListView.cshtml" />
+    <Content Include="Views\Shared\_searchForBudgetReport.cshtml" />
+    <Content Include="Views\AdminUser\Index.cshtml" />
+    <Content Include="Views\Documents\actDetail.cshtml" />
+    <None Include="packages.config" />
+    <Content Include="Views\MenuList\activityForm.cshtml" />
+    <Content Include="Views\MenuList\budget.cshtml" />
+    <Content Include="Views\MenuList\document.cshtml" />
+    <Content Include="Views\MenuList\approve.cshtml" />
+    <Content Include="Views\MenuList\report.cshtml" />
+    <Content Include="Views\MenuList\dashboard.cshtml" />
+    <Content Include="Views\MenuList\signature.cshtml" />
+    <Content Include="Views\MenuList\admin.cshtml" />
+    <Content Include="Views\MenuList\contact.cshtml" />
+    <Content Include="Views\Shared\_searchReportDetail.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\headerCompany.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\Index.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\headerDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\activityDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\activityBudgetDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetReport\lastwordForFYI.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\activityBudgetDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\activityDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\headerCompany.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\headerDetails.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\Index.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\lastwordForFYI.cshtml" />
+    <Content Include="Views\TBMMKT_ActivityBudgetInput\attachOutFormTag.cshtml" />
+    <Content Include="Views\Shared\_PreviewForApproveDetail.cshtml" />
+    <Content Include="Views\actFormRepDetail\repPreviewForApproveDetail.cshtml" />
+    <Content Include="Views\Approve\previewActBudget.cshtml" />
+    <Content Include="Views\Shared\_previewActFormBudget.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetActivityIndex.cshtml" />
+    <Content Include="Views\MenuList\account.cshtml" />
+    <Content Include="Views\BudgetReport\reportBudgetAccSeIndex.cshtml" />
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ActBudget\" />
-    <Folder Include="App_Data\" />
+    <Folder Include="ActivityFormPdf\" />
+    <Folder Include="BusinessLayer\Tbmmkt\Appcodes\" />
     <Folder Include="error\" />
     <Folder Include="obj\Release\" />
     <Folder Include="signatureFile\" />
+    <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
+    <Folder Include="Views\ApiApprove\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
-    <TypeScriptCompile Include="Scripts\index.d.ts" />
+    <ProjectReference Include="..\WebLibrary\WebLibrary.csproj">
+      <Project>{915ae4ce-4607-4e97-9329-2f6d8b5c4569}</Project>
+      <Name>WebLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

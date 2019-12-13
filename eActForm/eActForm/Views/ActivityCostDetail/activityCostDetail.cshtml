@@ -96,7 +96,7 @@
                             @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")", style = "autofocus = 'autofocus'" })
                         </td>
                         <td>
-                             @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true, style = "autofocus = 'autofocus'" }) 
+                            @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true, style = "autofocus = 'autofocus'" })
                         </td>
                         <td>
                             @Html.TextBoxFor(model => item.LE, "{0:n2}", new { @id = "lblLE_" + index, Name = "lblLE_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")", style = "autofocus = 'autofocus'" })
@@ -122,80 +122,82 @@
                 }
             }
 
-                    <tr>
+            <tr>
 
-                        <td colspan="5" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
-                        <td>
-                            <p class="text-success textRight">
-                                @if (normalTotal != 0)
-                                {
-                                    string result = String.Format("{0:n2}", @normalTotal);
-                                    @result.ToString();
-                                }
-                            </p>
-                        </td>
-                        <td>
-                            <p class="text-success textRight">
-                                @if (activityTotal != 0)
-                                {
-                                    string result = String.Format("{0:n2}", @activityTotal);
-                                    @result.ToString();
-                                }
-                            </p>
-                        </td>
-                        <td>
-                            <p class="text-success textRight">
-                                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                                {
-                                    growthTotal = sumGrowth;
-                                    string result = String.Format("{0:n2}%", @growthTotal);
-                                    @result.ToString();
-
-                                }
-                                else
-                                {
-                                    if (activityTotal != 0 && normalTotal != 0)
-                                    {
-                                        growthTotal = (activityTotal - normalTotal) / normalTotal * 100;
-                                        string result = String.Format("{0:n2}%", @growthTotal);
-                                        @result.ToString();
-                                    }
-                                }
-
-                            </p>
-                        </td>
-                        <td>
-                            <p class="text-success textRight">
-                                @if (LE != 0)
-                                {
-                                    string result = String.Format("{0:n2}%", @LE);
-                                    @result.ToString();
-                                }
-                            </p>
-                        </td>
-                        @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                <td colspan="5" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
+                <td>
+                    <p class="text-success textRight">
+                        @if (normalTotal != 0)
                         {
-                            <td>
-                                <p class="text-success textRight">
-                                    @if (total != 0)
-                                    {
-                                        string result = String.Format("{0:n2}", @total);
-                                        @result.ToString();
-                                    }
-                                </p>
-                            </td>
+                            string result = String.Format("{0:n2}", @normalTotal);
+                            @result.ToString();
                         }
-                        <td>
-                            @*<p class="text-success textRight">
-                @if (total != 0 && activityTotal != 0)
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success textRight">
+                        @if (activityTotal != 0)
+                        {
+                            string result = String.Format("{0:n2}", @activityTotal);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success textRight">
+                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                        {
+                            growthTotal = sumGrowth;
+                            string result = String.Format("{0:n2}%", @growthTotal);
+                            @result.ToString();
+
+                        }
+                        else
+                        {
+                            if (activityTotal != 0 && normalTotal != 0)
+                            {
+                                growthTotal = (activityTotal - normalTotal) / normalTotal * 100;
+                                string result = String.Format("{0:n2}%", @growthTotal);
+                                @result.ToString();
+                            }
+                        }
+
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success textRight">
+                        @if (LE != 0)
+                        {
+                            string result = String.Format("{0:n2}%", @LE);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+
+                <td>
+                    <p class="text-success textRight">
+                        @if (total != 0)
+                        {
+                            string result = String.Format("{0:n2}", @total);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+
+                @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                 {
-                    perTotal = total / (activityTotal * Convert.ToDecimal(promotioncost == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
-                    string result = String.Format("{0:n2}", @perTotal);
-                    @result.ToString();
+                    <td>
+                        @*<p class="text-success textRight">
+                                @if (total != 0 && activityTotal != 0)
+                                {
+                                    perTotal = total / (activityTotal * Convert.ToDecimal(promotioncost == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
+                                    string result = String.Format("{0:n2}", @perTotal);
+                                    @result.ToString();
+                                }
+                            </p>*@
+                    </td>
                 }
-            </p>*@
-                        </td>
-                    </tr>
+            </tr>
         </table>
     </div>
 </div>
@@ -219,9 +221,11 @@
             data: {
                 productGroupId: id,
                 perTotal: perTotal,
+                actId:'@Model.activityFormModel.id',
+
             }
         }).done(function (response) {
-            callThemedetailcost();
+            callThemedetailcost('@Model.activityFormModel.id');
         });
     }
 
@@ -246,10 +250,11 @@
                 productId: productId,
                 total: total,
                 themeCost: themeCost,
+                actId:'@Model.activityFormModel.id'
 
             }
         }).done(function (response) {
-            callThemedetailcost();
+            callThemedetailcost('@Model.activityFormModel.id');
         });
     }
 
@@ -267,7 +272,7 @@
         var LE = $("#lblLE_" + rowIndex).val();
         LE = LE == "" ? 0 : LE;
         var productId = $("#hdProductId_" + rowIndex).val();
-        
+
 
         $.ajax({
             type: 'POST',
@@ -281,10 +286,11 @@
                 unit: unit,
                 compensate: compensate,
                 LE: LE,
-                typeForm:'@Model.activityFormModel.typeForm'
+                typeForm: '@Model.activityFormModel.typeForm',
+                actId : '@Model.activityFormModel.id'
             }
         }).done(function (response) {
-            callThemedetailcost();
+            callThemedetailcost('@Model.activityFormModel.id');
         });
 
     }
@@ -294,11 +300,12 @@
             url: '@Url.Action("delActCostDetail", "ActivityCostDetail")',
             data: {
                 rowid: id,
+                actId:'@Model.activityFormModel.id'
             },
             dataType: "json",
             type: 'POST',
             success: function (response) {
-                callThemedetailcost();
+                callThemedetailcost('@Model.activityFormModel.id');
             }
         });
     }

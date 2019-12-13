@@ -8,6 +8,7 @@ using eActForm.BusinessLayer;
 using eActForm.Models;
 using System.Configuration;
 using iTextSharp.text;
+using static eActForm.Models.RepDetailModel;
 
 namespace eActForm.Controllers
 {
@@ -20,11 +21,24 @@ namespace eActForm.Controllers
             return View();
         }
 
-        public ActionResult reportDetail()
+        public ActionResult reportDetail(string typeForm)
         {
             try
             {
-                SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
+                SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+                models.typeForm = typeForm;
+               // ViewBag.TypeForm = typeForm;
+                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                {
+                    if (typeForm == Activity_Model.activityType.MT.ToString())
+                    {
+                        models.customerslist = QueryGetAllCustomers.getCustomersMT();
+                    }
+                    else
+                    {
+                        models.customerslist = QueryGetAllCustomers.getCustomersOMT();
+                    }
+                }
                 return View(models);
             }
             catch (Exception ex)
@@ -36,14 +50,64 @@ namespace eActForm.Controllers
             return View();
         }
 
-        public ActionResult reportDetailListsView()
+        public ActionResult searchActForm(string typeForm)
         {
             DocumentsModel.actRepDetailModels models = new DocumentsModel.actRepDetailModels();
             try
             {
+                DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
+                DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
+                models.actRepDetailLists = DocumentsAppCode.getActRepDetailLists(startDate, endDate, typeForm);
 
-                models.actRepDetailLists = DocumentsAppCode.getActRepDetailLists();
+                if (Request.Form["txtActivityNo"] != "")
+                {
+                    models.actRepDetailLists = models.actRepDetailLists.Where(x => x.id == RepDetailAppCode.getRepdetailByActNo(Request.Form["txtActivityNo"].ToString())).ToList();
+                }
+                else
+                {
+                    #region filter
+                    if (Request.Form["ddlStatus"] != "")
+                    {
+                        models.actRepDetailLists = models.actRepDetailLists.Where(x => x.statusId == Request.Form["ddlStatus"]).ToList();
+                    }
+                    if (Request.Form["ddlCustomer"] != "")
+                    {
+                        models.actRepDetailLists = models.actRepDetailLists.Where(x => x.customerId == Request.Form["ddlCustomer"]).ToList();
+                    }
 
+                    if (Request.Form["ddlProductType"] != "")
+                    {
+                        models.actRepDetailLists = models.actRepDetailLists.Where(x => x.productTypeId == Request.Form["ddlProductType"]).ToList();
+                    }
+
+
+                    #endregion
+                }
+                TempData["SearchDataRepDetail"] = models.actRepDetailLists;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return RedirectToAction("reportDetailListsView");
+        }
+
+        public ActionResult reportDetailListsView(string typeForm)
+        {
+            DocumentsModel.actRepDetailModels models = new DocumentsModel.actRepDetailModels();
+            try
+            {
+                if (TempData["SearchDataRepDetail"] != null)
+                {
+                    models.actRepDetailLists = (List<DocumentsModel.actRepDetailModel>)TempData["SearchDataRepDetail"];
+                }
+                else
+                {
+                    models.actRepDetailLists = DocumentsAppCode.getActRepDetailLists(DateTime.Now.AddDays(-15), DateTime.Now, typeForm);
+                }
+                TempData["SearchDataModelSummary"] = null;
+                return PartialView(models);
             }
             catch (Exception ex)
             {
@@ -59,8 +123,7 @@ namespace eActForm.Controllers
             var resultAjax = new AjaxResult();
             try
             {
-
-                var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId+"_");
+                var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
                 GridHtml = GridHtml.Replace("<br>", "<br/>");
                 AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
 
@@ -88,6 +151,23 @@ namespace eActForm.Controllers
                 resultAjax.Message = ex.Message;
             }
             return Json(resultAjax, "text/plain");
+        }
+
+
+        public ActionResult actDetail(string repId)
+        {
+            actApproveRepDetailModels model = new actApproveRepDetailModels();
+            try
+            {
+                model.repDetailLists = RepDetailAppCode.getActNoByRepId(repId);
+                return PartialView(model);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("actDetail >> " + ex.Message);
+            }
+
+            return PartialView(model);
         }
     }
 }

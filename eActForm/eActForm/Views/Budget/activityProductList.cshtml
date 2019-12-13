@@ -1,19 +1,28 @@
 ﻿@model eActForm.Models.Budget_Activity_Model
 @{
 	ViewBag.Title = "";
+	var last = Model.Budget_Activity_Last_Approve;
 }
 
 
 <div class="alert alert-success" role="alert">
-	<h4 class="alert-heading">
-		แบบฟอร์มรายละเอียดค่าใช้จ่ายตั้งจ่ายจริง  กิจกรรมเลขที่ :
-		@if (Model.Budget_Activity_Product_list.Count > 0)
-		{
-			@Html.DisplayFor(item => Model.Budget_Activity_Product_list.ElementAt(0).act_activityNo)
-		}
-	</h4>
-	<p></p>
+
+	@if (Model.Budget_Activity.act_activityNo != null)
+	{
+		<h4 class="alert-heading text-center">
+			แบบฟอร์มรายละเอียดค่าใช้จ่ายตั้งจ่ายจริง
+		</h4>
+
+		<h4 class="alert-heading text-center">
+			กิจกรรมเลขที่ : @Html.DisplayFor(item => Model.Budget_Activity.act_activityNo) (@Html.DisplayFor(item => Model.Budget_Activity.cus_cusNameTH))
+		</h4>
+	}
+
 </div>
+
+<a onclick="callApproveList('@(last == null ? "" : last.budgetApproveId)');"> <i class="btn ink-reaction btn-dark fa fa-eye"></i> รายการอนุมัติครั้งล่าสุด </a>
+@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = last == null ? "" : last.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" }) รายละเอียดค่าใช้จ่าย (pdf)
+
 
 <table class="table table-striped table-hover" id="datatable">
 	<thead class="thead-dark">
@@ -22,13 +31,8 @@
 			<th class="align-content-center font12B" style="width:15%;">ประเภทกิจกรรม</th>
 			<th class="align-content-center font12B" style="width:25%;">กลุ่มสินค้า/ชื่อสินค้า</th>
 			<th class="font12B" style="text-align:right;">จำนวนเงินที่ตั้ง</th>
-			@*<th class="align-content-center font12B">เลขที่ใบแจ้งหนี้</th>*@
-			@*<th class="align-content-center font12B">เลขที่ใบสำคัญจ่าย</th>
-				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม case</th>
-				<th class="align-content-center font12B">ยอดขายช่วงทำกิจกรรม bath</th>*@
 			<th class="font12B" style="text-align:right;">จำนวนเงินจ่าย(รวม)</th>
 			<th class="font12B" style="text-align:right;">คงเหลือ</th>
-			@*<th class="align-content-center font12B" >วันที่ทำรายการ</th>*@
 			<th class="align-content-center font12B" style="width:10%;">สถานะ</th>
 		</tr>
 	</thead>
@@ -41,7 +45,7 @@
 			{
 				<tr class="gradeX">
 					<td>
-						<a href="javascript:" class="btn ink-reaction btn-success fa fa-search" onclick="javascript:callInvoiceList('@item.act_activityId','@item.activityOfEstimateId');"></a>
+						<a href="javascript:" class="btn ink-reaction btn-success fa fa-list-ul" onclick="javascript:callInvoiceList('@item.act_activityId','@item.activityOfEstimateId');"></a>
 					</td>
 
 					<td style="font-size:12.5px;">@item.act_typeTheme</td>

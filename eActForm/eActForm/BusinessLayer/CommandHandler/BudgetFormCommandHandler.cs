@@ -29,10 +29,10 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@productId",model.productId)
 					,new SqlParameter("@activityOfEstimateId",model.activityOfEstimateId)
 					,new SqlParameter("@paymentNo",model.paymentNo)
-					
-					//รอเพิ่ม invoiceProductStatusId จาก ddlStatus ใน store procedure
-					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
 
+					,new SqlParameter("@budgetImageId",model.budgetImageId)
+
+					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
 					,new SqlParameter("@invoiceTotalBath",model.invoiceTotalBath)
 					,new SqlParameter("@actionDate",model.dateInvoiceAction) //invoiceActionDate
@@ -64,10 +64,9 @@ namespace eActForm.BusinessLayer
 					,new SqlParameter("@productId",model.productId)
 					,new SqlParameter("@activityOfEstimateId",model.activityOfEstimateId)
 					,new SqlParameter("@paymentNo",model.paymentNo)
-					
-					//รอเพิ่ม invoiceProductStatusId จาก ddlStatus ใน store procedure
-					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
+					,new SqlParameter("@budgetImageId",model.budgetImageId)
 
+					,new SqlParameter("@invoiceBudgetStatusId",model.invoiceBudgetStatusId)
 					,new SqlParameter("@invoiceNo",model.invoiceNo)
 					,new SqlParameter("@invoiceTotalBath",model.invoiceTotalBath)
 					//,new SqlParameter("@actionDate",model.invoiceActionDate)
@@ -84,7 +83,7 @@ namespace eActForm.BusinessLayer
 			return result;
 		}
 
-		public static int deleteInvoiceProduct(string activityId,string estimateId, string invoiceId)
+		public static int deleteInvoiceProduct(string activityId,string estimateId, string invoiceId , string delType)
 		//public static int deleteInvoiceProduct(string activityId, string estimateId, string invoiceNo)
 		{
 
@@ -97,6 +96,7 @@ namespace eActForm.BusinessLayer
 					, new SqlParameter[] {new SqlParameter("@activityId",activityId)
 					,new SqlParameter("@activityOfEstimateId",estimateId)
 					,new SqlParameter("@invoiceId",invoiceId)
+					,new SqlParameter("@delType",delType)
 					});
 			}
 			catch (Exception ex)
@@ -108,5 +108,6 @@ namespace eActForm.BusinessLayer
 		}
 
 
+	
 	}
 }

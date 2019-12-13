@@ -15,17 +15,31 @@ namespace eActForm.BusinessLayer
 {
     public class RepDetailAppCode
     {
-        public static void genFilePDFBrandGroup(string actRepDetailId,string gridHtml,string htmlOS, string htmlEst, string htmlWA, string htmlSO)
+        public static void reGenPDFReportDetail(string actRepDetailId, string gridHtml)
         {
             try
             {
                 string fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId);
                 var rootPath = HttpContext.Current.Server.MapPath(fileName);
-                List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("genFilePDF >> " + ex.Message);
+            }
+        }
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "OS&JJ_" + actRepDetailId );
-                rootPath = HttpContext.Current.Server.MapPath(fileName);
-                file = AppCode.genPdfFile(htmlOS, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+        public static void genFilePDFBrandGroup(string actRepDetailId, string gridHtml, string htmlOS, string htmlEst, string htmlWA, string htmlSO)
+        {
+            try
+            {
+                string fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actRepDetailId);
+                var rootPath = HttpContext.Current.Server.MapPath(fileName);
+                List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
+
+                fileName = "OS&JJ_" + actRepDetailId;
+                rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], fileName));
+                file = AppCode.genPdfFile(htmlOS, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                 TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel
                 {
                     activityId = actRepDetailId,
@@ -34,21 +48,21 @@ namespace eActForm.BusinessLayer
                 };
                 int resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "Est&HP_" + actRepDetailId );
-                rootPath = HttpContext.Current.Server.MapPath(fileName);
-                file = AppCode.genPdfFile(htmlEst, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                fileName = "Est&HP_" + actRepDetailId;
+                rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], fileName));
+                file = AppCode.genPdfFile(htmlEst, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                 imageFormModel._fileName = fileName;
                 resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "WA&CY_" + actRepDetailId);
-                rootPath = HttpContext.Current.Server.MapPath(fileName);
-                file = AppCode.genPdfFile(htmlWA, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                fileName = "WA&CY_" + actRepDetailId;
+                rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], fileName));
+                file = AppCode.genPdfFile(htmlWA, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                 imageFormModel._fileName = fileName;
                 resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
-                fileName = string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], "SO&WR_" + actRepDetailId);
-                rootPath = HttpContext.Current.Server.MapPath(fileName);
-                file = AppCode.genPdfFile(htmlSO, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                fileName = "SO&WR_" + actRepDetailId;
+                rootPath = HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], fileName));
+                file = AppCode.genPdfFile(htmlSO, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                 imageFormModel._fileName = fileName;
                 resultImg = ImageAppCode.insertImageForm(imageFormModel);
 
@@ -150,6 +164,20 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
+
+        public static RepDetailModel.actFormRepDetails getFilterRepDetailByRegion(RepDetailModel.actFormRepDetails model, string regionId)
+        {
+            try
+            {
+                model.actFormRepDetailGroupLists = model.actFormRepDetailGroupLists.Where(r => r.regionId == regionId).ToList();
+                model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.regionId == regionId).ToList();
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
+            }
+        }
         public static RepDetailModel.actFormRepDetails getFilterRepDetailByActivity(RepDetailModel.actFormRepDetails model, string activityId)
         {
             try
@@ -189,14 +217,15 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFilterRepDetailByActNo >>" + ex.Message);
             }
         }
-        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate)
+        public static RepDetailModel.actFormRepDetails getRepDetailReportByCreateDateAndStatusId(string startDate, string endDate, string typeForm)
         {
             try
             {
                 DataSet ds = new DataSet();
-                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminOMT)
                 {
-                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDate"
+                    string stored = typeForm == Activity_Model.activityType.MT.ToString() ? "usp_getReportDetailByCreateDate" : "usp_getReportDetailOMTByCreateDate";
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored
                     , new SqlParameter[] {
                         new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
@@ -229,7 +258,31 @@ namespace eActForm.BusinessLayer
                         new SqlParameter("@repDetailId",repDetailId)
                     });
 
-                return dataTableToRepDetailModels(ds);
+                RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
+                model = dataTableToRepDetailModels(ds);
+                model.actFormRepDetailGroupLists.Select(r => r.delFlag = false
+                        ).ToList();
+                model.actFormRepDetailLists.Select(r => r.delFlag = false
+                        ).ToList();
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getRepDetailReportByCreateDateAndStatusId >>" + ex.Message);
+            }
+        }
+
+
+        public static string getRepdetailByActNo(string actNo)
+        {
+
+            try
+            {
+                object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getRepDetailIdByActNo"
+                    , new SqlParameter[] { new SqlParameter("@actNo", actNo) });
+
+                return obj.ToString();
+
             }
             catch (Exception ex)
             {
@@ -243,51 +296,55 @@ namespace eActForm.BusinessLayer
             {
                 RepDetailModel.actFormRepDetails actRepModel = new RepDetailModel.actFormRepDetails();
                 actRepModel.actFormRepDetailLists = (from DataRow dr in ds.Tables[0].Rows
-                             select new RepDetailModel.actFormRepDetailModel()
-                             {
-                                 #region detail parse
-                                 id = dr["activityId"].ToString(),
-                                 reference = dr["reference"].ToString(),
-                                 statusId = dr["statusId"].ToString(),
-                                 statusName = dr["statusName"].ToString(),
-                                 activityNo = dr["activityNo"].ToString(),
-                                 documentDate = (DateTime?)dr["documentDate"] ?? null,
-                                 brandId = dr["brandId"].ToString(),
-                                 customerId = dr["customerId"].ToString(),
-                                 productCateId = dr["productCateId"].ToString(),
-                                 productGroupid = dr["productGroupid"].ToString(),
-                                 cusNameTH = dr["cusNameTH"].ToString(),
-                                 productId = dr["productId"].ToString(),
-                                 productName = dr["productName"].ToString(),
-                                 size = dr["size"].ToString(),
-                                 typeTheme = dr["typeTheme"].ToString(),
-                                 normalSale = dr["normalCase"] is DBNull ? 0 : (decimal?)dr["normalCase"],
-                                 promotionSale = dr["promotionCase"] is DBNull ? 0 : (decimal?)dr["promotionCase"],
-                                 total = dr["total"] is DBNull ? 0 : (decimal?)dr["total"],
-                                 specialDisc = dr["specialDisc"] is DBNull ? 0 : (decimal?)dr["specialDisc"],
-                                 specialDiscBaht = dr["specialDiscBaht"] is DBNull ? 0 : (decimal?)dr["specialDiscBaht"],
-                                 promotionCost = dr["promotionCost"] is DBNull ? 0 : (decimal?)dr["promotionCost"],
-                                 channelName = dr["channelName"].ToString(),
-                                 productTypeId = dr["productTypeId"].ToString(),
-                                 activityPeriodSt = dr["activityPeriodSt"] is DBNull ? null : (DateTime?)dr["activityPeriodSt"],
-                                 activityPeriodEnd = dr["activityPeriodEnd"] is DBNull ? null : (DateTime?)dr["activityPeriodEnd"],
-                                 costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
-                                 costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
-                                 activityName = dr["activityName"].ToString(),
-                                 theme = dr["theme"].ToString(),
-                                 activityDetail = dr["activityDetail"].ToString(),
-                                 compensate = dr["compensate"] is DBNull ? 0 : (decimal)dr["compensate"],
-                                 delFlag = false,
-                                 createdDate = (DateTime?)dr["createdDate"],
-                                 perGrowth = dr["growth"] is DBNull ? 0 : (decimal?)dr["growth"],
-                                 perSE = dr["Le"] is DBNull ? 0 : (decimal?)dr["Le"],
-                                 perToSale = dr["perToSale"] is DBNull ? 0 : (decimal?)dr["perToSale"],
-                                 #endregion
+                                                     select new RepDetailModel.actFormRepDetailModel()
+                                                     {
+                                                         #region detail parse
+                                                         id = dr["activityId"].ToString(),
+                                                         reference = dr["reference"].ToString(),
+                                                         statusId = dr["statusId"].ToString(),
+                                                         statusName = dr["statusName"].ToString(),
+                                                         activityNo = dr["activityNo"].ToString(),
+                                                         documentDate = (DateTime?)dr["documentDate"] ?? null,
+                                                         brandId = dr["brandId"].ToString(),
+                                                         customerId = dr["customerId"].ToString(),
+                                                         regionId = dr["regionId"].ToString(),
+                                                         productCateId = dr["productCateId"].ToString(),
+                                                         productGroupid = dr["productGroupid"].ToString(),
+                                                         cusNameTH = dr["cusNameTH"].ToString(),
+                                                         productId = dr["productId"].ToString(),
+                                                         productName = dr["productName"].ToString(),
+                                                         size = dr["size"].ToString(),
+                                                         typeTheme = dr["typeTheme"].ToString(),
+                                                         normalSale = dr["normalCase"] is DBNull ? 0 : (decimal?)dr["normalCase"],
+                                                         promotionSale = dr["promotionCase"] is DBNull ? 0 : (decimal?)dr["promotionCase"],
+                                                         total = dr["total"] is DBNull ? 0 : (decimal?)dr["total"],
+                                                         specialDisc = dr["specialDisc"] is DBNull ? 0 : (decimal?)dr["specialDisc"],
+                                                         specialDiscBaht = dr["specialDiscBaht"] is DBNull ? 0 : (decimal?)dr["specialDiscBaht"],
+                                                         promotionCost = dr["promotionCost"] is DBNull ? 0 : (decimal?)dr["promotionCost"],
+                                                         channelName = dr["channelName"].ToString(),
+                                                         productTypeId = dr["productTypeId"].ToString(),
+                                                         activityPeriodSt = dr["activityPeriodSt"] is DBNull ? null : (DateTime?)dr["activityPeriodSt"],
+                                                         activityPeriodEnd = dr["activityPeriodEnd"] is DBNull ? null : (DateTime?)dr["activityPeriodEnd"],
+                                                         costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
+                                                         costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
+                                                         activityName = dr["activityName"].ToString(),
+                                                         theme = dr["theme"].ToString(),
+                                                         activityDetail = dr["activityDetail"].ToString(),
+                                                         compensate = dr["compensate"] is DBNull ? 0 : (decimal)dr["compensate"],
+                                                         delFlag = true,
+                                                         createdDate = (DateTime?)dr["createdDate"],
+                                                         perGrowth = dr["growth"] is DBNull ? 0 : (decimal?)dr["growth"],
+                                                         perSE = dr["Le"] is DBNull ? 0 : (decimal?)dr["Le"],
+                                                         perToSale = dr["perToSale"] is DBNull ? 0 : (decimal?)dr["perToSale"],
+                                                         #endregion
 
-                             }).ToList();
+                                                     }).ToList();
 
                 actRepModel.actFormRepDetailGroupLists = actRepModel.actFormRepDetailLists
-                    .GroupBy(item => new {item.activityNo, item.productGroupid
+                    .GroupBy(item => new
+                    {
+                        item.activityNo,
+                        item.productGroupid
                     })
                     .Select((group, index) => new RepDetailModel.actFormRepDetailModel
                     {
@@ -301,6 +358,7 @@ namespace eActForm.BusinessLayer
                         documentDate = group.First().documentDate,
                         brandId = group.First().brandId,
                         customerId = group.First().customerId,
+                        regionId = group.First().regionId,
                         productCateId = group.First().productCateId,
                         productGroupid = group.First().productGroupid,
                         cusNameTH = group.First().cusNameTH,
@@ -332,13 +390,36 @@ namespace eActForm.BusinessLayer
                         #endregion
 
 
-                    }).ToList();
+                    }).OrderBy(x => x.activityNo).ToList();
 
                 return actRepModel;
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public static List<RepDetailModel.actApproveRepDetailModel> getActNoByRepId(string repId)
+        {
+
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActNoByRepId"
+                    , new SqlParameter[] { new SqlParameter("@repId", repId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new RepDetailModel.actApproveRepDetailModel()
+                             {
+                                 activityNo = dr["activityNo"].ToString(),
+
+                             }).ToList();
+                return lists;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getActNoByRepId >>" + ex.Message);
             }
         }
 

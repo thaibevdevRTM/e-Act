@@ -45,6 +45,7 @@ namespace eActForm.BusinessLayer
                                  unit = d["unit"].ToString() == "" ? 0 : int.Parse(d["unit"].ToString()),
                                  compensate = d["compensate"].ToString() == "" ? 0 : decimal.Parse(d["compensate"].ToString()),
                                  LE = d["Le"].ToString() == "" ? 0 : decimal.Parse(d["Le"].ToString()),
+                                 IO = d["IO"].ToString(),
                                  rowNo = int.Parse(d["rowNo"].ToString()),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),

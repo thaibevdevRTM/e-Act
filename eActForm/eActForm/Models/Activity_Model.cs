@@ -26,7 +26,7 @@ namespace eActForm.Models
         public ActivityForm activityFormModel { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
         public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
-        public List<TB_Act_Region_Model> regionGroupList { get; set; }
+        public List<TB_Act_Region_Model> regionGroupList { get; set; }       
 
         public Activity_Model()
         {
@@ -53,7 +53,8 @@ namespace eActForm.Models
         public enum activityType
         {
             OMT,
-            MT
+            MT,
+            TBM
         }
 
 
@@ -99,6 +100,7 @@ namespace eActForm.Models
             public string createByUserName { get; set; }
             public string regionId { get; set; }
             public string brandId { get; set; }
+            
         }
 
     }
@@ -172,6 +174,11 @@ namespace eActForm.Models
         public string regionName { get; set; }
         public string regionShort { get; set; }
         public string typeForm { get; set; }
+        public string remark { get; set; }
+        public string companyId { get; set; }
+        public Boolean chkAddIO { get; set; }
+        public string actIO { get; set; }
+        public string actClaim { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel
@@ -206,7 +213,7 @@ namespace eActForm.Models
         public string pack { get; set; }
         public string smellName { get; set; }
         public Boolean isShowGroup { get; set; }
-
+        public string IO { get; set; }
         public int rowNo { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
@@ -214,9 +221,10 @@ namespace eActForm.Models
         {
             detailGroup = new List<ProductCostOfGroupByPrice>();
         }
+
     }
 
-    public class CostThemeDetail : ActBaseModel
+        public class CostThemeDetail : ActBaseModel
     {
         public string id { get; set; }
         public string productGroupId { get; set; }
@@ -240,7 +248,7 @@ namespace eActForm.Models
         public string smellName { get; set; }
         public string productDetail { get; set; }
         public Boolean isShowGroup { get; set; }
-
+        public string IO { get; set; }
         public int rowNo { get; set; }
     }
 
@@ -296,6 +304,9 @@ namespace eActForm.Models
         public decimal? LE { get; set; }
         public Boolean isShowGroup { get; set; }
         public int rowNo { get; set; }
+        public string digitGroup { get; set; }
+        public string digitSubGroup { get; set; }
+        public string EO { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public ProductCostOfGroupByPrice()

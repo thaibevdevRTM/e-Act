@@ -2,6 +2,7 @@
 @{
 	ViewBag.Title = "Index";
 	Layout = "~/Views/Shared/_Layout.cshtml";
+	var var_companyEN = Request.QueryString["typeForm"];
 }
 
 <script src="~/Scripts/jquery-1.11.2.min.js"></script>
@@ -11,7 +12,7 @@
 <h2>My Document (Budget)</h2>
 <hr />
 
-@*<div class="row tile_count">
+<div class="row tile_count">
 	<div class="row tile_count">
 		<div class="col-md-12 col-xs-12">
 			@using (Ajax.BeginForm("searchBudgetForm", "BudgetMyDoc"
@@ -22,11 +23,11 @@
 			}
 		</div>
 	</div>
-</div>*@
+</div>
 
 <div class="row tile_count">
 	<div id="getQuery" class="col-md-12 col-xs-12">
-		@Html.Action("myDocBudget", "BudgetMyDoc")
+		@Html.Action("myDocBudget", "BudgetMyDoc", new { companyEN = var_companyEN })
 	</div>
 </div>
 

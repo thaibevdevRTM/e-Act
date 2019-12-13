@@ -1,4 +1,5 @@
 ﻿@using eActForm.Models
+@using eActForm.BusinessLayer
 @model eActForm.Models.Budget_Approve_Detail_Model.budgetForms
 <style type="text/css">
 
@@ -50,9 +51,9 @@
 	<div class="col-md-12 col-xs-12">
 
 
-		
+
 		@*<a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>คือ Delete
-		<a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit*@
+			<a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit*@
 		<a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
 		<a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>คือ History Approve
 		<a class="btn ink-reaction btn-info fa fa-send-o" href="#"></a>คือ Resend Email
@@ -71,58 +72,65 @@
 				</tr>
 			</thead>
 			<tbody>
-				@if (Model.budgetFormLists.Count>0)
+				@if (Model.budgetFormLists.Count > 0)
 				{
-				foreach (var item in Model.budgetFormLists)
-				{
-					<tr class="gradeX">
-						<td>
-							@*<a href="javascript:" target="_blank" onclick="return checkDelete('@item.budgetApproveId','@item.statusId');">
-								<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-							</a>*@
-							@*@Html.ActionLink(" ", "ActivityForm", "Activity", new { budgetApproveId = item.budgetApproveId, mode = Activity_Model.modeForm.edit }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })*@
-							@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = item.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
+					foreach (var item in Model.budgetFormLists)
+					{
+						<tr class="gradeX">
+							<td>
 
+								@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+								{
+									<a href="javascript:" onclick="return CallReBudgetApprovePdf('@item.budgetApproveId','@item.activityId','@item.statusId');">
+										<i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
+									</a>
+								}
 
-							<a onclick="callApproveList('@item.budgetApproveId');">
-								<i class="btn ink-reaction btn-dark fa fa-eye"></i>
-							</a>
-
-							@if (item.statusId == "2")
-							{
-
-								<a onclick="resendApprove('@item.budgetApproveId');">
-									<i class="btn ink-reaction btn-info fa fa-send-o"></i>
+								@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = item.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
+								<a onclick="callApproveList('@item.budgetApproveId');">
+									<i class="btn ink-reaction btn-dark fa fa-eye"></i>
 								</a>
-							}
 
-						</td>
-						<td>@item.statusName</td>
-						<td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
-						<td>@item.activityNo</td>
-						<td>@item.activityName</td>
-						<td>@item.cusShortName</td>
-						<td>@item.productCategory</td>
-						<td align="right">
-							@if (@item.totalInvoiceApproveBath != 0)
-							{
-								string result = String.Format("{0:n2}", @item.totalInvoiceApproveBath);
-								@result.ToString();
-							}
+								@if (item.statusId == "2")
+								{
+									<a onclick="resendApprove('@item.budgetApproveId');">
+										<i class="btn ink-reaction btn-info fa fa-send-o"></i>
+									</a>
+								}
 
-						</td>
-					</tr>
-				}
+							</td>
+							<td>@item.statusName</td>
+							<td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
+							<td>@item.activityNo</td>
+							<td>@item.activityName</td>
+							<td>@item.cusShortName</td>
+							<td>@item.productCategory</td>
+							<td align="right">
+								@if (@item.totalInvoiceApproveBath != 0)
+								{
+									string result = String.Format("{0:n2}", @item.totalInvoiceApproveBath);
+									@result.ToString();
+								}
+
+							</td>
+						</tr>
+					}
 				}
 			</tbody>
 		</table>
 
 	</div>
 </div>
-<div class="modal fade" id="modalmyDocBudgetList" role="dialog" style="display:none">
+<div class="modal fade" id="modalmyDocBudgetList" role="dialog" >
 	<div id="divModalmyDocBudgetList">
 	</div>
 </div>
+
+<div id="ModalPreviewPDF" style="display:none">
+	<div id="divRegenBudgetApprovePdf">
+	</div>
+</div>
+
 <script>
 	$(document).ready(function () {
 		$('#datatable').DataTable({
@@ -144,6 +152,35 @@
 	});
 	function waitpopup() {
 		$("#WaitDialog").show();
+	}
+
+	function CallReBudgetApprovePdf(budgetapproveId, activityId, statusId) {
+		$.ajax({
+            type: 'POST',
+            url: '@Url.Action("regenBudgetApprovePdf", "BudgetViewer")',
+            data: {
+				budgetApproveId: budgetapproveId,
+				activityId: activityId
+            }
+        }).done(function (htmlResponse) {
+			genPdf(budgetapproveId, activityId,statusId, htmlResponse);
+        });
+	}
+
+	function genPdf(budgetapproveId, activityId, statusId, htmlResponse) {
+        $.ajax({
+            url: '@Url.Action("genPdfApprove", "BudgetMyDoc")',
+            data: {
+                GridHtml: htmlResponse,
+                statusId: statusId,
+				budgetApproveId: budgetapproveId,
+				activityId: activityId,
+            },
+            dataType: "json",
+            type: 'POST',
+        }).done(function (response) {
+            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+        });
 	}
 
 </script>

@@ -1,0 +1,256 @@
+﻿@using eActForm.BusinessLayer
+@model eActForm.Models.Budget_Activity_Model
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+	//var var_urlUploadfilesBudget = System.Configuration.ConfigurationManager.AppSettings["urlUploadfilesBudget"].ToString();
+	var var_companyEN = Request.QueryString["typeForm"];
+}
+
+<script src="~/Scripts/jquery-1.11.2.min.js"></script>
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+
+<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
+
+<style type="text/css">
+
+	.font8 {
+		font-size: 8px;
+	}
+
+	.font10 {
+		font-size: 10px;
+	}
+
+	.textRight {
+		text-align: right;
+	}
+
+	.textLeft {
+		text-align: left;
+	}
+
+	.inner {
+		display: inline-block;
+	}
+
+	#outer {
+		width: 100%;
+		text-align: center;
+	}
+</style>
+
+
+@Html.HiddenFor(x => UtilsAppCode.Session.User.empId, new { @id = "hd_createUserId" })
+
+<div class="alert alert-success" role="alert">
+	<h4 class="alert-heading">รายการใบแจ้งหนี้ (Invoice)</h4>
+	<p></p>
+</div>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<div id="divManageInvoiceList">
+
+		</div>
+	</div>
+</div>
+
+
+
+<hr />
+
+<div class="row">
+	<div class="col-md-6">
+		<div id="divManageInvoiceView">
+
+		</div>
+	</div>
+
+	<div id="divUploadImg" class="col-md-6">
+		<div class="col-12">
+			<p class="lead">อัพโหลดใบแจ้งหนี้ (pdf,jpg)</p>
+		</div>
+		<div class="col-md-12" id="divUploadFiles">
+			<form action="@Url.Action("manageInvoiceUpload", "Budget", new { company = var_companyEN })" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
+				<div class="dz-message">
+					<span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div id='myModalInvoice' class="modal fade" role="dialog">
+	<div id='myModalInvoiceContent'></div>
+</div>
+
+
+<script>
+
+	$('document').ready(function () {
+		callManageInvoiceList();
+	});
+
+	var fileList = new Array;
+	Dropzone.options.dropzoneJsForm = {
+		maxFiles: 5,
+		acceptedFiles: "image/jpeg,image/jpg,image/png,application/pdf",
+		//acceptedFiles: "application/pdf",
+		paramName: "file",
+		maxFilesize: 10,
+		//addRemoveLinks: true,
+		init: function () {
+
+			this.on("complete", function (file) {
+				 $("#WaitDialog").show();
+				callManageInvoiceList();
+				this.removeFile(file);
+				$("#WaitDialog").hide();
+			});
+		}
+	};
+
+	function callManageInvoiceList() {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("manageInvoiceList", "Budget")',
+            data: {
+				companyTH: '@(var_companyEN)',
+				createdByUserId: $("#hd_createUserId").val()
+            }
+        }).done(function (htmlResponse) {
+			$("#divManageInvoiceList").html(htmlResponse);
+			//var elmnt = document.getElementById("divManageInvoiceList");
+			//elmnt.scrollIntoView();
+        });
+	}
+
+	function callManageInvoiceView(id) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("manageInvoiceView", "Budget")',
+            data: {
+				ImageId: id
+            }
+        }).done(function (htmlResponse) {
+			$("#divManageInvoiceView").html(htmlResponse);
+        });
+	}
+
+	function onclickDelImageBudget(id,fileName) {
+        var msg = "";
+		// can be delete
+		msg = " คุณต้องการลบเอกสาร " + fileName + " นี้หรือไม่?";
+        bootbox.confirm({
+			title: "Confirm Message",
+            message: msg,
+            buttons: {
+                confirm: {
+                    label: "Yes",
+                    className: "btn-success"
+                },
+                cancel: {
+                    label: "No",
+                    className: "btn-danger"
+                }
+            },
+			callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("manageInvoiceDelete", "Budget")',
+                        data: {
+							id: id,
+						},
+						success: function (response) {
+							console.log(response.success);
+							callManageInvoiceList();
+							$("#divManageInvoiceView").html("");
+						}
+
+					})
+                }
+            }
+        });
+	}
+
+	function onClickManageInvoiceEdit(id) {
+		var imageId = id;
+		var options = { "backdrop": "static", keyboard: true };
+
+		$.ajax({
+			type: "GET",
+			url:  '@Url.Action("manageInvoiceEdit", "Budget")',
+			contentType: "application/json; charset=utf-8",
+			data: {
+				"imageId": imageId,
+			},
+			datatype: "json",
+			success: function (data) {
+
+				$('#myModalInvoiceContent').html(data);
+				$('#myModalInvoice').modal(options);
+				$('#myModalInvoice').modal('show');
+
+			},
+			error: function () {
+				alert("Dynamic content load failed.");
+			}
+		});
+	}
+
+	function refreshInvoice() {
+		callManageInvoiceList();
+		$("#divManageInvoiceView").html("");
+	}
+
+	function submitManageInvoiceUpdate() {
+		//var var_imageId = $("#hd_imageId").val();
+		//alert(var_imageId);
+		$.ajax({
+			url: '@Url.Action("manageInvoiceEditSubmit", "Budget")',
+			data: {
+				id: $("#hd_imageId").val(),
+				invoiceNo: $("#txt_invoice_no").val(),
+				remark: $("#txt_remark").val(),
+				companyEN: '@(var_companyEN)',
+				regionId: $("#txt_region_id").val(),
+				customerId: $("#ddlCustomer").val(),
+
+			},
+			dataType: "json",
+			type: 'POST',
+			success: function (result) {
+				$('#myModalInvoice').modal('hide');
+
+				if (result.Message != null) {
+					var msg = "";
+					msg = "<div class='row text-center'> <h5>หมายเลขใบแจ้งหนี้ <b style='color:red'> " + result.Message + "</b> ซ้ำ (บันทึกข้อมูลเรียบร้อยแล้ว) </h5> </div>";
+					bootbox.alert({
+						title: "แจ้งเตือน",
+						message: msg
+					});
+				} else {
+					var msg = "";
+					msg = "<div class='row text-center'> <h5>บันทึกข้อมูล เรียบร้อยแล้ว </h5> </div>";
+					bootbox.alert({
+						title: "แจ้งเตือน",
+						message: msg
+					});
+				}
+
+				callManageInvoiceList();
+				//$("#divManageInvoiceView").html("");
+			}
+		})
+	}
+</script>

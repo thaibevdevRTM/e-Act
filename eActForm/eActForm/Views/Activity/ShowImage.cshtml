@@ -1,0 +1,63 @@
+﻿
+@model eActForm.Models.Activity_Model
+@{
+    string url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfiles"].ToString();
+}
+
+
+
+<div class="modal-body">
+    <div id="GridImg" style="width:97%; margin-left:20px;">
+        @if (Model.productImageList.Where(x => x.extension != ".pdf").AsEnumerable().Any())
+        {
+            <div style="page-break-before:always">&nbsp;</div>
+
+            if (Model.productImageList.Any())
+            {
+                <table>
+                    <tbody>
+                        @*<tr>
+                                <td colspan="3" align="center">
+                                    <label style="font-size:36px;">รูปภาพ</label>
+                                </td>
+                            </tr>*@
+                        @for (int index = 0; index < Model.productImageList.Count; index++)
+                        {
+                            if (Model.productImageList[index].extension != ".pdf")
+                            {
+                                if (Model.productImageList.Where(x => x.extension.ToLower() == ".jpg" || x.extension.ToLower() == ".png").AsEnumerable().Count() == 1)
+                                {
+                                    <tr>
+                                        <td style="text-align:center;">
+                                            <div>
+                                                <img width="500" src="@string.Format(url, Model.productImageList[index]._fileName)" />
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr style="height:400px;">
+                                        <td style="text-align:center;">
+                                            <img width="300" src="@string.Format(url, Model.productImageList[index]._fileName)" />
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        @if (index + 1 < Model.productImageList.Count)
+                                        {
+                                            index++;
+                                            <td style="text-align:center">
+                                                <img width="300" src="@string.Format(url, Model.productImageList[index]._fileName)" />
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+    </div>
+</div>

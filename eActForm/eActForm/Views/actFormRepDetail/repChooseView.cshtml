@@ -2,6 +2,7 @@
 @model eActForm.Models.RepDetailModel.actFormRepDetails
 
 <div id="chooseRepDetailView" class="row">
+
     <div class="row">
         <div class="col-md-4 col-xs-12"></div>
         <div class="col-md-4 col-xs-12" style="padding: 0 30px 10px 30px;">
@@ -14,8 +15,11 @@
             </div>
         </div>
         <div class="col-md-4 col-xs-12"></div>
-
     </div>
+
+
+
+
 
     <div class="row">
         @if (Model.actFormRepDetailLists != null && Model.actFormRepDetailLists.Count > 0)
@@ -42,11 +46,12 @@
                 <table id="datatable" border="0" class="table table-striped jambo_table bulk_action">
                     <thead>
                         <tr class="headings" style="text-align:center;">
-                            <th width="70px">#</th>
+                            <th width="70px"><input type="checkbox" id="chk_All" class="icheckbox_flat-green" onchange="setDelFlagRepDetail('All');" name="table_records"></th>
                             <th width="70px">ลำดับที่</th>
                             <th width="80px" style="text-align:center;">เลขที่ Activity</th>
                             <th style="text-align:center;">status</th>
                             <th style="text-align:center;">ชื่อลูกค้า</th>
+                            <th style="text-align:center;">Reference</th>
                             <th style="text-align:center;">Create Date</th>
                             <th colspan="2" rowspan="2" style="text-align:center;">ระยะเวลากิจกรรม</th>
                             <th colspan="2" rowspan="2" style="text-align:center;">ระยะเวลาให้ทุน</th>
@@ -55,19 +60,20 @@
                     <tbody>
                         @{ var index = 1; string strActNo = "";
                         }
-                        @foreach (var item in Model.actFormRepDetailLists)
+                        @foreach (var item in Model.actFormRepDetailGroupLists)
                         {
 
                             if (item.activityNo != strActNo)
                             {
                                 <tr class="even pointer">
                                     <td class="a-center ">
-                                        <input type="checkbox" id="chk_@item.id" checked class="icheckbox_flat-green" onchange="setDelFlagRepDetail('@item.id');" name="table_records">
+                                        <input type="checkbox" id="chk_@item.id" class="icheckbox_flat-green" onchange="setDelFlagRepDetail('@item.id');" name="table_records">
                                     </td>
                                     <td class=" ">@index</td>
                                     <td class=" ">@item.activityNo</td>
                                     <th style="text-align:center;">@item.statusName</th>
                                     <td style="text-align:center;">@item.cusNameTH</td>
+                                    <td style="text-align:center;">@item.reference</td>
                                     @if (item.createdDate != null)
                                     {
                                         <td width="100px">@item.createdDate.Value.ToString("dd/MM/yyyy")</td>
@@ -98,7 +104,8 @@
                                     }
                                     else
                                     {
-                                        <td></td>}
+                                        <td></td>
+}
                                     @if (item.costPeriodEnd != null)
                                     {
                                         <td width="100px" style="text-align:center;">@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
@@ -130,7 +137,7 @@
 
 <script type="text/javascript">
     function setDelFlagRepDetail(id) {
-        console.log($("#chk_" + id).is(":checked"));
+
         $.ajax({
             url: '@Url.Action("repSetDelFlagRecodeDetail", "actFormRepDetail")',
             data: {
@@ -140,12 +147,18 @@
             dataType: "json",
             type: 'POST'
         }).done(function (response) {
+            console.log(response.Code);
+            if (response.Code == 001) {
+                $("input[name='table_records']:checkbox").prop('checked', response.Success);
+            }
         });
     }
 
+
+
     $(function () {
         $("#btnSelected").click(function () {
-            $('#divPreview').load('@Url.Action("repListView", "actFormRepDetail", new { startDate = @ViewBag.startDate })');
+            $('#divPreview').load('@Url.Action("repListView", "actFormRepDetail" )');
             $("#previewModal").modal('show');
         });
     });

@@ -11,6 +11,7 @@
 <script src="~/Scripts/jquery-1.11.2.min.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/Approve/RepDetailApproves.js"></script>
 
 <h2>การอนุมัติ</h2>
 <hr />
@@ -38,6 +39,14 @@ else
             <h3>เอกสารขออนุมัติ</h3>
             <hr />
             @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
+
+
+            <div class="col-md-12">
+                <div id="divgetimage" class="col-md-12">
+                    @Html.Action("ImageList", "Activity", new { activityId = actId != null ? actId : "" })
+                </div>
+            </div>
+
 
             @using (Ajax.BeginForm("insertApprove", "Approve"
     , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }
@@ -99,7 +108,7 @@ else
                         @if (Model.approveModel.statusId != "2")
                         {
                             <h4 class="text-danger text-center">
-                                เอกสารฉับบนี้ได้ถูกอนุมัติเรียบร้อยแล้วครับ
+                                เอกสารฉบับนี้ได้ถูกอนุมัติเรียบร้อยแล้วครับ
                             </h4>
                         }
                         else if (Model.approveModel.isPermisionApprove)
@@ -127,9 +136,8 @@ else
     <div id="divPreviewApprove">
     </div>
 </div>
-
+<input id="dataFromPDF" type="hidden" />
 <script>
-
 
     $(document).ready(function () {
         $(".fv").each(function () {
@@ -139,6 +147,12 @@ else
             }
         });
         $("#txtRemark").val('');
+
+        var arrayOfElements = document.getElementsByClassName('divDelImg');
+        var lengthOfArray = arrayOfElements.length;
+        for (var i = 0; i < lengthOfArray; i++) {
+            arrayOfElements[i].style.display = 'none';
+        }
 
     });
 
@@ -185,16 +199,17 @@ else
     }
 
     function successQuery(response) {
-        $("#WaitDialog").show();
+        //$("#WaitDialog").show();
         if (response.Success) {
             if ('@type' == '@AppCode.ApproveType.Activity_Form.ToString()') {
                 callPreviewApprove('@actId');
             }
-            else if('@type' == '@AppCode.ApproveType.Report_Detail.ToString()') {
+            else if ('@type' == '@AppCode.ApproveType.Report_Detail.ToString()') {
+                 $("#WaitDialog").show();
                 callPreviewRepDetailApprove('@actId')
             }
             else if ('@type' == '@AppCode.ApproveType.Report_Summary.ToString()') {
-
+                $("#WaitDialog").show();
                 console.log('@actId');
                 callPreviewSummaryDetailApprove('@actId')
             }
@@ -214,40 +229,6 @@ else
     }
 
 
-    function callPreviewRepDetailApprove(obj) {
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("repPreviewListView", "actFormRepDetail")',
-            data: {
-                actId: obj
-            }
-        }).done(function (htmlResponse) {
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("repDetailGenPDF", "actFormRepDetail")',
-                data: {
-                    gridHtml: htmlResponse
-                    , actId: '@actId'
-                }
-            }).done(function (htmlResponse) {
-                $("#WaitDialog").hide();
-                bootbox.confirm({
-                    message: "ดำเนินการเรียบร้อยครับ",
-                    buttons: {
-                        confirm: {
-                            label: 'OK',
-                            className: 'btn-success'
-                        }
-                    },
-                    callback: function (result) {
-                        var url = '@Url.Action("Index", "ApproveListsRepDetail")';
-                        window.location.href = url;
-                    }
-
-                });
-            });
-        });
-    }
 
     function callPreviewSummaryDetailApprove(obj) {
         $.ajax({
@@ -265,58 +246,107 @@ else
                     , summaryId: '@actId'
                 }
             }).done(function (htmlResponse) {
-                $("#WaitDialog").hide();
-                bootbox.confirm({
-                    message: "ดำเนินการเรียบร้อยครับ",
-                    buttons: {
-                        confirm: {
-                            label: 'OK',
-                            className: 'btn-success'
-                        }
-                    },
-                    callback: function (result) {
-                        var url = '@Url.Action("Index", "ApproveSummaryDetail")';
-                        window.location.href = url;
-                    }
-
-                });
+                var url = '@Url.Action("Index", "ApproveSummaryDetail")';
+                doMsgSuccessAction("เรียบร้อย",url);
             });
         });
     }
 
     function callPreviewApprove(obj) {
+
+        if ('@UtilsAppCode.Session.User.empCompanyId' == '3030') {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("previewActBudget", "Approve")',
+                data: {
+                    activityId: obj,
+                    typeForm: '@Model.typeForm.ToString()',
+                }
+            }).done(function (htmlResponse) {
+                //$("#divPreviewApprove").html(htmlResponse);
+                //genPdf();
+                $("#dataFromPDF").val(htmlResponse);
+                genFileActForm();
+            });
+
+        }
+        else {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("previewApprove", "Approve")',
+                data: {
+                    actId: obj,
+                    typeForm: '@Model.typeForm.ToString()',
+                }
+            }).done(function (htmlResponse) {
+                //$("#divPreviewApprove").html(htmlResponse);
+                //$("#WaitDialog").hide();
+                $("#dataFromPDF").val(htmlResponse);
+                genFileActForm();
+            });
+
+        }
+
+    }
+
+     function callPreviewRepDetailApprove(obj) {
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("previewApprove", "Approve")',
+            url: '@Url.Action("repPreviewListView", "actFormRepDetail")',
             data: {
                 actId: obj
             }
         }).done(function (htmlResponse) {
-            $("#divPreviewApprove").html(htmlResponse);
-            genPdf();
+            $.ajax({
+                type: 'POST',
+                dataType: "html",
+                url: '@Url.Action("repDetailGenPDF", "actFormRepDetail")',
+                data: {
+                    gridHtml: htmlResponse
+                    , actId: '@actId'
+                }
+            }).done(function (htmlResponse) {
+                $("#WaitDialog").hide();
+                var url = '@Url.Action("Index", "ApproveListsRepDetail")';
+                doMsgSuccessAction('อนุมัติเรียบร้อย',url);
+            })
         });
-    }
-        function genPdf() {
+    } 
+
+    function genFileActForm() {
         $.ajax({
-            url: '@Url.Action("genPdfApprove", "Approve")',
+            url: '@Url.Action("doApprove", "ApiApprove")',
             data: {
-                GridHtml: $("#Grid1").html(),
+                gridHtml: $("#dataFromPDF").val(),
                 statusId: $("#ddlStatus").val(),
-                activityId: $("#HdId").val()
+                activityId: '@actId' //$("#HdId").val()
             },
+            async: true, 
             dataType: "json",
             type: 'POST',
-        }).done(function (response) {
-            $("#WaitDialog").hide();
-            $('#ModalPreviewPDF').modal('show');
+        }).done(function (reponse) {
+            console.log(reponse);
+
+            bootbox.confirm({
+                message: "ดำเนินการเรียบร้อยครับ",
+                buttons: {
+                    confirm: {
+                        label: 'OK',
+                        className: 'btn-success'
+                    }
+                },
+                callback: function (result) {
+
+                    var url = '@Url.Action("Index", "ApproveLists")';
+                    window.location.replace(url);// = url;
+
+                }
+            });
+
         });
     }
-
-    function onClickClose() {
-        var url = '@Url.Action("Index", "ApproveLists")';
-        window.location.href = url;
-    }
-
 
 
 </script>

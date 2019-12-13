@@ -1,0 +1,92 @@
+﻿
+@using eActForm.BusinessLayer
+@using eActForm.Models
+@model eActForm.Models.ReportSummaryModels
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+
+        <a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>คือ Delete
+        <a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit
+        <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
+        <a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>คือ History Approve
+        <a class="btn ink-reaction btn-info fa fa-send-o" href="#"></a>คือ Resend Email
+
+
+        @if (Model.summaryDetailLists != null && Model.summaryDetailLists.Count > 0)
+        {
+            <table id="datatable" border="0" class="table table-striped jambo_table bulk_action">
+                <thead>
+                    <tr class="headings" style="text-align:center;">
+                        <th width="70px">#</th>
+                        <th width="80px" style="text-align:center;">เลขที่ Summary</th>
+                        <th width="80px" style="text-align:center;">Status</th>
+                        <th width="80px" style="text-align:center;">ProductType</th>
+                        <th width="80px" style="text-align:center;">Create Date</th>
+                        <th width="80px" style="text-align:center;">Create By</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.summaryDetailLists)
+                    {
+                    <tr class="even pointer">
+                        <td class="a-center ">
+                            @if (item.statusId == "1" || item.statusId == "3" || item.statusId == "5" ||
+                            (item.statusId == "6" && (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)))
+                            {
+                                <a href="javascript:" target="_blank" onclick="return checkDelete('@item.id','@item.statusId');">
+                                    <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                                </a>
+                            }
+                            @if (item.statusId == "2" || item.statusId == "3")
+                            {
+                                @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
+                            }
+                            <a onclick="callApproveList('@item.id');">
+                                <i class="btn ink-reaction btn-dark fa fa-eye"></i>
+                            </a>
+                        </td>
+                        <td style="text-align:center">@item.activityNo</td>
+                        <td style="text-align:center">@item.statusName</td>
+                        <td style="text-align:center">@item.productTypeName</td>
+                        @if (item.createdDate != null)
+                        {
+                            <td class=" " style="text-align:center">@item.createdDate.Value.ToString("dd/MM/yyyy")</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td class=" " style="text-align:center">@item.createName</td>
+                    </tr>
+
+                    }
+
+                </tbody>
+            </table>
+
+        }
+    </div>
+</div>
+<div class="modal fade" id="modalApprovelist" role="dialog" style="display:none">
+    <div id="divModalApprovelist">
+    </div>
+</div>
+
+
+<script>
+function callApproveList(actId) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("approveLists", "Home")',
+            data: {
+            actId: actId
+            }
+            }).done(function (response) {
+                 $("#divModalApprovelist").html(response)
+                 $('#modalApprovelist').modal('show');
+            });
+    }
+</script>

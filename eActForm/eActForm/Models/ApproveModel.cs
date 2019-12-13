@@ -22,6 +22,7 @@ namespace eActForm.Models
         }
         public class approveModels
         {
+            public string typeForm { get; set; }
             public approveModel approveModel { get; set; }
             public List<approveDetailModel> approveDetailLists { get; set; }
             public List<approveStatus> approveStatusLists { get; set; }
@@ -59,6 +60,8 @@ namespace eActForm.Models
             public string remark { get; set; }
             public byte[] signature { get; set; }
             public string activityNo { get; set; }
+            public bool? isApprove { get; set; }
+            public string companyName { get; set; }
         }
         public class approveStatus : ActBaseModel
         {

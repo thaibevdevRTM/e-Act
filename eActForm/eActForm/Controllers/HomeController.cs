@@ -6,19 +6,32 @@ using System.Web.Mvc;
 using System.Configuration;
 using eActForm.Models;
 using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 namespace eActForm.Controllers
 {
     [LoginExpire]
     public class HomeController : Controller
     {
         // GET: Home
-        public ActionResult Index(string actId , string typeForm)
+        public ActionResult Index(string actId, string typeForm)
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+            {
+                if (typeForm == Activity_Model.activityType.MT.ToString())
+                {
+                    models.customerslist = QueryGetAllCustomers.getCustomersMT();
+                }
+                else
+                {
+                    models.customerslist = QueryGetAllCustomers.getCustomersOMT();
+                }
+            }
+
             models.typeForm = typeForm;
             return View(models);
         }
-      
+
         public ActionResult approveLists(string actId)
         {
             var result = new AjaxResult();
@@ -29,7 +42,7 @@ namespace eActForm.Controllers
 
 
 
-        public ActionResult myDoc(string actId , string TypeForm)
+        public ActionResult myDoc(string actId , string typeForm)
         {
             Activity_Model.actForms model;
             if (TempData["SearchDataModel"] != null)
@@ -39,17 +52,8 @@ namespace eActForm.Controllers
             else
             {
                 model = new Activity_Model.actForms();
-
-                if (TypeForm == Activity_Model.activityType.MT.ToString())
-                {
-                    model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.MT.ToString());
-                    model.typeForm = Activity_Model.activityType.MT.ToString();
-                }
-                else
-                {
-                    model.actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.empId, DateTime.Now.AddDays(-15), DateTime.Now, Activity_Model.activityType.OMT.ToString());
-                    model.typeForm = Activity_Model.activityType.OMT.ToString();
-                }
+                model.actLists = ActFormAppCode.getActFormByEmpId(DateTime.Now.AddDays(-7), DateTime.Now, typeForm);
+                model.typeForm = typeForm;
 
                 if (actId != null && actId != "")
                 {
@@ -61,7 +65,7 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-      
+
 
         public ActionResult requestDeleteDoc(string actId, string statusId)
         {
@@ -91,36 +95,36 @@ namespace eActForm.Controllers
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
             model = new Activity_Model.actForms
             {
-                actLists = ActFormAppCode.getActFormByEmpId(UtilsAppCode.Session.User.customerId, startDate, endDate , activityType)
+                actLists = ActFormAppCode.getActFormByEmpId(startDate, endDate, activityType)
             };
 
-           
-            if (Request.Form["txtActivityNo"] != "")
+
+            if (!string.IsNullOrEmpty(Request.Form["txtActivityNo"]))
             {
                 model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
             }
 
-            if (Request.Form["ddlStatus"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlStatus"]))
             {
                 model.actLists = model.actLists.Where(r => r.statusId == Request.Form["ddlStatus"]).ToList();
             }
 
-            if (Request.Form["ddlCustomer"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlCustomer"]))
             {
                 model.actLists = model.actLists.Where(r => r.customerId == Request.Form["ddlCustomer"]).ToList();
             }
 
-            if (Request.Form["ddlTheme"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlTheme"]))
             {
                 model.actLists = model.actLists.Where(r => r.theme == Request.Form["ddlTheme"]).ToList();
             }
 
-            if (Request.Form["ddlProductType"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlProductType"]))
             {
                 model.actLists = model.actLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
             }
 
-            if (Request.Form["ddlProductGrp"] != "")
+            if (!string.IsNullOrEmpty(Request.Form["ddlProductGrp"]))
             {
                 model.actLists = model.actLists.Where(r => r.productGroupid == Request.Form["ddlProductGrp"]).ToList();
             }

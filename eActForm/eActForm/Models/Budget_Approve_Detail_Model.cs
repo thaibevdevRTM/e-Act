@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using static eActForm.Models.Budget_Activity_Model;
-using static eActForm.Models.TB_Budget_Activity_Model;
+using static eActForm.Models.TB_Bud_Activity_Model;
 
 namespace eActForm.Models
 {
@@ -14,8 +14,9 @@ namespace eActForm.Models
 		//public List<Budget_Activity_Invoice_Att> Budget_Activity_Invoice_list { get; set; }
 		public List<Budget_Invoice_history_Att> Budget_Invoce_History_list { get; set; }
 		public List<Budget_Approve_Detail_Att> Budget_Approve_detail_list { get; set; }
-		public List<TB_Budget_Activity_Model.Budget_Activity_Att> Budget_Activity_list { get; set; }
-		public TB_Budget_Activity_Model.Budget_Activity_Att Budget_Activity { get; set; }
+		public List<TB_Bud_Activity_Model.Budget_Activity_Att> Budget_Activity_list { get; set; }
+		public TB_Bud_Activity_Model.Budget_Activity_Att Budget_Activity { get; set; }
+		public List<TB_Bud_Image_Model.BudImageModel> Budget_Invoice_list { get; set; }
 
 		public class Budget_Approve_Detail_Att
 		{

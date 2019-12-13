@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.ApplicationBlocks.Data;
 using eActForm.Models;
 using System.Configuration;
+
 namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
+      
+
         public static void setCountWatingApprove()
         {
             try
@@ -25,6 +27,12 @@ namespace eActForm.BusinessLayer
                         UtilsAppCode.Session.User.counteatingRepDetail = ds.Tables[0].Rows[0]["repFormId"].ToString();
                         UtilsAppCode.Session.User.counteatingSummaryDetail = ds.Tables[0].Rows[0]["sumFormId"].ToString();
                     }
+                    else
+                    {
+                        UtilsAppCode.Session.User.countWatingActForm = "0";
+                        UtilsAppCode.Session.User.counteatingRepDetail = "0";
+                        UtilsAppCode.Session.User.counteatingSummaryDetail = "0";
+                    }
                 }
             }
             catch (Exception ex)
@@ -32,6 +40,48 @@ namespace eActForm.BusinessLayer
                 throw new Exception("setCountWatingApprove >>" + ex.Message);
             }
         }
+
+        public static string getEmailCCByActId(string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmailCC"
+                     , new SqlParameter[] { new SqlParameter("@actId", actId)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveModel.approveDetailModel()
+                             {
+                                 empEmail = dr["empEmail"].ToString()
+                             }).ToList();
+
+                string emailCC = "";
+                if (lists.Any())
+                {
+                    emailCC = (string.Join(",", lists.Select(x => x.empEmail.ToString()).ToArray()));
+                }
+
+                return emailCC;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getEmailCCByActId >> " + ex.Message);
+            }
+        }
+
+        public static List<ApproveModel.approveDetailModel> getRemarkApprovedByEmpId(string actId, string empId)
+        {
+            try
+            {
+                ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
+                var empUser = models.approveDetailLists.Where(r => r.empId == empId).ToList();
+                return empUser;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getRemarkApprovedByEmpId >> " + ex.Message);
+            }
+        }
+
+
         public static List<ApproveModel.approveWaitingModel> getAllWaitingApproveGroupByEmpId()
         {
             try
@@ -109,19 +159,50 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                         });
 
-                if (approveType == AppCode.ApproveType.Activity_Form.ToString())
-                {
-                    rtn = updateActFormStatus(statusId, actFormId);
-                }
-                else if (approveType == AppCode.ApproveType.Report_Detail.ToString())
+               if (approveType == AppCode.ApproveType.Report_Detail.ToString())
                 {
                     rtn = updateActRepDetailStatus(statusId, actFormId);
                 }
+                else if (approveType == AppCode.ApproveType.Report_Summary.ToString())
+                {
+                    rtn = updateSummaryDetailStatus(statusId, actFormId);
+                }
+                else
+                {
+                    // default Activity Form
+                    rtn = updateActFormStatus(statusId, actFormId);
+                }
+
                 return rtn;
             }
             catch (Exception ex)
             {
                 throw new Exception("updateApprove >> " + ex.Message);
+            }
+        }
+
+        private static int updateSummaryDetailStatus(string statusId, string actFormId)
+        {
+            try
+            {
+                int rtn = 0;
+                // update activity form
+                if (statusId == ConfigurationManager.AppSettings["statusReject"])
+                {
+                    // update reject
+                    rtn += ReportSummaryAppCode.updateSummaryReportWithApproveReject(actFormId);
+                }
+                else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
+                {
+                    // update approve
+                    rtn += ReportSummaryAppCode.updateSummaryReportWithApproveDetail(actFormId);
+
+                }
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
@@ -203,6 +284,9 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+
+
         /// <summary>
         /// for Activity Form
         /// </summary>
@@ -269,6 +353,7 @@ namespace eActForm.BusinessLayer
                             ,new SqlParameter("@statusId","")
                             ,new SqlParameter("@isSendEmail",false)
                             ,new SqlParameter("@remark","")
+                            ,new SqlParameter("@isApproved",m.isApproved)
                             ,new SqlParameter("@delFlag",false)
                             ,new SqlParameter("@createdDate",DateTime.Now)
                             ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
@@ -284,8 +369,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
-
-        public static ApproveModel.approveModels getApproveByActFormId(string actFormId)
+        public static ApproveModel.approveModels getApproveByActFormId(string actFormId,string empId)
         {
             try
             {
@@ -307,6 +391,7 @@ namespace eActForm.BusinessLayer
                                                  remark = dr["remark"].ToString(),
                                                  signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
                                                  ImgName = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
+                                                 isApprove = (bool)dr["isApproved"],
                                                  delFlag = (bool)dr["delFlag"],
                                                  createdDate = (DateTime?)dr["createdDate"],
                                                  createdByUserId = dr["createdByUserId"].ToString(),
@@ -321,7 +406,7 @@ namespace eActForm.BusinessLayer
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveByActFormId"
                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
-                    var empDetail = models.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList(); //
+                    var empDetail = models.approveDetailLists.Where(r => r.empId == empId).ToList(); //
                     var lists = (from DataRow dr in ds.Tables[0].Rows
                                  select new ApproveModel.approveModel()
                                  {
@@ -335,7 +420,7 @@ namespace eActForm.BusinessLayer
                                      createdByUserId = dr["createdByUserId"].ToString(),
                                      updatedDate = (DateTime?)dr["updatedDate"],
                                      updatedByUserId = dr["updatedByUserId"].ToString(),
-                                     isPermisionApprove = getPremisionApproveByEmpid(models.approveDetailLists, UtilsAppCode.Session.User.empId)
+                                     isPermisionApprove = getPremisionApproveByEmpid(models.approveDetailLists, empId)
                                  }).ToList();
 
                     models.approveModel = lists[0];
@@ -343,6 +428,17 @@ namespace eActForm.BusinessLayer
                 }
 
                 return models;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getCountApproveByActFormId >>" + ex.Message);
+            }
+        }
+        public static ApproveModel.approveModels getApproveByActFormId(string actFormId)
+        {
+            try
+            {
+                return getApproveByActFormId(actFormId, UtilsAppCode.Session.User.empId);
             }
             catch (Exception ex)
             {
@@ -379,7 +475,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static int clearStatusApproveAndInsertHistory(string activityId )
+        public static int clearStatusApproveAndInsertHistory(string activityId)
         {
             int result = 0;
             try

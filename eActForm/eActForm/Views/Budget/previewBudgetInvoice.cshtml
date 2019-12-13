@@ -9,57 +9,28 @@
 <script type="text/javascript">
 
 	$('document').ready(function () {
-		showCurrentDate();
+
 	});
-
-	function showCurrentDate() {
-		n = new Date();
-		y = n.getFullYear();
-		m = n.getMonth() + 1;
-		d = n.getDate();
-
-		if (m < 10) { m = '0' + m }
-		if (d < 10) { d = '0' + d }
-
-		document.getElementById("docDate").innerHTML = d + "/" + m + "/" + y;
-	}
 
 	function onClickSubmitApprove() {
 		$("#WaitDialog").show();
-		submitApproveBudget();
-		$("#WaitDialog").hide();
-		bootbox.alert("ดำเนินการเรียบร้อยแล้ว", function () {
+
+		$.ajax({
+        url: '@Url.Action("submitPreviewBudget", "BudgetApprove")',
+        data: {
+			GridHtml: $("#GridPDF").html(),
+			budgetActivityId: $("#HbudgetId").val(),
+			companyEN: $("#HcompanyEN").val()
+        },
+        dataType: "json",
+        type: 'POST',
+		}).done(function (response) {
+			$("#WaitDialog").hide();
 			var url = '@Url.Action("activityProduct", "Budget")';
 			window.location.href = url;
 		});
-
 	}
 
-	function submitApproveBudget() {
-            $.ajax({
-            url: '@Url.Action("submitPreviewBudget", "BudgetApproveList")',
-            data: {
-				GridHtml: $("#GridPDF").html(),
-				budgetActivityId: $("#HbudgetId").val()
-            },
-            dataType: "json",
-            type: 'POST',
-			});
-	}
-
-	@*function refreshApproveBudget() {
-            $.ajax({
-            url: '@Url.Action("previewApproveBudget", "BudgetApprove")',
-            data: {
-				budgetActivityId: $("#HbudgetId").val()
-            },
-            dataType: "json",
-            type: 'POST',
-            }).done(function (response) {
-                $("#WaitDialog").hide();
-                console.log('success');
-                 });
-	}*@
 </script>
 
 <style type="text/css">
@@ -71,20 +42,18 @@
 </style>
 
 @Html.HiddenFor(m => m.Budget_Activity.budget_id, new { id = "HbudgetId" })
-@*@Html.HiddenFor(m => m.Budget_Activity_list.ElementAt(0).budget_id, new { id = "HbudgetId" })*@
-@*@Html.HiddenFor(m => m.Budget_Approve_detail_list.ElementAt(0).budgetApproveId, new { id = "HbudgetApproveId" })*@
+@Html.HiddenFor(m => m.Budget_Activity.act_companyEN, new { id = "HcompanyEN" })
+@Html.HiddenFor(m => m.Budget_Activity.act_form_id, new { id = "Hact_form_id" })
 
 @if (1 == 1)
 {
 	var count_wait_approve = 0;
 
-
-
 	<div class="modal-dialog modal-lg" style="width:95%;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<div style=""></div>
-				<button type="button" class="close" data-dismiss="modal" >&times;</button>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
 			<div class="modal-body">
@@ -122,8 +91,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityNo)
 									}
-
-									@*@Model.Budget_Activity_list.ElementAt(0).act_activityNo*@
 								</td>
 							</tr>
 
@@ -135,10 +102,10 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityName)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).act_activityName*@
 								</td>
 								<td style="text-align:right;">
-									<label> Document Date : </label> <span id="docDate"></span>
+									<label> Document Date : </label>
+									@Html.Label("docDate", DateTime.Now.ToString("dd-MM-yyyy"))
 								</td>
 							</tr>
 
@@ -149,7 +116,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_theme)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).act_theme*@
 								</td>
 								<td style="text-align:right;">
 									<label> ลูกค้า (Customer Name) : </label>
@@ -157,7 +123,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.cus_cusShortName)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).cus_cusShortName*@
 								</td>
 							</tr>
 
@@ -168,14 +133,11 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodSt)
 									}
-									 ถึง 
+									ถึง
 									@if (Model.Budget_Activity.act_activityPeriodEnd.ToString() != "")
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodEnd)
 									}
-
-									@*@Model.Budget_Activity_list.ElementAt(0).act_activityPeriodSt.Value.ToString("dd/MM/yyyy")  to  @Model.Budget_Activity_list.ElementAt(0).act_activityPeriodEnd.Value.ToString("dd/MM/yyyy")*@
-									@*@Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodSt to @Model.Budget_Activity_list.ElementAtOrDefault(0).act_activityPeriodEnd*@
 								</td>
 								<td style="text-align:right;">
 									<label> ช่องทาง (Channel) : </label>
@@ -183,7 +145,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.ch_chanelGroup)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).ch_chanelGroup*@
 								</td>
 							</tr>
 
@@ -199,15 +160,13 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_costPeriodEnd)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).act_costPeriodSt.Value.ToString("dd/MM/yyyy")  to  @Model.Budget_Activity_list.ElementAt(0).act_costPeriodEnd .Value.ToString("dd/MM/yyyy")*@
 								</td>
 								<td style="text-align:right;">
 									<label> กลุ่มสินค้า (Product Group) : </label>
 									@if (Model.Budget_Activity.prd_groupShort.ToString() != "")
 									{
-										@Html.DisplayFor(x => x.Budget_Activity.prd_groupShort)
+										@Html.DisplayFor(x => x.Budget_Activity.act_brandName)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).prd_groupShort*@
 								</td>
 							</tr>
 
@@ -218,7 +177,6 @@
 									{
 										@Html.DisplayFor(x => x.Budget_Activity.act_objective)
 									}
-									@*@Model.Budget_Activity_list.ElementAt(0).act_objective*@
 								</td>
 								<td style="text-align:right;"></td>
 							</tr>
@@ -300,6 +258,8 @@
 											<td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
 											<td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
 
+											@*status == 1 Draft
+												status == 2 รออนุมัติ*@
 											@if (item.invoiceApproveStatusId == 1)
 											{
 												<td style="text-align:center;font-size:12px;"></td>
@@ -309,7 +269,7 @@
 												<td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
 											}
 
-											@if ( item.invoiceApproveStatusId == 1 )
+											@if (item.invoiceApproveStatusId == 2)
 											{
 												count_wait_approve++;
 											}
@@ -343,14 +303,9 @@
 
 						@if (Model.Budget_Activity.budget_id != null)
 						{
-							@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id })
-							@*@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity_list.ElementAt(0).budget_id })*@
+							@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
 						}
-
-
 					</div>
-
-
 				</div>
 			</div>
 
@@ -358,18 +313,36 @@
 				<div>
 					<p class="d-flex justify-content-center">
 
-						<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-						@if (count_wait_approve > 0)
+						<button type="button" class="btn btn-sm btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+						@if (count_wait_approve == 0)
 						{
-							<button type="button" class="btn btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
+							<button type="button" class="btn btn-sm btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
 						}
 					</p>
 				</div>
 
+
+				@*<div>
+						<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: lightgray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+					</div>*@
+
+				<div class="row" style="width:97%; margin-left:10px;">
+					@if (Model.Budget_Invoice_list.Any())
+					{
+						<br />
+						<div style="text-align:left;"><h5>รายการเอกสารแนบ (@Model.Budget_Invoice_list.Count รายการ) </h5></div>
+						<br />
+
+						foreach (var item in Model.Budget_Invoice_list)
+						{
+							<div class="col-md-6">
+								<div style="text-align:right;"><h5>เลขที่ใบแจ้งหนี้ @item.invoiceNo</h5></div>
+								@Html.Action("invoicePDFView", "BudgetViewer", new { fileName = item._fileName })
+							</div>
+						}
+					}
+				</div>
 			</div>
-
-
-
 		</div>
 	</div>
 }

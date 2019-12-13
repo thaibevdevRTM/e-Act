@@ -13,7 +13,7 @@
 }
 
 <div class="modal-body">
-    <div id="Grid1" style="width:97%; margin-left:20px;">
+    <div id="divForm" style="width:97%; margin-left:20px;">
         <style>
             .cssborderbottom {
                 border-bottom-width: 1px;
@@ -393,10 +393,8 @@
                             }
 
                             <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
-                            @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
-                            {
-                                <td class="font11 textRight">@Html.DisplayFor(m => item.themeCost)</td>
-                            }
+
+                            <td class="font11 textRight">@Html.DisplayFor(m => item.themeCost)</td>
                             <td class="font11 textRight">@string.Format("{0:n2}", item.growth)</td>
                             <td class="font11 textRight">@Html.DisplayFor(m => item.total)</td>
                             @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
@@ -480,10 +478,17 @@
             ประมาณการ(Estimate)
         </div>
 
+        <div style="margin-bottom:10px;">
+            @if (Model.activityFormModel != null)
+            {
+                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id,subId = ConfigurationManager.AppSettings["subjectActivityFormId"] })
+            }
+        </div>
+
         <div>
             @if (Model.activityFormModel != null)
             {
-                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id })
+                @Html.Action("getApproveComment", "Approve", new { actId = Model.activityFormModel.id, actTypeName = Model.activityFormModel.txttheme })
             }
         </div>
 

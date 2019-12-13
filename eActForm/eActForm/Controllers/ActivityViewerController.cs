@@ -25,7 +25,7 @@ namespace eActForm.Controllers
             return PartialView();
         }
 
-        public ActionResult getPDF(string actId, string type )
+        public ActionResult getPDF(string actId, string type,string extension)
         {
             string rootPath = "", mapPath = "";
 
@@ -44,6 +44,7 @@ namespace eActForm.Controllers
                 {
                     rootPath = ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"];
                 }
+           
                 else
                 {
                     rootPath = ConfigurationManager.AppSettings["rooPdftURL"];
@@ -58,6 +59,8 @@ namespace eActForm.Controllers
                     }
                 }
 
+
+
             }
             catch(Exception ex)
             {
@@ -67,8 +70,17 @@ namespace eActForm.Controllers
                                                      FileMode.Open,
                                                      FileAccess.Read
                                                    );
-            var fsResult = new FileStreamResult(fileStream, "application/pdf");
-            return fsResult;
+
+       
+            if(extension == ".pdf" || string.IsNullOrEmpty(extension))
+            {
+                return new FileStreamResult(fileStream, "application/pdf");
+            }
+            else
+            {
+                return File(fileStream, "application/vnd.ms-excel", actId);
+            }
+
         }
 
     }

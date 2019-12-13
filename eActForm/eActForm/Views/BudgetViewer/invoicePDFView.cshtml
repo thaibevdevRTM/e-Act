@@ -1,0 +1,9 @@
+﻿
+
+<object data="@Url.Action("getInvoicePdfBudget", "BudgetViewer", new { fileName = TempData["fileName"] })" type="application/pdf" style="width:100%;min-height:350px;"></object>
+<div class="row">
+	<div>
+		<p class="text-success pull-right">Click <a href="@Url.Action("getInvoicePdfBudget", "BudgetViewer", new { fileName = TempData["fileName"] })" target="_blank" class="btn btn-sm btn-info"><i class="fa fa fa-search fa-fw"></i>&nbsp;</a>to view the file.</p>
+
+	</div>
+</div>

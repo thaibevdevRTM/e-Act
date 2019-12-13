@@ -20,9 +20,13 @@ namespace eActForm.BusinessLayer
                              select new TB_Act_ActivityGroup_Model()
                              {
                                  id = d["id"].ToString(),
+                                 activityTypeId = d["id"].ToString(),
                                  activitySales = d["activitySales"].ToString(),
                                  activityAccount = d["activityAccount"].ToString(),
                                  gl = d["gl"].ToString(),
+                                 digit_Group = d["digit_Group"].ToString() + d["digit_SubGroup"].ToString(),
+                                 digit_SubGroup = d["digit_SubGroup"].ToString(),
+                                 activityCondition = d["activityCondition"].ToString(),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),

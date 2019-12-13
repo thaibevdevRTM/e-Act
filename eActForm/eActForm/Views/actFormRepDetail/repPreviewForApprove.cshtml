@@ -1,0 +1,79 @@
+﻿
+@using eActForm.Models
+@using System.Configuration
+@using eActForm.BusinessLayer
+@model eActForm.Models.RepDetailModel.actFormRepDetails
+
+<div class="modal-dialog modal-large">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <div style=""></div>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        @RenderPage("~/Views/Shared/_PreviewForApproveDetail.cshtml")
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+
+    $(function () {
+
+                 $("#btnExportPDF").click(function () {
+                     $("input[name='gridHtml']").val($("#GridPDF").html());
+                 });
+    });
+
+
+    $(function () {
+                $("#btnSubmitPDF").click(function () {
+                    $("#previewModal").modal('hide');
+                    $("#WaitDialog").show();
+                    $.ajax({
+                        url: '@Url.Action("repReportDetailApprove", "actFormRepDetail")',
+                        data: {
+                            gridHtml: $("#GridPDF").html(),
+                            gridOs: $("#divOS").html(),
+                            gridEst: $("#divEst").html(),
+                            gridWA: $("#divWA").html(),
+                            gridSO: $("#divSO").html(),
+                            customerId: $("#ddlCustomer").val(),
+                            productTypeId: $("#ddlProductType").val(),
+                            startDate: $("#startDate").val(),
+                            endDate: $("#endDate").val()
+                        },
+                        dataType: "json",
+                        type: 'POST'
+                    }).done(function (response) {
+                        $("#WaitDialog").hide();
+                        if (response.Success) {
+                            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+                            $("#chooseRepDetailView").html("");
+                            }
+                            else {
+                            doMsgFail("ไม่สามารถดำเนินการได้สำเร็จ กรุณาติดต่อ Admin ครับ");
+                            }
+                    });
+
+
+                });
+            });
+</script>

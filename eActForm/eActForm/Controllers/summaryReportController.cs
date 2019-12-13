@@ -26,31 +26,49 @@ namespace eActForm.Controllers
 
         public ActionResult getPreviewSummary(string startDate)
         {
-           
+            string redirect = "";
             try
             {
                 string repDetail = "";
                 ReportSummaryModels model = new ReportSummaryModels();
                 ReportSummaryModels modelResult = new ReportSummaryModels();
 
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
+                repDetail = string.Join(",", model.activitySummaryList.Select(x => x.repDetailId));
+                
                 if (model.activitySummaryList.Any())
                 {
-                    repDetail = string.Join(",", model.activitySummaryList.Select(x => x.repDetailId));
-                    modelResult = ReportSummaryAppCode.getReportSummary(repDetail);
-                    modelResult.flowList = model.flowList;
+                    if (model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.nonAL)
+                    {
+                        modelResult = ReportSummaryAppCode.getReportSummary(repDetail, startDate);
+                        modelResult.producttype_id = AppCode.nonAL;
+                        redirect = "viewReportSummary";
+                    }
+                    else
+                    {
+                        modelResult = ReportSummaryAppCode.getReportSummaryAlcohol(repDetail, startDate);
+                        modelResult.producttype_id = AppCode.AL;
+                        redirect = "viewReportSummaryAlcohol";
+                    }
                 }
+                modelResult.subId = model.subId;
+                modelResult.cusId = model.cusId;
+                modelResult.flowList = model.flowList;
 
                 Session["SummaryDetailModel"] = modelResult;
-                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+
 
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message);
             }
-            return RedirectToAction("viewReportSummary", new { startDate = Request.Form["startDate"] });
+
+
+            return RedirectToAction(redirect, new { startDate = Request.Form["startDate"] });
         }
 
 
@@ -70,6 +88,25 @@ namespace eActForm.Controllers
 
             return PartialView(model);
         }
+
+
+        public ActionResult viewReportSummaryAlcohol(string startDate)
+        {
+            ReportSummaryModels model = null;
+            try
+            {
+
+                ViewBag.startDate = startDate;
+                model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
+
 
         [HttpPost]
         [ValidateInput(false)]
@@ -97,18 +134,59 @@ namespace eActForm.Controllers
                 string chk = Request.Form["chk_Approve"];
                 #region filter
 
+
+                if (Request.Form["txtRepDetailNo"] != "")
+                {
+                    model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByRepDetailNo(model.activitySummaryList, Request.Form["txtRepDetailNo"]);
+                }
                 if (Request.Form["ddlProductType"] != "")
                 {
                     model.activitySummaryList = ReportSummaryAppCode.getFilterSummaryDetailByProductType(model.activitySummaryList, Request.Form["ddlProductType"]);
                 }
 
-                if (Request.Form["ddlProductType"] != "")
+                if (chk == "true")
                 {
-                    model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
-                                    "639C73A8-328E-433E-8B12-19B04AC8D61A"
-                                    , "B18BB124-0EFC-4D90-BFFD-D333A1F79E32"
-                                    , Request.Form["ddlProductType"]);
+                    if (Request.Form["ddlProductType"] == AppCode.nonAL)
+                    {
+                        model.subId = "8D527314-6D2D-45AF-995F-54144A705BBD";
+                        model.producttype_id = AppCode.nonAL;
+                        model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                                      model.subId
+                                    , ""
+                                    , AppCode.nonAL);
+                    }
+                    else
+                    {
+                        model.subId = "8D527314-6D2D-45AF-995F-54144A705BBD";
+                        model.producttype_id = AppCode.AL;
+                        model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                                    model.subId
+                                    , ""
+                                    , AppCode.AL);
+                    }
                 }
+                else
+                {
+                    if (Request.Form["ddlProductType"] == AppCode.nonAL)
+                    {
+                        model.subId = "8D527314-6D2D-45AF-995F-54B44A705BBD";
+                        model.producttype_id = AppCode.nonAL;
+                        model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                                    model.subId
+                                    , ""
+                                    , AppCode.nonAL);
+                    }
+                    else
+                    {
+                        model.subId = "8D527314-6D2D-45AF-995F-54B44A705BBD";
+                        model.producttype_id = AppCode.AL;
+                        model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                                    model.subId
+                                    , ""
+                                    , AppCode.AL);
+                    }
+                }
+                model.cusId = "";
                 #endregion
 
                 Session["SummaryDetailModel"] = model;
@@ -137,6 +215,8 @@ namespace eActForm.Controllers
 
             return PartialView(model);
         }
+
+
 
         public JsonResult repSetDelFlagRecodeSummaryDetail(string repId, bool delFlag)
         {
@@ -171,8 +251,8 @@ namespace eActForm.Controllers
             {
                 ReportSummaryModels model = (ReportSummaryModels)Session["SummaryDetailModel"];
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
-                string summaryId = ReportSummaryAppCode.insertActivitySummaryDetail(customerId, productTypeId, startDate, endDate, model);
-                if (ReportSummaryAppCode.insertApproveForReportSummaryDetail("B18BB124-0EFC-4D90-BFFD-D333A1F79E32", productTypeId, summaryId) > 0)
+                string summaryId = ReportSummaryAppCode.insertActivitySummaryDetail(model.cusId, model.producttype_id, startDate, endDate, model);
+                if (ReportSummaryAppCode.insertApproveForReportSummaryDetail(model.subId , model.cusId, model.producttype_id, summaryId) > 0)
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
@@ -201,7 +281,7 @@ namespace eActForm.Controllers
             ReportSummaryModels modelResult = new ReportSummaryModels();
             try
             {
-                
+
                 modelResult = ReportSummaryAppCode.getReportSummaryApprove(summaryId);
                 modelResult.flowList = ApproveFlowAppCode.getFlowByActFormId(summaryId);
                 Session["SummaryDetailModel"] = modelResult;
@@ -245,5 +325,61 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+
+
+
+        //==========================VIEW DOCUMENT====================================
+
+        public ActionResult IndexDoc()
+        {
+
+
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            return View(models);
+
+        }
+
+        public ActionResult searchActFormSummary(string activityType)
+        {
+
+            DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
+            DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
+            ReportSummaryModels modelResult = new ReportSummaryModels();
+
+            modelResult.summaryDetailLists = ReportSummaryAppCode.getDocumentSummaryDetailByDate(startDate, endDate);
+
+
+            if (Request.Form["txtRepDetailNo"] != "")
+            {
+                modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.summaryId == ReportSummaryAppCode.getSummaryIdByRepdetail(Request.Form["txtRepDetailNo"].ToString())).ToList();
+            }
+            else
+            {
+               
+                if (Request.Form["ddlProductType"] != "")
+                {
+                    modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
+                }
+            }
+            TempData["SearchDataModelSummary"] = modelResult;
+            return RedirectToAction("ListDoc");
+        }
+
+        public ActionResult ListDoc()
+        {
+            ReportSummaryModels modelResult = new ReportSummaryModels();
+            if (TempData["SearchDataModelSummary"] != null)
+            {
+                modelResult = (ReportSummaryModels)TempData["SearchDataModelSummary"];
+            }
+            else
+            {
+                modelResult.summaryDetailLists = ReportSummaryAppCode.getDocumentSummaryDetailByDate(DateTime.Now.AddDays(-15), DateTime.Now);
+              
+            }
+
+            TempData.Clear();
+            return PartialView(modelResult);
+        }
     }
 }

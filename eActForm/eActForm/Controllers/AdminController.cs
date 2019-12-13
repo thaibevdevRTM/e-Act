@@ -44,9 +44,6 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-
-       
-
         public JsonResult onchangePrice(TB_Act_ProductPrice_Model.ProductPrice model)
         {
             var result = new AjaxResult();
@@ -107,7 +104,7 @@ namespace eActForm.Controllers
 
 
             result.Code = AdminCommandHandler.insertProduct(model);
-            //add productprice.....
+            //add productprice MT
             var getCustomerAll = QueryGetAllCustomers.getAllCustomers();
             if (getCustomerAll.Any())
             {
@@ -117,7 +114,11 @@ namespace eActForm.Controllers
                     countinsert = AdminCommandHandler.insertProductPrice(model.productCode, item.id);
                     countinsert++;
                 }
+
             }
+
+            
+
 
 
             return Json(result, JsonRequestBehavior.AllowGet);

@@ -12,6 +12,7 @@ using iTextSharp.text;
 using WebLibrary;
 using static eActForm.Models.ReportActivityBudgetModels;
 using Microsoft.VisualBasic;
+using static eActForm.Models.RepDetailModel;
 
 namespace eActForm.Controllers
 {
@@ -19,9 +20,23 @@ namespace eActForm.Controllers
     public class actFormRepDetailController : Controller
     {
         // GET: actFormRepDetail
-        public ActionResult Index()
+        public ActionResult Index(string typeForm)
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            ViewBag.TypeForm = typeForm;
+
+            if (typeForm == Activity_Model.activityType.MT.ToString())
+            {
+                models.customerslist = QueryGetAllCustomers.getCustomersMT();
+            }
+            else
+            {
+                models.customerslist = QueryGetAllCustomers.getAllRegion();
+            }
+
+
+
+
             models.approveStatusList.Add(new ApproveModel.approveStatus()
             {
                 id = "7",
@@ -31,17 +46,19 @@ namespace eActForm.Controllers
             return View(models);
         }
 
-        public ActionResult searchActForm()
+        public ActionResult searchActForm(string typeForm)
         {
             try
             {
 
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
-                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"]);
-                
+                model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"], typeForm);
+                model.typeForm = typeForm;
+                model.dateReport = Request.Form["reportDate"];
+
                 if (Request.Form["txtActivityNo"] != "")
                 {
-                    model = RepDetailAppCode.getFilterRepDetailByActNo(model, Request.Form["txtActivityNo"]);    
+                    model = RepDetailAppCode.getFilterRepDetailByActNo(model, Request.Form["txtActivityNo"]);
                 }
                 else
                 {
@@ -50,10 +67,19 @@ namespace eActForm.Controllers
                     {
                         model = RepDetailAppCode.getFilterRepDetailByStatusId(model, Request.Form["ddlStatus"]);
                     }
+
                     if (Request.Form["ddlCustomer"] != "")
                     {
-                        model = RepDetailAppCode.getFilterRepDetailByCustomer(model, Request.Form["ddlCustomer"]);
+                        if (typeForm == Activity_Model.activityType.MT.ToString())
+                        {
+                            model = RepDetailAppCode.getFilterRepDetailByCustomer(model, Request.Form["ddlCustomer"]);
+                        }
+                        else
+                        {
+                            model = RepDetailAppCode.getFilterRepDetailByRegion(model, Request.Form["ddlCustomer"]);
+                        }
                     }
+
                     if (Request.Form["ddlTheme"] != "")
                     {
                         model = RepDetailAppCode.getFilterRepDetailByActivity(model, Request.Form["ddlTheme"]);
@@ -66,14 +92,28 @@ namespace eActForm.Controllers
                     {
                         model = RepDetailAppCode.getFilterRepDetailByProductGroup(model, Request.Form["ddlProductGrp"]);
                     }
-                    
+
                     #endregion
                 }
 
-                model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
-                                        ConfigurationManager.AppSettings["subjectReportDetailId"]
-                                        , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
-                                        , Request.Form["ddlProductType"]);
+                if (model.actFormRepDetailGroupLists.Any())
+                {
+
+                    if (typeForm == Activity_Model.activityType.MT.ToString())
+                    {
+                        model.flowList = ApproveFlowAppCode.getFlowForReportDetail(
+                                                ConfigurationManager.AppSettings["subjectReportDetailId"]
+                                                , string.IsNullOrEmpty(Request.Form["ddlCustomer"]) ? model.actFormRepDetailLists.FirstOrDefault().customerId : Request.Form["ddlCustomer"]
+                                                , Request.Form["ddlProductType"]);
+                    }
+                    else
+                    {
+                        model.flowList = ApproveFlowAppCode.getFlowForReportDetailOMT(
+                                                ConfigurationManager.AppSettings["subjectReportDetailId"]
+                                                , Request.Form["ddlCustomer"]
+                                                , Request.Form["ddlProductType"]);
+                    }
+                }
 
                 Session["ActFormRepDetail"] = model;
             }
@@ -82,14 +122,14 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return RedirectToAction("repChooseView", new { startDate = Request.Form["startDate"] });
+            return RedirectToAction("repChooseView", new { startDate = Request.Form["reportDate"] });
         }
         public ActionResult repChooseView(string startDate)
         {
             RepDetailModel.actFormRepDetails model = null;
             try
             {
-                ViewBag.startDate = startDate;
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM-yyyy", null).ToString("MMM yyyy");
                 model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
             }
             catch (Exception ex)
@@ -106,11 +146,29 @@ namespace eActForm.Controllers
             try
             {
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
-                model.actFormRepDetailLists
-                    .Where(r => r.id == actId)
-                    .Select(r => r.delFlag = !delFlag
-                    ).ToList();
-                result.Success = true;
+                if (actId == "All")
+                {
+                    model.actFormRepDetailGroupLists.Select(r => r.delFlag = !delFlag
+                        ).ToList();
+
+                    model.actFormRepDetailLists.Select(r => r.delFlag = !delFlag
+                        ).ToList();
+                    result.Code = 001;
+                }
+                else
+                {
+                    model.actFormRepDetailGroupLists
+                        .Where(r => r.id == actId)
+                        .Select(r => r.delFlag = !delFlag
+                        ).ToList();
+
+                    model.actFormRepDetailLists
+                        .Where(r => r.id == actId)
+                        .Select(r => r.delFlag = !delFlag
+                        ).ToList();
+                }
+                result.Success = delFlag;
+
             }
             catch (Exception ex)
             {
@@ -127,7 +185,41 @@ namespace eActForm.Controllers
             return PartialView(flowModel);
         }
 
-        public ActionResult repListView(string startDate)
+        public ActionResult repListView()
+        {
+            RepDetailModel.actFormRepDetails model = null;
+            try
+            {
+                model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                ViewBag.MouthText = DateTime.ParseExact(model.dateReport, "MM-yyyy", null).ToString("MMM yyyy");
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
+
+
+        public ActionResult repPreviewForApproveDetail(string startDate)
+        {
+            RepDetailModel.actFormRepDetails model = null;
+            try
+            {
+                model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                ViewBag.MouthText = DateTime.ParseExact(startDate, "MM/dd/yyyy", null).ToString("MMM yyyy");
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
+
+
+        public ActionResult repPreviewForApprove(string startDate)
         {
             RepDetailModel.actFormRepDetails model = null;
             try
@@ -148,7 +240,8 @@ namespace eActForm.Controllers
             RepDetailModel.actFormRepDetails rep = new RepDetailModel.actFormRepDetails();
             try
             {
-                rep.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => brandId.Contains(r.brandId)).ToList();
+                rep.actFormRepDetailLists = model.actFormRepDetailGroupLists.Where(r => brandId.Contains(r.brandId)).ToList();
+
             }
             catch (Exception ex)
             {
@@ -167,7 +260,7 @@ namespace eActForm.Controllers
                 //RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
                 //gridHtml = gridHtml.Replace("\n", "<br>");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message);
             }
@@ -183,10 +276,10 @@ namespace eActForm.Controllers
             List<Attachment> file = new List<Attachment>();
             try
             {
-                var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"],"");
+                var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], "");
                 gridHtml = gridHtml.Replace("<br>", "<br/>");
-                file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10),"");
-                
+                file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), "");
+
             }
             catch (Exception ex)
             {
@@ -198,16 +291,16 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string gridEst,string gridWA,string gridSO, string customerId, string productTypeId, string startDate, string endDate)
+        public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string gridEst, string gridWA, string gridSO, string customerId, string productTypeId, string startDate, string endDate, string typeForm)
         {
             var result = new AjaxResult();
             try
             {
-
+                gridHtml = gridHtml.Replace("<br>", "<br/>");
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
                 string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
-                if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId) > 0)
+                if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId, typeForm) > 0)
                 {
                     RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, gridEst, gridWA, gridSO);
                     EmailAppCodes.sendApprove(actRepDetailId, AppCode.ApproveType.Report_Detail, false);
@@ -230,6 +323,31 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult reGenReportDetail(string gridHtml, string actRepDetailId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                gridHtml = gridHtml.Replace("<br>", "<br/>");
+                RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
+
+
+                RepDetailAppCode.reGenPDFReportDetail(actRepDetailId, gridHtml);
+                Session["ActFormRepDetail"] = null;
+                result.Success = true;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return Json(result);
+        }
         /// <summary>
         /// for approve page
         /// </summary>
@@ -249,7 +367,7 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
-            return RedirectToAction("repListView", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
+            return RedirectToAction("repPreviewForApproveDetail", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
         }
 
         /// <summary>
@@ -273,7 +391,7 @@ namespace eActForm.Controllers
                 else
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actId));
-                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
+                    List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A3.Rotate(), 25, 10, 10, 10), rootPath);
                     EmailAppCodes.sendApprove(actId, AppCode.ApproveType.Report_Detail, false);
                     Session["ActFormRepDetail"] = null;
                 }
@@ -287,6 +405,8 @@ namespace eActForm.Controllers
 
             return Json(result);
         }
+
+
 
     }
 }

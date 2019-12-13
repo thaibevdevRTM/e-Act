@@ -14,7 +14,7 @@ namespace eActForm.Controllers
     public class SignatureController : Controller
     {
         // GET: Signature
-        public ActionResult index()
+        public ActionResult Index()
         {
             ActSignatureModel.SignModel model = new ActSignatureModel.SignModel();
             model.empId = UtilsAppCode.Session.User.empId;
