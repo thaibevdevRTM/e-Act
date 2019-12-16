@@ -14,7 +14,24 @@ namespace eActForm.Models
         public List<TB_Act_ProductBrand_Model> productBrandList { get; set; }
         public List<TB_Act_Other_Model> companyList { get; set; }
         public List<TB_Act_Other_Model> getLimitList { get; set; }
+        public List<TB_Act_Other_Model> getDDLShowApproveList { get; set; }
+        public List<TB_Act_Other_Model> getDDlApproveList { get; set; }
+        public List<TB_Reg_ApproveGroup_Model> approveGroupList { get; set; }
+        public ApproveFlowModel.approveFlowModel approveFlow { get; set; }
 
+        public ManagementFlow_Model()
+        {
+            approveFlow = new ApproveFlowModel.approveFlowModel();
+            customerList = new List<TB_Act_Customers_Model.Customers_Model>();
+            chanelList = new List<TB_Act_Chanel_Model.Chanel_Model>();
+            cateList = new List<TB_Act_ProductCate_Model>();
+            productBrandList = new List<TB_Act_ProductBrand_Model>();
+            companyList = new List<TB_Act_Other_Model>();
+            getLimitList = new List<TB_Act_Other_Model>();
+            getDDLShowApproveList = new List<TB_Act_Other_Model>();
+            getDDlApproveList = new List<TB_Act_Other_Model>();
+            approveGroupList = new List<TB_Reg_ApproveGroup_Model>();
+        }
     }
 
     public class getDataList_Model : ActBaseModel

@@ -1,0 +1,48 @@
+﻿@model eActForm.Models.ManagementFlow_Model
+
+
+<table id="dtApproveLists" class="table table-striped table-hover">
+    <thead>
+        <tr style="background-color:#2B5D95;color:#ffffff;">
+            <th>ลำดับ</th>
+            <th>ชื่อ</th>
+            <th>กลุ่ม</th>
+            <th>แสดง</th>
+            <th>อนุมัติ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.approveFlow.flowDetail.OrderBy(x => x.rangNo))
+        {
+        <tr>
+            <td>
+                @Html.TextBoxFor(x => item.rangNo, new { @class = "textboxcss", @id = "txtRangNo" })
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.empId, new { @class = "form-control textboxcss", @id = "txtempId" })
+            </td>
+            <td>
+                @Html.DropDownListFor(x => item.approveGroupId, new SelectList(Model.approveGroupList, "id", "nameTH",item.approveGroupId), "Please Select", new
+                 {
+                     @class = "form-control textboxcss",
+                     id = "ddlApproveGroupId"
+                 })
+            </td>
+            <td>
+                @Html.DropDownListFor(x => item.isShowInDoc, new SelectList(Model.getDDLShowApproveList, "val1", "displayVal",item.isShowInDoc), "Please Select", new
+                 {
+                     @class = "form-control textboxcss",
+                     id = "ddlApproveShow"
+                 })
+            </td>
+            <td>
+                @Html.DropDownListFor(x => item.isApproved, new SelectList(Model.getDDlApproveList, "val1", "displayVal", item.isApproved), "Please Select", new
+                 {
+                     @class = "form-control textboxcss",
+                     id = "ddlApprove"
+                 })
+            </td>
+        </tr>
+
+        }
+</table>

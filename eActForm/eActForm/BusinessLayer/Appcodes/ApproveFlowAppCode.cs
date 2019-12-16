@@ -281,44 +281,33 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static ApproveFlowModel.approveFlowModel getFlowApproveGroupByType(
-            string companyId, string subjectId,string customerId,string productCatId,string flowLimitId,string channelId,string productBrandId)
+        public static ApproveFlowModel.approveFlowModel getFlowApproveGroupByType(getDataList_Model model)
         {
             try
             {
-                ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowIdByActFormId"
-                    , new SqlParameter[] {new SqlParameter("@companyId",companyId)
-                    ,new SqlParameter("@subjectId",subjectId)
-                    ,new SqlParameter("@customerId",customerId)
-                    ,new SqlParameter("@productCatId",productCatId)
-                    ,new SqlParameter("@flowLimitId",flowLimitId)
-                    ,new SqlParameter("@channelId",channelId)
-                    ,new SqlParameter("@productBrandId",productBrandId)});
+                ApproveFlowModel.approveFlowModel approveFlow_Model = new ApproveFlowModel.approveFlowModel();
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveByAllType"
+                    , new SqlParameter[] {new SqlParameter("@companyId",model.companyId)
+                    ,new SqlParameter("@subjectId",model.subjectId)
+                    ,new SqlParameter("@customerId",model.customerId)
+                    ,new SqlParameter("@productCatId",model.productCatId)
+                    ,new SqlParameter("@flowLimitId",model.flowLimitId)
+                    ,new SqlParameter("@channelId",model.channelId)
+                    ,new SqlParameter("@productBrandId",model.productBrandId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveFlowModel.flowApprove()
+                             select new ApproveFlowModel.flowApproveDetail()
                              {
                                  id = dr["id"].ToString(),
+                                 companyId = dr["companyId"].ToString(),
+                                 flowId = dr["flowId"].ToString(),
+                                 empId = dr["empId"].ToString(),
+                                 approveGroupId = dr["approveGroupId"].ToString(),
+                                 rangNo = int.Parse(dr["rangNo"].ToString()),
+                                 isShowInDoc = !string.IsNullOrEmpty(dr["showInDoc"].ToString()) ? bool.Parse(dr["showInDoc"].ToString()) : true,
+                                 isApproved = !string.IsNullOrEmpty(dr["isApproved"].ToString()) ? bool.Parse(dr["isApproved"].ToString()) : true,
                              }).ToList();
-                if (lists.Count > 0)
-                {
-                    DataSet ds1 = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveByFlowId"
-                     , new SqlParameter[] {new SqlParameter("@companyId",companyId) });
-                    var result = (from DataRow dr in ds.Tables[0].Rows
-                                  select new ApproveFlowModel.flowApproveDetail()
-                                  {
-                                      id = dr["id"].ToString(),
-                                      companyId = dr["companyId"].ToString(),
-                                      flowId = dr["flowId"].ToString(),
-                                      empId = dr["empId"].ToString(),
-                                      approveGroupId = dr["approveGroupId"].ToString(),
-                                      rangNo = int.Parse(dr["rangNo"].ToString()),
-                                      isShowInDoc = !string.IsNullOrEmpty(dr["isShowInDoc"].ToString()) ? bool.Parse(dr["isShowInDoc"].ToString()) : true,
-                                      isApproved = !string.IsNullOrEmpty(dr["isApproved"].ToString()) ? bool.Parse(dr["isApproved"].ToString()) : true, 
-                                  }).ToList();
-
-                }
-                return model;
+                approveFlow_Model.flowDetail = lists.ToList();
+                return approveFlow_Model;
             }
             catch (Exception ex)
             {

@@ -26,6 +26,16 @@ namespace eActForm.BusinessLayer.Appcodes
             return QueryOtherMaster.getOhterMaster("limitFlow", "");
         }
 
+        public static List<TB_Act_Other_Model> getApproveShow()
+        {
+            return QueryOtherMaster.getOhterMaster("approveShow", "");
+        }
+
+        public static List<TB_Act_Other_Model> getApprove()
+        {
+            return QueryOtherMaster.getOhterMaster("approve", "");
+        }
+
         public static List<TB_Act_Customers_Model.Customers_Model> getCustomer(string companyId)
         {
             if (companyId == ConfigurationManager.AppSettings["companyId_MT"])
@@ -54,6 +64,10 @@ namespace eActForm.BusinessLayer.Appcodes
             return QueryGetAllBrand.GetAllBrand().Where(x => x.no_tbmmkt != null).ToList();
         }
 
+        public static List<TB_Reg_ApproveGroup_Model> getApproveGroup()
+        {
+            return QueryGetAllApproveGroup.getAllApproveGroup().OrderBy(x => x.nameTH).ToList();
+        }
 
 
 

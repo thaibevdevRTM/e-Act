@@ -24,7 +24,7 @@
             <label>Limit</label>
         </div>
         <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "id", "displayVal"), "Please Select", new { @class = "form-control textboxcss", id = "ddlLimit" })
+            @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "val1", "displayVal"), "Please Select", new { @class = "form-control textboxcss", id = "ddlLimit" })
         </div>
     </div>
 
@@ -66,11 +66,33 @@
 <div class="box-body">
     <div id="Grid"></div>
 </div>
-
+<div class="col-md-12">
+    <div id="divApprove" class="col-md-12">
+    </div>
+</div>
 
 
 <script type="text/javascript">
     function submitPreview() {
+         $.ajax({
+            type: 'POST',
+            url: '@Url.Action("approveList", "ManagementFlow")',
+             data: {
+                 companyId: $("#ddlCompany").val(),
+                 subjectId: $("#ddlSubject").val(),
+                 customerId: $("#ddlCustomer").val(),
+                 flowLimitId: $("#ddlLimit").val(),
+                 productCatId: $("#ddlCate").val(),
+                 channelId: $("#ddlChanelGroup").val(),
+                 productBrandId: $("#ddlBrand").val(),
+             }
+        }).done(function (htmlResponse) {
+            $("#divApprove").html(htmlResponse);
+        });
+    }
+
+
+    @*function submitPreview() {
 
         var dataManager = ej.DataManager({
             url: '@Url.Action("getApproveFlowDataList", "ManagementFlow")',
@@ -119,6 +141,6 @@
                 actionComplete: "complete",
             });
         });
-    }
+    }*@
 
 </script>

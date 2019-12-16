@@ -32,6 +32,8 @@ namespace eActForm.Controllers
                 model.cateList = managementFlowAppCode.getProductCate(companyId);
                 model.chanelList = managementFlowAppCode.getChanel("data");
                 model.productBrandList = managementFlowAppCode.getProductBrand();
+
+
             }
             catch (Exception ex)
             {
@@ -40,20 +42,31 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-        public JsonResult getApproveFlowDataList()
+        //public JsonResult getApproveFlowDataList()
+        //{
+        //    var result = new AjaxResult();
+        //    try
+        //    {
+        //        //var result = ApproveFlowAppCode.getFlowApproveGroupByType();
+        //    }
+        //    catch(Exception ex)
+        //    {
+
+        //    }
+
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+
+        //}
+
+        public ActionResult approveList(getDataList_Model model)
         {
-            var result = new AjaxResult();
-            try
-            {
-                //var result = ApproveFlowAppCode.getFlowApproveGroupByType();
-            }
-            catch(Exception ex)
-            {
+            ManagementFlow_Model management_Model = new ManagementFlow_Model();
+            management_Model.approveFlow = ApproveFlowAppCode.getFlowApproveGroupByType(model);
+            management_Model.approveGroupList = managementFlowAppCode.getApproveGroup();
+            management_Model.getDDLShowApproveList = managementFlowAppCode.getApproveShow();
+            management_Model.getDDlApproveList = managementFlowAppCode.getApprove();
 
-            }
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-
+            return PartialView(management_Model);
         }
     }
 }
