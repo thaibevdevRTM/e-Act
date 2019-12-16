@@ -108,33 +108,28 @@
         @Html.AntiForgeryToken()
         <h3>ลายเซ็นปัจจุบัน</h3>
         <hr />
-            <div class="col-md-6 col-xs-6">
-                <div class="text-center">
-                    @if (Model.lists != null && Model.lists.Count > 0)
-                    {
-                        var base64 = Convert.ToBase64String(Model.lists[0].signature);
-                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                        <img src="@imgSrc" class="img-thumbnail" />
-                    }
-                    else
-                    {
-                        <img src="~/images/blank.png" class="img-thumbnail" />
-                    }
-                    <p style="text-align:center">@TempData["empName"]</p>
-                    <p style="text-align:center">@TempData["positionTitle"]</p>
-                </div>
+        <div class="col-md-6 col-xs-6">
+            <div class="text-center">
+                @if (Model.lists != null && Model.lists.Count > 0)
+                {
+                    var base64 = Convert.ToBase64String(Model.lists[0].signature);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                    <img src="@imgSrc" class="img-thumbnail" />
+                }
+                else
+                {
+                    <img src="~/images/blank.png" class="img-thumbnail" />
+                }
+                <p style="text-align:center">@TempData["empName"]</p>
+                <p style="text-align:center">@TempData["positionTitle"]</p>
             </div>
+        </div>
             <div class="col-md-6 col-xs-6">
                 <div class="signature-pad text-center">
                     <canvas class="panel panel-default center-block"></canvas>
-                    @if (Model.lists.Count > 0)
-                    {
-                    <input name="signature" type="hidden" value="@Model.lists[0].signature" />
-                    }
-                    else
-                    {
-                    <input name="signature" type="hidden" value="" />
-                    }
+
+                        <input name="signature" type="hidden" value="" />
+
                     <input type="file" name="files" id="files" />
                     <input name="empId" type="hidden" value="@UtilsAppCode.Session.User.empId" />
                     <button type="button" class="btn btn-success btn-sm btn-clear-canvas">
@@ -185,3 +180,13 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+
+        // Clear the canvas and hidden input
+        signaturePad.clear();
+        hiddenInput.value = '';
+
+    });
+
+</script>
