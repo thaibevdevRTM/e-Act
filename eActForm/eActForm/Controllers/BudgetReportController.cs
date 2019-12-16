@@ -150,13 +150,14 @@ namespace eActForm.Controllers
 
 				#region filter
 
-				//startDate = Request.Form["startDate"];
-				//endDate = Request.Form["endDate"];
-
-				if (Request.Form["chk_all"] != null && Request.Form["chk_all"] == "true")
+				if (Request.Form["chk_all"] == null || Request.Form["chk_all"] == "false")
 				{
 					startDate = Request.Form["startDate"];
 					endDate = Request.Form["endDate"];
+
+					if (Request.Form["startDate"] == null) { startDate = DateTime.Today.AddDays(-45).ToString("MM/dd/yyyy"); }
+					if (Request.Form["endDate"] == null) { endDate = DateTime.Today.ToString("MM/dd/yyyy"); }
+
 				}
 
 				actNo = Request["txtActivityNo"] == null ? null : Request["txtActivityNo"];
