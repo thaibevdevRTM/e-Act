@@ -24,40 +24,37 @@ namespace eActForm.BusinessLayer
                 if (model.activityFormModel.mode == "edit" && model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)//ถ้าเป็น บัญชีเข้ามาเพื่อกรอก IO
                 {
 
-                    insertIndex = 1;
-                    if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
-                    {
-                        rtn += deleteActivityOfEstimateByActivityId(activityId);
-                        foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
-                        {
+                    //insertIndex = 1;
+                    //if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
+                    //{
+                    //    rtn += deleteActivityOfEstimateByActivityId(activityId);
+                    //    foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
+                    //    {
 
-                            CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
-                            costThemeDetail.id = Guid.NewGuid().ToString();
-                            costThemeDetail.activityId = activityId;
-                            costThemeDetail.activityTypeId = item.activityTypeId;
-                            costThemeDetail.productDetail = item.productDetail;
-                            costThemeDetail.total = item.total;
-                            costThemeDetail.IO = item.IO;
-                            costThemeDetail.rowNo = insertIndex;
-                            costThemeDetail.delFlag = false;
-                            costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
-                            costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                            costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
-                            costThemeDetail.updatedDate = DateTime.Now;
-                            costThemeDetail.unit = item.unit;
-                            costThemeDetail.unitPrice = item.unitPrice;
+                    //        CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
+                    //        costThemeDetail.id = Guid.NewGuid().ToString();
+                    //        costThemeDetail.activityId = activityId;
+                    //        costThemeDetail.activityTypeId = item.activityTypeId;
+                    //        costThemeDetail.productDetail = item.productDetail;
+                    //        costThemeDetail.total = item.total;
+                    //        costThemeDetail.IO = item.IO;
+                    //        costThemeDetail.rowNo = insertIndex;
+                    //        costThemeDetail.delFlag = false;
+                    //        costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
+                    //        costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    //        costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    //        costThemeDetail.updatedDate = DateTime.Now;
+                    //        costThemeDetail.unit = item.unit;
+                    //        costThemeDetail.unitPrice = item.unitPrice;
+                    //        costThemeDetail.QtyName = item.QtyName;
 
-                            rtn += insertEstimate(costThemeDetail);
+                    //        rtn += insertEstimate(costThemeDetail);
 
-                            insertIndex++;
-                        }
-
-
-
-                    }
-
-
-
+                    //        insertIndex++;
+                    //    }
+                    //}
+                    rtn = ProcessInsertEstimate(rtn, model, activityId);
+                    rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
                 }
                 else
                 {
@@ -76,96 +73,71 @@ namespace eActForm.BusinessLayer
                     model.activityFormModel.remark = model.activityFormModel.remark;
                     rtn = insertActivityForm(model.activityFormModel);
 
-                    if (model.tB_Act_ActivityForm_DetailOther != null)
-                    {
-                        rtn += deleteusp_deleteTB_Act_ActivityForm_DetailOther(activityId);
+                    //if (model.tB_Act_ActivityForm_DetailOther != null)
+                    //{
+                    //    rtn += deleteusp_deleteTB_Act_ActivityForm_DetailOther(activityId);
 
-                        TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
-                        tB_Act_ActivityForm_DetailOther.Id = Guid.NewGuid().ToString();
-                        tB_Act_ActivityForm_DetailOther.activityId = activityId;
+                    //    TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+                    //    tB_Act_ActivityForm_DetailOther.Id = Guid.NewGuid().ToString();
+                    //    tB_Act_ActivityForm_DetailOther.activityId = activityId;
 
-                        if (model.activityFormTBMMKT.selectedBrandOrChannel == "Brand")
-                        {
-                            tB_Act_ActivityForm_DetailOther.productBrandId = model.activityFormTBMMKT.BrandlId;
-                        }
-                        else if (model.activityFormTBMMKT.selectedBrandOrChannel == "Channel")
-                        {
-                            tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId;
-                        }
+                    //    if (model.activityFormTBMMKT.selectedBrandOrChannel == "Brand")
+                    //    {
+                    //        tB_Act_ActivityForm_DetailOther.productBrandId = model.activityFormTBMMKT.BrandlId;
+                    //    }
+                    //    else if (model.activityFormTBMMKT.selectedBrandOrChannel == "Channel")
+                    //    {
+                    //        tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId;
+                    //    }
 
-                        tB_Act_ActivityForm_DetailOther.SubjectId = model.activityFormTBMMKT.SubjectId;
-                        tB_Act_ActivityForm_DetailOther.activityProduct = model.tB_Act_ActivityForm_DetailOther.activityProduct;
-                        tB_Act_ActivityForm_DetailOther.activityTel = model.tB_Act_ActivityForm_DetailOther.activityTel;
-                        tB_Act_ActivityForm_DetailOther.EO = model.tB_Act_ActivityForm_DetailOther.EO;
-                        tB_Act_ActivityForm_DetailOther.descAttach = model.tB_Act_ActivityForm_DetailOther.descAttach;
-                        tB_Act_ActivityForm_DetailOther.delFlag = false;
-                        tB_Act_ActivityForm_DetailOther.createdByUserId = model.activityFormModel.createdByUserId;
-                        tB_Act_ActivityForm_DetailOther.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                        tB_Act_ActivityForm_DetailOther.updatedByUserId = UtilsAppCode.Session.User.empId;
-                        tB_Act_ActivityForm_DetailOther.updatedDate = DateTime.Now;
+                    //    tB_Act_ActivityForm_DetailOther.SubjectId = model.activityFormTBMMKT.SubjectId;
+                    //    tB_Act_ActivityForm_DetailOther.activityProduct = model.tB_Act_ActivityForm_DetailOther.activityProduct;
+                    //    tB_Act_ActivityForm_DetailOther.activityTel = model.tB_Act_ActivityForm_DetailOther.activityTel;
+                    //    tB_Act_ActivityForm_DetailOther.EO = model.tB_Act_ActivityForm_DetailOther.EO;
+                    //    tB_Act_ActivityForm_DetailOther.descAttach = model.tB_Act_ActivityForm_DetailOther.descAttach;
+                    //    tB_Act_ActivityForm_DetailOther.delFlag = false;
+                    //    tB_Act_ActivityForm_DetailOther.createdByUserId = model.activityFormModel.createdByUserId;
+                    //    tB_Act_ActivityForm_DetailOther.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    //    tB_Act_ActivityForm_DetailOther.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    //    tB_Act_ActivityForm_DetailOther.updatedDate = DateTime.Now;
+                    //    tB_Act_ActivityForm_DetailOther.BudgetNumber = model.tB_Act_ActivityForm_DetailOther.BudgetNumber;
 
-                        rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
+                    //    rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
 
-                        insertIndex++;
-                    }
-
+                    //    insertIndex++;
+                    //}
+                    rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
 
                     //insertIndex = 1;
-                    //if (model.list_TB_Act_ActivityLayout != null)
+                    //if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
                     //{
-                    //    rtn += deleteusp_deleteTB_Act_ActivityLayout(activityId);
-                    //    foreach (var item in model.list_TB_Act_ActivityLayout.ToList())
+                    //    rtn += deleteActivityOfEstimateByActivityId(activityId);
+                    //    foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
                     //    {
 
-                    //        TB_Act_ActivityLayout tB_Act_ActivityLayout = new TB_Act_ActivityLayout();
-                    //        tB_Act_ActivityLayout.id = Guid.NewGuid().ToString();
-                    //        tB_Act_ActivityLayout.activityId = activityId;
-                    //        tB_Act_ActivityLayout.no = insertIndex.ToString();
-                    //        tB_Act_ActivityLayout.io = item.io;
-                    //        tB_Act_ActivityLayout.activity = item.activity;
-                    //        tB_Act_ActivityLayout.amount = item.amount;                       
-                    //        tB_Act_ActivityLayout.delFlag = false;
-                    //        tB_Act_ActivityLayout.createdByUserId = model.activityFormModel.createdByUserId;
-                    //        tB_Act_ActivityLayout.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                    //        tB_Act_ActivityLayout.updatedByUserId = UtilsAppCode.Session.User.empId;
-                    //        tB_Act_ActivityLayout.updatedDate = DateTime.Now;
+                    //        CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
+                    //        costThemeDetail.id = Guid.NewGuid().ToString();
+                    //        costThemeDetail.activityId = activityId;
+                    //        costThemeDetail.activityTypeId = item.activityTypeId;
+                    //        costThemeDetail.productDetail = item.productDetail;
+                    //        costThemeDetail.total = item.total;
+                    //        costThemeDetail.IO = item.IO;
+                    //        costThemeDetail.rowNo = insertIndex;
+                    //        costThemeDetail.delFlag = false;
+                    //        costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
+                    //        costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    //        costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    //        costThemeDetail.updatedDate = DateTime.Now;
+                    //        costThemeDetail.unit = item.unit;
+                    //        costThemeDetail.unitPrice = item.unitPrice;
+                    //        costThemeDetail.QtyName = item.QtyName;
 
-                    //        rtn += usp_insertusp_insertTB_Act_ActivityLayout(tB_Act_ActivityLayout);
+                    //        rtn += insertEstimate(costThemeDetail);
 
                     //        insertIndex++;
                     //    }
                     //}
-
-
-
-                    insertIndex = 1;
-                    if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
-                    {
-                        rtn += deleteActivityOfEstimateByActivityId(activityId);
-                        foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
-                        {
-
-                            CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
-                            costThemeDetail.id = Guid.NewGuid().ToString();
-                            costThemeDetail.activityId = activityId;
-                            costThemeDetail.activityTypeId = item.activityTypeId;
-                            costThemeDetail.productDetail = item.productDetail;
-                            costThemeDetail.total = item.total;
-                            costThemeDetail.IO = item.IO;
-                            costThemeDetail.rowNo = insertIndex;
-                            costThemeDetail.delFlag = false;
-                            costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
-                            costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                            costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
-                            costThemeDetail.updatedDate = DateTime.Now;
-                            costThemeDetail.unit = item.unit;
-                            costThemeDetail.unitPrice = item.unitPrice;
-
-                            rtn += insertEstimate(costThemeDetail);
-
-                            insertIndex++;
-                        }
-                    }
+                    rtn = ProcessInsertEstimate(rtn, model, activityId);
 
                 }
 
@@ -182,6 +154,79 @@ namespace eActForm.BusinessLayer
 
         }
 
+        public static int ProcessInsertEstimate(int rtn,Activity_TBMMKT_Model model, string activityId)
+        {
+            int insertIndex = 1;
+            if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
+            {
+                rtn += deleteActivityOfEstimateByActivityId(activityId);
+                foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
+                {
+
+                    CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
+                    costThemeDetail.id = Guid.NewGuid().ToString();
+                    costThemeDetail.activityId = activityId;
+                    costThemeDetail.activityTypeId = item.activityTypeId;
+                    costThemeDetail.productDetail = item.productDetail;
+                    costThemeDetail.total = item.total;
+                    costThemeDetail.IO = item.IO;
+                    costThemeDetail.rowNo = insertIndex;
+                    costThemeDetail.delFlag = false;
+                    costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
+                    costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    costThemeDetail.updatedDate = DateTime.Now;
+                    costThemeDetail.unit = item.unit; 
+                    costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",",""));
+                    costThemeDetail.QtyName = item.QtyName;
+
+                    rtn += insertEstimate(costThemeDetail);
+
+                    insertIndex++;
+                }
+            }
+            return rtn;
+        }
+
+        public static int ProcessInsertTB_Act_ActivityForm_DetailOther(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            int insertIndex = 1;
+            if (model.tB_Act_ActivityForm_DetailOther != null)
+            {
+                rtn += deleteusp_deleteTB_Act_ActivityForm_DetailOther(activityId);
+
+                TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+                tB_Act_ActivityForm_DetailOther.Id = Guid.NewGuid().ToString();
+                tB_Act_ActivityForm_DetailOther.activityId = activityId;
+
+                if (model.activityFormTBMMKT.selectedBrandOrChannel == "Brand")
+                {
+                    tB_Act_ActivityForm_DetailOther.productBrandId = model.activityFormTBMMKT.BrandlId;
+                }
+                else if (model.activityFormTBMMKT.selectedBrandOrChannel == "Channel")
+                {
+                    tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId;
+                }
+
+                tB_Act_ActivityForm_DetailOther.SubjectId = model.activityFormTBMMKT.SubjectId;
+                tB_Act_ActivityForm_DetailOther.activityProduct = model.tB_Act_ActivityForm_DetailOther.activityProduct;
+                tB_Act_ActivityForm_DetailOther.activityTel = model.tB_Act_ActivityForm_DetailOther.activityTel;
+                tB_Act_ActivityForm_DetailOther.EO = model.tB_Act_ActivityForm_DetailOther.EO;
+                tB_Act_ActivityForm_DetailOther.descAttach = model.tB_Act_ActivityForm_DetailOther.descAttach;
+                tB_Act_ActivityForm_DetailOther.delFlag = false;
+                tB_Act_ActivityForm_DetailOther.createdByUserId = model.activityFormModel.createdByUserId;
+                tB_Act_ActivityForm_DetailOther.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                tB_Act_ActivityForm_DetailOther.updatedByUserId = UtilsAppCode.Session.User.empId;
+                tB_Act_ActivityForm_DetailOther.updatedDate = DateTime.Now;
+                tB_Act_ActivityForm_DetailOther.BudgetNumber = model.tB_Act_ActivityForm_DetailOther.BudgetNumber;
+
+                rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
+
+                insertIndex++;
+            }
+            return rtn;
+        }
+
         public static Activity_TBMMKT_Model getDataForEditActivity(string activityId)
         {
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
@@ -189,8 +234,7 @@ namespace eActForm.BusinessLayer
             {
                 activity_TBMMKT_Model.activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(activityId).FirstOrDefault(); // TB_Act_ActivityForm
                 activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
-                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther
-                //activity_TBMMKT_Model.list_TB_Act_ActivityLayout = QueryGetActivityLayoutByActivityId.getByActivityId(activityId); // TB_Act_ActivityForm_DetailOther
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
                 activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
 
                 Decimal? totalCostThisActivity = 0;
@@ -437,6 +481,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@activityTel",model.activityTel)
                     ,new SqlParameter("@EO",model.EO)
                     ,new SqlParameter("@descAttach",model.descAttach)
+                    ,new SqlParameter("@BudgetNumber",model.BudgetNumber)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
@@ -514,6 +559,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
                     ,new SqlParameter("@unit",Convert.ToInt32(model.unit))
                     ,new SqlParameter("@unitPrice", decimal.Parse(string.Format("{0:0.00000}", model.unitPrice)))
+                    ,new SqlParameter("@QtyName",model.QtyName)
                     });
             }
             catch (Exception ex)

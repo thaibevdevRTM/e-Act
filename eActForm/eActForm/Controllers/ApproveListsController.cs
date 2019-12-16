@@ -25,7 +25,7 @@ namespace eActForm.Controllers
             return View(models);
         }
 
-        public ActionResult ListView()
+        public ActionResult ListView(string fromPage, string StatusApprove)
         {
             Activity_Model.actForms model = new Activity_Model.actForms();
             if (TempData["ApproveSearchResult"] == null)
@@ -33,7 +33,27 @@ namespace eActForm.Controllers
                 model = new Activity_Model.actForms();
                 model.actLists = ApproveListAppCode.getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
                 TempData["ApproveFormLists"] = model.actLists;
-                model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.รออนุมัติ);
+
+                if (fromPage != null && StatusApprove != null)
+                {
+                    if (fromPage == "DashboardPage")
+                    {
+                        if(StatusApprove == "2")
+                        {
+                            model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.รออนุมัติ);
+                        }
+                        else if (StatusApprove == "3")
+                        {
+                            model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.อนุมัติ);
+                        }
+                    }
+                }
+                else
+                {
+                    model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.รออนุมัติ);
+                }
+
+                      
             }
             else
             {

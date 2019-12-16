@@ -109,7 +109,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actFormId);
+                ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actFormId, currentEmpId);
                 if (models.approveDetailLists != null && models.approveDetailLists.Count > 0)
                 {
                     #region get mail to
@@ -227,7 +227,7 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message);
-                throw new Exception("sendEmailApprove" + ex.Message);
+                throw new Exception("sendEmailApprove " + ex.Message);
             }
         }
 
@@ -311,11 +311,16 @@ namespace eActForm.BusinessLayer
 
         private static void sendEmailActForm(string actFormId, string mailTo, string mailCC, string strSubject, string strBody, AppCode.ApproveType emailType)
         {
+            //================fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
+            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT(); 
+            activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault();
+            //=====END===========fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
+
             List<Attachment> files = new List<Attachment>();
             string[] pathFile = new string[10];
             mailCC = mailCC != "" ? "," + mailCC : "";
-            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC;
+            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
+            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;
 
             switch (emailType)
             {
@@ -362,23 +367,34 @@ namespace eActForm.BusinessLayer
                 }
             }
 
+            var i_loop_change_name = 0;
             foreach (var item in pathFile)
             {
                 if (System.IO.File.Exists(item))
                 {
-                    files.Add(new Attachment(item));
+                    //files.Add(new Attachment(item));// ของเดิมก่อนทำเปลี่ยนชื่อไฟล์ 20191213
+                    Attachment attachment;
+                    attachment = new Attachment(item);
+                    if(i_loop_change_name==0)
+                    {
+                        attachment.Name = replaceWordDangerForNameFile(activityFormTBMMKT.activityNo) + ".pdf";
+                    }
+                    files.Add(attachment);
+                    i_loop_change_name++;
                 }
             }
 
-
             sendEmail(mailTo
-                    , mailCC == "" ? ConfigurationManager.AppSettings["emailApproveCC"] : mailCC
+                    , mailCC
                     , strSubject
                     , strBody
                     , files);
         }
 
-
+        public static string replaceWordDangerForNameFile(string txt)
+        {
+            return txt.Replace("/", "_").Replace(" ", "_").Replace(@"\", "_");
+        }
 
 
 
@@ -531,9 +547,13 @@ namespace eActForm.BusinessLayer
             mailer.Subject = subject;
             mailer.Body = body;
             mailer.p_Attachment = files;
-            if (!string.IsNullOrEmpty(cc)) { mailer.CC = cc; }
+            if (!String.IsNullOrEmpty(cc)) {
+                mailer.CC = cc;
+            }
+            
             mailer.IsHtml = true;
             mailer.Send();
+           
 
             //slog = "mailer.Send() => ok";
             //ExceptionManager.WriteError("sendEmail=> " + slog);
