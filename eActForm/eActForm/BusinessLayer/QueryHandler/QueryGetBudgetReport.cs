@@ -45,6 +45,8 @@ namespace eActForm.BusinessLayer.QueryHandler
 
 								  cus_id = d["cus_id"].ToString(),
 								  cus_regionId = d["cus_regionId"].ToString(),
+								  cus_regionName = d["cus_regionName"].ToString(),
+								  cus_regionDesc = d["cus_regionDesc"].ToString(),
 								  cus_cusNameTH = d["cus_cusNameTH"].ToString(),
 								  cus_cusNameEN = d["cus_cusNameEN"].ToString(),
 
