@@ -240,6 +240,7 @@ namespace eActForm.BusinessLayer
                                  approveGroupName = dr["approveGroupName"].ToString(),
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
                                  isShowInDoc = (bool)dr["showInDoc"],
+                                 isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
                                  description = dr["description"].ToString(),
                              }).ToList();
                 return lists;

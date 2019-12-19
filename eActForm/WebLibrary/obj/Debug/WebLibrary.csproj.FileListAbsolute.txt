@@ -6,3 +6,16 @@ D:\thaibev\MAS_WebAPI\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.ca
 D:\thaibev\MAS_WebAPI\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
 D:\thaibev\MAS_WebAPI\WebLibrary\obj\Debug\WebLibrary.dll
 D:\thaibev\MAS_WebAPI\WebLibrary\obj\Debug\WebLibrary.pdb
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.dll
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.pdb
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CoreCompileInputs.cache
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.dll
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.pdb
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CoreCompileInputs.cache
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb

@@ -150,10 +150,14 @@ namespace eActForm.Controllers
 
 				#region filter
 
-				if (Request.Form["chk_all"] != null && Request.Form["chk_all"] == "true")
+				if (Request.Form["chk_all"] == null || Request.Form["chk_all"] == "false")
 				{
 					startDate = Request.Form["startDate"];
 					endDate = Request.Form["endDate"];
+
+					if (Request.Form["startDate"] == null) { startDate = DateTime.Today.AddDays(-45).ToString("MM/dd/yyyy"); }
+					if (Request.Form["endDate"] == null) { endDate = DateTime.Today.ToString("MM/dd/yyyy"); }
+
 				}
 
 				actNo = Request["txtActivityNo"] == null ? null : Request["txtActivityNo"];
@@ -171,7 +175,7 @@ namespace eActForm.Controllers
 
 				if (String.IsNullOrEmpty(Request.Form["ddlTheme"]) != true)
 				{
-					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.Theme == Request.Form["ddlTheme"]).ToList();
+					model.Report_Budget_Activity_List = model.Report_Budget_Activity_List.Where(r => r.themeId == Request.Form["ddlTheme"]).ToList();
 				}
 
 				if (String.IsNullOrEmpty( Request.Form["ddlProductType"]) != true && Request.Form["ddlProductType"] != "," )

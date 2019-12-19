@@ -131,6 +131,7 @@ namespace eActForm.BusinessLayer
 
 								  invoiceId = d["invoiceId"].ToString(),
 								  invoiceNo = d["invoiceNo"].ToString(),
+								  //invoiceCustomerId d["invoiceCustomerId"].ToString(),
 								  invoiceTotalBath = d["invoiceTotalBath"].ToString() == "" ? 0 : decimal.Parse(d["invoiceTotalBath"].ToString()),
 
 								  productBalanceBath = d["productBalanceBath"].ToString() == "" ? 0 : decimal.Parse(d["productBalanceBath"].ToString()),
