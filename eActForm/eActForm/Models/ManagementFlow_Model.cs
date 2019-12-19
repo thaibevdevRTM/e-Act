@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace eActForm.Models
 {
@@ -18,6 +19,14 @@ namespace eActForm.Models
         public List<TB_Act_Other_Model> getDDlApproveList { get; set; }
         public List<TB_Reg_ApproveGroup_Model> approveGroupList { get; set; }
         public ApproveFlowModel.approveFlowModel approveFlow { get; set; }
+
+        public List<string> p_rangNoList { get; set; }
+        public List<string> p_empIdList { get; set; }
+        public List<string> p_appovedGroupList { get; set; }
+        public List<string> p_isShowList { get; set; }
+        public List<string> p_isApproveList { get; set; }
+        public List<string> p_flowId { get; set; }
+        public string p_companyId { get; set; }
 
         public ManagementFlow_Model()
         {

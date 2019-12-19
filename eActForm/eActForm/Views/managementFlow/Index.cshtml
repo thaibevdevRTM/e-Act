@@ -31,11 +31,13 @@
 
 
     $("#ddlCompany").change(function () {
+        $("#WaitDialog").show();
         $.ajax({
             type: 'POST',
             url: '@Url.Action("dropDetail", "ManagementFlow")',
             data: { companyId: $("#ddlCompany").val() }
         }).done(function (htmlResponse) {
+            $("#WaitDialog").hide();
             $("#divDrop").html(htmlResponse);
             setShowDrop();
         });
@@ -43,14 +45,34 @@
   
 
     function setShowDrop() {
-        if ($("#ddlCompany").val() == '5600' || $("#ddlCompany").val() == '5601') {
-            document.getElementById("divTBM").style.display = "none";
+        if ($("#ddlCompany").val() == '5600') {
+            document.getElementById("divBrand").style.display = "none";
+            document.getElementById("divChanel").style.display = "none";
+            document.getElementById("divSubject").style.display = "block";
+            document.getElementById("divCus").style.display = "block";
+            document.getElementById("divLimit").style.display = "block";
+            document.getElementById("divCate").style.display = "block";    
+        }
+        else if ($("#ddlCompany").val() == '5601')
+        {
+            document.getElementById("divBrand").style.display = "none";
+            document.getElementById("divChanel").style.display = "none";
+            document.getElementById("divSubject").style.display = "block";
+            document.getElementById("divCus").style.display = "block";
+            document.getElementById("divLimit").style.display = "none";
+            document.getElementById("divCate").style.display = "none";
         }
         else {
-            document.getElementById("divTBM").style.display = "block";
+            document.getElementById("divBrand").style.display = "block";
+            document.getElementById("divChanel").style.display = "block";
+            document.getElementById("divSubject").style.display = "block";
+            document.getElementById("divCus").style.display = "none";
+            document.getElementById("divLimit").style.display = "block";
+            document.getElementById("divCate").style.display = "none";
         }
-
     }
+
+
 
 
 

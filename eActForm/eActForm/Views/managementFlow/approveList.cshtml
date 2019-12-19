@@ -1,48 +1,132 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
 
+<script src="~/Scripts/jquery-1.11.2.min.js"></script>
+<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<style>
+    .center {
+        text-align: center;
+    }
+</style>
+@using (Ajax.BeginForm("insertFlowApprove", "ManagementFlow"
+    , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }
+    , new { id = "subUpdate", @class = "form-horizontal form-label-left" }))
+{
 
-<table id="dtApproveLists" class="table table-striped table-hover">
-    <thead>
-        <tr style="background-color:#2B5D95;color:#ffffff;">
-            <th>ลำดับ</th>
-            <th>ชื่อ</th>
-            <th>กลุ่ม</th>
-            <th>แสดง</th>
-            <th>อนุมัติ</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.approveFlow.flowDetail.OrderBy(x => x.rangNo))
-        {
-        <tr>
-            <td>
-                @Html.TextBoxFor(x => item.rangNo, new { @class = "textboxcss", @id = "txtRangNo" })
-            </td>
-            <td>
-                @Html.DisplayFor(x => item.empId, new { @class = "form-control textboxcss", @id = "txtempId" })
-            </td>
-            <td>
-                @Html.DropDownListFor(x => item.approveGroupId, new SelectList(Model.approveGroupList, "id", "nameTH",item.approveGroupId), "Please Select", new
-                 {
-                     @class = "form-control textboxcss",
-                     id = "ddlApproveGroupId"
-                 })
-            </td>
-            <td>
-                @Html.DropDownListFor(x => item.isShowInDoc, new SelectList(Model.getDDLShowApproveList, "val1", "displayVal",item.isShowInDoc), "Please Select", new
-                 {
-                     @class = "form-control textboxcss",
-                     id = "ddlApproveShow"
-                 })
-            </td>
-            <td>
-                @Html.DropDownListFor(x => item.isApproved, new SelectList(Model.getDDlApproveList, "val1", "displayVal", item.isApproved), "Please Select", new
-                 {
-                     @class = "form-control textboxcss",
-                     id = "ddlApprove"
-                 })
-            </td>
-        </tr>
+    <table id="dtApproveLists" class="table table-striped table-hover">
+        <thead>
+            <tr style="background-color:#2B5D95;color:#ffffff;">
+                <th></th>
+                <th class="center" width="10%">ลำดับ</th>
+                <th class="center">ชื่อ</th>
+                <th class="center">กลุ่ม</th>
+                <th class="center">แสดง</th>
+                <th class="center">อนุมัติ</th>
+            </tr>
+        </thead>
+        <tbody>
 
+            @if (Model.approveFlow.flowDetail.Any())
+            {
+                foreach (var item in Model.approveFlow.flowDetail.OrderBy(x => x.rangNo))
+                {
+                    <tr>
+                        <td>
+                            <a href="javascript:" onclick="return checkDelete('@item.id');">
+                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                            </a>
+                        </td>
+                        <td>
+                            @*<input id="txtRangNo" type="number" class="form-control textboxcss" name="Model.p_rangNoList" value="@item.rangNo">*@
+                            @Html.TextBox("Model.p_rangNoList", item.rangNo, new { @class = "form-control textboxcss", @type = "number", @id = "txtRangNo" })
+                        </td>
+                        <td>
+
+                            @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", @id = "txtempId" })
+                        </td>
+                        <td>
+                            @Html.DropDownList("Model.p_appovedGroupList", new SelectList(Model.approveGroupList, "id", "nameTH", item.approveGroupId), "Please Select", new
+                       {
+                           @class = "form-control textboxcss",
+                           id = "ddlApproveGroupId"
+                       })
+                        </td>
+                        <td>
+                            @Html.DropDownList("Model.p_isShowList", new SelectList(Model.getDDLShowApproveList, "val1", "displayVal", item.isShowInDoc), "Please Select", new
+                       {
+                           @class = "form-control textboxcss",
+                           id = "ddlApproveShow",
+                       })
+                        </td>
+                        <td>
+                            @Html.DropDownList("Model.p_isApproveList", new SelectList(Model.getDDlApproveList, "val1", "displayVal", item.isApproved), "Please Select", new
+                       {
+                           @class = "form-control textboxcss",
+                           id = "ddlApprove",
+                       })
+                        </td>
+                        @Html.Hidden("Model.p_flowId", item.flowId)
+                        @Html.Hidden("Model.p_companyId", item.companyId)
+                    </tr>
+
+                }
+            }
+    </table>
+
+
+    <div class="row form-group">
+        <div class="col-md-5 col-xs-6">
+            <button type="button" onclick="return Add();" class="btn btn-default fa fa-plus"></button>
+        </div>
+        <div class="col-md-6 col-xs-6">
+            <button type="button" onclick="return validateForm();" class="btn btn-info">Update</button>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    function validateForm() {
+        $("#subUpdate").submit();
+    }
+
+    function Add() {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("addRow", "ManagementFlow")',
+             data: {
+             }
+        }).done(function (htmlResponse) {
+            $("#divApprove").html(htmlResponse);
+        });
+    }
+
+    function checkDelete(id) {
+         $.ajax({
+            type: 'POST',
+            url: '@Url.Action("delRow", "ManagementFlow")',
+             data: {
+                 id:id,
+             }
+        }).done(function (htmlResponse) {
+            $("#divApprove").html(htmlResponse);
+        });
+    }
+
+    function successQuery(response) {
+        if (response.Success) {
+            var url = '@Url.Action("Index", "ManagementFlow")';
+            doMsgSuccessAction('บันทึกเรียบร้อย', url);
         }
-</table>
+        else {
+            $("#WaitDialog").hide();
+            bootbox.alert("ไม่สามารถ บันทึกได้กรุณาติดต่อ Admin ครับ <br/>" + response.Message);
+        }
+    }
+    function failureQuery(data) {
+        bootbox.alert("ไม่สามารถ บันทึกได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
+    }
+
+    function beginQuery() {
+
+    }
+</script>

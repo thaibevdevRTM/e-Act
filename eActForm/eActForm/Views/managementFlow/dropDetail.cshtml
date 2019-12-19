@@ -3,7 +3,7 @@
 
 <div class="row form-group">
 
-    <div class="col-md-3">
+    <div id="divSubject" class="col-md-3">
         <div class="col-md-12 col-xs-12">
             <label>Subject</label>
         </div>
@@ -11,7 +11,7 @@
             @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlSubject" })
         </div>
     </div>
-    <div class="col-md-3">
+    <div id="divCus" class="col-md-3">
         <div class="col-md-12 col-xs-12">
             <label>Customer</label>
         </div>
@@ -19,7 +19,7 @@
             @Html.DropDownListFor(model => model.customerList, new SelectList(Model.customerList, "id", "cusNameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCustomer" })
         </div>
     </div>
-    <div class="col-md-3">
+    <div id="divLimit" class="col-md-3">
         <div class="col-md-12 col-xs-12">
             <label>Limit</label>
         </div>
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div id="divCate" class="col-md-3">
         <div class="col-md-12 col-xs-12">
             <label>Cate</label>
         </div>
@@ -36,10 +36,8 @@
             @Html.DropDownListFor(model => model.cateList, new SelectList(Model.cateList, "id", "cateName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCate" })
         </div>
     </div>
-</div>
 
-<div id="divTBM" class="row form-group">
-    <div class="col-md-3">
+    <div id="divBrand" class="col-md-3">
         <div class="col-md-12 col-xs-12">
             <label>Brand</label>
         </div>
@@ -47,7 +45,7 @@
             @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlBrand" })
         </div>
     </div>
-    <div class="col-md-3">
+    <div id="divChanel" class="col-md-3">
         <div class="col-md-12 col-xs-12">
             <label>Chanel</label>
         </div>
@@ -59,13 +57,14 @@
 
 <div class="row form-group" style="text-align:center;">
     <p class="d-flex justify-content-center">
+        <button type="button" class="btn btn-default btn-clear-canvas" onclick="callClear();">
+            <i class="fa fa fa-recycle fa-fw"></i>&nbsp;Clear
+        </button>
         <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
     </p>
 </div>
 
-<div class="box-body">
-    <div id="Grid"></div>
-</div>
+<hr />
 <div class="col-md-12">
     <div id="divApprove" class="col-md-12">
     </div>
@@ -73,10 +72,16 @@
 
 
 <script type="text/javascript">
+
+    function callClear() {
+         var url = '@Url.Action("Index", "ManagementFlow")';
+         window.location.href = url;
+    }
+
     function submitPreview() {
          $.ajax({
             type: 'POST',
-            url: '@Url.Action("approveList", "ManagementFlow")',
+            url: '@Url.Action("genDataApproveList", "ManagementFlow")',
              data: {
                  companyId: $("#ddlCompany").val(),
                  subjectId: $("#ddlSubject").val(),
@@ -91,56 +96,27 @@
         });
     }
 
-
-    @*function submitPreview() {
-
-        var dataManager = ej.DataManager({
-            url: '@Url.Action("getApproveFlowDataList", "ManagementFlow")',
-            adaptor: new ej.WebApiAdaptor(),
-            offline: true
+    $('#ddlSubject').change(function () {
+        $.ajax({
+            url: '@Url.Action("getLimitBySubject", "ManagementFlow")',
+            data: {
+                subjectId: $("#ddlSubject").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+             success: function (response) {
+                 if (response.Data.length > 0) {
+                     $("#ddlLimit option[value !='']").remove();
+                    $.each(response.Data, function () {
+                        $("#ddlLimit").append($("<option></option>").val(this['val2']).html(this['displayVal']));
+                    });
+                     document.getElementById("ddlLimit").disabled = false;
+                }
+                else {
+                     document.getElementById("ddlLimit").disabled = true;
+                }
+            }
         });
-
-        dataManager.ready.done(function (e) {
-            $("#Grid").ejGrid({
-                dataSource: ej.DataManager({
-                    json: e.result,
-                    adaptor: new ej.remoteSaveAdaptor(), 
-                    
-                    insertUrl: "/api/Warehouse/Insert",
-                    updateUrl: "/api/Warehouse/Update",
-                    removeUrl: "/api/Warehouse/Remove",
-                }),
-                toolbarSettings: {
-                    showToolbar: true,
-                    toolbarItems: ["add", "edit", "delete", "update", "cancel", "search", "printGrid"]
-                },
-                editSettings: {
-                    allowEditing: true,
-                    allowAdding: true,
-                    allowDeleting: true,
-                    showDeleteConfirmDialog: true,
-                    editMode: "dialog"
-                },
-                isResponsive: true,
-                enableResponsiveRow: true,
-                allowSorting: true,
-                allowSearching: true,
-                allowFiltering: true,
-                filterSettings: {
-                    filterType: "excel",
-                    maxFilterChoices: 100,
-                    enableCaseSensitivity: false
-                },
-                allowPaging: true,
-                pageSettings: { pageSize: 10, printMode: ej.Grid.PrintMode.CurrentPage },
-                columns: [
-                    { field: "WarehouseId", headerText: 'Warehouse Id', isPrimaryKey: true, isIdentity: true, visible: false },
-                    { field: "WarehouseName", headerText: 'Warehouse Name', validationRules: { required: true } },
-
-                ],
-                actionComplete: "complete",
-            });
-        });
-    }*@
-
+    });
+  
 </script>
