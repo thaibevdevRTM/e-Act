@@ -8,16 +8,17 @@ using System.Linq;
 using System.Web;
 using WebLibrary;
 
-namespace eActForm.BusinessLayer
+namespace eActForm.BusinessLayer.QueryHandler
 {
-    public class QueryGetMessage
+    public class QueryOtherMaster
     {
-        public static List<TB_Act_Other_Model> getOtherByType(string p_type)
+        public static List<TB_Act_Other_Model> getOhterMaster(string type, string subtype)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDataOtherbyType"
-                     , new SqlParameter("@type", p_type));
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAllTOtherMaster"
+                    , new SqlParameter("@type", type)
+                    , new SqlParameter("@subType", subtype));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Act_Other_Model()
                              {
@@ -37,12 +38,11 @@ namespace eActForm.BusinessLayer
                              });
                 return lists.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                ExceptionManager.WriteError("getOtherByType => " + ex.Message);
+                ExceptionManager.WriteError("getOhterMaster => " + ex.Message);
                 return new List<TB_Act_Other_Model>();
             }
-
         }
     }
 }

@@ -179,6 +179,7 @@
     <Compile Include="BusinessLayer\Appcodes\AdminUserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\BaseAppCodes.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
+    <Compile Include="BusinessLayer\Appcodes\managementFlowAppCode.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ActivityFormCommandHandler.cs" />
     <Compile Include="BusinessLayer\Appcodes\ReportSummaryAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ApproveListAppCode.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetActivityById.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetActivityDetailById.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllActivityGroup.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetAllApproveGroup.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllBrand.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllChanel.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllCustomers.cs" />
@@ -218,6 +220,8 @@
     <Compile Include="BusinessLayer\Appcodes\SignatureAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UtilsAppCode.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetSubject.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryOtherMaster.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityByIdTBMMKT.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityEstimateByActivityId.cs" />
@@ -250,6 +254,7 @@
     <Compile Include="Controllers\eActController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ManagementFlowController.cs" />
     <Compile Include="Controllers\SaleActualController.cs" />
     <Compile Include="Controllers\SignatureController.cs" />
     <Compile Include="Controllers\SummaryReportController.cs" />
@@ -270,6 +275,7 @@
     <Compile Include="Models\Budget_Report_Model.cs" />
     <Compile Include="Models\DashBoardModel.cs" />
     <Compile Include="Models\DocumentsModel.cs" />
+    <Compile Include="Models\ManagementFlow_Model.cs" />
     <Compile Include="Models\RepDetailModel.cs" />
     <Compile Include="Models\ReportActivityBudgetModel.cs" />
     <Compile Include="Models\ReportSummaryModel.cs" />
@@ -286,11 +292,12 @@
     <Compile Include="Models\TB_Act_ProductGroup_Model.cs" />
     <Compile Include="Models\TB_Act_ProductPrice_Model.cs" />
     <Compile Include="Models\TB_Act_ProductType_Model.cs" />
-    <Compile Include="Models\TB_Act_Product_Cate_Model.cs" />
     <Compile Include="Models\TB_Act_Product_Model.cs" />
     <Compile Include="Models\TB_Act_Region_Model.cs" />
     <Compile Include="Models\TB_Bud_Activity_Model.cs" />
     <Compile Include="Models\TB_Bud_Image_Model.cs" />
+    <Compile Include="Models\TB_Reg_ApproveGroup_Model.cs" />
+    <Compile Include="Models\TB_Reg_Subject_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -2376,6 +2383,9 @@
     <Content Include="Views\BudgetReport\reportBudgetActivityIndex.cshtml" />
     <Content Include="Views\MenuList\account.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetAccSeIndex.cshtml" />
+    <Content Include="Views\managementFlow\Index.cshtml" />
+    <Content Include="Views\managementFlow\dropDetail.cshtml" />
+    <Content Include="Views\managementFlow\approveList.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
