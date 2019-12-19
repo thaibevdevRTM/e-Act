@@ -6,6 +6,10 @@
         <ul class="nav child_menu">
             <li>@Html.ActionLink(" Product Setting ", "index", "Admin")</li>
             <li>@Html.ActionLink(" User Setting ", "index", "AdminUser")</li>
+            @if (UtilsAppCode.Session.User.isSuperAdmin)
+            {
+                <li>@Html.ActionLink(" Flow Setting ", "index", "ManagementFlow")</li>
+            }
         </ul>
     </li>
 }
