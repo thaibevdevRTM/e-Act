@@ -27,7 +27,7 @@ namespace WebLibrary
             , string mailTo, string subject, string body, string cc)
         {
             port = 587;
-            host = "smtp.gmail.com";
+            host = "smtp.office365.com";
             ssl = true;
             isHtml = true;
             this.userName = userName;
