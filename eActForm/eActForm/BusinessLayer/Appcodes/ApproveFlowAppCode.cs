@@ -282,5 +282,40 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static ApproveFlowModel.approveFlowModel getFlowApproveGroupByType(getDataList_Model model)
+        {
+            try
+            {
+                ApproveFlowModel.approveFlowModel approveFlow_Model = new ApproveFlowModel.approveFlowModel();
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveByAllType"
+                    , new SqlParameter[] {new SqlParameter("@companyId",model.companyId)
+                    ,new SqlParameter("@subjectId",model.subjectId)
+                    ,new SqlParameter("@customerId",model.customerId)
+                    ,new SqlParameter("@productCatId",model.productCatId)
+                    ,new SqlParameter("@flowLimitId",model.flowLimitId)
+                    ,new SqlParameter("@channelId",model.channelId)
+                    ,new SqlParameter("@productBrandId",model.productBrandId)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApproveDetail()
+                             {
+                                 id = dr["id"].ToString(),
+                                 companyId = dr["companyId"].ToString(),
+                                 flowId = dr["flowId"].ToString(),
+                                 empId = dr["empId"].ToString(),
+                                 approveGroupId = dr["approveGroupId"].ToString(),
+                                 rangNo = int.Parse(dr["rangNo"].ToString()),
+                                 isShowInDoc = !string.IsNullOrEmpty(dr["showInDoc"].ToString()) ? bool.Parse(dr["showInDoc"].ToString()) : true,
+                                 isApproved = !string.IsNullOrEmpty(dr["isApproved"].ToString()) ? bool.Parse(dr["isApproved"].ToString()) : true,
+                             }).ToList();
+                approveFlow_Model.flowDetail = lists.ToList();
+                return approveFlow_Model;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFlowApproveGroupByType >>" + ex.Message);
+            }
+        }
+
+
     }
 }
