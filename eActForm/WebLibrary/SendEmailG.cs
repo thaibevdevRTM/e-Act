@@ -27,7 +27,7 @@ namespace WebLibrary
             , string mailTo, string subject, string body, string cc)
         {
             port = 587;
-            host = "smtp.office365.com";
+            host = "smtp.gmail.com";
             ssl = true;
             isHtml = true;
             this.userName = userName;
@@ -46,7 +46,7 @@ namespace WebLibrary
             smtp.Host = host;
             smtp.Port = port;
             smtp.EnableSsl = ssl;
-            smtp.UseDefaultCredentials = false;
+            smtp.UseDefaultCredentials = true;
             smtp.Credentials = new NetworkCredential(mailFrom, passWord);
             using (var message = new MailMessage(mailFrom, mailTo))
             {
