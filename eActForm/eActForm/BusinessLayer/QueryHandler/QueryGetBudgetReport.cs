@@ -40,10 +40,13 @@ namespace eActForm.BusinessLayer.QueryHandler
 								  sub_code = d["sub_code"].ToString(),
 								  act_activityName = d["act_activityName"].ToString(),
 								  brandName = d["brandName"].ToString(),
+								  themeId = d["themeId"].ToString(),
 								  Theme = d["Theme"].ToString(),
 
 								  cus_id = d["cus_id"].ToString(),
 								  cus_regionId = d["cus_regionId"].ToString(),
+								  cus_regionName = d["cus_regionName"].ToString(),
+								  cus_regionDesc = d["cus_regionDesc"].ToString(),
 								  cus_cusNameTH = d["cus_cusNameTH"].ToString(),
 								  cus_cusNameEN = d["cus_cusNameEN"].ToString(),
 
