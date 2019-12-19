@@ -18,3 +18,9 @@ D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.Core
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojResolveAssemblyReference.cache
+D:\project\GitHub\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.dll
+D:\project\GitHub\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.pdb
+D:\project\GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
+D:\project\GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CoreCompileInputs.cache
+D:\project\GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
+D:\project\GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb

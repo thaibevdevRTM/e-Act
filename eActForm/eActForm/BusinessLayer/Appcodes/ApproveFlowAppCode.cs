@@ -302,6 +302,7 @@ namespace eActForm.BusinessLayer
                                  companyId = dr["companyId"].ToString(),
                                  flowId = dr["flowId"].ToString(),
                                  empId = dr["empId"].ToString(),
+                                 empFNameTH = dr["empName"].ToString(),
                                  approveGroupId = dr["approveGroupId"].ToString(),
                                  rangNo = int.Parse(dr["rangNo"].ToString()),
                                  isShowInDoc = !string.IsNullOrEmpty(dr["showInDoc"].ToString()) ? bool.Parse(dr["showInDoc"].ToString()) : true,
