@@ -6321,6 +6321,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/managementFlow/Index.cshtml">
       <publishTime>12/19/2019 14:17:29</publishTime>
     </File>
+    <File Include="Views/managementFlow/approveList.cshtml">
+      <publishTime>12/19/2019 14:34:19</publishTime>
+    </File>
+    <File Include="Views/managementFlow/dropDetail.cshtml">
+      <publishTime>12/19/2019 14:34:19</publishTime>
+    </File>
+    <File Include="Views/managementFlow/Index.cshtml">
+      <publishTime>12/19/2019 14:34:19</publishTime>
+    </File>
     <File Include="Views/MenuList/account.cshtml">
       <publishTime>12/11/2019 15:20:46</publishTime>
     </File>
