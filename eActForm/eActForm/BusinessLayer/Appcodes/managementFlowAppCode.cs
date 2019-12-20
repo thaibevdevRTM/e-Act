@@ -73,6 +73,11 @@ namespace eActForm.BusinessLayer.Appcodes
             return QueryGetAllApproveGroup.getAllApproveGroup().OrderBy(x => x.nameTH).ToList();
         }
 
+        public static List<TB_Act_ProductType_Model> getProductType()
+        {
+            return QuerygetAllProductCate.getAllProductType();
+        }
+
         public static int insertFlowApprove(ManagementFlow_Model model)
         {
             int i = 0;

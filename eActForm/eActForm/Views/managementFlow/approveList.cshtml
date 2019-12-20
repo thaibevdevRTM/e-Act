@@ -18,6 +18,7 @@
             <tr style="background-color:#2B5D95;color:#ffffff;">
                 <th></th>
                 <th class="center" width="10%">ลำดับ</th>
+                <th class="center">รหัส</th>
                 <th class="center">ชื่อ</th>
                 <th class="center">กลุ่ม</th>
                 <th class="center">แสดง</th>
@@ -43,6 +44,10 @@
                         <td>
 
                             @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", @id = "txtempId" })
+                        </td>
+                        <td>
+
+                            @Html.TextBox("empName", item.empFNameTH, new { @class = "form-control textboxcss", @id = "txtempName", @readonly = true })
                         </td>
                         <td>
                             @Html.DropDownList("Model.p_appovedGroupList", new SelectList(Model.approveGroupList, "id", "nameTH", item.approveGroupId), "Please Select", new
@@ -74,7 +79,7 @@
     </table>
 
 
-    <div class="row form-group">
+    <div class="row form-group  hero-container">
         <div class="col-md-5 col-xs-6">
             <button type="button" onclick="return Add();" class="btn btn-default fa fa-plus"></button>
         </div>

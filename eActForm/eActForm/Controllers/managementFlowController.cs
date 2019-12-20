@@ -33,7 +33,7 @@ namespace eActForm.Controllers
                 model.cateList = managementFlowAppCode.getProductCate(companyId);
                 model.chanelList = managementFlowAppCode.getChanel("data");
                 model.productBrandList = managementFlowAppCode.getProductBrand();
-
+                model.productTypeList = managementFlowAppCode.getProductType();
 
             }
             catch (Exception ex)
