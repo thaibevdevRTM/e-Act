@@ -27,7 +27,14 @@
             @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlLimit" })
         </div>
     </div>
-
+    <div id="divProductType" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>ProductType</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.productTypeList, new SelectList(Model.productTypeList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlProductType" })
+        </div>
+    </div>
     <div id="divCate" class="col-md-3">
         <div class="col-md-12 col-xs-12">
             <label>Cate</label>
@@ -53,6 +60,7 @@
             @Html.DropDownListFor(model => model.chanelList, new SelectList(Model.chanelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlChanelGroup" })
         </div>
     </div>
+
 </div>
 
 <div class="row form-group" style="text-align:center;">
@@ -90,6 +98,7 @@
                  productCatId: $("#ddlCate").val(),
                  channelId: $("#ddlChanelGroup").val(),
                  productBrandId: $("#ddlBrand").val(),
+                 productTypeId: $("#ddlProductType").val(),
              }
         }).done(function (htmlResponse) {
             $("#divApprove").html(htmlResponse);

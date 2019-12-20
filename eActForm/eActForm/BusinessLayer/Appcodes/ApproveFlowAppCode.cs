@@ -294,7 +294,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@productCatId",model.productCatId)
                     ,new SqlParameter("@flowLimitId",model.flowLimitId)
                     ,new SqlParameter("@channelId",model.channelId)
-                    ,new SqlParameter("@productBrandId",model.productBrandId)});
+                    ,new SqlParameter("@productBrandId",model.productBrandId)
+                    ,new SqlParameter("@productType",model.productTypeId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail()
                              {
