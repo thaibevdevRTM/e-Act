@@ -8,7 +8,7 @@
             <label>Subject</label>
         </div>
         <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlSubject" })
+            @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlSubject" })
         </div>
     </div>
     <div id="divCus" class="col-md-3">
@@ -16,7 +16,7 @@
             <label>Customer</label>
         </div>
         <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.customerList, new SelectList(Model.customerList, "id", "cusNameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCustomer" })
+            @Html.DropDownListFor(model => model.customerList, new SelectList(Model.customerList, "id", "cusNameTH"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCustomer" })
         </div>
     </div>
     <div id="divLimit" class="col-md-3">
@@ -24,7 +24,7 @@
             <label>Limit</label>
         </div>
         <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "val1", "displayVal"), "Please Select", new { @class = "form-control textboxcss", id = "ddlLimit" })
+            @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlLimit" })
         </div>
     </div>
 
@@ -33,7 +33,7 @@
             <label>Cate</label>
         </div>
         <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.cateList, new SelectList(Model.cateList, "id", "cateName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCate" })
+            @Html.DropDownListFor(model => model.cateList, new SelectList(Model.cateList, "id", "cateName"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCate" })
         </div>
     </div>
 
@@ -42,7 +42,7 @@
             <label>Brand</label>
         </div>
         <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlBrand" })
+            @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlBrand" })
         </div>
     </div>
     <div id="divChanel" class="col-md-3">
@@ -50,7 +50,7 @@
             <label>Chanel</label>
         </div>
         <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.chanelList, new SelectList(Model.chanelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control textboxcss", id = "ddlChanelGroup" })
+            @Html.DropDownListFor(model => model.chanelList, new SelectList(Model.chanelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlChanelGroup" })
         </div>
     </div>
 </div>

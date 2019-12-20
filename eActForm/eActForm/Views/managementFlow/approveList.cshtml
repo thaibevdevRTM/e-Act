@@ -31,55 +31,55 @@
             {
                 foreach (var item in Model.approveFlow.flowDetail.OrderBy(x => x.rangNo))
                 {
-            <tr>
-                <td>
-                    <a href="javascript:" onclick="return checkDelete('@item.id');">
-                        <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-                    </a>
-                </td>
-                <td>
-                    @*<input id="txtRangNo" type="number" class="form-control textboxcss" name="Model.p_rangNoList" value="@item.rangNo">*@
-                    @Html.TextBox("Model.p_rangNoList", item.rangNo, new { @class = "form-control textboxcss", @type = "number", @id = "txtRangNo" })
-                </td>
-                <td>
+                    <tr>
+                        <td>
+                            <a href="javascript:" onclick="return checkDelete('@item.id');">
+                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                            </a>
+                        </td>
+                        <td>
+                            @*<input id="txtRangNo" type="number" class="form-control textboxcss" name="Model.p_rangNoList" value="@item.rangNo">*@
+                            @Html.TextBox("Model.p_rangNoList", item.rangNo, new { @class = "form-control textboxcss", @type = "number", @id = "txtRangNo" })
+                        </td>
+                        <td>
 
-                    @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", @id = "txtempId" })
-                </td>
-                <td>
+                            @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", @id = "txtempId" })
+                        </td>
+                        <td>
 
-                    @Html.TextBox("empName", item.empFNameTH, new { @class = "form-control textboxcss", @id = "txtempName" , @readonly=true})
-                </td>
-                <td>
-                    @Html.DropDownList("Model.p_appovedGroupList", new SelectList(Model.approveGroupList, "id", "nameTH", item.approveGroupId), "Please Select", new
-               {
-                   @class = "form-control textboxcss",
-                   id = "ddlApproveGroupId"
-               })
-                </td>
-                <td>
-                    @Html.DropDownList("Model.p_isShowList", new SelectList(Model.getDDLShowApproveList, "val1", "displayVal", item.isShowInDoc), "Please Select", new
-               {
-                   @class = "form-control textboxcss",
-                   id = "ddlApproveShow",
-               })
-                </td>
-                <td>
-                    @Html.DropDownList("Model.p_isApproveList", new SelectList(Model.getDDlApproveList, "val1", "displayVal", item.isApproved), "Please Select", new
-               {
-                   @class = "form-control textboxcss",
-                   id = "ddlApprove",
-               })
-                </td>
-                @Html.Hidden("Model.p_flowId", item.flowId)
-                @Html.Hidden("Model.p_companyId", item.companyId)
-            </tr>
+                            @Html.TextBox("empName", item.empFNameTH, new { @class = "form-control textboxcss", @id = "txtempName", @readonly = true })
+                        </td>
+                        <td>
+                            @Html.DropDownList("Model.p_appovedGroupList", new SelectList(Model.approveGroupList, "id", "nameTH", item.approveGroupId), "Please Select", new
+                       {
+                           @class = "form-control textboxcss",
+                           id = "ddlApproveGroupId"
+                       })
+                        </td>
+                        <td>
+                            @Html.DropDownList("Model.p_isShowList", new SelectList(Model.getDDLShowApproveList, "val1", "displayVal", item.isShowInDoc), "Please Select", new
+                       {
+                           @class = "form-control textboxcss",
+                           id = "ddlApproveShow",
+                       })
+                        </td>
+                        <td>
+                            @Html.DropDownList("Model.p_isApproveList", new SelectList(Model.getDDlApproveList, "val1", "displayVal", item.isApproved), "Please Select", new
+                       {
+                           @class = "form-control textboxcss",
+                           id = "ddlApprove",
+                       })
+                        </td>
+                        @Html.Hidden("Model.p_flowId", item.flowId)
+                        @Html.Hidden("Model.p_companyId", item.companyId)
+                    </tr>
 
                 }
             }
     </table>
 
 
-    <div class="row form-group">
+    <div class="row form-group  hero-container">
         <div class="col-md-5 col-xs-6">
             <button type="button" onclick="return Add();" class="btn btn-default fa fa-plus"></button>
         </div>
