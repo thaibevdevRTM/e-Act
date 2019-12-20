@@ -16,7 +16,7 @@ namespace eActForm.BusinessLayer.Appcodes
     {
         public static List<TB_Act_Other_Model> getCompany()
         {
-            return QueryOtherMaster.getOhterMaster("company", "").Where(w => w.val1.Contains(UtilsAppCode.Session.User.empCompanyId)).ToList();
+            return QueryOtherMaster.getOhterMaster("company", "");
         }
 
         public static List<TB_Reg_Subject_Model> getSubject(string companyId)
