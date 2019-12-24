@@ -293,13 +293,14 @@ namespace eActForm.Controllers
         [ValidateInput(false)]
         public JsonResult repReportDetailApprove(string gridHtml, string gridOS, string gridEst, string gridWA, string gridSO, string customerId, string productTypeId, string startDate, string endDate, string typeForm)
         {
+            string actRepDetailId = "";
             var result = new AjaxResult();
             try
             {
                 gridHtml = gridHtml.Replace("<br>", "<br/>");
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
-                string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
+                actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
                 if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId, typeForm) > 0)
                 {
                     RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, gridEst, gridWA, gridSO);
@@ -317,7 +318,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError(ex.Message + " " + actRepDetailId);
             }
 
             return Json(result);

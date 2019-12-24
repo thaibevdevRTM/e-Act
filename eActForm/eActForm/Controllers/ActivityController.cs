@@ -338,7 +338,7 @@ namespace eActForm.Controllers
             {
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
-                ExceptionManager.WriteError("submitPreview => " + ex.Message);
+                ExceptionManager.WriteError("submitPreview => " + ex.Message +" "+ activityId);
             }
             return Json(resultAjax, "text/plain");
         }
