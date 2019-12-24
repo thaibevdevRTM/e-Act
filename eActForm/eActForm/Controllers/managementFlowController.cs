@@ -17,7 +17,7 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             ManagementFlow_Model model = new ManagementFlow_Model();
-            model.companyList = managementFlowAppCode.getCompany();
+            model.companyList = managementFlowAppCode.getCompany().Where(w => w.val1.Contains(UtilsAppCode.Session.User.empCompanyId)).ToList();
 
             return View(model);
         }
