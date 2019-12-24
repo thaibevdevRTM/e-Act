@@ -106,6 +106,13 @@
     }
 
     $('#ddlSubject').change(function () {
+        if ($("#ddlSubject").val() == '@System.Configuration.ConfigurationManager.AppSettings["subjectActivityFormId"]' || $("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_TBM"]') {
+            document.getElementById("divProductType").style.display = "none";
+        }
+        else {
+            document.getElementById("divProductType").style.display = "block";
+        }
+
         $.ajax({
             url: '@Url.Action("getLimitBySubject", "ManagementFlow")',
             data: {
