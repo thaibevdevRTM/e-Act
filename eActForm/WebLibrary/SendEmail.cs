@@ -24,7 +24,7 @@ namespace WebLibrary
 
         static GMailer()
         {
-             GmailHost = "smtp.gmail.com";
+             GmailHost = "smtp.office365.com";
              GmailPort = 587; // Gmail can use ports 25, 465 & 587; but must be 25 for medium trust environment.
             // GmailSSL = true;    
             //GmailHost = "smtp.office365.com";
@@ -40,7 +40,7 @@ namespace WebLibrary
             smtp.Port = GmailPort;
             smtp.EnableSsl = GmailSSL;
            // smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtp.UseDefaultCredentials = false;
+            smtp.UseDefaultCredentials = true;
             smtp.Credentials = new NetworkCredential(Mail_From, GmailPassword);
       
 

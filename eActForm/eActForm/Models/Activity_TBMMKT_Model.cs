@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using static eActForm.Models.TB_Act_Customers_Model;
-using static eActForm.Models.TB_Act_Product_Cate_Model;
-using static eActForm.Models.TB_Act_Product_Model;
 
 namespace eActForm.Models
 {

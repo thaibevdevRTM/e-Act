@@ -46,7 +46,7 @@ namespace WebLibrary
             smtp.Host = host;
             smtp.Port = port;
             smtp.EnableSsl = ssl;
-            smtp.UseDefaultCredentials = false;
+            smtp.UseDefaultCredentials = true;
             smtp.Credentials = new NetworkCredential(mailFrom, passWord);
             using (var message = new MailMessage(mailFrom, mailTo))
             {

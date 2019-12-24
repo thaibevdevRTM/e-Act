@@ -1,0 +1,87 @@
+﻿@model eActForm.Models.ManagementFlow_Model
+
+
+<style>
+    .hero-container {
+        background-image: -webkit-linear-gradient(left, #fff, #f0f0f0, #fff);
+        background-image: linear-gradient(left, #fff, #f0f0f0, #fff);
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    .txtBoxRed {
+        border: none;
+        border-bottom: 2px solid red;
+    }
+</style>
+
+<h3>Flow management</h3>
+<div class="row form-group">
+
+    <div id="divSubject" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Company</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
+        </div>
+    </div>
+
+</div>
+
+<hr />
+
+<div id="divDrop" class="col-md-12">
+</div>
+
+
+<script>
+
+
+    $("#ddlCompany").change(function () {
+        $("#WaitDialog").show();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("dropDetail", "ManagementFlow")',
+            data: { companyId: $("#ddlCompany").val() }
+        }).done(function (htmlResponse) {
+            $("#WaitDialog").hide();
+            $("#divDrop").html(htmlResponse);
+            setShowDrop();
+        });
+    });
+
+
+    function setShowDrop() {
+        if ($("#ddlCompany").val() == '5600') {
+            document.getElementById("divBrand").style.display = "none";
+            document.getElementById("divChanel").style.display = "none";
+            document.getElementById("divSubject").style.display = "block";
+            document.getElementById("divCus").style.display = "block";
+            document.getElementById("divLimit").style.display = "block";
+            document.getElementById("divCate").style.display = "block";
+        }
+        else if ($("#ddlCompany").val() == '5601')
+        {
+            document.getElementById("divBrand").style.display = "none";
+            document.getElementById("divChanel").style.display = "none";
+            document.getElementById("divSubject").style.display = "block";
+            document.getElementById("divCus").style.display = "block";
+            document.getElementById("divLimit").style.display = "none";
+            document.getElementById("divCate").style.display = "none";
+        }
+        else {
+            document.getElementById("divBrand").style.display = "block";
+            document.getElementById("divChanel").style.display = "block";
+            document.getElementById("divSubject").style.display = "block";
+            document.getElementById("divCus").style.display = "none";
+            document.getElementById("divLimit").style.display = "block";
+            document.getElementById("divCate").style.display = "none";
+        }
+    }
+
+
+
+
+
+</script>
