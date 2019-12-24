@@ -1,11 +1,12 @@
 ﻿@using eActForm.Models
 @using eActForm.BusinessLayer
+@using System.Configuration;
 @model eActForm.Models.Activity_Model.actForms
 
 <script>
     function checkDelete(actId,statusId) {
         var msg = "";
-        if (statusId == "1" || statusId == "6") {
+        if (statusId == "1" || statusId == "6" || (statusId == "5" && "@UtilsAppCode.Session.User.empCompanyId" == "@ConfigurationManager.AppSettings["companyId_TBM"]")) {
             // can be delete
             msg = "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
         }
@@ -39,6 +40,7 @@
                     }).done(function (htmlResponse) {
                         $("#getQuery").html(htmlResponse);
                         $("#WaitDialog").hide();
+                        doMsgSuccess("ดำเนินการยกเลิกเอกสารเรียบร้อย")
                     });
                 }
 
@@ -252,7 +254,7 @@
         });
     }
 
-   
-   
+
+
 
 </script>
