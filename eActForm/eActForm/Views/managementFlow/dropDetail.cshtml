@@ -106,7 +106,7 @@
     }
 
     $('#ddlSubject').change(function () {
-        if ($("#ddlSubject").val() == 'AB61F7AB-2583-4E66-A283-22D7922EC2CE' || $("#ddlCompany").val() == '3030') {
+        if ($("#ddlSubject").val() == '@System.Configuration.ConfigurationManager.AppSettings["subjectActivityFormId"]' || $("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_TBM"]') {
             document.getElementById("divProductType").style.display = "none";
         }
         else {
