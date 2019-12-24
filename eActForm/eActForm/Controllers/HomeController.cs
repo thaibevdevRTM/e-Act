@@ -72,7 +72,7 @@ namespace eActForm.Controllers
             //return RedirectToAction("index");
             AjaxResult result = new AjaxResult();
             result.Success = false;
-            if (statusId == "1" || statusId == "6" || (statusId == "5" && UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"]))
+            if (statusId == "1" || statusId == "6" || statusId == "5")
             {
                 //Draft || หรือ ถูก reject มาแล้วเป็นบริษัทTBM ให้สามารถยกเลิกเอกสารทิ้งได้ทันที เฟรม dev date 20191224
                 result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"]) > 0 ? true : false;
