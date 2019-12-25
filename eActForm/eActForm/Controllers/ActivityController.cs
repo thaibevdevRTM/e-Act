@@ -79,7 +79,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("ActivityForm => " + ex.Message);
+                ExceptionManager.WriteError("ActivityForm => " + ex.Message + " : " + activityId);
             }
             return View(activityModel);
         }
@@ -111,12 +111,18 @@ namespace eActForm.Controllers
         public ActionResult PreviewData(string activityId, string typeForm)
         {
             Activity_Model activityModel = new Activity_Model();
-            activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-            activityModel.activityFormModel.typeForm = typeForm;
-            activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
-            activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
-            activityModel.productImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();
-
+            try
+            {
+                activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+                activityModel.activityFormModel.typeForm = typeForm;
+                activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
+                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
+                activityModel.productImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();
+            }
+            catch(Exception ex)
+            {
+                ExceptionManager.WriteError("PreviewData => " + ex.Message+ " : "+ activityId);
+            }
             return PartialView(activityModel);
         }
 
@@ -152,7 +158,8 @@ namespace eActForm.Controllers
                 string statusId = "";
                 Activity_Model activityModel = TempData["actForm" + activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + activityFormModel.id];
                 activityModel.activityFormModel = activityFormModel;
-                 statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
+                statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
+                result.ActivityId = activityFormModel.id;
                 if (statusId == "1" || statusId == "5" || statusId == "")
                 {
                     int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, activityFormModel.id);
@@ -169,7 +176,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError("insertDataActivity => " + ex.Message);
+                ExceptionManager.WriteError("insertDataActivity => " + ex.Message + " : "+ result.ActivityId);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -192,7 +199,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError("updateDataActivity => " + ex.Message);
+                ExceptionManager.WriteError("updateDataActivity => " + ex.Message + " : " + result.ActivityId);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -217,7 +224,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError("copyAndSaveNewActivityForm => " + ex.Message);
+                ExceptionManager.WriteError("copyAndSaveNewActivityForm => " + ex.Message+" : " + result.ActivityId);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
