@@ -26,7 +26,8 @@ namespace eActForm.Controllers
             //}
 
             //return PartialView(activity_TBMMKT_Model);
-            return PartialView();
+            //return PartialView(); //ไว้ใช้เวลาจะใส่กับ Modal
+            return View();
         }
 
        
