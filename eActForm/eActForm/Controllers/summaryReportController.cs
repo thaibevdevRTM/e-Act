@@ -38,7 +38,7 @@ namespace eActForm.Controllers
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
                 repDetail = string.Join(",", model.activitySummaryList.Select(x => x.repDetailId));
-                
+
                 if (model.activitySummaryList.Any())
                 {
                     if (model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.nonAL)
@@ -64,7 +64,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("SummaryReport => getPreviewSummary" + ex.Message);
             }
 
 
@@ -83,7 +83,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("SummaryReport => viewReportSummary" + ex.Message);
             }
 
             return PartialView(model);
@@ -101,7 +101,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("SummaryReport => viewReportSummaryAlcohol" + ex.Message);
             }
 
             return PartialView(model);
@@ -112,15 +112,6 @@ namespace eActForm.Controllers
         [ValidateInput(false)]
         public FileResult summaryListViewExportExcel(string gridHtml)
         {
-            try
-            {
-                //RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message);
-            }
-
             return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "summaryReport.xls");
         }
 
@@ -193,7 +184,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("SummaryReport => searchActForm" + ex.Message);
             }
 
             return RedirectToAction("repSummaryView", new { startDate = Request.Form["startDate"] });
@@ -210,7 +201,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("SummaryReport => repSummaryView" + ex.Message);
             }
 
             return PartialView(model);
@@ -235,7 +226,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("SummaryReport => repSetDelFlagRecodeSummaryDetail" + ex.Message);
             }
 
             return Json(result);
@@ -252,7 +243,7 @@ namespace eActForm.Controllers
                 ReportSummaryModels model = (ReportSummaryModels)Session["SummaryDetailModel"];
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
                 string summaryId = ReportSummaryAppCode.insertActivitySummaryDetail(model.cusId, model.producttype_id, startDate, endDate, model);
-                if (ReportSummaryAppCode.insertApproveForReportSummaryDetail(model.subId , model.cusId, model.producttype_id, summaryId) > 0)
+                if (ReportSummaryAppCode.insertApproveForReportSummaryDetail(model.subId, model.cusId, model.producttype_id, summaryId) > 0)
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
@@ -269,7 +260,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("SummaryReport => repReportSummaryApprove" + ex.Message);
             }
 
             return Json(result);
@@ -288,7 +279,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("SummaryReport => summaryApproveListView" + ex.Message + " : " + summaryId);
             }
 
             return RedirectToAction("viewReportSummary", new { startDate = modelResult.activitySummaryList.Count > 0 ? modelResult.activitySummaryList[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
@@ -319,7 +310,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("SummaryReport => summaryDetailGenPDF" + ex.Message + " : " + summaryId);
             }
 
             return Json(result);
@@ -341,44 +332,55 @@ namespace eActForm.Controllers
 
         public ActionResult searchActFormSummary(string activityType)
         {
-
-            DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
-            DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
-            ReportSummaryModels modelResult = new ReportSummaryModels();
-
-            modelResult.summaryDetailLists = ReportSummaryAppCode.getDocumentSummaryDetailByDate(startDate, endDate);
-
-
-            if (Request.Form["txtRepDetailNo"] != "")
+            try
             {
-                modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.summaryId == ReportSummaryAppCode.getSummaryIdByRepdetail(Request.Form["txtRepDetailNo"].ToString())).ToList();
-            }
-            else
-            {
-               
-                if (Request.Form["ddlProductType"] != "")
+                DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
+                DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
+                ReportSummaryModels modelResult = new ReportSummaryModels();
+
+                modelResult.summaryDetailLists = ReportSummaryAppCode.getDocumentSummaryDetailByDate(startDate, endDate);
+
+
+                if (Request.Form["txtRepDetailNo"] != "")
                 {
-                    modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
+                    modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.summaryId == ReportSummaryAppCode.getSummaryIdByRepdetail(Request.Form["txtRepDetailNo"].ToString())).ToList();
                 }
+                else
+                {
+
+                    if (Request.Form["ddlProductType"] != "")
+                    {
+                        modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
+                    }
+                }
+                TempData["SearchDataModelSummary"] = modelResult;
             }
-            TempData["SearchDataModelSummary"] = modelResult;
+            catch(Exception ex)
+            {
+                ExceptionManager.WriteError("SummaryReport => searchActFormSummary" + ex.Message);
+            }
             return RedirectToAction("ListDoc");
         }
 
         public ActionResult ListDoc()
         {
             ReportSummaryModels modelResult = new ReportSummaryModels();
-            if (TempData["SearchDataModelSummary"] != null)
+            try
             {
-                modelResult = (ReportSummaryModels)TempData["SearchDataModelSummary"];
+                if (TempData["SearchDataModelSummary"] != null)
+                {
+                    modelResult = (ReportSummaryModels)TempData["SearchDataModelSummary"];
+                }
+                else
+                {
+                    modelResult.summaryDetailLists = ReportSummaryAppCode.getDocumentSummaryDetailByDate(DateTime.Now.AddDays(-15), DateTime.Now);
+                }
+                TempData.Clear();
             }
-            else
+            catch(Exception ex)
             {
-                modelResult.summaryDetailLists = ReportSummaryAppCode.getDocumentSummaryDetailByDate(DateTime.Now.AddDays(-15), DateTime.Now);
-              
+                ExceptionManager.WriteError("SummaryReport => ListDoc" + ex.Message);
             }
-
-            TempData.Clear();
             return PartialView(modelResult);
         }
     }

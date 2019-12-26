@@ -27,7 +27,7 @@ namespace eActForm.Controllers
 
         public ActionResult getPDF(string actId, string type,string extension)
         {
-            string rootPath = "", mapPath = "";
+            string rootPath = "";
 
             try
             {
@@ -58,13 +58,10 @@ namespace eActForm.Controllers
                         actId = "fileNotFound";
                     }
                 }
-
-
-
             }
             catch(Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError(ex.Message + " : "+ actId);
             }
             var fileStream = new FileStream(Server.MapPath(string.Format(rootPath, actId)),
                                                      FileMode.Open,

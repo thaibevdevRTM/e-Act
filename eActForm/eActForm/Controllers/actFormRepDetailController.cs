@@ -22,27 +22,32 @@ namespace eActForm.Controllers
         // GET: actFormRepDetail
         public ActionResult Index(string typeForm)
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
-            ViewBag.TypeForm = typeForm;
-
-            if (typeForm == Activity_Model.activityType.MT.ToString())
+            SearchActivityModels models = new SearchActivityModels();
+            try
             {
-                models.customerslist = QueryGetAllCustomers.getCustomersMT();
+                models = SearchAppCode.getMasterDataForSearchForDetailReport();
+                ViewBag.TypeForm = typeForm;
+
+                if (typeForm == Activity_Model.activityType.MT.ToString())
+                {
+                    models.customerslist = QueryGetAllCustomers.getCustomersMT();
+                }
+                else
+                {
+                    models.customerslist = QueryGetAllCustomers.getAllRegion();
+                }
+
+                models.approveStatusList.Add(new ApproveModel.approveStatus()
+                {
+                    id = "7",
+                    nameTH = "เพิ่มเติม",
+                    nameEN = "เพิ่มเติม",
+                });
             }
-            else
+            catch (Exception ex)
             {
-                models.customerslist = QueryGetAllCustomers.getAllRegion();
+                ExceptionManager.WriteError("actFormRepDetail => Index " + ex.Message);
             }
-
-
-
-
-            models.approveStatusList.Add(new ApproveModel.approveStatus()
-            {
-                id = "7",
-                nameTH = "เพิ่มเติม",
-                nameEN = "เพิ่มเติม",
-            });
             return View(models);
         }
 
@@ -50,7 +55,6 @@ namespace eActForm.Controllers
         {
             try
             {
-
                 RepDetailModel.actFormRepDetails model = new RepDetailModel.actFormRepDetails();
                 model = RepDetailAppCode.getRepDetailReportByCreateDateAndStatusId(Request.Form["startDate"], Request.Form["endDate"], typeForm);
                 model.typeForm = typeForm;
@@ -119,7 +123,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("actFormRepDetail => searchActForm " + ex.Message);
             }
 
             return RedirectToAction("repChooseView", new { startDate = Request.Form["reportDate"] });
@@ -134,7 +138,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("actFormRepDetail => repChooseView " + ex.Message);
             }
 
             return PartialView(model);
@@ -174,7 +178,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("actFormRepDetail => repSetDelFlagRecodeDetail " + ex.Message + " : " + actId);
             }
 
             return Json(result);
@@ -195,7 +199,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("actFormRepDetail => repListView " + ex.Message);
             }
 
             return PartialView(model);
@@ -212,7 +216,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("actFormRepDetail => repPreviewForApproveDetail " + ex.Message);
             }
 
             return PartialView(model);
@@ -229,7 +233,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("actFormRepDetail => repPreviewForApprove " + ex.Message);
             }
 
             return PartialView(model);
@@ -245,7 +249,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("actFormRepDetail => repListViewGroupBrand " + ex.Message);
             }
 
             return PartialView(rep);
@@ -255,16 +259,6 @@ namespace eActForm.Controllers
         [ValidateInput(false)]
         public FileResult repListViewExportExcel(string gridHtml)
         {
-            try
-            {
-                //RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
-                //gridHtml = gridHtml.Replace("\n", "<br>");
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError(ex.Message);
-            }
-
             return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "DetailReport.xls");
         }
 
@@ -283,7 +277,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("actFormRepDetail => repListViewExportPDF " + ex.Message);
             }
             return File(file[0].ContentStream, "application/pdf", "reportDetailPDF.pdf");
 
@@ -318,7 +312,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError(ex.Message + " " + actRepDetailId);
+                ExceptionManager.WriteError("actFormRepDetail => repReportDetailApprove " + ex.Message + " : " + actRepDetailId);
             }
 
             return Json(result);
@@ -344,7 +338,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("actFormRepDetail => reGenReportDetail " + ex.Message + " : " + actRepDetailId);
             }
 
             return Json(result);
@@ -365,7 +359,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("actFormRepDetail => repPreviewListView " + ex.Message + " : " + actId);
             }
 
             return RedirectToAction("repPreviewForApproveDetail", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
@@ -401,7 +395,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("actFormRepDetail => repDetailGenPDF " + ex.Message + " : " + actId);
             }
 
             return Json(result);

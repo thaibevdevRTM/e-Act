@@ -236,7 +236,6 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                byte[] binData = null;
                 TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel();
                 foreach (string UploadedImage in Request.Files)
                 {
@@ -273,7 +272,7 @@ namespace eActForm.Controllers
             {
                 result.Message = ex.Message;
                 result.Success = false;
-                ExceptionManager.WriteError("uploadFilesImage => " + ex.Message);
+                ExceptionManager.WriteError("uploadFilesImage => " + ex.Message + " : " + actId);
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -345,7 +344,7 @@ namespace eActForm.Controllers
             {
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
-                ExceptionManager.WriteError("submitPreview => " + ex.Message +" "+ activityId);
+                ExceptionManager.WriteError("submitPreview => " + ex.Message +" : "+ activityId);
             }
             return Json(resultAjax, "text/plain");
         }

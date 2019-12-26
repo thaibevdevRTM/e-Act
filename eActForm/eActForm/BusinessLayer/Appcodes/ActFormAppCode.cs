@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("updateWaitingCancel >>" + ex.Message);
             }
         }
         public static int deleteActForm(string actId, string remark)
@@ -191,7 +191,7 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 return result;
-                throw new Exception("getDigitGroup >>" + ex.Message);
+                throw new Exception("getDigitRunnigGroup >>" + ex.Message);
             }
         }
 

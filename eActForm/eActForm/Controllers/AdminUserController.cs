@@ -15,9 +15,9 @@ namespace eActForm.Controllers
         // GET: AdminUser
         public ActionResult Index()
         {
+
             AdminUserModel adminUserModel = new AdminUserModel();
             adminUserModel.userLists = AdminUserAppCode.getAllUserRole();
-
 
             return View(adminUserModel);
 

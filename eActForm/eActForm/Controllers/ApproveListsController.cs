@@ -15,49 +15,62 @@ namespace eActForm.Controllers
         // GET: ApproveLists
         public ActionResult Index()
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
-            models.approveStatusList.Add(new ApproveModel.approveStatus()
+            SearchActivityModels models = new SearchActivityModels();
+            try
             {
-                id = "7",
-                nameTH = "ทั้งหมด",
-                nameEN = "All",
-            });
+                models = SearchAppCode.getMasterDataForSearch();
+                models.approveStatusList.Add(new ApproveModel.approveStatus()
+                {
+                    id = "7",
+                    nameTH = "ทั้งหมด",
+                    nameEN = "All",
+                });
+            }
+            catch(Exception ex)
+            {
+                ExceptionManager.WriteError("ApproveList >> Index >>" + ex.Message);
+            }
             return View(models);
         }
 
         public ActionResult ListView(string fromPage, string StatusApprove)
         {
             Activity_Model.actForms model = new Activity_Model.actForms();
-            if (TempData["ApproveSearchResult"] == null)
+            try
             {
-                model = new Activity_Model.actForms();
-                model.actLists = ApproveListAppCode.getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
-                TempData["ApproveFormLists"] = model.actLists;
-
-                if (fromPage != null && StatusApprove != null)
+                if (TempData["ApproveSearchResult"] == null)
                 {
-                    if (fromPage == "DashboardPage")
+                    model = new Activity_Model.actForms();
+                    model.actLists = ApproveListAppCode.getApproveListsByEmpId(UtilsAppCode.Session.User.empId);
+                    TempData["ApproveFormLists"] = model.actLists;
+
+                    if (fromPage != null && StatusApprove != null)
                     {
-                        if(StatusApprove == "2")
+                        if (fromPage == "DashboardPage")
                         {
-                            model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.รออนุมัติ);
+                            if (StatusApprove == "2")
+                            {
+                                model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.รออนุมัติ);
+                            }
+                            else if (StatusApprove == "3")
+                            {
+                                model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.อนุมัติ);
+                            }
                         }
-                        else if (StatusApprove == "3")
-                        {
-                            model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.อนุมัติ);
-                        }
+                    }
+                    else
+                    {
+                        model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.รออนุมัติ);
                     }
                 }
                 else
                 {
-                    model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.รออนุมัติ);
+                    model.actLists = (List<Activity_Model.actForm>)TempData["ApproveSearchResult"];
                 }
-
-                      
             }
-            else
+            catch(Exception ex)
             {
-                model.actLists = (List<Activity_Model.actForm>)TempData["ApproveSearchResult"];
+                ExceptionManager.WriteError("ApproveList >> ListView >>" + ex.Message);
             }
             return PartialView(model);
         }
@@ -65,32 +78,38 @@ namespace eActForm.Controllers
 
         public ActionResult searchActForm()
         {
-            string count = Request.Form.AllKeys.Count().ToString();
-            Activity_Model.actForms model = new Activity_Model.actForms();
-            model.actLists = (List<Activity_Model.actForm>)TempData["ApproveFormLists"];
+            try
+            {
+                string count = Request.Form.AllKeys.Count().ToString();
+                Activity_Model.actForms model = new Activity_Model.actForms();
+                model.actLists = (List<Activity_Model.actForm>)TempData["ApproveFormLists"];
 
-            if (!string.IsNullOrEmpty(Request.Form["ddlStatus"]) && Request.Form["ddlStatus"] != "7")
-            {
-                model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, int.Parse(Request.Form["ddlStatus"]));
+                if (!string.IsNullOrEmpty(Request.Form["ddlStatus"]) && Request.Form["ddlStatus"] != "7")
+                {
+                    model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, int.Parse(Request.Form["ddlStatus"]));
+                }
+                if (!string.IsNullOrEmpty(Request.Form["txtActivityNo"]))
+                {
+                    model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
+                }
+                if (!string.IsNullOrEmpty(Request.Form["ddlCustomer"]))
+                {
+                    model.actLists = model.actLists.Where(r => r.customerId == Request.Form["ddlCustomer"]).ToList();
+                }
+                if (!string.IsNullOrEmpty(Request.Form["ddlTheme"]))
+                {
+                    model.actLists = model.actLists.Where(r => r.theme == Request.Form["ddlTheme"]).ToList();
+                }
+                if (!string.IsNullOrEmpty(Request.Form["ddlProductType"]))
+                {
+                    model.actLists = model.actLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
+                }
+                TempData["ApproveSearchResult"] = model.actLists;
             }
-            if (!string.IsNullOrEmpty(Request.Form["txtActivityNo"]))
+            catch(Exception ex)
             {
-                model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();
+                ExceptionManager.WriteError("ApproveList >> searchActForm >>" + ex.Message);
             }
-            if (!string.IsNullOrEmpty(Request.Form["ddlCustomer"]))
-            {
-                model.actLists = model.actLists.Where(r => r.customerId == Request.Form["ddlCustomer"]).ToList();
-            }
-            if (!string.IsNullOrEmpty(Request.Form["ddlTheme"]))
-            {
-                model.actLists = model.actLists.Where(r => r.theme == Request.Form["ddlTheme"]).ToList();
-            }
-            if (!string.IsNullOrEmpty(Request.Form["ddlProductType"]))
-            {
-                model.actLists = model.actLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
-            }
-
-            TempData["ApproveSearchResult"] = model.actLists;
             return RedirectToAction("ListView");
         }
 

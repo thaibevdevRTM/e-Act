@@ -44,7 +44,7 @@ namespace eActForm.Controllers
             catch (Exception ex)
             {
                 UtilsAppCode.Session.User.exception = ex.Message;
-                ExceptionManager.WriteError("reportDetail >> " + ex.Message);
+                ExceptionManager.WriteError("Documents => reportDetail >> " + ex.Message);
             }
 
             return View();
@@ -87,7 +87,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message);
+                ExceptionManager.WriteError("Documents => searchActForm => " + ex.Message);
             }
 
             return RedirectToAction("reportDetailListsView");
@@ -112,7 +112,7 @@ namespace eActForm.Controllers
             catch (Exception ex)
             {
                 UtilsAppCode.Session.User.exception = ex.Message;
-                ExceptionManager.WriteError("reportDetailListsView >>" + ex.Message);
+                ExceptionManager.WriteError("Documents => reportDetailListsView => " + ex.Message);
             }
             return PartialView(models);
         }
@@ -146,7 +146,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("genPdfApprove >> " + ex.Message);
+                ExceptionManager.WriteError("Documents => genPdfApprove => " + ex.Message);
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
             }
@@ -164,7 +164,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("actDetail >> " + ex.Message);
+                ExceptionManager.WriteError("Documents => actDetail => " + ex.Message);
             }
 
             return PartialView(model);
