@@ -61,10 +61,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WebLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\MAS_WebAPI\TBWebApi\bin\WebLibrary.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppCode.cs" />
@@ -102,6 +98,10 @@
     <ProjectReference Include="..\eActForm\eActForm.csproj">
       <Project>{f2ed982e-1ccb-455b-ab47-758aec9c6a25}</Project>
       <Name>eActForm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebLibrary\WebLibrary.csproj">
+      <Project>{915ae4ce-4607-4e97-9329-2f6d8b5c4569}</Project>
+      <Name>WebLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
