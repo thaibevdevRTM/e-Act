@@ -261,6 +261,7 @@
     <Compile Include="Controllers\TBMMKT_ActivityBudgetInputController.cs" />
     <Compile Include="Controllers\TBMMKT_AdvanceLoanReportController.cs" />
     <Compile Include="Controllers\TBMMKT_ActivityBudgetReportController.cs" />
+    <Compile Include="Controllers\TravellingInCountryFormReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2225,7 +2226,10 @@
     <Content Include="Views\BudgetApprove\previewApproveBudget.cshtml" />
     <Content Include="Views\Budget\activityIndex.cshtml" />
     <Content Include="Views\Budget\manageInvoiceList.cshtml" />
+    <Content Include="Views\Shared\_previewActFormTravelling.cshtml" />
     <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\headerDetails.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\lastwordForFYI.cshtml" />
     <Content Include="WebForm1.aspx" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -2387,18 +2391,17 @@
     <Content Include="Views\managementFlow\Index.cshtml" />
     <Content Include="Views\managementFlow\dropDetail.cshtml" />
     <Content Include="Views\managementFlow\approveList.cshtml" />
-    <Content Include="Views\TravellingInCountryFormReport\activityBudgetDetails.cshtml" />
-    <Content Include="Views\TravellingInCountryFormReport\activityDetails.cshtml" />
-    <Content Include="Views\TravellingInCountryFormReport\headerCompany.cshtml" />
-    <Content Include="Views\TravellingInCountryFormReport\headerDetails.cshtml" />
-    <Content Include="Views\TravellingInCountryFormReport\Index.cshtml" />
-    <Content Include="Views\TravellingInCountryFormReport\lastwordForFYI.cshtml" />
-    <Content Include="Views\Shared\_previewActFormTravelling.cshtml" />
     <Content Include="Views\TBMMKT_AdvanceLoanReport\Index.cshtml" />
     <Content Include="Views\Shared\_previewActFormAdvanceLoan.cshtml" />
     <Content Include="Views\TBMMKT_AdvanceLoanReport\headerCompany.cshtml" />
     <Content Include="Views\TBMMKT_AdvanceLoanReport\headerDetails.cshtml" />
     <Content Include="Views\TBMMKT_AdvanceLoanReport\listDetails.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\Index.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\listDetails.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\purposeDetail.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\placeDetails.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\estimateDetails.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\headerCompany.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

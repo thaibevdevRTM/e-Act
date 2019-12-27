@@ -1,50 +1,59 @@
-﻿@model eActForm.Models.Activity_TBMMKT_Model
-@using eActForm.Models;
-
-<div class="modal-dialog modal-lg">
-    <!-- Modal content-->
-    <div class="modal-content">
-        <div class="modal-header">
-            <div style=""></div>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-
-        @RenderPage("~/Views/Shared/_previewActFormTravelling.cshtml")
-
-       
-
-        <div class="modal-footer">
-            <div>
-                <p class="d-flex justify-content-center">
-                    <div style="display:inline-block;">
-                        @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
-                        {
-                            <input type="hidden" name="gridHtml" />
-                            <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
-                        }
-                    </div>
-                    <div style="display:inline-block;">
-                        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-                    </div>
-                    <div style="display:inline-block;">
-
-                        @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
-                        {
-                            <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
-                        }
-                    </div>
+﻿<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+@using (Html.BeginForm("printDoc", "TravellingInCountryFormReport", FormMethod.Post))
+{
+    <input type="hidden" name="gridHtml" />
+    <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
+    <br />
+}
+@RenderPage("~/Views/Shared/_previewActFormTravelling.cshtml")
 
 
-                </p>
+@*@model eActForm.Models.Activity_TBMMKT_Model
+    @using eActForm.Models;
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div style=""></div>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            @RenderPage("~/Views/Shared/_previewActFormBudget.cshtml")
+
+
+
+            <div class="modal-footer">
+                <div>
+                    <p class="d-flex justify-content-center">
+                        <div style="display:inline-block;">
+                            @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
+                            {
+                                <input type="hidden" name="gridHtml" />
+                                <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
+                            }
+                        </div>
+                        <div style="display:inline-block;">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                        </div>
+                        <div style="display:inline-block;">
+
+                            @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
+                            {
+                                <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                            }
+                        </div>
+
+
+                    </p>
+                </div>
+
+            </div>
+            <div class="center-block">
+
             </div>
 
         </div>
-        <div class="center-block">
-
-        </div>
-
-    </div>
-</div>
+    </div>*@
 
 <script>
 
@@ -52,7 +61,7 @@
             $("input[name='gridHtml']").val($("#divForm").html());
     });
 
-    function submitPreview() {
+    @*function submitPreview() {
 
         bootbox.confirm({
             message: "ยืนยัน บันทึกข้อมูล!",
@@ -68,7 +77,7 @@
             },
             callback: function (result) {
                 if (result == true) {
-                    
+
                     var htmlstr = "";
                     htmlstr = $("#divForm").html();
                     doLoading("Loading....");
@@ -93,5 +102,5 @@
             }
 
         });
-    }
+    }*@
 </script>

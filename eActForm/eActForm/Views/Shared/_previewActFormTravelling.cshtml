@@ -1,74 +1,106 @@
 ﻿
-@*@model eActForm.Models.Activity_TBMMKT_Model
-@using eActForm.Models;*@
+@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.Models;
 
 <div id="divForm" style="width:97%; margin-left:20px;">
-    <table style="width: 100%;border: 1px solid black; border-collapse: collapse;" id="tabel_report" runat="server">
+    <table style="width: 100%;" id="tabel_report" runat="server">
         <tr>
             <td>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/headerCompany.cshtml")
+                @RenderPage("~/Views/TravellingInCountryFormReport/headerCompany.cshtml")
+                <div style=" height :25px"></div>
             </td>
         </tr>
         <tr>
-            <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
-                    ขออนุมัติงบประมาณกิจกรรม @Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "txtActivityName" })
+            <td>
+                @RenderPage("~/Views/TravellingInCountryFormReport/headerDetails.cshtml")
+                <div style=" height :15px"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @RenderPage("~/Views/TravellingInCountryFormReport/listDetails.cshtml")
+                <div style=" height :15px"></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @RenderPage("~/Views/TravellingInCountryFormReport/purposeDetail.cshtml")
+                <div style=" height :15px"></div>
+            </td>
+        </tr>
+        <tr>
+            <td style="">
+                <div style="width: 100%; align-content: center; text-align:left ;">
+                    <b> รายละเอียดของกิจกรรม ดังนี้</b>
                 </div>
             </td>
         </tr>
+        <tr>
+            <td>
+                @RenderPage("~/Views/TravellingInCountryFormReport/placeDetails.cshtml")
+                <div style=" height :15px"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @RenderPage("~/Views/TravellingInCountryFormReport/estimateDetails.cshtml")
+                <div style=" height :15px"></div>
+            </td>
+        </tr>
+
         <tr style="border: 1px solid black; border-collapse: collapse;border-bottom:none;">
-            <td>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/headerDetails.cshtml")
-            </td>
-        </tr>
-        <tr>
-            <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
-                <div style="height:5px;"></div>
-                <div style="width: 100%; text-align: left;">
-                    &nbsp;ค่าใช้จ่ายในการทำกิจกรรม @Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "lblActivityName" }) จำนวนเงิน @Model.totalCostThisActivity.Value.ToString("#,###.00") บาท
-                    <br />
-                    &nbsp;รายละเอียดงบประมาณ
-                </div>
-            </td>
+            <td></td>
         </tr>
         @*<tr style="border-bottom:none;">
-            <td>
-                <div style="height:5px;"></div>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/activityDetails.cshtml")
-            </td>
-        </tr>*@
+                <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+                    <div style="height:5px;"></div>
+                    <div style="width: 100%; text-align: left;">
+                        &nbsp;โดยมีรายละเอียดประมาณการค่าใช้จ่ายดังนี้
+                    </div>
+                </td>
+            </tr>*@
         <tr style="border-bottom:none;">
             <td>
                 <div style="height:5px;"></div>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/activityBudgetDetails.cshtml")
+
             </td>
         </tr>
         <tr style="border-bottom:none;">
             <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
-                <div style="height:5px;"></div>
+                @*<div style="height:5px;"></div>*@
                 <div style="width: 100%; text-align: left;">
-                    หมายเหตุ
-                    <br />
-                    @Html.Raw(Model.activityFormTBMMKT.remark.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                    <b>
+                        หมายเหตุ
+                    </b> เดินทางโดยเครื่องบิน เนื่องจาประหยัดเวลาในการเดินทาง
+                    <div style=" height :15px"></div>
                 </div>
             </td>
         </tr>
         <tr>
             <td>
-                <div style="height:20px;"></div>
-                @RenderPage("~/Views/TBMMKT_ActivityBudgetReport/lastwordForFYI.cshtml")
+                @RenderPage("~/Views/TravellingInCountryFormReport/lastwordForFYI.cshtml")
+                <div style=" height :15px"></div>
             </td>
         </tr>
-        <tr>
-            <td style="height:150px;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+        @*<tr>
+                <td style="height:150px;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
+                    <div style="height:5px;"></div>
+                    <div style="width: 100%; text-align: left;">
+                        <div style="margin-bottom:10px;">
+                            @if (Model.activityFormModel != null)
+                        {
+                            @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id, subId = Model.tB_Act_ActivityForm_DetailOther.SubjectId })
+                    }
+                        </div>
+                    </div>
+                </td>
+            </tr>*@
+        <tr style="border-bottom:none;">
+            <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
                 <div style="height:5px;"></div>
                 <div style="width: 100%; text-align: left;">
-                    <div style="margin-bottom:10px;">
-                        @if (Model.activityFormModel != null)
-                    {
-                        @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id, subId = Model.tB_Act_ActivityForm_DetailOther.SubjectId })
-                }
-                    </div>
+                    ผู้จัดทำ ..................................
                 </div>
             </td>
         </tr>

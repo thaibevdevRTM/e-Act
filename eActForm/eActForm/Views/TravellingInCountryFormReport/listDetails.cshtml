@@ -1,0 +1,78 @@
+﻿@*@model eActForm.Models.Activity_TBMMKT_Model*@
+<div id="divListDetails" runat="server" style="width: 100%;">
+    <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabelListDetails" runat="server">
+        <tr  style="background-color:#A9A2A1;height:25px;">
+            <th colspan="5" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;"><b>Request for permission for the following persons to travel : รายชื่อผู้ร่วมเดินทางเพิ่มเติม ดังนี้</b></th></tr> 
+        <tr style="height:25px;">
+            <th style="width: 25%;border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:center;"><b>Name / ชื่อ</b></th>
+            <th style="width: 23%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;"><b>Position / ตำแหน่ง</b></th>
+            <th style="width: 6%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;"><b>level</b></th>
+            <th style="width: 23%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;"><b>Department / หน่วยงาน</b></th>
+            <th style="width: 23%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;"><b>BU / หน่วยธุรกิจ</b></th>
+
+        </tr>
+        @{ var index = 0;}
+        @for (index = 1; index <= 3; index++)
+        {
+            <tr>
+                <td style="width: 25%;border-style: solid;border-width: 0px 1px 1px 1px; border-collapse: collapse;text-align:left;">xxxxxxx</td>
+                <td style="width: 23%;border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;text-align:left;">&nbsp;xxxxxx</td>
+                <td style="width: 6%;border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;text-align:center;">xxxx&nbsp;</td>
+                <td style="width: 23%;border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;text-align:left;">&nbsp;xxxxxx</td>
+                <td style="width: 23%;border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;text-align:left;">&nbsp;xxxxxx</td>
+
+            </tr>
+        }
+
+        @*@foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
+            {
+                if (item.productDetail != "")
+                {
+                    <tr>
+                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                            @item.IO
+                        </td>
+                        <td style="width: 50%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;padding-left:5px;">
+                            @item.productDetail
+                        </td>
+                        @if (item.unit != 0)
+                        {
+                            <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @item.unit @item.QtyName
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;"></td>
+                        }
+
+                        @if (item.unitPrice != 0)
+                        {
+                            <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @item.unitPriceDisplay
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;"></td>
+                        }
+
+                        @if (item.total != 0)
+                        {
+                            <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                                @string.Format("{0:#,0.00}", @item.total)
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;"></td>
+                        }
+                    </tr>
+                }
+                index++;
+            }*@
+
+
+    </table>
+
+</div>

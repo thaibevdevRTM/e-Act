@@ -1,7 +1,24 @@
-﻿<div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
-    @*<asp:Label ID="lblHeaderCompany" Text="บริษัท  ไทยเบฟมาร์เก็ตติ้ง  จำกัด" style="width: 100%; align-content: center; text-align: center;" runat="server" Font-Size="18pt" Width="100%" Font-Names="TH SarabunPSK"></asp:Label><br />
-        <asp:Label ID="lblHeaderAddressCompany" Text="15 หมู่ 14 ถนนวิภาวดี-รังสิต แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900" style="width: 100%; align-content: center; text-align: center;" runat="server" Font-Size="18pt" Width="100%" Font-Names="TH SarabunPSK"></asp:Label>*@
-    บริษัท  ไทยเบฟมาร์เก็ตติ้ง  จำกัด<br />
-    15 หมู่ 14 ถนนวิภาวดี-รังสิต แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900
-    <img src="~/images/logo-ss.png" alt="" />
+﻿
+@model eActForm.Models.Activity_TBMMKT_Model
+
+@{
+    var url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfiles"].ToString();
+}
+
+<div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
+
+    <table style="text-align:center; width:100%;font-size :16pt" border="0" id="tabelHeaderDetails" runat="server">
+        <tr>
+            <th rowspan="3" style="width:150px">
+                @*<a href="@string.Format(url,"logo-ss.png")" target="_blank"><img src="@string.Format(url,"logo-ss.png")" id="catImage" width="100px" height="100px" /></a>*@
+                <img id="catImage" width="150px"   src="@string.Format(url,"logo-ss.png")"/>
+                @*<img src="~/images/logo-ss.png" width="100" height="100" />*@
+            </th>
+            <th><b>FORM FOR TRAVELLING APPROVAL</b></th>
+            <td rowspan="3"  style="width:150px"></td>
+        </tr>
+        <tr> <td> <b> (OFF-SIDE/PROVINCIAL WORK)</b></td> </tr>
+        <tr> <td> <b> แบบฟอร์มขอนุมัติไปปฎิบัติงานนอกสถานที่/ต่างจังหวัด </b></td> </tr>
+    </table>
+
 </div>
