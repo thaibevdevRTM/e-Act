@@ -14,12 +14,19 @@ using WebLibrary;
 namespace eActForm.Controllers
 {
     [LoginExpire]
-    public class TBMMKT_AdvanceLoanReportController : Controller
+    public class MainReportController : Controller
     {
 
         public ActionResult Index(string activityId)
         {
-            //Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            MainFormModel mainFormModel = new MainFormModel();
+
+            //==============test=================
+            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
+            activityFormTBMMKT.idTypeForm = "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4";
+            mainFormModel.activityFormTBMMKT = activityFormTBMMKT; //ใบยืมเงินทดรอง(แผนกการตลาด)
+            //====END==========test=================
+
             //if (!string.IsNullOrEmpty(activityId))
             //{
             //    activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
@@ -27,7 +34,7 @@ namespace eActForm.Controllers
 
             //return PartialView(activity_TBMMKT_Model);
             //return PartialView(); //ไว้ใช้เวลาจะใส่กับ Modal
-            return View();
+            return View(mainFormModel);
         }
 
        
