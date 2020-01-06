@@ -18,7 +18,7 @@ namespace eActForm.Controllers
 
             AdminUserModel adminUserModel = new AdminUserModel();
             adminUserModel.userLists = AdminUserAppCode.getAllUserRole();
-
+            adminUserModel.getCompany = AdminUserAppCode.getCompany();
             return View(adminUserModel);
 
         }
@@ -45,13 +45,13 @@ namespace eActForm.Controllers
                     {
                         if (model.custLi == null)
                         {
-                            AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], Request.Form["ddlCompany"], null, item);
+                            AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item);
                         }
                         else
                         {
                             foreach (var itemCust in model.custLi)
                             {
-                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], Request.Form["ddlCompany"], itemCust, item);
+                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], itemCust, item);
                             }
                         }
                     }
