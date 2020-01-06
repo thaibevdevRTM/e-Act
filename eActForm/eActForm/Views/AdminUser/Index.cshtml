@@ -1,5 +1,5 @@
 ﻿@model eActForm.Models.AdminUserModel
-@using System.Configuration;
+@using eActForm.BusinessLayer
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -29,14 +29,13 @@
                 Company :
             </div>
             <div class="col-md-4">
-                @Html.DropDownList("model.companyList", new SelectList(Model.getCompany, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
 
-                @*<select class="form-control" id="ddlCompany" name="ddlCompany" required>
+                <select class="form-control" id="ddlCompany" name="ddlCompany" required>
                     <option value="">-Selected-</option>
                     <option value="5600">MTM</option>
                     <option value="5601">OMT</option>
                     <option value="3030">TBM</option>
-                </select>*@
+                </select>
             </div>
         </div>
 
@@ -104,11 +103,11 @@
             </div>
             <div class="col-md-2">
                 <div>
-                    <input id="chkNonAl" type="checkbox" name="model.chkProductType" value="@ConfigurationManager.AppSettings["productTypeIdNonAlcho"]">
+                    <input id="chkNonAl" type="checkbox" name="model.chkProductType" value="1D1097F4-246F-4DC2-BB69-B7BB6E678299">
                     Non-Alcohol
                 </div>
                 <div>
-                    <input id="chkAl" type="checkbox" name="model.chkProductType" value="@ConfigurationManager.AppSettings["productTypeIdAlcho"]">
+                    <input id="chkAl" type="checkbox" name="model.chkProductType" value="FC696EB5-B058-445E-B605-977C5067AEBA">
                     Alcohol
                 </div>
             </div>
@@ -257,10 +256,10 @@
 
                             $.each(response.Data.productTypeList, function () {
                                 switch (this['productTypeId']) {
-                                    case '@ConfigurationManager.AppSettings["productTypeIdNonAlcho"]':
+                                    case '1D1097F4-246F-4DC2-BB69-B7BB6E678299':
                                         document.getElementById("chkNonAl").checked = true;
                                         break;
-                                    case '@ConfigurationManager.AppSettings["productTypeIdAlcho"]':
+                                    case 'FC696EB5-B058-445E-B605-977C5067AEBA':
                                         document.getElementById("chkAl").checked = true;
                                         break;
                                 }

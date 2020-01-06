@@ -89,7 +89,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("selectApprove >>" + ex.Message);
+                ExceptionManager.WriteError("insertApprove >>" + ex.Message);
                 result.Message = ex.Message;
             }
             return Json(result);
@@ -165,7 +165,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getApproveComment >>" + ex.Message + " : "+ actId);
+                ExceptionManager.WriteError("getApproveComment >>" + ex.Message);
             }
             return PartialView(model);
         }
@@ -212,7 +212,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("genPdfApprove >> " + ex.Message + " : " + activityId);
+                ExceptionManager.WriteError("genPdfApprove >> " + ex.Message);
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
             }

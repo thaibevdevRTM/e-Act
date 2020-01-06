@@ -17,14 +17,8 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             ManagementFlow_Model model = new ManagementFlow_Model();
-            try
-            {
-                model.companyList = managementFlowAppCode.getCompany().Where(w => w.val1.Contains(UtilsAppCode.Session.User.empCompanyId)).ToList();
-            }
-            catch(Exception ex)
-            {
-                ExceptionManager.WriteError("ManagementFlow => Index => " + ex.Message);
-            }
+            model.companyList = managementFlowAppCode.getCompany().Where(w => w.val1.Contains(UtilsAppCode.Session.User.empCompanyId)).ToList();
+
             return View(model);
         }
 
@@ -44,7 +38,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("ManagementFlow => dropDetail => " + ex.Message);
+                ExceptionManager.WriteError("dropDetail => " + ex.Message);
             }
             return PartialView(model);
         }
@@ -71,7 +65,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("ManagementFlow => approveList => " + ex.Message);
+                ExceptionManager.WriteError("approveList => " + ex.Message);
             }
             return PartialView(management_Model);
         }
@@ -94,7 +88,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("ManagementFlow => insertFlowApprove => " + ex.Message);
+                ExceptionManager.WriteError("insertFlowApprove => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -114,7 +108,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("ManagementFlow => addRow => " + ex.Message);
+                ExceptionManager.WriteError("addRow => " + ex.Message);
             }
             return RedirectToAction("approveList");
         }
@@ -133,7 +127,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("ManagementFlow => delRow => " + ex.Message);
+                ExceptionManager.WriteError("delRow => " + ex.Message);
             }
             return RedirectToAction("approveList");
         }
@@ -150,7 +144,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError("ManagementFlow => getLimitBySubject => " + ex.Message);
+                ExceptionManager.WriteError("getLimitBySubject => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
