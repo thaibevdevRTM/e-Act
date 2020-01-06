@@ -5,8 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using eActForm.Models;
 using eActForm.BusinessLayer;
-using WebLibrary;
-
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -15,36 +13,21 @@ namespace eActForm.Controllers
         // GET: ApproveListsRepDetail
         public ActionResult Index()
         {
-            SearchActivityModels models = new SearchActivityModels();
-            try
-            {
-                models = SearchAppCode.getMasterDataForSearch();
-            }
-            catch(Exception ex)
-            {
-                ExceptionManager.WriteError("ApproveListRepDetail >> Index >> " + ex.Message);
-            }
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
             return View(models);
         }
 
         public ActionResult ListView()
         {
             RepDetailModel.actApproveRepDetailModels model = new RepDetailModel.actApproveRepDetailModels();
-            try
+            if (TempData["ApproveSearchResult"] == null)
             {
-                if (TempData["ApproveSearchResult"] == null)
-                {
-                    model.repDetailLists = ApproveRepDetailAppCode.getApproveRepDetailListsByEmpId();
-                    TempData["ApproveFormLists"] = model.repDetailLists;
-                }
-                else
-                {
-                    model.repDetailLists = (List<RepDetailModel.actApproveRepDetailModel>)TempData["ApproveSearchResult"];
-                }
+                model.repDetailLists = ApproveRepDetailAppCode.getApproveRepDetailListsByEmpId();
+                TempData["ApproveFormLists"] = model.repDetailLists;
             }
-            catch(Exception ex)
+            else
             {
-                ExceptionManager.WriteError("ApproveListRepDetail >> ListView >> " + ex.Message);
+                model.repDetailLists = (List<RepDetailModel.actApproveRepDetailModel>)TempData["ApproveSearchResult"];
             }
             return PartialView(model);
         }
@@ -52,20 +35,13 @@ namespace eActForm.Controllers
         public ActionResult searchActForm()
         {
             RepDetailModel.actApproveRepDetailModels model = new RepDetailModel.actApproveRepDetailModels();
-            try
-            {
-                model.repDetailLists = (List<RepDetailModel.actApproveRepDetailModel>)TempData["ApproveFormLists"];
+            model.repDetailLists = (List<RepDetailModel.actApproveRepDetailModel>)TempData["ApproveFormLists"];
 
-                if (Request.Form["ddlStatus"] != "")
-                {
-                    model.repDetailLists = ApproveRepDetailAppCode.getFilterFormByStatusId(model.repDetailLists, int.Parse(Request.Form["ddlStatus"]));
-                }
-                TempData["ApproveSearchResult"] = model.repDetailLists;
-            }
-            catch(Exception ex)
+            if (Request.Form["ddlStatus"] != "")
             {
-                ExceptionManager.WriteError("ApproveListRepDetail >> searchActForm >> " + ex.Message);
+                model.repDetailLists = ApproveRepDetailAppCode.getFilterFormByStatusId(model.repDetailLists, int.Parse(Request.Form["ddlStatus"]));
             }
+            TempData["ApproveSearchResult"] = model.repDetailLists;
             return RedirectToAction("ListView");
         }
     }

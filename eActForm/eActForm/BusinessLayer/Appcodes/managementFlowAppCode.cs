@@ -40,7 +40,6 @@ namespace eActForm.BusinessLayer.Appcodes
             return QueryOtherMaster.getOhterMaster("approve", "");
         }
 
-
         public static List<TB_Act_Customers_Model.Customers_Model> getCustomer(string companyId)
         {
             if (companyId == ConfigurationManager.AppSettings["companyId_MT"])

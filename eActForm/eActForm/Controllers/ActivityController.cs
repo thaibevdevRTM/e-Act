@@ -79,7 +79,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("ActivityForm => " + ex.Message + " : " + activityId);
+                ExceptionManager.WriteError("ActivityForm => " + ex.Message);
             }
             return View(activityModel);
         }
@@ -111,18 +111,12 @@ namespace eActForm.Controllers
         public ActionResult PreviewData(string activityId, string typeForm)
         {
             Activity_Model activityModel = new Activity_Model();
-            try
-            {
-                activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-                activityModel.activityFormModel.typeForm = typeForm;
-                activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
-                activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
-                activityModel.productImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();
-            }
-            catch(Exception ex)
-            {
-                ExceptionManager.WriteError("PreviewData => " + ex.Message+ " : "+ activityId);
-            }
+            activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
+            activityModel.activityFormModel.typeForm = typeForm;
+            activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
+            activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
+            activityModel.productImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();
+
             return PartialView(activityModel);
         }
 
@@ -158,8 +152,7 @@ namespace eActForm.Controllers
                 string statusId = "";
                 Activity_Model activityModel = TempData["actForm" + activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + activityFormModel.id];
                 activityModel.activityFormModel = activityFormModel;
-                statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
-                result.ActivityId = activityFormModel.id;
+                 statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
                 if (statusId == "1" || statusId == "5" || statusId == "")
                 {
                     int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, activityFormModel.id);
@@ -176,7 +169,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError("insertDataActivity => " + ex.Message + " : "+ result.ActivityId);
+                ExceptionManager.WriteError("insertDataActivity => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -199,7 +192,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError("updateDataActivity => " + ex.Message + " : " + result.ActivityId);
+                ExceptionManager.WriteError("updateDataActivity => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -224,7 +217,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError("copyAndSaveNewActivityForm => " + ex.Message+" : " + result.ActivityId);
+                ExceptionManager.WriteError("copyAndSaveNewActivityForm => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -236,6 +229,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
+                byte[] binData = null;
                 TB_Act_Image_Model.ImageModel imageFormModel = new TB_Act_Image_Model.ImageModel();
                 foreach (string UploadedImage in Request.Files)
                 {
@@ -272,7 +266,7 @@ namespace eActForm.Controllers
             {
                 result.Message = ex.Message;
                 result.Success = false;
-                ExceptionManager.WriteError("uploadFilesImage => " + ex.Message + " : " + actId);
+                ExceptionManager.WriteError("uploadFilesImage => " + ex.Message);
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -344,7 +338,7 @@ namespace eActForm.Controllers
             {
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
-                ExceptionManager.WriteError("submitPreview => " + ex.Message +" : "+ activityId);
+                ExceptionManager.WriteError("submitPreview => " + ex.Message);
             }
             return Json(resultAjax, "text/plain");
         }

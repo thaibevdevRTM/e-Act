@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -14,36 +13,21 @@ namespace eActForm.Controllers
         // GET: ApproveSummary
         public ActionResult Index()
         {
-            SearchActivityModels models = new SearchActivityModels();
-            try
-            {
-                models = SearchAppCode.getMasterDataForSearch();
-            }
-            catch(Exception ex)
-            {
-                ExceptionManager.WriteError("ApproveSummaryDetail => Index " + ex.Message);
-            }
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
             return View(models);
         }
 
         public ActionResult ListViewApprove()
         {
             ReportSummaryModels model = new ReportSummaryModels();
-            try
+            if (TempData["ApproveSearchResult"] == null)
             {
-                if (TempData["ApproveSearchResult"] == null)
-                {
-                    model.summaryDetailLists = ReportSummaryAppCode.getApproveSummaryDetailListsByEmpId();
-                    TempData["ApproveFormLists"] = model.summaryDetailLists;
-                }
-                else
-                {
-                    model.summaryDetailLists = (List<ReportSummaryModels.actApproveSummaryDetailModel>)TempData["ApproveSearchResult"];
-                }
+                model.summaryDetailLists = ReportSummaryAppCode.getApproveSummaryDetailListsByEmpId();
+                TempData["ApproveFormLists"] = model.summaryDetailLists;
             }
-            catch(Exception ex)
+            else
             {
-                ExceptionManager.WriteError("ApproveSummaryDetail => ListViewApprove " + ex.Message);
+                model.summaryDetailLists = (List<ReportSummaryModels.actApproveSummaryDetailModel>)TempData["ApproveSearchResult"];
             }
             return PartialView(model);
         }
@@ -51,20 +35,13 @@ namespace eActForm.Controllers
         public ActionResult searchActForm()
         {
             ReportSummaryModels model = new ReportSummaryModels();
-            try
-            {
-                model.summaryDetailLists = (List<ReportSummaryModels.actApproveSummaryDetailModel>)TempData["ApproveFormLists"];
+            model.summaryDetailLists = (List<ReportSummaryModels.actApproveSummaryDetailModel>)TempData["ApproveFormLists"];
 
-                if (Request.Form["ddlStatus"] != "")
-                {
-                    model.summaryDetailLists = ReportSummaryAppCode.getFilterFormByStatusId(model.summaryDetailLists, int.Parse(Request.Form["ddlStatus"]));
-                }
-                TempData["ApproveSearchResult"] = model.summaryDetailLists;
-            }
-            catch(Exception ex)
+            if (Request.Form["ddlStatus"] != "")
             {
-                ExceptionManager.WriteError("ApproveSummaryDetail => searchActForm " + ex.Message);
+                model.summaryDetailLists = ReportSummaryAppCode.getFilterFormByStatusId(model.summaryDetailLists, int.Parse(Request.Form["ddlStatus"]));
             }
+            TempData["ApproveSearchResult"] = model.summaryDetailLists;
             return RedirectToAction("ListViewApprove");
         }
     }

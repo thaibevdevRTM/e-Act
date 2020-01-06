@@ -1,5 +1,4 @@
-﻿using eActForm.BusinessLayer.QueryHandler;
-using eActForm.Models;
+﻿using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -140,11 +139,6 @@ namespace eActForm.BusinessLayer.Appcodes
             {
                 throw new Exception("getcustomerRoleByEmpId >> " + ex.Message);
             }
-        }
-
-        public static List<TB_Act_Other_Model> getCompany()
-        {
-            return QueryOtherMaster.getOhterMaster("company", "");
         }
 
     }
