@@ -259,11 +259,13 @@
     <Compile Include="Controllers\SignatureController.cs" />
     <Compile Include="Controllers\SummaryReportController.cs" />
     <Compile Include="Controllers\TBMMKT_ActivityBudgetInputController.cs" />
+    <Compile Include="Controllers\MainReportController.cs" />
     <Compile Include="Controllers\TBMMKT_ActivityBudgetReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ActBaseModel.cs" />
+    <Compile Include="Models\MainFormModel.cs" />
     <Compile Include="Models\Activity_TBMMKT_Model.cs" />
     <Compile Include="Models\Activity_Model.cs" />
     <Compile Include="Models\ActSignatureModel.cs" />
@@ -2389,6 +2391,11 @@
     <Content Include="Views\managementFlow\Index.cshtml" />
     <Content Include="Views\managementFlow\dropDetail.cshtml" />
     <Content Include="Views\managementFlow\approveList.cshtml" />
+    <Content Include="Views\MainReport\Index.cshtml" />
+    <Content Include="Views\Shared\_previewMainReport.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderCompany\headerCompany.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderDetail\headerDetails.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail\listDetails.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
@@ -2425,7 +2432,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61263</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

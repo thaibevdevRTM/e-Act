@@ -1,0 +1,63 @@
+﻿
+@model eActForm.Models.MainFormModel
+@using eActForm.Models;
+
+<div id="divForm" style="width:97%; margin-left:20px;">
+    @if (Model.activityFormTBMMKT.idTypeForm == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4")
+    {
+        <table style="width: 100%;" id="tabel_report" runat="server">
+            <tr>
+                <td>
+                    @RenderPage("~/Views/SharedMasterFormHeaderCompany/headerCompany.cshtml")
+                </td>
+            </tr>
+            <tr>
+                <td style="">
+                    <div style="width: 100%; align-content: center; text-align: center;">
+                        วันที่ ..............................
+                    </div>
+                </td>
+            </tr>
+            <tr style="">
+                <td>
+                    @RenderPage("~/Views/SharedMasterFormHeaderDetail/headerDetails.cshtml")
+                </td>
+            </tr>
+            <tr style="border-bottom:none;">
+                <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+                    <div style="height:5px;"></div>
+                    <div style="width: 100%; text-align: left;padding-left:5px;">
+                        โดยมีรายละเอียดประมาณการค่าใช้จ่ายดังนี้
+                    </div>
+                </td>
+            </tr>
+            <tr style="border-bottom:none;">
+                <td>
+                    <div style="height:5px;"></div>
+                    @RenderPage("~/Views/SharedMasterFormDetail/listDetails.cshtml")
+                </td>
+            </tr>
+            <tr style="border-bottom:none;">
+                <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+                    <div style="height:5px;"></div>
+                    <div style="width: 100%; text-align: left;">
+                        หมายเหตุ แนบหลักฐานใบยืมเงินทดรองมาด้วยตอนเคลียร์เงิน
+                    </div>
+                </td>
+            </tr>
+            <tr style="border-bottom:none;">
+                <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+                    <div style="height:5px;"></div>
+                    <div style="width: 100%; text-align: left;">
+                        ผู้จัดทำ ..................................
+                    </div>
+                </td>
+            </tr>
+            <tr style="border-bottom:none;">
+                <td>
+                    &nbsp;<br />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
