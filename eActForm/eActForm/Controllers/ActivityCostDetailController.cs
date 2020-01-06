@@ -41,7 +41,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("delActCostDetail >> " +ex.Message);
+                ExceptionManager.WriteError("delActCostDetail >> " + ex.Message + " : " + actId);
                 result.Message = ex.Message;
                 result.Success = false;
             }
@@ -74,7 +74,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("addCostDetailTheme >> " + ex.Message);
+                ExceptionManager.WriteError("addCostDetailTheme >> " + ex.Message + " : " + actId);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -129,7 +129,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("calPercentSpendingOfSale >> " + ex.Message);
+                ExceptionManager.WriteError("calPercentSpendingOfSale >> " + ex.Message + " : " + actId);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -164,7 +164,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("calSpendingOfSaleChange >> " + ex.Message);
+                ExceptionManager.WriteError("calSpendingOfSaleChange >> " + ex.Message + " : " + actId);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -257,7 +257,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("calActivityDetailCost >> " + ex.Message);
+                ExceptionManager.WriteError("calActivityDetailCost >> " + ex.Message + " : " + actId);
                 result.Success = false;
                 result.Message = ex.Message;
             }

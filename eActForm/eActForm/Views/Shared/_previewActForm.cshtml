@@ -159,7 +159,15 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td></td>
+                    @{
+                        string showIO = "";
+                    }
+
+                    @if (!string.IsNullOrEmpty(@Model.activityFormModel.actIO))
+                    {
+                        showIO = "IO:" + @Model.activityFormModel.actIO + " / Claim :" + @Model.activityFormModel.actClaim;
+                    }
+                    <td td style="font-size:12.5px;">@showIO</td>
                     <td></td>
                     <td style="text-align:right; font-size:12.5px;">ระยะเวลาการให้ทุนพิเศษ</td>
                     <td></td>
@@ -481,7 +489,7 @@
         <div style="margin-bottom:10px;">
             @if (Model.activityFormModel != null)
             {
-                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id,subId = ConfigurationManager.AppSettings["subjectActivityFormId"] })
+                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id, subId = ConfigurationManager.AppSettings["subjectActivityFormId"] })
             }
         </div>
 

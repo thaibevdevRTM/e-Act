@@ -41,11 +41,17 @@ namespace eActForm.Controllers
 
         public ActionResult showDetailGroup(string rowId , string actId)
         {
-            Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+actId];
             Activity_Model ShowList_Product = new Activity_Model();
-            ShowList_Product.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).OrderBy(x => x.productName).ToList();
-
-            TempData.Keep();
+            try
+            {
+                Activity_Model activityModel = TempData["actForm" + actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + actId];
+                ShowList_Product.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).OrderBy(x => x.productName).ToList();
+                TempData.Keep();
+            }
+            catch(Exception ex)
+            {
+                ExceptionManager.WriteError("showDetailGroup >>" + ex.Message);
+            }
             return PartialView(ShowList_Product);
         }
 
@@ -71,7 +77,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("delCostDetail >>" + ex.Message);
+                ExceptionManager.WriteError("delCostDetail >>" + ex.Message + " : " + id);
                 result.Message = ex.Message;
                 result.Success = false;
             }
@@ -142,7 +148,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("addItemProduct >> " + ex.Message);
+                ExceptionManager.WriteError("addItemProduct >> " + ex.Message + " : " + actId);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -153,6 +159,7 @@ namespace eActForm.Controllers
         public bool calProductDetail(ProductCostOfGroupByPrice model)
         {
             bool success = true;
+            string actId = "";
             try
             {
                 decimal fixFormula = (decimal)1.07;
@@ -202,7 +209,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("calProductDetail >> " + ex.Message);
+                ExceptionManager.WriteError("calProductDetail >> " + ex.Message + " : " + actId);
                 success = false;
             }
 
