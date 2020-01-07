@@ -55,7 +55,7 @@
         var hiddenInput = wrapper.querySelector('input[type="hidden"]');
 
         var signaturePad = new SignaturePad(canvas);
-
+        
         // Read base64 string from hidden input
         var base64str = hiddenInput.value;
 
@@ -63,7 +63,7 @@
             // Draws signature image from data URL
             signaturePad.fromDataURL('data:image/png;base64,' + base64str);
         }
-
+        
         if (hiddenInput.disabled) {
             signaturePad.off();
         } else {
