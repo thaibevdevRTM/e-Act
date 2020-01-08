@@ -30,12 +30,8 @@
             </div>
             <div class="col-md-4">
 
-                <select class="form-control" id="ddlCompany" name="ddlCompany" required>
-                    <option value="">-Selected-</option>
-                    <option value="5600">MTM</option>
-                    <option value="5601">OMT</option>
-                    <option value="3030">TBM</option>
-                </select>
+                @Html.DropDownList("model.companyList", new SelectList(Model.getCompany, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
+
             </div>
         </div>
 

@@ -213,6 +213,7 @@
 
                         @if (Model.productImageList.Any())
                         {
+                            int index = 1;
                             string url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfiles"].ToString();
                             foreach (var item in Model.productImageList)
                             {
@@ -224,12 +225,14 @@
                                             <img width="220" height="120" src="@string.Format(url, item._fileName)" />
                                         </td>
                                     }
-                                    else
+                                    else if(index <= 2)
                                     {
                                         <td width="40%" style="text-align:right;">
-                                            <img width="130" height="120" src="@string.Format(url, item._fileName)" />
+                                            <img style="margin-left:10px;" width="130" height="120" src="@string.Format(url, item._fileName)" />
                                         </td>
                                     }
+
+                                    index++;
                                 }
                             }
                         }
