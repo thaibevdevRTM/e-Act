@@ -11,6 +11,8 @@ namespace eActForm.Models
         public string master_type_form_id { get; set; }
         public int orderNo { get; set; }
         public string path_partial { get; set; }
+        public string path_controller { get; set; }
+        public string path_action { get; set; }
         public string function_name { get; set; }
         public Boolean delFlag { get; set; }
         public DateTime? createdDate { get; set; }

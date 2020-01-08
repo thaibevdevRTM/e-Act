@@ -6,16 +6,7 @@
     <table style="width: 100%;" id="tabel_report" runat="server">
         @foreach (var item in Model.master_Type_Form_Detail_Models)
         {
-            @RenderPage(item.path_partial)
+            @Html.Action(item.path_action, item.path_controller, new { mainFormModel = Model })
         }
-
-        @*@RenderPage("~/Views/SharedMasterFormHeaderCompany/headerCompany.cshtml")
-            @RenderPage("~/Views/SharedMasterFormHeaderDetail/headerDetailsDate.cshtml")
-            @RenderPage("~/Views/SharedMasterFormHeaderDetail/headerDetails.cshtml")
-            @RenderPage("~/Views/SharedMasterFormDetail/textDetailsPay.cshtml")
-            @RenderPage("~/Views/SharedMasterFormDetail/listDetails.cshtml")
-            @RenderPage("~/Views/SharedMasterFormDetail/textDetailsAttachPay.cshtml")
-            @RenderPage("~/Views/SharedMasterFormDetail/textDetailsCreateByV1.cshtml")
-            @RenderPage("~/Views/SharedMasterFormDetail/textDetailsBlankRows.cshtml")*@
     </table>
 </div>

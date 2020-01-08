@@ -26,6 +26,8 @@ namespace eActForm.BusinessLayer
                                   master_type_form_id = d["master_type_form_id"].ToString(),
                                   orderNo = int.Parse(d["orderNo"].ToString()),
                                   path_partial = d["path_partial"].ToString(),
+                                  path_controller = d["path_controller"].ToString(),
+                                  path_action = d["path_action"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),
@@ -37,7 +39,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                ExceptionManager.WriteError("get_master_type_form_detail => " + ex.Message);
                 return new List<Master_type_form_detail_Model>();
             }
         }

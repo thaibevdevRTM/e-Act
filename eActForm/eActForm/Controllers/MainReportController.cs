@@ -26,6 +26,9 @@ namespace eActForm.Controllers
             activityFormTBMMKT.idTypeForm = "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4";
             mainFormModel.activityFormTBMMKT = activityFormTBMMKT; //ใบยืมเงินทดรอง(แผนกการตลาด)
             //====END==========test=================
+            
+            mainFormModel.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activityFormTBMMKT.idTypeForm);
+
 
             //if (!string.IsNullOrEmpty(activityId))
             //{
