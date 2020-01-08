@@ -225,13 +225,15 @@
                                             <img width="220" height="120" src="@string.Format(url, item._fileName)" />
                                         </td>
                                     }
-                                    else if(index <= 2)
+                                    else
                                     {
+                                        if (index <= 2)
+                                        {
                                         <td width="40%" style="text-align:right;">
                                             <img style="margin-left:10px;" width="130" height="120" src="@string.Format(url, item._fileName)" />
                                         </td>
+                                        }
                                     }
-
                                     index++;
                                 }
                             }
