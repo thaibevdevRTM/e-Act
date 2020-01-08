@@ -1,9 +1,83 @@
-﻿
-@{
-    ViewBag.Title = "contact";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewBag.Title = "Contact";
 }
+<style type="text/css">
+    .shadow {
+        -moz-box-shadow: 5px 5px 5px #ccc;
+        -webkit-box-shadow: 5px 5px 5px #ccc;
+        box-shadow: 5px 5px 5px #ccc;
+    }
 
-<h2>ติดต่อ</h2>
+    .my-bootbox-class .modal-dialog {
+        width: 400px;
+        font-size: 18px;
+        text-align: center;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <h2>@ViewBag.Title.</h2>
+    </div>
+
+    <div class="col-lg-12">
+        <h3>ส่วนงานพัฒนาระบบงานสนับสนุนการขาย-RTM</h3>
+    </div>
+
+
+    <br />
+</div>
 <hr />
+<br />
 
+<div class="row" style="margin-left:20px;">
+    <div>
+        <div class="col-offset-1 col-lg-5 shadow">
+            <div class="row col-lg-offset-1">
+                <address>
+                    <span class="glyphicon glyphicon-phone-alt">  <label>02-785-5555 ต่อ 4580,4607</label></span>
+                    <br />
+                </address>
+            </div>
+            <div class="row col-lg-offset-1">
+                <address>
+                    <span class="glyphicon glyphicon-phone-alt">  <label>HotLine: 061-3857262, 063-1970586</label></span>
+                </address>
+            </div>
+            <div class="row col-lg-offset-1">
+                <address>
+                    <img src="~/images/Martz90-Circle-Line.ico" width="25px;" height="25px;" />
+                    <label>Line : DevRTM  โดยเพิ่มเพื่อนมาที่ 092-264-6222</label>
+                </address>
+            </div>
+            <div class="row col-lg-offset-1">
+                <address>
+                    <strong>Support:</strong> <a style="color:black" href="mailto:#MKT-SSS-DevSupport@thaibev.com">#MKT-SSS-DevSupport@thaibev.com</a><br />
+                </address>
+            </div>
+            <br />
+        </div>
+
+    </div>
+    <div class="col-lg-offset-1 col-lg-5" style="margin-top:10px;">
+
+        <img src="~/images/120710.jpg" />
+
+    </div>
+</div>
+
+
+<img src="~/images/our-product.jpg" width="100%" />
+
+<script>
+     if (@ViewBag.checksaleteam == false)
+     {
+
+                    bootbox.alert({
+                        message: "คุณยังไม่มี ทีมตรวจ กรุณาติดต่อ Admin",
+                        className: "my-bootbox-class",
+                        callback: function () {
+
+                        }
+                    })
+      }
+</script>
