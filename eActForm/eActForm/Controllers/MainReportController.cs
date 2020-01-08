@@ -32,8 +32,8 @@ namespace eActForm.Controllers
             //    activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
             //}
 
-            //return PartialView(activity_TBMMKT_Model);
-            //return PartialView(); //ไว้ใช้เวลาจะใส่กับ Modal
+            //return PartialView(activity_TBMMKT_Model);  //ไว้ใช้เวลาจะใส่กับ Modal
+            //return PartialView();
             return View(mainFormModel);
         }
 
