@@ -1,0 +1,224 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer
+@using eActForm.Models
+<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
+<style>
+    .cssTableTDTextCenter {
+        max-width: none;
+        text-align: center;
+        width: 100%;
+    }
+
+    .cssTableTDTextLeft {
+        max-width: none;
+        text-align: left;
+        width: 100%;
+    }
+
+    .cssTableTDDetailNumber {
+        text-align: right;
+        width: 100%;
+    }
+</style>
+
+@using (Ajax.BeginForm("insertDataActivity", "MainForm", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="GridPDF" style="width:97%; margin-left:20px;">
+        <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
+
+            @foreach (var item in Model.master_Type_Form_Detail_Models)
+            {
+                @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+            }
+
+        </table>
+    </div>
+
+    @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
+    @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
+    @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
+
+    <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px; margin-left:20px;">
+        <div class="form-group">
+            <label class="control-label col-md-2 col-xs-12">
+                เอกสารแนบ :
+            </label>
+
+            <div class="col-md-10 col-xs-12">
+                <div class="row">
+                    @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.descAttach, new { @class = "form-control textboxcss", @id = "txtdescAttach" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@*@RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")*@
+
+<div style="height:5px;">
+
+</div>
+
+<div style="margin-left:25px;" class="text-center">
+    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+    @if (Model.activityFormModel.mode == "new" || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5 || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM))
+    {
+        <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+    }
+</div>
+
+
+<div class="modal fade" id="previewModal" role="dialog" style="display:none">
+    <div id="divPreview">
+    </div>
+</div>
+
+<script>
+
+       if(('@Model.activityFormTBMMKT.statusId' == '2' && '@UtilsAppCode.Session.User.isAdminTBM' == "False") || ('@Model.activityFormTBMMKT.statusId' == '3'))
+        {
+           $("#GridPDF :input").prop("disabled", true);
+           $("#txtdescAttach").prop("disabled", true);
+        }
+
+        if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
+            var arrayOfElements = document.getElementsByClassName('clstxtIO');
+            var lengthOfArray = arrayOfElements.length;
+            for (var i = 0; i < lengthOfArray; i++) {
+                arrayOfElements[i].disabled = 'disabled';
+            }
+        }
+
+
+
+
+    $("#btnExportPDF").click(function () {
+        $("input[name='gridHtml']").val($("#GridPDF").html());
+        });
+
+    $(function () {
+        $("#txtdateDoc").datepicker();
+        $("#txtdateActivitySt").datepicker();
+        $("#txtactivityPeriodEnd").datepicker();
+
+        });
+
+    function validatesubmit() {
+
+        var required = "กรุณา ระบุ :<br>";
+        var validate = true;
+
+        if ($("#ddlChannelOrBrand").val() == "") { required += "Condition Flow*<br>"; validate = false; }
+        if ($("#ddlChannel").val() == "" && $("#ddlBrand").val() == "") { required += "BrandหรือChannel*<br>"; validate = false; }
+        if ($("#ddlSubject").val() == "") { required += "เรื่อง*<br>"; validate = false; }
+
+        if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
+        if ($("#txtactivityTel").val() == "") { required += "เบอร์โทรศัพท์*<br>"; validate = false; }
+        if ($("#txtactivityProduct").val() == "") { required += "สินค้า*<br>"; validate = false; }
+        if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
+        if ($("#txtEO").val() == "") { required += "EO*<br>"; validate = false; }
+        if ($("#txtdateActivitySt").val() == "") { required += "วันที่เริ่มกิจกรรม*<br>"; validate = false; }
+        if ($("#txtactivityPeriodEnd").val() == "") { required += "วันที่สิ้นสุดกิจกรรม*<br>"; validate = false; }
+        if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
+
+            if (validate == true) {
+                SubmitData();
+            }
+            else {
+                bootbox.alert(required)
+            }
+        }
+
+    function SubmitData() {
+        console.log("submit");
+        $("#WaitDialog").show();
+        $("#divconditionFlow").submit();
+
+    }
+
+        function beginQuery() {
+
+        }
+
+    function successQuery(data) {
+        console.log('success');
+        console.log(data);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
+            data: { activityId: '@Model.activityFormModel.id' }
+        }).done(function (htmlResponse) {
+
+            $.ajax({
+                url: '@Url.Action("genPdfApprove", "Documents")',
+                data: {
+                    GridHtml: htmlResponse,
+                    statusId: '',
+                    activityId: '@Model.activityFormModel.id',
+                },
+                dataType: "json",
+                type: 'POST',
+            }).done(function (response) {
+                $("#WaitDialog").hide();
+                $("#divPreview").html(htmlResponse)
+                $('#previewModal').modal('show');
+            });
+        });
+
+    }
+
+     function genPdf() {
+
+    }
+
+
+
+
+
+    function failureQuery(data) {
+        console.log('fail');
+        console.log(data);
+    }
+
+
+    var fileList = new Array;
+    Dropzone.options.dropzoneJsForm = {
+        maxFiles: 5,
+        acceptedFiles: "",
+        paramName: "file",
+        maxFilesize: 10,
+        //addRemoveLinks: true,
+        init: function () {
+
+        this.on("complete", function (file) {
+            console.log($("#hdActivityId").val());
+            CallImageView($("#hdActivityId").val());
+
+        });
+    }
+
+};
+
+function CallImageView(obj) {
+    console.log(obj);
+        $.ajax({
+        type: 'POST',
+            url:  '@Url.Action("ImageList", "Activity")',
+            data: { activityId: obj}
+    }).done(function (htmlResponse) {
+            $("#divgetimage").html(htmlResponse)
+        });
+}
+
+</script>

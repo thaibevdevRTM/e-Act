@@ -24,6 +24,7 @@ namespace eActForm.BusinessLayer
                                  nameTH = d["nameTH"].ToString(),
                                  nameEN = d["nameEN"].ToString(),
                                  description = d["description"].ToString(),
+                                 master_type_form_id = d["master_type_form_id"].ToString(),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),

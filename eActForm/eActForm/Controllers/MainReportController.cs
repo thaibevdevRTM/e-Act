@@ -19,15 +19,13 @@ namespace eActForm.Controllers
 
         public ActionResult Index(string activityId)
         {
-            MainFormModel mainFormModel = new MainFormModel();
-
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             //==============test=================
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
-            activityFormTBMMKT.idTypeForm = "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4";
-            mainFormModel.activityFormTBMMKT = activityFormTBMMKT; //ใบยืมเงินทดรอง(แผนกการตลาด)
+            activityFormTBMMKT.master_type_form_id = "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4";
             //====END==========test=================
-            
-            mainFormModel.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activityFormTBMMKT.idTypeForm);
+
+            activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activityFormTBMMKT.master_type_form_id, "report");
 
 
             //if (!string.IsNullOrEmpty(activityId))
@@ -37,7 +35,7 @@ namespace eActForm.Controllers
 
             //return PartialView(activity_TBMMKT_Model);  //ไว้ใช้เวลาจะใส่กับ Modal
             //return PartialView();
-            return View(mainFormModel);
+            return View(activity_TBMMKT_Model);
         }
 
        

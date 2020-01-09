@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace eActForm.Controllers
 {
     [LoginExpire]
-    public class SharedMasterFormHeaderCompanyController : Controller
+    public class SharedMasterFormHeaderCompany_InputController : Controller
     {
         public ActionResult headerCompany(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {

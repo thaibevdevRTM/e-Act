@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace eActForm.Controllers
 {
     [LoginExpire]
-    public class SharedMasterFormDetailController : Controller
+    public class SharedMasterFormDetail_InputController : Controller
     {
         public ActionResult textDetailsPay(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {

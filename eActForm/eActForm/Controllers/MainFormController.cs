@@ -1,8 +1,12 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.Models;
+using eActForm.Models;
+using iTextSharp.text;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
@@ -10,13 +14,15 @@ using WebLibrary;
 namespace eActForm.Controllers
 {
     [LoginExpire]
-    public class TBMMKT_ActivityBudgetInputController : Controller
+    public class MainFormController : Controller
     {
-        // GET: TBMMKT_ActivityBudgetInput
-        public ActionResult Index(string activityId, string mode, string typeForm)
-        {
 
+        public ActionResult Index(string activityId, string mode, string typeForm,string master_type_form_id)
+        {
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
+
+            //activityFormTBMMKT.idTypeForm = "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4"; // for test            
             try
             {
 
@@ -41,6 +47,7 @@ namespace eActForm.Controllers
                     mode = "new";
                     string actId = Guid.NewGuid().ToString();
                     activity_TBMMKT_Model.activityFormModel.id = actId;
+                    activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
 
                     //===mock data for first input====
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
@@ -55,7 +62,6 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId = "";
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId = "";
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.BudgetNumber = "";
-                   ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
                     activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
                     activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "";
                     activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = costThemeDetailOfGroupByPriceTBMMKT;
@@ -68,19 +74,23 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrand.GetAllBrand().Where(x => x.no_tbmmkt != "").ToList();
                 activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel().Where(x => x.no_tbmmkt != "").ToList(); ;
                 activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
-                activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetAllQueryGetSelectAllTB_Reg_Subject().Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId && x.master_type_form_id == "").ToList();
+                activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetAllQueryGetSelectAllTB_Reg_Subject().Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId && x.master_type_form_id == activityFormTBMMKT.master_type_form_id).ToList();
                 activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "tbmmkt_ChooseActivityOrDetail").ToList();
                 activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
                 activity_TBMMKT_Model.activityFormModel.mode = mode;
+                activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activityFormTBMMKT.master_type_form_id, "input");
+                activity_TBMMKT_Model.activityFormTBMMKT.companyName = "ทดสอบ จำกัด";
+                activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
 
                 TempData.Keep();
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("TBMMKT_ActivityBudgetInputController => " + ex.Message);
+                ExceptionManager.WriteError("MainFormController[Action:Index] => " + ex.Message);
             }
             return View(activity_TBMMKT_Model);
         }
+
 
         [HttpPost] //post method
         [ValidateAntiForgeryToken] // prevents cross site attacks ต้องใส่   @Html.AntiForgeryToken() ในหน้า เว็บด้วย
@@ -101,10 +111,10 @@ namespace eActForm.Controllers
                 {
                     activity_TBMMKT_Model.activityFormTBMMKT.statusId = int.Parse(statusId);
                 }
-               
-                
+
+
                 int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
-              
+
                 result.Data = activity_TBMMKT_Model.activityFormModel.id;
                 result.Success = true;
             }
@@ -117,7 +127,6 @@ namespace eActForm.Controllers
 
             return Json(result);
         }
-
 
         public JsonResult updateDataIOActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
@@ -138,5 +147,6 @@ namespace eActForm.Controllers
 
             return Json(result);
         }
+
     }
 }
