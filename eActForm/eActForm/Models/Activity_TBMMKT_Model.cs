@@ -97,6 +97,7 @@ namespace eActForm.Models
         public string unitPriceDisplay { get; set; }
         public string unitPriceDisplayReport { get; set; }
         public string QtyName { get; set; }
+        public string remark { get; set; }
     }
 
 
