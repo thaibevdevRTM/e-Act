@@ -22,20 +22,20 @@ namespace eActForm.Controllers
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             //==============test=================
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
-            activityFormTBMMKT.master_type_form_id = "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4";
+            //activityFormTBMMKT.master_type_form_id = "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4";
             //====END==========test=================
 
-            activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activityFormTBMMKT.master_type_form_id, "report");
+            if (!string.IsNullOrEmpty(activityId))
+            {
+                activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+                activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
+                activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+                activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
+            }
 
-
-            //if (!string.IsNullOrEmpty(activityId))
-            //{
-            //    activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-            //}
-
-            //return PartialView(activity_TBMMKT_Model);  //ไว้ใช้เวลาจะใส่กับ Modal
-            //return PartialView();
-            return View(activity_TBMMKT_Model);
+            //return PartialView(activity_TBMMKT_Model);  //ไว้ใช้เวลาจะใส่กับ Modal            
+            //return View(activity_TBMMKT_Model); // test
+            return PartialView(activity_TBMMKT_Model);// production
         }
 
        

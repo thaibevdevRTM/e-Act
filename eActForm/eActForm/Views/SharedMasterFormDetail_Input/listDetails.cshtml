@@ -24,7 +24,7 @@
                             <input type="hidden" value="@item.total" id="costThemeDetailOfGroupByPriceTBMMKT[@index].total" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="form-control textboxcss text-right hidtotal_@index" />
                             @Html.TextBoxFor(x => item.total, "{0:n2}", new { @id = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].total", Name = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].total", @class = "form-control textboxcss text-right txttotal_" + index })
                             <script>
-                               $(".txttotal_@index").blur(function () {
+                                $(".txttotal_@index").blur(function () {
                                     sumall();
                                 });
                             </script>
@@ -54,6 +54,7 @@
 
                     for (i = 0; i < rowCount; i++) {
                         var rowtotal = parseFloat($(".txttotal_" + i.toString()).val().replace(",", ""));
+                        $(".hidtotal_" + i.toString()).val(rowtotal.toFixed(2));
                         totalAll = totalAll + rowtotal;
                     }
 

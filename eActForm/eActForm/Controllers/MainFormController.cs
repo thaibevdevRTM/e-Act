@@ -30,7 +30,7 @@ namespace eActForm.Controllers
                 {
 
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-
+                    activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
                     {
                         activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Brand";
@@ -122,27 +122,7 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-                ExceptionManager.WriteError("insertDataActivityTBMMKT => " + ex.Message);
-            }
-
-            return Json(result);
-        }
-
-        public JsonResult updateDataIOActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
-        {
-            var result = new AjaxResult();
-            try
-            {
-
-                int countSuccess = ActivityFormTBMMKTCommandHandler.updateIOActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
-                result.Data = activity_TBMMKT_Model.activityFormModel.id;
-                result.Success = true;
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = ex.Message;
-                ExceptionManager.WriteError("updateDataIOActivityTBMMKT => " + ex.Message);
+                ExceptionManager.WriteError("insertDataActivityMainForm => " + ex.Message);
             }
 
             return Json(result);

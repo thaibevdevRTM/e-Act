@@ -34,7 +34,13 @@
     @Html.AntiForgeryToken()
     <div id="GridPDF" style="width:97%; margin-left:20px;">
         <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
-
+            @*=================for test====================*@
+            <tr>
+                <td>
+                    @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
+                </td>
+            </tr>
+            @*=========END========for test====================*@
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
                 @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
@@ -46,7 +52,7 @@
     @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
     @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
     @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
-
+    @Html.HiddenFor(x => x.activityFormTBMMKT.master_type_form_id, new { @id = "hdmaster_type_form_id"})
 }
 
 @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
@@ -108,14 +114,19 @@
         if ($("#ddlChannel").val() == "" && $("#ddlBrand").val() == "") { required += "BrandหรือChannel*<br>"; validate = false; }
         if ($("#ddlSubject").val() == "") { required += "เรื่อง*<br>"; validate = false; }
 
-        if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
-        if ($("#txtactivityTel").val() == "") { required += "เบอร์โทรศัพท์*<br>"; validate = false; }
-        if ($("#txtactivityProduct").val() == "") { required += "สินค้า*<br>"; validate = false; }
-        if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
-        if ($("#txtEO").val() == "") { required += "EO*<br>"; validate = false; }
-        if ($("#txtdateActivitySt").val() == "") { required += "วันที่เริ่มกิจกรรม*<br>"; validate = false; }
-        if ($("#txtactivityPeriodEnd").val() == "") { required += "วันที่สิ้นสุดกิจกรรม*<br>"; validate = false; }
-        if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4") {
+
+        }
+        else {
+                //if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
+                //if ($("#txtactivityTel").val() == "") { required += "เบอร์โทรศัพท์*<br>"; validate = false; }
+                //if ($("#txtactivityProduct").val() == "") { required += "สินค้า*<br>"; validate = false; }
+                //if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
+                //if ($("#txtEO").val() == "") { required += "EO*<br>"; validate = false; }
+                //if ($("#txtdateActivitySt").val() == "") { required += "วันที่เริ่มกิจกรรม*<br>"; validate = false; }
+                //if ($("#txtactivityPeriodEnd").val() == "") { required += "วันที่สิ้นสุดกิจกรรม*<br>"; validate = false; }
+                //if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
+        }
 
             if (validate == true) {
                 SubmitData();
@@ -142,7 +153,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
+            url: '@Url.Action("Index", "MainReport")',
             data: { activityId: '@Model.activityFormModel.id' }
         }).done(function (htmlResponse) {
 

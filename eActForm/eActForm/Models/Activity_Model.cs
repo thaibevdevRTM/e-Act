@@ -98,8 +98,8 @@ namespace eActForm.Models
             public decimal? perTotal { get; set; }
             public string createByUserName { get; set; }
             public string regionId { get; set; }
-            public string brandId { get; set; }            
-
+            public string brandId { get; set; }
+            public string master_type_form_id { get; set; }
         }
 
     }

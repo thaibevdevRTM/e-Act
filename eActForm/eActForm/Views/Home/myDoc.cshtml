@@ -136,9 +136,13 @@
                             {
                                 @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.OMT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
-                            else if (Model.typeForm == Activity_Model.activityType.TBM.ToString())
+                            else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && item.master_type_form_id == "")
                             {
                                 @Html.ActionLink(" ", "Index", "TBMMKT_ActivityBudgetInput", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
+                            else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && item.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4")
+                            {
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
                             @if (item.statusId == "2" || item.statusId == "3")
                             {

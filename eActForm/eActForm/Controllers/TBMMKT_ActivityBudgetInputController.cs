@@ -118,25 +118,26 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+        //==============เก็บไว้ก่อน ถ้า On Production ใบยืมเงินทดลองไปแล้วไม่เกิดปัยหาอะไร ตามมาลบทิ้งได้เลย==========20200110 fream=====
+        //public JsonResult updateDataIOActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        //{
+        //    var result = new AjaxResult();
+        //    try
+        //    {
 
-        public JsonResult updateDataIOActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
-        {
-            var result = new AjaxResult();
-            try
-            {
+        //        int countSuccess = ActivityFormTBMMKTCommandHandler.updateIOActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
+        //        result.Data = activity_TBMMKT_Model.activityFormModel.id;
+        //        result.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.Success = false;
+        //        result.Message = ex.Message;
+        //        ExceptionManager.WriteError("updateDataIOActivityTBMMKT => " + ex.Message);
+        //    }
 
-                int countSuccess = ActivityFormTBMMKTCommandHandler.updateIOActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
-                result.Data = activity_TBMMKT_Model.activityFormModel.id;
-                result.Success = true;
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = ex.Message;
-                ExceptionManager.WriteError("updateDataIOActivityTBMMKT => " + ex.Message);
-            }
-
-            return Json(result);
-        }
+        //    return Json(result);
+        //}
+        //=====END=========เก็บไว้ก่อน ถ้า On Production ใบยืมเงินทดลองไปแล้วไม่เกิดปัยหาอะไร ตามมาลบทิ้งได้เลย==========20200110 fream=====
     }
 }
