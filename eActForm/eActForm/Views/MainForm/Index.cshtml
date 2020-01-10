@@ -47,23 +47,9 @@
     @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
     @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
 
-    <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px; margin-left:20px;">
-        <div class="form-group">
-            <label class="control-label col-md-2 col-xs-12">
-                เอกสารแนบ :
-            </label>
-
-            <div class="col-md-10 col-xs-12">
-                <div class="row">
-                    @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.descAttach, new { @class = "form-control textboxcss", @id = "txtdescAttach" })
-                </div>
-            </div>
-        </div>
-    </div>
-
 }
 
-@*@RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")*@
+@RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
 
 <div style="height:5px;">
 

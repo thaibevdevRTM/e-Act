@@ -1,4 +1,4 @@
-﻿@*@model eActForm.Models.Activity_TBMMKT_Model*@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
 
 <tr style="">
     <td>
@@ -6,37 +6,79 @@
             <table style="width: 100%;" id="tabelHeaderDetails" runat="server">
                 <tr>
                     <td>
-                        &nbsp;เรียน&nbsp;........................
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        &nbsp;ชื่องาน&nbsp;....................... &nbsp;EO&nbsp;.......................&nbsp;IO&nbsp;.......................
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        &nbsp;เพื่อ&nbsp;.......................
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        &nbsp;ชื่อผู้ขอยืม&nbsp;.......................&nbsp;ตำแหน่ง&nbsp;.......................
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        &nbsp;จำนวนเงิน&nbsp;.......................&nbsp;(.......................)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        &nbsp;ต้องการเช็ควันที่&nbsp;.......................&nbsp;(ล่วงหน้า 5 วัน)
-                    </td>
-                </tr>
-                <tr>
-                    <td style="">
-                        &nbsp;เคลียร์เงินทดรองในวันที่&nbsp;.......................&nbsp;(ไม่เกิน 12 วันหลังจบงาน)
+                        <div class="form-group">
+
+                            <label class="control-label col-md-2 col-xs-12">
+                                ชื่องาน :
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.activityFormModel.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", style = "" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xs-12">
+                                <div class="row">
+                                    &nbsp;<br />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-12">
+                                EO :
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "form-control textboxcss", @id = "txtEO", style = "" })
+                                </div>
+                            </div>
+
+                            <label class="control-label col-md-2 col-xs-12">
+                                IO :
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.IO, new { @class = "form-control textboxcss", @id = "txtIO", style = "" })
+                                </div>
+                            </div>
+                            <label class="control-label col-md-2 col-xs-12">
+                                ต้องการเช็ควันที่ :
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "", placeholder = "ล่วงหน้า 5 วัน" })
+                                </div>
+                            </div>
+
+                            <label class="control-label col-md-2 col-xs-12">
+                                เคลียร์เงินทดรองในวันที่ :
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "", placeholder = "ไม่เกิน 12 วันหลังจบงาน" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+
+                            <label class="control-label col-md-2 col-xs-12">
+                                เพื่อ :
+                            </label>
+
+                            <div class="col-md-10 col-xs-12">
+                                <div class="row">
+                                    @Html.TextAreaFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </table>

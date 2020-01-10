@@ -56,6 +56,7 @@ namespace eActForm.Models
         public string activityProduct { get; set; }
         public string activityTel { get; set; }
         public string EO { get; set; }
+        public string IO { get; set; }
         public string descAttach { get; set; }
         public Boolean delFlag { get; set; }
         public DateTime? createdDate { get; set; }

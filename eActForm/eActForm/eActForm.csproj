@@ -223,6 +223,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetSubject.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryOtherMaster.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_company.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_type_form.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_type_form_detail.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityByIdTBMMKT.cs" />
@@ -273,6 +274,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Master_Company_Model.cs" />
     <Compile Include="Models\Master_type_form_Model.cs" />
     <Compile Include="Models\Master_type_form_detail_Model.cs" />
     <Compile Include="Models\ActBaseModel.cs" />
