@@ -182,11 +182,11 @@
                         ประเภทกิจกรรม<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
-                   {
+                       @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
+                       {
                        @class = "form-control textboxcss",
                        id = "ddlTheme"
-                   })
+                       })
                     </div>
                 </div>
             </div>

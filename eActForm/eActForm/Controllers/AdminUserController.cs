@@ -1,7 +1,9 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -43,15 +45,33 @@ namespace eActForm.Controllers
                 {
                     foreach (var item in model.chkProductType)
                     {
-                        if (model.custLi == null)
+                        if (model.companyList[0] == @ConfigurationManager.AppSettings["companyId_MT"] || 
+                            model.companyList[0] == @ConfigurationManager.AppSettings["companyId_TBM"])
                         {
-                            AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item);
+                            if (model.custLi == null)
+                            {
+                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item);
+                            }
+                            else
+                            {
+                                foreach (var itemCust in model.custLi)
+                                {
+                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], itemCust, item);
+                                }
+                            }
                         }
                         else
                         {
-                            foreach (var itemCust in model.custLi)
+                            if (model.regionList == null)
                             {
-                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], itemCust, item);
+                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item);
+                            }
+                            else
+                            {
+                                foreach (var region in model.regionList)
+                                {
+                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], region, item);
+                                }
                             }
                         }
                     }
@@ -73,17 +93,20 @@ namespace eActForm.Controllers
             try
             {
                 userModel.userLists = AdminUserAppCode.getUserRoleByEmpId(empId);
-                userModel.customerLists = AdminUserAppCode.getcustomerRoleByEmpId(empId);
+                var customerLists = AdminUserAppCode.getcustomerRoleByEmpId(empId);
+                userModel.customerLists = customerLists.Where(x => x.cusId != "").ToList();
+                userModel.regionList = QueryGetAllRegion.getRegoinByEmpId(empId);
                 var resultData = new
                 {
                     userLists = userModel.userLists,
+                    regionList = userModel.regionList,
                     customerLists = userModel.customerLists.GroupBy(grp => grp.cusId).Select(group => new
                     {
                         cusId = group.First().cusId,
                         customerName = group.First().customerName
                     }).OrderBy(x => x.customerName).ToList(),
-                    productTypeList = userModel.customerLists,
-                    companyId = userModel.customerLists.Any()? userModel.customerLists.FirstOrDefault().companyId: userModel.userLists.FirstOrDefault().companyId,
+                    productTypeList = customerLists,
+                    companyId = customerLists.Any()? customerLists.FirstOrDefault().companyId: customerLists.FirstOrDefault().companyId,
                     empId = userModel.userLists.FirstOrDefault().empId
                 };
                 result.Data = resultData;

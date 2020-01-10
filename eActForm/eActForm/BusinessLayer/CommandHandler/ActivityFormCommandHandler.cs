@@ -23,15 +23,15 @@ namespace eActForm.BusinessLayer
             {
 
                 model.activityFormModel.id = activityId;
-                model.activityFormModel.documentDate = DateTime.ParseExact(model.activityFormModel.dateDoc, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                model.activityFormModel.documentDate = BaseAppCodes.converStrToDate(model.activityFormModel.dateDoc);
                 model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodSt) ? (DateTime?)null :
-                   DateTime.ParseExact(model.activityFormModel.str_activityPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                  BaseAppCodes.converStrToDate(model.activityFormModel.str_activityPeriodSt);
                 model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodEnd) ? (DateTime?)null :
-                   DateTime.ParseExact(model.activityFormModel.str_activityPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                   BaseAppCodes.converStrToDate(model.activityFormModel.str_activityPeriodEnd);
                 model.activityFormModel.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null :
-                   DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                   BaseAppCodes.converStrToDate(model.activityFormModel.str_costPeriodSt);
                 model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
-                   DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                   BaseAppCodes.converStrToDate(model.activityFormModel.str_costPeriodEnd);
                 model.activityFormModel.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
                 model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
                 model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
