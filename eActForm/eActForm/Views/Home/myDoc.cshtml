@@ -117,7 +117,7 @@
                         <td width="200">
                             @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                             {
-                                <a href="javascript:" onclick="return callPreviewApprove('@item.id','@item.statusId','@Model.typeForm');">
+                                <a href="javascript:" onclick="return callPreviewApprove('@item.id','@item.statusId','@Model.typeForm','@item.master_type_form_id');">
                                     <i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
                                 </a>
                             }
@@ -214,7 +214,7 @@
         $("#WaitDialog").show();
     }
 
-    function callPreviewApprove(actId, statusId, typeForm) {
+    function callPreviewApprove(actId, statusId, typeForm, master_type_form_id) {
 
         if (typeForm == '@Activity_Model.activityType.MT.ToString()' || typeForm == '@Activity_Model.activityType.OMT.ToString()') {
             $.ajax({
@@ -222,6 +222,18 @@
                 url: '@Url.Action("previewApprove", "Approve")',
                 data: {
                     actId: actId,
+                    typeForm: typeForm
+                }
+            }).done(function (htmlResponse) {
+                genPdf(actId, statusId, htmlResponse);
+            });
+        }
+        else if (master_type_form_id == '8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4') {
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Index", "MainReport")',
+                data: {
+                    activityId: actId,
                     typeForm: typeForm
                 }
             }).done(function (htmlResponse) {

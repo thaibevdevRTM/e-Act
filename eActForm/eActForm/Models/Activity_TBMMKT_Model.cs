@@ -17,7 +17,8 @@ namespace eActForm.Models
         public List<TB_Reg_Subject> tB_Reg_Subject { get; set; }
         public string createdByName { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
-        public decimal? totalCostThisActivity { get; set; }        
+        public decimal? totalCostThisActivity { get; set; }
+        public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
     }
 
     public class ActivityFormTBMMKT : ActivityForm

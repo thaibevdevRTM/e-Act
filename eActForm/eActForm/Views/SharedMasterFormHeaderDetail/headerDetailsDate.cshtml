@@ -1,8 +1,13 @@
-﻿@*@model eActForm.Models.Activity_TBMMKT_Model*@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using System.Globalization;
+@{
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+}
 <tr>
     <td style="">
         <div style="width: 100%; align-content: center; text-align: center;">
-            วันที่ ..............................
+            วันที่ @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
         </div>
     </td>
 </tr>
