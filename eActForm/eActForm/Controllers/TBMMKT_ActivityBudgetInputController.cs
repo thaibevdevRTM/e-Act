@@ -68,7 +68,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrand.GetAllBrand().Where(x => x.no_tbmmkt != "").ToList();
                 activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel().Where(x => x.no_tbmmkt != "").ToList(); ;
                 activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
-                activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetAllQueryGetSelectAllTB_Reg_Subject().Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId).ToList();
+                activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetAllQueryGetSelectAllTB_Reg_Subject().Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId && x.master_type_form_id == "").ToList();
                 activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "tbmmkt_ChooseActivityOrDetail").ToList();
                 activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
                 activity_TBMMKT_Model.activityFormModel.mode = mode;
@@ -118,25 +118,26 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+        //==============เก็บไว้ก่อน ถ้า On Production ใบยืมเงินทดลองไปแล้วไม่เกิดปัยหาอะไร ตามมาลบทิ้งได้เลย==========20200110 fream=====
+        //public JsonResult updateDataIOActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        //{
+        //    var result = new AjaxResult();
+        //    try
+        //    {
 
-        public JsonResult updateDataIOActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
-        {
-            var result = new AjaxResult();
-            try
-            {
+        //        int countSuccess = ActivityFormTBMMKTCommandHandler.updateIOActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
+        //        result.Data = activity_TBMMKT_Model.activityFormModel.id;
+        //        result.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.Success = false;
+        //        result.Message = ex.Message;
+        //        ExceptionManager.WriteError("updateDataIOActivityTBMMKT => " + ex.Message);
+        //    }
 
-                int countSuccess = ActivityFormTBMMKTCommandHandler.updateIOActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
-                result.Data = activity_TBMMKT_Model.activityFormModel.id;
-                result.Success = true;
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = ex.Message;
-                ExceptionManager.WriteError("updateDataIOActivityTBMMKT => " + ex.Message);
-            }
-
-            return Json(result);
-        }
+        //    return Json(result);
+        //}
+        //=====END=========เก็บไว้ก่อน ถ้า On Production ใบยืมเงินทดลองไปแล้วไม่เกิดปัยหาอะไร ตามมาลบทิ้งได้เลย==========20200110 fream=====
     }
 }
