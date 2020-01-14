@@ -2412,7 +2412,6 @@
     <Content Include="Views\SharedMasterFormDetail\textDetailsBlankRows.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\showSignatureV1.cshtml" />
     <Content Include="Views\MainForm\Index.cshtml" />
-    <Content Include="Views\MainReport\headerCompany.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany_Input\headerCompany.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\listDetails.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\showSignatureV1.cshtml" />

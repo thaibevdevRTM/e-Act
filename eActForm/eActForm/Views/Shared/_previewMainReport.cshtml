@@ -2,19 +2,27 @@
 @model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.Models;
 
-<div id="divForm" style="width:97%; margin-left:20px;">
+<div id="divForm" style="width:97%;">
     <style>
-        .font16{
-            font-size:16px;
+        .fontDocV1 {
+            font-size: 18px;
         }
-        .font20 {
-            font-size: 20px;
+
+        .fontDocV2 {
+            font-size: 22px;
+        }
+
+        .paddingFormV1 {
+            width: 100%;
+            padding-left: 35px;
         }
     </style>
-    <table style="width: 100%;" id="tabel_report" runat="server">
-        @foreach (var item in Model.master_Type_Form_Detail_Models)
-        {
-            @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
-        }
-    </table>
+    <div class="paddingFormV1">
+        <table style="width: 100%;" id="tabel_report" runat="server">
+            @foreach (var item in Model.master_Type_Form_Detail_Models)
+            {
+                @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+            }
+        </table>
+    </div>
 </div>
