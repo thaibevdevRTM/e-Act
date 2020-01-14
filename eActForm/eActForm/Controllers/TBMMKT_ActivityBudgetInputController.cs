@@ -13,10 +13,10 @@ namespace eActForm.Controllers
     public class TBMMKT_ActivityBudgetInputController : Controller
     {
         // GET: TBMMKT_ActivityBudgetInput
-        public ActionResult Index(string activityId, string mode, string typeForm)
+        public ActionResult Index(string activityId, string mode, string typeForm, string master_type_form_id)
         {
-
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
             try
             {
 
@@ -24,7 +24,7 @@ namespace eActForm.Controllers
                 {
 
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-
+                    activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
                     {
                         activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Brand";
@@ -41,7 +41,7 @@ namespace eActForm.Controllers
                     mode = "new";
                     string actId = Guid.NewGuid().ToString();
                     activity_TBMMKT_Model.activityFormModel.id = actId;
-
+                    activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
                     //===mock data for first input====
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
                     for (int i = 0; i < 14; i++)
@@ -54,8 +54,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId = "";
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId = "";
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId = "";
-                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.BudgetNumber = "";
-                   ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.BudgetNumber = "";                   
                     activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
                     activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "";
                     activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = costThemeDetailOfGroupByPriceTBMMKT;
@@ -68,7 +67,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrand.GetAllBrand().Where(x => x.no_tbmmkt != "").ToList();
                 activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel().Where(x => x.no_tbmmkt != "").ToList(); ;
                 activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
-                activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetAllQueryGetSelectAllTB_Reg_Subject().Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId && x.master_type_form_id == "").ToList();
+                activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetAllQueryGetSelectAllTB_Reg_Subject().Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId && x.master_type_form_id == "488F7C0D-8B59-4BDE-90E4-F157BFF67829").ToList();
                 activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "tbmmkt_ChooseActivityOrDetail").ToList();
                 activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
                 activity_TBMMKT_Model.activityFormModel.mode = mode;

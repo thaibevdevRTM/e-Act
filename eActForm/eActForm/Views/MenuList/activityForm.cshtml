@@ -19,7 +19,7 @@
             }
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] || UtilsAppCode.Session.User.isAdminTBM)
             {
-                <li>@Html.ActionLink(" Activity Form TBM", "Index", "TBMMKT_ActivityBudgetInput", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)</li>
+                <li>@Html.ActionLink(" Activity Form TBM", "Index", "TBMMKT_ActivityBudgetInput", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = "488F7C0D-8B59-4BDE-90E4-F157BFF67829" }, null)</li>
             }
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] || UtilsAppCode.Session.User.isAdminTBM)
             {
