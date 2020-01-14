@@ -5,17 +5,26 @@
     var dearGroup = "";
     var signBook = "";
     var signBookPos = "";
-    foreach (var item in Model.approveFlowDetail)
+    if (Model.approveFlowDetail != null)
     {
-        if (item.approveGroupId == "7C308168-B155-4684-A2CD-906EC94AA49C")
+        foreach (var item in Model.approveFlowDetail)
         {
-            dearGroup = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
+            if (item.approveGroupId == "7C308168-B155-4684-A2CD-906EC94AA49C")
+            {
+                dearGroup = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
+            }
+            if (item.approveGroupId == "CA8C71D3-F975-401E-A095-86E2E11C8014")
+            {
+                signBook = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
+                signBookPos = item.empPositionTitleTH;
+            }
         }
-        if (item.approveGroupId == "CA8C71D3-F975-401E-A095-86E2E11C8014")
-        {
-            signBook = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
-            signBookPos = item.empPositionTitleTH;
-        }
+    }
+    else
+    {
+        dearGroup = "";
+        signBook = "";
+        signBookPos = "";
     }
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
@@ -23,40 +32,40 @@
 <tr style="">
     <td>
         <div id="divHeaderDetails" runat="server" style="width: 100%;">
-            <table style="width: 100%;" id="tabelHeaderDetails" runat="server">
+            <table style="width: 100%;" id="tabelHeaderDetails" runat="server" class="font16">
                 <tr>
                     <td>
-                        &nbsp;เรียน&nbsp;<u>@dearGroup</u>
+                        &nbsp;เรียน&nbsp;@dearGroup
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        &nbsp;ชื่องาน&nbsp;<u>@Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "lblActivityName" })</u> &nbsp;EO&nbsp;<u>@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "lblEO" })</u>&nbsp;IO&nbsp;<u>@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.IO, new { @class = "", @id = "lblIO" })</u>
+                        &nbsp;ชื่องาน&nbsp;@Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "lblActivityName" })&nbsp;EO&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "lblEO" })&nbsp;IO&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.IO, new { @class = "", @id = "lblIO" })
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        &nbsp;เพื่อ&nbsp;<u>@Html.Raw(Model.activityFormModel.objective.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))</u>
+                        &nbsp;เพื่อ&nbsp;@Html.Raw(Model.activityFormModel.objective.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        &nbsp;ชื่อผู้ขอยืม&nbsp;<u>@signBook</u>&nbsp;ตำแหน่ง&nbsp;<u>@signBookPos</u>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ชื่อผู้ขอยืม&nbsp;@signBook&nbsp;ตำแหน่ง&nbsp;@signBookPos
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        &nbsp;จำนวนเงิน&nbsp;<u>@Model.totalCostThisActivity.Value.ToString("#,##0.00")</u>&nbsp;(<u>@DocumentsAppCode.ThaiBahtText(Model.totalCostThisActivity.Value.ToString())</u>)
-</td>
+                        &nbsp;จำนวนเงิน&nbsp;@Model.totalCostThisActivity.Value.ToString("#,##0.00")&nbsp;(@DocumentsAppCode.ThaiBahtText(Model.totalCostThisActivity.Value.ToString()))
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        &nbsp;ต้องการเช็ควันที่&nbsp;<u>@Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)</u>&nbsp;(ล่วงหน้า 5 วัน)
+                        &nbsp;ต้องการเช็ควันที่&nbsp;@Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)&nbsp;(ล่วงหน้า 5 วัน)
                     </td>
                 </tr>
                 <tr>
                     <td style="">
-                        &nbsp;เคลียร์เงินทดรองในวันที่&nbsp;<u>@Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy", DateEnglish)</u>&nbsp;(ไม่เกิน 12 วันหลังจบงาน)
+                        &nbsp;เคลียร์เงินทดรองในวันที่&nbsp;@Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy", DateEnglish)&nbsp;(ไม่เกิน 12 วันหลังจบงาน)
                     </td>
                 </tr>
             </table>
