@@ -39,8 +39,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        &nbsp;ชื่องาน&nbsp;@Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "lblActivityName" })&nbsp;EO&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "lblEO" })&nbsp;IO&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.IO, new { @class = "", @id = "lblIO" })
+                    <td>                        
+                        <table style="border-color:none;">
+                            <tr>
+                                <td>&nbsp;ชื่องาน</td>
+                                <td style="width:400px;">&nbsp;@Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "lblActivityName" })</td>
+                                <td>&nbsp;EO</td>
+                                <td>&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "lblEO" })</td>
+                                <td>&nbsp;IO</td>
+                                <td>&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.IO, new { @class = "", @id = "lblIO" })</td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr>
@@ -49,8 +58,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ชื่อผู้ขอยืม&nbsp;@signBook&nbsp;ตำแหน่ง&nbsp;@signBookPos
+                    <td>                        
+                        <table style="border-color:none;">
+                            <tr>
+                                <td>&nbsp;ชื่อผู้ขอยืม</td>
+                                <td style="width:385px;">&nbsp;@signBook</td>
+                                <td>&nbsp;ตำแหน่ง</td>
+                                <td colspan="3">&nbsp;@signBookPos</td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr>
@@ -60,7 +76,14 @@
                 </tr>
                 <tr>
                     <td>
-                        &nbsp;ต้องการเช็ควันที่&nbsp;@Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)&nbsp;(ล่วงหน้า 5 วัน)
+                        <table style="border-color:none;">
+                            <tr>
+                                <td>&nbsp;ชื่อผู้ต้องการเช็ควันที่</td>
+                                <td style="width:385px;">&nbsp;@Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
+                                <td>&nbsp;ตำแหน่ง</td>
+                                <td colspan="3">&nbsp;@signBookPos</td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr>
