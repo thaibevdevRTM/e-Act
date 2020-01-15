@@ -35,60 +35,68 @@
             <table style="width: 100%;" id="tabelHeaderDetails" runat="server" class="fontDocV1">
                 <tr>
                     <td>
-                        &nbsp;เรียน&nbsp;@dearGroup
-                    </td>
-                </tr>
-                <tr>
-                    <td>                        
-                        <table style="border-color:none;">
+                        <table style="border-color:none;" class="fontDocV1">
                             <tr>
-                                <td>&nbsp;ชื่องาน</td>
-                                <td style="width:400px;">&nbsp;@Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "lblActivityName" })</td>
-                                <td>&nbsp;EO</td>
-                                <td>&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "lblEO" })</td>
-                                <td>&nbsp;IO</td>
-                                <td>&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.IO, new { @class = "", @id = "lblIO" })</td>
+                                <td style="width:65px;">&nbsp;เรียน</td>
+                                <td style="width:585px; text-align:left;">@dearGroup</td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        &nbsp;เพื่อ&nbsp;@Html.Raw(Model.activityFormModel.objective.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
-                    </td>
-                </tr>
-                <tr>
-                    <td>                        
-                        <table style="border-color:none;">
+                        <table style="border-color:none;" class="fontDocV1">
                             <tr>
-                                <td>&nbsp;ชื่อผู้ขอยืม</td>
-                                <td style="width:385px;">&nbsp;@signBook</td>
-                                <td>&nbsp;ตำแหน่ง</td>
-                                <td colspan="3">&nbsp;@signBookPos</td>
+                                <td style="width:65px;vertical-align:top;">&nbsp;วัตถุประสงค์</td>
+                                <td style="width:585px;vertical-align:top;" colspan="5">@Html.Raw(Model.activityFormModel.objective.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))</td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        &nbsp;จำนวนเงิน&nbsp;@Model.totalCostThisActivity.Value.ToString("#,##0.00")&nbsp;(@DocumentsAppCode.ThaiBahtText(Model.totalCostThisActivity.Value.ToString()))
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;">
+                        <table style="border-color:none;" class="fontDocV1">
                             <tr>
-                                <td>&nbsp;ชื่อผู้ต้องการเช็ควันที่</td>
-                                <td style="width:385px;">&nbsp;@Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
-                                <td>&nbsp;ตำแหน่ง</td>
-                                <td colspan="3">&nbsp;@signBookPos</td>
+                                <td style="width:65px;">&nbsp;ชื่องาน</td>
+                                <td style="width:245px;">@Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "lblActivityName" })</td>
+                                <td style="width:20px;">&nbsp;EO</td>
+                                <td style="width:150px;">&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "lblEO" })</td>
+                                <td style="width:20px;">&nbsp;IO</td>
+                                <td style="width:150px;">&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.IO, new { @class = "", @id = "lblIO" })</td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <tr>
-                    <td style="">
-                        &nbsp;เคลียร์เงินทดรองในวันที่&nbsp;@Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy", DateEnglish)&nbsp;(ไม่เกิน 12 วันหลังจบงาน)
+                    <td>
+                        <table style="border-color:none;" class="fontDocV1">
+                            <tr>
+                                <td style="width:65px;">&nbsp;ชื่อผู้ขอยืม</td>
+                                <td style="width:245px;">@signBook</td>
+                                <td style="width:50px;">&nbsp;ตำแหน่ง</td>
+                                <td style="width:290px;">&nbsp;@signBookPos</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="border-color:none;" class="fontDocV1">
+                            <tr>
+                                <td style="width:310px;">&nbsp;ต้องการเช็ค&nbsp;&nbsp;วันที่@Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
+                                <td style="width:340px;">&nbsp;เคลียร์เงินทดรองในวันที่&nbsp;@Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="border-color:none;" class="fontDocV1">
+                            <tr>
+                                <td style="width:65px;">&nbsp;จำนวนเงิน</td>
+                                <td style="width:585px;">@Model.totalCostThisActivity.Value.ToString("#,##0.00")&nbsp;(@DocumentsAppCode.ThaiBahtText(Model.totalCostThisActivity.Value.ToString()))</td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
             </table>
