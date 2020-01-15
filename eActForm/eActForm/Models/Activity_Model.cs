@@ -98,8 +98,8 @@ namespace eActForm.Models
             public decimal? perTotal { get; set; }
             public string createByUserName { get; set; }
             public string regionId { get; set; }
-            public string brandId { get; set; }            
-
+            public string brandId { get; set; }
+            public string master_type_form_id { get; set; }
         }
 
     }
@@ -178,7 +178,7 @@ namespace eActForm.Models
         public Boolean chkAddIO { get; set; }
         public string actIO { get; set; }
         public string actClaim { get; set; }
-        public string idTypeForm { get; set; }
+        public string master_type_form_id { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel
