@@ -268,6 +268,7 @@ namespace eActForm.BusinessLayer
                                  empFNameTH = dr["empFNameTH"].ToString(),
                                  empLNameTH = dr["empLNameTH"].ToString(),
                                  empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
+                                 approveGroupId = dr["approveGroupId"].ToString(),//เฟรมเพิ่ม 20200113 เพิ่มapproveGroupId ไว้ใช้ดึงชือ่ผู้อนุมัติแสดงบนหนังสือฟอร์ม
                                  approveGroupName = dr["approveGroupName"].ToString(),
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
                                  isShowInDoc = (bool)dr["showInDoc"],
