@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Configuration;
+using System.Globalization;
+
 namespace eActForm.BusinessLayer.Appcodes
 {
     public class BaseAppCodes
@@ -83,5 +85,11 @@ namespace eActForm.BusinessLayer.Appcodes
                     return false;
             }
         }
+
+        public static DateTime converStrToDate(string p_date)
+        {
+            return DateTime.ParseExact(p_date, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+        }
+
     }
 }

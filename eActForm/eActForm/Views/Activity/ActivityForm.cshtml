@@ -182,11 +182,11 @@
                         ประเภทกิจกรรม<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
-                   {
+                       @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
+                       {
                        @class = "form-control textboxcss",
                        id = "ddlTheme"
-                   })
+                       })
                     </div>
                 </div>
             </div>
@@ -834,7 +834,7 @@
         if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
         if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม *<br>"; validate = false; }
         if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
-        if ($("#txtdateActivitySt").val() == "" && $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; }
+        if ($("#txtdateActivitySt").val() == "" || $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivityEnd").focus();}
         else {
             var startDate =  $("#txtdateActivitySt").val().split("-");
             var endDate = $("#txtdateActivityEnd").val().split("-");

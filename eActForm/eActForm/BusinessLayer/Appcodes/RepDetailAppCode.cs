@@ -233,12 +233,24 @@ namespace eActForm.BusinessLayer
                 }
                 else
                 {
-                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDateAndEmp"
-                    , new SqlParameter[] {
+                    if (typeForm == Activity_Model.activityType.MT.ToString())
+                    {
+                        ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailByCreateDateAndEmp"
+                        , new SqlParameter[] {
                         new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
                         ,new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
-                    });
+                        });
+                    }
+                    else
+                    {
+                        ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportDetailOMTByCreateDateAndEmp"
+                        , new SqlParameter[] {
+                        new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
+                        ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null).AddDays(1))
+                        ,new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
+                        });
+                    }
                 }
 
                 return dataTableToRepDetailModels(ds);
