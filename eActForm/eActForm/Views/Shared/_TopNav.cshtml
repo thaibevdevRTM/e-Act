@@ -12,7 +12,9 @@
             @{
                 var src = "http://webapp8.apps.thaibev.com/files/eCheck/Photos/" + @UtilsAppCode.Session.User.empId + ".jpg";
             }
+
             <ul class="nav navbar-nav navbar-right">
+                
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <img src=@src alt="">@UtilsAppCode.Session.User.empFNameTH @UtilsAppCode.Session.User.empLNameTH
@@ -26,7 +28,7 @@
                                 <span>Settings</span>
                             </a>
                         </li>
-                        <li><a href="@Url.Action("contact","home")">Help</a></li>
+                        <li><a class="glyphicon glyphicon-envelope" href="@Url.Action("contact","home")">Help</a></li>
                         <li><a href="@Url.Action("logOut","home")"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                     </ul>
                 </li>

@@ -17,7 +17,7 @@ namespace eActForm.Controllers
         {
             AdminUserModel adminUserModel = new AdminUserModel();
             adminUserModel.userLists = AdminUserAppCode.getAllUserRole();
-
+            adminUserModel.getCompany = AdminUserAppCode.getCompany();
 
             return View(adminUserModel);
 
