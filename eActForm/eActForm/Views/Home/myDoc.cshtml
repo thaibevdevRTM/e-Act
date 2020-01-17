@@ -6,7 +6,7 @@
 <script>
     function checkDelete(actId,statusId) {
         var msg = "";
-        if (statusId == "1" || statusId == "6" || statusId == "5") {
+        if (statusId == "1" || (statusId == "6" && ("@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true" || "@UtilsAppCode.Session.User.isAdmin.ToString().ToLower()" == "true" || "@UtilsAppCode.Session.User.isSuperAdmin.ToString().ToLower()" == "true")) || (statusId == "5" && ("@UtilsAppCode.Session.User.empCompanyId"=="3030" || "@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true" || "@UtilsAppCode.Session.User.isAdmin.ToString().ToLower()" == "true" || "@UtilsAppCode.Session.User.isAdminTBM.ToString().ToLower()" == "true" || "@UtilsAppCode.Session.User.isSuperAdmin.ToString().ToLower()" == "true"))) {
             // can be delete
             msg = "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
         }
