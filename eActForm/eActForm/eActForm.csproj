@@ -242,6 +242,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminUserController.cs" />
     <Compile Include="Controllers\AjaxResult.cs" />
+    <Compile Include="Controllers\API\GetDataMainFormController.cs" />
     <Compile Include="Controllers\API\ApiApproveController.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />

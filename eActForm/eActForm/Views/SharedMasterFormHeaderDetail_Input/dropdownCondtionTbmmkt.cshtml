@@ -1,4 +1,5 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer
 <tr>
     <td>
         <div class="form-group" style="margin-top:-20px;">
@@ -57,7 +58,8 @@
 
                                     $("#ddlChannelOrBrand").change(function () {
                                         processDropdownConditionFlow();
-                                    });
+                        });
+
                     </script>
 
                 </div>
@@ -91,6 +93,50 @@
                         id = "ddlSubject"
                     })
                 </div>
+                <script>
+                    $('#ddlChannel').change(function () {
+                        bindDropdownSubject()
+                    });
+                    $('#ddlBrand').change(function () {
+                        bindDropdownSubject()
+                    });
+                    function bindDropdownSubject() {
+                        var valDropdown = '';
+                        if ($('#ddlChannel').show()) {
+                            valDropdown = $('#ddlChannel').val();
+                        } else {
+                            valDropdown = $('#ddlBrand').val();
+                        }
+                        var dataToBeSend = {
+                            idBrandOrChannel: valDropdown
+                            , master_type_form_id: "@Model.activityFormTBMMKT.master_type_form_id"
+                            , companyId: "@UtilsAppCode.Session.User.empCompanyId"
+                        };
+
+                        var ddlSubject = $("#ddlSubject");
+                        $.ajax('@Url.Action("GetDataSubjectByChanelOrBrand", "GetDataMainForm")',
+                            {
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(dataToBeSend),
+                                dataType: 'json',
+                                type: "POST",
+                                success: function (response) {
+                                    if (response.Data.tB_Reg_Subject.length > 0) {
+                                        $("#ddlSubject option[value !='']").remove();
+                                        $.each(response.Data.tB_Reg_Subject, function () {
+                                            ddlSubject.append($("<option></option>").val(this['id']).html(this['nameTH']));
+                                        });
+                                    }
+                                    else {
+
+                                    }
+                                },
+                                error: function (data) {
+                                    alert("Error Get Subject.");
+                                }
+                            });
+                    }
+                </script>
             </div>
             <label class="control-label col-md-1 col-xs-12"></label>
         </div>
