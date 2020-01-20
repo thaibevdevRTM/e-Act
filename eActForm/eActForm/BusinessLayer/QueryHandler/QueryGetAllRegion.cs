@@ -3,6 +3,7 @@ using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using WebLibrary;
@@ -36,6 +37,30 @@ namespace eActForm.BusinessLayer.QueryHandler
             {
                 ExceptionManager.WriteError("getAllPrice => " + ex.Message);
                 return new List<TB_Act_Region_Model>();
+            }
+        }
+
+        public static List<TB_Act_Region_Model> getRegoinByEmpId(string empId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getRegoinByEmpId"
+                    , new SqlParameter[] { new SqlParameter("@empId", empId) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new TB_Act_Region_Model()
+                             {
+                                 id = dr["id"].ToString(),
+                                 name = dr["name"].ToString(),
+                                 nameShot = dr["nameShot"].ToString(),
+                                 descEn = dr["descEn"].ToString(),
+                                 descTh = dr["descTh"].ToString(),
+                             }).ToList();
+
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getcustomerRoleByEmpId >> " + ex.Message);
             }
         }
     }

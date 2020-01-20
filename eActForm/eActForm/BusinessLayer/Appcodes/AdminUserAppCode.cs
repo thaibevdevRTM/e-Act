@@ -142,6 +142,7 @@ namespace eActForm.BusinessLayer.Appcodes
             }
         }
 
+
         public static List<TB_Act_Other_Model> getCompany()
         {
             return QueryOtherMaster.getOhterMaster("company", "");
