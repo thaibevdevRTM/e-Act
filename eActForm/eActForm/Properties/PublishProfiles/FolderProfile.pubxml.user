@@ -6324,6 +6324,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/MainForm/Index.cshtml">
       <publishTime>01/20/2020 13:02:43</publishTime>
     </File>
+    <File Include="Views/MainForm/Index.cshtml">
+      <publishTime>01/20/2020 10:10:11</publishTime>
+    </File>
     <File Include="Views/MainReport/Index.cshtml">
       <publishTime>01/15/2020 13:02:45</publishTime>
     </File>

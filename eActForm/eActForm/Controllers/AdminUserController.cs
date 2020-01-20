@@ -50,13 +50,13 @@ namespace eActForm.Controllers
                         {
                             if (model.custLi == null)
                             {
-                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item);
+                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item,"");
                             }
                             else
                             {
                                 foreach (var itemCust in model.custLi)
                                 {
-                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], itemCust, item);
+                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], itemCust, item,"");
                                 }
                             }
                         }
@@ -64,13 +64,13 @@ namespace eActForm.Controllers
                         {
                             if (model.regionList == null)
                             {
-                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item);
+                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item,"");
                             }
                             else
                             {
                                 foreach (var region in model.regionList)
                                 {
-                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], region, item);
+                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], "", item, region);
                                 }
                             }
                         }
