@@ -119,10 +119,8 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-        public ActionResult previewApprove(string actId, string typeForm)
+        public ActionResult previewApprove(string actId)
         {
-
-
             Activity_Model activityModel = new Activity_Model();
             try
             {
@@ -130,7 +128,7 @@ namespace eActForm.Controllers
                 activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
                 activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
                 activityModel.productImageList = ImageAppCode.GetImage(actId).Where(x => x.extension != ".pdf").ToList();
-                activityModel.activityFormModel.typeForm = typeForm;
+                activityModel.activityFormModel.typeForm = BaseAppCodes.getactivityTypeByCompanyId(activityModel.activityFormModel.companyId);
             }
             catch (Exception ex)
             {
