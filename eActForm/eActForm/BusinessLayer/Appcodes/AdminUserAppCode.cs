@@ -52,7 +52,7 @@ namespace eActForm.BusinessLayer.Appcodes
         }
 
 
-        public static int insertAuthorized(string empId, string companyId ,string customerId, string productTypeId)
+        public static int insertAuthorized(string empId, string companyId ,string customerId, string productTypeId,string regionId)
         {
             int result = 0;
             try
@@ -63,6 +63,7 @@ namespace eActForm.BusinessLayer.Appcodes
                     ,new SqlParameter("@companyId",companyId)
                     ,new SqlParameter("@customerId",customerId)
                     ,new SqlParameter("@productTypeId",productTypeId)
+                    ,new SqlParameter("@regionId",regionId)
                     ,new SqlParameter("@createdBy",UtilsAppCode.Session.User.empId)
                     });
             }
