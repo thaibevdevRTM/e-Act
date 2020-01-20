@@ -403,6 +403,20 @@ namespace eActForm.BusinessLayer
         {
             try
             {
+                //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
+                Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+                activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
+                var emailTypeTxt = "";
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4")
+                {
+                    emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+                }
+                else
+                {
+                    emailTypeTxt = emailType.ToString().Replace("_", " ");
+                }
+                //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
+
                 string strBody = "";
                 switch (emailType)
                 {
@@ -411,7 +425,7 @@ namespace eActForm.BusinessLayer
                         strBody = string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
                             , item.empPrefix + " " + item.empName //เรียน
                             , AppCode.ApproveStatus.รออนุมัติ.ToString()
-                            , emailType.ToString().Replace("_", " ")
+                            , emailTypeTxt
                             , item.activityName
                             , item.activitySales
                             , item.activityNo
