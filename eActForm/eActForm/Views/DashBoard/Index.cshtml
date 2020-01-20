@@ -17,6 +17,8 @@
                 var linkWebDocument = "";
                 var linkWebWaitApprove = "";
                 var linkWebSuccessApprove = "";
+                var nameCssCreator = "";
+                var nameCssIsApprove = "";
 
                 if (UtilsAppCode.Session.User.isApprove)
                 {
@@ -46,7 +48,30 @@
             {
                 linkWebDocument = "#";
             }
-            <a href="@linkWebDocument">
+            <style>
+                .isDisabled {
+                    color: currentColor;
+                    cursor: default;
+                    text-decoration: none;
+                }
+            </style>
+            @if (UtilsAppCode.Session.User.isCreator)
+            {
+                 nameCssCreator = "";
+            }
+            else
+            {
+                 nameCssCreator = "isDisabled";
+            }
+            @if (UtilsAppCode.Session.User.isApprove)
+            {
+                 nameCssIsApprove = "";
+            }
+            else
+            {
+                 nameCssIsApprove = "isDisabled";
+            }
+            <a href="@linkWebDocument" class="@nameCssCreator">
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="tile-stats">
                         <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
@@ -56,7 +81,7 @@
                     </div>
                 </div>
             </a>
-            <a href="@linkWebWaitApprove">
+            <a href="@linkWebWaitApprove" class="@nameCssIsApprove">
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="tile-stats">
                         <div class="icon"><i class="fa fa-comments-o"></i></div>
