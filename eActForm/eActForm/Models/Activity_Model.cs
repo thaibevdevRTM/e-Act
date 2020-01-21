@@ -179,6 +179,7 @@ namespace eActForm.Models
         public string actIO { get; set; }
         public string actClaim { get; set; }
         public string master_type_form_id { get; set; }
+        public string benefit { get; set; }    
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel

@@ -1,8 +1,69 @@
 ﻿@*@model eActForm.Models.Activity_TBMMKT_Model*@
 <div id="divListDetails" runat="server" style="width: 100%;">
+    <table class="table table-bordered" id="tabelPlaceDetail" runat="server">
+        <tr style="background-color:#E5E2E2;height:25px; ">
+            <th colspan="5" style="text-align :center;">
+                Description of activity  :  รายละเอียดของกิจกรรม ดังนี้
+            </th>
+        </tr>
+        <tr style="height:25px;">
+            <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Place (Country) / สถานที่ (จังหวัด)</th>
+            <th style="width: 35%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">For Project / เพื่อโครงการ</th>
+            <th style="width: 9%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Period /<br /> จำนวนวัน </th>
+            <th style="width: 13%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Departure Date /<br /> วันออกเดินทาง</th>
+            <th style="width: 13%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Arrival Date /<br /> วันที่กลับ </th>
+        </tr>
+        @*@{ var index = 0;}
+        @foreach (var item in Model.PlaceDetailModel)
+        {
+            <tr class="tagCountRowinTable">
+                <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                    PlaceDetailModel[@index].place
+                </td>
+
+                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                     PlaceDetailModel[@index].forProject 
+                </td>
+                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    PlaceDetailModel[@index].period 
+                </td>
+                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                   PlaceDetailModel[@index].departureDate  
+                                  </td>
+                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    PlaceDetailModel[@index].arrivalDate 
+                </td>
+            </tr>
+            index++;
+        }*@
+
+        <tr class="tagCountRowinTable">
+            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                @*PlaceDetailModel[].place*@
+            </td>
+
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                @*PlaceDetailModel[].forProject*@
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                @*PlaceDetailModel[].period*@
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                @*PlaceDetailModel[].departureDate*@
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+               @* PlaceDetailModel[].arrivalDate*@
+            </td>
+        </tr>
+
+    </table>
+
+
+
+@*
     <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabelListDetails" runat="server">
         <tr  style="background-color:#A9A2A1;height:25px;">
-            <th colspan="5" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;"><b>Request for permission for the following persons to travel : รายชื่อผู้ร่วมเดินทางเพิ่มเติม ดังนี้</b></th></tr> 
+            <th colspan="5" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;"><b>Request for permission for the following persons to travel : รายชื่อผู้ร่วมเดินทางเพิ่มเติม ดังนี้</b></th></tr>
         <tr style="height:25px;">
             <th style="width: 25%;border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:center;"><b>Name / ชื่อ</b></th>
             <th style="width: 23%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;"><b>Position / ตำแหน่ง</b></th>
@@ -12,7 +73,7 @@
 
         </tr>
         @{ var index = 0;}
-        @for (index = 1; index <= 3; index++)
+        @for (index = 1; index <= 5; index++)
         {
             <tr>
                 <td style="width: 25%;border-style: solid;border-width: 0px 1px 1px 1px; border-collapse: collapse;text-align:left;">xxxxxxx</td>
@@ -24,7 +85,7 @@
             </tr>
         }
 
-        @*@foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
+      @foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
             {
                 if (item.productDetail != "")
                 {
@@ -70,9 +131,9 @@
                     </tr>
                 }
                 index++;
-            }*@
+            }
 
 
-    </table>
+    </table>*@
 
 </div>

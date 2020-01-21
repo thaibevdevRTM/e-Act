@@ -1,0 +1,21 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+<tr style="border-bottom:none;">
+    <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+        <div style="height:5px;"></div>
+        <div style="width: 100%; text-align: left;">
+            <div class="form-group">
+                <label class="col-md-6 col-xs-12">
+                    Expected benefit : ประโยชน์ที่คาดว่าจะได้รับจากการเดินทางไปในครั้งนี้
+                </label>
+                <label class="col-md-6 col-xs-12">  </label>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 col-xs-12">  </label>
+                <div class="col-md-10 col-xs-12">
+                    @Html.TextAreaFor(x => x.activityFormModel.benefit, new { @class = "form-control textboxcss", @id = "txtBenefit" })
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>

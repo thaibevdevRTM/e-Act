@@ -223,7 +223,10 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetSubject.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryOtherMaster.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_purpose.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_empDetailById.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_company.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_empByComp.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_type_form.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_type_form_detail.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityByIdTBMMKT.cs" />
@@ -2023,6 +2026,9 @@
     <Content Include="Scripts\bootbox.locales.js" />
     <Content Include="Scripts\bootbox.locales.min.js" />
     <Content Include="Scripts\bootbox.min.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.css" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2214,6 +2220,9 @@
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.datetimepicker.full.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\locales\bootstrap-datetimepicker.fr.js" />
+    <Content Include="Scripts\locales\bootstrap-datetimepicker.th.js" />
+    <Content Include="Scripts\locales\bootstrap-datetimepicker.uk.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -2433,6 +2442,12 @@
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetails.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetailsDate.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\dropdownCondtionTbmmkt.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\requestEmp.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\purposeDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\placeDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\expensesDetails.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\benefitDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\remarksDetail.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
