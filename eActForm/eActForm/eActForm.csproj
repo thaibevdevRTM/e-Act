@@ -204,6 +204,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllProduct.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QuerygetAllProductCate.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllProductGroup.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetAllFlowLimit.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllRegion.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetActivity.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetApprove.cs" />
@@ -314,6 +315,7 @@
     <Compile Include="Models\TB_Bud_Activity_Model.cs" />
     <Compile Include="Models\TB_Bud_Image_Model.cs" />
     <Compile Include="Models\TB_Reg_ApproveGroup_Model.cs" />
+    <Compile Include="Models\TB_Reg_FlowLimit_Model.cs" />
     <Compile Include="Models\TB_Reg_Subject_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForm1.aspx.cs">
