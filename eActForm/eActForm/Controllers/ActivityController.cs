@@ -108,11 +108,11 @@ namespace eActForm.Controllers
 
         }
 
-        public ActionResult PreviewData(string activityId, string typeForm)
+        public ActionResult PreviewData(string activityId)
         {
             Activity_Model activityModel = new Activity_Model();
             activityModel.activityFormModel = QueryGetActivityById.getActivityById(activityId).FirstOrDefault();
-            activityModel.activityFormModel.typeForm = typeForm;
+            activityModel.activityFormModel.typeForm = BaseAppCodes.getactivityTypeByCompanyId(activityModel.activityFormModel.companyId);
             activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
             activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
             activityModel.productImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension != ".pdf").ToList();

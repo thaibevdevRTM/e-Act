@@ -286,7 +286,6 @@ else
                 url: '@Url.Action("previewApprove", "Approve")',
                 data: {
                     actId: obj,
-                    typeForm: '@Model.typeForm.ToString()',
                 }
             }).done(function (htmlResponse) {
                 //$("#divPreviewApprove").html(htmlResponse);
