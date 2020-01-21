@@ -225,6 +225,8 @@
     <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllBrandByForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllChanelByForm.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelByGroup.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelMaster.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_company.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_type_form.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_type_form_detail.cs" />
