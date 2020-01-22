@@ -10,7 +10,7 @@
                     <label class="control-label" for="ddlRegion">
                         &nbsp;Condition Flow<span class="required">:&nbsp;</span>
                     </label>
-                    @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "val", "txt", ""), "", new
+                    @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "txt", "txt", ""), "", new
                {
                    @class = "form-control selectpicker",
                    id = "ddlChannelOrBrand"
@@ -42,6 +42,7 @@
                    id = "ddlBrand"
                })
                 </div>
+
             </div>
             <div class="col-md-4 col-xs-12">
                 <div id="divSubject" style="display:block; width:100%">
@@ -54,7 +55,17 @@
                    id = "ddlSubject"
                })
                 </div>
-
+                <div id="divSubjectNull" style="display:block; width:100%">
+                    <label class="control-label" for="ddlBrand">
+                        &nbsp;เรื่อง <span class="required"></span>
+                    </label>
+                    @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
+               {
+                   @class = "form-control selectpicker",
+                   id = "ddlSubjectNull"
+               })
+                  
+                </div>
 
             </div>
 
@@ -64,14 +75,24 @@
             <script>
                 function processDropdownConditionFlow() {
 
-                    if ($("#ddlChannelOrBrand").val() == "Channel") {
+                    if ($("#ddlChannelOrBrand").val() == "") {
 
-                        $('#divChannel').css('display', 'inline-block');
+                        $("#divBrand").hide();
+                        $("#divChannel").hide();
+                        $("#divSubject").hide();
+                    }
+                    else if ($("#ddlChannelOrBrand").val() == "Brand") {
+                        $('#divBrand').css('display', 'inline-block');
+                        $("#divSubject").css('display', 'inline-block');
+                        $("#divChannel").hide();
+                    }
+                    else {
+                         $('#divChannel').css('display', 'inline-block');
                         $("#divSubject").css('display', 'inline-block');
                         $("#divBrand").hide();
 
                         var ddlChannel = document.getElementById("ddlChannelOrBrand");
-                        
+
                         $.ajax({
                             url: '@Url.Action("getChannelByGroup", "MainForm")',
                             data: {
@@ -97,16 +118,6 @@
                             }
                         });
 
-                    }
-                    else if ($("#ddlChannelOrBrand").val() == "Brand") {
-                        $('#divBrand').css('display', 'inline-block');
-                        $("#divSubject").css('display', 'inline-block');
-                        $("#divChannel").hide();
-                    }
-                    else {
-                        $("#divBrand").hide();
-                        $("#divChannel").hide();
-                        $("#divSubject").hide();
                     }
                 }
 
@@ -146,10 +157,10 @@
                     });
                     function bindDropdownSubject() {
                         var valDropdown = '';
-                        if ($('#ddlChannelOrBrand').val() =="Channel") {
-                            valDropdown = $('#ddlChannel').val();
-                        } else {
+                        if ($('#ddlChannelOrBrand').val() =="Brand") {
                             valDropdown = $('#ddlBrand').val();
+                        } else {
+                            valDropdown = $('#ddlChannel').val();
                         }
                         var dataToBeSend = {
                             idBrandOrChannel: valDropdown
