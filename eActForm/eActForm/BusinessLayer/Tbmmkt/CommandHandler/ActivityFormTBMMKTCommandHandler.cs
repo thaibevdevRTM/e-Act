@@ -113,7 +113,7 @@ namespace eActForm.BusinessLayer
                 {
                     tB_Act_ActivityForm_DetailOther.productBrandId = model.activityFormTBMMKT.BrandlId;
                 }
-                else if (model.activityFormTBMMKT.selectedBrandOrChannel == "Channel")
+                else 
                 {
                     tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId;
                 }

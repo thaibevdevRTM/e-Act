@@ -83,31 +83,8 @@
             </div>
 
             <script>
-                function processDropdownConditionFlow() {
-
-                    if ($("#ddlChannelOrBrand").val() == "") {
-
-                        $("#divBrand").hide();
-                        $("#divChannel").hide();
-                        $("#divSubject").hide();
-                        $('#divChannelNull').css('display', 'inline-block');
-                        $('#divSubjectNull').css('display', 'inline-block');
-                     }
-                    else if ($("#ddlChannelOrBrand").val() == "Brand") {
-                        $("#divChannelNull").hide();
-                        $("#divSubjectNull").hide();
-                        $('#divBrand').css('display', 'inline-block');
-                        $("#divSubject").css('display', 'inline-block');
-                        $("#divChannel").hide();
-                    }
-                    else {
-                        $("#divChannelNull").hide();
-                        $("#divSubjectNull").hide();
-                         $('#divChannel').css('display', 'inline-block');
-                        $("#divSubject").css('display', 'inline-block');
-                        $("#divBrand").hide();
-
-                        var ddlChannel = document.getElementById("ddlChannelOrBrand");
+                function getDataDropwdownBrandChannel() {
+                     var ddlChannel = document.getElementById("ddlChannelOrBrand");
 
                         $.ajax({
                             url: '@Url.Action("getChannelByGroup", "MainForm")',
@@ -133,6 +110,32 @@
 
                             }
                         });
+                }
+                function processDropdownConditionFlow() {
+
+                    if ($("#ddlChannelOrBrand").val() == "") {
+
+                        $("#divBrand").hide();
+                        $("#divChannel").hide();
+                        $("#divSubject").hide();
+                        $('#divChannelNull').css('display', 'inline-block');
+                        $('#divSubjectNull').css('display', 'inline-block');
+                     }
+                    else if ($("#ddlChannelOrBrand").val() == "Brand") {
+                        $("#divChannelNull").hide();
+                        $("#divSubjectNull").hide();
+                        $('#divBrand').css('display', 'inline-block');
+                        $("#divSubject").css('display', 'inline-block');
+                        $("#divChannel").hide();
+                    }
+                    else {
+                        $("#divChannelNull").hide();
+                        $("#divSubjectNull").hide();
+                         $('#divChannel').css('display', 'inline-block');
+                        $("#divSubject").css('display', 'inline-block');
+                        $("#divBrand").hide();
+
+
 
                     }
                 }
@@ -159,6 +162,7 @@
 
                 $("#ddlChannelOrBrand").change(function () {
                     processDropdownConditionFlow();
+                    getDataDropwdownBrandChannel();
                 });
 
             </script>
