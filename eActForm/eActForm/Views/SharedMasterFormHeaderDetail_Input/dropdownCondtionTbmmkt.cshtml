@@ -42,7 +42,17 @@
                    id = "ddlBrand"
                })
                 </div>
+                <div id="divChannelNull" style="display:block; width:100%">
+                    <label class="control-label" for="ddlChannel">
+                        &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
+                    </label>
+                    @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.channelMasterTypeList, "subTypeId", "subName", 0), "", new
+               {
+                   @class = "form-control selectpicker",
+                   id = "ddlChannelNull"
+               })
 
+                </div>
             </div>
             <div class="col-md-4 col-xs-12">
                 <div id="divSubject" style="display:block; width:100%">
@@ -64,7 +74,7 @@
                    @class = "form-control selectpicker",
                    id = "ddlSubjectNull"
                })
-                  
+
                 </div>
 
             </div>
@@ -80,13 +90,19 @@
                         $("#divBrand").hide();
                         $("#divChannel").hide();
                         $("#divSubject").hide();
-                    }
+                        $('#divChannelNull').css('display', 'inline-block');
+                        $('#divSubjectNull').css('display', 'inline-block');
+                     }
                     else if ($("#ddlChannelOrBrand").val() == "Brand") {
+                        $("#divChannelNull").hide();
+                        $("#divSubjectNull").hide();
                         $('#divBrand').css('display', 'inline-block');
                         $("#divSubject").css('display', 'inline-block');
                         $("#divChannel").hide();
                     }
                     else {
+                        $("#divChannelNull").hide();
+                        $("#divSubjectNull").hide();
                          $('#divChannel').css('display', 'inline-block');
                         $("#divSubject").css('display', 'inline-block');
                         $("#divBrand").hide();

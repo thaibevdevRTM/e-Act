@@ -63,7 +63,7 @@ namespace eActForm.BusinessLayer
 
         }
 
-        public static int ProcessInsertEstimate(int rtn,Activity_TBMMKT_Model model, string activityId)
+        public static int ProcessInsertEstimate(int rtn, Activity_TBMMKT_Model model, string activityId)
         {
             int insertIndex = 1;
             if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
@@ -153,7 +153,7 @@ namespace eActForm.BusinessLayer
                 {
                     totalCostThisActivity += item.total;
                 }
-                
+
                 activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
             }
             catch (Exception ex)

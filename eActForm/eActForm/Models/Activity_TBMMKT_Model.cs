@@ -73,6 +73,7 @@ namespace eActForm.Models
         public DateTime? updatedDate { get; set; }
         public string updatedByUserId { get; set; }
         public string BudgetNumber { get; set; }
+        public string groupName { get; set; }
     }
 
 

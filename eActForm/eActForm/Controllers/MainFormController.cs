@@ -31,14 +31,17 @@ namespace eActForm.Controllers
 
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
                     activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
-                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
-                    {
-                        activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Brand";
-                    }
-                    else//Channel
-                    {
-                        activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Channel";
-                    }
+                    //if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
+                    //{
+                    //    activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Brand";
+                    //}
+                    //else//Channel
+                    //{
+                    //    activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Channel";
+                    //}
+
+                    activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.groupName;
+
 
                     //===================Get Subject=======================
                     objGetDataSubjectByChanelOrBrand objGetDataSubjectBy = new objGetDataSubjectByChanelOrBrand();
