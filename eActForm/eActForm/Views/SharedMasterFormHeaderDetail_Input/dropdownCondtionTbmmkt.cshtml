@@ -11,10 +11,10 @@
                         &nbsp;Condition Flow<span class="required">:&nbsp;</span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "txt", "txt", ""), "", new
-               {
-                   @class = "form-control selectpicker",
-                   id = "ddlChannelOrBrand"
-               })
+                    {
+                        @class = "form-control selectpicker",
+                        id = "ddlChannelOrBrand"
+                    })
 
 
                 </div>
@@ -26,10 +26,10 @@
                         &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.channelMasterTypeList, "subTypeId", "subName", 0), "", new
-               {
-                   @class = "form-control selectpicker",
-                   id = "ddlChannel"
-               })
+                    {
+                        @class = "form-control selectpicker",
+                        id = "ddlChannel"
+                    })
 
                 </div>
                 <div id="divBrand" style="display:none; width:100%">
@@ -37,21 +37,18 @@
                         &nbsp;เลือก Brand<span class="required"></span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
-               {
-                   @class = "form-control selectpicker",
-                   id = "ddlBrand"
-               })
+                    {
+                        @class = "form-control selectpicker",
+                        id = "ddlBrand"
+                    })
                 </div>
                 <div id="divChannelNull" style="display:block; width:100%">
                     <label class="control-label" for="ddlChannel">
                         &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
                     </label>
-                    @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.channelMasterTypeList, "subTypeId", "subName", 0), "", new
-               {
-                   @class = "form-control selectpicker",
-                   id = "ddlChannelNull"
-               })
-
+                    <select class="form-control selectpicker" id="ddlChannelNull" name="">
+                        <option value=""></option>
+                    </select>
                 </div>
             </div>
             <div class="col-md-4 col-xs-12">
@@ -60,23 +57,19 @@
                         &nbsp;เรื่อง <span class="required"></span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
-               {
-                   @class = "form-control selectpicker",
-                   id = "ddlSubject"
-               })
+                    {
+                        @class = "form-control selectpicker",
+                        id = "ddlSubject"
+                    })
                 </div>
                 <div id="divSubjectNull" style="display:block; width:100%">
                     <label class="control-label" for="ddlBrand">
                         &nbsp;เรื่อง <span class="required"></span>
                     </label>
-                    @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
-               {
-                   @class = "form-control selectpicker",
-                   id = "ddlSubjectNull"
-               })
-
+                    <select class="form-control selectpicker" id="ddlSubjectNull" name="">
+                        <option value=""></option>
+                    </select>
                 </div>
-
             </div>
 
             <div class="col-md-1 col-xs-12">
