@@ -221,8 +221,7 @@
                 type: 'POST',
                 url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
                 data: {
-                    actId: actId,
-                    typeForm: typeForm
+                    actId: actId
                 }
             }).done(function (htmlResponse) {
                 genPdf(actId, statusId, htmlResponse);
@@ -233,8 +232,7 @@
                 type: 'POST',
                 url: '@Url.Action("Index", "MainReport")',
                 data: {
-                    activityId: actId,
-                    typeForm: typeForm
+                    activityId: actId
                 }
             }).done(function (htmlResponse) {
                 genPdf(actId, statusId, htmlResponse);
@@ -245,8 +243,7 @@
                 type: 'POST',
                 url: '@Url.Action("previewApprove", "Approve")',
                 data: {
-                    activityId: actId,
-                    typeForm: typeForm
+                    activityId: actId
                 }
             }).done(function (htmlResponse) {
                 genPdf(actId, statusId, htmlResponse);
