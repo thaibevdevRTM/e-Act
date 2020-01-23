@@ -25,6 +25,10 @@
             {
                 <li>@Html.ActionLink(" ใบยืมเงินทดรอง TBM", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" }, null)</li>
             }
+            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] || UtilsAppCode.Session.User.isAdminTBM)
+            {
+                <li>@Html.ActionLink(" ใบเบิกผลิตภัณฑ์,POS/PREMIUM", "Index", "MainReport", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = "24BA9F57-586A-4A8E-B54C-00C23C41BFC5" }, null)</li>
+            }
         </ul>
     </li>
 }
