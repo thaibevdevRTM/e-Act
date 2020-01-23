@@ -219,7 +219,7 @@
         if (master_type_form_id == '488F7C0D-8B59-4BDE-90E4-F157BFF67829') {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("previewApprove", "Approve")',
+                url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
                 data: {
                     actId: actId,
                     typeForm: typeForm
@@ -243,7 +243,7 @@
         else {
              $.ajax({
                 type: 'POST',
-                url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
+                url: '@Url.Action("previewApprove", "Approve")',
                 data: {
                     activityId: actId,
                     typeForm: typeForm
