@@ -221,7 +221,7 @@
                 type: 'POST',
                 url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
                 data: {
-                    actId: actId
+                    activityId: actId
                 }
             }).done(function (htmlResponse) {
                 genPdf(actId, statusId, htmlResponse);
@@ -243,7 +243,7 @@
                 type: 'POST',
                 url: '@Url.Action("previewApprove", "Approve")', 
                 data: {
-                    activityId: actId
+                    actId: actId
                 }
             }).done(function (htmlResponse) {
                 genPdf(actId, statusId, htmlResponse);
