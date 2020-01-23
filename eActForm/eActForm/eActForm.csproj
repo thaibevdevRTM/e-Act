@@ -2232,6 +2232,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Uploadfiles\logo-ss.png" />
     <Content Include="uploadImages\12f4c0ff-c7ab-4308-b185-d072c9f151c8_72777008-1A93-48E0-A420-357B10696E30.png" />
     <Content Include="uploadImages\19f467c5-4b1a-4f84-975c-a86a0694f462_63164D1C-469B-431F-8C5B-0EA2544DFEA1.png" />
     <Content Include="uploadImages\301b51cb-8e48-4ed9-9215-01be74d96c83_05F58F69-427D-4FC5-975F-6C062CC8947A.png" />
@@ -2250,8 +2251,8 @@
     <Content Include="Views\Budget\manageInvoiceList.cshtml" />
     <Content Include="Views\Shared\_previewActFormTravelling.cshtml" />
     <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
-    <Content Include="Views\TravellingInCountryFormReport\headerDetails.cshtml" />
-    <Content Include="Views\TravellingInCountryFormReport\lastwordForFYI.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\requestToRpt.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\lastWordRpt.cshtml" />
     <Content Include="WebForm1.aspx" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -2414,10 +2415,10 @@
     <Content Include="Views\managementFlow\dropDetail.cshtml" />
     <Content Include="Views\managementFlow\approveList.cshtml" />
     <Content Include="Views\TravellingInCountryFormReport\Index.cshtml" />
-    <Content Include="Views\TravellingInCountryFormReport\listDetails.cshtml" />
-    <Content Include="Views\TravellingInCountryFormReport\purposeDetail.cshtml" />
-    <Content Include="Views\TravellingInCountryFormReport\placeDetails.cshtml" />
-    <Content Include="Views\TravellingInCountryFormReport\estimateDetails.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\requestEmpRpt.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\purposeDetailRpt.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\placeDetailRpt.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\expensesDetailsRpt.cshtml" />
     <Content Include="Views\TravellingInCountryFormReport\headerCompany.cshtml" />
     <Content Include="Views\MainReport\Index.cshtml" />
     <Content Include="Views\Shared\_previewMainReport.cshtml" />
@@ -2448,6 +2449,9 @@
     <Content Include="Views\SharedMasterFormDetail_Input\expensesDetails.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\benefitDetail.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\remarksDetail.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\chargeToRpt .cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\remarksDetailRpt.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\benefitDetailRpt.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
