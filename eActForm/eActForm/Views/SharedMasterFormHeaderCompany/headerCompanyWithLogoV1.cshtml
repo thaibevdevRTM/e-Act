@@ -2,6 +2,7 @@
 @{
     var rootPathWeb = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
     var urlLogoCompany = rootPathWeb + "/images/tbmmktLogo.png";
+    var titleTextInPage = "ใบเบิก POS";
 }
 <tr>
     <td>
@@ -9,12 +10,12 @@
             <table style="border-color:none;" class="fontDocV1">
                 <tr>
                     <td rowspan="2" style="width:135px;">&nbsp;<img width="120px" height="30px" src="@urlLogoCompany" /></td>
-                    <td rowspan="2" style="width:415px;text-align: center;" class="fontDocV3"> ใบเบิก POS</td>
+                    <td rowspan="2" style="width:415px;text-align: center;" class="fontDocV3"><b>@titleTextInPage</b></td>
                     <td style="width:150px;text-align: left;">เลขที่ : 7611009341</td>
                 </tr>
                 <tr>
                     <td style="width:150px;text-align: left;">
-                        วันที่ : 06/06/62
+                        วันที่&nbsp;&nbsp;: 06/06/62
                     </td>
                 </tr>
             </table>

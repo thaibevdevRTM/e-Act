@@ -4,7 +4,7 @@
 @{
     var dearGroup = "คุณกมล เศวตทวี"; //form pos/premium fixคนนี้เลยจนกว่าจะลาออก
     var signBook = "คุณทดสอบ ไทยเบฟมาเก็ตติ้ง";
-    var signBookDepartment = "";
+    var signBookDepartment = "Sale Support";
     /*if (Model.approveFlowDetail != null)
     {
         foreach (var item in Model.approveFlowDetail)
@@ -25,14 +25,20 @@
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
 }
-<tr style="">
-    <td>
+<style>
+    .hDetailtr {
+        height: 20px;
+    }
+</style>
+<tr>
+    <td style="padding-left:8px;">
         <div id="divHeaderDetails" runat="server" style="width: 100%;">
-            <table style="width: 100%;" id="tabelHeaderDetails" runat="server" class="fontDocV1">
+            <table style="width: 100%;border-collapse:collapse;" id="tabelHeaderDetails" runat="server" class="fontDocV1">
                 <tr>
                     <td>
-                        <table style="border-color:none;" class="fontDocV1">
-                            <tr>
+                        <div style="height:10px;"></div>
+                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                            <tr class="hDetailtr">
                                 <td style="width:65px;">&nbsp;เรียน</td>
                                 <td style="width:635px; text-align:left;">@dearGroup</td>
                             </tr>
@@ -41,34 +47,104 @@
                 </tr>
                 <tr>
                     <td>
-                        <table style="border-color:none;" class="fontDocV1">
-                            <tr>
+                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                            <tr class="hDetailtr">
                                 <td style="width:65px;vertical-align:top;">&nbsp;ข้าพเจ้า</td>
                                 <td style="width:245px;vertical-align:top;">@signBook</td>
-                                <td style="width:100px;vertical-align:top;">&nbsp;ฝ่าย/แผนก</td>
-                                <td style="width:290px;vertical-align:top;">&nbsp;@signBookDepartment</td>
+                                <td style="width:130px;vertical-align:top;">&nbsp;ฝ่าย/แผนก</td>
+                                <td style="width:260px;vertical-align:top;">: @signBookDepartment</td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <table style="border-color:none;" class="fontDocV1">
-                            <tr>
-                                <td style="width:150px;">&nbsp;Brand/ผลิตภัณฑ์</td>
-                                <td colspan="3" style="width:550px; text-align:left;">: KULOV</td>
+                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                            <tr class="hDetailtr">
+                                <td style="width:150px;vertical-align:top;">&nbsp;ขอเบิก</td>
+                                <td style="width:160px;vertical-align:top;text-align:left;">: ผลิตภัณฑ์,POS</td>
+                                <td style="width:130px;vertical-align:top;">&nbsp;เพื่อ</td>
+                                <td style="width:260px;vertical-align:top;">: เผยแพร่</td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <table style="border-color:none;" class="fontDocV1">
-                            <tr>
-                                <td style="width:150px;">&nbsp;ขอเบิก</td>
-                                <td style="width:160px; text-align:left;">: ผลิตภัณฑ์,POS</td>
-                                <td style="width:100px;vertical-align:top;">&nbsp;เพื่อ</td>
-                                <td style="width:290px;vertical-align:top;">: เผยแพร่</td>
+                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                            <tr class="hDetailtr">
+                                <td style="width:150px;vertical-align:top;">&nbsp;Brand/ผลิตภัณฑ์</td>
+                                <td style="width:160px;vertical-align:top;text-align:left;">: KULOV</td>
+                                <td style="width:130px;vertical-align:top;">&nbsp;Cost Center</td>
+                                <td style="width:260px;vertical-align:top;">: 76602200</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                            <tr class="hDetailtr">
+                                <td style="width:150px;vertical-align:top;">&nbsp;Channel+Region</td>
+                                <td style="width:160px;vertical-align:top;text-align:left;">: NT</td>
+                                <td style="width:130px;vertical-align:top;">&nbsp;Channel+Region Name</td>
+                                <td style="width:260px;vertical-align:top;">: Not Allocaded</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                            <tr class="hDetailtr">
+                                <td style="width:150px;vertical-align:top;">&nbsp;GL No.</td>
+                                <td style="width:160px;vertical-align:top;text-align:left;">: 650007500</td>
+                                <td style="width:130px;vertical-align:top;">&nbsp;GL Name</td>
+                                <td style="width:260px;vertical-align:top;">: วัสดุส่งเสริมการขาย-เผยแพร่ POS/POP/Premium</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                            <tr class="hDetailtr">
+                                <td style="width:150px;vertical-align:top;">&nbsp;ให้แก่ (ชื่อผู้รับ)</td>
+                                <td style="width:160px;vertical-align:top;text-align:left;">: R1-R8</td>
+                                <td style="width:130px;vertical-align:top;">&nbsp;โทรศัพท์/โทรสาร</td>
+                                <td style="width:260px;vertical-align:top;">: 02-785-5555</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                            <tr class="hDetailtr">
+                                <td style="width:150px;vertical-align:top;">&nbsp;หมายเหตุ&nbsp;&nbsp;วันที่ส่งมอบ</td>
+                                <td style="width:160px;vertical-align:top;text-align:left;">: 10/06/62</td>
+                                <td style="width:130px;vertical-align:top;">&nbsp;รายละเอียดผู้ติดต่อ</td>
+                                <td style="width:260px;vertical-align:top;">: คุณใจดี ศรีเมืองไทย</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                            <tr class="hDetailtr">
+                                <td style="width:150px;vertical-align:top;">&nbsp;ที่อยู่</td>
+                                <td colspan="3" style="width:550px;vertical-align:top;text-align:left;">: 14 อาคารแสงโสม ถนนวิภาวดีรังสิต แขวงจอมพล เขตจตุจักร กรุงเทพมหานคร 10900</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                            <tr class="hDetailtr">
+                                <td style="width:150px;vertical-align:top;">&nbsp;วัตถุประสงค์ที่ขอเบิก</td>
+                                <td colspan="3" style="width:550px;vertical-align:top;text-align:left;">: เพื่อเป็นสื่อประชาสัมพันธ์สินค้า และส่งเสริมยอดการขายสินค้า</td>
                             </tr>
                         </table>
                     </td>
