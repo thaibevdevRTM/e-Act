@@ -1,0 +1,80 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Globalization;
+@{
+    var dearGroup = "คุณกมล เศวตทวี"; //form pos/premium fixคนนี้เลยจนกว่าจะลาออก
+    var signBook = "คุณทดสอบ ไทยเบฟมาเก็ตติ้ง";
+    var signBookDepartment = "";
+    /*if (Model.approveFlowDetail != null)
+    {
+        foreach (var item in Model.approveFlowDetail)
+        {
+            if (item.approveGroupId == "CA8C71D3-F975-401E-A095-86E2E11C8014")
+            {
+                signBook = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
+                signBookDepartment = //ต้องไปเพิ่มให้ดึงแผนกด้วยและเอามาใส่ item.empPositionTitleTH;
+            }
+        }
+    }
+    else
+    {
+        dearGroup = "";
+        signBook = "";
+        signBookDepartment = "";
+    }*/
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+}
+<tr style="">
+    <td>
+        <div id="divHeaderDetails" runat="server" style="width: 100%;">
+            <table style="width: 100%;" id="tabelHeaderDetails" runat="server" class="fontDocV1">
+                <tr>
+                    <td>
+                        <table style="border-color:none;" class="fontDocV1">
+                            <tr>
+                                <td style="width:65px;">&nbsp;เรียน</td>
+                                <td style="width:635px; text-align:left;">@dearGroup</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="border-color:none;" class="fontDocV1">
+                            <tr>
+                                <td style="width:65px;vertical-align:top;">&nbsp;ข้าพเจ้า</td>
+                                <td style="width:245px;vertical-align:top;">@signBook</td>
+                                <td style="width:100px;vertical-align:top;">&nbsp;ฝ่าย/แผนก</td>
+                                <td style="width:290px;vertical-align:top;">&nbsp;@signBookDepartment</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="border-color:none;" class="fontDocV1">
+                            <tr>
+                                <td style="width:150px;">&nbsp;Brand/ผลิตภัณฑ์</td>
+                                <td colspan="3" style="width:550px; text-align:left;">: KULOV</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="border-color:none;" class="fontDocV1">
+                            <tr>
+                                <td style="width:150px;">&nbsp;ขอเบิก</td>
+                                <td style="width:160px; text-align:left;">: ผลิตภัณฑ์,POS</td>
+                                <td style="width:100px;vertical-align:top;">&nbsp;เพื่อ</td>
+                                <td style="width:290px;vertical-align:top;">: เผยแพร่</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </td>
+</tr>
