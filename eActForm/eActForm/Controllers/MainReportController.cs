@@ -20,24 +20,30 @@ namespace eActForm.Controllers
         public ActionResult Index(string activityId)
         {
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
-            //==============test=================
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
-            //====END==========test=================
+            //=========for=====test=================
+            ActivityFormTBMMKT dummy_activityFormTBMMKT = new ActivityFormTBMMKT();
+            activity_TBMMKT_Model.activityFormTBMMKT = dummy_activityFormTBMMKT;
+            activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = "24BA9F57-586A-4A8E-B54C-00C23C41BFC5";
+            activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
+            //====END====for======test=================
 
-            if (!string.IsNullOrEmpty(activityId))
+            /*if (!string.IsNullOrEmpty(activityId))
             {
-                /*activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+                activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
                 activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
-                activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;*/
+                activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
                 activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
                
                 //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-                //activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
+                activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
                 //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-            }
-       
-            return View(activity_TBMMKT_Model); // test
-            //return PartialView(activity_TBMMKT_Model);// production
+
+            }*/
+
+            //return PartialView(activity_TBMMKT_Model);  //ไว้ใช้เวลาจะใส่กับ Modal            
+            //return View(activity_TBMMKT_Model); // test
+            return PartialView(activity_TBMMKT_Model);// production
         }
 
 

@@ -1,21 +1,21 @@
 ﻿@*=====ของDEVทดลองprint pdf=========*@
 @*<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
-@using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
-{
-    <input type="hidden" name="gridHtml" />
-    <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
-    <br />
-}
+    @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
+    {
+        <input type="hidden" name="gridHtml" />
+        <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
+        <br />
+    }
 
 
-@RenderPage("~/Views/Shared/_previewMainReport.cshtml")
+    @RenderPage("~/Views/Shared/_previewMainReport.cshtml")
 
 
-<script>
-    $("#btnExportPDF").click(function () {
-        $("input[name='gridHtml']").val($("#divForm").html());
-    });
-</script>*@
+    <script>
+        $("#btnExportPDF").click(function () {
+            $("input[name='gridHtml']").val($("#divForm").html());
+        });
+    </script>*@
 @*===END==ของงDEVทดลองprint pdf=========*@
 
 @*=====ของใช้งานจริง=========*@
@@ -112,8 +112,19 @@
             });
         }
 </script>
+<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
 <script>
+     //==========for production============
     $("#btnExportPDF").click(function () {
         $("input[name='gridHtml']").val($("#divForm").html());
     });
+    //==========for production============
+
+     //==========for test============
+    //$(function () {
+    //    $("#btnExportPDF").click(function () {
+    //        $("input[name='gridHtml']").val($("#divForm").html());
+    //    });
+    //});
+    //===END=======for test============
 </script>
