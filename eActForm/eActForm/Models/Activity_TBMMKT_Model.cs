@@ -26,6 +26,14 @@ namespace eActForm.Models
         public List<CostThemeDetailOfGroupByPriceTBMMKT> expensesDetailModel { get; set; }
 
         public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
+        public List<ChannelMasterType> channelMasterTypeList { get; set; }
+
+
+        public Activity_TBMMKT_Model()
+        {
+            channelMasterTypeList = new List<ChannelMasterType>();
+        }
+
     }
 
     public class ActivityFormTBMMKT : ActivityForm
@@ -72,6 +80,7 @@ namespace eActForm.Models
         public DateTime? updatedDate { get; set; }
         public string updatedByUserId { get; set; }
         public string BudgetNumber { get; set; }
+        public string groupName { get; set; }
     }
 
 
@@ -147,5 +156,13 @@ namespace eActForm.Models
     //    public string QtyName { get; set; }
     //    public string remark { get; set; }
     //}
+    public class ChannelMasterType
+    {
+        public string id { get; set; }
+        public string groupName { get; set; }
+        public string subTypeId { get; set; }
+        public string subTypeName { get; set; }
+        public string subName { get; set; }
+    }
 
 }

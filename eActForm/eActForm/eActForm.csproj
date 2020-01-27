@@ -228,6 +228,8 @@
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_empDetailById.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllBrandByForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllChanelByForm.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelByGroup.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelMaster.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_company.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_empByComp.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_type_form.cs" />
