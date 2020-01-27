@@ -10,6 +10,7 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
+using static eActForm.Controllers.GetDataMainFormController;
 
 namespace eActForm.Controllers
 {
@@ -22,7 +23,6 @@ namespace eActForm.Controllers
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
 
-            //activityFormTBMMKT.idTypeForm = "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4"; // for test            
             try
             {
 
@@ -39,6 +39,21 @@ namespace eActForm.Controllers
                     {
                         activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Channel";
                     }
+
+                    //===================Get Subject=======================
+                    objGetDataSubjectByChanelOrBrand objGetDataSubjectBy = new objGetDataSubjectByChanelOrBrand();
+                    objGetDataSubjectBy.companyId = activity_TBMMKT_Model.activityFormTBMMKT.companyId;
+                    objGetDataSubjectBy.master_type_form_id = activityFormTBMMKT.master_type_form_id;
+                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
+                    {
+                        objGetDataSubjectBy.idBrandOrChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId;
+                    }
+                    else//Channel
+                    {
+                        objGetDataSubjectBy.idBrandOrChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId;
+                    }
+                    activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
+                    //====END===============Get Subject=======================
 
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
                 }
@@ -95,14 +110,16 @@ namespace eActForm.Controllers
                     #endregion
                     //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
 
+                    //===================Get Subject=======================
+                    List<TB_Reg_Subject> tB_Reg_Subjects = new List<TB_Reg_Subject>(); activity_TBMMKT_Model.tB_Reg_Subject = tB_Reg_Subjects;
+                    //======END=============Get Subject=======================
 
                     TempData["actForm" + actId] = activity_TBMMKT_Model;
                 }
 
-                activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrand.GetAllBrand().Where(x => x.no_tbmmkt != "").ToList();
-                activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel().Where(x => x.no_tbmmkt != "").ToList(); ;
+                activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrandByForm.GetAllBrand(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId).Where(x => x.no_tbmmkt != "").ToList();
+                activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanelByForm.getAllChanel(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId).Where(x => x.no_tbmmkt != "").ToList(); ;
                 activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
-                activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetAllQueryGetSelectAllTB_Reg_Subject().Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId && x.master_type_form_id == activityFormTBMMKT.master_type_form_id).ToList();
                 activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "tbmmkt_ChooseActivityOrDetail").ToList();
                 activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
                 activity_TBMMKT_Model.activityFormModel.mode = mode;

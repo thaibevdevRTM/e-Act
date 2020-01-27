@@ -43,11 +43,11 @@
     <div id="GridPDF" style="width:97%; margin-left:20px;">
         <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
             @*=================for test====================*@
-            <tr>
+            @*<tr>
                 <td>
                     @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
                 </td>
-            </tr>
+            </tr>*@
             @*=========END========for test====================*@
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
@@ -163,16 +163,14 @@
                 required += "&emsp;ประมาณค่าใช้จ่าย/Estimate of travelling expenses*<br>"; validate = false;
             }
 
+            if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
+            if ($("#txtActivityName").val() == "") { required += "ชื่องาน*<br>"; validate = false; }
+            if ($("#txtdateActivitySt").val() == "") { required += "ต้องการเช็ควันที่*<br>"; validate = false; }
+            if ($("#txtactivityPeriodEnd").val() == "") { required += "เคลียร์เงินทดรองในวันที่*<br>"; validate = false; }
+            if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
         }
         else {
-                //if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
-                //if ($("#txtactivityTel").val() == "") { required += "เบอร์โทรศัพท์*<br>"; validate = false; }
-                //if ($("#txtactivityProduct").val() == "") { required += "สินค้า*<br>"; validate = false; }
-                //if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
-                //if ($("#txtEO").val() == "") { required += "EO*<br>"; validate = false; }
-                //if ($("#txtdateActivitySt").val() == "") { required += "วันที่เริ่มกิจกรรม*<br>"; validate = false; }
-                //if ($("#txtactivityPeriodEnd").val() == "") { required += "วันที่สิ้นสุดกิจกรรม*<br>"; validate = false; }
-                //if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
+
         }
 
             if (validate == true) {

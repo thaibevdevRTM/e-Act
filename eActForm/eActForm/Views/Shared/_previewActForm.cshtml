@@ -159,7 +159,15 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td></td>
+                    @{
+                        string showIO = "";
+                    }
+
+                    @if (!string.IsNullOrEmpty(@Model.activityFormModel.actIO))
+                    {
+                        showIO = "IO:" + @Model.activityFormModel.actIO + " / Claim :" + @Model.activityFormModel.actClaim + "%";
+                    }
+                    <td td style="font-size:12.5px;">@showIO</td>
                     <td></td>
                     <td style="text-align:right; font-size:12.5px;">ระยะเวลาการให้ทุนพิเศษ</td>
                     <td></td>
@@ -213,6 +221,7 @@
 
                         @if (Model.productImageList.Any())
                         {
+                            int index = 1;
                             string url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfiles"].ToString();
                             foreach (var item in Model.productImageList)
                             {
@@ -226,10 +235,14 @@
                                     }
                                     else
                                     {
+                                        if (index <= 2)
+                                        {
                                         <td width="40%" style="text-align:right;">
-                                            <img width="130" height="120" src="@string.Format(url, item._fileName)" />
+                                            <img style="margin-left:10px;" width="130" height="120" src="@string.Format(url, item._fileName)" />
                                         </td>
+                                        }
                                     }
+                                    index++;
                                 }
                             }
                         }

@@ -25,9 +25,9 @@ namespace eActForm.BusinessLayer.Appcodes
             return QueryGetSubject.getAllSubject().Where(x => x.companyId.Contains(companyId)).OrderBy(x => x.nameTH).ToList();
         }
 
-        public static List<TB_Act_Other_Model> getLimit(string subjectId)
+        public static List<TB_Reg_FlowLimit_Model> getLimit(string subjectId)
         {
-            return QueryOtherMaster.getOhterMaster("limitFlow", "").Where(w=> w.val1.Equals(subjectId)).ToList();
+            return QueryGetAllFlowLimit.getAllFlowLimit().Where(x =>x.subjectId.Equals(subjectId)).ToList();
         }
 
         public static List<TB_Act_Other_Model> getApproveShow()

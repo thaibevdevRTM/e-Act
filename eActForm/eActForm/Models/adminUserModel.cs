@@ -11,11 +11,13 @@ namespace eActForm.Models
         public List<User> userLists { get; set; }
         public List<User> userRoleLists { get; set; }
         public List<Customer> customerLists { get; set; }
-        
+        public List<TB_Act_Other_Model> getCompany { get; set; }
+        public List<TB_Act_Region_Model> regionList { get; set; }
 
         public AdminUserModel()
         {
             userLists = new List<User>();
+            regionList = new List<TB_Act_Region_Model>();
         }
 
 
@@ -24,7 +26,8 @@ namespace eActForm.Models
             public List<string> custLi { get; set; }
             public List<string> chkProductType { get; set; }
             public List<string> chkRole { get; set; }
-
+            public List<string> companyList { get; set; }
+            public List<string> regionList { get; set; }
         }
 
         public class User

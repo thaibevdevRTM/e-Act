@@ -25,6 +25,7 @@ namespace eActForm.Models
         public List<PlaceDetailModel> PlaceDetailModel { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> expensesDetailModel { get; set; }
 
+        public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
     }
 
     public class ActivityFormTBMMKT : ActivityForm

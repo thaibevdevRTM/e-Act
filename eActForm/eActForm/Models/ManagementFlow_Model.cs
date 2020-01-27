@@ -15,7 +15,7 @@ namespace eActForm.Models
         public List<TB_Act_ProductBrand_Model> productBrandList { get; set; }
         public List<TB_Act_ProductType_Model> productTypeList { get; set; }
         public List<TB_Act_Other_Model> companyList { get; set; }
-        public List<TB_Act_Other_Model> getLimitList { get; set; }
+        public List<TB_Reg_FlowLimit_Model> getLimitList { get; set; }
         public List<TB_Act_Other_Model> getDDLShowApproveList { get; set; }
         public List<TB_Act_Other_Model> getDDlApproveList { get; set; }
         public List<TB_Reg_ApproveGroup_Model> approveGroupList { get; set; }
@@ -38,7 +38,7 @@ namespace eActForm.Models
             cateList = new List<TB_Act_ProductCate_Model>();
             productBrandList = new List<TB_Act_ProductBrand_Model>();
             companyList = new List<TB_Act_Other_Model>();
-            getLimitList = new List<TB_Act_Other_Model>();
+            getLimitList = new List<TB_Reg_FlowLimit_Model>();
             getDDLShowApproveList = new List<TB_Act_Other_Model>();
             getDDlApproveList = new List<TB_Act_Other_Model>();
             approveGroupList = new List<TB_Reg_ApproveGroup_Model>();

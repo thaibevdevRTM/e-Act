@@ -153,7 +153,7 @@ namespace eActForm.BusinessLayer
                 {
                     totalCostThisActivity += item.total;
                 }
-
+                
                 activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
             }
             catch (Exception ex)
@@ -635,6 +635,24 @@ namespace eActForm.BusinessLayer
             }
 
             return result;
+        }
+
+        public static List<ApproveFlowModel.flowApproveDetail> get_flowApproveDetail(string SubjectId, string activityId)
+        {
+            try
+            {
+                ApproveModel.approveModels models = new ApproveModel.approveModels();
+                models = ApproveAppCode.getApproveByActFormId(activityId);
+                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(SubjectId, activityId);
+                models.approveFlowDetail = flowModel.flowDetail;
+
+                return models.approveFlowDetail;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("get_flowApproveDetail => " + ex.Message);
+                return new List<ApproveFlowModel.flowApproveDetail>();
+            }
         }
 
     }
