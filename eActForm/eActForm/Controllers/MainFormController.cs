@@ -31,14 +31,17 @@ namespace eActForm.Controllers
 
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
                     activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
-                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
-                    {
-                        activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Brand";
-                    }
-                    else//Channel
-                    {
-                        activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Channel";
-                    }
+                    //if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
+                    //{
+                    //    activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Brand";
+                    //}
+                    //else//Channel
+                    //{
+                    //    activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Channel";
+                    //}
+
+                    activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.groupName;
+
 
                     //===================Get Subject=======================
                     objGetDataSubjectByChanelOrBrand objGetDataSubjectBy = new objGetDataSubjectByChanelOrBrand();
@@ -91,8 +94,11 @@ namespace eActForm.Controllers
                 }
 
                 activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrandByForm.GetAllBrand(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId).Where(x => x.no_tbmmkt != "").ToList();
-                activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanelByForm.getAllChanel(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId).Where(x => x.no_tbmmkt != "").ToList(); ;
-                activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
+
+                // activity_TBMMKT_Model.channelMasterTypeList = QueryGetAllChanelByForm.getAllChanel(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId).Where(x => x.no_tbmmkt != "").ToList(); ;
+                //activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
+                activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGet_channelMaster.get_channelMaster(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId);
+
                 activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "tbmmkt_ChooseActivityOrDetail").ToList();
                 activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
                 activity_TBMMKT_Model.activityFormModel.mode = mode;
@@ -145,6 +151,24 @@ namespace eActForm.Controllers
 
             return Json(result);
         }
-
+        public JsonResult getChannelByGroup(string formId, string groupName)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getChannel = QueryGet_channelByGroup.get_channelByGroup(formId, UtilsAppCode.Session.User.empCompanyId, groupName);
+                var resultData = new
+                {
+                    channelList = getChannel.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

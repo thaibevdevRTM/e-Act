@@ -3,77 +3,36 @@
 <tr>
     <td>
         <div class="form-group" style="margin-top:-20px;">
-            <div class="col-md-2 col-xs-12">
+            <div class="col-md-1 col-xs-12">
             </div>
-            <div class="col-md-10 col-xs-12">
-                <div style="display:inline-block;">
+            <div class="col-md-2 col-xs-12">
+                <div style="display:inline-block; width:100%">
                     <label class="control-label" for="ddlRegion">
                         &nbsp;Condition Flow<span class="required">:&nbsp;</span>
                     </label>
-                    @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "val", "txt", ""), "", new
+                    @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "txt", "txt", ""), "", new
                     {
                         @class = "form-control selectpicker",
                         id = "ddlChannelOrBrand"
                     })
 
-                    <script>
-                                    function processDropdownConditionFlow() {
-                                        if ($("#ddlChannelOrBrand").val() == "Channel") {
-                                            $('#divChannel').css('display', 'inline-block');
-                                            $("#divSubject").css('display', 'inline-block');
-                                            $("#divBrand").hide();
-                                        }
-                                        else if ($("#ddlChannelOrBrand").val() == "Brand") {
-                                            $('#divBrand').css('display', 'inline-block');
-                                            $("#divSubject").css('display', 'inline-block');
-                                            $("#divChannel").hide();
-                                        }
-                                        else {
-                                            $("#divBrand").hide();
-                                            $("#divChannel").hide();
-                                            $("#divSubject").hide();
-                                        }
-                                    }
-
-                                    $(function () {
-                                        //ทำหลังLoadหน้่าเว็บเสร็จ
-                                        var p_subjectId = "@Model.tB_Act_ActivityForm_DetailOther.SubjectId";
-                                        var p_productBrandId = "@Model.tB_Act_ActivityForm_DetailOther.productBrandId";
-                                        var p_channelId = "@Model.tB_Act_ActivityForm_DetailOther.channelId";
-                                        if (p_subjectId != "")
-                                         {
-                                            $("#divSubject").css('display', 'inline-block');
-                                            $("#ddlSubject").val(p_subjectId);
-                                        }
-                                        if (p_productBrandId != "") {
-                                            $("#divBrand").css('display', 'inline-block');
-                                            $("#ddlBrand").val(p_productBrandId);
-                                        }
-                                        if (p_channelId != "") {
-                                            $("#divChannel").css('display', 'inline-block');
-                                            $("#ddlChannel").val(p_channelId);
-                                        }
-                                        processDropdownConditionFlow();
-                                     });
-
-                                    $("#ddlChannelOrBrand").change(function () {
-                                        processDropdownConditionFlow();
-                        });
-
-                    </script>
 
                 </div>
-                <div id="divChannel" style="display:block;">
+            </div>
+            <div class="col-md-4 col-xs-12">
+
+                <div id="divChannel" style="display:block; width:100%">
                     <label class="control-label" for="ddlChannel">
                         &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
                     </label>
-                    @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.tB_Act_Chanel_Model, "id", "chanelGroup", 0), "", new
+                    @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.channelMasterTypeList, "subTypeId", "subName", 0), "", new
                     {
                         @class = "form-control selectpicker",
                         id = "ddlChannel"
                     })
+
                 </div>
-                <div id="divBrand" style="display:none;">
+                <div id="divBrand" style="display:none; width:100%">
                     <label class="control-label" for="ddlBrand">
                         &nbsp;เลือก Brand<span class="required"></span>
                     </label>
@@ -83,7 +42,17 @@
                         id = "ddlBrand"
                     })
                 </div>
-                <div id="divSubject" style="display:block;">
+                <div id="divChannelNull" style="display:block; width:100%">
+                    <label class="control-label" for="ddlChannel">
+                        &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
+                    </label>
+                    <select class="form-control selectpicker" id="ddlChannelNull" name="">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <div id="divSubject" style="display:block; width:100%">
                     <label class="control-label" for="ddlBrand">
                         &nbsp;เรื่อง <span class="required"></span>
                     </label>
@@ -93,7 +62,102 @@
                         id = "ddlSubject"
                     })
                 </div>
-                <script>
+                <div id="divSubjectNull" style="display:block; width:100%">
+                    <label class="control-label" for="ddlBrand">
+                        &nbsp;เรื่อง <span class="required"></span>
+                    </label>
+                    <select class="form-control selectpicker" id="ddlSubjectNull" name="">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-1 col-xs-12">
+            </div>
+
+            <script>
+                function processDropdownConditionFlow() {
+
+                    if ($("#ddlChannelOrBrand").val() == "") {
+
+                        $("#divBrand").hide();
+                        $("#divChannel").hide();
+                        $("#divSubject").hide();
+                        $('#divChannelNull').css('display', 'inline-block');
+                        $('#divSubjectNull').css('display', 'inline-block');
+                     }
+                    else if ($("#ddlChannelOrBrand").val() == "Brand") {
+                        $("#divChannelNull").hide();
+                        $("#divSubjectNull").hide();
+                        $('#divBrand').css('display', 'inline-block');
+                        $("#divSubject").css('display', 'inline-block');
+                        $("#divChannel").hide();
+                    }
+                    else {
+                        $("#divChannelNull").hide();
+                        $("#divSubjectNull").hide();
+                         $('#divChannel').css('display', 'inline-block');
+                        $("#divSubject").css('display', 'inline-block');
+                        $("#divBrand").hide();
+
+                        var ddlChannel = document.getElementById("ddlChannelOrBrand");
+
+                        $.ajax({
+                            url: '@Url.Action("getChannelByGroup", "MainForm")',
+                            data: {
+                                formId: '@Model.activityFormTBMMKT.master_type_form_id',
+                                groupName: ddlChannel.options[ddlChannel.selectedIndex].text,
+                            },
+                            dataType: "json",
+                            type: 'POST',
+                            success: function (response) {
+
+                                if (response.Data.channelList.length > 0) {
+                                    $("#ddlChannel option[value !='']").remove();
+                                    $.each(response.Data.channelList, function () {
+                                       $("#ddlChannel").append($("<option></option>").val(this['subTypeId']).html(this['subName']));
+                                    });
+                                    document.getElementById("ddlChannel").disabled = false;
+                                }
+                                else {
+                                    document.getElementById("ddlChannel").disabled = true;
+                                }
+
+
+                            }
+                        });
+
+                    }
+                }
+
+                $(function () {
+                    //ทำหลังLoadหน้่าเว็บเสร็จ
+                    var p_subjectId = "@Model.tB_Act_ActivityForm_DetailOther.SubjectId";
+                    var p_productBrandId = "@Model.tB_Act_ActivityForm_DetailOther.productBrandId";
+                    var p_channelId = "@Model.tB_Act_ActivityForm_DetailOther.channelId";
+                    if (p_subjectId != "") {
+                        $("#divSubject").css('display', 'inline-block');
+                        $("#ddlSubject").val(p_subjectId);
+                    }
+                    if (p_productBrandId != "") {
+                        $("#divBrand").css('display', 'inline-block');
+                        $("#ddlBrand").val(p_productBrandId);
+                    }
+                    if (p_channelId != "") {
+                        $("#divChannel").css('display', 'inline-block');
+                        $("#ddlChannel").val(p_channelId);
+                    }
+                    processDropdownConditionFlow();
+                });
+
+                $("#ddlChannelOrBrand").change(function () {
+                    processDropdownConditionFlow();
+                });
+
+            </script>
+
+
+            <script>
                     $('#ddlChannel').change(function () {
                         bindDropdownSubject()
                     });
@@ -102,10 +166,10 @@
                     });
                     function bindDropdownSubject() {
                         var valDropdown = '';
-                        if ($('#ddlChannelOrBrand').val() =="Channel") {
-                            valDropdown = $('#ddlChannel').val();
-                        } else {
+                        if ($('#ddlChannelOrBrand').val() =="Brand") {
                             valDropdown = $('#ddlBrand').val();
+                        } else {
+                            valDropdown = $('#ddlChannel').val();
                         }
                         var dataToBeSend = {
                             idBrandOrChannel: valDropdown
@@ -136,9 +200,8 @@
                                 }
                             });
                     }
-                </script>
-            </div>
-            <label class="control-label col-md-1 col-xs-12"></label>
+            </script>
+            @*<label class="control-label col-md-1 col-xs-12"></label>*@
         </div>
     </td>
 </tr>
