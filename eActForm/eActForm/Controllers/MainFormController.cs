@@ -31,17 +31,7 @@ namespace eActForm.Controllers
 
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
                     activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
-                    //if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
-                    //{
-                    //    activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Brand";
-                    //}
-                    //else//Channel
-                    //{
-                    //    activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Channel";
-                    //}
-
                     activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.groupName;
-
 
                     //===================Get Subject=======================
                     objGetDataSubjectByChanelOrBrand objGetDataSubjectBy = new objGetDataSubjectByChanelOrBrand();
@@ -84,6 +74,9 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "";
                     activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = costThemeDetailOfGroupByPriceTBMMKT;
                     activity_TBMMKT_Model.totalCostThisActivity = decimal.Parse("0.00");
+                    //activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new String[0];
+                    activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = "";
+                    activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = "";
                     //=END==mock data for first input=====
 
                     //===================Get Subject=======================
@@ -94,17 +87,20 @@ namespace eActForm.Controllers
                 }
 
                 activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrandByForm.GetAllBrand(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId).Where(x => x.no_tbmmkt != "").ToList();
-
-                // activity_TBMMKT_Model.channelMasterTypeList = QueryGetAllChanelByForm.getAllChanel(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId).Where(x => x.no_tbmmkt != "").ToList(); ;
-                //activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
                 activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGet_channelMaster.get_channelMaster(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId);
-
                 activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "tbmmkt_ChooseActivityOrDetail").ToList();
                 activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
                 activity_TBMMKT_Model.activityFormModel.mode = mode;
                 activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activityFormTBMMKT.master_type_form_id, "input");
                 activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(UtilsAppCode.Session.User.empCompanyId).FirstOrDefault().companyNameTH;
                 activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+
+                if(activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                {
+                    activity_TBMMKT_Model.list_1 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activityFormTBMMKT.master_type_form_id, "product_pos_premium");
+                    activity_TBMMKT_Model.list_2 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activityFormTBMMKT.master_type_form_id, "for");
+                    activity_TBMMKT_Model.list_3 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activityFormTBMMKT.master_type_form_id, "channel_place");
+                }
 
                 TempData.Keep();
             }

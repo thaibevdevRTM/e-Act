@@ -27,7 +27,7 @@
             }
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] || UtilsAppCode.Session.User.isAdminTBM)
             {
-                <li>@Html.ActionLink(" ใบเบิกผลิตภัณฑ์,POS/PREMIUM", "Index", "MainReport", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = "24BA9F57-586A-4A8E-B54C-00C23C41BFC5" }, null)</li>
+                <li>@Html.ActionLink(" ใบเบิกผลิตภัณฑ์,POS/PREMIUM", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = "24BA9F57-586A-4A8E-B54C-00C23C41BFC5" }, null)</li>
             }
         </ul>
     </li>

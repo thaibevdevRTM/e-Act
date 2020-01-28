@@ -121,6 +121,16 @@
             if ($("#txtactivityPeriodEnd").val() == "") { required += "เคลียร์เงินทดรองในวันที่*<br>"; validate = false; }
             if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
         }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5") {
+            //ขอเบิก
+            var listItems = $('ul.multiselect-container>li');
+            listItems.each(function (idx, li) {
+                var product = $(li);
+                // and the rest of your code
+            });
+
+
+        }
         else {
 
         }

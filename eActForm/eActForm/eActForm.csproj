@@ -226,6 +226,7 @@
     <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllBrandByForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllChanelByForm.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_master_list_choice.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelByGroup.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelMaster.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_company.cs" />
@@ -280,6 +281,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_Act_ActivityChoiceSelectModel.cs" />
+    <Compile Include="Models\TB_Act_master_list_choiceModel.cs" />
     <Compile Include="Models\Master_Company_Model.cs" />
     <Compile Include="Models\Master_type_form_Model.cs" />
     <Compile Include="Models\Master_type_form_detail_Model.cs" />
@@ -1997,6 +2000,8 @@
     <Content Include="Content\vendors\moment\templates\globals.js" />
     <Content Include="Content\vendors\moment\templates\locale-header.js" />
     <Content Include="Content\vendors\moment\templates\test-header.js" />
+    <Content Include="Content\vendors\multiselect\bootstrap-multiselect.css" />
+    <Content Include="Content\vendors\multiselect\bootstrap-multiselect.js" />
     <Content Include="Content\vendors\nprogress\index.html" />
     <Content Include="Content\vendors\nprogress\nprogress.css" />
     <Content Include="Content\vendors\nprogress\nprogress.js" />

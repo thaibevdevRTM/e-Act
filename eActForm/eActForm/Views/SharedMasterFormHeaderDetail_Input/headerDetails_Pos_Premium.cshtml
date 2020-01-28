@@ -18,7 +18,34 @@
 
                             <div class="col-md-4 col-xs-12">
                                 <div class="row">
-                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "form-control textboxcss", @id = "txtEO", style = "" })
+                                    <style>
+                                        td div span {
+                                            line-height: 0px;
+                                        }
+                                    </style>
+                                    @*@Html.DropDownListFor(x => x.activityFormTBMMKT.list_1_multi_select, new MultiSelectList(Model.list_1, "id", "name", ""), new
+    {
+        @class = "form-control selectpicker",
+        id = "ddlproduct_pos_premium",
+        multiple = "multiple"
+    })*@
+
+                                    @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new MultiSelectList(Model.list_1,
+                                    "id", "name"), 
+                                    new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlproduct_pos_premium",
+                                        multiple = "multiple"
+                                    })
+
+                                    <script>
+                                        $(document).ready(function () {
+                                            $('#ddlproduct_pos_premium').multiselect({
+                                                nonSelectedText: '                                 ',
+                                            });
+                                        });
+                                    </script>
                                 </div>
                             </div>
 
