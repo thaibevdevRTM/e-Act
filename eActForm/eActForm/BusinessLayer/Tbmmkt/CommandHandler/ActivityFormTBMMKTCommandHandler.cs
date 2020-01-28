@@ -48,9 +48,11 @@ namespace eActForm.BusinessLayer
 
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
 
+                    if (model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB") {
+
+                    }
+
                 }
-
-
 
                 return rtn;
             }
@@ -64,7 +66,7 @@ namespace eActForm.BusinessLayer
         }
 
         public static int ProcessInsertEstimate(int rtn, Activity_TBMMKT_Model model, string activityId)
-        {
+        {//boom
             int insertIndex = 1;
             if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
             {
@@ -89,6 +91,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
                     costThemeDetail.QtyName = item.QtyName;
                     costThemeDetail.remark = item.remark == null ? "" : item.remark;
+                    costThemeDetail.typeTheme = item.typeTheme == null ? "" : item.typeTheme;
 
                     rtn += insertEstimate(costThemeDetail);
 
@@ -100,12 +103,22 @@ namespace eActForm.BusinessLayer
 
         public static int ProcessInsertTB_Act_ActivityForm_DetailOther(int rtn, Activity_TBMMKT_Model model, string activityId)
         {
+            TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+            if (model.activityFormTBMMKT.master_type_form_id== "294146B1-A6E5-44A7-B484-17794FA368EB")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+            {
+                model.tB_Act_ActivityForm_DetailOther = tB_Act_ActivityForm_DetailOther;
+                model.tB_Act_ActivityForm_DetailOther.activityProduct = "";
+                model.tB_Act_ActivityForm_DetailOther.activityTel = "";
+                model.tB_Act_ActivityForm_DetailOther.IO = "";
+                model.tB_Act_ActivityForm_DetailOther.EO = "";
+                model.tB_Act_ActivityForm_DetailOther.descAttach = "";
+                model.tB_Act_ActivityForm_DetailOther.BudgetNumber = "";
+            }
+        
             int insertIndex = 1;
             if (model.tB_Act_ActivityForm_DetailOther != null)
             {
                 rtn += deleteusp_deleteTB_Act_ActivityForm_DetailOther(activityId);
-
-                TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
                 tB_Act_ActivityForm_DetailOther.Id = Guid.NewGuid().ToString();
                 tB_Act_ActivityForm_DetailOther.activityId = activityId;
 
@@ -240,12 +253,6 @@ namespace eActForm.BusinessLayer
                 return null;
             }
         }
-
-
-
-
-
-
 
         public static int deleteActivityOfProductByActivityId(string activityId)
         {
@@ -655,6 +662,116 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        #region "travelling tbm"
+        public static int deleteRequestEmpByActivityId(string activityId)
+        {
+
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteRequestEmpByActivityId"
+                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> deleteRequestEmpByActivityId");
+            }
+
+            return result;
+        }
+
+        public static int deletePlaceDetailByActivityId(string activityId)
+        {
+
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deletePlaceDetailByActivityId"
+                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> deletePlaceDetailByActivityId");
+            }
+
+            return result;
+        }
+
+        //public static int ProcessInsertRequestEmp(int rtn, Activity_TBMMKT_Model model, string activityId)
+        //{
+        //    int insertIndex = 1;
+        //    if (model. != null)
+        //    {
+        //        rtn += deleteRequestEmpByActivityId(activityId);
+        //        foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
+        //        {
+
+        //            CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
+        //            costThemeDetail.id = Guid.NewGuid().ToString();
+        //            costThemeDetail.activityId = activityId;
+        //            costThemeDetail.activityTypeId = item.activityTypeId;
+        //            costThemeDetail.productDetail = item.productDetail;
+        //            costThemeDetail.total = item.total;
+        //            costThemeDetail.IO = item.IO;
+        //            costThemeDetail.rowNo = insertIndex;
+        //            costThemeDetail.delFlag = false;
+        //            costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
+        //            costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+        //            costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+        //            costThemeDetail.updatedDate = DateTime.Now;
+        //            costThemeDetail.unit = item.unit;
+        //            costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
+        //            costThemeDetail.QtyName = item.QtyName;
+        //            costThemeDetail.remark = item.remark == null ? "" : item.remark;
+        //            costThemeDetail.typeTheme = item.typeTheme == null ? "" : item.typeTheme;
+
+        //            rtn += insertEstimate(costThemeDetail);
+
+        //            insertIndex++;
+        //        }
+        //    }
+        //    return rtn;
+        //}
+        //public static int ProcessInsertPlaceDetail(int rtn, Activity_TBMMKT_Model model, string activityId)
+        //{
+        //    int insertIndex = 1;
+        //    if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
+        //    {
+        //        rtn += deletePlaceDetailByActivityId(activityId);
+        //        foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
+        //        {
+
+        //            CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
+        //            costThemeDetail.id = Guid.NewGuid().ToString();
+        //            costThemeDetail.activityId = activityId;
+        //            costThemeDetail.activityTypeId = item.activityTypeId;
+        //            costThemeDetail.productDetail = item.productDetail;
+        //            costThemeDetail.total = item.total;
+        //            costThemeDetail.IO = item.IO;
+        //            costThemeDetail.rowNo = insertIndex;
+        //            costThemeDetail.delFlag = false;
+        //            costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
+        //            costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+        //            costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+        //            costThemeDetail.updatedDate = DateTime.Now;
+        //            costThemeDetail.unit = item.unit;
+        //            costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
+        //            costThemeDetail.QtyName = item.QtyName;
+        //            costThemeDetail.remark = item.remark == null ? "" : item.remark;
+        //            costThemeDetail.typeTheme = item.typeTheme == null ? "" : item.typeTheme;
+
+        //            rtn += insertEstimate(costThemeDetail);
+
+        //            insertIndex++;
+        //        }
+        //    }
+        //    return rtn;
+        //}
+
+        #endregion
     }
 
 }

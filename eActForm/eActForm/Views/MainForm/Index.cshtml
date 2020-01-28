@@ -44,10 +44,10 @@
         <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
             @*=================for test====================*@
             @*<tr>
-                <td>
-                    @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
-                </td>
-            </tr>*@
+                    <td>
+                        @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
+                    </td>
+                </tr>*@
             @*=========END========for test====================*@
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
@@ -129,15 +129,19 @@
         if ($("#ddlSubject").val() == "") { required += "&emsp;เรื่อง*<br>"; validate = false; }
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4") {
-
+            if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
+            if ($("#txtActivityName").val() == "") { required += "ชื่องาน*<br>"; validate = false; }
+            if ($("#txtdateActivitySt").val() == "") { required += "ต้องการเช็ควันที่*<br>"; validate = false; }
+            if ($("#txtactivityPeriodEnd").val() == "") { required += "เคลียร์เงินทดรองในวันที่*<br>"; validate = false; }
+            if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
         } else if ('@Model.activityFormTBMMKT.master_type_form_id'=='294146B1-A6E5-44A7-B484-17794FA368EB')
         {
-           
+
             //Travelling form TBM
-            if ($("#ddlEmp_0").val() == "") { required += "&emsp;ผู้ร่วมเดินทาง/The following persons to travel*<br>"; validate = false; }
+            @*if ($("#ddlEmp_0").val() == "") { required += "&emsp;ผู้ร่วมเดินทาง/The following persons to travel*<br>"; validate = false; }
 
             var validateCkb = false;
-            var rowCount = @Model.TB_Reg_Purpose.Count;
+            var rowCount = @Model.masterPurpose.Count;
             for (i = 0; i < rowCount; i++) {
                 if (document.getElementById("ckb_" + i.toString()).checked == true) {
                     validateCkb = true;
@@ -146,7 +150,7 @@
             if (validateCkb == false) {
                 required += "&emsp;วัตถุประสงค์ในการเดินทาง/Purpose of Travelling*<br>"; validate = false;
             }
-          
+
             if (!($("#txtPlace_0").val() != "" &&
                 $("#txtForProject_0").val() != "" &&
                 $("#txtPeriod_0").val() != "" &&
@@ -161,13 +165,8 @@
                 $("#txtTypeTheme_0").val() != "" &&
                 $("#txtUnit_0").val() != "")) {
                 required += "&emsp;ประมาณค่าใช้จ่าย/Estimate of travelling expenses*<br>"; validate = false;
-            }
+            }*@
 
-            if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
-            if ($("#txtActivityName").val() == "") { required += "ชื่องาน*<br>"; validate = false; }
-            if ($("#txtdateActivitySt").val() == "") { required += "ต้องการเช็ควันที่*<br>"; validate = false; }
-            if ($("#txtactivityPeriodEnd").val() == "") { required += "เคลียร์เงินทดรองในวันที่*<br>"; validate = false; }
-            if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
         }
         else {
 

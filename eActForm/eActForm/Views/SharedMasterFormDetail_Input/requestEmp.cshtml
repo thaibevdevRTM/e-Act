@@ -17,15 +17,15 @@
                     <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">BU / หน่วยธุรกิจ</th>
                 </tr>
                 @{ var index = 0;}
-                @foreach (var item in Model.RequestEmp)
+                @foreach (var item in Model.requestEmpModel)
                 {
                     <tr class="tagCountRowinTable">
                         <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
                             @*<input type="text" value="@(index+1)" id="costThemeDetailOfGroupByPriceTBMMKT[@index].rowNo" name="costThemeDetailOfGroupByPriceTBMMKT[@index].rowNo" class="form-control textboxcss clstxtIO" readonly="readonly" style="text-align:center;" />
                                 </td>
                                 <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">*@
-                            @Html.DropDownList("RequestEmp[" + index + "].empId",
-                           new SelectList(Model.TB_Reg_RequestEmp, "empId", "empName", item.empId), ""
+                            @Html.DropDownList("requestEmpModel[" + index + "].empId",
+                           new SelectList(Model.masterRequestEmp, "empId", "empName", item.empId), ""
                            , new
                            {
                                @id = "ddlEmp_" + index,
@@ -39,35 +39,20 @@
 
 
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.position" id="position_@index" name="RequestEmp[@index].position" readonly  class="form-control position" />
+                            <input type="text" value="@item.position" id="position_@index" name="requestEmpModel[@index].position" readonly class="form-control position" />
                         </td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.level" id="level_@index" name="RequestEmp[@index].level" readonly  class="form-control textboxcss" />
+                            <input type="text" value="@item.level" id="level_@index" name="requestEmpModel[@index].level" readonly class="form-control textboxcss" />
                         </td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.department" id="department_@index" name="RequestEmp[@index].department"  readonly class="form-control textboxcss" />
+                            <input type="text" value="@item.department" id="department_@index" name="requestEmpModel[@index].department" readonly class="form-control textboxcss" />
                         </td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.bu" id="bu_@index" name="RequestEmp[@index].bu" readonly  class="form-control textboxcss" />
+                            <input type="text" value="@item.bu" id="bu_@index" name="requestEmpModel[@index].bu" readonly class="form-control textboxcss" />
                         </td>
                     </tr>
                     index++;
                 }
-
-
-
-
-                @*<tr>
-                        <td colspan="2" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                            จำนวนเงินรวม(บาท)&nbsp;
-                        </td>
-                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
-                            <label id="totalEstimate" type="text" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###.00")</label>&nbsp;
-                        </td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                            &nbsp;
-                        </td>
-                    </tr>*@
             </table>
             <script>
 

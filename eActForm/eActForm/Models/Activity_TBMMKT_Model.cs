@@ -19,10 +19,11 @@ namespace eActForm.Models
         public string createdByName { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalCostThisActivity { get; set; }
-        public List< RequestEmpModel> TB_Reg_RequestEmp { get; set; }
-        public List<RequestEmpModel> RequestEmp { get; set; }
-        public List<PurposeModel> TB_Reg_Purpose { get; set; }
-        public List<PlaceDetailModel> PlaceDetailModel { get; set; }
+
+        public List<RequestEmpModel> masterRequestEmp { get; set; }
+        public List<RequestEmpModel> requestEmpModel { get; set; }
+        public List<PurposeModel> masterPurpose { get; set; }
+        public List<PlaceDetailModel> placeDetailModel { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> expensesDetailModel { get; set; }
 
         public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }

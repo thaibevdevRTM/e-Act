@@ -94,14 +94,14 @@ namespace eActForm.Controllers
                     {
                         RequestEmp.Add(new RequestEmpModel() { id = "", empId = "", empName = "", position = "", bu = "" });
                     }
-                    activity_TBMMKT_Model.RequestEmp = RequestEmp;
+                    activity_TBMMKT_Model.requestEmpModel = RequestEmp;
 
                     List<PlaceDetailModel> PlaceDetailModel = new List<PlaceDetailModel>();
                     for (int i = 0; i < 3; i++)
                     {
                         PlaceDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = "", arrivalDate = "" });
                     }
-                    activity_TBMMKT_Model.PlaceDetailModel = PlaceDetailModel;
+                    activity_TBMMKT_Model.placeDetailModel = PlaceDetailModel;
 
                 
                     List<CostThemeDetailOfGroupByPriceTBMMKT> expensesDetailModel = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
@@ -135,8 +135,8 @@ namespace eActForm.Controllers
               
                 
                 //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
-                activity_TBMMKT_Model.TB_Reg_RequestEmp = QueryGet_empByComp.getEmpByComp("3030").ToList();
-                activity_TBMMKT_Model.TB_Reg_Purpose = QueryGet_master_purpose.getAllPurpose().ToList();
+                activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp("3030").ToList();
+                activity_TBMMKT_Model.masterPurpose = QueryGet_master_purpose.getAllPurpose().ToList();
                 //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
 
 
