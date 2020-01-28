@@ -48,7 +48,8 @@ namespace eActForm.BusinessLayer
 
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
 
-                    if (model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB") {
+                    if (model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB")
+                    {
 
                     }
 
@@ -66,7 +67,7 @@ namespace eActForm.BusinessLayer
         }
 
         public static int ProcessInsertEstimate(int rtn, Activity_TBMMKT_Model model, string activityId)
-        {//boom
+        {
             int insertIndex = 1;
             if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
             {
@@ -104,7 +105,7 @@ namespace eActForm.BusinessLayer
         public static int ProcessInsertTB_Act_ActivityForm_DetailOther(int rtn, Activity_TBMMKT_Model model, string activityId)
         {
             TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
-            if (model.activityFormTBMMKT.master_type_form_id== "294146B1-A6E5-44A7-B484-17794FA368EB")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+            if (model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
             {
                 model.tB_Act_ActivityForm_DetailOther = tB_Act_ActivityForm_DetailOther;
                 model.tB_Act_ActivityForm_DetailOther.activityProduct = "";
@@ -114,7 +115,7 @@ namespace eActForm.BusinessLayer
                 model.tB_Act_ActivityForm_DetailOther.descAttach = "";
                 model.tB_Act_ActivityForm_DetailOther.BudgetNumber = "";
             }
-        
+
             int insertIndex = 1;
             if (model.tB_Act_ActivityForm_DetailOther != null)
             {
@@ -700,77 +701,182 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        //public static int ProcessInsertRequestEmp(int rtn, Activity_TBMMKT_Model model, string activityId)
-        //{
-        //    int insertIndex = 1;
-        //    if (model. != null)
-        //    {
-        //        rtn += deleteRequestEmpByActivityId(activityId);
-        //        foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
-        //        {
+        public static int ProcessInsertRequestEmp(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            int insertIndex = 1;
+            if (model.requestEmpModel != null)
+            {
+                rtn += deleteRequestEmpByActivityId(activityId);
+                foreach (var item in model.requestEmpModel.ToList())
+                {
 
-        //            CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
-        //            costThemeDetail.id = Guid.NewGuid().ToString();
-        //            costThemeDetail.activityId = activityId;
-        //            costThemeDetail.activityTypeId = item.activityTypeId;
-        //            costThemeDetail.productDetail = item.productDetail;
-        //            costThemeDetail.total = item.total;
-        //            costThemeDetail.IO = item.IO;
-        //            costThemeDetail.rowNo = insertIndex;
-        //            costThemeDetail.delFlag = false;
-        //            costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
-        //            costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-        //            costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
-        //            costThemeDetail.updatedDate = DateTime.Now;
-        //            costThemeDetail.unit = item.unit;
-        //            costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
-        //            costThemeDetail.QtyName = item.QtyName;
-        //            costThemeDetail.remark = item.remark == null ? "" : item.remark;
-        //            costThemeDetail.typeTheme = item.typeTheme == null ? "" : item.typeTheme;
+                    RequestEmpModel requestEmpModel = new RequestEmpModel();
 
-        //            rtn += insertEstimate(costThemeDetail);
+                    requestEmpModel.id = Guid.NewGuid().ToString();
+                    requestEmpModel.activityId = activityId;
+                    requestEmpModel.rowNo = insertIndex;
+                    requestEmpModel.empId = item.empId;
+                    requestEmpModel.delFlag = false;
+                    requestEmpModel.createdByUserId = model.activityFormModel.createdByUserId;
+                    requestEmpModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    requestEmpModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    requestEmpModel.updatedDate = DateTime.Now;
 
-        //            insertIndex++;
-        //        }
-        //    }
-        //    return rtn;
-        //}
-        //public static int ProcessInsertPlaceDetail(int rtn, Activity_TBMMKT_Model model, string activityId)
-        //{
-        //    int insertIndex = 1;
-        //    if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
-        //    {
-        //        rtn += deletePlaceDetailByActivityId(activityId);
-        //        foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
-        //        {
+                    rtn += insertRequestEmp(requestEmpModel);
 
-        //            CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
-        //            costThemeDetail.id = Guid.NewGuid().ToString();
-        //            costThemeDetail.activityId = activityId;
-        //            costThemeDetail.activityTypeId = item.activityTypeId;
-        //            costThemeDetail.productDetail = item.productDetail;
-        //            costThemeDetail.total = item.total;
-        //            costThemeDetail.IO = item.IO;
-        //            costThemeDetail.rowNo = insertIndex;
-        //            costThemeDetail.delFlag = false;
-        //            costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
-        //            costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-        //            costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
-        //            costThemeDetail.updatedDate = DateTime.Now;
-        //            costThemeDetail.unit = item.unit;
-        //            costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
-        //            costThemeDetail.QtyName = item.QtyName;
-        //            costThemeDetail.remark = item.remark == null ? "" : item.remark;
-        //            costThemeDetail.typeTheme = item.typeTheme == null ? "" : item.typeTheme;
+                    insertIndex++;
+                }
+            }
+            return rtn;
+        }
+        public static int ProcessInsertPlaceDetail(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            int insertIndex = 1;
+            if (model.placeDetailModel != null)
+            {
+                rtn += deletePlaceDetailByActivityId(activityId);
+                foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
+                {
 
-        //            rtn += insertEstimate(costThemeDetail);
+                    CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
+                    costThemeDetail.id = Guid.NewGuid().ToString();
+                    costThemeDetail.activityId = activityId;
+                    costThemeDetail.activityTypeId = item.activityTypeId;
+                    costThemeDetail.productDetail = item.productDetail;
+                    costThemeDetail.total = item.total;
+                    costThemeDetail.IO = item.IO;
+                    costThemeDetail.rowNo = insertIndex;
+                    costThemeDetail.delFlag = false;
+                    costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
+                    costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    costThemeDetail.updatedDate = DateTime.Now;
+                    costThemeDetail.unit = item.unit;
+                    costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
+                    costThemeDetail.QtyName = item.QtyName;
+                    costThemeDetail.remark = item.remark == null ? "" : item.remark;
+                    costThemeDetail.typeTheme = item.typeTheme == null ? "" : item.typeTheme;
 
-        //            insertIndex++;
-        //        }
-        //    }
-        //    return rtn;
-        //}
+                    rtn += insertEstimate(costThemeDetail);
 
+                    insertIndex++;
+                }
+            }
+            return rtn;
+        }
+        public static int ProcessInsertPerpose(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            int insertIndex = 1;
+            if (model.placeDetailModel != null)
+            {
+                rtn += deletePlaceDetailByActivityId(activityId);
+                foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
+                {
+
+                    CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
+                    costThemeDetail.id = Guid.NewGuid().ToString();
+                    costThemeDetail.activityId = activityId;
+                    costThemeDetail.activityTypeId = item.activityTypeId;
+                    costThemeDetail.productDetail = item.productDetail;
+                    costThemeDetail.total = item.total;
+                    costThemeDetail.IO = item.IO;
+                    costThemeDetail.rowNo = insertIndex;
+                    costThemeDetail.delFlag = false;
+                    costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
+                    costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    costThemeDetail.updatedDate = DateTime.Now;
+                    costThemeDetail.unit = item.unit;
+                    costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
+                    costThemeDetail.QtyName = item.QtyName;
+                    costThemeDetail.remark = item.remark == null ? "" : item.remark;
+                    costThemeDetail.typeTheme = item.typeTheme == null ? "" : item.typeTheme;
+
+                    rtn += insertEstimate(costThemeDetail);
+
+                    insertIndex++;
+                }
+            }
+            return rtn;
+        }
+        protected static int insertRequestEmp(RequestEmpModel model)
+        {
+            int result = 0;
+
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertRequestEmp"
+                    , new SqlParameter[] {new SqlParameter("@id",model.id)
+                    ,new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@rowNo",model.rowNo)
+                    ,new SqlParameter("@empId ",model.empId)
+                    ,new SqlParameter("@delFlag",model.delFlag)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertEstimateTBMMKT");
+            }
+
+            return result;
+        }
+        protected static int insertPlaceDetail(RequestEmpModel model)
+        {
+            int result = 0;
+
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertRequestEmp"
+                    , new SqlParameter[] {new SqlParameter("@id",model.id)
+                    ,new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@rowNo",model.rowNo)
+                    ,new SqlParameter("@empId ",model.empId)
+                    ,new SqlParameter("@delFlag",model.delFlag)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertEstimateTBMMKT");
+            }
+
+            return result;
+        }
+        protected static int insertInsertPerpose(RequestEmpModel model)
+        {
+            int result = 0;
+
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertRequestEmp"
+                    , new SqlParameter[] {new SqlParameter("@id",model.id)
+                    ,new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@rowNo",model.rowNo)
+                    ,new SqlParameter("@empId ",model.empId)
+                    ,new SqlParameter("@delFlag",model.delFlag)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertEstimateTBMMKT");
+            }
+
+            return result;
+        }
         #endregion
     }
 

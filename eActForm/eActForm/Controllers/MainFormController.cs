@@ -69,11 +69,11 @@ namespace eActForm.Controllers
 
                     //===mock data for first input====
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
-                    for (int i = 0; i < 14; i++)
-                    {
-                        costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { id = "", IO = "", activityTypeId = "", productDetail = "", unit = 0, unitPrice = 0, total = 0 });
-                    }
-
+                                          for (int i = 0; i < 14; i++)
+                        {
+                            costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { id = "", IO = "", activityTypeId = "", productDetail = "", unit = 0, unitPrice = 0, total = 0 });
+                        }
+                   
                     TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = tB_Act_ActivityForm_DetailOther;
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId = "";
@@ -96,18 +96,18 @@ namespace eActForm.Controllers
                     }
                     activity_TBMMKT_Model.requestEmpModel = RequestEmp;
 
-                    List<PlaceDetailModel> PlaceDetailModel = new List<PlaceDetailModel>();
+                    List<PlaceDetailModel> placeDetailModel = new List<PlaceDetailModel>();
                     for (int i = 0; i < 3; i++)
                     {
-                        PlaceDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = "", arrivalDate = "" });
+                        placeDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = "", arrivalDate = "" });
                     }
-                    activity_TBMMKT_Model.placeDetailModel = PlaceDetailModel;
+                    activity_TBMMKT_Model.placeDetailModel = placeDetailModel;
 
-                
+
                     List<CostThemeDetailOfGroupByPriceTBMMKT> expensesDetailModel = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
                     for (int i = 0; i < 6; i++)
                     {
-                        expensesDetailModel.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { productDetail = "", QtyName = "", unitPrice = 0, typeTheme = "", unit = 0,  total = 0 });
+                        expensesDetailModel.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { productDetail = "", QtyName = "", unitPrice = 0, typeTheme = "", unit = 0, total = 0 });
                     }
                     activity_TBMMKT_Model.expensesDetailModel = expensesDetailModel;
                     #endregion
@@ -132,8 +132,8 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activityFormTBMMKT.master_type_form_id, "input");
                 activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(UtilsAppCode.Session.User.empCompanyId).FirstOrDefault().companyNameTH;
                 activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
-              
-                
+
+
                 //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
                 activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp("3030").ToList();
                 activity_TBMMKT_Model.masterPurpose = QueryGet_master_purpose.getAllPurpose().ToList();
@@ -171,7 +171,12 @@ namespace eActForm.Controllers
                 }
 
 
-                int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+                {
+                    activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = activity_TBMMKT_Model.expensesDetailModel;
+                }
+
+                    int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
 
                 result.Data = activity_TBMMKT_Model.activityFormModel.id;
                 result.Success = true;
@@ -204,5 +209,7 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+      
     }
 }

@@ -45,7 +45,7 @@ namespace eActForm.Models
         public string SubjectId { get; set; }
         public string createdByName { get; set; }
         public string formName { get; set; }
-        public string companyName { get; set; }       
+        public string companyName { get; set; }
     }
 
     public class TB_Reg_Subject
@@ -118,27 +118,34 @@ namespace eActForm.Models
         public string remark { get; set; }
     }
 
-    public class RequestEmpModel
+    public class RequestEmpModel : ActBaseModel
     {
+
         public string id { get; set; }
+        public string activityId { get; set; }
+        public int rowNo { get; set; }
         public string empId { get; set; }
         public string empName { get; set; }
         public string position { get; set; }
         public string level { get; set; }
-        public string department { get; set; } 
-        public string bu { get; set; }     
+        public string department { get; set; }
+        public string bu { get; set; }
     }
 
-    public class PurposeModel
+    public class PurposeModel : ActBaseModel
     {
         public string id { get; set; }
+        public string activityId { get; set; }
+        public int rowNo { get; set; }
         public string detailTh { get; set; }
         public string detailEn { get; set; }
     }
 
-    public class PlaceDetailModel
+    public class PlaceDetailModel : ActBaseModel
     {
-
+        public string id { get; set; }
+        public string activityId { get; set; }
+        public int rowNo { get; set; }
         public string place { get; set; }
         public string forProject { get; set; }
         public string period { get; set; }
