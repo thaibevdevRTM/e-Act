@@ -224,11 +224,14 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetSubject.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryOtherMaster.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_purpose.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_empDetailById.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllBrandByForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllChanelByForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelByGroup.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelMaster.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_company.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_empByComp.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_type_form.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_type_form_detail.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetActivityByIdTBMMKT.cs" />
@@ -278,6 +281,7 @@
     <Compile Include="Controllers\TBMMKT_ActivityBudgetInputController.cs" />
     <Compile Include="Controllers\MainReportController.cs" />
     <Compile Include="Controllers\TBMMKT_ActivityBudgetReportController.cs" />
+    <Compile Include="Controllers\TravellingInCountryFormReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2033,6 +2037,9 @@
     <Content Include="Scripts\bootbox.locales.js" />
     <Content Include="Scripts\bootbox.locales.min.js" />
     <Content Include="Scripts\bootbox.min.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.css" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2224,6 +2231,9 @@
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.datetimepicker.full.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\locales\bootstrap-datetimepicker.fr.js" />
+    <Content Include="Scripts\locales\bootstrap-datetimepicker.th.js" />
+    <Content Include="Scripts\locales\bootstrap-datetimepicker.uk.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -2233,6 +2243,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Uploadfiles\logo-ss.png" />
     <Content Include="uploadImages\12f4c0ff-c7ab-4308-b185-d072c9f151c8_72777008-1A93-48E0-A420-357B10696E30.png" />
     <Content Include="uploadImages\19f467c5-4b1a-4f84-975c-a86a0694f462_63164D1C-469B-431F-8C5B-0EA2544DFEA1.png" />
     <Content Include="uploadImages\301b51cb-8e48-4ed9-9215-01be74d96c83_05F58F69-427D-4FC5-975F-6C062CC8947A.png" />
@@ -2249,7 +2260,10 @@
     <Content Include="Views\BudgetApprove\previewApproveBudget.cshtml" />
     <Content Include="Views\Budget\activityIndex.cshtml" />
     <Content Include="Views\Budget\manageInvoiceList.cshtml" />
+    <Content Include="Views\Shared\_previewActFormTravelling.cshtml" />
     <Content Include="Views\Shared\_searchBudgetActivity.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\requestToRpt.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\lastWordRpt.cshtml" />
     <Content Include="WebForm1.aspx" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -2411,6 +2425,12 @@
     <Content Include="Views\managementFlow\Index.cshtml" />
     <Content Include="Views\managementFlow\dropDetail.cshtml" />
     <Content Include="Views\managementFlow\approveList.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\Index.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\requestEmpRpt.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\purposeDetailRpt.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\placeDetailRpt.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\expensesDetailsRpt.cshtml" />
+    <Content Include="Views\TravellingInCountryFormReport\headerCompany.cshtml" />
     <Content Include="Views\MainReport\Index.cshtml" />
     <Content Include="Views\Shared\_previewMainReport.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompany.cshtml" />

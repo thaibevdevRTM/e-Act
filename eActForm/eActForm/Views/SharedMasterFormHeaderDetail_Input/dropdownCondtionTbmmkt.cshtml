@@ -37,10 +37,10 @@
                         &nbsp;เลือก Brand<span class="required"></span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
-                    {
-                        @class = "form-control selectpicker",
-                        id = "ddlBrand"
-                    })
+               {
+                   @class = "form-control selectpicker",
+                   id = "ddlBrand"
+               })
                 </div>
                 <div id="divChannelNull" style="display:block; width:100%">
                     <label class="control-label" for="ddlChannel">
@@ -57,10 +57,10 @@
                         &nbsp;เรื่อง <span class="required"></span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
-                    {
-                        @class = "form-control selectpicker",
-                        id = "ddlSubject"
-                    })
+               {
+                   @class = "form-control selectpicker",
+                   id = "ddlSubject"
+               })
                 </div>
                 <div id="divSubjectNull" style="display:block; width:100%">
                     <label class="control-label" for="ddlBrand">

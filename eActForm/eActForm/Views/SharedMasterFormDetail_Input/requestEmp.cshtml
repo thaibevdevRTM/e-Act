@@ -1,0 +1,108 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+<tr style="border-bottom:none;">
+    <td>
+        <div id="divRequestEmp" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
+            <table class="table table-bordered" id="tabelRequestEmp" runat="server">
+                <tr style="background-color:#E5E2E2;height:25px; ">
+                    <th colspan="5" style="text-align :center;">
+                        Request for permission for the following persons to travel :  รายชื่อผู้ร่วมเดินทางเพิ่มเติม ดังนี้
+                    </th>
+                </tr>
+                <tr style="height:25px;">
+                    <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Name / ชื่อ</th>
+                    <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Position / ตำแหน่ง</th>
+                    <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">level </th>
+                    <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Department  / หน่วยงาน</th>
+                    <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">BU / หน่วยธุรกิจ</th>
+                </tr>
+                @{ var index = 0;}
+                @foreach (var item in Model.RequestEmp)
+                {
+                    <tr class="tagCountRowinTable">
+                        <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                            @*<input type="text" value="@(index+1)" id="costThemeDetailOfGroupByPriceTBMMKT[@index].rowNo" name="costThemeDetailOfGroupByPriceTBMMKT[@index].rowNo" class="form-control textboxcss clstxtIO" readonly="readonly" style="text-align:center;" />
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">*@
+                            @Html.DropDownList("RequestEmp[" + index + "].empId",
+                           new SelectList(Model.TB_Reg_RequestEmp, "empId", "empName", item.empId), ""
+                           , new
+                           {
+                               @id = "ddlEmp_" + index,
+                               @class = "form-control selectpicker",
+                               @onchange = "changeGetEmp(" + index + ")",
+
+                           })
+
+                            @*data-live-search-placeholder="Search" data-max-options="1"*@
+                        </td>
+
+
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <input type="text" value="@item.position" id="position_@index" name="RequestEmp[@index].position" readonly  class="form-control position" />
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <input type="text" value="@item.level" id="level_@index" name="RequestEmp[@index].level" readonly  class="form-control textboxcss" />
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <input type="text" value="@item.department" id="department_@index" name="RequestEmp[@index].department"  readonly class="form-control textboxcss" />
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <input type="text" value="@item.bu" id="bu_@index" name="RequestEmp[@index].bu" readonly  class="form-control textboxcss" />
+                        </td>
+                    </tr>
+                    index++;
+                }
+
+
+
+
+                @*<tr>
+                        <td colspan="2" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                            จำนวนเงินรวม(บาท)&nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                            <label id="totalEstimate" type="text" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###.00")</label>&nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                            &nbsp;
+                        </td>
+                    </tr>*@
+            </table>
+            <script>
+
+                function sumall() {
+                    var totalAll = 0.00;
+                    var rowCount = parseInt($('#tabelHeaderDetails tr.tagCountRowinTable').length);
+
+                    for (i = 0; i < rowCount; i++) {
+                        var rowtotal = parseFloat($(".txttotal_" + i.toString()).val().replace(",", ""));
+                        $(".hidtotal_" + i.toString()).val(rowtotal.toFixed(2));
+                        totalAll = totalAll + rowtotal;
+                    }
+
+                    $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                }
+
+                function changeGetEmp(rowIndex) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("getEmpDetailById", "eAct")',
+                        data: {
+                            empId: $('#ddlEmp_' + rowIndex).val(),
+                        }
+                    }).done(function (response) {
+
+                        $('#position_' + rowIndex).val(response.Data.position);
+                        $('#level_' + rowIndex).val(response.Data.level);
+                        $('#department_' + rowIndex).val(response.Data.department);
+                        $('#bu_' + rowIndex).val(response.Data.bu);
+                    });
+
+                }
+
+            </script>
+        </div>
+    </td>
+</tr>

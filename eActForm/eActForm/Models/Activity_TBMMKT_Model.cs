@@ -10,6 +10,7 @@ namespace eActForm.Models
         public ActivityFormTBMMKT activityFormTBMMKT { get; set; }
         public TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther { get; set; }
         public List<TB_Act_Chanel_Model.Chanel_Model> tB_Act_Chanel_Model { get; set; }
+        //public List<TB_Act_Chanel_Model.Chanel_Model> tBChanelHCModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model { get; set; }
         public List<TB_Act_ActivityForm_SelectBrandOrChannel> tB_Act_ActivityForm_SelectBrandOrChannel { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT { get; set; }
@@ -18,6 +19,12 @@ namespace eActForm.Models
         public string createdByName { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalCostThisActivity { get; set; }
+        public List< RequestEmpModel> TB_Reg_RequestEmp { get; set; }
+        public List<RequestEmpModel> RequestEmp { get; set; }
+        public List<PurposeModel> TB_Reg_Purpose { get; set; }
+        public List<PlaceDetailModel> PlaceDetailModel { get; set; }
+        public List<CostThemeDetailOfGroupByPriceTBMMKT> expensesDetailModel { get; set; }
+
         public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
         public List<ChannelMasterType> channelMasterTypeList { get; set; }
 
@@ -121,6 +128,45 @@ namespace eActForm.Models
         public string remark { get; set; }
     }
 
+    public class RequestEmpModel
+    {
+        public string id { get; set; }
+        public string empId { get; set; }
+        public string empName { get; set; }
+        public string position { get; set; }
+        public string level { get; set; }
+        public string department { get; set; } 
+        public string bu { get; set; }     
+    }
+
+    public class PurposeModel
+    {
+        public string id { get; set; }
+        public string detailTh { get; set; }
+        public string detailEn { get; set; }
+    }
+
+    public class PlaceDetailModel
+    {
+
+        public string place { get; set; }
+        public string forProject { get; set; }
+        public string period { get; set; }
+        public string departureDate { get; set; }
+        public string arrivalDate { get; set; }
+
+    }
+
+
+    //public class CostThemeDetailOfGroupByPriceTBMMKT : CostThemeDetailOfGroupByPrice
+    //{
+    //    [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+    //    public decimal? unitPrice { get; set; }
+    //    public string unitPriceDisplay { get; set; }
+    //    public string unitPriceDisplayReport { get; set; }
+    //    public string QtyName { get; set; }
+    //    public string remark { get; set; }
+    //}
     public class ChannelMasterType
     {
         public string id { get; set; }
