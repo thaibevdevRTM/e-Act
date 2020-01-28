@@ -45,5 +45,38 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static List<Master_type_form_detail_Model> get_AllMasterFormDetailByTypeLayout(string layout_type)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAllFormDetail_Input"
+                  , new SqlParameter("@layout_type", layout_type));
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new Master_type_form_detail_Model()
+                              {
+                                  id = d["id"].ToString(),
+                                  master_type_form_id = d["master_type_form_id"].ToString(),
+                                  layout_type = d["layout_type"].ToString(),
+                                  orderNo = int.Parse(d["orderNo"].ToString()),
+                                  path_partial = d["path_partial"].ToString(),
+                                  path_controller = d["path_controller"].ToString(),
+                                  path_action = d["path_action"].ToString(),
+                                  delFlag = bool.Parse(d["delFlag"].ToString()),
+                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
+                                  createdByUserId = d["createdByUserId"].ToString(),
+                                  updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
+                                  updatedByUserId = d["updatedByUserId"].ToString(),
+                              });
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("get_AllMasterFormDetailByTypeLayout => " + ex.Message);
+                return new List<Master_type_form_detail_Model>();
+            }
+        }
     }
 }

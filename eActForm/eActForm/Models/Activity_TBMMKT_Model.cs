@@ -25,6 +25,17 @@ namespace eActForm.Models
         public Activity_TBMMKT_Model()
         {
             channelMasterTypeList = new List<ChannelMasterType>();
+            tB_Act_ActivityForm_SelectBrandOrChannel = new List<TB_Act_ActivityForm_SelectBrandOrChannel>();
+            costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+            costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+            tB_Act_Chanel_Model = new List<TB_Act_Chanel_Model.Chanel_Model>();
+            tB_Act_ProductBrand_Model = new List<TB_Act_ProductBrand_Model>();
+            list_TB_Act_ActivityLayout = new List<TB_Act_ActivityLayout>();
+            tB_Reg_Subject = new List<TB_Reg_Subject>();
+            approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
+            channelMasterTypeList = new List<ChannelMasterType>();
+            tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+            activityFormTBMMKT = new ActivityFormTBMMKT();
         }
 
     }

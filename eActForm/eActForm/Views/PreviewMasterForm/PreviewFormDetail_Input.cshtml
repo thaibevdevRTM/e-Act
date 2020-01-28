@@ -1,0 +1,23 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+@{ int index = 0; }
+@foreach (var item in Model.master_Type_Form_Detail_Models)
+{
+    if (index == 8)
+    {
+
+        <div class="row">
+            <labe>@item.path_action</labe>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+        </div>
+        <br />
+        <br /><br />
+        <br />
+        <hr />
+    }
+    index++;
+}
