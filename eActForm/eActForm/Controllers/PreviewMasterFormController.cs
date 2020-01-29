@@ -25,6 +25,21 @@ namespace eActForm.Controllers
             activity_TBMMKT_Model.activityFormModel = new ActivityForm();
             activityFormTBMMKT.companyName = "CompanyName";
             activityFormTBMMKT.formName = "FormName";
+            activity_TBMMKT_Model.totalCostThisActivity = 0;
+            activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_AllMasterFormDetailByTypeLayout(typeLayout);
+            activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+        public ActionResult PreviewFormDetail_Report(string typeLayout)
+        {
+
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
+            activity_TBMMKT_Model.activityFormModel = new ActivityForm();
+            activityFormTBMMKT.companyName = "CompanyName";
+            activityFormTBMMKT.formName = "FormName";
+            activity_TBMMKT_Model.totalCostThisActivity = 0;
             activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_AllMasterFormDetailByTypeLayout(typeLayout);
             activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
             return PartialView(activity_TBMMKT_Model);

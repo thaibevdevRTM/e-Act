@@ -43,6 +43,10 @@ namespace eActForm.Models
             channelMasterTypeList = new List<ChannelMasterType>();
             tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
             activityFormTBMMKT = new ActivityFormTBMMKT();
+            TB_Reg_Purpose = new List<PurposeModel>();
+            PlaceDetailModel = new List<PlaceDetailModel>();
+            expensesDetailModel = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+            RequestEmp = new List<RequestEmpModel>();
         }
 
     }

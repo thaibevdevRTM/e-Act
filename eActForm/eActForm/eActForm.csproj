@@ -2455,6 +2455,13 @@
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\dropdownCondtionTbmmkt.cshtml" />
     <Content Include="Views\PreviewMasterForm\Index.cshtml" />
     <Content Include="Views\PreviewMasterForm\PreviewFormDetail_Input.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\benefitDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\expensesDetails.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\placeDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\purposeDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\remarksDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\requestEmp.cshtml" />
+    <Content Include="Views\PreviewMasterForm\PreviewFormDetail_Report.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
