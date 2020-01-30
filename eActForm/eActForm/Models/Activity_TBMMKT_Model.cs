@@ -23,6 +23,8 @@ namespace eActForm.Models
         public List<TB_Act_master_list_choiceModel> list_1 { get; set; }
         public List<TB_Act_master_list_choiceModel> list_2 { get; set; }
         public List<TB_Act_master_list_choiceModel> list_3 { get; set; }
+        public TB_Act_ActivityChoiceSelectModel tB_Act_ActivityChoiceSelectModel { get; set; }
+        public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model_2 { get; set; }
 
         public Activity_TBMMKT_Model()
         {
@@ -43,6 +45,7 @@ namespace eActForm.Models
         public string[] list_1_multi_select { get; set; }
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }
+        public string brand_select { get; set; }
     }
 
     public class TB_Reg_Subject

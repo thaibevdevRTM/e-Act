@@ -22,27 +22,33 @@
                                         td div span {
                                             line-height: 0px;
                                         }
+                                        .multiselect{
+                                            width:308px;
+                                            text-align:left;
+                                        }
+                                        .btn .caret {
+                                            float: right;
+                                            margin-top:7px;
+                                            margin-right:-6px;
+                                        }
+                                        .checkbox, .radio {
+                                            position: relative;
+                                            display: block;
+                                            width:308px;
+                                        }
                                     </style>
-                                    @*@Html.DropDownListFor(x => x.activityFormTBMMKT.list_1_multi_select, new MultiSelectList(Model.list_1, "id", "name", ""), new
-    {
-        @class = "form-control selectpicker",
-        id = "ddlproduct_pos_premium",
-        multiple = "multiple"
-    })*@
-
                                     @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new MultiSelectList(Model.list_1,
-                                    "id", "name"), 
-                                    new
-                                    {
-                                        @class = "form-control selectpicker",
-                                        id = "ddlproduct_pos_premium",
-                                        multiple = "multiple"
-                                    })
-
+                                                      "id", "name"),
+                                                      new
+                                                      {
+                                                          @class = "form-control selectpicker",
+                                                          id = "ddlproduct_pos_premium",
+                                                          multiple = "multiple"
+                                                      })
                                     <script>
                                         $(document).ready(function () {
                                             $('#ddlproduct_pos_premium').multiselect({
-                                                nonSelectedText: '                                 ',
+                                                nonSelectedText: '                                                                     ',
                                             });
                                         });
                                     </script>
@@ -55,7 +61,49 @@
 
                             <div class="col-md-4 col-xs-12">
                                 <div class="row">
-                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.IO, new { @class = "form-control textboxcss", @id = "txtIO", style = "" })
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.list_2_select, new SelectList(Model.list_2, "id", "name", ""), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlfor"
+                                    })
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-12">
+                                Brand/ผลิตภัณฑ์ :
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    <style>
+                                        td div span {
+                                            line-height: 0px;
+                                        }
+                                    </style>
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.brand_select, new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", ""), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlfor"
+                                    })
+                                </div>
+                            </div>
+
+                            <label class="control-label col-md-2 col-xs-12">
+                                Cost Center :
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.list_2_select, new SelectList(Model.list_2, "id", "name", ""), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlfor"
+                                    })
                                 </div>
                             </div>
                         </div>
@@ -64,18 +112,6 @@
 
 
 
-                <tr>
-                    <td>
-                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
-                            <tr class="hDetailtr">
-                                <td style="width:150px;vertical-align:top;">&nbsp;ขอเบิก</td>
-                                <td style="width:160px;vertical-align:top;text-align:left;">: ผลิตภัณฑ์,POS</td>
-                                <td style="width:130px;vertical-align:top;">&nbsp;เพื่อ</td>
-                                <td style="width:260px;vertical-align:top;">: เผยแพร่</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
                 <tr>
                     <td>
                         <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
