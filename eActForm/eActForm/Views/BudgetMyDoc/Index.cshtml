@@ -27,7 +27,8 @@
 
 <div class="row tile_count">
 	<div id="getQuery" class="col-md-12 col-xs-12">
-		@Html.Action("myDocBudget", "BudgetMyDoc", new { companyEN = var_companyEN })
+		@*@Html.Action("myDocBudget", "BudgetMyDoc", new { companyEN = Request.QueryString["typeForm"] })*@
+		@Html.Action("myDocBudget", "BudgetMyDoc")
 	</div>
 </div>
 

@@ -48,15 +48,14 @@ namespace eActForm.Controllers
 			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
 			model = new Budget_Approve_Detail_Model.budgetForms();
 
+			string companyEN = Session["var_companyEN"].ToString();
+
 			if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
 			{
-				model.budgetFormLists = getBudgetListsByEmpId(null, null);
+				model.budgetFormLists = getBudgetListsByEmpId(null, companyEN);
 			}
 			else
 			{
-				string companyEN = "MT";
-				if (UtilsAppCode.Session.User.empCompanyId == "5601") { companyEN = "OMT"; } ;
-
 				model.budgetFormLists = getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN);
 			}
 
@@ -86,10 +85,12 @@ namespace eActForm.Controllers
 		}
 
 		
-		public ActionResult myDocBudget(string companyEN) 
+		public ActionResult myDocBudget() 
 		{
 			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
 			model = new Budget_Approve_Detail_Model.budgetForms();
+
+			string companyEN = Session["var_companyEN"].ToString();
 
 			if (TempData["SearchDataModelBudget"] != null)
 			{
