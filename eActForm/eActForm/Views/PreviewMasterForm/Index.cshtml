@@ -4,6 +4,14 @@
 
 
 
+<a href='@Url.Action("PreviewFormDetail", "PreviewMasterForm", new { typeLayout = "input" })'>
+    <img height="200" src='@Url.Content("~/images/google-forms.jpg")' />
+</a>
+<a href='@Url.Action("PreviewFormDetail", "PreviewMasterForm", new { typeLayout = "report" })'>
+    <img width="200" height="200" src='@Url.Content("~/images/pngtree-reports.jpg")' />
+    <label>REPORT</label>
+</a>
+
 <br />
 <br />
 <br />
@@ -11,6 +19,6 @@
 <br />
 <br />
 <div>
-    @Html.Action("PreviewFormDetail_Input", "PreviewMasterForm", new { typeLayout = "input" })
+   
     
 </div>

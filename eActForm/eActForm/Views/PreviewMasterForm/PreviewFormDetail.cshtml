@@ -1,13 +1,15 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 @{ int index = 0; }
 @foreach (var item in Model.master_Type_Form_Detail_Models)
 {
-    if (index == 8)
-    {
-
+   
         <div class="row">
-            <labe>@item.path_action</labe>
+            <labe>@item.path_action / @item.path_controller</labe>
         </div>
         <br />
         <br />
@@ -18,6 +20,7 @@
         <br /><br />
         <br />
         <hr />
-    }
-    index++;
+
+        index++;
+    
 }
