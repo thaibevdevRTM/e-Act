@@ -30,6 +30,7 @@ namespace eActForm.BusinessLayer
                                   activityProduct = d["activityProduct"].ToString(),
                                   activityTel = d["activityTel"].ToString(),
                                   EO = d["EO"].ToString(),
+                                  IO = d["IO"].ToString(),
                                   descAttach = d["descAttach"].ToString(),
                                   BudgetNumber = d["BudgetNumber"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
@@ -37,6 +38,7 @@ namespace eActForm.BusinessLayer
                                   createdByUserId = d["createdByUserId"].ToString(),
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
+                                  groupName = d["groupName"].ToString(),
                               });
 
                 return result.ToList();

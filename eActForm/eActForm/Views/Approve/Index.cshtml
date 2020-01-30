@@ -249,8 +249,8 @@ else
 
     function callPreviewApprove(obj) {
 
-        if ('@UtilsAppCode.Session.User.empCompanyId' == '3030') {
-
+        if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '488F7C0D-8B59-4BDE-90E4-F157BFF67829') {
+            
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("previewActBudget", "Approve")',
@@ -259,11 +259,25 @@ else
                     typeForm: '@Model.typeForm.ToString()',
                 }
             }).done(function (htmlResponse) {
-                //$("#divPreviewApprove").html(htmlResponse);
-                //genPdf();
                 $("#dataFromPDF").val(htmlResponse);
                 genFileActForm();
-            });
+                });
+
+        }
+        else if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4') {
+            
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("index", "MainReport")',
+                data: {
+                    activityId: obj,
+                    typeForm: '@Model.typeForm.ToString()',
+                }
+            }).done(function (htmlResponse) {
+                $("#dataFromPDF").val(htmlResponse);
+                genFileActForm();
+                });
+
         }
         else {
 
@@ -272,7 +286,6 @@ else
                 url: '@Url.Action("previewApprove", "Approve")',
                 data: {
                     actId: obj,
-                    typeForm: '@Model.typeForm.ToString()',
                 }
             }).done(function (htmlResponse) {
                 //$("#divPreviewApprove").html(htmlResponse);

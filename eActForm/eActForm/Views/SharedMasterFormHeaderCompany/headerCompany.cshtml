@@ -1,3 +1,8 @@
-﻿<div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;font-size:large;">
-    บริษัท  ไทยเบฟมาร์เก็ตติ้ง  จำกัด<br />ใบยืมเงินทดรอง
-</div>
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+<tr>
+    <td>
+        <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;" class="fontDocV2">
+            @Model.activityFormTBMMKT.companyName<br />@Model.activityFormTBMMKT.formName
+        </div>
+    </td>
+</tr>

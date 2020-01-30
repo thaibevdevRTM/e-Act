@@ -27,6 +27,7 @@ namespace eActForm.Models
             public List<approveDetailModel> approveDetailLists { get; set; }
             public List<approveStatus> approveStatusLists { get; set; }
             public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
+            public Activity_TBMMKT_Model activity_TBMMKT_Model { get; set; }//fream dev date 20200114
 
             public approveModels()
             {
