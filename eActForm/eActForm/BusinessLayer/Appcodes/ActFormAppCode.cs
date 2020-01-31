@@ -59,12 +59,18 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateDelFlagActivityForm"
+                int rtn = 0;
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateDelFlagActivityForm"
                     , new SqlParameter[] { new SqlParameter("@actId", actId)
                     ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
+                if (rtn > 0)
+                {
+                    EmailAppCodes.sendRequestCancelToAdmin(actId);
+                }
+                return rtn;
             }
             catch (Exception ex)
             {
