@@ -74,10 +74,13 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "";
                     activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = costThemeDetailOfGroupByPriceTBMMKT;
                     activity_TBMMKT_Model.totalCostThisActivity = decimal.Parse("0.00");
-                    //activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new String[0];
                     activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = "";
                     activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = "";
                     activity_TBMMKT_Model.activityFormTBMMKT.brand_select = "";
+                    activity_TBMMKT_Model.costCenter = "";
+                    activity_TBMMKT_Model.channelRegionName = "";
+                    activity_TBMMKT_Model.glNo = "";
+                    activity_TBMMKT_Model.glName = "";
                     //=END==mock data for first input=====
 
                     //===================Get Subject=======================

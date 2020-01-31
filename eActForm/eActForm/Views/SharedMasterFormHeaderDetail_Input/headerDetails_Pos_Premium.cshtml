@@ -15,30 +15,30 @@
                             <label class="control-label col-md-2 col-xs-12">
                                 สต๊อก :
                             </label>
-                            <div class="col-md-4 col-xs-12">
+                            <div class="col-md-3 col-xs-12">
                                 <div class="row">
                                     @Html.DropDownListFor(x => x.activityFormTBMMKT.list_0_select, new SelectList(Model.list_0, "id", "name", ""), "", new
                                     {
                                         @class = "form-control selectpicker",
                                         id = "ddlin_or_out_stock"
                                     })
-                                    <script>                                        
-                                        $("#ddlin_or_out_stock").change(function () {                                            
+                                    <script>
+                                        $("#ddlin_or_out_stock").change(function () {
                                             if ($("#ddlin_or_out_stock").val() != "") {
                                                 $('#ddlproduct_pos_premium').multiselect('enable');
                                             }
                                             else {
                                                 $('#ddlproduct_pos_premium').multiselect('disable');
-                                                $('#ddlproduct_pos_premium option').each(function () {
-                                                    $(this).prop('selected', false);
-                                                });
-                                            }            
+                                            }
+                                            $('#ddlproduct_pos_premium option').each(function () {
+                                                $(this).prop('selected', false);
+                                            });
                                             $('#ddlproduct_pos_premium').multiselect('refresh');
                                         });
                                     </script>
                                 </div>
                             </div>
-                            <label class="control-label col-md-6 col-xs-12">
+                            <label class="control-label col-md-7 col-xs-12">
                                 &nbsp;
                             </label>
                         </div>
@@ -50,42 +50,42 @@
                             <label class="control-label col-md-2 col-xs-12">
                                 ขอเบิก :
                             </label>
-                            <div class="col-md-4 col-xs-12">
+                            <div class="col-md-3 col-xs-12">
                                 <div class="row">
                                     <style>
                                         td div span {
                                             line-height: 0px;
                                         }
-
                                         .multiselect {
-                                            min-width: 308px;
+                                            min-width: 232px;
                                             text-align: left;
                                         }
-
+                                        .btn-group > .btn:first-child {                                          
+                                            width: 232px;
+                                        }
                                         .btn .caret {
                                             float: right;
                                             margin-top: 7px;
                                             margin-right: -6px;
                                         }
-
                                         .checkbox, .radio {
                                             position: relative;
                                             display: block;
-                                            min-width: 308px;
+                                            min-width: 232px;
                                         }
                                     </style>
                                     @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new MultiSelectList(Model.list_1,
-                                                                                     "id", "name"),
-                                                                                     new
-                                                                                     {
-                                                                                         @class = "form-control selectpicker",
-                                                                                         id = "ddlproduct_pos_premium",
-                                                                                         multiple = "multiple"
-                                                                                     })
+                                                                                               "id", "name"),
+                                                                                               new
+                                                                                               {
+                                                                                                   @class = "form-control selectpicker",
+                                                                                                   id = "ddlproduct_pos_premium",
+                                                                                                   multiple = "multiple"
+                                                                                               })
                                     <script>
-                                        $(document).ready(function () {                                            
+                                        $(document).ready(function () {
                                             $('#ddlproduct_pos_premium').multiselect({
-                                                nonSelectedText: '                                                                     ',
+                                                nonSelectedText: '                                                    ',
                                                 onChange: function (option, checked) {
                                                     if ($("#ddlin_or_out_stock").val() != "") {
                                                         var valueInStock = "4C059B00-6350-4E46-82E0-98E28807C697";
@@ -117,7 +117,7 @@
                                     </script>
                                 </div>
                             </div>
-                            <label class="control-label col-md-2 col-xs-12">
+                            <label class="control-label col-md-3 col-xs-12">
                                 เพื่อ :
                             </label>
                             <div class="col-md-4 col-xs-12">
@@ -139,27 +139,23 @@
                                 Brand/ผลิตภัณฑ์ :
                             </label>
 
-                            <div class="col-md-4 col-xs-12">
-                                <div class="row">
-                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.list_2_select, new SelectList(Model.list_2, "id", "name", ""), "", new
-                                    {
-                                        @class = "form-control selectpicker",
-                                        id = "ddlfor"
-                                    })
-                                </div>
-                            </div>
-
-                            <label class="control-label col-md-2 col-xs-12">
-                                Cost Center :
-                            </label>
-
-                            <div class="col-md-4 col-xs-12">
+                            <div class="col-md-3 col-xs-12">
                                 <div class="row">
                                     @Html.DropDownListFor(x => x.activityFormTBMMKT.brand_select, new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", ""), "", new
                                     {
                                         @class = "form-control selectpicker",
                                         id = "ddlbrand_select"
                                     })
+                                </div>
+                            </div>
+
+                            <label class="control-label col-md-3 col-xs-12">
+                                Cost Center :
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.costCenter, new { @class = "form-control textboxcss", @id = "txtCostCenter", style = "", @readonly = "readonly" })
                                 </div>
                             </div>
                         </div>
@@ -172,7 +168,7 @@
                                 Channel+Region :
                             </label>
 
-                            <div class="col-md-4 col-xs-12">
+                            <div class="col-md-3 col-xs-12">
                                 <div class="row">
                                     @Html.DropDownListFor(x => x.activityFormTBMMKT.list_3_select, new SelectList(Model.list_3, "id", "name", ""), "", new
                                     {
@@ -182,38 +178,19 @@
                                 </div>
                             </div>
 
-                            <label class="control-label col-md-2 col-xs-12">
+                            <label class="control-label col-md-3 col-xs-12">
                                 Channel+Region Name:
                             </label>
 
                             <div class="col-md-4 col-xs-12">
                                 <div class="row">
-                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.list_2_select, new SelectList(Model.list_2, "id", "name", ""), "", new
-                                    {
-                                        @class = "form-control selectpicker",
-                                        id = "ddlfor"
-                                    })
+                                    @Html.TextBoxFor(x => x.channelRegionName, new { @class = "form-control textboxcss", @id = "txtchannelRegionName", style = "", @readonly = "readonly" })
                                 </div>
                             </div>
                         </div>
                     </td>
                 </tr>
 
-
-
-
-                <tr>
-                    <td>
-                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
-                            <tr class="hDetailtr bgColorFocusDataAcc">
-                                <td style="width:150px;vertical-align:top;">&nbsp;Channel+Region</td>
-                                <td style="width:160px;vertical-align:top;text-align:left;">: NT</td>
-                                <td style="width:130px;vertical-align:top;">&nbsp;Channel+Region Name</td>
-                                <td style="width:260px;vertical-align:top;">: Not Allocaded</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
                 <tr>
                     <td>
                         <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">

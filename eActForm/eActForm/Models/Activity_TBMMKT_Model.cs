@@ -26,6 +26,10 @@ namespace eActForm.Models
         public List<TB_Act_master_list_choiceModel> list_3 { get; set; }
         public TB_Act_ActivityChoiceSelectModel tB_Act_ActivityChoiceSelectModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model_2 { get; set; }
+        public string costCenter { get; set; }
+        public string channelRegionName { get; set; }
+        public string glNo { get; set; }
+        public string glName { get; set; }
 
         public Activity_TBMMKT_Model()
         {
