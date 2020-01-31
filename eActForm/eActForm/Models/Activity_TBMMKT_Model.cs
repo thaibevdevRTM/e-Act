@@ -20,6 +20,7 @@ namespace eActForm.Models
         public decimal? totalCostThisActivity { get; set; }
         public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
         public List<ChannelMasterType> channelMasterTypeList { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_0 { get; set; }
         public List<TB_Act_master_list_choiceModel> list_1 { get; set; }
         public List<TB_Act_master_list_choiceModel> list_2 { get; set; }
         public List<TB_Act_master_list_choiceModel> list_3 { get; set; }
@@ -42,6 +43,7 @@ namespace eActForm.Models
         public string createdByName { get; set; }
         public string formName { get; set; }
         public string companyName { get; set; }
+        public string list_0_select { get; set; }
         public string[] list_1_multi_select { get; set; }
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }
@@ -82,6 +84,10 @@ namespace eActForm.Models
         public string updatedByUserId { get; set; }
         public string BudgetNumber { get; set; }
         public string groupName { get; set; }
+        public string toName { get; set; }
+        public string toAddress { get; set; }
+        public string toContact { get; set; }
+        public string detailContact { get; set; }
     }
 
 
