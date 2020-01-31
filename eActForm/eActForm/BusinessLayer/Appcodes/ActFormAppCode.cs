@@ -36,41 +36,16 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
-
-        public static bool checkActInvoice(string actId)
-        {
-            try
-            {
-                bool result = false;
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_checkRowActivityInvoice"
-                    , new SqlParameter[] { new SqlParameter("@actId", actId) });
-                if (ds.Tables[0].Rows.Count > 0)
-                {
-                    result = true;
-                }
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("checkActInvoice >>" + ex.Message);
-            }
-        }
         public static int deleteActForm(string actId, string remark)
         {
             try
             {
-                int rtn = 0;
-                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateDelFlagActivityForm"
+                return SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateDelFlagActivityForm"
                     , new SqlParameter[] { new SqlParameter("@actId", actId)
                     ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
-                if (rtn > 0)
-                {
-                    EmailAppCodes.sendRequestCancelToAdmin(actId);
-                }
-                return rtn;
             }
             catch (Exception ex)
             {
