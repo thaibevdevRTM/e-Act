@@ -36,6 +36,25 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
+
+        public static bool checkActInvoice(string actId)
+        {
+            try
+            {
+                bool result = false;
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_checkRowActivityInvoice"
+                    , new SqlParameter[] { new SqlParameter("@actId", actId) });
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    result = true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkActInvoice >>" + ex.Message);
+            }
+        }
         public static int deleteActForm(string actId, string remark)
         {
             try

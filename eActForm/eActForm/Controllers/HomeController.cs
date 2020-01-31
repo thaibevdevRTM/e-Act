@@ -66,6 +66,16 @@ namespace eActForm.Controllers
         }
 
 
+        public JsonResult checkActInvoice(string actId)
+        {
+            AjaxResult result = new AjaxResult();
+
+            result.Success = ActFormAppCode.checkActInvoice(actId);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         public ActionResult requestDeleteDoc(string actId, string statusId)
         {
