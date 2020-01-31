@@ -226,6 +226,7 @@
     <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllBrandByForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllChanelByForm.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_master_cost_center.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_master_list_choice.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelByGroup.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelMaster.cs" />
@@ -321,6 +322,7 @@
     <Compile Include="Models\TB_Bud_Image_Model.cs" />
     <Compile Include="Models\TB_Reg_ApproveGroup_Model.cs" />
     <Compile Include="Models\TB_Reg_FlowLimit_Model.cs" />
+    <Compile Include="Models\TB_Act_master_cost_centerModel.cs" />
     <Compile Include="Models\TB_Reg_Subject_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForm1.aspx.cs">

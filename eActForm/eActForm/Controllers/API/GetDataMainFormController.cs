@@ -20,6 +20,7 @@ namespace eActForm.Controllers
             public string master_type_form_id { get; set; }
             public string companyId { get; set; }
         }
+
         public JsonResult GetDataSubjectByChanelOrBrand(objGetDataSubjectByChanelOrBrand objGetDataSubjectBy)
         {
             var result = new AjaxResult();
@@ -41,5 +42,85 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public class objGetDataCostCenter
+        {
+            public string productBrandId { get; set; }
+            public string companyId { get; set; }
+        }
+
+        public JsonResult GetDataCostCenter(objGetDataCostCenter objGetDataCostCenter)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                List<TB_Act_master_cost_centerModel> tB_Act_Master_Cost_CenterModels = new List<TB_Act_master_cost_centerModel>();
+                tB_Act_Master_Cost_CenterModels = QueryGet_TB_Act_master_cost_center.get_TB_Act_master_cost_center(objGetDataCostCenter.productBrandId, objGetDataCostCenter.companyId);
+
+                var resultData = new
+                {
+                    tB_Act_Master_Cost_CenterModels = tB_Act_Master_Cost_CenterModels.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public class objGetDataListChoiceById
+        {
+            public string id { get; set; }
+            public string master_type_form_id { get; set; }
+            public string type { get; set; }
+        }
+
+        public JsonResult GetDataListChoiceById(objGetDataListChoiceById objGetDataListChoiceById)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                List<TB_Act_master_list_choiceModel> tB_Act_Master_List_ChoiceModels = new List<TB_Act_master_list_choiceModel>();
+                tB_Act_Master_List_ChoiceModels = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(objGetDataListChoiceById.master_type_form_id, objGetDataListChoiceById.type).Where(x => x.id == objGetDataListChoiceById.id).ToList();
+
+                var resultData = new
+                {
+                    tB_Act_Master_List_ChoiceModels = tB_Act_Master_List_ChoiceModels.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDataListChoiceByType(objGetDataListChoiceById objGetDataListChoiceById)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                List<TB_Act_master_list_choiceModel> tB_Act_Master_List_ChoiceModels = new List<TB_Act_master_list_choiceModel>();
+                tB_Act_Master_List_ChoiceModels = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(objGetDataListChoiceById.master_type_form_id, objGetDataListChoiceById.type);
+
+                var resultData = new
+                {
+                    tB_Act_Master_List_ChoiceModels = tB_Act_Master_List_ChoiceModels.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

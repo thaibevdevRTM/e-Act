@@ -56,18 +56,22 @@
                                         td div span {
                                             line-height: 0px;
                                         }
+
                                         .multiselect {
                                             min-width: 232px;
                                             text-align: left;
                                         }
-                                        .btn-group > .btn:first-child {                                          
+
+                                        .btn-group > .btn:first-child {
                                             width: 232px;
                                         }
+
                                         .btn .caret {
                                             float: right;
                                             margin-top: 7px;
                                             margin-right: -6px;
                                         }
+
                                         .checkbox, .radio {
                                             position: relative;
                                             display: block;
@@ -75,13 +79,13 @@
                                         }
                                     </style>
                                     @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new MultiSelectList(Model.list_1,
-                                                                                               "id", "name"),
-                                                                                               new
-                                                                                               {
-                                                                                                   @class = "form-control selectpicker",
-                                                                                                   id = "ddlproduct_pos_premium",
-                                                                                                   multiple = "multiple"
-                                                                                               })
+                                                                                                                        "id", "name"),
+                                                                                                                        new
+                                                                                                                        {
+                                                                                                                            @class = "form-control selectpicker",
+                                                                                                                            id = "ddlproduct_pos_premium",
+                                                                                                                            multiple = "multiple"
+                                                                                                                        })
                                     <script>
                                         $(document).ready(function () {
                                             $('#ddlproduct_pos_premium').multiselect({
@@ -146,6 +150,47 @@
                                         @class = "form-control selectpicker",
                                         id = "ddlbrand_select"
                                     })
+                                    <script>
+                                        $("#ddlbrand_select").change(function () {
+                                            if ($("#ddlChannelOrBrand").val() != "" && $("#ddlbrand_select").val() != "") {
+                                                var dataToBeSend =
+                                                    {
+                                                        productBrandId: $("#ddlbrand_select").val()
+                                                        , companyId: "@UtilsAppCode.Session.User.empCompanyId"
+                                                    };
+
+                                                $.ajax('@Url.Action("GetDataCostCenter", "GetDataMainForm")',
+                                                    {
+                                                        contentType: "application/json; charset=utf-8",
+                                                        data: JSON.stringify(dataToBeSend),
+                                                        dataType: 'json',
+                                                        type: "POST",
+                                                        success: function (response) {
+                                                            if (response.Data.tB_Act_Master_Cost_CenterModels.length > 0) {
+                                                                var mixCostLastThreePosition = "";
+                                                                if ($("#ddlChannelOrBrand").val() == "Brand") {
+                                                                    mixCostLastThreePosition = "100";
+                                                                } else {
+                                                                    mixCostLastThreePosition = "200";
+                                                                }
+                                                                $.each(response.Data.tB_Act_Master_Cost_CenterModels, function () {
+                                                                    var resultCostCenter = (this['costCenter'] + mixCostLastThreePosition);
+                                                                    $("#txtCostCenter").val(resultCostCenter);
+                                                                });
+                                                            }
+                                                            else {
+                                                                $("#txtCostCenter").val("ไม่พบข้อมูลCostCenter");
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert("Error Get CosCenter.");
+                                                        }
+                                                    });
+                                            } else {
+                                                $("#txtCostCenter").val("");
+                                            }
+                                        });
+                                    </script>
                                 </div>
                             </div>
 
@@ -155,7 +200,7 @@
 
                             <div class="col-md-4 col-xs-12">
                                 <div class="row">
-                                    @Html.TextBoxFor(x => x.costCenter, new { @class = "form-control textboxcss", @id = "txtCostCenter", style = "", @readonly = "readonly" })
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.costCenter, new { @class = "form-control textboxcss", @id = "txtCostCenter", style = "", @readonly = "readonly" })
                                 </div>
                             </div>
                         </div>
@@ -175,6 +220,41 @@
                                         @class = "form-control selectpicker",
                                         id = "ddlchannel_place"
                                     })
+                                    <script>
+                                        $("#ddlchannel_place").change(function () {
+                                            if ($("#ddlchannel_place").val() != "") {
+                                                var dataToBeSend =
+                                                    {
+                                                        id: $("#ddlchannel_place").val()
+                                                        , master_type_form_id: "@Model.activityFormTBMMKT.master_type_form_id"
+                                                        , type: "channel_place"
+                                                    };
+
+                                                $.ajax('@Url.Action("GetDataListChoiceById", "GetDataMainForm")',
+                                                    {
+                                                        contentType: "application/json; charset=utf-8",
+                                                        data: JSON.stringify(dataToBeSend),
+                                                        dataType: 'json',
+                                                        type: "POST",
+                                                        success: function (response) {
+                                                            if (response.Data.tB_Act_Master_List_ChoiceModels.length > 0) {
+                                                                $.each(response.Data.tB_Act_Master_List_ChoiceModels, function () {
+                                                                    $("#txtchannelRegionName").val(this['sub_name']);
+                                                                });
+                                                            }
+                                                            else {
+                                                                $("#txtchannelRegionName").val("");
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert("Error GetDataListChoiceById.");
+                                                        }
+                                                    });
+                                            } else {
+                                                $("#txtchannelRegionName").val("");
+                                            }
+                                        });
+                                    </script>
                                 </div>
                             </div>
 
@@ -184,12 +264,38 @@
 
                             <div class="col-md-4 col-xs-12">
                                 <div class="row">
-                                    @Html.TextBoxFor(x => x.channelRegionName, new { @class = "form-control textboxcss", @id = "txtchannelRegionName", style = "", @readonly = "readonly" })
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.channelRegionName, new { @class = "form-control textboxcss", @id = "txtchannelRegionName", style = "", @readonly = "readonly" })
                                 </div>
                             </div>
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-12">
+                                GL No. :
+                            </label>
+
+                            <div class="col-md-3 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.glNo, new { @class = "form-control textboxcss", @id = "txtglNo", style = "", @readonly = "readonly" })
+                                </div>
+                            </div>
+
+                            <label class="control-label col-md-3 col-xs-12">
+                                GL Name:
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.glName, new { @class = "form-control textboxcss", @id = "txtglName", style = "", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
 
                 <tr>
                     <td>

@@ -150,6 +150,55 @@
 
                 $("#ddlChannelOrBrand").change(function () {
                     processDropdownConditionFlow();
+                    if ('@Model.activityFormTBMMKT.master_type_form_id' == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5") //ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                    {
+                        $("#ddlbrand_select").val("");
+                        $("#txtCostCenter").val("");
+
+                        if ($("#ddlChannelOrBrand").val() != "")
+                        {
+                            var typeGL = "";
+                            if ($('#ddlChannelOrBrand').val() == "Brand") {
+                                typeGL = "tbmmkt_gl_brand";
+                            } else {
+                                typeGL = "tbmmkt_gl_channel";
+                            }
+
+                            var dataToBeSend =
+                                {
+                                    id: ""
+                                    , master_type_form_id: "@Model.activityFormTBMMKT.master_type_form_id"
+                                    , type: typeGL
+                                };
+
+                                $.ajax('@Url.Action("GetDataListChoiceByType", "GetDataMainForm")',
+                                {
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify(dataToBeSend),
+                                    dataType: 'json',
+                                    type: "POST",
+                                    success: function (response) {
+                                        if (response.Data.tB_Act_Master_List_ChoiceModels.length > 0) {
+                                            $.each(response.Data.tB_Act_Master_List_ChoiceModels, function () {
+                                                $("#txtglNo").val(this['name']);
+                                                $("#txtglName").val(this['sub_name']);
+                                            });
+                                        }
+                                        else {
+                                            $("#txtglNo").val("");
+                                            $("#txtglName").val("");
+                                        }
+                                   },
+                                    error: function (data)
+                                    {
+                                        alert("Error GetDataListChoiceById.");
+                                    }
+                                 });
+                        } else {
+                            $("#txtglNo").val("");
+                            $("#txtglName").val("");
+                        }
+                    }
                 });
 
             </script>
@@ -197,9 +246,9 @@
                                     alert("Error Get Subject.");
                                 }
                             });
-                    }
+                }
+
             </script>
-            @*<label class="control-label col-md-1 col-xs-12"></label>*@
         </div>
     </td>
 </tr>

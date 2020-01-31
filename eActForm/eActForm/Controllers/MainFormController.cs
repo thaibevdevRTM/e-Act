@@ -77,10 +77,10 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = "";
                     activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = "";
                     activity_TBMMKT_Model.activityFormTBMMKT.brand_select = "";
-                    activity_TBMMKT_Model.costCenter = "";
-                    activity_TBMMKT_Model.channelRegionName = "";
-                    activity_TBMMKT_Model.glNo = "";
-                    activity_TBMMKT_Model.glName = "";
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.costCenter = "";
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelRegionName = "";
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.glNo = "";
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.glName = "";
                     //=END==mock data for first input=====
 
                     //===================Get Subject=======================
@@ -104,7 +104,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.list_0 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activityFormTBMMKT.master_type_form_id, "in_or_out_stock").OrderBy(x => x.name).ToList();
                     activity_TBMMKT_Model.list_1 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activityFormTBMMKT.master_type_form_id, "product_pos_premium");
                     activity_TBMMKT_Model.list_2 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activityFormTBMMKT.master_type_form_id, "for");
-                    activity_TBMMKT_Model.list_3 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activityFormTBMMKT.master_type_form_id, "channel_place");
+                    activity_TBMMKT_Model.list_3 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activityFormTBMMKT.master_type_form_id, "channel_place").OrderBy(x => x.name).ToList();
                     activity_TBMMKT_Model.tB_Act_ProductBrand_Model_2 = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.no_tbmmkt != "").ToList();
                 }
 
