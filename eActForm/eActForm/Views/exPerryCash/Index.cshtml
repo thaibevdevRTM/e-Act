@@ -1,0 +1,13 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+
+
+@Html.Action("Index", "MainForm", new { typeForm = Model.activityFormModel.typeForm, master_type_form_id = Model.activityFormModel.master_type_form_id })
+
+
+
+
+<script type="text/javascript">
+
+    document.getElementById("divUploadFiles").style.display = "none";
+
+</script>

@@ -27,7 +27,8 @@ namespace eActForm.Models
 
         public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
         public List<ChannelMasterType> channelMasterTypeList { get; set; }
-
+        public List<CompanyModel> companyList { get; set; }
+        public exPerryCasheModel expensePerryCashModel { get; set; }
 
         public Activity_TBMMKT_Model()
         {
@@ -180,4 +181,11 @@ namespace eActForm.Models
         public string subName { get; set; }
     }
 
+    public class CompanyModel
+    {
+        public string id { get; set; }
+        public string companyId { get; set; }
+        public string companyNameEN { get; set; }
+        public string companyNameTH { get; set; }
+    }
 }

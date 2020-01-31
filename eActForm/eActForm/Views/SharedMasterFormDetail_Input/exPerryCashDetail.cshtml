@@ -1,0 +1,37 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+
+@*@Html.DropDownListFor(x => x.expensePerryCashModel.companyId, new SelectList(Model.companyList, "id", "companyNameTH", 0), "Please Select", new
+    {
+        @class = "form-control textboxcss",
+        id = "ddlCompany"
+    })*@
+
+
+<div class="form-group" id="divExpenseCash">
+    <div class="col-md-4 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
+            บริษัท<span class="required">*</span>
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            @Html.TextBoxFor(x => x.expensePerryCashModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+        </div>
+    </div>
+    <div class="col-md-4 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
+            หัวเรื่อง
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            @Html.TextBoxFor(x => x.expensePerryCashModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+        </div>
+    </div>
+    <div class="col-md-4 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlRegion">
+            ประจำเดือน
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            @Html.TextBoxFor(x => x.expensePerryCashModel.exMonth, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtExMonth" })
+        </div>
+    </div>
+</div>
