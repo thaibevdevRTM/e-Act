@@ -34,6 +34,7 @@ namespace eActForm.BusinessLayer
                                   IO = d["IO"].ToString(),
                                   QtyName = d["QtyName"].ToString(),
                                   remark = d["remark"].ToString(),
+                                  typeTheme = d["typeTheme"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),

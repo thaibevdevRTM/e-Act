@@ -29,7 +29,7 @@
         }
     </style>
     <div class="paddingFormV1">
-        <table style="width: 100%;" id="tabel_report" runat="server">
+        <table style="width: 100%;" id="tabel_report" border="0" runat="server">
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
                 @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })

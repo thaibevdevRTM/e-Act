@@ -141,7 +141,7 @@
             @*if ($("#ddlEmp_0").val() == "") { required += "&emsp;ผู้ร่วมเดินทาง/The following persons to travel*<br>"; validate = false; }
 
             var validateCkb = false;
-            var rowCount = @Model.masterPurpose.Count;
+            var rowCount = @Model.purposeModel.Count;
             for (i = 0; i < rowCount; i++) {
                 if (document.getElementById("ckb_" + i.toString()).checked == true) {
                     validateCkb = true;

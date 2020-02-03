@@ -1,6 +1,6 @@
-﻿@*@model eActForm.Models.Activity_TBMMKT_Model*@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
 <div id="divEstimateDetails" runat="server" style="width: 100%;">
-    <table class="tablethin" style="width:100%; text-align:center; " border="1" cellpadding="3" cellspacing="0">
+    <table  style="width:100%; text-align:center; " border="1" cellpadding="3" cellspacing="0">
         <tr style="background-color:#E5E2E2;height:25px;">
             <td colspan="6" style="text-align :center;  ">
                 <b>  Total estimate of travelling expenses ( ประมาณค่าใช้จ่ายในการเดินทาง ดังนี้ )</b>
@@ -26,44 +26,46 @@
                 <b>    Total/รวม</b>
             </td>
         </tr>
+
         @{ var index = 6;}
-        @for (index = 1; index <= 6; index++)
+        @for (index = 0; index < Model.expensesDetailModel.Count; index++)
         {
-            <tr class="tagCountRowinTable">
+            if (@Model.expensesDetailModel[@index].productDetail != "")
+            {
+                <tr class="tagCountRowinTable">
 
-                <td style="text-align:center;">
-                    productDetail
-                </td>
-                <td style="text-align:center;">
-                    QtyName
-                </td>
-                <td style="text-align:center;">
-                    unitPrice
-                </td>
-                <td style="text-align:center;">
-                    typeTheme
-                </td>
-                <td style="text-align:center;">
-                    unit
+                    <td style="text-align:left;">
+                        @Model.expensesDetailModel[@index].productDetail
+                    </td>
+                    <td style="text-align:center;">
+                        @Model.expensesDetailModel[@index].QtyName
+                    </td>
+                    <td style="text-align:right;">
+                        @Model.expensesDetailModel[@index].unitPrice.Value.ToString("#,###.00")
+                    </td>
+                    <td style="text-align:left;">
+                        @Model.expensesDetailModel[@index].typeTheme
+                    </td>
+                    <td style="text-align:center;">
+                        @Model.expensesDetailModel[@index].unit
 
-                </td>
-                <td style="text-align:right;">
-                    total
+                    </td>
+                    <td style="text-align:right;">
+                        @Model.expensesDetailModel[@index].total.Value.ToString("#,###.00")
 
 
-                </td>
-            </tr>
-            index++;
+                    </td>
+                </tr>
+
+            }
         }
         <tr>
             <td colspan="5" style="width: 85%;text-align:right;">
                 จำนวนเงินรวม(บาท)&nbsp;
             </td>
             <td style="width: 15%;text-align:right;">
-                @* <label id="totalEstimate" type="text" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###.00")</label>&nbsp;*@
-
-                <label id="totalEstimate" type="text" readonly="readonly"></label>&nbsp;
-
+                @* <label id="totalEstimate" type="text" readonly="readonly"></label>&nbsp;*@
+                @Model.totalCostThisActivity.Value.ToString("#,###.00")
             </td>
         </tr>
     </table>

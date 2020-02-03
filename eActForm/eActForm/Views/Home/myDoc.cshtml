@@ -140,7 +140,7 @@
                             {
                                 @Html.ActionLink(" ", "Index", "TBMMKT_ActivityBudgetInput", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
-                            else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && item.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4")
+                            else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && (item.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || item.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB"))
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
@@ -227,7 +227,7 @@
                 genPdf(actId, statusId, htmlResponse);
             });
         }
-        else if (master_type_form_id == '8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4') {
+        else if (master_type_form_id == '8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4' || master_type_form_id == '294146B1-A6E5-44A7-B484-17794FA368EB') {
              $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Index", "MainReport")',

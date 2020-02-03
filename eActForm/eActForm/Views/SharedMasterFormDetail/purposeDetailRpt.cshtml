@@ -1,25 +1,57 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
-    
+
 <div id="divPurposeDetail" runat="server" style="width: 100%;">
     <table style="width: 100%;" id="tabelPurposeDetail" runat="server" border="0" cellpadding="5">
         <tr>
-            <td style="width: 20%; text-align:right; " ><b>
-   Purpose of Travelling /<br />วัตถุประสงค์ในการเดินทาง
-</b>
+            <td style="width: 18%; text-align:right; ">
+                <b>
+                    Purpose of Travelling /<br />วัตถุประสงค์ในการเดินทาง
+                </b>
+            </td>
+            <td style="width: 2%; text-align:center; ">
+                <b>
+                    :
+                </b>
             </td>
             <td style="width: 80%;">
-                @*<input type="checkbox" checked="checked" />*@
-                <b>&nbsp; : &nbsp;</b> Mission : ปฎิบัติหน้าที่
+                <table style="width: 100%;">
+
+                    @for (int i = 0; i < @Model.purposeModel.Count; i = i + 2)
+            {
+                var index_1 = i;
+                var index_2 = i + 1;
+                        <tr>
+                            <td style="width: 50%;">
+                              
+                                @if (index_1 < Model.purposeModel.Count)
+                                {
+
+                                    @Model.purposeModel[index_1].detailTh
+
+                                }
+                            </td>
+                            <td style="width: 50%;">
+                                @if (index_2 < Model.purposeModel.Count)
+                                {
+
+                                    @Model.purposeModel[index_2].detailTh
+                                }
+                            </td>
+
+
+                        </tr>
+                    }
+                </table>
+
             </td>
 
-        </tr>
-    
+
         <tr>
-            <td></td>
+            <td colspan="2"></td>
             <td >
-                จัดกิจกรรม BLEN FES LIVE PROJECT 2019 โดยขอเดินทางไปก่อนวันจัดกิจกรรมลาวงหน้า 1 วัน
+             @Model.activityFormTBMMKT.objective
             </td>
         </tr>
     </table>
-    
+
 </div>

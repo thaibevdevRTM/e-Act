@@ -22,9 +22,10 @@ namespace eActForm.Models
 
         public List<RequestEmpModel> masterRequestEmp { get; set; }
         public List<RequestEmpModel> requestEmpModel { get; set; }
-        public List<PurposeModel> masterPurpose { get; set; }
+        public List<PurposeModel> purposeModel { get; set; }
         public List<PlaceDetailModel> placeDetailModel { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> expensesDetailModel { get; set; }
+        public List<string> chkPurpose { get; set; }
 
         public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
         public List<ChannelMasterType> channelMasterTypeList { get; set; }
@@ -33,6 +34,14 @@ namespace eActForm.Models
         public Activity_TBMMKT_Model()
         {
             channelMasterTypeList = new List<ChannelMasterType>();
+
+            masterRequestEmp = new List<RequestEmpModel>();
+            requestEmpModel = new List<RequestEmpModel>();
+            purposeModel = new List<PurposeModel>();
+            placeDetailModel = new List<PlaceDetailModel>();
+            expensesDetailModel = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+            approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
+
         }
 
     }
@@ -136,11 +145,16 @@ namespace eActForm.Models
     {
         public string id { get; set; }
         public string activityId { get; set; }
-        public int rowNo { get; set; }
+       // public int rowNo { get; set; }
         public string detailTh { get; set; }
         public string detailEn { get; set; }
-    }
+       // public bool chk { get; set; }
 
+    }
+    //public class CheckboxModels
+    //    {
+    //        public List<string> chkPurpose { get; set; }
+    //    }
     public class PlaceDetailModel : ActBaseModel
     {
         public string id { get; set; }
@@ -149,8 +163,10 @@ namespace eActForm.Models
         public string place { get; set; }
         public string forProject { get; set; }
         public string period { get; set; }
-        public string departureDate { get; set; }
-        public string arrivalDate { get; set; }
+        public DateTime? departureDate { get; set; }
+        public DateTime? arrivalDate { get; set; }
+        public string departureDateStr { get; set; }
+        public string arrivalDateStr { get; set; }
 
     }
 

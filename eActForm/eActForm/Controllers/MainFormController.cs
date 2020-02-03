@@ -5,6 +5,7 @@ using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
@@ -69,11 +70,11 @@ namespace eActForm.Controllers
 
                     //===mock data for first input====
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
-                                          for (int i = 0; i < 14; i++)
-                        {
-                            costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { id = "", IO = "", activityTypeId = "", productDetail = "", unit = 0, unitPrice = 0, total = 0 });
-                        }
-                   
+                    for (int i = 0; i < 14; i++)
+                    {
+                        costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { id = "", IO = "", activityTypeId = "", productDetail = "", unit = 0, unitPrice = 0, total = 0 });
+                    }
+
                     TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = tB_Act_ActivityForm_DetailOther;
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId = "";
@@ -99,7 +100,7 @@ namespace eActForm.Controllers
                     List<PlaceDetailModel> placeDetailModel = new List<PlaceDetailModel>();
                     for (int i = 0; i < 3; i++)
                     {
-                        placeDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = "", arrivalDate = "" });
+                        placeDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = null, arrivalDate = null });
                     }
                     activity_TBMMKT_Model.placeDetailModel = placeDetailModel;
 
@@ -136,7 +137,7 @@ namespace eActForm.Controllers
 
                 //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
                 activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp("3030").ToList();
-                activity_TBMMKT_Model.masterPurpose = QueryGet_master_purpose.getAllPurpose().ToList();
+                activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getAllPurpose().ToList();
                 //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
 
 
@@ -158,6 +159,37 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
+
+                //DateTime? test;
+                //string p_date = "28-12-2020 18:50";
+
+                //try
+                //{
+                //    test = DateTime.ParseExact("29-12-2020", "dd-MM-yyyy", CultureInfo.InvariantCulture);                    
+                //}
+                //catch (Exception ex) { }
+
+                //try
+                //{
+                //    test = DateTime.ParseExact(p_date, "dd-MM-yyyy hh:mm", CultureInfo.CurrentCulture);
+                //}
+                //catch (Exception ex) { }
+
+                //try
+                //{
+                //    test = DateTime.ParseExact(p_date, "dd-MM-yyyy HH:mm", CultureInfo.CurrentCulture);
+                //}
+                //catch (Exception ex) { }
+
+                //try
+                //{
+                //    test = DateTime.ParseExact(p_date, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+
+                //}
+                //catch (Exception ex) { }
+
+
+
                 string statusId = "";
 
                 statusId = ActivityFormCommandHandler.getStatusActivity(activity_TBMMKT_Model.activityFormModel.id);
@@ -176,7 +208,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = activity_TBMMKT_Model.expensesDetailModel;
                 }
 
-                    int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
+                int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
 
                 result.Data = activity_TBMMKT_Model.activityFormModel.id;
                 result.Success = true;
@@ -210,6 +242,6 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-      
+
     }
 }

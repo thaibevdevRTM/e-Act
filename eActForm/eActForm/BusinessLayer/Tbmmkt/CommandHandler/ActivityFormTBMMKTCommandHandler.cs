@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -48,10 +49,11 @@ namespace eActForm.BusinessLayer
 
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
 
-                    if (model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB")
-                    {
 
-                    }
+                    rtn = ProcessInsertRequestEmp(rtn, model, activityId);
+                    rtn = ProcessInsertPlaceDetail(rtn, model, activityId);
+                    rtn = ProcessInsertPurpose(rtn, model, activityId);
+
 
                 }
 
@@ -92,7 +94,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
                     costThemeDetail.QtyName = item.QtyName;
                     costThemeDetail.remark = item.remark == null ? "" : item.remark;
-                    costThemeDetail.typeTheme = item.typeTheme == null ? "" : item.typeTheme;
+                    costThemeDetail.typeTheme = item.typeTheme;
 
                     rtn += insertEstimate(costThemeDetail);
 
@@ -161,6 +163,20 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
                 activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
+
+                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId);
+                activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
+                activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
+                activity_TBMMKT_Model.expensesDetailModel = activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT;
+
+                //activity_TBMMKT_Model
+                //SELECT* FROM TB_Act_RequestEmp where activityId = @activityId
+
+                //SELECT* FROM TB_Act_PlaceDetail where activityId = @activityId
+
+
+
+
 
                 Decimal? totalCostThisActivity = 0;
                 foreach (var item in activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT)
@@ -351,6 +367,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
                     ,new SqlParameter("@master_type_form_id",model.master_type_form_id)
                     ,new SqlParameter("@remark",model.remark)
+                    ,new SqlParameter("@benefit", (model.benefit == null ? "" :model.benefit))
                     });
             }
             catch (Exception ex)
@@ -482,7 +499,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@unit",Convert.ToInt32(model.unit))
                     ,new SqlParameter("@unitPrice", decimal.Parse(string.Format("{0:0.00000}", model.unitPrice)))
                     ,new SqlParameter("@QtyName",model.QtyName)
-                    });
+                    ,new SqlParameter("@typeTheme",(model.typeTheme == null ? "" : model.typeTheme))
+            });
             }
             catch (Exception ex)
             {
@@ -682,7 +700,6 @@ namespace eActForm.BusinessLayer
 
             return result;
         }
-
         public static int deletePlaceDetailByActivityId(string activityId)
         {
 
@@ -690,6 +707,23 @@ namespace eActForm.BusinessLayer
             try
             {
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deletePlaceDetailByActivityId"
+                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> deletePlaceDetailByActivityId");
+            }
+
+            return result;
+        }
+        public static int deletePurposeByActivityId(string activityId)
+        {
+
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deletePurposeByActivityId"
                     , new SqlParameter[] {new SqlParameter("@activityId",activityId)
                     });
             }
@@ -711,8 +745,7 @@ namespace eActForm.BusinessLayer
                 {
 
                     RequestEmpModel requestEmpModel = new RequestEmpModel();
-
-                    requestEmpModel.id = Guid.NewGuid().ToString();
+                    // requestEmpModel.id = Guid.NewGuid().ToString();
                     requestEmpModel.activityId = activityId;
                     requestEmpModel.rowNo = insertIndex;
                     requestEmpModel.empId = item.empId;
@@ -735,70 +768,90 @@ namespace eActForm.BusinessLayer
             if (model.placeDetailModel != null)
             {
                 rtn += deletePlaceDetailByActivityId(activityId);
-                foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
+                foreach (var item in model.placeDetailModel.ToList())
                 {
+                    //     model.activityFormModel.activityPeriodSt 
+                    //         = string.IsNullOrEmpty(item.departureDate) ? (DateTime?)null :
+                    //BaseAppCodes.converStrToDate(item.departureDate);
 
-                    CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
-                    costThemeDetail.id = Guid.NewGuid().ToString();
-                    costThemeDetail.activityId = activityId;
-                    costThemeDetail.activityTypeId = item.activityTypeId;
-                    costThemeDetail.productDetail = item.productDetail;
-                    costThemeDetail.total = item.total;
-                    costThemeDetail.IO = item.IO;
-                    costThemeDetail.rowNo = insertIndex;
-                    costThemeDetail.delFlag = false;
-                    costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
-                    costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                    costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
-                    costThemeDetail.updatedDate = DateTime.Now;
-                    costThemeDetail.unit = item.unit;
-                    costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
-                    costThemeDetail.QtyName = item.QtyName;
-                    costThemeDetail.remark = item.remark == null ? "" : item.remark;
-                    costThemeDetail.typeTheme = item.typeTheme == null ? "" : item.typeTheme;
+                    PlaceDetailModel placeDetailModel = new PlaceDetailModel();
+                    //placeDetailModel.id = Guid.NewGuid().ToString();
+                    placeDetailModel.activityId = activityId;
+                    placeDetailModel.rowNo = insertIndex;
+                    placeDetailModel.place = item.place;
+                    placeDetailModel.forProject = item.forProject;
+                    placeDetailModel.period = item.period;
+                    // placeDetailModel.departureDate = item.departureDate;
+                    placeDetailModel.departureDate = string.IsNullOrEmpty(item.departureDateStr) ? (DateTime?)null :
+               BaseAppCodes.converStrToDateTime(item.departureDateStr);
+                    placeDetailModel.arrivalDate = string.IsNullOrEmpty(item.arrivalDateStr) ? (DateTime?)null :
+               BaseAppCodes.converStrToDateTime(item.arrivalDateStr);
+                    placeDetailModel.delFlag = false;
+                    placeDetailModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate; ;
+                    placeDetailModel.createdByUserId = model.activityFormModel.createdByUserId;
+                    placeDetailModel.updatedDate = DateTime.Now;
+                    placeDetailModel.updatedByUserId = UtilsAppCode.Session.User.empId;
 
-                    rtn += insertEstimate(costThemeDetail);
+                    rtn += insertPlaceDetail(placeDetailModel);
 
                     insertIndex++;
                 }
             }
             return rtn;
         }
-        public static int ProcessInsertPerpose(int rtn, Activity_TBMMKT_Model model, string activityId)
+        public static int ProcessInsertPurpose(int rtn, Activity_TBMMKT_Model model, string activityId)
         {
-            int insertIndex = 1;
-            if (model.placeDetailModel != null)
+            if (model.chkPurpose.Any())
             {
-                rtn += deletePlaceDetailByActivityId(activityId);
-                foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
+                rtn += deletePurposeByActivityId(activityId);
+                foreach (var item in model.chkPurpose)
                 {
 
-                    CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
-                    costThemeDetail.id = Guid.NewGuid().ToString();
-                    costThemeDetail.activityId = activityId;
-                    costThemeDetail.activityTypeId = item.activityTypeId;
-                    costThemeDetail.productDetail = item.productDetail;
-                    costThemeDetail.total = item.total;
-                    costThemeDetail.IO = item.IO;
-                    costThemeDetail.rowNo = insertIndex;
-                    costThemeDetail.delFlag = false;
-                    costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
-                    costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                    costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
-                    costThemeDetail.updatedDate = DateTime.Now;
-                    costThemeDetail.unit = item.unit;
-                    costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
-                    costThemeDetail.QtyName = item.QtyName;
-                    costThemeDetail.remark = item.remark == null ? "" : item.remark;
-                    costThemeDetail.typeTheme = item.typeTheme == null ? "" : item.typeTheme;
+                    PurposeModel purposeModel = new PurposeModel();
 
-                    rtn += insertEstimate(costThemeDetail);
+                    purposeModel.activityId = activityId;
+                    //purposeModel.rowNo = insertIndex;
+                    purposeModel.id = item;
+                    //  purposeModel.status =item.status;
+                    purposeModel.delFlag = false;
+                    purposeModel.createdByUserId = model.activityFormModel.createdByUserId;
+                    purposeModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    purposeModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    purposeModel.updatedDate = DateTime.Now;
 
-                    insertIndex++;
+
+                    rtn += insertPurpose(purposeModel);
                 }
             }
+
+            //int insertIndex = 1;
+            //if (model.purposeModel != null)
+            //{
+            //    rtn += deletePurposeByActivityId(activityId);
+            //    foreach (var item in model.purposeModel.ToList())
+            //    {
+
+            //        PurposeModel purposeModel = new PurposeModel();
+            //        purposeModel.id = Guid.NewGuid().ToString();
+            //        purposeModel.activityId = activityId;
+            //        purposeModel.rowNo = insertIndex;
+            //        purposeModel.id =item.id;
+            //      //  purposeModel.status =item.status;
+            //        purposeModel.delFlag = false;
+            //        purposeModel.createdByUserId = model.activityFormModel.createdByUserId;
+            //        purposeModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+            //        purposeModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+            //        purposeModel.updatedDate = DateTime.Now;
+
+
+            //        rtn += insertPurpose(purposeModel);
+
+            //        insertIndex++;
+            //    }
+            // }
             return rtn;
         }
+
         protected static int insertRequestEmp(RequestEmpModel model)
         {
             int result = 0;
@@ -806,8 +859,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertRequestEmp"
-                    , new SqlParameter[] {new SqlParameter("@id",model.id)
-                    ,new SqlParameter("@activityId",model.activityId)
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityId)
                     ,new SqlParameter("@rowNo",model.rowNo)
                     ,new SqlParameter("@empId ",model.empId)
                     ,new SqlParameter("@delFlag",model.delFlag)
@@ -825,17 +877,20 @@ namespace eActForm.BusinessLayer
 
             return result;
         }
-        protected static int insertPlaceDetail(RequestEmpModel model)
+        protected static int insertPlaceDetail(PlaceDetailModel model)
         {
             int result = 0;
 
             try
             {
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertRequestEmp"
-                    , new SqlParameter[] {new SqlParameter("@id",model.id)
-                    ,new SqlParameter("@activityId",model.activityId)
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertPlaceDetail"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityId)
                     ,new SqlParameter("@rowNo",model.rowNo)
-                    ,new SqlParameter("@empId ",model.empId)
+                    ,new SqlParameter("@place",model.place)
+                    ,new SqlParameter("@forProject",model.forProject)
+                    ,new SqlParameter("@period",model.period)
+                    ,new SqlParameter("@departureDate",model.departureDate)
+                    ,new SqlParameter("@arrivalDate",model.arrivalDate)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
@@ -846,22 +901,21 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> insertEstimateTBMMKT");
+                ExceptionManager.WriteError(ex.Message + ">> insertPlaceDetail");
             }
 
             return result;
         }
-        protected static int insertInsertPerpose(RequestEmpModel model)
+        protected static int insertPurpose(PurposeModel model)
         {
             int result = 0;
 
             try
             {
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertRequestEmp"
-                    , new SqlParameter[] {new SqlParameter("@id",model.id)
-                    ,new SqlParameter("@activityId",model.activityId)
-                    ,new SqlParameter("@rowNo",model.rowNo)
-                    ,new SqlParameter("@empId ",model.empId)
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertPurpose"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityId)
+                    //,new SqlParameter("@rowNo",model.rowNo)
+                    ,new SqlParameter("@purposeId ",model.id)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
@@ -872,7 +926,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> insertEstimateTBMMKT");
+                ExceptionManager.WriteError(ex.Message + ">> insertPurpose");
             }
 
             return result;
