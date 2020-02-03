@@ -48,6 +48,8 @@ namespace eActForm.BusinessLayer
 
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
 
+                    rtn = ProcessInsertTB_Act_ActivityChoiceSelect(rtn, model, activityId);
+
                 }
 
 
@@ -76,7 +78,6 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.id = Guid.NewGuid().ToString();
                     costThemeDetail.activityId = activityId;
                     costThemeDetail.activityTypeId = item.activityTypeId;
-                    costThemeDetail.productId = item.productId;
                     costThemeDetail.productDetail = item.productDetail;
                     costThemeDetail.total = item.total;
                     costThemeDetail.IO = item.IO;
@@ -90,6 +91,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
                     costThemeDetail.QtyName = item.QtyName;
                     costThemeDetail.remark = item.remark == null ? "" : item.remark;
+                    costThemeDetail.productId = item.productId == null ? "" : item.productId;
 
                     rtn += insertEstimate(costThemeDetail);
 
@@ -131,10 +133,81 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.updatedByUserId = UtilsAppCode.Session.User.empId;
                 tB_Act_ActivityForm_DetailOther.updatedDate = DateTime.Now;
                 tB_Act_ActivityForm_DetailOther.BudgetNumber = model.tB_Act_ActivityForm_DetailOther.BudgetNumber;
+                tB_Act_ActivityForm_DetailOther.costCenter = model.tB_Act_ActivityForm_DetailOther.costCenter;
+                tB_Act_ActivityForm_DetailOther.channelRegionName = model.tB_Act_ActivityForm_DetailOther.channelRegionName;
+                tB_Act_ActivityForm_DetailOther.glNo = model.tB_Act_ActivityForm_DetailOther.glNo;
+                tB_Act_ActivityForm_DetailOther.glName = model.tB_Act_ActivityForm_DetailOther.glName;
+                tB_Act_ActivityForm_DetailOther.toName = model.tB_Act_ActivityForm_DetailOther.toName;
+                tB_Act_ActivityForm_DetailOther.toAddress = model.tB_Act_ActivityForm_DetailOther.toAddress;
+                tB_Act_ActivityForm_DetailOther.toContact = model.tB_Act_ActivityForm_DetailOther.toContact;
+                tB_Act_ActivityForm_DetailOther.detailContact = model.tB_Act_ActivityForm_DetailOther.detailContact;
 
                 rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
 
                 insertIndex++;
+            }
+            return rtn;
+        }
+
+        public static int ProcessInsertTB_Act_ActivityChoiceSelect(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            var okProcessInsert = false;
+            TB_Act_ActivityChoiceSelectModel tB_Act_ActivityChoiceSelectModel = new TB_Act_ActivityChoiceSelectModel();
+            tB_Act_ActivityChoiceSelectModel.delFlag = false;
+            tB_Act_ActivityChoiceSelectModel.createdByUserId = model.activityFormModel.createdByUserId;
+            tB_Act_ActivityChoiceSelectModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+            tB_Act_ActivityChoiceSelectModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+            tB_Act_ActivityChoiceSelectModel.updatedDate = DateTime.Now;
+
+            if (model.activityFormTBMMKT.list_0_select != "" || model.activityFormTBMMKT.list_1_multi_select.Length > 0 ||
+                 model.activityFormTBMMKT.list_2_select != "" || model.activityFormTBMMKT.brand_select != "" ||
+                 model.activityFormTBMMKT.list_3_select != "")
+            {
+                rtn += deleteActivityTB_Act_ActivityChoiceSelect(activityId);
+                okProcessInsert = true;
+            }
+
+            if (okProcessInsert == true)
+            {
+                if (model.activityFormTBMMKT.list_0_select != "")//สต๊อก
+                {
+                    tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                    tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                    tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_0_select;
+                    rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                }
+
+                for (int i = 0; i < model.activityFormTBMMKT.list_1_multi_select.Length; i++)//ขอเบิก
+                {
+                    tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                    tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                    tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_1_multi_select[i];
+                    rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                }
+
+                if (model.activityFormTBMMKT.list_2_select != "")//เพื่อ
+                {
+                    tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                    tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                    tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_2_select;
+                    rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                }
+
+                if (model.activityFormTBMMKT.brand_select != "")//Brand/ผลิตภัณฑ์ 
+                {
+                    tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                    tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                    tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.brand_select;
+                    rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                }
+
+                if (model.activityFormTBMMKT.list_3_select != "")//Channel+Region
+                {
+                    tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                    tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                    tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_3_select;
+                    rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                }
             }
             return rtn;
         }
@@ -302,6 +375,23 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
+        public static int deleteActivityTB_Act_ActivityChoiceSelect(string activityId)
+        {
+
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteActivityTB_Act_ActivityChoiceSelect"
+                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> deleteActivityTB_Act_ActivityChoiceSelect");
+            }
+
+            return result;
+        }
 
         public static int deleteusp_deleteTB_Act_ActivityForm_DetailOther(string activityId)
         {
@@ -396,6 +486,14 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@descAttach",model.descAttach)
                     ,new SqlParameter("@BudgetNumber",model.BudgetNumber)
                     ,new SqlParameter("@IO",model.IO)
+                    ,new SqlParameter("@costCenter",model.costCenter)
+                    ,new SqlParameter("@channelRegionName",model.channelRegionName)
+                    ,new SqlParameter("@glNo",model.glNo)
+                    ,new SqlParameter("@glName",model.glName)
+                    ,new SqlParameter("@toName",model.toName)
+                    ,new SqlParameter("@toAddress",model.toAddress)
+                    ,new SqlParameter("@toContact",model.toContact)
+                    ,new SqlParameter("@detailContact",model.detailContact)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
@@ -475,11 +573,36 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@unit",Convert.ToInt32(model.unit))
                     ,new SqlParameter("@unitPrice", decimal.Parse(string.Format("{0:0.00000}", model.unitPrice)))
                     ,new SqlParameter("@QtyName",model.QtyName)
+                    ,new SqlParameter("@productId",model.productId)
                     });
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message + ">> insertEstimateTBMMKT");
+            }
+
+            return result;
+        }
+
+        protected static int insertActivityChoiceSelect(TB_Act_ActivityChoiceSelectModel model)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertTB_Act_ActivityChoiceSelect"
+                    , new SqlParameter[] {new SqlParameter("@id",model.id)
+                    ,new SqlParameter("@actFormId",model.actFormId)
+                    ,new SqlParameter("@select_list_choice_id",model.select_list_choice_id)
+                    ,new SqlParameter("@delFlag",model.delFlag)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertActivityChoiceSelect");
             }
 
             return result;
