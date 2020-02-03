@@ -122,5 +122,28 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+
+        public JsonResult GET_master_material_autoComplete(ObjGetData_master_material_Model objGetDataListChoiceById)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                List<TB_Act_master_material_Model> tB_Act_Master_Material_Models = new List<TB_Act_master_material_Model>();
+                tB_Act_Master_Material_Models = QueryGet_TB_Act_master_material.get_TB_Act_master_material_autoComplete(objGetDataListChoiceById);
+
+                var resultData = new
+                {
+                    tB_Act_Master_Material_Models = tB_Act_Master_Material_Models.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

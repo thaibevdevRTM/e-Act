@@ -122,7 +122,18 @@
             if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5") {//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
-
+            if ($("#ddlin_or_out_stock").val() == "") { required += "ประเภทสต๊อก*<br>"; validate = false; }
+            var v_select_tB_Act_master_list_choice_id = "";
+            $('#ddlproduct_pos_premium option:selected').each(function () {
+                v_select_tB_Act_master_list_choice_id += ($(this).val() + "|");
+            });
+            v_select_tB_Act_master_list_choice_id = v_select_tB_Act_master_list_choice_id.substring(0, (v_select_tB_Act_master_list_choice_id.length - 1))
+            if (v_select_tB_Act_master_list_choice_id == "") { required += "ขอเบิก*<br>"; validate = false; }
+            if ($("#ddlfor").val() == "") { required += "เพื่อ*<br>"; validate = false; }
+            if ($("#ddlbrand_select").val() == "") { required += "Brand/ผลิตภัณฑ์*<br>"; validate = false; }
+            if ($("#ddlchannel_place").val() == "") { required += "Channel+Region*<br>"; validate = false; }
+            if ($("#txttoName").val() == "") { required += "ให้แก่(ชื่อผู้รับ)*<br>"; validate = false; }
+            if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์ที่ขอเบิก*<br>"; validate = false; }
         }
         else {
 

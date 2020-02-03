@@ -76,6 +76,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.id = Guid.NewGuid().ToString();
                     costThemeDetail.activityId = activityId;
                     costThemeDetail.activityTypeId = item.activityTypeId;
+                    costThemeDetail.productId = item.productId;
                     costThemeDetail.productDetail = item.productDetail;
                     costThemeDetail.total = item.total;
                     costThemeDetail.IO = item.IO;

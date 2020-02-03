@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace eActForm.Models
+{
+    public class ObjGetData_master_material_Model
+    {
+        public string select_tB_Act_master_list_choice_id { get; set; }
+        public string select_material { get; set; }
+        public string select_materialDescription { get; set; }
+
+    }
+}

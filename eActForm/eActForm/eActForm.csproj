@@ -227,6 +227,7 @@
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllBrandByForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllChanelByForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_master_cost_center.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_master_material.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_master_list_choice.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelByGroup.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelMaster.cs" />
@@ -323,6 +324,8 @@
     <Compile Include="Models\TB_Reg_ApproveGroup_Model.cs" />
     <Compile Include="Models\TB_Reg_FlowLimit_Model.cs" />
     <Compile Include="Models\TB_Act_master_cost_centerModel.cs" />
+    <Compile Include="Models\TB_Act_master_material_Model.cs" />
+    <Compile Include="Models\ObjGetData_master_material_Model.cs" />
     <Compile Include="Models\TB_Reg_Subject_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForm1.aspx.cs">
@@ -2444,6 +2447,7 @@
     <Content Include="Views\SharedMasterFormHeaderDetail\headerDetails_Pos_Premium.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\listDetailsPosPremium.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetails_Pos_Premium.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\listDetailsPosPremium.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
