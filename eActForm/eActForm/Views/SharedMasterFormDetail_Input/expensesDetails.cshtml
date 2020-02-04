@@ -3,141 +3,14 @@
 <tr style="border-bottom:none;">
     <td>
         <div id="divPlaceDetail" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
-            <table class="table table-bordered" id="tabelPlaceDetail" runat="server">
-                <tr style="background-color:#E5E2E2;height:25px; ">
-                    <th colspan="6" style="text-align :center;">
-                        Total estimate of travelling expenses ( ประมาณค่าใช้จ่ายในการเดินทาง ดังนี้ )
-                    </th>
-                </tr>
-                <tr style="height:25px;">
-                    <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        Description / รายละเอียด
-                    </th>
-                    <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        Unit/ หน่วย
-                    </th>
-                    <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        Unit Price / <br />ราคาต่อหน่วย
-                    </th>
-                    <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        Exchange Rete /<br />อัตราแลกเปลี่ยน
-                    </th>
-                    <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        Qty
-                        / จำนวน
-                    </th>
-                    <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                        Total
-                        /รวม
-                    </th>
-                </tr>
-                @{ var index = 0;}
-                @foreach (var item in Model.expensesDetailModel)
-                {
-                    <tr class="tagCountRowinTable">
+            
 
-                        <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.productDetail" id="txtProductDetail_@index" name="expensesDetailModel[@index].productDetail" class="form-control textboxcss" />
-                        </td>
-                        <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.QtyName" id="txtQtyName_@index" name="expensesDetailModel[@index].QtyName" class="form-control textboxcss" />
-                        </td>
-                        <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" name="expensesDetailModel[@index].unitPriceDisplay" class="form-control textboxcss text-right" />
-                        </td>
-                        <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.typeTheme" id="txtTypeTheme_@index" name="expensesDetailModel[@index].typeTheme" class="form-control textboxcss" />
-                        </td>
-                        <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                  
-                            <input type="number" value="@item.typeTheme" id="txtUnit_@index"  name="expensesDetailModel[@index].unit" min="0"  class="form-control textboxcss text-center " />
-
-                            @*@Html.TextBoxFor(x => item.unit, new
-                       {
-                           @id = "txtUnit_" + index,
-                           Name = "expensesDetailModel[" + index + "].unit",
-                           @class = "form-control textboxcss text-right"
-                       })*@
-                        </td>
-                        <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                            <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel[@index].total" class="form-control textboxcss text-right hdTotal_@index" />
-                            @Html.TextBoxFor(x => item.total, "{0:n2}", new
-                       {
-                           @id = "txtTotal_" + @index
-                           ,
-                           Name = "expensesDetailModel[" + index + "].total"
-                           ,
-                           @class = "form-control textboxcss text-right"
-                           ,
-                           @readonly = "readonly"
-                       })
-
-                            <script>
-                            $("#txtUnitPrice_@index").blur(function () {
-                                    var v_unitRow = 0.00;
-                                    var v_unitpriceRow = 0.00;
-                                    var v_totalRow = 0.00;
-                                    if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
-                                    v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
-                                    }
-                                    if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                    v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
-                                    }
-                                    v_totalRow = (v_unitRow * v_unitpriceRow);
-
-                                    $("#hdTotal_@index").val(v_totalRow.toFixed(2));
-                                    $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                    sumall();
-                            });
-                            $("#txtUnit_@index").blur(function () {
-                                    var v_unitRow = 0.00;
-                                    var v_unitpriceRow = 0.00;
-                                    var v_totalRow = 0.00;
-                                    if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
-                                    v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
-                                    }
-                                    if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                    v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
-                                    }
-                                    v_totalRow = (v_unitRow * v_unitpriceRow);
-
-                                    $("#hdTotal_@index").val(v_totalRow.toFixed(2));
-                                    $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                    sumall();
-                            });
-
-                            </script>
-                        </td>
-                    </tr>
-                    index++;
-                }
-                <tr>
-                    <td colspan="5" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                        จำนวนเงินรวม(บาท)&nbsp;
-                    </td>
-                    <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
-                        @* <label id="totalEstimate" type="text" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###.00")</label>&nbsp;*@
-
-                        <label id="totalEstimate" type="text" readonly="readonly"></label>&nbsp;
-
-                    </td>
-                </tr>
-            </table>
-
-
-
-            <script>
-                            function sumall() {
-                                var totalAll = 0.00;
-                                var rowCount = '@Model.expensesDetailModel.Count';
-                                
-                                for (i = 0; i < rowCount; i++) {
-                                    var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
-                                    totalAll = totalAll + rowtotal;
-                                }                              
-                                 $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                            }
-            </script>
+        <div id="divDetailRows" >
+            @Html.Action("expensesDetailRows", "SharedMasterFormDetail_Input", new { model = @Model.expensesDetailModel ,isNew = false })
+        </div>
+            <div class="form-group col-lg-1 col-xs-1" onclick="addDetailRows()">
+                <label class="btn ink-reaction btn-danger fa fa-plus"></label>
+            </div>
         </div>
     </td>
 </tr>

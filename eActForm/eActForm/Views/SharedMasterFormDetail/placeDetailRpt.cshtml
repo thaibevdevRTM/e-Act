@@ -19,26 +19,28 @@
         @for (index = 0; index < Model.placeDetailModel.Count; index++)
 
         {
-            <tr style="height:25px;">
-                <td style="text-align:left; padding-left:5px;">
-                    @Model.placeDetailModel[@index].place
-                </td>
-                <td style="text-align:left; padding-left:5px;">
-                    @Model.placeDetailModel[@index].forProject
-                </td>
-                <td style="text-align:center; padding-left:5px;">
-                    @Model.placeDetailModel[@index].period
-                </td>
-                <td style="text-align:center; padding-left:5px;">
-                    @Model.placeDetailModel[@index].departureDateStr
-                </td>
-                <td style="text-align:center; padding-left:5px;">
-                    @Model.placeDetailModel[@index].arrivalDateStr
-                </td>
-            </tr>
+            if (@Model.placeDetailModel[@index].place != "")
+            {
+                <tr style="height:25px;">
+                    <td style="text-align:left; padding-left:5px;">
+                        @Model.placeDetailModel[@index].place
+                    </td>
+                    <td style="text-align:left; padding-left:5px;">
+                        @Model.placeDetailModel[@index].forProject
+                    </td>
+                    <td style="text-align:center; padding-left:5px;">
+                        @Model.placeDetailModel[@index].period
+                    </td>
+                    <td style="text-align:center; padding-left:5px;">
+                        @Model.placeDetailModel[@index].departureDateStr
+                    </td>
+                    <td style="text-align:center; padding-left:5px;">
+                        @Model.placeDetailModel[@index].arrivalDateStr
+                    </td>
+                </tr>
 
+            }
         }
-
 
 
     </table>

@@ -17,24 +17,27 @@
         </tr>
         @{ var index = 0;}
         @for (index = 0; index < Model.requestEmpModel.Count; index++)
+        {
+            if (@Model.requestEmpModel[@index].empId != "")
             {
-            <tr style="height:25px;">
-                <td style="text-align:left; padding-left:5px;">
-                    @Model.requestEmpModel[@index].empName
-                </td>
-                <td style="text-align:left; padding-left:5px;">
-                    @Model.requestEmpModel[@index].position
-                </td>
-                <td style="text-align:center; padding-left:5px;">
-                    @Model.requestEmpModel[@index].level
-                </td>
-                <td style="text-align:left; padding-left:5px;">
-                    @Model.requestEmpModel[@index].department
-                </td>
-                <td style="text-align:left; padding-left:5px;">
-                    @Model.requestEmpModel[@index].bu
-                </td>
-            </tr>
+                <tr style="height:25px;">
+                    <td style="text-align:left; padding-left:5px;">
+                        @Model.requestEmpModel[@index].empName
+                    </td>
+                    <td style="text-align:left; padding-left:5px;">
+                        @Model.requestEmpModel[@index].position
+                    </td>
+                    <td style="text-align:center; padding-left:5px;">
+                        @Model.requestEmpModel[@index].level
+                    </td>
+                    <td style="text-align:left; padding-left:5px;">
+                        @Model.requestEmpModel[@index].department
+                    </td>
+                    <td style="text-align:left; padding-left:5px;">
+                        @Model.requestEmpModel[@index].bu
+                    </td>
+                </tr>
+            }
         }
     </table>
 </div>

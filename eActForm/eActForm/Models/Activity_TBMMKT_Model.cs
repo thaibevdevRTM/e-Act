@@ -24,7 +24,7 @@ namespace eActForm.Models
         public List<RequestEmpModel> requestEmpModel { get; set; }
         public List<PurposeModel> purposeModel { get; set; }
         public List<PlaceDetailModel> placeDetailModel { get; set; }
-        public List<CostThemeDetailOfGroupByPriceTBMMKT> expensesDetailModel { get; set; }
+        public CostDetailOfGroupPriceTBMMKT expensesDetailModel { get; set; }
         public List<string> chkPurpose { get; set; }
 
         public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
@@ -39,7 +39,7 @@ namespace eActForm.Models
             requestEmpModel = new List<RequestEmpModel>();
             purposeModel = new List<PurposeModel>();
             placeDetailModel = new List<PlaceDetailModel>();
-            expensesDetailModel = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+            expensesDetailModel = new CostDetailOfGroupPriceTBMMKT();
             approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
 
         }
@@ -116,6 +116,10 @@ namespace eActForm.Models
         public string val { get; set; }
     }
 
+    public class CostDetailOfGroupPriceTBMMKT
+    {
+        public List<CostThemeDetailOfGroupByPriceTBMMKT> costDetailLists { get; set; }
+    }
 
     public class CostThemeDetailOfGroupByPriceTBMMKT : CostThemeDetailOfGroupByPrice
     {
@@ -145,10 +149,10 @@ namespace eActForm.Models
     {
         public string id { get; set; }
         public string activityId { get; set; }
-       // public int rowNo { get; set; }
+        // public int rowNo { get; set; }
         public string detailTh { get; set; }
         public string detailEn { get; set; }
-       // public bool chk { get; set; }
+        // public bool chk { get; set; }
 
     }
     //public class CheckboxModels

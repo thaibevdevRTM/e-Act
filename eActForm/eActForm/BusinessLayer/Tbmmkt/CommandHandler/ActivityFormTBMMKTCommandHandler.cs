@@ -167,7 +167,7 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId);
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
-                activity_TBMMKT_Model.expensesDetailModel = activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT;
+                activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT;
 
                 //activity_TBMMKT_Model
                 //SELECT* FROM TB_Act_RequestEmp where activityId = @activityId

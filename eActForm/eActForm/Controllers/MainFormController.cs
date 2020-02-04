@@ -90,27 +90,10 @@ namespace eActForm.Controllers
                     //========================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่=================
                     #region "ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่"
 
-                    List<RequestEmpModel> RequestEmp = new List<RequestEmpModel>();
-                    for (int i = 0; i < 3; i++)
-                    {
-                        RequestEmp.Add(new RequestEmpModel() { id = "", empId = "", empName = "", position = "", bu = "" });
-                    }
-                    activity_TBMMKT_Model.requestEmpModel = RequestEmp;
 
-                    List<PlaceDetailModel> placeDetailModel = new List<PlaceDetailModel>();
-                    for (int i = 0; i < 3; i++)
-                    {
-                        placeDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = null, arrivalDate = null });
-                    }
-                    activity_TBMMKT_Model.placeDetailModel = placeDetailModel;
+                  
 
-
-                    List<CostThemeDetailOfGroupByPriceTBMMKT> expensesDetailModel = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
-                    for (int i = 0; i < 6; i++)
-                    {
-                        expensesDetailModel.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { productDetail = "", QtyName = "", unitPrice = 0, typeTheme = "", unit = 0, total = 0 });
-                    }
-                    activity_TBMMKT_Model.expensesDetailModel = expensesDetailModel;
+                    
                     #endregion
                     //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
 
@@ -205,7 +188,7 @@ namespace eActForm.Controllers
 
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
                 {
-                    activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = activity_TBMMKT_Model.expensesDetailModel;
+                    activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
                 }
 
                 int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
