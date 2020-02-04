@@ -22,8 +22,9 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserAdminByCompanyId"
-                    , new SqlParameter[] { new SqlParameter("@companyId", UtilsAppCode.Session.User.empCompanyId) });
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserAdminByActId"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId )});
                 string actNo = QueryGetActivityById.getActivityById(actFormId)[0].activityNo;
                 string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId);
                 string strBody = string.Format(ConfigurationManager.AppSettings["emailRequestCancelBody"], actNo
