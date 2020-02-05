@@ -79,7 +79,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.activityId = activityId;
                     costThemeDetail.activityTypeId = item.activityTypeId;
                     costThemeDetail.productDetail = item.productDetail;
-                    costThemeDetail.total = item.total;
+                    costThemeDetail.total = item.total == null? 0 : item.total;
                     costThemeDetail.IO = item.IO;
                     costThemeDetail.rowNo = insertIndex;
                     costThemeDetail.delFlag = false;
