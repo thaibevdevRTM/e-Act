@@ -112,15 +112,17 @@
             });
         }
 </script>
-<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+ @*//==========for test============*@
+ @*<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>*@
+ @*//===END=======for test============*@
 <script>
-     //==========for production============
+    //==========for production============
     $("#btnExportPDF").click(function () {
         $("input[name='gridHtml']").val($("#divForm").html());
     });
     //==========for production============
 
-     //==========for test============
+    //==========for test============
     //$(function () {
     //    $("#btnExportPDF").click(function () {
     //        $("input[name='gridHtml']").val($("#divForm").html());
