@@ -23,7 +23,8 @@ namespace eActForm.BusinessLayer
                              {
                                  id = d["id"].ToString(),
                                  detailTh = d["detailTh"].ToString()+" : "+ d["detailEn"].ToString(),
-                                 detailEn = d["detailEn"].ToString(),                      
+                                 detailEn = d["detailEn"].ToString(),
+                                 chk = false,
                              });
                 return lists.OrderBy(x => x.detailTh).ToList();
             }
@@ -45,6 +46,7 @@ namespace eActForm.BusinessLayer
                                  id = d["id"].ToString(),
                                  detailTh = d["detailTh"].ToString() + " : " + d["detailEn"].ToString(),
                                  detailEn = d["detailEn"].ToString(),
+                                 chk = d["chk"].ToString()=="1" ? true : false ,
                              });
                 return lists.OrderBy(x => x.detailTh).ToList();
             }

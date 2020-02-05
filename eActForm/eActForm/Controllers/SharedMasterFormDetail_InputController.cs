@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer;
+using eActForm.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,35 +37,43 @@ namespace eActForm.Controllers
         }
         public ActionResult requestEmp(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-
-            List<RequestEmpModel> RequestEmp = new List<RequestEmpModel>();
-            for (int i = 0; i < 5; i++)
+            activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp("3030").ToList();
+            if (activity_TBMMKT_Model.requestEmpModel.Count == 0)
             {
-                RequestEmp.Add(new RequestEmpModel() { id = "", empId = "", empName = "", position = "", bu = "" });
+                List<RequestEmpModel> RequestEmp = new List<RequestEmpModel>();
+                for (int i = 0; i < 5; i++)
+                {
+                    RequestEmp.Add(new RequestEmpModel() { id = "", empId = "", empName = "", position = "", bu = "" });
+                }
+                activity_TBMMKT_Model.requestEmpModel = RequestEmp;
             }
-            activity_TBMMKT_Model.requestEmpModel = RequestEmp;
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult purposeDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+           
+            activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getAllPurpose().ToList();
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult placeDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            List<PlaceDetailModel> placeDetailModel = new List<PlaceDetailModel>();
-            for (int i = 0; i < 3; i++)
+            if (activity_TBMMKT_Model.placeDetailModel.Count == 0)
             {
-                placeDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = null, arrivalDate = null });
+                List<PlaceDetailModel> placeDetailModel = new List<PlaceDetailModel>();
+                for (int i = 0; i < 3; i++)
+                {
+                    placeDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = null, arrivalDate = null });
+                }
+                activity_TBMMKT_Model.placeDetailModel = placeDetailModel;
             }
-            activity_TBMMKT_Model.placeDetailModel = placeDetailModel;
-
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult expensesDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            if(activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null)
+            if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null)
             {
-                CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT {
+                CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT
+                {
                     costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
                 };
                 for (int i = 0; i < 6; i++)
@@ -93,6 +102,6 @@ namespace eActForm.Controllers
         {
             return PartialView(activity_TBMMKT_Model);
         }
-        
+
     }
 }

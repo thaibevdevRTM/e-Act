@@ -58,8 +58,13 @@ namespace eActForm.Controllers
                     }
                     activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
                     //====END===============Get Subject=======================
+ 
+                   activity_TBMMKT_Model.channelMasterTypeList = QueryGet_channelByGroup.get_channelByGroup(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId, activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel);
 
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
+
+
+
                 }
                 else
                 {
@@ -119,8 +124,7 @@ namespace eActForm.Controllers
 
 
                 //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
-                activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp("3030").ToList();
-                activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getAllPurpose().ToList();
+              
                 //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
 
 

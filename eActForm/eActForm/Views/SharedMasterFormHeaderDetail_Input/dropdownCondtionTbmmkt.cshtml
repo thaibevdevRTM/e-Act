@@ -75,9 +75,10 @@
             <div class="col-md-1 col-xs-12">
             </div>
 
+
             <script>
-                function processDropdownChannel() {
-                 var ddlChannel = document.getElementById("ddlChannelOrBrand");
+                function getDataDropwdownBrandChannel() {
+                     var ddlChannel = document.getElementById("ddlChannelOrBrand");
 
                         $.ajax({
                             url: '@Url.Action("getChannelByGroup", "MainForm")',
@@ -102,9 +103,8 @@
 
 
                             }
-                        });}
-
-
+                        });
+                }
                 function processDropdownConditionFlow() {
 
                     if ($("#ddlChannelOrBrand").val() == "") {
@@ -156,7 +156,7 @@
 
                 $("#ddlChannelOrBrand").change(function () {
                     processDropdownConditionFlow();
-                    processDropdownChannel();
+                    getDataDropwdownBrandChannel();
                 });
 
             </script>
