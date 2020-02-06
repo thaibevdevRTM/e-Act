@@ -11,23 +11,22 @@ using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
-    public class QueryGet_TB_Act_master_list_choice
+    public class QueryGet_TB_Act_ActivityChoiceSelect
     {
-        public static List<TB_Act_master_list_choiceModel> get_TB_Act_master_list_choice(string master_type_form_id, string type)
+        public static List<TB_Act_ActivityChoiceSelectModel> get_TB_Act_ActivityChoiceSelectModel(string actFormId)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_get_TB_Act_master_list_choice"
-                       , new SqlParameter("@master_type_form_id", master_type_form_id)
-                           , new SqlParameter("@type", type));
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_get_TB_Act_ActivityChoiceSelect"
+                       , new SqlParameter("@actFormId", actFormId));
                 var result = (from DataRow d in ds.Tables[0].Rows
-                              select new TB_Act_master_list_choiceModel()
+                              select new TB_Act_ActivityChoiceSelectModel()
                               {
                                   id = d["id"].ToString(),
+                                  actFormId = d["actFormId"].ToString(),
+                                  select_list_choice_id = d["select_list_choice_id"].ToString(),
                                   name = d["name"].ToString(),
-                                  sub_name = d["sub_name"].ToString(),
                                   type = d["type"].ToString(),
-                                  master_type_form_id = d["master_type_form_id"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),
@@ -39,9 +38,10 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("get_channelMasterType => " + ex.Message);
-                return new List<TB_Act_master_list_choiceModel>();
+                ExceptionManager.WriteError("get_TB_Act_ActivityChoiceSelectModel => " + ex.Message);
+                return new List<TB_Act_ActivityChoiceSelectModel>();
             }
         }
+
     }
 }

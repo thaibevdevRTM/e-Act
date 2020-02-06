@@ -79,7 +79,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.activityId = activityId;
                     costThemeDetail.activityTypeId = item.activityTypeId;
                     costThemeDetail.productDetail = item.productDetail;
-                    costThemeDetail.total = item.total == null? 0 : item.total;
+                    costThemeDetail.total = item.total == null ? 0 : item.total;
                     costThemeDetail.IO = item.IO;
                     costThemeDetail.rowNo = insertIndex;
                     costThemeDetail.delFlag = false;
@@ -133,6 +133,7 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.updatedByUserId = UtilsAppCode.Session.User.empId;
                 tB_Act_ActivityForm_DetailOther.updatedDate = DateTime.Now;
                 tB_Act_ActivityForm_DetailOther.BudgetNumber = model.tB_Act_ActivityForm_DetailOther.BudgetNumber;
+                tB_Act_ActivityForm_DetailOther.brand_select = model.activityFormTBMMKT.brand_select;
                 tB_Act_ActivityForm_DetailOther.costCenter = model.tB_Act_ActivityForm_DetailOther.costCenter;
                 tB_Act_ActivityForm_DetailOther.channelRegionName = model.tB_Act_ActivityForm_DetailOther.channelRegionName;
                 tB_Act_ActivityForm_DetailOther.glNo = model.tB_Act_ActivityForm_DetailOther.glNo;
@@ -221,11 +222,34 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
                 activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
+                activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activityId);
+                if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
+                {
+                    activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().select_list_choice_id;
+                    var countlist_1_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "product_pos_premium").Count();
+                    activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new string[countlist_1_multi_select];
+                    int index_each = 0;
+                    foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "product_pos_premium").ToList())
+                    {
+                        activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = item.select_list_choice_id;
+                        index_each++;
+                    }
+                    activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().select_list_choice_id;
+                    activity_TBMMKT_Model.activityFormTBMMKT.brand_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select;
+                    activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().select_list_choice_id;
+                }
 
                 Decimal? totalCostThisActivity = 0;
                 foreach (var item in activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT)
                 {
-                    totalCostThisActivity += item.total;
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                    {
+                        totalCostThisActivity += item.unit;
+                    }
+                    else
+                    {
+                        totalCostThisActivity += item.total;
+                    }                    
                 }
 
                 activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
@@ -486,6 +510,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@descAttach",model.descAttach)
                     ,new SqlParameter("@BudgetNumber",model.BudgetNumber)
                     ,new SqlParameter("@IO",model.IO)
+                    ,new SqlParameter("@brand_select",model.brand_select)
                     ,new SqlParameter("@costCenter",model.costCenter)
                     ,new SqlParameter("@channelRegionName",model.channelRegionName)
                     ,new SqlParameter("@glNo",model.glNo)

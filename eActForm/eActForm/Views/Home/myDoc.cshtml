@@ -144,6 +144,10 @@
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
+                            else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && item.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5") /*ใบเบิกผลิตภัณฑ์,POS / PREMIUM*/
+                            {
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
                                 @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
@@ -241,7 +245,7 @@
         else {
              $.ajax({
                 type: 'POST',
-                url: '@Url.Action("previewApprove", "Approve")', 
+                url: '@Url.Action("previewApprove", "Approve")',
                 data: {
                     actId: actId
                 }

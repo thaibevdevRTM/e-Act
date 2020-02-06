@@ -47,7 +47,7 @@ namespace eActForm.Controllers
                     }
                     activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
                     //====END===============Get Subject=======================
-
+                    activity_TBMMKT_Model.channelMasterTypeList = QueryGet_channelByGroup.get_channelByGroup(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId, activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel);
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
                 }
                 else

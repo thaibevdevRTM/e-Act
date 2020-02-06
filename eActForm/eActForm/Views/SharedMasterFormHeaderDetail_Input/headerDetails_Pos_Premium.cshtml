@@ -8,7 +8,7 @@
 <tr>
     <td style="padding-left:8px;">
         <div id="divHeaderDetails" runat="server" style="width: 100%;">
-            <table style="width: 100%;border-collapse:collapse;" id="tabelHeaderDetails" runat="server" class="fontDocV1">
+            <table style="width: 100%;border-collapse:collapse;" id="tabelHeaderDetails" runat="server">
                 <tr>
                     <td>
                         <div class="form-group">
@@ -18,10 +18,10 @@
                             <div class="col-md-3 col-xs-12">
                                 <div class="row">
                                     @Html.DropDownListFor(x => x.activityFormTBMMKT.list_0_select, new SelectList(Model.list_0, "id", "name", ""), "", new
-                        {
-                            @class = "form-control selectpicker",
-                            id = "ddlin_or_out_stock"
-                        })
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlin_or_out_stock"
+                                    })
                                     <script>
                                         $("#ddlin_or_out_stock").change(function () {
                                             if ($("#ddlin_or_out_stock").val() != "") {
@@ -78,14 +78,14 @@
                                             min-width: 262px;
                                         }
                                     </style>
-                                    @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new MultiSelectList(Model.list_1,
-                                                                                                   "id", "name"),
-                                                                                                   new
-                                                                                                   {
-                                                                                                       @class = "form-control selectpicker",
-                                                                                                       id = "ddlproduct_pos_premium",
-                                                                                                       multiple = "multiple"
-                                                                                                   })
+                                    @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.list_1,
+                                                                             "id", "name"),
+                                                                             new
+                                                                             {
+                                                                                 @class = "form-control selectpicker",
+                                                                                 id = "ddlproduct_pos_premium",
+                                                                                 multiple = "multiple"
+                                                                             })
                                     <script>
                                         $(document).ready(function () {
                                             $('#ddlproduct_pos_premium').multiselect({
@@ -116,7 +116,16 @@
                                                     }
                                                 },
                                             });
-                                            $('#ddlproduct_pos_premium').multiselect('disable');
+                                            if ($("#ddlin_or_out_stock").val() == "") {
+                                                $('#ddlproduct_pos_premium').multiselect('disable');
+                                            } else {
+                                                var valuesSelectChoiceFromDb = [];
+                                                @foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
+                                                {
+                                                    @:valuesSelectChoiceFromDb.push("@itemArray");
+                                                }
+                                                $("#ddlproduct_pos_premium").multiselect('select', valuesSelectChoiceFromDb);
+                                            }
                                         });
                                     </script>
                                 </div>
@@ -127,10 +136,10 @@
                             <div class="col-md-4 col-xs-12">
                                 <div class="row">
                                     @Html.DropDownListFor(x => x.activityFormTBMMKT.list_2_select, new SelectList(Model.list_2, "id", "name", ""), "", new
-                        {
-                            @class = "form-control selectpicker",
-                            id = "ddlfor"
-                        })
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlfor"
+                                    })
                                 </div>
                             </div>
                         </div>
@@ -146,10 +155,10 @@
                             <div class="col-md-3 col-xs-12">
                                 <div class="row">
                                     @Html.DropDownListFor(x => x.activityFormTBMMKT.brand_select, new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", ""), "", new
-                        {
-                            @class = "form-control selectpicker",
-                            id = "ddlbrand_select"
-                        })
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlbrand_select"
+                                    })
                                     <script>
                                         $("#ddlbrand_select").change(function () {
                                             if ($("#ddlChannelOrBrand").val() != "" && $("#ddlbrand_select").val() != "") {
@@ -216,10 +225,10 @@
                             <div class="col-md-3 col-xs-12">
                                 <div class="row">
                                     @Html.DropDownListFor(x => x.activityFormTBMMKT.list_3_select, new SelectList(Model.list_3, "id", "name", ""), "", new
-                        {
-                            @class = "form-control selectpicker",
-                            id = "ddlchannel_place"
-                        })
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlchannel_place"
+                                    })
                                     <script>
                                         $("#ddlchannel_place").change(function () {
                                             if ($("#ddlchannel_place").val() != "") {

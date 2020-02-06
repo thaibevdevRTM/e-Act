@@ -11,10 +11,10 @@
                         &nbsp;Condition Flow<span class="required">:&nbsp;</span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "txt", "txt", ""), "", new
-                    {
-                        @class = "form-control selectpicker",
-                        id = "ddlChannelOrBrand"
-                    })
+            {
+                @class = "form-control selectpicker",
+                id = "ddlChannelOrBrand"
+            })
                 </div>
             </div>
             <div class="col-md-4 col-xs-12">
@@ -24,10 +24,10 @@
                         &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.channelMasterTypeList, "subTypeId", "subName", 0), "", new
-                    {
-                        @class = "form-control selectpicker",
-                        id = "ddlChannel"
-                    })
+            {
+                @class = "form-control selectpicker",
+                id = "ddlChannel"
+            })
 
                 </div>
                 <div id="divBrand" style="display:none; width:100%">
@@ -35,10 +35,10 @@
                         &nbsp;เลือก Brand<span class="required"></span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
-                    {
-                        @class = "form-control selectpicker",
-                        id = "ddlBrand"
-                    })
+            {
+                @class = "form-control selectpicker",
+                id = "ddlBrand"
+            })
                 </div>
                 <div id="divChannelNull" style="display:block; width:100%">
                     <label class="control-label" for="ddlChannel">
@@ -55,10 +55,10 @@
                         &nbsp;เรื่อง <span class="required"></span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
-                    {
-                        @class = "form-control selectpicker",
-                        id = "ddlSubject"
-                    })
+            {
+                @class = "form-control selectpicker",
+                id = "ddlSubject"
+            })
                 </div>
                 <div id="divSubjectNull" style="display:block; width:100%">
                     <label class="control-label" for="ddlBrand">
@@ -74,31 +74,8 @@
             </div>
 
             <script>
-                function processDropdownConditionFlow() {
-
-                    if ($("#ddlChannelOrBrand").val() == "") {
-
-                        $("#divBrand").hide();
-                        $("#divChannel").hide();
-                        $("#divSubject").hide();
-                        $('#divChannelNull').css('display', 'inline-block');
-                        $('#divSubjectNull').css('display', 'inline-block');
-                     }
-                    else if ($("#ddlChannelOrBrand").val() == "Brand") {
-                        $("#divChannelNull").hide();
-                        $("#divSubjectNull").hide();
-                        $('#divBrand').css('display', 'inline-block');
-                        $("#divSubject").css('display', 'inline-block');
-                        $("#divChannel").hide();
-                    }
-                    else {
-                        $("#divChannelNull").hide();
-                        $("#divSubjectNull").hide();
-                         $('#divChannel').css('display', 'inline-block');
-                        $("#divSubject").css('display', 'inline-block');
-                        $("#divBrand").hide();
-
-                        var ddlChannel = document.getElementById("ddlChannelOrBrand");
+                function getDataDropwdownBrandChannel() {
+                     var ddlChannel = document.getElementById("ddlChannelOrBrand");
 
                         $.ajax({
                             url: '@Url.Action("getChannelByGroup", "MainForm")',
@@ -124,6 +101,30 @@
 
                             }
                         });
+                }
+                function processDropdownConditionFlow() {
+
+                    if ($("#ddlChannelOrBrand").val() == "") {
+
+                        $("#divBrand").hide();
+                        $("#divChannel").hide();
+                        $("#divSubject").hide();
+                        $('#divChannelNull').css('display', 'inline-block');
+                        $('#divSubjectNull').css('display', 'inline-block');
+                     }
+                    else if ($("#ddlChannelOrBrand").val() == "Brand") {
+                        $("#divChannelNull").hide();
+                        $("#divSubjectNull").hide();
+                        $('#divBrand').css('display', 'inline-block');
+                        $("#divSubject").css('display', 'inline-block');
+                        $("#divChannel").hide();
+                    }
+                    else {
+                        $("#divChannelNull").hide();
+                        $("#divSubjectNull").hide();
+                        $('#divChannel').css('display', 'inline-block');
+                        $("#divSubject").css('display', 'inline-block');
+                        $("#divBrand").hide();
 
                     }
                 }
@@ -150,6 +151,7 @@
 
                 $("#ddlChannelOrBrand").change(function () {
                     processDropdownConditionFlow();
+                    getDataDropwdownBrandChannel();
                     if ('@Model.activityFormTBMMKT.master_type_form_id' == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5") //ใบเบิกผลิตภัณฑ์,POS/PREMIUM
                     {
                         $("#ddlbrand_select").val("");
@@ -194,7 +196,8 @@
                                         alert("Error GetDataListChoiceById.");
                                     }
                                  });
-                        } else {
+                        }
+                        else {
                             $("#txtglNo").val("");
                             $("#txtglName").val("");
                         }
