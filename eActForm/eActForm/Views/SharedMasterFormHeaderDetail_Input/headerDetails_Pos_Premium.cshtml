@@ -38,9 +38,14 @@
                                     </script>
                                 </div>
                             </div>
-                            <label class="control-label col-md-7 col-xs-12">
-                                &nbsp;
+                            <label class="control-label col-md-3 col-xs-12">
+                                วันที่ขอเบิก :
                             </label>
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc" })
+                                </div>
+                            </div>
                         </div>
                     </td>
                 </tr>
@@ -79,18 +84,19 @@
                                         }
                                     </style>
                                     @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.list_1,
-                                                                             "id", "name"),
-                                                                             new
-                                                                             {
-                                                                                 @class = "form-control selectpicker",
-                                                                                 id = "ddlproduct_pos_premium",
-                                                                                 multiple = "multiple"
-                                                                             })
+                                                                                  "id", "name"),
+                                                                                  new
+                                                                                  {
+                                                                                      @class = "form-control selectpicker",
+                                                                                      id = "ddlproduct_pos_premium",
+                                                                                      multiple = "multiple"
+                                                                                  })
                                     <script>
                                         $(document).ready(function () {
                                             $('#ddlproduct_pos_premium').multiselect({
                                                 nonSelectedText: '                                                    ',
                                                 onChange: function (option, checked) {
+                                                    clearDataInTable();//ต้องเคลียร์กันไปเลือกMatในหัวข้อ ขอเบิก อื่นๆแล้วกลับมาแก้ไข หัวข้อเบิกใหม่ที่ไม่มี Mat ดังกล่าว
                                                     if ($("#ddlin_or_out_stock").val() != "") {
                                                         var valueInStock = "4C059B00-6350-4E46-82E0-98E28807C697";
                                                         var valueProduct = "AD1A2D99-04A5-43B6-988A-109B03614358";

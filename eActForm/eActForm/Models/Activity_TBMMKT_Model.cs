@@ -48,6 +48,12 @@ namespace eActForm.Models
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }
         public string brand_select { get; set; }
+        public string labelRequire { get; set; }
+        public string labelInOrOutStock { get; set; }
+        public string labelBrandOrChannel { get; set; }
+        public string labelFor { get; set; }
+        public string labelBrand { get; set; }
+        public string labelChannelRegion { get; set; }
     }
 
     public class TB_Reg_Subject

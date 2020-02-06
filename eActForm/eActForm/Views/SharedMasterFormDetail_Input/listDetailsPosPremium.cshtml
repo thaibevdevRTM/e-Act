@@ -25,7 +25,7 @@
         </style>
         <div style="height:5px;"></div>
         <div id="divHeaderDetails" runat="server" style="width: 100%;padding-left:5px;padding-right:15px;">
-            <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelHeaderDetails" >
+            <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelFormDetails" >
                 <tr style="background-color:#2f74b5;color:white;height:25px;">
                     <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ที่</th>
                     <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รหัสสินค้า</th>
@@ -100,9 +100,9 @@
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             <input type="text" value="@item.productDetail" id="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" name="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" class="form-control textboxcss txtInTable_productDetail_@index" readonly="readonly" />
                         </td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             <input type="hidden" value="@item.unit" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" class="form-control textboxcss text-right hidunit_@index" />
-                            @Html.TextBoxFor(x => item.unit, "{0:n0}", new { @id = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].unit", Name = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].unit", @class = "form-control textboxcss text-right txtunit_" + index })
+                            @Html.TextBoxFor(x => item.unit, "{0:n0}", new { @id = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].unit", Name = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].unit", @class = "form-control textboxcss text-center txtunit_" + index })
                             <script>
                             $(".txtunit_@index").blur(function () {
                                     sumall();
@@ -125,7 +125,7 @@
                     <td colspan="3" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                         รวม&nbsp;
                     </td>
-                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;">
                         <label id="totalEstimate" type="text" style="padding-top:5px;" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###")</label>&nbsp;
                     </td>
                     <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
@@ -134,9 +134,15 @@
                 </tr>
             </table>
             <script>
+                function clearDataInTable() {
+                    var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
+                    for (i = 0; i < rowCount; i++) {
+                        $(".txtInTable_productId_" + i.toString()).val("");
+                    }
+                }
                 function sumall() {
                     var totalAll = 0.00;
-                    var rowCount = parseInt($('#tabelHeaderDetails tr.tagCountRowinTable').length);
+                    var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
 
                     for (i = 0; i < rowCount; i++) {
                         var rowunit = parseFloat($(".txtunit_" + i.toString()).val().replace(",", ""));

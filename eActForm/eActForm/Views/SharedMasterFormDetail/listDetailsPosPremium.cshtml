@@ -14,48 +14,28 @@
                     <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หมายเหตุ</th>
                 </tr>
                 @{ var index = 0;}
-                @for (int i = 0; i <= 14; i++)
+                @foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
                 {
-                    <tr>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">@(index + 1)</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">230009421</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;ฐานไฟ LED วงกลม 127.7*2.7*12.7cm. - KL</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">10,000</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">EA</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">86S02006B019</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">มีรุปประกอบ</td>
-                    </tr>
-                }
-                @*@{ var index = 0;}
-                    @foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
+                    if (item.productDetail != "")
                     {
-                        if (item.productDetail != "")
-                        {
-                            <tr>
-                                <td style="width: 10%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">@(index + 1)</td>
-                                <td style="width: 55%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;@item.productDetail</td>
-                                @if (item.total != 0)
-                                {
-                                    <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                                        @string.Format("{0:#,0.00}", @item.total)&nbsp;
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;"></td>
-                                }
-
-                                <td style="width: 20%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;@item.remark</td>
-                            </tr>
-                        }
-                        index++;
-                    }*@
+                        <tr>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">@(index + 1)</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.productId</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;@item.productDetail</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.unit</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.QtyName</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.IO</td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.remark</td>
+                        </tr>
+                    }
+                    index++;
+                }
                 <tr>
                     <td colspan="3" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                         รวม&nbsp;
                     </td>
-                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
-                        @*@Model.totalCostThisActivity.Value.ToString("#,##0.00")*@&nbsp;
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;">
+                        @Model.totalCostThisActivity.Value.ToString("#,##0")&nbsp;
                     </td>
                     <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
                     <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>

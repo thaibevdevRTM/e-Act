@@ -3,16 +3,19 @@
 @using System.Globalization;
 @{
     var dearGroup = "คุณกมล เศวตทวี"; //form pos/premium fixคนนี้เลยจนกว่าจะลาออก
-    var signBook = "คุณทดสอบ ไทยเบฟมาเก็ตติ้ง";
-    var signBookDepartment = "Sale Support";
-    /*if (Model.approveFlowDetail != null)
+    var signBook = "";
+    var signBookDepartment = "";
+    if (Model.approveFlowDetail != null)
     {
         foreach (var item in Model.approveFlowDetail)
         {
-            if (item.approveGroupId == "CA8C71D3-F975-401E-A095-86E2E11C8014")
+            if (item.approveGroupId == "D0A49169-8697-4001-9CD4-896976E964F5")//ผู้ขอเบิก
             {
                 signBook = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
-                signBookDepartment = //ต้องไปเพิ่มให้ดึงแผนกด้วยและเอามาใส่ item.empPositionTitleTH;
+                if (Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                {
+                    signBookDepartment = Model.activityFormTBMMKT.labelBrandOrChannel + " Marketing";//พี่อ้วนบอกเอา Brandหรือ Channel มาแสดงเลย
+                }
             }
         }
     }
@@ -21,7 +24,7 @@
         dearGroup = "";
         signBook = "";
         signBookDepartment = "";
-    }*/
+    }
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
 }
@@ -65,9 +68,16 @@
                         <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
                             <tr class="hDetailtr">
                                 <td style="width:150px;vertical-align:top;">&nbsp;ขอเบิก</td>
-                                <td style="width:160px;vertical-align:top;text-align:left;">: ผลิตภัณฑ์,POS</td>
+                                @{ 
+                                    var lblInOrOutStock = "";
+                                    if (Model.activityFormTBMMKT.list_0_select == "0AD2C9AA-730B-471C-8CA0-581254823F2D")//OutStock ID
+                                    {
+                                        lblInOrOutStock = ("(" + Model.activityFormTBMMKT.labelInOrOutStock + ")");
+                                    }
+                                }
+                                <td style="width:160px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelRequire @lblInOrOutStock</td>
                                 <td style="width:130px;vertical-align:top;">&nbsp;เพื่อ</td>
-                                <td style="width:260px;vertical-align:top;">: เผยแพร่</td>
+                                <td style="width:260px;vertical-align:top;">: @Model.activityFormTBMMKT.labelFor</td>
                             </tr>
                         </table>
                     </td>
@@ -77,9 +87,9 @@
                         <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
                             <tr class="hDetailtr bgColorFocusDataAcc">
                                 <td style="width:150px;vertical-align:top;">&nbsp;Brand/ผลิตภัณฑ์</td>
-                                <td style="width:160px;vertical-align:top;text-align:left;">: KULOV</td>
+                                <td style="width:160px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelBrand</td>
                                 <td style="width:130px;vertical-align:top;">&nbsp;Cost Center</td>
-                                <td style="width:260px;vertical-align:top;">: 76602200</td>
+                                <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.costCenter</td>
                             </tr>
                         </table>
                     </td>
@@ -89,9 +99,9 @@
                         <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
                             <tr class="hDetailtr bgColorFocusDataAcc">
                                 <td style="width:150px;vertical-align:top;">&nbsp;Channel+Region</td>
-                                <td style="width:160px;vertical-align:top;text-align:left;">: NT</td>
+                                <td style="width:160px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelChannelRegion</td>
                                 <td style="width:130px;vertical-align:top;">&nbsp;Channel+Region Name</td>
-                                <td style="width:260px;vertical-align:top;">: Not Allocaded</td>
+                                <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.channelRegionName</td>
                             </tr>
                         </table>
                     </td>
@@ -101,9 +111,9 @@
                         <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
                             <tr class="hDetailtr bgColorFocusDataAcc">
                                 <td style="width:150px;vertical-align:top;">&nbsp;GL No.</td>
-                                <td style="width:160px;vertical-align:top;text-align:left;">: 650007500</td>
+                                <td style="width:160px;vertical-align:top;text-align:left;">: @Model.tB_Act_ActivityForm_DetailOther.glNo</td>
                                 <td style="width:130px;vertical-align:top;">&nbsp;GL Name</td>
-                                <td style="width:260px;vertical-align:top;">: วัสดุส่งเสริมการขาย-เผยแพร่ POS/POP/Premium</td>
+                                <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.glName</td>
                             </tr>
                         </table>
                     </td>
@@ -113,9 +123,9 @@
                         <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
                             <tr class="hDetailtr">
                                 <td style="width:150px;vertical-align:top;">&nbsp;ให้แก่ (ชื่อผู้รับ)</td>
-                                <td style="width:160px;vertical-align:top;text-align:left;">: R1-R8</td>
+                                <td style="width:160px;vertical-align:top;text-align:left;">: @Model.tB_Act_ActivityForm_DetailOther.toName</td>
                                 <td style="width:130px;vertical-align:top;">&nbsp;โทรศัพท์/โทรสาร</td>
-                                <td style="width:260px;vertical-align:top;">: 02-785-5555</td>
+                                <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.toContact</td>
                             </tr>
                         </table>
                     </td>
@@ -125,9 +135,9 @@
                         <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
                             <tr class="hDetailtr">
                                 <td style="width:150px;vertical-align:top;">&nbsp;หมายเหตุ&nbsp;&nbsp;วันที่ส่งมอบ</td>
-                                <td style="width:160px;vertical-align:top;text-align:left;">: 10/06/62</td>
+                                <td style="width:160px;vertical-align:top;text-align:left;">: @Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
                                 <td style="width:130px;vertical-align:top;">&nbsp;รายละเอียดผู้ติดต่อ</td>
-                                <td style="width:260px;vertical-align:top;">: คุณใจดี ศรีเมืองไทย</td>
+                                <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.detailContact</td>
                             </tr>
                         </table>
                     </td>
@@ -137,7 +147,7 @@
                         <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
                             <tr class="hDetailtr">
                                 <td style="width:150px;vertical-align:top;">&nbsp;ที่อยู่</td>
-                                <td colspan="3" style="width:550px;vertical-align:top;text-align:left;">: 14 อาคารแสงโสม ถนนวิภาวดีรังสิต แขวงจอมพล เขตจตุจักร กรุงเทพมหานคร 10900</td>
+                                <td colspan="3" style="width:550px;vertical-align:top;text-align:left;">:  @Model.tB_Act_ActivityForm_DetailOther.toAddress</td>
                             </tr>
                         </table>
                     </td>
@@ -147,7 +157,7 @@
                         <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
                             <tr class="hDetailtr">
                                 <td style="width:150px;vertical-align:top;">&nbsp;วัตถุประสงค์ที่ขอเบิก</td>
-                                <td colspan="3" style="width:550px;vertical-align:top;text-align:left;">: เพื่อเป็นสื่อประชาสัมพันธ์สินค้า และส่งเสริมยอดการขายสินค้า</td>
+                                <td colspan="3" style="width:550px;vertical-align:top;text-align:left;">: @Html.Raw(Model.activityFormModel.objective.Replace("\n", "<br/>&nbsp;&nbsp;").Replace("\r\n", "<br/>&nbsp;&nbsp;"))</td>
                             </tr>
                         </table>
                     </td>
