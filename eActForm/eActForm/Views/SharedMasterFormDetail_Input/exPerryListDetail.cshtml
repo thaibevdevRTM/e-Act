@@ -67,10 +67,12 @@
 
     function getValues() {
 
-        var table = document.getElementById("tbl_CashDetail"), sumVal = 0;
+        var table = document.getElementById("tbl_CashDetail");
+        var rows = table.rows;
+        var sum = 0;
 
         for (var i = 1; i < table.rows.length; i++) {
-            sumVal = sumVal + parseInt(table.rows[i].cells[4].innerHTML);
+            var cells = rows[i].cells;
 
             console.log(parseInt(table.rows[i].cells[1].innerHTML));
             console.log(parseInt(table.rows[i].cells[2].innerHTML));
