@@ -51,7 +51,7 @@ namespace eActForm.Controllers
         }
         public ActionResult purposeDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-           
+
             activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getAllPurpose().ToList();
             return PartialView(activity_TBMMKT_Model);
         }
@@ -102,6 +102,37 @@ namespace eActForm.Controllers
         {
             return PartialView(activity_TBMMKT_Model);
         }
+
+
+        public ActionResult exPerryCashDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            activity_TBMMKT_Model.companyList = QueryGetAllCompany.getAllCompany();
+            activity_TBMMKT_Model.objExpenseCashList = QueryOtherMaster.getOhterMaster("expenseCash", "");
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+
+        public ActionResult exPerryEmpInfoDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+        public ActionResult exPerryListDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            if (!activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
+                }
+            }
+
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+
+
+
 
     }
 }
