@@ -19,6 +19,9 @@ namespace eActForm.Controllers
 
         public ActionResult Index(string activityId)
         {
+
+           
+
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             //==============test=================
             //ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
@@ -31,6 +34,13 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
                 activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
                 activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+                {
+                    ViewBag.classFont = "fontDocSmall";
+                }
+                else {
+                    ViewBag.classFont = "fontDocV1";
+                }
 
                 //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
                 activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);

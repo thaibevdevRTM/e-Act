@@ -351,6 +351,7 @@
     <Content Include="Content\fontawesome\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\jquery.datetimepicker.css" />
+    <Content Include="Content\tablethin.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -2473,6 +2474,7 @@
     <Content Include="Views\SharedMasterFormDetail\chargeToRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\expensesDetailsRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\expensesDetailRows.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetailsDate_dmy.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

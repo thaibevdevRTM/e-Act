@@ -169,15 +169,6 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
                 activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT;
 
-                //activity_TBMMKT_Model
-                //SELECT* FROM TB_Act_RequestEmp where activityId = @activityId
-
-                //SELECT* FROM TB_Act_PlaceDetail where activityId = @activityId
-
-
-
-
-
                 Decimal? totalCostThisActivity = 0;
                 foreach (var item in activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT)
                 {
@@ -743,7 +734,6 @@ namespace eActForm.BusinessLayer
                 rtn += deleteRequestEmpByActivityId(activityId);
                 foreach (var item in model.requestEmpModel.ToList())
                 {
-
                     RequestEmpModel requestEmpModel = new RequestEmpModel();
                     // requestEmpModel.id = Guid.NewGuid().ToString();
                     requestEmpModel.activityId = activityId;
@@ -819,36 +809,10 @@ namespace eActForm.BusinessLayer
                     purposeModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                     purposeModel.updatedDate = DateTime.Now;
 
-
                     rtn += insertPurpose(purposeModel);
                 }
             }
 
-            //int insertIndex = 1;
-            //if (model.purposeModel != null)
-            //{
-            //    rtn += deletePurposeByActivityId(activityId);
-            //    foreach (var item in model.purposeModel.ToList())
-            //    {
-
-            //        PurposeModel purposeModel = new PurposeModel();
-            //        purposeModel.id = Guid.NewGuid().ToString();
-            //        purposeModel.activityId = activityId;
-            //        purposeModel.rowNo = insertIndex;
-            //        purposeModel.id =item.id;
-            //      //  purposeModel.status =item.status;
-            //        purposeModel.delFlag = false;
-            //        purposeModel.createdByUserId = model.activityFormModel.createdByUserId;
-            //        purposeModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-            //        purposeModel.updatedByUserId = UtilsAppCode.Session.User.empId;
-            //        purposeModel.updatedDate = DateTime.Now;
-
-
-            //        rtn += insertPurpose(purposeModel);
-
-            //        insertIndex++;
-            //    }
-            // }
             return rtn;
         }
 

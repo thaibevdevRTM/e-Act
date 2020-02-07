@@ -24,7 +24,7 @@
                         <div class="row">
                             @if (index_1 < Model.purposeModel.Count)
                             {
-                                <input id="ckb_@index_1" type="checkbox"  name="chkPurpose" value="@Model.purposeModel[index_1].id"  >
+                                <input id="ckb_@index_1" type="checkbox"  name="chkPurpose" value="@Model.purposeModel[index_1].id"  @( Model.purposeModel[index_1].chk == true ? "checked" : "" )  >
                                 @*@Html.CheckBoxFor(m=>m.purposeModel[index_1].chk, new { id = "ckb_" + @index_1, name = "chkPurpose", value = @Model.purposeModel[index_1].id })*@
                                 @Model.purposeModel[index_1].detailTh
 
@@ -36,7 +36,7 @@
                         <div class="row">
                             @if (index_2 < Model.purposeModel.Count)
                             {
-                                <input id="ckb_@index_2" type="checkbox" name="chkPurpose" value="@Model.purposeModel[index_2].id" >
+                                <input id="ckb_@index_2" type="checkbox" name="chkPurpose" value="@Model.purposeModel[index_2].id"  @( Model.purposeModel[index_2].chk == true ? "checked" : "" ) >
                                 @Model.purposeModel[index_2].detailTh
                                 //@Model.purposeModel[index_2].detailTh : @Model.purposeModel[index_2].detailEn;
 

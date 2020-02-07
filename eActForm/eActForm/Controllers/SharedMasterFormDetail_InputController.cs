@@ -41,7 +41,7 @@ namespace eActForm.Controllers
             if (activity_TBMMKT_Model.requestEmpModel.Count == 0)
             {
                 List<RequestEmpModel> RequestEmp = new List<RequestEmpModel>();
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     RequestEmp.Add(new RequestEmpModel() { id = "", empId = "", empName = "", position = "", bu = "" });
                 }
@@ -51,8 +51,10 @@ namespace eActForm.Controllers
         }
         public ActionResult purposeDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-           
-            activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getAllPurpose().ToList();
+            if (activity_TBMMKT_Model.purposeModel.Count == 0)
+            {
+                activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getAllPurpose().ToList();
+            }
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult placeDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)

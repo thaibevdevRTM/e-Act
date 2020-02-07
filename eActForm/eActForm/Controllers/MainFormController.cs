@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using eActForm.Models;
 using iTextSharp.text;
@@ -58,8 +59,8 @@ namespace eActForm.Controllers
                     }
                     activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
                     //====END===============Get Subject=======================
- 
-                   activity_TBMMKT_Model.channelMasterTypeList = QueryGet_channelByGroup.get_channelByGroup(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId, activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel);
+
+                    activity_TBMMKT_Model.channelMasterTypeList = QueryGet_channelByGroup.get_channelByGroup(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId, activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel);
 
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
 
@@ -96,9 +97,9 @@ namespace eActForm.Controllers
                     #region "ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่"
 
 
-                  
 
-                    
+
+
                     #endregion
                     //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
 
@@ -124,7 +125,7 @@ namespace eActForm.Controllers
 
 
                 //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
-              
+
                 //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
 
 
@@ -146,37 +147,6 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-
-                //DateTime? test;
-                //string p_date = "28-12-2020 18:50";
-
-                //try
-                //{
-                //    test = DateTime.ParseExact("29-12-2020", "dd-MM-yyyy", CultureInfo.InvariantCulture);                    
-                //}
-                //catch (Exception ex) { }
-
-                //try
-                //{
-                //    test = DateTime.ParseExact(p_date, "dd-MM-yyyy hh:mm", CultureInfo.CurrentCulture);
-                //}
-                //catch (Exception ex) { }
-
-                //try
-                //{
-                //    test = DateTime.ParseExact(p_date, "dd-MM-yyyy HH:mm", CultureInfo.CurrentCulture);
-                //}
-                //catch (Exception ex) { }
-
-                //try
-                //{
-                //    test = DateTime.ParseExact(p_date, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-
-                //}
-                //catch (Exception ex) { }
-
-
-
                 string statusId = "";
 
                 statusId = ActivityFormCommandHandler.getStatusActivity(activity_TBMMKT_Model.activityFormModel.id);
@@ -193,6 +163,8 @@ namespace eActForm.Controllers
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
                 {
                     activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
+                    activity_TBMMKT_Model.activityFormModel.documentDate = BaseAppCodes.converStrToDate(activity_TBMMKT_Model.activityFormModel.documentDateStr);
+
                 }
 
                 int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);

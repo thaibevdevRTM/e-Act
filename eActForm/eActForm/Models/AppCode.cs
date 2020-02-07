@@ -90,7 +90,7 @@ namespace eActForm.Models
                 GridBuilder.Append(sw.ToString());
 
 
-                string path = serverMapPath + "\\Content\\" + "tablethin.css";
+                string path = serverMapPath + "Content\\" + "tablethin.css";
                 string readText = System.IO.File.ReadAllText(path);
 
                 //Document pdfDoc = new Document(pageSize, 25, 25, 10, 10);

@@ -23,7 +23,6 @@
                         <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
                             <input type="text" value="@item.place" id="txtPlace_@index" name="placeDetailModel[@index].place" class="form-control textboxcss" />
                         </td>
-
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             <input type="text" value="@item.forProject" id="txtForProject_@index" name="placeDetailModel[@index].forProject" class="form-control textboxcss" />
                         </td>
@@ -32,43 +31,9 @@
                         </td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             <input type="text" value="@item.departureDateStr" id="txtDepartureDate_@index" name="placeDetailModel[@index].departureDateStr" class="form-control textboxcss   form_datetime" style="width:140px;" />
-
-
-                            @*@Html.TextBoxFor(x => item.departureDate, "{0:dd-mm-yyyy hh:ii}", new { @class = "form-control textboxcss form_datetime", id = "txtDepartureDate_@index", name = "placeDetailModel[@index].departureDate", autocomplete = "off" })*@
-
-
-
-
-
-
-                            @*@Html.TextBoxFor(x => item.departureDate, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss txtDate", id = "placeDetailModel[" + @index + "].departureDate", style = "width:140px;" })*@
-                            @*<script>
-                                $(function () {
-                                    $("#txtDepartureDate_@index").datepicker({
-                                        dateFormat: 'dd-MM-yyyy',
-                                        timeFormat: 'hh:mm',
-                                        showMinute: true,
-                                        showSecond: true,
-                                        separator: ' ',
-
-                                    });
-                                });
-
-                                </script>*@
-
                         </td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             <input type="text" value="@item.arrivalDateStr" id="txtArrivalDate_@index" name="placeDetailModel[@index].arrivalDateStr" class="form-control textboxcss  form_datetime" style="width:140px;" />
-
-                            @*@Html.TextBoxFor(x => item.arrivalDate, "{0:dd-mm-yyyy hh:ii}", new { @class = "form-control textboxcss form_datetime", id = "txtArrivalDate_@index", name = "placeDetailModel[@index].arrivalDate", autocomplete = "off" })*@
-
-
-
-
-                            @*@Html.TextBoxFor(x=>item.arrivalDate, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss txtDate", id = "placeDetailModel[" + @index + "].arrivalDate", style = "width:140px;" })*@
-
-
-
                         </td>
                     </tr>
                     index++;
@@ -78,19 +43,6 @@
 
             <script>
                 $(function () {
-
-                    //$('#txtArrivalDate_0').datetimepicker({
-                    //    //language:  'fr',
-                    //    format:'dd-MM-yyyy',
-                    //    //weekStart: 1,
-                    //    //todayBtn: 1,
-                    //    //autoclose: 1,
-                    //    //todayHighlight: 1,
-                    //    //startView: 2,
-                    //    //forceParse: 0,
-                    //    //showMeridian: 1
-                    //});
-
                     $('.form_datetime').datetimepicker({
                         language: 'th',
                         format: 'dd-mm-yyyy hh:ii',
@@ -102,27 +54,6 @@
                         forceParse: 0,
                         showMeridian: 1
                     });
-                    //$('.form_date').datetimepicker({
-                    //    language: 'th',
-                    //    weekStart: 1,
-                    //    todayBtn: 1,
-                    //    autoclose: 1,
-                    //    todayHighlight: 1,
-                    //    startView: 2,
-                    //    minView: 2,
-                    //    forceParse: 0
-                    //});
-                    //$('.form_time').datetimepicker({
-                    //    language: 'th',
-                    //    weekStart: 1,
-                    //    todayBtn: 1,
-                    //    autoclose: 1,
-                    //    todayHighlight: 1,
-                    //    startView: 1,
-                    //    minView: 0,
-                    //    maxView: 1,
-                    //    forceParse: 0
-                    //});
                 });
 
             </script>

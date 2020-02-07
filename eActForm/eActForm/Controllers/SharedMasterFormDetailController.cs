@@ -48,6 +48,7 @@ namespace eActForm.Controllers
         }
         public ActionResult purposeDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            activity_TBMMKT_Model.purposeModel = activity_TBMMKT_Model.purposeModel.Where(x => x.chk == true).ToList();
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult placeDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
