@@ -20,7 +20,8 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_get_TB_Act_master_material_autoComplete"
                        , new SqlParameter("@select_tB_Act_master_list_choice_id", objGetData_Master_Material_Model.select_tB_Act_master_list_choice_id)
                        , new SqlParameter("@select_material", objGetData_Master_Material_Model.select_material)
-                           , new SqlParameter("@select_materialDescription", objGetData_Master_Material_Model.select_materialDescription));
+                       , new SqlParameter("@select_materialDescription", objGetData_Master_Material_Model.select_materialDescription)
+                       , new SqlParameter("@tB_Act_master_list_choice_id_InOutStock", objGetData_Master_Material_Model.select_InOrOutStock));
                 var result = (from DataRow d in ds.Tables[0].Rows
                               select new TB_Act_master_material_Model()
                               {
@@ -31,6 +32,7 @@ namespace eActForm.BusinessLayer
                                   sloc = d["sloc"].ToString(),
                                   qty = int.Parse(d["qty"].ToString()),
                                   tB_Act_master_list_choice_id = d["tB_Act_master_list_choice_id"].ToString(),
+                                  tB_Act_master_list_choice_id_InOutStock = d["tB_Act_master_list_choice_id_InOutStock"].ToString(),
                                   qtyName = d["qtyName"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),

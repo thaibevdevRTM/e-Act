@@ -10,6 +10,6 @@ namespace eActForm.Models
         public string select_tB_Act_master_list_choice_id { get; set; }
         public string select_material { get; set; }
         public string select_materialDescription { get; set; }
-
+        public string select_InOrOutStock { get; set; }
     }
 }

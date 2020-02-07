@@ -54,12 +54,14 @@
                                     v_select_tB_Act_master_list_choice_id = v_select_tB_Act_master_list_choice_id.substring(0, (v_select_tB_Act_master_list_choice_id.length-1))
 
                                     var valProductIdForSearch = $(".txtInTable_productId_@index").val();
+                                    var valselect_InOrOutStock = $("#ddlin_or_out_stock").val();
                                     if (v_select_tB_Act_master_list_choice_id != "" && valProductIdForSearch != "") {
                                         var dataToBeSend =
                                             {
                                                 select_tB_Act_master_list_choice_id: v_select_tB_Act_master_list_choice_id
                                                 , select_material: valProductIdForSearch
                                                 , select_materialDescription: valProductIdForSearch
+                                                , select_InOrOutStock: valselect_InOrOutStock
                                             };
 
                                         $.ajax('@Url.Action("GET_master_material_autoComplete", "GetDataMainForm")',
@@ -113,10 +115,10 @@
                             <input type="text" value="@item.QtyName" id="costThemeDetailOfGroupByPriceTBMMKT[@index].QtyName" name="costThemeDetailOfGroupByPriceTBMMKT[@index].QtyName" class="form-control textboxcss txtInTable_QtyName_@index" readonly="readonly" />
                         </td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class="form-control textboxcss" />
+                            <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class="form-control textboxcss txtInTable_IO_@index" />
                         </td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.remark" id="costThemeDetailOfGroupByPriceTBMMKT[@index].remark" name="costThemeDetailOfGroupByPriceTBMMKT[@index].remark" class="form-control textboxcss" />
+                            <input type="text" value="@item.remark" id="costThemeDetailOfGroupByPriceTBMMKT[@index].remark" name="costThemeDetailOfGroupByPriceTBMMKT[@index].remark" class="form-control textboxcss txtInTable_remark_@index" />
                         </td>
                     </tr>
                     index++;
@@ -138,6 +140,12 @@
                     var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
                     for (i = 0; i < rowCount; i++) {
                         $(".txtInTable_productId_" + i.toString()).val("");
+                        $(".txtInTable_productDetail_" + i.toString()).val("");
+                        $(".txtunit_" + i.toString()).val("0");
+                        $("#totalEstimate").text("0");
+                        $(".txtInTable_QtyName_" + i.toString()).val("");
+                        $(".txtInTable_IO_" + i.toString()).val("");
+                        $(".txtInTable_remark_" + i.toString()).val("");
                     }
                 }
                 function sumall() {

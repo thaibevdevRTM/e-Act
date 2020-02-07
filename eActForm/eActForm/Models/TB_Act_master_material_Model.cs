@@ -14,6 +14,7 @@ namespace eActForm.Models
         public string sloc { get; set; }
         public int qty { get; set; }
         public string tB_Act_master_list_choice_id { get; set; }
+        public string tB_Act_master_list_choice_id_InOutStock { get; set; }
         public string qtyName { get; set; }
 
     }
