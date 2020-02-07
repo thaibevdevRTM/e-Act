@@ -11,7 +11,7 @@
 <link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-ui.js"></script>
 
-<script src="~/Scripts/bootstrap.min.js"></script>
+@*<script src="~/Scripts/bootstrap.min.js"></script>*@
 
 <link href="~/Scripts/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
@@ -51,7 +51,7 @@
             @*=========END========for test====================*@
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
-                @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+            @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
             }
 
 
@@ -138,7 +138,7 @@
         {
 
             //Travelling form TBM
-            @*if ($("#ddlEmp_0").val() == "") { required += "&emsp;ผู้ร่วมเดินทาง/The following persons to travel*<br>"; validate = false; }
+            if ($("#ddlEmp_0").val() == "") { required += "&emsp;ผู้ร่วมเดินทาง/The following persons to travel*<br>"; validate = false; }
 
             var validateCkb = false;
             var rowCount = @Model.purposeModel.Count;
@@ -165,7 +165,7 @@
                 $("#txtTypeTheme_0").val() != "" &&
                 $("#txtUnit_0").val() != "")) {
                 required += "&emsp;ประมาณค่าใช้จ่าย/Estimate of travelling expenses*<br>"; validate = false;
-            }*@
+            }
 
         }
         else {
