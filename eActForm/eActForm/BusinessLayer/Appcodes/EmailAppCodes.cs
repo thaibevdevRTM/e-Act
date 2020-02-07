@@ -105,7 +105,7 @@ namespace eActForm.BusinessLayer
         /// <param name="actFormId"></param>
         /// <param name="emailType"></param>
         /// <param name="currentEmpId"> fixed support API Background Service </param>
-        public static void sendReject(string actFormId, AppCode.ApproveType emailType ,string currentEmpId)
+        public static void sendReject(string actFormId, AppCode.ApproveType emailType, string currentEmpId)
         {
             try
             {
@@ -312,11 +312,11 @@ namespace eActForm.BusinessLayer
         private static void sendEmailActForm(string actFormId, string mailTo, string mailCC, string strSubject, string strBody, AppCode.ApproveType emailType)
         {
             //================fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
-            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();           
+            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
             //=====END===========fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
 
             List<Attachment> files = new List<Attachment>();
-            string[] pathFile = new string[10];           
+            string[] pathFile = new string[10];
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
             mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail
 
@@ -344,16 +344,17 @@ namespace eActForm.BusinessLayer
                 foreach (var item in getImageModel.tbActImageList)
                 {
                     //=== use case this background service (bg service cannot get data session)===
-                    string companyId = ""; 
+                    string companyId = "";
                     try
                     {
                         companyId = UtilsAppCode.Session.User.empCompanyId;
                     }
-                    catch {
+                    catch
+                    {
                         companyId = QueryGetActivityById.getActivityById(actFormId)[0].companyId;
                     }
                     // ==================================================
-                    if(companyId == ConfigurationManager.AppSettings["companyId_TBM"])
+                    if (companyId == ConfigurationManager.AppSettings["companyId_TBM"])
                     {
                         pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
                     }
@@ -376,7 +377,7 @@ namespace eActForm.BusinessLayer
                     //files.Add(new Attachment(item));// ของเดิมก่อนทำเปลี่ยนชื่อไฟล์ 20191213
                     Attachment attachment;
                     attachment = new Attachment(item);
-                    if(i_loop_change_name==0 && emailType==AppCode.ApproveType.Activity_Form)
+                    if (i_loop_change_name == 0 && emailType == AppCode.ApproveType.Activity_Form)
                     {
                         attachment.Name = replaceWordDangerForNameFile(activityFormTBMMKT.activityNo) + ".pdf";
                     }
@@ -407,9 +408,12 @@ namespace eActForm.BusinessLayer
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 var emailTypeTxt = "";
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4")
+                string[] arrayFormStyleV1 = { "488F7C0D-8B59-4BDE-90E4-F157BFF67829", "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4"};
+                string[] arrayFormStyleV2 = { "24BA9F57-586A-4A8E-B54C-00C23C41BFC5", "294146B1-A6E5-44A7-B484-17794FA368EB" };
+                string[] arrayFormStyleV3 = { "24BA9F57-586A-4A8E-B54C-00C23C41BFC5" };
+                if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV2.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV3.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                 {
-                    emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+                    emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;                    
                 }
                 else
                 {
@@ -422,7 +426,20 @@ namespace eActForm.BusinessLayer
                 {
                     case AppCode.ApproveType.Activity_Form:
                         var models = ActFormAppCode.getUserCreateActForm(actId);
-                        strBody = string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
+                        strBody = ConfigurationManager.AppSettings["emailApproveBody"];
+                        if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                        {
+                            strBody = strBody.Replace("<b>ประเภทกิจกรรม :</b> {4}<br>", "");
+                        }
+                        if (arrayFormStyleV2.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                        {
+                            strBody = strBody.Replace("<b>เรื่อง :</b> {3}<br>", "").Replace("<b>ประเภทกิจกรรม :</b> {4}<br>", "");
+                        }
+                        if (arrayFormStyleV3.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                        {
+                            strBody = strBody.Replace("<b>จำนวนเงินที่ขอนุมัติ :</b> {6} บาท<br>", "");
+                        }
+                        strBody = string.Format(strBody
                             , item.empPrefix + " " + item.empName //เรียน
                             , AppCode.ApproveStatus.รออนุมัติ.ToString()
                             , emailTypeTxt
@@ -562,13 +579,14 @@ namespace eActForm.BusinessLayer
             mailer.Subject = subject;
             mailer.Body = body;
             mailer.p_Attachment = files;
-            if (!String.IsNullOrEmpty(cc)) {
+            if (!String.IsNullOrEmpty(cc))
+            {
                 mailer.CC = cc;
             }
-            
+
             mailer.IsHtml = true;
             mailer.Send();
-           
+
 
             //slog = "mailer.Send() => ok";
             //ExceptionManager.WriteError("sendEmail=> " + slog);

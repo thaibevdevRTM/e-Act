@@ -160,9 +160,9 @@ namespace eActForm.BusinessLayer
             tB_Act_ActivityChoiceSelectModel.updatedByUserId = UtilsAppCode.Session.User.empId;
             tB_Act_ActivityChoiceSelectModel.updatedDate = DateTime.Now;
 
-            if (model.activityFormTBMMKT.list_0_select != "" || model.activityFormTBMMKT.list_1_multi_select.Length > 0 ||
-                 model.activityFormTBMMKT.list_2_select != "" || model.activityFormTBMMKT.brand_select != "" ||
-                 model.activityFormTBMMKT.list_3_select != "")
+            if (model.activityFormTBMMKT.list_0_select != null || model.activityFormTBMMKT.list_1_multi_select != null ||
+                 model.activityFormTBMMKT.list_2_select != null || model.activityFormTBMMKT.brand_select != null ||
+                 model.activityFormTBMMKT.list_3_select != null)
             {
                 rtn += deleteActivityTB_Act_ActivityChoiceSelect(activityId);
                 okProcessInsert = true;
@@ -178,12 +178,15 @@ namespace eActForm.BusinessLayer
                     rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
                 }
 
-                for (int i = 0; i < model.activityFormTBMMKT.list_1_multi_select.Length; i++)//ขอเบิก
+                if (model.activityFormTBMMKT.list_1_multi_select.Length > 0)
                 {
-                    tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
-                    tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
-                    tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_1_multi_select[i];
-                    rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                    for (int i = 0; i < model.activityFormTBMMKT.list_1_multi_select.Length; i++)//ขอเบิก
+                    {
+                        tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                        tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                        tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_1_multi_select[i];
+                        rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                    }
                 }
 
                 if (model.activityFormTBMMKT.list_2_select != "")//เพื่อ
@@ -230,12 +233,12 @@ namespace eActForm.BusinessLayer
                     activity_TBMMKT_Model.activityFormTBMMKT.labelInOrOutStock = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().name;
                     var countlist_1_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "product_pos_premium").Count();
                     activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new string[countlist_1_multi_select];
-                    
+
                     int index_each = 0;
                     foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "product_pos_premium").ToList())
                     {
                         activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = item.select_list_choice_id;
-                        if(index_each == 0)
+                        if (index_each == 0)
                         {
                             sumTxtLabelRequired += item.name;
                         }
@@ -273,7 +276,7 @@ namespace eActForm.BusinessLayer
                     else
                     {
                         totalCostThisActivity += item.total;
-                    }                    
+                    }
                 }
 
                 activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;

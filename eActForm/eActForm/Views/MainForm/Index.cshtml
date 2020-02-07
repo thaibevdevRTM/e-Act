@@ -36,10 +36,10 @@
         <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
             @*=================for test====================*@
             @*<tr>
-                <td>
-                    @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
-                </td>
-            </tr>*@
+                    <td>
+                        @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
+                    </td>
+                </tr>*@
             @*=========END========for test====================*@
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
@@ -52,7 +52,8 @@
     @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
     @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
     @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
-    @Html.HiddenFor(x => x.activityFormTBMMKT.master_type_form_id, new { @id = "hdmaster_type_form_id"})
+    @Html.HiddenFor(x => x.activityFormTBMMKT.master_type_form_id, new { @id = "hdmaster_type_form_id" })
+    @Html.HiddenFor(x => x.activityFormModel.activityNo, new { @id = "hdactivityNo" })
 }
 
 @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")

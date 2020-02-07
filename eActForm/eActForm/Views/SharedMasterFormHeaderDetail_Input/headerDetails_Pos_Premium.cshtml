@@ -84,13 +84,13 @@
                                         }
                                     </style>
                                     @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.list_1,
-                                                                                  "id", "name"),
-                                                                                  new
-                                                                                  {
-                                                                                      @class = "form-control selectpicker",
-                                                                                      id = "ddlproduct_pos_premium",
-                                                                                      multiple = "multiple"
-                                                                                  })
+                                                                                                 "id", "name"),
+                                                                                                 new
+                                                                                                 {
+                                                                                                     @class = "form-control selectpicker",
+                                                                                                     id = "ddlproduct_pos_premium",
+                                                                                                     multiple = "multiple"
+                                                                                                 })
                                     <script>
                                         $(document).ready(function () {
                                             $('#ddlproduct_pos_premium').multiselect({
@@ -124,11 +124,15 @@
                                             });
                                             if ($("#ddlin_or_out_stock").val() == "") {
                                                 $('#ddlproduct_pos_premium').multiselect('disable');
-                                            } else {
+                                            } else
+                                            {
                                                 var valuesSelectChoiceFromDb = [];
-                                                @foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
+                                                @if (Model.activityFormTBMMKT.list_1_multi_select != null)
                                                 {
+                                                    foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
+                                                    {
                                                     @:valuesSelectChoiceFromDb.push("@itemArray");
+                                                    }
                                                 }
                                                 $("#ddlproduct_pos_premium").multiselect('select', valuesSelectChoiceFromDb);
                                             }
