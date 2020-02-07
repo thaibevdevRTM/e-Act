@@ -24,6 +24,14 @@ namespace eActForm.Controllers
         }
         public ActionResult headerDetails_Pos_Premium(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+                        return PartialView(activity_TBMMKT_Model);
+        }
+        public ActionResult headerDetailsDate_dmy(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            if (string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.documentDateStr) && (activity_TBMMKT_Model.activityFormModel.documentDate!= null))
+            {
+                activity_TBMMKT_Model.activityFormTBMMKT.documentDateStr = activity_TBMMKT_Model.activityFormModel.documentDate?.ToString("dd-MM-yyyy");
+            }
             return PartialView(activity_TBMMKT_Model);
         }
     }

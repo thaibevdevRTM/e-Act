@@ -10,6 +10,7 @@ namespace eActForm.Models
         public ActivityFormTBMMKT activityFormTBMMKT { get; set; }
         public TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther { get; set; }
         public List<TB_Act_Chanel_Model.Chanel_Model> tB_Act_Chanel_Model { get; set; }
+        //public List<TB_Act_Chanel_Model.Chanel_Model> tBChanelHCModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model { get; set; }
         public List<TB_Act_ActivityForm_SelectBrandOrChannel> tB_Act_ActivityForm_SelectBrandOrChannel { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT { get; set; }
@@ -18,6 +19,14 @@ namespace eActForm.Models
         public string createdByName { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalCostThisActivity { get; set; }
+
+        public List<RequestEmpModel> masterRequestEmp { get; set; }
+        public List<RequestEmpModel> requestEmpModel { get; set; }
+        public List<PurposeModel> purposeModel { get; set; }
+        public List<PlaceDetailModel> placeDetailModel { get; set; }
+        public CostDetailOfGroupPriceTBMMKT expensesDetailModel { get; set; }
+        public List<string> chkPurpose { get; set; }
+
         public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
         public List<ChannelMasterType> channelMasterTypeList { get; set; }
         public List<TB_Act_master_list_choiceModel> list_0 { get; set; }
@@ -30,6 +39,14 @@ namespace eActForm.Models
         public Activity_TBMMKT_Model()
         {
             channelMasterTypeList = new List<ChannelMasterType>();
+
+            masterRequestEmp = new List<RequestEmpModel>();
+            requestEmpModel = new List<RequestEmpModel>();
+            purposeModel = new List<PurposeModel>();
+            placeDetailModel = new List<PlaceDetailModel>();
+            expensesDetailModel = new CostDetailOfGroupPriceTBMMKT();
+            approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
+
         }
 
     }
@@ -124,6 +141,10 @@ namespace eActForm.Models
         public string val { get; set; }
     }
 
+    public class CostDetailOfGroupPriceTBMMKT
+    {
+        public List<CostThemeDetailOfGroupByPriceTBMMKT> costDetailLists { get; set; }
+    }
 
     public class CostThemeDetailOfGroupByPriceTBMMKT : CostThemeDetailOfGroupByPrice
     {
@@ -135,6 +156,59 @@ namespace eActForm.Models
         public string remark { get; set; }
     }
 
+    public class RequestEmpModel : ActBaseModel
+    {
+
+        public string id { get; set; }
+        public string activityId { get; set; }
+        public int rowNo { get; set; }
+        public string empId { get; set; }
+        public string empName { get; set; }
+        public string position { get; set; }
+        public string level { get; set; }
+        public string department { get; set; }
+        public string bu { get; set; }
+    }
+
+    public class PurposeModel : ActBaseModel
+    {
+        public string id { get; set; }
+        public string activityId { get; set; }
+        // public int rowNo { get; set; }
+        public string detailTh { get; set; }
+        public string detailEn { get; set; }
+         public bool chk { get; set; }
+
+    }
+    //public class CheckboxModels
+    //    {
+    //        public List<string> chkPurpose { get; set; }
+    //    }
+    public class PlaceDetailModel : ActBaseModel
+    {
+        public string id { get; set; }
+        public string activityId { get; set; }
+        public int rowNo { get; set; }
+        public string place { get; set; }
+        public string forProject { get; set; }
+        public string period { get; set; }
+        public DateTime? departureDate { get; set; }
+        public DateTime? arrivalDate { get; set; }
+        public string departureDateStr { get; set; }
+        public string arrivalDateStr { get; set; }
+
+    }
+
+
+    //public class CostThemeDetailOfGroupByPriceTBMMKT : CostThemeDetailOfGroupByPrice
+    //{
+    //    [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+    //    public decimal? unitPrice { get; set; }
+    //    public string unitPriceDisplay { get; set; }
+    //    public string unitPriceDisplayReport { get; set; }
+    //    public string QtyName { get; set; }
+    //    public string remark { get; set; }
+    //}
     public class ChannelMasterType
     {
         public string id { get; set; }

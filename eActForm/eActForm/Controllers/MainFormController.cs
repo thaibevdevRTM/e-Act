@@ -1,10 +1,12 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using eActForm.Models;
 using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
@@ -49,6 +51,9 @@ namespace eActForm.Controllers
                     //====END===============Get Subject=======================
                     activity_TBMMKT_Model.channelMasterTypeList = QueryGet_channelByGroup.get_channelByGroup(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId, activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel);
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
+
+
+
                 }
                 else
                 {
@@ -82,6 +87,16 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.glNo = "";
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.glName = "";
                     //=END==mock data for first input=====
+
+                    //========================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่=================
+                    #region "ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่"
+
+
+
+
+
+                    #endregion
+                    //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
 
                     //===================Get Subject=======================
                     List<TB_Reg_Subject> tB_Reg_Subjects = new List<TB_Reg_Subject>(); activity_TBMMKT_Model.tB_Reg_Subject = tB_Reg_Subjects;
@@ -139,6 +154,13 @@ namespace eActForm.Controllers
                 }
 
 
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+                {
+                    activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
+                    activity_TBMMKT_Model.activityFormModel.documentDate = BaseAppCodes.converStrToDate(activity_TBMMKT_Model.activityFormModel.documentDateStr);
+
+                }
+
                 int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
 
                 result.Data = activity_TBMMKT_Model.activityFormModel.id;
@@ -172,5 +194,7 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
     }
 }

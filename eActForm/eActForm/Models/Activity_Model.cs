@@ -119,6 +119,7 @@ namespace eActForm.Models
         public int statusId { get; set; }
         public string activityNo { get; set; }
         public DateTime? documentDate { get; set; }
+        public string documentDateStr { get; set; }
         public string reference { get; set; }
         public string cusShortName { get; set; }
         public string customerName { get; set; }
@@ -179,6 +180,9 @@ namespace eActForm.Models
         public string actIO { get; set; }
         public string actClaim { get; set; }
         public string master_type_form_id { get; set; }
+        public string benefit { get; set; }
+        public string companyNameEN { get; set; }
+        public string companyNameTH { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel

@@ -40,6 +40,7 @@ namespace eActForm.Models
             public string remark;
             public string imgSignature { get; set; }
             public bool? isApproved { get; set; }
+            public string bu { get; set; }
         }
     }
 }

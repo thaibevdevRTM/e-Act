@@ -119,6 +119,10 @@ namespace eActForm.BusinessLayer.Appcodes
         {
             return DateTime.ParseExact(p_date, "dd-MM-yyyy", CultureInfo.InvariantCulture);
         }
+        public static DateTime converStrToDateTime(string p_date)
+        {
+            return DateTime.ParseExact(p_date, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+        }
 
     }
 }

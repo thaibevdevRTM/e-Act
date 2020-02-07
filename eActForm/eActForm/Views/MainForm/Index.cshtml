@@ -2,7 +2,7 @@
 @using eActForm.BusinessLayer
 @using eActForm.Models
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+@*<script src="~/Scripts/jquery.datetimepicker.full.js"></script>*@
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
@@ -10,6 +10,14 @@
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
 <link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-ui.js"></script>
+
+@*<script src="~/Scripts/bootstrap.min.js"></script>*@
+
+<link href="~/Scripts/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Scripts/locales/bootstrap-datetimepicker.fr.js"></script>
+<script src="~/Scripts/locales/bootstrap-datetimepicker.th.js"></script>
 <style>
     .cssTableTDTextCenter {
         max-width: none;
@@ -43,8 +51,10 @@
             @*=========END========for test====================*@
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
-                @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+            @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
             }
+
+
 
         </table>
     </div>
@@ -55,9 +65,13 @@
     @Html.HiddenFor(x => x.activityFormTBMMKT.master_type_form_id, new { @id = "hdmaster_type_form_id" })
     @Html.HiddenFor(x => x.activityFormModel.activityNo, new { @id = "hdactivityNo" })
 }
-
-@RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
-
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
+    <tr>
+        <td>
+            @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
+        </td>
+    </tr>
+</table>
 <div style="height:5px;">
 
 </div>
@@ -108,12 +122,12 @@
 
     function validatesubmit() {
 
-        var required = "กรุณา ระบุ :<br>";
+        required = "<b>กรุณาระบุ/Please input data :<br></b>";
         var validate = true;
 
-        if ($("#ddlChannelOrBrand").val() == "") { required += "Condition Flow*<br>"; validate = false; }
-        if ($("#ddlChannel").val() == "" && $("#ddlBrand").val() == "") { required += "BrandหรือChannel*<br>"; validate = false; }
-        if ($("#ddlSubject").val() == "") { required += "เรื่อง*<br>"; validate = false; }
+        if ($("#ddlChannelOrBrand").val() == "") { required += "&emsp;Condition Flow*<br>"; validate = false; }
+        if ($("#ddlChannel").val() == "" && $("#ddlBrand").val() == "") { required += "&emsp;BrandหรือChannel*<br>"; validate = false; }
+        if ($("#ddlSubject").val() == "") { required += "&emsp;เรื่อง*<br>"; validate = false; }
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4") {
             if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
@@ -121,6 +135,39 @@
             if ($("#txtdateActivitySt").val() == "") { required += "ต้องการเช็ควันที่*<br>"; validate = false; }
             if ($("#txtactivityPeriodEnd").val() == "") { required += "เคลียร์เงินทดรองในวันที่*<br>"; validate = false; }
             if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
+        } else if ('@Model.activityFormTBMMKT.master_type_form_id'=='294146B1-A6E5-44A7-B484-17794FA368EB')
+        {
+
+            //Travelling form TBM
+            if ($("#ddlEmp_0").val() == "") { required += "&emsp;ผู้ร่วมเดินทาง/The following persons to travel*<br>"; validate = false; }
+
+            var validateCkb = false;
+            var rowCount = @Model.purposeModel.Count;
+            for (i = 0; i < rowCount; i++) {
+                if (document.getElementById("ckb_" + i.toString()).checked == true) {
+                    validateCkb = true;
+                }
+            }
+            if (validateCkb == false) {
+                required += "&emsp;วัตถุประสงค์ในการเดินทาง/Purpose of Travelling*<br>"; validate = false;
+            }
+
+            if (!($("#txtPlace_0").val() != "" &&
+                $("#txtForProject_0").val() != "" &&
+                $("#txtPeriod_0").val() != "" &&
+                $("#txtDepartureDate_0").val() != "" &&
+                $("#txtArrivalDate_0").val() != "")){
+                required += "&emsp;รายละเอียดของกิจกรรม/Description of activity*<br>"; validate = false;
+            }
+
+            if (!($("#txtProductDetail_0").val() != "" &&
+                $("#txtQtyName_0").val() != "" &&
+                $("#txtUnitPrice_0").val() != "" &&
+                $("#txtTypeTheme_0").val() != "" &&
+                $("#txtUnit_0").val() != "")) {
+                required += "&emsp;ประมาณค่าใช้จ่าย/Estimate of travelling expenses*<br>"; validate = false;
+            }
+
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5") {//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
             if ($("#ddlin_or_out_stock").val() == "") { required += "ประเภทสต๊อก*<br>"; validate = false; }

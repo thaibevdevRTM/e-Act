@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -50,9 +51,14 @@ namespace eActForm.BusinessLayer
 
                     rtn = ProcessInsertTB_Act_ActivityChoiceSelect(rtn, model, activityId);
 
+                
+
+                    rtn = ProcessInsertRequestEmp(rtn, model, activityId);
+                    rtn = ProcessInsertPlaceDetail(rtn, model, activityId);
+                    rtn = ProcessInsertPurpose(rtn, model, activityId);
+
+
                 }
-
-
 
                 return rtn;
             }
@@ -92,6 +98,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.QtyName = item.QtyName;
                     costThemeDetail.remark = item.remark == null ? "" : item.remark;
                     costThemeDetail.productId = item.productId == null ? "" : item.productId;
+                    costThemeDetail.typeTheme = item.typeTheme;
 
                     rtn += insertEstimate(costThemeDetail);
 
@@ -103,12 +110,22 @@ namespace eActForm.BusinessLayer
 
         public static int ProcessInsertTB_Act_ActivityForm_DetailOther(int rtn, Activity_TBMMKT_Model model, string activityId)
         {
+            TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+            if (model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+            {
+                model.tB_Act_ActivityForm_DetailOther = tB_Act_ActivityForm_DetailOther;
+                model.tB_Act_ActivityForm_DetailOther.activityProduct = "";
+                model.tB_Act_ActivityForm_DetailOther.activityTel = "";
+                model.tB_Act_ActivityForm_DetailOther.IO = "";
+                model.tB_Act_ActivityForm_DetailOther.EO = "";
+                model.tB_Act_ActivityForm_DetailOther.descAttach = "";
+                model.tB_Act_ActivityForm_DetailOther.BudgetNumber = "";
+            }
+
             int insertIndex = 1;
             if (model.tB_Act_ActivityForm_DetailOther != null)
             {
                 rtn += deleteusp_deleteTB_Act_ActivityForm_DetailOther(activityId);
-
-                TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
                 tB_Act_ActivityForm_DetailOther.Id = Guid.NewGuid().ToString();
                 tB_Act_ActivityForm_DetailOther.activityId = activityId;
 
@@ -266,6 +283,11 @@ namespace eActForm.BusinessLayer
 
                 }
 
+                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId);
+                activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
+                activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
+                activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT;
+
                 Decimal? totalCostThisActivity = 0;
                 foreach (var item in activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT)
                 {
@@ -365,12 +387,6 @@ namespace eActForm.BusinessLayer
                 return null;
             }
         }
-
-
-
-
-
-
 
         public static int deleteActivityOfProductByActivityId(string activityId)
         {
@@ -485,6 +501,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
                     ,new SqlParameter("@master_type_form_id",model.master_type_form_id)
                     ,new SqlParameter("@remark",model.remark)
+                    ,new SqlParameter("@benefit", (model.benefit == null ? "" :model.benefit))
                     });
             }
             catch (Exception ex)
@@ -626,7 +643,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@unitPrice", decimal.Parse(string.Format("{0:0.00000}", model.unitPrice)))
                     ,new SqlParameter("@QtyName",model.QtyName)
                     ,new SqlParameter("@productId",model.productId)
-                    });
+                    ,new SqlParameter("@typeTheme",(model.typeTheme == null ? "" : model.typeTheme))
+            });
             }
             catch (Exception ex)
             {
@@ -831,6 +849,230 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        #region "travelling tbm"
+        public static int deleteRequestEmpByActivityId(string activityId)
+        {
+
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteRequestEmpByActivityId"
+                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> deleteRequestEmpByActivityId");
+            }
+
+            return result;
+        }
+        public static int deletePlaceDetailByActivityId(string activityId)
+        {
+
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deletePlaceDetailByActivityId"
+                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> deletePlaceDetailByActivityId");
+            }
+
+            return result;
+        }
+        public static int deletePurposeByActivityId(string activityId)
+        {
+
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deletePurposeByActivityId"
+                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> deletePlaceDetailByActivityId");
+            }
+
+            return result;
+        }
+
+        public static int ProcessInsertRequestEmp(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            int insertIndex = 1;
+            if (model.requestEmpModel != null)
+            {
+                rtn += deleteRequestEmpByActivityId(activityId);
+                foreach (var item in model.requestEmpModel.ToList())
+                {
+                    RequestEmpModel requestEmpModel = new RequestEmpModel();
+                    // requestEmpModel.id = Guid.NewGuid().ToString();
+                    requestEmpModel.activityId = activityId;
+                    requestEmpModel.rowNo = insertIndex;
+                    requestEmpModel.empId = item.empId;
+                    requestEmpModel.delFlag = false;
+                    requestEmpModel.createdByUserId = model.activityFormModel.createdByUserId;
+                    requestEmpModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    requestEmpModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    requestEmpModel.updatedDate = DateTime.Now;
+
+                    rtn += insertRequestEmp(requestEmpModel);
+
+                    insertIndex++;
+                }
+            }
+            return rtn;
+        }
+        public static int ProcessInsertPlaceDetail(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            int insertIndex = 1;
+            if (model.placeDetailModel != null)
+            {
+                rtn += deletePlaceDetailByActivityId(activityId);
+                foreach (var item in model.placeDetailModel.ToList())
+                {
+                    //     model.activityFormModel.activityPeriodSt 
+                    //         = string.IsNullOrEmpty(item.departureDate) ? (DateTime?)null :
+                    //BaseAppCodes.converStrToDate(item.departureDate);
+
+                    PlaceDetailModel placeDetailModel = new PlaceDetailModel();
+                    //placeDetailModel.id = Guid.NewGuid().ToString();
+                    placeDetailModel.activityId = activityId;
+                    placeDetailModel.rowNo = insertIndex;
+                    placeDetailModel.place = item.place;
+                    placeDetailModel.forProject = item.forProject;
+                    placeDetailModel.period = item.period;
+                    // placeDetailModel.departureDate = item.departureDate;
+                    placeDetailModel.departureDate = string.IsNullOrEmpty(item.departureDateStr) ? (DateTime?)null :
+               BaseAppCodes.converStrToDateTime(item.departureDateStr);
+                    placeDetailModel.arrivalDate = string.IsNullOrEmpty(item.arrivalDateStr) ? (DateTime?)null :
+               BaseAppCodes.converStrToDateTime(item.arrivalDateStr);
+                    placeDetailModel.delFlag = false;
+                    placeDetailModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate; ;
+                    placeDetailModel.createdByUserId = model.activityFormModel.createdByUserId;
+                    placeDetailModel.updatedDate = DateTime.Now;
+                    placeDetailModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+
+                    rtn += insertPlaceDetail(placeDetailModel);
+
+                    insertIndex++;
+                }
+            }
+            return rtn;
+        }
+        public static int ProcessInsertPurpose(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            if (model.chkPurpose.Any())
+            {
+                rtn += deletePurposeByActivityId(activityId);
+                foreach (var item in model.chkPurpose)
+                {
+
+                    PurposeModel purposeModel = new PurposeModel();
+
+                    purposeModel.activityId = activityId;
+                    //purposeModel.rowNo = insertIndex;
+                    purposeModel.id = item;
+                    //  purposeModel.status =item.status;
+                    purposeModel.delFlag = false;
+                    purposeModel.createdByUserId = model.activityFormModel.createdByUserId;
+                    purposeModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    purposeModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    purposeModel.updatedDate = DateTime.Now;
+
+                    rtn += insertPurpose(purposeModel);
+                }
+            }
+
+            return rtn;
+        }
+
+        protected static int insertRequestEmp(RequestEmpModel model)
+        {
+            int result = 0;
+
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertRequestEmp"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@rowNo",model.rowNo)
+                    ,new SqlParameter("@empId ",model.empId)
+                    ,new SqlParameter("@delFlag",model.delFlag)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertEstimateTBMMKT");
+            }
+
+            return result;
+        }
+        protected static int insertPlaceDetail(PlaceDetailModel model)
+        {
+            int result = 0;
+
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertPlaceDetail"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@rowNo",model.rowNo)
+                    ,new SqlParameter("@place",model.place)
+                    ,new SqlParameter("@forProject",model.forProject)
+                    ,new SqlParameter("@period",model.period)
+                    ,new SqlParameter("@departureDate",model.departureDate)
+                    ,new SqlParameter("@arrivalDate",model.arrivalDate)
+                    ,new SqlParameter("@delFlag",model.delFlag)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertPlaceDetail");
+            }
+
+            return result;
+        }
+        protected static int insertPurpose(PurposeModel model)
+        {
+            int result = 0;
+
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertPurpose"
+                    , new SqlParameter[] {new SqlParameter("@activityId",model.activityId)
+                    //,new SqlParameter("@rowNo",model.rowNo)
+                    ,new SqlParameter("@purposeId ",model.id)
+                    ,new SqlParameter("@delFlag",model.delFlag)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertPurpose");
+            }
+
+            return result;
+        }
+        #endregion
     }
 
 }

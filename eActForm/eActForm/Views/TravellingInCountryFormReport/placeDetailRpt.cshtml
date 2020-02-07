@@ -1,0 +1,50 @@
+﻿@*@model eActForm.Models.Activity_TBMMKT_Model*@
+<div id="divPlaceDetails" runat="server" style="width: 100%;">
+    <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="3" cellspacing="0">
+
+        <tr style="background-color:#E5E2E2;height:25px;  ">
+            <td colspan="5" style="text-align :center;">
+                <b>Description of activity : รายละเอียดของกิจกรรม ดังนี้</b>
+            </td>
+        </tr>
+        <tr style="height:25px;">
+            <td style="width: 30%;text-align:center;"><b>Place (Country) / สถานที่ (จังหวัด)	</b></td>
+            <td style="width: 35%;text-align:center;"><b>For Project / เพื่อโครงการ</b></td>
+            <td style="width: 9%;text-align:center;"><b>Period /<br/>จำนวนวัน</b> </td>
+            <td style="width: 13%;text-align:center;"><b>Departure Date /<br />วันออกเดินทาง</b></td>
+            <td style="width: 13%;text-align:center;"><b>Arrival Date /<br />วันที่กลับ</b></td>
+        </tr>
+        @{ var index = 0;}
+
+
+        @for (index = 1; index <= 3; index++)
+            {
+            <tr style="height:25px;">
+                <td style="text-align:left;">
+                    xxxxxxx xxxxxxxxxxxxx
+                </td>
+
+
+                <td style="text-align:left;">
+                    RequestEmp[@index].position
+                </td>
+                <td style="text-align:center;">
+                    15  @*RequestEmp[@index].level*@
+                </td>
+                <td style="text-align:center;">
+                    10/12/2020 18.30
+                </td>
+                <td style="text-align:center;">
+                    10/12/2020 18.30
+                </td>
+            </tr>
+
+        }
+
+
+
+    </table>
+
+    <br />
+
+</div>

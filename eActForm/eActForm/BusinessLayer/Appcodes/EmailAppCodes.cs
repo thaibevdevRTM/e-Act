@@ -399,7 +399,6 @@ namespace eActForm.BusinessLayer
         }
 
 
-
         private static string getEmailBody(ApproveModel.approveEmailDetailModel item, AppCode.ApproveType emailType, string actId)
         {
             try
@@ -480,7 +479,6 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
-
         private static List<ApproveModel.approveEmailDetailModel> getEmailApproveNextLevel(string actFormId)
         {
             try
