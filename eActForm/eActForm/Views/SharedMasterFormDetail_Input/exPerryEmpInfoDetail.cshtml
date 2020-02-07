@@ -1,0 +1,30 @@
+﻿
+@model eActForm.Models.Activity_TBMMKT_Model
+
+<div class="form-group" id="divExpenseCashEmpInfo">
+    <label>เรียน </label>ผู้จัดการภาคการขายสุรา
+</div>
+<br />
+<div class="form-group" id="divExpenseCashEmpInfo">
+
+    @*<div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;@Model.TB_Reg_RequestEmp.empName&nbsp;&nbsp;</div>
+        <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
+    <div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;นายธนาพงศ์ วณิชย์ญาตระกูล&nbsp;&nbsp;</div>
+    <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;ABC&nbsp;&nbsp;</div>
+    <div id="lblVehicleregis" style="display:inline-block;"><label>ขับรถทะเบียน</label>&nbsp;กข-1234&nbsp;</div>
+    <div style="display:inline-block;"><label>ขอเบิกค่าใช้จ่าย ตามรายละเอียดดังนี้</label></div>
+
+</div>
+
+
+<script type="text/javascript">
+    document.getElementById("lblVehicleregis").style.display = "none";
+    $("#ddlObjective").change(function () {
+        if ($("#ddlObjective").val() == '01F28E2A-A4DE-4221-9869-5FA02719822E') {
+            document.getElementById("lblVehicleregis").style.display = "block";
+        }
+        else {
+            document.getElementById("lblVehicleregis").style.display = "none";
+        }
+    });
+</script>

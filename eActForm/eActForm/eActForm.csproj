@@ -199,6 +199,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllApproveGroup.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllBrand.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllChanel.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetAllCompany.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllCustomers.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllPrice.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllProduct.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\eActController.cs" />
+    <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MainFormController.cs" />
     <Compile Include="Controllers\SharedMasterFormDetail_InputController.cs" />
@@ -2473,6 +2475,9 @@
     <Content Include="Views\SharedMasterFormDetail\chargeToRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\expensesDetailsRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\expensesDetailRows.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\exPerryCashDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\exPerryEmpInfoDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\exPerryListDetail.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
@@ -2487,6 +2492,7 @@
     <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
     <Folder Include="Views\ApiApprove\" />
+    <Folder Include="Views\exPerryCash\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebLibrary\WebLibrary.csproj">
