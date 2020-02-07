@@ -120,6 +120,11 @@ namespace eActForm.Models
     public class CostDetailOfGroupPriceTBMMKT
     {
         public List<CostThemeDetailOfGroupByPriceTBMMKT> costDetailLists { get; set; }
+
+        public CostDetailOfGroupPriceTBMMKT()
+        {
+            costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+        }
     }
 
     public class CostThemeDetailOfGroupByPriceTBMMKT : CostThemeDetailOfGroupByPrice

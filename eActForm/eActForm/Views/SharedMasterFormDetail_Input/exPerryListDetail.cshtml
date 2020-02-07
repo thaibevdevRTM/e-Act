@@ -1,1 +1,85 @@
-﻿
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered" id="tbl_CashDetail" cellpadding="0" cellspacing="0">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="align-content-center font10" rowspan="2" style="width:5%;"></th>
+                    <th class="align-content-center font10" rowspan="2" style="width:10%;">วันเดือนปี</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:30%;">รายการ</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:20%;">สถานที่</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:10%;">จำนวนเงิน</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:30%;">หมายเหตุ</th>
+                </tr>
+            </thead>
+            @{var index = 0; }
+            @foreach (var item in Model.expensesDetailModel.costDetailLists)
+            {
+
+                <tr>
+                    <td><button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button></td>
+                    <td style="text-align:right"><input type="text" id="date[@index]" name="expensesDetailModel.costDetailLists[@index].date" class="form-control textboxcss font10 textRight" /></td>
+                    <td style="text-align:right"><input type="text" id="productCashDetail[@index]" name="expensesDetailModel.costDetailLists[@index].productDetail" class="form-control textboxcss font10 textRight" /></td>
+                    <td style="text-align:right"><input type="text" id="detail[@index]" name="expensesDetailModel.costDetailLists[@index].detail" class="form-control textboxcss font10 textRight" /></td>
+                    <td style="text-align:right"><input type="text" id="total[@index]" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss font10 textRight" onkeyup="getValues()" /></td>
+                    <td style="text-align:right"><input type="text" id="remark[@index]" name="expensesDetailModel.costDetailLists[@index].remark" class="form-control textboxcss font10 textRight" /></td>
+
+                </tr>
+                index++;
+            }
+
+        </table>
+
+
+
+    </div>
+
+</div>
+<div class="form-group col-lg-1 col-xs-1" onclick="addRow();">
+    <label class="btn ink-reaction btn-danger fa fa-plus"></label>
+</div>
+
+
+
+<script type="text/javascript">
+
+    function addRow() {
+        var table = document.getElementById("tbl_CashDetail");
+        var RowCount = table.rows.length - 1;
+        console.log(RowCount);
+        $("#tbl_CashDetail").append(
+            "<tr>" + '<td><button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button></td>' +
+            '<td style="text-align:right"><input type="text" id="date" name="expensesDetailModel.costDetailLists[' + RowCount + '].date" class="form-control textboxcss font10 textRight" /></td>' +
+            '<td style="text-align:right"><input type="text" id="productCashDetail" name="expensesDetailModel.costDetailLists[' + RowCount + '].productDetail" class="form-control textboxcss font10 textRight" /></td>' +
+            '<td style="text-align:right"><input type="text" id="detail" name="expensesDetailModel.costDetailLists[' + RowCount + '].detail" class="form-control textboxcss font10 textRight" /></td>' +
+            '<td style="text-align:right"><input type="text" id="total" name="expensesDetailModel.costDetailLists[' + RowCount + '].total" class="form-control textboxcss font10 textRight" /></td>' +
+            '<td style="text-align:right"><input type="text" id="remark" name="expensesDetailModel.costDetailLists[' + RowCount + '].remark" class="form-control textboxcss font10 textRight" /></td>' + "</tr>"
+        );
+    }
+
+    function cashDelete(btn) {
+        console.log(btn);
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
+
+    function getValues() {
+
+        var table = document.getElementById("tbl_CashDetail"), sumVal = 0;
+
+        for (var i = 1; i < table.rows.length; i++) {
+            sumVal = sumVal + parseInt(table.rows[i].cells[4].innerHTML);
+
+            console.log(parseInt(table.rows[i].cells[1].innerHTML));
+            console.log(parseInt(table.rows[i].cells[2].innerHTML));
+            console.log(parseInt(table.rows[i].cells[3].innerHTML));
+            console.log(parseInt(table.rows[i].cells[4].innerHTML));
+            console.log(parseInt(table.rows[i].cells[5].innerHTML));
+        }
+
+        sumVal = sumVal.toFixed(2);
+        console.log(sumVal);
+    }
+</script>
