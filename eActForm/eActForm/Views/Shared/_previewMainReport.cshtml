@@ -7,26 +7,31 @@
         .fontDocV1 {
             font-family: 'TH SarabunPSK';
             font-size: 18px;
-            color:black;
+            color: black;
         }
+
         .fontDocV2 {
             font-family: 'TH SarabunPSK';
             font-size: 22px;
             color: black;
         }
+
         .fontSigV1 {
             font-family: 'TH SarabunPSK';
             font-size: 14px;
             color: black;
         }
+
         .paddingFormV1 {
             width: 100%;
             padding-left: 35px;
         }
+
         .formListDetailV1 {
             height: 430px;
-            vertical-align: top;            
+            vertical-align: top;
         }
+
         .fontDocV3 {
             font-family: 'TH SarabunPSK';
             font-size: 28px;
@@ -35,9 +40,14 @@
     </style>
     <div class="paddingFormV1">
         <table style="width: 100%;" id="tabel_report" runat="server">
+
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
-                @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+                <tr>
+                    <td>
+                        @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+                    </td>
+                </tr>
             }
         </table>
     </div>

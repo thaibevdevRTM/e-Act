@@ -36,134 +36,136 @@
         background-color: #FCE4D6;
     }
 </style>
-<tr>
-    <td style="padding-left:8px;">
-        <div id="divHeaderDetails" runat="server" style="width: 100%;">
-            <table style="width: 100%;border-collapse:collapse;" id="tabelHeaderDetails" runat="server" class="fontDocV1">
-                <tr>
-                    <td>
-                        <div style="height:10px;"></div>
-                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
-                            <tr class="hDetailtr">
-                                <td style="width:65px;">&nbsp;เรียน</td>
-                                <td style="width:635px; text-align:left;">@dearGroup</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
-                            <tr class="hDetailtr">
-                                <td style="width:65px;vertical-align:top;">&nbsp;ข้าพเจ้า</td>
-                                <td style="width:235px;vertical-align:top;">@signBook</td>
-                                <td style="width:140px;vertical-align:top;">&nbsp;ฝ่าย/แผนก</td>
-                                <td style="width:260px;vertical-align:top;">: @signBookDepartment</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
-                            <tr class="hDetailtr">
-                                <td style="width:150px;vertical-align:top;">&nbsp;ขอเบิก</td>
-                                @{ 
-                                    var lblInOrOutStock = "";
-                                    if (Model.activityFormTBMMKT.list_0_select == "0AD2C9AA-730B-471C-8CA0-581254823F2D")//OutStock ID
-                                    {
-                                        lblInOrOutStock = ("(" + Model.activityFormTBMMKT.labelInOrOutStock + ")");
+<table style="width:100%;" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td style="padding-left:8px;">
+            <div id="divHeaderDetails" runat="server" style="width: 100%;">
+                <table style="width: 100%;border-collapse:collapse;" id="tabelHeaderDetails" runat="server" class="fontDocV1">
+                    <tr>
+                        <td>
+                            <div style="height:10px;"></div>
+                            <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                                <tr class="hDetailtr">
+                                    <td style="width:65px;">&nbsp;เรียน</td>
+                                    <td style="width:635px; text-align:left;">@dearGroup</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                                <tr class="hDetailtr">
+                                    <td style="width:65px;vertical-align:top;">&nbsp;ข้าพเจ้า</td>
+                                    <td style="width:235px;vertical-align:top;">@signBook</td>
+                                    <td style="width:140px;vertical-align:top;">&nbsp;ฝ่าย/แผนก</td>
+                                    <td style="width:260px;vertical-align:top;">: @signBookDepartment</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                                <tr class="hDetailtr">
+                                    <td style="width:150px;vertical-align:top;">&nbsp;ขอเบิก</td>
+                                    @{
+                                        var lblInOrOutStock = "";
+                                        if (Model.activityFormTBMMKT.list_0_select == "0AD2C9AA-730B-471C-8CA0-581254823F2D")//OutStock ID
+                                        {
+                                            lblInOrOutStock = ("(" + Model.activityFormTBMMKT.labelInOrOutStock + ")");
+                                        }
                                     }
-                                }
-                                <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelRequire @lblInOrOutStock</td>
-                                <td style="width:140px;vertical-align:top;">&nbsp;เพื่อ</td>
-                                <td style="width:260px;vertical-align:top;">: @Model.activityFormTBMMKT.labelFor</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
-                            <tr class="hDetailtr bgColorFocusDataAcc">
-                                <td style="width:150px;vertical-align:top;">&nbsp;Brand/ผลิตภัณฑ์</td>
-                                <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelBrand</td>
-                                <td style="width:140px;vertical-align:top;">&nbsp;Cost Center</td>
-                                <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.costCenter</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
-                            <tr class="hDetailtr bgColorFocusDataAcc">
-                                <td style="width:150px;vertical-align:top;">&nbsp;Channel+Region</td>
-                                <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelChannelRegion</td>
-                                <td style="width:140px;vertical-align:top;">&nbsp;Channel+Region Name</td>
-                                <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.channelRegionName</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
-                            <tr class="hDetailtr bgColorFocusDataAcc">
-                                <td style="width:150px;vertical-align:top;">&nbsp;GL No.</td>
-                                <td style="width:150px;vertical-align:top;text-align:left;">: @Model.tB_Act_ActivityForm_DetailOther.glNo</td>
-                                <td style="width:140px;vertical-align:top;">&nbsp;GL Name</td>
-                                <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.glName</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
-                            <tr class="hDetailtr">
-                                <td style="width:150px;vertical-align:top;">&nbsp;ให้แก่ (ชื่อผู้รับ)</td>
-                                <td style="width:150px;vertical-align:top;text-align:left;">: @Model.tB_Act_ActivityForm_DetailOther.toName</td>
-                                <td style="width:140px;vertical-align:top;">&nbsp;โทรศัพท์/โทรสาร</td>
-                                <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.toContact</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
-                            <tr class="hDetailtr">
-                                <td style="width:150px;vertical-align:top;">&nbsp;หมายเหตุ&nbsp;&nbsp;วันที่ส่งมอบ</td>
-                                <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
-                                <td style="width:140px;vertical-align:top;">&nbsp;รายละเอียดผู้ติดต่อ</td>
-                                <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.detailContact</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
-                            <tr class="hDetailtr">
-                                <td style="width:150px;vertical-align:top;">&nbsp;ที่อยู่</td>
-                                <td colspan="3" style="width:550px;vertical-align:top;text-align:left;">:  @Model.tB_Act_ActivityForm_DetailOther.toAddress</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
-                            <tr class="hDetailtr">
-                                <td style="width:150px;vertical-align:top;">&nbsp;วัตถุประสงค์ที่ขอเบิก</td>
-                                <td colspan="3" style="width:550px;vertical-align:top;text-align:left;">: @Html.Raw(Model.activityFormModel.objective.Replace("\n", "<br/>&nbsp;&nbsp;").Replace("\r\n", "<br/>&nbsp;&nbsp;"))</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+                                    <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelRequire @lblInOrOutStock</td>
+                                    <td style="width:140px;vertical-align:top;">&nbsp;เพื่อ</td>
+                                    <td style="width:260px;vertical-align:top;">: @Model.activityFormTBMMKT.labelFor</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                                <tr class="hDetailtr bgColorFocusDataAcc">
+                                    <td style="width:150px;vertical-align:top;">&nbsp;Brand/ผลิตภัณฑ์</td>
+                                    <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelBrand</td>
+                                    <td style="width:140px;vertical-align:top;">&nbsp;Cost Center</td>
+                                    <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.costCenter</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                                <tr class="hDetailtr bgColorFocusDataAcc">
+                                    <td style="width:150px;vertical-align:top;">&nbsp;Channel+Region</td>
+                                    <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormTBMMKT.labelChannelRegion</td>
+                                    <td style="width:140px;vertical-align:top;">&nbsp;Channel+Region Name</td>
+                                    <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.channelRegionName</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                                <tr class="hDetailtr bgColorFocusDataAcc">
+                                    <td style="width:150px;vertical-align:top;">&nbsp;GL No.</td>
+                                    <td style="width:150px;vertical-align:top;text-align:left;">: @Model.tB_Act_ActivityForm_DetailOther.glNo</td>
+                                    <td style="width:140px;vertical-align:top;">&nbsp;GL Name</td>
+                                    <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.glName</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                                <tr class="hDetailtr">
+                                    <td style="width:150px;vertical-align:top;">&nbsp;ให้แก่ (ชื่อผู้รับ)</td>
+                                    <td style="width:150px;vertical-align:top;text-align:left;">: @Model.tB_Act_ActivityForm_DetailOther.toName</td>
+                                    <td style="width:140px;vertical-align:top;">&nbsp;โทรศัพท์/โทรสาร</td>
+                                    <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.toContact</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                                <tr class="hDetailtr">
+                                    <td style="width:150px;vertical-align:top;">&nbsp;หมายเหตุ&nbsp;&nbsp;วันที่ส่งมอบ</td>
+                                    <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
+                                    <td style="width:140px;vertical-align:top;">&nbsp;รายละเอียดผู้ติดต่อ</td>
+                                    <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.detailContact</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                                <tr class="hDetailtr">
+                                    <td style="width:150px;vertical-align:top;">&nbsp;ที่อยู่</td>
+                                    <td colspan="3" style="width:550px;vertical-align:top;text-align:left;">:  @Model.tB_Act_ActivityForm_DetailOther.toAddress</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
+                                <tr class="hDetailtr">
+                                    <td style="width:150px;vertical-align:top;">&nbsp;วัตถุประสงค์ที่ขอเบิก</td>
+                                    <td colspan="3" style="width:550px;vertical-align:top;text-align:left;">: @Html.Raw(Model.activityFormModel.objective.Replace("\n", "<br/>&nbsp;&nbsp;").Replace("\r\n", "<br/>&nbsp;&nbsp;"))</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
 
-        </div>
-    </td>
-</tr>
+            </div>
+        </td>
+    </tr>
+</table>
