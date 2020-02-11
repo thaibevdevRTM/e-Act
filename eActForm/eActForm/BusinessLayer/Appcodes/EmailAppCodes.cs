@@ -191,7 +191,8 @@ namespace eActForm.BusinessLayer
                 }
 
                 string emailAllApprovedSubject = "";
-                string createUsersName = "";                
+                string createUsersName = "";
+                string txtemailAllApproveBody = "";
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actFormId);
 
@@ -239,15 +240,17 @@ namespace eActForm.BusinessLayer
                             {
                                 createUsersName = createUsers.FirstOrDefault().empName_EN;
                                 emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject_EN"];
+                                txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody_EN"];
                             }
                             else
                             {
                                 createUsersName = createUsers.FirstOrDefault().empName;
                                 emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject"];
+                                txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody"];
                             }
 
                             strBody = (emailType == AppCode.ApproveType.Activity_Form)
-                                ? string.Format(ConfigurationManager.AppSettings["emailAllApproveBody"]
+                                ? string.Format(txtemailAllApproveBody
                                     , createUsersName
                                     , createUsers.FirstOrDefault().activityNo
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId))
@@ -292,10 +295,14 @@ namespace eActForm.BusinessLayer
                         lists = getEmailApproveSummaryNextLevel(actFormId);
                         break;
                 }
-
-                string strBody = "", strSubject = "";
+               
+                string emailAllApprovedSubject = "";
+                string createUsersName = "";
+                string txtemailAllApproveBody = "";
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actFormId);
+
+                string strBody = "", strSubject = "";
                 if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)//Inter sale
                 {
                     strSubject = ConfigurationManager.AppSettings["emailApproveSubject_EN"];
@@ -334,19 +341,33 @@ namespace eActForm.BusinessLayer
                             List<ApproveModel.approveDetailModel> createUsers = (emailType == AppCode.ApproveType.Activity_Form) ? ActFormAppCode.getUserCreateActForm(actFormId)
                                 : RepDetailAppCode.getUserCreateRepDetailForm(actFormId);
 
+                            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)// Inter sale
+                            {
+                                createUsersName = createUsers.FirstOrDefault().empName_EN;
+                                emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject_EN"];
+                                txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody_EN"];
+                            }
+                            else
+                            {
+                                createUsersName = createUsers.FirstOrDefault().empName;
+                                emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject"];
+                                txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody"];
+                            }
+
+
                             strBody = (emailType == AppCode.ApproveType.Activity_Form)
-                                ? string.Format(ConfigurationManager.AppSettings["emailAllApproveBody"]
-                                    , createUsers.FirstOrDefault().empName
+                                ? string.Format(txtemailAllApproveBody
+                                    , createUsersName
                                     , createUsers.FirstOrDefault().activityNo
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId))
                                 : string.Format(ConfigurationManager.AppSettings["emailAllApproveRepDetailBody"]
-                                    , createUsers.FirstOrDefault().empName
+                                    , createUsersName
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
 
                             sendEmailActForm(actFormId
                             , createUsers.FirstOrDefault().empEmail
                             , ApproveAppCode.getEmailCCByActId(actFormId)
-                            , ConfigurationManager.AppSettings["emailAllApprovedSubject"]
+                            , emailAllApprovedSubject
                             , strBody
                             , emailType);
                         }
