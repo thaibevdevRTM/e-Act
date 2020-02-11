@@ -7,6 +7,7 @@ using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System.Data.SqlClient;
 using eActForm.BusinessLayer.Appcodes;
+using GreatFriends.ThaiBahtText;
 
 namespace eActForm.BusinessLayer
 {
@@ -196,5 +197,19 @@ namespace eActForm.BusinessLayer
         }
 
 
+        public static string convertThaiBaht(decimal? txbaht)
+        {
+            string result = "";
+            try
+            {
+                result = GreatFriends.ThaiBahtText.ThaiBahtTextUtil.ThaiBahtText(txbaht);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return result;
+                throw new Exception("convertThaiBaht >>" + ex.Message);
+            }
+        }
     }
 }

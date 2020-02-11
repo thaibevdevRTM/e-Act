@@ -335,6 +335,19 @@ namespace eActForm.Controllers
             return Json(regionList, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult textThaiBaht(string txtBaht)
+        {
+            try
+            {
+                txtBaht = ActFormAppCode.convertThaiBaht(decimal.Parse(txtBaht));
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
+            }
+            return Json(txtBaht, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }
