@@ -17,13 +17,18 @@
 
 
 <script type="text/javascript">
+    
     document.getElementById("lblVehicleregis").style.display = "none";
     $("#ddlObjective").change(function () {
         if ($("#ddlObjective").val() == '01F28E2A-A4DE-4221-9869-5FA02719822E') {
             document.getElementById("lblVehicleregis").style.display = "block";
+            document.getElementById("divCertification").style.display = "none";
+            document.getElementById("divCashBill").style.display = "block";
         }
         else {
             document.getElementById("lblVehicleregis").style.display = "none";
+            document.getElementById("divCertification").style.display = "block";  
+            document.getElementById("divCashBill").style.display = "none";
         }
     });
 </script>

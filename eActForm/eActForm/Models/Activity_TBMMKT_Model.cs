@@ -32,6 +32,7 @@ namespace eActForm.Models
         public List<CompanyModel> companyList { get; set; }
         public List<TB_Act_Other_Model> objExpenseCashList { get; set; }
         public List<exPerryCashModel> exPerryCashList { get; set; }
+        public exPerryCashModel exPerryCashModel { get; set; }
         public Activity_TBMMKT_Model()
         {
             channelMasterTypeList = new List<ChannelMasterType>();
@@ -42,6 +43,7 @@ namespace eActForm.Models
             expensesDetailModel = new CostDetailOfGroupPriceTBMMKT();
             approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
             exPerryCashList = new List<exPerryCashModel>();
+            exPerryCashModel = new exPerryCashModel();
         }
 
     }

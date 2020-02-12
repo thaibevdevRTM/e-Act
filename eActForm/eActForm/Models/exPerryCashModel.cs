@@ -13,6 +13,7 @@ namespace eActForm.Models
         public string positionName { get; set; }
         public decimal? cash { get; set; }
         public string empId { get; set; }
+        public decimal? rulesCash { get; set; }
 
     }
 

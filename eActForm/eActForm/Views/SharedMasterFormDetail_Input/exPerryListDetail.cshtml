@@ -31,6 +31,9 @@
             }
 
         </table>
+        <div class="form-group col-lg-12 col-xs-12" onclick="addRow();">
+            <label class="btn ink-reaction btn-danger fa fa-plus"></label>
+        </div>
         <div class="row">
             <div class="col-lg-7">
             </div>
@@ -55,44 +58,41 @@
             </div>
             <div class="col-lg-1 col-xs-1">
                 <label>
-                    @if (@Model.exPerryCashList.Any())
-                    {@Model.exPerryCashList[0].cash}
+                    @Model.exPerryCashModel.rulesCash
                 </label>
             </div>
         </div>
         <br />
         <div id="divCertification" class="row">
-            <div class="col-lg-7">
+            <div class="col-lg-8">
             </div>
-            <div class="col-lg-5">
-                <label style="color:red">
-                    ***จ่ายตามหลักเกณฑ์ @if (@Model.exPerryCashList.Any())
-                    {@Model.exPerryCashList[0].cash} บาท ต่อเดือน
-                </label>
+            <div class="col-lg-4">
+                <label style="color:red">***จ่ายตามหลักเกณฑ์  @Model.exPerryCashModel.rulesCash บาท ต่อเดือน</label>
             </div>
         </div>
+
         <div id="divCashBill" class="row">
-            <div style="text-align:center">
-                <label style="color:red">จ่ายตามหลักเกณฑ์ ค่าล้างรถ 150 บาท/เดือน (fix)</label>
-            </div>
-            <div style="text-align:center">
-                <label style="color:red">ค่าทางด่วน 1,200 บาท/เดือน (ดึงจาก master)</label>
-            </div>
-            <div style="text-align:center">
-                <label style="color:red">ค่าโทรศัพท์ 400 บาท/เดือน (ดึงจาก master)</label>
-            </div>
-            
+
+            @foreach (var item in Model.exPerryCashList)
+            {
+                <div class="col-lg-8">
+                </div>
+                <div class="col-lg-4">
+                    <label style="color:red">
+                        <label style="color:red"> @item.cashName @item.cash บาท/เดือน</label>
+                    </label>
+                </div>
+            }
+
         </div>
 
     </div>
-    <div class="form-group col-lg-12 col-xs-12" onclick="addRow();">
-        <label class="btn ink-reaction btn-danger fa fa-plus"></label>
-    </div>
+    
 
 
 
-    <script type="text/javascript">
-
+<script type="text/javascript">
+     document.getElementById("divCashBill").style.display = "none";
     $('.datepicker').datepicker({
         format: 'dd-mm-yyyy'
     });
