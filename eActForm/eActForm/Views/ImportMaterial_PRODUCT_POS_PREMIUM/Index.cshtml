@@ -1,0 +1,25 @@
+﻿@using eActForm.Models
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.ImportExcel
+
+<h2>Import Material PRODUCT-POS,PREMIUM</h2>
+
+@using (Ajax.BeginForm("Index", "ImportMaterial_PRODUCT_POS_PREMIUM", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { enctype = "multipart/form-data", id="divUpload" }))
+{
+
+    @Html.TextBoxFor(m => m.file, new { type = "file" })
+    <br />
+    <div>
+        &nbsp;<button id="submitButton" type="button" onclick="uploadClicked()">Submit</button>
+    </div>    
+    @Html.ValidationMessageFor(model => model.file)
+}
+
+<b style="color:#016427">@ViewBag.Result</b>
+<script>
+    function uploadClicked() {
+        $("#WaitDialog").show();
+        $("#divUpload").submit();
+    }
+</script>

@@ -24,6 +24,10 @@
                 <li>@Html.ActionLink(" ใบเบิกผลิตภัณฑ์,POS/PREMIUM", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = "24BA9F57-586A-4A8E-B54C-00C23C41BFC5" }, null)</li>
                 <li>@Html.ActionLink(" Travelling Form TBM", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = "294146B1-A6E5-44A7-B484-17794FA368EB" }, null)</li>
             }
+            @if ((UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] && UtilsAppCode.Session.User.isAdmin) || (UtilsAppCode.Session.User.isSuperAdmin))
+            {
+                <li>@Html.ActionLink(" Import Material PRODUCT-POS,PREMIUM", "Index", "ImportMaterial_PRODUCT_POS_PREMIUM", new { }, null)</li>
+            }
         </ul>
     </li>
 }
