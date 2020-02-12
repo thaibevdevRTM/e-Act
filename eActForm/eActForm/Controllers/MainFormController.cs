@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using eActForm.Models;
 using iTextSharp.text;
@@ -127,7 +128,10 @@ namespace eActForm.Controllers
               
                 //=======================ฟอร์มเดินทางปฏฏิบัติงานนอกสถานที่====================
 
-
+                if(master_type_form_id == "ECBA6180-359F-4A43-B97A-CB82CC949B75")
+                {
+                    activity_TBMMKT_Model = exPerryCashAppCode.getMaster(activity_TBMMKT_Model);
+                }
                 TempData.Keep();
             }
             catch (Exception ex)

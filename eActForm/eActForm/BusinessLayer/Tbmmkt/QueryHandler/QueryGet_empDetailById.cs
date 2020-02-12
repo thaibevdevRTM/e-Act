@@ -12,7 +12,7 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGet_empDetailById
     {
-        public static List< RequestEmpModel> getEmpDetailById(string empId)
+        public static List<RequestEmpModel> getEmpDetailById(string empId)
         {
             try
             {

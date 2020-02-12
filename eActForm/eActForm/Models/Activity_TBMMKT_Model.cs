@@ -31,18 +31,17 @@ namespace eActForm.Models
         public List<ChannelMasterType> channelMasterTypeList { get; set; }
         public List<CompanyModel> companyList { get; set; }
         public List<TB_Act_Other_Model> objExpenseCashList { get; set; }
-
+        public List<exPerryCashModel> exPerryCashList { get; set; }
         public Activity_TBMMKT_Model()
         {
             channelMasterTypeList = new List<ChannelMasterType>();
-
             masterRequestEmp = new List<RequestEmpModel>();
             requestEmpModel = new List<RequestEmpModel>();
             purposeModel = new List<PurposeModel>();
             placeDetailModel = new List<PlaceDetailModel>();
             expensesDetailModel = new CostDetailOfGroupPriceTBMMKT();
             approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
-
+            exPerryCashList = new List<exPerryCashModel>();
         }
 
     }
