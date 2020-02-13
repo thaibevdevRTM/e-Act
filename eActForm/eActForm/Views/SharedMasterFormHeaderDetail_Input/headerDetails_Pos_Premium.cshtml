@@ -43,7 +43,7 @@
                             </label>
                             <div class="col-md-4 col-xs-12">
                                 <div class="row">
-                                    @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc" })
+                                    @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", autocomplete = "off" })
                                 </div>
                             </div>
                         </div>
@@ -348,7 +348,7 @@
 
                             <div class="col-md-3 col-xs-12">
                                 <div class="row">
-                                    @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "", placeholder = "" })
+                                    @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "", placeholder = "" ,autocomplete = "off" })
                                 </div>
                             </div>
 

@@ -176,6 +176,7 @@
                 function selectData(indexObj, material, materialDescription, QtyName) {
                     $(".txtInTable_productId_" + indexObj).val(material);
                     $(".txtInTable_productDetail_" + indexObj).val(materialDescription);
+                    $(".txtInTable_productDetail_" + indexObj).attr('title', materialDescription)
                     $(".txtInTable_QtyName_" + indexObj).val(QtyName);
                     $(".txtInTable_QtyName_" + indexObj).attr('title', QtyName)
                     $("#suggesstion_box_" + indexObj).hide(); 
