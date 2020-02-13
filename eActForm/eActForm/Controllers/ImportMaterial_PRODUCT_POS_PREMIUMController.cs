@@ -41,9 +41,14 @@ namespace eActForm.Controllers
                     //=====validate=======
                     bool validateValue = true;
                     string txtError = "";
+                    string idFormPOS_Premium = "24BA9F57-586A-4A8E-B54C-00C23C41BFC5";
+                    List<TB_Act_master_list_choiceModel> list_TB_Act_master_list_choiceModel = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(idFormPOS_Premium, "product_pos_premium");
+                    List<TB_Act_master_list_choiceModel> list_TB_Act_master_list_choiceModel_in_or_out_stock = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(idFormPOS_Premium, "in_or_out_stock");
+
                     for (int i = 0; i < countDataHaveRows; i++)
                     {
                         int rowInExcelAlert = (i + 2);
+
                         if (dt.Rows[i]["Material"].ToString() == "")
                         {
                             validateValue = false;
@@ -59,9 +64,8 @@ namespace eActForm.Controllers
                             validateValue = false;
                             txtError += "กรุณาระบุ Status Mat บรรทัดที่ " + rowInExcelAlert + "<br />";
                         }
-
-                        string idFormPOS_Premium = "24BA9F57-586A-4A8E-B54C-00C23C41BFC5";
-                        var keyValue_subGroupIdByRow = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(idFormPOS_Premium, "product_pos_premium").Where(x => x.name == dt.Rows[i]["Sub Group"].ToString().ToUpper()).FirstOrDefault();
+                       
+                        var keyValue_subGroupIdByRow = list_TB_Act_master_list_choiceModel.Where(x => x.name == dt.Rows[i]["Sub Group"].ToString().ToUpper()).FirstOrDefault();
                         if (keyValue_subGroupIdByRow != null)
                         {
                             dt.Rows[i]["tB_Act_master_list_choice_id"] = keyValue_subGroupIdByRow.id;
@@ -71,7 +75,7 @@ namespace eActForm.Controllers
                             validateValue = false;
                             txtError += "รูปแบบข้อมูลที่กรอกไม่ถูกต้อง Sub Group บรรทัดที่ " + rowInExcelAlert + "<br />";
                         }
-                        var keyValue_statusMatIdByRow = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(idFormPOS_Premium, "in_or_out_stock").Where(x => x.name == dt.Rows[i]["Status Mat"].ToString().ToUpper()).FirstOrDefault();
+                        var keyValue_statusMatIdByRow = list_TB_Act_master_list_choiceModel_in_or_out_stock.Where(x => x.name == dt.Rows[i]["Status Mat"].ToString().ToUpper()).FirstOrDefault();
                         if (keyValue_statusMatIdByRow != null)
                         {
                             dt.Rows[i]["tB_Act_master_list_choice_id_InOutStock"] = keyValue_statusMatIdByRow.id;
@@ -82,6 +86,13 @@ namespace eActForm.Controllers
                             txtError += "รูปแบบข้อมูลที่กรอกไม่ถูกต้อง Status Mat บรรทัดที่ " + rowInExcelAlert + "<br />";
                         }
 
+                        var isNumeric = int.TryParse(dt.Rows[i]["qty"].ToString(), out int n);
+                        if (isNumeric == false)
+                        {
+                            validateValue = false;
+                            txtError += "กรุณาระบุ qty เป็นตัวเลขบรรทัดที่ " + rowInExcelAlert + "<br />";
+                        }
+
                     }
                     if (validateValue == false)
                     {
@@ -89,11 +100,27 @@ namespace eActForm.Controllers
                         return View();
                     }
                     else
-                    {
-
+                    {                        
+                        for (int i = 0; i < countDataHaveRows; i++)
+                        {
+                            TB_Act_master_material_Model tB_Act_Master_Material_Model = new TB_Act_master_material_Model();
+                            tB_Act_Master_Material_Model.plnt = dt.Rows[i]["Plnt"].ToString();
+                            tB_Act_Master_Material_Model.material = dt.Rows[i]["Material"].ToString();
+                            tB_Act_Master_Material_Model.materialDescription = dt.Rows[i]["Material Description"].ToString();
+                            tB_Act_Master_Material_Model.sloc = dt.Rows[i]["SLoc"].ToString();
+                            tB_Act_Master_Material_Model.qty =  int.Parse(dt.Rows[i]["Qty"].ToString().Replace("-","0"));
+                            tB_Act_Master_Material_Model.tB_Act_master_list_choice_id = dt.Rows[i]["tB_Act_master_list_choice_id"].ToString();
+                            tB_Act_Master_Material_Model.tB_Act_master_list_choice_id_InOutStock = dt.Rows[i]["tB_Act_master_list_choice_id_InOutStock"].ToString();
+                            tB_Act_Master_Material_Model.qtyName = dt.Rows[i]["Qty Name"].ToString();
+                            tB_Act_Master_Material_Model.createdByUserId = UtilsAppCode.Session.User.empId;
+                            tB_Act_Master_Material_Model.createdDate =  DateTime.Now;
+                            tB_Act_Master_Material_Model.updatedByUserId = UtilsAppCode.Session.User.empId;
+                            tB_Act_Master_Material_Model.updatedDate = DateTime.Now;
+                            tB_Act_Master_Material_Model.delFlag = false;
+                            QueryProcess_TB_Act_master_material.insert_TB_Act_master_material(tB_Act_Master_Material_Model);
+                        }
+                        //===END==validate=======
                     }
-                    //===END==validate=======
-
                 }
 
                 ViewBag.Result = "Successfully Imported";
