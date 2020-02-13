@@ -130,7 +130,7 @@ namespace eActForm.Controllers
 
                 if(master_type_form_id == "ECBA6180-359F-4A43-B97A-CB82CC949B75")
                 {
-                    activity_TBMMKT_Model = exPerryCashAppCode.getMaster(activity_TBMMKT_Model);
+                    //activity_TBMMKT_Model = exPerryCashAppCode.getMaster(activity_TBMMKT_Model);
                 }
                 TempData.Keep();
             }

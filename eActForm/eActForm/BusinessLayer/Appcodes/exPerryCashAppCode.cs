@@ -16,9 +16,9 @@ namespace eActForm.BusinessLayer.Appcodes
         {
             try
             {
-                model.requestEmpModel = QueryGet_empDetailById.getEmpDetailById(UtilsAppCode.Session.User.empId);
-                model.exPerryCashList = getCashPosition(UtilsAppCode.Session.User.empId);
-                model.exPerryCashModel.rulesCash = getCashPosition(UtilsAppCode.Session.User.empId).Where(x => x.cashLimitId.Equals("87757B5B-C946-4001-A74B-AB6C9003AD25")).FirstOrDefault().cash;
+                //model.requestEmpModel = QueryGet_empDetailById.getEmpDetailById(UtilsAppCode.Session.User.empId);
+                //model.exPerryCashList = getCashPosition(UtilsAppCode.Session.User.empId);
+                //model.exPerryCashModel.rulesCash = getCashPosition(UtilsAppCode.Session.User.empId).Where(x => x.cashLimitId.Equals("87757B5B-C946-4001-A74B-AB6C9003AD25")).FirstOrDefault().cash;
             }
             catch(Exception ex)
             {

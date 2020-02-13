@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -120,14 +122,22 @@ namespace eActForm.Controllers
 
         public ActionResult exPerryListDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            if (!activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
+            try
             {
-                for (int i = 0; i < 6; i++)
+                if (!activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
                 {
-                    activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
+                    for (int i = 0; i < 6; i++)
+                    {
+                        activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
+                    }
                 }
+                activity_TBMMKT_Model.exPerryCashList = exPerryCashAppCode.getCashPosition(UtilsAppCode.Session.User.empId);
+                activity_TBMMKT_Model.exPerryCashModel.rulesCash = activity_TBMMKT_Model.exPerryCashList.Any() ? activity_TBMMKT_Model.exPerryCashList.Where(x => x.cashLimitId.Equals("87757B5B-C946-4001-A74B-AB6C9003AD25")).FirstOrDefault().cash : 0;
             }
-
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("exPerryListDetail => " + ex.Message);
+            }
             return PartialView(activity_TBMMKT_Model);
         }
 
