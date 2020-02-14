@@ -53,7 +53,9 @@ namespace eActForm.Models
         {
             OMT,
             MT,
-            TBM
+            TBM,
+            HCM,
+            OtherCompany
         }
 
 
