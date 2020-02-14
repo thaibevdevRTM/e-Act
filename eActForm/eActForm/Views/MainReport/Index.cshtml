@@ -99,9 +99,10 @@
                             dataType: "json",
                             type: 'POST',
                         }).done(function (response) {
-                            @{  var rootPathWeb = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);  }
-                            console.log(response);
-                            var url = '@rootPathWeb' + '/Home?typeForm=' + response.Message;
+
+                            var val_typeForm = response.Message;
+                            var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = "val_typeForm" }, null)';
+                            url = url.replace("val_typeForm", val_typeForm);
                             window.location.href = url;
 
                         });

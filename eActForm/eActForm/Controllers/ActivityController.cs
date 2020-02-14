@@ -322,6 +322,7 @@ namespace eActForm.Controllers
                             i++;
                         }
                     }
+
                     var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
 
