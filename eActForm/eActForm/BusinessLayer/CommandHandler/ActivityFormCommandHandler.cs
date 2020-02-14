@@ -188,9 +188,13 @@ namespace eActForm.BusinessLayer
                 {
                     if (getActList.FirstOrDefault().activityNo.ToString() == "---")
                     {
-                        string getYear = getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9 ?
-                                new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2)
-                              : new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
+                        string getYear="";
+                        if (getActList.FirstOrDefault().activityPeriodSt != null)
+                        {
+                            getYear = getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9 ?
+                                   new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2)
+                                 : new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
+                        }
 
                         if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
                         {

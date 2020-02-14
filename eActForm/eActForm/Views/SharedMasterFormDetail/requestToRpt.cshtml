@@ -1,0 +1,52 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Globalization;
+@{
+    var bu = "";
+    var reqName = "";
+    var pos = "";
+    if (Model.approveFlowDetail != null)
+    {
+        foreach (var item in Model.approveFlowDetail)
+        {
+
+            if (item.approveGroupId == "CA8C71D3-F975-401E-A095-86E2E11C8014")
+            {
+                reqName = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
+                pos = item.empPositionTitleTH;
+                bu = item.bu;
+            }
+        }
+    }
+
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+}
+
+
+@*    <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="3" cellspacing="0">*@
+
+
+<div id="divHeaderDetails2" runat="server" style="width: 100%;"  >
+    <table style="width: 100%;" class=" fontDocSmall" id="tabelHeaderDetails2" runat="server" border="0" cellpadding="4" >
+        <tr>
+            <td style="width: 12%;text-align :right ; ">
+                <b> Requested by<br />ผู้ขออนุมัติ</b>
+            </td>
+            <td style="width: 1%;text-align :center ; "><b>&nbsp; : &nbsp;</b></td>
+            <td style="width: 20%; text-align :left;">
+                @reqName
+            </td>
+            <td style="width: 8%;text-align :right ; ">
+                <b>Position<br />ตำแหน่ง</b>
+            </td>
+            <td style="width: 1%;text-align :center ; "><b>&nbsp; : &nbsp;</b></td>
+            <td style="width: 23%; text-align :left;"> @pos</td>
+            <td style="width: 10%;text-align :right ; "><b>BU SPIRITS<br />หน่วยธุรกิจ</b> </td>
+            <td style="width: 1%;text-align :center ; "><b>&nbsp; : &nbsp;</b></td>
+            <td style="width: 20%; text-align :left;">@bu</td>
+        </tr>
+
+    </table>
+
+</div>

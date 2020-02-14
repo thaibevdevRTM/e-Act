@@ -88,9 +88,11 @@ namespace eActForm.BusinessLayer
                              {
                                  empId = dr["empId"].ToString(),
                                  empName = dr["empName"].ToString(),
+                                 empName_EN = dr["empName_EN"].ToString(),
                                  empEmail = dr["empEmail"].ToString(),
                                  activityNo = dr["activityNo"].ToString(),
                                  companyName = dr["companyName"].ToString(),
+                                 companyNameEN = dr["companyNameEN"].ToString(),
                                  delFlag = (bool)dr["delFlag"],
                                  createdDate = (DateTime?)dr["createdDate"],
                                  createdByUserId = dr["createdByUserId"].ToString(),

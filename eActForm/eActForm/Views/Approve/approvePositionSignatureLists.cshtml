@@ -1,5 +1,5 @@
 ﻿@model eActForm.Models.ApproveModel.approveModels
-
+@using eActForm.Models;
 <style>
     .line1px {
         border-bottom: groove;
@@ -14,6 +14,17 @@
     }
 </style>
 
+@if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
+{
+    ApproveFlowModel.flowApproveDetail flowApproveDetail = new ApproveFlowModel.flowApproveDetail();
+    flowApproveDetail.approveGroupName = "ผู้รับของ";
+    flowApproveDetail.approveGroupNameEN = "Received By";
+    flowApproveDetail.empFNameTH = "                                    ";
+    flowApproveDetail.empLNameTH = "";
+    flowApproveDetail.empPositionTitleTH = "";
+    flowApproveDetail.isShowInDoc = true;
+    Model.approveFlowDetail.Add(flowApproveDetail);
+}
 
 <div class="text-center">
     @if (TempData["approvePositionSignatureError"] != null)
@@ -54,7 +65,7 @@
         <table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
             <tr>
                 @{ int countisShowInDoc = 0;
-                    string yu = "คุณ";}
+                    string yu = "";}
                 @foreach (var item in Model.approveFlowDetail)
                 {
                     if (item.isShowInDoc)
@@ -63,7 +74,7 @@
                         if (countisShowInDoc <= 5)
                         {
                             <td style="width:140px;">
-                                @{ if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4")
+                                @{ if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
                                     {
                                         <div class="fontSigV1">
                                             @item.approveGroupName
@@ -135,7 +146,7 @@
                         if (countisShowInDoc <= 5)
                         {
                             <td>
-                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4")
+                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
                                     {
                                         <div style="text-align:center; margin-top:5px;" class="fontSigV1">@yu@item.empFNameTH @item.empLNameTH</div>
                                     }
@@ -161,7 +172,7 @@
                         if (countisShowInDoc <= 5)
                         {
                             <td>
-                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4")
+                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
                                     {
                                         <div style="text-align:center;height:50px;" class="fontSigV1">@Html.Raw(item.empPositionTitleTH)</div>
                                     }
@@ -185,7 +196,7 @@
         <table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
             <tr>
                 @{ int countisShowInDoc = 0;
-                    string yu = "คุณ";}
+                    string yu = "";}
                 @foreach (var item in Model.approveFlowDetail)
                 {
                     if (item.isShowInDoc)
@@ -194,7 +205,7 @@
                         if (countisShowInDoc >= 6)
                         {
                             <td style="width:140px;">
-                                @{ if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4")
+                                @{ if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
                                     {
                                         <div class="fontSigV1">
                                             @item.approveGroupName
@@ -266,7 +277,7 @@
                         if (countisShowInDoc >= 6)
                         {
                             <td>
-                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4")
+                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
                                     {
                                         <div style="text-align:center; margin-top:5px;" class="fontSigV1">@yu@item.empFNameTH @item.empLNameTH</div>
                                     }
@@ -292,7 +303,7 @@
                         if (countisShowInDoc >= 6)
                         {
                             <td>
-                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4")
+                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
                                     {
                                         <div style="text-align:center;height:50px;" class="fontSigV1">@Html.Raw(item.empPositionTitleTH)</div>
                                     }

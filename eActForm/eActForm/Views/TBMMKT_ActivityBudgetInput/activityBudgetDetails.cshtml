@@ -102,10 +102,11 @@
             var rowCount = parseInt($('#tabelHeaderDetails tr.tagCountRowinTable').length);
 
             for (i = 0; i < rowCount; i++) {
+               
                 var rowtotal = parseFloat($(".hidtotal_" + i.toString()).val().replace(",", ""));
                 totalAll = totalAll + rowtotal;
             }
-
+          
             $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         }
     </script>
