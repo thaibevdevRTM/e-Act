@@ -102,14 +102,15 @@
         var table = document.getElementById("tbl_CashDetail");
         var RowCount = table.rows.length-1;
         $("#tbl_CashDetail").append(
-            "<tr>" + '<td><button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button></td>' +
+            "<tr class=\"tagCountRowinTable\">" + '<td><button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button></td>' +
             '<td style="text-align:right"><input type="text" id="date[' + RowCount + ']" name="expensesDetailModel.costDetailLists[' + RowCount + '].date" class="form-control textboxcss font10 textRight datepicker" /></td>' +
             '<td style="text-align:right"><input type="text" id="productCashDetail[' + RowCount +']" name="expensesDetailModel.costDetailLists[' + RowCount + '].productDetail" class="form-control textboxcss font10 textRight" /></td>' +
             '<td style="text-align:right"><input type="text" id="detail['+ RowCount+']" name="expensesDetailModel.costDetailLists[' + RowCount + '].detail" class="form-control textboxcss font10 textRight" /></td>' +
             '<td style="text-align:right"><input type="number" id="total['+ RowCount+']" name="expensesDetailModel.costDetailLists[' + RowCount + '].total" class="form-control textboxcss font10 textRight txttotal_'+RowCount+'" onkeyup="getValues()" /></td>' +
             '<td style="text-align:right"><input type="text" id="remark['+ RowCount+']" name="expensesDetailModel.costDetailLists[' + RowCount + '].remark" class="form-control textboxcss font10 textRight" /></td>' + "</tr>"
         );
-        document.getElementById("total[" + RowCount + "]").onclick = function () { return getValues(); }
+
+        document.getElementById("total[" + RowCount + "]").onkeyup = function () { return getValues(); }
     }
 
     function cashDelete(btn) {
