@@ -10,54 +10,21 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12">
                 บริษัท<span class="required">*</span>
             </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(m => m.activityFormModel.companyId, new SelectList(Model.companyList, "id", "companyNameTH", 0), "Please Select", new
-                 {
-                     @class = "form-control textboxcss",
-                     id = "ddlCompany"
-                 })
+            <div runat="server" style="width: 100%; align-content: center; text-align: center;" class="fontDocV2">
+                @Model.activityFormTBMMKT.companyName<br />
             </div>
         </div>
-
-        <div class="col-md-5 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                ประจำเดือน
-            </label>
-            <div class="col-md-5 col-sm-5 col-xs-12">
-                @Html.TextBoxFor(m => m.activityFormModel.dateDoc, new { @class = "form-control textboxcss", @id = "txtExMonth" })
-            </div>
-        </div>
-
     </div>
     <div class="form-group">
-        <div class="col-md-5 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                หัวเรื่อง
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownList("ddlObjective", new SelectList(Model.objExpenseCashList, "id", "displayVal", 0), new
-                 {
-                     @class = "form-control textboxcss",
-                     id = "ddlObjective"
-                 })
-            </div>
+        <div runat="server" style="width: 100%; align-content: center; text-align: center;" class="fontDocV2">
+            @Model.activityFormTBMMKT.companyNameTH
         </div>
-
+    </div>
+    <div class="form-group">
+        <div runat="server" style="width: 100%; align-content: center; text-align: center;" class="fontDocV2">
+           ประจำเดือน 
+        </div>
     </div>
 </div>
 
 
-<script type="text/javascript">
-
-
-    $(function () {
-        $("#txtExMonth").datepicker({
-            format: "mm-yyyy",
-            viewMode: "months",
-            minViewMode: "months"
-        });
-    });
-
-
-
-</script>
