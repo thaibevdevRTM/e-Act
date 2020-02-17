@@ -39,7 +39,7 @@ namespace eActForm.BusinessLayer
                     model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                     model.activityFormModel.updatedDate = DateTime.Now;
                     model.activityFormModel.delFlag = false;
-                    model.activityFormModel.companyId = UtilsAppCode.Session.User.empCompanyId;
+                    model.activityFormModel.companyId = model.activityFormTBMMKT.formCompanyId;
                     model.activityFormModel.remark = model.activityFormModel.remark;
                     model.activityFormModel.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
 

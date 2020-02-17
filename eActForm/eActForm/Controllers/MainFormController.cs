@@ -33,6 +33,7 @@ namespace eActForm.Controllers
 
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
                     activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
+                    activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
                     activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.groupName;
 
                     //===================Get Subject=======================
@@ -61,6 +62,7 @@ namespace eActForm.Controllers
                     string actId = Guid.NewGuid().ToString();
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
+                    activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
 
                     //===mock data for first input====
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();

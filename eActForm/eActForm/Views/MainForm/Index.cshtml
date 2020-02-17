@@ -51,7 +51,7 @@
             @*=========END========for test====================*@
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
-            @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+                @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
             }
 
 
@@ -64,6 +64,7 @@
     @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
     @Html.HiddenFor(x => x.activityFormTBMMKT.master_type_form_id, new { @id = "hdmaster_type_form_id" })
     @Html.HiddenFor(x => x.activityFormModel.activityNo, new { @id = "hdactivityNo" })
+    @Html.HiddenFor(x => x.activityFormTBMMKT.formCompanyId, new { @id = "hdformCompanyId" })
 }
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
     <tr>
@@ -77,7 +78,7 @@
 </div>
 
 <div style="margin-left:25px;" class="text-center">
-    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+    <a href="@Url.Action("index", "Home", new { typeForm = @Model.activityFormModel.typeForm }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
     @if (Model.activityFormModel.mode == "new" || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5 || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM))
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>

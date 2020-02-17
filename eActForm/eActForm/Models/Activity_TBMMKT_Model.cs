@@ -71,6 +71,7 @@ namespace eActForm.Models
         public string labelFor { get; set; }
         public string labelBrand { get; set; }
         public string labelChannelRegion { get; set; }
+        public string formCompanyId { get; set; }
     }
 
     public class TB_Reg_Subject
