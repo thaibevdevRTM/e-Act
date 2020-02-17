@@ -48,16 +48,17 @@ namespace eActForm.Controllers
 			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
 			model = new Budget_Approve_Detail_Model.budgetForms();
 
+			string companyEN = Session["var_companyEN"].ToString();
+			string startDate = Request.Form["startDate"];
+			string endDate = Request.Form["endDate"];
+
 			if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
 			{
-				model.budgetFormLists = getBudgetListsByEmpId(null, null);
+				model.budgetFormLists = getBudgetListsByEmpId(null, companyEN,startDate, endDate);
 			}
 			else
 			{
-				string companyEN = "MT";
-				if (UtilsAppCode.Session.User.empCompanyId == "5601") { companyEN = "OMT"; } ;
-
-				model.budgetFormLists = getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN);
+				model.budgetFormLists = getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN, startDate, endDate);
 			}
 
 			if (Request.Form["txtActivityNo"] != "")
@@ -86,10 +87,21 @@ namespace eActForm.Controllers
 		}
 
 		
-		public ActionResult myDocBudget(string companyEN) 
+		public ActionResult myDocBudget() 
 		{
 			Budget_Approve_Detail_Model.budgetForms model = new Budget_Approve_Detail_Model.budgetForms();
 			model = new Budget_Approve_Detail_Model.budgetForms();
+
+			string companyEN = Session["var_companyEN"].ToString();
+			string startDate = Request.Form["startDate"];
+			string endDate = Request.Form["endDate"];
+
+			if (startDate == null)
+			{
+				startDate = DateTime.Now.AddDays(-30).ToString("MM/dd/yyyy");
+				endDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+			}
 
 			if (TempData["SearchDataModelBudget"] != null)
 			{
@@ -99,22 +111,27 @@ namespace eActForm.Controllers
 			{
 				if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
 				{
-					model.budgetFormLists = getBudgetListsByEmpId(null, companyEN);
-				} else {
-					model.budgetFormLists = getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN);
+					model.budgetFormLists = getBudgetListsByEmpId(null, companyEN, startDate, endDate);
+				}
+				else
+				{
+					model.budgetFormLists = getBudgetListsByEmpId(UtilsAppCode.Session.User.empId, companyEN, startDate, endDate);
 				}
 			}
 			return PartialView(model);
+			//return PartialView();
 		}
 
-		public static List<Budget_Approve_Detail_Model.budgetForm> getBudgetListsByEmpId(string empId , string companyEN)
+		public static List<Budget_Approve_Detail_Model.budgetForm> getBudgetListsByEmpId(string empId , string companyEN , string createdDateStart , string createdDateEnd)
 		{
 			try
 			{
 				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFormByEmpId"
 					, new SqlParameter[] {
 					new SqlParameter("@empId", empId),
-					new SqlParameter("@companyEN", companyEN)
+					new SqlParameter("@companyEN", companyEN),
+					new SqlParameter("@createdDateStart", createdDateStart),
+					new SqlParameter("@createdDateEnd", createdDateEnd)
 					});
 				var lists = (from DataRow dr in ds.Tables[0].Rows
 							 select new Budget_Approve_Detail_Model.budgetForm()

@@ -59,6 +59,8 @@ namespace eActForm.BusinessLayer
                     emailCC = (string.Join(",", lists.Select(x => x.empEmail.ToString()).ToArray()));
                 }
 
+
+
                 return emailCC;
             }
             catch (Exception ex)

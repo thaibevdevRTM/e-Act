@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using static eActForm.Models.TB_Act_Customers_Model;
-using static eActForm.Models.TB_Act_Product_Cate_Model;
 using static eActForm.Models.TB_Act_Product_Model;
 
 namespace eActForm.Models
@@ -12,7 +11,7 @@ namespace eActForm.Models
     public class Activity_Model
     {
 
-        public List<Product_Cate_Model> productcatelist { get; set; }
+        public List<TB_Act_ProductCate_Model> productcatelist { get; set; }
         public List<TB_Act_ProductGroup_Model> productGroupList { get; set; }
         public List<TB_Act_ProductBrand_Model> productBrandList { get; set; }
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
@@ -34,7 +33,7 @@ namespace eActForm.Models
            // productcostdetaillist = new List<Productcostdetail>();
             costthemedetail = new List<CostThemeDetail>();
             productlist = new List<Product_Model>();
-            productcatelist = new List<Product_Cate_Model>();
+            productcatelist = new List<TB_Act_ProductCate_Model>();
             customerslist = new List<Customers_Model>();
             otherlist = new List<TB_Act_Other_Model>();
             productGroupList = new List<TB_Act_ProductGroup_Model>();
@@ -100,7 +99,7 @@ namespace eActForm.Models
             public string createByUserName { get; set; }
             public string regionId { get; set; }
             public string brandId { get; set; }
-            
+            public string master_type_form_id { get; set; }
         }
 
     }
@@ -179,6 +178,7 @@ namespace eActForm.Models
         public Boolean chkAddIO { get; set; }
         public string actIO { get; set; }
         public string actClaim { get; set; }
+        public string master_type_form_id { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel

@@ -22,8 +22,9 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserAdminByCompanyId"
-                    , new SqlParameter[] { new SqlParameter("@companyId", UtilsAppCode.Session.User.empCompanyId) });
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserAdminByActId"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId )});
                 string actNo = QueryGetActivityById.getActivityById(actFormId)[0].activityNo;
                 string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId);
                 string strBody = string.Format(ConfigurationManager.AppSettings["emailRequestCancelBody"], actNo
@@ -311,22 +312,28 @@ namespace eActForm.BusinessLayer
 
         private static void sendEmailActForm(string actFormId, string mailTo, string mailCC, string strSubject, string strBody, AppCode.ApproveType emailType)
         {
+            //================fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
+            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();           
+            //=====END===========fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
+
             List<Attachment> files = new List<Attachment>();
-            string[] pathFile = new string[10];
-            mailCC = mailCC != "" ? "," + mailCC : "";
+            string[] pathFile = new string[10];           
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
-            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;
+            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail
 
             switch (emailType)
             {
                 case AppCode.ApproveType.Activity_Form:
                     pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], actFormId));
+                    activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault();
                     break;
                 case AppCode.ApproveType.Report_Detail:
                     pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], actFormId));
+
                     break;
                 case AppCode.ApproveType.Report_Summary:
                     pathFile[0] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], actFormId));
+
                     break;
             }
 
@@ -355,21 +362,29 @@ namespace eActForm.BusinessLayer
                     {
                         if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
                         {
-                            pathFile[i] = HostingEnvironment.MapPath(item._fileName);
+                            pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], item._fileName));
                         }
                     }
                     i++;
                 }
             }
 
+            var i_loop_change_name = 0;
             foreach (var item in pathFile)
             {
                 if (System.IO.File.Exists(item))
                 {
-                    files.Add(new Attachment(item));
+                    //files.Add(new Attachment(item));// ของเดิมก่อนทำเปลี่ยนชื่อไฟล์ 20191213
+                    Attachment attachment;
+                    attachment = new Attachment(item);
+                    if(i_loop_change_name==0 && emailType==AppCode.ApproveType.Activity_Form)
+                    {
+                        attachment.Name = replaceWordDangerForNameFile(activityFormTBMMKT.activityNo) + ".pdf";
+                    }
+                    files.Add(attachment);
+                    i_loop_change_name++;
                 }
             }
-
 
             sendEmail(mailTo
                     , mailCC
@@ -378,7 +393,10 @@ namespace eActForm.BusinessLayer
                     , files);
         }
 
-
+        public static string replaceWordDangerForNameFile(string txt)
+        {
+            return txt.Replace("/", "_").Replace(" ", "_").Replace(@"\", "_");
+        }
 
 
 
@@ -386,6 +404,20 @@ namespace eActForm.BusinessLayer
         {
             try
             {
+                //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
+                Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+                activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
+                var emailTypeTxt = "";
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4")
+                {
+                    emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+                }
+                else
+                {
+                    emailTypeTxt = emailType.ToString().Replace("_", " ");
+                }
+                //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
+
                 string strBody = "";
                 switch (emailType)
                 {
@@ -394,7 +426,7 @@ namespace eActForm.BusinessLayer
                         strBody = string.Format(ConfigurationManager.AppSettings["emailApproveBody"]
                             , item.empPrefix + " " + item.empName //เรียน
                             , AppCode.ApproveStatus.รออนุมัติ.ToString()
-                            , emailType.ToString().Replace("_", " ")
+                            , emailTypeTxt
                             , item.activityName
                             , item.activitySales
                             , item.activityNo

@@ -1,0 +1,138 @@
+﻿@model eActForm.Models.ManagementFlow_Model
+
+
+<div class="row form-group">
+
+    <div id="divSubject" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Subject</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlSubject" })
+        </div>
+    </div>
+    <div id="divCus" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Customer</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.customerList, new SelectList(Model.customerList, "id", "cusNameTH"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCustomer" })
+        </div>
+    </div>
+    <div id="divLimit" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Limit</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlLimit" })
+        </div>
+    </div>
+    <div id="divProductType" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>ProductType</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.productTypeList, new SelectList(Model.productTypeList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlProductType" })
+        </div>
+    </div>
+    <div id="divCate" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Cate</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.cateList, new SelectList(Model.cateList, "id", "cateName"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCate" })
+        </div>
+    </div>
+
+    <div id="divBrand" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Brand</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlBrand" })
+        </div>
+    </div>
+    <div id="divChanel" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Chanel</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.chanelList, new SelectList(Model.chanelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlChanelGroup" })
+        </div>
+    </div>
+
+</div>
+
+<div class="row form-group" style="text-align:center;">
+    <p class="d-flex justify-content-center">
+        <button type="button" class="btn btn-default btn-clear-canvas" onclick="callClear();">
+            <i class="fa fa fa-recycle fa-fw"></i>&nbsp;Clear
+        </button>
+        <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+    </p>
+</div>
+
+<hr />
+<div class="col-md-12">
+    <div id="divApprove" class="col-md-12">
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    function callClear() {
+         var url = '@Url.Action("Index", "ManagementFlow")';
+         window.location.href = url;
+    }
+
+    function submitPreview() {
+         $.ajax({
+            type: 'POST',
+            url: '@Url.Action("genDataApproveList", "ManagementFlow")',
+             data: {
+                 companyId: $("#ddlCompany").val(),
+                 subjectId: $("#ddlSubject").val(),
+                 customerId: $("#ddlCustomer").val(),
+                 flowLimitId: $("#ddlLimit").val(),
+                 productCatId: $("#ddlCate").val(),
+                 channelId: $("#ddlChanelGroup").val(),
+                 productBrandId: $("#ddlBrand").val(),
+                 productTypeId: $("#ddlProductType").val(),
+             }
+        }).done(function (htmlResponse) {
+            $("#divApprove").html(htmlResponse);
+        });
+    }
+
+    $('#ddlSubject').change(function () {
+        if ($("#ddlSubject").val() == '@System.Configuration.ConfigurationManager.AppSettings["subjectActivityFormId"]' || $("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_TBM"]') {
+            document.getElementById("divProductType").style.display = "none";
+        }
+        else {
+            document.getElementById("divProductType").style.display = "block";
+        }
+
+        $.ajax({
+            url: '@Url.Action("getLimitBySubject", "ManagementFlow")',
+            data: {
+                subjectId: $("#ddlSubject").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+             success: function (response) {
+                 if (response.Data.length > 0) {
+                     $("#ddlLimit option[value !='']").remove();
+                    $.each(response.Data, function () {
+                        $("#ddlLimit").append($("<option></option>").val(this['id']).html(this['displayVal']));
+                    });
+                     document.getElementById("ddlLimit").disabled = false;
+                }
+                else {
+                     document.getElementById("ddlLimit").disabled = true;
+                }
+            }
+        });
+    });
+  
+</script>

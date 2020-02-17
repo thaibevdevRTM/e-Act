@@ -1,8 +1,22 @@
 ﻿
-<object data="@Url.Action("getPDF", "ActivityViewer", new { embedded=true,actId = ViewBag.actId,type=ViewBag.type })" type="application/pdf" style="width:100%;min-height:350px;"></object>
-<div class="row">
-    <div class="col-md-12">
-        <p class="text-success pull-right">Click <a href="@Url.Action("getPDF", "ActivityViewer", new { actId = ViewBag.actId,type=ViewBag.type })" target="_blank" class="btn btn-info"><i class="fa fa fa-search fa-fw"></i>&nbsp;</a>to view the file.</p>
-
+<div class="row" id="div_ltDocPdf" style="text-align: center;">
+    <div class="col-md-12" style="width:100%;">
+        <object data="@Url.Action("getPDF", "ActivityViewer", new { actId = ViewBag.actId, type = ViewBag.type })" type="application/pdf" style="width:100%;min-height:350px;"></object>
     </div>
 </div>
+<div class="row" id="divMobile" style="text-align: center;">
+    <div class="col-md-12" style="width:100%;">
+        <p class="text-success"><a href="@Url.Action("getPDF", "ActivityViewer", new { actId = ViewBag.actId, type = ViewBag.type })" target="_blank" class="btn btn-primary active"><i class="fa fa fa-folder-open fa-fw"></i>&nbsp;ดูหนังสืออนุมัติ</a></p>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.getElementById('div_ltDocPdf').style.display = "none";
+        }
+        else {
+            document.getElementById('divMobile').style.display = "none";
+        }
+    });
+</script>

@@ -66,6 +66,7 @@ namespace eActForm.Models
 
 			public string invoiceId { get; set; }
 			public string invoiceNo { get; set; }
+			public string invoiceCustomerId { get; set; }
 
 			[DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
 			public decimal invoiceTotalBath { get; set; }

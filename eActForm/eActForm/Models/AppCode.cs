@@ -97,6 +97,7 @@ namespace eActForm.Models
                 using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
                 {
                     pdfDoc.Open();
+                    //pdfDoc = new Document(PageSize.A4, 25, 25, 10, 10);
                     using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
                     {
 
