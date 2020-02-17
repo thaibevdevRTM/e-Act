@@ -82,7 +82,7 @@ namespace eActForm.Controllers
 				}
 				else
 				{
-					models.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", null, null, null, typeForm, DateTime.Now.AddDays(-90).ToString("MM/dd/yyyy"), DateTime.Now.ToString("MM/dd/yyyy"), null).ToList();
+					models.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivity("3", null, null, null, typeForm, DateTime.Now.AddDays(-30).ToString("MM/dd/yyyy"), DateTime.Now.ToString("MM/dd/yyyy"), null).ToList();
 				}
 				TempData["searchBudgetActivityForm"] = null;
 				return PartialView(models);
@@ -98,18 +98,21 @@ namespace eActForm.Controllers
 		{
 			 Session["activityId"]= activityId;
 			string var_actNo = "";
+			string var_cusId = "";
 
 			Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
 			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId,null);
 			Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null,null, null, null, null).FirstOrDefault();
 
 			var_actNo = Budget_Model.Budget_Activity.act_activityNo;
-			Budget_Model.Budget_Invoice_list = ImageAppCodeBudget.getImageBudget(null,null,null, var_actNo,null,null,null);
+			var_cusId = Budget_Model.Budget_Activity.act_customerId;
+
+			Budget_Model.Budget_Invoice_list = ImageAppCodeBudget.getImageBudget(null,null,null, var_actNo,null,null, var_cusId);
 
 			List<TB_Bud_Image_Model.BudImageModel> Result = new List<TB_Bud_Image_Model.BudImageModel>();
-			foreach (var inv_his in Budget_Model.Budget_Invoce_History_list)
+			foreach (var inv_his in Budget_Model.Budget_Invoce_History_list) // preview invoice pdf non approved
 			{
-				if (inv_his.invoiceApproveStatusId == 1 || inv_his.invoiceApproveStatusId == 2) // draft or wait
+				if (inv_his.invoiceApproveStatusId == 1 || inv_his.invoiceApproveStatusId == 2 ) // draft or wait
 				{
 					Result.Add(Budget_Model.Budget_Invoice_list.Find(x => (x.invoiceNo == inv_his.invoiceNo )));
 				}

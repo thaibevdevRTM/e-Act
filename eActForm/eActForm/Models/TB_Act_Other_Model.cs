@@ -5,7 +5,7 @@ using System.Web;
 
 namespace eActForm.Models
 {
-    public class TB_Act_Other_Model
+    public class TB_Act_Other_Model : ActBaseModel
     {
         public string id { get; set; }
         public string type { get; set; }
@@ -15,12 +15,6 @@ namespace eActForm.Models
         public string val1 { get; set; }
         public string val2 { get; set; }
         public string sort { get; set; }
-        public string delFlag { get; set; }
-        public DateTime createdDate { get; set; }
-        public string createdByUserId { get; set; }
-        public DateTime updatedDate { get; set; }
-        public string updatedByUserId { get; set; }
-
 
     }
 }

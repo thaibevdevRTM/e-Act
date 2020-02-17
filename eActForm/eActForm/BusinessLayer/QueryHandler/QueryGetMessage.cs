@@ -29,7 +29,7 @@ namespace eActForm.BusinessLayer
                                  val1 = d["val1"].ToString(),
                                  val2 = d["val2"].ToString(),
                                  sort = d["sort"].ToString(),
-                                 delFlag = d["delFlag"].ToString(),
+                                 delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),
                                  updatedDate = DateTime.Parse(d["updatedDate"].ToString()),

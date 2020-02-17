@@ -1,5 +1,5 @@
 ﻿@model eActForm.Models.AdminUserModel
-@using eActForm.BusinessLayer
+@using System.Configuration;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -30,37 +30,58 @@
             </div>
             <div class="col-md-4">
 
-                <select class="form-control" id="ddlCompany" name="ddlCompany" required>
-                    <option value="">-Selected-</option>
-                    <option value="5600">MTM</option>
-                    <option value="5601">OMT</option>
-                    <option value="3030">TBM</option>
-                </select>
+                @Html.DropDownList("model.companyList", new SelectList(Model.getCompany, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany", onchange = "onchangeCompany();" })
+
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-2 control-label">
-                Customer :
-            </div>
-            <div class="col-md-4">
-                <input type="text" class="form-control" id="txtCustomer" name="txtCustomer" />
-                <input type="hidden" class="form-control" id="txtCustomerIds" name="txtCustomerIds" />
-            </div>
-        </div>
-        <div class="row">
+        <div id="divCustomer">
             <div class="form-group">
                 <div class="col-md-2 control-label">
+                    Customer :
                 </div>
-                <div class="col-md-10">
-                    <div id="divCustLists">
-
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="txtCustomer" name="txtCustomer" />
+                    <input type="hidden" class="form-control" id="txtCustomerIds" name="txtCustomerIds" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2 control-label">
                     </div>
-                </div>
+                    <div class="col-md-10">
+                        <div id="divCustLists">
 
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 
+        <div id="divRegion">
+            <div class="form-group">
+                <div class="col-md-2 control-label">
+                    Region :
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="txtRegion" name="txtRegion" />
+                    <input type="hidden" class="form-control" id="txtRegions" name="txtRegions" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2 control-label">
+                    </div>
+                    <div class="col-md-10">
+                        <div id="divRegionLists">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-2 control-label">
@@ -167,11 +188,28 @@
 
 <script type="text/javascript">
     var index = 0;
+
+    function onchangeCompany() {
+        if ($("#ddlCompany").val() == '@ConfigurationManager.AppSettings["companyId_OMT"]') {
+            document.getElementById("divRegion").style.display = "block";
+            document.getElementById("divCustomer").style.display = "none";
+
+        }
+        else if ($("#ddlCompany").val() == '@ConfigurationManager.AppSettings["companyId_MT"]') {
+            document.getElementById("divRegion").style.display = "none";
+            document.getElementById("divCustomer").style.display = "block";
+        }
+        else {
+            document.getElementById("divRegion").style.display = "none";
+            document.getElementById("divCustomer").style.display = "none";
+        }
+    }
+
     function validateForm() {
-       var favorite = [];
-            $.each($("input[name='model.chkProductType']:checked"), function(){
-                favorite.push($(this).val());
-            });
+        var favorite = [];
+        $.each($("input[name='model.chkProductType']:checked"), function () {
+            favorite.push($(this).val());
+        });
 
 
         if (favorite.length > 0 && $("#ddlCompany").val() != "") {
@@ -182,7 +220,13 @@
             return false;
         }
     }
-        $(document).ready(function () {
+    $(document).ready(function () {
+
+        
+        
+
+        document.getElementById("divRegion").style.display = "none";
+
             $('#datatable').DataTable({
                 "dom": 'lCfrtip',
                 "order": [],
@@ -221,6 +265,7 @@
                     results: function (resultsCount) {
                     }
                 }, select: function (event, ui) {
+
                     $("#txtCustomerIds").val($("#txtCustomerIds").val() + "," + ui.item.id);
                     $("#divCustLists").append("<div id='" + ui.item.id + "' ><span class='pull-left close' onclick=javascript:onclickDelCusList('" + ui.item.id + "');>x</span><input type='hidden' name='model.custLi' value='" + ui.item.id + "'/>" + ui.item.label + " <br/></div>");
                     index++;
@@ -228,6 +273,39 @@
             }).focus(function () {
                 $(this).data("uiAutocomplete").search($(this).val());
             });
+
+
+
+            $("#txtRegion").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("getAllRegion", "eAct")',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            txtRegion: $("#txtRegion").val(),
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.descTh, value: item.descTh, id: item.id };
+                            }))
+                        }
+                    })
+                },
+                minLength: 0,
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) {
+                    }
+                }, select: function (event, ui) {
+                    $("#txtRegionIds").val($("#txtRegionIds").val() + "," + ui.item.id);
+                    $("#divRegionLists").append("<div id='" + ui.item.id + "' ><span class='pull-left close' onclick=javascript:onclickDelCusList('" + ui.item.id + "');>x</span><input type='hidden' name='model.regionList' value='" + ui.item.id + "'/>" + ui.item.label + " <br/></div>");
+                    index++;
+                }
+            }).focus(function () {
+                $(this).data("uiAutocomplete").search($(this).val());
+            });
+
         });
 
 
@@ -235,63 +313,72 @@
             document.getElementById(id).remove();
         }
 
-        function onClickEdit(empId) {
+    function onClickEdit(empId) {
 
-            $("#divCustLists").html("");
-            $.ajax({
-                url: '@Url.Action("getUserRoleByEmpId", "AdminUser")',
-                data: {
-                    empId: empId,
-                },
-                dataType: "json",
-                type: 'POST',
-                success: function (response) {
-                    $("#ddlCompany").val(response.Data.companyId);
-                    $("#txtEmpCode").val(response.Data.empId);
-                    if (response.Data.customerLists.length > 0) {
+        $("#divCustLists").html("");
+        $.ajax({
+            url: '@Url.Action("getUserRoleByEmpId", "AdminUser")',
+            data: {
+                empId: empId,
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                $("#ddlCompany").val(response.Data.companyId);
+                onchangeCompany();
 
-                        $.each(response.Data.customerLists, function () {
 
-                            $("#divCustLists").append("<div id='" + this['cusId'] +"'> <span class='pull-left close' onclick=javascript:onclickDelCusList('" + this['cusId'] + "');>x</span><input type='hidden' name='model.custLi' value='" + this['cusId'] + "'/>" + this['customerName'] + " <br/></div>");
+                $("#txtEmpCode").val(response.Data.empId);
 
-                            $.each(response.Data.productTypeList, function () {
-                                switch (this['productTypeId']) {
-                                    case '1D1097F4-246F-4DC2-BB69-B7BB6E678299':
-                                        document.getElementById("chkNonAl").checked = true;
-                                        break;
-                                    case 'FC696EB5-B058-445E-B605-977C5067AEBA':
-                                        document.getElementById("chkAl").checked = true;
-                                        break;
-                                }
-                            });
-                        });
-                    }
-
-                    $.each(response.Data.userLists, function () {
-                        switch (this['roleId']) {
-                            case '1':
-                                document.getElementById("creater").checked = true;
-                                break;
-                            case '2':
-                                document.getElementById("approve").checked = true;
-                                break;
-                            case '3':
-                                document.getElementById("admin").checked = true;
-                                break;
-                            case '4':
-                                document.getElementById("superAdmin").checked = true;
-                                break;
-                            case '5':
-                                document.getElementById("adminOMT").checked = true;
-                                break;
-                            case '6':
-                                document.getElementById("adminTBM").checked = true;
-                                break;
-                        }
+                if (response.Data.regionList.length > 0) {
+                    $.each(response.Data.regionList, function () {
+                        $("#divRegionLists").append("<div id='" + this['Id'] + "'> <span class='pull-left close' onclick=javascript:onclickDelCusList('" + this['Id'] + "');>x</span><input type='hidden' name='model.regionList' value='" + this['Id'] + "'/>" + this['descTh'] + " <br/></div>");
                     });
                 }
-            });
-        }
+
+
+                if (response.Data.customerLists.length > 0) {
+                    $.each(response.Data.customerLists, function () {
+                        $("#divCustLists").append("<div id='" + this['cusId'] + "'> <span class='pull-left close' onclick=javascript:onclickDelCusList('" + this['cusId'] + "');>x</span><input type='hidden' name='model.custLi' value='" + this['cusId'] + "'/>" + this['customerName'] + " <br/></div>");
+                    });
+                }
+
+                $.each(response.Data.productTypeList, function () {
+                    switch (this['productTypeId']) {
+                        case '1D1097F4-246F-4DC2-BB69-B7BB6E678299':
+                            document.getElementById("chkNonAl").checked = true;
+                            break;
+                        case 'FC696EB5-B058-445E-B605-977C5067AEBA':
+                            document.getElementById("chkAl").checked = true;
+                            break;
+                    }
+                });
+
+                $.each(response.Data.userLists, function () {
+                    switch (this['roleId']) {
+                        case '1':
+                            document.getElementById("creater").checked = true;
+                            break;
+                        case '2':
+                            document.getElementById("approve").checked = true;
+                            break;
+                        case '3':
+                            document.getElementById("admin").checked = true;
+                            break;
+                        case '4':
+                            document.getElementById("superAdmin").checked = true;
+                            break;
+                        case '5':
+                            document.getElementById("adminOMT").checked = true;
+                            break;
+                        case '6':
+                            document.getElementById("adminTBM").checked = true;
+                            break;
+                    }
+                });
+            }
+        });
+    }
 
 
     function onClickDel(empId) {

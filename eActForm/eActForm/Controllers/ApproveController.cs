@@ -29,6 +29,7 @@ namespace eActForm.Controllers
                 }
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
                 models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app).Where(x => x.id == "3" || x.id == "5").ToList();
+                models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
 
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
                 if (getActList.Any())
@@ -109,6 +110,11 @@ namespace eActForm.Controllers
                 models = ApproveAppCode.getApproveByActFormId(actId);
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
                 models.approveFlowDetail = flowModel.flowDetail;
+                //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
+                Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+                models.activity_TBMMKT_Model= ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
+                //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
+
             }
             catch (Exception ex)
             {
@@ -118,10 +124,8 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-        public ActionResult previewApprove(string actId, string typeForm)
+        public ActionResult previewApprove(string actId)
         {
-
-
             Activity_Model activityModel = new Activity_Model();
             try
             {
@@ -129,7 +133,7 @@ namespace eActForm.Controllers
                 activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(actId);
                 activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(actId);
                 activityModel.productImageList = ImageAppCode.GetImage(actId).Where(x => x.extension != ".pdf").ToList();
-                activityModel.activityFormModel.typeForm = typeForm;
+                activityModel.activityFormModel.typeForm = BaseAppCodes.getactivityTypeByCompanyId(activityModel.activityFormModel.companyId);
             }
             catch (Exception ex)
             {

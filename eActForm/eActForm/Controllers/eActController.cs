@@ -295,6 +295,22 @@ namespace eActForm.Controllers
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getAllRegion(string txtRegion)
+        {
+
+            List<TB_Act_Region_Model> regionList = new List<TB_Act_Region_Model>();
+            try
+            {
+                regionList = QueryGetAllRegion.getAllRegion().Where(x => x.descTh.Contains(txtRegion)).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
+            }
+            return Json(regionList, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

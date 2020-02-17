@@ -160,14 +160,52 @@
                                         id = "ddlSubject"
                                     })
                                 </div>
+                                <script>
+                    $('#ddlChannel').change(function () {
+                        bindDropdownSubject()
+                    });
+                    $('#ddlBrand').change(function () {
+                        bindDropdownSubject()
+                    });
+                    function bindDropdownSubject() {
+                        var valDropdown = '';
+                        if ($('#ddlChannelOrBrand').val() == "Channel") {
+                            valDropdown = $('#ddlChannel').val();
+                        } else {
+                            valDropdown = $('#ddlBrand').val();
+                        }
+                        var dataToBeSend = {
+                            idBrandOrChannel: valDropdown
+                            , master_type_form_id: "@Model.activityFormTBMMKT.master_type_form_id"
+                            , companyId: "@UtilsAppCode.Session.User.empCompanyId"
+                        };
 
+                        var ddlSubject = $("#ddlSubject");
+                        $.ajax('@Url.Action("GetDataSubjectByChanelOrBrand", "GetDataMainForm")',
+                            {
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(dataToBeSend),
+                                dataType: 'json',
+                                type: "POST",
+                                success: function (response) {
+                                    if (response.Data.tB_Reg_Subject.length > 0) {
+                                        $("#ddlSubject option[value !='']").remove();
+                                        $.each(response.Data.tB_Reg_Subject, function () {
+                                            ddlSubject.append($("<option></option>").val(this['id']).html(this['nameTH']));
+                                        });
+                                    }
+                                    else {
+
+                                    }
+                                },
+                                error: function (data) {
+                                    alert("Error Get Subject.");
+                                }
+                            });
+                    }
+                                </script>
                             </div>
                             <label class="control-label col-md-1 col-xs-12"></label>
-
-                            @*}*@
-
-                            @*<div style="height:15px;"></div>
-                                </div>*@
 
                         </div>
                     </div>
@@ -245,7 +283,7 @@
     @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
     @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
     @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
-
+    @Html.HiddenFor(x => x.activityFormTBMMKT.master_type_form_id, new { @id = "hdmaster_type_form_id" })
 
     <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px; margin-left:20px;">
         <div class="form-group">
@@ -328,7 +366,7 @@
         if ($("#txtactivityTel").val() == "") { required += "เบอร์โทรศัพท์*<br>"; validate = false; }
         if ($("#txtactivityProduct").val() == "") { required += "สินค้า*<br>"; validate = false; }
         if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
-        if ($("#txtEO").val() == "") { required += "EO*<br>"; validate = false; }        
+        if ($("#txtEO").val() == "") { required += "EO*<br>"; validate = false; }
         if ($("#txtdateActivitySt").val() == "") { required += "วันที่เริ่มกิจกรรม*<br>"; validate = false; }
         if ($("#txtactivityPeriodEnd").val() == "") { required += "วันที่สิ้นสุดกิจกรรม*<br>"; validate = false; }
         if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }

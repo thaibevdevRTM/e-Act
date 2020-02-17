@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Configuration;
+using System.Globalization;
+
 namespace eActForm.BusinessLayer.Appcodes
 {
     public class BaseAppCodes
@@ -66,6 +68,35 @@ namespace eActForm.BusinessLayer.Appcodes
             }
         }
 
+        public static string getactivityTypeByCompanyId(string comId)
+        {
+            try
+            {
+
+                if (comId == ConfigurationManager.AppSettings["companyId_MT"].ToString())
+                {
+                    return Activity_Model.activityType.MT.ToString();
+                }
+                else if (comId == ConfigurationManager.AppSettings["companyId_OMT"].ToString())
+                {
+                    return Activity_Model.activityType.OMT.ToString();
+                }
+                else if (comId == ConfigurationManager.AppSettings["companyId_TBM"].ToString())
+                {
+                    return Activity_Model.activityType.TBM.ToString();
+                }
+                else
+                {
+                    return Activity_Model.activityType.MT.ToString();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public static bool ValidateExtension(string extension)
         {
             extension = extension.ToLower();
@@ -82,6 +113,11 @@ namespace eActForm.BusinessLayer.Appcodes
                 default:
                     return false;
             }
+        }
+
+        public static DateTime converStrToDate(string p_date)
+        {
+            return DateTime.ParseExact(p_date, "dd-MM-yyyy", CultureInfo.InvariantCulture);
         }
 
     }

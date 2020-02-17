@@ -1,9 +1,6 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace eActForm.Controllers
@@ -22,7 +19,7 @@ namespace eActForm.Controllers
             activityModel.customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList();
             activityModel.productlist = QueryGetAllProduct.getAllProduct("");
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate()
-                .Select(group => new TB_Act_Product_Cate_Model.Product_Cate_Model
+                .Select(group => new TB_Act_ProductCate_Model
                 {
                     cateName = group.cateName,   
                 }).ToList();
