@@ -18,6 +18,8 @@
 <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
 <script src="~/Scripts/locales/bootstrap-datetimepicker.fr.js"></script>
 <script src="~/Scripts/locales/bootstrap-datetimepicker.th.js"></script>
+
+
 <style>
     .cssTableTDTextCenter {
         max-width: none;
@@ -79,7 +81,10 @@
 
 <div style="margin-left:25px;" class="text-center">
     <a href="@Url.Action("index", "Home", new { typeForm = @Model.activityFormModel.typeForm }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-    @if (Model.activityFormModel.mode == "new" || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5 || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM))
+    @if (Model.activityFormModel.mode == "new"
+        || Model.activityFormTBMMKT.statusId == 1
+        || Model.activityFormTBMMKT.statusId == 5
+        || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)))
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
     }
@@ -136,10 +141,11 @@
             if ($("#txtdateActivitySt").val() == "") { required += "ต้องการเช็ควันที่*<br>"; validate = false; }
             if ($("#txtactivityPeriodEnd").val() == "") { required += "เคลียร์เงินทดรองในวันที่*<br>"; validate = false; }
             if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
-        } else if ('@Model.activityFormTBMMKT.master_type_form_id'=='294146B1-A6E5-44A7-B484-17794FA368EB')
+        } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '294146B1-A6E5-44A7-B484-17794FA368EB' || '@Model.activityFormTBMMKT.master_type_form_id' =='B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90')
         {
 
             //Travelling form TBM
+            if ($("#txtdateDoc2").val() == "") { required += "&emsp;Document Date*<br>"; validate = false; }
             if ($("#ddlEmp_0").val() == "") { required += "&emsp;ผู้ร่วมเดินทาง/The following persons to travel*<br>"; validate = false; }
 
             var validateCkb = false;

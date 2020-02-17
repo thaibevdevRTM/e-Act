@@ -41,7 +41,7 @@ namespace eActForm.Controllers
         }
         public ActionResult requestEmp(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp("3030").ToList();
+            activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp(activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId).ToList();
             if (activity_TBMMKT_Model.requestEmpModel.Count == 0)
             {
                 List<RequestEmpModel> RequestEmp = new List<RequestEmpModel>();

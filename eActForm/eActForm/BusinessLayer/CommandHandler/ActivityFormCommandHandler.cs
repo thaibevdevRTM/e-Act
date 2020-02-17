@@ -188,7 +188,8 @@ namespace eActForm.BusinessLayer
                 {
                     if (getActList.FirstOrDefault().activityNo.ToString() == "---")
                     {
-                        string getYear="";
+                        
+                        string getYear = "";
                         if (getActList.FirstOrDefault().activityPeriodSt != null)
                         {
                             getYear = getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9 ?
@@ -572,7 +573,6 @@ namespace eActForm.BusinessLayer
                 return new List<TB_Act_ActivityFormDocNo_Model>();
             }
         }
-
 
 
 
