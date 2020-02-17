@@ -161,6 +161,11 @@
                 required += "&emsp;ประมาณค่าใช้จ่าย/Estimate of travelling expenses*<br>"; validate = false;
             }*@
 
+        } else if ('@Model.activityFormTBMMKT.master_type_form_id' =='ECBA6180-359F-4A43-B97A-CB82CC949B75')
+        {
+            if ($("#ddlCompany").val() == "") { required += "บริษัท*<br>"; validate = false; }
+            if ($("#txtExMonth").val() == "") { required += "ประจำเดือน*<br>"; validate = false; }
+            
         }
         else {
 

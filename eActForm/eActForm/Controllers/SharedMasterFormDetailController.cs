@@ -78,6 +78,14 @@ namespace eActForm.Controllers
         {
             return PartialView(activity_TBMMKT_Model);
         }
+        public ActionResult exPerryListDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            return PartialView(activity_TBMMKT_Model);
+        }
+        public ActionResult exPerryEmpInfoDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            return PartialView(activity_TBMMKT_Model);
+        }
 
     }
 }

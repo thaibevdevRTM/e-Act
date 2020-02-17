@@ -8,12 +8,15 @@
 <div class="form-group" id="divExpenseCashEmpInfo">
     @*<div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;@Model.TB_Reg_RequestEmp.empName&nbsp;&nbsp;</div>
         <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
-    <div class="col-lg-3"><label>ข้าพเจ้า</label> &nbsp; @UtilsAppCode.Session.User.empFNameTH&nbsp;@UtilsAppCode.Session.User.empLNameTH  &nbsp;&nbsp;</div>
-    <div class="col-lg-3"><label>ตำแหน่ง </label>&nbsp; @UtilsAppCode.Session.User.empPositionTitleTH &nbsp; &nbsp;</div>
-    <div id="lblVehicleregis" class="col-lg-2"><label>ขับรถทะเบียน</label><input type="text" id="txtVehicleregis" name="txtVehicleregis" class="form-control textboxcss font10 textRight" /></div>
-    <div class="col-lg-4"><label>ขอเบิกค่าใช้จ่าย ตามรายละเอียดดังนี้</label></div>
+    <div class="col-lg-12">
+        <label>ข้าพเจ้า</label> &nbsp; @UtilsAppCode.Session.User.empFNameTH&nbsp;@UtilsAppCode.Session.User.empLNameTH &nbsp;&nbsp;
+        <label>ตำแหน่ง </label>&nbsp; @UtilsAppCode.Session.User.empPositionTitleTH &nbsp; &nbsp;
+        <label id="lblVehicleregis">ขับรถทะเบียน<input type="text" width="5" id="txtVehicleregis" name="txtVehicleregis" class="textboxcss textRight" /></label>
+        <label>ขอเบิกค่าใช้จ่าย ตามรายละเอียดดังนี้</label>
+    </div>
 
 </div>
+
 
 
 <script type="text/javascript">
@@ -21,12 +24,14 @@
     document.getElementById("lblVehicleregis").style.display = "none";
     $("#ddlObjective").change(function () {
         if ($("#ddlObjective").val() == '01F28E2A-A4DE-4221-9869-5FA02719822E') {
-            document.getElementById("lblVehicleregis").style.display = "block";
+            $("#lblVehicleregis").show();
+            //document.getElementById("lblVehicleregis").style.display = "block";
             document.getElementById("divCertification").style.display = "none";
             document.getElementById("divCashBill").style.display = "block";
         }
         else {
-            document.getElementById("lblVehicleregis").style.display = "none";
+            $("#lblVehicleregis").hide();
+            //document.getElementById("lblVehicleregis").style.display = "none";
             document.getElementById("divCertification").style.display = "block";
             document.getElementById("divCashBill").style.display = "none";
         }
