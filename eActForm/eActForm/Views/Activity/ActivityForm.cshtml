@@ -573,7 +573,12 @@
 
     function onchangeCustomer() {
         ObjModel = {};
-         $("#txtchanel").val('');
+
+        console.log($("#ddlCustomer").val());
+        if ($("#ddlCustomer").val() == "B18BB124-0EFC-4D90-BFFD-D333A1F79E32" || $("#ddlCustomer").val() == "8AAD2C59-114E-4819-BA8F-1931EED00A66") {
+            getFormatCus();
+        }
+        $("#txtchanel").val('');
          $.ajax({
                 url: '@Url.Action("getChanel", "eAct")',
                 data: {
@@ -586,6 +591,40 @@
              }
          });
     }
+
+    function getFormatCus() {
+        $("#txtReference").autocomplete({
+            source: function (request, response) {
+                    $.ajax({
+                    url: '@Url.Action("getOtherMasterByType", "eAct")',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                        type: "formatCus",
+                        subType: $("#ddlCustomer").val(),
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.displayVal, value: item.val1, id: item.id };
+                            }))
+
+                        }
+                    })
+                },
+                minLength: 0,
+                messages: {
+                noResults: '',
+                    results: function (resultsCount) {
+                    }
+                }, select: function (event, ui) {
+                    $("#txtReference").val(ui.item.displayVal)
+                           }
+            }).focus(function () {
+                $(this).data("uiAutocomplete").search($(this).val());
+            });
+    }
+
+
 
     $("#ddlProductBrand").change(function () {
         fillProductOnChange();
