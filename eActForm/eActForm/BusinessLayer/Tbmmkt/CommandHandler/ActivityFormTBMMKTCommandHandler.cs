@@ -39,7 +39,7 @@ namespace eActForm.BusinessLayer
                     model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                     model.activityFormModel.updatedDate = DateTime.Now;
                     model.activityFormModel.delFlag = false;
-                    model.activityFormModel.companyId = UtilsAppCode.Session.User.empCompanyId;
+                    model.activityFormModel.companyId = model.activityFormTBMMKT.formCompanyId;
                     model.activityFormModel.remark = model.activityFormModel.remark;
                     model.activityFormModel.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
 
@@ -111,7 +111,7 @@ namespace eActForm.BusinessLayer
         public static int ProcessInsertTB_Act_ActivityForm_DetailOther(int rtn, Activity_TBMMKT_Model model, string activityId)
         {
             TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
-            if (model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+            if (model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB" || model.activityFormTBMMKT.master_type_form_id == "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
             {
                 model.tB_Act_ActivityForm_DetailOther = tB_Act_ActivityForm_DetailOther;
                 model.tB_Act_ActivityForm_DetailOther.activityProduct = "";

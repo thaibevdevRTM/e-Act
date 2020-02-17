@@ -6,7 +6,20 @@
 <script>
     function checkDelete(actId,statusId) {
         var msg = "";
-        if (statusId == "1" || (statusId == "6" && ("@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true" || "@UtilsAppCode.Session.User.isAdmin.ToString().ToLower()" == "true" || "@UtilsAppCode.Session.User.isSuperAdmin.ToString().ToLower()" == "true")) || (statusId == "5" && ("@UtilsAppCode.Session.User.empCompanyId"=="3030" || "@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true" || "@UtilsAppCode.Session.User.isAdmin.ToString().ToLower()" == "true" || "@UtilsAppCode.Session.User.isAdminTBM.ToString().ToLower()" == "true" || "@UtilsAppCode.Session.User.isSuperAdmin.ToString().ToLower()" == "true"))) {
+        if (statusId == "1"
+            ||
+            (statusId == "6" && ("@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true"
+                || "@UtilsAppCode.Session.User.isAdmin.ToString().ToLower()" == "true"
+                || "@UtilsAppCode.Session.User.isSuperAdmin.ToString().ToLower()" == "true"))
+            ||
+            (statusId == "5" && ("@UtilsAppCode.Session.User.empCompanyId" == "3030"
+                || "@UtilsAppCode.Session.User.empCompanyId" == "4800"
+                || "@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true"
+                || "@UtilsAppCode.Session.User.isAdmin.ToString().ToLower()" == "true"
+                || "@UtilsAppCode.Session.User.isAdminTBM.ToString().ToLower()" == "true"
+                || "@UtilsAppCode.Session.User.isAdminHCM.ToString().ToLower()" == "true"
+                || "@UtilsAppCode.Session.User.isSuperAdmin.ToString().ToLower()" == "true")))
+        {
             // can be delete
             msg = "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
         }
@@ -148,6 +161,10 @@
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
+                            else if (Model.typeForm == Activity_Model.activityType.HCM.ToString() && ( item.master_type_form_id == "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90"))
+                            {
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
                                 @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
@@ -183,7 +200,7 @@
                         <td>@{ date = item.createdDate == null ? "" : item.createdDate.Value.ToString("dd/MM/yyyy");} @date</td>
                         <td>@item.createByUserName</td>
                     </tr>
-                }
+                            }
             </tbody>
         </table>
 
@@ -231,7 +248,7 @@
                 genPdf(actId, statusId, htmlResponse);
             });
         }
-        else if (master_type_form_id == '8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4' || master_type_form_id == '294146B1-A6E5-44A7-B484-17794FA368EB' || master_type_form_id == '24BA9F57-586A-4A8E-B54C-00C23C41BFC5') {
+        else if (master_type_form_id == '8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4' || master_type_form_id == '294146B1-A6E5-44A7-B484-17794FA368EB' || master_type_form_id == '24BA9F57-586A-4A8E-B54C-00C23C41BFC5' || master_type_form_id == "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90") {
              $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Index", "MainReport")',

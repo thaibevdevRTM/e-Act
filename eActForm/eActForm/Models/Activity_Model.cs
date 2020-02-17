@@ -53,7 +53,9 @@ namespace eActForm.Models
         {
             OMT,
             MT,
-            TBM
+            TBM,
+            HCM,
+            OtherCompany
         }
 
 
@@ -183,6 +185,8 @@ namespace eActForm.Models
         public string benefit { get; set; }
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
+        public string formCompanyId { get; set; }
+
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel

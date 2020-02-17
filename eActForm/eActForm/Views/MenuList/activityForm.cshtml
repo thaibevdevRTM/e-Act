@@ -24,6 +24,11 @@
                 <li>@Html.ActionLink(" ใบเบิกผลิตภัณฑ์,POS/PREMIUM", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = "24BA9F57-586A-4A8E-B54C-00C23C41BFC5" }, null)</li>
                 <li>@Html.ActionLink(" Travelling Form TBM", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = "294146B1-A6E5-44A7-B484-17794FA368EB" }, null)</li>
             }
+            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] || UtilsAppCode.Session.User.isAdminHCM)
+            { 
+                <li>@Html.ActionLink(" Travelling Form Horeca", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90" }, null)</li>
+            }
+            
         </ul>
     </li>
 }

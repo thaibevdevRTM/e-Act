@@ -102,7 +102,7 @@ namespace eActForm.BusinessLayer
 
 
                 if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin ||
-                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
+                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM|| UtilsAppCode.Session.User.isAdminHCM )
                 {
                     strCall = "usp_getActivityFormAll";
                 }

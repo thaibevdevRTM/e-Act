@@ -408,7 +408,7 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 var emailTypeTxt = "";
                 string[] arrayFormStyleV1 = { "488F7C0D-8B59-4BDE-90E4-F157BFF67829", "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4"};
-                string[] arrayFormStyleV2 = { "24BA9F57-586A-4A8E-B54C-00C23C41BFC5", "294146B1-A6E5-44A7-B484-17794FA368EB" };
+                string[] arrayFormStyleV2 = { "24BA9F57-586A-4A8E-B54C-00C23C41BFC5", "294146B1-A6E5-44A7-B484-17794FA368EB", "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90" };
                 string[] arrayFormStyleV3 = { "24BA9F57-586A-4A8E-B54C-00C23C41BFC5" };
                 if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV2.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV3.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                 {

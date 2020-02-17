@@ -101,8 +101,8 @@
                         }).done(function (response) {
 
                             console.log(response);
-                            var url = '@Url.Action("Index", "Home", new { actId = "", typeForm = Activity_Model.activityType.TBM.ToString() }, null)';
-                                window.location.href = url;
+                            var url = '/Home?typeForm=' + response.Message;
+                            window.location.href = url;
 
 
                         });
@@ -112,14 +112,14 @@
             });
         }
 </script>
- @*//==========for test============*@
- @*<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>*@
- @*//===END=======for test============*@
+@*//==========for test============*@
+@*<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>*@
+@*//===END=======for test============*@
 <script>
-    //==========for production============
-    $("#btnExportPDF").click(function () {
-        $("input[name='gridHtml']").val($("#divForm").html());
-    });
+       //==========for production============
+       $("#btnExportPDF").click(function () {
+           $("input[name='gridHtml']").val($("#divForm").html());
+       });
     //==========for production============
 
     //==========for test============
