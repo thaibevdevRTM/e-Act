@@ -2032,6 +2032,7 @@
     <Content Include="images\icon_ref.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\logo-ss.png" />
+    <Content Include="images\LogoTD_Department.png" />
     <Content Include="images\logo_vision2020.png" />
     <Content Include="images\maintain.png" />
     <Content Include="images\non_al.jpeg" />
