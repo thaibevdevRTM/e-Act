@@ -110,6 +110,7 @@ namespace eActForm.BusinessLayer
                         costThemeDetail.IO = "56S0" + getYear + ActFormAppCode.getDigitGroup(item.activityTypeId) + ActFormAppCode.getDigitRunnigGroup(item.productId);
 
                         //costThemeDetail.IO = item.IO;
+                        costThemeDetail.mechanics = item.mechanics;
                         costThemeDetail.rowNo = insertIndex;
                         costThemeDetail.delFlag = item.delFlag;
                         costThemeDetail.isShowGroup = item.isShowGroup;
@@ -433,6 +434,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@perTotal",model.perTotal)
                     ,new SqlParameter("@isShowGroup",model.isShowGroup)
                     ,new SqlParameter("@rowNo",model.rowNo)
+                    ,new SqlParameter("@mechanics",model.mechanics)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
