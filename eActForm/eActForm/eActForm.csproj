@@ -2039,6 +2039,7 @@
     <Content Include="images\contact2.png" />
     <Content Include="images\contact3.png" />
     <Content Include="images\favicon.ico" />
+    <Content Include="images\horecaLogo.jpg" />
     <Content Include="images\icon_ref.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\logo-ss.png" />
@@ -2270,7 +2271,6 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Uploadfiles\logo-ss.png" />
     <Content Include="uploadImages\12f4c0ff-c7ab-4308-b185-d072c9f151c8_72777008-1A93-48E0-A420-357B10696E30.png" />
     <Content Include="uploadImages\19f467c5-4b1a-4f84-975c-a86a0694f462_63164D1C-469B-431F-8C5B-0EA2544DFEA1.png" />
     <Content Include="uploadImages\301b51cb-8e48-4ed9-9215-01be74d96c83_05F58F69-427D-4FC5-975F-6C062CC8947A.png" />
