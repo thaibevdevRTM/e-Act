@@ -4,7 +4,7 @@
 @model eActForm.Models.Activity_Model.actForms
 
 <script>
- 
+
     function checkBeforeDelete(actId, statusId) {
         chkInvoiceBeforeDel(actId, statusId);
     }
@@ -185,7 +185,11 @@
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
-                            else if (Model.typeForm == Activity_Model.activityType.HCM.ToString() && ( item.master_type_form_id == "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90"))
+                            else if (Model.typeForm == Activity_Model.activityType.HCM.ToString() && (item.master_type_form_id == "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90"))
+                            {
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
+                            else if (Model.typeForm == Activity_Model.activityType.HCM.ToString() && (item.master_type_form_id == "D3741442-EAD8-40F6-9A94-339DA65C0428"))
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
@@ -224,7 +228,7 @@
                         <td>@{ date = item.createdDate == null ? "" : item.createdDate.Value.ToString("dd/MM/yyyy");} @date</td>
                         <td>@item.createByUserName</td>
                     </tr>
-                            }
+                }
             </tbody>
         </table>
 
