@@ -2,10 +2,8 @@
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -45,18 +43,18 @@ namespace eActForm.Controllers
                 {
                     foreach (var item in model.chkProductType)
                     {
-                        if (model.companyList[0] == @ConfigurationManager.AppSettings["companyId_MT"] || 
+                        if (model.companyList[0] == @ConfigurationManager.AppSettings["companyId_MT"] ||
                             model.companyList[0] == @ConfigurationManager.AppSettings["companyId_TBM"])
                         {
                             if (model.custLi == null)
                             {
-                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item,"");
+                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item, "");
                             }
                             else
                             {
                                 foreach (var itemCust in model.custLi)
                                 {
-                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], itemCust, item,"");
+                                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], itemCust, item, "");
                                 }
                             }
                         }
@@ -64,7 +62,7 @@ namespace eActForm.Controllers
                         {
                             if (model.regionList == null)
                             {
-                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item,"");
+                                AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, item, "");
                             }
                             else
                             {
@@ -77,7 +75,7 @@ namespace eActForm.Controllers
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("insertUsers => " + ex.Message);
             }
@@ -106,7 +104,7 @@ namespace eActForm.Controllers
                         customerName = group.First().customerName
                     }).OrderBy(x => x.customerName).ToList(),
                     productTypeList = customerLists,
-                    companyId = customerLists.Any()? customerLists.FirstOrDefault().companyId: customerLists.FirstOrDefault().companyId,
+                    companyId = customerLists.Any() ? customerLists.FirstOrDefault().companyId : customerLists.FirstOrDefault().companyId,
                     empId = userModel.userLists.FirstOrDefault().empId
                 };
                 result.Data = resultData;

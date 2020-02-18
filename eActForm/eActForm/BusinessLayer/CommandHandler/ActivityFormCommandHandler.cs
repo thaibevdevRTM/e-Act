@@ -8,7 +8,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -181,7 +180,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
- 
+
                 String[] result = new String[2];
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);
                 if (getActList.Any())
@@ -221,8 +220,8 @@ namespace eActForm.BusinessLayer
                             int genNumber = int.Parse(getActivityDoc("running_TBM").FirstOrDefault().docNo);
                             var model = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId);
 
-                            result[0] += !string.IsNullOrEmpty(model.FirstOrDefault().channelId) ? 
-                                QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(model.FirstOrDefault().channelId)).FirstOrDefault().no_tbmmkt 
+                            result[0] += !string.IsNullOrEmpty(model.FirstOrDefault().channelId) ?
+                                QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(model.FirstOrDefault().channelId)).FirstOrDefault().no_tbmmkt
                                 : QueryGetAllBrand.GetAllBrand().Where(x => x.id.Equals(model.FirstOrDefault().productBrandId)).FirstOrDefault().no_tbmmkt;
                             result[0] += getActList.FirstOrDefault().documentDate.Value.Year.ToString();
                             result[0] += "/";
@@ -336,7 +335,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                if(model.chkAddIO == false)
+                if (model.chkAddIO == false)
                 {
                     model.actClaim = "";
                     model.actIO = "";

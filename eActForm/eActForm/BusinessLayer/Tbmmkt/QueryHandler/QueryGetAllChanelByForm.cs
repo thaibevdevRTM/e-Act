@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -13,7 +12,7 @@ namespace eActForm.BusinessLayer
     public class QueryGetAllChanelByForm
     {
 
-        public static List<TB_Act_Chanel_Model.Chanel_Model> getAllChanel(string master_type_form_id,string companyId)
+        public static List<TB_Act_Chanel_Model.Chanel_Model> getAllChanel(string master_type_form_id, string companyId)
         {
             try
             {
@@ -35,7 +34,7 @@ namespace eActForm.BusinessLayer
                              });
                 return lists.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("getAllChanel => " + ex.Message);
                 return new List<TB_Act_Chanel_Model.Chanel_Model>();

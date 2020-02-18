@@ -2,9 +2,7 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
 using static eActForm.Models.ApproveFlowModel;
@@ -59,7 +57,7 @@ namespace eActForm.Controllers
         {
             ManagementFlow_Model management_Model = new ManagementFlow_Model();
             try
-            {     
+            {
                 management_Model = (ManagementFlow_Model)TempData["management_Model"];
                 TempData.Keep();
             }
@@ -70,7 +68,7 @@ namespace eActForm.Controllers
             return PartialView(management_Model);
         }
 
-       
+
         public JsonResult insertFlowApprove(ManagementFlow_Model model)
         {
             var result = new AjaxResult();
@@ -100,7 +98,7 @@ namespace eActForm.Controllers
             {
                 management_Model = (ManagementFlow_Model)TempData["management_Model"];
                 flowApproveDetail flowDetail_Model = new flowApproveDetail();
-                flowDetail_Model.rangNo = management_Model.approveFlow.flowDetail.OrderBy(x=>x.rangNo).Last().rangNo + 1;
+                flowDetail_Model.rangNo = management_Model.approveFlow.flowDetail.OrderBy(x => x.rangNo).Last().rangNo + 1;
                 flowDetail_Model.id = Guid.NewGuid().ToString();
                 management_Model.approveFlow.flowDetail.Add(flowDetail_Model);
 

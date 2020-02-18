@@ -7,7 +7,6 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -38,7 +37,7 @@ namespace eActForm.Controllers
                 model = (ReportSummaryModels)Session["SummaryDetailModel"] ?? new ReportSummaryModels();
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
                 repDetail = string.Join(",", model.activitySummaryList.Select(x => x.repDetailId));
-                
+
                 if (model.activitySummaryList.Any())
                 {
                     if (model.activitySummaryList.FirstOrDefault().productTypeId == AppCode.nonAL)
@@ -252,7 +251,7 @@ namespace eActForm.Controllers
                 ReportSummaryModels model = (ReportSummaryModels)Session["SummaryDetailModel"];
                 model.activitySummaryList = model.activitySummaryList.Where(r => r.delFlag == false).ToList();
                 string summaryId = ReportSummaryAppCode.insertActivitySummaryDetail(model.cusId, model.producttype_id, startDate, endDate, model);
-                if (ReportSummaryAppCode.insertApproveForReportSummaryDetail(model.subId , model.cusId, model.producttype_id, summaryId) > 0)
+                if (ReportSummaryAppCode.insertApproveForReportSummaryDetail(model.subId, model.cusId, model.producttype_id, summaryId) > 0)
                 {
                     var rootPath = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"], summaryId));
                     List<Attachment> file = AppCode.genPdfFile(gridHtml, new Document(PageSize.A4.Rotate(), 2, 2, 10, 10), rootPath);
@@ -355,7 +354,7 @@ namespace eActForm.Controllers
             }
             else
             {
-               
+
                 if (Request.Form["ddlProductType"] != "")
                 {
                     modelResult.summaryDetailLists = modelResult.summaryDetailLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
@@ -375,7 +374,7 @@ namespace eActForm.Controllers
             else
             {
                 modelResult.summaryDetailLists = ReportSummaryAppCode.getDocumentSummaryDetailByDate(DateTime.Now.AddDays(-15), DateTime.Now);
-              
+
             }
 
             TempData.Clear();

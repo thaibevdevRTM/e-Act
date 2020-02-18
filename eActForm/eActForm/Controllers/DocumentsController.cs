@@ -1,13 +1,12 @@
-﻿using System;
+﻿using eActForm.BusinessLayer;
+using eActForm.Models;
+using iTextSharp.text;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
-using eActForm.BusinessLayer;
-using eActForm.Models;
-using System.Configuration;
-using iTextSharp.text;
 using static eActForm.Models.RepDetailModel;
 
 namespace eActForm.Controllers
@@ -27,7 +26,7 @@ namespace eActForm.Controllers
             {
                 SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
                 models.typeForm = typeForm;
-               // ViewBag.TypeForm = typeForm;
+                // ViewBag.TypeForm = typeForm;
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
                     if (typeForm == Activity_Model.activityType.MT.ToString())

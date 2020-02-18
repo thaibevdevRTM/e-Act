@@ -1,18 +1,18 @@
-﻿using System;
+﻿using eActForm.Controllers;
+using eActForm.Models;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using Microsoft.ApplicationBlocks.Data;
-using WebLibrary;
-using eActForm.Models;
-using eActForm.Controllers;
+using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Hosting;
+using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
@@ -24,7 +24,7 @@ namespace eActForm.BusinessLayer
             {
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserAdminByActId"
-                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId )});
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
                 string actNo = QueryGetActivityById.getActivityById(actFormId)[0].activityNo;
                 string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId);
                 string strBody = string.Format(ConfigurationManager.AppSettings["emailRequestCancelBody"], actNo
@@ -106,7 +106,7 @@ namespace eActForm.BusinessLayer
         /// <param name="actFormId"></param>
         /// <param name="emailType"></param>
         /// <param name="currentEmpId"> fixed support API Background Service </param>
-        public static void sendReject(string actFormId, AppCode.ApproveType emailType ,string currentEmpId)
+        public static void sendReject(string actFormId, AppCode.ApproveType emailType, string currentEmpId)
         {
             try
             {
@@ -313,11 +313,11 @@ namespace eActForm.BusinessLayer
         private static void sendEmailActForm(string actFormId, string mailTo, string mailCC, string strSubject, string strBody, AppCode.ApproveType emailType)
         {
             //================fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
-            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();           
+            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
             //=====END===========fream devdate 20191213 ดึงค่าเพื่อเอาเลขที่เอกสารไปRenameชื่อไฟล์แนบ==================
 
             List<Attachment> files = new List<Attachment>();
-            string[] pathFile = new string[10];           
+            string[] pathFile = new string[10];
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
             mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail
 
@@ -345,16 +345,17 @@ namespace eActForm.BusinessLayer
                 foreach (var item in getImageModel.tbActImageList)
                 {
                     //=== use case this background service (bg service cannot get data session)===
-                    string companyId = ""; 
+                    string companyId = "";
                     try
                     {
                         companyId = UtilsAppCode.Session.User.empCompanyId;
                     }
-                    catch {
+                    catch
+                    {
                         companyId = QueryGetActivityById.getActivityById(actFormId)[0].companyId;
                     }
                     // ==================================================
-                    if(companyId == ConfigurationManager.AppSettings["companyId_TBM"])
+                    if (companyId == ConfigurationManager.AppSettings["companyId_TBM"])
                     {
                         pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
                     }
@@ -377,7 +378,7 @@ namespace eActForm.BusinessLayer
                     //files.Add(new Attachment(item));// ของเดิมก่อนทำเปลี่ยนชื่อไฟล์ 20191213
                     Attachment attachment;
                     attachment = new Attachment(item);
-                    if(i_loop_change_name==0 && emailType==AppCode.ApproveType.Activity_Form)
+                    if (i_loop_change_name == 0 && emailType == AppCode.ApproveType.Activity_Form)
                     {
                         attachment.Name = replaceWordDangerForNameFile(activityFormTBMMKT.activityNo) + ".pdf";
                     }
@@ -563,13 +564,14 @@ namespace eActForm.BusinessLayer
             mailer.Subject = subject;
             mailer.Body = body;
             mailer.p_Attachment = files;
-            if (!String.IsNullOrEmpty(cc)) {
+            if (!String.IsNullOrEmpty(cc))
+            {
                 mailer.CC = cc;
             }
-            
+
             mailer.IsHtml = true;
             mailer.Send();
-           
+
 
             //slog = "mailer.Send() => ok";
             //ExceptionManager.WriteError("sendEmail=> " + slog);

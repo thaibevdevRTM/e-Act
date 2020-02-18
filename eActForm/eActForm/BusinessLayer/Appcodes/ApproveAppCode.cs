@@ -1,17 +1,17 @@
-﻿using System;
+﻿using eActForm.Models;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.ApplicationBlocks.Data;
-using eActForm.Models;
-using System.Configuration;
+using System.Linq;
 
 namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
-      
+
 
         public static void setCountWatingApprove()
         {
@@ -46,7 +46,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmailCC"
-                     , new SqlParameter[] { new SqlParameter("@actId", actId)});
+                     , new SqlParameter[] { new SqlParameter("@actId", actId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveModel.approveDetailModel()
                              {
@@ -161,7 +161,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                         });
 
-               if (approveType == AppCode.ApproveType.Report_Detail.ToString())
+                if (approveType == AppCode.ApproveType.Report_Detail.ToString())
                 {
                     rtn = updateActRepDetailStatus(statusId, actFormId);
                 }
@@ -371,7 +371,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
-        public static ApproveModel.approveModels getApproveByActFormId(string actFormId,string empId)
+        public static ApproveModel.approveModels getApproveByActFormId(string actFormId, string empId)
         {
             try
             {

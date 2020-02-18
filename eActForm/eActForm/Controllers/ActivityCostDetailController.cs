@@ -1,8 +1,6 @@
-﻿using eActForm.BusinessLayer;
-using eActForm.Models;
+﻿using eActForm.Models;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -11,21 +9,21 @@ namespace eActForm.Controllers
 {
     public class ActivityCostDetailController : Controller
     {
-        public ActionResult activityCostDetail(string typeForm , string actId)
+        public ActionResult activityCostDetail(string typeForm, string actId)
         {
-            Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ actId];
+            Activity_Model activityModel = TempData["actForm" + actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + actId];
             activityModel.activityFormModel.typeForm = typeForm;
             activityModel.activityFormModel.id = actId;
             TempData.Keep();
             return PartialView(activityModel);
         }
 
-        public JsonResult delActCostDetail(string rowid,string actId)
+        public JsonResult delActCostDetail(string rowid, string actId)
         {
             var result = new AjaxResult();
             try
             {
-                Activity_Model activityModel = (Activity_Model)TempData["actForm"+ actId];
+                Activity_Model activityModel = (Activity_Model)TempData["actForm" + actId];
                 if (rowid != null)
                 {
                     activityModel.activitydetaillist.RemoveAll(r => r.productGroupId == rowid);
@@ -41,7 +39,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("delActCostDetail >> " +ex.Message);
+                ExceptionManager.WriteError("delActCostDetail >> " + ex.Message);
                 result.Message = ex.Message;
                 result.Success = false;
             }
@@ -49,12 +47,12 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult addCostDetailTheme(string themeId, string txttheme,string actId ,string brandId)
+        public JsonResult addCostDetailTheme(string themeId, string txttheme, string actId, string brandId)
         {
             var result = new AjaxResult();
             try
             {
-                Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ actId];
+                Activity_Model activityModel = TempData["actForm" + actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + actId];
 
                 CostThemeDetailOfGroupByPrice costThemeDetailOfGroupByPriceModel = new CostThemeDetailOfGroupByPrice();
                 ProductCostOfGroupByPrice productcostdetail = new ProductCostOfGroupByPrice();
@@ -68,7 +66,7 @@ namespace eActForm.Controllers
                 costThemeDetailOfGroupByPriceModel.detailGroup.Add(productcostdetail);
                 //costThemeDetailOfGroupByPriceModel.IO = "56SO" + DateTime.Now.Year.ToString().Substring(2) + ActFormAppCode.getDigitGroup(themeId);
                 activityModel.activitydetaillist.Add(costThemeDetailOfGroupByPriceModel);
-                TempData["actForm"+ actId] = activityModel;
+                TempData["actForm" + actId] = activityModel;
                 TempData.Keep();
 
             }
@@ -89,7 +87,7 @@ namespace eActForm.Controllers
         /// <param name="total"></param>
         /// <param name="themeCost"></param>
         /// <returns></returns>
-        public JsonResult calPercentSpendingOfSale(string productGroupId, string productId, string total, string themeCost,string actId)
+        public JsonResult calPercentSpendingOfSale(string productGroupId, string productId, string total, string themeCost, string actId)
         {
             var result = new AjaxResult();
             try
@@ -98,7 +96,7 @@ namespace eActForm.Controllers
                 decimal p_perTotal = 0;
                 decimal getPromotionCost = 0;
 
-                Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ actId];
+                Activity_Model activityModel = TempData["actForm" + actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + actId];
                 if (activityModel.productcostdetaillist1 != null)
                 {
                     if (activityModel.productcostdetaillist1.Where(x => x.productId == productId).Any() && activityModel.productcostdetaillist1.Where(x => x.productId == productId).Any())
@@ -109,20 +107,21 @@ namespace eActForm.Controllers
                         try
                         {
                             p_perTotal = (p_total / (decimal.Parse(themeCost) * getPromotionCost)) * 100; // % ยอดขายโปโมชั่น
-                        }catch{ }
+                        }
+                        catch { }
                     }
                 }
 
-                 activityModel.activitydetaillist
-                           .Where(r => r.productGroupId != null && r.productGroupId.Equals(productGroupId))
-                           .Select(r =>
-                           {
-                               r.total = Math.Round(p_total, 2);
-                               r.perTotal = Math.Round(p_perTotal, 2);
-                               return r;
-                           }).ToList();
+                activityModel.activitydetaillist
+                          .Where(r => r.productGroupId != null && r.productGroupId.Equals(productGroupId))
+                          .Select(r =>
+                          {
+                              r.total = Math.Round(p_total, 2);
+                              r.perTotal = Math.Round(p_perTotal, 2);
+                              return r;
+                          }).ToList();
 
-                TempData["actForm"+ actId] = activityModel;
+                TempData["actForm" + actId] = activityModel;
                 TempData.Keep();
                 result.Success = true;
 
@@ -149,7 +148,7 @@ namespace eActForm.Controllers
             try
             {
                 decimal p_perTotal = decimal.Parse(perTotal);
-                Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ actId];
+                Activity_Model activityModel = TempData["actForm" + actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + actId];
                 activityModel.activitydetaillist
                            .Where(r => r.productGroupId != null && r.productGroupId.Equals(productGroupId))
                            .Select(r =>
@@ -158,7 +157,7 @@ namespace eActForm.Controllers
                                return r;
                            }).ToList();
 
-                TempData["actForm"+ actId] = activityModel;
+                TempData["actForm" + actId] = activityModel;
                 TempData.Keep();
                 result.Success = true;
             }
@@ -184,13 +183,13 @@ namespace eActForm.Controllers
         /// <param name="compensate"></param>
         /// <param name="LE"></param>
         /// <returns></returns>
-        public JsonResult calActivityDetailCost(string name, string productGroupId, string productId, string normalCase, string promotionCase, string unit, string compensate, string LE,  string typeForm , string actId)
+        public JsonResult calActivityDetailCost(string name, string productGroupId, string productId, string normalCase, string promotionCase, string unit, string compensate, string LE, string typeForm, string actId)
         {
             var result = new AjaxResult();
 
             try
             {
-                Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ actId];
+                Activity_Model activityModel = TempData["actForm" + actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + actId];
 
                 decimal getPromotionCost = 0;
                 decimal getNormalCost = 0;
@@ -228,7 +227,7 @@ namespace eActForm.Controllers
                     p_total = decimal.Parse(promotionCase) * decimal.Parse(unit) * decimal.Parse(compensate);
                     p_total = (p_LE > 0) ? p_total * (p_LE / 100) : p_total;
                 }
-              
+
                 getPromotionCost = getPromotionCost == 0 ? 1 : getPromotionCost;
                 get_PerTotal = p_total == 0 ? 0 : (p_total / (decimal.Parse(promotionCase) * getNormalCost)) * 100; // % ยอดขายโปโมชั่น
 
@@ -251,7 +250,7 @@ namespace eActForm.Controllers
                             return r;
                         }).ToList();
 
-                TempData["actForm"+ actId] = activityModel;
+                TempData["actForm" + actId] = activityModel;
                 TempData.Keep();
                 result.Success = true;
 

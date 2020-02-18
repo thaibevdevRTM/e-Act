@@ -37,7 +37,7 @@ namespace eActForm.Models
         public string SubjectId { get; set; }
         public string createdByName { get; set; }
         public string formName { get; set; }
-        public string companyName { get; set; }       
+        public string companyName { get; set; }
     }
 
     public class TB_Reg_Subject

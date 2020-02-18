@@ -1,20 +1,10 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using iTextSharp.tool.xml;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Net.Mail;
-using System.Net.Mime;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 using WebLibrary;
 
 namespace eActForm.Controllers
@@ -41,7 +31,7 @@ namespace eActForm.Controllers
                 };
             }
             catch (Exception ex)
-            {               
+            {
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -143,13 +133,13 @@ namespace eActForm.Controllers
         //}
 
 
-        public JsonResult getProductDetail(string brandId, string smellId,string productGroupId)
+        public JsonResult getProductDetail(string brandId, string smellId, string productGroupId)
         {
             var result = new AjaxResult();
             try
             {
                 List<TB_Act_Product_Model.Product_Model> getProductDetail = new List<TB_Act_Product_Model.Product_Model>();
-                if( smellId != "" && brandId != "")
+                if (smellId != "" && brandId != "")
                 {
                     getProductDetail = QueryGetAllProduct.getProductBySmellIdAndBrandId(smellId, brandId);
                 }
@@ -186,7 +176,7 @@ namespace eActForm.Controllers
                         Text = x.productName
                     }).OrderBy(x => x.Text).ToList(),
                 };
-                
+
                 result.Data = resultData;
             }
             catch (Exception ex)
@@ -198,7 +188,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getddlProduct(string size, string brandId,string smellId,string productGroupId)
+        public JsonResult getddlProduct(string size, string brandId, string smellId, string productGroupId)
         {
             int psize = size == "" ? 0 : int.Parse(size);
             var result = new AjaxResult();
@@ -208,7 +198,7 @@ namespace eActForm.Controllers
                 if (size != "")
                 {
 
-                    if(smellId != "" && brandId != "")
+                    if (smellId != "" && brandId != "")
                     {
                         productModel = QueryGetAllProduct.getAllProduct(productGroupId).Where(x => x.brandId == brandId && x.smellId == smellId && x.size == psize).ToList();
                     }
@@ -277,15 +267,15 @@ namespace eActForm.Controllers
         }
 
 
-       
 
-        public JsonResult getCustomerByRegion(string regionId , string txtCus)
+
+        public JsonResult getCustomerByRegion(string regionId, string txtCus)
         {
 
-            List<TB_Act_Customers_Model.Customers_Model> customerList = new  List<TB_Act_Customers_Model.Customers_Model>();
+            List<TB_Act_Customers_Model.Customers_Model> customerList = new List<TB_Act_Customers_Model.Customers_Model>();
             try
             {
-                 customerList = QueryGetAllCustomers.getCustomersOMT().Where(x => x.regionId == regionId && x.cusNameTH.Contains(txtCus)).ToList();
+                customerList = QueryGetAllCustomers.getCustomersOMT().Where(x => x.regionId == regionId && x.cusNameTH.Contains(txtCus)).ToList();
 
             }
             catch (Exception ex)

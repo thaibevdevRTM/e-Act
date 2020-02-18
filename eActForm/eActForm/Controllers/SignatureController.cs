@@ -1,12 +1,12 @@
-﻿using System;
+﻿using eActForm.BusinessLayer;
+using eActForm.Models;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using eActForm.Models;
-using eActForm.BusinessLayer;
-using System.Configuration;
-using System.IO;
 
 namespace eActForm.Controllers
 {
@@ -33,14 +33,14 @@ namespace eActForm.Controllers
             List<ActSignatureModel.SignModel> list = new List<ActSignatureModel.SignModel>();
             list.Add(model);
 
-        
-            if (Request.Files[0].ContentLength>0)
+
+            if (Request.Files[0].ContentLength > 0)
             {
                 var f = files.ToList();
                 MemoryStream target = new MemoryStream();
                 f[0].InputStream.CopyTo(target);
                 list[0].signature = target.ToArray();
-             }
+            }
 
             int rtn = SignatureAppCode.signatureInsert(AppCode.ToDataTable(list));
             if (rtn > 0)
