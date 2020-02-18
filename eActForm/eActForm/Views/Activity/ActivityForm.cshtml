@@ -74,11 +74,11 @@
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @if (Model.activityFormModel.documentDate.ToString() != "")
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" , @readonly = true , autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @readonly = true, autocomplete = "off" })
                         }
                         else
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd-MM-yyyy"), @readonly=true , autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd-MM-yyyy"), @readonly = true, autocomplete = "off" })
                         }
                     </div>
                 </div>
@@ -91,7 +91,11 @@
                             Reference
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.reference, new { @class = "form-control textboxcss", @id = "txtReference", autocomplete = "off" })
+                            <div id="divReference">
+                                @Html.TextBoxFor(x => x.activityFormModel.reference, new { @class = "form-control textboxcss", @id = "txtReference", autocomplete = "off" })
+                            </div>
+                            <div id="divRadioRef" class="radioRef">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -182,11 +186,11 @@
                         ประเภทกิจกรรม<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                       @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
-                       {
-                       @class = "form-control textboxcss",
-                       id = "ddlTheme"
-                       })
+                        @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
+                        {
+                        @class = "form-control textboxcss",
+                        id = "ddlTheme"
+                        })
                     </div>
                 </div>
             </div>
@@ -292,7 +296,7 @@
                     </div>
                 </div>
             </div>
-          
+
         </div>
     </form>
 </div>
@@ -573,11 +577,8 @@
 
     function onchangeCustomer() {
         ObjModel = {};
-
-        console.log($("#ddlCustomer").val());
-        if ($("#ddlCustomer").val() == "B18BB124-0EFC-4D90-BFFD-D333A1F79E32" || $("#ddlCustomer").val() == "8AAD2C59-114E-4819-BA8F-1931EED00A66") {
-            getFormatCus();
-        }
+        getFormatCus();
+        
         $("#txtchanel").val('');
          $.ajax({
                 url: '@Url.Action("getChanel", "eAct")',
@@ -593,38 +594,27 @@
     }
 
     function getFormatCus() {
-        $("#txtReference").autocomplete({
-            source: function (request, response) {
-                    $.ajax({
-                    url: '@Url.Action("getOtherMasterByType", "eAct")',
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-                        type: "formatCus",
-                        subType: $("#ddlCustomer").val(),
-                        },
-                        success: function (data) {
-                            response($.map(data, function (item) {
-                                return { label: item.displayVal, value: item.val1, id: item.id };
-                            }))
+        document.getElementById("divRadioRef").innerHTML = "";
+        if ($("#ddlCustomer").val() == "B18BB124-0EFC-4D90-BFFD-D333A1F79E32") {
+          
+            $("#divRadioRef").append('<input type="radio" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="radio" name="formatCus" value="Market" onchange = "onchangeRdbRef(this);">Market</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="radio" name="formatCus" value="Mini" onchange = "onchangeRdbRef(this);">Mini</input>');
+        }
+        else if ($("#ddlCustomer").val() == "8AAD2C59-114E-4819-BA8F-1931EED00A66") {
+            $("#divRadioRef").append('<input type="radio" name="formatCus" value="Express" onchange = "onchangeRdbRef(this);">Express</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="radio" name="formatCus" value="Talad" onchange = "onchangeRdbRef(this);">Talad</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="radio" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>');
+        }
+        else {
+          
+        }
 
-                        }
-                    })
-                },
-                minLength: 0,
-                messages: {
-                noResults: '',
-                    results: function (resultsCount) {
-                    }
-                }, select: function (event, ui) {
-                    $("#txtReference").val(ui.item.displayVal)
-                           }
-            }).focus(function () {
-                $(this).data("uiAutocomplete").search($(this).val());
-            });
     }
 
-
+    function onchangeRdbRef(element) {
+        $("#txtReference").val(element.value)
+    }
 
     $("#ddlProductBrand").change(function () {
         fillProductOnChange();
