@@ -32,6 +32,7 @@
     .hDetailtr {
         height: 20px;
     }
+
     .bgColorFocusDataAcc {
         background-color: #FCE4D6;
     }
@@ -136,7 +137,14 @@
                             <table style="border-color:none;border-collapse:collapse;" class="fontDocV1">
                                 <tr class="hDetailtr">
                                     <td style="width:150px;vertical-align:top;">&nbsp;หมายเหตุ&nbsp;&nbsp;วันที่ส่งมอบ</td>
-                                    <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
+                                    @if (Model.activityFormModel.activityPeriodSt != null)
+                                    {
+                                        <td style="width:150px;vertical-align:top;text-align:left;">: @Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="width:150px;vertical-align:top;text-align:left;">: </td>
+                                    }
                                     <td style="width:140px;vertical-align:top;">&nbsp;รายละเอียดผู้ติดต่อ</td>
                                     <td style="width:260px;vertical-align:top;">: @Model.tB_Act_ActivityForm_DetailOther.detailContact</td>
                                 </tr>

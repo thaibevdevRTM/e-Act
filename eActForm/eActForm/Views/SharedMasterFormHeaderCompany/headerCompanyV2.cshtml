@@ -1,0 +1,24 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using System.Globalization;
+@using System.Configuration;
+@{
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+}
+        <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
+            <table style="border-color:none;">
+                <tr>
+                    <td style="width:135px;">&nbsp;</td>
+                    <td style="width:415px;text-align: center;vertical-align:middle;" class="fontDocV2">@Model.activityFormTBMMKT.companyName</td>
+                    <td style="width:150px;text-align: left;vertical-align:middle;" class="fontDocV1">เลขที่ : @Model.activityFormModel.activityNo</td>
+                </tr>
+                <tr>
+                    <td style="width:135px;">&nbsp;</td>
+                    <td style="width:415px;text-align: center;vertical-align:middle;" class="fontDocV2">@Model.activityFormTBMMKT.formName</td>
+                    <td style="width:150px;text-align: left;vertical-align:middle;" class="fontDocV1">
+                        วันที่&nbsp;&nbsp;: @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
+                    </td>
+                </tr>
+            </table>
+        </div>
+
