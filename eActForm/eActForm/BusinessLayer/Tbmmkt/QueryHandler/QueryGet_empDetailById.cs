@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllActivityGroup => " + ex.Message);
+                ExceptionManager.WriteError("getEmpDetailById => " + ex.Message);
                 return new List<RequestEmpModel>();
             }
         }
