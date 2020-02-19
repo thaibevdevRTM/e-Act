@@ -135,7 +135,7 @@
         if ($("#ddlChannel").val() == "" && $("#ddlBrand").val() == "") { required += "&emsp;BrandหรือChannel*<br>"; validate = false; }
         if ($("#ddlSubject").val() == "") { required += "&emsp;เรื่อง*<br>"; validate = false; }
 
-        if ('@Model.activityFormTBMMKT.master_type_form_id' == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4") {
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || '@Model.activityFormTBMMKT.master_type_form_id' == "D3741442-EAD8-40F6-9A94-339DA65C0428") {
             if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
             if ($("#txtActivityName").val() == "") { required += "ชื่องาน*<br>"; validate = false; }
             if ($("#txtdateActivitySt").val() == "") { required += "ต้องการเช็ควันที่*<br>"; validate = false; }
@@ -177,6 +177,7 @@
 
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5") {//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+            if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
             if ($("#ddlin_or_out_stock").val() == "") { required += "ประเภทสต๊อก*<br>"; validate = false; }
             var v_select_tB_Act_master_list_choice_id = "";
             $('#ddlproduct_pos_premium option:selected').each(function () {

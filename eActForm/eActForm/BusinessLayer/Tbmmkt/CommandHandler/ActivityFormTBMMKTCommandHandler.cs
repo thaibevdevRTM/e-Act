@@ -51,7 +51,7 @@ namespace eActForm.BusinessLayer
 
                     rtn = ProcessInsertTB_Act_ActivityChoiceSelect(rtn, model, activityId);
 
-                
+
 
                     rtn = ProcessInsertRequestEmp(rtn, model, activityId);
                     rtn = ProcessInsertPlaceDetail(rtn, model, activityId);
@@ -968,25 +968,28 @@ namespace eActForm.BusinessLayer
         }
         public static int ProcessInsertPurpose(int rtn, Activity_TBMMKT_Model model, string activityId)
         {
-            if (model.chkPurpose.Any())
+            if (model.chkPurpose != null)
             {
-                rtn += deletePurposeByActivityId(activityId);
-                foreach (var item in model.chkPurpose)
+                if (model.chkPurpose.Any())
                 {
+                    rtn += deletePurposeByActivityId(activityId);
+                    foreach (var item in model.chkPurpose)
+                    {
 
-                    PurposeModel purposeModel = new PurposeModel();
+                        PurposeModel purposeModel = new PurposeModel();
 
-                    purposeModel.activityId = activityId;
-                    //purposeModel.rowNo = insertIndex;
-                    purposeModel.id = item;
-                    //  purposeModel.status =item.status;
-                    purposeModel.delFlag = false;
-                    purposeModel.createdByUserId = model.activityFormModel.createdByUserId;
-                    purposeModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                    purposeModel.updatedByUserId = UtilsAppCode.Session.User.empId;
-                    purposeModel.updatedDate = DateTime.Now;
+                        purposeModel.activityId = activityId;
+                        //purposeModel.rowNo = insertIndex;
+                        purposeModel.id = item;
+                        //  purposeModel.status =item.status;
+                        purposeModel.delFlag = false;
+                        purposeModel.createdByUserId = model.activityFormModel.createdByUserId;
+                        purposeModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                        purposeModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+                        purposeModel.updatedDate = DateTime.Now;
 
-                    rtn += insertPurpose(purposeModel);
+                        rtn += insertPurpose(purposeModel);
+                    }
                 }
             }
 
