@@ -27,7 +27,7 @@
             }
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] || UtilsAppCode.Session.User.isAdminHCM || (UtilsAppCode.Session.User.isSuperAdmin))
             {
-                <li>@Html.ActionLink(" ใบยืมเงินทดรอง HCM", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = "D3741442-EAD8-40F6-9A94-339DA65C0428" }, null)</li>
+                <li>@Html.ActionLink(" ใบยืมเงินทดรอง Horeca", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = "D3741442-EAD8-40F6-9A94-339DA65C0428" }, null)</li>
                 <li>@Html.ActionLink(" Travelling Form Horeca", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90" }, null)</li>                
             }            
         </ul>
