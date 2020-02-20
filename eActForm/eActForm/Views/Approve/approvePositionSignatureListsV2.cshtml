@@ -13,6 +13,12 @@
         border-color: gray;
     }
 </style>
+@if (Model.activity_TBMMKT_Model.activityFormTBMMKT == null)
+{
+    ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
+    activityFormTBMMKT.master_type_form_id = "";
+    Model.activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
+}
 
 @if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
 {
