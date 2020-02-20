@@ -66,13 +66,23 @@ namespace eActForm.Controllers
         }
 
 
+        public JsonResult checkActInvoice(string actId)
+        {
+            AjaxResult result = new AjaxResult();
+
+            result.Success = ActFormAppCode.checkActInvoice(actId);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         public ActionResult requestDeleteDoc(string actId, string statusId)
         {
             //return RedirectToAction("index");
             AjaxResult result = new AjaxResult();
             result.Success = false;
-            if ((statusId == "1") || (statusId == "6" && (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)) || (statusId == "5" && (UtilsAppCode.Session.User.empCompanyId == "3030"||UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin)))
+            if ((statusId == "1")|| (statusId == "3") || (statusId == "6" && (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)) || (statusId == "5" && (UtilsAppCode.Session.User.empCompanyId == "3030"||UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin)))
             {
                 //Draft || หรือ ถูก reject มาแล้วเป็นบริษัทTBM ให้สามารถยกเลิกเอกสารทิ้งได้ทันที เฟรม dev date 20191224
                 result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"]) > 0 ? true : false;

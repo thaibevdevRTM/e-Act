@@ -192,7 +192,8 @@ namespace eActForm.Controllers
             {
                 Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ actId];
 
-                decimal getPromotionCost = 0; 
+                decimal getPromotionCost = 0;
+                decimal getNormalCost = 0;
                 decimal get_PerTotal = 0;
                 decimal p_total = 0;
                 decimal p_LE = decimal.Parse(AppCode.checkNullorEmpty(LE));
@@ -203,7 +204,7 @@ namespace eActForm.Controllers
                     if (activityModel.productcostdetaillist1.Where(x => x.productId == productId).Any() && activityModel.productcostdetaillist1.Where(x => x.productId == productId).Any())
                     {
                         // cal normal spending
-                        decimal getNormalCost = decimal.Parse(AppCode.checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).Any() ?
+                        getNormalCost = decimal.Parse(AppCode.checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).Any() ?
                             activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).FirstOrDefault().normalCost.ToString() : "0"));
 
                         getPromotionCost = decimal.Parse(AppCode.checkNullorEmpty(activityModel.productcostdetaillist1.Where(x => x.productGroupId == productGroupId).Any() ?
@@ -229,7 +230,8 @@ namespace eActForm.Controllers
                 }
               
                 getPromotionCost = getPromotionCost == 0 ? 1 : getPromotionCost;
-                get_PerTotal = p_total == 0 ? 0 : (p_total / (decimal.Parse(promotionCase) * getPromotionCost)) * 100; // % ยอดขายโปโมชั่น
+                getNormalCost = getNormalCost == 0 ? 1 : getNormalCost;
+                get_PerTotal = p_total == 0 ? 0 : (p_total / (decimal.Parse(promotionCase) * getNormalCost)) * 100; // % ยอดขายโปโมชั่น
 
 
 

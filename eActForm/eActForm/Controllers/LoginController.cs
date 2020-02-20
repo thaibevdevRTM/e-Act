@@ -39,7 +39,7 @@ namespace eActForm.Controllers
             try
             {
                 UtilsAppCode.Session.User = new ActUserModel.User();
-                string strUserName = EncrptHelper.MD5Encryp(Request.Form["txtUserName"].ToString());
+                string strUserName = EncrptHelper.MD5Encryp(Request.Form["txtUserName"].ToString().ToLower().Replace("i","1"));
                 string strPassword = EncrptHelper.MD5Encryp(Request.Form["txtPassword"].ToString());
                 ActUserModel.ResponseUserAPI response = AuthenAppCode.doAuthen(strUserName, strPassword);
                 if (response != null && response.userModel.Count > 0)
