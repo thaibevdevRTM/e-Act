@@ -13,8 +13,10 @@
         border-color: gray;
     }
 </style>
-@if (Model.activity_TBMMKT_Model.activityFormTBMMKT == null)
+@if (Model.activity_TBMMKT_Model == null)
 {
+    Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+    Model.activity_TBMMKT_Model = activity_TBMMKT_Model;
     ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
     activityFormTBMMKT.master_type_form_id = "";
     Model.activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
