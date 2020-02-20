@@ -138,6 +138,10 @@ namespace eActForm.BusinessLayer
                     string txtEmpUser = "";
                     Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actFormId);
+
+                    emailRejectBody = ConfigurationManager.AppSettings["emailRejectBody"];
+                    emailRejectSubject = ConfigurationManager.AppSettings["emailRejectSubject"];
+                    txtEmpUser = empUser.FirstOrDefault().empName;
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                     {
                         if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)// Inter sale
@@ -146,12 +150,6 @@ namespace eActForm.BusinessLayer
                             emailRejectSubject = ConfigurationManager.AppSettings["emailRejectSubject_EN"];
                             txtEmpUser = empUser.FirstOrDefault().empName_EN;
                         }
-                    }
-                    else
-                    {
-                        emailRejectBody = ConfigurationManager.AppSettings["emailRejectBody"];
-                        emailRejectSubject = ConfigurationManager.AppSettings["emailRejectSubject"];
-                        txtEmpUser = empUser.FirstOrDefault().empName;
                     }
 
                     string strBody = string.Format(emailRejectBody
@@ -203,16 +201,13 @@ namespace eActForm.BusinessLayer
                 string strBody = "", strSubject = "";
                 if (lists.Count > 0)
                 {
+                    emailAllApprovedSubject = ConfigurationManager.AppSettings["emailApproveSubject"];
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                     {
                         if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)// Inter sale
                         {
                             emailAllApprovedSubject = ConfigurationManager.AppSettings["emailApproveSubject_EN"];
                         }
-                    }
-                    else
-                    {
-                        emailAllApprovedSubject = ConfigurationManager.AppSettings["emailApproveSubject"];
                     }
 
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
@@ -244,6 +239,9 @@ namespace eActForm.BusinessLayer
                             List<ApproveModel.approveDetailModel> createUsers = (emailType == AppCode.ApproveType.Activity_Form) ? ActFormAppCode.getUserCreateActForm(actFormId)
                                 : RepDetailAppCode.getUserCreateRepDetailForm(actFormId);
 
+                            createUsersName = createUsers.FirstOrDefault().empName;
+                            emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject"];
+                            txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody"];
                             if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                             {
                                 if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)// Inter sale
@@ -252,12 +250,6 @@ namespace eActForm.BusinessLayer
                                     emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject_EN"];
                                     txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody_EN"];
                                 }
-                            }
-                            else
-                            {
-                                createUsersName = createUsers.FirstOrDefault().empName;
-                                emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject"];
-                                txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody"];
                             }
 
                             strBody = (emailType == AppCode.ApproveType.Activity_Form)
@@ -314,6 +306,7 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actFormId);
 
                 string strBody = "", strSubject = "";
+                strSubject = ConfigurationManager.AppSettings["emailApproveSubject"];
                 if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                 {
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)//Inter sale
@@ -321,10 +314,7 @@ namespace eActForm.BusinessLayer
                         strSubject = ConfigurationManager.AppSettings["emailApproveSubject_EN"];
                     }
                 }
-                else
-                {
-                    strSubject = ConfigurationManager.AppSettings["emailApproveSubject"];
-                }
+
                 if (lists.Count > 0)
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
@@ -355,6 +345,9 @@ namespace eActForm.BusinessLayer
                             List<ApproveModel.approveDetailModel> createUsers = (emailType == AppCode.ApproveType.Activity_Form) ? ActFormAppCode.getUserCreateActForm(actFormId)
                                 : RepDetailAppCode.getUserCreateRepDetailForm(actFormId);
 
+                            createUsersName = createUsers.FirstOrDefault().empName;
+                            emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject"];
+                            txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody"];
                             if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                             {
                                 if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)// Inter sale
@@ -364,13 +357,6 @@ namespace eActForm.BusinessLayer
                                     txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody_EN"];
                                 }
                             }
-                            else
-                            {
-                                createUsersName = createUsers.FirstOrDefault().empName;
-                                emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject"];
-                                txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody"];
-                            }
-
 
                             strBody = (emailType == AppCode.ApproveType.Activity_Form)
                                 ? string.Format(txtemailAllApproveBody
@@ -502,16 +488,13 @@ namespace eActForm.BusinessLayer
                 string[] arrayFormStyleV3 = { "24BA9F57-586A-4A8E-B54C-00C23C41BFC5" };
                 if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV2.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV3.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                 {
+                    emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                     {
                         if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)//Inter sale
                         {
                             emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm_EN;
                         }
-                    }
-                    else
-                    {
-                        emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
                     }
                 }
                 else
@@ -529,6 +512,11 @@ namespace eActForm.BusinessLayer
                 {
                     case AppCode.ApproveType.Activity_Form:
                         var models = ActFormAppCode.getUserCreateActForm(actId);
+                        strBody = ConfigurationManager.AppSettings["emailApproveBody"];
+                        empNameResult = item.empName;
+                        txtApprove = AppCode.ApproveStatus.รออนุมัติ.ToString();
+                        txtcreateBy = item.createBy;
+                        txtCompanyname = models[0].companyName;
                         if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                         {
                             if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)//Inter sale
@@ -539,14 +527,6 @@ namespace eActForm.BusinessLayer
                                 txtcreateBy = item.createBy_EN;
                                 txtCompanyname = models[0].companyNameEN;
                             }
-                        }
-                        else
-                        {
-                            strBody = ConfigurationManager.AppSettings["emailApproveBody"];
-                            empNameResult = item.empName;
-                            txtApprove = AppCode.ApproveStatus.รออนุมัติ.ToString();
-                            txtcreateBy = item.createBy;
-                            txtCompanyname = models[0].companyName;
                         }
 
                         if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))

@@ -22,9 +22,9 @@
                     </td>
                     @if (item.unit != 0)
                     {
-                        <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            @item.unit @item.QtyName
-                        </td>
+                    <td style="width: 5%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        @string.Format("{0:#,0}", @item.unit) @item.QtyName
+                    </td>
                     }
                     else
                     {
