@@ -1,6 +1,22 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
 @using eActForm.Models
+
+
+@using System.Configuration;
+@{
+
+    var rootPathWeb = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
+    var strHeader = "";
+    var urlWorkFlowTrv = "";
+    if (Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB")//travelling TBM
+    {
+        strHeader = "คำแนะนำการขอเบิกค่าใช้จ่ายในการเดินทาง";
+        urlWorkFlowTrv = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "manual/travelling_TBM.pdf";
+    }
+
+}
+
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 @*<script src="~/Scripts/jquery.datetimepicker.full.js"></script>*@
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
@@ -82,9 +98,9 @@
 <div style="margin-left:25px;" class="text-center">
     <a href="@Url.Action("index", "Home", new { typeForm = @Model.activityFormModel.typeForm }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
     @if (Model.activityFormModel.mode == "new"
-        || Model.activityFormTBMMKT.statusId == 1
-        || Model.activityFormTBMMKT.statusId == 5
-        || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)))
+                        || Model.activityFormTBMMKT.statusId == 1
+                        || Model.activityFormTBMMKT.statusId == 5
+                        || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)))
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
     }
@@ -95,6 +111,30 @@
     <div id="divPreview">
     </div>
 </div>
+
+<div id="preview" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                <h4 class="modal-title">@strHeader</h4>
+            </div>
+            <div class="modal-body">
+
+                <embed src="@urlWorkFlowTrv" frameborder="0" width="100%" height="400px">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 
 <script>
 
@@ -124,7 +164,10 @@
         $("#txtdateActivitySt").datepicker();
         $("#txtactivityPeriodEnd").datepicker();
 
-        });
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '294146B1-A6E5-44A7-B484-17794FA368EB'){//travelling TBM
+            $('#preview').modal('show');
+        }
+    });
 
     function validatesubmit() {
 

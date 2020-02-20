@@ -2242,6 +2242,7 @@
     <Content Include="Content\vendors\iCheck\bower.json" />
     <Content Include="Content\vendors\iCheck\icheck.jquery.json" />
     <Content Include="ActSummaryDetail\f063c365-1e86-433e-bbb9-1fc6b58a386c.pdf" />
+    <Content Include="manual\travelling_TBM.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <Content Include="Scripts\bootstrap-select.js.map" />
@@ -2511,6 +2512,7 @@
     <Content Include="Views\SharedMasterFormDetail\showSignatureV2.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyWithLogoV2.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyV2.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerViewManual.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
