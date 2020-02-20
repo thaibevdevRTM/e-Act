@@ -25,7 +25,7 @@ namespace eActForm.BusinessLayer
             {
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserAdminByActId"
-                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId )});
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
                 string actNo = QueryGetActivityById.getActivityById(actFormId)[0].activityNo;
                 string strLink = string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId);
                 string strBody = string.Format(ConfigurationManager.AppSettings["emailRequestCancelBody"], actNo
@@ -200,14 +200,18 @@ namespace eActForm.BusinessLayer
                 string strBody = "", strSubject = "";
                 if (lists.Count > 0)
                 {
-                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)// Inter sale
+                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                     {
-                        emailAllApprovedSubject = ConfigurationManager.AppSettings["emailApproveSubject_EN"];
+                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)// Inter sale
+                        {
+                            emailAllApprovedSubject = ConfigurationManager.AppSettings["emailApproveSubject_EN"];
+                        }
+                        else
+                        {
+                            emailAllApprovedSubject = ConfigurationManager.AppSettings["emailApproveSubject"];
+                        }
                     }
-                    else
-                    {
-                        emailAllApprovedSubject = ConfigurationManager.AppSettings["emailApproveSubject"];
-                    }
+
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
                         strBody = getEmailBody(item, emailType, actFormId);
@@ -296,7 +300,7 @@ namespace eActForm.BusinessLayer
                         lists = getEmailApproveSummaryNextLevel(actFormId);
                         break;
                 }
-               
+
                 string emailAllApprovedSubject = "";
                 string createUsersName = "";
                 string txtemailAllApproveBody = "";
@@ -493,7 +497,7 @@ namespace eActForm.BusinessLayer
                     else
                     {
                         emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
-                    }                        
+                    }
                 }
                 else
                 {
@@ -510,23 +514,26 @@ namespace eActForm.BusinessLayer
                 {
                     case AppCode.ApproveType.Activity_Form:
                         var models = ActFormAppCode.getUserCreateActForm(actId);
-                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)//Inter sale
+                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                         {
-                            strBody = ConfigurationManager.AppSettings["emailApproveBody_EN"];
-                            empNameResult = item.empName_EN;
-                            txtApprove = "";
-                            txtcreateBy = item.createBy_EN;
-                            txtCompanyname = models[0].companyNameEN;
+                            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)//Inter sale
+                            {
+                                strBody = ConfigurationManager.AppSettings["emailApproveBody_EN"];
+                                empNameResult = item.empName_EN;
+                                txtApprove = "";
+                                txtcreateBy = item.createBy_EN;
+                                txtCompanyname = models[0].companyNameEN;
+                            }
+                            else
+                            {
+                                strBody = ConfigurationManager.AppSettings["emailApproveBody"];
+                                empNameResult = item.empName;
+                                txtApprove = AppCode.ApproveStatus.รออนุมัติ.ToString();
+                                txtcreateBy = item.createBy;
+                                txtCompanyname = models[0].companyName;
+                            }
                         }
-                        else
-                        {
-                            strBody = ConfigurationManager.AppSettings["emailApproveBody"];
-                            empNameResult = item.empName;
-                            txtApprove = AppCode.ApproveStatus.รออนุมัติ.ToString();
-                            txtcreateBy = item.createBy;
-                            txtCompanyname = models[0].companyName;
-                        }
-                        
+
                         if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                         {
                             strBody = strBody.Replace("<b>ประเภทกิจกรรม :</b> {4}<br>", "");
@@ -543,7 +550,7 @@ namespace eActForm.BusinessLayer
                             strBody = strBody.Replace("<b>Amount Requested :</b> {6} Bath<br>", "");
                         }
                         strBody = string.Format(strBody
-                            , item.empPrefix + " " + empNameResult 
+                            , item.empPrefix + " " + empNameResult
                             , txtApprove
                             , emailTypeTxt
                             , item.activityName
