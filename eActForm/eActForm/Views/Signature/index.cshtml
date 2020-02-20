@@ -1,10 +1,12 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.ActSignatureModel.SignModel
 
-@{
+@*@{
     TempData["empName"] = UtilsAppCode.Session.User.empFNameTH + " " + UtilsAppCode.Session.User.empLNameTH;
     TempData["positionTitle"] = UtilsAppCode.Session.User.empPositionTitleTH;
-}
+}*@
+@using (Html.BeginForm("searchEmp", "Signature", FormMethod.Post))
+{
 <h2>จัดการลายเซ็น</h2>
 <hr />
 <div class="row">
@@ -15,20 +17,21 @@
             <div id="crop-avatar">
                 <!-- Current avatar -->
                 @{
-                    var src = "http://webapp8.apps.thaibev.com/files/eCheck/Photos/" + @UtilsAppCode.Session.User.empId + ".jpg";
+                    var src = "http://webapp8.apps.thaibev.com/files/eCheck/Photos/" + Model.empId + ".jpg";
                 }
                 <img class="img-responsive avatar-view" src=@src alt="Avatar" title="Change the avatar">
             </div>
         </div>
-        <h3>@TempData["empName"]</h3>
+        <h3> @Model.empName
+            </h3>
 
         <ul class="list-unstyled user_data">
             <li>
-                <i class="fa fa-map-marker user-profile-icon"></i> @UtilsAppCode.Session.User.empCompanyName
+                <i class="fa fa-map-marker user-profile-icon"></i> ชื่อบริษัท
             </li>
 
             <li>
-                <i class="fa fa-briefcase user-profile-icon"></i> @TempData["positionTitle"]
+                <i class="fa fa-briefcase user-profile-icon"></i> @Model.positionTitle
             </li>
 
             <li class="m-top-xs">
@@ -36,15 +39,19 @@
             </li>
         </ul>
 
+        <input type="text" value="" id="txtEmpID" name="Model.empId"  class="form-control textboxcss" />
+        <input id="btnSearch"  type="submit" value="search" />
+   
 
     </div>
     <div class="col-md-9 col-sm-9 col-xs-12">
 
-        @Html.Action("listsSignature", "Signature", new { empId = @UtilsAppCode.Session.User.empId })
+        @Html.Action("listsSignature", "Signature", new { empId = Model.empId })
+       
     </div>
-
+    
 </div>
-
+                    }
 <script src="~/Scripts/SignatureTool.js"></script>
 <script>
     var signaturePadWrappers = document.querySelectorAll('.signature-pad');
@@ -80,4 +87,5 @@
             });
         }
     });
-</script>
+
+  </script>
