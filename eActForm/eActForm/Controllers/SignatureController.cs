@@ -16,9 +16,11 @@ namespace eActForm.Controllers
         // GET: Signature
         public ActionResult Index(ActSignatureModel.SignModel Model)
         {
-            if (string.IsNullOrEmpty(Model.empId)) {
+            if (string.IsNullOrEmpty(Model.empId))
+            {
                 Model.empId = UtilsAppCode.Session.User.empId;
                 Model.empName = UtilsAppCode.Session.User.empFNameTH + " " + UtilsAppCode.Session.User.empLNameTH;
+                Model.empCompanyName = QueryGet_empDetailById.getEmpDetailById(Model.empId).FirstOrDefault().companyName;
                 Model.positionTitle = UtilsAppCode.Session.User.empPositionTitleTH;
             }
 
@@ -53,7 +55,9 @@ namespace eActForm.Controllers
                     , model.signature
                     , string.Format(ConfigurationManager.AppSettings["rootSignaURL"], model.empId));
             }
-            return RedirectToAction("Index");
+
+            model.signature = null;
+            return RedirectToAction("Index", model);
 
 
 
@@ -63,6 +67,29 @@ namespace eActForm.Controllers
         {
             ActSignatureModel.SignModels models = new ActSignatureModel.SignModels();
             models.lists = SignatureAppCode.signatureGetByEmpId(empId);
+
+            List<RequestEmpModel> emp = new List<RequestEmpModel>();
+            emp = QueryGet_empDetailById.getEmpDetailById(empId);
+            ActSignatureModel.SignModel singna = new ActSignatureModel.SignModel();
+            if (!models.lists.Any())
+            {
+
+                singna.empId = emp[0].empId;
+                singna.empName = emp[0].empName;
+                singna.empCompanyName = emp[0].companyName;
+                singna.positionTitle = emp[0].position;
+               
+                models.lists.Add(singna);
+            }
+            else
+            {
+
+                models.lists[0].empId = emp[0].empId;
+                models.lists[0].empName = emp[0].empName;
+                models.lists[0].empCompanyName = emp[0].companyName;
+                models.lists[0].positionTitle = emp[0].position;
+            }
+
             return PartialView(models);
         }
 
@@ -73,14 +100,14 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-        [HttpPost] //post method
-        [ValidateAntiForgeryToken] // prevents cross site attacks ต้องใส่   @Html.AntiForgeryToken() ในหน้า เว็บด้วย
-        [ValidateInput(false)]
-       //  public JsonResult searchEmp(ActSignatureModel.SignModel model)
-          public ActionResult searchEmp(ActSignatureModel.SignModel model)
+        [HttpPost]
+        public ActionResult searchEmp(ActSignatureModel.SignModel model)
         {
+            //ActSignatureModel.SignModel model = new ActSignatureModel.SignModel();
             try
             {
+
+
                 string empid = model.empId;
                 List<RequestEmpModel> emp = new List<RequestEmpModel>();
 
@@ -88,20 +115,21 @@ namespace eActForm.Controllers
 
                 model.empId = emp[0].empId;
                 model.empName = emp[0].empName;
+                model.empCompanyName = emp[0].companyName;
                 model.positionTitle = emp[0].position;
-                   
 
-    }
+
+            }
             catch (Exception ex)
             {
-              
+
                 // ExceptionManager.WriteError("insertDataActivityMainForm => " + ex.Message);
             }
-            
-          return RedirectToAction("Index",model);
 
-              // return Json(result);
+            return RedirectToAction("Index", model);
+
+            // return Json(result);
         }
-                    
+     
     }
 }

@@ -169,6 +169,7 @@ namespace eActForm.Models
         public string level { get; set; }
         public string department { get; set; }
         public string bu { get; set; }
+        public string companyName { get; set; }
     }
 
     public class PurposeModel : ActBaseModel
