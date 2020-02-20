@@ -1,0 +1,23 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@{
+    var strHeader = "";
+    if (Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB")//travelling TBM
+    {
+        strHeader = "คำแนะนำการขอเบิกค่าใช้จ่าย";
+    }
+}
+<tr>
+    <td style="text-align:right;">
+        <div class="form-group">
+            <div class="col-md-12 col-xs-12">
+                <div class="row">
+                    <h4><u>
+    <a href="#" onclick="$('#preview').modal('show');">@strHeader</a>
+</u>
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div style="height:8px;"></div>
+    </td>
+</tr>
