@@ -479,6 +479,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
+
                 //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
@@ -486,20 +487,23 @@ namespace eActForm.BusinessLayer
                 string[] arrayFormStyleV1 = { "488F7C0D-8B59-4BDE-90E4-F157BFF67829", "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4", "D3741442-EAD8-40F6-9A94-339DA65C0428" };
                 string[] arrayFormStyleV2 = { "24BA9F57-586A-4A8E-B54C-00C23C41BFC5", "294146B1-A6E5-44A7-B484-17794FA368EB", "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90" };
                 string[] arrayFormStyleV3 = { "24BA9F57-586A-4A8E-B54C-00C23C41BFC5" };
-                if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV2.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV3.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                if (activity_TBMMKT_Model.activityFormTBMMKT != null)
                 {
-                    emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
-                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
+                    if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV2.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV3.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                     {
-                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)//Inter sale
+                        emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                         {
-                            emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm_EN;
+                            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)//Inter sale
+                            {
+                                emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm_EN;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    emailTypeTxt = emailType.ToString().Replace("_", " ");
+                    else
+                    {
+                        emailTypeTxt = emailType.ToString().Replace("_", " ");
+                    }
                 }
                 //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
 
