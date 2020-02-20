@@ -476,7 +476,7 @@ namespace eActForm.Controllers
 							,new SqlParameter("@approveId",model.id)
 							,new SqlParameter("@rangNo",m.rangNo)
 							,new SqlParameter("@empId",m.empId)
-							,new SqlParameter("@statusId","")
+							,new SqlParameter("@statusId","3")
 							,new SqlParameter("@isSendEmail",false)
 							,new SqlParameter("@remark","")
 
