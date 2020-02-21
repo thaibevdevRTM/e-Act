@@ -124,6 +124,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.list_2 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activityFormTBMMKT.master_type_form_id, "for");
                     activity_TBMMKT_Model.list_3 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activityFormTBMMKT.master_type_form_id, "channel_place").OrderBy(x => x.name).ToList();
                     activity_TBMMKT_Model.tB_Act_ProductBrand_Model_2 = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.no_tbmmkt != "").ToList();
+                    activity_TBMMKT_Model.activityFormModel.documentDate = DateTime.Now;
                 }
 
                 TempData.Keep();
