@@ -28,7 +28,7 @@ namespace eActForm.Controllers
                 importExcel.file.SaveAs(path);
 
                 var dt = new DataTable();
-                dt = ExcelAppCode.ReadExcel(path, "dataimport", "A:H");
+                dt = ExcelAppCode.ReadExcel(path, "dataimport", "A:I");
                 var countDataHaveRows = dt.Rows.Count;
 
                 if (countDataHaveRows > 0)
@@ -93,7 +93,14 @@ namespace eActForm.Controllers
                             txtError += "กรุณาระบุ qty เป็นตัวเลขบรรทัดที่ " + rowInExcelAlert + "<br />";
                         }
 
+                        if (dt.Rows[i]["Status Use"].ToString() != "ใช้งาน" && dt.Rows[i]["Status Use"].ToString() != "ไม่ใช้งาน")
+                        {
+                            validateValue = false;
+                            txtError += "รูปแบบข้อมูลที่กรอกไม่ถูกต้อง Status Use บรรทัดที่ " + rowInExcelAlert + "<br />";
+                        }
+
                     }
+
                     if (validateValue == false)
                     {
                         ViewBag.Error = txtError;
@@ -103,6 +110,8 @@ namespace eActForm.Controllers
                     {                        
                         for (int i = 0; i < countDataHaveRows; i++)
                         {
+                            var delFlag = false;
+                            if(dt.Rows[i]["Status Use"].ToString() == "ไม่ใช้งาน") { delFlag = true; }
                             TB_Act_master_material_Model tB_Act_Master_Material_Model = new TB_Act_master_material_Model();
                             tB_Act_Master_Material_Model.plnt = dt.Rows[i]["Plnt"].ToString();
                             tB_Act_Master_Material_Model.material = dt.Rows[i]["Material"].ToString();
@@ -116,7 +125,7 @@ namespace eActForm.Controllers
                             tB_Act_Master_Material_Model.createdDate =  DateTime.Now;
                             tB_Act_Master_Material_Model.updatedByUserId = UtilsAppCode.Session.User.empId;
                             tB_Act_Master_Material_Model.updatedDate = DateTime.Now;
-                            tB_Act_Master_Material_Model.delFlag = false;
+                            tB_Act_Master_Material_Model.delFlag = delFlag;
                             QueryProcess_TB_Act_master_material.insert_TB_Act_master_material(tB_Act_Master_Material_Model);
                         }
                         //===END==validate=======
