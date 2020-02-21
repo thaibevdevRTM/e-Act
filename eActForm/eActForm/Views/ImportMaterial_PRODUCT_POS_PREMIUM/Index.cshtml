@@ -41,6 +41,16 @@
     5.คอลัมน์ Material, Sub Group,Status Mat :ห้ามเป็นค่าว่าง<br />
     6.คอลัมน์ Status Use ::ให้ใส่ ใช้งาน หรือ ไม่ใช้งาน<br />
 </div>
+<hr />
+<div>
+    <h2>
+        Download Material ที่มีอยู่ในระบบปัจจุบัน.
+        @using (Html.BeginForm("ExportMat", "ImportMaterial_PRODUCT_POS_PREMIUM", FormMethod.Post))
+        {
+            <input type="submit" value="Export" />
+        }
+    </h2><br />
+</div>
 <script>
     function uploadClicked() {
         var r = confirm("Please confirm for upload file.");
