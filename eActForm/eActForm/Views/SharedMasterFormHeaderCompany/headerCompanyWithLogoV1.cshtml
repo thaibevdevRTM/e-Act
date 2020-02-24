@@ -5,7 +5,8 @@
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
     var rootPathWeb = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
-    var urlLogoCompany = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "images/tbmmktLogo.png";
+    //var urlLogoCompany = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "images/tbmmktLogo.png";//สรุปจากUAT 20200221 ยังไม่มีโลโก้
+    var urlLogoCompany = "";
     var titleTextInPage = "ใบเบิก " + Model.activityFormTBMMKT.labelRequire;
 }
 
