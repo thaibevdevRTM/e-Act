@@ -61,6 +61,7 @@ namespace eActForm.Controllers
                 else
                 {
                     mode = "new";
+
                     string actId = Guid.NewGuid().ToString();
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production

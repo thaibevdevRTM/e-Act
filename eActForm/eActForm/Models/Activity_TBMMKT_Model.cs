@@ -61,6 +61,7 @@ namespace eActForm.Models
         public string formName { get; set; }
         public string companyName { get; set; }
         public string list_0_select { get; set; }
+        public string list_0_select_value { get; set; }
         public string[] list_1_multi_select { get; set; }
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }
