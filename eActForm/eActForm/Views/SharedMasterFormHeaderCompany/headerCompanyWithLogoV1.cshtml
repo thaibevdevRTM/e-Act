@@ -11,18 +11,24 @@
 }
 
 
-        <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;" class="fontDocV2">
-            <table style="border-color:none;" class="fontDocV1">
-                <tr>
-                    <td rowspan="2" style="width:135px;">&nbsp;<img width="120px" height="30px" src="@urlLogoCompany" /></td>
-                    <td rowspan="2" style="width:415px;text-align: center;" class="fontDocV3"><b>@titleTextInPage</b></td>
-                    <td style="width:150px;text-align: left;">เลขที่ : @Model.activityFormModel.activityNo</td>
-                </tr>
-                <tr>
-                    <td style="width:150px;text-align: left;">
-                        วันที่&nbsp;&nbsp;: @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
-                    </td>
-                </tr>
-            </table>
-        </div>
+<div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;" class="fontDocV2">
+    <table style="border-color:none;" class="fontDocV1">
+        <tr>
+            <td rowspan="2" style="width:135px;">
+                &nbsp;
+                @if (urlLogoCompany != "")
+                {
+                    <img width="120px" height="30px" src="@urlLogoCompany" />
+                }
+            </td>
+            <td rowspan="2" style="width:415px;text-align: center;" class="fontDocV3"><b>@titleTextInPage</b></td>
+            <td style="width:150px;text-align: left;">เลขที่ : @Model.activityFormModel.activityNo</td>
+        </tr>
+        <tr>
+            <td style="width:150px;text-align: left;">
+                วันที่&nbsp;&nbsp;: @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
+            </td>
+        </tr>
+    </table>
+</div>
 
