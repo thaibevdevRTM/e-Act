@@ -25,6 +25,7 @@ namespace eActForm.Models
         public Activity_TBMMKT_Model()
         {
             channelMasterTypeList = new List<ChannelMasterType>();
+            activityFormTBMMKT = new ActivityFormTBMMKT();
         }
 
     }

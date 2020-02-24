@@ -23,6 +23,14 @@
 
     <!-- jQuery -->
     <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+
+    <link href="~/Scripts/pnotify/dist/pnotify.nonblock.css" rel="stylesheet" />
+    <link href="~/Scripts/pnotify/dist/pnotify.buttons.css" rel="stylesheet" />
+    <link href="~/Scripts/pnotify/dist/pnotify.css" rel="stylesheet" />
+    <script src="~/Scripts/pnotify/dist/pnotify.js"></script>
+    <script src="~/Scripts/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="~/Scripts/pnotify/dist/pnotify.nonblock.js"></script>
+
 </head>
 <body class="nav-md">
     <div id="WaitDialog" class="loading" style="text-align: center;display:none;">
@@ -162,6 +170,34 @@
     </style>
 
     <script>
+
+       
+        $(document).ready(function () {
+            var chkIsCreate = true;
+            var chkIsApprove = true;
+            
+            if ('@UtilsAppCode.Session.User.isApprove' == 'True') {
+
+                (new PNotify({
+                    title: 'เอกสารที่คุณ อนุมัติ ไม่ได้รับการอนุมัติจำนวน ' + @UtilsAppCode.Session.User.countApproveReject+' รายการ',
+                    text: '',
+                    hide: false,
+                    styling: 'bootstrap3'
+
+                }));
+            }
+
+            if ('@UtilsAppCode.Session.User.isCreator' == 'True') {
+                (new PNotify({
+                    title: 'คุณมีเอกสารไม่รับการอนุมัติจำนวน ' + @UtilsAppCode.Session.User.countRejectAct+' รายการ',
+                    text: '',
+                    hide: false,
+                    styling: 'bootstrap3'
+                }));
+            }
+        });
+
+        
 
         function doMsgSuccess(msg) {
             bootbox.alert("<div class='row'><div class='text-center'><img width='150px' src='images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>");
