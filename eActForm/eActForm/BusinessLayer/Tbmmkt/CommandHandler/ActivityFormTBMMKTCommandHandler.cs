@@ -195,39 +195,48 @@ namespace eActForm.BusinessLayer
                     rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
                 }
 
-                if (model.activityFormTBMMKT.list_1_multi_select.Length > 0)
+                if (model.activityFormTBMMKT.list_1_multi_select != null)
                 {
-                    for (int i = 0; i < model.activityFormTBMMKT.list_1_multi_select.Length; i++)//ขอเบิก
+                    if (model.activityFormTBMMKT.list_1_multi_select.Length > 0)
+                    {
+                        for (int i = 0; i < model.activityFormTBMMKT.list_1_multi_select.Length; i++)//ขอเบิก
+                        {
+                            tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                            tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                            tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_1_multi_select[i];
+                            rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                        }
+                    }
+                }
+                if (model.activityFormTBMMKT.list_2_select != null)
+                {
+                    if (model.activityFormTBMMKT.list_2_select != "")//เพื่อ
                     {
                         tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                         tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
-                        tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_1_multi_select[i];
+                        tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_2_select;
                         rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
                     }
                 }
-
-                if (model.activityFormTBMMKT.list_2_select != "")//เพื่อ
+                if (model.activityFormTBMMKT.brand_select != null)
                 {
-                    tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
-                    tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
-                    tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_2_select;
-                    rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                    if (model.activityFormTBMMKT.brand_select != "")//Brand/ผลิตภัณฑ์ 
+                    {
+                        tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                        tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                        tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.brand_select;
+                        rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                    }
                 }
-
-                if (model.activityFormTBMMKT.brand_select != "")//Brand/ผลิตภัณฑ์ 
+                if (model.activityFormTBMMKT.list_3_select != null)
                 {
-                    tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
-                    tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
-                    tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.brand_select;
-                    rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
-                }
-
-                if (model.activityFormTBMMKT.list_3_select != "")//Channel+Region
-                {
-                    tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
-                    tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
-                    tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_3_select;
-                    rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                    if (model.activityFormTBMMKT.list_3_select != "")//Channel+Region
+                    {
+                        tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                        tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                        tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_3_select;
+                        rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                    }
                 }
             }
             return rtn;
@@ -244,44 +253,53 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
                 activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
                 activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activityId);
+
                 if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
                 {
-                    activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().select_list_choice_id;
-                    activity_TBMMKT_Model.activityFormTBMMKT.labelInOrOutStock = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().name;
-                    var countlist_1_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "product_pos_premium").Count();
-                    activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new string[countlist_1_multi_select];
-
-                    int index_each = 0;
-                    foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "product_pos_premium").ToList())
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
                     {
-                        activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = item.select_list_choice_id;
-                        if (index_each == 0)
+                        activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().select_list_choice_id;
+                        activity_TBMMKT_Model.activityFormTBMMKT.labelInOrOutStock = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().name;
+                        var countlist_1_multi_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "product_pos_premium").Count();
+                        activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new string[countlist_1_multi_select];
+
+                        int index_each = 0;
+                        foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "product_pos_premium").ToList())
                         {
-                            sumTxtLabelRequired += item.name;
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = item.select_list_choice_id;
+                            if (index_each == 0)
+                            {
+                                sumTxtLabelRequired += item.name;
+                            }
+                            else
+                            {
+                                sumTxtLabelRequired += ("," + item.name);
+                            }
+                            index_each++;
+                        }
+                        activity_TBMMKT_Model.activityFormTBMMKT.labelRequire = sumTxtLabelRequired;
+                        activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().select_list_choice_id;
+                        activity_TBMMKT_Model.activityFormTBMMKT.labelFor = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().name;
+                        activity_TBMMKT_Model.activityFormTBMMKT.brand_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select;
+                        activity_TBMMKT_Model.activityFormTBMMKT.labelBrand = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.id == activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select).FirstOrDefault().brandName;
+                        activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().select_list_choice_id;
+                        activity_TBMMKT_Model.activityFormTBMMKT.labelChannelRegion = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().name;
+                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
+                        {
+                            activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Brand";
                         }
                         else
                         {
-                            sumTxtLabelRequired += ("," + item.name);
+                            activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Channel";
                         }
-                        index_each++;
                     }
-                    activity_TBMMKT_Model.activityFormTBMMKT.labelRequire = sumTxtLabelRequired;
-                    activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().select_list_choice_id;
-                    activity_TBMMKT_Model.activityFormTBMMKT.labelFor = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "for").FirstOrDefault().name;
-                    activity_TBMMKT_Model.activityFormTBMMKT.brand_select = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select;
-                    activity_TBMMKT_Model.activityFormTBMMKT.labelBrand = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.id == activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.brand_select).FirstOrDefault().brandName;
-                    activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().select_list_choice_id;
-                    activity_TBMMKT_Model.activityFormTBMMKT.labelChannelRegion = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "channel_place").FirstOrDefault().name;
-                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
+                    else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB" || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90")
                     {
-                        activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Brand";
+                        activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().select_list_choice_id;
+                        activity_TBMMKT_Model.activityFormTBMMKT.list_0_select_value = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().name;
                     }
-                    else
-                    {
-                        activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Channel";
-                    }
-
                 }
+
 
                 activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId);
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);

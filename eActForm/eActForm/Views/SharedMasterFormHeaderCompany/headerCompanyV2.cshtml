@@ -4,6 +4,15 @@
 @{
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
+    var formName = "";
+    if (Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB" || Model.activityFormTBMMKT.master_type_form_id == "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90")
+    {
+        formName = @Model.activityFormTBMMKT.formName+ "("+@Model.activityFormTBMMKT.list_0_select_value+")";
+    }
+    else
+    {
+        formName = @Model.activityFormTBMMKT.formName;
+    }
 }
         <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
             <table style="border-color:none;">
@@ -14,7 +23,7 @@
                 </tr>
                 <tr>
                     <td style="width:135px;">&nbsp;</td>
-                    <td style="width:415px;text-align: center;vertical-align:middle;" class="fontDocV2">@Model.activityFormTBMMKT.formName</td>
+                    <td style="width:415px;text-align: center;vertical-align:middle;" class="fontDocV2">@formName</td>
                     <td style="width:150px;text-align: left;vertical-align:middle;" class="fontDocV1">
                         วันที่&nbsp;&nbsp;: @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
                     </td>
