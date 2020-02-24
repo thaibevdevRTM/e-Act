@@ -173,9 +173,7 @@
 
        
         $(document).ready(function () {
-            var chkIsCreate = true;
-            var chkIsApprove = true;
-            
+
             if ('@UtilsAppCode.Session.User.isApprove' == 'True') {
 
                 (new PNotify({
@@ -183,7 +181,6 @@
                     text: '',
                     hide: false,
                     styling: 'bootstrap3'
-
                 }));
             }
 
