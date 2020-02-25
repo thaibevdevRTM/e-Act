@@ -594,26 +594,36 @@
     }
 
     function getFormatCus() {
+        $("#txtReference").val('');
         document.getElementById("divRadioRef").innerHTML = "";
+        document.getElementById("txtReference").readOnly = true;
         if ($("#ddlCustomer").val() == "B18BB124-0EFC-4D90-BFFD-D333A1F79E32") {
-          
-            $("#divRadioRef").append('<input type="radio" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>&nbsp;&nbsp;');
-            $("#divRadioRef").append('<input type="radio" name="formatCus" value="Market" onchange = "onchangeRdbRef(this);">Market</input>&nbsp;&nbsp;');
-            $("#divRadioRef").append('<input type="radio" name="formatCus" value="Mini" onchange = "onchangeRdbRef(this);">Mini</input>');
+            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Market" onchange = "onchangeRdbRef(this);">Market</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Mini" onchange = "onchangeRdbRef(this);">Mini</input>');
         }
-        else if ($("#ddlCustomer").val() == "8AAD2C59-114E-4819-BA8F-1931EED00A66") {
-            $("#divRadioRef").append('<input type="radio" name="formatCus" value="Express" onchange = "onchangeRdbRef(this);">Express</input>&nbsp;&nbsp;');
-            $("#divRadioRef").append('<input type="radio" name="formatCus" value="Talad" onchange = "onchangeRdbRef(this);">Talad</input>&nbsp;&nbsp;');
-            $("#divRadioRef").append('<input type="radio" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>');
+        else if ($("#ddlCustomer").val() == "8AAD2C59-114E-4819-BA8F-1931EED00A66") {     
+            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Express" onchange = "onchangeRdbRef(this);">Express</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Talad" onchange = "onchangeRdbRef(this);">Talad</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>');
         }
         else {
-          
+            document.getElementById("txtReference").readOnly = false;
         }
 
     }
 
     function onchangeRdbRef(element) {
-        $("#txtReference").val(element.value)
+
+        var unionStr = $("#txtReference").val();
+        unionStr += element.value + ',';
+
+        if (!element.checked) {
+            console.log(element.value + ',')
+            unionStr = document.getElementById("txtReference").value.replace(element.value + ',', '');
+        }
+
+        $("#txtReference").val(unionStr)
     }
 
     $("#ddlProductBrand").change(function () {
