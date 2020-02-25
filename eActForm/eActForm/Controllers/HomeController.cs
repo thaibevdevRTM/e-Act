@@ -82,9 +82,7 @@ namespace eActForm.Controllers
             //return RedirectToAction("index");
             AjaxResult result = new AjaxResult();
             result.Success = false;            
-            if ((statusId == "1")
-            || (statusId == "3")
-                ||
+            if ((statusId == "1")||
                     (statusId == "6" && (UtilsAppCode.Session.User.isAdminOMT
                     || UtilsAppCode.Session.User.isAdmin
                     || UtilsAppCode.Session.User.isSuperAdmin))
