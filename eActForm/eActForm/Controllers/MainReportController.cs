@@ -27,7 +27,7 @@ namespace eActForm.Controllers
             //=========for=====test=================
             /*ActivityFormTBMMKT dummy_activityFormTBMMKT = new ActivityFormTBMMKT();
             activity_TBMMKT_Model.activityFormTBMMKT = dummy_activityFormTBMMKT;
-            activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = "24BA9F57-586A-4A8E-B54C-00C23C41BFC5";
+            activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["formPosTbmId"];
             activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");*/
             //====END====for======test=================
 
@@ -39,7 +39,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
                 activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
 
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB" || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
                 {
                     ViewBag.classFont = "fontDocSmall";
                     ViewBag.padding = "paddingFormV2";

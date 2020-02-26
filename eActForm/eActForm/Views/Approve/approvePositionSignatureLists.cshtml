@@ -22,7 +22,7 @@
     Model.activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
 }
 
-@if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
+@if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
 {
     ApproveFlowModel.flowApproveDetail flowApproveDetail = new ApproveFlowModel.flowApproveDetail();
     flowApproveDetail.approveGroupName = "ผู้รับของ";
@@ -82,7 +82,7 @@
                         if (countisShowInDoc <= 5)
                         {
                             <td style="width:140px;">
-                                @{ if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
+                                @{ if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
                                     {
                                         <div class="fontSigV1">
                                             @item.approveGroupName
@@ -154,7 +154,7 @@
                         if (countisShowInDoc <= 5)
                         {
                             <td>
-                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
+                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
                                     {
                                         <div style="text-align:center; margin-top:5px;" class="fontSigV1">@yu@item.empFNameTH @item.empLNameTH</div>
                                     }
@@ -180,7 +180,7 @@
                         if (countisShowInDoc <= 5)
                         {
                             <td>
-                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
+                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
                                     {
                                         <div style="text-align:center;height:50px;" class="fontSigV1">@Html.Raw(item.empPositionTitleTH)</div>
                                     }
@@ -213,7 +213,7 @@
                         if (countisShowInDoc >= 6)
                         {
                             <td style="width:140px;">
-                                @{ if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
+                                @{ if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
                                     {
                                         <div class="fontSigV1">
                                             @item.approveGroupName
@@ -285,7 +285,7 @@
                         if (countisShowInDoc >= 6)
                         {
                             <td>
-                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
+                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
                                     {
                                         <div style="text-align:center; margin-top:5px;" class="fontSigV1">@yu@item.empFNameTH @item.empLNameTH</div>
                                     }
@@ -311,7 +311,7 @@
                         if (countisShowInDoc >= 6)
                         {
                             <td>
-                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4" || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
+                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
                                     {
                                         <div style="text-align:center;height:50px;" class="fontSigV1">@Html.Raw(item.empPositionTitleTH)</div>
                                     }

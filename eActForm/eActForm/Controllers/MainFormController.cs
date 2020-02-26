@@ -139,7 +139,7 @@ namespace eActForm.Controllers
                 }
 
 
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB" || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
                 {
                     activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
                     activity_TBMMKT_Model.activityFormModel.documentDate = BaseAppCodes.converStrToDate(activity_TBMMKT_Model.activityFormModel.documentDateStr);
