@@ -6,12 +6,12 @@
     CultureInfo DateEnglish = new CultureInfo("en-US");
     var rootPathWeb = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
     var urlLogoCompany = "";
-    if (Model.activityFormTBMMKT.formCompanyId == "3030")
+    if (Model.activityFormTBMMKT.formCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
     {
         //urlLogoCompany = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "images/tbmmktLogo.png"; //สรุปจากUAT 20200221 ยังไม่มีโลโก้
         urlLogoCompany = "";
     }
-    else if (Model.activityFormTBMMKT.formCompanyId == "4800")
+    else if (Model.activityFormTBMMKT.formCompanyId == ConfigurationManager.AppSettings["companyId_HCM"])
     {
         urlLogoCompany = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "images/horecaLogo.jpg";
     }

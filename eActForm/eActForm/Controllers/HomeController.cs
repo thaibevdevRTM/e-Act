@@ -87,7 +87,7 @@ namespace eActForm.Controllers
                     || UtilsAppCode.Session.User.isAdmin
                     || UtilsAppCode.Session.User.isSuperAdmin))
                     ||
-                (statusId == "5" && (UtilsAppCode.Session.User.empCompanyId == "3030" || UtilsAppCode.Session.User.empCompanyId == "4800"
+                (statusId == "5" && (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"]
                 || UtilsAppCode.Session.User.isAdminOMT
                 || UtilsAppCode.Session.User.isAdmin
                 || UtilsAppCode.Session.User.isAdminTBM
