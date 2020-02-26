@@ -1,5 +1,6 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
+@using System.Configuration;
 <tr>
     <td>
         <div class="form-group" style="margin-top:-20px;">
@@ -11,10 +12,10 @@
                         &nbsp;Condition Flow<span class="required">:&nbsp;</span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "txt", "txt", ""), "", new
-            {
-                @class = "form-control ",
-                id = "ddlChannelOrBrand"
-            })
+                    {
+                        @class = "form-control ",
+                        id = "ddlChannelOrBrand"
+                    })
                 </div>
             </div>
             <div class="col-md-4 col-xs-12">
@@ -24,10 +25,10 @@
                         &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.channelMasterTypeList, "subTypeId", "subName", 0), "", new
-            {
-                @class = "form-control ",
-                id = "ddlChannel"
-            })
+                    {
+                        @class = "form-control ",
+                        id = "ddlChannel"
+                    })
 
                 </div>
                 <div id="divBrand" style="display:none; width:100%">
@@ -35,10 +36,10 @@
                         &nbsp;เลือก Brand<span class="required"></span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
-            {
-                @class = "form-control ",
-                id = "ddlBrand"
-            })
+                    {
+                        @class = "form-control ",
+                        id = "ddlBrand"
+                    })
                 </div>
                 <div id="divChannelNull" style="display:block; width:100%">
                     <label class="control-label" for="ddlChannel">
@@ -55,10 +56,10 @@
                         &nbsp;เรื่อง <span class="required"></span>
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
-            {
-                @class = "form-control ",
-                id = "ddlSubject"
-            })
+                    {
+                        @class = "form-control ",
+                        id = "ddlSubject"
+                    })
                 </div>
                 <div id="divSubjectNull" style="display:block; width:100%">
                     <label class="control-label" for="ddlBrand">
@@ -152,7 +153,7 @@
                 $("#ddlChannelOrBrand").change(function () {
                     processDropdownConditionFlow();
                     getDataDropwdownBrandChannel();
-                    if ('@Model.activityFormTBMMKT.master_type_form_id' == ConfigurationManager.AppSettings["formPosTbmId"]) //ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                    if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]') //ใบเบิกผลิตภัณฑ์,POS/PREMIUM
                     {
                         $("#ddlbrand_select").val("");
                         $("#txtCostCenter").val("");

@@ -1,4 +1,5 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using System.Configuration;
 @{
     var strHeader = "";
     if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"])//travelling TBM
@@ -11,9 +12,10 @@
         <div class="form-group">
             <div class="col-md-12 col-xs-12">
                 <div class="row">
-                    <h4><u>
-    <a href="#" onclick="$('#preview').modal('show');">@strHeader</a>
-</u>
+                    <h4>
+                        <u>
+                            <a href="#" onclick="$('#preview').modal('show');">@strHeader</a>
+                        </u>
                     </h4>
                 </div>
             </div>
