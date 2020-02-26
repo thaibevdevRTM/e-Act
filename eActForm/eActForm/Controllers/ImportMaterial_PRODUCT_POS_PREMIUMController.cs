@@ -3,6 +3,7 @@ using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -41,7 +42,7 @@ namespace eActForm.Controllers
                     //=====validate=======
                     bool validateValue = true;
                     string txtError = "";
-                    string idFormPOS_Premium = "24BA9F57-586A-4A8E-B54C-00C23C41BFC5";
+                    string idFormPOS_Premium = ConfigurationManager.AppSettings["formPosTbmId"];
                     List<TB_Act_master_list_choiceModel> list_TB_Act_master_list_choiceModel = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(idFormPOS_Premium, "product_pos_premium");
                     List<TB_Act_master_list_choiceModel> list_TB_Act_master_list_choiceModel_in_or_out_stock = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(idFormPOS_Premium, "in_or_out_stock");
 

@@ -5,7 +5,7 @@
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
     var formName = "";
-    if (Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB" || Model.activityFormTBMMKT.master_type_form_id == "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90")
+    if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] || Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])
     {
         formName = @Model.activityFormTBMMKT.formName+ "("+@Model.activityFormTBMMKT.list_0_select_value+")";
     }

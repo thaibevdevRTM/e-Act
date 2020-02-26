@@ -111,7 +111,7 @@ namespace eActForm.BusinessLayer
         public static int ProcessInsertTB_Act_ActivityForm_DetailOther(int rtn, Activity_TBMMKT_Model model, string activityId)
         {
             TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
-            if (model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB" || model.activityFormTBMMKT.master_type_form_id == "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90")//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+            if (model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] || model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
             {
                 model.tB_Act_ActivityForm_DetailOther = tB_Act_ActivityForm_DetailOther;
                 model.tB_Act_ActivityForm_DetailOther.activityProduct = "";
@@ -256,7 +256,7 @@ namespace eActForm.BusinessLayer
 
                 if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
                 {
-                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
                     {
                         activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().select_list_choice_id;
                         activity_TBMMKT_Model.activityFormTBMMKT.labelInOrOutStock = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "in_or_out_stock").FirstOrDefault().name;
@@ -293,7 +293,7 @@ namespace eActForm.BusinessLayer
                             activity_TBMMKT_Model.activityFormTBMMKT.labelBrandOrChannel = "Channel";
                         }
                     }
-                    else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "294146B1-A6E5-44A7-B484-17794FA368EB" || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "B4F405D7-8AAF-4B03-8AFB-3EC8F292AA90")
+                    else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])
                     {
                         activity_TBMMKT_Model.activityFormTBMMKT.list_0_select = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().select_list_choice_id;
                         activity_TBMMKT_Model.activityFormTBMMKT.list_0_select_value = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "travelling").FirstOrDefault().name;
@@ -309,7 +309,7 @@ namespace eActForm.BusinessLayer
                 Decimal? totalCostThisActivity = 0;
                 foreach (var item in activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT)
                 {
-                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == "24BA9F57-586A-4A8E-B54C-00C23C41BFC5")//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
                     {
                         totalCostThisActivity += item.unit;
                     }

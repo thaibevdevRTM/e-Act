@@ -1,6 +1,7 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer;
 @using System.Globalization;
+@using System.Configuration;
 @{
     var bu = "";
     var reqName = "";
@@ -10,7 +11,7 @@
         foreach (var item in Model.approveFlowDetail)
         {
 
-            if (item.approveGroupId == "A2D5B3D5-610D-4D7E-B311-25717B3457F8")
+            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGrouApplicant"])
             {
                 reqName = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
                 pos = item.empPositionTitleTH;
@@ -27,8 +28,8 @@
 @*    <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="3" cellspacing="0">*@
 
 
-<div id="divHeaderDetails2" runat="server" style="width: 100%;"  >
-    <table style="width: 100%;" class=" fontDocSmall" id="tabelHeaderDetails2" runat="server" border="0" cellpadding="4" >
+<div id="divHeaderDetails2" runat="server" style="width: 100%;">
+    <table style="width: 100%;" class=" fontDocSmall" id="tabelHeaderDetails2" runat="server" border="0" cellpadding="4">
         <tr>
             <td style="width: 12%;text-align :right ; ">
                 <b> Requested by<br />ผู้ขออนุมัติ</b>
