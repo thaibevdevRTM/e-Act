@@ -17,8 +17,8 @@
                 || "@UtilsAppCode.Session.User.isAdmin.ToString().ToLower()" == "true"
                 || "@UtilsAppCode.Session.User.isSuperAdmin.ToString().ToLower()" == "true"))
             ||
-            (statusId == "5" && ("@UtilsAppCode.Session.User.empCompanyId" == "3030"
-                || "@UtilsAppCode.Session.User.empCompanyId" == "4800"
+            (statusId == "5" && ("@UtilsAppCode.Session.User.empCompanyId" == '@ConfigurationManager.AppSettings["companyId_TBM"]'
+                || "@UtilsAppCode.Session.User.empCompanyId" == '@ConfigurationManager.AppSettings["companyId_HCM"]'
                 || "@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true"
                 || "@UtilsAppCode.Session.User.isAdmin.ToString().ToLower()" == "true"
                 || "@UtilsAppCode.Session.User.isAdminTBM.ToString().ToLower()" == "true"
