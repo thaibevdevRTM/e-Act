@@ -45,7 +45,8 @@ namespace eActForm.Controllers
                 {
                     foreach (var item in model.chkProductType)
                     {
-                        if (model.companyList[0] == @ConfigurationManager.AppSettings["companyId_MT"] || 
+                        if (model.companyList[0] == @ConfigurationManager.AppSettings["companyId_MT"] ||
+                            model.companyList[0] == @ConfigurationManager.AppSettings["companyId_HCM"] ||
                             model.companyList[0] == @ConfigurationManager.AppSettings["companyId_TBM"])
                         {
                             if (model.custLi == null)

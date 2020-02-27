@@ -1,0 +1,402 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Globalization;
+@{
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+}
+<tr>
+    <td style="padding-left:8px;">
+        <div id="divHeaderDetails" runat="server" style="width: 100%;">
+            <table style="width: 100%;border-collapse:collapse;" id="tabelHeaderDetails" runat="server">
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-12">
+                                สต๊อก :
+                            </label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="row">
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.list_0_select, new SelectList(Model.list_0, "id", "name", ""), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlin_or_out_stock"
+                                    })
+                                    <script>
+                                        $("#ddlin_or_out_stock").change(function () {
+                                            if ($("#ddlin_or_out_stock").val() != "") {
+                                                $('#ddlproduct_pos_premium').multiselect('enable');
+                                            }
+                                            else {
+                                                $('#ddlproduct_pos_premium').multiselect('disable');
+                                            }
+                                            $('#ddlproduct_pos_premium option').each(function () {
+                                                $(this).prop('selected', false);
+                                            });
+                                            $('#ddlproduct_pos_premium').multiselect('refresh');
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                            <label class="control-label col-md-3 col-xs-12">
+                                Document Date :
+                            </label>
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM/dd/yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-12">
+                                ขอเบิก :
+                            </label>
+                            <div class="col-md-3 col-xs-12">
+                                <div class="row">
+                                    <style>
+                                        td div span {
+                                            line-height: 0px;
+                                        }
+
+                                        .multiselect {
+                                            min-width: 262px;
+                                            text-align: left;
+                                        }
+
+                                        .btn-group > .btn:first-child {
+                                            width: 262px;
+                                        }
+
+                                        .btn .caret {
+                                            float: right;
+                                            margin-top: 7px;
+                                            margin-right: -6px;
+                                        }
+
+                                        .checkbox, .radio {
+                                            position: relative;
+                                            display: block;
+                                            min-width: 262px;
+                                        }
+                                    </style>
+                                    @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.list_1,
+                                                                                                 "id", "name"),
+                                                                                                 new
+                                                                                                 {
+                                                                                                     @class = "form-control selectpicker",
+                                                                                                     id = "ddlproduct_pos_premium",
+                                                                                                     multiple = "multiple"
+                                                                                                 })
+                                    <script>
+                                        $(document).ready(function () {
+                                            $('#ddlproduct_pos_premium').multiselect({
+                                                nonSelectedText: '                                                    ',
+                                                onChange: function (option, checked) {
+                                                    clearDataInTable();//ต้องเคลียร์กันไปเลือกMatในหัวข้อ ขอเบิก อื่นๆแล้วกลับมาแก้ไข หัวข้อเบิกใหม่ที่ไม่มี Mat ดังกล่าว
+                                                    if ($("#ddlin_or_out_stock").val() != "") {
+                                                        var valueInStock = "4C059B00-6350-4E46-82E0-98E28807C697";
+                                                        var valueProduct = "AD1A2D99-04A5-43B6-988A-109B03614358";
+                                                        var valuePOS = "4F1909E0-A047-4DA3-8C68-4C2780120E71";
+                                                        var valuePREMIUM = "F890856A-13EE-4C1D-8453-6D824481BCDD";
+
+                                                        if ($('#ddlin_or_out_stock').val() == valueInStock) {
+                                                            if (option.val() == valuePREMIUM && checked === true) {
+                                                                var values = [];
+                                                                values.push(valueProduct);
+                                                                values.push(valuePOS);
+                                                                $('#ddlproduct_pos_premium').multiselect('deselect', values, true);
+                                                            } else if ((option.val() == valueProduct && checked === true) || (option.val() == valuePOS && checked === true)) {
+                                                                $('#ddlproduct_pos_premium').multiselect('deselect', valuePREMIUM, true);
+                                                            }
+                                                            $('#ddlproduct_pos_premium option').each(function () {
+                                                                //ไว้เล่นวนลูปค่า
+                                                                //if ($(this).val() == option.val()) {
+                                                                //    alert($(this).val());
+                                                                //}
+                                                            });
+                                                        }
+                                                    }
+                                                },
+                                            });
+                                            if ($("#ddlin_or_out_stock").val() == "") {
+                                                $('#ddlproduct_pos_premium').multiselect('disable');
+                                            } else
+                                            {
+                                                var valuesSelectChoiceFromDb = [];
+                                                @if (Model.activityFormTBMMKT.list_1_multi_select != null)
+                                                {
+                                                    foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
+                                                    {
+                                                    @:valuesSelectChoiceFromDb.push("@itemArray");
+                                                    }
+                                                }
+                                                $("#ddlproduct_pos_premium").multiselect('select', valuesSelectChoiceFromDb);
+                                            }
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                            <label class="control-label col-md-3 col-xs-12">
+                                เพื่อ :
+                            </label>
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.list_2_select, new SelectList(Model.list_2, "id", "name", ""), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlfor"
+                                    })
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-12">
+                                Brand/ผลิตภัณฑ์ :
+                            </label>
+
+                            <div class="col-md-3 col-xs-12">
+                                <div class="row">
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.brand_select, new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", ""), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlbrand_select"
+                                    })
+                                    <script>
+                                        $("#ddlbrand_select").change(function () {
+                                            if ($("#ddlChannelOrBrand").val() != "" && $("#ddlbrand_select").val() != "") {
+                                                var dataToBeSend =
+                                                    {
+                                                        productBrandId: $("#ddlbrand_select").val()
+                                                        , companyId: "@UtilsAppCode.Session.User.empCompanyId"
+                                                    };
+
+                                                $.ajax('@Url.Action("GetDataCostCenter", "GetDataMainForm")',
+                                                    {
+                                                        contentType: "application/json; charset=utf-8",
+                                                        data: JSON.stringify(dataToBeSend),
+                                                        dataType: 'json',
+                                                        type: "POST",
+                                                        success: function (response) {
+                                                            if (response.Data.tB_Act_Master_Cost_CenterModels.length > 0) {
+                                                                var mixCostLastThreePosition = "";
+                                                                if ($("#ddlChannelOrBrand").val() == "Brand") {
+                                                                    mixCostLastThreePosition = "100";
+                                                                } else {
+                                                                    mixCostLastThreePosition = "200";
+                                                                }
+                                                                $.each(response.Data.tB_Act_Master_Cost_CenterModels, function () {
+                                                                    var resultCostCenter = (this['costCenter'] + mixCostLastThreePosition);
+                                                                    $("#txtCostCenter").val(resultCostCenter);
+                                                                });
+                                                            }
+                                                            else {
+                                                                $("#txtCostCenter").val("ไม่พบข้อมูลCostCenter");
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert("Error Get CosCenter.");
+                                                        }
+                                                    });
+                                            } else {
+                                                $("#txtCostCenter").val("");
+                                            }
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+
+                            <label class="control-label col-md-3 col-xs-12">
+                                Cost Center :
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.costCenter, new { @class = "form-control textboxcss", @id = "txtCostCenter", style = "", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-12">
+                                Channel+Region :
+                            </label>
+
+                            <div class="col-md-3 col-xs-12">
+                                <div class="row">
+                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.list_3_select, new SelectList(Model.list_3, "id", "name", ""), "", new
+                                    {
+                                        @class = "form-control selectpicker",
+                                        id = "ddlchannel_place"
+                                    })
+                                    <script>
+                                        $("#ddlchannel_place").change(function () {
+                                            if ($("#ddlchannel_place").val() != "") {
+                                                var dataToBeSend =
+                                                    {
+                                                        id: $("#ddlchannel_place").val()
+                                                        , master_type_form_id: "@Model.activityFormTBMMKT.master_type_form_id"
+                                                        , type: "channel_place"
+                                                    };
+
+                                                $.ajax('@Url.Action("GetDataListChoiceById", "GetDataMainForm")',
+                                                    {
+                                                        contentType: "application/json; charset=utf-8",
+                                                        data: JSON.stringify(dataToBeSend),
+                                                        dataType: 'json',
+                                                        type: "POST",
+                                                        success: function (response) {
+                                                            if (response.Data.tB_Act_Master_List_ChoiceModels.length > 0) {
+                                                                $.each(response.Data.tB_Act_Master_List_ChoiceModels, function () {
+                                                                    $("#txtchannelRegionName").val(this['sub_name']);
+                                                                });
+                                                            }
+                                                            else {
+                                                                $("#txtchannelRegionName").val("");
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert("Error GetDataListChoiceById.");
+                                                        }
+                                                    });
+                                            } else {
+                                                $("#txtchannelRegionName").val("");
+                                            }
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+
+                            <label class="control-label col-md-3 col-xs-12">
+                                Channel+Region Name:
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.channelRegionName, new { @class = "form-control textboxcss", @id = "txtchannelRegionName", style = "", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-12">
+                                GL No. :
+                            </label>
+
+                            <div class="col-md-3 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.glNo, new { @class = "form-control textboxcss", @id = "txtglNo", style = "", @readonly = "readonly" })
+                                </div>
+                            </div>
+
+                            <label class="control-label col-md-3 col-xs-12">
+                                GL Name:
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.glName, new { @class = "form-control textboxcss", @id = "txtglName", style = "", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-12">
+                                ให้แก่(ชื่อผู้รับ) :
+                            </label>
+
+                            <div class="col-md-3 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toName, new { @class = "form-control textboxcss", @id = "txttoName", style = "" })
+                                </div>
+                            </div>
+
+                            <label class="control-label col-md-3 col-xs-12">
+                                โทรศัพท์/โทรสาร
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txttoContact", style = "" })
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-12">
+                                หมายเหตุ วันที่ส่งมอบ :
+                            </label>
+
+                            <div class="col-md-3 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM/dd/yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "", placeholder = "" ,autocomplete = "off" })
+                                </div>
+                            </div>
+
+                            <label class="control-label col-md-3 col-xs-12">
+                                รายละเอียดผู้ติดต่อ
+                            </label>
+
+                            <div class="col-md-4 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, new { @class = "form-control textboxcss", @id = "txtdetailContact", style = "" })
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-12">
+                                ที่อยู่ :
+                            </label>
+
+                            <div class="col-md-10 col-xs-12">
+                                <div class="row">
+                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toAddress, new { @class = "form-control textboxcss", @id = "txttoAddress" })
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-12">
+                                วัตถุประสงค์ที่ขอเบิก :
+                            </label>
+
+                            <div class="col-md-10 col-xs-12">
+                                <div class="row">
+                                    @Html.TextAreaFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+    </td>
+</tr>
