@@ -508,7 +508,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 string id = Guid.NewGuid().ToString();
-                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc("SummaryDetail").FirstOrDefault().docNo));
+                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc("SummaryDetail","").FirstOrDefault().docNo));
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertSummaryDetail"
                     , new SqlParameter[] {
                         new SqlParameter("@id",id)

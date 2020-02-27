@@ -14,11 +14,17 @@ namespace eActForm.Controllers
     public class SignatureController : Controller
     {
         // GET: Signature
-        public ActionResult Index()
+        public ActionResult Index(ActSignatureModel.SignModel Model)
         {
-            ActSignatureModel.SignModel model = new ActSignatureModel.SignModel();
-            model.empId = UtilsAppCode.Session.User.empId;
-            return View(model);
+            if (string.IsNullOrEmpty(Model.empId))
+            {
+                Model.empId = UtilsAppCode.Session.User.empId;
+                Model.empName = UtilsAppCode.Session.User.empFNameTH + " " + UtilsAppCode.Session.User.empLNameTH;
+                Model.empCompanyName = QueryGet_empDetailById.getEmpDetailById(Model.empId).FirstOrDefault().companyName;
+                Model.positionTitle = UtilsAppCode.Session.User.empPositionTitleTH;
+            }
+
+            return View(Model);
         }
 
         [HttpPost]
@@ -47,9 +53,11 @@ namespace eActForm.Controllers
             {
                 UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
                     , model.signature
-                    , string.Format(ConfigurationManager.AppSettings["rootSignaURL"], UtilsAppCode.Session.User.empId));
+                    , string.Format(ConfigurationManager.AppSettings["rootSignaURL"], model.empId));
             }
-            return RedirectToAction("Index");
+
+            model.signature = null;
+            return RedirectToAction("Index", model);
 
 
 
@@ -59,6 +67,29 @@ namespace eActForm.Controllers
         {
             ActSignatureModel.SignModels models = new ActSignatureModel.SignModels();
             models.lists = SignatureAppCode.signatureGetByEmpId(empId);
+
+            List<RequestEmpModel> emp = new List<RequestEmpModel>();
+            emp = QueryGet_empDetailById.getEmpDetailById(empId);
+            ActSignatureModel.SignModel singna = new ActSignatureModel.SignModel();
+            if (!models.lists.Any())
+            {
+
+                singna.empId = emp[0].empId;
+                singna.empName = emp[0].empName;
+                singna.empCompanyName = emp[0].companyName;
+                singna.positionTitle = emp[0].position;
+               
+                models.lists.Add(singna);
+            }
+            else
+            {
+
+                models.lists[0].empId = emp[0].empId;
+                models.lists[0].empName = emp[0].empName;
+                models.lists[0].empCompanyName = emp[0].companyName;
+                models.lists[0].positionTitle = emp[0].position;
+            }
+
             return PartialView(models);
         }
 
@@ -68,5 +99,37 @@ namespace eActForm.Controllers
             ActSignatureModel.SignModel model = (models.lists == null || models.lists.Count == 0) ? null : models.lists[0];
             return PartialView(model);
         }
+
+        [HttpPost]
+        public ActionResult searchEmp(ActSignatureModel.SignModel model)
+        {
+            //ActSignatureModel.SignModel model = new ActSignatureModel.SignModel();
+            try
+            {
+
+
+                string empid = model.empId;
+                List<RequestEmpModel> emp = new List<RequestEmpModel>();
+
+                emp = QueryGet_empDetailById.getEmpDetailById(empid);
+
+                model.empId = emp[0].empId;
+                model.empName = emp[0].empName;
+                model.empCompanyName = emp[0].companyName;
+                model.positionTitle = emp[0].position;
+
+
+            }
+            catch (Exception ex)
+            {
+
+                // ExceptionManager.WriteError("insertDataActivityMainForm => " + ex.Message);
+            }
+
+            return RedirectToAction("Index", model);
+
+            // return Json(result);
+        }
+     
     }
 }

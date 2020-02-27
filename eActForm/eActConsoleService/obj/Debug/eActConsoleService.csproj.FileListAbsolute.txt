@@ -79,7 +79,7 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\Antlr3.Runtim
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\Antlr3.Runtime.pdb
 D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojResolveAssemblyReference.cache
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojResolveAssemblyReference.cache
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojResolveAssemblyReference.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache

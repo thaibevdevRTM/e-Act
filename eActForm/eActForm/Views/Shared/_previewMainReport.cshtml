@@ -7,32 +7,61 @@
         .fontDocV1 {
             font-family: 'TH SarabunPSK';
             font-size: 18px;
-            color:black;
+            color: black;
         }
+
         .fontDocV2 {
             font-family: 'TH SarabunPSK';
             font-size: 22px;
             color: black;
         }
+
+        .fontDocSmall {
+            font-family: 'TH SarabunPSK';
+            font-size: 14px;
+            color: black;
+        }
+
         .fontSigV1 {
             font-family: 'TH SarabunPSK';
             font-size: 14px;
             color: black;
         }
+
         .paddingFormV1 {
             width: 100%;
             padding-left: 35px;
         }
+
         .formListDetailV1 {
-            height: 460px;
-            vertical-align: top;            
+            height: 450px;
+            vertical-align: top;
+        }
+
+        .formListDetailV2 {
+            height: 400px;
+            vertical-align: top;
+        }
+
+        .fontDocV3 {
+            font-family: 'TH SarabunPSK';
+            font-size: 28px;
+            color: black;
+        }
+        .paddingFormV2 {
+            width: 100%;
+          
         }
     </style>
-    <div class="paddingFormV1">
-        <table style="width: 100%;" id="tabel_report" runat="server">
+    <div class="@ViewBag.padding">
+        <table style="width: 100%;" id="tabel_report" class="@ViewBag.classFont" border="0" runat="server">
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
-                @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+                <tr>
+                    <td>
+                        @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+                    </td>
+                </tr>
             }
         </table>
     </div>

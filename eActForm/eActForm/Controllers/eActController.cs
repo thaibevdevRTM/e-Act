@@ -285,6 +285,31 @@ namespace eActForm.Controllers
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getEmpDetailById(string empId)
+        {
+
+            List<RequestEmpModel> empDetailList = new List< RequestEmpModel>();
+            var result = new AjaxResult();
+            try
+            {
+                empDetailList = QueryGet_empDetailById.getEmpDetailById(empId).ToList();
+
+                var resultData = new
+                {
+                    empName= empDetailList.FirstOrDefault().empName,
+                    position = empDetailList.FirstOrDefault().position,
+                    level = empDetailList.FirstOrDefault().level,
+                    department = empDetailList.FirstOrDefault().department,
+                    bu = empDetailList.FirstOrDefault().bu,
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getEmpDetailById => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult getAllRegion(string txtRegion)
         {
 
