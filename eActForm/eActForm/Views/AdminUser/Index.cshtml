@@ -218,7 +218,8 @@
         });
 
         console.log(favorite.length);
-        if (favorite.length == 0 && $("#ddlCompany").val() == "5600" || $("#ddlCompany").val() == "5601") {
+        console.log($("#ddlCompany").val());
+        if (favorite.length == 0 && $("#ddlCompany").val() == "5600" && $("#ddlCompany").val() == "5601") {
             doMsgFail("กรุณาระบุ <br/>ProductType");
             return false;
         }
@@ -359,7 +360,7 @@
                             break;
                     }
                 });
-
+                $('input:checkbox').removeAttr('checked');
                 $.each(response.Data.userLists, function () {
                     switch (this['roleId']) {
                         case '1':

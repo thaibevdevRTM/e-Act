@@ -171,10 +171,10 @@
 
     <script>
 
-       
+
         $(document).ready(function () {
 
-            if ('@UtilsAppCode.Session.User.isApprove' == 'True' && '@UtilsAppCode.Session.User.isApprove' != '0') {
+            if ('@UtilsAppCode.Session.User.isApprove' == 'True' && '@UtilsAppCode.Session.User.countApproveReject' != '0') {
 
                 (new PNotify({
                     title: 'เอกสารที่คุณ"อนุมัติ"ไม่ได้รับการอนุมัติ',
@@ -194,7 +194,7 @@
             }
         });
 
-        
+
 
         function doMsgSuccess(msg) {
             bootbox.alert("<div class='row'><div class='text-center'><img width='150px' src='images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>");
