@@ -207,7 +207,6 @@ $(document).ready(function () {
 // iCheck
 $(document).ready(function () {
     if ($("input.flat")[0]) {
-        console.log("iCheckkkkkkkkkkkkkkkkkkkkkkk");
         $(document).ready(function () {
             $('input.flat').iCheck({
                 checkboxClass: 'icheckbox_flat-green',
@@ -1296,10 +1295,10 @@ function init_knob() {
         },
         release: function (value) {
             //console.log(this.$.attr('value'));
-            console.log("release : " + value);
+            //console.log("release : " + value);
         },
         cancel: function () {
-            console.log("cancel : ", this);
+            //console.log("cancel : ", this);
         },
         /*format : function (value) {
          return value + '%';
