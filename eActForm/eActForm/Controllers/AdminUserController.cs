@@ -41,7 +41,7 @@ namespace eActForm.Controllers
                     }
                 }
 
-                if (model.chkProductType.Any())
+                if (model.chkProductType != null)
                 {
                     foreach (var item in model.chkProductType)
                     {
@@ -75,6 +75,11 @@ namespace eActForm.Controllers
                             }
                         }
                     }
+                }
+                else
+                {
+                    //other Company
+                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, "", "");
                 }
             }
             catch(Exception ex)

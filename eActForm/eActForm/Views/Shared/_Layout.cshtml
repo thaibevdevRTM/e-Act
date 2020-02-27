@@ -174,7 +174,7 @@
        
         $(document).ready(function () {
 
-            if ('@UtilsAppCode.Session.User.isApprove' == 'True') {
+            if ('@UtilsAppCode.Session.User.isApprove' == 'True' && '@UtilsAppCode.Session.User.isApprove' != '0') {
 
                 (new PNotify({
                     title: 'เอกสารที่คุณ"อนุมัติ"ไม่ได้รับการอนุมัติ',
@@ -184,7 +184,7 @@
                 }));
             }
 
-            if ('@UtilsAppCode.Session.User.isCreator' == 'True') {
+            if ('@UtilsAppCode.Session.User.isCreator' == 'True' && '@UtilsAppCode.Session.User.countRejectAct' != '0') {
                 (new PNotify({
                     title: 'คุณมีเอกสารไม่รับการอนุมัติ' ,
                     text: 'จำนวน '+'@UtilsAppCode.Session.User.countRejectAct' +' รายการ',
