@@ -439,7 +439,7 @@
         fillProductOnChange();
         document.getElementById("ddlProductfilter").disabled = true;
         document.getElementById("ddlProductSize").disabled = true;
-
+        getFormatCus();
 
         var chkClaim = '@ViewBag.chkClaim'
         if (chkClaim == 'True') {
@@ -593,24 +593,31 @@
          });
     }
 
-    function getFormatCus() {
+    function clearFormatCus() {
         $("#txtReference").val('');
+    }
+
+    function getFormatCus() {
         document.getElementById("divRadioRef").innerHTML = "";
         document.getElementById("txtReference").readOnly = true;
         if ($("#ddlCustomer").val() == "B18BB124-0EFC-4D90-BFFD-D333A1F79E32") {
             $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Market" onchange = "onchangeRdbRef(this);">Market</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Mini" onchange = "onchangeRdbRef(this);">Mini</input>');
+            $("#divRadioRef").append('&nbsp;&nbsp;&nbsp;&nbsp;');
+            $("#divRadioRef").append('<button type="button" onclick = "clearFormatCus();">clear</button>');
         }
         else if ($("#ddlCustomer").val() == "8AAD2C59-114E-4819-BA8F-1931EED00A66") {     
             $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Express" onchange = "onchangeRdbRef(this);">Express</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Talad" onchange = "onchangeRdbRef(this);">Talad</input>&nbsp;&nbsp;');
             $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>');
+            $("#divRadioRef").append('&nbsp;&nbsp;&nbsp;&nbsp;');
+            $("#divRadioRef").append('<button type="button" onclick = "clearFormatCus();">clear</button>');
         }
         else {
             document.getElementById("txtReference").readOnly = false;
         }
-
+        
     }
 
     function onchangeRdbRef(element) {
@@ -882,6 +889,8 @@
             }
         }
         if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
+        if ($("#txtReference").val() == "" && $("#ddlCustomer").val() == "B18BB124-0EFC-4D90-BFFD-D333A1F79E32" ||
+            $("#ddlCustomer").val() == "8AAD2C59-114E-4819-BA8F-1931EED00A66") { required += "Reference*<br>"; validate = false; }
 
         //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 

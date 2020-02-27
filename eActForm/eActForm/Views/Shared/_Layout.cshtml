@@ -177,8 +177,8 @@
             if ('@UtilsAppCode.Session.User.isApprove' == 'True') {
 
                 (new PNotify({
-                    title: 'เอกสารที่คุณ"อนุมัติ"ไม่ได้รับการอนุมัติจำนวน ' + @UtilsAppCode.Session.User.countApproveReject+' รายการ',
-                    text: '',
+                    title: 'เอกสารที่คุณ"อนุมัติ"ไม่ได้รับการอนุมัติ',
+                    text: 'จำนวน ' + '@UtilsAppCode.Session.User.countApproveReject' +' รายการ',
                     hide: false,
                     styling: 'bootstrap3'
                 }));
@@ -186,8 +186,8 @@
 
             if ('@UtilsAppCode.Session.User.isCreator' == 'True') {
                 (new PNotify({
-                    title: 'คุณมีเอกสารไม่รับการอนุมัติจำนวน ' + @UtilsAppCode.Session.User.countRejectAct+' รายการ',
-                    text: '',
+                    title: 'คุณมีเอกสารไม่รับการอนุมัติ' ,
+                    text: 'จำนวน '+'@UtilsAppCode.Session.User.countRejectAct' +' รายการ',
                     hide: false,
                     styling: 'bootstrap3'
                 }));

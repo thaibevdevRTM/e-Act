@@ -211,13 +211,13 @@
             favorite.push($(this).val());
         });
 
-
-        if (favorite.length > 0 && $("#ddlCompany").val() != "") {
-            $("#frmAdminUser").submit();
+        console.log(favorite.length);
+        if (favorite.length == 0 && $("#ddlCompany").val() == "5600" || $("#ddlCompany").val() == "5601") {
+            doMsgFail("กรุณาระบุ <br/>ProductType");
+            return false;
         }
         else {
-            doMsgFail("กรุณาระบุ <br/>ProductType<br/>,Company");
-            return false;
+            $("#frmAdminUser").submit();
         }
     }
     $(document).ready(function () {
