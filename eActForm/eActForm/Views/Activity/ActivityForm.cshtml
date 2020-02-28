@@ -892,8 +892,9 @@
             }
         }
         if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
-        if ($("#txtReference").val() == "" && $("#ddlCustomer").val() == "B18BB124-0EFC-4D90-BFFD-D333A1F79E32" &&
-            $("#ddlCustomer").val() == "8AAD2C59-114E-4819-BA8F-1931EED00A66") { required += "Reference*<br>"; validate = false; }
+
+        if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "B18BB124-0EFC-4D90-BFFD-D333A1F79E32" ||
+            $("#ddlCustomer").val() == "8AAD2C59-114E-4819-BA8F-1931EED00A66")) { required += "Reference*<br>"; validate = false; }
 
         //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 
