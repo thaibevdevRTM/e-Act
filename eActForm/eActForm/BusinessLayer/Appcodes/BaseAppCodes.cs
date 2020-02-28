@@ -62,7 +62,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 }
                 else
                 {
-                    return ConfigurationManager.AppSettings["companyId_MT"].ToString();
+                    return UtilsAppCode.Session.User.empCompanyId;
                 }
 
             }
