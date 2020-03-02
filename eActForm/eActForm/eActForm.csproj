@@ -2523,7 +2523,6 @@
     <Content Include="Views\SharedMasterFormDetail\exPerryEmpInfoDetail.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetailsDate_dmy.cshtml" />
     <Content Include="Views\ImportMaterial_PRODUCT_POS_PREMIUM\Index.cshtml" />
-    <Content Include="Uploadfiles\ImportMatProductPosPremium\template\template_import_data_product_pos_premium.xlsx" />
     <Content Include="Views\Approve\approvePositionSignatureListsV2.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\showSignatureV2.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyWithLogoV2.cshtml" />
@@ -2542,6 +2541,7 @@
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
+    <Folder Include="Uploadfiles\ImportMatProductPosPremium\template\" />
     <Folder Include="Views\ApiApprove\" />
     <Folder Include="Views\exPerryCash\" />
   </ItemGroup>

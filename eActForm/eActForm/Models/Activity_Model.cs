@@ -54,7 +54,7 @@ namespace eActForm.Models
             OMT,
             MT,
             TBM,
-            EXPENSE
+            EXPENSE,
             HCM,
             OtherCompany
         }
@@ -187,6 +187,7 @@ namespace eActForm.Models
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
         public string formCompanyId { get; set; }
+        public string subjectId { get; set; }
 
     }
 

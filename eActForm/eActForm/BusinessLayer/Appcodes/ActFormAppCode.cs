@@ -25,11 +25,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
 
-                if (rtn > 0)
-                {
-                    EmailAppCodes.sendRequestCancelToAdmin(actId);
-                }
-
                 return rtn;
             }
             catch (Exception ex)
@@ -67,10 +62,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
-                if (rtn > 0)
-                {
-                    EmailAppCodes.sendRequestCancelToAdmin(actId);
-                }
                 return rtn;
             }
             catch (Exception ex)
@@ -237,6 +228,15 @@ namespace eActForm.BusinessLayer
                 return result;
                 throw new Exception("convertThaiBaht >>" + ex.Message);
             }
+        }
+
+        public static bool isAdmin()
+        {
+            return (UtilsAppCode.Session.User.isAdminOMT
+                || UtilsAppCode.Session.User.isAdmin
+                || UtilsAppCode.Session.User.isAdminTBM
+                || UtilsAppCode.Session.User.isAdminHCM
+                || UtilsAppCode.Session.User.isSuperAdmin) ? true : false;
         }
     }
 }
