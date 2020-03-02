@@ -5,7 +5,7 @@
    
     return {
 
-        editProduct: function (id, productcode, cateid, groupid, brandid, size, pack, productname, smellid,unit) {
+        editProduct: function (id, productcode, cateid, groupid, brandid, size, pack, productname, smellid,unit,digit_IO) {
 
             $.ajax({
                 url: $adminPage.urlgetProductSmell,
@@ -74,7 +74,8 @@
             $("#txtUnit").val(unit);
             $("#txtPack").val(pack);
             $("#txtProductName").val(productname);
-           
+            $("#txtDigit_IO").val(digit_IO);
+            
 
         },
 
@@ -250,6 +251,7 @@
                                     productName: $("#txtProductName").val(),
                                     productCode: $("#txtProductCode").val(),
                                     smellId: $("#ddlProductSmell").val(),
+                                    digit_IO: $("#txtDigit_IO").val(),
                                 },
                                 dataType: "json",
                                 type: 'POST',
@@ -271,6 +273,7 @@
                                     productName: $("#txtProductName").val(),
                                     productCode: $("#txtProductCode").val(),
                                     smellId: $("#ddlProductSmell").val(),
+                                    digit_IO: $("#txtDigit_IO").val(),
                                 },
                                 dataType: "json",
                                 type: 'POST',
