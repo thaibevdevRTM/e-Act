@@ -79,7 +79,7 @@
                                                             if (indexIn == 0) {
                                                                 $("#suggesstion_box_@index").append("<ul id='autocomplete_list_@index' style='list-style-type: none;position: absolute;'></ul>");
                                                             }
-                                                            $("#autocomplete_list_@index").append("<li style='margin-left:-40px;' onClick=\"selectData('@index','" + this['material'] + "','" + this['materialDescription'].replace("\"","&quot;") + "','" + this['qtyName'] + "')\" value='" + this['material'] + "'>" + this['materialDescription'] + "</li>");
+                                                            $("#autocomplete_list_@index").append("<li style='margin-left:-40px;' onClick=\"selectData('@index','" + this['material'] + "','" + this['materialDescription'].replace("\"", "&quot;").replace("'","\\'") + "','" + this['qtyName'] + "')\" value='" + this['material'] + "'>" + this['materialDescription'] + "</li>");
                                                             indexIn++;
                                                         });
                                                         $("#suggesstion_box_@index").show();
