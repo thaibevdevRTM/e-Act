@@ -3,14 +3,17 @@
 <tr style="border-bottom:none;">
     <td>
         <div id="divPlaceDetail" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
-            
 
-        <div id="divDetailRows" >
-            @Html.Action("expensesDetailRows", "SharedMasterFormDetail_Input", new { model = @Model.expensesDetailModel ,isNew = false })
-        </div>
-            <div class="form-group col-lg-1 col-xs-1" onclick="addDetailRows()">
-                <label class="btn ink-reaction btn-danger fa fa-plus"></label>
+
+            <div id="divDetailRows">
+                @Html.Action("expensesDetailRows", "SharedMasterFormDetail_Input", new { model = @Model.expensesDetailModel, isNew = false })
             </div>
+
+            @*<div class="form-group col-lg-1 col-xs-1"
+                 onclick="addClick()">
+                <label class="btn ink-reaction btn-danger fa fa-plus"></label>
+            </div>*@
+
         </div>
     </td>
 </tr>

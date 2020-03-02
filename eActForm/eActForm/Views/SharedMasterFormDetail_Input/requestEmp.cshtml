@@ -1,5 +1,9 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
+
+<link href="~/Scripts/bootstrap-select.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-select.min.js"></script>
+
 <tr style="border-bottom:none;">
     <td>
         <div id="divRequestEmp" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
@@ -11,10 +15,10 @@
                 </tr>
                 <tr style="height:25px;">
                     <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Name / ชื่อ</th>
-                    <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Position / ตำแหน่ง</th>
+                    <th style="width: 22%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Position / ตำแหน่ง</th>
                     <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">level </th>
                     <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Department  / หน่วยงาน</th>
-                    <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">BU / หน่วยธุรกิจ</th>
+                    <th style="width: 23%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">BU / หน่วยธุรกิจ</th>
                 </tr>
                 @{ var index = 0;}
                 @foreach (var item in Model.requestEmpModel)
@@ -56,18 +60,10 @@
             </table>
             <script>
 
-                function sumall() {
-                    var totalAll = 0.00;
-                    var rowCount = parseInt($('#tabelHeaderDetails tr.tagCountRowinTable').length);
-
-                    for (i = 0; i < rowCount; i++) {
-                        var rowtotal = parseFloat($(".txttotal_" + i.toString()).val().replace(",", ""));
-                        $(".hidtotal_" + i.toString()).val(rowtotal.toFixed(2));
-                        totalAll = totalAll + rowtotal;
-                    }
-
-                    $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                }
+                $('.selectpicker').selectpicker({
+                    liveSearch: true,
+                    showSubtext: true
+                });
 
                 function changeGetEmp(rowIndex) {
 

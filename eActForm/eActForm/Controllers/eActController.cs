@@ -306,6 +306,7 @@ namespace eActForm.Controllers
 
                 var resultData = new
                 {
+                    empName= empDetailList.FirstOrDefault().empName,
                     position = empDetailList.FirstOrDefault().position,
                     level = empDetailList.FirstOrDefault().level,
                     department = empDetailList.FirstOrDefault().department,

@@ -54,6 +54,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>C:\Users\70015978\Desktop\EPPlus\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\MAS_WebAPI\TBWebApi\bin\itextsharp.dll</HintPath>
@@ -182,6 +185,8 @@
     <Compile Include="BusinessLayer\Appcodes\AdminUserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\BaseAppCodes.cs" />
     <Compile Include="BusinessLayer\Appcodes\exPerryCashAppCode.cs" />
+    <Compile Include="BusinessLayer\Appcodes\FileExt.cs" />
+    <Compile Include="BusinessLayer\Appcodes\ImageAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
     <Compile Include="BusinessLayer\Appcodes\managementFlowAppCode.cs" />
     <Compile Include="BusinessLayer\CommandHandler\ActivityFormCommandHandler.cs" />
@@ -216,7 +221,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetBudgetReport.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetChanelNameByCustomerId.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetCostDetailById.cs" />
-    <Compile Include="BusinessLayer\Appcodes\ImageAppCode.cs" />
+    <Compile Include="BusinessLayer\Appcodes\ExcelAppCode.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetInvoiceActivityStstus.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetMessage.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetProductCostDetail.cs" />
@@ -235,6 +240,11 @@
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_empDetailById.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllBrandByForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllChanelByForm.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_master_cost_center.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_ActivityChoiceSelect.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryProcess_TB_Act_master_material.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_master_material.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_master_list_choice.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelByGroup.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_channelMaster.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_master_company.cs" />
@@ -273,6 +283,7 @@
     <Compile Include="Controllers\eActController.cs" />
     <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportMaterial_PRODUCT_POS_PREMIUMController.cs" />
     <Compile Include="Controllers\MainFormController.cs" />
     <Compile Include="Controllers\SharedMasterFormDetail_InputController.cs" />
     <Compile Include="Controllers\SharedMasterFormHeaderCompany_InputController.cs" />
@@ -293,6 +304,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\exPerryCashModel.cs" />
+    <Compile Include="Models\ImportExcel.cs" />
+    <Compile Include="Models\TB_Act_ActivityChoiceSelectModel.cs" />
+    <Compile Include="Models\TB_Act_master_list_choiceModel.cs" />
     <Compile Include="Models\Master_Company_Model.cs" />
     <Compile Include="Models\Master_type_form_Model.cs" />
     <Compile Include="Models\Master_type_form_detail_Model.cs" />
@@ -331,6 +345,9 @@
     <Compile Include="Models\TB_Bud_Image_Model.cs" />
     <Compile Include="Models\TB_Reg_ApproveGroup_Model.cs" />
     <Compile Include="Models\TB_Reg_FlowLimit_Model.cs" />
+    <Compile Include="Models\TB_Act_master_cost_centerModel.cs" />
+    <Compile Include="Models\TB_Act_master_material_Model.cs" />
+    <Compile Include="Models\ObjGetData_master_material_Model.cs" />
     <Compile Include="Models\TB_Reg_Subject_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForm1.aspx.cs">
@@ -358,6 +375,7 @@
     <Content Include="Content\fontawesome\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\jquery.datetimepicker.css" />
+    <Content Include="Content\tablethin.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -2010,6 +2028,8 @@
     <Content Include="Content\vendors\moment\templates\globals.js" />
     <Content Include="Content\vendors\moment\templates\locale-header.js" />
     <Content Include="Content\vendors\moment\templates\test-header.js" />
+    <Content Include="Content\vendors\multiselect\bootstrap-multiselect.css" />
+    <Content Include="Content\vendors\multiselect\bootstrap-multiselect.js" />
     <Content Include="Content\vendors\nprogress\index.html" />
     <Content Include="Content\vendors\nprogress\nprogress.css" />
     <Content Include="Content\vendors\nprogress\nprogress.js" />
@@ -2029,6 +2049,7 @@
     <Content Include="images\contact2.png" />
     <Content Include="images\contact3.png" />
     <Content Include="images\favicon.ico" />
+    <Content Include="images\horecaLogo.jpg" />
     <Content Include="images\icon_ref.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\logo-ss.png" />
@@ -2036,6 +2057,7 @@
     <Content Include="images\logo_vision2020.png" />
     <Content Include="images\maintain.png" />
     <Content Include="images\non_al.jpeg" />
+    <Content Include="images\tbmmktLogo.png" />
     <Content Include="images\warning_error.png" />
     <Content Include="images\xlx.png" />
     <Content Include="Scripts\Admin\adminPage.js" />
@@ -2049,6 +2071,10 @@
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.css" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap-select.css" />
+    <Content Include="Scripts\bootstrap-select.js" />
+    <Content Include="Scripts\bootstrap-select.min.css" />
+    <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2226,8 +2252,12 @@
     <Content Include="Content\vendors\iCheck\bower.json" />
     <Content Include="Content\vendors\iCheck\icheck.jquery.json" />
     <Content Include="ActSummaryDetail\f063c365-1e86-433e-bbb9-1fc6b58a386c.pdf" />
+    <Content Include="manual\travelling_TBM.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <Content Include="Scripts\bootstrap-select.js.map" />
+    <Content Include="Scripts\bootstrap-select.min.js.map" />
+    <Content Include="Scripts\bootstrap-select.css.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -2252,7 +2282,6 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Uploadfiles\logo-ss.png" />
     <Content Include="uploadImages\12f4c0ff-c7ab-4308-b185-d072c9f151c8_72777008-1A93-48E0-A420-357B10696E30.png" />
     <Content Include="uploadImages\19f467c5-4b1a-4f84-975c-a86a0694f462_63164D1C-469B-431F-8C5B-0EA2544DFEA1.png" />
     <Content Include="uploadImages\301b51cb-8e48-4ed9-9215-01be74d96c83_05F58F69-427D-4FC5-975F-6C062CC8947A.png" />
@@ -2462,6 +2491,11 @@
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetails.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetailsDate.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\dropdownCondtionTbmmkt.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyWithLogoV1.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderDetail\headerDetails_Pos_Premium.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail\listDetailsPosPremium.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetails_Pos_Premium.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\listDetailsPosPremium.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\requestEmp.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\purposeDetail.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\placeDetail.cshtml" />
@@ -2487,6 +2521,14 @@
     <Content Include="Views\SharedMasterFormDetail\exPerryCashDetail.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\exPerryListDetail.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\exPerryEmpInfoDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetailsDate_dmy.cshtml" />
+    <Content Include="Views\ImportMaterial_PRODUCT_POS_PREMIUM\Index.cshtml" />
+    <Content Include="Uploadfiles\ImportMatProductPosPremium\template\template_import_data_product_pos_premium.xlsx" />
+    <Content Include="Views\Approve\approvePositionSignatureListsV2.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail\showSignatureV2.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyWithLogoV2.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyV2.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerViewManual.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
@@ -2528,7 +2570,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61263</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61263/</IISUrl>
+          <IISUrl>http://localhost:61264/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

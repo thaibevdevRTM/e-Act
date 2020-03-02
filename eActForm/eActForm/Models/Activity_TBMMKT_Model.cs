@@ -33,6 +33,13 @@ namespace eActForm.Models
         public List<TB_Act_Other_Model> objExpenseCashList { get; set; }
         public List<exPerryCashModel> exPerryCashList { get; set; }
         public exPerryCashModel exPerryCashModel { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_0 { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_1 { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_2 { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_3 { get; set; }
+        public List<TB_Act_ActivityChoiceSelectModel> tB_Act_ActivityChoiceSelectModel { get; set; }
+        public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model_2 { get; set; }
+
         public Activity_TBMMKT_Model()
         {
             channelMasterTypeList = new List<ChannelMasterType>();
@@ -57,6 +64,19 @@ namespace eActForm.Models
         public string createdByName { get; set; }
         public string formName { get; set; }
         public string companyName { get; set; }
+        public string list_0_select { get; set; }
+        public string list_0_select_value { get; set; }
+        public string[] list_1_multi_select { get; set; }
+        public string list_2_select { get; set; }
+        public string list_3_select { get; set; }
+        public string brand_select { get; set; }
+        public string labelRequire { get; set; }
+        public string labelInOrOutStock { get; set; }
+        public string labelBrandOrChannel { get; set; }
+        public string labelFor { get; set; }
+        public string labelBrand { get; set; }
+        public string labelChannelRegion { get; set; }
+        public string formCompanyId { get; set; }
     }
 
     public class TB_Reg_Subject
@@ -93,6 +113,15 @@ namespace eActForm.Models
         public string updatedByUserId { get; set; }
         public string BudgetNumber { get; set; }
         public string groupName { get; set; }
+        public string costCenter { get; set; }
+        public string channelRegionName { get; set; }
+        public string glNo { get; set; }
+        public string glName { get; set; }
+        public string toName { get; set; }
+        public string toAddress { get; set; }
+        public string toContact { get; set; }
+        public string detailContact { get; set; }
+        public string brand_select { get; set; }
     }
 
 
@@ -150,6 +179,7 @@ namespace eActForm.Models
         public string level { get; set; }
         public string department { get; set; }
         public string bu { get; set; }
+        public string companyName { get; set; }
     }
 
     public class PurposeModel : ActBaseModel

@@ -28,12 +28,13 @@ namespace eActForm.BusinessLayer
                                  level = d["empLevel"].ToString(),
                                  department = d["empDepartmentTH"].ToString(),
                                  bu = d["empDivisionTH"].ToString(),
+                                 companyName = "บริษัท" + d["companyNameTH"].ToString(),
                              });
                 return lists.OrderBy(x => x.empName).ToList();
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllActivityGroup => " + ex.Message);
+                ExceptionManager.WriteError("getEmpDetailById => " + ex.Message);
                 return new List<RequestEmpModel>();
             }
         }

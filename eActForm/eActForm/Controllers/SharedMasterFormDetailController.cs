@@ -34,10 +34,10 @@ namespace eActForm.Controllers
         {
             return PartialView(activity_TBMMKT_Model);
         }
-
-
-
-
+        public ActionResult listDetailsPosPremium(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            return PartialView(activity_TBMMKT_Model);
+        }
         public ActionResult requestToRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             return PartialView(activity_TBMMKT_Model);
@@ -48,6 +48,7 @@ namespace eActForm.Controllers
         }
         public ActionResult purposeDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            activity_TBMMKT_Model.purposeModel = activity_TBMMKT_Model.purposeModel.Where(x => x.chk == true).ToList();
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult placeDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
@@ -87,5 +88,9 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
+        public ActionResult showSignatureV2(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            return PartialView(activity_TBMMKT_Model);
+        }
     }
 }

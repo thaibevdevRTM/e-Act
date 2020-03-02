@@ -55,6 +55,8 @@ namespace eActForm.Models
             MT,
             TBM,
             EXPENSE
+            HCM,
+            OtherCompany
         }
 
 
@@ -120,6 +122,7 @@ namespace eActForm.Models
         public int statusId { get; set; }
         public string activityNo { get; set; }
         public DateTime? documentDate { get; set; }
+        public string documentDateStr { get; set; }
         public string reference { get; set; }
         public string cusShortName { get; set; }
         public string customerName { get; set; }
@@ -183,6 +186,8 @@ namespace eActForm.Models
         public string benefit { get; set; }
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
+        public string formCompanyId { get; set; }
+
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel

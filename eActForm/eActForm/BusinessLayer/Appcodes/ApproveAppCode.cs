@@ -386,6 +386,7 @@ namespace eActForm.BusinessLayer
                                                  rangNo = (int)dr["rangNo"],
                                                  empId = dr["empId"].ToString(),
                                                  empName = dr["empName"].ToString(),
+                                                 empName_EN = dr["empName_EN"].ToString(),
                                                  empEmail = dr["empEmail"].ToString(),
                                                  statusId = dr["statusId"].ToString(),
                                                  statusName = dr["statusName"].ToString(),

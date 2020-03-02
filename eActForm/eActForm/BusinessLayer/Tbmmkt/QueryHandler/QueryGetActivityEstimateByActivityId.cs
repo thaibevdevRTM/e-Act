@@ -25,6 +25,7 @@ namespace eActForm.BusinessLayer
                                   id = d["id"].ToString(),
                                   activityId = d["activityId"].ToString(),
                                   activityTypeId = d["activityTypeId"].ToString(),
+                                  productId = d["productId"].ToString(),
                                   productDetail = d["productDetail"].ToString(),                                
                                   unit = int.Parse(d["unit"].ToString()),
                                   unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),

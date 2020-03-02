@@ -15,7 +15,7 @@
                 Unit/ หน่วย
             </th>
             <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                Unit Price / <br />ราคาต่อหน่วย
+                Unit Price / <br />ราคาต่อหน่วย(บาท)
             </th>
             <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                 Exchange Rete /<br />อัตราแลกเปลี่ยน
@@ -26,7 +26,7 @@
             </th>
             <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                 Total
-                /รวม
+                /รวม(บาท)
             </th>
         </tr>
         @{ var index = 0;}
@@ -48,7 +48,7 @@
                 </td>
                 <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
 
-                    <input type="number" value="@item.typeTheme" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" min="0" class="form-control textboxcss text-center " />
+                    <input type="number" value="@item.unit" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" min="0" class="form-control textboxcss text-center " />
 
                     @*@Html.TextBoxFor(x => item.unit, new
                         {

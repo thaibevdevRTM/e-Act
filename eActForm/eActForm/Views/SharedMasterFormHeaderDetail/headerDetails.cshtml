@@ -1,6 +1,7 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer;
 @using System.Globalization;
+@using System.Configuration;
 @{
     var dearGroup = "";
     var signBook = "";
@@ -9,11 +10,11 @@
     {
         foreach (var item in Model.approveFlowDetail)
         {
-            if (item.approveGroupId == "7C308168-B155-4684-A2CD-906EC94AA49C")
+            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGroupApproveby"])
             {
                 dearGroup = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
             }
-            if (item.approveGroupId == "CA8C71D3-F975-401E-A095-86E2E11C8014")
+            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGrouApplicantTwo"])
             {
                 signBook = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
                 signBookPos = item.empPositionTitleTH;
@@ -29,79 +30,79 @@
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
 }
-<tr style="">
-    <td>
-        <div id="divHeaderDetails" runat="server" style="width: 100%;">
-            <table style="width: 100%;" id="tabelHeaderDetails" runat="server" class="fontDocV1">
-                <tr>
-                    <td>
-                        <table style="border-color:none;" class="fontDocV1">
-                            <tr>
-                                <td style="width:65px;">&nbsp;เรียน</td>
-                                <td style="width:635px; text-align:left;">@dearGroup</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;" class="fontDocV1">
-                            <tr>
-                                <td style="width:65px;vertical-align:top;">&nbsp;วัตถุประสงค์</td>
-                                <td style="width:635px;vertical-align:top;" colspan="5">@Html.Raw(Model.activityFormModel.objective.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;" class="fontDocV1">
-                            <tr>
-                                <td style="width:65px;">&nbsp;ชื่องาน</td>
-                                <td style="width:245px;">@Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "lblActivityName" })</td>
-                                <td style="width:20px;">&nbsp;EO</td>
-                                <td style="width:150px;">&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "lblEO" })</td>
-                                <td style="width:20px;">&nbsp;IO</td>
-                                <td style="width:200px;">&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.IO, new { @class = "", @id = "lblIO" })</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;" class="fontDocV1">
-                            <tr>
-                                <td style="width:65px;vertical-align:top;">&nbsp;ชื่อผู้ขอยืม</td>
-                                <td style="width:245px;vertical-align:top;">@signBook</td>
-                                <td style="width:50px;vertical-align:top;">&nbsp;ตำแหน่ง</td>
-                                <td style="width:340px;vertical-align:top;">&nbsp;@signBookPos</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;" class="fontDocV1">
-                            <tr>
-                                <td style="width:65px;">&nbsp;ต้องการเช็ค</td>
-                                <td style="width:245px;">&nbsp;@Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
-                                <td style="width:390px;">&nbsp;เคลียร์เงินทดรองในวันที่&nbsp;@Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="border-color:none;" class="fontDocV1">
-                            <tr>
-                                <td style="width:65px;">&nbsp;จำนวนเงิน</td>
-                                <td style="width:635px;">@Model.totalCostThisActivity.Value.ToString("#,##0.00")&nbsp;(@DocumentsAppCode.ThaiBahtText(Model.totalCostThisActivity.Value.ToString()))</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+@*<tr style="">
+    <td>*@
+<div id="divHeaderDetails" runat="server" style="width: 100%;">
+    <table style="width: 100%;" id="tabelHeaderDetails" runat="server" class="fontDocV1">
+        <tr>
+            <td>
+                <table style="border-color:none;" class="fontDocV1">
+                    <tr>
+                        <td style="width:65px;">&nbsp;เรียน</td>
+                        <td style="width:635px; text-align:left;">@dearGroup</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="border-color:none;" class="fontDocV1">
+                    <tr>
+                        <td style="width:65px;vertical-align:top;">&nbsp;วัตถุประสงค์</td>
+                        <td style="width:635px;vertical-align:top;" colspan="5">@Html.Raw(Model.activityFormModel.objective.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="border-color:none;" class="fontDocV1">
+                    <tr>
+                        <td style="width:65px;">&nbsp;ชื่องาน</td>
+                        <td style="width:245px;">@Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "lblActivityName" })</td>
+                        <td style="width:20px;">&nbsp;EO</td>
+                        <td style="width:150px;">&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "lblEO" })</td>
+                        <td style="width:20px;">&nbsp;IO</td>
+                        <td style="width:200px;">&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.IO, new { @class = "", @id = "lblIO" })</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="border-color:none;" class="fontDocV1">
+                    <tr>
+                        <td style="width:65px;vertical-align:top;">&nbsp;ชื่อผู้ขอยืม</td>
+                        <td style="width:245px;vertical-align:top;">@signBook</td>
+                        <td style="width:50px;vertical-align:top;">&nbsp;ตำแหน่ง</td>
+                        <td style="width:340px;vertical-align:top;">&nbsp;@signBookPos</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="border-color:none;" class="fontDocV1">
+                    <tr>
+                        <td style="width:65px;">&nbsp;ต้องการเช็ค</td>
+                        <td style="width:245px;">&nbsp;@Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
+                        <td style="width:390px;">&nbsp;เคลียร์เงินทดรองในวันที่&nbsp;@Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy", DateEnglish)</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="border-color:none;" class="fontDocV1">
+                    <tr>
+                        <td style="width:65px;">&nbsp;จำนวนเงิน</td>
+                        <td style="width:635px;">@Model.totalCostThisActivity.Value.ToString("#,##0.00")&nbsp;(@DocumentsAppCode.ThaiBahtText(Model.totalCostThisActivity.Value.ToString()))</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 
-        </div>
-    </td>
-</tr>
+</div>
+@*</td>
+    </tr>*@
