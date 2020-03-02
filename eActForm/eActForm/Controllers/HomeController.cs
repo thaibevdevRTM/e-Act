@@ -42,7 +42,7 @@ namespace eActForm.Controllers
 
 
 
-        public ActionResult myDoc(string actId , string typeForm)
+        public ActionResult myDoc(string actId, string typeForm)
         {
             Activity_Model.actForms model;
             if (TempData["SearchDataModel"] != null)

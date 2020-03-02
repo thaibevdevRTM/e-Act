@@ -79,3 +79,5 @@ D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleSer
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojResolveAssemblyReference.cache
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojResolveAssemblyReference.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache

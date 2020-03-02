@@ -1,0 +1,77 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+<tr>
+    <td style="">
+        <div class="form-group">
+            <div style="height:10px" class="row">
+                <label class="control-label col-md-12 col-xs-12"></label>
+            </div>
+            <div class="row">
+                <label class="control-label col-md-1 col-xs-12"></label>
+                <label class="control-label col-md-2 col-xs-12">
+                    วันที่/Document Date :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.TextBoxFor(x => x.activityFormModel.documentDateStr, new { @class = "form-control textboxcss ", id = "txtdateDoc2", style = "" })
+                        @*<input type="text" value="@Model.activityFormModel.documentDate" id="txtdateDoc" name="activityFormModel.documentDate" class="form-control textboxcss txtdateDoc2" style="width:140px;" />*@
+
+                    </div>
+                </div>
+                <div class="col-md-5 col-xs-12">
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div style="height:10px" class="row">
+                <label class="control-label col-md-12 col-xs-12"></label>
+            </div>
+            <div class="row">
+                <label class="control-label col-md-1 col-xs-12"></label>
+                <label class="control-label col-md-2 col-xs-12">
+                    ประเภทการเดินทาง :
+                </label>
+                <div class="col-md-4 col-xs-12">
+
+                    <div class="row">
+                        @Html.DropDownListFor(x => x.activityFormTBMMKT.list_0_select, new SelectList(Model.list_0, "id", "name", ""), "", new
+                       {
+                           @class = "form-control selectpicker",
+                           id = "ddlTravelling"
+                       })
+
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-5 col-xs-12">
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(function () {
+
+                    $('#txtdateDoc2').datetimepicker({
+                        language: 'th',
+                        format: 'dd-mm-yyyy',
+                        weekStart: 1,
+                        todayBtn: 1,
+                        autoclose: 1,
+                        todayHighlight: 1,
+                        startView: 2,
+                        minView: 2,
+                        forceParse: 0
+                    });
+
+
+                });
+
+            </script>
+
+        </div>
+
+    </td>
+</tr>

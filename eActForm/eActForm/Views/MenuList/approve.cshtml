@@ -15,7 +15,7 @@
                 </a>
             </li>
             @if (UtilsAppCode.Session.User.isSuperAdmin ||
-                UtilsAppCode.Session.User.isApprove && UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_TBM"])
+                UtilsAppCode.Session.User.isApprove && UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_TBM"] && UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_HCM"])
             {
                 <li>
                     <a href="@Url.Action("Index", "ApproveListsRepDetail")">

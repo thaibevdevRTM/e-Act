@@ -114,6 +114,10 @@
                     <input id="adminTBM" type="checkbox" name="model.chkRole" value="6">
                     adminTBM
                 </div>
+                <div>
+                    <input id="adminHCM" type="checkbox" name="model.chkRole" value="7">
+                    adminHCM
+                </div>
             </div>
 
             <div id="divProductType">
@@ -380,6 +384,9 @@
                             break;
                         case '6':
                             document.getElementById("adminTBM").checked = true;
+                            break;
+                        case '7':
+                            document.getElementById("adminHCM").checked = true;
                             break;
                     }
                 });

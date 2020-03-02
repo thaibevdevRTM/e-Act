@@ -230,6 +230,7 @@ namespace eActForm.Controllers
                 }
               
                 getPromotionCost = getPromotionCost == 0 ? 1 : getPromotionCost;
+                getNormalCost = getNormalCost == 0 ? 1 : getNormalCost;
                 get_PerTotal = p_total == 0 ? 0 : (p_total / (decimal.Parse(promotionCase) * getNormalCost)) * 100; // % ยอดขายโปโมชั่น
 
 

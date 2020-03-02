@@ -1,0 +1,24 @@
+﻿
+@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.Models;
+
+<div id="divForm" style="width:97%; margin-left:20px;">
+    <table style="width: 100%;" id="tabel_report" runat="server">
+    
+        <tr style="border-bottom:none;">
+            <td>
+                @RenderPage("~/Views/TravellingInCountryFormReport/headerCompany.cshtml")
+                @RenderPage("~/Views/TravellingInCountryFormReport/requestToRpt.cshtml")
+                @RenderPage("~/Views/TravellingInCountryFormReport/requestEmpRpt.cshtml")
+                @RenderPage("~/Views/TravellingInCountryFormReport/purposeDetailRpt.cshtml")
+                @RenderPage("~/Views/TravellingInCountryFormReport/placeDetailRpt.cshtml")
+                @RenderPage("~/Views/TravellingInCountryFormReport/expensesDetailsRpt.cshtml")
+                @RenderPage("~/Views/TravellingInCountryFormReport/chargeToRpt .cshtml")
+                @RenderPage("~/Views/TravellingInCountryFormReport/benefitDetailRpt.cshtml")
+                @RenderPage("~/Views/TravellingInCountryFormReport/remarksDetailRpt.cshtml")
+                @RenderPage("~/Views/TravellingInCountryFormReport/lastWordRpt.cshtml")
+            </td>
+        </tr>
+    </table>
+
+</div>
