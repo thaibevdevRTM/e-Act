@@ -228,6 +228,7 @@ namespace eActForm.Models
         public string detail { get; set; }
         public string date { get; set; }
 
+        public string mechanics { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public CostThemeDetailOfGroupByPrice()
@@ -263,6 +264,7 @@ namespace eActForm.Models
         public Boolean isShowGroup { get; set; }
         public string IO { get; set; }
         public int rowNo { get; set; }
+        public string mechanics { get; set; }
     }
 
     public class ProductCostOfGroupByPrice : ActBaseModel

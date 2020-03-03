@@ -350,5 +350,9 @@ namespace eActForm.Controllers
         }
 
 
+        public static List<TB_Act_Other_Model> getOtherMasterByType(string type, string subType)
+        {
+            return QueryOtherMaster.getOhterMaster(type, subType);
+        }
     }
 }

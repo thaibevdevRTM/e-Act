@@ -82,7 +82,7 @@ namespace eActForm.Controllers
             //return RedirectToAction("index");
             AjaxResult result = new AjaxResult();
             result.Success = false;
-            if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isAdmin()))
+            if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isOtherCompanyMT()))
             {
                 // case delete
                 result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"]) > 0 ? true : false;
@@ -91,7 +91,7 @@ namespace eActForm.Controllers
                     EmailAppCodes.sendRequestCancelToAdmin(actId);
                 }
             }
-            else if (statusId == "5")
+            else if (statusId == "5" || statusId == "3")
             {
                 // waiting delete
                 result.Success = ActFormAppCode.updateWaitingCancel(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"]) > 0 ? true : false;
