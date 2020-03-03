@@ -184,7 +184,7 @@ namespace eActForm.Controllers
         /// <param name="compensate"></param>
         /// <param name="LE"></param>
         /// <returns></returns>
-        public JsonResult calActivityDetailCost(string name, string productGroupId, string productId, string normalCase, string promotionCase, string unit, string compensate, string LE,  string typeForm , string actId)
+        public JsonResult calActivityDetailCost(string name,string mechanics, string productGroupId, string productId, string normalCase, string promotionCase, string unit, string compensate, string LE,  string typeForm , string actId)
         {
             var result = new AjaxResult();
 
@@ -240,6 +240,7 @@ namespace eActForm.Controllers
                         .Select(r =>
                         {
                             r.productName = name;
+                            r.mechanics = mechanics;
                             //r.detailGroup[0].productName = name;
                             r.normalCost = decimal.Parse(normalCase);
                             r.growth = Math.Round(p_growth, 2);
