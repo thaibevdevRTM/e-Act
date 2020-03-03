@@ -230,13 +230,6 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static bool isAdmin()
-        {
-            return (UtilsAppCode.Session.User.isAdminOMT
-                || UtilsAppCode.Session.User.isAdmin
-                || UtilsAppCode.Session.User.isAdminTBM
-                || UtilsAppCode.Session.User.isAdminHCM
-                || UtilsAppCode.Session.User.isSuperAdmin) ? true : false;
-        }
+
     }
 }
