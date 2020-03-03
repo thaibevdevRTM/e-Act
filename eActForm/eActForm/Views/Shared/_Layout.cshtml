@@ -24,6 +24,12 @@
     <!-- jQuery -->
     <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
 
+    <link href="~/Scripts/pnotify/dist/pnotify.nonblock.css" rel="stylesheet" />
+    <link href="~/Scripts/pnotify/dist/pnotify.buttons.css" rel="stylesheet" />
+    <link href="~/Scripts/pnotify/dist/pnotify.css" rel="stylesheet" />
+    <script src="~/Scripts/pnotify/dist/pnotify.js"></script>
+    <script src="~/Scripts/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="~/Scripts/pnotify/dist/pnotify.nonblock.js"></script>
     <!-- MultiSelect -->
     <link href="~/Content/vendors/multiselect/bootstrap-multiselect.css" rel="stylesheet">
     <script src="~/Content/vendors/multiselect/bootstrap-multiselect.js"></script>
@@ -167,6 +173,31 @@
     </style>
 
     <script>
+
+
+        $(document).ready(function () {
+
+            if ('@UtilsAppCode.Session.User.isApprove' == 'True' && '@UtilsAppCode.Session.User.countApproveReject' != '0') {
+
+                (new PNotify({
+                    title: 'คำเตือน',
+                    text: 'เอกสารที่คุณ"อนุมัติ"ไม่ได้รับการอนุมัติ <br/>จำนวน ' + '@UtilsAppCode.Session.User.countApproveReject' +' รายการ',
+                    hide: false,
+                    styling: 'bootstrap3'
+                }));
+            }
+
+            if ('@UtilsAppCode.Session.User.isCreator' == 'True' && '@UtilsAppCode.Session.User.countRejectAct' != '0') {
+                (new PNotify({
+                    title: 'คำเตือน' ,
+                    text: 'คุณมีเอกสารไม่รับการอนุมัติ <br/>จำนวน '+'@UtilsAppCode.Session.User.countRejectAct' +' รายการ',
+                    hide: false,
+                    styling: 'bootstrap3'
+                }));
+            }
+        });
+
+
 
         function doMsgSuccess(msg) {
             bootbox.alert("<div class='row'><div class='text-center'><img width='150px' src='images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>");

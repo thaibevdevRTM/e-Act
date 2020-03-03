@@ -7,6 +7,7 @@ using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System.Data.SqlClient;
 using eActForm.BusinessLayer.Appcodes;
+using System.Configuration;
 
 namespace eActForm.BusinessLayer
 {
@@ -223,5 +224,10 @@ namespace eActForm.BusinessLayer
         }
 
 
+        public static bool isOtherCompanyMT()
+        {
+            return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] ||
+                UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+        }
     }
 }
