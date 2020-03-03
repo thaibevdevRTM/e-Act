@@ -223,7 +223,7 @@
 
         console.log(favorite.length);
         console.log($("#ddlCompany").val());
-        if (favorite.length == 0 && $("#ddlCompany").val() == "5600" && $("#ddlCompany").val() == "5601") {
+        if (favorite.length == 0 && $("#ddlCompany").val() == "@ConfigurationManager.AppSettings["companyId_MT"]" && $("#ddlCompany").val() == "@ConfigurationManager.AppSettings["companyId_OMT"]") {
             doMsgFail("กรุณาระบุ <br/>ProductType");
             return false;
         }
