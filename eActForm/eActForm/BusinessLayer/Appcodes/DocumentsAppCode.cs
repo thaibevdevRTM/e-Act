@@ -37,7 +37,7 @@ namespace eActForm.BusinessLayer
                              }).ToList();
                 return lists;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -142,5 +142,21 @@ namespace eActForm.BusinessLayer
             return BahtText;
         }
 
+        public static bool checkUseFormEng(string activityId)
+        {
+            bool chk = false;
+
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActIDUseEng"
+                    , new SqlParameter[] { new SqlParameter("@activityId", activityId) });
+                if (ds.Tables[0].Rows.Count > 0) chk = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return chk;
+        }
     }
 }

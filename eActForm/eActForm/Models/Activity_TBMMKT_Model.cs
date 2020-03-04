@@ -73,6 +73,8 @@ namespace eActForm.Models
         public string labelBrand { get; set; }
         public string labelChannelRegion { get; set; }
         public string formCompanyId { get; set; }
+        public string formNameEn { get; set; }
+        public bool chkUseEng { get; set; }
     }
 
     public class TB_Reg_Subject
@@ -171,6 +173,11 @@ namespace eActForm.Models
         public string department { get; set; }
         public string bu { get; set; }
         public string companyName { get; set; }
+
+        public string empNameEN { get; set; }
+        public string positionEN { get; set; }
+        public string departmentEN { get; set; }
+        public string buEN { get; set; }
     }
 
     public class PurposeModel : ActBaseModel

@@ -274,7 +274,11 @@ namespace eActForm.BusinessLayer
                                  isShowInDoc = (bool)dr["showInDoc"],
                                  description = dr["description"].ToString(),
                                  isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
-                                 bu = dr["empDivisionTH"].ToString()
+                                 bu = dr["empDivisionTH"].ToString(),
+                                 buEN = dr["empDivisionEN"].ToString(),
+                                 empFNameEN = dr["empFNameEN"].ToString(),
+                                 empLNameEN = dr["empFNameEN"].ToString(),
+                                 empPositionTitleEN = dr["empPositionTitleEN"].ToString()
                              }).ToList();
                 return lists;
             }

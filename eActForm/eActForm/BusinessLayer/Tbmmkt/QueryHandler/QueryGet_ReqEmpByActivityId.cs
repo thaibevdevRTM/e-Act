@@ -29,6 +29,11 @@ namespace eActForm.BusinessLayer
                                  level = d["empLevel"].ToString(),
                                  department = d["empDepartmentTH"].ToString(),
                                  bu = d["empDivisionTH"].ToString(),
+                                 empNameEN = d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
+                                 positionEN = d["empPositionTitleEN"].ToString(),
+                                 departmentEN = d["empDepartmentEN"].ToString(),
+                                 buEN = d["empDivisionEN"].ToString(),
+
                              });
                 return lists.OrderBy(x => x.rowNo).ToList();
             }
