@@ -130,11 +130,13 @@ namespace eActForm.Controllers
         {
             try
             {
-                if (!activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
+                activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = QueryGetActivityEstimateByActivityId.getByActivityId(actId);
+
+                if (!activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT.Any())
                 {
                     for (int i = 0; i < 6; i++)
                     {
-                        activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
+                        activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
                     }
                 }
                 else
