@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using eActForm.Models;
 using eActForm.BusinessLayer;
+
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -13,6 +14,7 @@ namespace eActForm.Controllers
         // GET: DashBoard
         public ActionResult Index()
         {
+
             DashBoardModel.infoDashBoardModels model = new DashBoardModel.infoDashBoardModels
             {
                 dashBoardLists = DashBoardAppCode.getInfoDashBoard(),

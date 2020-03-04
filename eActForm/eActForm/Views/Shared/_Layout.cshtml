@@ -133,8 +133,8 @@
             text-align: right;
         }
 
-        .inputFull{
-            width:100%;
+        .inputFull {
+            width: 100%;
         }
 
         .my-bootbox-class .modal-dialog {
@@ -181,11 +181,12 @@
 
         function doAlert(msg) {
             bootbox.dialog({
-                message: "<div class='row'><div class='text-center'><img width='80px' src='../images/warning_error.png' class='text - center'/><br/>" + msg + "</div></div>"});
-                closeButton: false
+                message: "<div class='row'><div class='text-center'><img width='80px' src='../images/warning_error.png' class='text - center'/><br/>" + msg + "</div></div>"
+            });
+            closeButton: false
         }
 
-        function doMsgSuccessAction(msg,action) {
+        function doMsgSuccessAction(msg, action) {
             bootbox.alert({
                 message: "<div class='row'><div class='text-center'><img width='150px' src='~/images/checkmark.gif' class='text-center'/><br/>" + msg + "</div></div>",
                 callback: function () {

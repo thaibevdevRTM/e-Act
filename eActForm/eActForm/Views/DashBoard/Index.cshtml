@@ -1,7 +1,8 @@
 ﻿@model eActForm.Models.DashBoardModel.infoDashBoardModels
 @using System.Configuration;
 @using eActForm.Models;
-@using eActForm.BusinessLayer
+@using eActForm.BusinessLayer;
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -80,8 +81,8 @@
                     <div class="tile-stats">
                         <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
                         <div class="count">@Model.dashBoardLists[0].countCreated</div>
-                        <h3>เอกสารทั้งหมด</h3>
-                        <p>จำนวนเอกสารที่คุณสร้าง</p>
+                        <h3>@Resources.Global.Dashboard_Index_allDocuments</h3>
+                        <p>@Resources.Global.Dashboard_Index_yourCreatedDocuments</p>
                     </div>
                 </div>
             </a>
