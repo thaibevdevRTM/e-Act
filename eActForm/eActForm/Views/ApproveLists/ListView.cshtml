@@ -37,7 +37,7 @@
                     <th align="center">ค่าใช้จ่าย</th>
                     <th align="center">% ต่อยอดขาย</th>
                     <th align="center">createBy</th>
-                    <th align="center">createDate</th>
+                    <th align="center">วันที่ส่งอนุมัติ</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,7 +69,7 @@
                             @string.Format("{0:n2}", @item.perTotal)
                         </td>
                         <td>@item.createByUserName</td>
-                        <td>@item.createdDate.Value.ToString("dd/MM/yyyy")</td>
+                        <td>@item.dateSentApprove.Value.ToString("dd/MM/yyyy")</td>
                     </tr>
                 }
             </tbody>
