@@ -29,20 +29,16 @@ namespace eActForm.Controllers
                 }
                 ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
                 models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app).Where(x => x.id == "3" || x.id == "5").ToList();
+
+                //********************************************************************************//
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
+                //********************************************************************************//
 
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
-                if (getActList.Any())
+                if (getActList.Any() && getActList.FirstOrDefault().master_type_form_id != null)
                 {
-
-                    models.typeForm = BaseAppCodes.getCompanyTypeForm().ToString();
-                   
+                    models.masterTypeFormId = getActList.FirstOrDefault().master_type_form_id.ToString();
                 }
-                else
-                {
-                    models.typeForm = "";
-                }
-
 
                 return View(models);
             }

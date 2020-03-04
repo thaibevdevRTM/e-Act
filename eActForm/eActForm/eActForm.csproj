@@ -268,6 +268,7 @@
     <Compile Include="Controllers\API\GetDataMainFormController.cs" />
     <Compile Include="Controllers\API\ApiApproveController.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
+    <Compile Include="Controllers\ApproveListExpenseController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
     <Compile Include="Controllers\ApproveListsRepDetailController.cs" />
     <Compile Include="Controllers\ApproveSummaryDetailController.cs" />
@@ -2546,6 +2547,8 @@
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyWithLogoV2.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyV2.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerViewManual.cshtml" />
+    <Content Include="Views\ApproveListExpense\Index.cshtml" />
+    <Content Include="Views\ApproveListExpense\ApproveList.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

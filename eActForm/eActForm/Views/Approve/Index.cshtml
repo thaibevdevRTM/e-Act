@@ -39,7 +39,15 @@ else
         <div class="col-md-8 col-xs-12">
             <h3>เอกสารขออนุมัติ</h3>
             <hr />
-            @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
+            @if (Model.masterTypeFormId == ConfigurationManager.AppSettings["masterEmpExpense"].ToString())
+            {
+                @Html.Action("exPerryListDetail", "SharedMasterFormDetail_Input", new { actId = actId })
+            }
+            else
+            {
+                @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
+            }
+
             <div class="col-md-12">
                 <div id="divgetimage" class="col-md-12">
                     @Html.Action("ImageList", "Activity", new { activityId = actId != null ? actId : "" })
@@ -250,14 +258,13 @@ else
 
     function callPreviewApprove(obj) {
 
-        if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
+        if ('@Model.masterTypeFormId.ToString()' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
 
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("previewActBudget", "Approve")',
                 data: {
                     activityId: obj,
-                    typeForm: '@Model.typeForm.ToString()',
                 }
             }).done(function (htmlResponse) {
                 $("#dataFromPDF").val(htmlResponse);
@@ -265,11 +272,11 @@ else
                 });
 
         }
-        else if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvTbmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvHcmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvHcmId"]'
+        else if ('@Model.masterTypeFormId.ToString()' == '@ConfigurationManager.AppSettings["formAdvTbmId"]'
+            || '@Model.masterTypeFormId.ToString()' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'
+            || '@Model.masterTypeFormId.ToString()' == '@ConfigurationManager.AppSettings["formPosTbmId"]'
+            || '@Model.masterTypeFormId.ToString()' == '@ConfigurationManager.AppSettings["formTrvHcmId"]'
+            || '@Model.masterTypeFormId.ToString()' == '@ConfigurationManager.AppSettings["formAdvHcmId"]'
         ) {
 
             $.ajax({
@@ -277,7 +284,6 @@ else
                 url: '@Url.Action("index", "MainReport")',
                 data: {
                     activityId: obj,
-                    typeForm: '@Model.typeForm.ToString()',
                 }
             }).done(function (htmlResponse) {
                 $("#dataFromPDF").val(htmlResponse);

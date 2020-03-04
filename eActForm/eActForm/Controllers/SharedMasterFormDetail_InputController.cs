@@ -126,7 +126,7 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-        public ActionResult exPerryListDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public ActionResult exPerryListDetail(Activity_TBMMKT_Model activity_TBMMKT_Model,string actId)
         {
             try
             {
@@ -136,6 +136,10 @@ namespace eActForm.Controllers
                     {
                         activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
                     }
+                }
+                else
+                {
+
                 }
                 activity_TBMMKT_Model.exPerryCashList = exPerryCashAppCode.getCashPosition(UtilsAppCode.Session.User.empId);
                 activity_TBMMKT_Model.exPerryCashModel.rulesCash = activity_TBMMKT_Model.exPerryCashList.Any() ? activity_TBMMKT_Model.exPerryCashList.Where(x => x.cashLimitId.Equals("87757B5B-C946-4001-A74B-AB6C9003AD25")).FirstOrDefault().cash : 0;

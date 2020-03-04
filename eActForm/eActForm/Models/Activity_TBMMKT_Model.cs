@@ -60,7 +60,6 @@ namespace eActForm.Models
         public string selectedBrandOrChannel { get; set; }
         public string channelId { get; set; }
         public string BrandlId { get; set; }
-        public string SubjectId { get; set; }
         public string createdByName { get; set; }
         public string formName { get; set; }
         public string companyName { get; set; }
