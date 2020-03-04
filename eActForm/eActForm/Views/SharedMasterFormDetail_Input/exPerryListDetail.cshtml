@@ -2,6 +2,10 @@
 @using eActForm.BusinessLayer
 @using eActForm.Models
 
+
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
+
 <div class="row">
     <div class="col-12">
         <table class="table table-bordered" id="tbl_CashDetail" cellpadding="0" cellspacing="0">
@@ -20,7 +24,7 @@
             {
 
                 <tr class="tagCountRowinTable">
-                    @if (UtilsAppCode.Session.User.isCreator || Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
+                    @if (UtilsAppCode.Session.User.isCreator && Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
                     {
                         <td><button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button></td>
                     }
@@ -40,7 +44,7 @@
             }
 
         </table>
-        @if (UtilsAppCode.Session.User.isCreator || Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
+        @if (UtilsAppCode.Session.User.isCreator && Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
         {
             <div onclick="addRow();">
                 <label class="btn ink-reaction btn-danger fa fa-plus"></label>
