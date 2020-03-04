@@ -17,12 +17,26 @@
             <ul class="nav navbar-nav navbar-right">
                 <li style="margin-top:14px;">
                     <div class="user-profile dropdown-toggle" style="display:inline-block;">
-                        <img src="~/images/flagEN.png" style="height:29px;width:29px;" onclick="changeLanguage('en-US')"/>
-                        <img src="~/images/flagTH.png" style="height:29px;width:29px;" onclick="changeLanguage('th-TH')"/>
+                        <style>
+                            .btnFlag {
+                                height: 29px;
+                                width: 29px;
+                                cursor: pointer;
+                            }
+                        </style>
+                        <img id="flagEN" src="~/images/flagEN.png" style="" class="btnFlag" onclick="changeLanguage('@ConfigurationManager.AppSettings["cultureEng"]')" title="Change to english language." alt="Change to english language."/>
+                        <img id="flagTH" src="~/images/flagTH.png" style="" class="btnFlag" onclick="changeLanguage('@ConfigurationManager.AppSettings["cultureThai"]')" title="Change to thai language." alt="Change to thai language."/>
                         <script>
+                            if (getCookie("@ConfigurationManager.AppSettings["nameCookieLanguageEact"]") == "@ConfigurationManager.AppSettings["cultureEng"]") {
+                                $("#flagEN").attr("style", "opacity:1;")
+                                $("#flagTH").attr("style", "opacity:0.2;")
+                            } else {
+                                $("#flagEN").attr("style", "opacity:0.2;")
+                                $("#flagTH").attr("style", "opacity:1;")
+                            }
+
                             function changeLanguage(varLang) {
                                 setCookie("@ConfigurationManager.AppSettings["nameCookieLanguageEact"]", varLang,365);
-                                //alert(getCookie("@ConfigurationManager.AppSettings["nameCookieLanguageEact"]"));
                                 window.location.reload();
                             }
                             function getCookie(cname) {
