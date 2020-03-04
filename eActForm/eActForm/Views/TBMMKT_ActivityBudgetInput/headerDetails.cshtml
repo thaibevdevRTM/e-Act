@@ -1,5 +1,6 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.Models
 <div id="divHeaderDetails" runat="server" style="width: 100%;">
 
     <table style="width: 100%;" id="tabelHeaderDetails" runat="server">
@@ -26,7 +27,7 @@
                     <label class="control-label col-md-2 col-xs-12">
                         ชื่อผู้เสนอกิจกรรม :
                     </label>
-                    @if (Model.activityFormModel.mode == "new")
+                    @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
                     {
                         <div class="col-md-4 col-xs-12">
                             <div class="row">

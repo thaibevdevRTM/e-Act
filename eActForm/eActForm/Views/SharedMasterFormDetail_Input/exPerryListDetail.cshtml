@@ -1,5 +1,6 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
+@using eActForm.Models
 
 <div class="row">
     <div class="col-12">
@@ -19,27 +20,27 @@
             {
 
                 <tr class="tagCountRowinTable">
-                    @if (UtilsAppCode.Session.User.isApprove)
-                    {
-                        <td> <input type="checkbox" id="chk_All" class="icheckbox_flat-green" name="table_records"></td>
-                    }
-                    else
+                    @if (UtilsAppCode.Session.User.isCreator || Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
                     {
                         <td><button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button></td>
                     }
+                    else
+                    {
+                        <td> <input type="checkbox" id="chk_All" class="icheckbox_flat-green" name="table_records"></td>
+                    }
 
-                    <td style="text-align:right"><input type="text" id="date[@index]" data-date-format="DD MMMM YYYY" name="expensesDetailModel.costDetailLists[@index].date" class="form-control textboxcss font10 textRight datepicker" /></td>
-                    <td style="text-align:right"><input type="text" id="productCashDetail[@index]" name="expensesDetailModel.costDetailLists[@index].productDetail" class="form-control textboxcss font10 textRight" /></td>
-                    <td style="text-align:right"><input type="text" id="detail[@index]" name="expensesDetailModel.costDetailLists[@index].detail" class="form-control textboxcss font10 textRight" /></td>
-                    <td style="text-align:right"><input type="number" id="total[@index]" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss font10 textRight txttotal_@index" onkeyup="getValues()" /></td>
-                    <td style="text-align:right"><input type="text" id="remark[@index]" name="expensesDetailModel.costDetailLists[@index].remark" class="form-control textboxcss font10 textRight" /></td>
+                    <td style="text-align:right"><input type="text" value="@item.date" id="date[@index]" data-date-format="DD MMMM YYYY" name="costThemeDetailOfGroupByPriceTBMMKT[@index].date" class="form-control textboxcss font10 textRight datepicker" /></td>
+                    <td style="text-align:right"><input type="text" value="@item.productDetail" id="productCashDetail[@index]" name="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" class="form-control textboxcss font10 textRight" /></td>
+                    <td style="text-align:right"><input type="text" value="@item.detail" id="detail[@index]" name="costThemeDetailOfGroupByPriceTBMMKT[@index].detail" class="form-control textboxcss font10 textRight" /></td>
+                    <td style="text-align:right"><input type="number" value="@item.total" id="total[@index]" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="form-control textboxcss font10 textRight txttotal_@index" onkeyup="getValues()" /></td>
+                    <td style="text-align:right"><input type="text" value="@item.remark" id="remark[@index]" name="costThemeDetailOfGroupByPriceTBMMKT[@index].remark" class="form-control textboxcss font10 textRight" /></td>
 
                 </tr>
                 index++;
             }
 
         </table>
-        @if (!UtilsAppCode.Session.User.isApprove)
+        @if (UtilsAppCode.Session.User.isCreator || Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
         {
             <div onclick="addRow();">
                 <label class="btn ink-reaction btn-danger fa fa-plus"></label>
@@ -124,36 +125,37 @@
         document.getElementById("total[" + RowCount + "]").onkeyup = function () { return getValues(); }
     }
 
-    function cashDelete(btn) {
-        var row = btn.parentNode.parentNode;
-        row.parentNode.removeChild(row);
-    }
-
-
-    function getValues() {
-        var totalAll = 0.00;
-        var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowinTable').length);
-
-        for (i = 0; i < rowCount; i++) {
-            var rowtotal = parseFloat($(".txttotal_" + i.toString()).val().replace(",", ""));
-            if (isNaN(rowtotal)) rowtotal = 0;
-            totalAll = totalAll + rowtotal;
+        function cashDelete(btn) {
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            getValues();
         }
-        convertBaht2Text(totalAll);
-        document.getElementById('lblShowtotal').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    }
 
 
-    function convertBaht2Text(baht) {
-         $.ajax({
-            type: 'POST',
-            url:  '@Url.Action("textThaiBaht", "eAct")',
-            data: {
-                txtBaht: baht,
+        function getValues() {
+            var totalAll = 0.00;
+            var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowinTable').length);
+
+            for (i = 0; i < rowCount; i++) {
+                var rowtotal = parseFloat($(".txttotal_" + i.toString()).val());
+                if (isNaN(rowtotal)) rowtotal = 0;
+                totalAll = totalAll + rowtotal;
             }
-         }).done(function (result) {
-             document.getElementById('lbltxtTotal').innerHTML = result;
-        });
-    }
+            convertBaht2Text(totalAll);
+            document.getElementById('lblShowtotal').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+
+        function convertBaht2Text(baht) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("textThaiBaht", "eAct")',
+                data: {
+                    txtBaht: baht,
+                }
+            }).done(function (result) {
+                document.getElementById('lbltxtTotal').innerHTML = result;
+            });
+        }
 
     </script>

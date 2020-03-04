@@ -131,18 +131,15 @@ namespace eActForm.Controllers
             try
             {
                 activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = QueryGetActivityEstimateByActivityId.getByActivityId(actId);
-
                 if (!activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT.Any())
                 {
                     for (int i = 0; i < 6; i++)
                     {
                         activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
                     }
+                    activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
                 }
-                else
-                {
 
-                }
                 activity_TBMMKT_Model.exPerryCashList = exPerryCashAppCode.getCashPosition(UtilsAppCode.Session.User.empId);
                 activity_TBMMKT_Model.exPerryCashModel.rulesCash = activity_TBMMKT_Model.exPerryCashList.Any() ? activity_TBMMKT_Model.exPerryCashList.Where(x => x.cashLimitId.Equals("87757B5B-C946-4001-A74B-AB6C9003AD25")).FirstOrDefault().cash : 0;
             }

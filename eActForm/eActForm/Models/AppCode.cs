@@ -57,6 +57,12 @@ namespace eActForm.Models
             doc // document
         }
 
+        public enum Mode
+        {
+            addNew, 
+            edit 
+        }
+
 
         public static string checkNullorEmpty(string p)
         {
