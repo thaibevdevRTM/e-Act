@@ -24,12 +24,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
-
-                if (rtn > 0)
-                {
-                    EmailAppCodes.sendRequestCancelToAdmin(actId);
-                }
-
                 return rtn;
             }
             catch (Exception ex)
@@ -67,10 +61,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
-                if (rtn > 0)
-                {
-                    EmailAppCodes.sendRequestCancelToAdmin(actId);
-                }
                 return rtn;
             }
             catch (Exception ex)
