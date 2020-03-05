@@ -117,14 +117,59 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dashboard_Index_allDocuments" xml:space="preserve">
+  <data name="dropdownStatus" xml:space="preserve">
+    <value>nameEN</value>
+  </data>
+  <data name="headerTableCost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="headerTableObjective" xml:space="preserve">
+    <value>Objective</value>
+  </data>
+  <data name="headerTableSales" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="headerTableSalesPercent" xml:space="preserve">
+    <value>% Sales</value>
+  </data>
+  <data name="toApproveDocument" xml:space="preserve">
+    <value>To Approve Document.</value>
+  </data>
+  <data name="toViewDocument" xml:space="preserve">
+    <value>To View Document.</value>
+  </data>
+  <data name="approval" xml:space="preserve">
+    <value>Approval</value>
+  </data>
+  <data name="dontFoundYourSignatureInSystem" xml:space="preserve">
+    <value>Don't found your signature in system</value>
+  </data>
+  <data name="insertYourSignature" xml:space="preserve">
+    <value>Insert your signature</value>
+  </data>
+  <data name="pleaseInsertYourSignatureBeforeApprovalDocument" xml:space="preserve">
+    <value>Please insert your signature before approval document.</value>
+  </data>
+  <data name="allDocuments" xml:space="preserve">
     <value>All Documents</value>
   </data>
-  <data name="Dashboard_Index_awaitingApproval" xml:space="preserve">
+  <data name="approved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="yourDocumentsApproved" xml:space="preserve">
+    <value>Your Documents Approved.</value>
+  </data>
+  <data name="awaitingApproval" xml:space="preserve">
     <value>Awaiting Approval</value>
   </data>
-  <data name="Dashboard_Index_yourCreatedDocuments" xml:space="preserve">
-    <value>Your Created Documents</value>
+  <data name="overdue" xml:space="preserve">
+    <value>Overdue</value>
+  </data>
+  <data name="yourCreatedDocuments" xml:space="preserve">
+    <value>Your Created Documents.</value>
+  </data>
+  <data name="yourDocumentsAwaitingApproval" xml:space="preserve">
+    <value>Your Documents Awaiting Approval.</value>
   </data>
   <data name="Dashboard_Index_yourDocumentsAwaitingApproval" xml:space="preserve">
     <value>Your Documents Awaiting Approval.</value>
