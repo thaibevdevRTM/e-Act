@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to nameTH.
+        /// </summary>
+        public static string ApproveLists_Dropdown_Status {
+            get {
+                return ResourceManager.GetString("ApproveLists_Dropdown_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ค่าใช้จ่าย.
         /// </summary>
         public static string ApproveLists_HeaderTable_Cost {
