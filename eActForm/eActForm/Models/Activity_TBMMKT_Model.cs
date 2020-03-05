@@ -13,10 +13,8 @@ namespace eActForm.Models
         //public List<TB_Act_Chanel_Model.Chanel_Model> tBChanelHCModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model { get; set; }
         public List<TB_Act_ActivityForm_SelectBrandOrChannel> tB_Act_ActivityForm_SelectBrandOrChannel { get; set; }
-        public List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT { get; set; }
-        public List<TB_Act_ActivityLayout> list_TB_Act_ActivityLayout { get; set; }
+        public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList { get; set; }
         public List<TB_Reg_Subject> tB_Reg_Subject { get; set; }
-        public string createdByName { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalCostThisActivity { get; set; }
 

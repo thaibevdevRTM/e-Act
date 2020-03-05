@@ -39,25 +39,28 @@ else
         <div class="col-md-8 col-xs-12">
             <h3>เอกสารขออนุมัติ</h3>
             <hr />
-            @if (Model.masterTypeFormId == ConfigurationManager.AppSettings["masterEmpExpense"].ToString())
-            {
-                @Html.Action("exPerryListDetail", "SharedMasterFormDetail_Input", new { actId = actId })
-            }
-            else
-            {
-                @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
-            }
 
-            <div class="col-md-12">
-                <div id="divgetimage" class="col-md-12">
-                    @Html.Action("ImageList", "Activity", new { activityId = actId != null ? actId : "" })
-                </div>
-            </div>
+
+
             @using (Ajax.BeginForm("insertApprove", "Approve"
 , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }
 , new { id = "formApprove", @class = "form-horizontal form-label-left" }))
             {
                 var item = Model.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
+                if (Model.masterTypeFormId == ConfigurationManager.AppSettings["masterEmpExpense"].ToString())
+                {
+                    @Html.Action("exPerryListDetail", "SharedMasterFormDetail_Input", new { actId = actId })
+                }
+                else
+                {
+                    @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
+                }
+
+                <div class="col-md-12">
+                    <div id="divgetimage" class="col-md-12">
+                        @Html.Action("ImageList", "Activity", new { activityId = actId != null ? actId : "" })
+                    </div>
+                </div>
                 <h3>อนุมัติ</h3>
                 <hr />
                 <div class="form-group">

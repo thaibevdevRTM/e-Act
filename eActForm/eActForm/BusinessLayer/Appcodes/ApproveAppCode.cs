@@ -6,12 +6,13 @@ using System.Data.SqlClient;
 using Microsoft.ApplicationBlocks.Data;
 using eActForm.Models;
 using System.Configuration;
+using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
-      
+
 
         public static void setCountWatingApprove()
         {
@@ -56,12 +57,45 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static bool manageApproveEmpExpense(ApproveModel.approveModels model,string actId)
+        {
+            int resultInsert = 0;
+            string newID = Guid.NewGuid().ToString();
+            try
+            {
+                model.activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
+
+                //---- ApprovePass-----//
+                var dataApproveList = model.activityModel.activityOfEstimateList.Where(w => w.chkBox == "on").ToList();
+                model.activityModel.activityOfEstimateList = dataApproveList;
+                resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activityModel, actId);
+
+                //---- ApproveUnPass-----//
+                var dataUnApproveList = model.activityModel.activityOfEstimateList.Where(w => w.chkBox != "on").ToList();
+                model.activityModel.activityOfEstimateList = dataUnApproveList;
+                resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activityModel, newID);
+
+                model.activityModel.activityFormModel.reference = model.activityModel.activityFormModel.activityNo;
+                model.activityModel.activityFormModel.id = newID;
+                model.activityModel.activityFormModel.activityNo = "";
+                model.activityModel.activityFormModel.statusId = 1;
+                resultInsert += ActivityFormTBMMKTCommandHandler.insertActivityForm(model.activityModel.activityFormModel);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                ExceptionManager.WriteError("manageApproveEmpExpense => " + ex.Message);
+                return false;
+            }
+        }
+
         public static string getEmailCCByActId(string actId)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmailCC"
-                     , new SqlParameter[] { new SqlParameter("@actId", actId)});
+                     , new SqlParameter[] { new SqlParameter("@actId", actId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveModel.approveDetailModel()
                              {
@@ -176,7 +210,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                         });
 
-               if (approveType == AppCode.ApproveType.Report_Detail.ToString())
+                if (approveType == AppCode.ApproveType.Report_Detail.ToString())
                 {
                     rtn = updateActRepDetailStatus(statusId, actFormId);
                 }
@@ -386,7 +420,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
-        public static ApproveModel.approveModels getApproveByActFormId(string actFormId,string empId)
+        public static ApproveModel.approveModels getApproveByActFormId(string actFormId, string empId)
         {
             try
             {

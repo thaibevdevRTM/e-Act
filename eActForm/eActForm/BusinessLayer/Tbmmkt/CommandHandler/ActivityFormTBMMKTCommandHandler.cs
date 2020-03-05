@@ -74,10 +74,10 @@ namespace eActForm.BusinessLayer
         public static int ProcessInsertEstimate(int rtn, Activity_TBMMKT_Model model, string activityId)
         {
             int insertIndex = 1;
-            if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
+            if (model.activityOfEstimateList != null)
             {
                 rtn += deleteActivityOfEstimateByActivityId(activityId);
-                foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
+                foreach (var item in model.activityOfEstimateList.ToList())
                 {
 
                     CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
@@ -251,7 +251,7 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(activityId).FirstOrDefault(); // TB_Act_ActivityForm
                 activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
-                activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
+                activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
                 activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activityId);
 
                 if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
@@ -304,10 +304,10 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId);
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
-                activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT;
+                activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
 
                 Decimal? totalCostThisActivity = 0;
-                foreach (var item in activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT)
+                foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
                 {
                     if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
                     {
@@ -497,7 +497,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        protected static int insertActivityForm(ActivityForm model)
+        public static int insertActivityForm(ActivityForm model)
         {
             int result = 0;
             try
@@ -805,9 +805,9 @@ namespace eActForm.BusinessLayer
             {
                 int insertIndex = 1;
 
-                if (model.costThemeDetailOfGroupByPriceTBMMKT != null)
+                if (model.activityOfEstimateList != null)
                 {
-                    foreach (var item in model.costThemeDetailOfGroupByPriceTBMMKT.ToList())
+                    foreach (var item in model.activityOfEstimateList.ToList())
                     {
                         CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
                         costThemeDetail.id = item.id;// ไท่แน่ใจค่าจะมาหรือป่าว                       

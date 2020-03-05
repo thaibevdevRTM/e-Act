@@ -126,17 +126,17 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-        public ActionResult exPerryListDetail(Activity_TBMMKT_Model activity_TBMMKT_Model,string actId)
+        public ActionResult exPerryListDetail(Activity_TBMMKT_Model activity_TBMMKT_Model, string actId)
         {
             try
             {
-                activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = QueryGetActivityEstimateByActivityId.getByActivityId(actId);
-                if (!activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT.Any())
+                activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actId);
+                if (!activity_TBMMKT_Model.activityOfEstimateList.Any())
                 {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
-                    }
+                    //for (int i = 0; i < 6; i++)
+                    //{
+                    activity_TBMMKT_Model.activityOfEstimateList.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
+                    // }
                     activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
                 }
 

@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             @{var index = 0; }
-            @foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
+            @foreach (var item in Model.activityOfEstimateList)
             {
 
                 <tr class="tagCountRowinTable">
@@ -30,15 +30,14 @@
                     }
                     else
                     {
-                        <td> <input type="checkbox" id="chk_All" class="icheckbox_flat-green" name="table_records"></td>
+                        <td> <input type="checkbox" checked id="chkBox" class="icheckbox_flat-green" name="activityModel.activityOfEstimateList[@index].chkBox"></td>
                     }
 
-                    <td style="text-align:right"><input type="text" value="@item.date" id="date[@index]" data-date-format="DD MMMM YYYY" name="costThemeDetailOfGroupByPriceTBMMKT[@index].date" class="form-control textboxcss font10 textRight datepicker" /></td>
-                    <td style="text-align:right"><input type="text" value="@item.productDetail" id="productCashDetail[@index]" name="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" class="form-control textboxcss font10 textRight" /></td>
-                    <td style="text-align:right"><input type="text" value="@item.detail" id="detail[@index]" name="costThemeDetailOfGroupByPriceTBMMKT[@index].detail" class="form-control textboxcss font10 textRight" /></td>
-                    <td style="text-align:right"><input type="number" value="@item.total" id="total[@index]" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="form-control textboxcss font10 textRight txttotal_@index" onkeyup="getValues()" /></td>
-                    <td style="text-align:right"><input type="text" value="@item.remark" id="remark[@index]" name="costThemeDetailOfGroupByPriceTBMMKT[@index].remark" class="form-control textboxcss font10 textRight" /></td>
-
+                    <td style="text-align:right"><input type="text" value="@item.date" id="date[@index]" data-date-format="DD MMMM YYYY" name="activityModel.activityOfEstimateList[@index].date" class="form-control textboxcss font10 textRight datepicker" /></td>
+                    <td style="text-align:right"><input type="text" value="@item.productDetail" id="productCashDetail[@index]" name="activityModel.activityOfEstimateList[@index].productDetail" class="form-control textboxcss font10 textRight" /></td>
+                    <td style="text-align:right"><input type="text" value="@item.detail" id="detail[@index]" name="activityModel.activityOfEstimateList[@index].detail" class="form-control textboxcss font10 textRight" /></td>
+                    <td style="text-align:right"><input type="number" value="@item.total" id="total[@index]" name="activityModel.activityOfEstimateList[@index].total" class="form-control textboxcss font10 textRight txttotal_@index" onkeyup="getValues()" /></td>
+                    <td style="text-align:right"><input type="text" value="@item.remark" id="remark[@index]" name="activityModel.activityOfEstimateList[@index].remark" class="form-control textboxcss font10 textRight" /></td>
                 </tr>
                 index++;
             }
@@ -49,59 +48,59 @@
             <div onclick="addRow();">
                 <label class="btn ink-reaction btn-danger fa fa-plus"></label>
             </div>
-        }
-        <div class="row">
-            <div class="col-lg-7">
-            </div>
-            <div class="col-lg-2 col-xs-2">
-                <label id="lbltxtTotal"></label>
-            </div>
-            <div class="col-lg-2 col-xs-2">
-                <label style="text-align:left">รวม</label>
-            </div>
-            <div class="col-lg-1 col-xs-1">
-                <label id="lblShowtotal"></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-            </div>
-            <div class="col-lg-3 col-xs-3">
-                <label id="lbltxtTotal"></label>
-            </div>
-            <div class="col-lg-2 col-xs-2">
-                <label class="pull-left">เบิกตามสิทธิ (ต่อเดือน)</label>
-            </div>
-            <div class="col-lg-1 col-xs-1">
-                <label>
-                    @Model.exPerryCashModel.rulesCash
-                </label>
-            </div>
-        </div>
-        <br />
-        <div id="divCertification" class="row">
-            <div class="col-lg-8">
-            </div>
-            <div class="col-lg-4">
-                <label style="color:red">***จ่ายตามหลักเกณฑ์  @Model.exPerryCashModel.rulesCash บาท ต่อเดือน</label>
-            </div>
-        </div>
 
-        <div id="divCashBill" class="row">
-
-            @foreach (var item in Model.exPerryCashList)
-            {
+            <div class="row">
+                <div class="col-lg-7">
+                </div>
+                <div class="col-lg-2 col-xs-2">
+                    <label id="lbltxtTotal"></label>
+                </div>
+                <div class="col-lg-2 col-xs-2">
+                    <label style="text-align:left">รวม</label>
+                </div>
+                <div class="col-lg-1 col-xs-1">
+                    <label id="lblShowtotal"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                </div>
+                <div class="col-lg-3 col-xs-3">
+                    <label id="lbltxtTotal"></label>
+                </div>
+                <div class="col-lg-2 col-xs-2">
+                    <label class="pull-left">เบิกตามสิทธิ (ต่อเดือน)</label>
+                </div>
+                <div class="col-lg-1 col-xs-1">
+                    <label>
+                        @Model.exPerryCashModel.rulesCash
+                    </label>
+                </div>
+            </div>
+            <br />
+            <div id="divCertification" class="row">
                 <div class="col-lg-8">
                 </div>
                 <div class="col-lg-4">
-                    <label style="color:red">
-                        <label style="color:red"> @item.cashName @item.cash บาท/เดือน</label>
-                    </label>
+                    <label style="color:red">***จ่ายตามหลักเกณฑ์  @Model.exPerryCashModel.rulesCash บาท ต่อเดือน</label>
                 </div>
-            }
+            </div>
 
-        </div>
+            <div id="divCashBill" class="row">
 
+                @foreach (var item in Model.exPerryCashList)
+                {
+                    <div class="col-lg-8">
+                    </div>
+                    <div class="col-lg-4">
+                        <label style="color:red">
+                            <label style="color:red"> @item.cashName @item.cash บาท/เดือน</label>
+                        </label>
+                    </div>
+                }
+
+            </div>
+        }
     </div>
 
 
