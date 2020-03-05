@@ -14,7 +14,7 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <script src="~/Scripts/Approve/RepDetailApproves.js"></script>
 
-<h2>การอนุมัติ</h2>
+<h2>@Resources.Global.approval</h2>
 <hr />
 
 @if (ViewBag.messCannotFindSignature != null)
@@ -22,8 +22,8 @@
     <div class="loading" style="text-align: center;">
         <img src="~/images/warning_error.png" style="margin-top:100px;width:100px;height:100px;" />
         <div style="margin-top: 10px; color: white">
-            <p class="text-danger"><h2>ไม่พบลายเซ็นของคุณในระบบ!!! <br />กรุณาเพิ่มลายเซ็นก่อนอนุมัติเอกสาร</h2></p>
-            @Html.ActionLink("เพิ่มลายเซ็นในระบบ Click", "index", "Signature")
+            <p class="text-danger"><h2>@Resources.Global.dontFoundYourSignatureInSystem !!! <br />@Resources.Global.pleaseInsertYourSignatureBeforeApprovalDocument</h2></p>
+            @Html.ActionLink(Resources.Global.insertYourSignature + " Click", "index", "Signature")
         </div>
 
     </div>

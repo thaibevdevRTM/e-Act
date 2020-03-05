@@ -117,46 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ApproveLists_Dropdown_Status" xml:space="preserve">
+  <data name="dropdownStatus" xml:space="preserve">
     <value>nameTH</value>
   </data>
-  <data name="ApproveLists_HeaderTable_Cost" xml:space="preserve">
+  <data name="headerTableCost" xml:space="preserve">
     <value>ค่าใช้จ่าย</value>
   </data>
-  <data name="ApproveLists_HeaderTable_Objective" xml:space="preserve">
+  <data name="headerTableObjective" xml:space="preserve">
     <value>วัตถุประสงค์</value>
   </data>
-  <data name="ApproveLists_HeaderTable_Sales" xml:space="preserve">
+  <data name="headerTableSales" xml:space="preserve">
     <value>ยอดขายช่วงกิจกรรม</value>
   </data>
-  <data name="ApproveLists_HeaderTable_SalesPercent" xml:space="preserve">
+  <data name="headerTableSalesPercent" xml:space="preserve">
     <value>% ต่อยอดขาย</value>
   </data>
-  <data name="ApproveLists_toApproveDocument" xml:space="preserve">
+  <data name="toApproveDocument" xml:space="preserve">
     <value>เพื่ออนุมัติ</value>
   </data>
-  <data name="ApproveLists_toViewDocument" xml:space="preserve">
+  <data name="toViewDocument" xml:space="preserve">
     <value>ดูเอกสาร</value>
   </data>
-  <data name="Dashboard_Index_allDocuments" xml:space="preserve">
+  <data name="approval" xml:space="preserve">
+    <value>การอนุมัติ</value>
+  </data>
+  <data name="dontFoundYourSignatureInSystem" xml:space="preserve">
+    <value>ไม่พบลายเซ็นของคุณในระบบ</value>
+  </data>
+  <data name="insertYourSignature" xml:space="preserve">
+    <value>เพิ่มลายเซ็นในระบบ</value>
+  </data>
+  <data name="pleaseInsertYourSignatureBeforeApprovalDocument" xml:space="preserve">
+    <value>กรุณาเพิ่มลายเซ็นก่อนอนุมัติเอกสาร</value>
+  </data>
+  <data name="allDocuments" xml:space="preserve">
     <value>เอกสารทั้งหมด</value>
   </data>
-  <data name="Dashboard_Index_approved" xml:space="preserve">
+  <data name="approved" xml:space="preserve">
     <value>อนุมัติ</value>
   </data>
-  <data name="Dashboard_Index_approved_YourDocumentsApproved" xml:space="preserve">
+  <data name="yourDocumentsApproved" xml:space="preserve">
     <value>จำนวนเอกสารที่ได้รับการอนุมัติเรียบร้อย</value>
   </data>
-  <data name="Dashboard_Index_awaitingApproval" xml:space="preserve">
+  <data name="awaitingApproval" xml:space="preserve">
     <value>รออนุมัติ</value>
   </data>
-  <data name="Dashboard_Index_overdue" xml:space="preserve">
+  <data name="overdue" xml:space="preserve">
     <value>เกินกำหนด</value>
   </data>
-  <data name="Dashboard_Index_yourCreatedDocuments" xml:space="preserve">
+  <data name="yourCreatedDocuments" xml:space="preserve">
     <value>จำนวนเอกสารที่คุณสร้าง</value>
   </data>
-  <data name="Dashboard_Index_yourDocumentsAwaitingApproval" xml:space="preserve">
+  <data name="yourDocumentsAwaitingApproval" xml:space="preserve">
     <value>จำนวนเอกสารที่รอการอนุมัติ</value>
   </data>
 </root>
