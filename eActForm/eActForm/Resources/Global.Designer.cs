@@ -61,6 +61,60 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ค่าใช้จ่าย.
+        /// </summary>
+        public static string ApproveLists_HeaderTable_Cost {
+            get {
+                return ResourceManager.GetString("ApproveLists_HeaderTable_Cost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to วัตถุประสงค์.
+        /// </summary>
+        public static string ApproveLists_HeaderTable_Objective {
+            get {
+                return ResourceManager.GetString("ApproveLists_HeaderTable_Objective", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ยอดขายช่วงกิจกรรม.
+        /// </summary>
+        public static string ApproveLists_HeaderTable_Sales {
+            get {
+                return ResourceManager.GetString("ApproveLists_HeaderTable_Sales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to % ต่อยอดขาย.
+        /// </summary>
+        public static string ApproveLists_HeaderTable_SalesPercent {
+            get {
+                return ResourceManager.GetString("ApproveLists_HeaderTable_SalesPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to เพื่ออนุมัติ.
+        /// </summary>
+        public static string ApproveLists_toApproveDocument {
+            get {
+                return ResourceManager.GetString("ApproveLists_toApproveDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ดูเอกสาร.
+        /// </summary>
+        public static string ApproveLists_toViewDocument {
+            get {
+                return ResourceManager.GetString("ApproveLists_toViewDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to เอกสารทั้งหมด.
         /// </summary>
         public static string Dashboard_Index_allDocuments {
@@ -70,11 +124,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to อนุมัติ.
+        /// </summary>
+        public static string Dashboard_Index_approved {
+            get {
+                return ResourceManager.GetString("Dashboard_Index_approved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to จำนวนเอกสารที่ได้รับการอนุมัติเรียบร้อย.
+        /// </summary>
+        public static string Dashboard_Index_approved_YourDocumentsApproved {
+            get {
+                return ResourceManager.GetString("Dashboard_Index_approved_YourDocumentsApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to รออนุมัติ.
         /// </summary>
         public static string Dashboard_Index_awaitingApproval {
             get {
                 return ResourceManager.GetString("Dashboard_Index_awaitingApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to เกินกำหนด.
+        /// </summary>
+        public static string Dashboard_Index_overdue {
+            get {
+                return ResourceManager.GetString("Dashboard_Index_overdue", resourceCulture);
             }
         }
         

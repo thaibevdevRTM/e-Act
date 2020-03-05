@@ -117,11 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApproveLists_HeaderTable_Cost" xml:space="preserve">
+    <value>ค่าใช้จ่าย</value>
+  </data>
+  <data name="ApproveLists_HeaderTable_Objective" xml:space="preserve">
+    <value>วัตถุประสงค์</value>
+  </data>
+  <data name="ApproveLists_HeaderTable_Sales" xml:space="preserve">
+    <value>ยอดขายช่วงกิจกรรม</value>
+  </data>
+  <data name="ApproveLists_HeaderTable_SalesPercent" xml:space="preserve">
+    <value>% ต่อยอดขาย</value>
+  </data>
+  <data name="ApproveLists_toApproveDocument" xml:space="preserve">
+    <value>เพื่ออนุมัติ</value>
+  </data>
+  <data name="ApproveLists_toViewDocument" xml:space="preserve">
+    <value>ดูเอกสาร</value>
+  </data>
   <data name="Dashboard_Index_allDocuments" xml:space="preserve">
     <value>เอกสารทั้งหมด</value>
   </data>
+  <data name="Dashboard_Index_approved" xml:space="preserve">
+    <value>อนุมัติ</value>
+  </data>
+  <data name="Dashboard_Index_approved_YourDocumentsApproved" xml:space="preserve">
+    <value>จำนวนเอกสารที่ได้รับการอนุมัติเรียบร้อย</value>
+  </data>
   <data name="Dashboard_Index_awaitingApproval" xml:space="preserve">
     <value>รออนุมัติ</value>
+  </data>
+  <data name="Dashboard_Index_overdue" xml:space="preserve">
+    <value>เกินกำหนด</value>
   </data>
   <data name="Dashboard_Index_yourCreatedDocuments" xml:space="preserve">
     <value>จำนวนเอกสารที่คุณสร้าง</value>

@@ -91,8 +91,8 @@
                     <div class="tile-stats">
                         <div class="icon"><i class="fa fa-comments-o"></i></div>
                         <div class="count">@Model.dashBoardLists[0].countWaitingApprove</div>
-                        <h3>รออนุมัติ</h3>
-                        <p>จำนวนเอกสารที่รอการอนุมติ</p>
+                        <h3>@Resources.Global.Dashboard_Index_awaitingApproval</h3>
+                        <p>@Resources.Global.Dashboard_Index_yourDocumentsAwaitingApproval</p>
                     </div>
                 </div>
             </a>
@@ -101,8 +101,8 @@
                     <div class="tile-stats">
                         <div class="icon"><i class="fa fa-check-square-o"></i></div>
                         <div class="count">@Model.dashBoardLists[0].countApprove</div>
-                        <h3>อนุมัติ</h3>
-                        <p>จำนวนเอกสารที่ได้รับการอนุมติเรียบร้อย</p>
+                        <h3>@Resources.Global.Dashboard_Index_approved</h3>
+                        <p>@Resources.Global.Dashboard_Index_approved_YourDocumentsApproved</p>
                     </div>
                 </div>
             </a>
@@ -110,7 +110,7 @@
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
                     <div class="count">@Model.dashBoardLists[0].countOverSLA</div>
-                    <h3>เกินกำหนด</h3>
+                    <h3>@Resources.Global.Dashboard_Index_overdue</h3>
                     <p>SLA 2 days.</p>
                 </div>
             </div>

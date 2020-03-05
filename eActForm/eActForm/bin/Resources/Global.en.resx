@@ -117,14 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApproveLists_HeaderTable_Cost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="ApproveLists_HeaderTable_Objective" xml:space="preserve">
+    <value>Objective</value>
+  </data>
+  <data name="ApproveLists_HeaderTable_Sales" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="ApproveLists_HeaderTable_SalesPercent" xml:space="preserve">
+    <value>% Sales</value>
+  </data>
+  <data name="ApproveLists_toApproveDocument" xml:space="preserve">
+    <value>To Approve Document.</value>
+  </data>
+  <data name="ApproveLists_toViewDocument" xml:space="preserve">
+    <value>To View Document.</value>
+  </data>
   <data name="Dashboard_Index_allDocuments" xml:space="preserve">
     <value>All Documents</value>
+  </data>
+  <data name="Dashboard_Index_approved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="Dashboard_Index_approved_YourDocumentsApproved" xml:space="preserve">
+    <value>Your Documents Approved.</value>
   </data>
   <data name="Dashboard_Index_awaitingApproval" xml:space="preserve">
     <value>Awaiting Approval</value>
   </data>
+  <data name="Dashboard_Index_overdue" xml:space="preserve">
+    <value>Overdue</value>
+  </data>
   <data name="Dashboard_Index_yourCreatedDocuments" xml:space="preserve">
-    <value>Your Created Documents</value>
+    <value>Your Created Documents.</value>
   </data>
   <data name="Dashboard_Index_yourDocumentsAwaitingApproval" xml:space="preserve">
     <value>Your Documents Awaiting Approval.</value>
