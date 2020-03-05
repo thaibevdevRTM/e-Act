@@ -228,8 +228,9 @@ namespace eActForm.Controllers
                     p_total = decimal.Parse(promotionCase) * decimal.Parse(unit) * decimal.Parse(compensate);
                     p_total = (p_LE > 0) ? p_total * (p_LE / 100) : p_total;
                 }
-              
+
                 getPromotionCost = getPromotionCost == 0 ? 1 : getPromotionCost;
+                getNormalCost = getNormalCost == 0 ? 1 : getNormalCost;
                 get_PerTotal = p_total == 0 ? 0 : (p_total / (decimal.Parse(promotionCase) * getNormalCost)) * 100; // % ยอดขายโปโมชั่น
 
 
