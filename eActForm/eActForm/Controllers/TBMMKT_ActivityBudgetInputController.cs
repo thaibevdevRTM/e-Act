@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
+using static eActForm.Controllers.GetDataMainFormController;
 
 namespace eActForm.Controllers
 {
@@ -13,10 +14,10 @@ namespace eActForm.Controllers
     public class TBMMKT_ActivityBudgetInputController : Controller
     {
         // GET: TBMMKT_ActivityBudgetInput
-        public ActionResult Index(string activityId, string mode, string typeForm)
+        public ActionResult Index(string activityId, string mode, string typeForm, string master_type_form_id)
         {
-
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
             try
             {
 
@@ -24,7 +25,7 @@ namespace eActForm.Controllers
                 {
 
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-
+                    activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
                     {
                         activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Brand";
@@ -34,6 +35,20 @@ namespace eActForm.Controllers
                         activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "Channel";
                     }
 
+                    //===================Get Subject=======================
+                    objGetDataSubjectByChanelOrBrand objGetDataSubjectBy = new objGetDataSubjectByChanelOrBrand();
+                    objGetDataSubjectBy.companyId = activity_TBMMKT_Model.activityFormTBMMKT.companyId;
+                    objGetDataSubjectBy.master_type_form_id = activityFormTBMMKT.master_type_form_id;
+                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
+                    {
+                        objGetDataSubjectBy.idBrandOrChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId;
+                    }
+                    else//Channel
+                    {
+                        objGetDataSubjectBy.idBrandOrChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId;
+                    }                 
+                    activity_TBMMKT_Model.tB_Reg_Subject  = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
+                    //====END===============Get Subject=======================
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
                 }
                 else
@@ -41,7 +56,7 @@ namespace eActForm.Controllers
                     mode = "new";
                     string actId = Guid.NewGuid().ToString();
                     activity_TBMMKT_Model.activityFormModel.id = actId;
-
+                    activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
                     //===mock data for first input====
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
                     for (int i = 0; i < 14; i++)
@@ -54,21 +69,23 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId = "";
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId = "";
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId = "";
-                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.BudgetNumber = "";
-                   ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.BudgetNumber = "";                   
                     activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
                     activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "";
                     activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = costThemeDetailOfGroupByPriceTBMMKT;
                     activity_TBMMKT_Model.totalCostThisActivity = decimal.Parse("0.00");
                     //=END==mock data for first input=====
 
+                    //===================Get Subject=======================
+                    List<TB_Reg_Subject> tB_Reg_Subjects = new List<TB_Reg_Subject>(); activity_TBMMKT_Model.tB_Reg_Subject = tB_Reg_Subjects;
+                    //======END=============Get Subject=======================
+
                     TempData["actForm" + actId] = activity_TBMMKT_Model;
                 }
 
-                activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrand.GetAllBrand().Where(x => x.no_tbmmkt != "").ToList();
-                activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanel.getAllChanel().Where(x => x.no_tbmmkt != "").ToList(); ;
-                activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
-                activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetAllQueryGetSelectAllTB_Reg_Subject().Where(x => x.companyId == UtilsAppCode.Session.User.empCompanyId).ToList();
+                activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrandByForm.GetAllBrand(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId).Where(x => x.no_tbmmkt != "").ToList();
+                activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanelByForm.getAllChanel(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId).Where(x => x.no_tbmmkt != "").ToList(); ;
+                activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();                                
                 activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "tbmmkt_ChooseActivityOrDetail").ToList();
                 activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
                 activity_TBMMKT_Model.activityFormModel.mode = mode;
@@ -118,25 +135,26 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+        //==============เก็บไว้ก่อน ถ้า On Production ใบยืมเงินทดลองไปแล้วไม่เกิดปัยหาอะไร ตามมาลบทิ้งได้เลย==========20200110 fream=====
+        //public JsonResult updateDataIOActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        //{
+        //    var result = new AjaxResult();
+        //    try
+        //    {
 
-        public JsonResult updateDataIOActivity(Activity_TBMMKT_Model activity_TBMMKT_Model)
-        {
-            var result = new AjaxResult();
-            try
-            {
+        //        int countSuccess = ActivityFormTBMMKTCommandHandler.updateIOActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
+        //        result.Data = activity_TBMMKT_Model.activityFormModel.id;
+        //        result.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.Success = false;
+        //        result.Message = ex.Message;
+        //        ExceptionManager.WriteError("updateDataIOActivityTBMMKT => " + ex.Message);
+        //    }
 
-                int countSuccess = ActivityFormTBMMKTCommandHandler.updateIOActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
-                result.Data = activity_TBMMKT_Model.activityFormModel.id;
-                result.Success = true;
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = ex.Message;
-                ExceptionManager.WriteError("updateDataIOActivityTBMMKT => " + ex.Message);
-            }
-
-            return Json(result);
-        }
+        //    return Json(result);
+        //}
+        //=====END=========เก็บไว้ก่อน ถ้า On Production ใบยืมเงินทดลองไปแล้วไม่เกิดปัยหาอะไร ตามมาลบทิ้งได้เลย==========20200110 fream=====
     }
 }

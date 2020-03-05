@@ -5766,6 +5766,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="images/checkmark.gif">
       <publishTime>04/12/2019 09:57:25</publishTime>
     </File>
+    <File Include="images/contact1.png">
+      <publishTime>01/20/2020 13:34:35</publishTime>
+    </File>
+    <File Include="images/contact2.png">
+      <publishTime>01/20/2020 13:34:35</publishTime>
+    </File>
+    <File Include="images/contact3.png">
+      <publishTime>01/20/2020 13:34:35</publishTime>
+    </File>
     <File Include="images/favicon.ico">
       <publishTime>12/11/2019 15:20:46</publishTime>
     </File>
@@ -5777,6 +5786,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="images/logo-ss.png">
       <publishTime>03/12/2019 10:55:50</publishTime>
+    </File>
+    <File Include="images/LogoTD_Department.png">
+      <publishTime>02/13/2020 11:22:39</publishTime>
     </File>
     <File Include="images/logo_vision2020.png">
       <publishTime>03/12/2019 10:55:50</publishTime>
@@ -6097,7 +6109,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/24/2019 15:33:48</publishTime>
     </File>
     <File Include="Views/ActivityCostDetail/activityCostDetail.cshtml">
-      <publishTime>09/16/2019 11:08:25</publishTime>
+      <publishTime>01/23/2020 17:29:25</publishTime>
     </File>
     <File Include="Views/ActivityProductDetail/ProductCostdetail.cshtml">
       <publishTime>09/16/2019 11:08:25</publishTime>
@@ -6127,7 +6139,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/11/2019 16:51:54</publishTime>
     </File>
     <File Include="Views/Approve/approvePositionSignatureLists.cshtml">
-      <publishTime>12/11/2019 15:20:46</publishTime>
+      <publishTime>01/20/2020 14:25:05</publishTime>
     </File>
     <File Include="Views/Approve/getApproveComment.cshtml">
       <publishTime>10/29/2019 16:57:59</publishTime>
@@ -6175,7 +6187,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/11/2019 15:20:46</publishTime>
     </File>
     <File Include="Views/Budget/activityProductInvoiceEdit.cshtml">
-      <publishTime>12/11/2019 15:20:46</publishTime>
+      <publishTime>02/13/2020 11:16:43</publishTime>
     </File>
     <File Include="Views/Budget/activityProductInvoiceList.cshtml">
       <publishTime>12/11/2019 15:20:46</publishTime>
@@ -6232,7 +6244,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/21/2019 09:42:45</publishTime>
     </File>
     <File Include="Views/BudgetMyDoc/Index.cshtml">
-      <publishTime>09/16/2019 11:08:25</publishTime>
+      <publishTime>02/13/2020 11:16:43</publishTime>
     </File>
     <File Include="Views/BudgetMyDoc/myDocBudget.cshtml">
       <publishTime>09/25/2019 11:28:54</publishTime>
@@ -6307,10 +6319,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/08/2020 11:17:56</publishTime>
     </File>
     <File Include="Views/Login/index.cshtml">
-      <publishTime>12/20/2019 11:36:42</publishTime>
+      <publishTime>02/13/2020 13:10:51</publishTime>
     </File>
     <File Include="Views/Login/Maintain.cshtml">
       <publishTime>07/31/2019 16:09:14</publishTime>
+    </File>
+    <File Include="Views/MainForm/Index.cshtml">
+      <publishTime>02/13/2020 11:16:43</publishTime>
+    </File>
+    <File Include="Views/MainForm/Index.cshtml">
+      <publishTime>02/13/2020 11:16:43</publishTime>
+    </File>
+    <File Include="Views/MainReport/Index.cshtml">
+      <publishTime>02/13/2020 11:16:43</publishTime>
     </File>
     <File Include="Views/managementFlow/approveList.cshtml">
       <publishTime>12/24/2019 15:42:45</publishTime>
@@ -6381,14 +6402,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Shared/_PreviewForApproveDetail.cshtml">
       <publishTime>12/11/2019 15:20:46</publishTime>
     </File>
+    <File Include="Views/Shared/_previewMainReport.cshtml">
+      <publishTime>02/13/2020 11:16:43</publishTime>
+    </File>
     <File Include="Views/Shared/_search.cshtml">
       <publishTime>12/11/2019 15:20:46</publishTime>
     </File>
     <File Include="Views/Shared/_searchBudget.cshtml">
-      <publishTime>08/19/2019 14:06:21</publishTime>
+      <publishTime>02/13/2020 11:16:43</publishTime>
     </File>
     <File Include="Views/Shared/_searchBudgetActivity.cshtml">
-      <publishTime>12/11/2019 15:20:46</publishTime>
+      <publishTime>02/13/2020 11:16:43</publishTime>
     </File>
     <File Include="Views/Shared/_searchForBudgetReport.cshtml">
       <publishTime>12/24/2019 15:42:45</publishTime>
@@ -6452,7 +6476,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/16/2019 11:08:25</publishTime>
     </File>
     <File Include="Views/TBMMKT_ActivityBudgetInput/activityBudgetDetails.cshtml">
-      <publishTime>12/11/2019 15:28:30</publishTime>
+      <publishTime>02/13/2020 11:16:43</publishTime>
     </File>
     <File Include="Views/TBMMKT_ActivityBudgetInput/activityDetails.cshtml">
       <publishTime>12/11/2019 15:20:46</publishTime>
@@ -6464,10 +6488,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/11/2019 15:20:46</publishTime>
     </File>
     <File Include="Views/TBMMKT_ActivityBudgetInput/headerDetails.cshtml">
-      <publishTime>12/11/2019 15:28:30</publishTime>
+      <publishTime>01/20/2020 13:34:34</publishTime>
     </File>
     <File Include="Views/TBMMKT_ActivityBudgetInput/Index.cshtml">
-      <publishTime>12/11/2019 15:20:46</publishTime>
+      <publishTime>01/20/2020 14:25:06</publishTime>
     </File>
     <File Include="Views/TBMMKT_ActivityBudgetInput/lastwordForFYI.cshtml">
       <publishTime>12/11/2019 15:20:46</publishTime>
@@ -6493,6 +6517,18 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/TBMMKT_ActivityBudgetReport/previewActBudget.cshtml">
       <publishTime>11/25/2019 17:05:53</publishTime>
     </File>
+    <File Include="Views/TBMMKT_AdvanceLoanReport/headerCompany.cshtml">
+      <publishTime>12/26/2019 14:33:43</publishTime>
+    </File>
+    <File Include="Views/TBMMKT_AdvanceLoanReport/headerDetails.cshtml">
+      <publishTime>12/26/2019 14:28:33</publishTime>
+    </File>
+    <File Include="Views/TBMMKT_AdvanceLoanReport/Index.cshtml">
+      <publishTime>12/26/2019 10:57:36</publishTime>
+    </File>
+    <File Include="Views/TBMMKT_AdvanceLoanReport/listDetails.cshtml">
+      <publishTime>12/26/2019 14:11:28</publishTime>
+    </File>
     <File Include="Views/Web.config">
       <publishTime>03/12/2019 10:55:48</publishTime>
     </File>
@@ -6503,7 +6539,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/08/2020 11:19:54</publishTime>
     </File>
     <File Include="WebForm1.aspx">
-      <publishTime>12/11/2019 15:20:46</publishTime>
+      <publishTime>02/13/2020 11:16:43</publishTime>
     </File>
   </ItemGroup>
 </Project>

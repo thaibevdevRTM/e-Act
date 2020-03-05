@@ -7,7 +7,7 @@
     var actId = Request.QueryString["actId"];
     var type = Request.QueryString["type"];
 }
-
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <script src="~/Scripts/jquery-1.11.2.min.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -39,18 +39,14 @@ else
             <h3>เอกสารขออนุมัติ</h3>
             <hr />
             @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
-
-
             <div class="col-md-12">
                 <div id="divgetimage" class="col-md-12">
                     @Html.Action("ImageList", "Activity", new { activityId = actId != null ? actId : "" })
                 </div>
             </div>
-
-
             @using (Ajax.BeginForm("insertApprove", "Approve"
-    , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }
-    , new { id = "formApprove", @class = "form-horizontal form-label-left" }))
+, new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }
+, new { id = "formApprove", @class = "form-horizontal form-label-left" }))
             {
                 var item = Model.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
                 <h3>อนุมัติ</h3>
@@ -62,7 +58,7 @@ else
                                 เหตุผล(เพิ่มเติม)
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required>
+                                <textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required style="border:solid;border-color:#ddd;border-width:thin;">
                                     @if (item != null && item.Count > 0)
                                     {
                                         @item.FirstOrDefault().remark.Trim();
@@ -72,19 +68,19 @@ else
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                <input type="hidden" id="lblActFormId" name="lblActFormId" value="@actId" />
+                if (Model.approveModel != null)
+                {
+                    <input type="hidden" id="lblApproveId" name="lblApproveId" value="@Model.approveModel.id" />
+                    <input type="hidden" id="lblApproveType" name="lblApproveType" value="@type" />
+                }
+                <div class="form-group" style="display:none;">
                     <div class="col-md-12 col-xs-12">
                         <div class="row">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
                                 สถานะ
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input type="hidden" id="lblActFormId" name="lblActFormId" value="@actId" />
-                                @if (Model.approveModel != null)
-                                {
-                                    <input type="hidden" id="lblApproveId" name="lblApproveId" value="@Model.approveModel.id" />
-                                    <input type="hidden" id="lblApproveType" name="lblApproveType" value="@type" />
-                                }
                                 @Html.DropDownListFor(m => m.approveModel.statusId, new SelectList(Model.approveStatusLists, "id", "nameTH"), "-Selected-", new { @class = "form-control", required = "required", id = "ddlStatus", Name = "ddlStatus" })
                             </div>
                         </div>
@@ -113,8 +109,9 @@ else
                         }
                         else if (Model.approveModel.isPermisionApprove)
                         {
-                            <button type="button" onclick="return confirmQuery();" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
-                            <a href="@Url.Action("index", "ApproveLists")" class="btn btn-warning pull-right"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                            <a href="@Url.Action("index", "ApproveLists")" class="btn btn-warning pull-right"><i class="fa fa fa-reply fa-fw"></i>&nbsp;ย้อนกลับ</a>
+                            <button type="button" onclick="return confirmQuery(5);" class="btn btn-danger pull-right"><i class="fa fa fa-close fa-fw"></i>&nbsp;ไม่อนุมัติ</button>
+                            <button type="button" onclick="return confirmQuery(3);" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;อนุมัติ</button>
                         }
                         else
                         {
@@ -156,10 +153,12 @@ else
 
     });
 
-    function confirmQuery() {
+    function confirmQuery(statusId) {
 
-        var statusId = $("#ddlStatus").val();
+        //var statusId = $("#ddlStatus").val();
         var mess = $("#txtRemark").val();
+        $("#lblstatusId").val(statusId);
+        $("#ddlStatus").val(statusId);
         if (statusId == "5" && mess == "") {
             doMsgFail("กรุณาระบุ เหตุผล(เพิ่มเติม) ค่ะ")
             $("#txtRemark").focus();
@@ -250,8 +249,8 @@ else
 
     function callPreviewApprove(obj) {
 
-        if ('@UtilsAppCode.Session.User.empCompanyId' == '3030') {
-
+        if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '488F7C0D-8B59-4BDE-90E4-F157BFF67829') {
+            
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("previewActBudget", "Approve")',
@@ -260,11 +259,25 @@ else
                     typeForm: '@Model.typeForm.ToString()',
                 }
             }).done(function (htmlResponse) {
-                //$("#divPreviewApprove").html(htmlResponse);
-                //genPdf();
                 $("#dataFromPDF").val(htmlResponse);
                 genFileActForm();
-            });
+                });
+
+        }
+        else if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4') {
+            
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("index", "MainReport")',
+                data: {
+                    activityId: obj,
+                    typeForm: '@Model.typeForm.ToString()',
+                }
+            }).done(function (htmlResponse) {
+                $("#dataFromPDF").val(htmlResponse);
+                genFileActForm();
+                });
+
         }
         else {
 
@@ -273,7 +286,6 @@ else
                 url: '@Url.Action("previewApprove", "Approve")',
                 data: {
                     actId: obj,
-                    typeForm: '@Model.typeForm.ToString()',
                 }
             }).done(function (htmlResponse) {
                 //$("#divPreviewApprove").html(htmlResponse);
@@ -308,7 +320,7 @@ else
                 doMsgSuccessAction('อนุมัติเรียบร้อย',url);
             })
         });
-    } 
+    }
 
     function genFileActForm() {
         $.ajax({
@@ -318,7 +330,7 @@ else
                 statusId: $("#ddlStatus").val(),
                 activityId: '@actId' //$("#HdId").val()
             },
-            async: true, 
+            async: true,
             dataType: "json",
             type: 'POST',
         }).done(function (reponse) {

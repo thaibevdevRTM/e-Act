@@ -106,6 +106,13 @@
     }
 
     $('#ddlSubject').change(function () {
+        if ($("#ddlSubject").val() == '@System.Configuration.ConfigurationManager.AppSettings["subjectActivityFormId"]' || $("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_TBM"]') {
+            document.getElementById("divProductType").style.display = "none";
+        }
+        else {
+            document.getElementById("divProductType").style.display = "block";
+        }
+
         $.ajax({
             url: '@Url.Action("getLimitBySubject", "ManagementFlow")',
             data: {
@@ -117,7 +124,7 @@
                  if (response.Data.length > 0) {
                      $("#ddlLimit option[value !='']").remove();
                     $.each(response.Data, function () {
-                        $("#ddlLimit").append($("<option></option>").val(this['val2']).html(this['displayVal']));
+                        $("#ddlLimit").append($("<option></option>").val(this['id']).html(this['displayVal']));
                     });
                      document.getElementById("ddlLimit").disabled = false;
                 }

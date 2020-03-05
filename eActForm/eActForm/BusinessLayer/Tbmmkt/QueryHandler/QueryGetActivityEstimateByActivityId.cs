@@ -33,6 +33,7 @@ namespace eActForm.BusinessLayer
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
                                   IO = d["IO"].ToString(),
                                   QtyName = d["QtyName"].ToString(),
+                                  remark = d["remark"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),
