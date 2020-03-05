@@ -170,6 +170,10 @@
             width: 100%;
             height: 100%;
         }
+
+        .sizeFont15 {
+            font-size:15px;
+        }
     </style>
 
     <script>
@@ -180,19 +184,22 @@
             if ('@UtilsAppCode.Session.User.isApprove' == 'True' && '@UtilsAppCode.Session.User.countApproveReject' != '0') {
 
                 (new PNotify({
-                    title: 'คำเตือน',
+                    title: 'แจ้งเตือน',
                     text: 'เอกสารที่คุณ"อนุมัติ"ไม่ได้รับการอนุมัติ <br/>จำนวน ' + '@UtilsAppCode.Session.User.countApproveReject' +' รายการ',
+
                     hide: false,
-                    styling: 'bootstrap3'
+                    styling: 'bootstrap3',
+                    addclass: "sizeFont15",
                 }));
             }
 
             if ('@UtilsAppCode.Session.User.isCreator' == 'True' && '@UtilsAppCode.Session.User.countRejectAct' != '0') {
                 (new PNotify({
-                    title: 'คำเตือน' ,
+                    title: 'แจ้งเตือน' ,
                     text: 'คุณมีเอกสารไม่รับการอนุมัติ <br/>จำนวน '+'@UtilsAppCode.Session.User.countRejectAct' +' รายการ',
                     hide: false,
-                    styling: 'bootstrap3'
+                    styling: 'bootstrap3',
+                    addclass: "sizeFont15",
                 }));
             }
         });
