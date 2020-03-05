@@ -41,11 +41,12 @@ namespace eActForm.Controllers
                     }
                 }
 
-                if (model.chkProductType.Any())
+                if (model.chkProductType != null)
                 {
                     foreach (var item in model.chkProductType)
                     {
-                        if (model.companyList[0] == @ConfigurationManager.AppSettings["companyId_MT"] || 
+                        if (model.companyList[0] == @ConfigurationManager.AppSettings["companyId_MT"] ||
+                            model.companyList[0] == @ConfigurationManager.AppSettings["companyId_HCM"] ||
                             model.companyList[0] == @ConfigurationManager.AppSettings["companyId_TBM"])
                         {
                             if (model.custLi == null)
@@ -75,6 +76,11 @@ namespace eActForm.Controllers
                             }
                         }
                     }
+                }
+                else
+                {
+                    //other Company
+                    AdminUserAppCode.insertAuthorized(Request.Form["txtEmpCode"], model.companyList[0], null, "", "");
                 }
             }
             catch(Exception ex)

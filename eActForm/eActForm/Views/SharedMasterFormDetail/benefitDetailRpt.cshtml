@@ -1,0 +1,19 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+<div id="divBenefit" runat="server" style="width: 100%;" >
+
+    <table style="width: 100%;" id="tabelBenefit" runat="server"   border="0" cellpadding="2" cellspacing="0" class=" fontDocSmall">
+        <tr>
+            <td style="width: 18%;   text-align:right;">
+                <b>
+                    Expected benefit      /<br />ประโยชน์ที่คาดว่าจะได้รับ</b>
+            </td>
+            <td style="width: 2%;text-align:center;"><b>:</b></td>
+            <td style="width: 80%;">
+             @Model.activityFormTBMMKT.benefit
+            </td>
+
+        </tr>
+
+    </table>
+ 
+</div>

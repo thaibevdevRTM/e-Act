@@ -114,22 +114,27 @@
                     <input id="adminTBM" type="checkbox" name="model.chkRole" value="6">
                     adminTBM
                 </div>
-            </div>
-
-
-            <div class="col-md-2 control-label">
-                <label>
-                    ProductType :
-                </label>
-            </div>
-            <div class="col-md-2">
                 <div>
-                    <input id="chkNonAl" type="checkbox" name="model.chkProductType" value="1D1097F4-246F-4DC2-BB69-B7BB6E678299">
-                    Non-Alcohol
+                    <input id="adminHCM" type="checkbox" name="model.chkRole" value="7">
+                    adminHCM
                 </div>
-                <div>
-                    <input id="chkAl" type="checkbox" name="model.chkProductType" value="FC696EB5-B058-445E-B605-977C5067AEBA">
-                    Alcohol
+            </div>
+
+            <div id="divProductType">
+                <div class="col-md-2 control-label">
+                    <label>
+                        ProductType :
+                    </label>
+                </div>
+                <div class="col-md-2">
+                    <div>
+                        <input id="chkNonAl" type="checkbox" name="model.chkProductType" value="1D1097F4-246F-4DC2-BB69-B7BB6E678299">
+                        Non-Alcohol
+                    </div>
+                    <div>
+                        <input id="chkAl" type="checkbox" name="model.chkProductType" value="FC696EB5-B058-445E-B605-977C5067AEBA">
+                        Alcohol
+                    </div>
                 </div>
             </div>
 
@@ -189,19 +194,24 @@
 <script type="text/javascript">
     var index = 0;
 
+
+
     function onchangeCompany() {
         if ($("#ddlCompany").val() == '@ConfigurationManager.AppSettings["companyId_OMT"]') {
             document.getElementById("divRegion").style.display = "block";
             document.getElementById("divCustomer").style.display = "none";
+            document.getElementById("divProductType").style.display = "block";
 
         }
         else if ($("#ddlCompany").val() == '@ConfigurationManager.AppSettings["companyId_MT"]') {
             document.getElementById("divRegion").style.display = "none";
             document.getElementById("divCustomer").style.display = "block";
+            document.getElementById("divProductType").style.display = "block";
         }
         else {
             document.getElementById("divRegion").style.display = "none";
             document.getElementById("divCustomer").style.display = "none";
+            document.getElementById("divProductType").style.display = "none";
         }
     }
 
@@ -211,19 +221,20 @@
             favorite.push($(this).val());
         });
 
-
-        if (favorite.length > 0 && $("#ddlCompany").val() != "") {
-            $("#frmAdminUser").submit();
+        console.log(favorite.length);
+        console.log($("#ddlCompany").val());
+        if (favorite.length == 0 && $("#ddlCompany").val() == "@ConfigurationManager.AppSettings["companyId_MT"]" && $("#ddlCompany").val() == "@ConfigurationManager.AppSettings["companyId_OMT"]") {
+            doMsgFail("กรุณาระบุ <br/>ProductType");
+            return false;
         }
         else {
-            doMsgFail("กรุณาระบุ <br/>ProductType<br/>,Company");
-            return false;
+            $("#frmAdminUser").submit();
         }
     }
     $(document).ready(function () {
 
-        
-        
+
+
 
         document.getElementById("divRegion").style.display = "none";
 
@@ -353,7 +364,7 @@
                             break;
                     }
                 });
-
+                $('input:checkbox').removeAttr('checked');
                 $.each(response.Data.userLists, function () {
                     switch (this['roleId']) {
                         case '1':
@@ -373,6 +384,9 @@
                             break;
                         case '6':
                             document.getElementById("adminTBM").checked = true;
+                            break;
+                        case '7':
+                            document.getElementById("adminHCM").checked = true;
                             break;
                     }
                 });

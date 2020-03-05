@@ -1,6 +1,8 @@
 ﻿@using eActForm.Models
 @using eActForm.BusinessLayer
+@using System.Configuration;
 @model eActForm.Models.Activity_Model
+
 @{
     /**/
 
@@ -8,7 +10,7 @@
     var mode = Request["mode"] == null ? "" : Request["mode"];
 }
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>z
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
@@ -74,11 +76,11 @@
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @if (Model.activityFormModel.documentDate.ToString() != "")
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc" , @readonly = true , autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @readonly = true, autocomplete = "off" })
                         }
                         else
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd-MM-yyyy"), @readonly=true , autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd-MM-yyyy"), @readonly = true, autocomplete = "off" })
                         }
                     </div>
                 </div>
@@ -91,7 +93,11 @@
                             Reference
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.TextBoxFor(x => x.activityFormModel.reference, new { @class = "form-control textboxcss", @id = "txtReference", autocomplete = "off" })
+                            <div id="divReference">
+                                @Html.TextBoxFor(x => x.activityFormModel.reference, new { @class = "form-control textboxcss", @id = "txtReference", autocomplete = "off" })
+                            </div>
+                            <div id="divRadioRef" class="radioRef">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -182,11 +188,11 @@
                         ประเภทกิจกรรม<span class="required">*</span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                       @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
-                       {
-                       @class = "form-control textboxcss",
-                       id = "ddlTheme"
-                       })
+                        @Html.DropDownListFor(x => x.activityFormModel.theme, new SelectList(Model.activityGroupList, "id", "activitySales", 0), "Please Select", new
+                        {
+                        @class = "form-control textboxcss",
+                        id = "ddlTheme"
+                        })
                     </div>
                 </div>
             </div>
@@ -292,7 +298,7 @@
                     </div>
                 </div>
             </div>
-          
+
         </div>
     </form>
 </div>
@@ -435,7 +441,7 @@
         fillProductOnChange();
         document.getElementById("ddlProductfilter").disabled = true;
         document.getElementById("ddlProductSize").disabled = true;
-
+        getFormatCus();
 
         var chkClaim = '@ViewBag.chkClaim'
         if (chkClaim == 'True') {
@@ -573,7 +579,9 @@
 
     function onchangeCustomer() {
         ObjModel = {};
-         $("#txtchanel").val('');
+        getFormatCus();
+
+        $("#txtchanel").val('');
          $.ajax({
                 url: '@Url.Action("getChanel", "eAct")',
                 data: {
@@ -585,6 +593,49 @@
                  $("#txtchanel").val(response.Data.Chanel_group);
              }
          });
+    }
+
+    function clearFormatCus() {
+        $("#txtReference").val('');
+        $('input[name="formatCus"]').each(function () {
+            this.checked = false;
+        });
+    }
+
+    function getFormatCus() {
+        document.getElementById("divRadioRef").innerHTML = "";
+        document.getElementById("txtReference").readOnly = true;
+        if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]") {
+            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Market" onchange = "onchangeRdbRef(this);">Market</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Mini" onchange = "onchangeRdbRef(this);">Mini</input>');
+            $("#divRadioRef").append('&nbsp;&nbsp;&nbsp;&nbsp;');
+            $("#divRadioRef").append('<button type="button" onclick = "clearFormatCus();">clear</button>');
+        }
+        else if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]") {
+            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Express" onchange = "onchangeRdbRef(this);">Express</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Talad" onchange = "onchangeRdbRef(this);">Talad</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>');
+            $("#divRadioRef").append('&nbsp;&nbsp;&nbsp;&nbsp;');
+            $("#divRadioRef").append('<button type="button" onclick = "clearFormatCus();">clear</button>');
+        }
+        else {
+            document.getElementById("txtReference").readOnly = false;
+        }
+
+    }
+
+    function onchangeRdbRef(element) {
+
+        var unionStr = $("#txtReference").val();
+        unionStr += element.value + ',';
+
+        if (!element.checked) {
+            console.log(element.value + ',')
+            unionStr = document.getElementById("txtReference").value.replace(element.value + ',', '');
+        }
+
+        $("#txtReference").val(unionStr)
     }
 
     $("#ddlProductBrand").change(function () {
@@ -843,6 +894,9 @@
             }
         }
         if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
+
+        if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
+            $("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]")) { required += "Reference*<br>"; validate = false; }
 
         //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 

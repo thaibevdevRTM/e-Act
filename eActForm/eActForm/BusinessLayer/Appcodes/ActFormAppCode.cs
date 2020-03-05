@@ -7,6 +7,7 @@ using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System.Data.SqlClient;
 using eActForm.BusinessLayer.Appcodes;
+using System.Configuration;
 
 namespace eActForm.BusinessLayer
 {
@@ -88,9 +89,11 @@ namespace eActForm.BusinessLayer
                              {
                                  empId = dr["empId"].ToString(),
                                  empName = dr["empName"].ToString(),
+                                 empName_EN = dr["empName_EN"].ToString(),
                                  empEmail = dr["empEmail"].ToString(),
                                  activityNo = dr["activityNo"].ToString(),
                                  companyName = dr["companyName"].ToString(),
+                                 companyNameEN = dr["companyNameEN"].ToString(),
                                  delFlag = (bool)dr["delFlag"],
                                  createdDate = (DateTime?)dr["createdDate"],
                                  createdByUserId = dr["createdByUserId"].ToString(),
@@ -127,7 +130,7 @@ namespace eActForm.BusinessLayer
 
 
                 if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin ||
-                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
+                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM|| UtilsAppCode.Session.User.isAdminHCM )
                 {
                     strCall = "usp_getActivityFormAll";
                 }
@@ -221,5 +224,10 @@ namespace eActForm.BusinessLayer
         }
 
 
+        public static bool isOtherCompanyMT()
+        {
+            return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] ||
+                UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+        }
     }
 }

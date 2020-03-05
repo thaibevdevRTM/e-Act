@@ -1,9 +1,10 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
-<tr style="border-bottom:none;">
-    <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+@*<tr style="border-bottom:none;">
+    <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">*@
         <div style="height:5px;"></div>
-        <div style="width: 100%; text-align: left;" class="fontDocV1">
+        <div style="width: 100%; text-align: left;">
             &nbsp;ผู้จัดทำ @Model.activityFormTBMMKT.createdByName
+            <br/>@ViewBag.classFont
         </div>
-    </td>
-</tr>
+    @*</td>
+</tr>*@
