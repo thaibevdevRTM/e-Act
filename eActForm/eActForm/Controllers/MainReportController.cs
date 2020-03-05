@@ -39,7 +39,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm_EN;
                 activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
                 activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
-                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkUseFormEng(activity_TBMMKT_Model.activityFormTBMMKT.id);
+               // activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkUseFormEng(Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString());
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
                 {
                     ViewBag.classFont = "fontDocSmall";

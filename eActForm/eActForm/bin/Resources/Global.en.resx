@@ -120,7 +120,13 @@
   <data name="Dashboard_Index_allDocuments" xml:space="preserve">
     <value>All Documents</value>
   </data>
+  <data name="Dashboard_Index_awaitingApproval" xml:space="preserve">
+    <value>Awaiting Approval</value>
+  </data>
   <data name="Dashboard_Index_yourCreatedDocuments" xml:space="preserve">
     <value>Your Created Documents</value>
+  </data>
+  <data name="Dashboard_Index_yourDocumentsAwaitingApproval" xml:space="preserve">
+    <value>Your Documents Awaiting Approval.</value>
   </data>
 </root>

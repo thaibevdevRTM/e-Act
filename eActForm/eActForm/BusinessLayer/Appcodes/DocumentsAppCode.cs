@@ -6,6 +6,8 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.ApplicationBlocks.Data;
 using eActForm.Models;
+
+
 namespace eActForm.BusinessLayer
 {
     public class DocumentsAppCode
@@ -142,15 +144,43 @@ namespace eActForm.BusinessLayer
             return BahtText;
         }
 
-        public static bool checkUseFormEng(string activityId)
+        public static bool checkLanguate(string cultureDoc,string cultureLocal, string culture, int statusId)
         {
             bool chk = false;
 
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActIDUseEng"
-                    , new SqlParameter[] { new SqlParameter("@activityId", activityId) });
-                if (ds.Tables[0].Rows.Count > 0) chk = true;
+
+                if (checkModeEdit(statusId)) {
+                    //ถ้าเป็นโหมด
+                }
+
+
+                if (culture == "en-US")
+                { chk = true; }
+                //DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActIDUseEng"
+                //    , new SqlParameter[] { new SqlParameter("@activityId", activityId) });
+                //if (ds.Tables[0].Rows.Count > 0) chk = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return chk;
+        }
+
+        public static bool checkModeEdit(int statusId)
+        {
+            bool chk = true; //แก้ไขได้
+
+            try
+            {
+               
+                if ((statusId == 2 && UtilsAppCode.Session.User.isAdminTBM ==false) || (statusId == 3))
+                {
+                    chk = false;//แก้ไข้ไม่ได้
+                }
+               
             }
             catch (Exception ex)
             {

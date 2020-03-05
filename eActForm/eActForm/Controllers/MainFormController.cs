@@ -146,6 +146,8 @@ namespace eActForm.Controllers
 
                 }
 
+                activity_TBMMKT_Model.activityFormTBMMKT.languageDoc = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
+
                 int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
 
                 result.Data = activity_TBMMKT_Model.activityFormModel.id;

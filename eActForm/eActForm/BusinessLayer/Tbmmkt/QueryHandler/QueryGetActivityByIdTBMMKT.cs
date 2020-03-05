@@ -34,6 +34,7 @@ namespace eActForm.BusinessLayer
                                   companyId = d["companyId"].ToString(),
                                   master_type_form_id = d["master_type_form_id"].ToString(),
                                   benefit = d["benefit"].ToString(),
+                                  languageDoc = d["languageDoc"].ToString(),
                                   companyNameEN = d["companyNameEN"].ToString(),
                                   companyNameTH = d["companyNameTH"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
