@@ -120,7 +120,13 @@
   <data name="Dashboard_Index_allDocuments" xml:space="preserve">
     <value>เอกสารทั้งหมด</value>
   </data>
+  <data name="Dashboard_Index_awaitingApproval" xml:space="preserve">
+    <value>รออนุมัติ</value>
+  </data>
   <data name="Dashboard_Index_yourCreatedDocuments" xml:space="preserve">
     <value>จำนวนเอกสารที่คุณสร้าง</value>
+  </data>
+  <data name="Dashboard_Index_yourDocumentsAwaitingApproval" xml:space="preserve">
+    <value>จำนวนเอกสารที่รอการอนุมัติ</value>
   </data>
 </root>

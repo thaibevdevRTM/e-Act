@@ -10,10 +10,8 @@
 
 namespace Resources {
     using System;
-    using System.Globalization;
-    using System.Threading;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -25,7 +23,7 @@ namespace Resources {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Global {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
@@ -72,11 +70,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to รออนุมัติ.
+        /// </summary>
+        public static string Dashboard_Index_awaitingApproval {
+            get {
+                return ResourceManager.GetString("Dashboard_Index_awaitingApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to จำนวนเอกสารที่คุณสร้าง.
         /// </summary>
         public static string Dashboard_Index_yourCreatedDocuments {
             get {
                 return ResourceManager.GetString("Dashboard_Index_yourCreatedDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to จำนวนเอกสารที่รอการอนุมัติ.
+        /// </summary>
+        public static string Dashboard_Index_yourDocumentsAwaitingApproval {
+            get {
+                return ResourceManager.GetString("Dashboard_Index_yourDocumentsAwaitingApproval", resourceCulture);
             }
         }
     }

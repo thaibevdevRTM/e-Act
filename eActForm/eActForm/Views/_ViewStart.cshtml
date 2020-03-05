@@ -5,8 +5,8 @@
     //==========dev date 20200403 peerapop=====Cookie multi language==========
     if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]] == null)
     {
-        Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value = ConfigurationManager.AppSettings["cultureThai"];
-        Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Expires = DateTime.Now.AddDays(365);
+        Response.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value = ConfigurationManager.AppSettings["cultureThai"];
+        Response.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Expires = DateTime.Now.AddDays(365);
     }
     //===END=======dev date 20200403 peerapop=====Cookie multi language==========
 
