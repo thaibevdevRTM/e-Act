@@ -133,6 +133,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to th-TH.
+        /// </summary>
+        public static string cultureLocal {
+            get {
+                return ResourceManager.GetString("cultureLocal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to เรียน เพื่อทราบ.
+        /// </summary>
+        public static string dearToInform {
+            get {
+                return ResourceManager.GetString("dearToInform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ไม่พบลายเซ็นของคุณในระบบ.
         /// </summary>
         public static string dontFoundYourSignatureInSystem {
@@ -210,6 +228,15 @@ namespace Resources {
         public static string name {
             get {
                 return ResourceManager.GetString("name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ยังไม่อนุมัติ.
+        /// </summary>
+        public static string notApprove {
+            get {
+                return ResourceManager.GetString("notApprove", resourceCulture);
             }
         }
         

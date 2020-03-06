@@ -183,11 +183,20 @@
   <data name="approveDate" xml:space="preserve">
     <value>Approve Date</value>
   </data>
+  <data name="cultureLocal" xml:space="preserve">
+    <value>en-US</value>
+  </data>
+  <data name="dearToInform" xml:space="preserve">
+    <value>Dear to inform</value>
+  </data>
   <data name="empName" xml:space="preserve">
     <value>empNameEN</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="notApprove" xml:space="preserve">
+    <value>Not approve</value>
   </data>
   <data name="rank" xml:space="preserve">
     <value>Rank</value>
