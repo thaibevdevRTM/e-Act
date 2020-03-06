@@ -68,11 +68,12 @@ namespace eActForm.BusinessLayer
 
                 //---- ApprovePass-----//
                 var dataApproveList = model.activityModel.activityOfEstimateList.Where(w => w.chkBox == "on").ToList();
+                var dataUnApproveList = model.activityModel.activityOfEstimateList.Where(w => w.chkBox == null).ToList();
+
                 model.activityModel.activityOfEstimateList = dataApproveList;
                 resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activityModel, actId);
 
                 //---- ApproveUnPass-----//
-                var dataUnApproveList = model.activityModel.activityOfEstimateList.Where(w => w.chkBox != "on").ToList();
                 model.activityModel.activityOfEstimateList = dataUnApproveList;
                 resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activityModel, newID);
 
@@ -80,6 +81,8 @@ namespace eActForm.BusinessLayer
                 model.activityModel.activityFormModel.id = newID;
                 model.activityModel.activityFormModel.activityNo = "";
                 model.activityModel.activityFormModel.statusId = 1;
+                model.activityModel.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+                model.activityModel.activityFormModel.updatedDate = DateTime.Now;
                 resultInsert += ActivityFormTBMMKTCommandHandler.insertActivityForm(model.activityModel.activityFormModel);
                 return true;
             }

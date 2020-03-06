@@ -520,6 +520,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@master_type_form_id",model.master_type_form_id)
                     ,new SqlParameter("@remark",model.remark)
                     ,new SqlParameter("@benefit", (model.benefit == null ? "" :model.benefit))
+                    ,new SqlParameter("@reference", model.reference)
                     });
             }
             catch (Exception ex)
