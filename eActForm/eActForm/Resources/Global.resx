@@ -171,4 +171,34 @@
   <data name="yourDocumentsAwaitingApproval" xml:space="preserve">
     <value>จำนวนเอกสารที่รอการอนุมัติ</value>
   </data>
+  <data name="approvalDocument" xml:space="preserve">
+    <value>เอกสารขออนุมัติ</value>
+  </data>
+  <data name="approvalHistory" xml:space="preserve">
+    <value>ประวัติการอนุมัติ</value>
+  </data>
+  <data name="approve" xml:space="preserve">
+    <value>อนุมัติ</value>
+  </data>
+  <data name="approveDate" xml:space="preserve">
+    <value>วันที่อนุมัติ</value>
+  </data>
+  <data name="empName" xml:space="preserve">
+    <value>empName</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>ชื่อ</value>
+  </data>
+  <data name="rank" xml:space="preserve">
+    <value>ลำดับ</value>
+  </data>
+  <data name="reason" xml:space="preserve">
+    <value>เหตุผล</value>
+  </data>
+  <data name="status" xml:space="preserve">
+    <value>สถานะ</value>
+  </data>
+  <data name="yourSignature" xml:space="preserve">
+    <value>ลายเซ็นปัจจุบัน</value>
+  </data>
 </root>

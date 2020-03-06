@@ -79,11 +79,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to เอกสารขออนุมัติ.
+        /// </summary>
+        public static string approvalDocument {
+            get {
+                return ResourceManager.GetString("approvalDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ประวัติการอนุมัติ.
+        /// </summary>
+        public static string approvalHistory {
+            get {
+                return ResourceManager.GetString("approvalHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to อนุมัติ.
+        /// </summary>
+        public static string approve {
+            get {
+                return ResourceManager.GetString("approve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to อนุมัติ.
         /// </summary>
         public static string approved {
             get {
                 return ResourceManager.GetString("approved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to วันที่อนุมัติ.
+        /// </summary>
+        public static string approveDate {
+            get {
+                return ResourceManager.GetString("approveDate", resourceCulture);
             }
         }
         
@@ -111,6 +147,15 @@ namespace Resources {
         public static string dropdownStatus {
             get {
                 return ResourceManager.GetString("dropdownStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to empName.
+        /// </summary>
+        public static string empName {
+            get {
+                return ResourceManager.GetString("empName", resourceCulture);
             }
         }
         
@@ -160,6 +205,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ชื่อ.
+        /// </summary>
+        public static string name {
+            get {
+                return ResourceManager.GetString("name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to เกินกำหนด.
         /// </summary>
         public static string overdue {
@@ -174,6 +228,33 @@ namespace Resources {
         public static string pleaseInsertYourSignatureBeforeApprovalDocument {
             get {
                 return ResourceManager.GetString("pleaseInsertYourSignatureBeforeApprovalDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ลำดับ.
+        /// </summary>
+        public static string rank {
+            get {
+                return ResourceManager.GetString("rank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to เหตุผล.
+        /// </summary>
+        public static string reason {
+            get {
+                return ResourceManager.GetString("reason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to สถานะ.
+        /// </summary>
+        public static string status {
+            get {
+                return ResourceManager.GetString("status", resourceCulture);
             }
         }
         
@@ -219,6 +300,15 @@ namespace Resources {
         public static string yourDocumentsAwaitingApproval {
             get {
                 return ResourceManager.GetString("yourDocumentsAwaitingApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ลายเซ็นปัจจุบัน.
+        /// </summary>
+        public static string yourSignature {
+            get {
+                return ResourceManager.GetString("yourSignature", resourceCulture);
             }
         }
     }

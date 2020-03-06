@@ -171,4 +171,34 @@
   <data name="yourDocumentsAwaitingApproval" xml:space="preserve">
     <value>Your Documents Awaiting Approval.</value>
   </data>
+  <data name="approvalDocument" xml:space="preserve">
+    <value>Approval document</value>
+  </data>
+  <data name="approvalHistory" xml:space="preserve">
+    <value>Approval history</value>
+  </data>
+  <data name="approve" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="approveDate" xml:space="preserve">
+    <value>Approve Date</value>
+  </data>
+  <data name="empName" xml:space="preserve">
+    <value>empNameEN</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="rank" xml:space="preserve">
+    <value>Rank</value>
+  </data>
+  <data name="reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="yourSignature" xml:space="preserve">
+    <value>Your Signature</value>
+  </data>
 </root>

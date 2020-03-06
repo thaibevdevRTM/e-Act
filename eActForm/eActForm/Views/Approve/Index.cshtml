@@ -32,12 +32,12 @@ else
 {
     <div class="row">
         <div class="col-md-4 col-xs-12">
-            <h3>ประวัติการอนุมัติ</h3>
+            <h3>@Resources.Global.approvalHistory</h3>
             <hr />
             @Html.Action("approveLists", "Approve", Model)
         </div>
         <div class="col-md-8 col-xs-12">
-            <h3>เอกสารขออนุมัติ</h3>
+            <h3>@Resources.Global.approvalDocument</h3>
             <hr />
             @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
             <div class="col-md-12">
@@ -50,13 +50,13 @@ else
 , new { id = "formApprove", @class = "form-horizontal form-label-left" }))
             {
                 var item = Model.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
-                <h3>อนุมัติ</h3>
+            <h3>@Resources.Global.approve</h3>
                 <hr />
                 <div class="form-group">
                     <div class="col-md-12 col-xs-12">
                         <div class="row">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
-                                เหตุผล(เพิ่มเติม)
+                                @Resources.Global.reason
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
                                 <textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required style="border:solid;border-color:#ddd;border-width:thin;">
@@ -91,7 +91,7 @@ else
                     <div class="col-md-12 col-xs-12">
                         <div class="row">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="currentSignature">
-                                ลายเซ็นปัจจุบัน
+                                @Resources.Global.yourSignature
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
                                 @Html.Action("currentSignature", "Signature", new { empId = UtilsAppCode.Session.User.empId })
