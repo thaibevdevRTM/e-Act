@@ -14,7 +14,7 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <script src="~/Scripts/Approve/RepDetailApproves.js"></script>
 
-<h2>การอนุมัติ</h2>
+<h2>@Resources.Global.approval</h2>
 <hr />
 
 @if (ViewBag.messCannotFindSignature != null)
@@ -22,8 +22,8 @@
     <div class="loading" style="text-align: center;">
         <img src="~/images/warning_error.png" style="margin-top:100px;width:100px;height:100px;" />
         <div style="margin-top: 10px; color: white">
-            <p class="text-danger"><h2>ไม่พบลายเซ็นของคุณในระบบ!!! <br />กรุณาเพิ่มลายเซ็นก่อนอนุมัติเอกสาร</h2></p>
-            @Html.ActionLink("เพิ่มลายเซ็นในระบบ Click", "index", "Signature")
+            <p class="text-danger"><h2>@Resources.Global.dontFoundYourSignatureInSystem !!! <br />@Resources.Global.pleaseInsertYourSignatureBeforeApprovalDocument</h2></p>
+            @Html.ActionLink(Resources.Global.insertYourSignature + " Click", "index", "Signature")
         </div>
 
     </div>
@@ -32,12 +32,12 @@ else
 {
     <div class="row">
         <div class="col-md-4 col-xs-12">
-            <h3>ประวัติการอนุมัติ</h3>
+            <h3>@Resources.Global.approvalHistory</h3>
             <hr />
             @Html.Action("approveLists", "Approve", Model)
         </div>
         <div class="col-md-8 col-xs-12">
-            <h3>เอกสารขออนุมัติ</h3>
+            <h3>@Resources.Global.approvalDocument</h3>
             <hr />
 
 
@@ -61,13 +61,13 @@ else
                         @Html.Action("ImageList", "Activity", new { activityId = actId != null ? actId : "" })
                     </div>
                 </div>
-                <h3>อนุมัติ</h3>
+            <h3>@Resources.Global.approve</h3>
                 <hr />
                 <div class="form-group">
                     <div class="col-md-12 col-xs-12">
                         <div class="row">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
-                                เหตุผล(เพิ่มเติม)
+                                @Resources.Global.reason
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
                                 <textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required style="border:solid;border-color:#ddd;border-width:thin;">
@@ -102,7 +102,7 @@ else
                     <div class="col-md-12 col-xs-12">
                         <div class="row">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="currentSignature">
-                                ลายเซ็นปัจจุบัน
+                                @Resources.Global.yourSignature
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
                                 @Html.Action("currentSignature", "Signature", new { empId = UtilsAppCode.Session.User.empId })

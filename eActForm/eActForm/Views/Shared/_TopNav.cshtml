@@ -1,4 +1,5 @@
 ﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
 @{
     Layout = null;
 }
@@ -14,7 +15,54 @@
             }
 
             <ul class="nav navbar-nav navbar-right">
-                
+                <li style="margin-top:14px;">
+                    <div class="user-profile dropdown-toggle" style="display:inline-block;">
+                        <style>
+                            .btnFlag {
+                                height: 29px;
+                                width: 29px;
+                                cursor: pointer;
+                            }
+                        </style>
+                        <img id="flagEN" src="~/images/flagEN.png" style="" class="btnFlag" onclick="changeLanguage('@ConfigurationManager.AppSettings["cultureEng"]')" title="Change to english language." alt="Change to english language."/>
+                        <img id="flagTH" src="~/images/flagTH.png" style="" class="btnFlag" onclick="changeLanguage('@ConfigurationManager.AppSettings["cultureThai"]')" title="Change to thai language." alt="Change to thai language."/>
+                        <script>
+                            if (getCookie("@ConfigurationManager.AppSettings["nameCookieLanguageEact"]") == "@ConfigurationManager.AppSettings["cultureEng"]") {
+                                $("#flagEN").attr("style", "opacity:1;")
+                                $("#flagTH").attr("style", "opacity:0.2;")
+                            } else {
+                                $("#flagEN").attr("style", "opacity:0.2;")
+                                $("#flagTH").attr("style", "opacity:1;")
+                            }
+
+                            function changeLanguage(varLang) {
+                                setCookie("@ConfigurationManager.AppSettings["nameCookieLanguageEact"]", varLang,365);
+                                window.location.reload();
+                            }
+                            function getCookie(cname) {
+                                var name = cname + "=";
+                                var decodedCookie = decodeURIComponent(document.cookie);
+                                var ca = decodedCookie.split(';');
+                                for (var i = 0; i < ca.length; i++) {
+                                    var c = ca[i];
+                                    while (c.charAt(0) == ' ') {
+                                        c = c.substring(1);
+                                    }
+                                    if (c.indexOf(name) == 0) {
+                                        return c.substring(name.length, c.length);
+                                    }
+                                }
+                                return "";
+                            }
+                            function setCookie(cname, cvalue, exdays) {
+                                var d = new Date();
+                                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                                var expires = "expires=" + d.toUTCString();
+                                document.cookie = cname + "=" + cvalue + "; " + expires;
+                            }
+                        </script>
+                    </div>
+                </li>
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <img src=@src alt="">@UtilsAppCode.Session.User.empFNameTH @UtilsAppCode.Session.User.empLNameTH
