@@ -86,7 +86,7 @@ namespace eActForm.Controllers
             {
                 // case delete
                 result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"]) > 0 ? true : false;
-                if (statusId == "5" && result.Success)
+                if (statusId == "5" && result.Success && !ActFormAppCode.isOtherCompanyMT())
                 {
                     EmailAppCodes.sendRequestCancelToAdmin(actId);
                 }
