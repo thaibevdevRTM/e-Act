@@ -171,7 +171,31 @@
   <data name="yourDocumentsAwaitingApproval" xml:space="preserve">
     <value>Your Documents Awaiting Approval.</value>
   </data>
-  <data name="Dashboard_Index_yourDocumentsAwaitingApproval" xml:space="preserve">
-    <value>Your Documents Awaiting Approval.</value>
+  <data name="compName" xml:space="preserve">
+    <value>companyNameEN</value>
+  </data>
+  <data name="cultureLocal" xml:space="preserve">
+    <value>en-US</value>
+  </data>
+  <data name="empBu" xml:space="preserve">
+    <value>buEN</value>
+  </data>
+  <data name="empCompName" xml:space="preserve">
+    <value>companyNameEN</value>
+  </data>
+  <data name="empDepartment" xml:space="preserve">
+    <value>departmentEN</value>
+  </data>
+  <data name="empName" xml:space="preserve">
+    <value>empNameEN</value>
+  </data>
+  <data name="empPosition" xml:space="preserve">
+    <value>positionEN</value>
+  </data>
+  <data name="formName" xml:space="preserve">
+    <value>formNameEN</value>
+  </data>
+  <data name="viewManual" xml:space="preserve">
+    <value>Suggestion For allowance requisition</value>
   </data>
 </root>

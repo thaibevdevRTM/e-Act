@@ -6,7 +6,8 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.ApplicationBlocks.Data;
 using eActForm.Models;
-
+using Org.BouncyCastle.Asn1.Ocsp;
+using System.Configuration;
 
 namespace eActForm.BusinessLayer
 {
@@ -144,20 +145,30 @@ namespace eActForm.BusinessLayer
             return BahtText;
         }
 
-        public static bool checkLanguate(string cultureDoc,string cultureLocal, string culture, int statusId)
+        public static bool checkLanguageDoc(string cultureDoc, string culture, int statusId)
         {
-            bool chk = false;
+            //เพื่อเช็คการใช้ภาษาในหน้า input form
+            string cultureLocal = HttpContext.Current.Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
 
+            bool chk = false;
             try
             {
 
-                if (checkModeEdit(statusId)) {
-                    //ถ้าเป็นโหมด
+                if (checkModeEdit(statusId))
+                {
+                    //ถ้าเป็นโหมดแก้ไขได้ ใช้ภาษาเครื่อง
+                    if(culture== cultureLocal) chk = true;
+                }
+                else {
+
+                    //แก้ไขไม่ได้ต้องใช้ภาษาใน DB
+                    if (culture == cultureDoc) chk = true; 
+
                 }
 
+                //if (culture == "en-US")
+                //{ chk = true; }
 
-                if (culture == "en-US")
-                { chk = true; }
                 //DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActIDUseEng"
                 //    , new SqlParameter[] { new SqlParameter("@activityId", activityId) });
                 //if (ds.Tables[0].Rows.Count > 0) chk = true;
@@ -172,15 +183,12 @@ namespace eActForm.BusinessLayer
         public static bool checkModeEdit(int statusId)
         {
             bool chk = true; //แก้ไขได้
-
             try
-            {
-               
+            {              
                 if ((statusId == 2 && UtilsAppCode.Session.User.isAdminTBM ==false) || (statusId == 3))
                 {
                     chk = false;//แก้ไข้ไม่ได้
-                }
-               
+                }        
             }
             catch (Exception ex)
             {

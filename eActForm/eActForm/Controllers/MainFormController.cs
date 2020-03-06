@@ -2,6 +2,7 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using iTextSharp.text;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -29,7 +30,7 @@ namespace eActForm.Controllers
 
                 if (!string.IsNullOrEmpty(activityId))
                 {
-
+                    Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
                     activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
                     activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
@@ -61,11 +62,12 @@ namespace eActForm.Controllers
                 else
                 {
                     mode = "new";
-
+                    
                     string actId = Guid.NewGuid().ToString();
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
                     activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
+                    activityFormTBMMKT.chkUseEng = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString()== ConfigurationManager.AppSettings["cultureEng"];
                     //===mock data for first input====
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
                     for (int i = 0; i < 14; i++)
@@ -106,6 +108,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityFormModel.mode = mode;
                 activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activityFormTBMMKT.master_type_form_id, "input");
                 activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activityFormTBMMKT.formCompanyId).FirstOrDefault().companyNameTH;
+                activity_TBMMKT_Model.activityFormTBMMKT.companyNameEN = QueryGet_master_company.get_master_company(activityFormTBMMKT.formCompanyId).FirstOrDefault().companyNameEN;
                 activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
                 activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm_EN;
                 TempData.Keep();

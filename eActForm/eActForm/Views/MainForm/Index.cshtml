@@ -11,7 +11,7 @@
     var urlWorkFlowTrv = "";
     if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"])//travelling TBM
     {
-        strHeader = "คำแนะนำการขอเบิกค่าใช้จ่ายในการเดินทาง";
+        strHeader = Resources.Global.viewManual;
         urlWorkFlowTrv = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "manual/travelling_TBM.pdf";
     }
 
@@ -144,7 +144,7 @@
     {
            $("#GridPDF :input").prop("disabled", true);
            $("#txtdescAttach").prop("disabled", true);
-        }
+    }
 
         if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
             var arrayOfElements = document.getElementsByClassName('clstxtIO');

@@ -97,6 +97,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to companyName.
+        /// </summary>
+        public static string compName {
+            get {
+                return ResourceManager.GetString("compName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to th-TH.
+        /// </summary>
+        public static string cultureLocal {
+            get {
+                return ResourceManager.GetString("cultureLocal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ไม่พบลายเซ็นของคุณในระบบ.
         /// </summary>
         public static string dontFoundYourSignatureInSystem {
@@ -111,6 +129,60 @@ namespace Resources {
         public static string dropdownStatus {
             get {
                 return ResourceManager.GetString("dropdownStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to bu.
+        /// </summary>
+        public static string empBu {
+            get {
+                return ResourceManager.GetString("empBu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to companyName.
+        /// </summary>
+        public static string empCompName {
+            get {
+                return ResourceManager.GetString("empCompName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to department.
+        /// </summary>
+        public static string empDepartment {
+            get {
+                return ResourceManager.GetString("empDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to empName.
+        /// </summary>
+        public static string empName {
+            get {
+                return ResourceManager.GetString("empName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to position.
+        /// </summary>
+        public static string empPosition {
+            get {
+                return ResourceManager.GetString("empPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to formName.
+        /// </summary>
+        public static string formName {
+            get {
+                return ResourceManager.GetString("formName", resourceCulture);
             }
         }
         
@@ -192,6 +264,15 @@ namespace Resources {
         public static string toViewDocument {
             get {
                 return ResourceManager.GetString("toViewDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to คำแนะนำการขอเบิกค่าใช้จ่าย.
+        /// </summary>
+        public static string viewManual {
+            get {
+                return ResourceManager.GetString("viewManual", resourceCulture);
             }
         }
         
