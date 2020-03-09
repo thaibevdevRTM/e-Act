@@ -182,15 +182,14 @@
   </data>
   <data name="approveDate" xml:space="preserve">
     <value>วันที่อนุมัติ</value>
+  <data name="compName" xml:space="preserve">
+    <value>companyName</value>
   </data>
   <data name="cultureLocal" xml:space="preserve">
     <value>th-TH</value>
   </data>
   <data name="dearToInform" xml:space="preserve">
     <value>เรียน เพื่อทราบ</value>
-  </data>
-  <data name="empName" xml:space="preserve">
-    <value>empName</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>ชื่อ</value>
@@ -209,5 +208,25 @@
   </data>
   <data name="yourSignature" xml:space="preserve">
     <value>ลายเซ็นปัจจุบัน</value>
+  <data name="empBu" xml:space="preserve">
+    <value>bu</value>
+  </data>
+  <data name="empCompName" xml:space="preserve">
+    <value>companyName</value>
+  </data>
+  <data name="empDepartment" xml:space="preserve">
+    <value>department</value>
+  </data>
+  <data name="empName" xml:space="preserve">
+    <value>empName</value>
+  </data>
+  <data name="empPosition" xml:space="preserve">
+    <value>position</value>
+  </data>
+  <data name="formName" xml:space="preserve">
+    <value>formName</value>
+  </data>
+  <data name="viewManual" xml:space="preserve">
+    <value>คำแนะนำการขอเบิกค่าใช้จ่าย</value>
   </data>
 </root>

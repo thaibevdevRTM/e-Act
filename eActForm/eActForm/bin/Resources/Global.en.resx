@@ -182,15 +182,14 @@
   </data>
   <data name="approveDate" xml:space="preserve">
     <value>Approve Date</value>
+  <data name="compName" xml:space="preserve">
+    <value>companyNameEN</value>
   </data>
   <data name="cultureLocal" xml:space="preserve">
     <value>en-US</value>
   </data>
   <data name="dearToInform" xml:space="preserve">
     <value>Dear to inform</value>
-  </data>
-  <data name="empName" xml:space="preserve">
-    <value>empNameEN</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>Name</value>
@@ -209,5 +208,25 @@
   </data>
   <data name="yourSignature" xml:space="preserve">
     <value>Your Signature</value>
+  <data name="empBu" xml:space="preserve">
+    <value>buEN</value>
+  </data>
+  <data name="empCompName" xml:space="preserve">
+    <value>companyNameEN</value>
+  </data>
+  <data name="empDepartment" xml:space="preserve">
+    <value>departmentEN</value>
+  </data>
+  <data name="empName" xml:space="preserve">
+    <value>empNameEN</value>
+  </data>
+  <data name="empPosition" xml:space="preserve">
+    <value>positionEN</value>
+  </data>
+  <data name="formName" xml:space="preserve">
+    <value>formNameEN</value>
+  </data>
+  <data name="viewManual" xml:space="preserve">
+    <value>Suggestion For allowance requisition</value>
   </data>
 </root>
