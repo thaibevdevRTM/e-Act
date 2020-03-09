@@ -6,18 +6,34 @@
     var dearGroup = "";
     var signBook = "";
     var signBookPos = "";
+    var Khun = "คุณ";
     if (Model.approveFlowDetail != null)
     {
         foreach (var item in Model.approveFlowDetail)
         {
             if (item.approveGroupId == ConfigurationManager.AppSettings["approveGroupApproveby"])
             {
-                dearGroup = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
+                if (Model.activityFormTBMMKT.chkUseEng)
+                {
+                    dearGroup = (item.empFNameEN + " " + item.empLNameEN);
+                }
+                else
+                {
+                    dearGroup = (Khun + item.empFNameTH + " " + item.empLNameTH);
+                }
             }
             if (item.approveGroupId == ConfigurationManager.AppSettings["approveGrouApplicantTwo"])
             {
-                signBook = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
-                signBookPos = item.empPositionTitleTH;
+                if (Model.activityFormTBMMKT.chkUseEng)
+                {
+                    signBook = (item.empFNameEN + " " + item.empLNameEN);
+                    signBookPos = item.empPositionTitleEN;
+                }
+                else
+                {
+                    signBook = (Khun + item.empFNameTH + " " + item.empLNameTH);
+                    signBookPos = item.empPositionTitleTH;
+                }
             }
         }
     }
