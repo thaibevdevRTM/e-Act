@@ -232,6 +232,14 @@
             if ($("#ddlchannel_place").val() == "") { required += "Channel+Region*<br>"; validate = false; }
             if ($("#txttoName").val() == "") { required += "ให้แก่(ชื่อผู้รับ)*<br>"; validate = false; }
             if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์ที่ขอเบิก*<br>"; validate = false; }
+
+            var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
+            for (i = 0; i < rowCount; i++) {
+                if ($("#ddlin_or_out_stock").val()=='@ConfigurationManager.AppSettings["idInStock"]' && $(".txtInTable_productId_" + i).val() != '' && $(".txtInTable_IO_" + i).val() == '') {
+                    required += "กรุณาระบุIOในMatรายการที่: " + (i+1) +"<br>"; validate = false;
+                }
+            }
+
         }
         else {
 
