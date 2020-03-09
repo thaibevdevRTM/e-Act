@@ -49,6 +49,7 @@ else
                 var item = Model.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
                 if (Model.masterTypeFormId == ConfigurationManager.AppSettings["masterEmpExpense"].ToString())
                 {
+                    @Html.Action("headerCompanySubject", "SharedMasterFormHeaderCompany_Input", new { actId = actId })
                     @Html.Action("exPerryListDetail", "SharedMasterFormDetail_Input", new { actId = actId })
                 }
                 else
@@ -61,7 +62,7 @@ else
                         @Html.Action("ImageList", "Activity", new { activityId = actId != null ? actId : "" })
                     </div>
                 </div>
-            <h3>@Resources.Global.approve</h3>
+                <h3>@Resources.Global.approve</h3>
                 <hr />
                 <div class="form-group">
                     <div class="col-md-12 col-xs-12">
