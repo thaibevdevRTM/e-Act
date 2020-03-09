@@ -39,6 +39,7 @@ namespace eActForm.Models
         public Activity_TBMMKT_Model()
         {
             channelMasterTypeList = new List<ChannelMasterType>();
+            activityFormTBMMKT = new ActivityFormTBMMKT();
 
             masterRequestEmp = new List<RequestEmpModel>();
             requestEmpModel = new List<RequestEmpModel>();

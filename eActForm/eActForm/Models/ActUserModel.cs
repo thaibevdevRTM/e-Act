@@ -79,6 +79,8 @@ namespace eActForm.Models
             public string counteatingRepDetail { get; set; }
             public string counteatingSummaryDetail { get; set; }
             public string countWatingBudgetForm { get; set; }
+            public string countApproveReject { get; set; }
+            public string countRejectAct { get; set; }
             public string exception { get; set; }
             public string regionId { get; set; }
             public string customerId { get; set; }
