@@ -183,11 +183,20 @@
   <data name="approveDate" xml:space="preserve">
     <value>วันที่อนุมัติ</value>
   </data>
+  <data name="cultureLocal" xml:space="preserve">
+    <value>th-TH</value>
+  </data>
+  <data name="dearToInform" xml:space="preserve">
+    <value>เรียน เพื่อทราบ</value>
+  </data>
   <data name="empName" xml:space="preserve">
     <value>empName</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>ชื่อ</value>
+  </data>
+  <data name="notApprove" xml:space="preserve">
+    <value>ยังไม่อนุมัติ</value>
   </data>
   <data name="rank" xml:space="preserve">
     <value>ลำดับ</value>

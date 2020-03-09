@@ -59,6 +59,7 @@ namespace eActForm.Models
             public string empName_EN { get; set; }
             public string statusId { get; set; }
             public string statusName { get; set; }
+            public string statusNameEN { get; set; }
             public bool? isSendEmail { get; set; }
             public string remark { get; set; }
             public byte[] signature { get; set; }

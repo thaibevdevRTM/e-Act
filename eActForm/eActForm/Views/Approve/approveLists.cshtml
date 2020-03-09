@@ -1,4 +1,5 @@
-﻿@model eActForm.Models.ApproveModel.approveModels
+﻿@using System.Configuration;
+@model eActForm.Models.ApproveModel.approveModels
 <table id="dtApproveLists" class="table table-striped table-hover">
     <thead>
         <tr style="background-color:#2B5D95;color:#ffffff;">
@@ -14,25 +15,44 @@
         {
             <tr class="gradeX">
                 <td>@item.rangNo</td>
-                <td>@item.empName</td>
+                @if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureThai"])
+                {
+                    <td>@item.empName</td>
+                }
+                else if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureEng"])
+                {
+                    <td>@item.empName_EN</td>
+                }
+
                 <td>
-                    @{ var status = item.statusId == "" ? "ยังไม่อนุมัติ" : item.statusName;
+                    @{
+                        string valStatusName = "";
+                        if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureThai"])
+                        {
+                            valStatusName = item.statusName;
+                        }
+                        else if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureEng"])
+                        {
+                            valStatusName = item.statusNameEN;
+                        }
+
+                        var status = item.statusId == "" ? Resources.Global.notApprove : valStatusName;
 
                         if (item.isApprove == false)
                         {
-                            status = "เรียน เพื่อทราบ";
+                            status = Resources.Global.dearToInform;
                         }
-                } @status
-            </td>
-            <td>@{ var date = item.statusId == "3" || item.statusId == "5" ? item.updatedDate.Value.ToString("dd/MM/yyyy HH:mm") : "";} @date</td>
-            <td>
-                @if (@item.remark != "")
-                {
-                    <a class="btn ink-reaction btn-danger fa fa-search" onclick="onShowRemark('@item.remark');"></a>
-                }
-            </td>
-        </tr>
-    }
+                    } @status
+                </td>
+                <td>@{ var date = item.statusId == "3" || item.statusId == "5" ? item.updatedDate.Value.ToString("dd/MM/yyyy HH:mm") : "";} @date</td>
+                <td>
+                    @if (@item.remark != "")
+                    {
+                        <a class="btn ink-reaction btn-danger fa fa-search" onclick="onShowRemark('@item.remark');"></a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
