@@ -182,6 +182,7 @@
   </data>
   <data name="approveDate" xml:space="preserve">
     <value>Approve Date</value>
+	</data>
   <data name="compName" xml:space="preserve">
     <value>companyNameEN</value>
   </data>
@@ -208,6 +209,7 @@
   </data>
   <data name="yourSignature" xml:space="preserve">
     <value>Your Signature</value>
+	</data>
   <data name="empBu" xml:space="preserve">
     <value>buEN</value>
   </data>

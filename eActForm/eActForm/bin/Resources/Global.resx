@@ -182,6 +182,7 @@
   </data>
   <data name="approveDate" xml:space="preserve">
     <value>วันที่อนุมัติ</value>
+	 </data>
   <data name="compName" xml:space="preserve">
     <value>companyName</value>
   </data>
@@ -208,6 +209,7 @@
   </data>
   <data name="yourSignature" xml:space="preserve">
     <value>ลายเซ็นปัจจุบัน</value>
+	 </data>
   <data name="empBu" xml:space="preserve">
     <value>bu</value>
   </data>

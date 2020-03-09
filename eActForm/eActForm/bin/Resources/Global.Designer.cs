@@ -149,10 +149,6 @@ namespace Resources {
                 return ResourceManager.GetString("dearToInform", resourceCulture);
                             }
         }
-          
-          
-          
-        /// <summary>
         ///   Looks up a localized string similar to th-TH.
         /// </summary>
         public static string cultureLocal {
