@@ -73,6 +73,7 @@ namespace eActForm.BusinessLayer.CommandHandler
                     ,new SqlParameter("@size",model.size)
                     ,new SqlParameter("@pack",model.pack)
                     ,new SqlParameter("@unit",model.unit)
+                    ,new SqlParameter("@digit_IO",model.digit_IO)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",DateTime.Now)
                     ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
@@ -106,6 +107,7 @@ namespace eActForm.BusinessLayer.CommandHandler
                     ,new SqlParameter("@size",model.size)
                     ,new SqlParameter("@pack",model.pack)
                     ,new SqlParameter("@unit",model.unit)
+                    ,new SqlParameter("@digit_IO",model.digit_IO)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@updatedDate",DateTime.Now)
                     ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
@@ -113,7 +115,7 @@ namespace eActForm.BusinessLayer.CommandHandler
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> insertProduct");
+                ExceptionManager.WriteError(ex.Message + ">> updateProduct");
             }
 
             return result;

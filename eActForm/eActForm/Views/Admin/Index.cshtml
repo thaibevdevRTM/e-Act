@@ -96,15 +96,18 @@
 
 
 <div class="row form-group">
-    <div class="col-md-5 col-sm-12 col-xs-6">
+    <div class="col-md-4">
         ProductDetail:&nbsp;&nbsp;
         @Html.TextBoxFor(x => x.activityFormModel.productName, new { @class = "form-controlMix", @id = "txtProductName", @style = "width:100%;" })
     </div>
-    <div class="col-md-6 col-sm-12 col-xs-6">
+    <div class="col-md-3">
         ProductCode:&nbsp;&nbsp;
-        @Html.TextBoxFor(x => x.activityFormModel.productCode, new { @class = "form-controlMix", @id = "txtProductCode" })
+        @Html.TextBoxFor(x => x.activityFormModel.productCode, new { @class = "form-controlMix", @id = "txtProductCode", @style = "width:100%;" })
     </div>
-
+    <div class="col-lg-3 col-xs-6">
+        digit_IO:&nbsp;&nbsp;
+        @Html.TextBoxFor(x => x.activityFormModel.digit_IO, new { @class = "form-controlMix", @id = "txtDigit_IO", @style = "width:100%;" })
+    </div>
 </div>
 <div class="row form-group">
     <div  align="center" class="form-group col-md-3 col-sm-3 col-xs-3 col-md-offset-4" onclick="return $adminPage.checkProduct();">

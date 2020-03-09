@@ -102,6 +102,7 @@ namespace eActForm.Models
             public string regionId { get; set; }
             public string brandId { get; set; }
             public string master_type_form_id { get; set; }
+            public DateTime? dateSentApprove { get; set; }
         }
 
     }
@@ -186,6 +187,7 @@ namespace eActForm.Models
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
         public string formCompanyId { get; set; }
+        public string digit_IO { get; set; }
 
     }
 
