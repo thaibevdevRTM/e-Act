@@ -14,8 +14,8 @@
                     <th class="align-content-center font10" rowspan="2" style="width:5%;"></th>
                     <th class="align-content-center font10" rowspan="2" style="width:10%;">วันเดือนปี</th>
                     <th class="align-content-center font10" rowspan="2" style="width:30%;">รายการ</th>
-                    <th class="align-content-center font10" rowspan="2" style="width:20%;">สถานที่</th>
-                    <th class="align-content-center font10" rowspan="2" style="width:10%;">จำนวนเงิน</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:15%;">สถานที่</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:15%;">จำนวนเงิน</th>
                     <th class="align-content-center font10" rowspan="2" style="width:30%;">หมายเหตุ</th>
                 </tr>
             </thead>
@@ -45,7 +45,7 @@
         </table>
         @if (UtilsAppCode.Session.User.isCreator && Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
         {
-            <div onclick="addRow();">
+            <div  class="row" style="width:50px" onclick="addRow();">
                 <label class="btn ink-reaction btn-danger fa fa-plus"></label>
             </div>
 
