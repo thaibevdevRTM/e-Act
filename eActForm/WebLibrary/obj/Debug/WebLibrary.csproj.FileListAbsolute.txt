@@ -24,3 +24,4 @@ D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.Core
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojResolveAssemblyReference.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojResolveAssemblyReference.cache

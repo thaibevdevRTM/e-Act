@@ -18,7 +18,10 @@ namespace eActForm.BusinessLayer
 {
     public class EmailAppCodes
     {
-        public static string departmentInterSale = "941F6AC9-A36E-48A4-8769-1A267EB8BC3A";
+        //public static string[] departmentUseEN = { "941F6AC9-A36E-48A4-8769-1A267EB8BC3A", "8C0DD2A1-9110-4EEC-8BE3-578E4FA59520" };
+
+        //public static string departmentInterSale = "941F6AC9-A36E-48A4-8769-1A267EB8BC3A";
+
         public static void sendRequestCancelToAdmin(string actFormId)
         {
             try
@@ -144,7 +147,7 @@ namespace eActForm.BusinessLayer
                     txtEmpUser = empUser.FirstOrDefault().empName;
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                     {
-                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)// Inter sale
+                        if (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"])// Inter sale
                         {
                             emailRejectBody = ConfigurationManager.AppSettings["emailRejectBody_EN"];
                             emailRejectSubject = ConfigurationManager.AppSettings["emailRejectSubject_EN"];
@@ -204,7 +207,7 @@ namespace eActForm.BusinessLayer
                     emailAllApprovedSubject = ConfigurationManager.AppSettings["emailApproveSubject"];
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                     {
-                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)// Inter sale
+                        if (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"])// Inter sale
                         {
                             emailAllApprovedSubject = ConfigurationManager.AppSettings["emailApproveSubject_EN"];
                         }
@@ -244,7 +247,7 @@ namespace eActForm.BusinessLayer
                             txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody"];
                             if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                             {
-                                if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)// Inter sale
+                                if (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"])// Inter sale
                                 {
                                     createUsersName = createUsers.FirstOrDefault().empName_EN;
                                     emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject_EN"];
@@ -309,7 +312,7 @@ namespace eActForm.BusinessLayer
                 strSubject = ConfigurationManager.AppSettings["emailApproveSubject"];
                 if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                 {
-                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)//Inter sale
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"])//Inter sale
                     {
                         strSubject = ConfigurationManager.AppSettings["emailApproveSubject_EN"];
                     }
@@ -350,7 +353,7 @@ namespace eActForm.BusinessLayer
                             txtemailAllApproveBody = ConfigurationManager.AppSettings["emailAllApproveBody"];
                             if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                             {
-                                if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)// Inter sale
+                                if (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"])// Inter sale
                                 {
                                     createUsersName = createUsers.FirstOrDefault().empName_EN;
                                     emailAllApprovedSubject = ConfigurationManager.AppSettings["emailAllApprovedSubject_EN"];
@@ -494,7 +497,7 @@ namespace eActForm.BusinessLayer
                         emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
                         if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                         {
-                            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)//Inter sale
+                            if (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"])//Inter sale
                             {
                                 emailTypeTxt = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm_EN;
                             }
@@ -523,7 +526,7 @@ namespace eActForm.BusinessLayer
                         txtCompanyname = models[0].companyName;
                         if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                         {
-                            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == departmentInterSale)//Inter sale
+                            if (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"])//Inter sale
                             {
                                 strBody = ConfigurationManager.AppSettings["emailApproveBody_EN"];
                                 empNameResult = item.empName_EN;
