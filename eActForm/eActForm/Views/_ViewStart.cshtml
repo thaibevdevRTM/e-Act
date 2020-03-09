@@ -2,13 +2,13 @@
 @using System.Configuration;
 @using System.Threading;
 @{
-    //==========dev date 20200403 peerapop=====Cookie multi language==========
+    //==========dev date 20200304 peerapop=====Cookie multi language==========
     if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]] == null)
     {
         Response.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value = ConfigurationManager.AppSettings["cultureThai"];
         Response.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Expires = DateTime.Now.AddDays(365);
     }
-    //===END=======dev date 20200403 peerapop=====Cookie multi language==========
+    //===END=======dev date 20200304 peerapop=====Cookie multi language==========
 
 
     string culture = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();

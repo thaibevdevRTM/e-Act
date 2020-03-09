@@ -182,7 +182,7 @@
   </data>
   <data name="approveDate" xml:space="preserve">
     <value>วันที่อนุมัติ</value>
-	 </data>
+  </data>
   <data name="compName" xml:space="preserve">
     <value>companyName</value>
   </data>
@@ -209,7 +209,7 @@
   </data>
   <data name="yourSignature" xml:space="preserve">
     <value>ลายเซ็นปัจจุบัน</value>
-	 </data>
+  </data>
   <data name="empBu" xml:space="preserve">
     <value>bu</value>
   </data>
@@ -230,5 +230,8 @@
   </data>
   <data name="viewManual" xml:space="preserve">
     <value>คำแนะนำการขอเบิกค่าใช้จ่าย</value>
+  </data>
+  <data name="toDocument" xml:space="preserve">
+    <value>เรียน</value>
   </data>
 </root>

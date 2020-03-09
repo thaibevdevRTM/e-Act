@@ -142,18 +142,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to เรียน เพื่อทราบ.
-        /// </summary>
-        public static string dearToInform {
-            get {
-                return ResourceManager.GetString("dearToInform", resourceCulture);
-                            }
-        }
         ///   Looks up a localized string similar to th-TH.
         /// </summary>
         public static string cultureLocal {
             get {
                 return ResourceManager.GetString("cultureLocal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to เรียน เพื่อทราบ.
+        /// </summary>
+        public static string dearToInform {
+            get {
+                return ResourceManager.GetString("dearToInform", resourceCulture);
             }
         }
         
@@ -343,6 +345,15 @@ namespace Resources {
         public static string toApproveDocument {
             get {
                 return ResourceManager.GetString("toApproveDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to เรียน.
+        /// </summary>
+        public static string toDocument {
+            get {
+                return ResourceManager.GetString("toDocument", resourceCulture);
             }
         }
         

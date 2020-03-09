@@ -231,4 +231,7 @@
   <data name="viewManual" xml:space="preserve">
     <value>Suggestion For allowance requisition</value>
   </data>
+  <data name="toDocument" xml:space="preserve">
+    <value>To</value>
+  </data>
 </root>
