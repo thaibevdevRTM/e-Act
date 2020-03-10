@@ -56,6 +56,12 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
                 //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
             }
+
+            //===========Set Language By Document Dev date 20200310 Peerapop=====================
+            //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
+            DocumentsAppCode.setCulture(activity_TBMMKT_Model.activityFormModel.languageDoc);
+            //====END=======Set Language By Document Dev date 20200310 Peerapop==================
+
             //return PartialView(activity_TBMMKT_Model);  //ไว้ใช้เวลาจะใส่กับ Modal            
             //return View(activity_TBMMKT_Model); // test
             return PartialView(activity_TBMMKT_Model);// production

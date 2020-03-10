@@ -212,6 +212,10 @@ namespace eActForm.BusinessLayer
         }
         public static void setCulture(string culture)
         {
+            if(culture=="" || culture== null){
+                culture = ConfigurationManager.AppSettings["cultureThai"]; // base Language
+            }
+
             //string culture = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
