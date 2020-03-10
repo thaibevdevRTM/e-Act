@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to จำนวนเงิน(บาท).
+        /// </summary>
+        public static string amountTHB {
+            get {
+                return ResourceManager.GetString("amountTHB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to การอนุมัติ.
         /// </summary>
         public static string approval {
@@ -124,6 +133,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ที่.
+        /// </summary>
+        public static string at {
+            get {
+                return ResourceManager.GetString("at", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to รออนุมัติ.
         /// </summary>
         public static string awaitingApproval {
@@ -151,11 +169,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ต้องการเช็ค.
+        /// </summary>
+        public static string dateOfCheque {
+            get {
+                return ResourceManager.GetString("dateOfCheque", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to เคลียร์เงินทดรองในวันที่.
+        /// </summary>
+        public static string dateOfPaymentSettlement {
+            get {
+                return ResourceManager.GetString("dateOfPaymentSettlement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to เรียน เพื่อทราบ.
         /// </summary>
         public static string dearToInform {
             get {
                 return ResourceManager.GetString("dearToInform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to รายการ.
+        /// </summary>
+        public static string description {
+            get {
+                return ResourceManager.GetString("description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to วันที่.
+        /// </summary>
+        public static string documentDate {
+            get {
+                return ResourceManager.GetString("documentDate", resourceCulture);
             }
         }
         
@@ -277,6 +331,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ชื่องาน.
+        /// </summary>
+        public static string jobName {
+            get {
+                return ResourceManager.GetString("jobName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ชื่อ.
         /// </summary>
         public static string name {
@@ -291,6 +354,15 @@ namespace Resources {
         public static string notApprove {
             get {
                 return ResourceManager.GetString("notApprove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to หมายเหตุ.
+        /// </summary>
+        public static string note {
+            get {
+                return ResourceManager.GetString("note", resourceCulture);
             }
         }
         
@@ -313,6 +385,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ตำแหน่ง.
+        /// </summary>
+        public static string position {
+            get {
+                return ResourceManager.GetString("position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to วัตถุประสงค์.
+        /// </summary>
+        public static string purpose {
+            get {
+                return ResourceManager.GetString("purpose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ลำดับ.
         /// </summary>
         public static string rank {
@@ -331,11 +421,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ชื่อผู้ขอยืม.
+        /// </summary>
+        public static string requestByName {
+            get {
+                return ResourceManager.GetString("requestByName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to สถานะ.
         /// </summary>
         public static string status {
             get {
                 return ResourceManager.GetString("status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to หมายเหตุ แนบหลักฐานใบยืมเงินทดรองมาด้วยตอนเคลียร์เงิน.
+        /// </summary>
+        public static string textDetailsAttachPay {
+            get {
+                return ResourceManager.GetString("textDetailsAttachPay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to โดยมีรายละเอียดประมาณการค่าใช้จ่ายดังนี้.
+        /// </summary>
+        public static string theEstimatedExpenseDetailsAsPerFollowing {
+            get {
+                return ResourceManager.GetString("theEstimatedExpenseDetailsAsPerFollowing", resourceCulture);
             }
         }
         
@@ -354,6 +471,15 @@ namespace Resources {
         public static string toDocument {
             get {
                 return ResourceManager.GetString("toDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to รวมเงิน(บาท).
+        /// </summary>
+        public static string totalAmountTHB {
+            get {
+                return ResourceManager.GetString("totalAmountTHB", resourceCulture);
             }
         }
         

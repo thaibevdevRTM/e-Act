@@ -234,4 +234,46 @@
   <data name="toDocument" xml:space="preserve">
     <value>To</value>
   </data>
+  <data name="amountTHB" xml:space="preserve">
+    <value>Amount (THB)</value>
+  </data>
+  <data name="at" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="dateOfCheque" xml:space="preserve">
+    <value>Date of cheque</value>
+  </data>
+  <data name="dateOfPaymentSettlement" xml:space="preserve">
+    <value>Date of payment settlement</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="documentDate" xml:space="preserve">
+    <value>Document Date</value>
+  </data>
+  <data name="jobName" xml:space="preserve">
+    <value>Job Name</value>
+  </data>
+  <data name="note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="purpose" xml:space="preserve">
+    <value>Purpose</value>
+  </data>
+  <data name="requestByName" xml:space="preserve">
+    <value>Request by Name</value>
+  </data>
+  <data name="textDetailsAttachPay" xml:space="preserve">
+    <value>Note : Please attach approved cash advance form when settle the expenses.</value>
+  </data>
+  <data name="theEstimatedExpenseDetailsAsPerFollowing" xml:space="preserve">
+    <value>The estimated expense details as per following</value>
+  </data>
+  <data name="totalAmountTHB" xml:space="preserve">
+    <value>Total amount (THB)</value>
+  </data>
 </root>

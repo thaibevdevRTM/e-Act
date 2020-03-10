@@ -220,5 +220,14 @@ namespace eActForm.BusinessLayer
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
         }
+        public static DateTime? convertDateToSaveDB(DateTime? dateToDb,string cultureCheck)
+        {
+            DateTime tempDateCalulate = dateToDb.Value;
+            if (cultureCheck == ConfigurationManager.AppSettings["cultureThai"])
+            {
+                dateToDb = tempDateCalulate.AddYears(-543);
+            }
+            return dateToDb;
+        }
     }
 }

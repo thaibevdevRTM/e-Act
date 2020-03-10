@@ -234,4 +234,46 @@
   <data name="toDocument" xml:space="preserve">
     <value>เรียน</value>
   </data>
+  <data name="amountTHB" xml:space="preserve">
+    <value>จำนวนเงิน(บาท)</value>
+  </data>
+  <data name="at" xml:space="preserve">
+    <value>ที่</value>
+  </data>
+  <data name="dateOfCheque" xml:space="preserve">
+    <value>ต้องการเช็ค</value>
+  </data>
+  <data name="dateOfPaymentSettlement" xml:space="preserve">
+    <value>เคลียร์เงินทดรองในวันที่</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>รายการ</value>
+  </data>
+  <data name="documentDate" xml:space="preserve">
+    <value>วันที่</value>
+  </data>
+  <data name="jobName" xml:space="preserve">
+    <value>ชื่องาน</value>
+  </data>
+  <data name="note" xml:space="preserve">
+    <value>หมายเหตุ</value>
+  </data>
+  <data name="position" xml:space="preserve">
+    <value>ตำแหน่ง</value>
+  </data>
+  <data name="purpose" xml:space="preserve">
+    <value>วัตถุประสงค์</value>
+  </data>
+  <data name="requestByName" xml:space="preserve">
+    <value>ชื่อผู้ขอยืม</value>
+  </data>
+  <data name="textDetailsAttachPay" xml:space="preserve">
+    <value>หมายเหตุ แนบหลักฐานใบยืมเงินทดรองมาด้วยตอนเคลียร์เงิน</value>
+  </data>
+  <data name="theEstimatedExpenseDetailsAsPerFollowing" xml:space="preserve">
+    <value>โดยมีรายละเอียดประมาณการค่าใช้จ่ายดังนี้</value>
+  </data>
+  <data name="totalAmountTHB" xml:space="preserve">
+    <value>รวมเงิน(บาท)</value>
+  </data>
 </root>

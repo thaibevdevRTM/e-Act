@@ -18,10 +18,18 @@ namespace eActForm.Controllers
         }
         public ActionResult headerDetailsDate(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            ////=================บังคับรูปแบบให้ใช้เป็น คศ. หน้า Input==============Peerapop dev date 20200310=======
+            //DocumentsAppCode.setCulture(ConfigurationManager.AppSettings["cultureEng"]);
+            ////===END==============บังคับรูปแบบให้ใช้เป็น คศ. หน้า Input==============Peerapop dev date 20200310====
+
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult headerDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            ////=================บังคับรูปแบบให้ใช้เป็น คศ. หน้า Input==============Peerapop dev date 20200310=======
+            //DocumentsAppCode.setCulture(ConfigurationManager.AppSettings["cultureEng"]);
+            ////===END==============บังคับรูปแบบให้ใช้เป็น คศ. หน้า Input==============Peerapop dev date 20200310====
+
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult headerDetails_Pos_Premium(Activity_TBMMKT_Model activity_TBMMKT_Model)
