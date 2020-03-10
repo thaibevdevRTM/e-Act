@@ -147,22 +147,34 @@ namespace eActForm.BusinessLayer
 
         public static bool checkLanguageDoc(string cultureDoc, string culture, int statusId)
         {
-            //เพื่อเช็คการใช้ภาษาในหน้า input form
-            string cultureLocal = HttpContext.Current.Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
 
+            //เพื่อเช็คการใช้ภาษาในหน้า input form
+            string cultureLocal = "";
+            if (HttpContext.Current != null)
+            {
+                cultureLocal = HttpContext.Current.Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
+            }
+            else {
+                //เกิดกรณี approve เรียก fn ผ่าน API ใช้ Cookies ไม่ได้
+                cultureLocal = cultureDoc;
+            }
+
+            //   Resources.Global.cultureLocal; 
+            //   Resources.Global.cultureLocal ;
             bool chk = false;
             try
             {
 
-                if (checkModeEdit(statusId))
+                if (HttpContext.Current != null && checkModeEdit(statusId))
                 {
                     //ถ้าเป็นโหมดแก้ไขได้ ใช้ภาษาเครื่อง
-                    if(culture== cultureLocal) chk = true;
+                    if (culture == cultureLocal) chk = true;
                 }
-                else {
+                else
+                {
 
                     //แก้ไขไม่ได้ต้องใช้ภาษาใน DB
-                    if (culture == cultureDoc) chk = true; 
+                    if (culture == cultureDoc) chk = true;
 
                 }
 
@@ -184,11 +196,11 @@ namespace eActForm.BusinessLayer
         {
             bool chk = true; //แก้ไขได้
             try
-            {              
-                if ((statusId == 2 && UtilsAppCode.Session.User.isAdminTBM ==false) || (statusId == 3))
+            {
+                if ((statusId == 2 && UtilsAppCode.Session.User.isAdminTBM == false) || (statusId == 3))
                 {
                     chk = false;//แก้ไข้ไม่ได้
-                }        
+                }
             }
             catch (Exception ex)
             {
