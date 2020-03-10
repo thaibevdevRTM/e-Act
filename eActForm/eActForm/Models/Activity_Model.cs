@@ -225,8 +225,9 @@ namespace eActForm.Models
         public int rowNo { get; set; }
         public string detail { get; set; }
         public DateTime? date { get; set; }
+        public string dateInput { get; set; }
         public string mechanics { get; set; }
-        public string chkBox { get; set; }
+        public bool chkBox { get; set; }
 
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 

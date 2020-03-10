@@ -67,8 +67,8 @@ namespace eActForm.BusinessLayer
                 model.activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
 
                 //---- ApprovePass-----//
-                var dataApproveList = model.activityModel.activityOfEstimateList.Where(w => w.chkBox == "on").ToList();
-                var dataUnApproveList = model.activityModel.activityOfEstimateList.Where(w => w.chkBox == null).ToList();
+                var dataApproveList = model.activityModel.activityOfEstimateList.Where(w => w.chkBox == true).ToList();
+                var dataUnApproveList = model.activityModel.activityOfEstimateList.Where(w => w.chkBox == false).ToList();
 
                 model.activityModel.activityOfEstimateList = dataApproveList;
                 resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activityModel, actId);

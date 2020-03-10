@@ -312,7 +312,7 @@
     <Compile Include="Models\Master_type_form_Model.cs" />
     <Compile Include="Models\Master_type_form_detail_Model.cs" />
     <Compile Include="Models\ActBaseModel.cs" />
-    <Compile Include="Models\Activity_TBMMKT_Model.cs" />
+    <Compile Include="Models\Activity_Main_Model.cs" />
     <Compile Include="Models\Activity_Model.cs" />
     <Compile Include="Models\ActSignatureModel.cs" />
     <Compile Include="Models\ActUserModel.cs" />

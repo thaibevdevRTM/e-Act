@@ -19,7 +19,7 @@ namespace eActForm.Controllers
     public class MainFormController : Controller
     {
 
-        public ActionResult Index(string activityId, string mode, string typeForm, string master_type_form_id ,string subjectId)
+        public ActionResult Index(string activityId, string mode, string typeForm, string master_type_form_id)
         {
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();

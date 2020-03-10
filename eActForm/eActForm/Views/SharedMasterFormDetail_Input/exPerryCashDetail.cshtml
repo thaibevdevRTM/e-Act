@@ -9,8 +9,8 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12">
                 บริษัท<span class="required">*</span>
             </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(m => m.activityFormModel.companyId, new SelectList(Model.companyList, "id", "companyNameTH", 0), "Please Select", new
+            <div class="col-lg-7 col-sm-5 col-xs-12">
+                @Html.DropDownListFor(m => m.activityFormModel.companyId, new SelectList(Model.companyList, "companyId", "companyNameTH", 0), "Please Select", new
                  {
                      @class = "form-control textboxcss",
                      id = "ddlCompany"
@@ -33,8 +33,8 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12">
                 หัวเรื่อง
             </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownList("ddlObjective", new SelectList(Model.objExpenseCashList, "id", "displayVal", 0), new
+            <div class="col-md-7 col-sm-5 col-xs-12">
+                @Html.DropDownListFor(m => m.activityFormModel.SubjectId, new SelectList(Model.objExpenseCashList, "id", "displayVal", 0), new
                  {
                      @class = "form-control textboxcss",
                      id = "ddlObjective"
