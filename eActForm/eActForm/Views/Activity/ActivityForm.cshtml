@@ -10,7 +10,7 @@
     var mode = Request["mode"] == null ? "" : Request["mode"];
 }
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.datetimepicker.full.js"></script>z
+<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
@@ -595,34 +595,43 @@
          });
     }
 
-    function clearFormatCus() {
-        $("#txtReference").val('');
-        $('input[name="formatCus"]').each(function () {
-            this.checked = false;
-        });
-    }
+    //function clearFormatCus() {
+    //    $("#txtReference").val('');
+    //    $('input[name="formatCus"]').each(function () {
+    //        this.checked = false;
+    //    });
+    //}
 
     function getFormatCus() {
         document.getElementById("divRadioRef").innerHTML = "";
         document.getElementById("txtReference").readOnly = true;
+
         if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]") {
-            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>&nbsp;&nbsp;');
-            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Market" onchange = "onchangeRdbRef(this);">Market</input>&nbsp;&nbsp;');
-            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Mini" onchange = "onchangeRdbRef(this);">Mini</input>');
+            $("#divRadioRef").append('<input type="checkbox" id="chkHyper" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" id="chkMarket" name="formatCus" value="Market" onchange = "onchangeRdbRef(this);">Market</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" id="chkMini" name="formatCus" value="Mini" onchange = "onchangeRdbRef(this);">Mini</input>');
             $("#divRadioRef").append('&nbsp;&nbsp;&nbsp;&nbsp;');
-            $("#divRadioRef").append('<button type="button" onclick = "clearFormatCus();">clear</button>');
         }
         else if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]") {
-            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Express" onchange = "onchangeRdbRef(this);">Express</input>&nbsp;&nbsp;');
-            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Talad" onchange = "onchangeRdbRef(this);">Talad</input>&nbsp;&nbsp;');
-            $("#divRadioRef").append('<input type="checkbox" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>');
+            $("#divRadioRef").append('<input type="checkbox" id="chkExpress" name="formatCus" value="Express" onchange = "onchangeRdbRef(this);">Express</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" id="chkTalad" name="formatCus" value="Talad" onchange = "onchangeRdbRef(this);">Talad</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" id="chkHyper" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>');
             $("#divRadioRef").append('&nbsp;&nbsp;&nbsp;&nbsp;');
-            $("#divRadioRef").append('<button type="button" onclick = "clearFormatCus();">clear</button>');
         }
         else {
             document.getElementById("txtReference").readOnly = false;
         }
 
+        var cus = ["Hyper", "Market", "Mini","Express","Talad","Hyper"];
+        cus.forEach(chkTrueRef);
+    }
+
+    function chkTrueRef(item, index) {
+        var txtRef = document.getElementById("txtReference").value.includes(item);
+        console.log(txtRef);
+        if (txtRef == true) {
+            document.getElementById("chk"+item).checked = true;
+        }
     }
 
     function onchangeRdbRef(element) {
