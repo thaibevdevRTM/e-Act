@@ -54,7 +54,7 @@
             <td>
                 <table style="border-color:none;" class="fontDocV1">
                     <tr>
-                        <td style="width:65px;">&nbsp;@Resources.Global.toDocument</td>
+                        <td style="width:65px;">&nbsp;@Resources.Global.toDocument | @Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString()</td>
                         <td style="width:635px; text-align:left;">@dearGroup</td>
                     </tr>
                 </table>

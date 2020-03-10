@@ -8,6 +8,8 @@ using Microsoft.ApplicationBlocks.Data;
 using eActForm.Models;
 using Org.BouncyCastle.Asn1.Ocsp;
 using System.Configuration;
+using System.Threading;
+using System.Globalization;
 
 namespace eActForm.BusinessLayer
 {
@@ -157,12 +159,13 @@ namespace eActForm.BusinessLayer
                 if (checkModeEdit(statusId))
                 {
                     //ถ้าเป็นโหมดแก้ไขได้ ใช้ภาษาเครื่อง
-                    if(culture== cultureLocal) chk = true;
+                    if (culture == cultureLocal) chk = true;
                 }
-                else {
+                else
+                {
 
                     //แก้ไขไม่ได้ต้องใช้ภาษาใน DB
-                    if (culture == cultureDoc) chk = true; 
+                    if (culture == cultureDoc) chk = true;
 
                 }
 
@@ -184,17 +187,23 @@ namespace eActForm.BusinessLayer
         {
             bool chk = true; //แก้ไขได้
             try
-            {              
-                if ((statusId == 2 && UtilsAppCode.Session.User.isAdminTBM ==false) || (statusId == 3))
+            {
+                if ((statusId == 2 && UtilsAppCode.Session.User.isAdminTBM == false) || (statusId == 3))
                 {
                     chk = false;//แก้ไข้ไม่ได้
-                }        
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
             return chk;
+        }
+        public static void setCulture(string culture)
+        {
+            //string culture = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
         }
     }
 }
