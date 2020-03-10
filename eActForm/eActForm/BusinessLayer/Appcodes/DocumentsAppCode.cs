@@ -156,7 +156,8 @@ namespace eActForm.BusinessLayer
             {
                 cultureLocal = HttpContext.Current.Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
             }
-            else {
+            else
+            {
                 //เกิดกรณี approve เรียก fn ผ่าน API ใช้ Cookies ไม่ได้
                 cultureLocal = cultureDoc;
             }
@@ -212,7 +213,8 @@ namespace eActForm.BusinessLayer
         }
         public static void setCulture(string culture)
         {
-            if(culture=="" || culture== null){
+            if (culture == "" || culture == null)
+            {
                 culture = ConfigurationManager.AppSettings["cultureThai"]; // base Language
             }
 
@@ -220,14 +222,14 @@ namespace eActForm.BusinessLayer
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
         }
-        public static DateTime? convertDateToSaveDB(DateTime? dateToDb,string cultureCheck)
+        public static string convertDateTHToShowCultureDateEN(DateTime? dateToShow)
         {
-            DateTime tempDateCalulate = dateToDb.Value;
-            if (cultureCheck == ConfigurationManager.AppSettings["cultureThai"])
+            string valResult = "";
+            if (dateToShow != null)
             {
-                dateToDb = tempDateCalulate.AddYears(-543);
+                valResult = dateToShow.Value.ToString("MM/dd/yyyy", new CultureInfo(ConfigurationManager.AppSettings["cultureEng"], true));
             }
-            return dateToDb;
+            return valResult;
         }
     }
 }

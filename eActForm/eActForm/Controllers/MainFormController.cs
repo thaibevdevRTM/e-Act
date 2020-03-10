@@ -54,6 +54,7 @@ namespace eActForm.Controllers
                     //====END===============Get Subject=======================
                     activity_TBMMKT_Model.channelMasterTypeList = QueryGet_channelByGroup.get_channelByGroup(activityFormTBMMKT.master_type_form_id, activityFormTBMMKT.formCompanyId, activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel);
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
+
                 }
                 else
                 {

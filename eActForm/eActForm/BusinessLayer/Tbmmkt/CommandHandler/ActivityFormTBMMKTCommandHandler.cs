@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer
                 {
                     model.activityFormModel.id = activityId;
                     model.activityFormModel.statusId = 1;
-                    model.activityFormModel.documentDate = DocumentsAppCode.convertDateToSaveDB(model.activityFormModel.documentDate, model.activityFormTBMMKT.languageDoc);
+                    model.activityFormModel.documentDate = model.activityFormModel.documentDate;
                     model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.activityPeriodSt.ToString()) ? (DateTime?)null : model.activityFormModel.activityPeriodSt;
                     model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.activityPeriodEnd.ToString()) ? (DateTime?)null : model.activityFormModel.activityPeriodEnd;
                     model.activityFormModel.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
