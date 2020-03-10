@@ -11,6 +11,7 @@
 
     function checkDelete(actId, statusId) {
         var msg = "";
+      
         if (statusId == "1"
             ||
             (statusId == "6" && ("@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true"
@@ -35,6 +36,7 @@
 
         bootbox.confirm({
             title: "Confirm Message",
+            
             message: msg,
             buttons: {
                 confirm: {
