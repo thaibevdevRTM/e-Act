@@ -50,21 +50,23 @@ else
 , new { id = "formApprove", @class = "form-horizontal form-label-left" }))
             {
                 var item = Model.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
-                <h3>อนุมัติ</h3>
-                <hr />
-                <div class="form-group">
-                    <div class="col-md-12 col-xs-12">
-                        <div class="row">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
-                                เหตุผล(เพิ่มเติม)
-                            </label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                <textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required style="border:solid;border-color:#ddd;border-width:thin;">
+                <div class="col-md-12">
+                    <h3>อนุมัติ</h3>
+                    <hr />
+                    <div class="form-group">
+                        <div class="col-md-12 col-xs-12">
+                            <div class="row">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
+                                    เหตุผล(เพิ่มเติม)
+                                </label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required style="border:solid;border-color:#ddd;border-width:thin;">
                                     @if (item != null && item.Count > 0)
                                     {
                                         @item.FirstOrDefault().remark.Trim();
                                     }
                             </textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
