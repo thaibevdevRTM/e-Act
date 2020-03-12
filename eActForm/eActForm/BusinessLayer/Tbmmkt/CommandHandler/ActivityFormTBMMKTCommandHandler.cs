@@ -978,9 +978,9 @@ namespace eActForm.BusinessLayer
                     placeDetailModel.period = item.period;
                     // placeDetailModel.departureDate = item.departureDate;
                     placeDetailModel.departureDate = string.IsNullOrEmpty(item.departureDateStr) ? (DateTime?)null :
-               BaseAppCodes.converStrToDateTime(item.departureDateStr);
+               BaseAppCodes.converStrToDatetimeWithFormat(item.departureDateStr, ConfigurationManager.AppSettings["formatDatetimeUse"]);
                     placeDetailModel.arrivalDate = string.IsNullOrEmpty(item.arrivalDateStr) ? (DateTime?)null :
-               BaseAppCodes.converStrToDateTime(item.arrivalDateStr);
+               BaseAppCodes.converStrToDatetimeWithFormat(item.arrivalDateStr, ConfigurationManager.AppSettings["formatDatetimeUse"]);
                     placeDetailModel.delFlag = false;
                     placeDetailModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate; ;
                     placeDetailModel.createdByUserId = model.activityFormModel.createdByUserId;

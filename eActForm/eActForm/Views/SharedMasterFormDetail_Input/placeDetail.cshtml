@@ -1,4 +1,5 @@
 ﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
 @model eActForm.Models.Activity_TBMMKT_Model
 <tr style="border-bottom:none;">
     <td>
@@ -45,7 +46,7 @@
                 $(function () {
                     $('.form_datetime').datetimepicker({
                         language: 'th',
-                        format: 'dd-mm-yyyy hh:ii',
+                        format: '@ConfigurationManager.AppSettings["formatDatetimeUseJquery"]',
                         weekStart: 1,
                         todayBtn: 1,
                         autoclose: 1,

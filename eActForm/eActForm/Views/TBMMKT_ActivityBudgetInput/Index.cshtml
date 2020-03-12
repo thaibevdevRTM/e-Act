@@ -1,6 +1,7 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
 @using eActForm.Models
+@using System.Configuration;
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
 <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
@@ -348,9 +349,9 @@
         });
 
     $(function () {
-        $("#txtdateDoc").datepicker();
-        $("#txtdateActivitySt").datepicker();
-        $("#txtactivityPeriodEnd").datepicker();
+        $("#txtdateDoc").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#txtdateActivitySt").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#txtactivityPeriodEnd").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
 
         });
 

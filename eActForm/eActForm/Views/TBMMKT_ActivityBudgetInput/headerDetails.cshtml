@@ -1,4 +1,5 @@
 ﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
 @model eActForm.Models.Activity_TBMMKT_Model
 <div id="divHeaderDetails" runat="server" style="width: 100%;">
 
@@ -15,7 +16,8 @@
 
                     <div class="col-md-10 col-xs-12">
                         <div class="row">
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", style = "width:320px;", autocomplete = "off" })
+                            @*@Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", style = "width:320px;", autocomplete = "off" })*@
+                            @Html.TextBox("activityFormModel.documentDate", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateDoc", style = "width:320px;", autocomplete = "off" })
                         </div>
                     </div>
                 </div>
@@ -111,7 +113,8 @@
                             <div class="form-group">
                                 <div class="col-md-5 col-sm-5 col-xs-12">
                                     <div class="row">
-                                        @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "width:140px;", autocomplete = "off" })
+                                        @*@Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "width:140px;", autocomplete = "off" })*@
+                                        @Html.TextBox("activityFormModel.activityPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "width:140px;", autocomplete = "off" })
                                     </div>
                                 </div>
                                 <label class="control-label col-md-1 col-xs-12">
@@ -119,7 +122,8 @@
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="row">
-                                        @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;", autocomplete = "off" })
+                                        @*@Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;", autocomplete = "off" })*@
+                                        @Html.TextBox("activityFormModel.activityPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;", autocomplete = "off" })
                                     </div>
                                 </div>
                             </div>
