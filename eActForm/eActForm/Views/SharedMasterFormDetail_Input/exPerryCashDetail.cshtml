@@ -5,20 +5,7 @@
 
 <div class="form-group" id="divExpenseCash">
     <div class="form-group">
-        <div class="col-md-5 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                บริษัท<span class="required">*</span>
-            </label>
-            <div class="col-lg-7 col-sm-5 col-xs-12">
-                @Html.DropDownListFor(m => m.activityFormModel.companyId, new SelectList(Model.companyList, "companyId", "companyNameTH", 0), "Please Select", new
-                 {
-                     @class = "form-control textboxcss",
-                     id = "ddlCompany"
-                 })
-            </div>
-        </div>
-
-        <div class="col-md-5 col-xs-12">
+        <div class="col-md-6 col-xs-12">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">
                 ประจำเดือน
             </label>
@@ -26,28 +13,12 @@
                 @Html.TextBoxFor(m => m.activityFormModel.dateDoc, new { @class = "form-control textboxcss", @id = "txtExMonth" })
             </div>
         </div>
-
-    </div>
-    <div class="form-group">
-        <div class="col-md-5 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                หัวเรื่อง
-            </label>
-            <div class="col-md-7 col-sm-5 col-xs-12">
-                @Html.DropDownListFor(m => m.activityFormModel.SubjectId, new SelectList(Model.objExpenseCashList, "id", "displayVal", 0), new
-                 {
-                     @class = "form-control textboxcss",
-                     id = "ddlObjective"
-                 })
-            </div>
-        </div>
-
     </div>
 </div>
 
 
 <script type="text/javascript">
-
+   
 
     $(function () {
         $("#txtExMonth").datepicker({

@@ -18,7 +18,7 @@ namespace eActForm.Models
 
 
 
-    public class exPerryCashModel
+    public class exPerryCashModel : ActBaseModel
     {
         public string id { get; set; }
         public string actNo { get; set; }
@@ -32,6 +32,9 @@ namespace eActForm.Models
         public string empId { get; set; }
         public decimal? rulesCash { get; set; }
         public string subject { get; set; }
+        public DateTime? startDate { get; set; }
+        public string activityNo { get; set; }
+        public string createName { get; set; }
         public DateTime? monthCash { get; set; }
         public string createby { get; set; }
         public DateTime? createDate { get; set; }

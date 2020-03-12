@@ -1,4 +1,7 @@
-﻿using System;
+﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
+using eActForm.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,12 +14,23 @@ namespace eActForm.Controllers
         // GET: ApproveListExpense
         public ActionResult Index()
         {
-            return View();
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearch();
+            return View(models);
         }
 
         public ActionResult ApproveList()
         {
-            return View();
+            exPerryCashModels model = new exPerryCashModels();
+            if (TempData["ApproveSearchResult"] == null)
+            {
+                model.exPrettyModelList = exPerryCashAppCode.getApproveExpenseListsByEmpId();
+                TempData["ApproveFormLists"] = model.exPrettyModelList;
+            }
+            else
+            {
+                //model.exPrettyModelList = (List<exPerryCashModels>)TempData["ApproveSearchResult"];
+            }
+            return PartialView(model);
         }
 
         public ActionResult ApproveDetail()

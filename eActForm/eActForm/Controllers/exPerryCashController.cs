@@ -15,10 +15,9 @@ namespace eActForm.Controllers
         {
 
             Activity_TBMMKT_Model model = new Activity_TBMMKT_Model();
-            model.requestEmpModel = QueryGet_empDetailById.getEmpDetailById(UtilsAppCode.Session.User.empId);
-
-
             return model;
         }
+
+
     }
 }

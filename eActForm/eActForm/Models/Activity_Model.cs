@@ -187,6 +187,7 @@ namespace eActForm.Models
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
         public string SubjectId { get; set; }
+        public string empId { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel

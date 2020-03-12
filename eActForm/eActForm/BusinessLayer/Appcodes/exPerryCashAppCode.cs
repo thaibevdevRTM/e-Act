@@ -52,5 +52,44 @@ namespace eActForm.BusinessLayer.Appcodes
                 throw new Exception("getCashPosition >> " + ex.Message);
             }
         }
+
+        public static List<exPerryCashModel> getApproveExpenseListsByEmpId()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveExpenseByEmpId"
+                    , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    var lists = (from DataRow dr in ds.Tables[0].Rows
+                                 select new exPerryCashModel()
+                                 {
+                                     id = dr["id"].ToString(),
+                                     actNo = dr["statusId"].ToString(),
+                                     detail = dr["statusName"].ToString(),
+                                     status = dr["productTypeName"].ToString(),
+                                     startDate = dr["startDate"] is DBNull ? null : (DateTime?)dr["startDate"],
+                                     activityNo = dr["actNo"].ToString(),
+                                     createName = dr["createByName"].ToString(),
+                                     delFlag = (bool)dr["delFlag"],
+                                     createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
+                                     createdByUserId = dr["createdByUserId"].ToString(),
+                                     updatedDate = dr["updatedDate"] is DBNull ? null : (DateTime?)dr["updatedDate"],
+                                     updatedByUserId = dr["updatedByUserId"].ToString()
+                                 }).ToList();
+                    return lists;
+                }
+                else
+                {
+                    return new List<exPerryCashModel>();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getApproveSummaryDetailListsByEmpId >>" + ex.Message);
+            }
+        }
     }
 }
