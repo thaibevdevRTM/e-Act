@@ -11,20 +11,13 @@
 
     function checkDelete(actId, statusId) {
         var msg = "";
-      
+
         if (statusId == "1"
             ||
-            (statusId == "6" && ("@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true"
-                || "@UtilsAppCode.Session.User.isAdmin.ToString().ToLower()" == "true"
-                || "@UtilsAppCode.Session.User.isSuperAdmin.ToString().ToLower()" == "true"))
+            (statusId == "6" &&  @ActFormAppCode.isAdmin())
             ||
-            (statusId == "5" && ("@UtilsAppCode.Session.User.empCompanyId" == '@ConfigurationManager.AppSettings["companyId_TBM"]'
-                || "@UtilsAppCode.Session.User.empCompanyId" == '@ConfigurationManager.AppSettings["companyId_HCM"]'
-                || "@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true"
-                || "@UtilsAppCode.Session.User.isAdmin.ToString().ToLower()" == "true"
-                || "@UtilsAppCode.Session.User.isAdminTBM.ToString().ToLower()" == "true"
-                || "@UtilsAppCode.Session.User.isAdminHCM.ToString().ToLower()" == "true"
-                || "@UtilsAppCode.Session.User.isSuperAdmin.ToString().ToLower()" == "true")))
+            (statusId == "5" && (@ActFormAppCode.isOtherCompanyMT() || @ActFormAppCode.isAdmin() ))
+          )
         {
             // can be delete
             msg = "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
@@ -36,7 +29,7 @@
 
         bootbox.confirm({
             title: "Confirm Message",
-            
+
             message: msg,
             buttons: {
                 confirm: {
@@ -83,7 +76,14 @@
                 return false;
             }
             else {
-                checkDelete(actId, statusId);
+                //ถ้าเป็น TBM HCM จะแสดง popup ให้ใส่เหตุผล
+                if ((status == "3" || status == "5") && (@ActFormAppCode.isOtherCompanyMT())) {
+                    
+                }
+                else {
+                    checkDelete(actId, statusId);
+                }
+
             }
         });
     }
@@ -160,8 +160,7 @@
                                     <i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
                                 </a>
                             }
-                            @if (item.statusId == "1" || item.statusId == "3" || item.statusId == "5" ||
-(item.statusId == "6" && (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin)))
+                            @if (item.statusId == "1" || item.statusId == "3" || item.statusId == "5" || (item.statusId == "6" && @ActFormAppCode.isAdmin()))
                             {
                                 <a href="javascript:" onclick="return checkBeforeDelete('@item.id','@item.statusId');">
                                     <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
@@ -230,7 +229,7 @@
                         <td>@{ date = item.createdDate == null ? "" : item.createdDate.Value.ToString("dd/MM/yyyy");} @date</td>
                         <td>@item.createByUserName</td>
                     </tr>
-                }
+                            }
             </tbody>
         </table>
 

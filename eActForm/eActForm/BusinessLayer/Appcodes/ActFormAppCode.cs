@@ -105,11 +105,11 @@ namespace eActForm.BusinessLayer
             {
                 string strCall = "";
 
-                if(typeForm == Activity_Model.activityType.MT.ToString())
+                if (typeForm == Activity_Model.activityType.MT.ToString())
                 {
                     strCall = "usp_getActivityCustomersFormByEmpId";
                 }
-                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                else if (typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
@@ -120,7 +120,7 @@ namespace eActForm.BusinessLayer
 
 
                 if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin ||
-                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM|| UtilsAppCode.Session.User.isAdminHCM )
+                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)
                 {
                     strCall = "usp_getActivityFormAll";
                 }
@@ -218,6 +218,16 @@ namespace eActForm.BusinessLayer
         {
             return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] ||
                 UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+        }
+
+        public static bool isAdmin()
+        {
+            return
+                UtilsAppCode.Session.User.isAdminOMT
+                || UtilsAppCode.Session.User.isAdmin
+                || UtilsAppCode.Session.User.isAdminTBM
+                || UtilsAppCode.Session.User.isAdminHCM
+                || UtilsAppCode.Session.User.isSuperAdmin ? true : false;
         }
     }
 }
