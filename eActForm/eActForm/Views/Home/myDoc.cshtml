@@ -9,14 +9,11 @@
         chkInvoiceBeforeDel(actId, statusId);
     }
 
-    function checkDelete(actId, statusId) {
+    @*function checkDelete(actId, statusId) {
         var msg = "";
-
-        if (statusId == "1"
-            ||
-            (statusId == "6" &&  @ActFormAppCode.isAdmin())
-            ||
-            (statusId == "5" && (@ActFormAppCode.isOtherCompanyMT() || @ActFormAppCode.isAdmin() ))
+        if( statusId == "1" ||
+            (statusId == "6" &&  '@ActFormAppCode.isAdmin()'=="True") ||
+            (statusId == "5" && ('@ActFormAppCode.isOtherCompanyMT()'=="True" || '@ActFormAppCode.isAdmin()'=="True" ))
           )
         {
             // can be delete
@@ -43,7 +40,56 @@
             },
             callback: function (result) {
                 if (result) {
-                    $("#WaitDialog").show();
+                    requestDeleteDoc(actId, statusId)
+                }
+            }
+        });
+    }*@
+
+
+     function checkDelete(actId, statusId) {
+         var msg = "";
+         var name = document.getElementById("namebox").value;
+         if ((statusId == "3" || statusId == "5") && ('@ActFormAppCode.isOtherCompanyMT()' == "True")) {
+
+             msg = "ยืนยันยกเลิกกรุณาระบุเหตุผล" + name
+         } else
+        if( statusId == "1" ||
+            (statusId == "6" &&  '@ActFormAppCode.isAdmin()'=="True") ||
+            (statusId == "5" && ('@ActFormAppCode.isOtherCompanyMT()'=="True" || '@ActFormAppCode.isAdmin()'=="True" ))
+          )
+        {
+            // can be delete
+            msg = "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
+        }
+        else {
+            // can't delete
+            msg = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ <br/> ท่านต้องการยกเลิกเอกสารหรือไม่ค่ะ?";
+        }
+
+        bootbox.confirm({
+            title: "Confirm Message",
+
+            message: msg,
+            buttons: {
+                confirm: {
+                    label: "Yes",
+                    className: "btn-success"
+                },
+                cancel: {
+                    label: "No",
+                    className: "btn-danger"
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    requestDeleteDoc(actId, statusId)
+                }
+            }
+        });
+    }
+    function requestDeleteDoc(actId, statusId) {
+           $("#WaitDialog").show();
                     $.ajax({
                         url: '@Url.Action("requestDeleteDoc", "Home")',
                         data: {
@@ -55,11 +101,6 @@
                         $("#WaitDialog").hide();
                         doMsgSuccess("ดำเนินการยกเลิกเอกสารเรียบร้อย")
                     });
-                }
-
-            }
-        });
-
     }
 
     function chkInvoiceBeforeDel(actId, statusId) {
@@ -76,13 +117,14 @@
                 return false;
             }
             else {
-                //ถ้าเป็น TBM HCM จะแสดง popup ให้ใส่เหตุผล
-                if ((status == "3" || status == "5") && (@ActFormAppCode.isOtherCompanyMT())) {
-                    
+
+                @*//ถ้าเป็น TBM HCM จะแสดง popup ให้ใส่เหตุผล
+                if ((statusId == "3" || statusId == "5") && ('@ActFormAppCode.isOtherCompanyMT()'=="True")) {
+                    $('#modalReasonCancle').modal('show');
                 }
-                else {
+                else {*@
                     checkDelete(actId, statusId);
-                }
+                //}
 
             }
         });
@@ -118,10 +160,12 @@
             }
         });
       }
-
+    function confirmCc() { }
 
 </script>
 <div class="row">
+    @*@Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
+    @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })*@
 
     <div class="col-md-12 col-xs-12">
 
@@ -237,6 +281,33 @@
 </div>
 <div class="modal fade" id="modalApprovelist" role="dialog" style="display:none">
     <div id="divModalApprovelist">
+    </div>
+</div>
+<div class="modal fade" id="modalReasonCancle" role="dialog" style="display:none">
+    <div id="divModalReasonCancle">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div style=""></div>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="Grid" style="width:97%; margin-left:20px;">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <p class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-success" onclick="confirmCc"><i class="fa fa fa-reply fa-fw"></i>&nbsp;OK</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script>
