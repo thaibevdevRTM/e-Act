@@ -70,6 +70,8 @@ namespace eActForm.Models
             public string id { get; set; }
             public string statusId { get; set; }
             public string statusName { get; set; }
+            public string statusNameEN { get; set; }
+            public string languageDoc { get; set; }
             public string activityNo { get; set; }
             public DateTime? documentDate { get; set; }
             public string reference { get; set; }
