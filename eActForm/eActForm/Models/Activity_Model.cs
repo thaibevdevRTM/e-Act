@@ -147,7 +147,9 @@ namespace eActForm.Models
         public string groupShort { get; set; }
         public string productTypeId { get; set; }
         public DateTime? activityPeriodSt { get; set; }
+        public string activityPeriodStStr { get; set; }
         public DateTime? activityPeriodEnd { get; set; }
+        public string activityPeriodEndStr { get; set; }
         public DateTime? costPeriodSt { get; set; }
         //[DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]

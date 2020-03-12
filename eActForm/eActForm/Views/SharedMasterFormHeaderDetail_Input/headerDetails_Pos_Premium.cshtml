@@ -1,7 +1,10 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer;
 @using System.Globalization;
+@using System.Configuration;
 @{
+    /**/
+
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
 }
@@ -43,7 +46,8 @@
                             </label>
                             <div class="col-md-4 col-xs-12">
                                 <div class="row">
-                                    @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM/dd/yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", autocomplete = "off" })
+                                    @*@Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM/dd/yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", autocomplete = "off" })*@
+                                    @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateDoc", autocomplete = "off" })
                                 </div>
                             </div>
                         </div>
@@ -84,13 +88,13 @@
                                         }
                                     </style>
                                     @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.list_1,
-                                                                                                 "id", "name"),
-                                                                                                 new
-                                                                                                 {
-                                                                                                     @class = "form-control selectpicker",
-                                                                                                     id = "ddlproduct_pos_premium",
-                                                                                                     multiple = "multiple"
-                                                                                                 })
+                                                                                                           "id", "name"),
+                                                                                                           new
+                                                                                                           {
+                                                                                                               @class = "form-control selectpicker",
+                                                                                                               id = "ddlproduct_pos_premium",
+                                                                                                               multiple = "multiple"
+                                                                                                           })
                                     <script>
                                         $(document).ready(function () {
                                             $('#ddlproduct_pos_premium').multiselect({
@@ -348,7 +352,8 @@
 
                             <div class="col-md-3 col-xs-12">
                                 <div class="row">
-                                    @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM/dd/yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "", placeholder = "" ,autocomplete = "off" })
+                                    @*@Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM/dd/yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "", placeholder = "", autocomplete = "off" })*@
+                                    @Html.TextBox("activityFormModel.activityPeriodStStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "", placeholder = "", autocomplete = "off" })
                                 </div>
                             </div>
 
