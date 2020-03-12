@@ -221,12 +221,12 @@ namespace eActForm.BusinessLayer
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
         }
-        public static string convertDateTHToShowCultureDateEN(DateTime? dateToShow)
+        public static string convertDateTHToShowCultureDateEN(DateTime? dateToShow,string formatDatetime)
         {
             string valResult = "";
             if (dateToShow != null)
             {
-                valResult = dateToShow.Value.ToString("MM/dd/yyyy", new CultureInfo(ConfigurationManager.AppSettings["cultureEng"], true));
+                valResult = dateToShow.Value.ToString(formatDatetime, new CultureInfo(ConfigurationManager.AppSettings["cultureEng"], true));
             }
             return valResult;
         }

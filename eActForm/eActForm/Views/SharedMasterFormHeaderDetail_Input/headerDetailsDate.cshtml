@@ -10,7 +10,7 @@
             <div class="col-md-4 col-xs-12">
                 <div class="row">
                     @*@Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM/dd/yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", style = "", autocomplete = "off" })*@
-                    @Html.TextBox("activityFormModel.documentDate", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate), new { @class = "form-control textboxcss", id = "txtdateDoc", name = Model.activityFormModel.documentDate, style = "", autocomplete = "off" })
+                    @Html.TextBox("activityFormModel.documentDate", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, "MM/dd/yyyy"), new { @class = "form-control textboxcss", id = "txtdateDoc", name = Model.activityFormModel.documentDate, style = "", autocomplete = "off" })
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
