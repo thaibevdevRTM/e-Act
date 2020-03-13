@@ -290,9 +290,7 @@
     <Compile Include="Controllers\SaleActualController.cs" />
     <Compile Include="Controllers\SignatureController.cs" />
     <Compile Include="Controllers\SummaryReportController.cs" />
-    <Compile Include="Controllers\TBMMKT_ActivityBudgetInputController.cs" />
     <Compile Include="Controllers\MainReportController.cs" />
-    <Compile Include="Controllers\TBMMKT_ActivityBudgetReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2460,19 +2458,6 @@
     <Content Include="Views\MenuList\admin.cshtml" />
     <Content Include="Views\MenuList\contact.cshtml" />
     <Content Include="Views\Shared\_searchReportDetail.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetReport\headerCompany.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetReport\Index.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetReport\headerDetails.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetReport\activityDetails.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetReport\activityBudgetDetails.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetReport\lastwordForFYI.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetInput\activityBudgetDetails.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetInput\activityDetails.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetInput\headerCompany.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetInput\headerDetails.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetInput\Index.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetInput\lastwordForFYI.cshtml" />
-    <Content Include="Views\TBMMKT_ActivityBudgetInput\attachOutFormTag.cshtml" />
     <Content Include="Views\Shared\_PreviewForApproveDetail.cshtml" />
     <Content Include="Views\actFormRepDetail\repPreviewForApproveDetail.cshtml" />
     <Content Include="Views\Approve\previewActBudget.cshtml" />
@@ -2541,6 +2526,7 @@
     <Content Include="Views\SharedMasterFormHeaderDetail\headerDetailsBg.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\activityBudgetDetails.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\lastwordForFYI.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\attachOutFormTag.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
