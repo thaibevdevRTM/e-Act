@@ -1,8 +1,6 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
 @using eActForm.Models
-
-
 @using System.Configuration;
 @{
 
@@ -66,14 +64,11 @@
                         @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
                     </td>
                 </tr>*@
-            @*=========END========for test====================*@
+            @*=========END========for test==================*@
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
                 @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
             }
-
-
-
         </table>
     </div>
 
@@ -87,7 +82,7 @@
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
     <tr>
         <td>
-            @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
+            @RenderPage("~/Views/SharedMasterFormDetail_Input/attachOutFormTag.cshtml")
         </td>
     </tr>
 </table>
@@ -138,8 +133,6 @@
 
 <script>
 
-    //if(('Model.activityFormTBMMKT.statusId' == '2' && 'UtilsAppCode.Session.User.isAdminTBM' == "False") || ('Model.activityFormTBMMKT.statusId' == '3'))
-    
     if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId)' == "False")
     {
            $("#GridPDF :input").prop("disabled", true);
@@ -162,9 +155,9 @@
         });
 
     $(function () {
-        $("#txtdateDoc").datepicker();
-        $("#txtdateActivitySt").datepicker();
-        $("#txtactivityPeriodEnd").datepicker();
+        $("#txtdateDoc").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#txtdateActivitySt").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#txtactivityPeriodEnd").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'){//travelling TBM
             $('#preview').modal('show');

@@ -79,5 +79,9 @@ namespace eActForm.Controllers
         {
             return PartialView(activity_TBMMKT_Model);
         }
+        public ActionResult activityBudgetDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            return PartialView(activity_TBMMKT_Model);
+        }
     }
 }

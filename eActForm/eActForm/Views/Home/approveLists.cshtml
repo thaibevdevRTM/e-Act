@@ -27,22 +27,22 @@
                                 <tr class="gradeX">
                                     <td>@item.rangNo</td>
                                     <td>@item.empId</td>
-                                    @if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureThai"])
+                                    @if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureThai"])
                                     {
                                         <td>@item.empName</td>
                                     }
-                                    else if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureEng"])
+                                    else if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"])
                                     {
                                         <td>@item.empName_EN</td>
                                     }
                                     <td>
                                         @{
                                             string valStatusName = "";
-                                            if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureThai"])
+                                            if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureThai"])
                                             {
                                                 valStatusName = item.statusName;
                                             }
-                                            else if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureEng"])
+                                            else if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"])
                                             {
                                                 valStatusName = item.statusNameEN;
                                             }

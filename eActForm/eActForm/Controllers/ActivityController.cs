@@ -207,7 +207,7 @@ namespace eActForm.Controllers
                 activityModel = (Activity_Model)TempData["actForm" + activityFormModel.id];
                 activityModel.activityFormModel = activityFormModel;
                 activityModel.activityFormModel.activityNo = "";
-                activityModel.activityFormModel.dateDoc = DateTime.Now.ToString("dd-MM-yyyy");
+                activityModel.activityFormModel.dateDoc = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]);
                 int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, actId);
                 TempData.Keep();
                 result.ActivityId = actId;

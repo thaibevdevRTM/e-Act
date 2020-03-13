@@ -1,4 +1,5 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using System.Configuration;
 <tr>
     <td style="">
         <div class="form-group">
@@ -34,10 +35,10 @@
 
                     <div class="row">
                         @Html.DropDownListFor(x => x.activityFormTBMMKT.list_0_select, new SelectList(Model.list_0, "id", "name", ""), "", new
-                       {
-                           @class = "form-control selectpicker",
-                           id = "ddlTravelling"
-                       })
+                        {
+                            @class = "form-control selectpicker",
+                            id = "ddlTravelling"
+                        })
 
                     </div>
                 </div>
@@ -55,7 +56,7 @@
 
                     $('#txtdateDoc2').datetimepicker({
                         language: 'th',
-                        format: 'dd-mm-yyyy',
+                        format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]',
                         weekStart: 1,
                         todayBtn: 1,
                         autoclose: 1,

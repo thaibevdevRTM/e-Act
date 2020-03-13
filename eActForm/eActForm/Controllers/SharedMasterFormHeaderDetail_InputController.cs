@@ -18,18 +18,14 @@ namespace eActForm.Controllers
         }
         public ActionResult headerDetailsDate(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            ////=================บังคับรูปแบบให้ใช้เป็น คศ. หน้า Input==============Peerapop dev date 20200310=======
-            //DocumentsAppCode.setCulture(ConfigurationManager.AppSettings["cultureEng"]);
-            ////===END==============บังคับรูปแบบให้ใช้เป็น คศ. หน้า Input==============Peerapop dev date 20200310====
-
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult headerDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            ////=================บังคับรูปแบบให้ใช้เป็น คศ. หน้า Input==============Peerapop dev date 20200310=======
-            //DocumentsAppCode.setCulture(ConfigurationManager.AppSettings["cultureEng"]);
-            ////===END==============บังคับรูปแบบให้ใช้เป็น คศ. หน้า Input==============Peerapop dev date 20200310====
-
+            return PartialView(activity_TBMMKT_Model);
+        }
+        public ActionResult headerDetailsBg(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult headerDetails_Pos_Premium(Activity_TBMMKT_Model activity_TBMMKT_Model)
@@ -49,7 +45,7 @@ namespace eActForm.Controllers
         {
             if (string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.documentDateStr) && (activity_TBMMKT_Model.activityFormModel.documentDate != null))
             {
-                activity_TBMMKT_Model.activityFormTBMMKT.documentDateStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activity_TBMMKT_Model.activityFormModel.documentDate, "dd-MM-yyyy");
+                activity_TBMMKT_Model.activityFormTBMMKT.documentDateStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activity_TBMMKT_Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]);
             }
 
             if (activity_TBMMKT_Model.list_0 == null || activity_TBMMKT_Model.list_0.Count == 0)
@@ -65,7 +61,7 @@ namespace eActForm.Controllers
         {
             if (string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.documentDateStr) && (activity_TBMMKT_Model.activityFormModel.documentDate != null))
             {
-                activity_TBMMKT_Model.activityFormTBMMKT.documentDateStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activity_TBMMKT_Model.activityFormModel.documentDate, "dd-MM-yyyy");
+                activity_TBMMKT_Model.activityFormTBMMKT.documentDateStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activity_TBMMKT_Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]);
             }
             return PartialView(activity_TBMMKT_Model);
         }
