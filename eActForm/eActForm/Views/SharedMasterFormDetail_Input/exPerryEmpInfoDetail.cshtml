@@ -1,39 +1,55 @@
 ﻿@using eActForm.BusinessLayer
 @model eActForm.Models.Activity_TBMMKT_Model
-<div class="form-group col-md-12" id="divExpenseCashEmpInfo">
-    @*<div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;@Model.TB_Reg_RequestEmp.empName&nbsp;&nbsp;</div>
+    <div class="form-group col-md-12" id="divExpenseCashEmpInfo">
+        @*<div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;@Model.TB_Reg_RequestEmp.empName&nbsp;&nbsp;</div>
         <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
 
 
-    <div class="col-lg-12">
-        <div class="col-md-5 col-xs-12">
-            <label id="lblEmpId" style="">รหัสพนักงาน @Html.TextBoxFor(x => x.activityFormModel.empId, new { @class = "textboxcss textRight", Style = "width:5;  text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })</label>
-        </div>
-    </div>
-
-    <div class="col-lg-12">
-        <div class="col-md-4 col-xs-12">
-            <label style="width:90px;">ชื่อ/Name:</label> &nbsp;&nbsp;<label id="lblEmpName"></label>
-        </div>
-        <div class="col-md-5 col-xs-12">
-            <label style="width:130px;">ตำแหน่ง/Position: </label>&nbsp;&nbsp;<label id="lblEmpPosition"></label>
-        </div>
-    </div>
-
-    <div class="col-lg-12">
-        <div class="col-md-4 col-xs-12">
-            <label style="width:90px;">ระดับ/Level:</label> &nbsp;&nbsp;<label id="lblLvl" />
-        </div>
-        <div class="col-md-5 col-xs-12">
-            <label style="width:130px;">หน่วยงาน/Dept: </label>&nbsp;&nbsp;<label id="lblDept" />
+        <div class="col-lg-12 col-xs-12">
+            <div class="col-md-5 col-xs-12">
+                <label id="lblEmpId">รหัสพนักงาน @Html.TextBoxFor(x => x.activityFormModel.empId, new { @class = "textboxcss textRight", Style = "width:5;  text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })</label>
+            </div>
         </div>
 
+        <div class="col-lg-12 col-xs-12" style="margin-top:15px;">
+            <div class="col-md-4 col-xs-12">
+                <label style="width:90px;">ชื่อ/Name:</label> &nbsp;&nbsp;<lable id="lblEmpName"></lable>
+            </div>
+            <div class="col-md-5 col-xs-12">
+                <label style="width:130px;">ตำแหน่ง/Position: </label>&nbsp;&nbsp;<lable id="lblEmpPosition"></lable>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-xs-12">
+            <div class="col-md-4 col-xs-12">
+                <label style="width:90px;">ระดับ/Level:</label> &nbsp;&nbsp;<lable id="lblLvl" />
+            </div>
+            <div class="col-md-5 col-xs-12">
+                <label style="width:130px;">หน่วยงาน/Dept: </label>&nbsp;&nbsp;<lable id="lblDept" />
+            </div>
+        </div>
+       
+        <div class="col-lg-12 col-xs-12" style="margin-top:30px">
+            <div class="col-md-6 col-xs-12">
+                <label> ประเทศหรืองานที่เดินทางไป / Country or For:</label>
+                @Html.TextBoxFor(x => x.activityFormModel.pack, new { @class = "textboxcss textRight", Style = "width:40%;  text-align:center;", id = "txtPack" })
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <label>วันที่ / Date: </label>
+                @Html.TextBoxFor(x => x.activityFormModel.str_activityPeriodSt, new { @class = "textboxcss textRight datepicker", Style = "width:5;  text-align:center;" })
+            </div>
+        </div>
     </div>
-</div>
 
 <script type="text/javascript">
 
+     $(document).ready(function () {
 
+        $('.datepicker').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+
+    });
      function getEmpDetail() {
         $.ajax({
             type: 'POST',

@@ -150,9 +150,10 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
+        public ActionResult exPerryListEntertainment()
+        {
 
-
-
+        }
 
     }
 }
