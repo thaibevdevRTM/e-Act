@@ -1,4 +1,9 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using System.Globalization;
+@{
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+}
 <table style="width:100%;">
     <tr>
         <td style="border-width: 0px 0.5px 0px 0.5px; border-collapse: collapse;border-top:none;">
@@ -9,7 +14,7 @@
                             &nbsp;วันที่เสนอกิจกรรม
                         </td>
                         <td colspan="3" style="border-style: solid;border-width: 0px 0px 0px 0.5px; border-collapse: collapse;border-right:none;border-top:none;">
-                            &nbsp;@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy")
+                            &nbsp;@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
                         </td>
                     </tr>
                     <tr>
@@ -59,7 +64,7 @@
                             &nbsp;เริ่มกิจกรรม
                         </td>
                         <td style="width: 50%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;border-bottom:none;">
-                            &nbsp;@Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy") &nbsp;ถึง&nbsp;@Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy")
+                            &nbsp;@Model.activityFormModel.activityPeriodSt.Value.ToString("dd/MM/yyyy", DateEnglish) &nbsp;ถึง&nbsp;@Model.activityFormModel.activityPeriodEnd.Value.ToString("dd/MM/yyyy", DateEnglish)
                         </td>
                         <td style="width: 15%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
                             &nbsp;Budget Number
@@ -91,7 +96,7 @@
     </tr>
 </table>
 <table style="width:100%;">
-    <tr >
+    <tr>
         <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-bottom:none;border-left:none;border-right:none;">
             <div style="height:5px;"></div>
             <div style="width: 100%; text-align: left;">
