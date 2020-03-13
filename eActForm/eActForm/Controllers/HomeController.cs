@@ -77,7 +77,7 @@ namespace eActForm.Controllers
 
 
 
-        public ActionResult requestDeleteDoc(string actId, string statusId)
+        public ActionResult requestDeleteDoc(string actId, string statusId,string statusNote)
         {
             //return RedirectToAction("index");
             AjaxResult result = new AjaxResult();
@@ -85,7 +85,7 @@ namespace eActForm.Controllers
             if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isOtherCompanyMT()))
             {
                 // case delete
-                result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"]) > 0 ? true : false;
+                result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
                 if (statusId == "6" && result.Success && !ActFormAppCode.isOtherCompanyMT())
                 {
                     EmailAppCodes.sendRequestCancelToAdmin(actId);
@@ -94,7 +94,7 @@ namespace eActForm.Controllers
             else if (statusId == "5" || statusId == "3")
             {
                 // waiting delete
-                result.Success = ActFormAppCode.updateWaitingCancel(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"]) > 0 ? true : false;
+                result.Success = ActFormAppCode.updateWaitingCancel(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
                 if (result.Success)
                 {
                     EmailAppCodes.sendRequestCancelToAdmin(actId);
@@ -163,5 +163,15 @@ namespace eActForm.Controllers
         {
             return View();
         }
+
+        public JsonResult getStatusNote(string actId)
+        {
+            AjaxResult result = new AjaxResult();
+
+            result.Message = ActFormAppCode.getStatusNote(actId);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

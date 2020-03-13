@@ -6,6 +6,22 @@
 <script>
 
     function checkBeforeDelete(actId, statusId) {
+        if (statusId == "6") {
+            //get statusNOte
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getStatusNote", "Home")',
+                data: {
+                    actId: actId
+                }
+            }).done(function (response) {
+              
+                if (response.Message != "") {
+                    $('#hdStatusNote').val("สาเหตุการยกเลิก : " + response.Message + "<br/>");
+                }
+            });
+        }
+        
         chkInvoiceBeforeDel(actId, statusId);
     }
 
@@ -49,18 +65,14 @@
 
      function checkDelete(actId, statusId) {
          var msg = "";
-         var name = document.getElementById("namebox").value;
-         if ((statusId == "3" || statusId == "5") && ('@ActFormAppCode.isOtherCompanyMT()' == "True")) {
 
-             msg = "ยืนยันยกเลิกกรุณาระบุเหตุผล" + name
-         } else
         if( statusId == "1" ||
             (statusId == "6" &&  '@ActFormAppCode.isAdmin()'=="True") ||
             (statusId == "5" && ('@ActFormAppCode.isOtherCompanyMT()'=="True" || '@ActFormAppCode.isAdmin()'=="True" ))
           )
         {
             // can be delete
-            msg = "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
+            msg =   document.getElementById("hdStatusNote").value+"คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
         }
         else {
             // can't delete
@@ -83,18 +95,19 @@
             },
             callback: function (result) {
                 if (result) {
-                    requestDeleteDoc(actId, statusId)
+                    requestDeleteDoc(actId, statusId,"")
                 }
             }
         });
     }
-    function requestDeleteDoc(actId, statusId) {
+     function requestDeleteDoc(actId, statusId, statusNote) {
            $("#WaitDialog").show();
                     $.ajax({
                         url: '@Url.Action("requestDeleteDoc", "Home")',
                         data: {
                             actId: actId,
                             statusId: statusId,
+                            statusNote: statusNote,
                         },
                     }).done(function (htmlResponse) {
                         $("#getQuery").html(htmlResponse);
@@ -118,13 +131,22 @@
             }
             else {
 
-                @*//ถ้าเป็น TBM HCM จะแสดง popup ให้ใส่เหตุผล
-                if ((statusId == "3" || statusId == "5") && ('@ActFormAppCode.isOtherCompanyMT()'=="True")) {
-                    $('#modalReasonCancle').modal('show');
+                //ถ้าเป็น TBM HCM จะแสดง popup ให้ใส่เหตุผล
+                if ((statusId == "3" || statusId == "5") && ('@ActFormAppCode.isOtherCompanyMT()' == "True")) {
+                    document.getElementById("hdActId").value = actId;
+                    document.getElementById("hdStatusId").value = statusId;
+                    document.getElementById("txtStatusNote").value = "";
+
+                    if (statusId == "5") {
+                        document.getElementById("lblMess").textContent = "คุณต้องการยกเลิกเอกสารนี้หรือไม่ กรุณาระบุเหตุผลในการยกเลิก";
+                    } else {
+                        document.getElementById("lblMess").textContent = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ กรุณาระบุเหตุผลในการยกเลิก";
+                    }
+                    $('#modalStatusNote').modal('show');
                 }
-                else {*@
+                else {
                     checkDelete(actId, statusId);
-                //}
+                }
 
             }
         });
@@ -160,12 +182,25 @@
             }
         });
       }
-    function confirmCc() { }
+    function confirmCc() {
+        var actId = document.getElementById("hdActId").value;
+        var statusId = document.getElementById("hdStatusId").value;
+        var StatusNote = document.getElementById("txtStatusNote").value;
+        if (StatusNote==""){
+            alert("กรุณาระบุเหตุผล");
+        } else {
+            $('#modalStatusNote').modal('hide');
+            requestDeleteDoc(actId, statusId, StatusNote);
+            document.getElementById("txtStatusNote").value = "";
+        }
+
+    }
 
 </script>
 <div class="row">
-    @*@Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
-    @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })*@
+    <input type="hidden" id="hdActId" value="" />
+    <input type="hidden" id="hdStatusId" value="" />
+    <input type="hidden" id="hdStatusNote" value="" />
 
     <div class="col-md-12 col-xs-12">
 
@@ -279,29 +314,40 @@
 
     </div>
 </div>
+
 <div class="modal fade" id="modalApprovelist" role="dialog" style="display:none">
     <div id="divModalApprovelist">
     </div>
 </div>
-<div class="modal fade" id="modalReasonCancle" role="dialog" style="display:none">
-    <div id="divModalReasonCancle">
+
+<div class="modal fade" id="modalStatusNote" role="dialog" style="display:none">
+    <div id="divModalStatusNote">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <div style=""></div>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div id="Grid" style="width:97%; margin-left:20px;">
+                    <div class="row">
+                        <h5>  <label class="col-md-10 col-xs-10"> Confirm Message</label></h5>
+                        <div class="col-md-2 col-xs-2">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
 
                     </div>
+                </div>
+                <div class="modal-body">
+                    @*<div id="Grid" style="width:97%; margin-left:20px;"> </div>*@
+                    <label id="lblMess"></label>
+                    @*<textarea class="form-control textboxcss" cols="20" id="txtStatusNote" rows="2"></textarea>*@
+                    <textarea name="txtStatusNote" id="txtStatusNote" class="form-control textboxcss" rows="3" cols="50"
+                              required="" style="border:solid;border-color:#ddd;border-width:thin;"></textarea>
                 </div>
                 <div class="modal-footer">
                     <div>
                         <p class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-success" onclick="confirmCc"><i class="fa fa fa-reply fa-fw"></i>&nbsp;OK</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+
+                            <button type="button" class="btn btn-danger bootbox-cancel" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-success bootbox-accept" onclick="confirmCc();">Yes</button>
+
                         </p>
                     </div>
 
@@ -310,6 +356,7 @@
         </div>
     </div>
 </div>
+
 <script>
     $(document).ready(function () {
         $('#datatable').DataTable({

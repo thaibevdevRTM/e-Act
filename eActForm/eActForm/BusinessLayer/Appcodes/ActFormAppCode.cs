@@ -13,7 +13,7 @@ namespace eActForm.BusinessLayer
 {
     public class ActFormAppCode
     {
-        public static int updateWaitingCancel(string actId, string remark)
+        public static int updateWaitingCancel(string actId, string remark, string statusNote)
         {
             try
             {
@@ -23,6 +23,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@statusNote",statusNote)
                     });
                 return rtn;
             }
@@ -50,7 +51,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("checkActInvoice >>" + ex.Message);
             }
         }
-        public static int deleteActForm(string actId, string remark)
+        public static int deleteActForm(string actId, string remark,string statusNote)
         {
             try
             {
@@ -60,6 +61,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@statusNote",statusNote)
                     });
                 return rtn;
             }
@@ -228,6 +230,25 @@ namespace eActForm.BusinessLayer
                 || UtilsAppCode.Session.User.isAdminTBM
                 || UtilsAppCode.Session.User.isAdminHCM
                 || UtilsAppCode.Session.User.isSuperAdmin ? true : false;
+        }
+
+        public static string getStatusNote(string actId)
+        {
+            try
+            {
+                string statusNote = "";
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getStatusNote"
+                    , new SqlParameter[] { new SqlParameter("@actId", actId) });
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    statusNote = ds.Tables[0].Rows[0]["statusNote"].ToString();
+                }
+                return statusNote;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getStatusNote >>" + ex.Message);
+            }
         }
     }
 }
