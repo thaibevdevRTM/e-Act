@@ -250,22 +250,7 @@ else
 
     function callPreviewApprove(obj) {
 
-        @*if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
-
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("previewActBudget", "Approve")',
-                data: {
-                    activityId: obj,
-                    typeForm: '@Model.typeForm.ToString()',
-                }
-            }).done(function (htmlResponse) {
-                $("#dataFromPDF").val(htmlResponse);
-                genFileActForm();
-                });
-
-        }
-        else*@ if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]'
+        if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]'
             || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvTbmId"]'
             || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'
             || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]'

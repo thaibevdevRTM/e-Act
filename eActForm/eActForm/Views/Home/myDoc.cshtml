@@ -268,18 +268,7 @@
 
     function callPreviewApprove(actId, statusId, typeForm, master_type_form_id) {
 
-        @*if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]") {
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
-                data: {
-                    activityId: actId
-                }
-            }).done(function (htmlResponse) {
-                genPdf(actId, statusId, htmlResponse);
-            });
-        }
-        else*@ if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formPosTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]") {
+        if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formPosTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]") {
              $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Index", "MainReport")',
