@@ -250,7 +250,7 @@ else
 
     function callPreviewApprove(obj) {
 
-        @*if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
+        if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
 
             $.ajax({
                 type: 'POST',
@@ -265,8 +265,7 @@ else
                 });
 
         }
-        else*@ if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvTbmId"]'
+        else if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvTbmId"]'
             || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'
             || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]'
             || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvHcmId"]'
