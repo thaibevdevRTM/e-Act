@@ -11,7 +11,7 @@
 
     function checkDelete(actId, statusId) {
         var msg = "";
-      
+
         if (statusId == "1"
             ||
             (statusId == "6" && ("@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true"
@@ -36,7 +36,7 @@
 
         bootbox.confirm({
             title: "Confirm Message",
-            
+
             message: msg,
             buttons: {
                 confirm: {
@@ -177,7 +177,8 @@
                             }
                             else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && item.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])
                             {
-                                @Html.ActionLink(" ", "Index", "TBMMKT_ActivityBudgetInput", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @*@Html.ActionLink(" ", "Index", "TBMMKT_ActivityBudgetInput", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })*@
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
                             else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || item.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]))
                             {
@@ -267,7 +268,7 @@
 
     function callPreviewApprove(actId, statusId, typeForm, master_type_form_id) {
 
-        if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]") {
+        @*if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]") {
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
@@ -278,7 +279,7 @@
                 genPdf(actId, statusId, htmlResponse);
             });
         }
-        else if (master_type_form_id == "@ConfigurationManager.AppSettings["formAdvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formPosTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]") {
+        else*@ if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formPosTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]") {
              $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Index", "MainReport")',

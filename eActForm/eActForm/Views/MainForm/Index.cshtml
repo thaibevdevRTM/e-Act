@@ -64,14 +64,11 @@
                         @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
                     </td>
                 </tr>*@
-            @*=========END========for test====================*@
+            @*=========END========for test==================*@
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
                 @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
             }
-
-
-
         </table>
     </div>
 
@@ -136,8 +133,6 @@
 
 <script>
 
-    //if(('Model.activityFormTBMMKT.statusId' == '2' && 'UtilsAppCode.Session.User.isAdminTBM' == "False") || ('Model.activityFormTBMMKT.statusId' == '3'))
-    
     if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId)' == "False")
     {
            $("#GridPDF :input").prop("disabled", true);
