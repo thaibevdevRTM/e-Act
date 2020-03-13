@@ -30,7 +30,7 @@
     }
 </style>
 
-@using (Ajax.BeginForm("insertDataActivity", "TBMMKT_ActivityBudgetInput", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
+@using (Ajax.BeginForm("insertDataActivity", "MainForm", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
 {
     @Html.AntiForgeryToken()
     <div id="GridPDF" style="width:97%; margin-left:20px;">

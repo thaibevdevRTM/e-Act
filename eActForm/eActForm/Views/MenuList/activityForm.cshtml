@@ -19,8 +19,8 @@
 }
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] || UtilsAppCode.Session.User.isAdminTBM || (UtilsAppCode.Session.User.isSuperAdmin))
     {
-        <li>@Html.ActionLink(" Activity Form TBM", "Index", "TBMMKT_ActivityBudgetInput", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"] }, null)</li>
-        @*<li>@Html.ActionLink(" Activity Form TBM", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"] }, null)</li>*@
+        @*<li>@Html.ActionLink(" Activity Form TBM", "Index", "TBMMKT_ActivityBudgetInput", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"] }, null)</li>*@
+        <li>@Html.ActionLink(" Activity Form TBM", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"] }, null)</li>
         <li>@Html.ActionLink(" ใบยืมเงินทดรอง TBM", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formAdvTbmId"] }, null)</li>
         <li>@Html.ActionLink(" ใบเบิกผลิตภัณฑ์,POS/PREMIUM TBM", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formPosTbmId"] }, null)</li>
         <li>@Html.ActionLink(" Travelling Form TBM", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formTrvTbmId"] }, null)</li>
