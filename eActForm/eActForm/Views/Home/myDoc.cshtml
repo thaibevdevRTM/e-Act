@@ -214,7 +214,7 @@
 
                         </td>
                         <td>@item.statusName</td>
-                        <td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
+                        <td>@{var date = item.documentDate == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.documentDate, ConfigurationManager.AppSettings["formatDateUse"]);} @date </td>
                         <td>@item.activityNo</td>
                         <td>@item.activityName</td>
                         <td>@item.cusShortName</td>
@@ -227,7 +227,7 @@
                                 @result.ToString();
                             }
                         </td>
-                        <td>@{ date = item.createdDate == null ? "" : item.createdDate.Value.ToString("dd/MM/yyyy");} @date</td>
+                        <td>@{ date = item.createdDate == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.createdDate, ConfigurationManager.AppSettings["formatDateUse"]);} @date</td>
                         <td>@item.createByUserName</td>
                     </tr>
                 }
