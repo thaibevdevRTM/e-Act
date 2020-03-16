@@ -39,6 +39,15 @@ namespace eActForm.BusinessLayer
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                                   groupName = d["groupName"].ToString(),
+                                  brand_select = d["brand_select"].ToString(),
+                                  costCenter = d["costCenter"].ToString(),
+                                  channelRegionName = d["channelRegionName"].ToString(),
+                                  glNo = d["glNo"].ToString(),
+                                  glName = d["glName"].ToString(),
+                                  toName = d["toName"].ToString(),
+                                  toAddress = d["toAddress"].ToString(),
+                                  toContact = d["toContact"].ToString(),
+                                  detailContact = d["detailContact"].ToString(),
                               });
 
                 return result.ToList();

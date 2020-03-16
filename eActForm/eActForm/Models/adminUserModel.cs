@@ -20,7 +20,7 @@ namespace eActForm.Models
             regionList = new List<TB_Act_Region_Model>();
         }
 
-
+        
         public class AdminUserModels
         {
             public List<string> custLi { get; set; }

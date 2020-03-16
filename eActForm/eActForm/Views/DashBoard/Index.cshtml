@@ -40,9 +40,13 @@
 
                 linkWebDocument = ("Home?typeForm=" + Activity_Model.activityType.OMT.ToString());
             }
-            else if (UtilsAppCode.Session.User.isCreator)
+            else if (UtilsAppCode.Session.User.isCreator && UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"])
             {
                 linkWebDocument = ("Home?typeForm=" + Activity_Model.activityType.TBM.ToString());
+            }
+            else if (UtilsAppCode.Session.User.isCreator && UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"])
+            {
+                linkWebDocument = ("Home?typeForm=" + Activity_Model.activityType.HCM.ToString());
             }
             else
             {

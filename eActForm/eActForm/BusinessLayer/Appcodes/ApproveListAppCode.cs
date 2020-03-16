@@ -63,7 +63,8 @@ namespace eActForm.BusinessLayer
                                  normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
                                  themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
-                                 createByUserName = dr["createByName"].ToString()
+                                 createByUserName = dr["createByName"].ToString(),
+                                 dateSentApprove = dr["dateSentApprove"] is DBNull ? null : (DateTime?)dr["dateSentApprove"],
                              }).ToList();
                 return lists;
             }

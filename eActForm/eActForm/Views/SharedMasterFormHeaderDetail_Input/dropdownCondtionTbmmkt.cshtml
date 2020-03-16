@@ -1,5 +1,6 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
+@using System.Configuration;
 <tr>
     <td>
         <div class="form-group" style="margin-top:-20px;">
@@ -12,11 +13,9 @@
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.selectedBrandOrChannel, new SelectList(Model.tB_Act_ActivityForm_SelectBrandOrChannel, "txt", "txt", ""), "", new
                     {
-                        @class = "form-control selectpicker",
+                        @class = "form-control ",
                         id = "ddlChannelOrBrand"
                     })
-
-
                 </div>
             </div>
             <div class="col-md-4 col-xs-12">
@@ -27,7 +26,7 @@
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.channelId, new SelectList(Model.channelMasterTypeList, "subTypeId", "subName", 0), "", new
                     {
-                        @class = "form-control selectpicker",
+                        @class = "form-control ",
                         id = "ddlChannel"
                     })
 
@@ -38,7 +37,7 @@
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.BrandlId, new SelectList(Model.tB_Act_ProductBrand_Model, "id", "brandName", 0), "", new
                     {
-                        @class = "form-control selectpicker",
+                        @class = "form-control ",
                         id = "ddlBrand"
                     })
                 </div>
@@ -46,7 +45,7 @@
                     <label class="control-label" for="ddlChannel">
                         &nbsp;เลือก Channel<span class="required">:&nbsp;</span>
                     </label>
-                    <select class="form-control selectpicker" id="ddlChannelNull" name="">
+                    <select class="form-control " id="ddlChannelNull" name="">
                         <option value=""></option>
                     </select>
                 </div>
@@ -58,7 +57,7 @@
                     </label>
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
                     {
-                        @class = "form-control selectpicker",
+                        @class = "form-control ",
                         id = "ddlSubject"
                     })
                 </div>
@@ -66,7 +65,7 @@
                     <label class="control-label" for="ddlBrand">
                         &nbsp;เรื่อง <span class="required"></span>
                     </label>
-                    <select class="form-control selectpicker" id="ddlSubjectNull" name="">
+                    <select class="form-control " id="ddlSubjectNull" name="">
                         <option value=""></option>
                     </select>
                 </div>
@@ -76,31 +75,8 @@
             </div>
 
             <script>
-                function processDropdownConditionFlow() {
-
-                    if ($("#ddlChannelOrBrand").val() == "") {
-
-                        $("#divBrand").hide();
-                        $("#divChannel").hide();
-                        $("#divSubject").hide();
-                        $('#divChannelNull').css('display', 'inline-block');
-                        $('#divSubjectNull').css('display', 'inline-block');
-                     }
-                    else if ($("#ddlChannelOrBrand").val() == "Brand") {
-                        $("#divChannelNull").hide();
-                        $("#divSubjectNull").hide();
-                        $('#divBrand').css('display', 'inline-block');
-                        $("#divSubject").css('display', 'inline-block');
-                        $("#divChannel").hide();
-                    }
-                    else {
-                        $("#divChannelNull").hide();
-                        $("#divSubjectNull").hide();
-                         $('#divChannel').css('display', 'inline-block');
-                        $("#divSubject").css('display', 'inline-block');
-                        $("#divBrand").hide();
-
-                        var ddlChannel = document.getElementById("ddlChannelOrBrand");
+                function getDataDropwdownBrandChannel() {
+                     var ddlChannel = document.getElementById("ddlChannelOrBrand");
 
                         $.ajax({
                             url: '@Url.Action("getChannelByGroup", "MainForm")',
@@ -126,6 +102,30 @@
 
                             }
                         });
+                }
+                function processDropdownConditionFlow() {
+
+                    if ($("#ddlChannelOrBrand").val() == "") {
+
+                        $("#divBrand").hide();
+                        $("#divChannel").hide();
+                        $("#divSubject").hide();
+                        $('#divChannelNull').css('display', 'inline-block');
+                        $('#divSubjectNull').css('display', 'inline-block');
+                     }
+                    else if ($("#ddlChannelOrBrand").val() == "Brand") {
+                        $("#divChannelNull").hide();
+                        $("#divSubjectNull").hide();
+                        $('#divBrand').css('display', 'inline-block');
+                        $("#divSubject").css('display', 'inline-block');
+                        $("#divChannel").hide();
+                    }
+                    else {
+                        $("#divChannelNull").hide();
+                        $("#divSubjectNull").hide();
+                        $('#divChannel').css('display', 'inline-block');
+                        $("#divSubject").css('display', 'inline-block');
+                        $("#divBrand").hide();
 
                     }
                 }
@@ -152,6 +152,57 @@
 
                 $("#ddlChannelOrBrand").change(function () {
                     processDropdownConditionFlow();
+                    getDataDropwdownBrandChannel();
+                    if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]') //ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                    {
+                        $("#ddlbrand_select").val("");
+                        $("#txtCostCenter").val("");
+
+                        if ($("#ddlChannelOrBrand").val() != "")
+                        {
+                            var typeGL = "";
+                            if ($('#ddlChannelOrBrand').val() == "Brand") {
+                                typeGL = "tbmmkt_gl_brand";
+                            } else {
+                                typeGL = "tbmmkt_gl_channel";
+                            }
+
+                            var dataToBeSend =
+                                {
+                                    id: ""
+                                    , master_type_form_id: "@Model.activityFormTBMMKT.master_type_form_id"
+                                    , type: typeGL
+                                };
+
+                                $.ajax('@Url.Action("GetDataListChoiceByType", "GetDataMainForm")',
+                                {
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify(dataToBeSend),
+                                    dataType: 'json',
+                                    type: "POST",
+                                    success: function (response) {
+                                        if (response.Data.tB_Act_Master_List_ChoiceModels.length > 0) {
+                                            $.each(response.Data.tB_Act_Master_List_ChoiceModels, function () {
+                                                $("#txtglNo").val(this['name']);
+                                                $("#txtglName").val(this['sub_name']);
+                                            });
+                                        }
+                                        else {
+                                            $("#txtglNo").val("");
+                                            $("#txtglName").val("");
+                                        }
+                                   },
+                                    error: function (data)
+                                    {
+                                        alert("Error GetDataListChoiceById.");
+                                    }
+                                 });
+                        }
+                        else {
+                            $("#txtglNo").val("");
+                            $("#txtglName").val("");
+                        }
+                    }
                 });
 
             </script>
@@ -199,9 +250,9 @@
                                     alert("Error Get Subject.");
                                 }
                             });
-                    }
+                }
+
             </script>
-            @*<label class="control-label col-md-1 col-xs-12"></label>*@
         </div>
     </td>
 </tr>
