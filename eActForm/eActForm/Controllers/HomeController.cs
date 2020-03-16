@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Configuration;
+﻿using eActForm.BusinessLayer;
 using eActForm.Models;
-using eActForm.BusinessLayer;
-using eActForm.BusinessLayer.Appcodes;
+using System;
+using System.Configuration;
+using System.Linq;
+using System.Web.Mvc;
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -42,7 +39,7 @@ namespace eActForm.Controllers
 
 
 
-        public ActionResult myDoc(string actId , string typeForm)
+        public ActionResult myDoc(string actId, string typeForm)
         {
             Activity_Model.actForms model;
             if (TempData["SearchDataModel"] != null)
@@ -82,14 +79,23 @@ namespace eActForm.Controllers
             //return RedirectToAction("index");
             AjaxResult result = new AjaxResult();
             result.Success = false;
-            if ((statusId == "1")|| (statusId == "3") || (statusId == "6" && (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)) || (statusId == "5" && (UtilsAppCode.Session.User.empCompanyId == "3030"||UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin)))
+            if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isOtherCompanyMT()))
             {
-                //Draft || หรือ ถูก reject มาแล้วเป็นบริษัทTBM ให้สามารถยกเลิกเอกสารทิ้งได้ทันที เฟรม dev date 20191224
+                // case delete
                 result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"]) > 0 ? true : false;
+                if (statusId == "5" && result.Success && !ActFormAppCode.isOtherCompanyMT())
+                {
+                    EmailAppCodes.sendRequestCancelToAdmin(actId);
+                }
             }
-            else
+            else if (statusId == "5" || statusId == "3")
             {
+                // waiting delete
                 result.Success = ActFormAppCode.updateWaitingCancel(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"]) > 0 ? true : false;
+                if (result.Success)
+                {
+                    EmailAppCodes.sendRequestCancelToAdmin(actId);
+                }
             }
 
             TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];

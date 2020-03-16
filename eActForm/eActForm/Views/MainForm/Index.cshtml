@@ -1,15 +1,30 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
 @using eActForm.Models
-<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
-<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+@using System.Configuration;
+@{
+
+    var rootPathWeb = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
+    var strHeader = "";
+    var urlWorkFlowTrv = "";
+    if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"])//travelling TBM
+    {
+        strHeader = "คำแนะนำการขอเบิกค่าใช้จ่ายในการเดินทาง";
+        urlWorkFlowTrv = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "manual/travelling_TBM.pdf";
+    }
+
+}
+
+
 
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
-<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/locales/bootstrap-datetimepicker.fr.js"></script>
+<script src="~/Scripts/locales/bootstrap-datetimepicker.th.js"></script>
+
+
 <style>
     .cssTableTDTextCenter {
         max-width: none;
@@ -36,15 +51,17 @@
         <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
             @*=================for test====================*@
             @*<tr>
-                <td>
-                    @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
-                </td>
-            </tr>*@
+                    <td>
+                        @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
+                    </td>
+                </tr>*@
             @*=========END========for test====================*@
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
                 @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
             }
+
+
 
         </table>
     </div>
@@ -52,18 +69,27 @@
     @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
     @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
     @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
-    @Html.HiddenFor(x => x.activityFormTBMMKT.master_type_form_id, new { @id = "hdmaster_type_form_id"})
+    @Html.HiddenFor(x => x.activityFormTBMMKT.master_type_form_id, new { @id = "hdmaster_type_form_id" })
+    @Html.HiddenFor(x => x.activityFormModel.activityNo, new { @id = "hdactivityNo" })
+    @Html.HiddenFor(x => x.activityFormTBMMKT.formCompanyId, new { @id = "hdformCompanyId" })
 }
-
-@RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
-
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
+    <tr>
+        <td>
+            @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
+        </td>
+    </tr>
+</table>
 <div style="height:5px;">
 
 </div>
 
 <div style="margin-left:25px;" class="text-center">
-    <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-    @if (Model.activityFormModel.mode == "new" || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5 || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM))
+    <a href="@Url.Action("index", "Home", new { typeForm = @Model.activityFormModel.typeForm }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+    @if (Model.activityFormModel.mode == "new"
+                        || Model.activityFormTBMMKT.statusId == 1
+                        || Model.activityFormTBMMKT.statusId == 5
+                        || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)))
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
     }
@@ -74,6 +100,30 @@
     <div id="divPreview">
     </div>
 </div>
+
+<div id="preview" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                <h4 class="modal-title">@strHeader</h4>
+            </div>
+            <div class="modal-body">
+
+                <embed src="@urlWorkFlowTrv" frameborder="0" width="100%" height="400px">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 
 <script>
 
@@ -103,23 +153,74 @@
         $("#txtdateActivitySt").datepicker();
         $("#txtactivityPeriodEnd").datepicker();
 
-        });
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'){//travelling TBM
+            $('#preview').modal('show');
+        }
+    });
 
     function validatesubmit() {
 
-        var required = "กรุณา ระบุ :<br>";
+        required = "<b>กรุณาระบุ/Please input data :<br></b>";
         var validate = true;
 
-        if ($("#ddlChannelOrBrand").val() == "") { required += "Condition Flow*<br>"; validate = false; }
-        if ($("#ddlChannel").val() == "" && $("#ddlBrand").val() == "") { required += "BrandหรือChannel*<br>"; validate = false; }
-        if ($("#ddlSubject").val() == "") { required += "เรื่อง*<br>"; validate = false; }
+        if ($("#ddlChannelOrBrand").val() == "") { required += "&emsp;Condition Flow*<br>"; validate = false; }
+        if ($("#ddlChannel").val() == "" && $("#ddlBrand").val() == "") { required += "&emsp;BrandหรือChannel*<br>"; validate = false; }
+        if ($("#ddlSubject").val() == "") { required += "&emsp;เรื่อง*<br>"; validate = false; }
 
-        if ('@Model.activityFormTBMMKT.master_type_form_id' == "8C4511BA-E0D6-4E6F-AD8D-62A5431E4BD4") {
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvTbmId"]' || '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvHcmId"]') {
             if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
             if ($("#txtActivityName").val() == "") { required += "ชื่องาน*<br>"; validate = false; }
             if ($("#txtdateActivitySt").val() == "") { required += "ต้องการเช็ควันที่*<br>"; validate = false; }
             if ($("#txtactivityPeriodEnd").val() == "") { required += "เคลียร์เงินทดรองในวันที่*<br>"; validate = false; }
             if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
+        } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]' || '@Model.activityFormTBMMKT.master_type_form_id' =='@ConfigurationManager.AppSettings["formTrvHcmId"]')
+        {
+
+            //Travelling form TBM
+            if ($("#txtdateDoc2").val() == "") { required += "&emsp;Document Date*<br>"; validate = false; }
+            //if ($("#ddlEmp_0").val() == "") { required += "&emsp;ผู้ร่วมเดินทาง/The following persons to travel*<br>"; validate = false; }
+
+            var validateCkb = false;
+            var rowCount = @Model.purposeModel.Count;
+            for (i = 0; i < rowCount; i++) {
+                if (document.getElementById("ckb_" + i.toString()).checked == true) {
+                    validateCkb = true;
+                }
+            }
+            if (validateCkb == false) {
+                required += "&emsp;วัตถุประสงค์ในการเดินทาง/Purpose of Travelling*<br>"; validate = false;
+            }
+
+            if (!($("#txtPlace_0").val() != "" &&
+                $("#txtForProject_0").val() != "" &&
+                $("#txtPeriod_0").val() != "" &&
+                $("#txtDepartureDate_0").val() != "" &&
+                $("#txtArrivalDate_0").val() != "")){
+                required += "&emsp;รายละเอียดของกิจกรรม/Description of activity*<br>"; validate = false;
+            }
+
+            if (!($("#txtProductDetail_0").val() != "" &&
+                $("#txtQtyName_0").val() != "" &&
+                $("#txtUnitPrice_0").val() != "" &&
+                $("#txtUnit_0").val() != "")) {
+                required += "&emsp;ประมาณค่าใช้จ่าย/Estimate of travelling expenses*<br>"; validate = false;
+            }
+
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]') {//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+            if ($("#txtdateDoc").val() == "") { required += "Document Date*<br>"; validate = false; }
+            if ($("#ddlin_or_out_stock").val() == "") { required += "ประเภทสต๊อก*<br>"; validate = false; }
+            var v_select_tB_Act_master_list_choice_id = "";
+            $('#ddlproduct_pos_premium option:selected').each(function () {
+                v_select_tB_Act_master_list_choice_id += ($(this).val() + "|");
+            });
+            v_select_tB_Act_master_list_choice_id = v_select_tB_Act_master_list_choice_id.substring(0, (v_select_tB_Act_master_list_choice_id.length - 1))
+            if (v_select_tB_Act_master_list_choice_id == "") { required += "ขอเบิก*<br>"; validate = false; }
+            if ($("#ddlfor").val() == "") { required += "เพื่อ*<br>"; validate = false; }
+            if ($("#ddlbrand_select").val() == "") { required += "Brand/ผลิตภัณฑ์*<br>"; validate = false; }
+            if ($("#ddlchannel_place").val() == "") { required += "Channel+Region*<br>"; validate = false; }
+            if ($("#txttoName").val() == "") { required += "ให้แก่(ชื่อผู้รับ)*<br>"; validate = false; }
+            if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์ที่ขอเบิก*<br>"; validate = false; }
         }
         else {
 
@@ -165,7 +266,7 @@
                 type: 'POST',
             }).done(function (response) {
                 $("#WaitDialog").hide();
-                $("#divPreview").html(htmlResponse)
+                $("#divPreview").html(htmlResponse);
                 $('#previewModal').modal('show');
             });
         });

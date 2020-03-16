@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Configuration;
-using WebLibrary;
-using eActForm.BusinessLayer;
+﻿using eActForm.BusinessLayer;
 using eActForm.Models;
+using System;
+using System.Configuration;
+using System.Web.Mvc;
+using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -39,7 +36,7 @@ namespace eActForm.Controllers
             try
             {
                 UtilsAppCode.Session.User = new ActUserModel.User();
-                string strUserName = EncrptHelper.MD5Encryp(Request.Form["txtUserName"].ToString().ToLower().Replace("i","1"));
+                string strUserName = EncrptHelper.MD5Encryp(Request.Form["txtUserName"].ToString().ToLower().Replace("i", "1"));
                 string strPassword = EncrptHelper.MD5Encryp(Request.Form["txtPassword"].ToString());
                 ActUserModel.ResponseUserAPI response = AuthenAppCode.doAuthen(strUserName, strPassword);
                 if (response != null && response.userModel.Count > 0)

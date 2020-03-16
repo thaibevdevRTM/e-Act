@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -24,6 +23,7 @@ namespace eActForm.BusinessLayer
                               {
                                   id = d["id"].ToString(),
                                   nameForm = d["nameForm"].ToString(),
+                                  nameForm_EN = d["nameForm_EN"].ToString(),
                                   department = d["department"].ToString(),
                                   useIn = d["useIn"].ToString(),
                                   companyId = d["companyId"].ToString(),

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace eActForm.Models
 {
@@ -16,6 +13,9 @@ namespace eActForm.Models
             public string id { get; set; }
             public string empId { get; set; }
             public byte[] signature { get; set; }
+            public string empName { get; set; }
+            public string empCompanyName { get; set; }
+            public string positionTitle { get; set; }
         }
     }
 }

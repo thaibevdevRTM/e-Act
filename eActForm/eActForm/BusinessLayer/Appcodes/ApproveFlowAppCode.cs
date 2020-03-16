@@ -1,11 +1,11 @@
-﻿using System;
+﻿using eActForm.Models;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Configuration;
-using eActForm.Models;
-using Microsoft.ApplicationBlocks.Data;
 using WebLibrary;
 namespace eActForm.BusinessLayer
 {
@@ -273,7 +273,8 @@ namespace eActForm.BusinessLayer
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
                                  isShowInDoc = (bool)dr["showInDoc"],
                                  description = dr["description"].ToString(),
-                                 isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true
+                                 isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
+                                 bu = dr["empDivisionTH"].ToString()
                              }).ToList();
                 return lists;
             }

@@ -1,0 +1,68 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+<tr style="border-bottom:none;">
+    <td>
+        <div id="divPurpose" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
+
+            <div class="form-group">
+
+                <label class="col-md-4 col-xs-12">
+                    Purpose of Travelling  : วัตถุประสงค์ในการเดินทาง
+                </label>
+                <label class="col-md-8 col-xs-12">  </label>
+            </div>
+
+            @for (int i = 0; i < @Model.purposeModel.Count; i = i + 2)
+            {
+                var index_1 = i;
+                var index_2 = i + 1;
+
+                <div class="form-group">
+                    <label class="col-md-2 col-xs-12">
+                    </label>
+                    <div class="col-md-5 col-xs-12">
+                        <div class="row">
+                            @if (index_1 < Model.purposeModel.Count)
+                            {
+                                <input id="ckb_@index_1" type="checkbox"  name="chkPurpose" value="@Model.purposeModel[index_1].id"  @( Model.purposeModel[index_1].chk == true ? "checked" : "" )  >
+                                @*@Html.CheckBoxFor(m=>m.purposeModel[index_1].chk, new { id = "ckb_" + @index_1, name = "chkPurpose", value = @Model.purposeModel[index_1].id })*@
+                                @Model.purposeModel[index_1].detailTh
+
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-xs-12">
+                        <div class="row">
+                            @if (index_2 < Model.purposeModel.Count)
+                            {
+                                <input id="ckb_@index_2" type="checkbox" name="chkPurpose" value="@Model.purposeModel[index_2].id"  @( Model.purposeModel[index_2].chk == true ? "checked" : "" ) >
+                                @Model.purposeModel[index_2].detailTh
+                                //@Model.purposeModel[index_2].detailTh : @Model.purposeModel[index_2].detailEn;
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <div class="form-group">
+
+                <label class="col-md-2 col-xs-12">
+
+                </label>
+                <label class="col-md-10 col-xs-12">
+
+                    @Html.TextAreaFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective", @placeholder = "Remarks" })
+
+
+                </label>
+            </div>
+
+            <script>
+ 
+            </script>
+        </div>
+    </td>
+</tr>

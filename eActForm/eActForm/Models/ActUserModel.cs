@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace eActForm.Models
 {
@@ -74,10 +71,13 @@ namespace eActForm.Models
             public bool isSuperAdmin { get; set; }
             public bool isAdminOMT { get; set; }
             public bool isAdminTBM { get; set; }
+            public bool isAdminHCM { get; set; }
             public string countWatingActForm { get; set; }
             public string counteatingRepDetail { get; set; }
             public string counteatingSummaryDetail { get; set; }
             public string countWatingBudgetForm { get; set; }
+            public string countApproveReject { get; set; }
+            public string countRejectAct { get; set; }
             public string exception { get; set; }
             public string regionId { get; set; }
             public string customerId { get; set; }

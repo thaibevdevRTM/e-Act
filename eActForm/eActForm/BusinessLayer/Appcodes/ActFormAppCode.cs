@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
+﻿using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
-using eActForm.BusinessLayer.Appcodes;
+using System.Linq;
+using System.Configuration;
 
 namespace eActForm.BusinessLayer
 {
@@ -23,12 +23,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
-
-                if (rtn > 0)
-                {
-                    EmailAppCodes.sendRequestCancelToAdmin(actId);
-                }
-
                 return rtn;
             }
             catch (Exception ex)
@@ -66,10 +60,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
-                if (rtn > 0)
-                {
-                    EmailAppCodes.sendRequestCancelToAdmin(actId);
-                }
                 return rtn;
             }
             catch (Exception ex)
@@ -88,9 +78,11 @@ namespace eActForm.BusinessLayer
                              {
                                  empId = dr["empId"].ToString(),
                                  empName = dr["empName"].ToString(),
+                                 empName_EN = dr["empName_EN"].ToString(),
                                  empEmail = dr["empEmail"].ToString(),
                                  activityNo = dr["activityNo"].ToString(),
                                  companyName = dr["companyName"].ToString(),
+                                 companyNameEN = dr["companyNameEN"].ToString(),
                                  delFlag = (bool)dr["delFlag"],
                                  createdDate = (DateTime?)dr["createdDate"],
                                  createdByUserId = dr["createdByUserId"].ToString(),
@@ -112,11 +104,11 @@ namespace eActForm.BusinessLayer
             {
                 string strCall = "";
 
-                if(typeForm == Activity_Model.activityType.MT.ToString())
+                if (typeForm == Activity_Model.activityType.MT.ToString())
                 {
                     strCall = "usp_getActivityCustomersFormByEmpId";
                 }
-                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                else if (typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
@@ -127,7 +119,7 @@ namespace eActForm.BusinessLayer
 
 
                 if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin ||
-                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
+                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM|| UtilsAppCode.Session.User.isAdminHCM )
                 {
                     strCall = "usp_getActivityFormAll";
                 }
@@ -221,5 +213,10 @@ namespace eActForm.BusinessLayer
         }
 
 
+        public static bool isOtherCompanyMT()
+        {
+            return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] ||
+                UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+        }
     }
 }

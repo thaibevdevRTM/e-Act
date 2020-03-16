@@ -38,6 +38,11 @@
                 </td>
                 <td style="width: 7%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                     <input type="text" value="@item.unit" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" class="form-control textboxcss txtUnit_@index" />
+                    <script>
+                        $(".txtUnit_@index").blur(function () {
+                            $(".txtUnit_@index").val($(".txtUnit_@index").val().replace(",", ""));
+                        });
+                    </script>
                 </td>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                     @Html.TextBoxFor(x => item.unitPriceDisplay, new { @id = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].unitPriceDisplay", Name = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index })
@@ -102,10 +107,11 @@
             var rowCount = parseInt($('#tabelHeaderDetails tr.tagCountRowinTable').length);
 
             for (i = 0; i < rowCount; i++) {
+               
                 var rowtotal = parseFloat($(".hidtotal_" + i.toString()).val().replace(",", ""));
                 totalAll = totalAll + rowtotal;
             }
-
+          
             $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         }
     </script>

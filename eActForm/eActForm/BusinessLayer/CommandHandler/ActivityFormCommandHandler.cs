@@ -8,7 +8,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -110,6 +109,7 @@ namespace eActForm.BusinessLayer
                         costThemeDetail.IO = "56S0" + getYear + ActFormAppCode.getDigitGroup(item.activityTypeId) + ActFormAppCode.getDigitRunnigGroup(item.productId);
 
                         //costThemeDetail.IO = item.IO;
+                        costThemeDetail.mechanics = item.mechanics;
                         costThemeDetail.rowNo = insertIndex;
                         costThemeDetail.delFlag = item.delFlag;
                         costThemeDetail.isShowGroup = item.isShowGroup;
@@ -181,20 +181,25 @@ namespace eActForm.BusinessLayer
         {
             try
             {
- 
+
                 String[] result = new String[2];
                 List<ActivityForm> getActList = QueryGetActivityById.getActivityById(activityId);
                 if (getActList.Any())
                 {
                     if (getActList.FirstOrDefault().activityNo.ToString() == "---")
                     {
-                        string getYear = getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9 ?
-                                new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2)
-                              : new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
+                        
+                        string getYear = "";
+                        if (getActList.FirstOrDefault().activityPeriodSt != null)
+                        {
+                            getYear = getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9 ?
+                                   new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2)
+                                 : new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
+                        }
 
                         if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
                         {
-                            int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id).FirstOrDefault().docNo);
+                            int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id, activityId).FirstOrDefault().docNo);
 
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
@@ -206,7 +211,7 @@ namespace eActForm.BusinessLayer
                         }
                         else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-                            int genNumber = int.Parse(getActivityDoc("running_OMT").FirstOrDefault().docNo);
+                            int genNumber = int.Parse(getActivityDoc("running_OMT", activityId).FirstOrDefault().docNo);
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().regionShort.Trim();
@@ -215,27 +220,58 @@ namespace eActForm.BusinessLayer
                             result[0] += string.Format("{0:0000}", genNumber);
                             result[1] = Activity_Model.activityType.OMT.ToString();
                         }
-                        else
+                        else//other company
                         {
+                            //==========แบบเก่า================
+                            //int genNumber = int.Parse(getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId).FirstOrDefault().docNo);
+                            //var model = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId);
+                            //result[0] += !string.IsNullOrEmpty(model.FirstOrDefault().channelId) ?
+                            //    QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(model.FirstOrDefault().channelId)).FirstOrDefault().no_tbmmkt
+                            //    : QueryGetAllBrand.GetAllBrand().Where(x => x.id.Equals(model.FirstOrDefault().productBrandId)).FirstOrDefault().no_tbmmkt;
+                            //result[0] += getActList.FirstOrDefault().documentDate.Value.Year.ToString();
+                            //result[0] += "/";
+                            //result[0] += string.Format("{0:0000}", genNumber);
+                            //==========แบบเก่า================
 
-                            int genNumber = int.Parse(getActivityDoc("running_TBM").FirstOrDefault().docNo);
-                            var model = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId);
-
-                            result[0] += !string.IsNullOrEmpty(model.FirstOrDefault().channelId) ? 
-                                QueryGetAllChanel.getAllChanel().Where(x => x.id.Equals(model.FirstOrDefault().channelId)).FirstOrDefault().no_tbmmkt 
-                                : QueryGetAllBrand.GetAllBrand().Where(x => x.id.Equals(model.FirstOrDefault().productBrandId)).FirstOrDefault().no_tbmmkt;
-                            result[0] += getActList.FirstOrDefault().documentDate.Value.Year.ToString();
-                            result[0] += "/";
-                            result[0] += string.Format("{0:0000}", genNumber); ;
-                            result[1] = Activity_Model.activityType.TBM.ToString();
-
+                            //=========แบบใหม่ Gen In USP=======By Peerapop=========
+                            result[0] += getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId).FirstOrDefault().docNo;
+                            if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_TBM"])
+                            {
+                                result[1] = Activity_Model.activityType.TBM.ToString();
+                            }
+                            else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_HCM"])
+                            {
+                                result[1] = Activity_Model.activityType.HCM.ToString();
+                            }                                   
+                            //====END=====แบบใหม่ Gen In USP=======By Peerapop=========
                         }
                     }
                     else
                     {
                         result[0] = getActList.FirstOrDefault().activityNo.ToString();
-                        result[1] = UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] ? Activity_Model.activityType.OMT.ToString() : Activity_Model.activityType.MT.ToString();
-
+                        //=====update by fream devDate 20200214=======
+                        string typeFormCompany = "";
+                        if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            typeFormCompany = Activity_Model.activityType.OMT.ToString();
+                        }
+                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
+                        {
+                            typeFormCompany = Activity_Model.activityType.MT.ToString();
+                        }
+                        else
+                        {
+                            if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_TBM"])
+                            {
+                                typeFormCompany = Activity_Model.activityType.TBM.ToString();
+                            }
+                            else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_HCM"])
+                            {
+                                typeFormCompany = Activity_Model.activityType.HCM.ToString();
+                            }
+                        }
+                        //==END===update by fream devDate 20200214=======
+                        result[1] = typeFormCompany;
                     }
                 }
 
@@ -336,7 +372,7 @@ namespace eActForm.BusinessLayer
             try
             {
 
-                if(model.chkAddIO == false)
+                if (model.chkAddIO == false)
                 {
                     model.actClaim = "";
                     model.actIO = "";
@@ -433,6 +469,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@perTotal",model.perTotal)
                     ,new SqlParameter("@isShowGroup",model.isShowGroup)
                     ,new SqlParameter("@rowNo",model.rowNo)
+                    ,new SqlParameter("@mechanics",model.mechanics)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
@@ -509,12 +546,20 @@ namespace eActForm.BusinessLayer
 
 
 
-        public static List<TB_Act_ActivityFormDocNo_Model> getActivityDoc(string chanel_Id)
+        public static List<TB_Act_ActivityFormDocNo_Model> getActivityDoc(string chanel_Id, string activityId)
         {
+            //ถ้ามาจาก other company คือบริษัที่ไม่ใช่ OMT กับ MT ตัวแปรchanel_Idคือส่ง ActFromId ไป By Peerapop dev date 20200214
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertDocNoByChanelId"
-                , new SqlParameter("@chanel_Id", chanel_Id));
+                DataSet ds;
+                if (chanel_Id == Activity_Model.activityType.OtherCompany.ToString())
+                {
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "uspInsertDocnoByDocNoTxt", new SqlParameter("@activityId", activityId));
+                }
+                else
+                {
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertDocNoByChanelId", new SqlParameter("@chanel_Id", chanel_Id));
+                }
 
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Act_ActivityFormDocNo_Model()
@@ -529,7 +574,6 @@ namespace eActForm.BusinessLayer
                 return new List<TB_Act_ActivityFormDocNo_Model>();
             }
         }
-
 
 
 

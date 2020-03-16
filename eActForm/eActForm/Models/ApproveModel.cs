@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using eActForm.Models;
+﻿using System.Collections.Generic;
 namespace eActForm.Models
 {
     public class ApproveModel
@@ -14,10 +10,10 @@ namespace eActForm.Models
         public class approveWaitingModel
         {
             public string empId { get; set; }
-	        public string waitingCount { get; set; }
-	        public string empPrefix { get; set; }
-	        public string empFNameTH { get; set; }
-	        public string empLNameTH { get; set; }
+            public string waitingCount { get; set; }
+            public string empPrefix { get; set; }
+            public string empFNameTH { get; set; }
+            public string empLNameTH { get; set; }
             public string empEmail { get; set; }
         }
         public class approveModels
@@ -55,6 +51,7 @@ namespace eActForm.Models
             public string empPrefix { get; set; }
             public string empEmail { get; set; }
             public string empName { get; set; }
+            public string empName_EN { get; set; }
             public string statusId { get; set; }
             public string statusName { get; set; }
             public bool? isSendEmail { get; set; }
@@ -63,6 +60,7 @@ namespace eActForm.Models
             public string activityNo { get; set; }
             public bool? isApprove { get; set; }
             public string companyName { get; set; }
+            public string companyNameEN { get; set; }            
         }
         public class approveStatus : ActBaseModel
         {
@@ -85,7 +83,9 @@ namespace eActForm.Models
             public string empPrefix { get; set; }
             public string empEmail { get; set; }
             public string empName { get; set; }
+            public string empName_EN { get; set; }
             public string createBy { get; set; }
+            public string createBy_EN { get; set; }
         }
     }
 }

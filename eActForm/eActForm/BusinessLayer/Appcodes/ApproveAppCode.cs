@@ -1,17 +1,17 @@
-﻿using System;
+﻿using eActForm.Models;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.ApplicationBlocks.Data;
-using eActForm.Models;
-using System.Configuration;
+using System.Linq;
 
 namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
-      
+
 
         public static void setCountWatingApprove()
         {
@@ -33,6 +33,21 @@ namespace eActForm.BusinessLayer
                         UtilsAppCode.Session.User.counteatingRepDetail = "0";
                         UtilsAppCode.Session.User.counteatingSummaryDetail = "0";
                     }
+
+
+                    DataSet dsReject = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountRejectByEmpId"
+                        , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
+                    if (dsReject.Tables.Count > 0 && dsReject.Tables[0].Rows.Count > 0)
+                    {
+                        UtilsAppCode.Session.User.countRejectAct = dsReject.Tables[0].Rows[0]["countRejectAct"].ToString();
+                        UtilsAppCode.Session.User.countApproveReject = dsReject.Tables[0].Rows[0]["countApprove"].ToString();
+                    }
+                    else
+                    {
+                        UtilsAppCode.Session.User.countApproveReject = "0";
+                        UtilsAppCode.Session.User.countRejectAct = "0";
+                    }
+
                 }
             }
             catch (Exception ex)
@@ -46,7 +61,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmailCC"
-                     , new SqlParameter[] { new SqlParameter("@actId", actId)});
+                     , new SqlParameter[] { new SqlParameter("@actId", actId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveModel.approveDetailModel()
                              {
@@ -161,7 +176,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                         });
 
-               if (approveType == AppCode.ApproveType.Report_Detail.ToString())
+                if (approveType == AppCode.ApproveType.Report_Detail.ToString())
                 {
                     rtn = updateActRepDetailStatus(statusId, actFormId);
                 }
@@ -371,7 +386,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
-        public static ApproveModel.approveModels getApproveByActFormId(string actFormId,string empId)
+        public static ApproveModel.approveModels getApproveByActFormId(string actFormId, string empId)
         {
             try
             {
@@ -386,6 +401,7 @@ namespace eActForm.BusinessLayer
                                                  rangNo = (int)dr["rangNo"],
                                                  empId = dr["empId"].ToString(),
                                                  empName = dr["empName"].ToString(),
+                                                 empName_EN = dr["empName_EN"].ToString(),
                                                  empEmail = dr["empEmail"].ToString(),
                                                  statusId = dr["statusId"].ToString(),
                                                  statusName = dr["statusName"].ToString(),

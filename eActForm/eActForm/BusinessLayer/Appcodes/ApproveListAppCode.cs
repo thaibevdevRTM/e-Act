@@ -1,17 +1,16 @@
-﻿using System;
+﻿using eActForm.Models;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.ApplicationBlocks.Data;
-using eActForm.Models;
+using System.Linq;
 using WebLibrary;
 namespace eActForm.BusinessLayer
 {
     public class ApproveListAppCode
     {
-        public static List<Activity_Model.actForm> getFilterFormByStatusId(List<Activity_Model.actForm> lists,int statusId)
+        public static List<Activity_Model.actForm> getFilterFormByStatusId(List<Activity_Model.actForm> lists, int statusId)
         {
             try
             {
@@ -63,11 +62,12 @@ namespace eActForm.BusinessLayer
                                  normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
                                  themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
-                                 createByUserName = dr["createByName"].ToString()
+                                 createByUserName = dr["createByName"].ToString(),
+                                 dateSentApprove = dr["dateSentApprove"] is DBNull ? null : (DateTime?)dr["dateSentApprove"],
                              }).ToList();
                 return lists;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //throw new Exception("getApproveListsByStatusId >> " + ex.Message);
                 ExceptionManager.WriteError("getApproveListsByStatusId >> " + ex.Message);

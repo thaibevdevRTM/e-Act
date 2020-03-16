@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data;
-using System.Data.SqlClient;
+﻿using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
-using eActForm.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 namespace eActForm.BusinessLayer
 {
     public class DocumentsAppCode
@@ -37,7 +35,7 @@ namespace eActForm.BusinessLayer
                              }).ToList();
                 return lists;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

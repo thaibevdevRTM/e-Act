@@ -1,13 +1,11 @@
-﻿using System;
+﻿using eActForm.Models;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using Microsoft.ApplicationBlocks.Data;
-using eActForm.Models;
-using eActForm.BusinessLayer;
+using System.Linq;
 namespace eActForm.BusinessLayer
 {
     public class ApproveRepDetailAppCode
@@ -97,7 +95,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 string id = Guid.NewGuid().ToString();
-                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc("repDetail").FirstOrDefault().docNo));
+                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc("repDetail","").FirstOrDefault().docNo));
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertActivityRepDetail"
                     , new SqlParameter[] {
                         new SqlParameter("@id",id)
@@ -144,7 +142,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("insertActivityRepDetail >>" + ex.Message);
             }
         }
-        public static int insertApproveForReportDetail(string customerId, string productTypeId, string actId,string typeForm)
+        public static int insertApproveForReportDetail(string customerId, string productTypeId, string actId, string typeForm)
         {
             try
             {

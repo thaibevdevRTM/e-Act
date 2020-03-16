@@ -1,11 +1,10 @@
-﻿using System;
+﻿using eActForm.Models;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.ApplicationBlocks.Data;
-using eActForm.Models;
+using System.Linq;
 namespace eActForm.BusinessLayer
 {
     public class UserAppCode
@@ -59,6 +58,8 @@ namespace eActForm.BusinessLayer
                                     UtilsAppCode.Session.User.isAdminOMT = true; break;
                                 case "6":
                                     UtilsAppCode.Session.User.isAdminTBM = true; break;
+                                case "7":
+                                    UtilsAppCode.Session.User.isAdminHCM = true; break;
                             }
 
                             UtilsAppCode.Session.User.empCompanyId = dr["companyId"].ToString();

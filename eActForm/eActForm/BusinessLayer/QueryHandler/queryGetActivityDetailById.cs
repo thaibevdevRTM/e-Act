@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -47,6 +46,7 @@ namespace eActForm.BusinessLayer
                                  LE = d["Le"].ToString() == "" ? 0 : decimal.Parse(d["Le"].ToString()),
                                  IO = d["IO"].ToString(),
                                  rowNo = int.Parse(d["rowNo"].ToString()),
+                                 mechanics = d["mechanics"].ToString(),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),
@@ -55,34 +55,34 @@ namespace eActForm.BusinessLayer
                              });
 
                 groupByPrice = lists.OrderBy(x => x.rowNo).ToList();
-               //     .GroupBy(item => new { item.normalCost, item.size, item.rowNo, item.pack })
-               //.Select((group, index) => new CostThemeDetailOfGroupByPrice
-               //{
-               //    productGroupId = group.First().productGroupId,
-               //    brandId = group.First().brandId,
-               //    smellId = group.First().smellId,
-               //    smellName = group.First().smellName,
-               //    activityTypeId = group.First().activityTypeId,
-               //    brandName = group.First().brandName/*.Trim() + " " + group.First().size + "ALL(" + group.ToList().Count + ")"*/,
-               //    productId = group.First().productId,
-               //    wholeSalesPrice = group.First().wholeSalesPrice,
-               //    typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == group.First().activityTypeId).FirstOrDefault().activitySales,
-               //    productName = group.First().isShowGroup ? group.First().brandName.Trim() + " " + group.First().size + "ALL(" + group.ToList().Count + ")" : group.First().productName,
-               //    size = group.First().size,
-               //    normalCost = group.First().normalCost,
-               //    themeCost = group.First().themeCost,
-               //    growth = group.First().growth,
-               //    total = group.First().total,
-               //    perTotal = group.First().perTotal,
-               //    unit = group.First().unit,
-               //    compensate = group.First().compensate,
-               //    LE = group.First().LE,
-               //    pack = QueryGetAllProduct.getProductById(group.First().productId).Any() ? "Pack" + QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString() : "",
-               //    isShowGroup = group.First().isShowGroup,
-               //    rowNo = group.First().rowNo,
-               //    detailGroup = group.ToList()
+                //     .GroupBy(item => new { item.normalCost, item.size, item.rowNo, item.pack })
+                //.Select((group, index) => new CostThemeDetailOfGroupByPrice
+                //{
+                //    productGroupId = group.First().productGroupId,
+                //    brandId = group.First().brandId,
+                //    smellId = group.First().smellId,
+                //    smellName = group.First().smellName,
+                //    activityTypeId = group.First().activityTypeId,
+                //    brandName = group.First().brandName/*.Trim() + " " + group.First().size + "ALL(" + group.ToList().Count + ")"*/,
+                //    productId = group.First().productId,
+                //    wholeSalesPrice = group.First().wholeSalesPrice,
+                //    typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == group.First().activityTypeId).FirstOrDefault().activitySales,
+                //    productName = group.First().isShowGroup ? group.First().brandName.Trim() + " " + group.First().size + "ALL(" + group.ToList().Count + ")" : group.First().productName,
+                //    size = group.First().size,
+                //    normalCost = group.First().normalCost,
+                //    themeCost = group.First().themeCost,
+                //    growth = group.First().growth,
+                //    total = group.First().total,
+                //    perTotal = group.First().perTotal,
+                //    unit = group.First().unit,
+                //    compensate = group.First().compensate,
+                //    LE = group.First().LE,
+                //    pack = QueryGetAllProduct.getProductById(group.First().productId).Any() ? "Pack" + QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString() : "",
+                //    isShowGroup = group.First().isShowGroup,
+                //    rowNo = group.First().rowNo,
+                //    detailGroup = group.ToList()
 
-               //}).ToList();
+                //}).ToList();
 
                 return groupByPrice;
             }

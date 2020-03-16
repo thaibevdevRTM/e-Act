@@ -1,15 +1,11 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
 @using eActForm.Models
-<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
-<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
 
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
-<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-ui.js"></script>
+
 <style>
     .cssTableTDTextCenter {
         max-width: none;
@@ -284,7 +280,8 @@
     @Html.HiddenFor(x => x.activityFormModel.mode, new { @id = "hdMode" })
     @Html.HiddenFor(x => x.activityFormModel.createdByUserId, new { @id = "hdcreateUser" })
     @Html.HiddenFor(x => x.activityFormTBMMKT.master_type_form_id, new { @id = "hdmaster_type_form_id" })
-
+    @Html.HiddenFor(x => x.activityFormModel.activityNo, new { @id = "hdactivityNo" })
+    @Html.HiddenFor(x => x.activityFormTBMMKT.formCompanyId, new { @id = "hdformCompanyId" })
     <div id="divtabelAttachDesc" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px; margin-left:20px;">
         <div class="form-group">
             <label class="control-label col-md-2 col-xs-12">
