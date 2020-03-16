@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using eActForm.Models;
+﻿using System.Collections.Generic;
 namespace eActForm.Models
 {
     public class ApproveModel
@@ -14,10 +10,10 @@ namespace eActForm.Models
         public class approveWaitingModel
         {
             public string empId { get; set; }
-	        public string waitingCount { get; set; }
-	        public string empPrefix { get; set; }
-	        public string empFNameTH { get; set; }
-	        public string empLNameTH { get; set; }
+            public string waitingCount { get; set; }
+            public string empPrefix { get; set; }
+            public string empFNameTH { get; set; }
+            public string empLNameTH { get; set; }
             public string empEmail { get; set; }
         }
         public class approveModels

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace eActForm.Models
 {
@@ -25,7 +21,7 @@ namespace eActForm.Models
 
         public class infoMonthTotalSpending
         {
-            public string monthDate { get; set; }            
+            public string monthDate { get; set; }
             public int sumTotal { get; set; }
         }
 

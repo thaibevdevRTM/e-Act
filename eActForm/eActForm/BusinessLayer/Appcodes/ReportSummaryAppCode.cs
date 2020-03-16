@@ -6,7 +6,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 using static eActForm.Models.ReportSummaryModels;
 
@@ -301,7 +300,7 @@ namespace eActForm.BusinessLayer
 
 
                 //add Sales Forecast
-             
+
                 var forecastlist = (new ReportSummaryModel
                 {
                     id = Guid.NewGuid().ToString(),
