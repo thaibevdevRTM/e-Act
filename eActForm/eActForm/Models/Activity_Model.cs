@@ -68,6 +68,8 @@ namespace eActForm.Models
             public string id { get; set; }
             public string statusId { get; set; }
             public string statusName { get; set; }
+            public string statusNameEN { get; set; }
+            public string languageDoc { get; set; }
             public string activityNo { get; set; }
             public DateTime? documentDate { get; set; }
             public string reference { get; set; }
@@ -145,7 +147,9 @@ namespace eActForm.Models
         public string groupShort { get; set; }
         public string productTypeId { get; set; }
         public DateTime? activityPeriodSt { get; set; }
+        public string activityPeriodStStr { get; set; }
         public DateTime? activityPeriodEnd { get; set; }
+        public string activityPeriodEndStr { get; set; }
         public DateTime? costPeriodSt { get; set; }
         //[DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
@@ -185,6 +189,7 @@ namespace eActForm.Models
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
         public string formCompanyId { get; set; }
+        public string languageDoc { get; set; }    
         public string digit_IO { get; set; }
 
     }

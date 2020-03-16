@@ -2,6 +2,7 @@
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,10 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult listDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            return PartialView(activity_TBMMKT_Model);
+        }
+        public ActionResult activityBudgetDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             return PartialView(activity_TBMMKT_Model);
         }
@@ -41,7 +46,13 @@ namespace eActForm.Controllers
         }
         public ActionResult requestEmp(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp(activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId).ToList();
+
+            //string cultureLocal = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
+            //string en = ConfigurationManager.AppSettings["cultureEng"];
+
+            activity_TBMMKT_Model.masterRequestEmp = QueryGet_empByComp.getEmpByComp(activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId,
+              activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng).ToList();
+
             if (activity_TBMMKT_Model.requestEmpModel.Count == 0)
             {
                 List<RequestEmpModel> RequestEmp = new List<RequestEmpModel>();

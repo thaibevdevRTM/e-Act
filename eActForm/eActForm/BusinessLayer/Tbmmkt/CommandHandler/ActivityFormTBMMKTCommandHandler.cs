@@ -1,6 +1,7 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,12 +11,14 @@ using System.Globalization;
 using System.Linq;
 using WebLibrary;
 
+
 namespace eActForm.BusinessLayer
 {
     public class ActivityFormTBMMKTCommandHandler
     {
         public static int insertAllActivity(Activity_TBMMKT_Model model, string activityId)
         {
+
             int rtn = 0;
             try
             {
@@ -29,9 +32,9 @@ namespace eActForm.BusinessLayer
                 {
                     model.activityFormModel.id = activityId;
                     model.activityFormModel.statusId = 1;
-                    model.activityFormModel.documentDate = model.activityFormModel.documentDate;
-                    model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.activityPeriodSt.ToString()) ? (DateTime?)null : model.activityFormModel.activityPeriodSt;
-                    model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.activityPeriodEnd.ToString()) ? (DateTime?)null : model.activityFormModel.activityPeriodEnd;
+                    model.activityFormModel.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                    model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.activityPeriodStStr) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.activityPeriodStStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                    model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.activityPeriodEndStr) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.activityPeriodEndStr, ConfigurationManager.AppSettings["formatDateUse"]);
                     model.activityFormModel.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
                     model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
                     model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -41,6 +44,7 @@ namespace eActForm.BusinessLayer
                     model.activityFormModel.companyId = model.activityFormTBMMKT.formCompanyId;
                     model.activityFormModel.remark = model.activityFormModel.remark;
                     model.activityFormModel.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
+                    model.activityFormModel.languageDoc = model.activityFormTBMMKT.languageDoc == null ? "" : model.activityFormTBMMKT.languageDoc;
 
                     rtn = insertActivityForm(model.activityFormModel);
 
@@ -246,13 +250,18 @@ namespace eActForm.BusinessLayer
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             try
             {
-                string sumTxtLabelRequired = "";
+                string en = ConfigurationManager.AppSettings["cultureEng"];
+
+                 string sumTxtLabelRequired = "";
                 activity_TBMMKT_Model.activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(activityId).FirstOrDefault(); // TB_Act_ActivityForm
                 activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
                 activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
                 activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activityId);
-
+                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(
+                 activity_TBMMKT_Model.activityFormTBMMKT.languageDoc              
+                , en
+                , activity_TBMMKT_Model.activityFormTBMMKT.statusId);
                 if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
                 {
                     if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
@@ -300,7 +309,7 @@ namespace eActForm.BusinessLayer
                 }
 
 
-                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId);
+                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng);
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
                 activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT;
@@ -519,6 +528,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@master_type_form_id",model.master_type_form_id)
                     ,new SqlParameter("@remark",model.remark)
                     ,new SqlParameter("@benefit", (model.benefit == null ? "" :model.benefit))
+                     ,new SqlParameter("@languageDoc", (model.languageDoc == null ? "" :model.languageDoc))
                     });
             }
             catch (Exception ex)
@@ -967,9 +977,9 @@ namespace eActForm.BusinessLayer
                     placeDetailModel.period = item.period;
                     // placeDetailModel.departureDate = item.departureDate;
                     placeDetailModel.departureDate = string.IsNullOrEmpty(item.departureDateStr) ? (DateTime?)null :
-               BaseAppCodes.converStrToDateTime(item.departureDateStr);
+               BaseAppCodes.converStrToDatetimeWithFormat(item.departureDateStr, ConfigurationManager.AppSettings["formatDatetimeUse"]);
                     placeDetailModel.arrivalDate = string.IsNullOrEmpty(item.arrivalDateStr) ? (DateTime?)null :
-               BaseAppCodes.converStrToDateTime(item.arrivalDateStr);
+               BaseAppCodes.converStrToDatetimeWithFormat(item.arrivalDateStr, ConfigurationManager.AppSettings["formatDatetimeUse"]);
                     placeDetailModel.delFlag = false;
                     placeDetailModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate; ;
                     placeDetailModel.createdByUserId = model.activityFormModel.createdByUserId;

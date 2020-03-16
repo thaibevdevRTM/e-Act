@@ -33,6 +33,8 @@ namespace eActForm.BusinessLayer
                                  id = dr["id"].ToString(),
                                  statusId = dr["statusId"].ToString(),
                                  statusName = dr["statusName"].ToString(),
+                                 statusNameEN = dr["statusNameEN"].ToString(),
+                                 languageDoc = dr["languageDoc"].ToString(),
                                  activityNo = dr["activityNo"].ToString(),
                                  documentDate = dr["documentDate"] is DBNull ? null : (DateTime?)dr["documentDate"],
                                  reference = dr["reference"].ToString(),

@@ -1,6 +1,10 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -287,8 +291,8 @@ namespace eActForm.Controllers
 
         public JsonResult getEmpDetailById(string empId)
         {
-
-            List<RequestEmpModel> empDetailList = new List< RequestEmpModel>();
+            bool langEn = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
+            List<RequestEmpModel> empDetailList = new List<RequestEmpModel>();
             var result = new AjaxResult();
             try
             {
@@ -296,12 +300,14 @@ namespace eActForm.Controllers
 
                 var resultData = new
                 {
-                    empName= empDetailList.FirstOrDefault().empName,
-                    position = empDetailList.FirstOrDefault().position,
+                    empName = !langEn ? empDetailList.FirstOrDefault().empName : empDetailList.FirstOrDefault().empNameEN,
+                    position = !langEn ? empDetailList.FirstOrDefault().position : empDetailList.FirstOrDefault().positionEN,
                     level = empDetailList.FirstOrDefault().level,
-                    department = empDetailList.FirstOrDefault().department,
-                    bu = empDetailList.FirstOrDefault().bu,
+                    department = !langEn ? empDetailList.FirstOrDefault().department : empDetailList.FirstOrDefault().departmentEN,
+                    bu = !langEn ? empDetailList.FirstOrDefault().bu : empDetailList.FirstOrDefault().buEN,
                 };
+
+
                 result.Data = resultData;
             }
             catch (Exception ex)

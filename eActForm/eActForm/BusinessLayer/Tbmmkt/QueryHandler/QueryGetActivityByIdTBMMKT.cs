@@ -33,6 +33,7 @@ namespace eActForm.BusinessLayer
                                   companyId = d["companyId"].ToString(),
                                   master_type_form_id = d["master_type_form_id"].ToString(),
                                   benefit = d["benefit"].ToString(),
+                                  languageDoc = d["languageDoc"].ToString(),
                                   companyNameEN = d["companyNameEN"].ToString(),
                                   companyNameTH = d["companyNameTH"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
@@ -41,6 +42,8 @@ namespace eActForm.BusinessLayer
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                                   createdByName = "คุณ" + d["createdByName"].ToString(),
+                                  createdByNameEN =  d["createdByNameEN"].ToString(),
+
                               });
 
                 return result.ToList();
