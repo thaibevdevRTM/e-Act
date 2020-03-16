@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Globalization;
-using System.Data.OracleClient;
 namespace WebLibrary
 {
     public class ExceptionManager
@@ -12,10 +8,10 @@ namespace WebLibrary
         {
             try
             {
-            //    OrclHelper.ExecuteNonQuery(connStr, CommandType.StoredProcedure, "WAP_PAYMENT.SectionPaymentLogsInsert"
-            //, new OracleParameter[] {OracleDataAccress.OrclHelper.GetOracleParameter("p_file_name", fileName, OracleType.VarChar, ParameterDirection.Input) 
-            //, OracleDataAccress.OrclHelper.GetOracleParameter("p_file_detail", resultMessage, OracleType.VarChar, ParameterDirection.Input) 
-            //, OracleDataAccress.OrclHelper.GetOracleParameter("p_file_date", DateTime.Now, OracleType.DateTime, ParameterDirection.Input)});
+                //    OrclHelper.ExecuteNonQuery(connStr, CommandType.StoredProcedure, "WAP_PAYMENT.SectionPaymentLogsInsert"
+                //, new OracleParameter[] {OracleDataAccress.OrclHelper.GetOracleParameter("p_file_name", fileName, OracleType.VarChar, ParameterDirection.Input) 
+                //, OracleDataAccress.OrclHelper.GetOracleParameter("p_file_detail", resultMessage, OracleType.VarChar, ParameterDirection.Input) 
+                //, OracleDataAccress.OrclHelper.GetOracleParameter("p_file_date", DateTime.Now, OracleType.DateTime, ParameterDirection.Input)});
                 string path = "~/Error/" + DateTime.Today.ToString("dd-MM-yy") + ".txt";
                 if (!File.Exists(System.Web.HttpContext.Current.Server.MapPath(path)))
                 {

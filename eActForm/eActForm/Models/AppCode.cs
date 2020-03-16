@@ -15,7 +15,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Mvc;
 using System.Web.UI;
 using WebLibrary;
 using static eActForm.Models.TB_Act_Image_Model;
@@ -69,7 +68,7 @@ namespace eActForm.Models
             return p == "" || p == null || p == "0" || p == "0.00" || p == "0.000" || p == "0.0000" || p == "0.00000" ? "0" : p;
         }
 
-        public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc,string serverMapPath)
+        public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc, string serverMapPath)
         {
             MemoryStream ms = new MemoryStream();
             try
@@ -239,7 +238,7 @@ namespace eActForm.Models
             return genPdfFile(GridHtml, doc, rootPath, HttpContext.Current.Server.MapPath("~"));
         }
 
-        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath,string serverMapPath)
+        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath, string serverMapPath)
         {
             //GridHtml = GridHtml.Replace("\n", "");
             ContentType xlsxContent = new ContentType("application/pdf");

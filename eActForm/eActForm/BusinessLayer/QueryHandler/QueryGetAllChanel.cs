@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -34,7 +33,7 @@ namespace eActForm.BusinessLayer
                              });
                 return lists.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("getAllChanel => " + ex.Message);
                 return new List<TB_Act_Chanel_Model.Chanel_Model>();

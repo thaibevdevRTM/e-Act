@@ -1,0 +1,5 @@
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Models\bin\Debug\eForms.Models.dll
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Models\bin\Debug\eForms.Models.pdb
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Models\obj\Debug\eForms.Models.csprojAssemblyReference.cache
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Models\obj\Debug\eForms.Models.dll
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Models\obj\Debug\eForms.Models.pdb

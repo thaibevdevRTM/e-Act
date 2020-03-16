@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
+﻿using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using eActForm.BusinessLayer.Appcodes;
 using GreatFriends.ThaiBahtText;
@@ -25,7 +24,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
-
                 return rtn;
             }
             catch (Exception ex)
@@ -107,11 +105,11 @@ namespace eActForm.BusinessLayer
             {
                 string strCall = "";
 
-                if(typeForm == Activity_Model.activityType.MT.ToString())
+                if (typeForm == Activity_Model.activityType.MT.ToString())
                 {
                     strCall = "usp_getActivityCustomersFormByEmpId";
                 }
-                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                else if (typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }

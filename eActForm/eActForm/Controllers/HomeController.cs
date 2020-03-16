@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Configuration;
+﻿using eActForm.BusinessLayer;
 using eActForm.Models;
-using eActForm.BusinessLayer;
-using eActForm.BusinessLayer.Appcodes;
+using System;
+using System.Configuration;
+using System.Linq;
+using System.Web.Mvc;
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -86,7 +83,7 @@ namespace eActForm.Controllers
             {
                 // case delete
                 result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"]) > 0 ? true : false;
-                if (statusId == "5" && result.Success)
+                if (statusId == "5" && result.Success && !ActFormAppCode.isOtherCompanyMT())
                 {
                     EmailAppCodes.sendRequestCancelToAdmin(actId);
                 }

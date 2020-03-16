@@ -9,9 +9,7 @@
     var type = Request.QueryString["type"];
 }
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-<script src="~/Scripts/jquery-1.11.2.min.js"></script>
-<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
 <script src="~/Scripts/Approve/RepDetailApproves.js"></script>
 
 <h2>@Resources.Global.approval</h2>
@@ -114,26 +112,28 @@ else
                 <div class="form-group">
                     <div class="col-md-3 col-sm-3 col-xs-12"></div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @if (Model.approveModel.statusId != "2")
-                        {
-                            <h4 class="text-danger text-center">
-                                เอกสารฉบับนี้ได้ถูกอนุมัติเรียบร้อยแล้วครับ
-                            </h4>
-                        }
-                        else if (Model.approveModel.isPermisionApprove)
-                        {
-                            <a href="@Url.Action("index", "ApproveLists")" class="btn btn-warning pull-right"><i class="fa fa fa-reply fa-fw"></i>&nbsp;ย้อนกลับ</a>
-                            <button type="button" onclick="return confirmQuery(5);" class="btn btn-danger pull-right"><i class="fa fa fa-close fa-fw"></i>&nbsp;ไม่อนุมัติ</button>
-                            <button type="button" onclick="return confirmQuery(3);" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;อนุมัติ</button>
-                        }
-                        else
-                        {
-                            <h4 class="text-danger text-center">
-                                คุณไม่สามารถอนุมัติเอกสารฉบับนี้ได้<br />
-                                เนื่องจากไม่มีรายชื่ออยู่ในการอนุมัติ<br />
-                                @Html.ActionLink(" สอบถามข้อมูลเพิ่มเติม Click ", "contact", "home")
-                            </h4>
-                        }
+                        <div class="text-center">
+                            @if (Model.approveModel.statusId != "2")
+                            {
+                                <h4 class="text-danger text-center">
+                                    เอกสารฉบับนี้ได้ถูกอนุมัติเรียบร้อยแล้วครับ
+                                </h4>
+                            }
+                            else if (Model.approveModel.isPermisionApprove)
+                            {
+                                <a href="@Url.Action("index", "ApproveLists")" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;ย้อนกลับ</a>
+                                <button type="button" onclick="return confirmQuery(5);" class="btn btn-danger"><i class="fa fa fa-close fa-fw"></i>&nbsp;ไม่อนุมัติ</button>
+                                <button type="button" onclick="return confirmQuery(3);" class="btn btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;อนุมัติ</button>
+                            }
+                            else
+                            {
+                                <h4 class="text-danger text-center">
+                                    คุณไม่สามารถอนุมัติเอกสารฉบับนี้ได้<br />
+                                    เนื่องจากไม่มีรายชื่ออยู่ในการอนุมัติ<br />
+                                    @Html.ActionLink(" สอบถามข้อมูลเพิ่มเติม Click ", "contact", "home")
+                                </h4>
+                            }
+                        </div>
                     </div>
                 </div>
             }

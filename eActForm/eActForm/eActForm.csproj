@@ -69,13 +69,191 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\work\TBWebBackEnd\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Antiforgery, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Antiforgery.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Antiforgery.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Core.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authorization, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authorization.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authorization.Policy, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authorization.Policy.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authorization.Policy.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.Internal.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.DataProtection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.DataProtection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Diagnostics.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Diagnostics.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Diagnostics.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Server.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Html.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Html.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Html.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Extensions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Extensions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.JsonPatch, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.JsonPatch.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.JsonPatch.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Core.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.DataAnnotations, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.DataAnnotations.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.DataAnnotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Formatters.Json, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Formatters.Json.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Formatters.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.ViewFeatures, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.ViewFeatures.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.ViewFeatures.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.ResponseCaching.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.ResponseCaching.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.ResponseCaching.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Routing, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Routing.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Routing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Routing.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Routing.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Routing.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.DotNet.PlatformAbstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.DotNet.PlatformAbstractions.2.1.0\lib\net45\Microsoft.DotNet.PlatformAbstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.2.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyModel, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyModel.2.1.0\lib\net451\Microsoft.Extensions.DependencyModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Hosting.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Hosting.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Localization, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Localization.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Localization.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Localization.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Localization.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.ObjectPool, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.ObjectPool.2.2.0\lib\netstandard2.0\Microsoft.Extensions.ObjectPool.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.WebEncoders, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.WebEncoders.2.2.0\lib\netstandard2.0\Microsoft.Extensions.WebEncoders.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Win32.Registry, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Registry.4.5.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.1\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.4.5.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Xml, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Xml.4.5.0\lib\net461\System.Security.Cryptography.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Permissions.4.5.0\lib\net461\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.4.5.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -145,9 +323,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Diagnostics.DiagnosticSource">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.TelemetryCorrelation">
       <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
     </Reference>
@@ -258,6 +433,7 @@
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetSelectAllTB_Reg_Subject.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetSelectBrandOrChannel.cs" />
     <Compile Include="Controllers\actFormRepDetailController.cs" />
+    <Compile Include="Controllers\actFormRepPostEvaController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\ActivityCostDetailController.cs" />
     <Compile Include="Controllers\ActivityProductDetailController.cs" />
@@ -431,6 +607,7 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\vendors\bootstrap-datepicker\bootstrap-datepicker.js" />
+    <Content Include="Content\vendors\bootstrap-datepicker\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\vendors\bootstrap-datepicker\datepicker3.css" />
     <Content Include="Content\vendors\bootstrap-datepicker\locales\bootstrap-datepicker.ar.js" />
     <Content Include="Content\vendors\bootstrap-datepicker\locales\bootstrap-datepicker.az.js" />
@@ -502,45 +679,10 @@
     <Content Include="Content\vendors\build\images\loading.gif" />
     <Content Include="Content\vendors\build\js\custom.js" />
     <Content Include="Content\vendors\build\js\custom.min.js" />
-    <Content Include="Content\vendors\Chart.js\.gitignore" />
     <Content Include="Content\vendors\Chart.js\dist\Chart.bundle.js" />
     <Content Include="Content\vendors\Chart.js\dist\Chart.bundle.min.js" />
     <Content Include="Content\vendors\Chart.js\dist\Chart.js" />
     <Content Include="Content\vendors\Chart.js\dist\Chart.min.js" />
-    <Content Include="Content\vendors\Chart.js\gulpfile.js" />
-    <Content Include="Content\vendors\Chart.js\karma.conf.ci.js" />
-    <Content Include="Content\vendors\Chart.js\karma.conf.js" />
-    <Content Include="Content\vendors\Chart.js\karma.coverage.conf.js" />
-    <Content Include="Content\vendors\Chart.js\samples\AnimationCallbacks\progress-bar.html" />
-    <Content Include="Content\vendors\Chart.js\samples\bar-horizontal.html" />
-    <Content Include="Content\vendors\Chart.js\samples\bar-multi-axis.html" />
-    <Content Include="Content\vendors\Chart.js\samples\bar-stacked.html" />
-    <Content Include="Content\vendors\Chart.js\samples\bar.html" />
-    <Content Include="Content\vendors\Chart.js\samples\bubble.html" />
-    <Content Include="Content\vendors\Chart.js\samples\combo-bar-line.html" />
-    <Content Include="Content\vendors\Chart.js\samples\data_label_combo-bar-line.html" />
-    <Content Include="Content\vendors\Chart.js\samples\different-point-sizes.html" />
-    <Content Include="Content\vendors\Chart.js\samples\doughnut.html" />
-    <Content Include="Content\vendors\Chart.js\samples\line-customTooltips.html" />
-    <Content Include="Content\vendors\Chart.js\samples\line-legend.html" />
-    <Content Include="Content\vendors\Chart.js\samples\line-logarithmic.html" />
-    <Content Include="Content\vendors\Chart.js\samples\line-multi-axis.html" />
-    <Content Include="Content\vendors\Chart.js\samples\line-skip-points.html" />
-    <Content Include="Content\vendors\Chart.js\samples\line-stacked-area.html" />
-    <Content Include="Content\vendors\Chart.js\samples\line-x-axis-filter.html" />
-    <Content Include="Content\vendors\Chart.js\samples\line.html" />
-    <Content Include="Content\vendors\Chart.js\samples\pie-customTooltips.html" />
-    <Content Include="Content\vendors\Chart.js\samples\pie.html" />
-    <Content Include="Content\vendors\Chart.js\samples\polar-area.html" />
-    <Content Include="Content\vendors\Chart.js\samples\radar-skip-points.html" />
-    <Content Include="Content\vendors\Chart.js\samples\radar.html" />
-    <Content Include="Content\vendors\Chart.js\samples\scatter-logX.html" />
-    <Content Include="Content\vendors\Chart.js\samples\scatter-multi-axis.html" />
-    <Content Include="Content\vendors\Chart.js\samples\scatter.html" />
-    <Content Include="Content\vendors\Chart.js\samples\timeScale\combo-time-scale.html" />
-    <Content Include="Content\vendors\Chart.js\samples\timeScale\line-time-point-data.html" />
-    <Content Include="Content\vendors\Chart.js\samples\timeScale\line-time-scale.html" />
-    <Content Include="Content\vendors\Chart.js\samples\tooltip-hooks.html" />
     <Content Include="Content\vendors\Chart.js\src\chart.js" />
     <Content Include="Content\vendors\Chart.js\src\charts\Chart.Bar.js" />
     <Content Include="Content\vendors\Chart.js\src\charts\Chart.Bubble.js" />
@@ -577,30 +719,6 @@
     <Content Include="Content\vendors\Chart.js\src\scales\scale.logarithmic.js" />
     <Content Include="Content\vendors\Chart.js\src\scales\scale.radialLinear.js" />
     <Content Include="Content\vendors\Chart.js\src\scales\scale.time.js" />
-    <Content Include="Content\vendors\Chart.js\test\controller.bar.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\controller.bubble.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\controller.doughnut.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\controller.line.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\controller.polarArea.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\controller.radar.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\core.element.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\core.helpers.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\core.layoutService.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\core.legend.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\core.plugin.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\core.scaleService.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\core.title.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\defaultConfig.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\element.arc.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\element.line.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\element.point.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\element.rectangle.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\mockContext.js" />
-    <Content Include="Content\vendors\Chart.js\test\scale.category.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\scale.linear.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\scale.logarithmic.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\scale.radialLinear.tests.js" />
-    <Content Include="Content\vendors\Chart.js\test\scale.time.tests.js" />
     <Content Include="Content\vendors\datatables.net-bs\css\dataTables.bootstrap.css" />
     <Content Include="Content\vendors\datatables.net-bs\css\dataTables.bootstrap.min.css" />
     <Content Include="Content\vendors\datatables.net-bs\js\dataTables.bootstrap.js" />
@@ -1423,6 +1541,347 @@
     <Content Include="Content\vendors\DateJS\src\i18n\zh-SG.js" />
     <Content Include="Content\vendors\DateJS\src\i18n\zh-TW.js" />
     <Content Include="Content\vendors\DateJS\src\i18n\zu-ZA.js" />
+    <Content Include="Content\vendors\echarts\build\amd2common.js" />
+    <Content Include="Content\vendors\echarts\build\mangleString.js" />
+    <Content Include="Content\vendors\echarts\build\optimize.js" />
+    <Content Include="Content\vendors\echarts\dist\echarts.common.js" />
+    <Content Include="Content\vendors\echarts\dist\echarts.common.min.js" />
+    <Content Include="Content\vendors\echarts\dist\echarts.js" />
+    <Content Include="Content\vendors\echarts\dist\echarts.min.js" />
+    <Content Include="Content\vendors\echarts\dist\echarts.simple.js" />
+    <Content Include="Content\vendors\echarts\dist\echarts.simple.min.js" />
+    <Content Include="Content\vendors\echarts\dist\extension\bmap.js" />
+    <Content Include="Content\vendors\echarts\dist\extension\bmap.min.js" />
+    <Content Include="Content\vendors\echarts\dist\extension\dataTool.js" />
+    <Content Include="Content\vendors\echarts\dist\extension\dataTool.min.js" />
+    <Content Include="Content\vendors\echarts\extension\bmap\bmap.js" />
+    <Content Include="Content\vendors\echarts\extension\bmap\BMapCoordSys.js" />
+    <Content Include="Content\vendors\echarts\extension\bmap\BMapModel.js" />
+    <Content Include="Content\vendors\echarts\extension\bmap\BMapView.js" />
+    <Content Include="Content\vendors\echarts\extension\dataTool\gexf.js" />
+    <Content Include="Content\vendors\echarts\extension\dataTool\index.js" />
+    <Content Include="Content\vendors\echarts\extension\dataTool\prepareBoxplotData.js" />
+    <Content Include="Content\vendors\echarts\extension\dataTool\quantile.js" />
+    <Content Include="Content\vendors\echarts\extension\echarts.js" />
+    <Content Include="Content\vendors\echarts\extension\webpack.config.js" />
+    <Content Include="Content\vendors\echarts\src\action\createDataSelectAction.js" />
+    <Content Include="Content\vendors\echarts\src\action\geoRoam.js" />
+    <Content Include="Content\vendors\echarts\src\action\roamHelper.js" />
+    <Content Include="Content\vendors\echarts\src\chart\bar.js" />
+    <Content Include="Content\vendors\echarts\src\chart\bar\barItemStyle.js" />
+    <Content Include="Content\vendors\echarts\src\chart\bar\BarSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\bar\BarView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\boxplot.js" />
+    <Content Include="Content\vendors\echarts\src\chart\boxplot\boxplotLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\boxplot\BoxplotSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\boxplot\BoxplotView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\boxplot\boxplotVisual.js" />
+    <Content Include="Content\vendors\echarts\src\chart\candlestick.js" />
+    <Content Include="Content\vendors\echarts\src\chart\candlestick\candlestickLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\candlestick\CandlestickSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\candlestick\CandlestickView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\candlestick\candlestickVisual.js" />
+    <Content Include="Content\vendors\echarts\src\chart\candlestick\preprocessor.js" />
+    <Content Include="Content\vendors\echarts\src\chart\chord.js" />
+    <Content Include="Content\vendors\echarts\src\chart\chord\chordCircularLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\chord\ChordSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\chord\ChordView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\chord\Ribbon.js" />
+    <Content Include="Content\vendors\echarts\src\chart\effectScatter.js" />
+    <Content Include="Content\vendors\echarts\src\chart\effectScatter\EffectScatterSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\effectScatter\EffectScatterView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\funnel.js" />
+    <Content Include="Content\vendors\echarts\src\chart\funnel\funnelLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\funnel\FunnelSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\funnel\FunnelView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\gauge.js" />
+    <Content Include="Content\vendors\echarts\src\chart\gauge\GaugeSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\gauge\GaugeView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\gauge\PointerPath.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\adjustEdge.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\backwardCompat.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\categoryFilter.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\categoryVisual.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\circularLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\circularLayoutHelper.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\createView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\edgeVisual.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\forceHelper.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\forceLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\GraphSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\GraphView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\roamAction.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\simpleLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\simpleLayoutEdge.js" />
+    <Content Include="Content\vendors\echarts\src\chart\graph\simpleLayoutHelper.js" />
+    <Content Include="Content\vendors\echarts\src\chart\heatmap.js" />
+    <Content Include="Content\vendors\echarts\src\chart\heatmap\HeatmapLayer.js" />
+    <Content Include="Content\vendors\echarts\src\chart\heatmap\HeatmapSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\heatmap\HeatmapView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\createGraphFromNodeEdge.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\createGraphFromNodeMatrix.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\createListFromArray.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\EffectLine.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\EffectSymbol.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\LargeSymbolDraw.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\Line.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\LineDraw.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\LinePath.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\Symbol.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\SymbolDraw.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\whiskerBoxCommon.js" />
+    <Content Include="Content\vendors\echarts\src\chart\helper\WhiskerBoxDraw.js" />
+    <Content Include="Content\vendors\echarts\src\chart\line.js" />
+    <Content Include="Content\vendors\echarts\src\chart\lines.js" />
+    <Content Include="Content\vendors\echarts\src\chart\lines\linesLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\lines\LinesSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\lines\LinesView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\line\lineAnimationDiff.js" />
+    <Content Include="Content\vendors\echarts\src\chart\line\LineSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\line\LineView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\line\poly.js" />
+    <Content Include="Content\vendors\echarts\src\chart\map.js" />
+    <Content Include="Content\vendors\echarts\src\chart\map\backwardCompat.js" />
+    <Content Include="Content\vendors\echarts\src\chart\map\mapDataStatistic.js" />
+    <Content Include="Content\vendors\echarts\src\chart\map\MapSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\map\mapSymbolLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\map\MapView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\map\mapVisual.js" />
+    <Content Include="Content\vendors\echarts\src\chart\parallel.js" />
+    <Content Include="Content\vendors\echarts\src\chart\parallel\ParallelSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\parallel\ParallelView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\parallel\parallelVisual.js" />
+    <Content Include="Content\vendors\echarts\src\chart\pie.js" />
+    <Content Include="Content\vendors\echarts\src\chart\pie\labelLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\pie\pieLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\pie\PieSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\pie\PieView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\radar.js" />
+    <Content Include="Content\vendors\echarts\src\chart\radar\backwardCompat.js" />
+    <Content Include="Content\vendors\echarts\src\chart\radar\radarLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\radar\RadarSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\radar\RadarView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\sankey.js" />
+    <Content Include="Content\vendors\echarts\src\chart\sankey\sankeyLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\sankey\SankeySeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\sankey\SankeyView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\sankey\sankeyVisual.js" />
+    <Content Include="Content\vendors\echarts\src\chart\scatter.js" />
+    <Content Include="Content\vendors\echarts\src\chart\scatter\ScatterSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\scatter\ScatterView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\themeRiver.js" />
+    <Content Include="Content\vendors\echarts\src\chart\themeRiver\themeRiverLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\themeRiver\ThemeRiverSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\themeRiver\ThemeRiverView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\themeRiver\themeRiverVisual.js" />
+    <Content Include="Content\vendors\echarts\src\chart\treemap.js" />
+    <Content Include="Content\vendors\echarts\src\chart\treemap\Breadcrumb.js" />
+    <Content Include="Content\vendors\echarts\src\chart\treemap\helper.js" />
+    <Content Include="Content\vendors\echarts\src\chart\treemap\treemapAction.js" />
+    <Content Include="Content\vendors\echarts\src\chart\treemap\treemapLayout.js" />
+    <Content Include="Content\vendors\echarts\src\chart\treemap\TreemapSeries.js" />
+    <Content Include="Content\vendors\echarts\src\chart\treemap\TreemapView.js" />
+    <Content Include="Content\vendors\echarts\src\chart\treemap\treemapVisual.js" />
+    <Content Include="Content\vendors\echarts\src\component\angleAxis.js" />
+    <Content Include="Content\vendors\echarts\src\component\axis.js" />
+    <Content Include="Content\vendors\echarts\src\component\axis\AngleAxisView.js" />
+    <Content Include="Content\vendors\echarts\src\component\axis\AxisBuilder.js" />
+    <Content Include="Content\vendors\echarts\src\component\axis\AxisView.js" />
+    <Content Include="Content\vendors\echarts\src\component\axis\parallelAxisAction.js" />
+    <Content Include="Content\vendors\echarts\src\component\axis\ParallelAxisView.js" />
+    <Content Include="Content\vendors\echarts\src\component\axis\RadiusAxisView.js" />
+    <Content Include="Content\vendors\echarts\src\component\axis\SingleAxisView.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoomInside.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoomSelect.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\AxisProxy.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\dataZoomAction.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\DataZoomModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\dataZoomProcessor.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\DataZoomView.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\history.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\InsideZoomModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\InsideZoomView.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\roams.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\SelectZoomModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\SelectZoomView.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\SliderZoomModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\SliderZoomView.js" />
+    <Content Include="Content\vendors\echarts\src\component\dataZoom\typeDefaulter.js" />
+    <Content Include="Content\vendors\echarts\src\component\geo.js" />
+    <Content Include="Content\vendors\echarts\src\component\geo\GeoView.js" />
+    <Content Include="Content\vendors\echarts\src\component\grid.js" />
+    <Content Include="Content\vendors\echarts\src\component\helper\interactionMutex.js" />
+    <Content Include="Content\vendors\echarts\src\component\helper\listComponent.js" />
+    <Content Include="Content\vendors\echarts\src\component\helper\MapDraw.js" />
+    <Content Include="Content\vendors\echarts\src\component\helper\RoamController.js" />
+    <Content Include="Content\vendors\echarts\src\component\helper\selectableMixin.js" />
+    <Content Include="Content\vendors\echarts\src\component\helper\SelectController.js" />
+    <Content Include="Content\vendors\echarts\src\component\helper\sliderMove.js" />
+    <Content Include="Content\vendors\echarts\src\component\legend.js" />
+    <Content Include="Content\vendors\echarts\src\component\legend\legendAction.js" />
+    <Content Include="Content\vendors\echarts\src\component\legend\legendFilter.js" />
+    <Content Include="Content\vendors\echarts\src\component\legend\LegendModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\legend\LegendView.js" />
+    <Content Include="Content\vendors\echarts\src\component\marker\markerHelper.js" />
+    <Content Include="Content\vendors\echarts\src\component\marker\MarkLineModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\marker\MarkLineView.js" />
+    <Content Include="Content\vendors\echarts\src\component\marker\MarkPointModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\marker\MarkPointView.js" />
+    <Content Include="Content\vendors\echarts\src\component\markLine.js" />
+    <Content Include="Content\vendors\echarts\src\component\markPoint.js" />
+    <Content Include="Content\vendors\echarts\src\component\parallel.js" />
+    <Content Include="Content\vendors\echarts\src\component\parallelAxis.js" />
+    <Content Include="Content\vendors\echarts\src\component\polar.js" />
+    <Content Include="Content\vendors\echarts\src\component\radar.js" />
+    <Content Include="Content\vendors\echarts\src\component\radar\RadarView.js" />
+    <Content Include="Content\vendors\echarts\src\component\radiusAxis.js" />
+    <Content Include="Content\vendors\echarts\src\component\single.js" />
+    <Content Include="Content\vendors\echarts\src\component\singleAxis.js" />
+    <Content Include="Content\vendors\echarts\src\component\timeline.js" />
+    <Content Include="Content\vendors\echarts\src\component\timeline\preprocessor.js" />
+    <Content Include="Content\vendors\echarts\src\component\timeline\SliderTimelineModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\timeline\SliderTimelineView.js" />
+    <Content Include="Content\vendors\echarts\src\component\timeline\timelineAction.js" />
+    <Content Include="Content\vendors\echarts\src\component\timeline\TimelineAxis.js" />
+    <Content Include="Content\vendors\echarts\src\component\timeline\TimelineModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\timeline\TimelineView.js" />
+    <Content Include="Content\vendors\echarts\src\component\timeline\typeDefaulter.js" />
+    <Content Include="Content\vendors\echarts\src\component\title.js" />
+    <Content Include="Content\vendors\echarts\src\component\toolbox.js" />
+    <Content Include="Content\vendors\echarts\src\component\toolbox\featureManager.js" />
+    <Content Include="Content\vendors\echarts\src\component\toolbox\feature\DataView.js" />
+    <Content Include="Content\vendors\echarts\src\component\toolbox\feature\DataZoom.js" />
+    <Content Include="Content\vendors\echarts\src\component\toolbox\feature\MagicType.js" />
+    <Content Include="Content\vendors\echarts\src\component\toolbox\feature\Restore.js" />
+    <Content Include="Content\vendors\echarts\src\component\toolbox\feature\SaveAsImage.js" />
+    <Content Include="Content\vendors\echarts\src\component\toolbox\ToolboxModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\toolbox\ToolboxView.js" />
+    <Content Include="Content\vendors\echarts\src\component\tooltip.js" />
+    <Content Include="Content\vendors\echarts\src\component\tooltip\TooltipContent.js" />
+    <Content Include="Content\vendors\echarts\src\component\tooltip\TooltipModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\tooltip\TooltipView.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMap.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMapContinuous.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMapPiecewise.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMap\ContinuousModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMap\ContinuousView.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMap\helper.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMap\PiecewiseModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMap\PiecewiseView.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMap\preprocessor.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMap\typeDefaulter.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMap\visualCoding.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMap\visualMapAction.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMap\VisualMapModel.js" />
+    <Content Include="Content\vendors\echarts\src\component\visualMap\VisualMapView.js" />
+    <Content Include="Content\vendors\echarts\src\CoordinateSystem.js" />
+    <Content Include="Content\vendors\echarts\src\coord\Axis.js" />
+    <Content Include="Content\vendors\echarts\src\coord\axisDefault.js" />
+    <Content Include="Content\vendors\echarts\src\coord\axisHelper.js" />
+    <Content Include="Content\vendors\echarts\src\coord\axisModelCommonMixin.js" />
+    <Content Include="Content\vendors\echarts\src\coord\axisModelCreator.js" />
+    <Content Include="Content\vendors\echarts\src\coord\cartesian\Axis2D.js" />
+    <Content Include="Content\vendors\echarts\src\coord\cartesian\axisLabelInterval.js" />
+    <Content Include="Content\vendors\echarts\src\coord\cartesian\AxisModel.js" />
+    <Content Include="Content\vendors\echarts\src\coord\cartesian\Cartesian.js" />
+    <Content Include="Content\vendors\echarts\src\coord\cartesian\Cartesian2D.js" />
+    <Content Include="Content\vendors\echarts\src\coord\cartesian\Grid.js" />
+    <Content Include="Content\vendors\echarts\src\coord\cartesian\GridModel.js" />
+    <Content Include="Content\vendors\echarts\src\coord\geo\fix\geoCoord.js" />
+    <Content Include="Content\vendors\echarts\src\coord\geo\fix\nanhai.js" />
+    <Content Include="Content\vendors\echarts\src\coord\geo\fix\textCoord.js" />
+    <Content Include="Content\vendors\echarts\src\coord\geo\Geo.js" />
+    <Content Include="Content\vendors\echarts\src\coord\geo\geoCreator.js" />
+    <Content Include="Content\vendors\echarts\src\coord\geo\GeoModel.js" />
+    <Content Include="Content\vendors\echarts\src\coord\geo\parseGeoJson.js" />
+    <Content Include="Content\vendors\echarts\src\coord\geo\Region.js" />
+    <Content Include="Content\vendors\echarts\src\coord\parallel\AxisModel.js" />
+    <Content Include="Content\vendors\echarts\src\coord\parallel\Parallel.js" />
+    <Content Include="Content\vendors\echarts\src\coord\parallel\ParallelAxis.js" />
+    <Content Include="Content\vendors\echarts\src\coord\parallel\parallelCreator.js" />
+    <Content Include="Content\vendors\echarts\src\coord\parallel\ParallelModel.js" />
+    <Content Include="Content\vendors\echarts\src\coord\parallel\parallelPreprocessor.js" />
+    <Content Include="Content\vendors\echarts\src\coord\polar\AngleAxis.js" />
+    <Content Include="Content\vendors\echarts\src\coord\polar\AxisModel.js" />
+    <Content Include="Content\vendors\echarts\src\coord\polar\Polar.js" />
+    <Content Include="Content\vendors\echarts\src\coord\polar\polarCreator.js" />
+    <Content Include="Content\vendors\echarts\src\coord\polar\PolarModel.js" />
+    <Content Include="Content\vendors\echarts\src\coord\polar\RadiusAxis.js" />
+    <Content Include="Content\vendors\echarts\src\coord\radar\IndicatorAxis.js" />
+    <Content Include="Content\vendors\echarts\src\coord\radar\Radar.js" />
+    <Content Include="Content\vendors\echarts\src\coord\radar\RadarModel.js" />
+    <Content Include="Content\vendors\echarts\src\coord\single\AxisModel.js" />
+    <Content Include="Content\vendors\echarts\src\coord\single\Single.js" />
+    <Content Include="Content\vendors\echarts\src\coord\single\SingleAxis.js" />
+    <Content Include="Content\vendors\echarts\src\coord\single\singleCreator.js" />
+    <Content Include="Content\vendors\echarts\src\coord\View.js" />
+    <Content Include="Content\vendors\echarts\src\data\DataDiffer.js" />
+    <Content Include="Content\vendors\echarts\src\data\Graph.js" />
+    <Content Include="Content\vendors\echarts\src\data\helper\completeDimensions.js" />
+    <Content Include="Content\vendors\echarts\src\data\helper\linkList.js" />
+    <Content Include="Content\vendors\echarts\src\data\List.js" />
+    <Content Include="Content\vendors\echarts\src\data\Tree.js" />
+    <Content Include="Content\vendors\echarts\src\echarts.js" />
+    <Content Include="Content\vendors\echarts\src\ExtensionAPI.js" />
+    <Content Include="Content\vendors\echarts\src\layout\barGrid.js" />
+    <Content Include="Content\vendors\echarts\src\layout\points.js" />
+    <Content Include="Content\vendors\echarts\src\loading\default.js" />
+    <Content Include="Content\vendors\echarts\src\model\Component.js" />
+    <Content Include="Content\vendors\echarts\src\model\Global.js" />
+    <Content Include="Content\vendors\echarts\src\model\globalDefault.js" />
+    <Content Include="Content\vendors\echarts\src\model\mixin\areaStyle.js" />
+    <Content Include="Content\vendors\echarts\src\model\mixin\boxLayout.js" />
+    <Content Include="Content\vendors\echarts\src\model\mixin\itemStyle.js" />
+    <Content Include="Content\vendors\echarts\src\model\mixin\lineStyle.js" />
+    <Content Include="Content\vendors\echarts\src\model\mixin\makeStyleMapper.js" />
+    <Content Include="Content\vendors\echarts\src\model\mixin\textStyle.js" />
+    <Content Include="Content\vendors\echarts\src\model\Model.js" />
+    <Content Include="Content\vendors\echarts\src\model\OptionManager.js" />
+    <Content Include="Content\vendors\echarts\src\model\Series.js" />
+    <Content Include="Content\vendors\echarts\src\preprocessor\backwardCompat.js" />
+    <Content Include="Content\vendors\echarts\src\preprocessor\helper\compatStyle.js" />
+    <Content Include="Content\vendors\echarts\src\processor\dataFilter.js" />
+    <Content Include="Content\vendors\echarts\src\processor\dataSample.js" />
+    <Content Include="Content\vendors\echarts\src\scale\Interval.js" />
+    <Content Include="Content\vendors\echarts\src\scale\Log.js" />
+    <Content Include="Content\vendors\echarts\src\scale\Ordinal.js" />
+    <Content Include="Content\vendors\echarts\src\scale\Scale.js" />
+    <Content Include="Content\vendors\echarts\src\scale\Time.js" />
+    <Content Include="Content\vendors\echarts\src\util\animation.js" />
+    <Content Include="Content\vendors\echarts\src\util\array\nest.js" />
+    <Content Include="Content\vendors\echarts\src\util\clazz.js" />
+    <Content Include="Content\vendors\echarts\src\util\component.js" />
+    <Content Include="Content\vendors\echarts\src\util\format.js" />
+    <Content Include="Content\vendors\echarts\src\util\graphic.js" />
+    <Content Include="Content\vendors\echarts\src\util\KDTree.js" />
+    <Content Include="Content\vendors\echarts\src\util\layout.js" />
+    <Content Include="Content\vendors\echarts\src\util\model.js" />
+    <Content Include="Content\vendors\echarts\src\util\number.js" />
+    <Content Include="Content\vendors\echarts\src\util\quickSelect.js" />
+    <Content Include="Content\vendors\echarts\src\util\symbol.js" />
+    <Content Include="Content\vendors\echarts\src\util\throttle.js" />
+    <Content Include="Content\vendors\echarts\src\view\Chart.js" />
+    <Content Include="Content\vendors\echarts\src\view\Component.js" />
+    <Content Include="Content\vendors\echarts\src\visual\dataColor.js" />
+    <Content Include="Content\vendors\echarts\src\visual\seriesColor.js" />
+    <Content Include="Content\vendors\echarts\src\visual\symbol.js" />
+    <Content Include="Content\vendors\echarts\src\visual\visualDefault.js" />
+    <Content Include="Content\vendors\echarts\src\visual\VisualMapping.js" />
+    <Content Include="Content\vendors\echarts\theme\dark.js" />
+    <Content Include="Content\vendors\echarts\theme\infographic.js" />
+    <Content Include="Content\vendors\echarts\theme\macarons.js" />
+    <Content Include="Content\vendors\echarts\theme\roma.js" />
+    <Content Include="Content\vendors\echarts\theme\shine.js" />
+    <Content Include="Content\vendors\echarts\theme\tool\option\area.js" />
+    <Content Include="Content\vendors\echarts\theme\tool\option\bar.js" />
+    <Content Include="Content\vendors\echarts\theme\tool\option\graph.js" />
+    <Content Include="Content\vendors\echarts\theme\tool\option\map.js" />
+    <Content Include="Content\vendors\echarts\theme\tool\option\pie.js" />
+    <Content Include="Content\vendors\echarts\theme\tool\option\scatter.js" />
+    <Content Include="Content\vendors\echarts\theme\tool\thumb.js" />
+    <Content Include="Content\vendors\echarts\theme\vintage.js" />
     <Content Include="Content\vendors\fastclick\lib\fastclick.js" />
     <Content Include="Content\vendors\flot-spline\js\jquery.flot.spline.js" />
     <Content Include="Content\vendors\flot-spline\js\jquery.flot.spline.min.js" />
@@ -2141,18 +2600,6 @@
     <Content Include="Content\vendors\nprogress\License.md" />
     <Content Include="Content\vendors\nprogress\Notes.md" />
     <Content Include="Content\vendors\nprogress\Readme.md" />
-    <Content Include="Content\vendors\Chart.js\.bower.json" />
-    <Content Include="Content\vendors\Chart.js\.codeclimate.yml" />
-    <Content Include="Content\vendors\Chart.js\.editorconfig" />
-    <Content Include="Content\vendors\Chart.js\.eslintignore" />
-    <Content Include="Content\vendors\Chart.js\.eslintrc" />
-    <Content Include="Content\vendors\Chart.js\.github\ISSUE_TEMPLATE.md" />
-    <Content Include="Content\vendors\Chart.js\.github\PULL_REQUEST_TEMPLATE.md" />
-    <Content Include="Content\vendors\Chart.js\.travis.yml" />
-    <Content Include="Content\vendors\Chart.js\bower.json" />
-    <Content Include="Content\vendors\Chart.js\composer.json" />
-    <Content Include="Content\vendors\Chart.js\config.jshintrc" />
-    <Content Include="Content\vendors\Chart.js\CONTRIBUTING.md" />
     <Content Include="Content\vendors\Chart.js\docs\00-Getting-Started.md" />
     <Content Include="Content\vendors\Chart.js\docs\01-Chart-Configuration.md" />
     <Content Include="Content\vendors\Chart.js\docs\02-Scales.md" />
@@ -2164,9 +2611,6 @@
     <Content Include="Content\vendors\Chart.js\docs\08-Bubble-Chart.md" />
     <Content Include="Content\vendors\Chart.js\docs\09-Advanced.md" />
     <Content Include="Content\vendors\Chart.js\docs\10-Notes.md" />
-    <Content Include="Content\vendors\Chart.js\LICENSE.md" />
-    <Content Include="Content\vendors\Chart.js\package.json" />
-    <Content Include="Content\vendors\Chart.js\README.md" />
     <Content Include="Content\vendors\Flot\.bower.json" />
     <Content Include="Content\vendors\Flot\.travis.yml" />
     <Content Include="Content\vendors\Flot\API.md" />
@@ -2267,7 +2711,7 @@
     <Content Include="Content\vendors\iCheck\bower.json" />
     <Content Include="Content\vendors\iCheck\icheck.jquery.json" />
     <Content Include="ActSummaryDetail\f063c365-1e86-433e-bbb9-1fc6b58a386c.pdf" />
-    <Content Include="manual\travelling_TBM.pdf" />
+    <Content Include="Content\vendors\echarts\build\build.sh" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <Content Include="Scripts\bootstrap-select.js.map" />
@@ -2561,10 +3005,9 @@
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyWithLogoV2.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyV2.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerViewManual.cshtml" />
-    <Content Include="Views\ApproveListExpense\Index.cshtml" />
-    <Content Include="Views\ApproveListExpense\ApproveList.cshtml" />
-    <Content Include="Views\SharedMasterFormHeaderCompany_Input\headerCompanySubject.cshtml" />
-    <Content Include="Views\SharedMasterFormDetail_Input\exPerryListEntertainment.cshtml" />
+    <Content Include="Views\actFormRepPostEva\index.cshtml" />
+    <Content Include="Views\actFormRepPostEva\postEvaListView.cshtml" />
+    <Content Include="Views\actFormRepPostEva\postEvaGroupBrandView.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
@@ -2584,6 +3027,14 @@
     <Folder Include="Views\exPerryCash\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\eForms.Models\eForms.Models.csproj">
+      <Project>{43f0b5dc-e0fb-4330-a1fa-e666ffe7e04b}</Project>
+      <Name>eForms.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eForms.Presenter\eForms.Presenter.csproj">
+      <Project>{7d8303a1-bcdc-4184-b676-12a9263f0686}</Project>
+      <Name>eForms.Presenter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebLibrary\WebLibrary.csproj">
       <Project>{915ae4ce-4607-4e97-9329-2f6d8b5c4569}</Project>
       <Name>WebLibrary</Name>

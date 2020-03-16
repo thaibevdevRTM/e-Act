@@ -1,5 +1,6 @@
 ﻿@model eActForm.Models.AdminUserModel
 @using System.Configuration;
+@using eActForm.Models
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -128,11 +129,11 @@
                 </div>
                 <div class="col-md-2">
                     <div>
-                        <input id="chkNonAl" type="checkbox" name="model.chkProductType" value="1D1097F4-246F-4DC2-BB69-B7BB6E678299">
+                        <input id="chkNonAl" type="checkbox" name="model.chkProductType" value="@AppCode.nonAL">
                         Non-Alcohol
                     </div>
                     <div>
-                        <input id="chkAl" type="checkbox" name="model.chkProductType" value="FC696EB5-B058-445E-B605-977C5067AEBA">
+                        <input id="chkAl" type="checkbox" name="model.chkProductType" value="@AppCode.AL">
                         Alcohol
                     </div>
                 </div>
@@ -353,18 +354,19 @@
                         $("#divCustLists").append("<div id='" + this['cusId'] + "'> <span class='pull-left close' onclick=javascript:onclickDelCusList('" + this['cusId'] + "');>x</span><input type='hidden' name='model.custLi' value='" + this['cusId'] + "'/>" + this['customerName'] + " <br/></div>");
                     });
                 }
-
+                $('input:checkbox').removeAttr('checked');
                 $.each(response.Data.productTypeList, function () {
+                    console.log(this['productTypeId']);
                     switch (this['productTypeId']) {
-                        case '1D1097F4-246F-4DC2-BB69-B7BB6E678299':
+                        case '@AppCode.nonAL':
                             document.getElementById("chkNonAl").checked = true;
                             break;
-                        case 'FC696EB5-B058-445E-B605-977C5067AEBA':
+                        case '@AppCode.AL':
                             document.getElementById("chkAl").checked = true;
                             break;
                     }
                 });
-                $('input:checkbox').removeAttr('checked');
+               
                 $.each(response.Data.userLists, function () {
                     switch (this['roleId']) {
                         case '1':
