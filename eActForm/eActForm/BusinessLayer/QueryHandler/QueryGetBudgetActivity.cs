@@ -116,6 +116,89 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
+		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityList(string act_approveStatusId, string act_activityId, string act_activityNo, string companyTH, string act_createdDateStart, string act_createdDateEnd, string act_budgetStatusIdIn)
+		{
+			try
+			{
+				//act_budgetStatusIdIn =null;
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivity"
+				 , new SqlParameter("@act_approveStatusId", act_approveStatusId)
+				 , new SqlParameter("@act_activityId", act_activityId)
+				 , new SqlParameter("@act_activityNo", act_activityNo)
+				 , new SqlParameter("@budgetApproveId", null)
+				 , new SqlParameter("@companyTH", companyTH)
+
+				 , new SqlParameter("@act_createdDateStart", act_createdDateStart)
+				 , new SqlParameter("@act_createdDateEnd", act_createdDateEnd)
+				 , new SqlParameter("@act_budgetStatusIdIn", act_budgetStatusIdIn)
+				 );
+
+				var result = (from DataRow d in ds.Tables[0].Rows
+							  select new TB_Bud_Activity_Model.Budget_Activity_Att()
+							  {
+								  budget_id = d["budget_Id"].ToString(),
+								  act_form_id = d["act_form_id"].ToString(),
+								  act_approveStatusId = int.Parse(d["act_approveStatusId"].ToString()),
+								  act_activityNo = d["act_activityNo"].ToString(),
+								  act_reference = d["act_reference"].ToString(),
+								  act_customerId = d["act_customerId"].ToString(),
+
+								  act_companyEN = d["act_companyEN"].ToString(),
+
+								  cus_cusShortName = d["cus_cusShortName"].ToString(),
+								  cus_cusNameEN = d["cus_cusNameEN"].ToString(),
+								  cus_cusNameTH = d["cus_cusNameTH"].ToString(),
+
+								  //ch_chanelCust = d["ch_chanelCust"].ToString(),
+								  //ch_chanelGroup = d["ch_chanelGroup"].ToString(),
+								  //ch_chanelTradingPartner = d["ch_chanelTradingPartner"].ToString(),
+
+								  //prd_groupName = d["prd_groupName"].ToString(),
+								  //prd_groupNameTH = d["prd_groupNameTH"].ToString(),
+								  //prd_groupShort = d["prd_groupShort"].ToString(),
+
+								  //act_brandNameTH = d["act_brandNameTH"].ToString(),
+								  //act_brandName = d["act_brandName"].ToString(),
+								  //act_shortBrand = d["act_shortBrand"].ToString(),
+
+								  act_activityPeriodSt = d["act_activityPeriodSt"] is DBNull ? null : (DateTime?)d["act_activityPeriodSt"],
+								  act_activityPeriodEnd = d["act_activityPeriodEnd"] is DBNull ? null : (DateTime?)d["act_activityPeriodEnd"],
+								  act_costPeriodSt = d["act_costPeriodSt"] is DBNull ? null : (DateTime?)d["act_costPeriodSt"],
+								  act_costPeriodEnd = d["act_costPeriodEnd"] is DBNull ? null : (DateTime?)d["act_costPeriodEnd"],
+
+								  act_activityName = d["act_activityName"].ToString(),
+								  act_theme = d["act_activitySales"].ToString(),
+
+								  //act_objective = d["act_objective"].ToString(),
+								  //act_trade = d["act_trade"].ToString(),
+								  //act_activityDetail = d["act_activityDetail"].ToString(),
+
+								  act_normalCost = d["act_normalCost"].ToString() == "" ? 0 : decimal.Parse(d["act_normalCost"].ToString()),
+								  act_themeCost = d["act_themeCost"].ToString() == "" ? 0 : decimal.Parse(d["act_themeCost"].ToString()),
+								  act_totalCost = d["act_totalCost"].ToString() == "" ? 0 : decimal.Parse(d["act_totalCost"].ToString()),
+								  act_total_invoive = d["act_total_invoive"].ToString() == "" ? 0 : decimal.Parse(d["act_total_invoive"].ToString()),
+								  act_balance = d["act_balance"].ToString() == "" ? 0 : decimal.Parse(d["act_balance"].ToString()),
+
+								  act_createdDate = d["act_createdDate"] is DBNull ? null : (DateTime?)d["act_createdDate"],
+								  act_updatedDate = d["act_updatedDate"] is DBNull ? null : (DateTime?)d["act_updatedDate"],
+
+								  act_createdByUserId = d["act_createdByUserId"].ToString(),
+								  act_updatedByUserId = d["act_updatedByUserId"].ToString(),
+
+								  bud_ActivityStatusId = d["bud_ActivityStatusId"].ToString(),
+								  bud_ActivityStatus = d["bud_ActivityStatus"].ToString(),
+
+							  });
+
+				return result.ToList();
+			}
+			catch (Exception ex)
+			{
+				ExceptionManager.WriteError("getBudgetActivity => " + ex.Message);
+				return new List<TB_Bud_Activity_Model.Budget_Activity_Att>();
+			}
+		}
+
 		public static List<Budget_Activity_Model.Budget_Activity_Product_Att> getBudgetActivityProduct(string act_activityID, string act_activityOfEstimateId)
 		{
 			try
