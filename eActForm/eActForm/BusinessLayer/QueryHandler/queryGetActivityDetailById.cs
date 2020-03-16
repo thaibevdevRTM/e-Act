@@ -46,6 +46,7 @@ namespace eActForm.BusinessLayer
                                  LE = d["Le"].ToString() == "" ? 0 : decimal.Parse(d["Le"].ToString()),
                                  IO = d["IO"].ToString(),
                                  rowNo = int.Parse(d["rowNo"].ToString()),
+                                 mechanics = d["mechanics"].ToString(),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),

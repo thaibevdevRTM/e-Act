@@ -100,6 +100,7 @@ namespace eActForm.Models
             public string regionId { get; set; }
             public string brandId { get; set; }
             public string master_type_form_id { get; set; }
+            public DateTime? dateSentApprove { get; set; }
         }
 
     }
@@ -184,6 +185,7 @@ namespace eActForm.Models
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
         public string formCompanyId { get; set; }
+        public string digit_IO { get; set; }
 
     }
 
@@ -221,6 +223,7 @@ namespace eActForm.Models
         public Boolean isShowGroup { get; set; }
         public string IO { get; set; }
         public int rowNo { get; set; }
+        public string mechanics { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public CostThemeDetailOfGroupByPrice()
@@ -256,6 +259,7 @@ namespace eActForm.Models
         public Boolean isShowGroup { get; set; }
         public string IO { get; set; }
         public int rowNo { get; set; }
+        public string mechanics { get; set; }
     }
 
     public class ProductCostOfGroupByPrice : ActBaseModel

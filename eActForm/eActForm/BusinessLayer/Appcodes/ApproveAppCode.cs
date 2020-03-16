@@ -33,6 +33,21 @@ namespace eActForm.BusinessLayer
                         UtilsAppCode.Session.User.counteatingRepDetail = "0";
                         UtilsAppCode.Session.User.counteatingSummaryDetail = "0";
                     }
+
+
+                    DataSet dsReject = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCountRejectByEmpId"
+                        , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId) });
+                    if (dsReject.Tables.Count > 0 && dsReject.Tables[0].Rows.Count > 0)
+                    {
+                        UtilsAppCode.Session.User.countRejectAct = dsReject.Tables[0].Rows[0]["countRejectAct"].ToString();
+                        UtilsAppCode.Session.User.countApproveReject = dsReject.Tables[0].Rows[0]["countApprove"].ToString();
+                    }
+                    else
+                    {
+                        UtilsAppCode.Session.User.countApproveReject = "0";
+                        UtilsAppCode.Session.User.countRejectAct = "0";
+                    }
+
                 }
             }
             catch (Exception ex)

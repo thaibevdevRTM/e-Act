@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Configuration;
 
 namespace eActForm.BusinessLayer
 {
@@ -22,12 +23,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
-
-                if (rtn > 0)
-                {
-                    EmailAppCodes.sendRequestCancelToAdmin(actId);
-                }
-
                 return rtn;
             }
             catch (Exception ex)
@@ -65,10 +60,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
                     });
-                if (rtn > 0)
-                {
-                    EmailAppCodes.sendRequestCancelToAdmin(actId);
-                }
                 return rtn;
             }
             catch (Exception ex)
@@ -222,5 +213,10 @@ namespace eActForm.BusinessLayer
         }
 
 
+        public static bool isOtherCompanyMT()
+        {
+            return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] ||
+                UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+        }
     }
 }

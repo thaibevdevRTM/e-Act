@@ -27,7 +27,11 @@
                 <tr>
                     <th class="align-content-center font10" rowspan="2" width="10px" onclick="onDelActDetail();"> <button class="btn ink-reaction btn-danger fa fa-trash-o"></button></th>
                     <th class="align-content-center font10" rowspan="2" style="width:15%;">ประเภทกิจกรรม</th>
-                    <th class="align-content-center font10" rowspan="2" style="width:24%;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</th>
+                    <th class="align-content-center font10" rowspan="2" style="width:14%;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</th>
+                    @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                    {
+                        <th class="align-content-center font10" rowspan="2" style="width:10%;">Mechanics</th>
+                    }
                     <th class="align-content-center font10" rowspan="2" style="width:6%;">Unit</th>
                     <th class="align-content-center font10" rowspan="2" style="width:6%;">Compensate</th>
                     @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
@@ -87,7 +91,10 @@
                             {
                                 <td>@Html.TextBoxFor(model => item.brandName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" }) </td>
                             }*@
-
+                        @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                        {
+                            <td>@Html.TextBoxFor(model => item.mechanics, new { @id = "lblMechanics_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        }
                         <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")", style = "autofocus = 'autofocus'" })</td>
                         <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")", style = "autofocus = 'autofocus'" })</td>
 
@@ -123,8 +130,15 @@
             }
 
             <tr>
+                @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                {
+                    <td colspan="6" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
+                }
+                else
+                {
+                    <td colspan="5" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
+                }
 
-                <td colspan="5" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
                 <td>
                     <p class="text-success textRight">
                         @if (normalTotal != 0)
@@ -261,6 +275,7 @@
     // case all input change
     function calActivityDetailCost(id, rowIndex, checktotal) {
         var name = $('#lblProductName_' + rowIndex).val();
+        var mechanics = $('#lblMechanics_' + rowIndex).val();
         var normalCost = $('#lblNormalCost_' + rowIndex).val();
         normalCost = normalCost == "" ? 0 : normalCost;
         var themeCost = $('#lblThemeCost_' + rowIndex).val();
@@ -279,6 +294,7 @@
             url: '@Url.Action("calActivityDetailCost", "ActivityCostDetail")',
             data: {
                 name: name,
+                mechanics: mechanics,
                 productGroupId: id,
                 productId: productId,
                 normalCase: normalCost,
