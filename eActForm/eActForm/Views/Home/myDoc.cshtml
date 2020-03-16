@@ -6,34 +6,33 @@
 <script>
 
     function checkBeforeDelete(actId, statusId) {
-        if (statusId == "6") {
+      //  if (statusId == "6") { }
             //get statusNOte
-            $.ajax({
+                   $.ajax({
                 type: 'POST',
                 url: '@Url.Action("getStatusNote", "Home")',
                 data: {
                     actId: actId
                 }
             }).done(function (response) {
-              
                 if (response.Message != "") {
                     $('#hdStatusNote').val("สาเหตุการยกเลิก : " + response.Message + "<br/>");
+                } else {
+                    $('#hdStatusNote').val("");
                 }
+                chkInvoiceBeforeDel(actId, statusId);
             });
-        }
-        
-        chkInvoiceBeforeDel(actId, statusId);
     }
 
-    @*function checkDelete(actId, statusId) {
+    function checkDelete(actId, statusId) {
         var msg = "";
-        if( statusId == "1" ||
-            (statusId == "6" &&  '@ActFormAppCode.isAdmin()'=="True") ||
-            (statusId == "5" && ('@ActFormAppCode.isOtherCompanyMT()'=="True" || '@ActFormAppCode.isAdmin()'=="True" ))
-          )
-        {
+
+        if (statusId == "1" ||
+            (statusId == "6" && '@ActFormAppCode.isAdmin()' == "True") ||
+            (statusId == "5" && ('@ActFormAppCode.isOtherCompanyMT()' == "True" || '@ActFormAppCode.isAdmin()' == "True"))
+        ) {
             // can be delete
-            msg = "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
+            msg = document.getElementById("hdStatusNote").value + "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
         }
         else {
             // can't delete
@@ -56,64 +55,25 @@
             },
             callback: function (result) {
                 if (result) {
-                    requestDeleteDoc(actId, statusId)
-                }
-            }
-        });
-    }*@
-
-
-     function checkDelete(actId, statusId) {
-         var msg = "";
-
-        if( statusId == "1" ||
-            (statusId == "6" &&  '@ActFormAppCode.isAdmin()'=="True") ||
-            (statusId == "5" && ('@ActFormAppCode.isOtherCompanyMT()'=="True" || '@ActFormAppCode.isAdmin()'=="True" ))
-          )
-        {
-            // can be delete
-            msg =   document.getElementById("hdStatusNote").value+"คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
-        }
-        else {
-            // can't delete
-            msg = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ <br/> ท่านต้องการยกเลิกเอกสารหรือไม่ค่ะ?";
-        }
-
-        bootbox.confirm({
-            title: "Confirm Message",
-
-            message: msg,
-            buttons: {
-                confirm: {
-                    label: "Yes",
-                    className: "btn-success"
-                },
-                cancel: {
-                    label: "No",
-                    className: "btn-danger"
-                }
-            },
-            callback: function (result) {
-                if (result) {
-                    requestDeleteDoc(actId, statusId,"")
+                    requestDeleteDoc(actId, statusId, "")
                 }
             }
         });
     }
-     function requestDeleteDoc(actId, statusId, statusNote) {
-           $("#WaitDialog").show();
-                    $.ajax({
-                        url: '@Url.Action("requestDeleteDoc", "Home")',
-                        data: {
-                            actId: actId,
-                            statusId: statusId,
-                            statusNote: statusNote,
-                        },
-                    }).done(function (htmlResponse) {
-                        $("#getQuery").html(htmlResponse);
-                        $("#WaitDialog").hide();
-                        doMsgSuccess("ดำเนินการยกเลิกเอกสารเรียบร้อย")
-                    });
+    function requestDeleteDoc(actId, statusId, statusNote) {
+        $("#WaitDialog").show();
+        $.ajax({
+            url: '@Url.Action("requestDeleteDoc", "Home")',
+            data: {
+                actId: actId,
+                statusId: statusId,
+                statusNote: statusNote,
+            },
+        }).done(function (htmlResponse) {
+            $("#getQuery").html(htmlResponse);
+            $("#WaitDialog").hide();
+            doMsgSuccess("ดำเนินการยกเลิกเอกสารเรียบร้อย")
+        });
     }
 
     function chkInvoiceBeforeDel(actId, statusId) {
@@ -169,7 +129,7 @@
         $("#WaitDialog").show();
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("resendApprove", "Base")',
+            url: '@Url.Action("resendApprove", "Base")',
             data: {
                 actId: actId
             }
@@ -181,7 +141,7 @@
                 doMsgFail(response.Message);
             }
         });
-      }
+    }
     function confirmCc() {
         var actId = document.getElementById("hdActId").value;
         var statusId = document.getElementById("hdStatusId").value;
@@ -193,7 +153,6 @@
             requestDeleteDoc(actId, statusId, StatusNote);
             document.getElementById("txtStatusNote").value = "";
         }
-
     }
 
 </script>
