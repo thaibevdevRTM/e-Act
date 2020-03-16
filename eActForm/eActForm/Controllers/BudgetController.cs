@@ -81,7 +81,7 @@ namespace eActForm.Controllers
 				}
 				else
 				{
-					models.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, DateTime.Now.AddDays(-30).ToString("MM/dd/yyyy"), DateTime.Now.ToString("MM/dd/yyyy"), null).ToList();
+					models.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList ("3",  null, null, typeForm, DateTime.Now.AddDays(-30).ToString("MM/dd/yyyy"), DateTime.Now.ToString("MM/dd/yyyy"), null).ToList();
 				}
 				TempData["searchBudgetActivityForm"] = null;
 				return PartialView(models);
