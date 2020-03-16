@@ -20,7 +20,10 @@
             {
                 <li>@Html.ActionLink(" Documents TBM", "Index", "Home", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)</li>
             }
-
+            @if (UtilsAppCode.Session.User.isAdminHCM || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"])
+            {
+                <li>@Html.ActionLink(" Documents Horeca", "Index", "Home", new { typeForm = Activity_Model.activityType.HCM.ToString() }, null)</li>
+            }
             @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
             {
                 <li>@Html.ActionLink(" Budget", "Index", "BudgetMyDoc", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() }, null)</li>

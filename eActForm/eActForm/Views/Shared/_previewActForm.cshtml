@@ -237,9 +237,9 @@
                                     {
                                         if (index <= 2)
                                         {
-                                        <td width="40%" style="text-align:right;">
-                                            <img style="margin-left:10px;" width="130" height="120" src="@string.Format(url, item._fileName)" />
-                                        </td>
+                                            <td width="40%" style="text-align:right;">
+                                                <img style="margin-left:10px;" width="130" height="120" src="@string.Format(url, item._fileName)" />
+                                            </td>
                                         }
                                     }
                                     index++;
@@ -369,8 +369,13 @@
         <div>
             <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td rowspan="2" width="20%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
-                    <td rowspan="2" width="30%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
+                    <td rowspan="2" width="15%" style="font-size:12.5px;">ประเภทกิจกรรม</td>
+                    <td rowspan="2" width="20%" style="font-size:12.5px;">ชื่อสินค้า/ค่าใช้จ่ายอื่นๆ</td>
+                    @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                    {
+                        <td rowspan="2" width="17%" style="font-size:12.5px;">Mechanics</td>
+                    }
+
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
                         <td colspan="5" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
@@ -387,7 +392,7 @@
                     <td width="12%" style="font-size:12.5px;">ค่าใช้จ่ายรวม Spending Exp. (Bath)</td>
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        <td width="8%" style="font-size:12.5px;">% ยอดขาย</td>
+                        <td width="7%" style="font-size:12.5px;">% ยอดขาย</td>
                     }
                 </tr>
                 @if (Model.activitydetaillist.Any())
@@ -403,6 +408,10 @@
                             else
                             {
                                 <td class="font11 textLeft">@Html.DisplayFor(m => item.productName)  </td>
+                            }
+                            @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                            {
+                                <td class="font11 textLeft">@Html.DisplayFor(m => item.mechanics)</td>
                             }
 
                             <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
@@ -425,6 +434,10 @@
 
 
                 <tr>
+                    @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                    {
+                        <td style="border:none; border-bottom:none;"></td>
+                    }
                     <td style="border:none; border-bottom:none;"></td>
                     <td style="text-align:right; border:none; border-bottom:none;">รวม</td>
                     <td class="textRight">
@@ -494,7 +507,7 @@
         <div style="margin-bottom:10px;">
             @if (Model.activityFormModel != null)
             {
-                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id,subId = ConfigurationManager.AppSettings["subjectActivityFormId"] })
+                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id, subId = ConfigurationManager.AppSettings["subjectActivityFormId"] })
             }
         </div>
 
