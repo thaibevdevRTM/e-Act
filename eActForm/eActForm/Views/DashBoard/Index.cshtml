@@ -62,19 +62,19 @@
             </style>
             @if (UtilsAppCode.Session.User.isCreator)
             {
-                 nameCssCreator = "";
+                nameCssCreator = "";
             }
             else
             {
-                 nameCssCreator = "isDisabled";
+                nameCssCreator = "isDisabled";
             }
             @if (UtilsAppCode.Session.User.isApprove)
             {
-                 nameCssIsApprove = "";
+                nameCssIsApprove = "";
             }
             else
             {
-                 nameCssIsApprove = "isDisabled";
+                nameCssIsApprove = "isDisabled";
             }
             <a href="@linkWebDocument" class="@nameCssCreator">
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -184,307 +184,6 @@
 
         }
 
-        @*<div class="row">
-                <div class="col-md-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Weekly Summary <small>Activity shares</small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li>
-                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="#">Settings 1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Settings 2</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-
-                            <div class="row" style="border-bottom: 1px solid #E0E0E0; padding-bottom: 5px; margin-bottom: 5px;">
-                                <div class="col-md-7" style="overflow:hidden;">
-                                    <span class="sparkline_one" style="height: 160px; padding: 10px 25px;">
-                                        <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                                    </span>
-                                    <h4 style="margin:18px">Weekly sales progress</h4>
-                                </div>
-
-                                <div class="col-md-5">
-                                    <div class="row" style="text-align: center;">
-                                        <div class="col-md-4">
-                                            <canvas class="canvasDoughnut" height="110" width="110" style="margin: 5px 10px 10px 0"></canvas>
-                                            <h4 style="margin:0">Bounce Rates</h4>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <canvas class="canvasDoughnut" height="110" width="110" style="margin: 5px 10px 10px 0"></canvas>
-                                            <h4 style="margin:0">New Traffic</h4>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <canvas class="canvasDoughnut" height="110" width="110" style="margin: 5px 10px 10px 0"></canvas>
-                                            <h4 style="margin:0">Device Share</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Top Profiles <small>Sessions</small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li>
-                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="#">Settings 1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Settings 2</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item One Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item Two Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item Two Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item Two Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item Three Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Top Profiles <small>Sessions</small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li>
-                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="#">Settings 1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Settings 2</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item One Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item Two Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item Two Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item Two Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item Three Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Top Profiles <small>Sessions</small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li>
-                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="#">Settings 1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Settings 2</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item One Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item Two Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item Two Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item Two Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                            <article class="media event">
-                                <a class="pull-left date">
-                                    <p class="month">April</p>
-                                    <p class="day">23</p>
-                                </a>
-                                <div class="media-body">
-                                    <a class="title" href="#">Item Three Title</a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
     </div>
 </div>
 
@@ -540,8 +239,6 @@
             chart_plot_02_data.push(value);
         })
 
-        console.log(chart_plot_02_data);
-        console.log( labels);
         var ctx = document.getElementById('myChart').getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create
@@ -592,58 +289,6 @@
         chart.update();
     }
 
-    //function init_chart_doughnut() {
-
-    //    if (typeof (Chart) === 'undefined') { return; }
-
-
-    //    if ($('.canvasDoughnut').length) {
-
-    //        var chart_doughnut_settings = {
-    //            type: 'doughnut',
-    //            tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-    //            data: {
-    //                labels: [
-    //                    "Symbian",
-    //                    "Blackberry",
-    //                    "Other",
-    //                    "Android",
-    //                    "IOS"
-    //                ],
-    //                datasets: [{
-    //                    data: [15, 20, 30, 10, 30],
-    //                    backgroundColor: [
-    //                        "#BDC3C7",
-    //                        "#9B59B6",
-    //                        "#E74C3C",
-    //                        "#26B99A",
-    //                        "#3498DB"
-    //                    ],
-    //                    hoverBackgroundColor: [
-    //                        "#CFD4D8",
-    //                        "#B370CF",
-    //                        "#E95E4F",
-    //                        "#36CAAB",
-    //                        "#49A9EA"
-    //                    ]
-    //                }]
-    //            },
-    //            options: {
-    //                legend: false,
-    //                responsive: false
-    //            }
-    //        }
-
-    //        $('.canvasDoughnut').each(function () {
-
-    //            var chart_element = $(this);
-    //            var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
-
-    //        });
-
-    //    }
-
-    //}
 
 
 

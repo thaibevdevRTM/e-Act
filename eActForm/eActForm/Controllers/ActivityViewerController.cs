@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using eActForm.Models;
+using System;
 using System.Configuration;
 using System.IO;
-using eActForm.Models;
+using System.Web.Mvc;
 using WebLibrary;
 namespace eActForm.Controllers
 {
@@ -25,26 +22,26 @@ namespace eActForm.Controllers
             return PartialView();
         }
 
-        public ActionResult getPDF(string actId, string type,string extension)
+        public ActionResult getPDF(string actId, string type, string extension)
         {
             string rootPath = "", mapPath = "";
 
             try
             {
-                
+
                 if (type == AppCode.ApproveType.Report_Detail.ToString())
                 {
                     rootPath = ConfigurationManager.AppSettings["rootRepDetailPdftURL"];
                 }
-                else if(type == "UploadFile")
+                else if (type == "UploadFile")
                 {
                     rootPath = ConfigurationManager.AppSettings["rootUploadfiles"];
                 }
-                else if(type == AppCode.ApproveType.Report_Summary.ToString())
+                else if (type == AppCode.ApproveType.Report_Summary.ToString())
                 {
                     rootPath = ConfigurationManager.AppSettings["rootSummaryDetailPdftURL"];
                 }
-           
+
                 else
                 {
                     rootPath = ConfigurationManager.AppSettings["rooPdftURL"];
@@ -62,7 +59,7 @@ namespace eActForm.Controllers
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError(ex.Message);
             }
@@ -71,8 +68,8 @@ namespace eActForm.Controllers
                                                      FileAccess.Read
                                                    );
 
-       
-            if(extension == ".pdf" || string.IsNullOrEmpty(extension))
+
+            if (extension == ".pdf" || string.IsNullOrEmpty(extension))
             {
                 return new FileStreamResult(fileStream, "application/pdf");
             }

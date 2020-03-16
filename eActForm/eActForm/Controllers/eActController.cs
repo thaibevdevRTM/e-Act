@@ -1,21 +1,10 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using iTextSharp.tool.xml;
-using Resources;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Net.Mail;
-using System.Net.Mime;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 using WebLibrary;
 
 namespace eActForm.Controllers

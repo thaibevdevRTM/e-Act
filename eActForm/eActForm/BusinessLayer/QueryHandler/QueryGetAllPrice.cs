@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -35,7 +34,7 @@ namespace eActForm.BusinessLayer
                              });
                 return lists.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("getActivityById => " + ex.Message);
                 return new List<TB_Act_ProductPrice_Model.ProductPrice>();
@@ -58,8 +57,8 @@ namespace eActForm.BusinessLayer
                                  customerId = d["customerId"].ToString(),
                                  normalCost = d["normalCost"] == null ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["normalCost"].ToString())),
                                  wholeSalesPrice = d["wholeSalesPrice"] == null ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["wholeSalesPrice"].ToString())),
-                                 discount1 = d["discount1"] == null ? 0 :decimal.Parse(AppCode.checkNullorEmpty(d["discount1"].ToString())),
-                                 discount2 = d["discount2"] == null ? 0 :decimal.Parse(AppCode.checkNullorEmpty(d["discount2"].ToString())),
+                                 discount1 = d["discount1"] == null ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["discount1"].ToString())),
+                                 discount2 = d["discount2"] == null ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["discount2"].ToString())),
                                  discount3 = d["discount3"] == null ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["discount3"].ToString())),
                                  saleNormal = d["saleNormal"] == null ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["saleNormal"].ToString())),
                                  updatedDate = string.IsNullOrEmpty(d["updatedDate"].ToString()) ? DateTime.Now : DateTime.Parse(d["updatedDate"].ToString()),

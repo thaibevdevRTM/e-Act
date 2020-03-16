@@ -1,0 +1,487 @@
+﻿@model eForms.Models.Reports.RepPostEvaModels
+@using Microsoft.AspNetCore.Html
+
+<!-- Font Awesome -->
+<link href="~/Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<!-- NProgress -->
+<link href="~/Content/vendors/nprogress/nprogress.css" rel="stylesheet">
+
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Group Brand and Sum Spending Exp. (MB)</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" style="height:300px;">
+
+                <div id="echart_pie2" style="height:300px;"></div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Group Sum Sales-In (MB)</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" style="height:300px;">
+
+                <canvas id="myChart"></canvas>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Compare estimate(case) and sales-in(case)</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="chart-container">
+                <div class="row" style="width:700px;">
+                    <canvas id="chartCompare" class="chartjs-render-monitor"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="~/Content/vendors/Chart.js/dist/Chart.min.js"></script>
+
+<script src="~/Content/vendors/echarts/dist/echarts.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        init_flot_chart();
+
+    });
+
+
+    function init_flot_chart() {
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("postEvaGroupBrandData", "actFormRepPostEva")',
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                genMonthlySpending(response);
+            },
+        });
+    }
+
+    function genMonthlySpending(jsondata) {
+
+        var chart_plot_02_data = [];
+        var labels = [];
+        if ($('#chartCompare').length) {
+            var ctxC = document.getElementById("chartCompare");
+            var mybarChart = new Chart(ctxC, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            type: 'line',
+                            label: '# of Sales In(case)',
+                            backgroundColor: "rgba(255, 0, 0, 0.2)",
+                            borderColor: "rgba(255, 0, 0, 0.4)",
+                            pointBorderColor: "rgba(255, 0, 0, 0.8)",
+                            pointBorderColor: "rgba(255, 0, 0, 0.8)",
+                            pointHoverBackgroundColor: "#fff",
+                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                            pointBorderWidth: 1,
+                            data: []
+                        },
+                        {
+                            label: '# of Normal(case)',
+                            backgroundColor: "#26B99A",
+                            data: []
+                        }, {
+                            label: '# of Promotion(case)',
+                            backgroundColor: "#03586A",
+                            data: []
+                        }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                max: 1500,
+                                stepSize: 200
+                            }
+                        }],
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'ล้านบาท',
+                            fontSize: 10,
+                        }
+                    }
+                }
+            });
+        }
+
+        jsondata.forEach(function (e) {
+            labels.push([e.name]);
+            chart_plot_02_data.push([e.sumActSalesParti]);
+            mybarChart.data.datasets[0].data.push(e.sumSalesInCase);
+            mybarChart.data.datasets[1].data.push(e.sumNormalCase);
+            mybarChart.data.datasets[2].data.push(e.sumPromotionCase);
+
+        })
+
+        mybarChart.update();
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Montly Summary',
+                    backgroundColor: [
+                        "#455C73",
+                        "#9B59B6",
+                        "#BDC3C7",
+                        "#26B99A",
+                        "#3498DB",
+                        "#3949AB",
+                        "#006064",
+                        "#827717",
+                        "#FF6F00"
+                    ],
+                    //borderColor: "rgba(255,99,132,1)",
+                    pointBorderColor: "#fff",
+                    pointBackgroundColor: "rgba(255,99,132,1)",
+                    pointBorderColor: "#fff",
+                    data: chart_plot_02_data,
+                }]
+            },
+            // Configuration options go here
+            otpions: {
+                legend: false
+            }
+        });
+        //chart.update();
+
+        var theme = {
+            color: [
+                '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+                '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
+            ],
+
+            title: {
+                itemGap: 8,
+                textStyle: {
+                    fontWeight: 'normal',
+                    color: '#408829'
+                }
+            },
+
+            dataRange: {
+                color: ['#1f610a', '#97b58d']
+            },
+
+            toolbox: {
+                color: ['#408829', '#408829', '#408829', '#408829']
+            },
+
+            tooltip: {
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                axisPointer: {
+                    type: 'line',
+                    lineStyle: {
+                        color: '#408829',
+                        type: 'dashed'
+                    },
+                    crossStyle: {
+                        color: '#408829'
+                    },
+                    shadowStyle: {
+                        color: 'rgba(200,200,200,0.3)'
+                    }
+                }
+            },
+
+            dataZoom: {
+                dataBackgroundColor: '#eee',
+                fillerColor: 'rgba(64,136,41,0.2)',
+                handleColor: '#408829'
+            },
+            grid: {
+                borderWidth: 0
+            },
+
+            categoryAxis: {
+                axisLine: {
+                    lineStyle: {
+                        color: '#408829'
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: ['#eee']
+                    }
+                }
+            },
+
+            valueAxis: {
+                axisLine: {
+                    lineStyle: {
+                        color: '#408829'
+                    }
+                },
+                splitArea: {
+                    show: true,
+                    areaStyle: {
+                        color: ['rgba(250,250,250,0.1)', 'rgba(200,200,200,0.1)']
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: ['#eee']
+                    }
+                }
+            },
+            timeline: {
+                lineStyle: {
+                    color: '#408829'
+                },
+                controlStyle: {
+                    normal: { color: '#408829' },
+                    emphasis: { color: '#408829' }
+                }
+            },
+
+            k: {
+                itemStyle: {
+                    normal: {
+                        color: '#68a54a',
+                        color0: '#a9cba2',
+                        lineStyle: {
+                            width: 1,
+                            color: '#408829',
+                            color0: '#86b379'
+                        }
+                    }
+                }
+            },
+            map: {
+                itemStyle: {
+                    normal: {
+                        areaStyle: {
+                            color: '#ddd'
+                        },
+                        label: {
+                            textStyle: {
+                                color: '#c12e34'
+                            }
+                        }
+                    },
+                    emphasis: {
+                        areaStyle: {
+                            color: '#99d2dd'
+                        },
+                        label: {
+                            textStyle: {
+                                color: '#c12e34'
+                            }
+                        }
+                    }
+                }
+            },
+            force: {
+                itemStyle: {
+                    normal: {
+                        linkStyle: {
+                            strokeColor: '#408829'
+                        }
+                    }
+                }
+            },
+            chord: {
+                padding: 4,
+                itemStyle: {
+                    normal: {
+                        lineStyle: {
+                            width: 1,
+                            color: 'rgba(128, 128, 128, 0.5)'
+                        },
+                        chordStyle: {
+                            lineStyle: {
+                                width: 1,
+                                color: 'rgba(128, 128, 128, 0.5)'
+                            }
+                        }
+                    },
+                    emphasis: {
+                        lineStyle: {
+                            width: 1,
+                            color: 'rgba(128, 128, 128, 0.5)'
+                        },
+                        chordStyle: {
+                            lineStyle: {
+                                width: 1,
+                                color: 'rgba(128, 128, 128, 0.5)'
+                            }
+                        }
+                    }
+                }
+            },
+            gauge: {
+                startAngle: 225,
+                endAngle: -45,
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: [[0.2, '#86b379'], [0.8, '#68a54a'], [1, '#408829']],
+                        width: 8
+                    }
+                },
+                axisTick: {
+                    splitNumber: 10,
+                    length: 12,
+                    lineStyle: {
+                        color: 'auto'
+                    }
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: 'auto'
+                    }
+                },
+                splitLine: {
+                    length: 18,
+                    lineStyle: {
+                        color: 'auto'
+                    }
+                },
+                pointer: {
+                    length: '90%',
+                    color: 'auto'
+                },
+                title: {
+                    textStyle: {
+                        color: '#333'
+                    }
+                },
+                detail: {
+                    textStyle: {
+                        color: 'auto'
+                    }
+                }
+            },
+            textStyle: {
+                fontFamily: 'Arial, Verdana, sans-serif'
+            }
+        };
+
+        if ($('#echart_pie2').length) {
+
+            var echartPieCollapse = echarts.init(document.getElementById('echart_pie2'), theme);
+
+            echartPieCollapse.setOption({
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    x: 'center',
+                    y: 'bottom',
+                    data: labels
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        magicType: {
+                            show: true,
+                            type: ['pie', 'funnel']
+                        },
+                        restore: {
+                            show: true,
+                            title: "Restore"
+                        },
+                        saveAsImage: {
+                            show: true,
+                            title: "Save Image"
+                        }
+                    }
+                },
+                calculable: true,
+                series: [{
+                    name: 'Area Mode',
+                    type: 'pie',
+                    radius: [25, 90],
+                    center: ['50%', 170],
+                    roseType: 'area',
+                    x: '50%',
+                    max: 40,
+                    sort: 'ascending',
+                    data: jsondata
+                    //data: [{
+                    //    value: 10,
+                    //    name: 'rose1'
+                    //}, {
+                    //    value: 5,
+                    //    name: 'rose2'
+                    //}, {
+                    //    value: 15,
+                    //    name: 'rose3'
+                    //}, {
+                    //    value: 25,
+                    //    name: 'rose4'
+                    //}, {
+                    //    value: 20,
+                    //    name: 'rose5'
+                    //}, {
+                    //    value: 35,
+                    //    name: 'rose6'
+                    //}]
+                }]
+            });
+
+        }
+
+    }
+
+
+</script>
+

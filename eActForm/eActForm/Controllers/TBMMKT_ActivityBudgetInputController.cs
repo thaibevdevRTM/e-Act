@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
 using static eActForm.Controllers.GetDataMainFormController;
@@ -49,8 +48,8 @@ namespace eActForm.Controllers
                     else//Channel
                     {
                         objGetDataSubjectBy.idBrandOrChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId;
-                    }                 
-                    activity_TBMMKT_Model.tB_Reg_Subject  = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
+                    }
+                    activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
                     //====END===============Get Subject=======================
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
                 }
@@ -73,7 +72,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId = "";
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId = "";
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId = "";
-                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.BudgetNumber = "";                   
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.BudgetNumber = "";
                     activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
                     activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "";
                     activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = costThemeDetailOfGroupByPriceTBMMKT;
@@ -89,7 +88,7 @@ namespace eActForm.Controllers
 
                 activity_TBMMKT_Model.tB_Act_ProductBrand_Model = QueryGetAllBrandByForm.GetAllBrandByForm(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId).Where(x => x.no_tbmmkt != "").ToList();
                 activity_TBMMKT_Model.tB_Act_Chanel_Model = QueryGetAllChanelByForm.getAllChanel(activityFormTBMMKT.master_type_form_id, UtilsAppCode.Session.User.empCompanyId).Where(x => x.no_tbmmkt != "").ToList(); ;
-                activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();                                
+                activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGetSelectBrandOrChannel.GetAllQueryGetSelectBrandOrChannel();
                 activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "tbmmkt_ChooseActivityOrDetail").ToList();
                 activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
                 activity_TBMMKT_Model.activityFormModel.mode = mode;
@@ -126,7 +125,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityFormTBMMKT.languageDoc = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
 
                 int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
-              
+
                 result.Data = activity_TBMMKT_Model.activityFormModel.id;
                 result.Success = true;
             }
