@@ -323,6 +323,8 @@ namespace eActForm.Models
         public string digitGroup { get; set; }
         public string digitSubGroup { get; set; }
         public string EO { get; set; }
+        public bool chkBox { get; set; }
+        public string DateInput { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public ProductCostOfGroupByPrice()

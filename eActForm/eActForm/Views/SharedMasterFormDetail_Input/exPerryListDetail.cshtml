@@ -2,55 +2,49 @@
 @using eActForm.BusinessLayer
 @using eActForm.Models
 
-<div class="form-group col-md-12" id="divExpenseCash" style="margin-top:30px">
+   
     <div class="col-lg-12 col-xs-12">
-        <label>
-            ค่าใช้จ่ายในการเดินทาง / Travel & Transportation Expenses
-        </label>
+        <fieldset>
+            <legend> ค่าใช้จ่ายในการเดินทาง / Travel & Transportation Expenses</legend>
+        </fieldset>
     </div>
 
-    <div class="col-md-12">
-        <table class="table table-bordered" id="tbl_CashDetail" cellpadding="0" cellspacing="0">
-            <thead class="thead-dark">
-                <tr>
-                    <th class="align-content-center font10" rowspan="2" style="width:5%;"></th>
-                    <th class="align-content-center font10" rowspan="2" style="width:10%;">วันเดือนปี</th>
-                    <th class="align-content-center font10" rowspan="2" style="width:30%;">รายการ</th>
-                    <th class="align-content-center font10" rowspan="2" style="width:15%;">ลิตร</th>
-                    <th class="align-content-center font10" rowspan="2" style="width:15%;">จำนวนเงิน</th>
-                    <th class="align-content-center font10" rowspan="2" style="width:30%;">หมายเหตุ</th>
-                </tr>
-            </thead>
-
-            @for (int i = 0; i < Model.activityOfEstimateList.Count; i++)
-            {
-                <tbody>
-                    <tr class="tagCountRowinTable">
-                        @if (UtilsAppCode.Session.User.isCreator && Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
-                        {
-                            <td><button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button></td>
-                        }
-                        else
-                        {
-                            @*<td> <input type="checkbox" checked id="chkBox" class="icheckbox_flat-green" name="Activity_TBMMKT_Model.activityOfEstimateList[@index].chkBox"></td>*@
-                            <td style="text-align:right"> @Html.CheckBoxFor(x => x.activityOfEstimateList[i].chkBox, new { @class = "icheckbox_flat-green", @checked = true })</td>
-                        }
-                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].dateInput, new { @class = "form-control textboxcss font10 textRight datepicker" })</td>
-                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
-                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].unit, new { @class = "form-control textboxcss font10 textRight",onkeyup = "getLite()" })</td>
-                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getValues()" })</td>
-                        <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
-
-
-                        @*<td style="text-align:right"><input type="text" value="@item.date" id="date[@index]" data-date-format="DD MMMM YYYY" name="Activity_TBMMKT_Model.activityOfEstimateList[@index].date" class="form-control textboxcss font10 textRight datepicker" /></td>
-                            <td style="text-align:right"><input type="text" value="@item.productDetail" id="productCashDetail[@index]" name="Activity_TBMMKT_Model.activityOfEstimateList[@index].productDetail" class="form-control textboxcss font10 textRight" /></td>
-                            <td style="text-align:right"><input type="text" value="@item.detail" id="detail[@index]" name="Activity_TBMMKT_Model.activityOfEstimateList[@index].detail" class="form-control textboxcss font10 textRight" /></td>
-                            <td style="text-align:right"><input type="number" value="@item.total" id="total[@index]" name="Activity_TBMMKT_Model.activityOfEstimateList[@index].total" class="form-control textboxcss font10 textRight txttotal_@index" onkeyup="getValues()" /></td>
-                            <td style="text-align:right"><input type="text" value="@item.remark" id="remark[@index]" name="Activity_TBMMKT_Model.activityOfEstimateList[@index].remark" class="form-control textboxcss font10 textRight" /></td>*@
+        <div class="col-md-12">
+            <table class="table table-bordered" id="tbl_CashDetail" cellpadding="0" cellspacing="0">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="align-content-center font10" rowspan="2" style="width:5%;"></th>
+                        <th class="align-content-center font10" rowspan="2" style="width:10%;">วันเดือนปี</th>
+                        <th class="align-content-center font10" rowspan="2" style="width:30%;">รายการ</th>
+                        <th class="align-content-center font10" rowspan="2" style="width:15%;">ลิตร</th>
+                        <th class="align-content-center font10" rowspan="2" style="width:15%;">จำนวนเงิน</th>
+                        <th class="align-content-center font10" rowspan="2" style="width:30%;">หมายเหตุ</th>
                     </tr>
+                </thead>
+
+                @for (int i = 0; i < Model.activityOfEstimateList.Count; i++)
+                {
+                    <tbody id=first>
+                        <tr class="tagCountRowTravel">
+                            @if (UtilsAppCode.Session.User.isCreator && Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
+                            {
+                                <td><button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button></td>
+                            }
+                            else
+                            {
+                                @*<td> <input type="checkbox" checked id="chkBox" class="icheckbox_flat-green" name="Activity_TBMMKT_Model.activityOfEstimateList[@index].chkBox"></td>*@
+                                <td style="text-align:right"> @Html.CheckBoxFor(x => x.activityOfEstimateList[i].chkBox, new { @class = "icheckbox_flat-green", @checked = true })</td>
+                            }
+                            <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].dateInput, new { @class = "form-control textboxcss font10 textRight datepicker" })</td>
+                            <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
+                            <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].unit, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getLite()" })</td>
+                            <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getValues()" })</td>
+                            <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
+                        </tr>
+                    </tbody>
                     <tr>
                         <td></td>
-                        <td colspan="2">
+                        <td colspan="2" class="textRight">
                             รวมค่าใช้จ่ายในการเดินทาง/ต่าใช้จ่ายประจำเดือน (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)
                             Total Travel & Transporation Expenses (Excluding Entertainment Expenses and Market Visit)
                         </td>
@@ -62,76 +56,39 @@
                         </td>
                         <td></td>
                     </tr>
-                </tbody>
-            }
 
-        </table>
-        @if (UtilsAppCode.Session.User.isCreator && Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
-        {
-            <div class="row" style="width:50px" onclick="addRow();">
-                <label class="btn ink-reaction btn-danger fa fa-plus"></label>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-7">
-                </div>
-                <div class="col-lg-2 col-xs-4">
-                    <label id="lbltxtTotal"></label>
-                </div>
-                <div class="col-lg-2 col-xs-4">
-                    <label style="text-align:left">รวม</label>
-                </div>
-                <div class="col-lg-1 col-xs-4">
-                    @*<label id="lblShowtotal"></label>*@
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
-                </div>
-                <div class="col-lg-3 col-xs-4">
-                    <label id="lbltxtTotal"></label>
-                </div>
-                <div class="col-lg-2 col-xs-4">
-                    <label class="pull-left">เบิกตามสิทธิ (ต่อเดือน)</label>
-                </div>
-                <div class="col-lg-1 col-xs-3">
-                    <label>
-                        @Model.exPerryCashModel.rulesCash
-                    </label>
-                </div>
-            </div>
-            <br />
-            <div id="divCertification" class="row">
-                <div class="col-lg-8">
-                </div>
-                <div class="col-lg-4">
-                    <label style="color:red">***จ่ายตามหลักเกณฑ์  @Model.exPerryCashModel.rulesCash บาท ต่อเดือน</label>
-                </div>
-            </div>
-
-            <div id="divCashBill" class="row">
-
-                @foreach (var item in Model.exPerryCashList)
-                {
-                    <div class="col-lg-8">
-                    </div>
-                    <div class="col-lg-4">
-                        <label style="color:red">
-                            <label style="color:red"> @item.cashName @item.cash บาท/เดือน</label>
-                        </label>
-                    </div>
                 }
 
-            </div>
-        }
-        else
-        {
-            <div id="divCashBill" class="row"></div>
-        }
-    </div>
-</div>
+            </table>
+            @if (UtilsAppCode.Session.User.isCreator && Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
+            {
+                <div class="row pull-right" style="width:150px" onclick="addRow();">
+                    <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
+                </div>
 
-<script type="text/javascript">
+                <div id="divCashBill" class="row">
+
+                    @foreach (var item in Model.exPerryCashList)
+                    {
+                        <div class="col-lg-8">
+                        </div>
+                        <div class="col-lg-4">
+                            <label style="color:red">
+                                <label style="color:red"> @item.cashName @item.cash บาท/เดือน</label>
+                            </label>
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div id="divCashBill" class="row"></div>
+            }
+        </div>
+
+
+        <script type="text/javascript">
 
 
     $(document).ready(function () {
@@ -143,29 +100,19 @@
     });
 
     function addRow() {
-        var table = document.getElementById("tbl_CashDetail");
-        var RowCount = table.rows.length - 1;
-
+        var RowCount = $('#tbl_CashDetail tbody tr').length - 1;
         var newRow = $("#tbl_CashDetail tbody tr").first().clone().find("input").val("").end();
-        $("tbody").append(newRow);
+        $("#tbl_CashDetail > tbody:first").append(newRow);
         newRow.find("input").each(function () {
             $(this).attr("id", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
             $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
         }
         );
-        //$("#tbl_CashDetail").append(
-        //    "<tr class=\"tagCountRowinTable\">" + '<td><button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button></td>' +
-        //    '<td style="text-align:right"><input type="text" id="date[' + RowCount + ']" data-date-format="DD MMMM YYYY" name="Activity_TBMMKT_Model.activityOfEstimateList[' + RowCount + '].date" class="form-control textboxcss font10 textRight datepicker" /></td>' +
-        //    '<td style="text-align:right"><input type="text" id="productCashDetail[' + RowCount +']" name="Activity_TBMMKT_Model.activityOfEstimateList[' + RowCount + '].productDetail" class="form-control textboxcss font10 textRight" /></td>' +
-        //    '<td style="text-align:right"><input type="text" id="detail[' + RowCount +']" name="Activity_TBMMKT_Model.activityOfEstimateList[' + RowCount + '].detail" class="form-control textboxcss font10 textRight" /></td>' +
-        //    '<td style="text-align:right"><input type="number" id="total[' + RowCount +']" name="Activity_TBMMKT_Model.activityOfEstimateList[' + RowCount + '].total" class="form-control textboxcss font10 textRight txttotal_'+RowCount+'" onkeyup="getValues()" /></td>' +
-        //    '<td style="text-align:right"><input type="text" id="remark[' + RowCount +']" name="Activity_TBMMKT_Model.activityOfEstimateList[' + RowCount + '].remark" class="form-control textboxcss font10 textRight" /></td>' + "</tr>"
-        //);
+
         $('.datepicker').datepicker({
             format: 'dd-mm-yyyy'
         });
 
-        //document.getElementById("total[" + RowCount + "]").onkeyup = function () { return getValues(); }
     }
 
         function cashDelete(btn) {
@@ -177,7 +124,7 @@
 
     function getValues() {
         var totalAll = 0.00;
-        var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowinTable').length);
+        var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowTravel').length);
 
         for (i = 0; i < rowCount; i++) {
             var x = document.getElementsByName("activityOfEstimateList[" + i + "].total");
@@ -192,7 +139,7 @@
 
     function getLite() {
         var totalAll = 0.00;
-        var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowinTable').length);
+        var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowTravel').length);
 
         for (i = 0; i < rowCount; i++) {
             var x = document.getElementsByName("activityOfEstimateList[" + i + "].unit");
@@ -216,4 +163,4 @@
             });
         }
 
-</script>
+        </script>

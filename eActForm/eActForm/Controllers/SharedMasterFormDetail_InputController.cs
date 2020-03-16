@@ -4,6 +4,7 @@ using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -139,9 +140,6 @@ namespace eActForm.Controllers
                     // }
                     activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
                 }
-
-                activity_TBMMKT_Model.exPerryCashList = exPerryCashAppCode.getCashPosition(UtilsAppCode.Session.User.empId);
-                activity_TBMMKT_Model.exPerryCashModel.rulesCash = activity_TBMMKT_Model.exPerryCashList.Any() ? activity_TBMMKT_Model.exPerryCashList.Where(x => x.cashLimitId.Equals("87757B5B-C946-4001-A74B-AB6C9003AD25")).FirstOrDefault().cash : 0;
             }
             catch (Exception ex)
             {
@@ -150,9 +148,28 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-        public ActionResult exPerryListEntertainment()
+        public ActionResult exPerryListEntertainment(Activity_TBMMKT_Model activity_TBMMKT_Model, string actId)
         {
+            try
+            {
 
+                if (!activity_TBMMKT_Model.productcostdetaillist1.Any())
+                {
+                    //for (int i = 0; i < 6; i++)
+                    //{
+                    activity_TBMMKT_Model.productcostdetaillist1.Add(new ProductCostOfGroupByPrice());
+                    // }
+                    activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
+                }
+
+                activity_TBMMKT_Model.exPerryCashList = exPerryCashAppCode.getCashPosition(UtilsAppCode.Session.User.empId);
+                activity_TBMMKT_Model.exPerryCashModel.rulesCash = activity_TBMMKT_Model.exPerryCashList.Any() ? activity_TBMMKT_Model.exPerryCashList.Where(x => x.cashLimitId.Equals(ConfigurationManager.AppSettings["limitCertification"])).FirstOrDefault().cash : 0;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("exPerryListEntertainment => " + ex.Message);
+            }
+            return PartialView(activity_TBMMKT_Model);
         }
 
     }
