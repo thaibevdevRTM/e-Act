@@ -17,25 +17,10 @@ namespace eActForm.Controllers
         // GET: Approve
         public ActionResult Index(string actId)
         {
+
             try
             {
-
-                ActSignatureModel.SignModels signModels = SignatureAppCode.currentSignatureByEmpId(UtilsAppCode.Session.User.empId);
-                if (signModels.lists == null || signModels.lists.Count == 0)
-                {
-                    ViewBag.messCannotFindSignature = true;
-                }
-                ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
-                models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app).Where(x => x.id == "3" || x.id == "5").ToList();
-                models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
-
-                List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
-                if (getActList.Any())
-                {
-
-                    models.typeForm = BaseAppCodes.getCompanyTypeForm().ToString();
-
-                }
+                if (actId == null) return RedirectToAction("index", "Home");
                 else
                 {
 
@@ -56,7 +41,7 @@ namespace eActForm.Controllers
                     return View(models);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("Approve >> Index >>" + ex.Message);
                 return null;
@@ -70,12 +55,12 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             result.Success = false;
 
-          
+
             try
             {
-                if(model.activityModel.activityOfEstimateList.Any())
+                if (model.activity_TBMMKT_Model.activityOfEstimateList.Any())
                 {
-                    ApproveAppCode.manageApproveEmpExpense(model, Request.Form["lblActFormId"]);         
+                    ApproveAppCode.manageApproveEmpExpense(model, Request.Form["lblActFormId"]);
                 }
 
 
@@ -258,7 +243,7 @@ namespace eActForm.Controllers
                 models.approveFlowDetail = flowModel.flowDetail;
                 //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
-                models.activityModel = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
+                models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
 
             }

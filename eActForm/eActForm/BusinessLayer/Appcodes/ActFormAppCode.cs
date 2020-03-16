@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using eActForm.BusinessLayer.Appcodes;
-using GreatFriends.ThaiBahtText;
 using System.Configuration;
+using System.Linq;
 
 namespace eActForm.BusinessLayer
 {

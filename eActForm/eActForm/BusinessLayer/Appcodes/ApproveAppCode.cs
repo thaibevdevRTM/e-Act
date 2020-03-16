@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.ApplicationBlocks.Data;
-using eActForm.Models;
-using System.Configuration;
 using WebLibrary;
+using System.Linq;
 
 namespace eActForm.BusinessLayer
 {
@@ -66,26 +64,26 @@ namespace eActForm.BusinessLayer
             string newID = Guid.NewGuid().ToString();
             try
             {
-                model.activityModel.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
+                model.activity_TBMMKT_Model.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
 
                 //---- ApprovePass-----//
-                var dataApproveList = model.activityModel.activityOfEstimateList.Where(w => w.chkBox == true).ToList();
-                var dataUnApproveList = model.activityModel.activityOfEstimateList.Where(w => w.chkBox == false).ToList();
+                var dataApproveList = model.activity_TBMMKT_Model.activityOfEstimateList.Where(w => w.chkBox == true).ToList();
+                var dataUnApproveList = model.activity_TBMMKT_Model.activityOfEstimateList.Where(w => w.chkBox == false).ToList();
 
-                model.activityModel.activityOfEstimateList = dataApproveList;
-                resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activityModel, actId);
+                model.activity_TBMMKT_Model.activityOfEstimateList = dataApproveList;
+                resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activity_TBMMKT_Model, actId);
 
                 //---- ApproveUnPass-----//
-                model.activityModel.activityOfEstimateList = dataUnApproveList;
-                resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activityModel, newID);
+                model.activity_TBMMKT_Model.activityOfEstimateList = dataUnApproveList;
+                resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activity_TBMMKT_Model, newID);
 
-                model.activityModel.activityFormModel.reference = model.activityModel.activityFormModel.activityNo;
-                model.activityModel.activityFormModel.id = newID;
-                model.activityModel.activityFormModel.activityNo = "";
-                model.activityModel.activityFormModel.statusId = 1;
-                model.activityModel.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
-                model.activityModel.activityFormModel.updatedDate = DateTime.Now;
-                resultInsert += ActivityFormTBMMKTCommandHandler.insertActivityForm(model.activityModel.activityFormModel);
+                model.activity_TBMMKT_Model.activityFormModel.reference = model.activity_TBMMKT_Model.activityFormModel.activityNo;
+                model.activity_TBMMKT_Model.activityFormModel.id = newID;
+                model.activity_TBMMKT_Model.activityFormModel.activityNo = "";
+                model.activity_TBMMKT_Model.activityFormModel.statusId = 1;
+                model.activity_TBMMKT_Model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+                model.activity_TBMMKT_Model.activityFormModel.updatedDate = DateTime.Now;
+                resultInsert += ActivityFormTBMMKTCommandHandler.insertActivityForm(model.activity_TBMMKT_Model.activityFormModel);
                 return true;
             }
             catch(Exception ex)
