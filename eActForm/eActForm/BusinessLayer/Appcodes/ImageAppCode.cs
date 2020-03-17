@@ -21,7 +21,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                //ExceptionManager.WriteError("getImage => " + ex.Message); // background service use this
+                //ExceptionManager.WriteError("getImage => " + ex.Message); // background service use this. then can't write logs
                 return new List<TB_Act_Image_Model.ImageModel>();
             }
         }
@@ -50,7 +50,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                // ExceptionManager.WriteError("getImage => " + ex.Message);
+                // ExceptionManager.WriteError("getImage => " + ex.Message); // background service use this. then can't write logs
                 return new List<TB_Act_Image_Model.ImageModel>();
             }
         }

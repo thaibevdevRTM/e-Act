@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eActConsoleService", "eActC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebLibrary", "WebLibrary\WebLibrary.csproj", "{915AE4CE-4607-4E97-9329-2F6D8B5C4569}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eForms.Models", "eForms.Models\eForms.Models.csproj", "{43F0B5DC-E0FB-4330-A1FA-E666FFE7E04B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eForms.Presenter", "eForms.Presenter\eForms.Presenter.csproj", "{7D8303A1-BCDC-4184-B676-12A9263F0686}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{915AE4CE-4607-4E97-9329-2F6D8B5C4569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{915AE4CE-4607-4E97-9329-2F6D8B5C4569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{915AE4CE-4607-4E97-9329-2F6D8B5C4569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43F0B5DC-E0FB-4330-A1FA-E666FFE7E04B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43F0B5DC-E0FB-4330-A1FA-E666FFE7E04B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43F0B5DC-E0FB-4330-A1FA-E666FFE7E04B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43F0B5DC-E0FB-4330-A1FA-E666FFE7E04B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D8303A1-BCDC-4184-B676-12A9263F0686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D8303A1-BCDC-4184-B676-12A9263F0686}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D8303A1-BCDC-4184-B676-12A9263F0686}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D8303A1-BCDC-4184-B676-12A9263F0686}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
