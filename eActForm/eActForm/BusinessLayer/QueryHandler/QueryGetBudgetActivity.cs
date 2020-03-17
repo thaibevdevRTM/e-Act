@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId, string companyTH,string act_createdDateStart , string act_createdDateEnd , string act_budgetStatusIdIn)
+		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivity(string act_approveStatusId, string act_activityId, string act_activityNo,string budgetApproveId, string companyTH,DateTime act_createdDateStart , DateTime act_createdDateEnd , string act_budgetStatusIdIn)
 		{
 			try
 			{
@@ -116,16 +116,15 @@ namespace eActForm.BusinessLayer
 			}
 		}
 
-		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityList(string act_approveStatusId, string act_activityId, string act_activityNo, string companyTH, string act_createdDateStart, string act_createdDateEnd, string act_budgetStatusIdIn)
+		public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityList(string act_approveStatusId, string act_activityId, string act_activityNo, string budgetApproveId, string companyTH, DateTime act_createdDateStart, DateTime act_createdDateEnd, string act_budgetStatusIdIn)
 		{
 			try
 			{
-				//act_budgetStatusIdIn =null;
-				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivity"
+				DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActivityList"
 				 , new SqlParameter("@act_approveStatusId", act_approveStatusId)
 				 , new SqlParameter("@act_activityId", act_activityId)
 				 , new SqlParameter("@act_activityNo", act_activityNo)
-				 , new SqlParameter("@budgetApproveId", null)
+				 , new SqlParameter("@budgetApproveId", budgetApproveId)
 				 , new SqlParameter("@companyTH", companyTH)
 
 				 , new SqlParameter("@act_createdDateStart", act_createdDateStart)
@@ -161,6 +160,10 @@ namespace eActForm.BusinessLayer
 								  //act_brandName = d["act_brandName"].ToString(),
 								  //act_shortBrand = d["act_shortBrand"].ToString(),
 
+								  //act_objective = d["act_objective"].ToString(),
+								  //act_trade = d["act_trade"].ToString(),
+								  //act_activityDetail = d["act_activityDetail"].ToString(),
+
 								  act_activityPeriodSt = d["act_activityPeriodSt"] is DBNull ? null : (DateTime?)d["act_activityPeriodSt"],
 								  act_activityPeriodEnd = d["act_activityPeriodEnd"] is DBNull ? null : (DateTime?)d["act_activityPeriodEnd"],
 								  act_costPeriodSt = d["act_costPeriodSt"] is DBNull ? null : (DateTime?)d["act_costPeriodSt"],
@@ -168,10 +171,6 @@ namespace eActForm.BusinessLayer
 
 								  act_activityName = d["act_activityName"].ToString(),
 								  act_theme = d["act_activitySales"].ToString(),
-
-								  //act_objective = d["act_objective"].ToString(),
-								  //act_trade = d["act_trade"].ToString(),
-								  //act_activityDetail = d["act_activityDetail"].ToString(),
 
 								  act_normalCost = d["act_normalCost"].ToString() == "" ? 0 : decimal.Parse(d["act_normalCost"].ToString()),
 								  act_themeCost = d["act_themeCost"].ToString() == "" ? 0 : decimal.Parse(d["act_themeCost"].ToString()),
