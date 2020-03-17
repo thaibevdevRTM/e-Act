@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using eActForm.BusinessLayer;
 using eActForm.Models;
-using eActForm.BusinessLayer;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace eActForm.Controllers
 {
@@ -23,16 +20,18 @@ namespace eActForm.Controllers
             };
             if (Request.QueryString["s"] != null)
             {
-                if( Request.QueryString["s"] == AppCode.ApproveEmailype.document.ToString())
+                if (Request.QueryString["s"] == AppCode.ApproveEmailype.document.ToString())
                 {
                     return RedirectToAction("index", "Home", new { actId = Request.QueryString["actId"] });
-                }else if(Request.QueryString["s"] == AppCode.ApproveEmailype.approve.ToString())
+                }
+                else if (Request.QueryString["s"] == AppCode.ApproveEmailype.approve.ToString())
                 {
                     return RedirectToAction("index", "ApproveLists", new { actId = Request.QueryString["actId"] });
-                }else if (Request.QueryString["s"] == AppCode.ApproveEmailype.budget_form.ToString())
-				{
-					return RedirectToAction("index", "BudgetApproveList", new { actId = Request.QueryString["actId"] });
-				}
+                }
+                else if (Request.QueryString["s"] == AppCode.ApproveEmailype.budget_form.ToString())
+                {
+                    return RedirectToAction("index", "BudgetApproveList", new { actId = Request.QueryString["actId"] });
+                }
             }
             return View(model);
         }

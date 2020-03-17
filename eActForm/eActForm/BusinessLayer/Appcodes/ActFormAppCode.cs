@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
+﻿using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
-using System.Data.SqlClient;
-using eActForm.BusinessLayer.Appcodes;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 
 namespace eActForm.BusinessLayer
 {
@@ -51,7 +50,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("checkActInvoice >>" + ex.Message);
             }
         }
-        public static int deleteActForm(string actId, string remark,string statusNote)
+        public static int deleteActForm(string actId, string remark, string statusNote)
         {
             try
             {

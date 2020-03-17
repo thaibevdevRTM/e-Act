@@ -1,15 +1,9 @@
 ﻿using eActForm.BusinessLayer;
-using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
-using iTextSharp.text;
-using Resources;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
 using System.Linq;
-using System.Net.Mail;
-using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
 using static eActForm.Controllers.GetDataMainFormController;
@@ -40,7 +34,7 @@ namespace eActForm.Controllers
                     objGetDataSubjectByChanelOrBrand objGetDataSubjectBy = new objGetDataSubjectByChanelOrBrand();
                     objGetDataSubjectBy.companyId = activity_TBMMKT_Model.activityFormTBMMKT.companyId;
                     objGetDataSubjectBy.master_type_form_id = activityFormTBMMKT.master_type_form_id;
-                   
+
 
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
                     {
@@ -59,12 +53,12 @@ namespace eActForm.Controllers
                 else
                 {
                     mode = "new";
-                    
+
                     string actId = Guid.NewGuid().ToString();
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
                     activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
-                    activityFormTBMMKT.chkUseEng = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString()== ConfigurationManager.AppSettings["cultureEng"];
+                    activityFormTBMMKT.chkUseEng = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
                     //===mock data for first input====
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
                     for (int i = 0; i < 14; i++)

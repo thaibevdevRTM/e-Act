@@ -1,11 +1,8 @@
 ﻿using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer.CommandHandler
@@ -122,7 +119,7 @@ namespace eActForm.BusinessLayer.CommandHandler
         }
 
 
-        public static int insertProductPrice(string productCode , string customerId)
+        public static int insertProductPrice(string productCode, string customerId)
         {
             int result = 0;
             try

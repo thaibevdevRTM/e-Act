@@ -8,7 +8,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -188,7 +187,7 @@ namespace eActForm.BusinessLayer
                 {
                     if (getActList.FirstOrDefault().activityNo.ToString() == "---")
                     {
-                        
+
                         string getYear = "";
                         if (getActList.FirstOrDefault().activityPeriodSt != null)
                         {
@@ -242,7 +241,7 @@ namespace eActForm.BusinessLayer
                             else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_HCM"])
                             {
                                 result[1] = Activity_Model.activityType.HCM.ToString();
-                            }                                   
+                            }
                             //====END=====แบบใหม่ Gen In USP=======By Peerapop=========
                         }
                     }

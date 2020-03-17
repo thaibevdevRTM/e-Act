@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -27,7 +26,7 @@ namespace eActForm.BusinessLayer
                                   activityNo = d["activityNo"].ToString(),
                                   documentDate = !string.IsNullOrEmpty(d["documentDate"].ToString()) ? DateTime.Parse(d["documentDate"].ToString()) : (DateTime?)null,
                                   activityPeriodSt = !string.IsNullOrEmpty(d["activityPeriodSt"].ToString()) ? DateTime.Parse(d["activityPeriodSt"].ToString()) : (DateTime?)null,
-                                  activityPeriodEnd = !string.IsNullOrEmpty(d["activityPeriodEnd"].ToString()) ? DateTime.Parse(d["activityPeriodEnd"].ToString()) : (DateTime?)null,          
+                                  activityPeriodEnd = !string.IsNullOrEmpty(d["activityPeriodEnd"].ToString()) ? DateTime.Parse(d["activityPeriodEnd"].ToString()) : (DateTime?)null,
                                   activityName = d["activityName"].ToString(),
                                   objective = d["objective"].ToString(),
                                   remark = d["remark"].ToString(),
@@ -43,7 +42,7 @@ namespace eActForm.BusinessLayer
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                                   createdByName = "คุณ" + d["createdByName"].ToString(),
-                                  createdByNameEN =  d["createdByNameEN"].ToString(),
+                                  createdByNameEN = d["createdByNameEN"].ToString(),
 
                               });
 

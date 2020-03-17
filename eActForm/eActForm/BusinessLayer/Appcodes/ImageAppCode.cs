@@ -5,14 +5,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
-    public class ImageAppCode 
+    public class ImageAppCode
     {
-        public static List<TB_Act_Image_Model.ImageModel> GetImage(string activityId,string type)
+        public static List<TB_Act_Image_Model.ImageModel> GetImage(string activityId, string type)
         {
             try
             {
@@ -51,7 +50,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-               // ExceptionManager.WriteError("getImage => " + ex.Message);
+                // ExceptionManager.WriteError("getImage => " + ex.Message);
                 return new List<TB_Act_Image_Model.ImageModel>();
             }
         }

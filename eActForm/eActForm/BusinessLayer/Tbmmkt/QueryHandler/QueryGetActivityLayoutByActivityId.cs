@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -27,7 +26,7 @@ namespace eActForm.BusinessLayer
                                   no = d["no"].ToString(),
                                   io = d["io"].ToString(),
                                   activity = d["activity"].ToString(),
-                                  amount =  Decimal.Parse(d["amount"].ToString()),
+                                  amount = Decimal.Parse(d["amount"].ToString()),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),

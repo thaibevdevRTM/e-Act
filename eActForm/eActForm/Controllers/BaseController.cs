@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using eActForm.BusinessLayer;
+﻿using eActForm.BusinessLayer;
 using eActForm.Models;
+using System;
 using System.Configuration;
+using System.Web.Mvc;
 namespace eActForm.Controllers
 {
     public class BaseController : Controller
@@ -28,24 +25,24 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-		public JsonResult resendApproveBudget(string actId)
-		{
-			var result = new AjaxResult();
-			try
-			{
-				EmailAppCodes.resendHistory(actId);
-				EmailAppCodes.sendApproveBudget(actId, AppCode.ApproveType.Budget_form, true);
-				result.Success = true;
-			}
-			catch (Exception ex)
-			{
-				result.Success = false;
-				result.Message = AppCode.StrMessFail + " Detail :" + ex.Message;
-			}
-			return Json(result, JsonRequestBehavior.AllowGet);
-		}
+        public JsonResult resendApproveBudget(string actId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                EmailAppCodes.resendHistory(actId);
+                EmailAppCodes.sendApproveBudget(actId, AppCode.ApproveType.Budget_form, true);
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = AppCode.StrMessFail + " Detail :" + ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
-	}
+    }
     public class LoginExpireAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)

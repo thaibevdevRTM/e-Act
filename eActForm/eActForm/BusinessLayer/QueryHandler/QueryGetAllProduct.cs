@@ -3,10 +3,9 @@ using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using WebLibrary;
 using System.Data.SqlClient;
+using System.Linq;
+using WebLibrary;
 namespace eActForm.BusinessLayer
 {
     public class QueryGetAllProduct
@@ -70,12 +69,12 @@ namespace eActForm.BusinessLayer
                 return new List<TB_Act_Product_Model.Product_Model>();
             }
         }
-        public static List<TB_Act_Product_Model.Product_Model> getProductBySmellId(string smellId,string productGroupId)
+        public static List<TB_Act_Product_Model.Product_Model> getProductBySmellId(string smellId, string productGroupId)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getProductBySmellId"
-                    ,new SqlParameter[] {
+                    , new SqlParameter[] {
                         new SqlParameter("@smellId", smellId)
                         ,new SqlParameter("@productGroupId",productGroupId)
                     });
@@ -108,7 +107,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAllProduct"
-                    ,new SqlParameter[] { new SqlParameter("@productGroupId", productGroupId) });
+                    , new SqlParameter[] { new SqlParameter("@productGroupId", productGroupId) });
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Act_Product_Model.Product_Model()
                              {
@@ -208,4 +207,3 @@ namespace eActForm.BusinessLayer
         }
     }
 }
-    

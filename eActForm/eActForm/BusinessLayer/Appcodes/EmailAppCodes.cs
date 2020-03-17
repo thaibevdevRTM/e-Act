@@ -1,18 +1,18 @@
-﻿using System;
+﻿using eActForm.Controllers;
+using eActForm.Models;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using Microsoft.ApplicationBlocks.Data;
-using WebLibrary;
-using eActForm.Models;
-using eActForm.Controllers;
+using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Hosting;
+using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
@@ -287,7 +287,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-             
+
                 List<ApproveModel.approveEmailDetailModel> lists = new List<ApproveModel.approveEmailDetailModel>();
 
                 switch (emailType)

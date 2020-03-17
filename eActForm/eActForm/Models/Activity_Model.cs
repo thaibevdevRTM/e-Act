@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using static eActForm.Models.TB_Act_Customers_Model;
 using static eActForm.Models.TB_Act_Product_Model;
 
@@ -25,12 +23,12 @@ namespace eActForm.Models
         public ActivityForm activityFormModel { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
         public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
-        public List<TB_Act_Region_Model> regionGroupList { get; set; }       
+        public List<TB_Act_Region_Model> regionGroupList { get; set; }
 
         public Activity_Model()
         {
             productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
-           // productcostdetaillist = new List<Productcostdetail>();
+            // productcostdetaillist = new List<Productcostdetail>();
             costthemedetail = new List<CostThemeDetail>();
             productlist = new List<Product_Model>();
             productcatelist = new List<TB_Act_ProductCate_Model>();
@@ -191,7 +189,7 @@ namespace eActForm.Models
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
         public string formCompanyId { get; set; }
-        public string languageDoc { get; set; }    
+        public string languageDoc { get; set; }
         public string digit_IO { get; set; }
         public string statusNote { get; set; }
     }
@@ -240,7 +238,7 @@ namespace eActForm.Models
 
     }
 
-        public class CostThemeDetail : ActBaseModel
+    public class CostThemeDetail : ActBaseModel
     {
         public string id { get; set; }
         public string productGroupId { get; set; }
@@ -372,6 +370,6 @@ namespace eActForm.Models
     }
 
 
-   
+
 
 }

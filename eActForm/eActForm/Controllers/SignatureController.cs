@@ -1,12 +1,12 @@
-﻿using System;
+﻿using eActForm.BusinessLayer;
+using eActForm.Models;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using eActForm.Models;
-using eActForm.BusinessLayer;
-using System.Configuration;
-using System.IO;
 
 namespace eActForm.Controllers
 {
@@ -78,7 +78,7 @@ namespace eActForm.Controllers
                 singna.empName = emp[0].empName;
                 singna.empCompanyName = emp[0].companyName;
                 singna.positionTitle = emp[0].position;
-               
+
                 models.lists.Add(singna);
             }
             else
@@ -130,6 +130,6 @@ namespace eActForm.Controllers
 
             // return Json(result);
         }
-     
+
     }
 }
