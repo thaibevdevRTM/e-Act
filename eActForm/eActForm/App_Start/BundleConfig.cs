@@ -34,7 +34,7 @@ namespace eActForm
                        "~/Scripts/jquery-migrate-1.2.1.min.js",
                         "~/Scripts/jquery.unobtrusive-ajax.min.js"));
 
-            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
+             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                 "~/Scripts/jquery-ui.css",
                 "~/content/vendors/bootstrap/dist/css/bootstrap.min.css",
                 "~/content/vendors/font-awesome/css/font-awesome.min.css",

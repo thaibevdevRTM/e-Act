@@ -34,8 +34,6 @@ D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService
 D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojResolveAssemblyReference.cache
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojResolveAssemblyReference.cache
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\ApplicationInsights.config
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\ActRepDetail\0c0ec151-e347-46b7-a92f-e58df434eb21.pdf
@@ -87,9 +85,7 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.We
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.Razor.xml
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Razor.xml
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\Antlr3.Runtime.pdb
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
-D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojResolveAssemblyReference.cache
-D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.Deployment.xml
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\ApplicationInsights.config
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\ActRepDetail\0c0ec151-e347-46b7-a92f-e58df434eb21.pdf
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\ActRepDetail\37349052-6886-424d-9f7d-9d76c40fc63b.pdf
@@ -110,9 +106,11 @@ D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\WebActivatorEx
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Optimization.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Mvc.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\itextsharp.dll
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eForms.Models.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\EPPlus.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\Newtonsoft.Json.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\itextsharp.xmlworker.dll
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eForms.Presenter.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\Microsoft.Exchange.WebServices.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\Microsoft.Web.Infrastructure.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\WebGrease.dll
@@ -126,7 +124,10 @@ D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eActForm.dll.c
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\WebLibrary.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Optimization.xml
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Mvc.xml
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eForms.Models.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\Newtonsoft.Json.xml
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eForms.Presenter.pdb
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\Microsoft.Exchange.WebServices.xml
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.xml
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.Razor.xml
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Razor.xml
@@ -134,7 +135,7 @@ D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\Antlr3.Runtime
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.Deployment.xml
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\en\eActForm.resources.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CopyComplete
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.Deployment.xml
