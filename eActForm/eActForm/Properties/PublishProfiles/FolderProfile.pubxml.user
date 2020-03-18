@@ -85,10 +85,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/12/2019 14:57:40</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
-      <publishTime>03/18/2020 11:15:46</publishTime>
+      <publishTime>03/18/2020 11:52:02</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
-      <publishTime>03/18/2020 11:15:46</publishTime>
+      <publishTime>03/18/2020 11:52:02</publishTime>
     </File>
     <File Include="bin/eForms.Models.dll">
       <publishTime>03/18/2020 11:10:29</publishTime>
@@ -103,7 +103,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/18/2020 11:10:30</publishTime>
     </File>
     <File Include="bin/en/eActForm.resources.dll">
-      <publishTime>03/18/2020 11:15:47</publishTime>
+      <publishTime>03/18/2020 11:52:02</publishTime>
     </File>
     <File Include="bin/EPPlus.dll">
       <publishTime>02/27/2020 15:14:07</publishTime>
@@ -891,8 +891,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/fonts/fontawesome-webfont.woff">
       <publishTime>11/12/2019 14:57:41</publishTime>
     </File>
+    <File Include="Content/fonts/fontawesome-webfont.woff2">
+      <publishTime>03/18/2020 11:38:50</publishTime>
+    </File>
     <File Include="Content/fonts/FontAwesome.otf">
       <publishTime>11/12/2019 14:57:41</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.woff">
+      <publishTime>03/18/2020 11:50:12</publishTime>
     </File>
     <File Include="Content/jquery.datetimepicker.css">
       <publishTime>11/12/2019 14:57:41</publishTime>
@@ -1025,6 +1031,18 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/themes/base/tooltip.css">
       <publishTime>11/12/2019 14:57:41</publishTime>
+    </File>
+    <File Include="Content/themes/fonts/fontawesome-webfont.woff2">
+      <publishTime>03/18/2020 11:48:15</publishTime>
+    </File>
+    <File Include="Content/themes/fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>03/18/2020 11:51:37</publishTime>
+    </File>
+    <File Include="Content/themes/fonts/glyphicons-halflings-regular.woff">
+      <publishTime>03/18/2020 11:39:08</publishTime>
+    </File>
+    <File Include="Content/themes/fonts/glyphicons-halflings-regular.woff2">
+      <publishTime>03/18/2020 11:48:30</publishTime>
     </File>
     <File Include="Content/vendors/bootstrap-datepicker/bootstrap-datepicker.js">
       <publishTime>11/12/2019 14:57:42</publishTime>
@@ -7975,7 +7993,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/12/2020 08:46:03</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/18/2020 11:15:51</publishTime>
+      <publishTime>03/18/2020 11:40:10</publishTime>
     </File>
     <File Include="WebForm1.aspx">
       <publishTime>03/18/2020 10:49:39</publishTime>
