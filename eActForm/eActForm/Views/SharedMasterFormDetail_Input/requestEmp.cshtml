@@ -74,7 +74,6 @@
                             empId: $('#ddlEmp_' + rowIndex).val(),
                         }
                     }).done(function (response) {
-
                         $('#position_' + rowIndex).val(response.Data.position);
                         $('#level_' + rowIndex).val(response.Data.level);
                         $('#department_' + rowIndex).val(response.Data.department);

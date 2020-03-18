@@ -262,25 +262,12 @@ else
 
     function callPreviewApprove(obj) {
 
-        if ('@Model.masterTypeFormId.ToString()' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
-
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("previewActBudget", "Approve")',
-                data: {
-                    activityId: obj,
-                }
-            }).done(function (htmlResponse) {
-                $("#dataFromPDF").val(htmlResponse);
-                genFileActForm();
-                });
-
-        }
-        else if ('@Model.masterTypeFormId.ToString()' == '@ConfigurationManager.AppSettings["formAdvTbmId"]'
-            || '@Model.masterTypeFormId.ToString()' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'
-            || '@Model.masterTypeFormId.ToString()' == '@ConfigurationManager.AppSettings["formPosTbmId"]'
-            || '@Model.masterTypeFormId.ToString()' == '@ConfigurationManager.AppSettings["formTrvHcmId"]'
-            || '@Model.masterTypeFormId.ToString()' == '@ConfigurationManager.AppSettings["formAdvHcmId"]'
+        if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]'
+            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvTbmId"]'
+            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'
+            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]'
+            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvHcmId"]'
+            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvHcmId"]'
         ) {
 
             $.ajax({

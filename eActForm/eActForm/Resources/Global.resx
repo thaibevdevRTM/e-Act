@@ -183,14 +183,14 @@
   <data name="approveDate" xml:space="preserve">
     <value>วันที่อนุมัติ</value>
   </data>
+  <data name="compName" xml:space="preserve">
+    <value>companyName</value>
+  </data>
   <data name="cultureLocal" xml:space="preserve">
     <value>th-TH</value>
   </data>
   <data name="dearToInform" xml:space="preserve">
     <value>เรียน เพื่อทราบ</value>
-  </data>
-  <data name="empName" xml:space="preserve">
-    <value>empName</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>ชื่อ</value>
@@ -209,5 +209,71 @@
   </data>
   <data name="yourSignature" xml:space="preserve">
     <value>ลายเซ็นปัจจุบัน</value>
+  </data>
+  <data name="empBu" xml:space="preserve">
+    <value>bu</value>
+  </data>
+  <data name="empCompName" xml:space="preserve">
+    <value>companyName</value>
+  </data>
+  <data name="empDepartment" xml:space="preserve">
+    <value>department</value>
+  </data>
+  <data name="empName" xml:space="preserve">
+    <value>empName</value>
+  </data>
+  <data name="empPosition" xml:space="preserve">
+    <value>position</value>
+  </data>
+  <data name="formName" xml:space="preserve">
+    <value>formName</value>
+  </data>
+  <data name="viewManual" xml:space="preserve">
+    <value>คำแนะนำการขอเบิกค่าใช้จ่าย</value>
+  </data>
+  <data name="toDocument" xml:space="preserve">
+    <value>เรียน</value>
+  </data>
+  <data name="amountTHB" xml:space="preserve">
+    <value>จำนวนเงิน(บาท)</value>
+  </data>
+  <data name="at" xml:space="preserve">
+    <value>ที่</value>
+  </data>
+  <data name="dateOfCheque" xml:space="preserve">
+    <value>ต้องการเช็ค</value>
+  </data>
+  <data name="dateOfPaymentSettlement" xml:space="preserve">
+    <value>เคลียร์เงินทดรองในวันที่</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>รายการ</value>
+  </data>
+  <data name="documentDate" xml:space="preserve">
+    <value>วันที่</value>
+  </data>
+  <data name="jobName" xml:space="preserve">
+    <value>ชื่องาน</value>
+  </data>
+  <data name="note" xml:space="preserve">
+    <value>หมายเหตุ</value>
+  </data>
+  <data name="position" xml:space="preserve">
+    <value>ตำแหน่ง</value>
+  </data>
+  <data name="purpose" xml:space="preserve">
+    <value>วัตถุประสงค์</value>
+  </data>
+  <data name="requestByName" xml:space="preserve">
+    <value>ชื่อผู้ขอยืม</value>
+  </data>
+  <data name="textDetailsAttachPay" xml:space="preserve">
+    <value>หมายเหตุ แนบหลักฐานใบยืมเงินทดรองมาด้วยตอนเคลียร์เงิน</value>
+  </data>
+  <data name="theEstimatedExpenseDetailsAsPerFollowing" xml:space="preserve">
+    <value>โดยมีรายละเอียดประมาณการค่าใช้จ่ายดังนี้</value>
+  </data>
+  <data name="totalAmountTHB" xml:space="preserve">
+    <value>รวมเงิน(บาท)</value>
   </data>
 </root>

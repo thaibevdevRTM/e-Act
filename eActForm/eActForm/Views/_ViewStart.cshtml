@@ -1,18 +1,16 @@
 ﻿@using System.Globalization;
 @using System.Configuration;
-@using System.Threading;
+@using eActForm.BusinessLayer;
 @{
-    //==========dev date 20200403 peerapop=====Cookie multi language==========
+    //==========dev date 20200304 peerapop=====Cookie multi language==========
     if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]] == null)
     {
         Response.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value = ConfigurationManager.AppSettings["cultureThai"];
         Response.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Expires = DateTime.Now.AddDays(365);
     }
-    //===END=======dev date 20200403 peerapop=====Cookie multi language==========
+    //===END=======dev date 20200304 peerapop=====Cookie multi language==========
 
 
-    string culture = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
-    Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
-    Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+    DocumentsAppCode.setCulture(Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString());
     Layout = "~/Views/Shared/_Layout.cshtml";
 }

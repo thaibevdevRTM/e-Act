@@ -7,7 +7,7 @@
         {
             var base64 = Convert.ToBase64String(Model.signature);
             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-            <img src="@imgSrc" class="img-thumbnail" style="text-align:center;width:200px;" />
+            <img src="@imgSrc" class="img-thumbnail" style="text-align:center;" />
             if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureThai"])
             {
                 <p style="text-align:center">@UtilsAppCode.Session.User.empFNameTH @UtilsAppCode.Session.User.empLNameTH</p>

@@ -1,8 +1,6 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
 @using eActForm.Models
-
-
 @using System.Configuration;
 @{
 
@@ -11,7 +9,7 @@
     var urlWorkFlowTrv = "";
     if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"])//travelling TBM
     {
-        strHeader = "คำแนะนำการขอเบิกค่าใช้จ่ายในการเดินทาง";
+        strHeader = Resources.Global.viewManual;
         urlWorkFlowTrv = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "manual/travelling_TBM.pdf";
     }
 
@@ -55,14 +53,11 @@
                         @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
                     </td>
                 </tr>*@
-            @*=========END========for test====================*@
+            @*=========END========for test==================*@
             @foreach (var item in Model.master_Type_Form_Detail_Models)
             {
                 @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
             }
-
-
-
         </table>
     </div>
 
@@ -73,17 +68,23 @@
     @Html.HiddenFor(x => x.activityFormModel.activityNo, new { @id = "hdactivityNo" })
     @Html.HiddenFor(x => x.activityFormTBMMKT.formCompanyId, new { @id = "hdformCompanyId" })
 }
-
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
+    <tr>
+        <td>
+            @RenderPage("~/Views/SharedMasterFormDetail_Input/attachOutFormTag.cshtml")
+        </td>
+    </tr>
+</table>
 <div style="height:5px;">
 
 </div>
 
 <div style="margin-left:25px;" class="text-center">
     <a href="@Url.Action("index", "Home", new { typeForm = @Model.activityFormModel.typeForm }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-    @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString()
-                        || Model.activityFormTBMMKT.statusId == 1
-                        || Model.activityFormTBMMKT.statusId == 5
-                        || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)))
+    @if (Model.activityFormModel.mode == "new"
+                                                || Model.activityFormTBMMKT.statusId == 1
+                                                || Model.activityFormTBMMKT.statusId == 5
+                                                || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)))
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
     }
@@ -121,11 +122,11 @@
 
 <script>
 
-       if(('@Model.activityFormTBMMKT.statusId' == '2' && '@UtilsAppCode.Session.User.isAdminTBM' == "False") || ('@Model.activityFormTBMMKT.statusId' == '3'))
-        {
+    if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId)' == "False")
+    {
            $("#GridPDF :input").prop("disabled", true);
            $("#txtdescAttach").prop("disabled", true);
-        }
+    }
 
         if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
             var arrayOfElements = document.getElementsByClassName('clstxtIO');
@@ -143,9 +144,9 @@
         });
 
     $(function () {
-        $("#txtdateDoc").datepicker();
-        $("#txtdateActivitySt").datepicker();
-        $("#txtactivityPeriodEnd").datepicker();
+        $("#txtdateDoc").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#txtdateActivitySt").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#txtactivityPeriodEnd").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'){//travelling TBM
             $('#preview').modal('show');
@@ -220,6 +221,14 @@
             if ($("#ddlchannel_place").val() == "") { required += "Channel+Region*<br>"; validate = false; }
             if ($("#txttoName").val() == "") { required += "ให้แก่(ชื่อผู้รับ)*<br>"; validate = false; }
             if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์ที่ขอเบิก*<br>"; validate = false; }
+
+            var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
+            for (i = 0; i < rowCount; i++) {
+                if ($("#ddlin_or_out_stock").val()=='@ConfigurationManager.AppSettings["idInStock"]' && $(".txtInTable_productId_" + i).val() != '' && $(".txtInTable_IO_" + i).val() == '') {
+                    required += "กรุณาระบุIOในMatรายการที่: " + (i+1) +"<br>"; validate = false;
+                }
+            }
+
         }
         else {
 
