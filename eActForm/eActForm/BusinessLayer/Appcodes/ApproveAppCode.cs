@@ -405,6 +405,7 @@ namespace eActForm.BusinessLayer
                                                  empEmail = dr["empEmail"].ToString(),
                                                  statusId = dr["statusId"].ToString(),
                                                  statusName = dr["statusName"].ToString(),
+                                                 statusNameEN = dr["statusNameEN"].ToString(),
                                                  isSendEmail = (bool)dr["isSendEmail"],
                                                  remark = dr["remark"].ToString(),
                                                  signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],

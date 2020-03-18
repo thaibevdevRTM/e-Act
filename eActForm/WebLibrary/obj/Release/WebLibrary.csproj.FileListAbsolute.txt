@@ -28,3 +28,10 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csprojAs
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.dll
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.pdb
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.xml
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csprojResolveAssemblyReference.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CoreCompileInputs.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb

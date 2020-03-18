@@ -19,7 +19,7 @@
                 Status
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
+                @Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", @Resources.Global.dropdownStatus), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
             Start date
         </label>
         <div class="col-md-9 col-sm-9 col-xs-12">
-            <input type="text" name="startDate" id="startDate" value="@DateTime.Now.AddDays(-15).ToString("MM/dd/yyyy")" class="form-control fv">
+            <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-15), ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
         </div>
 
     </div>
@@ -39,7 +39,7 @@
             End date
         </label>
         <div class="col-md-9 col-sm-9 col-xs-12">
-            <input type="text" name="endDate" id="endDate" value="@DateTime.Now.ToString("MM/dd/yyyy")" class="form-control fv">
+            <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
         </div>
 
     </div>
