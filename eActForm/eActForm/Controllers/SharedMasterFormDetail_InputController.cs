@@ -1,8 +1,11 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -114,6 +117,69 @@ namespace eActForm.Controllers
         }
         public ActionResult remarksDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+
+        public ActionResult exPerryCashDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            activity_TBMMKT_Model.companyList = QueryGetAllCompany.getAllCompany();
+            activity_TBMMKT_Model.objExpenseCashList = QueryOtherMaster.getOhterMaster("expenseCash", "");
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+
+        public ActionResult exPerryEmpInfoDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+        public ActionResult exPerryListDetail(Activity_TBMMKT_Model activity_TBMMKT_Model, string actId)
+        {
+            try
+            {
+                var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actId);
+                activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId.Equals("1")).ToList();
+                if (!activity_TBMMKT_Model.activityOfEstimateList.Any())
+                {
+                    //for (int i = 0; i < 6; i++)
+                    //{
+                    activity_TBMMKT_Model.activityOfEstimateList.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
+                    // }
+                    activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
+                }
+
+                activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId.Equals("2")).ToList();
+                if (!activity_TBMMKT_Model.activityOfEstimateList2.Any())
+                {
+                    //for (int i = 0; i < 6; i++)
+                    //{
+                    activity_TBMMKT_Model.activityOfEstimateList2.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
+                    // }
+                    activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
+                }
+
+                activity_TBMMKT_Model.exPerryCashList = exPerryCashAppCode.getCashPosition(UtilsAppCode.Session.User.empId);
+                activity_TBMMKT_Model.exPerryCashModel.rulesCash = activity_TBMMKT_Model.exPerryCashList.Any() ? activity_TBMMKT_Model.exPerryCashList.Where(x => x.cashLimitId.Equals(ConfigurationManager.AppSettings["limitCertification"])).FirstOrDefault().cash : 0;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("exPerryListDetail => " + ex.Message);
+            }
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+        public ActionResult exPerryListEntertainment(Activity_TBMMKT_Model activity_TBMMKT_Model, string actId)
+        {
+            try
+            {
+
+               
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("exPerryListEntertainment => " + ex.Message);
+            }
             return PartialView(activity_TBMMKT_Model);
         }
 

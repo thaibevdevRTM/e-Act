@@ -1,0 +1,60 @@
+﻿
+@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer
+@using eActForm.Models
+
+
+
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $('.datepicker').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+
+    });
+
+    function addRowEntertainment() {
+        var RowCount = $('#tbl_Entertainment tbody tr').length - 4;
+        var newRow = $("#tbl_Entertainment tbody tr").first().clone().find("input").val("").end();
+        $("#tbl_Entertainment > tbody:first").append(newRow);
+        newRow.find("input").each(function () {
+            $(this).attr("id", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+            $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+        }
+        );
+
+        $('.datepicker').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+
+        //document.getElementById("total[" + RowCount + "]").onkeyup = function () { return getValues(); }
+    }
+
+    function cashDelete(btn) {
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        getValues();
+    }
+
+
+    function getTotal() {
+        var totalAll = 0.00;
+        var rowCount = parseInt($('#tbl_Entertainment tr.tagCountRowExpenses').length);
+
+        for (i = 0; i < rowCount; i++) {
+            var x = document.getElementsByName("productcostdetaillist1[" + i + "].total");
+            var rowtotal = parseFloat($(x).val());
+            if (isNaN(rowtotal)) rowtotal = 0;
+           var totalAll = totalAll + rowtotal;
+        }
+        document.getElementById('lbltotalExMaket').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        totalExpenExMaket();
+        totalAllExpenses();
+    }
+
+
+</script>

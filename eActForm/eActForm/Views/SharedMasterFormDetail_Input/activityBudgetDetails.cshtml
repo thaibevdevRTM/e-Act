@@ -14,31 +14,31 @@
                     <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</th>
                 </tr>
                 @{ var index = 0;}
-                @foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
+                @foreach (var item in Model.activityOfEstimateList)
                 {
                     <tr class="tagCountRowinTable">
                         <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
                             @if (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)
                             {
-                                <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class="form-control textboxcss clstxtIO" />
+                                <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" />
                             }
                             else
                             {
-                                <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class="form-control textboxcss clstxtIO" readonly="readonly" />
+                                <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" readonly="readonly" />
                             }
 
                         </td>
                         <td style="width: 10%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            @Html.DropDownList("costThemeDetailOfGroupByPriceTBMMKT[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control selectpicker" })
+                            @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control selectpicker" })
                         </td>
                         <td style="width: 30%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.productDetail" id="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" name="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" class="form-control textboxcss" />
+                            <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss" />
                         </td>
                         <td style="width: 8%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.QtyName" id="costThemeDetailOfGroupByPriceTBMMKT[@index].QtyName" name="costThemeDetailOfGroupByPriceTBMMKT[@index].QtyName" class="form-control textboxcss" />
+                            <input type="text" value="@item.QtyName" id="activityOfEstimateList[@index].QtyName" name="activityOfEstimateList[@index].QtyName" class="form-control textboxcss" />
                         </td>
                         <td style="width: 7%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.unit" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" class="form-control textboxcss txtUnit_@index" />
+                            <input type="text" value="@item.unit" id="activityOfEstimateList[@index].unit" name="activityOfEstimateList[@index].unit" class="form-control textboxcss txtUnit_@index" />
                             <script>
                         $(".txtUnit_@index").blur(function () {
                             $(".txtUnit_@index").val($(".txtUnit_@index").val().replace(",", ""));
@@ -46,11 +46,11 @@
                             </script>
                         </td>
                         <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            @Html.TextBoxFor(x => item.unitPriceDisplay, new { @id = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].unitPriceDisplay", Name = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index })
+                            @Html.TextBoxFor(x => item.unitPriceDisplay, new { @id = "activityOfEstimateList[" + index + "].unitPriceDisplay", Name = "activityOfEstimateList[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index })
                         </td>
                         <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                            <input type="hidden" value="@item.total" id="costThemeDetailOfGroupByPriceTBMMKT[@index].total" name="costThemeDetailOfGroupByPriceTBMMKT[@index].total" class="form-control textboxcss text-right hidtotal_@index" />
-                            @Html.TextBoxFor(x => item.total, "{0:n2}", new { @id = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].total", Name = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].total", @class = "form-control textboxcss text-right txttotal_" + index, @readonly = "readonly" })
+                            <input type="hidden" value="@item.total" id="activityOfEstimateList[@index].total" name="activityOfEstimateList[@index].total" class="form-control textboxcss text-right hidtotal_@index" />
+                            @Html.TextBoxFor(x => item.total, "{0:n2}", new { @id = "activityOfEstimateList[" + index + "].total", Name = "activityOfEstimateList[" + index + "].total", @class = "form-control textboxcss text-right txttotal_" + index, @readonly = "readonly" })
                             <script>
                          $(".txtUnit_@index").blur(function () {
                             var v_unitRow = 0.00;

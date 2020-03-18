@@ -18,12 +18,13 @@ namespace eActForm.Models
         }
         public class approveModels
         {
-            public string typeForm { get; set; }
+            public string masterTypeFormId { get; set; }
             public approveModel approveModel { get; set; }
             public List<approveDetailModel> approveDetailLists { get; set; }
             public List<approveStatus> approveStatusLists { get; set; }
             public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
             public Activity_TBMMKT_Model activity_TBMMKT_Model { get; set; }//fream dev date 20200114
+            public List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT { get; set; }
 
             public approveModels()
             {

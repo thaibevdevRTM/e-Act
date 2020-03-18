@@ -283,12 +283,6 @@ namespace eActForm.BusinessLayer
             }
         }
 
-
-
-
-
-
-
         public static int deleteActivityOfProductByActivityId(string activityId)
         {
 

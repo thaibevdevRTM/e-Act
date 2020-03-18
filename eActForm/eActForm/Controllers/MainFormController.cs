@@ -57,6 +57,7 @@ namespace eActForm.Controllers
                     string actId = Guid.NewGuid().ToString();
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
+                    //activityFormTBMMKT.subjectId = subjectId;
                     activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
                     activityFormTBMMKT.chkUseEng = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
                     //===mock data for first input====
@@ -74,7 +75,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.BudgetNumber = "";
                     activity_TBMMKT_Model.activityFormTBMMKT = activityFormTBMMKT;
                     activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = "";
-                    activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = costThemeDetailOfGroupByPriceTBMMKT;
+                    activity_TBMMKT_Model.activityOfEstimateList = costThemeDetailOfGroupByPriceTBMMKT;
                     activity_TBMMKT_Model.totalCostThisActivity = decimal.Parse("0.00");
                     activity_TBMMKT_Model.activityFormTBMMKT.list_2_select = "";
                     activity_TBMMKT_Model.activityFormTBMMKT.list_3_select = "";
@@ -96,7 +97,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGet_channelMaster.get_channelMaster(activityFormTBMMKT.master_type_form_id, activityFormTBMMKT.formCompanyId);
                 activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "tbmmkt_ChooseActivityOrDetail").ToList();
                 activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
-                activity_TBMMKT_Model.activityFormModel.mode = mode;
+                activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
                 activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activityFormTBMMKT.master_type_form_id, "input");
                 activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activityFormTBMMKT.formCompanyId).FirstOrDefault().companyNameTH;
                 activity_TBMMKT_Model.activityFormTBMMKT.companyNameEN = QueryGet_master_company.get_master_company(activityFormTBMMKT.formCompanyId).FirstOrDefault().companyNameEN;
@@ -135,7 +136,7 @@ namespace eActForm.Controllers
 
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"])//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
                 {
-                    activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
+                    activity_TBMMKT_Model.activityOfEstimateList = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
                     //activity_TBMMKT_Model.activityFormModel.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                 }
 

@@ -215,6 +215,22 @@ namespace eActForm.BusinessLayer
         }
 
 
+        public static string convertThaiBaht(decimal? txbaht)
+        {
+            string result = "";
+            try
+            {
+                result = GreatFriends.ThaiBahtText.ThaiBahtTextUtil.ThaiBahtText(txbaht);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return result;
+                throw new Exception("convertThaiBaht >>" + ex.Message);
+            }
+        }
+
+
         public static bool isOtherCompanyMT()
         {
             return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] ||
