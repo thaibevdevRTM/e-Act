@@ -32,7 +32,10 @@ namespace eActForm
                        "~/Content/vendors/iCheck/icheck.min.js",
                        "~/Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js",
                        "~/Scripts/jquery-migrate-1.2.1.min.js",
-                        "~/Scripts/jquery.unobtrusive-ajax.min.js"));
+                        "~/Scripts/jquery.unobtrusive-ajax.min.js",
+                        "~/Scripts/pnotify/dist/pnotify.js",
+                        "~/Scripts/pnotify/dist/pnotify.buttons.js",
+                        "~/Scripts/pnotify/dist/pnotify.nonblock.js"));
 
              bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                 "~/Scripts/jquery-ui.css",
@@ -42,7 +45,10 @@ namespace eActForm
                 "~/Content/vendors/iCheck/skins/flat/green.css",
                 "~/Content/vendors/bootstrap-datepicker/datepicker3.css",
                 "~/Content/Site.css",
-                "~/content/vendors/build/css/custom.min.css"));
+                "~/content/vendors/build/css/custom.min.css",
+                "~/Scripts/pnotify/dist/pnotify.nonblock.css",
+                "~/Scripts/pnotify/dist/pnotify.buttons.css",
+                "~/Scripts/pnotify/dist/pnotify.css"));
 
             //~/Content/vendors/bootstrap-datepicker/datepicker3.css
         }

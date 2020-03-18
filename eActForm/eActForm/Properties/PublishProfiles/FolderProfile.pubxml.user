@@ -684,11 +684,8 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/vendors/bootstrap-datepicker/locales/bootstrap-datepicker.lt.js">
       <publishTime>11/12/2019 14:57:42</publishTime>
     </File>
-    <File Include="Content/vendors/bootstrap-datepicker/locales/bootstrap-datepicker.lv.js">
-      <publishTime>11/12/2019 14:57:42</publishTime>
-    </File>
-    <File Include="Content/vendors/bootstrap-datepicker/locales/bootstrap-datepicker.mk.js">
-      <publishTime>11/12/2019 14:57:42</publishTime>
+    <File Include="bin/WebLibrary.dll">
+      <publishTime>02/27/2020 16:32:22</publishTime>
     </File>
     <File Include="Content/vendors/bootstrap-datepicker/locales/bootstrap-datepicker.ms.js">
       <publishTime>11/12/2019 14:57:42</publishTime>
@@ -13748,26 +13745,26 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/03/2018 15:46:52</publishTime>
       <publishTime>11/12/2019 14:57:43</publishTime>
     </File>
-    <File Include="images/tbmmktLogo.png">
-      <publishTime>02/27/2020 15:14:08</publishTime>
+    <File Include="Content/vendors/iCheck/skins/flat/_all.css">
+      <publishTime>12/20/2019 15:18:22</publishTime>
     </File>
-    <File Include="images/warning_error.png">
-      <publishTime>11/12/2019 14:57:43</publishTime>
+    <File Include="Content/vendors/iCheck/skins/futurico/futurico%402x.png">
+      <publishTime>12/20/2019 15:18:22</publishTime>
     </File>
-    <File Include="images/warning_error.png">
-      <publishTime>11/12/2019 14:57:43</publishTime>
+    <File Include="Content/vendors/iCheck/skins/futurico/futurico.css">
+      <publishTime>12/20/2019 15:18:22</publishTime>
     </File>
-    <File Include="images/xlx.png">
-      <publishTime>11/28/2019 14:27:49</publishTime>
+    <File Include="Content/vendors/iCheck/skins/futurico/futurico.png">
+      <publishTime>12/20/2019 15:18:22</publishTime>
     </File>
-    <File Include="images/xlx.png">
-      <publishTime>11/28/2019 14:27:49</publishTime>
+    <File Include="Content/vendors/iCheck/skins/line/aero.css">
+      <publishTime>12/20/2019 15:18:22</publishTime>
     </File>
-    <File Include="manual/manual_eAct.pdf">
-      <publishTime>11/12/2019 14:57:43</publishTime>
+    <File Include="Content/vendors/iCheck/skins/line/blue.css">
+      <publishTime>12/20/2019 15:18:22</publishTime>
     </File>
-    <File Include="manual/travelling_TBM.pdf">
-      <publishTime>02/20/2020 10:08:10</publishTime>
+    <File Include="Content/vendors/iCheck/skins/line/green.css">
+      <publishTime>12/20/2019 15:18:22</publishTime>
     </File>
     <File Include="Scripts/umd/popper.min.js.map">
       <publishTime>12/03/2018 15:46:51</publishTime>
