@@ -1,4 +1,4 @@
-﻿﻿﻿using eActForm.Models;
+﻿@using eActForm.Models;
 using System.Web.Mvc;
 
 namespace eActForm.Controllers
@@ -11,7 +11,7 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult headerDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
-        {           
+        {
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult headerDetails_Pos_Premium(Activity_TBMMKT_Model activity_TBMMKT_Model)

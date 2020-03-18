@@ -37,7 +37,7 @@ namespace eActForm
                         "~/Scripts/pnotify/dist/pnotify.buttons.js",
                         "~/Scripts/pnotify/dist/pnotify.nonblock.js"));
 
-            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
+             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                 "~/Scripts/jquery-ui.css",
                 "~/content/vendors/bootstrap/dist/css/bootstrap.min.css",
                 "~/content/vendors/font-awesome/css/font-awesome.min.css",

@@ -189,7 +189,7 @@ namespace eActForm.Models
         // public int rowNo { get; set; }
         public string detailTh { get; set; }
         public string detailEn { get; set; }
-         public bool chk { get; set; }
+        public bool chk { get; set; }
 
     }
     //public class CheckboxModels

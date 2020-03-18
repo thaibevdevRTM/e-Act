@@ -5,14 +5,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
     public class QueryGet_empDetailById
     {
-        public static List< RequestEmpModel> getEmpDetailById(string empId)
+        public static List<RequestEmpModel> getEmpDetailById(string empId)
         {
             try
             {
@@ -34,7 +33,7 @@ namespace eActForm.BusinessLayer
                                  positionEN = d["empPositionTitleEN"].ToString(),
                                  departmentEN = d["empDepartmentEN"].ToString(),
                                  buEN = d["empDivisionEN"].ToString(),
-                                 companyNameEN =  d["companyNameEN"].ToString(),
+                                 companyNameEN = d["companyNameEN"].ToString(),
                              });
                 return lists.OrderBy(x => x.empName).ToList();
             }

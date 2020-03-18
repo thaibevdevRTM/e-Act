@@ -1,7 +1,6 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
-using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -252,14 +251,14 @@ namespace eActForm.BusinessLayer
             {
                 string en = ConfigurationManager.AppSettings["cultureEng"];
 
-                 string sumTxtLabelRequired = "";
+                string sumTxtLabelRequired = "";
                 activity_TBMMKT_Model.activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getActivityById(activityId).FirstOrDefault(); // TB_Act_ActivityForm
                 activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activityId).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
                 activity_TBMMKT_Model.costThemeDetailOfGroupByPriceTBMMKT = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
                 activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activityId);
                 activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(
-                 activity_TBMMKT_Model.activityFormTBMMKT.languageDoc              
+                 activity_TBMMKT_Model.activityFormTBMMKT.languageDoc
                 , en
                 , activity_TBMMKT_Model.activityFormTBMMKT.statusId);
                 if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)

@@ -78,7 +78,7 @@ namespace eActForm.Controllers
                 singna.empName = emp[0].empName;
                 singna.empCompanyName = emp[0].companyName;
                 singna.positionTitle = emp[0].position;
-               
+
                 models.lists.Add(singna);
             }
             else
@@ -130,6 +130,6 @@ namespace eActForm.Controllers
 
             // return Json(result);
         }
-     
+
     }
 }

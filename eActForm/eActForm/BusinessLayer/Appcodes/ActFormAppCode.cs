@@ -3,16 +3,16 @@ using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Configuration;
 
 namespace eActForm.BusinessLayer
 {
     public class ActFormAppCode
     {
-        public static int updateWaitingCancel(string actId, string remark)
+        public static int updateWaitingCancel(string actId, string remark, string statusNote)
         {
             try
             {
@@ -22,6 +22,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@statusNote",statusNote)
                     });
                 return rtn;
             }
@@ -49,7 +50,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("checkActInvoice >>" + ex.Message);
             }
         }
-        public static int deleteActForm(string actId, string remark)
+        public static int deleteActForm(string actId, string remark, string statusNote)
         {
             try
             {
@@ -59,6 +60,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@statusNote",statusNote)
                     });
                 return rtn;
             }
@@ -119,7 +121,7 @@ namespace eActForm.BusinessLayer
 
 
                 if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin ||
-                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM|| UtilsAppCode.Session.User.isAdminHCM )
+                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)
                 {
                     strCall = "usp_getActivityFormAll";
                 }
@@ -217,6 +219,35 @@ namespace eActForm.BusinessLayer
         {
             return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] ||
                 UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+        }
+
+        public static bool isAdmin()
+        {
+            return
+                UtilsAppCode.Session.User.isAdminOMT
+                || UtilsAppCode.Session.User.isAdmin
+                || UtilsAppCode.Session.User.isAdminTBM
+                || UtilsAppCode.Session.User.isAdminHCM
+                || UtilsAppCode.Session.User.isSuperAdmin ? true : false;
+        }
+
+        public static string getStatusNote(string actId)
+        {
+            try
+            {
+                string statusNote = "";
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getStatusNote"
+                    , new SqlParameter[] { new SqlParameter("@actId", actId) });
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    statusNote = ds.Tables[0].Rows[0]["statusNote"].ToString();
+                }
+                return statusNote;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getStatusNote >>" + ex.Message);
+            }
         }
     }
 }

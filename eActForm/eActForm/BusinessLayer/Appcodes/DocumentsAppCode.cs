@@ -4,14 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.ApplicationBlocks.Data;
-using eActForm.Models;
 using Org.BouncyCastle.Asn1.Ocsp;
 using System.Configuration;
-using System.Threading;
 using System.Globalization;
-
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 namespace eActForm.BusinessLayer
@@ -224,7 +221,7 @@ namespace eActForm.BusinessLayer
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
         }
-        public static string convertDateTHToShowCultureDateEN(DateTime? dateToShow,string formatDatetime)
+        public static string convertDateTHToShowCultureDateEN(DateTime? dateToShow, string formatDatetime)
         {
             string valResult = "";
             if (dateToShow != null)
