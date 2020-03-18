@@ -816,8 +816,8 @@ namespace eActForm.BusinessLayer
                         {
 
                             Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-                            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, null, null, actFormId, null, null, null, null).FirstOrDefault();
-
+                            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, null, null, actFormId, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
+                            
                             string var_link = "";
                             var_link = "activityProduct?activityId=" + budget_activity_model.Budget_Activity.act_form_id + "&activityNo=" + budget_activity_model.Budget_Activity.act_activityNo + "&companyEN=" + budget_activity_model.Budget_Activity.act_companyEN;
 

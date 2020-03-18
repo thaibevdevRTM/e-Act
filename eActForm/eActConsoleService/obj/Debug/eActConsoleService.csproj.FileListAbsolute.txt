@@ -139,3 +139,5 @@ D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleSer
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CopyComplete
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache

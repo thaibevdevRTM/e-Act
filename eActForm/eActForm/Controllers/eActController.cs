@@ -1,6 +1,10 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

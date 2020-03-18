@@ -11,17 +11,6 @@ using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
 
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Web;
-//using System.Web.Mvc;
-//using WebLibrary;
-//using eActForm.BusinessLayer;
-//using eActForm.Models;
-//using System.Configuration;
-
-
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -49,8 +38,8 @@ namespace eActForm.Controllers
             model = new Budget_Approve_Detail_Model.budgetForms();
 
             string companyEN = Session["var_companyEN"].ToString();
-            string startDate = Request.Form["startDate"];
-            string endDate = Request.Form["endDate"];
+            DateTime startDate = DateTime.ParseExact(Request.Form["startDate"].Trim(), "MM/dd/yyyy", null);
+            DateTime endDate = DateTime.ParseExact(Request.Form["endDate"].Trim(), "MM/dd/yyyy", null);
 
             if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
@@ -81,7 +70,6 @@ namespace eActForm.Controllers
                 model.budgetFormLists = model.budgetFormLists.Where(r => r.themeId == Request.Form["ddlTheme"]).ToList();
             }
 
-
             TempData["SearchDataModelBudget"] = model.budgetFormLists;
             return RedirectToAction("myDocBudget");
         }
@@ -93,15 +81,8 @@ namespace eActForm.Controllers
             model = new Budget_Approve_Detail_Model.budgetForms();
 
             string companyEN = Session["var_companyEN"].ToString();
-            string startDate = Request.Form["startDate"];
-            string endDate = Request.Form["endDate"];
-
-            if (startDate == null)
-            {
-                startDate = DateTime.Now.AddDays(-30).ToString("MM/dd/yyyy");
-                endDate = DateTime.Now.ToString("MM/dd/yyyy");
-
-            }
+            DateTime startDate = DateTime.Now.AddDays(-30);
+            DateTime endDate = DateTime.Now.AddDays(1);
 
             if (TempData["SearchDataModelBudget"] != null)
             {
@@ -119,10 +100,9 @@ namespace eActForm.Controllers
                 }
             }
             return PartialView(model);
-            //return PartialView();
         }
 
-        public static List<Budget_Approve_Detail_Model.budgetForm> getBudgetListsByEmpId(string empId, string companyEN, string createdDateStart, string createdDateEnd)
+        public static List<Budget_Approve_Detail_Model.budgetForm> getBudgetListsByEmpId(string empId, string companyEN, DateTime createdDateStart, DateTime createdDateEnd)
         {
             try
             {
