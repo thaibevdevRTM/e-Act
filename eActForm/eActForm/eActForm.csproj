@@ -2976,7 +2976,6 @@
     <Content Include="Views\actFormRepPostEva\index.cshtml" />
     <Content Include="Views\actFormRepPostEva\postEvaListView.cshtml" />
     <Content Include="Views\actFormRepPostEva\postEvaGroupBrandView.cshtml" />
-    <Content Include="Views\SharedMasterFormDetail_Input\exPerryListEntertainment.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetailsBg.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\activityBudgetDetails.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyWithAddress.cshtml" />

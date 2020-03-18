@@ -2,7 +2,9 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -124,7 +126,6 @@ namespace eActForm.Controllers
         public ActionResult exPerryCashDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             activity_TBMMKT_Model.companyList = QueryGetAllCompany.getAllCompany();
-            activity_TBMMKT_Model.objExpenseCashList = QueryOtherMaster.getOhterMaster("expenseCash", "");
             return PartialView(activity_TBMMKT_Model);
         }
 
@@ -165,20 +166,6 @@ namespace eActForm.Controllers
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("exPerryListDetail => " + ex.Message);
-            }
-            return PartialView(activity_TBMMKT_Model);
-        }
-
-        public ActionResult exPerryListEntertainment(Activity_TBMMKT_Model activity_TBMMKT_Model, string actId)
-        {
-            try
-            {
-
-               
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("exPerryListEntertainment => " + ex.Message);
             }
             return PartialView(activity_TBMMKT_Model);
         }

@@ -342,10 +342,20 @@ namespace eActForm.Controllers
             return Json(txtBaht, JsonRequestBehavior.AllowGet);
         }
 
-
-        public static List<TB_Act_Other_Model> getOtherMasterByType(string type, string subType)
+        public JsonResult getOtherMasterByType(string type, string subType)
         {
-            return QueryOtherMaster.getOhterMaster(type, subType);
+            List<TB_Act_Other_Model> getOtherList = new List<TB_Act_Other_Model>();
+            try
+            {
+                getOtherList =  QueryOtherMaster.getOhterMaster(type, subType);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
+            }
+            return Json(getOtherList, JsonRequestBehavior.AllowGet);
         }
+
+       
     }
 }
