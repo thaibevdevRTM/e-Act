@@ -42,7 +42,7 @@ namespace eActForm.BusinessLayer
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                                   createdByName = "คุณ" + d["createdByName"].ToString(),
-                                  createdByNameEN =  d["createdByNameEN"].ToString(),
+                                  createdByNameEN = d["createdByNameEN"].ToString(),
 
                               });
 

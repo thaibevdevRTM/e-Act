@@ -41,16 +41,16 @@ namespace eActForm.Controllers
         }
         public ActionResult headerDetailsDate_dmy(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            if (string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.documentDateStr) && (activity_TBMMKT_Model.activityFormModel.documentDate!= null))
+            if (string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.documentDateStr) && (activity_TBMMKT_Model.activityFormModel.documentDate != null))
             {
                 activity_TBMMKT_Model.activityFormTBMMKT.documentDateStr = DocumentsAppCode.convertDateTHToShowCultureDateEN(activity_TBMMKT_Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]);
             }
 
-            if (activity_TBMMKT_Model.list_0 == null|| activity_TBMMKT_Model.list_0.Count == 0 )
+            if (activity_TBMMKT_Model.list_0 == null || activity_TBMMKT_Model.list_0.Count == 0)
             {
 
-               // if (activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
-            
+                // if (activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+
                 activity_TBMMKT_Model.list_0 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "travelling").OrderBy(x => x.name).ToList();
             }
             return PartialView(activity_TBMMKT_Model);
@@ -63,6 +63,6 @@ namespace eActForm.Controllers
             }
             return PartialView(activity_TBMMKT_Model);
         }
-        
+
     }
 }

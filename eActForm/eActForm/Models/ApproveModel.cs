@@ -61,7 +61,7 @@ namespace eActForm.Models
             public string activityNo { get; set; }
             public bool? isApprove { get; set; }
             public string companyName { get; set; }
-            public string companyNameEN { get; set; }            
+            public string companyNameEN { get; set; }
         }
         public class approveStatus : ActBaseModel
         {
