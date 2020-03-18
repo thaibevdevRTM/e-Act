@@ -19,10 +19,10 @@
             <tr>
                 <th class="align-content-center font10" rowspan="2" style="width:5%;"></th>
                 <th class="align-content-center font10" rowspan="2" style="width:10%;">วันที่</th>
-                <th class="align-content-center font10" rowspan="2" style="width:30%;">สถานที่</th>
-                <th class="align-content-center font10" rowspan="2" style="width:15%;">จุดประสงค์</th>
-                <th class="align-content-center font10" rowspan="2" style="width:15%;">ชื่อลูกค้า</th>
-                <th class="align-content-center font10" rowspan="2" style="width:30%;">รวมเป็นจำนวนเงิน</th>
+                <th class="align-content-center font10" rowspan="2" style="width:15%;">สถานที่</th>
+                <th class="align-content-center font10" rowspan="2" style="width:25%;">จุดประสงค์</th>
+                <th class="align-content-center font10" rowspan="2" style="width:25%;">ชื่อลูกค้า</th>
+                <th class="align-content-center font10" rowspan="2" style="width:10%;">รวมเป็นจำนวนเงิน</th>
             </tr>
         </thead>
 
@@ -39,10 +39,10 @@
                         <td style="text-align:right"> @Html.CheckBoxFor(x => x.productcostdetaillist1[i].chkBox, new { @class = "icheckbox_flat-green", @checked = true })</td>
                     }
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.productcostdetaillist1[i].DateInput, new { @class = "form-control textboxcss font10 textRight datepicker" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.productcostdetaillist1[i].productName, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.productcostdetaillist1[i].productDetail, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getLite()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.productcostdetaillist1[i].place, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.productcostdetaillist1[i].detail, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getLite()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.productcostdetaillist1[i].customer, new { @class = "form-control textboxcss font10 textRight" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.productcostdetaillist1[i].total, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal()" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.productcostdetaillist1[i].total, new { @class = "form-control textboxcss font10 textRight" })</td>
                 </tr>
             </tbody>
             <tr>
@@ -53,6 +53,16 @@
                 </td>
                 <td class="textRight">
                     <label id="lbltotalExMaket"></label>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="4" class="textRight">
+                    รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท)
+                    Total Monthly Expenses (Baht)
+                </td>
+                <td class="textRight">
+                    <label id="lbltotalExpenses"></label>
                 </td>
             </tr>
             <tr>
@@ -125,7 +135,7 @@
     });
 
     function addRowEntertainment() {
-        var RowCount = $('#tbl_Entertainment tbody tr').length - 3;
+        var RowCount = $('#tbl_Entertainment tbody tr').length - 4;
         var newRow = $("#tbl_Entertainment tbody tr").first().clone().find("input").val("").end();
         $("#tbl_Entertainment > tbody:first").append(newRow);
         newRow.find("input").each(function () {
@@ -153,17 +163,15 @@
         var rowCount = parseInt($('#tbl_Entertainment tr.tagCountRowExpenses').length);
 
         for (i = 0; i < rowCount; i++) {
-            var x = document.getElementsByName("activityOfEstimateList[" + i + "].total");
+            var x = document.getElementsByName("productcostdetaillist1[" + i + "].total");
             var rowtotal = parseFloat($(x).val());
             if (isNaN(rowtotal)) rowtotal = 0;
-            totalAll = totalAll + rowtotal;
+           var totalAll = totalAll + rowtotal;
         }
-        convertBaht2Text(totalAll);
         document.getElementById('lbltotalExMaket').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        totalExpenExMaket();
+        totalAllExpenses();
     }
-
-
-
 
 
 </script>

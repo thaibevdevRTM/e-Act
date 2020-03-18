@@ -50,8 +50,6 @@ namespace eActForm.BusinessLayer
 
                     rtn = ProcessInsertTB_Act_ActivityChoiceSelect(rtn, model, activityId);
 
-
-
                     rtn = ProcessInsertRequestEmp(rtn, model, activityId);
                     rtn = ProcessInsertPlaceDetail(rtn, model, activityId);
                     rtn = ProcessInsertPurpose(rtn, model, activityId);
@@ -107,6 +105,47 @@ namespace eActForm.BusinessLayer
             return rtn;
         }
 
+        public static int processInsertTBProduct(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            int insertIndex = 1;
+            List<ProductCostOfGroupByPrice> insertProductlist = new List<ProductCostOfGroupByPrice>();
+            if (model.productcostdetaillist1 != null)
+            {
+                rtn += deleteActivityOfProductByActivityId(activityId);
+                foreach (var item in model.productcostdetaillist1.ToList())
+                {
+                    ProductCostOfGroupByPrice productcostdetail = new ProductCostOfGroupByPrice();
+                    productcostdetail.id = item.id;
+                    productcostdetail.productGroupId = item.productGroupId;
+                    productcostdetail.activityId = activityId;
+                    productcostdetail.productId = item.productId;
+                    productcostdetail.wholeSalesPrice = item.wholeSalesPrice;
+                    productcostdetail.saleIn = item.saleIn;
+                    productcostdetail.saleOut = item.saleNormal;
+                    productcostdetail.disCount1 = item.disCount1;
+                    productcostdetail.disCount2 = item.disCount2;
+                    productcostdetail.disCount3 = item.disCount3;
+                    productcostdetail.normalCost = item.normalCost;
+                    productcostdetail.normalGp = item.normalGp;
+                    productcostdetail.promotionGp = item.promotionGp;
+                    productcostdetail.specialDisc = item.specialDisc;
+                    productcostdetail.specialDiscBaht = item.specialDiscBaht;
+                    productcostdetail.promotionCost = item.promotionCost;
+                    productcostdetail.isShowGroup = item.isShowGroup;
+                    productcostdetail.rowNo = insertIndex;
+                    productcostdetail.delFlag = item.delFlag;
+                    productcostdetail.createdByUserId = model.activityFormModel.createdByUserId;
+                    productcostdetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    productcostdetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    productcostdetail.updatedDate = DateTime.Now;
+
+                    rtn += insertTBProduct(productcostdetail);
+
+                    insertIndex++;
+                }
+            }
+            return rtn;
+        }
         public static int ProcessInsertTB_Act_ActivityForm_DetailOther(int rtn, Activity_TBMMKT_Model model, string activityId)
         {
             TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
@@ -699,22 +738,47 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        protected static int insertProductCost(DataTable dt)
+        protected static int insertTBProduct(ProductCostOfGroupByPrice model)
         {
+            int result = 0;
             try
             {
-                int rtn = 0;
-                foreach (DataRow dr in dt.Rows)
-                {
-
-                    rtn += SqlHelper.ExecuteNonQueryTypedParams(AppCode.StrCon, "usp_insertProductCostdetail", dr);
-                }
-                return rtn;
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertProductCostdetail"
+                    , new SqlParameter[] {new SqlParameter("@id",model.id)
+                    ,new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@productId",model.productId)
+                    ,new SqlParameter("@productName",model.productName)
+                    ,new SqlParameter("@wholeSalesPrice",model.wholeSalesPrice)
+                    ,new SqlParameter("@saleIn",model.saleIn)
+                    ,new SqlParameter("@saleOut", model.saleOut)
+                    ,new SqlParameter("@disCount1",model.disCount1)
+                    ,new SqlParameter("@disCount2",model.disCount2)
+                    ,new SqlParameter("@disCount3",model.disCount3)
+                    ,new SqlParameter("@normalCost",model.normalCost)
+                    ,new SqlParameter("@normalGp",model.normalGp)
+                    ,new SqlParameter("@promotionGp",model.promotionGp)
+                    ,new SqlParameter("@specialDisc",model.specialDisc)
+                    ,new SqlParameter("@specialDiscBaht",model.specialDiscBaht)
+                    ,new SqlParameter("@promotionCost",model.promotionCost)
+                    ,new SqlParameter("@rowNo",model.rowNo)
+                    ,new SqlParameter("@isShowGroup",model.isShowGroup)
+                    ,new SqlParameter("@Date",model.DateInput)
+                    ,new SqlParameter("@place",model.place)
+                    ,new SqlParameter("@detail",model.detail)
+                    ,new SqlParameter("@total",model.total)
+                    ,new SqlParameter("@delFlag",model.delFlag)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+            });
             }
             catch (Exception ex)
             {
-                throw new Exception("insertProductCost >> " + ex.Message);
+                ExceptionManager.WriteError(ex.Message + ">> insertEstimateTBMMKT");
             }
+
+            return result;
         }
 
         protected static int insertCostThemeDetail(DataTable dt)

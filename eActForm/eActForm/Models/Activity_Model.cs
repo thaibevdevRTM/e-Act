@@ -327,6 +327,9 @@ namespace eActForm.Models
         public string EO { get; set; }
         public bool chkBox { get; set; }
         public string DateInput { get; set; }
+        public string place { get; set; }
+        public string detail { get; set; }
+        public string customer { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public ProductCostOfGroupByPrice()
