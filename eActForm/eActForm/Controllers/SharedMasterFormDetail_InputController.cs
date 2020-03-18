@@ -141,7 +141,8 @@ namespace eActForm.Controllers
         {
             try
             {
-                activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actId);
+                var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actId);
+                activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId.Equals("1")).ToList();
                 if (!activity_TBMMKT_Model.activityOfEstimateList.Any())
                 {
                     //for (int i = 0; i < 6; i++)
@@ -150,6 +151,19 @@ namespace eActForm.Controllers
                     // }
                     activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
                 }
+
+                activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId.Equals("2")).ToList();
+                if (!activity_TBMMKT_Model.activityOfEstimateList2.Any())
+                {
+                    //for (int i = 0; i < 6; i++)
+                    //{
+                    activity_TBMMKT_Model.activityOfEstimateList2.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
+                    // }
+                    activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
+                }
+
+                activity_TBMMKT_Model.exPerryCashList = exPerryCashAppCode.getCashPosition(UtilsAppCode.Session.User.empId);
+                activity_TBMMKT_Model.exPerryCashModel.rulesCash = activity_TBMMKT_Model.exPerryCashList.Any() ? activity_TBMMKT_Model.exPerryCashList.Where(x => x.cashLimitId.Equals(ConfigurationManager.AppSettings["limitCertification"])).FirstOrDefault().cash : 0;
             }
             catch (Exception ex)
             {
@@ -163,17 +177,7 @@ namespace eActForm.Controllers
             try
             {
 
-                if (!activity_TBMMKT_Model.productcostdetaillist1.Any())
-                {
-                    //for (int i = 0; i < 6; i++)
-                    //{
-                    activity_TBMMKT_Model.productcostdetaillist1.Add(new ProductCostOfGroupByPrice());
-                    // }
-                    activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
-                }
-
-                activity_TBMMKT_Model.exPerryCashList = exPerryCashAppCode.getCashPosition(UtilsAppCode.Session.User.empId);
-                activity_TBMMKT_Model.exPerryCashModel.rulesCash = activity_TBMMKT_Model.exPerryCashList.Any() ? activity_TBMMKT_Model.exPerryCashList.Where(x => x.cashLimitId.Equals(ConfigurationManager.AppSettings["limitCertification"])).FirstOrDefault().cash : 0;
+               
             }
             catch (Exception ex)
             {
