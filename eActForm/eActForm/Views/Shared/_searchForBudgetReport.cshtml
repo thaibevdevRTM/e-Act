@@ -33,7 +33,7 @@
 			Start date
 		</label>
 		<div class="col-md-9 col-sm-9 col-xs-12">
-			<input type="text" name="startDate" id="startDate" value="@DateTime.Now.AddDays(-45).ToString("MM/dd/yyyy")" class="form-control fv">
+			<input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-45), ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
 		</div>
 
 	</div>
@@ -42,7 +42,7 @@
 			End date
 		</label>
 		<div class="col-md-6 col-sm-6 col-xs-12">
-			<input type="text" name="endDate" id="endDate" value="@DateTime.Now.ToString("MM/dd/yyyy")" class="form-control fv">
+			<input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
 		</div>
 
 		<label class="control-label col-md-2 col-sm-2 col-xs-12" for="ddlCustomer">

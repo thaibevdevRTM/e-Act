@@ -44,6 +44,11 @@ namespace eActForm.Controllers
                     ViewBag.classFont = "fontDocSmall";
                     ViewBag.padding = "paddingFormV2";
                 }
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"] )//แบบฟอร์มอนุมัติจัดกิจกรรม dev date 20200313
+                {
+                    ViewBag.classFont = "formBorderStyle1";
+                    ViewBag.padding = "paddingFormV3";
+                }
                 else
                 {
                     ViewBag.classFont = "fontDocV1";
