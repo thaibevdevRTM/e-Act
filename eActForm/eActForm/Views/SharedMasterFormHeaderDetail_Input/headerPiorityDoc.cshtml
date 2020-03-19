@@ -15,16 +15,16 @@
                     </div>
                 </div> 
                 <label class="control-label col-md-3 col-xs-12">
-                    ความเร่งด่วน :
+                    @Resources.Global.piorityDoc :
                 </label>
                 <div class="col-md-2 col-xs-12">
 
                     <div class="row">
-                        @Html.DropDownListFor(x => x.activityFormTBMMKT.piorityDoc, new SelectList(Model.listPiority, "id", "name", ""), "", new
-                        {
-                            @class = "form-control selectpicker",
-                            id = "ddlTravelling"
-                        })
+                        @Html.DropDownListFor(x => x.activityFormTBMMKT.piorityDoc, new SelectList(Model.listPiority, "id", Model.activityFormTBMMKT.chkUseEng ? "nameEN" : "name", ""), "", new
+                   {
+                       @class = "form-control selectpicker",
+                       id = "ddlTravelling"
+                   });
 
                     </div>
                   

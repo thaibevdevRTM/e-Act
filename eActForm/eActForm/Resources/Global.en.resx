@@ -276,4 +276,7 @@
   <data name="totalAmountTHB" xml:space="preserve">
     <value>Total amount (THB)</value>
   </data>
+  <data name="piorityDoc" xml:space="preserve">
+    <value>Piority Doc</value>
+  </data>
 </root>

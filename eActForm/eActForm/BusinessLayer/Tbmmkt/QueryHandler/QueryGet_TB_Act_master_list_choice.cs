@@ -24,6 +24,7 @@ namespace eActForm.BusinessLayer
                               {
                                   id = d["id"].ToString(),
                                   name = d["name"].ToString(),
+                                  nameEN = d["nameEN"].ToString(),
                                   sub_name = d["sub_name"].ToString(),
                                   type = d["type"].ToString(),
                                   master_type_form_id = d["master_type_form_id"].ToString(),
