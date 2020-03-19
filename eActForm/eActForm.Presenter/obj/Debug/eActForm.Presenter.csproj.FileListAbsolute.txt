@@ -1,9 +1,0 @@
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Presenter\bin\Debug\eActForm.Presenter.dll
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Presenter\bin\Debug\eActForm.Presenter.pdb
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Presenter\bin\Debug\eActForm.Models.dll
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Presenter\bin\Debug\Microsoft.ApplicationBlocks.Data.dll
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Presenter\bin\Debug\eActForm.Models.pdb
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Presenter\obj\Debug\eActForm.Presenter.csprojAssemblyReference.cache
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Presenter\obj\Debug\eActForm.Presenter.csproj.CopyComplete
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Presenter\obj\Debug\eActForm.Presenter.dll
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActForm.Presenter\obj\Debug\eActForm.Presenter.pdb
