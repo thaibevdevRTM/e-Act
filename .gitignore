@@ -1,7 +1,7 @@
 eActForm/eActForm/UploadfilesBudget/
 eActForm/eActForm/ActBudget/
-eActForm/.vs/
-eActForm/eActForm/obj/
+eActForm/.vs/*
+eActForm/eActForm/obj/*
 eActForm/eActForm/Uploadfiles/
 eActForm/eActForm/error/
 eActForm/eActForm/ActivityFormPdf/
@@ -15,3 +15,5 @@ eActForm/eActConsoleService/obj
 eActForm/eActConsoleService/*.config
 eActForm/eActConsoleService/bin
 *.pdf
+eActForm/eActForm/Properties/*
+eActForm/eActConsoleService/bin/Debug/*
