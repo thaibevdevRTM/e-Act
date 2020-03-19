@@ -3009,7 +3009,7 @@
     <Folder Include="ActivityFormPdf\" />
     <Folder Include="BusinessLayer\Tbmmkt\Appcodes\" />
     <Folder Include="error\" />
-    <Folder Include="obj\Release\" />
+    <Folder Include="obj\" />
     <Folder Include="Scripts\pnotify\libtests\browserify\" />
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
