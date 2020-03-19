@@ -16,3 +16,4 @@ eActForm/eActConsoleService/*.config
 eActForm/eActConsoleService/bin
 *.pdf
 eActForm/eActForm/Properties/*
+eActForm/eActConsoleService/bin/Debug/*
