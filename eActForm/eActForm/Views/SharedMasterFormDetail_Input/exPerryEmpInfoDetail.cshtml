@@ -1,24 +1,19 @@
 ﻿@using eActForm.BusinessLayer
 @model eActForm.Models.Activity_TBMMKT_Model
-<div class="form-group col-md-12" id="divExpenseCashEmpInfo">
+
+
+
+<div class="col-md-12" id="divExpenseCashEmpInfo">
     @*<div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;@Model.TB_Reg_RequestEmp.empName&nbsp;&nbsp;</div>
         <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
     <fieldset>
-        <legend>Employee Info:</legend>
+        <legend>พนักงาน</legend>
+
         <div class="col-lg-12 col-xs-12">
             <div class="col-md-3 col-xs-12">
                 <label id="lblEmpId">รหัสพนักงาน </label>
                 @Html.TextBoxFor(x => x.activityFormModel.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
             </div>
-            <div class="col-md-5 col-xs-12">
-                <label> ประเทศหรืองานที่เดินทางไป</label>
-                @Html.TextBoxFor(x => x.activityFormModel.pack, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtPack" })
-            </div>
-            <div class="col-md-3 col-xs-12">
-                <label>วันที่</label>
-                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, new { @class = "form-control textboxcss textRight datepicker", Style = "text-align:center;" })
-            </div>
-
         </div>
 
         <div class="col-lg-12 col-xs-12" style="margin-top:15px;">
@@ -38,12 +33,31 @@
                 <label style="width:130px;">หน่วยงาน :</label>&nbsp;&nbsp;<lable id="lblDept" />
             </div>
         </div>
+    </fieldset>
+    <br />
+    <fieldset>
+        <legend>เดินทาง </legend>
+        <div class="col-lg-12 col-xs-12">
+            <div class="col-md-5 col-xs-12">
+                <label> ประเทศหรืองานที่เดินทางไป</label>
+                @Html.TextBoxFor(x => x.activityFormModel.activityDetail, new { @class = "form-control  textRight", Style = "text-align:center;", id = "txtPack" })
+            </div>
+        </div>
+        <div class="col-lg-12 col-xs-12">
+            <div class="col-md-3 col-xs-12">
+                <label>วันที่</label>
+                @Html.TextBoxFor(x => x.activityFormModel.str_costPeriodSt, new { @class = "form-control  textRight datepicker", Style = "text-align:center;" })
+            </div>
+            <div class="col-md-3 col-xs-12">
+                <label>ถึง</label>
+                @Html.TextBoxFor(x => x.activityFormModel.str_costPeriodEnd, new { @class = "form-control  textRight datepicker", Style = "text-align:center;" })
+            </div>
 
-        <div class="col-lg-12 col-xs-12" style="margin-top:30px">
-           
+        </div>
+
+        <div class="col-lg-12 col-xs-12" style="margin-top:15px">
         </div>
     </fieldset>
-    <hr />
 </div>
 
 <script type="text/javascript">
@@ -51,7 +65,7 @@
      $(document).ready(function () {
 
         $('.datepicker').datepicker({
-            format: 'dd-mm-yyyy'
+            format: 'dd/mm/yyyy'
         });
 
     });
