@@ -1,0 +1,222 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+
+@*=====ของDEVทดลองprint pdf=========*@
+<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+@using (Html.BeginForm("printDoc", "MainReport", FormMethod.Post))
+{
+    <input type="hidden" name="gridHtml" />
+    <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
+    <br />
+    <br />
+    <br />
+}
+
+
+<script>
+    $("#btnExportPDF").click(function () {
+        $("input[name='gridHtml']").val($("#divForm").html());
+    });
+</script>
+@*===END==ของงDEVทดลองprint pdf=========*@
+
+<div id="divForm" style="width:97%;">
+    <style>
+        .fontDocV2 {
+            font-family: 'TH SarabunPSK';
+            font-size: 22px;
+            color: black;
+        }
+
+        .fontDocSmall {
+            font-family: 'TH SarabunPSK';
+            font-size: 14px;
+            color: black;
+        }
+        .threeBoxTop {
+            background-color: white;
+            font-weight: bold;
+        }
+    </style>
+    <table style="width:100%;" class="fontDocSmall">
+        <tr>
+            <td style="width: 80%; height: 40pt; border: 0px solid black; font-weight: bold; text-align: center; font-size: 12pt;">
+                <table style="width:100%;">
+                    <tr>
+                        <td style="text-align: left;">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width: 60%; height: 15px; border: 0px solid black; padding-top: -40px; text-align: left;" class="fontDocV2">
+                                        <label ID="lblCompanyName_01">บริษัท นำยุค จำกัด</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 60%; height: 15px; border-top: 1.1px solid black; border-right: 1.1px solid black; border-bottom: 0px solid black; border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
+                                        <label ID="label1" class="threeBoxTop">&nbsp;จ่ายให้&nbsp;</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 40px;border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; border-left: 1.1px solid black; text-align: center;">
+                                        <label ID="lblCreateName_01">กนกพรรณ บุญเพ็ง</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="padding-left:15px;padding-bottom:5px;">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width: 60%; height: 15px; border: 0px solid black; padding-top: -35px; text-align: right;">
+                                        <label ID="label3" Font-Size="16pt" Font-Bold="true">ใบเบิกเงินสดย่อย</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 60%;
+                                                height: 15px;
+                                                border-top: 1.1px solid black;
+                                                border-right: 1.1px solid black;
+                                                border-bottom: 0px solid black;
+                                                border-left: 1.1px solid black;
+                                                padding-top: -15px;
+                                                text-align: left;">
+
+                                        <label ID="label7" class="threeBoxTop">&nbsp;เลขที่&nbsp;</label>
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td style=" height: 15px;
+                                                border-top: 0px solid black;
+                                                border-right: 1.1px solid black;
+                                                border-bottom: 1.1px solid black;
+                                                border-left: 1.1px solid black;
+                                                text-align: center;">
+                                        <label ID="label8"></label>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 60%; height: 15px; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 0px solid black; border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
+
+                                        <label ID="label9" class="threeBoxTop">&nbsp;วันที่&nbsp;</label>
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td style="height: 15px; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; border-left: 1.1px solid black; text-align: center; padding-top: -15px;">
+                                        <label ID="lblCreateDate_01"></label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="height: 220pt; border: 0px solid black; font-weight: bold; text-align: center; font-size: 12pt;">
+                <table border="0" style="width: 100%; text-align: center;">
+                    <tr>
+                        <td>
+
+                            <table style="width: 100%; border-collapse: collapse; font-family: 'th sarabunPSK'; font-size: 12pt;" cellspacing="5" cellpadding="5">
+
+                                <tr style="height: 20pt;">
+                                    <td style="width: 75%; text-align: center; border: 1.1px solid black;">
+                                        <label ID="label4" style="font-weight:bold;">รายการ</label>
+                                    </td>
+
+                                    <td style="width: 12%; text-align: center; border-bottom: 1.1px solid black; border-top: 1.1px solid black; border-right: 1.1px solid black;">
+                                        <label ID="label5" style="font-weight:bold;">รหัสบัญชี</label>
+                                    </td>
+
+                                    <td style="width: 13%;text-align: center; border-bottom: 1.1px solid black; border-top: 1.1px solid black; border-right: 1.1px solid black;">
+                                        <label ID="label6" style="font-weight:bold;">จำนวนเงิน</label>
+                                    </td>
+                                </tr>
+                                <tr style="height: 19pt;">
+                                    <td style="text-align: left; border-left: 1.1px solid black; border-bottom: 0.05px  solid black; border-right: 1.1px solid black;">
+                                        <label ID="lblDetail01_01"></label>
+                                    </td>
+
+
+                                    <td style="text-align: left; border-bottom: 0.05px solid black; border-right: 1.1px solid black;">
+                                        12345789
+                                    </td>
+
+                                    <td style="text-align: right; border-bottom: 0.05px solid black; border-right: 1.1px solid black;">
+                                        <label ID="lblAmount01_01"></label>
+                                    </td>
+                                </tr>
+                                <tr style="height: 20pt;">
+                                    <td colspan="2" style="text-align: left; border-left: 0px solid black; border-left: 0px solid black; border-bottom: 0px solid black; border-right: 1.1px solid black;">
+                                        <label ID="label76" Text="รวม" Font-Bold="true"></label>
+
+                                        &nbsp;
+
+                                        <label ID="lblTatalTextAmount_01"></label>
+
+
+                                    </td>
+
+                                    <td style="text-align: right; border-bottom: 1.1px solid black; border-right: 1.1px solid black;">
+                                        <label ID="lblTatalAmount_01"></label>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div style="text-align: right; height: 10px;"></div>
+                            @*<div style="text-align: right;">
+                                    <Image ID="imgSignature01_01"  BorderWidth="0" Height="25px" Width="80" ImageUrl="http://localhost:22865/_img/Capture.png" />
+                                    <Image ID="imgSignature03_01"  BorderWidth="0" Height="25px" Width="80" ImageUrl="http://localhost:22865/_img/Capture.png" />
+                                </div>*@
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="height: 30pt; border: 0px solid black; font-weight: bold; text-align: center; font-size: 12pt;">
+
+
+                <table style="width: 100%; border-bottom: 0px solid black; border-right: 0px solid black; border-left: 0px solid black; border-collapse: collapse; font-family: 'th sarabunPSK'; font-size: 12pt;">
+
+                    <tr>
+                        <td style="width: 25%; height: 10pt; border-top: 1.1px solid black; border-right: 1.1px solid black; border-bottom: 0px solid black; border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
+
+                            <label ID="label121" BackColor="White" Font-Bold="true" Text="&nbsp;ผู้รับเงิน&nbsp;"></label>
+
+                        </td>
+                        <td style="width: 25%; height: 10pt; border-top: 1.1px solid black; border-right: 1.1px solid black; padding-top: -15px; text-align: left;">
+                            <label ID="label311" BackColor="White" Font-Bold="true" Text="&nbsp;ผู้จ่ายเงิน&nbsp;"></label>
+                        </td>
+                        <td style="width: 25%; height: 10pt; border-top: 1.1px solid black; border-right: 1.1px solid black; padding-top: -15px; text-align: left;">
+                            <label ID="label411" BackColor="White" Font-Bold="true" Text="&nbsp;ผู้ตรวจสอบ&nbsp;"></label>
+                        </td>
+                        <td style="width: 25%; height: 10pt; border-top: 1.1px solid black; border-right: 1.1px solid black; padding-top: -15px; text-align: left;">
+                            <label ID="label511" BackColor="White" Font-Bold="true" Text="&nbsp;ผู้อนุมัติ&nbsp;"></label>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; border-left: 1.1px solid black; text-align: center;"></td>
+                        <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;"></td>
+                        <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;"></td>
+                        <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;">
+                            <Image ID="imgSignature02_01" Height="30pt" Width="80pt" ImageUrl="http://localhost:22865/_img/Capture.png" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="border-top: 0px solid black; border-right: 0px solid black; border-bottom: 0px solid black; border-left: 0px solid black; text-align: right;" colspan="4">
+                            &nbsp;
+                            <label ID="lblDocId_01" Text="SS_NUM R1 HC.0005/62" Font-Bold="true"></label>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+</div>

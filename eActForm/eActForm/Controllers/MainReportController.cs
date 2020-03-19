@@ -17,9 +17,6 @@ namespace eActForm.Controllers
 
         public ActionResult Index(string activityId)
         {
-
-
-
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
             //=========for=====test=================
@@ -70,7 +67,16 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);// production
         }
 
+        public ActionResult ReportPettyCashNum(string activityId, Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            Activity_TBMMKT_Model activity_Model = new Activity_TBMMKT_Model();
+            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
 
+            activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm;
+
+            return View(activity_Model); // test
+            //return PartialView(activity_TBMMKT_Model);// production
+        }
 
         [HttpPost]
         [ValidateInput(false)]
