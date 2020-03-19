@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eForms.Models.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using static eActForm.Models.TB_Act_Customers_Model;
@@ -108,6 +109,7 @@ namespace eActForm.Models
     }
     public class SearchActivityModels
     {
+        public searchParameterFilterModel showUIModel { get; set; }
         public List<Customers_Model> customerslist { get; set; }
         public List<TB_Act_ProductType_Model> productTypelist { get; set; }
         public List<TB_Act_ProductGroup_Model> productGroupList { get; set; }
