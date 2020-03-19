@@ -36,7 +36,7 @@
                         <td style="text-align:right"> @Html.CheckBoxFor(x => x.activityOfEstimateList[i].chkBox, new { @class = "icheckbox_flat-green", @checked = true })</td>
                     }
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].dateInput, new { @class = "form-control textboxcss font10 textRight datepicker" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList" ,id="dateInput"+i })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].unit, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getLite()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getValues()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
@@ -337,7 +337,7 @@
     }
 
 
-    $(".expenseList").autocomplete({
+    $("dateInput0").autocomplete({
         source: function (request, response) {
             $.ajax({
                 url: '@Url.Action("getOtherMasterByType", "eAct")',
@@ -361,7 +361,7 @@
             results: function (resultsCount) {
             }
         }, select: function (event, ui) {
-            $("#customerId").val(ui.item.id)
+            $("#dateInput1").val(ui.item.id)
         }
     }).focus(function () {
         $(this).data("uiAutocomplete").search($(this).val());

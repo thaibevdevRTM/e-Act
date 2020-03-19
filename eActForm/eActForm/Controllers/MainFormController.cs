@@ -52,7 +52,7 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    mode = "new";
+                    mode = AppCode.Mode.addNew.ToString();
 
                     string actId = Guid.NewGuid().ToString();
                     activity_TBMMKT_Model.activityFormModel.id = actId;
