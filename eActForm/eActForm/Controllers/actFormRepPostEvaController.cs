@@ -6,6 +6,7 @@ using eForms.Models.Reports;
 using eForms.Presenter.Reports;
 using WebLibrary;
 using System.Collections.Generic;
+using eForms.Models.Forms;
 
 namespace eActForm.Controllers
 {
@@ -16,6 +17,7 @@ namespace eActForm.Controllers
         public ActionResult index()
         {
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            models.showUIModel = new searchParameterFilterModel { isShowActNo = false, isShowStatus = false, isShowActType = false, isShowProductGroup = false, isShowProductType = false, isShowMonthText = false };
             return View(models);
         }
 
@@ -55,7 +57,7 @@ namespace eActForm.Controllers
         {
             try
             {
-               // model.repPostEvaGroupBrand = RepPostEvaPresenter.getPostEvaGroupByBrand(model.repPostEvaLists);
+                // model.repPostEvaGroupBrand = RepPostEvaPresenter.getPostEvaGroupByBrand(model.repPostEvaLists);
             }
             catch (Exception ex)
             {
@@ -78,7 +80,7 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError("PostEvaGroupBrandView >> " + ex.Message);
             }
 
-            return Json(list,JsonRequestBehavior.AllowGet);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
     }
