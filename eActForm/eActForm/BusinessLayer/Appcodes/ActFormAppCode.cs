@@ -114,6 +114,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
+                else if (typeForm == Activity_Model.activityType.EXPENSE.ToString())
+                {
+                    strCall = "usp_getExpensePerryFormByEmpId";
+                }
                 else
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";

@@ -175,40 +175,7 @@
     <div class="row pull-right" style="width:150px" onclick="addRowEntertainment();">
         <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
     </div>
-    @*@if (UtilsAppCode.Session.User.isCreator && Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
-        {
-            <div class="row pull-right" style="width:150px" onclick="addRowEntertainment();">
-                <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
-            </div>
-            <div id="divCertification" class="row">
-                <div class="col-lg-12">
-                    <div class="col-lg-8">
-                    </div>
-                    <div class="col-lg-4">
-                        <label style="color:red">***จ่ายตามหลักเกณฑ์  @Model.exPerryCashModel.rulesCash บาท ต่อเดือน</label>
-                    </div>
-                </div>
-            </div>
-
-            <div id="divCashBill" class="row">
-
-                @foreach (var item in Model.exPerryCashList)
-                {
-                    <div class="col-lg-8">
-                    </div>
-                    <div class="col-lg-4">
-                        <label style="color:red">
-                            <label style="color:red"> @item.cashName @item.cash บาท/เดือน</label>
-                        </label>
-                    </div>
-                }
-
-            </div>
-        }
-        else
-        {
-            <div id="divCashBill" class="row"></div>
-        }*@
+ 
 </div>
 
 
@@ -266,7 +233,7 @@
         );
 
         $('.datepicker').datepicker({
-            format: 'dd-mm-yyyy'
+            format: 'dd/mm/yyyy'
         });
 
     }
@@ -350,7 +317,7 @@
         );
 
         $('.datepicker').datepicker({
-            format: 'dd-mm-yyyy'
+            format: 'dd/mm/yyyy'
         });
     }
 

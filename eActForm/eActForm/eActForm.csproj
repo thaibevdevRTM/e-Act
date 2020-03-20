@@ -2963,9 +2963,7 @@
     <Content Include="Views\SharedMasterFormDetail_Input\exPerryCashDetail.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\exPerryEmpInfoDetail.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\exPerryListDetail.cshtml" />
-    <Content Include="Views\SharedMasterFormDetail\exPerryCashDetail.cshtml" />
-    <Content Include="Views\SharedMasterFormDetail\exPerryListDetail.cshtml" />
-    <Content Include="Views\SharedMasterFormDetail\exPerryEmpInfoDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail\exPerryCashReport.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetailsDate_dmy.cshtml" />
     <Content Include="Views\ImportMaterial_PRODUCT_POS_PREMIUM\Index.cshtml" />
     <Content Include="Views\Approve\approvePositionSignatureListsV2.cshtml" />

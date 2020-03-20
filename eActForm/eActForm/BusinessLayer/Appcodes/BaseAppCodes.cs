@@ -57,6 +57,10 @@ namespace eActForm.BusinessLayer.Appcodes
                 {
                     return ConfigurationManager.AppSettings["companyId_HCM"].ToString();
                 }
+                else if(actType == Activity_Model.activityType.EXPENSE.ToString())
+                {
+                    return ConfigurationManager.AppSettings["companyId_EXPENSE"].ToString();
+                }
                 else
                 {
                     return UtilsAppCode.Session.User.empCompanyId;
