@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Global {
@@ -61,11 +61,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to รหัสบัญชี.
+        /// </summary>
+        public static string accountCode {
+            get {
+                return ResourceManager.GetString("accountCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to เอกสารทั้งหมด.
         /// </summary>
         public static string allDocuments {
             get {
                 return ResourceManager.GetString("allDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to จำนวนเงิน.
+        /// </summary>
+        public static string amount {
+            get {
+                return ResourceManager.GetString("amount", resourceCulture);
             }
         }
         
@@ -129,6 +147,15 @@ namespace Resources {
         public static string approveDate {
             get {
                 return ResourceManager.GetString("approveDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ผู้อนุมัติ.
+        /// </summary>
+        public static string approvePerson {
+            get {
+                return ResourceManager.GetString("approvePerson", resourceCulture);
             }
         }
         
@@ -210,6 +237,15 @@ namespace Resources {
         public static string documentDate {
             get {
                 return ResourceManager.GetString("documentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to เลขที่.
+        /// </summary>
+        public static string documentNo {
+            get {
+                return ResourceManager.GetString("documentNo", resourceCulture);
             }
         }
         
@@ -376,6 +412,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ผู้รับเงิน.
+        /// </summary>
+        public static string payee {
+            get {
+                return ResourceManager.GetString("payee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ผู้จ่ายเงิน.
+        /// </summary>
+        public static string payer {
+            get {
+                return ResourceManager.GetString("payer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to กรุณาเพิ่มลายเซ็นก่อนอนุมัติเอกสาร.
         /// </summary>
         public static string pleaseInsertYourSignatureBeforeApprovalDocument {
@@ -475,6 +529,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to จ่ายให้.
+        /// </summary>
+        public static string toPay {
+            get {
+                return ResourceManager.GetString("toPay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to รวม.
+        /// </summary>
+        public static string total {
+            get {
+                return ResourceManager.GetString("total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to รวมเงิน(บาท).
         /// </summary>
         public static string totalAmountTHB {
@@ -489,6 +561,15 @@ namespace Resources {
         public static string toViewDocument {
             get {
                 return ResourceManager.GetString("toViewDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ผู้ตรวจสอบ.
+        /// </summary>
+        public static string verify {
+            get {
+                return ResourceManager.GetString("verify", resourceCulture);
             }
         }
         
