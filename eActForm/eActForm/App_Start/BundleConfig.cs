@@ -35,7 +35,9 @@ namespace eActForm
                         "~/Scripts/jquery.unobtrusive-ajax.min.js",
                         "~/Scripts/pnotify/dist/pnotify.js",
                         "~/Scripts/pnotify/dist/pnotify.buttons.js",
-                        "~/Scripts/pnotify/dist/pnotify.nonblock.js"));
+                        "~/Scripts/pnotify/dist/pnotify.nonblock.js",
+                        "~/Content/vendors/multiselect/bootstrap-multiselect.js"
+                        ));
 
              bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                 "~/Scripts/jquery-ui.css",
@@ -48,7 +50,9 @@ namespace eActForm
                 "~/content/vendors/build/css/custom.min.css",
                 "~/Scripts/pnotify/dist/pnotify.nonblock.css",
                 "~/Scripts/pnotify/dist/pnotify.buttons.css",
-                "~/Scripts/pnotify/dist/pnotify.css"));
+                "~/Scripts/pnotify/dist/pnotify.css",
+                "~/Content/vendors/multiselect/bootstrap-multiselect.css"
+                ));
 
             //~/Content/vendors/bootstrap-datepicker/datepicker3.css
         }

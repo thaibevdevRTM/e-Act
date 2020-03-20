@@ -50,7 +50,9 @@ namespace eActForm.Models
 
         }
 
-    }
+        public ApproveModel.approveModels approveModels { get; set; }
+
+}
 
     public class ActivityFormTBMMKT : ActivityForm
     {

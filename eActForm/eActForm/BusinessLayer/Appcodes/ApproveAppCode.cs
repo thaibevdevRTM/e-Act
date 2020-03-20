@@ -411,6 +411,7 @@ namespace eActForm.BusinessLayer
                                                  signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
                                                  ImgName = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
                                                  isApprove = (bool)dr["isApproved"],
+                                                 approveGroupId = dr["approveGroupId"].ToString(),
                                                  delFlag = (bool)dr["delFlag"],
                                                  createdDate = (DateTime?)dr["createdDate"],
                                                  createdByUserId = dr["createdByUserId"].ToString(),

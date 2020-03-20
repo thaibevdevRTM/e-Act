@@ -29,7 +29,7 @@
     {
         foreach (var item in Model.approveFlowDetail)
         {
-            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGroupApproveby"])
+            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGrouApplicant"] || item.approveGroupId == ConfigurationManager.AppSettings["approveGrouApplicantTwo"])
             {
                 if (Model.activityFormTBMMKT.chkUseEng)
                 {
@@ -176,17 +176,24 @@
                                         <label ID="label6" style="font-weight:bold;">@Resources.Global.amount</label>
                                     </td>
                                 </tr>
-                                <tr style="height: 19pt;">
-                                    <td style="text-align: left; border-left: 1.1px solid black; border-bottom: 0.05px  solid black; border-right: 1.1px solid black;">
-                                        &nbsp;
-                                    </td>
-                                    <td style="text-align: left; border-bottom: 0.05px solid black; border-right: 1.1px solid black;">
-                                        &nbsp;
-                                    </td>
-                                    <td style="text-align: right; border-bottom: 0.05px solid black; border-right: 1.1px solid black;">
-                                        100,000
-                                    </td>
-                                </tr>
+                                @{ var index = 0;}
+                                @foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
+                                {
+                                    if (item.total != 0)
+                                    {
+                                        <tr style="height: 19pt;">
+                                            <td style="text-align: left; border-left: 1.1px solid black; border-bottom: 0.05px  solid black; border-right: 1.1px solid black;">
+                                                &nbsp;@item.productDetail
+                                            </td>
+                                            <td style="text-align: left; border-bottom: 0.05px solid black; border-right: 1.1px solid black;">
+                                                &nbsp;
+                                            </td>
+                                            <td style="text-align: right; border-bottom: 0.05px solid black; border-right: 1.1px solid black;">
+                                                @string.Format("{0:#,0.00}", @item.total)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
                                 <tr style="height: 20pt;">
                                     <td colspan="2" style="text-align: left; border-left: 0px solid black; border-left: 0px solid black; border-bottom: 0px solid black; border-right: 1.1px solid black;">
                                         @{
@@ -242,9 +249,26 @@
                         <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; border-left: 1.1px solid black; text-align: center;"></td>
                         <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;"></td>
                         <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;"></td>
+                        @{int writeoneHit = 0; }
+                        @foreach (var itemFlowByDoc in Model.approveModels.approveDetailLists)
+                        {
+                            if (writeoneHit == 0)
+                            {
+                                if (itemFlowByDoc.approveGroupId == ConfigurationManager.AppSettings["approveGroupApproveby"] && itemFlowByDoc.statusId == "3")
+                                {
+                                    <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;">
+                                        <img style="text-align:center;" width="80" height="30" src="@itemFlowByDoc.ImgName" />
+                                    </td>
+                                    writeoneHit += 1;
+                                }
+                            }
+                        }
+                        @if (writeoneHit == 0)
+                        {
                         <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;">
-                            <Image ID="imgSignature02_01" Height="30pt" Width="80pt" ImageUrl="http://localhost:22865/_img/Capture.png" />
+                            &nbsp;
                         </td>
+                        }
                     </tr>
                     <tr>
                         <td style="border-top: 0px solid black; border-right: 0px solid black; border-bottom: 0px solid black; border-left: 0px solid black; text-align: right;" colspan="4">
