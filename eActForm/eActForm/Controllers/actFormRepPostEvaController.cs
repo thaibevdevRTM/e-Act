@@ -7,6 +7,7 @@ using eForms.Presenter.Reports;
 using WebLibrary;
 using System.Collections.Generic;
 using eForms.Models.Forms;
+using System.Text;
 
 namespace eActForm.Controllers
 {
@@ -19,6 +20,23 @@ namespace eActForm.Controllers
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
             models.showUIModel = new searchParameterFilterModel { isShowActNo = false, isShowStatus = false, isShowActType = false, isShowProductGroup = false, isShowProductType = false, isShowMonthText = false };
             return View(models);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public FileResult repExportExcel(string gridHtml)
+        {
+            try
+            {
+                //RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                //gridHtml = gridHtml.Replace("\n", "<br>");
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "DetailReport.xls");
         }
 
         [HttpPost]
