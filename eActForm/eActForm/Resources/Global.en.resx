@@ -276,4 +276,31 @@
   <data name="totalAmountTHB" xml:space="preserve">
     <value>Total amount (THB)</value>
   </data>
+  <data name="piorityDoc" xml:space="preserve">
+    <value>Piority Doc</value>
+  </data>
+  <data name="accountCode" xml:space="preserve">
+    <value>Account Code</value>
+  </data>
+  <data name="amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="approvePerson" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="documentNo" xml:space="preserve">
+    <value>Document No</value>
+  </data>
+  <data name="payee" xml:space="preserve">
+    <value>Payee</value>
+  </data>
+  <data name="toPay" xml:space="preserve">
+    <value>To pay</value>
+  </data>
+  <data name="total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="verify" xml:space="preserve">
+    <value>Verify</value>
+  </data>
 </root>

@@ -44,6 +44,7 @@ namespace eActForm.BusinessLayer
                     model.activityFormModel.remark = model.activityFormModel.remark;
                     model.activityFormModel.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
                     model.activityFormModel.languageDoc = model.activityFormTBMMKT.languageDoc == null ? "" : model.activityFormTBMMKT.languageDoc;
+                    model.activityFormModel.piorityDoc = model.activityFormTBMMKT.piorityDoc == null ? "" : model.activityFormTBMMKT.piorityDoc;
 
                     rtn = insertActivityForm(model.activityFormModel);
 
@@ -307,7 +308,6 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
-
                 activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng);
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
@@ -527,7 +527,9 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@master_type_form_id",model.master_type_form_id)
                     ,new SqlParameter("@remark",model.remark)
                     ,new SqlParameter("@benefit", (model.benefit == null ? "" :model.benefit))
-                     ,new SqlParameter("@languageDoc", (model.languageDoc == null ? "" :model.languageDoc))
+                    ,new SqlParameter("@languageDoc", (model.languageDoc == null ? "" :model.languageDoc))
+                    ,new SqlParameter("@piorityDoc", (model.piorityDoc == null ? "" :model.piorityDoc))
+
                     });
             }
             catch (Exception ex)

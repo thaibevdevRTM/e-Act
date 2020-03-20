@@ -30,35 +30,19 @@
     }
 
     var compName = "";
-    var docNo = "";
-    var date = "";
-
-    if (Model.activityFormTBMMKT.chkUseEng)
-    {
-        compName = @Model.activityFormTBMMKT.companyNameEN;
-        date = "Document Date";
-        docNo = "Document No";
-    }
-    else
-    {
-
-        compName = @Model.activityFormTBMMKT.companyName;
-        date = "วันที่";
-        docNo = "เลขที่";
-    }
 }
 <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
     <table style="border-color:none;">
         <tr>
             <td style="width:135px;">&nbsp;</td>
             <td style="width:405px;text-align: center;vertical-align:middle;" class="fontDocV2">@compName</td>
-            <td style="width:160px;text-align: left;vertical-align:middle;" class="fontDocSmall">@docNo : @Model.activityFormModel.activityNo</td>
+            <td style="width:160px;text-align: left;vertical-align:middle;" class="fontDocSmall">@Resources.Global.documentNo : @Model.activityFormModel.activityNo</td>
         </tr>
         <tr>
             <td style="width:135px;">&nbsp;</td>
             <td style="width:405px;text-align: center;vertical-align:middle;" class="fontDocV2">@formName</td>
             <td style="width:160px;text-align: left;vertical-align:middle;" class="fontDocSmall">
-                @date&nbsp;&nbsp;: @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
+                @Resources.Global.documentDate&nbsp;&nbsp;: @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
             </td>
         </tr>
     </table>

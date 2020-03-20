@@ -23,17 +23,14 @@ namespace eActForm.BusinessLayer
                                  id = d["id"].ToString(),
                                  empId = d["empId"].ToString(),
                                  level = d["empLevel"].ToString(),
-
-                                 empName = !langEn ? d["empFNameTH"].ToString() + " " + d["empLNameTH"].ToString() : d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
-                                 position = !langEn ? d["empPositionTitleTH"].ToString() : d["empPositionTitleEN"].ToString(),
-                                 department = !langEn ? d["empDepartmentTH"].ToString() : d["empDepartmentEN"].ToString(),
-                                 bu = !langEn ? d["empDivisionTH"].ToString() : d["empDivisionEN"].ToString(),
-
+                                 empName = d["empFNameTH"].ToString() + " " + d["empLNameTH"].ToString(),
+                                 position = d["empPositionTitleTH"].ToString() ,
+                                 department =  d["empDepartmentTH"].ToString(),
+                                 bu = d["empDivisionTH"].ToString() ,
                                  empNameEN = d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
                                  positionEN = d["empPositionTitleEN"].ToString(),
                                  departmentEN = d["empDepartmentEN"].ToString(),
                                  buEN = d["empDivisionEN"].ToString(),
-
                              });
                 return lists.OrderBy(x => x.empName).ToList();
             }

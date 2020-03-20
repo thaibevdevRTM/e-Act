@@ -1,5 +1,9 @@
 ﻿@using System.Configuration;
 @model eActForm.Models.ApproveModel.approveModels
+@using eActForm.BusinessLayer;
+@{ 
+    DocumentsAppCode.setCulture(Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString());
+}
 <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
@@ -45,7 +49,7 @@
                                             else if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"])
                                             {
                                                 valStatusName = item.statusNameEN;
-                                            }
+                                            }                                            
 
                                             var status = item.statusId == "" ? Resources.Global.notApprove : valStatusName;
 

@@ -516,26 +516,47 @@ namespace eActForm.BusinessLayer
                 string txtApprove = "";
                 string txtcreateBy = "";
                 string txtCompanyname = "";
+                string strPiority = "";
+
                 switch (emailType)
                 {
                     case AppCode.ApproveType.Activity_Form:
                         var models = ActFormAppCode.getUserCreateActForm(actId);
                         strBody = ConfigurationManager.AppSettings["emailApproveBody"];
+                        strPiority = ConfigurationManager.AppSettings["emailpiority"];
                         empNameResult = item.empName;
                         txtApprove = AppCode.ApproveStatus.รออนุมัติ.ToString();
                         txtcreateBy = item.createBy;
                         txtCompanyname = models[0].companyName;
+
                         if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                         {
                             if (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"])//Inter sale
                             {
                                 strBody = ConfigurationManager.AppSettings["emailApproveBody_EN"];
+                                strPiority = ConfigurationManager.AppSettings["emailpiority_EN"];
                                 empNameResult = item.empName_EN;
                                 txtApprove = "";
                                 txtcreateBy = item.createBy_EN;
                                 txtCompanyname = models[0].companyNameEN;
                             }
                         }
+
+                        if (ActFormAppCode.isOtherCompanyMTOfDoc(activity_TBMMKT_Model.activityFormTBMMKT.companyId))
+                        {
+                            string strPiorityDoc = "";
+                            strPiorityDoc = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]) ?
+                                   QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "piorityDoc").Where(x => x.id == activity_TBMMKT_Model.activityFormTBMMKT.piorityDoc).AsEnumerable().FirstOrDefault().nameEN :
+                                   QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "piorityDoc").Where(x => x.id == activity_TBMMKT_Model.activityFormTBMMKT.piorityDoc).AsEnumerable().FirstOrDefault().name;
+
+                            strPiority = string.Format(strPiority, ActFormAppCode.getStatusNeedDocColor(activity_TBMMKT_Model.activityFormTBMMKT.piorityDoc), strPiorityDoc);
+                            strBody = strBody.Replace("||piority||", strPiority);
+                        }
+                        else
+                        {
+                            strBody = strBody.Replace("||piority||", "");
+                        }
+
 
                         if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                         {
@@ -817,7 +838,7 @@ namespace eActForm.BusinessLayer
 
                             Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
                             budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, null, null, actFormId, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
-                            
+
                             string var_link = "";
                             var_link = "activityProduct?activityId=" + budget_activity_model.Budget_Activity.act_form_id + "&activityNo=" + budget_activity_model.Budget_Activity.act_activityNo + "&companyEN=" + budget_activity_model.Budget_Activity.act_companyEN;
 
