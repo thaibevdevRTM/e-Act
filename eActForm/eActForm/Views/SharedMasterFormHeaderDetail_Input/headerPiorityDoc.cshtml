@@ -6,40 +6,29 @@
             <div style="height:10px" class="row">
                 <label class="control-label col-md-12 col-xs-12"></label>
             </div>
-    
-            <div class="row"  style="width: 100%;">
+            <div class="row" style="width: 100%;">
                 @*<label class="control-label col-md-1 col-xs-12"></label>*@
                 <div class="col-md-7 col-xs-12">
                     <div class="row">
                         &nbsp;
                     </div>
-                </div> 
+                </div>
                 <label class="control-label col-md-3 col-xs-12">
                     @Resources.Global.piorityDoc :
                 </label>
                 <div class="col-md-2 col-xs-12">
 
                     <div class="row">
-                        @Html.DropDownListFor(x => x.activityFormTBMMKT.piorityDoc, new SelectList(Model.listPiority, "id", Model.activityFormTBMMKT.chkUseEng ? "nameEN" : "name", ""), "", new
+                        @Html.DropDownListFor(x => x.activityFormTBMMKT.piorityDoc, new SelectList(Model.listPiority, "id", Model.activityFormTBMMKT.chkUseEng ? "nameEN" : "name", "AA21FB12-B80A-4A0B-B9CA-78B8D7899D44"), "", new
                    {
                        @class = "form-control selectpicker",
                        id = "ddlTravelling"
                    });
 
                     </div>
-                  
-
-
-
-
                 </div>
-
-            
-
-          
-
-        </div>
             </div>
+        </div>
 
     </td>
 </tr>

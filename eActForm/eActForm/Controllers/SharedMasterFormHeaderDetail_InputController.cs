@@ -70,7 +70,7 @@ namespace eActForm.Controllers
             if (activity_TBMMKT_Model.listPiority == null || activity_TBMMKT_Model.listPiority.Count == 0)
             {
 
-                activity_TBMMKT_Model.listPiority = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "piorityDoc").OrderBy(x => x.name).ToList();
+                activity_TBMMKT_Model.listPiority = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "piorityDoc").OrderBy(x => x.orderNum).ToList();
             }
             return PartialView(activity_TBMMKT_Model);
         }

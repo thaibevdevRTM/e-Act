@@ -8,5 +8,6 @@
         public string sub_name { get; set; }
         public string type { get; set; }
         public string master_type_form_id { get; set; }
+        public string orderNum { get; set; }
     }
 }
