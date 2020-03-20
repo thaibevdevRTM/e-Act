@@ -139,7 +139,7 @@ namespace eActForm.Controllers
         {
             try
             {
-                var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actId);
+                var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
                 activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId.Equals("1")).ToList();
                 if (!activity_TBMMKT_Model.activityOfEstimateList.Any())
                 {
