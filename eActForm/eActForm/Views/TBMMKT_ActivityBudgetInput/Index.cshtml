@@ -304,7 +304,7 @@
 
 <div style="margin-left:25px;" class="text-center">
     <a href="@Url.Action("index", "Home", new { typeForm = Activity_Model.activityType.TBM.ToString() }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-    @if (Model.activityFormModel.mode == "new" || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5 || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM))
+    @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString() || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5 || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM))
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
     }

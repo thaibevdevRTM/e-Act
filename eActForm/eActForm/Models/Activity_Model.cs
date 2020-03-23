@@ -53,6 +53,7 @@ namespace eActForm.Models
             OMT,
             MT,
             TBM,
+            EXPENSE,
             HCM,
             OtherCompany
         }
@@ -190,6 +191,8 @@ namespace eActForm.Models
         public string benefit { get; set; }
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
+        public string SubjectId { get; set; }
+        public string empId { get; set; }
         public string formCompanyId { get; set; }
         public string languageDoc { get; set; }
         public string digit_IO { get; set; }
@@ -230,7 +233,12 @@ namespace eActForm.Models
         public Boolean isShowGroup { get; set; }
         public string IO { get; set; }
         public int rowNo { get; set; }
+        public string detail { get; set; }
+        public DateTime? date { get; set; }
+        public string dateInput { get; set; }
         public string mechanics { get; set; }
+        public bool chkBox { get; set; }
+
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public CostThemeDetailOfGroupByPrice()
@@ -324,6 +332,11 @@ namespace eActForm.Models
         public string digitGroup { get; set; }
         public string digitSubGroup { get; set; }
         public string EO { get; set; }
+        public bool chkBox { get; set; }
+        public string DateInput { get; set; }
+        public string place { get; set; }
+        public string detail { get; set; }
+        public string customer { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public ProductCostOfGroupByPrice()

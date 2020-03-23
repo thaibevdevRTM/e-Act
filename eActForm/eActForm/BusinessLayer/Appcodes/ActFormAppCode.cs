@@ -114,6 +114,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
+                else if (typeForm == Activity_Model.activityType.EXPENSE.ToString())
+                {
+                    strCall = "usp_getExpensePerryFormByEmpId";
+                }
                 else
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
@@ -211,6 +215,22 @@ namespace eActForm.BusinessLayer
             {
                 return result;
                 throw new Exception("getDigitGroup >>" + ex.Message);
+            }
+        }
+
+
+        public static string convertThaiBaht(decimal? txbaht)
+        {
+            string result = "";
+            try
+            {
+                result = GreatFriends.ThaiBahtText.ThaiBahtTextUtil.ThaiBahtText(txbaht);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return result;
+                throw new Exception("convertThaiBaht >>" + ex.Message);
             }
         }
 
