@@ -41,6 +41,7 @@ namespace eActForm.BusinessLayer
                                   costPeriodSt = !string.IsNullOrEmpty(d["costPeriodSt"].ToString()) ? DateTime.Parse(d["costPeriodSt"].ToString()) : (DateTime?)null,
                                   costPeriodEnd = !string.IsNullOrEmpty(d["costPeriodEnd"].ToString()) ? DateTime.Parse(d["costPeriodEnd"].ToString()) : (DateTime?)null,
                                   activityDetail = d["activityDetail"].ToString(),
+                                  empId = d["empId"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),

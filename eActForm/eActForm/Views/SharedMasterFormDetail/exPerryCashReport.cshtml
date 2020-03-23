@@ -1,9 +1,12 @@
 ﻿
 @using eActForm.BusinessLayer
 @model eActForm.Models.Activity_TBMMKT_Model
+@{ 
+    decimal? unit = 0;
+    decimal? total = 0;
+}
 
 <style>
-
     .textRight {
         text-align: right;
     }
@@ -23,163 +26,159 @@
 
 
 
+<div class="modal-body">
+    <div id="divForm" style="width: 97%; margin-left: 20px;">
+        <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;" class="fontDocV2">
+            @Model.activityFormTBMMKT.companyName<br />
+            @Model.activityFormTBMMKT.formName
+        </div>
 
-<div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;" class="fontDocV2">
-    @Model.activityFormTBMMKT.companyName<br />
-    @Model.activityFormTBMMKT.formName
-</div>
 
+        <div>
+            <div style="text-align: center;">
+                <lable>ประจำเดือน : &nbsp;&nbsp; @Model.activityFormModel.documentDate </lable>
+            </div>
+            <div style="text-align: right;">
+                <lable>เลขที่เอกสาร  :  &nbsp;@Model.activityFormModel.activityNo</lable>
+            </div>
+        </div>
+        <div>
+            <div style="text-align: right;">
+                <lable>เลขที่เอกสารใบยืมเงินทดรอง :  &nbsp;@Model.activityFormModel.reference</lable>
+            </div>
+        </div>
 
-<div>
-    <div style="text-align: center;">
-        <lable>ประจำเดือน : </lable>
+        <div>
+            <table style="width: 100%; margin-top: 30px;">
+                <tr>
+                    <td class="font12" width="30px">
+                        ชื่อ / Name:
+                    </td>
+                    <td>
+                        @Model.masterRequestEmp[0].empName
+                    </td>
+                    <td class="font12" width="30px">
+                        ตำแหน่ง / Position:
+                    </td>
+                    <td>
+                        @Model.masterRequestEmp[0].position
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font12">
+                        ระดับ / Level:
+                    </td>
+                    <td class="font12">
+                        หน่วยงาน / Dept.:
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br />
+
+        <div>
+            Part 1 :   ค่าใช้จ่ายในการเดินทาง / Travel & Transportation Expenses
+        </div>
+        <div class="font12">
+            - ประเทศหรืองานที่เดินทางไป / Country or For:
+        </div>
+        <br />
+        <div>
+            <table class="tablethin font12" style="width: 100%; text-align: center;" border="1" cellpadding="0" cellspacing="0">
+                <tr style="background-color: #E5E2E2; height: 25px;">
+                    <td style="text-align: center; width: 15%;">วันเดือนปี</td>
+                    <td style="text-align: center; width: 30%;">รายการ</td>
+                    <td style="text-align: center; width: 15%;">ลิตร</td>
+                    <td style="text-align: center; width: 15%;">จำนวนเงิน</td>
+                    <td style="text-align: center; width: 26%;">หมายเหตุ</td>
+                </tr>
+                @foreach (var item in Model.activityOfEstimateList)
+                {
+                    <tr>
+                        <td>@item.date.Value.ToString("dd/MM/yyyy")</td>
+                        <td>@item.productDetail</td>
+                        <td>@item.unit</td>
+                        <td>@string.Format("{0:n2}", @item.total)</td>
+                        <td>@item.remark</td>
+                    </tr> 
+                    
+                    unit = @item.unit == null ? 0 + unit : item.unit + unit;
+                    total = item.total == null ? 0 + total : item.total + total;
+                }
+                <tr>
+                    <td colspan="2" class="textRight">
+                        รวมค่าใช้จ่ายในการเดินทาง/ต่าใช้จ่ายประจำเดือน (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)
+                        Total Travel & Transporation Expenses (Excluding Entertainment Expenses and Market Visit)
+                    </td>
+                    <td class="textRight">
+                        @if (unit != 0)
+                        {
+                            string result = String.Format("{0:n2}", @unit);
+                            @result.ToString();
+                        }
+                    </td>
+                    <td class="textRight">
+                        @if (total != 0)
+                        {
+                            string result = String.Format("{0:n2}", @total);
+                            @result.ToString();
+                        }
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <br />
+        <br />
+        <div>
+            Part 2 : ค่าใช้จ่ายในการเลี้ยงรับรอง หรือการตรวจตลาด / Entertainment Expenses and Market Visit
+        </div>
+        <div class="font12">
+            <lable style="color: red"> * หมายเหตุ:</lable>
+            <lable>ค่าใช้จ่ายส่วนนี้ จะต้องผ่านการอนุมัติตามอำนาจการอนุมัติได้เท่านั้น *</lable>
+        </div>
+        <br />
+        <div>
+            <table class="tablethin font12" style="width: 100%; text-align: center;" border="1" cellpadding="0" cellspacing="0">
+                <tr style="background-color: #E5E2E2; height: 25px;">
+                    <td style="text-align: center; width: 15%;">วันที่</td>
+                    <td style="text-align: center; width: 20%;">สถานที่</td>
+                    <td style="text-align: center; width: 35%;">จุดประสงค์</td>
+                    <td style="text-align: center; width: 20%;">ชื่อลูกค้า</td>
+                    <td style="text-align: center; width: 15%;">รวมเป็นจำนวนเงิน</td>
+                </tr>
+                @foreach (var item in Model.activityOfEstimateList2)
+                {
+                    <tr>
+                        <td>@item.date.Value.ToString("dd/MM/yyyy")</td>
+                        <td>@item.productDetail</td>
+                        <td>@item.detail</td>
+                        <td>@item.remark</td>
+                        <td>@item.total</td>
+                    </tr>
+                }
+                    <tr>
+                        <td colspan="4" class="textRight">
+                            รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
+                            Total Entertainment Expenses and Market Visit
+                        </td>
+                        <td class="textRight"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="textRight">
+                            กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)  =
+                        </td>
+                        <td class="textRight"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="textRight">
+                            รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses  =
+                        </td>
+                        <td class="textRight"></td>
+                    </tr>
+                </table>
+        </div>
+
     </div>
-    <div style="text-align: right;">
-        <lable>เลขที่เอกสาร   Exp 001 : </lable>
-    </div>
-</div>
-<div>
-    <div style="text-align: right;">
-        <lable>เลขที่เอกสารใบยืมเงินทดรอง   ADV…..</lable>
-    </div>
-</div>
-
-<div>
-    <table style="width: 100%; margin-top: 30px;">
-        <tr>
-            <td style="font-size: 12.5px;">
-                ชื่อ / Name:
-            </td>
-            <td style="font-size: 12.5px;">
-                ตำแหน่ง / Position:
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size: 12.5px;">
-                ระดับ / Level:
-            </td>
-            <td style="font-size: 12.5px;">
-                หน่วยงาน / Dept.:
-            </td>
-        </tr>
-    </table>
-</div>
-<br />
-
-<div>
-    Part 1 :   ค่าใช้จ่ายในการเดินทาง / Travel & Transportation Expenses
-</div>
-<div style="font-size: 12.5px;">
-    - ประเทศหรืองานที่เดินทางไป / Country or For:
-</div>
-<br />
-<div>
-    <table class="tablethin" style="width: 100%; text-align: center;" border="1" cellpadding="0" cellspacing="0">
-        <tr>
-            <td style="text-align: center; font-size: 12.5px; width:15%;">วันเดือนปี</td>
-            <td style="text-align: center; font-size: 12.5px; width:30%;">รายการ</td>
-            <td style="text-align: center; font-size: 12.5px; width:15%;">ลิตร</td>
-            <td style="text-align: center; font-size: 12.5px; width:15%;">จำนวนเงิน</td>
-            <td style="text-align: center; font-size: 12.5px; width:25%;">หมายเหตุ</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td colspan="2" class="textRight font12">
-                รวมค่าใช้จ่ายในการเดินทาง/ต่าใช้จ่ายประจำเดือน (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)
-                Total Travel & Transporation Expenses (Excluding Entertainment Expenses and Market Visit)
-            </td>
-            <td class="textRight">
-                <label id="lblLite"></label>
-            </td>
-            <td class="textRight">
-                <label id="lblShowtotal"></label>
-            </td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-</div>
-<br />
-<br />
-<div>
-    Part 2 : ค่าใช้จ่ายในการเลี้ยงรับรอง หรือการตรวจตลาด / Entertainment Expenses and Market Visit
-</div>
-<div class="font12">
-    <lable style="color: red"> * หมายเหตุ:</lable>
-    <lable>ค่าใช้จ่ายส่วนนี้ จะต้องผ่านการอนุมัติตามอำนาจการอนุมัติได้เท่านั้น *</lable>
-</div>
-<br />
-<div>
-    <table class="tablethin" style="width: 100%; text-align: center;" border="1" cellpadding="0" cellspacing="0">
-        <tr>
-            <td class="fontDocV2" style="text-align: center; font-size: 12.5px; width:15%;">วันที่</td>
-            <td class="fontDocV2" style="text-align: center; font-size: 12.5px; width:20%;">สถานที่</td>
-            <td style="text-align: center; font-size: 12.5px; width:35%;">จุดประสงค์</td>
-            <td style="text-align: center; font-size: 12.5px; width:20%;">ชื่อลูกค้า</td>
-            <td style="text-align: center; font-size: 12.5px; width:15%;">รวมเป็นจำนวนเงิน</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td colspan="4" class="textRight font12">
-                รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
-                Total Entertainment Expenses and Market Visit
-            </td>
-            <td class="textRight">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" class="textRight font12">
-                กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)  =
-            </td>
-            <td class="textRight">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" class="textRight font12">
-                รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses  =
-            </td>
-            <td class="textRight">
-            </td>
-        </tr>
-    </table>
 </div>

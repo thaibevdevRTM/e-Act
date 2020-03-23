@@ -26,7 +26,10 @@
         {
             <tbody id=first>
                 <tr class="tagCountRowTravel">
-                    <td><button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button></td>
+                    <td>
+                        <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
+                        @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1" })
+                    </td>
                     <td style="text-align:right">
                         @Html.TextBox("activityOfEstimateList[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
                              new { @class = "form-control textboxcss font10 textRight datepicker", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]), autocomplete = "off" })
@@ -35,7 +38,7 @@
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].unit, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getLite()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getValues()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1" })
+
                 </tr>
             </tbody>
             <tr>
@@ -108,58 +111,62 @@
         {
             <tbody id="first1">
                 <tr class="tagCountRowExpenses">
-                    <td><button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button></td>
+                    <td>
+                        <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
+                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId" })
+                    </td>
                     <td style="text-align:right">
                         @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
-                        new { @class = "form-control textboxcss font10 textRight datepicker", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]), autocomplete = "off" })
+                 new { @class = "form-control textboxcss font10 textRight datepicker", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]), autocomplete = "off" })
                     </td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].detail, new { @class = "form-control textboxcss font10 textRight" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal()" })</td>
-                    @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2" })
+
                 </tr>
             </tbody>
-            <tr>
-                <td></td>
-                <td colspan="4" class="textRight">
-                    รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
-                    Total Entertainment Expenses and Market Visit
-                </td>
-                <td class="textRight">
-                    <label id="lbltotalExMaket"></label>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td colspan="4" class="textRight">
-                    รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท)
-                    Total Monthly Expenses (Baht)
-                </td>
-                <td class="textRight">
-                    <label id="lbltotalExpenses"></label>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td colspan="4" class="textRight">
-                    กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)  =
-                </td>
-                <td class="textRight">
-                    <label id="lbltotalAdvance"></label>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td colspan="4" class="textRight">
-                    รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses  =
-                </td>
-                <td class="textRight">
-                    <label id="lbltotalAll"></label>
-                </td>
-            </tr>
-
         }
+        <tr>
+            <td></td>
+            <td colspan="4" class="textRight">
+                รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
+                Total Entertainment Expenses and Market Visit
+            </td>
+            <td class="textRight">
+                <label id="lbltotalExMaket"></label>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="4" class="textRight">
+                รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท)
+                Total Monthly Expenses (Baht)
+            </td>
+            <td class="textRight">
+                <label id="lbltotalExpenses"></label>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="4" class="textRight">
+                กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)  =
+            </td>
+            <td class="textRight">
+                <label id="lbltotalAdvance"></label>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="4" class="textRight">
+                รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses  =
+            </td>
+            <td class="textRight">
+                <label id="lbltotalAll"></label>
+            </td>
+        </tr>
+
+
 
     </table>
 
@@ -172,6 +179,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        getTotal();
+        getLite();
+        getValues();
         document.getElementById("divCashBill").style.display = "none";
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
@@ -218,7 +228,7 @@
         var newRow = $("#tbl_CashDetail tbody tr").first().clone().find("input").val("").end();
         $("#tbl_CashDetail > tbody:first").append(newRow);
         newRow.find("input").each(function () {
-            $(this).attr("id", $(this).attr("name").replace("[0].", "_" +RowCount+ "__"));
+            $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
             $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
         }
         );
@@ -304,6 +314,11 @@
         newRow.find("input").each(function () {
             $(this).attr("id", $(this).attr("name").replace("[0]", "_" + RowCount + "_"));
             $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+
+            var elms = document.getElementsByClassName('hindenTypeId')
+            for (var i = 0; i < elms.length; i++) {
+                    elms[i].setAttribute("value", "2");
+            }
         }
         );
 

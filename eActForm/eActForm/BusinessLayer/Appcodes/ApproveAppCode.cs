@@ -83,7 +83,7 @@ namespace eActForm.BusinessLayer
                 model.activity_TBMMKT_Model.activityFormModel.statusId = 1;
                 model.activity_TBMMKT_Model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                 model.activity_TBMMKT_Model.activityFormModel.updatedDate = DateTime.Now;
-                resultInsert += ActivityFormTBMMKTCommandHandler.insertActivityForm(model.activity_TBMMKT_Model.activityFormModel);
+                resultInsert += ActivityFormTBMMKTCommandHandler.insertActivityForm(model.activity_TBMMKT_Model.activityFormTBMMKT);
                 return true;
             }
             catch(Exception ex)

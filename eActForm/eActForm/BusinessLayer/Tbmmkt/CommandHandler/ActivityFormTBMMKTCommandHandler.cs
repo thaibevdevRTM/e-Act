@@ -47,7 +47,7 @@ namespace eActForm.BusinessLayer
                     model.activityFormModel.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
                     model.activityFormModel.languageDoc = model.activityFormTBMMKT.languageDoc == null ? "" : model.activityFormTBMMKT.languageDoc;
 
-                    rtn = insertActivityForm(model.activityFormModel);
+                    rtn = insertActivityForm(model.activityFormTBMMKT);
 
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
 
@@ -102,6 +102,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.productId = item.productId == null ? "" : item.productId;
                     costThemeDetail.typeTheme = item.typeTheme;
                     costThemeDetail.date = string.IsNullOrEmpty(item.dateInput) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(item.dateInput, ConfigurationManager.AppSettings["formatDateUse"]);
+                    costThemeDetail.detail = item.detail;
                     rtn += insertEstimate(costThemeDetail);
 
                     insertIndex++;
@@ -130,7 +131,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.productId = item.productId == null ? "" : item.productId;
                     costThemeDetail.typeTheme = item.typeTheme;
                     costThemeDetail.date = string.IsNullOrEmpty(item.dateInput) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(item.dateInput, ConfigurationManager.AppSettings["formatDateUse"]);
-
+                    costThemeDetail.detail = item.detail;
                     rtn += insertEstimate(costThemeDetail);
 
                     insertIndex++;
@@ -575,7 +576,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static int insertActivityForm(ActivityForm model)
+        public static int insertActivityForm(ActivityFormTBMMKT model)
         {
             int result = 0;
             try
@@ -604,6 +605,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@activityDetail", model.activityDetail)
                     ,new SqlParameter("@costPeriodST", model.costPeriodSt)
                     ,new SqlParameter("@costPeriodEND", model.costPeriodEnd)
+                    ,new SqlParameter("@empId", model.empId)
+
 
                   });
             }
@@ -748,6 +751,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@productId",model.productId)
                     ,new SqlParameter("@typeTheme",(model.typeTheme == null ? "" : model.typeTheme))
                     ,new SqlParameter("@date",model.date)
+                    ,new SqlParameter("@detail",model.detail)
 
             });
             }
