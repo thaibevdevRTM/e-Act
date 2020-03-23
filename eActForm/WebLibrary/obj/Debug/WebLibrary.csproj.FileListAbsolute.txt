@@ -33,3 +33,4 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAsse
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\bin\Debug\Microsoft.Exchange.WebServices.xml
