@@ -28,7 +28,7 @@
                 <tr class="tagCountRowTravel">
                     <td>
                         <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
-                        @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1" })
+                        @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { @class = "hindenTypeId" })
                     </td>
                     <td style="text-align:right">
                         @Html.TextBox("activityOfEstimateList[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
@@ -113,7 +113,7 @@
                 <tr class="tagCountRowExpenses">
                     <td>
                         <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
-                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId" })
+                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
                     </td>
                     <td style="text-align:right">
                         @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
@@ -230,6 +230,11 @@
         newRow.find("input").each(function () {
             $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
             $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+
+            var elms = document.getElementsByClassName('hindenTypeId')
+            for (var i = 0; i < elms.length; i++) {
+                    elms[i].setAttribute("value", "1");
+            }
         }
         );
 
@@ -315,7 +320,7 @@
             $(this).attr("id", $(this).attr("name").replace("[0]", "_" + RowCount + "_"));
             $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
 
-            var elms = document.getElementsByClassName('hindenTypeId')
+            var elms = document.getElementsByClassName('hindenTypeId2')
             for (var i = 0; i < elms.length; i++) {
                     elms[i].setAttribute("value", "2");
             }
