@@ -1,0 +1,17 @@
+eActForm/eActForm/UploadfilesBudget/
+eActForm/eActForm/ActBudget/
+eActForm/.vs/
+eActForm/eActForm/obj/
+eActForm/eActForm/Uploadfiles/
+eActForm/eActForm/error/
+eActForm/eActForm/ActivityFormPdf/
+eActForm/eActForm/ActRepDetail/
+eActForm/eActForm/Properties/PublishProfiles/*
+eActForm/eActForm/signature/
+eActForm/eActConsoleService/obj/*
+eActForm/Properties/PublishProfiles/*
+eActForm/eActForm/Properties/PublishProfiles/*
+eActForm/eActConsoleService/obj
+eActForm/eActConsoleService/*.config
+eActForm/eActConsoleService/bin
+*.pdf
