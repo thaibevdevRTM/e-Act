@@ -59,12 +59,11 @@
         }
 
     </table>
+    <div class="row pull-right" style="width:150px" onclick="addRow();">
+        <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
+    </div>
     @if (UtilsAppCode.Session.User.isCreator && Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
     {
-        <div class="row pull-right" style="width:150px" onclick="addRow();">
-            <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
-        </div>
-
         <div id="divCashBill" class="row">
 
             @foreach (var item in Model.exPerryCashList)
