@@ -31,8 +31,8 @@
 
     function beginQuery() {
 
-        if ($("#ddlProductType").val() == "") {
-            doMsgFail("กรุณาระบุ Product Type ครับ");
+        if ($("#ddlCustomer").val() == "") {
+            doMsgFail("กรุณาระบุ Customer ครับ");
             return false;
         }
 
@@ -40,8 +40,28 @@
     }
 
     function successQuery(htmlResponse) {
-        $("#getQuery").html(htmlResponse)
+        $("#getQuery").html(htmlResponse);
+        $("#gridHtml").val($("#gridDataPostEva").html());
         $("#getQuery").fadeIn(300);
+
+        $('#datatable').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": 0 }
+                , { "orderable": false, "targets": 1 }
+                , { "orderable": false, "targets": 2 }
+                , { "orderable": false, "targets": 3 }
+            ],
+            "dom": 'lCfrtip',
+            "order": [],
+            "language": {
+                "lengthMenu": '_MENU_ entries per page',
+                "search": '<i class="fa fa-search"></i>',
+                "paginate": {
+                    "previous": '<i class="fa fa-angle-left"></i>',
+                    "next": '<i class="fa fa-angle-right"></i>'
+                }
+            }
+        });
     }
 
     function failureQuery(data) {

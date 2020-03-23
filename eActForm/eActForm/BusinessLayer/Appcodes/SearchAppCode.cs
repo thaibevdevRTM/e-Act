@@ -1,4 +1,5 @@
 ﻿using eActForm.Models;
+using eForms.Models.Forms;
 using System;
 using System.Linq;
 namespace eActForm.BusinessLayer
@@ -11,6 +12,7 @@ namespace eActForm.BusinessLayer
             {
                 SearchActivityModels models = new SearchActivityModels
                 {
+                    showUIModel = new searchParameterFilterModel(),
                     approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app),
                     productGroupList = QueryGetAllProductGroup.getAllProductGroup(),
                     customerslist = QueryGetAllCustomers.getCustomersByEmpId().Where(x => x.cusNameEN != "").ToList(),

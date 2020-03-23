@@ -1,5 +1,6 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.Models;
+using eForms.Models.Forms;
 using iTextSharp.text;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,10 @@ namespace eActForm.Controllers
         // GET: actFormRepDetail
         public ActionResult Index(string typeForm)
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
             ViewBag.TypeForm = typeForm;
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            models.showUIModel = new searchParameterFilterModel();
+            
 
             if (typeForm == Activity_Model.activityType.MT.ToString())
             {

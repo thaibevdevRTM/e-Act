@@ -7,3 +7,13 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presen
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.csproj.CopyComplete
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.pdb
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\bin\Release\eForms.Presenter.dll
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\bin\Release\eForms.Presenter.pdb
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\bin\Release\eForms.Models.dll
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\bin\Release\Microsoft.ApplicationBlocks.Data.dll
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\bin\Release\eForms.Models.pdb
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.csprojAssemblyReference.cache
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.csproj.CoreCompileInputs.cache
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.csproj.CopyComplete
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.dll
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.pdb
