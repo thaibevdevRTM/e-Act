@@ -17,3 +17,13 @@ D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presente
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.csproj.CopyComplete
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.dll
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.pdb
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Release\eForms.Presenter.dll
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Release\eForms.Presenter.pdb
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Release\eForms.Models.dll
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Release\Microsoft.ApplicationBlocks.Data.dll
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Release\eForms.Models.pdb
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.csprojAssemblyReference.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.csproj.CoreCompileInputs.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.csproj.CopyComplete
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.dll
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Release\eForms.Presenter.pdb
