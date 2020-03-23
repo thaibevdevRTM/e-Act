@@ -35,20 +35,24 @@ namespace eActForm
                         "~/Scripts/jquery.unobtrusive-ajax.min.js",
                         "~/Scripts/pnotify/dist/pnotify.js",
                         "~/Scripts/pnotify/dist/pnotify.buttons.js",
-                        "~/Scripts/pnotify/dist/pnotify.nonblock.js"));
+                        "~/Scripts/pnotify/dist/pnotify.nonblock.js",
+                        "~/Content/vendors/multiselect/bootstrap-multiselect.js"
+                        ));
 
-             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
-                "~/Scripts/jquery-ui.css",
-                "~/content/vendors/bootstrap/dist/css/bootstrap.min.css",
-                "~/content/vendors/font-awesome/css/font-awesome.min.css",
-                "~/Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css",
-                "~/Content/vendors/iCheck/skins/flat/green.css",
-                "~/Content/vendors/bootstrap-datepicker/datepicker3.css",
-                "~/Content/Site.css",
-                "~/content/vendors/build/css/custom.min.css",
-                "~/Scripts/pnotify/dist/pnotify.nonblock.css",
-                "~/Scripts/pnotify/dist/pnotify.buttons.css",
-                "~/Scripts/pnotify/dist/pnotify.css"));
+            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
+               "~/Scripts/jquery-ui.css",
+               "~/content/vendors/bootstrap/dist/css/bootstrap.min.css",
+               "~/content/vendors/font-awesome/css/font-awesome.min.css",
+               "~/Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css",
+               "~/Content/vendors/iCheck/skins/flat/green.css",
+               "~/Content/vendors/bootstrap-datepicker/datepicker3.css",
+               "~/Content/Site.css",
+               "~/content/vendors/build/css/custom.min.css",
+               "~/Scripts/pnotify/dist/pnotify.nonblock.css",
+               "~/Scripts/pnotify/dist/pnotify.buttons.css",
+               "~/Scripts/pnotify/dist/pnotify.css",
+               "~/Content/vendors/multiselect/bootstrap-multiselect.css"
+               ));
 
             //~/Content/vendors/bootstrap-datepicker/datepicker3.css
         }

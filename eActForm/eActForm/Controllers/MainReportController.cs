@@ -17,9 +17,6 @@ namespace eActForm.Controllers
 
         public ActionResult Index(string activityId)
         {
-
-
-
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
             //=========for=====test=================
@@ -70,7 +67,39 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);// production
         }
 
+        public ActionResult ReportPettyCashNum(string activityId, Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            //=============for test=====================
+            activityId = "d57d1303-ded1-4927-bd31-4d9f85dfabe4";
+            //==END===========for test=====================
+            Activity_TBMMKT_Model activity_Model = new Activity_TBMMKT_Model();
+            ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
+            if (activity_TBMMKT_Model.activityFormTBMMKT.id != null)
+            {
+                activity_Model = activity_TBMMKT_Model;
+            }
+            else
+            {
+                activity_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+                activity_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
+                activity_Model.activityFormTBMMKT.chkUseEng = (activity_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
+                //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+                activity_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
+                //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+            }
 
+
+            activity_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm;
+            activity_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm_EN;
+
+            //===========Set Language By Document Dev date 20200310 Peerapop=====================
+            //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
+            DocumentsAppCode.setCulture(activity_Model.activityFormModel.languageDoc);
+            //====END=======Set Language By Document Dev date 20200310 Peerapop==================
+
+            //return View(activity_Model); // test
+            return PartialView(activity_Model);// production
+        }
 
         [HttpPost]
         [ValidateInput(false)]
