@@ -43,7 +43,7 @@ namespace eActForm.Controllers
         }
         public ActionResult requestEmp(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-
+           
             //string cultureLocal = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
             //string en = ConfigurationManager.AppSettings["cultureEng"];
 
@@ -63,6 +63,8 @@ namespace eActForm.Controllers
         }
         public ActionResult purposeDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+           
+
             if (activity_TBMMKT_Model.purposeModel.Count == 0)
             {
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getAllPurpose().ToList();
@@ -71,6 +73,7 @@ namespace eActForm.Controllers
         }
         public ActionResult placeDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+           
             if (activity_TBMMKT_Model.placeDetailModel.Count == 0)
             {
                 List<PlaceDetailModel> placeDetailModel = new List<PlaceDetailModel>();
@@ -84,6 +87,7 @@ namespace eActForm.Controllers
         }
         public ActionResult expensesDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+           
             if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null)
             {
                 CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT

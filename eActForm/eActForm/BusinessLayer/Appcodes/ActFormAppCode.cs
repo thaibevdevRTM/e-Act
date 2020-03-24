@@ -220,7 +220,11 @@ namespace eActForm.BusinessLayer
             return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] ||
                 UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
         }
-
+        public static bool isOtherCompanyMTOfDoc(string compId)
+        {
+            return compId == ConfigurationManager.AppSettings["companyId_TBM"] ||
+               compId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+        }
         public static bool isAdmin()
         {
             return
@@ -248,6 +252,17 @@ namespace eActForm.BusinessLayer
             {
                 throw new Exception("getStatusNote >>" + ex.Message);
             }
+        }
+        public static string getStatusNeedDocColor(string val)
+        {
+            if (val == "AA21FB12-B80A-4A0B-B9CA-78B8D7899D44")
+                val = "1d8110";
+            else if (val == "D0298BD9-ACC2-4434-955F-40E8A7EE810D")
+                val = "fba222";
+            else if (val == "B3EDA054-49C8-4EEF-83F2-EB0D9F39AB02")
+                val = "f80014";
+
+            return val;
         }
     }
 }

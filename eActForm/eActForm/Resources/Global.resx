@@ -276,6 +276,9 @@
   <data name="totalAmountTHB" xml:space="preserve">
     <value>รวมเงิน(บาท)</value>
   </data>
+  <data name="piorityDoc" xml:space="preserve">
+    <value>ความเร่งด่วน</value>
+  </data>
   <data name="accountCode" xml:space="preserve">
     <value>รหัสบัญชี</value>
   </data>
