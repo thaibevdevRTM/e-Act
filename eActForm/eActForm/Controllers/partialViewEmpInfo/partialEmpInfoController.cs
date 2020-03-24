@@ -9,7 +9,7 @@ namespace eActForm.Controllers
     public class partialEmpInfoController : Controller
     {
         // GET: partialEmpInfo
-        public ActionResult Index()
+        public ActionResult index()
         {
             return PartialView();
         }

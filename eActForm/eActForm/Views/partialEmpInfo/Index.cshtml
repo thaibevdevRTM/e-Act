@@ -45,18 +45,24 @@
                     <p class="pull-right">รหัสพนักงาน :</p>
                 </div>
                 <div class="col-lg-2 col-xs-4">
-                    <input type="text" class="form-control textboxcss textRight" Style="text-align:center;" id="txtEmpId" onchange="getEmpDetail();" />
+                    <input type="text" data-val="true" data-val-required="field is required." class="form-control textboxcss textRight" Style="text-align:center;" id="txtEmpId" required name="activityFormModel.empId" onchange="getEmpDetail();" />
                 </div>
                 <div class="col-lg-1 col-xs-2">
                     <p class="pull-right">Email :</p>
                 </div>
                 <div class="col-lg-2 col-xs-4">
-                    <input type="text" class="form-control textboxcss textRight" Style="text-align:center;" id="txtEmail" />
+                    <input type="text" data-val="true" data-val-required="field is required." class="form-control textboxcss textRight" Style="text-align:center;" id="txtEmail" required name="activityFormModel.empEmail" />
+                </div>
+                <div class="col-lg-1 col-xs-2">
+                    <p class="pull-right">Tel :</p>
+                </div>
+                <div class="col-lg-2 col-xs-4">
+                    <input type="text" data-val="true" data-val-required="field is required." class="form-control textboxcss textRight" Style="text-align:center;" id="txtTel" required name="activityFormModel.empTel" />
                 </div>
             </div>
         </div>
 
-
+        <input type="hidden" name="activityFormModel.customerName" id="customerName" />
     </fieldset>
 </div>
 
@@ -77,16 +83,19 @@
                 empId: $("#txtEmpId").val(),
             }
         }).done(function (response) {
-            console.log(response);
             if (response.Data != null) {
                 $("#txtEmpName").val(response.Data.empName);
+                $("#customerName").val(response.Data.empName);
+                $("#txtEmail").val(response.Data.email);
                 document.getElementById('lblEmpName').innerHTML = response.Data.empName;
                 document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
                 document.getElementById('lblLvl').innerHTML = response.Data.level;
                 document.getElementById('lblDept').innerHTML = response.Data.department;
             }
             else {
-                 $("#txtEmpName").val('');
+                $("#txtEmpName").val('');
+                $("#customerName").val('');
+                 $("#txtEmail").val('');
                 document.getElementById('lblEmpName').innerHTML ='';
                 document.getElementById('lblEmpPosition').innerHTML = '';
                 document.getElementById('lblLvl').innerHTML = '';

@@ -46,6 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasePresenter.cs" />
+    <Compile Include="MasterData\AmphuresPresenter.cs" />
+    <Compile Include="MasterData\ProvincePresenter.cs" />
+    <Compile Include="MasterData\SalesTeamPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\RepPostEvaPresenter.cs" />
   </ItemGroup>

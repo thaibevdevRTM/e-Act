@@ -3,9 +3,45 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_BlankLayout.cshtml";
 }
-
+<style>
+    input[data-val-required] { background:#E0F7FA } 
+    select.input-validation-error { border-color: red }
+</style>
 <body class="login">
-    <div>
-        @Html.Action("Index", "partialEmpInfo" )
-    </div>
+
+        @using (Ajax.BeginForm("submitOrder", "orderProduct", new AjaxOptions { HttpMethod = "post"
+            , OnBegin = "return beginQuery()"
+            , OnSuccess = "successQuery"
+            , OnFailure = "failureQuery" }
+        , new { id = "divFrmOrderProduct"
+        , @class = "form-horizontal form-label-left" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.Action("index", "partialEmpInfo", new { actId = ViewBag.actId })
+            @Html.Action("index", "partialByProduct", new { actId = ViewBag.actId })
+            @Html.Action("index", "partialSaleTeam")
+            <div class="row text-center">
+                <button id="btnsubmit" type="submit" class="btn ink-reaction btn-success" ><i class="fa fa fa-check fa-fw"></i>&nbsp;สั่งซื้อ</button>
+            </div>
+            <input type="hidden" value="@ViewBag.actId" name="activityFormModel.id" />
+        }
+
 </body>
+
+<script>
+
+    
+    function beginQuery() {
+       
+    }
+
+    function successQuery(data) {
+
+
+    }
+
+    function failureQuery(data) {
+
+    }
+</script>

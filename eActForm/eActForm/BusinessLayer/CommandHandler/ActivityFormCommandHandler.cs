@@ -319,7 +319,7 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        protected static int insertActivityForm(ActivityForm model)
+        public static int insertActivityForm(ActivityForm model)
         {
             int result = 0;
             try
@@ -437,7 +437,7 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        protected static int insertEstimate(CostThemeDetail model)
+        public static int insertEstimate(CostThemeDetail model)
         {
             int result = 0;
             try

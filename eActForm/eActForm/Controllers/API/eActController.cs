@@ -302,6 +302,7 @@ namespace eActForm.Controllers
                     level = empDetailList.FirstOrDefault().level,
                     department = !langEn ? empDetailList.FirstOrDefault().department : empDetailList.FirstOrDefault().departmentEN,
                     bu = !langEn ? empDetailList.FirstOrDefault().bu : empDetailList.FirstOrDefault().buEN,
+                    email = empDetailList.FirstOrDefault().email
                 };
 
 

@@ -188,6 +188,7 @@ namespace eActForm.Models
         public string positionEN { get; set; }
         public string departmentEN { get; set; }
         public string buEN { get; set; }
+        public string email { get; set; }
     }
 
     public class PurposeModel : ActBaseModel
