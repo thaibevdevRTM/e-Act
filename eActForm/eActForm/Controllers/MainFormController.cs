@@ -56,6 +56,7 @@ namespace eActForm.Controllers
                             objGetDataSubjectBy.idBrandOrChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId;
                         }
                     }
+
                     activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
                     //====END===============Get Subject=======================
                     activity_TBMMKT_Model.channelMasterTypeList = QueryGet_channelByGroup.get_channelByGroup(activityFormTBMMKT.master_type_form_id, activityFormTBMMKT.formCompanyId, activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel);

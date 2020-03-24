@@ -24,6 +24,7 @@ namespace eActForm.BusinessLayer
                               {
                                   id = d["id"].ToString(),
                                   name = d["name"].ToString(),
+                                  nameEN = d["nameEN"].ToString(),
                                   sub_name = d["sub_name"].ToString(),
                                   type = d["type"].ToString(),
                                   master_type_form_id = d["master_type_form_id"].ToString(),
@@ -32,9 +33,9 @@ namespace eActForm.BusinessLayer
                                   createdByUserId = d["createdByUserId"].ToString(),
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
+                                  orderNum = d["orderNum"].ToString(),
                               });
-
-                return result.ToList();
+                return result.OrderBy(x => x.orderNum).OrderBy(x => x.id).ToList();
             }
             catch (Exception ex)
             {

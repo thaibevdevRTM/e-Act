@@ -379,7 +379,6 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
-
                 activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng);
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
@@ -606,6 +605,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@costPeriodST", model.costPeriodSt)
                     ,new SqlParameter("@costPeriodEND", model.costPeriodEnd)
                     ,new SqlParameter("@empId", model.empId)
+                    ,new SqlParameter("@piorityDoc", (model.piorityDoc == null ? "" :model.piorityDoc))
+
                   });
             }
             catch (Exception ex)
