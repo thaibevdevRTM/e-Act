@@ -4,6 +4,9 @@
 @{
     decimal? unit = 0;
     decimal? total = 0;
+    decimal? totalEntertainment = 0;
+    decimal? totalAdvance = 0;
+    decimal? totalExpenses  = 0;
 }
 
 <style>
@@ -35,35 +38,36 @@
 
 
         <div>
-            <div style="text-align: center;">
-                <lable>ประจำเดือน : &nbsp;&nbsp; @Model.activityFormModel.documentDate </lable>
+            <div style="text-align: center;" class="fontDocV2">
+                ประจำเดือน : &nbsp;&nbsp; @Model.activityFormModel.documentDate.Value.ToString("MMMM")
             </div>
             <div style="text-align: right;">
-                <lable>เลขที่เอกสาร  :  &nbsp;@Model.activityFormModel.activityNo</lable>
+                <lable>เลขที่เอกสาร  :  &nbsp;</lable><label style="width:120px;">@Model.activityFormModel.activityNo</label>
             </div>
         </div>
         <div>
             <div style="text-align: right;">
-                <lable>เลขที่เอกสารใบยืมเงินทดรอง :  &nbsp;@Model.activityFormModel.reference</lable>
+                <lable>เลขที่เอกสารใบยืมเงินทดรอง :  &nbsp;</lable><label style="width:120px;">@Model.activityFormModel.reference</label>
             </div>
         </div>
 
         <div>
             <table style="width: 100%; margin-top: 30px;">
                 <tr>
-                    <td class="font12" width="30px">
+                    <td width="30px">
                         ชื่อ / Name:
                     </td>
-                    <td>
+                    <td width="60px">
                         @if (@Model.masterRequestEmp.Any())
                         {
                             @Model.masterRequestEmp[0].empName
                         }
                     </td>
-                    <td class="font12" width="30px">
+                    <td  width="30px">
                         ตำแหน่ง / Position:
                     </td>
-                    <td>
+
+                    <td width="60px">
                         @if (@Model.masterRequestEmp.Any())
                         {
                             @Model.masterRequestEmp[0].position
@@ -71,11 +75,23 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="font12">
+                    <td  width="30px">
                         ระดับ / Level:
                     </td>
-                    <td class="font12">
+                    <td width="60px">
+                        @if (@Model.masterRequestEmp.Any())
+                        {
+                            @Model.masterRequestEmp[0].level
+                        }
+                    </td>
+                    <td width="30px">
                         หน่วยงาน / Dept.:
+                    </td>
+                    <td width="60px">
+                        @if (@Model.masterRequestEmp.Any())
+                        {
+                            @Model.masterRequestEmp[0].department
+                        }
                     </td>
                 </tr>
             </table>
@@ -85,47 +101,51 @@
         <div>
             Part 1 :   ค่าใช้จ่ายในการเดินทาง / Travel & Transportation Expenses
         </div>
-        <div class="font12">
-            - ประเทศหรืองานที่เดินทางไป / Country or For:
+        <div class="font12 pull-left">
+            - ประเทศหรืองานที่เดินทางไป / Country or For: @Model.activityFormTBMMKT.activityDetail
         </div>
-        <br />
+        <div class="font12 pull-right">
+            วันที่/Date :  @if (@Model.activityFormTBMMKT.costPeriodSt != null)
+            {@Model.activityFormTBMMKT.costPeriodSt.Value.ToString("dd/MMM/yyyy")} -
+            @if (@Model.activityFormTBMMKT.costPeriodEnd != null) {@Model.activityFormTBMMKT.costPeriodEnd.Value.ToString("dd/MMM/yyyy")}
+        </div>
         <div>
             <table class="tablethin font12" style="width: 100%; text-align: center;" border="1" cellpadding="0" cellspacing="0">
                 <tr style="background-color: #E5E2E2; height: 25px;">
                     <td style="text-align: center; width: 15%;">วันเดือนปี</td>
                     <td style="text-align: center; width: 30%;">รายการ</td>
-                    <td style="text-align: center; width: 15%;">ลิตร</td>
+                    <td style="text-align: center; width: 10%;">ลิตร</td>
                     <td style="text-align: center; width: 15%;">จำนวนเงิน</td>
-                    <td style="text-align: center; width: 26%;">หมายเหตุ</td>
+                    <td style="text-align: center; width: 30%;">หมายเหตุ</td>
                 </tr>
                 @foreach (var item in Model.activityOfEstimateList)
                 {
                     <tr>
-                        <td>@if (@item.date != null) {@item.date.Value.ToString("dd/MM/yyyy")}</td>
-                        <td>@item.productDetail</td>
-                        <td>@item.unit</td>
-                        <td>@string.Format("{0:n2}", @item.total)</td>
-                        <td>@item.remark</td>
-                    </tr>
-
-
-
-                    unit = @item.unit == null ? 0 + unit : item.unit + unit;
-                    total = item.total == null ? 0 + total : item.total + total;
-                }
+                        <td>
+                            @if (@item.date != null)
+                            {@item.date.Value.ToString("dd/MM/yyyy")}
+                    </td>
+                    <td>@item.productDetail</td>
+                    <td>@item.unit</td>
+                    <td>@string.Format("{0:n2}", @item.total)</td>
+                    <td>@item.remark</td>
+                </tr>
+                unit =  item.unit + unit;
+                total = item.total == null ? 0 + total : item.total + total;
+            }
                 <tr>
                     <td colspan="2" class="textRight">
                         รวมค่าใช้จ่ายในการเดินทาง/ต่าใช้จ่ายประจำเดือน (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)
                         Total Travel & Transporation Expenses (Excluding Entertainment Expenses and Market Visit)
                     </td>
-                    <td class="textRight">
+                    <td class="center">
                         @if (unit != 0)
                         {
                             string result = String.Format("{0:n2}", @unit);
                             @result.ToString();
                         }
                     </td>
-                    <td class="textRight">
+                    <td class="center">
                         @if (total != 0)
                         {
                             string result = String.Format("{0:n2}", @total);
@@ -133,7 +153,7 @@
                         }
                     </td>
                     <td></td>
-                    <td></td>
+
                 </tr>
             </table>
         </div>
@@ -146,7 +166,6 @@
             <lable style="color: red"> * หมายเหตุ:</lable>
             <lable>ค่าใช้จ่ายส่วนนี้ จะต้องผ่านการอนุมัติตามอำนาจการอนุมัติได้เท่านั้น *</lable>
         </div>
-        <br />
         <div>
             <table class="tablethin font12" style="width: 100%; text-align: center;" border="1" cellpadding="0" cellspacing="0">
                 <tr style="background-color: #E5E2E2; height: 25px;">
@@ -159,31 +178,60 @@
                 @foreach (var item in Model.activityOfEstimateList2)
                 {
                     <tr>
-                        <td>@if (@item.date != null) {@item.date.Value.ToString("dd/MM/yyyy")}</td>
+                        <td>
+                            @if (@item.date != null)
+                            {@item.date.Value.ToString("dd/MM/yyyy")}
+                        </td>
                         <td>@item.productDetail</td>
                         <td>@item.detail</td>
                         <td>@item.remark</td>
-                        <td>@item.total</td>
+                        <td>@string.Format("{0:n2}", @item.total)</td>
                     </tr>
+
+                    totalEntertainment = item.total == null ? 0 + totalEntertainment : item.total + totalEntertainment;
+                    totalAdvance = item.total == null ? 0 + totalAdvance : item.total + total;
                 }
                 <tr>
                     <td colspan="4" class="textRight">
                         รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
                         Total Entertainment Expenses and Market Visit
                     </td>
-                    <td class="textRight"></td>
+                    <td class="center">
+                        @if (totalEntertainment != 0)
+                        {
+                            string result = String.Format("{0:n2}", @totalEntertainment);
+                            @result.ToString();
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="textRight">
+                        รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท) Total Monthly Expenses (Baht)
+                    </td>
+                    <td class="center">
+                        @if (totalEntertainment != 0)
+                        {
+                            var totalEnt = totalEntertainment + total;
+                            string result = String.Format("{0:n2}", @totalEnt);
+                            @result.ToString();
+                        }
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="4" class="textRight">
                         กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)  =
                     </td>
-                    <td class="textRight"></td>
+                    <td class="center">
+                       @Model.activityFormTBMMKT.objective
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="4" class="textRight">
                         รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses  =
                     </td>
-                    <td class="textRight"></td>
+                    <td class="center">
+
+                    </td>
                 </tr>
             </table>
         </div>

@@ -36,7 +36,7 @@
                     </td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail(this)" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].unit, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getLite()" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getValues()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}" , new { @class = "form-control textboxcss font10 textRight", onkeyup = "getValues()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
 
                 </tr>
@@ -93,6 +93,7 @@
         <lable>ค่าใช้จ่ายส่วนนี้ จะต้องผ่านการอนุมัติตามอำนาจการอนุมัติได้เท่านั้น *</lable>
     </div>
 </div>
+
 <div class="col-md-12">
     <table class="table table-bordered" id="tbl_Entertainment" cellpadding="0" cellspacing="0">
         <thead class="thead-dark">
@@ -121,7 +122,7 @@
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].detail, new { @class = "form-control textboxcss font10 textRight" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal()" })</td>
 
                 </tr>
             </tbody>
@@ -152,7 +153,13 @@
                 กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)  =
             </td>
             <td class="textRight">
-                <label id="lbltotalAdvance"></label>
+                <label id="lbltotalAdvance">
+                    @{
+                        string result = String.Format("{0:n2}", @Model.totalCostThisActivity);
+                        @result.ToString();
+                        @Html.HiddenFor(x => x.activityFormTBMMKT.objective)
+                    }
+                </label>
             </td>
         </tr>
         <tr>
@@ -185,6 +192,8 @@
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
         });
+
+       
     });
 
     function autocompleDetail(i) {
@@ -267,19 +276,19 @@
     }
 
     function totalExpenExMaket() {
-        var total = parseFloat(document.getElementById('lblShowtotal').innerHTML.split(",").join(""));
-        var ExMaket = parseFloat(document.getElementById('lbltotalExMaket').innerHTML.split(",").join(""));
+        var total = document.getElementById('lblShowtotal').innerHTML.split(",").join("");
+        var ExMaket = document.getElementById('lbltotalExMaket').innerHTML.split(",").join("");
+        total = isNaN(total) ? 0 : parseFloat(total);
         ExMaket = isNaN(ExMaket) ? 0 : parseFloat(ExMaket);
-        var result = total +  ExMaket
-         //Id for exPerryListEntertainment View
+        var result = total + ExMaket;
         document.getElementById('lbltotalExpenses').innerHTML = isNaN(result) ? 0 : result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-
+        
     }
 
     function totalAllExpenses() {
         var ex = parseFloat(document.getElementById('lbltotalExpenses').innerHTML.split(",").join(""));
-        var adv = parseFloat(0); // set 0 wait value
-        var result = ex - adv;
+        var adv = parseFloat(document.getElementById('lbltotalAdvance').innerHTML.split(",").join("")); // set 0 wait value
+        var result = adv - ex;
          //Id for exPerryListEntertainment View
         document.getElementById('lbltotalAll').innerHTML =  result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     }

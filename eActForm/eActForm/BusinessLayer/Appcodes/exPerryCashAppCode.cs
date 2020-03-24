@@ -2,6 +2,7 @@
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 //model.exPerryCashList = getCashPosition(UtilsAppCode.Session.User.empId);
                 //model.exPerryCashModel.rulesCash = getCashPosition(UtilsAppCode.Session.User.empId).Where(x => x.cashLimitId.Equals("87757B5B-C946-4001-A74B-AB6C9003AD25")).FirstOrDefault().cash;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("getMaster" + ex.Message);
             }
@@ -90,6 +91,25 @@ namespace eActForm.BusinessLayer.Appcodes
             {
                 throw new Exception("getApproveSummaryDetailListsByEmpId >>" + ex.Message);
             }
+        }
+
+        public static Activity_TBMMKT_Model prepareDataExpense(Activity_TBMMKT_Model activity_TBMMKT_Model, string activityId)
+        {
+            try
+            {
+                activity_TBMMKT_Model.activityFormModel.id = Guid.NewGuid().ToString();
+                activity_TBMMKT_Model.activityFormTBMMKT.empId = ApproveAppCode.getApproveByActFormId(activityId).approveDetailLists.FirstOrDefault().empId;
+                activity_TBMMKT_Model.activityFormTBMMKT.statusId = 1;
+                activity_TBMMKT_Model.activityFormTBMMKT.reference = activity_TBMMKT_Model.activityFormTBMMKT.activityNo;
+                activity_TBMMKT_Model.activityFormTBMMKT.activityNo = "";
+                activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"];
+                activity_TBMMKT_Model.activityFormTBMMKT.objective = activity_TBMMKT_Model.totalCostThisActivity.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("prepareDataExpense >>" + ex.Message);
+            }
+            return activity_TBMMKT_Model;
         }
     }
 }

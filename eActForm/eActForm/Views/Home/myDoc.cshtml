@@ -220,6 +220,11 @@
                             else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || item.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]))
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+
+                                if (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"])
+                                {
+                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", onclick = "waitpopup();", })
+                                }
                             }
                             else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && item.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"]) /*ใบเบิกผลิตภัณฑ์,POS / PREMIUM*/
                             {
