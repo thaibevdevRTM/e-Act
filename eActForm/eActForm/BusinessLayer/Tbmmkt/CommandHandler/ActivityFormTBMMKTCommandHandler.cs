@@ -48,7 +48,7 @@ namespace eActForm.BusinessLayer
                     model.activityFormTBMMKT.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
                     model.activityFormTBMMKT.languageDoc = model.activityFormTBMMKT.languageDoc == null ? "" : model.activityFormTBMMKT.languageDoc;
                     model.activityFormTBMMKT.piorityDoc = model.activityFormTBMMKT.piorityDoc == null ? "" : model.activityFormTBMMKT.piorityDoc;
-
+                  
                     rtn = insertActivityForm(model.activityFormTBMMKT);
 
                     //model.activityFormModel.id = activityId;
@@ -131,36 +131,37 @@ namespace eActForm.BusinessLayer
 
                     insertIndex++;
                 }
-
-                foreach (var item in model.activityOfEstimateList2.ToList())
+                if (model.activityOfEstimateList2 != null)
                 {
+                    foreach (var item in model.activityOfEstimateList2.ToList())
+                    {
 
-                    CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
-                    costThemeDetail.id = Guid.NewGuid().ToString();
-                    costThemeDetail.activityId = activityId;
-                    costThemeDetail.activityTypeId = item.activityTypeId;
-                    costThemeDetail.productDetail = item.productDetail;
-                    costThemeDetail.total = item.total == null ? 0 : item.total;
-                    costThemeDetail.IO = item.IO;
-                    costThemeDetail.rowNo = insertIndex;
-                    costThemeDetail.delFlag = false;
-                    costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
-                    costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                    costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
-                    costThemeDetail.updatedDate = DateTime.Now;
-                    costThemeDetail.unit = item.unit;
-                    costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
-                    costThemeDetail.QtyName = item.QtyName;
-                    costThemeDetail.remark = item.remark == null ? "" : item.remark;
-                    costThemeDetail.productId = item.productId == null ? "" : item.productId;
-                    costThemeDetail.typeTheme = item.typeTheme;
-                    costThemeDetail.date = string.IsNullOrEmpty(item.dateInput) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(item.dateInput, ConfigurationManager.AppSettings["formatDateUse"]);
-                    costThemeDetail.detail = item.detail;
-                    rtn += insertEstimate(costThemeDetail);
+                        CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
+                        costThemeDetail.id = Guid.NewGuid().ToString();
+                        costThemeDetail.activityId = activityId;
+                        costThemeDetail.activityTypeId = item.activityTypeId;
+                        costThemeDetail.productDetail = item.productDetail;
+                        costThemeDetail.total = item.total == null ? 0 : item.total;
+                        costThemeDetail.IO = item.IO;
+                        costThemeDetail.rowNo = insertIndex;
+                        costThemeDetail.delFlag = false;
+                        costThemeDetail.createdByUserId = model.activityFormModel.createdByUserId;
+                        costThemeDetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                        costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                        costThemeDetail.updatedDate = DateTime.Now;
+                        costThemeDetail.unit = item.unit;
+                        costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
+                        costThemeDetail.QtyName = item.QtyName;
+                        costThemeDetail.remark = item.remark == null ? "" : item.remark;
+                        costThemeDetail.productId = item.productId == null ? "" : item.productId;
+                        costThemeDetail.typeTheme = item.typeTheme;
+                        costThemeDetail.date = string.IsNullOrEmpty(item.dateInput) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(item.dateInput, ConfigurationManager.AppSettings["formatDateUse"]);
+                        costThemeDetail.detail = item.detail;
+                        rtn += insertEstimate(costThemeDetail);
 
-                    insertIndex++;
+                        insertIndex++;
+                    }
                 }
-
             }
             return rtn;
         }
