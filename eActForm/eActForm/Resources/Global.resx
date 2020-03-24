@@ -276,4 +276,34 @@
   <data name="totalAmountTHB" xml:space="preserve">
     <value>รวมเงิน(บาท)</value>
   </data>
+  <data name="piorityDoc" xml:space="preserve">
+    <value>ความเร่งด่วน</value>
+  </data>
+  <data name="accountCode" xml:space="preserve">
+    <value>รหัสบัญชี</value>
+  </data>
+  <data name="amount" xml:space="preserve">
+    <value>จำนวนเงิน</value>
+  </data>
+  <data name="approvePerson" xml:space="preserve">
+    <value>ผู้อนุมัติ</value>
+  </data>
+  <data name="documentNo" xml:space="preserve">
+    <value>เลขที่</value>
+  </data>
+  <data name="payee" xml:space="preserve">
+    <value>ผู้รับเงิน</value>
+  </data>
+  <data name="payer" xml:space="preserve">
+    <value>ผู้จ่ายเงิน</value>
+  </data>
+  <data name="toPay" xml:space="preserve">
+    <value>จ่ายให้</value>
+  </data>
+  <data name="total" xml:space="preserve">
+    <value>รวม</value>
+  </data>
+  <data name="verify" xml:space="preserve">
+    <value>ผู้ตรวจสอบ</value>
+  </data>
 </root>
