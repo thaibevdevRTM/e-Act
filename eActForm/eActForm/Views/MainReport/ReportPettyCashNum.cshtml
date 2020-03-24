@@ -1,0 +1,260 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Configuration;
+@using System.Globalization;
+@*=====ของDEVทดลองprint pdf=========*@
+<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+@using (Html.BeginForm("printDoc", "MainReport", FormMethod.Post))
+{
+    <input type="hidden" name="gridHtml" />
+    <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
+    <br />
+    <br />
+    <br />
+}
+
+
+<script>
+    $("#btnExportPDF").click(function () {
+        $("input[name='gridHtml']").val($("#divForm").html());
+    });
+</script>
+@*===END==ของงDEVทดลองprint pdf=========*@
+
+@{
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+    var applicantTwo = "";
+    if (Model.approveFlowDetail != null)
+    {
+        foreach (var item in Model.approveFlowDetail)
+        {
+            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGroupApproveby"])
+            {
+                if (Model.activityFormTBMMKT.chkUseEng)
+                {
+                    applicantTwo = (item.empFNameEN + " " + item.empLNameEN);
+                }
+                else
+                {
+                    applicantTwo = (item.empFNameTH + " " + item.empLNameTH);
+                }
+            }
+        }
+    }
+}
+
+<div id="divForm" style="width:97%;">
+    <style>
+        .fontDocV2 {
+            font-family: 'TH SarabunPSK';
+            font-size: 22px;
+            color: black;
+        }
+
+        .fontDocSmall {
+            font-family: 'TH SarabunPSK';
+            font-size: 14px;
+            color: black;
+        }
+
+        .font16 {
+            font-family: 'TH SarabunPSK';
+            font-size: 16px;
+            color: black;
+        }
+
+        .cssTitleOverLap {
+            background-color: white;
+            font-weight: bold;
+        }
+    </style>
+    <table style="width:100%;" class="fontDocSmall">
+        <tr>
+            <td style="width: 80%; height: 40pt; border: 0px solid black; font-weight: bold; text-align: center; font-size: 12pt;">
+                <table style="width:100%;">
+                    <tr>
+                        <td style="text-align: left;">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width: 60%; height: 15px; border: 0px solid black; padding-top: -40px; text-align: left;" class="fontDocV2">
+                                        @if (Model.activityFormTBMMKT.chkUseEng)
+                                        {
+                                            @Model.activityFormTBMMKT.companyNameEN
+                                        }
+                                        else
+                                        {
+                                            @Model.activityFormTBMMKT.companyName
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 60%; height: 15px; border-top: 1.1px solid black; border-right: 1.1px solid black; border-bottom: 0px solid black; border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
+                                        <label class="cssTitleOverLap">&nbsp;@Resources.Global.toPay&nbsp;</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 46px;border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; border-left: 1.1px solid black; text-align: center;">
+                                        @applicantTwo
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="padding-left:15px;padding-bottom:5px;">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width: 60%; height: 15px; border: 0px solid black; padding-top: -35px; text-align: right;" class="font16">
+                                        @if (Model.activityFormTBMMKT.chkUseEng)
+                                        {
+                                            @Model.activityFormTBMMKT.formNameEn
+                                        }
+                                        else
+                                        {
+                                            @Model.activityFormTBMMKT.formName
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 60%;
+                                                height: 15px;
+                                                border-top: 1.1px solid black;
+                                                border-right: 1.1px solid black;
+                                                border-bottom: 0px solid black;
+                                                border-left: 1.1px solid black;
+                                                padding-top: -15px;
+                                                text-align: left;">
+                                        <label class="cssTitleOverLap">&nbsp;@Resources.Global.documentNo&nbsp;</label>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td style=" height: 15px;
+                                                border-top: 0px solid black;
+                                                border-right: 1.1px solid black;
+                                                border-bottom: 1.1px solid black;
+                                                border-left: 1.1px solid black;
+                                                text-align: center;">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 60%; height: 15px; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 0px solid black; border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
+                                        <label class="cssTitleOverLap">&nbsp;@Resources.Global.documentDate&nbsp;</label>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td style="height: 15px; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; border-left: 1.1px solid black; text-align: center; padding-top: -15px;">
+                                        @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            @*<td style="height: 220pt; border: 0px solid black; font-weight: bold; text-align: center; font-size: 12pt;vertical-align:top;">
+            *@
+            <td style="border: 0px solid black; font-weight: bold; text-align: center; font-size: 12pt;vertical-align:top;">
+                <table border="0" style="width: 100%; text-align: center;">
+                    <tr>
+                        <td>
+                            <table style="width: 100%; border-collapse: collapse; font-family: 'th sarabunPSK'; font-size: 12pt;" cellspacing="5" cellpadding="5">
+                                <tr style="height: 20pt;">
+                                    <td style="vertical-align:middle;width: 75%; text-align: center; border: 1.1px solid black;">
+                                        <label ID="label4" style="font-weight:bold;">@Resources.Global.description</label>
+                                    </td>
+
+                                    <td style="vertical-align:middle;width: 12%; text-align: center; border-bottom: 1.1px solid black; border-top: 1.1px solid black; border-right: 1.1px solid black;">
+                                        <label ID="label5" style="font-weight:bold;">@Resources.Global.accountCode</label>
+                                    </td>
+
+                                    <td style="vertical-align:middle;width: 13%;text-align: center; border-bottom: 1.1px solid black; border-top: 1.1px solid black; border-right: 1.1px solid black;">
+                                        <label ID="label6" style="font-weight:bold;">@Resources.Global.amount</label>
+                                    </td>
+                                </tr>
+                                <tr style="height: 19pt;">
+                                    <td style="text-align: left; border-left: 1.1px solid black; border-bottom: 0.05px  solid black; border-right: 1.1px solid black;">
+                                        &nbsp;
+                                    </td>
+                                    <td style="text-align: left; border-bottom: 0.05px solid black; border-right: 1.1px solid black;">
+                                        &nbsp;
+                                    </td>
+                                    <td style="text-align: right; border-bottom: 0.05px solid black; border-right: 1.1px solid black;">
+                                        100,000
+                                    </td>
+                                </tr>
+                                <tr style="height: 20pt;">
+                                    <td colspan="2" style="text-align: left; border-left: 0px solid black; border-left: 0px solid black; border-bottom: 0px solid black; border-right: 1.1px solid black;">
+                                        @{
+                                            string txtTotalCostThisActivity = "";
+                                            string bath = "";
+                                            if (Model.activityFormTBMMKT.chkUseEng)
+                                            {
+                                                txtTotalCostThisActivity = Resources.Global.total;
+                                            }
+                                            else
+                                            {
+                                                txtTotalCostThisActivity = Resources.Global.total;
+                                                bath = DocumentsAppCode.ThaiBahtText(Model.totalCostThisActivity.Value.ToString());
+                                            }
+                                        }
+                                        <label style="font-weight:bold;">@txtTotalCostThisActivity</label> @bath
+                                    </td>
+
+                                    <td style="text-align: right; border-bottom: 1.1px solid black; border-right: 1.1px solid black;">
+                                        @Model.totalCostThisActivity.Value.ToString("#,##0.00")
+                                    </td>
+                                </tr>
+                            </table>
+                            <div style="text-align: right; height: 10px;"></div>
+                            @*<div style="text-align: right;">
+                                    <Image ID="imgSignature01_01"  BorderWidth="0" Height="25px" Width="80" ImageUrl="http://localhost:22865/_img/Capture.png" />
+                                    <Image ID="imgSignature03_01"  BorderWidth="0" Height="25px" Width="80" ImageUrl="http://localhost:22865/_img/Capture.png" />
+                                </div>*@
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="height: 30pt; border: 0px solid black; font-weight: bold; text-align: center; font-size: 12pt;vertical-align:top;">
+                <table style="width: 100%; border-bottom: 0px solid black; border-right: 0px solid black; border-left: 0px solid black; border-collapse: collapse; font-family: 'th sarabunPSK'; font-size: 12pt;">
+                    <tr>
+                        <td style="width: 25%; height: 10pt; border-top: 1.1px solid black; border-right: 1.1px solid black; border-bottom: 0px solid black; border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
+                            <label class="cssTitleOverLap">@Resources.Global.payee</label>
+
+                        </td>
+                        <td style="width: 25%; height: 10pt; border-top: 1.1px solid black; border-right: 1.1px solid black; padding-top: -15px; text-align: left;">
+                            <label class="cssTitleOverLap">@Resources.Global.payer</label>
+                        </td>
+                        <td style="width: 25%; height: 10pt; border-top: 1.1px solid black; border-right: 1.1px solid black; padding-top: -15px; text-align: left;">
+                            <label class="cssTitleOverLap">@Resources.Global.verify</label>
+                        </td>
+                        <td style="width: 25%; height: 10pt; border-top: 1.1px solid black; border-right: 1.1px solid black; padding-top: -15px; text-align: left;">
+                            <label class="cssTitleOverLap">@Resources.Global.approvePerson</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; border-left: 1.1px solid black; text-align: center;"></td>
+                        <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;"></td>
+                        <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;"></td>
+                        <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;">
+                            <Image ID="imgSignature02_01" Height="30pt" Width="80pt" ImageUrl="http://localhost:22865/_img/Capture.png" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-top: 0px solid black; border-right: 0px solid black; border-bottom: 0px solid black; border-left: 0px solid black; text-align: right;" colspan="4">
+                            &nbsp;<label class="cssTitleOverLap">@Model.activityFormModel.activityNo</label>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+</div>

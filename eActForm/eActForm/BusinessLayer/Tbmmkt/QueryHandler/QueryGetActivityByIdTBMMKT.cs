@@ -49,6 +49,7 @@ namespace eActForm.BusinessLayer
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                                   createdByName = "คุณ" + d["createdByName"].ToString(),
                                   createdByNameEN = d["createdByNameEN"].ToString(),
+                                  piorityDoc = d["piorityDoc"].ToString(),
 
                               });
 
