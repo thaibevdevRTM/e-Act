@@ -29,6 +29,7 @@ namespace eActForm.BusinessLayer
                 }
                 else
                 {
+
                     model.activityFormTBMMKT.id = activityId;
                     model.activityFormTBMMKT.statusId = 1;
                     model.activityFormTBMMKT.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
@@ -48,6 +49,26 @@ namespace eActForm.BusinessLayer
                     model.activityFormTBMMKT.languageDoc = model.activityFormTBMMKT.languageDoc == null ? "" : model.activityFormTBMMKT.languageDoc;
 
                     rtn = insertActivityForm(model.activityFormTBMMKT);
+/*
+                    model.activityFormModel.id = activityId;
+                    model.activityFormModel.statusId = 1;
+                    model.activityFormModel.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                    model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.activityPeriodStStr) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.activityPeriodStStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                    model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.activityPeriodEndStr) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.activityPeriodEndStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                    model.activityFormModel.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
+                    model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
+                    model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    model.activityFormModel.updatedDate = DateTime.Now;
+                    model.activityFormModel.delFlag = false;
+                    model.activityFormModel.companyId = model.activityFormTBMMKT.formCompanyId;
+                    model.activityFormModel.remark = model.activityFormModel.remark;
+                    model.activityFormModel.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
+                    model.activityFormModel.languageDoc = model.activityFormTBMMKT.languageDoc == null ? "" : model.activityFormTBMMKT.languageDoc;
+                    model.activityFormModel.piorityDoc = model.activityFormTBMMKT.piorityDoc == null ? "" : model.activityFormTBMMKT.piorityDoc;
+
+                    rtn = insertActivityForm(model.activityFormModel);
+*/
 
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
 
@@ -379,7 +400,6 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
-
                 activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng);
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
@@ -601,6 +621,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@benefit", (model.benefit == null ? "" :model.benefit))
                     ,new SqlParameter("@reference", model.reference)
                     ,new SqlParameter("@languageDoc", (model.languageDoc == null ? "" :model.languageDoc))
+                    ,new SqlParameter("@piorityDoc", (model.piorityDoc == null ? "" :model.piorityDoc))
                     ,new SqlParameter("@customerId", model.customerId)
                     ,new SqlParameter("@activityDetail", model.activityDetail)
                     ,new SqlParameter("@costPeriodST", model.costPeriodSt)

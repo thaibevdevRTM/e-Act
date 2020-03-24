@@ -38,7 +38,7 @@ namespace eActForm.Models
         public List<TB_Act_master_list_choiceModel> list_3 { get; set; }
         public List<TB_Act_ActivityChoiceSelectModel> tB_Act_ActivityChoiceSelectModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model_2 { get; set; }
-
+        public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
         public Activity_TBMMKT_Model()
         {
             activityFormTBMMKT = new ActivityFormTBMMKT();
@@ -79,6 +79,7 @@ namespace eActForm.Models
         public string formNameEn { get; set; }
         public bool chkUseEng { get; set; }
         public string createdByNameEN { get; set; }
+        public string piorityDoc { get; set; }
     }
 
     public class TB_Reg_Subject
