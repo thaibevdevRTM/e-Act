@@ -209,20 +209,8 @@
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.5.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.1\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
@@ -328,6 +316,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="ThaiBahtText, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>C:\Users\70015978\Desktop\ThaiBahtText\ThaiBahtText.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
@@ -377,6 +368,7 @@
     <Compile Include="BusinessLayer\Appcodes\ActFormAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\AdminUserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\BaseAppCodes.cs" />
+    <Compile Include="BusinessLayer\Appcodes\exPerryCashAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\FileExt.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
@@ -400,6 +392,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllApproveGroup.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllBrand.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllChanel.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetAllCompany.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllCustomers.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllPrice.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllProduct.cs" />
@@ -460,6 +453,7 @@
     <Compile Include="Controllers\API\GetDataMainFormController.cs" />
     <Compile Include="Controllers\API\ApiApproveController.cs" />
     <Compile Include="Controllers\ApproveController.cs" />
+    <Compile Include="Controllers\ApproveListExpenseController.cs" />
     <Compile Include="Controllers\ApproveListsController.cs" />
     <Compile Include="Controllers\ApproveListsRepDetailController.cs" />
     <Compile Include="Controllers\ApproveSummaryDetailController.cs" />
@@ -473,6 +467,7 @@
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\eActController.cs" />
+    <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportMaterial_PRODUCT_POS_PREMIUMController.cs" />
     <Compile Include="Controllers\MainFormController.cs" />
@@ -491,6 +486,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\exPerryCashModel.cs" />
     <Compile Include="Models\ImportExcel.cs" />
     <Compile Include="Models\TB_Act_ActivityChoiceSelectModel.cs" />
     <Compile Include="Models\TB_Act_master_list_choiceModel.cs" />
@@ -498,7 +494,7 @@
     <Compile Include="Models\Master_type_form_Model.cs" />
     <Compile Include="Models\Master_type_form_detail_Model.cs" />
     <Compile Include="Models\ActBaseModel.cs" />
-    <Compile Include="Models\Activity_TBMMKT_Model.cs" />
+    <Compile Include="Models\Activity_Main_Model.cs" />
     <Compile Include="Models\Activity_Model.cs" />
     <Compile Include="Models\ActSignatureModel.cs" />
     <Compile Include="Models\ActUserModel.cs" />
@@ -2982,6 +2978,10 @@
     <Content Include="Views\SharedMasterFormDetail\chargeToRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\expensesDetailsRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\expensesDetailRows.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\exPerryCashDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\exPerryEmpInfoDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\exPerryListDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail\exPerryCashReport.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetailsDate_dmy.cshtml" />
     <Content Include="Views\ImportMaterial_PRODUCT_POS_PREMIUM\Index.cshtml" />
     <Content Include="Views\Approve\approvePositionSignatureListsV2.cshtml" />
@@ -2989,6 +2989,9 @@
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyWithLogoV2.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyV2.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerViewManual.cshtml" />
+    <Content Include="Views\actFormRepPostEva\index.cshtml" />
+    <Content Include="Views\actFormRepPostEva\postEvaListView.cshtml" />
+    <Content Include="Views\actFormRepPostEva\postEvaGroupBrandView.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetailsBg.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\activityBudgetDetails.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyWithAddress.cshtml" />
@@ -3000,6 +3003,7 @@
     <Content Include="Views\actFormRepPostEva\index.cshtml" />
     <Content Include="Views\actFormRepPostEva\postEvaListView.cshtml" />
     <Content Include="Views\actFormRepPostEva\postEvaGroupBrandView.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\exTravelDetail.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerPiorityDoc.cshtml" />
     <Content Include="Views\MainReport\ReportPettyCashNum.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -3018,6 +3022,7 @@
     <Folder Include="Uploadfiles\ActivityForm\" />
     <Folder Include="Uploadfiles\ImportMatProductPosPremium\template\" />
     <Folder Include="Views\ApiApprove\" />
+    <Folder Include="Views\exPerryCash\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\eForms.Models\eForms.Models.csproj">
