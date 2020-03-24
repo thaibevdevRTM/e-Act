@@ -17,3 +17,4 @@ eActForm/eActConsoleService/bin
 eActForm/eActForm/Properties/*
 eActForm/eActConsoleService/bin/Debug/*
 eActForm/eActForm/obj/*
+*.txt
