@@ -600,7 +600,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static int insertActivityForm(ActivityFormTBMMKT model)
+        public static int insertActivityForm(ActivityForm model)
         {
             int result = 0;
             try
