@@ -1,0 +1,14 @@
+﻿@using eActForm.BusinessLayer
+@using System.Configuration;
+@using eActForm.Models;
+
+@*@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin
+        || UtilsAppCode.Session.User.isCreator)
+    {*@
+<li>
+    <a><i class="fa fa-edit"></i>HC Forms <span class="fa fa-chevron-down"></span></a>
+    <ul class="nav child_menu">
+        <li>@Html.ActionLink(" expense travelling", "Index", "MainForm", new { typeForm = Activity_Model.activityType.OtherCompany.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formExpTrvId"] }, null)</li>
+    </ul>
+</li>
+@*//}*@
