@@ -9,30 +9,23 @@
     <link rel="apple-touch-icon" sizes="128x128" href="~/images/logo-ss.png">
     <link rel="apple-touch-icon-precomposed" sizes="128x128" href="~/images/logo-ss.png">
 
-    <!-- Bootstrap -->
-    <link href="~/content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="~/content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    @Styles.Render("~/Content/themes/base/css")
 
-    <link href="~/content/vendors/build/css/custom.min.css" rel="stylesheet">
+    @Scripts.Render("~/bundles/modernizr")
 
-    <!-- jQuery -->
-    <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+    @Scripts.Render("~/bundles/jquery")
 
 
 </head>
-
+<body>
 
     @RenderBody()
 
 
-    <!-- Bootstrap -->
-    <script src="~/Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="~/Content/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- Custom Theme Scripts -->
-    <script src="~/Content/vendors/build/js/custom.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryui", "~/bundles/jqueryval", "~/bundles/bootstrap")
 
+    <script src="~/Content/vendors/build/js/custom.js" type="text/javascript"></script>
 
+</body>
 
 </html>
