@@ -287,10 +287,10 @@
 
     function totalAllExpenses() {
         var ex = parseFloat(document.getElementById('lbltotalExpenses').innerHTML.split(",").join(""));
-        var adv = parseFloat(document.getElementById('lbltotalAdvance').innerHTML.split(",").join("")); // set 0 wait value
+        var adv = parseFloat(document.getElementById('lbltotalAdvance').innerHTML.split(",").join(""));
         var result = adv - ex;
          //Id for exPerryListEntertainment View
-        document.getElementById('lbltotalAll').innerHTML =  result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        document.getElementById('lbltotalAll').innerHTML = result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     }
 
 
