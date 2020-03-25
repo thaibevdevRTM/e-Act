@@ -178,6 +178,9 @@ namespace eActForm.Controllers
         {
             return PartialView(activity_TBMMKT_Model);
         }
-
+        public ActionResult empInfoDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            return PartialView(activity_TBMMKT_Model);
+        }
     }
 }
