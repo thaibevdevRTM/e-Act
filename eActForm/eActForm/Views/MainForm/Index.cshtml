@@ -46,7 +46,7 @@
 {
     @Html.AntiForgeryToken()
     <div id="GridPDF" style="width:97%; margin-left:20px;">
-        <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
+        @*<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">*@
             @*=================for test====================*@
             @*<tr>
                     <td>
@@ -58,7 +58,7 @@
             {
                 @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
             }
-        </table>
+        @*</table>*@
     </div>
 
     @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
