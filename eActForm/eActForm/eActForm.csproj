@@ -471,6 +471,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportMaterial_PRODUCT_POS_PREMIUMController.cs" />
     <Compile Include="Controllers\MainFormController.cs" />
+    <Compile Include="Controllers\ExpenseEstimate.cs" />
     <Compile Include="Controllers\TravellingController.cs" />
     <Compile Include="Controllers\SharedMasterFormDetail_InputController.cs" />
     <Compile Include="Controllers\SharedMasterFormHeaderCompany_InputController.cs" />
@@ -3026,6 +3027,7 @@
     <Folder Include="Uploadfiles\ActivityForm\" />
     <Folder Include="Uploadfiles\ImportMatProductPosPremium\template\" />
     <Folder Include="Views\ApiApprove\" />
+    <Folder Include="Views\ExpenseEstimate\" />
     <Folder Include="Views\exPerryCash\" />
   </ItemGroup>
   <ItemGroup>

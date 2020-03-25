@@ -302,9 +302,8 @@ namespace eActForm.Controllers
                     level = empDetailList.FirstOrDefault().level,
                     department = !langEn ? empDetailList.FirstOrDefault().department : empDetailList.FirstOrDefault().departmentEN,
                     bu = !langEn ? empDetailList.FirstOrDefault().bu : empDetailList.FirstOrDefault().buEN,
+                    companyName = !langEn ? empDetailList.FirstOrDefault().companyName : empDetailList.FirstOrDefault().companyNameEN,
                 };
-
-
                 result.Data = resultData;
             }
             catch (Exception ex)
@@ -342,12 +341,12 @@ namespace eActForm.Controllers
             return Json(txtBaht, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getOtherMasterByType(string type, string subType ,string text)
+        public JsonResult getOtherMasterByType(string type, string subType, string text)
         {
-          List<TB_Act_Other_Model> getOtherList = new List<TB_Act_Other_Model>();
+            List<TB_Act_Other_Model> getOtherList = new List<TB_Act_Other_Model>();
             try
             {
-                getOtherList =  QueryOtherMaster.getOhterMaster(type, subType).Where(x => x.displayVal.Contains(text)).ToList();
+                getOtherList = QueryOtherMaster.getOhterMaster(type, subType).Where(x => x.displayVal.Contains(text)).ToList();
             }
             catch (Exception ex)
             {
@@ -356,6 +355,6 @@ namespace eActForm.Controllers
             return Json(getOtherList, JsonRequestBehavior.AllowGet);
         }
 
-       
+
     }
 }

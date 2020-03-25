@@ -10,6 +10,7 @@
     <fieldset>
         <legend>พนักงาน</legend>
 
+
         <div class="col-lg-3 col-xs-12">
             <div class="col-md-12 col-xs-12">
                 <label id="lblEmpId">รหัสพนักงาน </label>
@@ -40,27 +41,28 @@
         <div class="col-lg-3 col-xs-12">
         </div>
         <div class="col-lg-9 col-xs-12">
-            <div class="col-md-5 col-xs-12">
-                <label style="width:90px;">สังกัดบริษัท :</label> &nbsp<lable id="lblLvl" />
+            <div class="col-md-12 col-xs-12">
+                <label style="width:90px;">สังกัดบริษัท :</label> &nbsp<lable id="lblComp" />
             </div>
-            <div class="col-md-6 col-xs-12">
-                <label style="width:130px;">โทรศัพท์ติดต่อ :</label>&nbsp;<lable id="lblDept" />
-            </div>
+
         </div>
+
 
         <div class="col-lg-3 col-xs-12">
         </div>
         <div class="col-lg-9 col-xs-12">
             <div class="col-md-5 col-xs-12">
-                <label style="width:90px;">ตามคำสั่ง :</label> &nbsp<lable id="lblLvl" />
+                <label style="width:95px;">โทรศัพท์ติดต่อ :</label> &nbsp; @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "textboxcss textRight", Style = "text-align:center;", id = "txtEmpTel" })
+
             </div>
             <div class="col-md-6 col-xs-12">
-                <label style="width:130px;"></label>&nbsp;<lable id="lblDept" />
+                <label style="width:130px;">ตามคำสั่ง :</label>&nbsp; @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "textboxcss textRight", Style = "text-align:center;", id = "txtOrerOf" })
+
             </div>
         </div>
     </fieldset>
     <br />
-   
+
 </div>
 
 <script type="text/javascript">
@@ -87,6 +89,7 @@
                 document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
                 document.getElementById('lblLvl').innerHTML = response.Data.level;
                 document.getElementById('lblDept').innerHTML = response.Data.department;
+                document.getElementById('lblComp').innerHTML = response.Data.companyName;
             }
             else {
                  $("#txtEmpName").val('');
@@ -94,6 +97,7 @@
                 document.getElementById('lblEmpPosition').innerHTML = '';
                 document.getElementById('lblLvl').innerHTML = '';
                 document.getElementById('lblDept').innerHTML = '';
+                document.getElementById('lblComp').innerHTML = '';
             }
         });
     }
