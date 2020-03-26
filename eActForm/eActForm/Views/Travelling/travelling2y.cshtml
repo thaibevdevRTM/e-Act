@@ -1,0 +1,64 @@
+﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+        <div id="divPlaceDetail" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
+            <table class="table table-bordered" id="tabelPlaceDetail" runat="server">
+                <tr style="background-color:#E5E2E2;height:25px; ">
+                    <th colspan="6" style="text-align :center;">
+                        รายละเอียดการเดินทาง
+                    </th>
+                </tr>
+                <tr style="height:25px;">
+                    <th style="width: 16%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">เริ่มต้นจาก</th>
+                    <th style="width: 16%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ถึงปลายทาง</th>
+                    <th style="width: 35%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">การเดินทางและการปฏิบัติงานประจำวัน</th>
+                    <th style="width: 7%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;"> จำนวน/วัน </th>
+                    <th style="width: 13%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">วันออกเดินทาง</th>
+                    <th style="width: 13%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;"> วันที่กลับ </th>
+                </tr>
+                @{ var index = 0;}
+                @foreach (var item in Model.placeDetailModel)
+                {
+            <tr class="tagCountRowinTable">
+                <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                    <input type="text" value="@item.place" id="txtPlace_@index" name="placeDetailModel[@index].place" class="form-control textboxcss" />
+                </td>
+                <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                    <input type="text" value="@item.place" id="txtPlace_@index" name="placeDetailModel[@index].place" class="form-control textboxcss" />
+                </td>
+                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    <input type="text" value="@item.forProject" id="txtForProject_@index" name="placeDetailModel[@index].forProject" class="form-control textboxcss" />
+                </td>
+                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    <input type="text" value="@item.period" id="txtPeriod_@index" name="placeDetailModel[@index].period" class="form-control textboxcss" />
+                </td>
+                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    <input type="text" value="@item.departureDateStr" id="txtDepartureDate_@index" name="placeDetailModel[@index].departureDateStr" class="form-control textboxcss   form_datetime" style="width:140px;" />
+                </td>
+                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    <input type="text" value="@item.arrivalDateStr" id="txtArrivalDate_@index" name="placeDetailModel[@index].arrivalDateStr" class="form-control textboxcss  form_datetime" style="width:140px;" />
+                </td>
+            </tr>
+                    index++;
+                }
+
+            </table>
+
+            <script>
+                $(function () {
+                    $('.form_datetime').datetimepicker({
+                        language: 'th',
+                        format: '@ConfigurationManager.AppSettings["formatDatetimeUseJquery"]',
+                        weekStart: 1,
+                        todayBtn: 1,
+                        autoclose: 1,
+                        todayHighlight: 1,
+                        startView: 2,
+                        forceParse: 0,
+                        showMeridian: 1
+                    });
+                });
+
+            </script>
+        </div>
