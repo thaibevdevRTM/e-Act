@@ -60,7 +60,7 @@
 
 
     </table>
-    <div class="row pull-right" style="width:150px" onclick="addRow();">
+    <div id="addEx" class="row pull-right" style="width:150px" onclick="addRow();">
         <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
     </div>
     @if (UtilsAppCode.Session.User.isCreator && Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
@@ -177,7 +177,7 @@
 
     </table>
 
-    <div class="row pull-right" style="width:150px" onclick="addRowEntertainment();">
+    <div id="addEnt" class="row pull-right" style="width:150px" onclick="addRowEntertainment();">
         <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
     </div>
 
@@ -194,6 +194,10 @@
             format: 'dd/mm/yyyy'
         });
 
+        if ('@Model.activityFormTBMMKT.statusId' != '' || '@Model.activityFormTBMMKT.statusId' == '1') {
+             document.getElementById("addEnt").style.display = "none";
+             document.getElementById("addEx").style.display = "none";
+        }
 
     });
 

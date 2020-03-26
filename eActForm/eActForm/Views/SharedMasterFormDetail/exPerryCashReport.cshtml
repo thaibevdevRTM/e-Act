@@ -221,12 +221,12 @@
                     </td>
                     <td class="center">
 
-                        @if(!string.IsNullOrEmpty(@Model.activityFormTBMMKT.objective))
+                        @if (!string.IsNullOrEmpty(@Model.activityFormTBMMKT.objective))
                         {
-                            string resultAdv = String.Format("{0:n2}",  decimal.Parse(@Model.activityFormTBMMKT.objective));
+                            string resultAdv = String.Format("{0:n2}", decimal.Parse(@Model.activityFormTBMMKT.objective));
                             @resultAdv.ToString();
                         }
-                       
+
                     </td>
                 </tr>
                 <tr>
@@ -236,7 +236,7 @@
                     <td class="center">
                         @{
                             decimal adv = 0;
-                            if(!string.IsNullOrEmpty(@Model.activityFormTBMMKT.objective)) { adv = decimal.Parse(@Model.activityFormTBMMKT.objective); }
+                            if (!string.IsNullOrEmpty(@Model.activityFormTBMMKT.objective)) { adv = decimal.Parse(@Model.activityFormTBMMKT.objective); }
                             var sumTotal = adv - totalEx;
                             string resultTotal = String.Format("{0:n2}", @sumTotal);
                             @resultTotal.ToString();

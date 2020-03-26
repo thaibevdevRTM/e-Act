@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -106,7 +107,11 @@ namespace eActForm.BusinessLayer
             try
             {
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowIdByActFormId"
+
+                var getMasterType = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault().master_type_form_id;
+                string stor = ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stor
                     , new SqlParameter[] {new SqlParameter("@subId",subId)
                     ,new SqlParameter("@actFormId",actFormId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
@@ -124,7 +129,14 @@ namespace eActForm.BusinessLayer
                     }
                     else
                     {
-                        model.flowDetail = getFlowDetail(model.flowMain.id, actFormId);
+                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType)
+                        {
+                            model.flowDetail = getFlowDetailExpense(model.flowMain.id, actFormId);
+                        }
+                        else
+                        {
+                            model.flowDetail = getFlowDetail(model.flowMain.id, actFormId);
+                        }
                     }
 
                 }
@@ -287,6 +299,44 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 throw new Exception("getFlowDetail >>" + ex.Message);
+            }
+        }
+
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailExpense(string flowId, string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveDetailExpense"
+                    , new SqlParameter[] { new SqlParameter("@flowId", flowId)
+                                            , new SqlParameter("@actFormId",actId)
+                    });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApproveDetail()
+                             {
+                                 id = dr["id"].ToString(),
+                                 rangNo = (int)dr["rangNo"],
+                                 empId = dr["empId"].ToString(),
+                                 empEmail = dr["empEmail"].ToString(),
+                                 empFNameTH = dr["empFNameTH"].ToString(),
+                                 empLNameTH = dr["empLNameTH"].ToString(),
+                                 empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
+                                 approveGroupId = dr["approveGroupId"].ToString(),
+                                 approveGroupName = dr["approveGroupName"].ToString(),
+                                 approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
+                                 isShowInDoc = (bool)dr["showInDoc"],
+                                 description = dr["description"].ToString(),
+                                 isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
+                                 bu = dr["empDivisionTH"].ToString(),
+                                 buEN = dr["empDivisionEN"].ToString(),
+                                 empFNameEN = dr["empFNameEN"].ToString(),
+                                 empLNameEN = dr["empLNameEN"].ToString(),
+                                 empPositionTitleEN = dr["empPositionTitleEN"].ToString()
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFlowDetailExpense >>" + ex.Message);
             }
         }
 

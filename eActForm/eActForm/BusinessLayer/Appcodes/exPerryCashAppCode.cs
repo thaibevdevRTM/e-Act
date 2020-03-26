@@ -99,6 +99,7 @@ namespace eActForm.BusinessLayer.Appcodes
             try
             {
                 activity_TBMMKT_Model.activityFormModel.id = Guid.NewGuid().ToString();
+                //get empid from เงินทดรอง
                 activity_TBMMKT_Model.activityFormTBMMKT.empId = ApproveAppCode.getApproveByActFormId(activityId).approveDetailLists.FirstOrDefault().empId;
                 activity_TBMMKT_Model.activityFormTBMMKT.statusId = 1;
                 activity_TBMMKT_Model.activityFormTBMMKT.reference = activity_TBMMKT_Model.activityFormTBMMKT.activityNo;
