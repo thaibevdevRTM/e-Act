@@ -1,60 +1,61 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using System.Configuration;
-<tr>
-    <td style="">
-        <div class="form-group">
-            <div style="height:10px" class="row">
-                <label class="control-label col-md-12 col-xs-12"></label>
-            </div>
-            <div class="row">
-                <label class="control-label col-md-1 col-xs-12"></label>
-                <label class="control-label col-md-2 col-xs-12">
-                    Document Date / วันที่ :
-                </label>
-                <div class="col-md-4 col-xs-12">
-                    <div class="row">
-                        @Html.TextBoxFor(x => x.activityFormModel.documentDateStr, new { @class = "form-control textboxcss ", id = "txtdateDoc2", style = "" })
-                        @*<input type="text" value="@Model.activityFormModel.documentDate" id="txtdateDoc" name="activityFormModel.documentDate" class="form-control textboxcss txtdateDoc2" style="width:140px;" />*@
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr>
+        <td style="">
+            <div class="form-group">
+                <div style="height:10px" class="row">
+                    <label class="control-label col-md-12 col-xs-12"></label>
+                </div>
+                <div class="row">
+                    <label class="control-label col-md-1 col-xs-12"></label>
+                    <label class="control-label col-md-2 col-xs-12">
+                        Document Date / วันที่ :
+                    </label>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="row">
+                            @Html.TextBoxFor(x => x.activityFormModel.documentDateStr, new { @class = "form-control textboxcss ", id = "txtdateDoc2", style = "" })
+                            @*<input type="text" value="@Model.activityFormModel.documentDate" id="txtdateDoc" name="activityFormModel.documentDate" class="form-control textboxcss txtdateDoc2" style="width:140px;" />*@
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-xs-12">
+                        <div class="row">
+                            &nbsp;
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-5 col-xs-12">
-                    <div class="row">
-                        &nbsp;
+                <div style="height:10px" class="row">
+                    <label class="control-label col-md-12 col-xs-12"></label>
+                </div>
+                <div class="row">
+                    @*<label class="control-label col-md-1 col-xs-12"></label>*@
+                    <label class="control-label col-md-3 col-xs-12">
+                        Travelling type / ประเภทการเดินทาง :
+                    </label>
+                    <div class="col-md-4 col-xs-12">
+
+                        <div class="row">
+                            @Html.DropDownListFor(x => x.activityFormTBMMKT.list_0_select, new SelectList(Model.list_0, "id", "name", ""), "", new
+                            {
+                                @class = "form-control selectpicker",
+                                id = "ddlTravelling"
+                            })
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-5 col-xs-12">
+                        <div class="row">
+                            &nbsp;
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div style="height:10px" class="row">
-                <label class="control-label col-md-12 col-xs-12"></label>
-            </div>
-            <div class="row">
-                @*<label class="control-label col-md-1 col-xs-12"></label>*@
-                <label class="control-label col-md-3 col-xs-12">
-                    Travelling type / ประเภทการเดินทาง :
-                </label>
-                <div class="col-md-4 col-xs-12">
-
-                    <div class="row">
-                        @Html.DropDownListFor(x => x.activityFormTBMMKT.list_0_select, new SelectList(Model.list_0, "id", "name", ""), "", new
-                        {
-                            @class = "form-control selectpicker",
-                            id = "ddlTravelling"
-                        })
-
-                    </div>
-                </div>
 
 
 
-                <div class="col-md-5 col-xs-12">
-                    <div class="row">
-                        &nbsp;
-                    </div>
-                </div>
-            </div>
-
-            
-
-            <script>
+                <script>
                 $(function () {
 
                     $('#txtdateDoc2').datetimepicker({
@@ -72,9 +73,10 @@
 
                 });
 
-            </script>
+                </script>
 
-        </div>
+            </div>
 
-    </td>
-</tr>
+        </td>
+    </tr>
+</table>

@@ -93,7 +93,7 @@ namespace eActForm.Controllers
         public ActionResult expensesDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
            
-            if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null)
+            if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null|| !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             {
                 CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT
                 {

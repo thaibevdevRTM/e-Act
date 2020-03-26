@@ -142,3 +142,4 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleSe
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\Microsoft.Exchange.WebServices.xml
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\ThaiBahtText.dll
