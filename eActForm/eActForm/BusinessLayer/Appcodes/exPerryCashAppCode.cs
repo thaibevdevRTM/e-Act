@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -93,7 +94,7 @@ namespace eActForm.BusinessLayer.Appcodes
             }
         }
 
-        public static Activity_TBMMKT_Model prepareDataExpense(Activity_TBMMKT_Model activity_TBMMKT_Model, string activityId)
+        public static Activity_TBMMKT_Model prepareDataExpense_AddNew(Activity_TBMMKT_Model activity_TBMMKT_Model, string activityId)
         {
             try
             {
@@ -108,6 +109,76 @@ namespace eActForm.BusinessLayer.Appcodes
             catch (Exception ex)
             {
                 throw new Exception("prepareDataExpense >>" + ex.Message);
+            }
+            return activity_TBMMKT_Model;
+        }
+
+        public static Activity_TBMMKT_Model processDataExpense(Activity_TBMMKT_Model activity_TBMMKT_Model, string activityId)
+        {
+            try
+            {
+                if (!checkActExpense(activity_TBMMKT_Model.activityFormTBMMKT.activityNo))
+                {
+                    if (ConfigurationManager.AppSettings["masterEmpExpense"] != activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)
+                    {
+                        // case เอกสารใหม่
+                        activity_TBMMKT_Model = prepareDataExpense_AddNew(activity_TBMMKT_Model, activityId);
+                    }
+                    else
+                    {
+                        // case คลิกจาก document ตรง
+                        activity_TBMMKT_Model.totalCostThisActivity = !string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.objective) ? decimal.Parse(activity_TBMMKT_Model.activityFormTBMMKT.objective) : 0;
+                    }
+                }
+                else
+                {
+                    // case คลิกจาก ยืมเงินทดรอง ต้องใช้ ActNo เพื่อ Get Data
+                    activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivityByActNo(activity_TBMMKT_Model.activityFormTBMMKT.activityNo);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("processDataExpense >>" + ex.Message);
+            }
+            return activity_TBMMKT_Model;
+        }
+
+        public static bool checkActExpense(string actNo)
+        {
+            bool result = false;
+            try
+            {
+                if (QueryGetActivityByActNo.getCheckRefActivityByActNo(actNo).Any())
+                {
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkActExpense >>" + ex.Message);
+            }
+            return result;
+        }
+
+
+
+        
+        public static Activity_TBMMKT_Model addDataToDetailOther(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            //activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+            try
+            {
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId = activity_TBMMKT_Model.activityFormTBMMKT.BrandlId;
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId = activity_TBMMKT_Model.activityFormTBMMKT.channelId;
+                //activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
+                
+                //ค่าที่ insert จะไปยัดใน tB_Act_ActivityForm_DetailOther อีกที
+                activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("addDataToDetailOther >>" + ex.Message);
             }
             return activity_TBMMKT_Model;
         }

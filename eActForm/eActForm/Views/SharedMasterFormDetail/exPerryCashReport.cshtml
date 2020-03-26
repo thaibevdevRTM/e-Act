@@ -197,10 +197,9 @@
                         Total Entertainment Expenses and Market Visit
                     </td>
                     <td class="center">
-                        @if (totalEntertainment != 0)
-                        {
-                            string result = String.Format("{0:n2}", @totalEntertainment);
-                            @result.ToString();
+                        @{
+                            string resultMak = String.Format("{0:n2}", @totalEntertainment);
+                            @resultMak.ToString();
                         }
                     </td>
                 </tr>
@@ -209,11 +208,10 @@
                         รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท) Total Monthly Expenses (Baht)
                     </td>
                     <td class="center">
-                        @if (totalEntertainment != 0)
-                        {
-                            var totalEnt = totalEntertainment + total;
-                            string result = String.Format("{0:n2}", @totalEnt);
-                            @result.ToString();
+                        @{
+                            var totalEx = totalEntertainment + total;
+                            string resultEx = String.Format("{0:n2}", @totalEx);
+                            @resultEx.ToString();
                         }
                     </td>
                 </tr>
@@ -222,7 +220,13 @@
                         กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)  =
                     </td>
                     <td class="center">
-                       @Model.activityFormTBMMKT.objective
+
+                        @if(!string.IsNullOrEmpty(@Model.activityFormTBMMKT.objective))
+                        {
+                            string resultAdv = String.Format("{0:n2}",  decimal.Parse(@Model.activityFormTBMMKT.objective));
+                            @resultAdv.ToString();
+                        }
+                       
                     </td>
                 </tr>
                 <tr>
@@ -230,7 +234,13 @@
                         รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses  =
                     </td>
                     <td class="center">
-
+                        @{
+                            decimal adv = 0;
+                            if(!string.IsNullOrEmpty(@Model.activityFormTBMMKT.objective)) { adv = decimal.Parse(@Model.activityFormTBMMKT.objective); }
+                            var sumTotal = adv - totalEx;
+                            string resultTotal = String.Format("{0:n2}", @sumTotal);
+                            @resultTotal.ToString();
+                        }
                     </td>
                 </tr>
             </table>

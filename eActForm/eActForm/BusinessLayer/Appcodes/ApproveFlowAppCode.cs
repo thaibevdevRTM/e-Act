@@ -7,6 +7,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using WebLibrary;
+using static eActForm.Models.ApproveFlowModel;
+
 namespace eActForm.BusinessLayer
 {
     public class ApproveFlowAppCode
@@ -324,6 +326,35 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static List<TB_Reg_FlowModel> getMainFlowByMasterTypeId(string masterTypeId)
+        {
+            try
+            {
+                List<TB_Reg_FlowModel> regMainFlow = new List<TB_Reg_FlowModel>();
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_get_FlowMainByMasterTypeId"
+                    , new SqlParameter[] { new SqlParameter("@masterTypeId", masterTypeId) });
+                regMainFlow = (from DataRow dr in ds.Tables[0].Rows
+                               select new TB_Reg_FlowModel()
+                               {
+                                   id = dr["id"].ToString(),
+                                   subjectId = dr["subjectId"].ToString(),
+                                   companyId = dr["companyId"].ToString(),
+                                   customerId = dr["customerId"].ToString(),
+                                   productCatId = dr["productCatId"].ToString(),
+                                   productTypeId = dr["productTypeId"].ToString(),
+                                   flowLimitId = dr["flowLimitId"].ToString(),
+                                   channelId = dr["channelId"].ToString(),
+                                   productBrandId = dr["productBrandId"].ToString(),
+                               }).ToList();
+
+                return regMainFlow;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getMainFlowByMasterTypeId >>" + ex.Message);
+            }
+        }
 
     }
 }

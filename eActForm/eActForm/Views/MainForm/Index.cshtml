@@ -67,6 +67,7 @@
     @Html.HiddenFor(x => x.activityFormTBMMKT.master_type_form_id, new { @id = "hdmaster_type_form_id" })
     @Html.HiddenFor(x => x.activityFormModel.activityNo, new { @id = "hdactivityNo" })
     @Html.HiddenFor(x => x.activityFormTBMMKT.formCompanyId, new { @id = "hdformCompanyId" })
+
 }
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
     <tr>
@@ -135,9 +136,6 @@
                 arrayOfElements[i].disabled = 'disabled';
             }
         }
-
-
-
 
     $("#btnExportPDF").click(function () {
         $("input[name='gridHtml']").val($("#GridPDF").html());
