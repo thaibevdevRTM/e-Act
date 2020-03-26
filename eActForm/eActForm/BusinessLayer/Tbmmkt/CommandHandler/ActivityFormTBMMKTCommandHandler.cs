@@ -647,7 +647,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@costPeriodST", model.costPeriodSt)
                     ,new SqlParameter("@costPeriodEND", model.costPeriodEnd)
                     ,new SqlParameter("@empId", model.empId)
-                    ,new SqlParameter("@piorityDoc", (model.piorityDoc == null ? "" :model.piorityDoc))
 
                   });
             }
