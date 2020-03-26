@@ -127,7 +127,7 @@
                     }
                 },
                 callback: function (result) {
-                    if (result == true) {
+                    if (result === true) {
                         if (result) {
                             $("#WaitDialog").show();
                             $.ajax({
@@ -207,7 +207,7 @@
                 dataType: "json",
                 type: 'POST',
                 success: function (response) {
-                    if (response.Success == true) {
+                    if (response.Success === true) {
                         console.log($("#ddlProductSmell").val())
                         $adminPage.callInsertOrUpdateProduct("คุณต้องการแก้ไขสินค้า ใช่ หรือ ไม่!", "update");
 
@@ -234,11 +234,11 @@
                     }
                 },
                 callback: function (result) {
-                    if (result == true) {
+                    if (result === true) {
                         console.log(result);
                         bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
 
-                        if (type == "insert") {
+                        if (type === "insert") {
                             $.ajax({
                                 url: $adminPage.urlAddProduct,
                                 data: {

@@ -23,6 +23,8 @@ namespace eActForm.Models
 {
     public class AppCode
     {
+        
+        public static string StrConAuthen = ConfigurationManager.ConnectionStrings["ActDBAuthen_ConnectionString"].ConnectionString;
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
         public static string nonAL = "1D1097F4-246F-4DC2-BB69-B7BB6E678299";
@@ -54,6 +56,12 @@ namespace eActForm.Models
         {
             app, // approve
             doc // document
+        }
+
+        public enum Mode
+        {
+            addNew, 
+            edit
         }
 
 

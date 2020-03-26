@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using WebLibrary;
 using System.Linq;
 
 namespace eActForm.BusinessLayer
@@ -53,6 +54,42 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 throw new Exception("setCountWatingApprove >>" + ex.Message);
+            }
+        }
+
+
+        public static bool manageApproveEmpExpense(ApproveModel.approveModels model,string actId)
+        {
+            int resultInsert = 0;
+            string newID = Guid.NewGuid().ToString();
+            try
+            {
+                model.activity_TBMMKT_Model.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
+
+                //---- ApprovePass-----//
+                var dataApproveList = model.activity_TBMMKT_Model.activityOfEstimateList.Where(w => w.chkBox == true).ToList();
+                var dataUnApproveList = model.activity_TBMMKT_Model.activityOfEstimateList.Where(w => w.chkBox == false).ToList();
+
+                model.activity_TBMMKT_Model.activityOfEstimateList = dataApproveList;
+                resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activity_TBMMKT_Model, actId);
+
+                //---- ApproveUnPass-----//
+                model.activity_TBMMKT_Model.activityOfEstimateList = dataUnApproveList;
+                resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activity_TBMMKT_Model, newID);
+
+                model.activity_TBMMKT_Model.activityFormModel.reference = model.activity_TBMMKT_Model.activityFormModel.activityNo;
+                model.activity_TBMMKT_Model.activityFormModel.id = newID;
+                model.activity_TBMMKT_Model.activityFormModel.activityNo = "";
+                model.activity_TBMMKT_Model.activityFormModel.statusId = 1;
+                model.activity_TBMMKT_Model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+                model.activity_TBMMKT_Model.activityFormModel.updatedDate = DateTime.Now;
+                resultInsert += ActivityFormTBMMKTCommandHandler.insertActivityForm(model.activity_TBMMKT_Model.activityFormTBMMKT);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                ExceptionManager.WriteError("manageApproveEmpExpense => " + ex.Message);
+                return false;
             }
         }
 

@@ -1,0 +1,97 @@
+﻿@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+
+
+<div class="col-md-12" id="divExpenseCashEmpInfo">
+    @*<div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;@Model.TB_Reg_RequestEmp.empName&nbsp;&nbsp;</div>
+        <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
+    <fieldset>
+        <legend>พนักงาน</legend>
+
+        <div class="col-lg-3 col-xs-12">
+            <div class="col-md-12 col-xs-12">
+                <label id="lblEmpId">รหัสพนักงาน </label>
+                @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
+            </div>
+        </div>
+
+        <div class="col-lg-9 col-xs-12" style="margin-top:15px;">
+            <div class="col-md-5 col-xs-12">
+                <label style="width:90px;">ชื่อ :</label> &nbsp;<lable id="lblEmpName"></lable>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <label style="width:130px;">ตำแหน่ง :</label>&nbsp;<lable id="lblEmpPosition"></lable>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-12">
+        </div>
+
+        <div class="col-lg-9 col-xs-12">
+            <div class="col-md-5 col-xs-12">
+                <label style="width:90px;">ระดับ :</label> &nbsp<lable id="lblLvl" />
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <label style="width:130px;">หน่วยงาน :</label>&nbsp;<lable id="lblDept" />
+            </div>
+        </div>
+    </fieldset>
+    <br />
+   
+</div>
+
+<script type="text/javascript">
+
+     $(document).ready(function () {
+
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        getEmpDetail();
+    });
+     function getEmpDetail() {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getEmpDetailById", "eAct")',
+            data: {
+                empId: $("#txtEmpId").val(),
+            }
+        }).done(function (response) {
+            console.log(response);
+            if (response.Data != null) {
+                $("#txtEmpName").val(response.Data.empName);
+                document.getElementById('lblEmpName').innerHTML = response.Data.empName;
+                document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
+                document.getElementById('lblLvl').innerHTML = response.Data.level;
+                document.getElementById('lblDept').innerHTML = response.Data.department;
+            }
+            else {
+                 $("#txtEmpName").val('');
+                document.getElementById('lblEmpName').innerHTML ='';
+                document.getElementById('lblEmpPosition').innerHTML = '';
+                document.getElementById('lblLvl').innerHTML = '';
+                document.getElementById('lblDept').innerHTML = '';
+            }
+        });
+    }
+
+
+        //document.getElementById("lblVehicleregis").style.display = "none";
+        //$("#ddlObjective").change(function () {
+        //    if ($("#ddlObjective").val() == '01F28E2A-A4DE-4221-9869-5FA02719822E') {
+        //        $("#lblVehicleregis").show();
+        //        //document.getElementById("lblVehicleregis").style.display = "block";
+        //        document.getElementById("divCertification").style.display = "none";
+        //        document.getElementById("divCashBill").style.display = "block";
+        //    }
+        //    else {
+        //        $("#lblVehicleregis").hide();
+        //        //document.getElementById("lblVehicleregis").style.display = "none";
+        //        document.getElementById("divCertification").style.display = "block";
+        //        document.getElementById("divCashBill").style.display = "none";
+        //    }
+        //});
+
+
+</script>

@@ -283,12 +283,6 @@ namespace eActForm.BusinessLayer
             }
         }
 
-
-
-
-
-
-
         public static int deleteActivityOfProductByActivityId(string activityId)
         {
 
@@ -325,7 +319,7 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        protected static int insertActivityForm(ActivityForm model)
+        public static int insertActivityForm(ActivityForm model)
         {
             int result = 0;
             try
@@ -350,6 +344,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@trade",model.trade)
                     ,new SqlParameter("@activityDetail",model.activityDetail)
                     ,new SqlParameter("@companyId",model.companyId)
+                    ,new SqlParameter("@empId",model.empId)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
@@ -443,7 +438,7 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        protected static int insertEstimate(CostThemeDetail model)
+        public static int insertEstimate(CostThemeDetail model)
         {
             int result = 0;
             try

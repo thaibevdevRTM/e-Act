@@ -16,14 +16,22 @@ namespace eActForm.Models
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
         public List<Product_Model> productlist { get; set; }
         public List<ProductSmellModel> productSmellLists { get; set; }
+
+
+        // ***************************** class is duplicat ***********************************/
+        public List<CostThemeDetail> costthemedetail { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
+        // **********************************************************************************/
+
+
         public List<Customers_Model> customerslist { get; set; }
         public List<TB_Act_Other_Model> otherlist { get; set; }
         //public List<Productcostdetail> productcostdetaillist { get; set; }
-        public List<CostThemeDetail> costthemedetail { get; set; }
+        
         public List<TB_Act_Image_Model.ImageModel> productImageList { get; set; }
         public ActivityForm activityFormModel { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
-        public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
+       
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
 
         public Activity_Model()
@@ -53,6 +61,7 @@ namespace eActForm.Models
             OMT,
             MT,
             TBM,
+            EXPENSE,
             HCM,
             OtherCompany
         }
@@ -190,11 +199,18 @@ namespace eActForm.Models
         public string benefit { get; set; }
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
+        public string SubjectId { get; set; }
+        public string empId { get; set; }
         public string formCompanyId { get; set; }
         public string languageDoc { get; set; }
         public string digit_IO { get; set; }
         public string statusNote { get; set; }
         public string piorityDoc { get; set; }
+        public string empEmail { get; set; }
+        public string empTel { get; set; }
+        public string contactEmail { get; set; }
+        public string contactName { get; set; }
+        public string contactTel { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel
@@ -231,7 +247,13 @@ namespace eActForm.Models
         public Boolean isShowGroup { get; set; }
         public string IO { get; set; }
         public int rowNo { get; set; }
+        public string detail { get; set; }
+        public DateTime? date { get; set; }
+        public string dateInput { get; set; }
         public string mechanics { get; set; }
+        public bool chkBox { get; set; }
+        public string qty { get; set; }
+
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public CostThemeDetailOfGroupByPrice()
@@ -325,6 +347,11 @@ namespace eActForm.Models
         public string digitGroup { get; set; }
         public string digitSubGroup { get; set; }
         public string EO { get; set; }
+        public bool chkBox { get; set; }
+        public string DateInput { get; set; }
+        public string place { get; set; }
+        public string detail { get; set; }
+        public string customer { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public ProductCostOfGroupByPrice()
