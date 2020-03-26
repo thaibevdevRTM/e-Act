@@ -89,3 +89,10 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\ActRepDetai
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\WebGrease.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\Antlr3.Runtime.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\Antlr3.Runtime.pdb
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\eForms.Models.dll
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\EPPlus.dll
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\eForms.Presenter.dll
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\ThaiBahtText.dll
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\eForms.Models.pdb
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\eForms.Presenter.pdb
+D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Release\en\eActForm.resources.dll
