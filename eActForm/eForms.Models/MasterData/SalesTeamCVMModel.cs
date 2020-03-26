@@ -16,6 +16,6 @@ namespace eForms.Models.MasterData
         public string emailManager { get; set; }
         public string address { get; set; }
         public string nameManager { get; set; }
-        public string nameCashier { get; set; }
+        public string nameCashier1 { get; set; }
     }
 }

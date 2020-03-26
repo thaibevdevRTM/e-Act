@@ -48,9 +48,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EPPlus, Version=4.0.4.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\EPPlus.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory, Version=5.0.0.0, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
+      <HintPath>..\packages\ICSharpCode.NRefactory.5.5.1\lib\Net40\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory.Cecil, Version=5.0.0.0, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
+      <HintPath>..\packages\ICSharpCode.NRefactory.5.5.1\lib\Net40\ICSharpCode.NRefactory.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory.CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
+      <HintPath>..\packages\ICSharpCode.NRefactory.5.5.1\lib\Net40\ICSharpCode.NRefactory.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory.Xml, Version=5.0.0.0, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
+      <HintPath>..\packages\ICSharpCode.NRefactory.5.5.1\lib\Net40\ICSharpCode.NRefactory.Xml.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -542,6 +556,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\eActForm.dll" />
     <Content Include="bin\eActForm.pdb" />
     <Content Include="bin\eForms.Models.dll" />
@@ -556,63 +571,109 @@
     <Content Include="bin\itextsharp.xmlworker.dll" />
     <Content Include="bin\Microsoft.AI.Agent.Intercept.dll" />
     <Content Include="bin\Microsoft.AI.DependencyCollector.dll" />
+    <Content Include="bin\Microsoft.AI.DependencyCollector.xml" />
     <Content Include="bin\Microsoft.AI.PerfCounterCollector.dll" />
     <Content Include="bin\Microsoft.AI.ServerTelemetryChannel.dll" />
     <Content Include="bin\Microsoft.AI.Web.dll" />
+    <Content Include="bin\Microsoft.AI.Web.xml" />
     <Content Include="bin\Microsoft.AI.WindowsServer.dll" />
+    <Content Include="bin\Microsoft.AI.WindowsServer.xml" />
     <Content Include="bin\Microsoft.ApplicationBlocks.Data.dll" />
     <Content Include="bin\Microsoft.ApplicationInsights.dll" />
     <Content Include="bin\Microsoft.AspNet.TelemetryCorrelation.dll" />
+    <Content Include="bin\Microsoft.AspNet.TelemetryCorrelation.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Antiforgery.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Antiforgery.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Authentication.Abstractions.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Authentication.Abstractions.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Authentication.Core.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Authentication.Core.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Authorization.dll" />
     <Content Include="bin\Microsoft.AspNetCore.Authorization.Policy.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Authorization.Policy.xml" />
+    <Content Include="bin\Microsoft.AspNetCore.Authorization.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Cryptography.Internal.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Cryptography.Internal.xml" />
     <Content Include="bin\Microsoft.AspNetCore.DataProtection.Abstractions.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.DataProtection.Abstractions.xml" />
     <Content Include="bin\Microsoft.AspNetCore.DataProtection.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.DataProtection.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Diagnostics.Abstractions.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Diagnostics.Abstractions.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Hosting.Abstractions.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Hosting.Abstractions.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Hosting.Server.Abstractions.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Html.Abstractions.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Html.Abstractions.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Http.Abstractions.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Http.Abstractions.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Http.dll" />
     <Content Include="bin\Microsoft.AspNetCore.Http.Extensions.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Http.Extensions.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Http.Features.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Http.Features.xml" />
+    <Content Include="bin\Microsoft.AspNetCore.Http.xml" />
     <Content Include="bin\Microsoft.AspNetCore.JsonPatch.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.JsonPatch.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Mvc.Abstractions.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Mvc.Abstractions.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Mvc.Core.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Mvc.Core.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Mvc.DataAnnotations.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Mvc.DataAnnotations.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Mvc.Formatters.Json.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Mvc.Formatters.Json.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Mvc.ViewFeatures.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Mvc.ViewFeatures.xml" />
     <Content Include="bin\Microsoft.AspNetCore.ResponseCaching.Abstractions.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.ResponseCaching.Abstractions.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Routing.Abstractions.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Routing.Abstractions.xml" />
     <Content Include="bin\Microsoft.AspNetCore.Routing.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.Routing.xml" />
     <Content Include="bin\Microsoft.AspNetCore.WebUtilities.dll" />
+    <Content Include="bin\Microsoft.AspNetCore.WebUtilities.xml" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="bin\Microsoft.DotNet.PlatformAbstractions.dll" />
     <Content Include="bin\Microsoft.Exchange.WebServices.dll" />
     <Content Include="bin\Microsoft.Exchange.WebServices.xml" />
     <Content Include="bin\Microsoft.Extensions.Configuration.Abstractions.dll" />
+    <Content Include="bin\Microsoft.Extensions.Configuration.Abstractions.xml" />
     <Content Include="bin\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+    <Content Include="bin\Microsoft.Extensions.DependencyInjection.Abstractions.xml" />
     <Content Include="bin\Microsoft.Extensions.DependencyInjection.dll" />
+    <Content Include="bin\Microsoft.Extensions.DependencyInjection.xml" />
     <Content Include="bin\Microsoft.Extensions.DependencyModel.dll" />
     <Content Include="bin\Microsoft.Extensions.FileProviders.Abstractions.dll" />
+    <Content Include="bin\Microsoft.Extensions.FileProviders.Abstractions.xml" />
     <Content Include="bin\Microsoft.Extensions.Hosting.Abstractions.dll" />
+    <Content Include="bin\Microsoft.Extensions.Hosting.Abstractions.xml" />
     <Content Include="bin\Microsoft.Extensions.Localization.Abstractions.dll" />
+    <Content Include="bin\Microsoft.Extensions.Localization.Abstractions.xml" />
     <Content Include="bin\Microsoft.Extensions.Localization.dll" />
+    <Content Include="bin\Microsoft.Extensions.Localization.xml" />
     <Content Include="bin\Microsoft.Extensions.Logging.Abstractions.dll" />
+    <Content Include="bin\Microsoft.Extensions.Logging.Abstractions.xml" />
     <Content Include="bin\Microsoft.Extensions.ObjectPool.dll" />
+    <Content Include="bin\Microsoft.Extensions.ObjectPool.xml" />
     <Content Include="bin\Microsoft.Extensions.Options.dll" />
+    <Content Include="bin\Microsoft.Extensions.Options.xml" />
     <Content Include="bin\Microsoft.Extensions.Primitives.dll" />
+    <Content Include="bin\Microsoft.Extensions.Primitives.xml" />
     <Content Include="bin\Microsoft.Extensions.WebEncoders.dll" />
+    <Content Include="bin\Microsoft.Extensions.WebEncoders.xml" />
     <Content Include="bin\Microsoft.Net.Http.Headers.dll" />
+    <Content Include="bin\Microsoft.Net.Http.Headers.xml" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Microsoft.Win32.Primitives.dll" />
     <Content Include="bin\Microsoft.Win32.Registry.dll" />
     <Content Include="bin\netstandard.dll" />
     <Content Include="bin\Newtonsoft.Json.Bson.dll" />
+    <Content Include="bin\Newtonsoft.Json.Bson.xml" />
     <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Newtonsoft.Json.xml" />
     <Content Include="bin\roslyn\csc.exe" />
     <Content Include="bin\roslyn\csi.exe" />
     <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
@@ -654,6 +715,7 @@
     <Content Include="bin\roslyn\VBCSCompiler.exe" />
     <Content Include="bin\System.AppContext.dll" />
     <Content Include="bin\System.Buffers.dll" />
+    <Content Include="bin\System.Buffers.xml" />
     <Content Include="bin\System.Collections.Concurrent.dll" />
     <Content Include="bin\System.Collections.dll" />
     <Content Include="bin\System.Collections.NonGeneric.dll" />
@@ -668,6 +730,7 @@
     <Content Include="bin\System.Diagnostics.Contracts.dll" />
     <Content Include="bin\System.Diagnostics.Debug.dll" />
     <Content Include="bin\System.Diagnostics.DiagnosticSource.dll" />
+    <Content Include="bin\System.Diagnostics.DiagnosticSource.xml" />
     <Content Include="bin\System.Diagnostics.FileVersionInfo.dll" />
     <Content Include="bin\System.Diagnostics.Process.dll" />
     <Content Include="bin\System.Diagnostics.StackTrace.dll" />
@@ -696,6 +759,7 @@
     <Content Include="bin\System.Linq.Parallel.dll" />
     <Content Include="bin\System.Linq.Queryable.dll" />
     <Content Include="bin\System.Memory.dll" />
+    <Content Include="bin\System.Memory.xml" />
     <Content Include="bin\System.Net.Http.dll" />
     <Content Include="bin\System.Net.Http.Formatting.dll" />
     <Content Include="bin\System.Net.NameResolution.dll" />
@@ -709,6 +773,7 @@
     <Content Include="bin\System.Net.WebSockets.Client.dll" />
     <Content Include="bin\System.Net.WebSockets.dll" />
     <Content Include="bin\System.Numerics.Vectors.dll" />
+    <Content Include="bin\System.Numerics.Vectors.xml" />
     <Content Include="bin\System.ObjectModel.dll" />
     <Content Include="bin\System.Reflection.dll" />
     <Content Include="bin\System.Reflection.Extensions.dll" />
@@ -717,6 +782,7 @@
     <Content Include="bin\System.Resources.ResourceManager.dll" />
     <Content Include="bin\System.Resources.Writer.dll" />
     <Content Include="bin\System.Runtime.CompilerServices.Unsafe.dll" />
+    <Content Include="bin\System.Runtime.CompilerServices.Unsafe.xml" />
     <Content Include="bin\System.Runtime.CompilerServices.VisualC.dll" />
     <Content Include="bin\System.Runtime.dll" />
     <Content Include="bin\System.Runtime.Extensions.dll" />
@@ -743,32 +809,40 @@
     <Content Include="bin\System.Text.Encoding.dll" />
     <Content Include="bin\System.Text.Encoding.Extensions.dll" />
     <Content Include="bin\System.Text.Encodings.Web.dll" />
+    <Content Include="bin\System.Text.Encodings.Web.xml" />
     <Content Include="bin\System.Text.RegularExpressions.dll" />
     <Content Include="bin\System.Threading.dll" />
     <Content Include="bin\System.Threading.Overlapped.dll" />
     <Content Include="bin\System.Threading.Tasks.dll" />
     <Content Include="bin\System.Threading.Tasks.Extensions.dll" />
+    <Content Include="bin\System.Threading.Tasks.Extensions.xml" />
     <Content Include="bin\System.Threading.Tasks.Parallel.dll" />
     <Content Include="bin\System.Threading.Thread.dll" />
     <Content Include="bin\System.Threading.ThreadPool.dll" />
     <Content Include="bin\System.Threading.Timer.dll" />
     <Content Include="bin\System.ValueTuple.dll" />
     <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Helpers.xml" />
     <Content Include="bin\System.Web.Http.dll" />
     <Content Include="bin\System.Web.Http.WebHost.dll" />
     <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Mvc.xml" />
     <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Optimization.xml" />
     <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.Razor.xml" />
     <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
     <Content Include="bin\System.Web.WebPages.dll" />
     <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.xml" />
     <Content Include="bin\System.Xml.ReaderWriter.dll" />
     <Content Include="bin\System.Xml.XDocument.dll" />
     <Content Include="bin\System.Xml.XmlDocument.dll" />
     <Content Include="bin\System.Xml.XmlSerializer.dll" />
     <Content Include="bin\System.Xml.XPath.dll" />
     <Content Include="bin\System.Xml.XPath.XDocument.dll" />
-    <Content Include="bin\ThaiBahtText.dll" />
     <Content Include="bin\WebActivatorEx.dll" />
     <Content Include="bin\WebGrease.dll" />
     <Content Include="bin\WebLibrary.dll" />
@@ -2944,6 +3018,16 @@
     <Content Include="Content\themes\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\themes\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="bin\ActRepDetail\0c0ec151-e347-46b7-a92f-e58df434eb21.pdf" />
+    <Content Include="bin\ActRepDetail\37349052-6886-424d-9f7d-9d76c40fc63b.pdf" />
+    <Content Include="bin\ActRepDetail\5cb6e209-d682-41ff-9210-fb489c12c122.pdf" />
+    <Content Include="bin\ActRepDetail\745f5a8e-09ea-4fe1-8a54-4b178a75b301.pdf" />
+    <Content Include="bin\ActRepDetail\8de26708-65d2-41df-9d51-a4db9ce24a9e.pdf" />
+    <Content Include="bin\ActRepDetail\9fc4fd53-4314-407e-b7f6-61b6917ab6e0.pdf" />
+    <Content Include="bin\ActRepDetail\e0ea294c-d8f2-40a0-841b-aedda8fdf31d.pdf" />
+    <Content Include="bin\ActRepDetail\e34e33ac-edb2-4dab-8319-1c440e447e6a.pdf" />
+    <Content Include="bin\ActRepDetail\f65d5aae-656c-4764-b141-509a6ddbd91e.pdf" />
+    <Content Include="bin\ActRepDetail\fileNotFound.pdf" />
     <Content Include="bin\ApplicationInsights.config" />
     <Content Include="bin\eActForm.dll.config" />
     <Content Include="bin\Microsoft.ApplicationBlocks.Data.rar" />
