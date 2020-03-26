@@ -632,7 +632,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@costPeriodEND", model.costPeriodEnd)
                     ,new SqlParameter("@empId", model.empId)
 
-
                   });
             }
             catch (Exception ex)
