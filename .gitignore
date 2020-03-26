@@ -18,3 +18,5 @@ eActForm/eActForm/Properties/*
 eActForm/eActConsoleService/bin/Debug/*
 eActForm/eActForm/obj/*
 *.txt
+eActForm/eForms.Models/obj/*
+eActForm/eForms.Presenter/obj/*
