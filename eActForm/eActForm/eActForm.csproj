@@ -3330,6 +3330,7 @@
     <Content Include="Views\actFormRepPostEva\postEvaGroupBrandView.cshtml" />
     <Content Include="Views\orderProduct\Index.cshtml" />
     <Content Include="Views\partialEmpInfo\Index.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\exTravelDetail.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerPiorityDoc.cshtml" />
     <Content Include="Views\MainReport\ReportPettyCashNum.cshtml" />
     <Content Include="Views\partialByProduct\Index.cshtml" />

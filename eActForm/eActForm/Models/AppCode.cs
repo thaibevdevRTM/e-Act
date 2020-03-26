@@ -61,7 +61,7 @@ namespace eActForm.Models
         public enum Mode
         {
             addNew, 
-            edit 
+            edit
         }
 
 

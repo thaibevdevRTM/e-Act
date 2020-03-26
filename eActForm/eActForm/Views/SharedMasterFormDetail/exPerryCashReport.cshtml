@@ -1,7 +1,7 @@
 ﻿
 @using eActForm.BusinessLayer
 @model eActForm.Models.Activity_TBMMKT_Model
-@{ 
+@{
     decimal? unit = 0;
     decimal? total = 0;
 }
@@ -55,13 +55,19 @@
                         ชื่อ / Name:
                     </td>
                     <td>
-                        @Model.masterRequestEmp[0].empName
+                        @if (@Model.masterRequestEmp.Any())
+                        {
+                            @Model.masterRequestEmp[0].empName
+                        }
                     </td>
                     <td class="font12" width="30px">
                         ตำแหน่ง / Position:
                     </td>
                     <td>
-                        @Model.masterRequestEmp[0].position
+                        @if (@Model.masterRequestEmp.Any())
+                        {
+                            @Model.masterRequestEmp[0].position
+                        }
                     </td>
                 </tr>
                 <tr>
@@ -95,13 +101,15 @@
                 @foreach (var item in Model.activityOfEstimateList)
                 {
                     <tr>
-                        <td>@item.date.Value.ToString("dd/MM/yyyy")</td>
+                        <td>@if (@item.date != null) {@item.date.Value.ToString("dd/MM/yyyy")}</td>
                         <td>@item.productDetail</td>
                         <td>@item.unit</td>
                         <td>@string.Format("{0:n2}", @item.total)</td>
                         <td>@item.remark</td>
-                    </tr> 
-                    
+                    </tr>
+
+
+
                     unit = @item.unit == null ? 0 + unit : item.unit + unit;
                     total = item.total == null ? 0 + total : item.total + total;
                 }
@@ -151,33 +159,33 @@
                 @foreach (var item in Model.activityOfEstimateList2)
                 {
                     <tr>
-                        <td>@item.date.Value.ToString("dd/MM/yyyy")</td>
+                        <td>@if (@item.date != null) {@item.date.Value.ToString("dd/MM/yyyy")}</td>
                         <td>@item.productDetail</td>
                         <td>@item.detail</td>
                         <td>@item.remark</td>
                         <td>@item.total</td>
                     </tr>
                 }
-                    <tr>
-                        <td colspan="4" class="textRight">
-                            รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
-                            Total Entertainment Expenses and Market Visit
-                        </td>
-                        <td class="textRight"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" class="textRight">
-                            กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)  =
-                        </td>
-                        <td class="textRight"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" class="textRight">
-                            รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses  =
-                        </td>
-                        <td class="textRight"></td>
-                    </tr>
-                </table>
+                <tr>
+                    <td colspan="4" class="textRight">
+                        รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
+                        Total Entertainment Expenses and Market Visit
+                    </td>
+                    <td class="textRight"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="textRight">
+                        กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)  =
+                    </td>
+                    <td class="textRight"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="textRight">
+                        รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses  =
+                    </td>
+                    <td class="textRight"></td>
+                </tr>
+            </table>
         </div>
 
     </div>
