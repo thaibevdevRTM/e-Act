@@ -37,7 +37,6 @@ namespace eActForm.Controllers
                     if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther != null)
                     {
                         activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.groupName;
-
                         if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId != "")
                         {
                             objGetDataSubjectBy.idBrandOrChannel = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId;
@@ -56,8 +55,6 @@ namespace eActForm.Controllers
                 }
                 else
                 {
-                    mode = "new";
-
                     string actId = Guid.NewGuid().ToString();
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production

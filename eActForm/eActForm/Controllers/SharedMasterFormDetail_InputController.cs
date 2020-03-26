@@ -2,7 +2,9 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -91,7 +93,7 @@ namespace eActForm.Controllers
         public ActionResult expensesDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
            
-            if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null)
+            if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null|| !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             {
                 CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT
                 {
@@ -128,7 +130,6 @@ namespace eActForm.Controllers
         public ActionResult exPerryCashDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             activity_TBMMKT_Model.companyList = QueryGetAllCompany.getAllCompany();
-            activity_TBMMKT_Model.objExpenseCashList = QueryOtherMaster.getOhterMaster("expenseCash", "");
             return PartialView(activity_TBMMKT_Model);
         }
 
@@ -142,7 +143,7 @@ namespace eActForm.Controllers
         {
             try
             {
-                var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(actId);
+                var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
                 activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId.Equals("1")).ToList();
                 if (!activity_TBMMKT_Model.activityOfEstimateList.Any())
                 {
@@ -173,17 +174,8 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-        public ActionResult exPerryListEntertainment(Activity_TBMMKT_Model activity_TBMMKT_Model, string actId)
+        public ActionResult exTravelDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            try
-            {
-
-               
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("exPerryListEntertainment => " + ex.Message);
-            }
             return PartialView(activity_TBMMKT_Model);
         }
 

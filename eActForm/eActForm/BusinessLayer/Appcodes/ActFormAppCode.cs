@@ -114,6 +114,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
+                else if (typeForm == Activity_Model.activityType.EXPENSE.ToString())
+                {
+                    strCall = "usp_getExpensePerryFormByEmpId";
+                }
                 else
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
@@ -271,11 +275,11 @@ namespace eActForm.BusinessLayer
         }
         public static string getStatusNeedDocColor(string val)
         {
-            if (val == "AA21FB12-B80A-4A0B-B9CA-78B8D7899D44")
+            if (val == ConfigurationManager.AppSettings["normal"])
                 val = "1d8110";
-            else if (val == "D0298BD9-ACC2-4434-955F-40E8A7EE810D")
+            else if (val == ConfigurationManager.AppSettings["urgently"])
                 val = "fba222";
-            else if (val == "B3EDA054-49C8-4EEF-83F2-EB0D9F39AB02")
+            else if (val == ConfigurationManager.AppSettings["veryUrgently"])
                 val = "f80014";
 
             return val;

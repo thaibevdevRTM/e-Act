@@ -317,7 +317,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="ThaiBahtText, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThaiBahtText.1.0.103\lib\net40\ThaiBahtText.dll</HintPath>
+      <HintPath>C:\Users\70015978\Desktop\ThaiBahtText\ThaiBahtText.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
@@ -2981,9 +2981,7 @@
     <Content Include="Views\SharedMasterFormDetail_Input\exPerryCashDetail.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\exPerryEmpInfoDetail.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\exPerryListDetail.cshtml" />
-    <Content Include="Views\SharedMasterFormDetail\exPerryCashDetail.cshtml" />
-    <Content Include="Views\SharedMasterFormDetail\exPerryListDetail.cshtml" />
-    <Content Include="Views\SharedMasterFormDetail\exPerryEmpInfoDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail\exPerryCashReport.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetailsDate_dmy.cshtml" />
     <Content Include="Views\ImportMaterial_PRODUCT_POS_PREMIUM\Index.cshtml" />
     <Content Include="Views\Approve\approvePositionSignatureListsV2.cshtml" />
@@ -2994,7 +2992,6 @@
     <Content Include="Views\actFormRepPostEva\index.cshtml" />
     <Content Include="Views\actFormRepPostEva\postEvaListView.cshtml" />
     <Content Include="Views\actFormRepPostEva\postEvaGroupBrandView.cshtml" />
-    <Content Include="Views\SharedMasterFormDetail_Input\exPerryListEntertainment.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetailsBg.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\activityBudgetDetails.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany\headerCompanyWithAddress.cshtml" />
@@ -3006,6 +3003,7 @@
     <Content Include="Views\actFormRepPostEva\index.cshtml" />
     <Content Include="Views\actFormRepPostEva\postEvaListView.cshtml" />
     <Content Include="Views\actFormRepPostEva\postEvaGroupBrandView.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\exTravelDetail.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerPiorityDoc.cshtml" />
     <Content Include="Views\MainReport\ReportPettyCashNum.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

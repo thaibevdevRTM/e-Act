@@ -1,49 +1,44 @@
 ﻿@using eActForm.BusinessLayer
+@using System.Configuration;
 @model eActForm.Models.Activity_TBMMKT_Model
-<div class="form-group col-md-12" id="divExpenseCashEmpInfo">
+
+
+
+<div class="col-md-12" id="divExpenseCashEmpInfo">
     @*<div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;@Model.TB_Reg_RequestEmp.empName&nbsp;&nbsp;</div>
         <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
     <fieldset>
-        <legend>Employee Info:</legend>
-        <div class="col-lg-12 col-xs-12">
-            <div class="col-md-3 col-xs-12">
+        <legend>พนักงาน</legend>
+
+        <div class="col-lg-3 col-xs-12">
+            <div class="col-md-12 col-xs-12">
                 <label id="lblEmpId">รหัสพนักงาน </label>
-                @Html.TextBoxFor(x => x.activityFormModel.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
+                @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
             </div>
-            <div class="col-md-3 col-xs-12">
-                <label> ประเทศหรืองานที่เดินทางไป</label>
-                @Html.TextBoxFor(x => x.activityFormModel.pack, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtPack" })
-            </div>
-            <div class="col-md-3 col-xs-12">
-                <label>วันที่</label>
-                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, new { @class = "form-control textboxcss textRight datepicker", Style = "text-align:center;" })
-            </div>
-
         </div>
 
-        <div class="col-lg-12 col-xs-12" style="margin-top:15px;">
-            <div class="col-md-4 col-xs-12">
-                <label style="width:90px;">ชื่อ :</label> &nbsp;&nbsp;<lable id="lblEmpName"></lable>
-            </div>
+        <div class="col-lg-9 col-xs-12" style="margin-top:15px;">
             <div class="col-md-5 col-xs-12">
-                <label style="width:130px;">ตำแหน่ง :</label>&nbsp;&nbsp;<lable id="lblEmpPosition"></lable>
+                <label style="width:90px;">ชื่อ :</label> &nbsp;<lable id="lblEmpName"></lable>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <label style="width:130px;">ตำแหน่ง :</label>&nbsp;<lable id="lblEmpPosition"></lable>
             </div>
         </div>
+        <div class="col-lg-3 col-xs-12">
+        </div>
 
-        <div class="col-lg-12 col-xs-12">
-            <div class="col-md-4 col-xs-12">
-                <label style="width:90px;">ระดับ :</label> &nbsp;&nbsp;<lable id="lblLvl" />
-            </div>
+        <div class="col-lg-9 col-xs-12">
             <div class="col-md-5 col-xs-12">
-                <label style="width:130px;">หน่วยงาน :</label>&nbsp;&nbsp;<lable id="lblDept" />
+                <label style="width:90px;">ระดับ :</label> &nbsp<lable id="lblLvl" />
             </div>
-        </div>
-
-        <div class="col-lg-12 col-xs-12" style="margin-top:30px">
-           
+            <div class="col-md-6 col-xs-12">
+                <label style="width:130px;">หน่วยงาน :</label>&nbsp;<lable id="lblDept" />
+            </div>
         </div>
     </fieldset>
-    <hr />
+    <br />
+   
 </div>
 
 <script type="text/javascript">
@@ -51,9 +46,9 @@
      $(document).ready(function () {
 
         $('.datepicker').datepicker({
-            format: 'dd-mm-yyyy'
+            format: 'dd/mm/yyyy'
         });
-
+        getEmpDetail();
     });
      function getEmpDetail() {
         $.ajax({
@@ -64,11 +59,20 @@
             }
         }).done(function (response) {
             console.log(response);
-            $("#txtEmpName").val(response.Data.empName);
-            document.getElementById('lblEmpName').innerHTML = response.Data.empName;
-            document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
-            document.getElementById('lblLvl').innerHTML = response.Data.level;
-            document.getElementById('lblDept').innerHTML = response.Data.department;
+            if (response.Data != null) {
+                $("#txtEmpName").val(response.Data.empName);
+                document.getElementById('lblEmpName').innerHTML = response.Data.empName;
+                document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
+                document.getElementById('lblLvl').innerHTML = response.Data.level;
+                document.getElementById('lblDept').innerHTML = response.Data.department;
+            }
+            else {
+                 $("#txtEmpName").val('');
+                document.getElementById('lblEmpName').innerHTML ='';
+                document.getElementById('lblEmpPosition').innerHTML = '';
+                document.getElementById('lblLvl').innerHTML = '';
+                document.getElementById('lblDept').innerHTML = '';
+            }
         });
     }
 
