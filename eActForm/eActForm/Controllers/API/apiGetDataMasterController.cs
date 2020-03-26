@@ -29,7 +29,7 @@ namespace eActForm.Controllers
             salesTeamModel model = new salesTeamModel();
             model.saleTeamList = SalesTeamPresenter.getSalesTeamCVM(AppCode.StrConAuthen, provinceId);
             resultAjax.Data = model;
-            return Json(resultAjax, "text/plain");
+            return Json(resultAjax, JsonRequestBehavior.AllowGet);
         }
 
     }

@@ -2826,6 +2826,7 @@
     <Content Include="images\contact1.png" />
     <Content Include="images\contact2.png" />
     <Content Include="images\contact3.png" />
+    <Content Include="images\crystal.png" />
     <Content Include="images\favicon.ico" />
     <Content Include="images\flagEN.png" />
     <Content Include="images\flagTH.png" />

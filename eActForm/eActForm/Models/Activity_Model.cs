@@ -208,6 +208,9 @@ namespace eActForm.Models
         public string piorityDoc { get; set; }
         public string empEmail { get; set; }
         public string empTel { get; set; }
+        public string contactEmail { get; set; }
+        public string contactName { get; set; }
+        public string contactTel { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel

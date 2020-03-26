@@ -344,6 +344,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@trade",model.trade)
                     ,new SqlParameter("@activityDetail",model.activityDetail)
                     ,new SqlParameter("@companyId",model.companyId)
+                    ,new SqlParameter("@empId",model.empId)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)

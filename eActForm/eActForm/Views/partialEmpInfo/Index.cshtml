@@ -1,70 +1,65 @@
 ﻿
-<div class="col-md-12" id="divExpenseCashEmpInfo">
+    <div id="divExpenseCashEmpInfo" style="margin-left:15px;">
 
-    <fieldset>
-        <legend>พนักงาน</legend>
 
-        <div class="row align-bottom align-text-bottom">
-            <div class="form-group">
+        <h2>พนักงาน</h2>
+        <hr />
+        <div class="row">
 
-                <div class="col-lg-1 col-xs-2">
-                    <p class="pull-right">ชื่อ :</p>
-                </div>
-                <div class="col-lg-2 col-xs-4">
-                    <lable id="lblEmpName"></lable>
-                </div>
-                <div class="col-lg-1 col-xs-2">
-                    <p class="pull-right">ตำแหน่ง :</p>
-                </div>
-                <div class="col-lg-3 col-xs-4">
-                    <lable id="lblEmpPosition"></lable>
-                </div>
+            <div class="col-lg-2 col-3">
+                <p class="pull-right text-warning">*</p><p class="pull-right">รหัสพนักงาน :</p>
             </div>
+            <div class="col-lg-4 col">
+                <input type="text" data-val="true" data-val-required="field is required." class="form-control textboxcss textRight" Style="text-align:center;" id="txtEmpId" required name="activityFormModel.empId" onchange="getEmpDetail();" />
+            </div>
+
+
+            <div class="col-lg-2 col-3">
+                <p class="pull-right">ชื่อ :</p>
+            </div>
+            <div class="col-lg-4 col">
+                <lable id="lblEmpName"></lable>
+            </div>
+
+
         </div>
 
-        <div class="row align-bottom align-text-bottom">
-            <div class="form-group">
+        <div class="row">
 
-                <div class="col-lg-1 col-xs-2">
-                    <p class="pull-right">ระดับ :</p>
-                </div>
-                <div class="col-lg-2 col-xs-4">
-                    <lable id="lblLvl" />
-                </div>
-                <div class="col-lg-1 col-xs-2">
-                    <p class="pull-right">หน่วยงาน :</p>
-                </div>
-                <div class="col-lg-3 col-xs-4">
-                    <lable id="lblDept" />
-                </div>
+            <div class="col-lg-2 col-3">
+                <p class="pull-right">ตำแหน่ง :</p>
+            </div>
+            <div class="col-lg-4 col">
+                <lable id="lblEmpPosition"></lable>
+            </div>
+            <div class="col-lg-2 col-3">
+                <p class="pull-right">หน่วยงาน :</p>
+            </div>
+            <div class="col-lg-4 col">
+                <lable id="lblDept" />
             </div>
         </div>
-        <div>
-            <div class="form-group">
-                <div class="col-lg-1 col-xs-2">
-                    <p class="pull-right">รหัสพนักงาน :</p>
-                </div>
-                <div class="col-lg-2 col-xs-4">
-                    <input type="text" data-val="true" data-val-required="field is required." class="form-control textboxcss textRight" Style="text-align:center;" id="txtEmpId" required name="activityFormModel.empId" onchange="getEmpDetail();" />
-                </div>
-                <div class="col-lg-1 col-xs-2">
-                    <p class="pull-right">Email :</p>
-                </div>
-                <div class="col-lg-2 col-xs-4">
-                    <input type="text" data-val="true" data-val-required="field is required." class="form-control textboxcss textRight" Style="text-align:center;" id="txtEmail" required name="activityFormModel.empEmail" />
-                </div>
-                <div class="col-lg-1 col-xs-2">
-                    <p class="pull-right">Tel :</p>
-                </div>
-                <div class="col-lg-2 col-xs-4">
-                    <input type="text" data-val="true" data-val-required="field is required." class="form-control textboxcss textRight" Style="text-align:center;" id="txtTel" required name="activityFormModel.empTel" />
-                </div>
+        <div class="row">
+            <div class="col-lg-2 col-3">
+                <p class="pull-right text-warning">*</p><p class="pull-right">Email :</p>
             </div>
+            <div class="col-lg-4 col">
+                <input type="text" data-val="true" data-val-required="field is required." class="form-control textboxcss textRight" Style="text-align:center;" id="txtEmail" required name="activityFormModel.empEmail" />
+            </div>
+
+            <div class="col-lg-2 col-3">
+                <p class="pull-right text-warning">*</p><p class="pull-right">เบอร์ติดต่อ :</p>
+            </div>
+            <div class="col-lg-4 col">
+                <input type="text" data-val="true" data-val-required="field is required." class="form-control textboxcss textRight" Style="text-align:center;" id="txtTel" required name="activityFormModel.empTel" />
+            </div>
+
+
         </div>
 
         <input type="hidden" name="activityFormModel.customerName" id="customerName" />
-    </fieldset>
-</div>
+
+    </div>
 
 <script type="text/javascript">
 
@@ -89,16 +84,14 @@
                 $("#txtEmail").val(response.Data.email);
                 document.getElementById('lblEmpName').innerHTML = response.Data.empName;
                 document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
-                document.getElementById('lblLvl').innerHTML = response.Data.level;
                 document.getElementById('lblDept').innerHTML = response.Data.department;
             }
             else {
                 $("#txtEmpName").val('');
                 $("#customerName").val('');
-                 $("#txtEmail").val('');
+                $("#txtEmail").val('');
                 document.getElementById('lblEmpName').innerHTML ='';
                 document.getElementById('lblEmpPosition').innerHTML = '';
-                document.getElementById('lblLvl').innerHTML = '';
                 document.getElementById('lblDept').innerHTML = '';
             }
         });

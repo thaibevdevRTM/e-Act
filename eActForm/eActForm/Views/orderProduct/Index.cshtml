@@ -4,40 +4,95 @@
     Layout = "~/Views/Shared/_BlankLayout.cshtml";
 }
 <style>
-    input[data-val-required] { background:#E0F7FA } 
-    select.input-validation-error { border-color: red }
+    input[data-val-required] {
+        background: #E0F7FA
+    }
+
+    select.input-validation-error {
+        border-color: red
+    }
 </style>
+<link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css">
+
 <body class="login">
+    <div class="d-flex justify-content-around">
 
-        @using (Ajax.BeginForm("submitOrder", "orderProduct", new AjaxOptions { HttpMethod = "post"
-            , OnBegin = "return beginQuery()"
-            , OnSuccess = "successQuery"
-            , OnFailure = "failureQuery" }
-        , new { id = "divFrmOrderProduct"
-        , @class = "form-horizontal form-label-left" }))
-        {
-            @Html.AntiForgeryToken()
-
-            @Html.Action("index", "partialEmpInfo", new { actId = ViewBag.actId })
-            @Html.Action("index", "partialByProduct", new { actId = ViewBag.actId })
-            @Html.Action("index", "partialSaleTeam")
-            <div class="row text-center">
-                <button id="btnsubmit" type="submit" class="btn ink-reaction btn-success" ><i class="fa fa fa-check fa-fw"></i>&nbsp;สั่งซื้อ</button>
+        <div class="card">
+            <img src="~/images/crystal.png" class="card-img-top img-thumbnail" alt="...">
+            <div class="card-body">
+                <h3 class="card-title">น้ำดื่มราคาสวัสดิการพนักงาน</h3>
+                <p class="card-text">รายละเอียดการสั่งซื้อ.</p>
+                <p class="card-text">1. สามารถสั่งได้สัปดาห์ละ 1 ครั้ง</p>
+                <p class="card-text">2. การสั่งซื้อแต่ละครั้งยอดรวมไม่เกิน 10 Pack</p>
+                <p class="card-text">3. ตัดรอบทุกวันอังคาร 24.00 น. และรับสินค้าได้วันเสาร์ถัดไป</p>
+                <p class="card-text">4. รับสินค้าพร้อมชำระเงินได้ตามหน่วยขายที่ระบุ</p>
+                <p class="card-text text-warning">* requied</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
             </div>
-            <input type="hidden" value="@ViewBag.actId" name="activityFormModel.id" />
-        }
 
+
+
+            @using (Ajax.BeginForm("submitOrder", "orderProduct", new AjaxOptions
+            {
+                HttpMethod = "post",
+                OnBegin = "return beginQuery()",
+                OnSuccess = "successQuery",
+                OnFailure = "failureQuery"
+            }
+            , new
+            {
+                id = "divFrmOrderProduct",
+                @class = "form-horizontal form-label-left"
+            }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.Action("index", "partialEmpInfo", new { actId = ViewBag.actId })
+                @Html.Action("index", "partialByProduct", new { actId = ViewBag.actId })
+                @Html.Action("index", "partialSaleTeam")
+
+                <div class="text-center">
+                    <button id="btnsubmit" type="submit" class="btn ink-reaction btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;สั่งซื้อ</button>
+                </div>
+                <input type="hidden" value="@ViewBag.actId" name="activityFormModel.id" />
+            }
+        </div>
+
+
+    </div>
 </body>
+
+
 
 <script>
 
-    
+
     function beginQuery() {
-       
+
+
+        if ($("#totalQty").text() == "" || $("#totalQty").text() == "0") {
+            alert("กรุณาระบุจำนวนที่ต้องการสั่งค่ะ");
+            return false;
+        } else if ($("#totalQty").text() > 10) {
+            alert("การสั่งซื้อแต่ละครั้งยอดรวมไม่เกิน 10 Pack ค่ะ");
+            return false;
+        } else if ($("#customerName").val() == "") {
+            alert("ไม่พบรหัสพนักงานค่ะ กรุณาติดต่อ hotline : 063-1970586");
+            return false;
+        }
+
+        $("#WaitDialog").show();
     }
 
     function successQuery(data) {
-
+        console.log(data);
+        if (data.Code == "200") {
+            $("#WaitDialog").hide();
+            alert("ดำเนินการเรียบร้อยค่ะ");
+            location.reload(true);
+        } else {
+            alert("ไม่สามารถดำเนินการได้ค่ะ กรุณาติดต่อ hotline : 063-1970586");
+        }
 
     }
 
