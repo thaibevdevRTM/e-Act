@@ -64,7 +64,7 @@ namespace eActForm.Controllers
                     , model.activityFormModel.customerName
                     , strProductDetail
                     , "จังหวัด " + model.activityFormModel.regionName + model.activityFormModel.activityName
-                    , contactModel[0].nameCashier
+                    , contactModel[0].nameCashier1
                     , contactModel[0].telCashier);
 
                 EmailAppCodes.sendEmail(model.activityFormModel.empEmail

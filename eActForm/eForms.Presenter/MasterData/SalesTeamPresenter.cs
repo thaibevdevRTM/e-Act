@@ -1,10 +1,10 @@
-﻿using eForms.Models.MasterData;
-using Microsoft.ApplicationBlocks.Data;
+﻿using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Data.SqlClient;
+using eForms.Models.MasterData;
 
 namespace eForms.Presenter.MasterData
 {
@@ -48,8 +48,7 @@ namespace eForms.Presenter.MasterData
                                 emailCashier = dr["emailCashier"].ToString(),
                                 emailManager = dr["emailManager"].ToString(),
                                 address = dr["address"].ToString(),
-                                nameCashier = dr["nameCashier"].ToString(),
-                                nameManager = dr["nameManager"].ToString()
+                                nameCashier1 = dr["nameCashier"].ToString()
                             }).ToList();
                 return list;
             }
