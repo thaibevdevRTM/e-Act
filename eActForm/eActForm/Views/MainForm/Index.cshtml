@@ -46,7 +46,7 @@
 {
     @Html.AntiForgeryToken()
     <div id="GridPDF" style="width:97%; margin-left:20px;">
-        <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
+        @*<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">*@
             @*=================for test====================*@
             @*<tr>
                     <td>
@@ -58,7 +58,7 @@
             {
                 @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
             }
-        </table>
+        @*</table>*@
     </div>
 
     @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
@@ -81,10 +81,10 @@
 
 <div style="margin-left:25px;" class="text-center">
     <a href="@Url.Action("index", "Home", new { typeForm = @Model.activityFormModel.typeForm }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-    @if (Model.activityFormModel.mode == "new"
+    @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString()
                                                 || Model.activityFormTBMMKT.statusId == 1
                                                 || Model.activityFormTBMMKT.statusId == 5
-                                                || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)))
+                                                || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)))
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
     }
@@ -200,6 +200,11 @@
                 $("#txtUnit_0").val() != "")) {
                 required += "&emsp;ประมาณค่าใช้จ่าย/Estimate of travelling expenses*<br>"; validate = false;
             }
+
+        } else if ('@Model.activityFormTBMMKT.master_type_form_id' =='ECBA6180-359F-4A43-B97A-CB82CC949B75')
+        {
+            if ($("#ddlCompany").val() == "") { required += "บริษัท*<br>"; validate = false; }
+            if ($("#txtExMonth").val() == "") { required += "ประจำเดือน*<br>"; validate = false; }
 
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]') {//ใบเบิกผลิตภัณฑ์,POS/PREMIUM

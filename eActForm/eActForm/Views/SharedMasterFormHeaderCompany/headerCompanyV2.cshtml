@@ -30,6 +30,15 @@
     }
 
     var compName = "";
+
+    if (Model.activityFormTBMMKT.chkUseEng)
+    {
+        compName = @Model.activityFormTBMMKT.companyNameEN;
+    }
+    else
+    {
+        compName = @Model.activityFormTBMMKT.companyName;
+    }
 }
 <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
     <table style="border-color:none;">
