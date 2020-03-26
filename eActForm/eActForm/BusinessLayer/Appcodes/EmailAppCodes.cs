@@ -706,7 +706,7 @@ namespace eActForm.BusinessLayer
             //slog = slog + "cc=>" + cc;
             //ExceptionManager.WriteError("sendEmail >> " + slog);
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-
+            mailTo = mailTo == null || mailTo == "" ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
             GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
             GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
             GMailer mailer = new GMailer();
