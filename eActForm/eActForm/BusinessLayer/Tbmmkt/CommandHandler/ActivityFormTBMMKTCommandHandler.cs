@@ -47,6 +47,7 @@ namespace eActForm.BusinessLayer
                     model.activityFormTBMMKT.remark = model.activityFormModel.remark;
                     model.activityFormTBMMKT.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
                     model.activityFormTBMMKT.languageDoc = model.activityFormTBMMKT.languageDoc == null ? "" : model.activityFormTBMMKT.languageDoc;
+                    model.activityFormTBMMKT.piorityDoc = model.activityFormTBMMKT.piorityDoc == null ? "" : model.activityFormTBMMKT.piorityDoc;
 
                     rtn = insertActivityForm(model.activityFormTBMMKT);
 
