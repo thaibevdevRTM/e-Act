@@ -262,14 +262,13 @@ else
 
     function callPreviewApprove(obj) {
 
-        if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvTbmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvHcmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvHcmId"]'
+        if ('@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formBgTbmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formAdvTbmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formPosTbmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formTrvHcmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formAdvHcmId"]'
         ) {
-
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("index", "MainReport")',
@@ -279,7 +278,7 @@ else
             }).done(function (htmlResponse) {
                 $("#dataFromPDF").val(htmlResponse);
                 genFileActForm();
-                });
+            });
 
         }
         else {

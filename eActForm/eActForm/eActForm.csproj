@@ -3012,7 +3012,6 @@
     <Content Include="Views\Travelling\travellingDetail.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\empInfoDetail.cshtml" />
     <Content Include="Views\Travelling\expensesTrvDetail.cshtml" />
-    <Content Include="Views\Travelling\expensesDetails.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\test.cshtml" />
     <Content Include="Views\Travelling\test.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

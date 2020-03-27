@@ -37,9 +37,14 @@ namespace eActForm.Controllers
                 {
                     costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
                 };
-                for (int i = 0; i < 8; i++)
+
+
+                activity_TBMMKT_Model.listPiority = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("E887A185-2BD5-4DA6-98CF-8EAF1BF35E49", "expensesTrv").OrderBy(x => x.orderNum).ToList();
+
+                // listChoiceName,listChoiceId
+                for (int i = 0; i < activity_TBMMKT_Model.listPiority.Count; i++)
                 {
-                    model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { productDetail = "", unit = 0, unitPrice = 0, total = 0 });
+                    model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { listChoiceId = activity_TBMMKT_Model.listPiority[i].id, listChoiceName = activity_TBMMKT_Model.listPiority[i].name, productDetail = "", unit = 0, unitPrice = 0, total = 0 });
                 }
                 activity_TBMMKT_Model.expensesDetailModel = model;
 
