@@ -77,6 +77,7 @@ namespace eActForm.Controllers
             if (activity_TBMMKT_Model.activityFormTBMMKT.id != null)
             {
                 activity_Model = activity_TBMMKT_Model;
+                activityId = activity_Model.activityFormModel.id;
             }
             else
             {
@@ -88,7 +89,7 @@ namespace eActForm.Controllers
                 //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
             }
 
-
+            activity_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
             activity_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm;
             activity_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm_EN;
 

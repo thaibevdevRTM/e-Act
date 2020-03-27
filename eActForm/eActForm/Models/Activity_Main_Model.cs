@@ -53,7 +53,9 @@ namespace eActForm.Models
             exPerryCashModel = new exPerryCashModel();
         }
 
-    }
+        public ApproveModel.approveModels approveModels { get; set; }
+
+}
 
     public class ActivityFormTBMMKT : ActivityForm
     {
