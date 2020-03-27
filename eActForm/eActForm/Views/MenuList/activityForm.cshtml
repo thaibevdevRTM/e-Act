@@ -24,6 +24,7 @@
                 <li>@Html.ActionLink("TBM Travelling Form", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formTrvTbmId"] }, null)</li>
                 <li>@Html.ActionLink("TBM ยืมเงินทดรอง", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formAdvTbmId"] }, null)</li>
                 <li>@Html.ActionLink("TBM เบิกผลิตภัณฑ์ POS/PREMIUM ", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formPosTbmId"] }, null)</li>
+                <li>@Html.ActionLink(" ใบเบิกค่าใช้จ่ายพนักงาน", "Index", "MainForm", new { typeForm = Activity_Model.activityType.EXPENSE.ToString(), master_type_form_id = "ECBA6180-359F-4A43-B97A-CB82CC949B75" }, null)</li>
 
             }
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] && UtilsAppCode.Session.User.isAdminTBM || (UtilsAppCode.Session.User.isSuperAdmin))
@@ -35,7 +36,7 @@
                 <li>@Html.ActionLink("Horeca ยืมเงินทดรอง", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formAdvHcmId"] }, null)</li>
                 <li>@Html.ActionLink("Horeca Travelling Form", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formTrvHcmId"] }, null)</li>
             }
-            <li>@Html.ActionLink(" Expense Form", "Index", "MainForm", new { typeForm = Activity_Model.activityType.EXPENSE.ToString(), master_type_form_id = "ECBA6180-359F-4A43-B97A-CB82CC949B75"}, null)</li>
+            <li>@Html.ActionLink(" ใบเบิกค่าใช้จ่ายพนักงาน", "Index", "MainForm", new { typeForm = Activity_Model.activityType.EXPENSE.ToString(), master_type_form_id = "ECBA6180-359F-4A43-B97A-CB82CC949B75" }, null)</li>
 
         </ul>
     </li>
