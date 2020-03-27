@@ -19,13 +19,13 @@
             <label class="control-label">
                 Doc No.
             </label>
-            @Html.TextBoxFor(m => m.activityFormModel.activityNo, new { @class = "form-control textboxcss", Style = "width:5;", @id = "txtActivityNo" })
+            @Html.TextBoxFor(m => m.activityFormModel.activityNo, new { @class = "form-control textboxcss", Style = "width:5;", @id = "txtActivityNo" , @readonly = true})
         </div>
         <div class="col-md-4 col-xs-12">
             <label class="control-label">
                 เลขที่เอกสารใบยืมเงินทดลอง
             </label>
-            @Html.TextBoxFor(m => m.activityFormTBMMKT.reference, new { @class = "form-control textboxcss", Style = "width:5;", @id = "txtReference" })
+            @Html.TextBoxFor(m => m.activityFormTBMMKT.reference, new { @class = "form-control textboxcss", Style = "width:5;", @id = "txtReference" , @readonly = true })
         </div>
     </div>
     <div class="col-md-12 col-xs-12">

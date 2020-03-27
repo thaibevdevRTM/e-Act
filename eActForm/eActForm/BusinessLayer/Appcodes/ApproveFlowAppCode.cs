@@ -131,7 +131,7 @@ namespace eActForm.BusinessLayer
                     {
                         if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType)
                         {
-                            model.flowDetail = getFlowDetailExpense(model.flowMain.id, actFormId);
+                            model.flowDetail = getFlowDetailExpense(actFormId);
                         }
                         else
                         {
@@ -302,13 +302,12 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailExpense(string flowId, string actId)
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailExpense(string actId)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveDetailExpense"
-                    , new SqlParameter[] { new SqlParameter("@flowId", flowId)
-                                            , new SqlParameter("@actFormId",actId)
+                    , new SqlParameter[] {new SqlParameter("@actFormId",actId)
                     });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail()
