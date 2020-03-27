@@ -12,7 +12,7 @@ using WebLibrary;
 namespace eActForm.Controllers
 {
     [LoginExpire]
-    public class TravellingController : Controller
+    public class TravellingInputController : Controller
     {
         public ActionResult travellingDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {

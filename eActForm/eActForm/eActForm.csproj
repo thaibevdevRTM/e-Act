@@ -472,7 +472,6 @@
     <Compile Include="Controllers\ImportMaterial_PRODUCT_POS_PREMIUMController.cs" />
     <Compile Include="Controllers\MainFormController.cs" />
     <Compile Include="Controllers\ExpenseEstimate.cs" />
-    <Compile Include="Controllers\TravellingController.cs" />
     <Compile Include="Controllers\SharedMasterFormDetail_InputController.cs" />
     <Compile Include="Controllers\SharedMasterFormHeaderCompany_InputController.cs" />
     <Compile Include="Controllers\SharedMasterFormHeaderCompanyController.cs" />
@@ -485,6 +484,7 @@
     <Compile Include="Controllers\SignatureController.cs" />
     <Compile Include="Controllers\SummaryReportController.cs" />
     <Compile Include="Controllers\MainReportController.cs" />
+    <Compile Include="Controllers\TravellingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3012,7 +3012,9 @@
     <Content Include="Views\Travelling\travellingDetail.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\empInfoDetail.cshtml" />
     <Content Include="Views\Travelling\expensesTrvDetail.cshtml" />
-    <Content Include="Views\Travelling\travelling2y.cshtml" />
+    <Content Include="Views\Travelling\expensesDetails.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\test.cshtml" />
+    <Content Include="Views\Travelling\test.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

@@ -92,8 +92,8 @@ namespace eActForm.Controllers
         }
         public ActionResult expensesDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-           
-            if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null|| !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
+
+            if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             {
                 CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT
                 {
@@ -180,6 +180,13 @@ namespace eActForm.Controllers
         }
         public ActionResult empInfoDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            return PartialView(activity_TBMMKT_Model);
+        }
+        public ActionResult expensesTrvDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            return PartialView(activity_TBMMKT_Model);
+        }
+        public ActionResult test(Activity_TBMMKT_Model activity_TBMMKT_Model) { 
             return PartialView(activity_TBMMKT_Model);
         }
     }

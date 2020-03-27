@@ -11,58 +11,164 @@
         <legend>พนักงาน</legend>
 
 
-        <div class="col-lg-3 col-xs-12">
-            <div class="col-md-12 col-xs-12">
-                <label id="lblEmpId">รหัสพนักงาน </label>
-                @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
+        @*<div class="col-lg-3 col-xs-12">
+                <div class="col-md-12 col-xs-12">
+                    <label id="lblEmpId">รหัสพนักงาน </label>
+                    @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
+                </div>
             </div>
-        </div>
 
-        <div class="col-lg-9 col-xs-12" style="margin-top:15px;">
-            <div class="col-md-5 col-xs-12">
-                <label style="width:90px;">ชื่อ :</label> &nbsp;<lable id="lblEmpName"></lable>
+            <div class="col-lg-9 col-xs-12" style="margin-top:15px;">
+                <div class="col-md-5 col-xs-12">
+                    <label style="width:90px;">ชื่อ :</label> &nbsp;<lable id="lblEmpName"></lable>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <label style="width:130px;">ตำแหน่ง :</label>&nbsp;<lable id="lblEmpPosition"></lable>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xs-12">
+            </div>
+            <div class="col-lg-9 col-xs-12">
+                <div class="col-md-5 col-xs-12">
+                    <label style="width:90px;">ระดับ :</label> &nbsp<lable id="lblLvl" />
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <label style="width:130px;">หน่วยงาน :</label>&nbsp;<lable id="lblDept" />
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xs-12">
+            </div>
+            <div class="col-lg-9 col-xs-12">
+                <div class="col-md-12 col-xs-12">
+                    <label style="width:90px;">สังกัดบริษัท :</label> &nbsp<lable id="lblComp" />
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-3 col-xs-12">
+            </div>
+            <div class="col-lg-9 col-xs-12">
+                <div class="col-md-5 col-xs-12">
+                    <label style="width:95px;">โทรศัพท์ติดต่อ :</label> &nbsp; @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "textboxcss textRight", Style = "text-align:center;", id = "txtEmpTel" })
+
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <label style="width:130px;">ตามคำสั่ง :</label>&nbsp; @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "textboxcss textRight", Style = "text-align:center;", id = "txtOrerOf" })
+
+                </div>
+            </div>*@
+
+
+        <br />
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
+                        รหัสพนักงาน :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpId", onchange = "getEmpDetail();" })
+                    </div>
+                </div>
             </div>
             <div class="col-md-6 col-xs-12">
-                <label style="width:130px;">ตำแหน่ง :</label>&nbsp;<lable id="lblEmpPosition"></lable>
+                <div class="row"></div>
             </div>
         </div>
-
-        <div class="col-lg-3 col-xs-12">
-        </div>
-        <div class="col-lg-9 col-xs-12">
-            <div class="col-md-5 col-xs-12">
-                <label style="width:90px;">ระดับ :</label> &nbsp<lable id="lblLvl" />
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpName">
+                        ชื่อ :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <lable id="lblEmpName" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6 col-xs-12">
-                <label style="width:130px;">หน่วยงาน :</label>&nbsp;<lable id="lblDept" />
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
+                        ตำแหน่ง :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <lable id="lblEmpPosition" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="col-lg-3 col-xs-12">
-        </div>
-        <div class="col-lg-9 col-xs-12">
-            <div class="col-md-12 col-xs-12">
-                <label style="width:90px;">สังกัดบริษัท :</label> &nbsp<lable id="lblComp" />
-            </div>
-
-        </div>
-
-
-        <div class="col-lg-3 col-xs-12">
-        </div>
-        <div class="col-lg-9 col-xs-12">
-            <div class="col-md-5 col-xs-12">
-                <label style="width:95px;">โทรศัพท์ติดต่อ :</label> &nbsp; @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "textboxcss textRight", Style = "text-align:center;", id = "txtEmpTel" })
-
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblLvl">
+                        ระดับ :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <lable id="lblLvl" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6 col-xs-12">
-                <label style="width:130px;">ตามคำสั่ง :</label>&nbsp; @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "textboxcss textRight", Style = "text-align:center;", id = "txtOrerOf" })
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblDept">
+                        หน่วยงาน :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <lable id="lblDept" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblComp">
+                        สังกัดบริษัท :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <lable id="lblComp" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
 
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEmpTel">
+                        โทรศัพท์ติดต่อ :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpTel" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
+                        ตามคำสั่ง :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtOrerOf" })
+
+                    </div>
+                </div>
             </div>
         </div>
     </fieldset>
     <br />
-
 </div>
 
 <script type="text/javascript">

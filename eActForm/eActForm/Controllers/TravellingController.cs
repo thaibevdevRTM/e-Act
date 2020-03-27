@@ -12,7 +12,7 @@ using WebLibrary;
 namespace eActForm.Controllers
 {
     [LoginExpire]
-    public class TavellingController : Controller
+    public class TravellingController : Controller
     {
 
         public ActionResult travellingDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
@@ -28,37 +28,27 @@ namespace eActForm.Controllers
             }
             return PartialView(activity_TBMMKT_Model);
         }
-        public ActionResult travelling2y(Activity_TBMMKT_Model activity_TBMMKT_Model)
+
+        public ActionResult expensesTrvDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            if (activity_TBMMKT_Model.placeDetailModel.Count == 0)
+            if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             {
-                List<PlaceDetailModel> placeDetailModel = new List<PlaceDetailModel>();
-                for (int i = 0; i < 3; i++)
+                CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT
                 {
-                    placeDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = null, arrivalDate = null });
+                    costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
+                };
+                for (int i = 0; i < 8; i++)
+                {
+                    model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { productDetail = "", unit = 0, unitPrice = 0, total = 0 });
                 }
-                activity_TBMMKT_Model.placeDetailModel = placeDetailModel;
+                activity_TBMMKT_Model.expensesDetailModel = model;
+
             }
             return PartialView(activity_TBMMKT_Model);
         }
-
-       
-        public ActionResult expensesTrvDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
-        {
-            //if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
-            //{
-            //    CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT
-            //    {
-            //        costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
-            //    };
-            //    for (int i = 0; i < 8; i++)
-            //    {
-            //        model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { productDetail = "", QtyName = "", unitPrice = 0, typeTheme = "", unit = 0, total = 0 });
-            //    }
-            //    activity_TBMMKT_Model.expensesDetailModel = model;
-
-            //}
-            return PartialView(activity_TBMMKT_Model);
-        }
+        //public ActionResult testExpensesDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        //{
+        //    return PartialView(activity_TBMMKT_Model);
+        //}
     }
 }
