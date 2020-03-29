@@ -193,14 +193,13 @@
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
         });
-
-        if ('@Model.activityFormTBMMKT.statusId' != '' || '@Model.activityFormTBMMKT.statusId' == '1') {
-             document.getElementById("addEnt").style.display = "none";
-             document.getElementById("addEx").style.display = "none";
-        }
-
     });
 
+
+    if (@Model.activityFormTBMMKT.statusId != "1" || @Model.activityFormTBMMKT.statusId == "5" || '@Model.activityFormTBMMKT.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
+        document.getElementById("addEnt").style.display = "none";
+        document.getElementById("addEx").style.display = "none";
+    }
     function autocompleDetail(i) {
         console.log(i.id);
         $("#"+i.id).autocomplete({

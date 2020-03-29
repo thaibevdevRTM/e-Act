@@ -64,6 +64,8 @@ namespace eActForm.Controllers
                 {
                     mode = AppCode.Mode.addNew.ToString();
                     string actId = Guid.NewGuid().ToString();
+                    activityFormTBMMKT.statusId = 1;
+                    activityFormTBMMKT.createdByUserId = @UtilsAppCode.Session.User.empId;
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
                     //activityFormTBMMKT.subjectId = subjectId;
