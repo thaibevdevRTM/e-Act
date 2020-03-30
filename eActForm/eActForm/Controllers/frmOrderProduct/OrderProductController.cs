@@ -80,11 +80,12 @@ namespace eActForm.Controllers
                         , model.activityFormModel.customerName
                         , strProductDetail
                         , "จังหวัด " + model.activityFormModel.regionName + " " + model.activityFormModel.activityName
-                        , contactModel[0].nameCashier1
-                        , contactModel[0].telCashier);
+                        , contactModel[0].nameContact
+                        , contactModel[0].telContact
+                        , string.Format(ConfigurationManager.AppSettings["bodyEmailLinkLocation"],contactModel[0].latitude,contactModel[0].longitude));
 
                     EmailAppCodes.sendEmail(model.activityFormModel.empEmail
-                        , ConfigurationManager.AppSettings["emailApproveCC"] // model.activityFormModel.contactEmail
+                        , ConfigurationManager.AppSettings["emailApproveCC"] // contactModel[0].emailContact
                         , ConfigurationManager.AppSettings["subjectEmailConfirm"]
                         , strBody
                         , null);

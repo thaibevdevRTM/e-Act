@@ -33,4 +33,3 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\bin\Debug\Microsoft.Exchange.We
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
-D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
