@@ -39,7 +39,7 @@ namespace eActForm.Controllers
                 };
 
 
-                activity_TBMMKT_Model.listPiority = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("E887A185-2BD5-4DA6-98CF-8EAF1BF35E49", "expensesTrv").OrderBy(x => x.orderNum).ToList();
+                activity_TBMMKT_Model.listPiority = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "expensesTrv").OrderBy(x => x.orderNum).ToList();
 
                 // listChoiceName,listChoiceId
                 for (int i = 0; i < activity_TBMMKT_Model.listPiority.Count; i++)

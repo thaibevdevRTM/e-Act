@@ -124,7 +124,8 @@ namespace eActForm.Models
         public string toContact { get; set; }
         public string detailContact { get; set; }
         public string brand_select { get; set; }
-    }
+        public string orderOf { get; set; }
+}
 
 
     public class TB_Act_ActivityLayout
@@ -187,6 +188,7 @@ namespace eActForm.Models
         public string positionEN { get; set; }
         public string departmentEN { get; set; }
         public string buEN { get; set; }
+        public string empTel { get; set; }
     }
 
     public class PurposeModel : ActBaseModel
@@ -215,7 +217,9 @@ namespace eActForm.Models
         public DateTime? arrivalDate { get; set; }
         public string departureDateStr { get; set; }
         public string arrivalDateStr { get; set; }
-
+        public string depart { get; set; }
+        public string arrived { get; set; }
+       
     }
 
 

@@ -9,5 +9,7 @@
         public string type { get; set; }
         public string master_type_form_id { get; set; }
         public string orderNum { get; set; }
+        public string displayType { get; set; }
+        public string subDisplayType { get; set; }
     }
 }
