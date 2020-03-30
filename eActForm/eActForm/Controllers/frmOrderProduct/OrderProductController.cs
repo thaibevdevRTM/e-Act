@@ -33,7 +33,11 @@ namespace eActForm.Controllers
             try
             {
                 DateTime baseDate = DateTime.Today;
-                var today = baseDate;
+                switch (DateTime.Now.DayOfWeek)
+                {
+                    case DayOfWeek.Monday: baseDate = baseDate.AddDays(-2); break ;
+                    case DayOfWeek.Tuesday: baseDate = baseDate.AddDays(-3); break;
+                }
                 var yesterday = baseDate.AddDays(-1);
                 var thisWeekStart = baseDate.AddDays(-(int)baseDate.DayOfWeek).AddDays(+3);
                 var thisWeekEnd = thisWeekStart.AddDays(7).AddSeconds(-1);
