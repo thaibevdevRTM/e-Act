@@ -20,9 +20,7 @@ namespace eForms.Presenter.MasterData
                              select new SalesTeamCVMModel()
                              {
                                  id = dr["saleTeamId"].ToString(),
-                                 nameTH = dr["nameTH"].ToString(),
-                                 telCashier = dr["telCashier"].ToString(),
-                                 telManager = dr["telManager"].ToString()
+                                 nameTH = dr["nameTH"].ToString()
                              }).ToList();
                 return lists;
             }
@@ -43,12 +41,14 @@ namespace eForms.Presenter.MasterData
                             {
                                 id = dr["id"].ToString(),
                                 nameTH = dr["nameTH"].ToString(),
-                                telCashier = dr["telCashier"].ToString(),
+                                telContact = dr["telContact"].ToString(),
                                 telManager = dr["telManager"].ToString(),
-                                emailCashier = dr["emailCashier"].ToString(),
+                                emailContact = dr["emailContact"].ToString(),
                                 emailManager = dr["emailManager"].ToString(),
                                 address = dr["address"].ToString(),
-                                nameCashier1 = dr["nameCashier"].ToString()
+                                nameContact = dr["nameContact"].ToString(),
+                                latitude = dr["latitude"].ToString(),
+                                longitude = dr["longitude"].ToString()
                             }).ToList();
                 return list;
             }

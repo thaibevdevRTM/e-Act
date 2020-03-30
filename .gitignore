@@ -20,3 +20,6 @@ eActForm/eActForm/obj/*
 *.txt
 eActForm/eForms.Models/obj/*
 eActForm/eForms.Presenter/obj/*
+*.cache
+eActForm/webLibrary/obj/*
+eActForm/eActForm/Properties/*

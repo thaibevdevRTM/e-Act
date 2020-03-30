@@ -14,7 +14,7 @@
             <tr class="tagCountRowinTable">
 
                 <td style="width: 30%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                    <input type="text" value="@item.productDetail" id="costthemedetail[@index].productDetail" name="costthemedetail[@index].productDetail" class="form-control textboxcss" />
+                    <input type="text" value="@item.productDetail" id="costthemedetail[@index].productDetail" name="costthemedetail[@index].productDetail" class="form-control textboxcss" readonly />
                 </td>
                 <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                     @Html.TextBoxFor(x => item.wholeSalesPrice, new { @id = "costthemedetail[" + index + "].wholeSalesPrice", Name = "costthemedetail[" + index + "].wholeSalesPrice", @class = "form-control textboxcss text-right txtwholeSalesPrice__" + index, @readonly = "readonly" })

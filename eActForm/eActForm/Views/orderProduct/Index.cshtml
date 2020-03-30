@@ -79,17 +79,23 @@
         } else if ($("#customerName").val() == "") {
             alert("ไม่พบรหัสพนักงานค่ะ กรุณาติดต่อ hotline : 063-1970586");
             return false;
+        } else if ($("#txtTel").val().length < 10) {
+            alert("กรุณาระบุเบอร์ติดต่อให้ถูกต้องค่ะ");
+            $("#txtTel").focus();
+            return false;
         }
 
         $("#WaitDialog").show();
     }
 
     function successQuery(data) {
-        console.log(data);
+
+        $("#WaitDialog").hide();
         if (data.Code == "200") {
-            $("#WaitDialog").hide();
             alert("ดำเนินการเรียบร้อยค่ะ");
             location.reload(true);
+        } else if (data.Code == "501") {
+            alert(data.Message);
         } else {
             alert("ไม่สามารถดำเนินการได้ค่ะ กรุณาติดต่อ hotline : 063-1970586");
         }
@@ -97,6 +103,7 @@
     }
 
     function failureQuery(data) {
-
+        console.log(data);
+        alert("ไม่สามารถดำเนินการได้ค่ะ กรุณาติดต่อ hotline : 063-1970586");
     }
 </script>
