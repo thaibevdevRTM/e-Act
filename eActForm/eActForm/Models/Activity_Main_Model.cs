@@ -80,6 +80,7 @@ namespace eActForm.Models
         public string formNameEn { get; set; }
         public bool chkUseEng { get; set; }
         public string createdByNameEN { get; set; }
+       
     }
 
     public class TB_Reg_Subject

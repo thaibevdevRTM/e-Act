@@ -28,7 +28,6 @@ D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActCons
 D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CopyComplete
 D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\work\project\source code\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
-D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
 D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\project\GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb

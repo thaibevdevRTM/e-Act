@@ -1,0 +1,12 @@
+﻿
+<div class="modal-body">
+    <div id="divSing" style="width: 97%; margin-left: 20px;">
+        <div style="margin-bottom:10px;">
+            @if (Model.activityFormModel != null)
+            {
+                @Html.Action("approvePositionSignatureLists", "Approve", new { actId = Model.activityFormModel.id, subId = Model.tB_Act_ActivityForm_DetailOther.SubjectId })
+            }
+        </div>
+
+    </div>
+</div>

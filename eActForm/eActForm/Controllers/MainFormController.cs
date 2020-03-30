@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,12 @@ namespace eActForm.Controllers
                 if (!string.IsNullOrEmpty(activityId))
                 {
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+                    if (ConfigurationManager.AppSettings["masterEmpExpense"] == master_type_form_id )
+                    {
+                        activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"];
+                        activity_TBMMKT_Model = exPerryCashAppCode.processDataExpense(activity_TBMMKT_Model, activityId);
+                    }
+
                     activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
                     activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
                     activityFormTBMMKT.formCompanyId = activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId;
@@ -55,7 +62,10 @@ namespace eActForm.Controllers
                 }
                 else
                 {
+                    mode = AppCode.Mode.addNew.ToString();
                     string actId = Guid.NewGuid().ToString();
+                    activityFormTBMMKT.statusId = 1;
+                    activityFormTBMMKT.createdByUserId = @UtilsAppCode.Session.User.empId;
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
                     //activityFormTBMMKT.subjectId = subjectId;
@@ -98,7 +108,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.tB_Act_ActivityForm_SelectBrandOrChannel = QueryGet_channelMaster.get_channelMaster(activityFormTBMMKT.master_type_form_id, activityFormTBMMKT.formCompanyId);
                 activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition == "tbmmkt_ChooseActivityOrDetail").ToList();
                 activity_TBMMKT_Model.activityFormModel.typeForm = typeForm;
-                activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
+                activity_TBMMKT_Model.activityFormModel.mode = mode;
                 activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activityFormTBMMKT.master_type_form_id, "input");
                 activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activityFormTBMMKT.formCompanyId).FirstOrDefault().companyNameTH;
                 activity_TBMMKT_Model.activityFormTBMMKT.companyNameEN = QueryGet_master_company.get_master_company(activityFormTBMMKT.formCompanyId).FirstOrDefault().companyNameEN;
@@ -139,6 +149,11 @@ namespace eActForm.Controllers
                 {
                     activity_TBMMKT_Model.activityOfEstimateList = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
                     //activity_TBMMKT_Model.activityFormModel.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                }
+
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                {
+                    activity_TBMMKT_Model = exPerryCashAppCode.addDataToDetailOther(activity_TBMMKT_Model);
                 }
 
                 activity_TBMMKT_Model.activityFormTBMMKT.languageDoc = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();

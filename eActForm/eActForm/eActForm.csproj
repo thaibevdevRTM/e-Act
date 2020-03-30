@@ -369,6 +369,7 @@
     <Compile Include="BusinessLayer\Appcodes\EmailAppCodes.cs" />
     <Compile Include="BusinessLayer\Appcodes\ApproveAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ApproveFlowAppCode.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetActivityByActNo.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetActivityById.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetActivityDetailById.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllActivityGroup.cs" />
@@ -520,6 +521,7 @@
     <Compile Include="Models\TB_Act_master_cost_centerModel.cs" />
     <Compile Include="Models\TB_Act_master_material_Model.cs" />
     <Compile Include="Models\ObjGetData_master_material_Model.cs" />
+    <Compile Include="Models\TB_Reg_FlowModel.cs" />
     <Compile Include="Models\TB_Reg_Subject_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Global.en.Designer.cs">
@@ -3244,6 +3246,7 @@
     <Content Include="Views\MainReport\ReportPettyCashNum.cshtml" />
     <Content Include="Views\partialByProduct\Index.cshtml" />
     <Content Include="Views\partialSaleTeam\index.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail\showSignatureDiv.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

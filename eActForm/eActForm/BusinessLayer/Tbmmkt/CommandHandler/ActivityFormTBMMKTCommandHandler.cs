@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
@@ -29,49 +30,26 @@ namespace eActForm.BusinessLayer
                 }
                 else
                 {
+                    model.activityFormTBMMKT.id = activityId;
+                    model.activityFormTBMMKT.statusId = 1;
+                    model.activityFormTBMMKT.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                    model.activityFormTBMMKT.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.activityPeriodStStr) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.activityPeriodStStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                    model.activityFormTBMMKT.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.activityPeriodEndStr) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.activityPeriodEndStr, ConfigurationManager.AppSettings["formatDateUse"]);
+                    model.activityFormTBMMKT.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
+                    model.activityFormTBMMKT.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
+                    model.activityFormTBMMKT.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
+                    model.activityFormTBMMKT.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
+                    model.activityFormTBMMKT.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                    model.activityFormTBMMKT.updatedByUserId = UtilsAppCode.Session.User.empId;
+                    model.activityFormTBMMKT.updatedDate = DateTime.Now;
+                    model.activityFormTBMMKT.delFlag = false;
+                    model.activityFormTBMMKT.companyId = model.activityFormTBMMKT.formCompanyId;
+                    model.activityFormTBMMKT.remark = model.activityFormModel.remark;
+                    model.activityFormTBMMKT.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
+                    model.activityFormTBMMKT.languageDoc = model.activityFormTBMMKT.languageDoc == null ? "" : model.activityFormTBMMKT.languageDoc;
+                    model.activityFormTBMMKT.piorityDoc = model.activityFormTBMMKT.piorityDoc == null ? "" : model.activityFormTBMMKT.piorityDoc;
 
-                    //model.activityFormTBMMKT.id = activityId;
-                    //model.activityFormTBMMKT.statusId = 1;
-                    //model.activityFormTBMMKT.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                    //model.activityFormTBMMKT.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.activityPeriodStStr) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.activityPeriodStStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                    //model.activityFormTBMMKT.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.activityPeriodEndStr) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.activityPeriodEndStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                    //model.activityFormTBMMKT.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
-                    //model.activityFormTBMMKT.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
-                    //model.activityFormTBMMKT.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
-                    //model.activityFormTBMMKT.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
-                    //model.activityFormTBMMKT.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                    //model.activityFormTBMMKT.updatedByUserId = UtilsAppCode.Session.User.empId;
-                    //model.activityFormTBMMKT.updatedDate = DateTime.Now;
-                    //model.activityFormTBMMKT.delFlag = false;
-                    //model.activityFormTBMMKT.companyId = model.activityFormTBMMKT.formCompanyId;
-                    //model.activityFormTBMMKT.remark = model.activityFormModel.remark;
-                    //model.activityFormTBMMKT.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
-                    //model.activityFormTBMMKT.languageDoc = model.activityFormTBMMKT.languageDoc == null ? "" : model.activityFormTBMMKT.languageDoc;
-                    //model.activityFormTBMMKT.piorityDoc = model.activityFormTBMMKT.piorityDoc == null ? "" : model.activityFormTBMMKT.piorityDoc;
-            
-                    //rtn = insertActivityForm(model.activityFormTBMMKT);
-
-                    model.activityFormModel.id = activityId;
-                    model.activityFormModel.statusId = 1;
-                    model.activityFormModel.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                    model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.activityPeriodStStr) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.activityPeriodStStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                    model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.activityPeriodEndStr) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.activityPeriodEndStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                    model.activityFormModel.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
-                    model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
-                    model.activityFormModel.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
-                    model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
-                    model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
-                    model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
-                    model.activityFormModel.updatedDate = DateTime.Now;
-                    model.activityFormModel.delFlag = false;
-                    model.activityFormModel.companyId = model.activityFormTBMMKT.formCompanyId;
-                    model.activityFormModel.remark = model.activityFormModel.remark;
-                    model.activityFormModel.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
-                    model.activityFormModel.languageDoc = model.activityFormTBMMKT.languageDoc == null ? "" : model.activityFormTBMMKT.languageDoc;
-                    model.activityFormModel.piorityDoc = model.activityFormTBMMKT.piorityDoc == null ? "" : model.activityFormTBMMKT.piorityDoc;
-
-                    rtn = insertActivityForm(model.activityFormModel);
-
+                    rtn = insertActivityForm(model.activityFormTBMMKT);
 
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
 
@@ -355,7 +333,7 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
                 activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activityId);
                 activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(
-                 activity_TBMMKT_Model.activityFormTBMMKT.languageDoc
+                activity_TBMMKT_Model.activityFormTBMMKT.languageDoc
                 , en
                 , activity_TBMMKT_Model.activityFormTBMMKT.statusId);
                 if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
@@ -431,6 +409,45 @@ namespace eActForm.BusinessLayer
             return activity_TBMMKT_Model;
         }
 
+
+        public static Activity_TBMMKT_Model getDataForEditActivityByActNo(string actNo)
+        {
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            try
+            {
+                string en = ConfigurationManager.AppSettings["cultureEng"];
+
+                activity_TBMMKT_Model.activityFormTBMMKT = QueryGetActivityByActNo.getCheckRefActivityByActNo(actNo).FirstOrDefault(); // TB_Act_ActivityForm
+                activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
+                activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);  //TB_Act_ActivityOfEstimate
+                activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activity_TBMMKT_Model.activityFormTBMMKT.id);
+                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(
+                activity_TBMMKT_Model.activityFormTBMMKT.languageDoc
+                , en
+                , activity_TBMMKT_Model.activityFormTBMMKT.statusId);
+
+                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng);
+                activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);
+                activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);
+                activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
+
+                Decimal? totalCostThisActivity = 0;
+
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                {
+                    totalCostThisActivity = !string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.objective) ? decimal.Parse(activity_TBMMKT_Model.activityFormTBMMKT.objective) : 0;
+                }
+
+
+                activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> getDataForEditActivityTBMMKT");
+            }
+            return activity_TBMMKT_Model;
+        }
         public static int updateActivityForm(Activity_Model model, string activityId)
         {
             int rtn = 0;
