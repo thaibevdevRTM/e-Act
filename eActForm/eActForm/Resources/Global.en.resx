@@ -303,4 +303,13 @@
   <data name="verify" xml:space="preserve">
     <value>Verify</value>
   </data>
+  <data name="btnApprove" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="btnBack" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="btnReject" xml:space="preserve">
+    <value>Reject</value>
+  </data>
 </root>
