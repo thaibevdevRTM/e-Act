@@ -6,8 +6,10 @@
     decimal? total = 0;
     decimal? totalEntertainment = 0;
     decimal? totalAdvance = 0;
-    decimal? totalExpenses  = 0;
+    decimal? totalExpenses = 0;
 }
+
+
 
 <style>
     .textRight {
@@ -25,28 +27,47 @@
     .font12 {
         font-size: 12.5px;
     }
+
+    .lineTdLeft {
+        border-style: solid;
+        border-width: 1px 1px 0px 1px;
+        border-collapse: collapse;
+    }
+
+    .lineTdCenter {
+        border-style: solid;
+        border-width: 1px 1px 0px 1px;
+        border-collapse: collapse;
+    }
+
+    .lineTdRight {
+        border-style: solid;
+        border-width: 1px 1px 0px 0px;
+        border-collapse: collapse;
+    }
+
 </style>
 
 
 
 <div class="modal-body">
     <div id="divForm" style="width: 97%; margin-left: 20px;">
-        <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;" class="fontDocV2">
+        <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center; " class="fontDocV2">
             @Model.activityFormTBMMKT.companyName<br />
             @Model.activityFormTBMMKT.formName
         </div>
 
 
         <div>
-            <div style="text-align: center;" class="fontDocV2">
+            <div class="fontDocV1" style="text-align: center;">
                 ประจำเดือน : &nbsp;&nbsp; @Model.activityFormModel.documentDate.Value.ToString("MMMM")
             </div>
-            <div style="text-align: right;">
+            <div class="fontDocV1" style="text-align: right;">
                 <lable>เลขที่เอกสาร  :  &nbsp;</lable><label style="width:120px;">@Model.activityFormModel.activityNo</label>
             </div>
         </div>
         <div>
-            <div style="text-align: right;">
+            <div class="fontDocV1" style="text-align: right;">
                 <lable>เลขที่เอกสารใบยืมเงินทดรอง :  &nbsp;</lable><label style="width:120px;">@Model.activityFormModel.reference</label>
             </div>
         </div>
@@ -54,20 +75,20 @@
         <div>
             <table style="width: 100%; margin-top: 30px;">
                 <tr>
-                    <td width="30px">
+                    <td class="fontDocV1" width="30px">
                         ชื่อ / Name:
                     </td>
-                    <td width="60px">
+                    <td class="fontDocV1" width="60px">
                         @if (@Model.masterRequestEmp.Any())
                         {
                             @Model.masterRequestEmp[0].empName
                         }
                     </td>
-                    <td  width="30px">
+                    <td class="fontDocV1" width="30px">
                         ตำแหน่ง / Position:
                     </td>
 
-                    <td width="60px">
+                    <td class="fontDocV1" width="60px">
                         @if (@Model.masterRequestEmp.Any())
                         {
                             @Model.masterRequestEmp[0].position
@@ -75,19 +96,19 @@
                     </td>
                 </tr>
                 <tr>
-                    <td  width="30px">
+                    <td class="fontDocV1" width="30px">
                         ระดับ / Level:
                     </td>
-                    <td width="60px">
+                    <td class="fontDocV1" width="60px">
                         @if (@Model.masterRequestEmp.Any())
                         {
                             @Model.masterRequestEmp[0].level
                         }
                     </td>
-                    <td width="30px">
+                    <td class="fontDocV1" width="30px">
                         หน่วยงาน / Dept.:
                     </td>
-                    <td width="60px">
+                    <td class="fontDocV1" width="60px">
                         @if (@Model.masterRequestEmp.Any())
                         {
                             @Model.masterRequestEmp[0].department
@@ -98,105 +119,109 @@
         </div>
         <br />
 
-        <div>
+        <div class="fontDocV1">
             Part 1 :   ค่าใช้จ่ายในการเดินทาง / Travel & Transportation Expenses
         </div>
-        <div class="font12 pull-left">
+        <div class="fontDocV1 pull-left">
             - ประเทศหรืองานที่เดินทางไป / Country or For: @Model.activityFormTBMMKT.activityDetail
         </div>
-        <div class="font12 pull-right">
+        <div class="fontDocV1 pull-right">
             วันที่/Date :  @if (@Model.activityFormTBMMKT.costPeriodSt != null)
             {@Model.activityFormTBMMKT.costPeriodSt.Value.ToString("dd/MMM/yyyy")} -
-            @if (@Model.activityFormTBMMKT.costPeriodEnd != null) {@Model.activityFormTBMMKT.costPeriodEnd.Value.ToString("dd/MMM/yyyy")}
+            @if (@Model.activityFormTBMMKT.costPeriodEnd != null)
+            {@Model.activityFormTBMMKT.costPeriodEnd.Value.ToString("dd/MMM/yyyy")}
         </div>
         <div>
-            <table class="tablethin font12" style="width: 100%; text-align: center;" border="1" cellpadding="0" cellspacing="0">
+
+            <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" class="fontDocV1">
                 <tr style="background-color: #E5E2E2; height: 25px;">
-                    <td style="text-align: center; width: 15%;">วันเดือนปี</td>
-                    <td style="text-align: center; width: 30%;">รายการ</td>
-                    <td style="text-align: center; width: 10%;">ลิตร</td>
-                    <td style="text-align: center; width: 15%;">จำนวนเงิน</td>
-                    <td style="text-align: center; width: 30%;">หมายเหตุ</td>
+                    <td style="width: 15%; border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">วันเดือนปี</td>
+                    <td style="text-align: center; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายการ</td>
+                    <td style="text-align: center; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ลิตร</td>
+                    <td style="text-align: center; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน</td>
+                    <td style="text-align: center; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หมายเหตุ</td>
                 </tr>
                 @foreach (var item in Model.activityOfEstimateList)
                 {
                     <tr>
-                        <td>
+                        <td class="lineTdLeft" style="text-align:center;">
                             @if (@item.date != null)
                             {@item.date.Value.ToString("dd/MM/yyyy")}
-                    </td>
-                    <td>@item.productDetail</td>
-                    <td>@item.unit</td>
-                    <td>@string.Format("{0:n2}", @item.total)</td>
-                    <td>@item.remark</td>
-                </tr>
-                unit =  item.unit + unit;
-                total = item.total == null ? 0 + total : item.total + total;
-            }
+                        </td>
+                        <td class="lineTdCenter" style="text-align:center;">@item.productDetail</td>
+                        <td class="lineTdCenter" style="text-align:center;">@item.unit</td>
+                        <td class="lineTdCenter" style="text-align:center;">@string.Format("{0:n2}", @item.total)</td>
+                        <td class="lineTdCenter" style="text-align:center;">@item.remark</td>
+                    </tr>
+                    unit = item.unit + unit;
+                    total = item.total == null ? 0 + total : item.total + total;
+                }
                 <tr>
-                    <td colspan="2" class="textRight">
-                        รวมค่าใช้จ่ายในการเดินทาง/ต่าใช้จ่ายประจำเดือน (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)
-                        Total Travel & Transporation Expenses (Excluding Entertainment Expenses and Market Visit)
+                    <td colspan="2" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse; text-align:right">
+                        <div>รวมค่าใช้จ่ายในการเดินทาง/ต่าใช้จ่ายประจำเดือน (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)&nbsp;&nbsp;</div>
+                        <div>Total Travel & Transporation Expenses (Excluding Entertainment Expenses and Market Visit)&nbsp;&nbsp;</div>
                     </td>
-                    <td class="center">
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse; text-align:center">
                         @if (unit != 0)
                         {
                             string result = String.Format("{0:n2}", @unit);
                             @result.ToString();
                         }
                     </td>
-                    <td class="center">
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse; text-align:center">
                         @if (total != 0)
                         {
                             string result = String.Format("{0:n2}", @total);
                             @result.ToString();
                         }
                     </td>
-                    <td></td>
+                    <td class="center" style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;"></td>
 
                 </tr>
             </table>
+
         </div>
         <br />
         <br />
-        <div>
+        <div class="fontDocV1">
             Part 2 : ค่าใช้จ่ายในการเลี้ยงรับรอง หรือการตรวจตลาด / Entertainment Expenses and Market Visit
         </div>
-        <div class="font12">
+        <div class="fontDocV1">
             <lable style="color: red"> * หมายเหตุ:</lable>
             <lable>ค่าใช้จ่ายส่วนนี้ จะต้องผ่านการอนุมัติตามอำนาจการอนุมัติได้เท่านั้น *</lable>
         </div>
         <div>
-            <table class="tablethin font12" style="width: 100%; text-align: center;" border="1" cellpadding="0" cellspacing="0">
+
+            <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" class="fontDocV1">
                 <tr style="background-color: #E5E2E2; height: 25px;">
-                    <td style="text-align: center; width: 15%;">วันที่</td>
-                    <td style="text-align: center; width: 20%;">สถานที่</td>
-                    <td style="text-align: center; width: 35%;">จุดประสงค์</td>
-                    <td style="text-align: center; width: 20%;">ชื่อลูกค้า</td>
-                    <td style="text-align: center; width: 15%;">รวมเป็นจำนวนเงิน</td>
+                    <td style="border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center; width: 15%;">วันที่</td>
+                    <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center; width: 20%;">สถานที่</td>
+                    <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center; width: 35%;">จุดประสงค์</td>
+                    <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center; width: 20%;">ชื่อลูกค้า</td>
+                    <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center; width: 15%;">รวมเป็นจำนวนเงิน</td>
                 </tr>
                 @foreach (var item in Model.activityOfEstimateList2)
                 {
                     <tr>
-                        <td>
+                        <td class="lineTdLeft">
                             @if (@item.date != null)
                             {@item.date.Value.ToString("dd/MM/yyyy")}
                         </td>
-                        <td>@item.productDetail</td>
-                        <td>@item.detail</td>
-                        <td>@item.remark</td>
-                        <td>@string.Format("{0:n2}", @item.total)</td>
+                        <td class="lineTdCenter" style="text-align:center">@item.productDetail</td>
+                        <td class="lineTdCenter" style="text-align:center">@item.detail</td>
+                        <td class="lineTdCenter" style="text-align:center">@item.remark</td>
+                        <td class="lineTdCenter" style="text-align:center">@string.Format("{0:n2}", @item.total)</td>
                     </tr>
 
                     totalEntertainment = item.total == null ? 0 + totalEntertainment : item.total + totalEntertainment;
                     totalAdvance = item.total == null ? 0 + totalAdvance : item.total + total;
                 }
                 <tr>
-                    <td colspan="4" class="textRight">
+                    <td colspan="4" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse; text-align:right">
                         รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
-                        Total Entertainment Expenses and Market Visit
+                        Total Entertainment Expenses and Market Visit&nbsp;&nbsp;
                     </td>
-                    <td class="center">
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;">
                         @{
                             string resultMak = String.Format("{0:n2}", @totalEntertainment);
                             @resultMak.ToString();
@@ -204,10 +229,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="textRight">
-                        รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท) Total Monthly Expenses (Baht)
+                    <td colspan="4" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+                        รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท) Total Monthly Expenses (Baht)&nbsp;&nbsp;
                     </td>
-                    <td class="center">
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;">
                         @{
                             var totalEx = totalEntertainment + total;
                             string resultEx = String.Format("{0:n2}", @totalEx);
@@ -216,10 +241,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="textRight">
-                        กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)  =
+                    <td colspan="4" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+                        กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)  =&nbsp;&nbsp;
                     </td>
-                    <td class="center">
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;">
 
                         @if (!string.IsNullOrEmpty(@Model.activityFormTBMMKT.objective))
                         {
@@ -230,10 +255,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="textRight">
-                        รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses  =
+                    <td colspan="4" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+                        รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses  =&nbsp;&nbsp;
                     </td>
-                    <td class="center">
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;">
                         @{
                             decimal adv = 0;
                             if (!string.IsNullOrEmpty(@Model.activityFormTBMMKT.objective)) { adv = decimal.Parse(@Model.activityFormTBMMKT.objective); }
