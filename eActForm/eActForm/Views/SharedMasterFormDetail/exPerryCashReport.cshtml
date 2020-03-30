@@ -28,12 +28,6 @@
         font-size: 12.5px;
     }
 
-    .lineTable {
-        border-style: solid;
-        border-width: 0px 1px 0px 1px;
-        border-collapse: collapse;
-    }
-
     .lineTdLeft {
         border-style: solid;
         border-width: 1px 1px 0px 1px;
@@ -52,16 +46,6 @@
         border-collapse: collapse;
     }
 
-    .lineTdFooterLeft {
-        border-style: solid;
-        border-width: 1px 1px 0px 0px;
-        border-collapse: collapse;
-    }
-
-    .lineFooterCenAndRight {
-        border-width: 1px 1px 1px 0px;
-        border-collapse: collapse;
-    }
 </style>
 
 
@@ -75,15 +59,15 @@
 
 
         <div>
-            <div style="text-align: center;" class="fontDocV2">
+            <div class="fontDocV1" style="text-align: center;">
                 ประจำเดือน : &nbsp;&nbsp; @Model.activityFormModel.documentDate.Value.ToString("MMMM")
             </div>
-            <div style="text-align: right;">
+            <div class="fontDocV1" style="text-align: right;">
                 <lable>เลขที่เอกสาร  :  &nbsp;</lable><label style="width:120px;">@Model.activityFormModel.activityNo</label>
             </div>
         </div>
         <div>
-            <div style="text-align: right;">
+            <div class="fontDocV1" style="text-align: right;">
                 <lable>เลขที่เอกสารใบยืมเงินทดรอง :  &nbsp;</lable><label style="width:120px;">@Model.activityFormModel.reference</label>
             </div>
         </div>
@@ -91,20 +75,20 @@
         <div>
             <table style="width: 100%; margin-top: 30px;">
                 <tr>
-                    <td width="30px">
+                    <td class="fontDocV1" width="30px">
                         ชื่อ / Name:
                     </td>
-                    <td width="60px">
+                    <td class="fontDocV1" width="60px">
                         @if (@Model.masterRequestEmp.Any())
                         {
                             @Model.masterRequestEmp[0].empName
                         }
                     </td>
-                    <td width="30px">
+                    <td class="fontDocV1" width="30px">
                         ตำแหน่ง / Position:
                     </td>
 
-                    <td width="60px">
+                    <td class="fontDocV1" width="60px">
                         @if (@Model.masterRequestEmp.Any())
                         {
                             @Model.masterRequestEmp[0].position
@@ -112,19 +96,19 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="30px">
+                    <td class="fontDocV1" width="30px">
                         ระดับ / Level:
                     </td>
-                    <td width="60px">
+                    <td class="fontDocV1" width="60px">
                         @if (@Model.masterRequestEmp.Any())
                         {
                             @Model.masterRequestEmp[0].level
                         }
                     </td>
-                    <td width="30px">
+                    <td class="fontDocV1" width="30px">
                         หน่วยงาน / Dept.:
                     </td>
-                    <td width="60px">
+                    <td class="fontDocV1" width="60px">
                         @if (@Model.masterRequestEmp.Any())
                         {
                             @Model.masterRequestEmp[0].department
@@ -135,13 +119,13 @@
         </div>
         <br />
 
-        <div>
+        <div class="fontDocV1">
             Part 1 :   ค่าใช้จ่ายในการเดินทาง / Travel & Transportation Expenses
         </div>
-        <div class="font12 pull-left">
+        <div class="fontDocV1 pull-left">
             - ประเทศหรืองานที่เดินทางไป / Country or For: @Model.activityFormTBMMKT.activityDetail
         </div>
-        <div class="font12 pull-right">
+        <div class="fontDocV1 pull-right">
             วันที่/Date :  @if (@Model.activityFormTBMMKT.costPeriodSt != null)
             {@Model.activityFormTBMMKT.costPeriodSt.Value.ToString("dd/MMM/yyyy")} -
             @if (@Model.activityFormTBMMKT.costPeriodEnd != null)
@@ -149,7 +133,7 @@
         </div>
         <div>
 
-            <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" class="font12">
+            <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" class="fontDocV1">
                 <tr style="background-color: #E5E2E2; height: 25px;">
                     <td style="width: 15%; border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">วันเดือนปี</td>
                     <td style="text-align: center; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายการ</td>
@@ -199,16 +183,16 @@
         </div>
         <br />
         <br />
-        <div>
+        <div class="fontDocV1">
             Part 2 : ค่าใช้จ่ายในการเลี้ยงรับรอง หรือการตรวจตลาด / Entertainment Expenses and Market Visit
         </div>
-        <div class="font12">
+        <div class="fontDocV1">
             <lable style="color: red"> * หมายเหตุ:</lable>
             <lable>ค่าใช้จ่ายส่วนนี้ จะต้องผ่านการอนุมัติตามอำนาจการอนุมัติได้เท่านั้น *</lable>
         </div>
         <div>
 
-            <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" class="font12">
+            <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" class="fontDocV1">
                 <tr style="background-color: #E5E2E2; height: 25px;">
                     <td style="border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center; width: 15%;">วันที่</td>
                     <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center; width: 20%;">สถานที่</td>
