@@ -78,7 +78,7 @@ namespace eActForm.Models
         public string formNameEn { get; set; }
         public bool chkUseEng { get; set; }
         public string createdByNameEN { get; set; }
-       
+
     }
 
     public class TB_Reg_Subject
@@ -125,7 +125,7 @@ namespace eActForm.Models
         public string detailContact { get; set; }
         public string brand_select { get; set; }
         public string orderOf { get; set; }
-}
+    }
 
 
     public class TB_Act_ActivityLayout
@@ -219,7 +219,7 @@ namespace eActForm.Models
         public string arrivalDateStr { get; set; }
         public string depart { get; set; }
         public string arrived { get; set; }
-       
+
     }
 
 
@@ -247,5 +247,15 @@ namespace eActForm.Models
         public string companyId { get; set; }
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
+    }
+
+    public class CashEmpModel
+    {
+        public string empId { get; set; }
+        public string choiceID { get; set; }
+        public string choiceName { get; set; }
+        public decimal cashPerDay { get; set; }
+        public string empLevel { get; set; }
+
     }
 }

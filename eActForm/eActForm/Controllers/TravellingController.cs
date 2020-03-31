@@ -44,11 +44,37 @@ namespace eActForm.Controllers
                 // listChoiceName,listChoiceId
                 for (int i = 0; i < activity_TBMMKT_Model.listPiority.Count; i++)
                 {
-                    model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { listChoiceId = activity_TBMMKT_Model.listPiority[i].id, listChoiceName = activity_TBMMKT_Model.listPiority[i].name, productDetail = "", unit = 0, unitPrice = 0, total = 0 });
+                    model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                    {
+                        listChoiceId = activity_TBMMKT_Model.listPiority[i].id,
+                        listChoiceName = activity_TBMMKT_Model.listPiority[i].name,
+                        productDetail = "",
+                        unit = 0,
+                        unitPrice = 0,
+                        total = 0,
+                        displayType = activity_TBMMKT_Model.listPiority[i].displayType,
+                        subDisplayType = activity_TBMMKT_Model.listPiority[i].subDisplayType
+                    });
                 }
                 activity_TBMMKT_Model.expensesDetailModel = model;
 
             }
+
+
+            if (activity_TBMMKT_Model.list_0 == null || activity_TBMMKT_Model.list_0.Count == 0)
+            {
+
+                activity_TBMMKT_Model.list_0 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "trainClass").OrderBy(x => x.orderNum).ToList();
+           
+            }
+            if (activity_TBMMKT_Model.list_1 == null || activity_TBMMKT_Model.list_1.Count == 0)
+            {
+
+                activity_TBMMKT_Model.list_1 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "airplaneClass").OrderBy(x => x.orderNum).ToList();
+
+            }
+
+
             return PartialView(activity_TBMMKT_Model);
         }
         //public ActionResult testExpensesDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)

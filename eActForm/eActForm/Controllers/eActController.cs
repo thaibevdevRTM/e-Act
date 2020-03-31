@@ -355,6 +355,29 @@ namespace eActForm.Controllers
             return Json(getOtherList, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getCashLimitByEmpId(string empId)
+        {
+            List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
+            var result = new AjaxResult();
+            try
+            {
+                cashEmpList = QueryGetBenafit.getCashLimitByEmpId(empId).ToList();
+                if (cashEmpList.Count > 0)
+                {
+                    var resultData = new
+                    {
+                        ProductDetail_0 = cashEmpList[0].cashPerDay,
+                        ProductDetail_1 = cashEmpList[1].cashPerDay,
+                    };
 
+                    result.Data = resultData;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getEmpDetailById => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }
