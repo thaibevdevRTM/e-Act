@@ -1,0 +1,77 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+<style>
+    .cssMainHeaderPvDetails {
+        width: 100%;
+        border-top: 1px solid black;
+        border-right: 0px solid black;
+        border-bottom: 0px solid black;
+        border-left: 0px solid black;
+        border-collapse: collapse;
+    }
+
+    .borderBottom {
+        /*vertical-align: top;
+        text-align: left;
+        border-top: 0px solid black;
+        border-right: 0px solid black;
+        border-bottom: 1px solid black;
+        border-left: 0px solid black;
+        border-collapse: collapse;*/
+    }
+</style>
+<table class="cssMainHeaderPvDetails fontDocV1">
+    <tr>
+        <td style="width:57%;vertical-align:top;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="width:10%;vertical-align:top;text-align:left;" class="paddingRowTable">
+                        &nbsp;เรื่อง:
+                    </td>
+                    <td style="width:85%;text-align:left;" class="paddingRowTable">
+                        ค่า Event Production <br />งาน Big Mountain Music Festival 2019
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top;text-align:left;" class="paddingRowTable">
+                        &nbsp;เรียน:
+                    </td>
+                    <td style="text-align:left;" class="paddingRowTable borderBottom">
+                        คุณประภากร ทองเทพไพโรจน์
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td style="width: 43%;vertical-align: top;" class="borderLeft">
+            <table style="width:100%;border-collapse: collapse;">
+                <tr>
+                    <td style="width:25%;text-align:left;" class="paddingRowTable">
+                        &nbsp;วันที่:
+                    </td>
+                    <td style="width:75%;text-align:center;" class="paddingRowTable">
+                        01/02/2020
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;" class="paddingRowTable">
+                        &nbsp;เลขที่:
+                    </td>
+                    <td style="text-align:center;" class="paddingRowTable">
+                        PV005/2020
+                    </td>
+                </tr>
+                @for (int i = 1; i <= 4; i++)
+                {
+                    <tr>
+                        <td style="text-align:left;" class="paddingRowTable">
+                            &nbsp;งบประมาณเลขที่:
+                        </td>
+                        <td style="text-align:center;" class="paddingRowTable borderBottom">
+                            EO: S017 10 A6 20/0124
+                        </td>
+                    </tr>
+                }
+            </table>
+        </td>
+    </tr>
+</table>
+

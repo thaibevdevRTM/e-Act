@@ -20,10 +20,12 @@ namespace eActForm.Controllers
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
             //=========for=====test=================
-            /*ActivityFormTBMMKT dummy_activityFormTBMMKT = new ActivityFormTBMMKT();
+            ActivityFormTBMMKT dummy_activityFormTBMMKT = new ActivityFormTBMMKT();
             activity_TBMMKT_Model.activityFormTBMMKT = dummy_activityFormTBMMKT;
-            activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["formPosTbmId"];
-            activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");*/
+            activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["formPaymentVoucherTbmId"];
+            activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
+            ViewBag.classFont = "formBorderStyle2";
+            ViewBag.padding = "paddingFormV3";
             //====END====for======test=================
 
             if (!string.IsNullOrEmpty(activityId))
