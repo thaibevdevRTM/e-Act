@@ -48,40 +48,65 @@
             font-size: 28px;
             color: black;
         }
+
         .paddingFormV2 {
-            width: 100%;          
+            width: 100%;
         }
+
         .paddingFormV3 {
             width: 100%;
         }
+
         .formBorderStyle1 {
             border: 1px solid black;
             border-collapse: collapse;
         }
+
         .formBorderStyle2 {
             border: 1px solid black;
-            border-collapse: collapse;
             font-family: 'TH SarabunPSK';
             font-size: 18px;
             color: black;
+            border-collapse: separate; /* allow spacing between cell borders */
+            border-spacing: 0px 0px; /* NOTE: syntax is <horizontal value> <vertical value> */
+            padding-top: 0px;
         }
+
         .borderLeft {
             border-left: 1px solid black;
         }
+
         .paddingRowTable {
             /*padding-top: -15px;*/
         }
+
+        .borderBottom {
+            padding-top: -30px;
+            text-align: center;
+            border-top: 1px solid black;
+        }
+
+        .tdTopLeft {
+            vertical-align: top;
+            text-align: left;
+        }
     </style>
-    <div class="@ViewBag.padding">
-        <table style="width: 100%;" id="tabel_report" class="@ViewBag.classFont" runat="server">
-            @foreach (var item in Model.master_Type_Form_Detail_Models)
-            {
-                <tr>
-                    <td>
-                        @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
-                    </td>
-                </tr>
-            }
-        </table>
-    </div>
+    @*<div class="@ViewBag.padding">
+            <table style="width: 100%;" id="tabel_report" class="@ViewBag.classFont" runat="server">
+                @foreach (var item in Model.master_Type_Form_Detail_Models)
+                {
+                    <tr>
+                        <td>
+                            @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>*@
+    @foreach (var item in Model.master_Type_Form_Detail_Models)
+    {
+
+        @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+
+    }
 </div>

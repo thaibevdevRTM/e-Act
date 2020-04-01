@@ -1,6 +1,6 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 <style>
-    .cssMainHeaderPvDetails {
+    .cssMainDetailSectionOneToFive {
         width: 100%;
         border-top: 1px solid black;
         border-right: 0px solid black;
@@ -8,31 +8,55 @@
         border-left: 0px solid black;
         border-collapse: collapse;
     }
-
+    #tbMain {
+        border-collapse: separate; /* allow spacing between cell borders */
+        border-spacing: 0px 0px; /* NOTE: syntax is <horizontal value> <vertical value> */
+    }
 </style>
-<table class="cssMainHeaderPvDetails fontDocV1">
-    <tr>
-        <td style="width:57%;vertical-align:top;">
-            <table style="width: 100%; border-collapse: collapse;">
-                <tr>
-                    <td style="width:10%;" class="tdTopLeft paddingRowTable">
-                        &nbsp;เรื่อง:
+<table id="tbMain" class="cssMainDetailSectionOneToFive fontDocV1">
+    <tr class="spaceUnder">
+        <td style="width:35%;vertical-align:top;">
+            <table style="width: 100%;border-collapse: collapse;">
+                <tr class="paddingRowTable">
+                    <td colspan="2" style="width:100%;background-color: #ccffff;" class="tdTopLeft paddingRowTable">
+                        &nbsp;ส่วนที่ 1)
                     </td>
-                    <td style="width:85%;text-align:left;" class="paddingRowTable">
-                        ค่า Event Production <br />งาน Big Mountain Music Festival 2019
+                </tr>
+                <tr>
+                    <td style="width:20%;" class="tdTopLeft paddingRowTable">
+                        &nbsp;วัตถุประสงค์:
+                    </td>
+                    <td style="width:75%;text-align:left;" class="paddingRowTable">
+                        เพื่อส่งเสริมภาพลักษณ์และ <br />ใช้ประชาสัมพันธ์ผลิตภัณฑ์
                     </td>
                 </tr>
                 <tr>
                     <td class="tdTopLeft paddingRowTable">
-                        &nbsp;เรียน:
+                        &nbsp;Supplier:
                     </td>
                     <td style="text-align:left;" class="paddingRowTable">
-                        คุณประภากร ทองเทพไพโรจน์
+                        ตรีเพชรอีซูซุ เซลส์
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTopLeft paddingRowTable">
+                        &nbsp;ที่อยู่:
+                    </td>
+                    <td style="text-align:left;" class="paddingRowTable">
+                        1088 ถ.วิภาวดีรังสิต แขวงจตุจักร<br />เขตจตุจักร กรุงเทพมหานคร 10900
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTopLeft paddingRowTable">
+                        &nbsp;Tel/Fax:
+                    </td>
+                    <td style="text-align:left;" class="paddingRowTable">
+                        0-2966-2111/0-2966-2191
                     </td>
                 </tr>
             </table>
         </td>
-        <td style="width: 43%;vertical-align: top;" class="borderLeft">
+        <td style="width: 65%;vertical-align: top;" class="borderLeft">
             <table style="width:100%;border-collapse: collapse;">
                 <tr>
                     <td style="width:25%;text-align:left;" class="paddingRowTable">
@@ -43,7 +67,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align:left;" class="paddingRowTable">
+                    <td style="text-align: left;" class="paddingRowTable">
                         &nbsp;เลขที่:
                     </td>
                     <td style="text-align:center;" class="paddingRowTable">
