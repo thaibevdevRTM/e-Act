@@ -36,3 +36,13 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presente
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.dll
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.pdb
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.dll
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\Microsoft.ApplicationBlocks.Data.dll
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.pdb
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csprojAssemblyReference.cache
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CoreCompileInputs.cache
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb

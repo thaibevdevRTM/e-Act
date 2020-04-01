@@ -19,10 +19,10 @@
 
         <div class="col-lg-9 col-xs-12" style="margin-top:15px;">
             <div class="col-md-5 col-xs-12">
-                <label style="width:90px;">ชื่อ :</label> &nbsp;<lable id="lblEmpName"></lable>
+                <label style="width:80px;">ชื่อ :</label> &nbsp;<lable style="text-align:left" id="lblEmpName"></lable>
             </div>
             <div class="col-md-6 col-xs-12">
-                <label style="width:130px;">ตำแหน่ง :</label>&nbsp;<lable id="lblEmpPosition"></lable>
+                <label style="width:80px;">ตำแหน่ง :</label>&nbsp;<lable style="text-align:left" id="lblEmpPosition"></lable>
             </div>
         </div>
         <div class="col-lg-3 col-xs-12">
@@ -30,10 +30,10 @@
 
         <div class="col-lg-9 col-xs-12">
             <div class="col-md-5 col-xs-12">
-                <label style="width:90px;">ระดับ :</label> &nbsp<lable id="lblLvl" />
+                <label style="width:80px;">ระดับ :</label> &nbsp<lable style="text-align:left" id="lblLvl" />
             </div>
             <div class="col-md-6 col-xs-12">
-                <label style="width:130px;">หน่วยงาน :</label>&nbsp;<lable id="lblDept" />
+                <label style="width:80px;">หน่วยงาน :</label>&nbsp;<lable style="text-align:left" id="lblDept" />
             </div>
         </div>
     </fieldset>
@@ -58,12 +58,13 @@
                         type: "POST",
                         dataType: "json",
                         data: {
-                            subjectId: $("#ddlChannelOrBrand").val(),
+                            subjectId: $("#ddlSubject").val(),
                             channelId: $("#ddlChannel").val(),
                         },
                         success: function (data) {
                             response($.map(data, function (item) {
-                                return { label: item.empName, value: item.empName, id: item.empId };
+                                return { label: item.empName, value: item.empId, id: item.empId };
+
                             }))
 
                         }
@@ -76,13 +77,12 @@
                     }
                 }, select: function (event, ui) {
                     $("#" + i.id).val(ui.item.id)
-                }
+                },
+                close: function( event, ui ) { getEmpDetail(); }
             }).focus(function () {
                 $(this).data("uiAutocomplete").search($(this).val());
             });
         }
-
-
     });
 
     function getEmpDetail() {

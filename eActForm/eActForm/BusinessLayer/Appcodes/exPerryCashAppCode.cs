@@ -190,7 +190,7 @@ namespace eActForm.BusinessLayer.Appcodes
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveExpenseByEmpId"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmpbyChannelId"
                     , new SqlParameter[] { new SqlParameter("@subjectId", subjectId),
                                            new SqlParameter("@channelId", channelId)
                     });
@@ -199,14 +199,8 @@ namespace eActForm.BusinessLayer.Appcodes
                     var lists = (from DataRow dr in ds.Tables[0].Rows
                                  select new RequestEmpModel()
                                  {
-                                     id = dr["id"].ToString(),
                                      empId = dr["empId"].ToString(),
-                                     empName = dr["empName"].ToString(),
-                                     delFlag = (bool)dr["delFlag"],
-                                     createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
-                                     createdByUserId = dr["createdByUserId"].ToString(),
-                                     updatedDate = dr["updatedDate"] is DBNull ? null : (DateTime?)dr["updatedDate"],
-                                     updatedByUserId = dr["updatedByUserId"].ToString()
+                                     empName = dr["empName"].ToString(),             
                                  }).ToList();
                     return lists;
                 }
