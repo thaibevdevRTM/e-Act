@@ -38,7 +38,7 @@
         </div>
     </fieldset>
     <br />
-   
+
 </div>
 
 <script type="text/javascript">
@@ -50,7 +50,7 @@
         });
         getEmpDetail();
 
-        if (@Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"]) {
+        if('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
             $("#txtEmpId").autocomplete({
                 source: function (request, response) {
                     $.ajax({
@@ -84,7 +84,7 @@
 
 
     });
-    
+
     function getEmpDetail() {
         $.ajax({
             type: 'POST',
