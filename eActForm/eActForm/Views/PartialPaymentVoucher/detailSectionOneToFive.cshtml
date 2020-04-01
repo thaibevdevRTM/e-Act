@@ -8,34 +8,38 @@
         border-left: 0px solid black;
         border-collapse: collapse;
     }
+    #tbMain {
+        border-collapse: separate; /* allow spacing between cell borders */
+        border-spacing: 0px 0px; /* NOTE: syntax is <horizontal value> <vertical value> */
+    }
 </style>
-<table class="cssMainDetailSectionOneToFive fontDocV1">
+<table id="tbMain" class="cssMainDetailSectionOneToFive fontDocV1">
     <tr class="spaceUnder">
-        <td style="width:35%;" class="boxTableFormV1">
-            <table style="width: 100%; border-collapse: collapse;">
-                <tr>
-                    <td colspan="2" style="width:100%;background-color: #ccffff;" class="tdTopLeft fontRedV1">
+        <td style="width:35%;vertical-align:top;">
+            <table style="width: 100%;border-collapse: collapse;">
+                <tr class="paddingRowTable">
+                    <td colspan="2" style="width:100%;background-color: #ccffff;" class="tdTopLeft paddingRowTable">
                         &nbsp;ส่วนที่ 1)
                     </td>
                 </tr>
                 <tr>
-                    <td style="width:72px;" class="tdTopLeft fontRedV1">
+                    <td style="width:20%;" class="tdTopLeft paddingRowTable">
                         &nbsp;วัตถุประสงค์:
                     </td>
-                    <td style="text-align:left;" class="">
+                    <td style="width:75%;text-align:left;" class="paddingRowTable">
                         เพื่อส่งเสริมภาพลักษณ์และ <br />ใช้ประชาสัมพันธ์ผลิตภัณฑ์
                     </td>
                 </tr>
                 <tr>
-                    <td class="tdTopLeft fontRedV1 paddingRowTable">
+                    <td class="tdTopLeft paddingRowTable">
                         &nbsp;Supplier:
                     </td>
-                    <td style="text-align: left;" class="paddingRowTable">
+                    <td style="text-align:left;" class="paddingRowTable">
                         ตรีเพชรอีซูซุ เซลส์
                     </td>
                 </tr>
                 <tr>
-                    <td class="tdTopLeft fontRedV1 paddingRowTable">
+                    <td class="tdTopLeft paddingRowTable">
                         &nbsp;ที่อยู่:
                     </td>
                     <td style="text-align:left;" class="paddingRowTable">
@@ -43,7 +47,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="tdTopLeft fontRedV1 paddingRowTable">
+                    <td class="tdTopLeft paddingRowTable">
                         &nbsp;Tel/Fax:
                     </td>
                     <td style="text-align:left;" class="paddingRowTable">
@@ -51,44 +55,14 @@
                     </td>
                 </tr>
             </table>
-            <table style="width: 100%; border-collapse: collapse;">
-                <tr>
-                    <td colspan="2" style="width:100%;background-color: #ccffff;" class="tdTopLeft fontRedV1">
-                        &nbsp;ส่วนที่ 2)
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width:72px;" class="tdTopLeft fontBlueV1">
-                        &nbsp;เอกสารแนบ:
-                    </td>
-                    <td style="text-align:left;" class="fontBlueV1">
-                        1.เอกสารแนบที่หนึ่ง<br />2.เอกสารแนบที่สอง<br />3.เอกสารแนบที่สาม<br />4.เอกสารแนบที่สี่
-                    </td>
-                </tr>
-            </table>
-            <table style="border-collapse: collapse;">
-                <tr>
-                    <td class="tdTopLeft fontRedV1 paddingRowTable">
-                        &nbsp;ข้อมูลสนับสนุน/หมายเหตุ:
-                    </td>
-                </tr>
-            </table>
-            <table style="border-collapse: collapse;">
-                <tr>
-                    <td class="tdTopLeft paddingRowTable">
-                        &nbsp;สั่งจ่ายเพราะงานเสร็จแล้ว<br />&nbsp;ควรดำเนินการให้เร็วที่สุด
-                    </td>
-                </tr>
-            </table>
-
         </td>
-        <td style="width: 65%;" class="boxTableFormV1 borderLeft">
+        <td style="width: 65%;vertical-align: top;" class="borderLeft">
             <table style="width:100%;border-collapse: collapse;">
                 <tr>
-                    <td style="width:27%;text-align:left;">
+                    <td style="width:25%;text-align:left;" class="paddingRowTable">
                         &nbsp;วันที่:
                     </td>
-                    <td style="width:73%;text-align:center;">
+                    <td style="width:75%;text-align:center;" class="paddingRowTable">
                         01/02/2020
                     </td>
                 </tr>
@@ -109,6 +83,13 @@
                         <td style="text-align:center;" class="paddingRowTable">
                             EO: S017 10 A6 20/0124
                             <br />
+                            @*<table style="width:100%;">
+                                <tr>
+                                    <td class="borderBottom">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                            </table>*@
                         </td>
                     </tr>
                 }
