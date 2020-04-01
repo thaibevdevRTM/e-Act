@@ -359,12 +359,12 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult getEmpByChannel(string subjectId, string channelId)
+        public JsonResult getEmpByChannel(string subjectId, string channelId,string filter)
         {
             List<RequestEmpModel> empList = new List<RequestEmpModel>();
             try
             {
-                empList = exPerryCashAppCode.getEmpByChannel(subjectId, channelId);
+                empList = exPerryCashAppCode.getEmpByChannel(subjectId, channelId, filter);
             }
             catch (Exception ex)
             {

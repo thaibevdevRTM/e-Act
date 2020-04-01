@@ -60,6 +60,7 @@
                         data: {
                             subjectId: $("#ddlSubject").val(),
                             channelId: $("#ddlChannel").val(),
+                            filter: $("#txtEmpId").val(),
                         },
                         success: function (data) {
                             response($.map(data, function (item) {

@@ -186,7 +186,7 @@ namespace eActForm.BusinessLayer.Appcodes
         }
 
 
-        public static List<RequestEmpModel> getEmpByChannel(string subjectId, string channelId)
+        public static List<RequestEmpModel> getEmpByChannel(string subjectId, string channelId,string filter)
         {
             try
             {
@@ -200,8 +200,10 @@ namespace eActForm.BusinessLayer.Appcodes
                                  select new RequestEmpModel()
                                  {
                                      empId = dr["empId"].ToString(),
-                                     empName = dr["empName"].ToString(),             
+                                     empName = dr["empId"].ToString() + "  "+ dr["empName"].ToString(),             
                                  }).ToList();
+
+                    lists = !string.IsNullOrEmpty(filter) ? lists.Where(x => x.empId.Contains(filter)).ToList() : lists;
                     return lists;
                 }
                 else
