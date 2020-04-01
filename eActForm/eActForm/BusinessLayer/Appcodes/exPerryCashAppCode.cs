@@ -7,7 +7,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
+using System.Web.Mvc;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer.Appcodes
@@ -105,7 +105,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 activity_TBMMKT_Model.activityFormTBMMKT.reference = activity_TBMMKT_Model.activityFormTBMMKT.activityNo;
                 activity_TBMMKT_Model.activityFormTBMMKT.activityNo = "";
                 activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"];
-                activity_TBMMKT_Model.activityFormTBMMKT.objective = activity_TBMMKT_Model.totalCostThisActivity.ToString();
+                activity_TBMMKT_Model.activityFormTBMMKT.benefit = activity_TBMMKT_Model.totalCostThisActivity.ToString();
             }
             catch (Exception ex)
             {
@@ -128,7 +128,7 @@ namespace eActForm.BusinessLayer.Appcodes
                     else
                     {
                         // case คลิกจาก document ตรง
-                        activity_TBMMKT_Model.totalCostThisActivity = !string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.objective) ? decimal.Parse(activity_TBMMKT_Model.activityFormTBMMKT.objective) : 0;
+                        activity_TBMMKT_Model.totalCostThisActivity = !string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.benefit) ? decimal.Parse(activity_TBMMKT_Model.activityFormTBMMKT.benefit) : 0;
                     }
                 }
                 else
@@ -163,7 +163,7 @@ namespace eActForm.BusinessLayer.Appcodes
 
 
 
-        
+
         public static Activity_TBMMKT_Model addDataToDetailOther(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             //activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
@@ -173,9 +173,10 @@ namespace eActForm.BusinessLayer.Appcodes
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId = activity_TBMMKT_Model.activityFormTBMMKT.BrandlId;
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId = activity_TBMMKT_Model.activityFormTBMMKT.channelId;
                 //activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
-                
+
                 //ค่าที่ insert จะไปยัดใน tB_Act_ActivityForm_DetailOther อีกที
                 activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
+                activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
             }
             catch (Exception ex)
             {
@@ -183,5 +184,45 @@ namespace eActForm.BusinessLayer.Appcodes
             }
             return activity_TBMMKT_Model;
         }
+
+
+        public static List<RequestEmpModel> getEmpByChannel(string subjectId, string channelId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveExpenseByEmpId"
+                    , new SqlParameter[] { new SqlParameter("@subjectId", subjectId),
+                                           new SqlParameter("@channelId", channelId)
+                    });
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    var lists = (from DataRow dr in ds.Tables[0].Rows
+                                 select new RequestEmpModel()
+                                 {
+                                     id = dr["id"].ToString(),
+                                     empId = dr["empId"].ToString(),
+                                     empName = dr["empName"].ToString(),
+                                     delFlag = (bool)dr["delFlag"],
+                                     createdDate = dr["createdDate"] is DBNull ? null : (DateTime?)dr["createdDate"],
+                                     createdByUserId = dr["createdByUserId"].ToString(),
+                                     updatedDate = dr["updatedDate"] is DBNull ? null : (DateTime?)dr["updatedDate"],
+                                     updatedByUserId = dr["updatedByUserId"].ToString()
+                                 }).ToList();
+                    return lists;
+                }
+                else
+                {
+                    return new List<RequestEmpModel>();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getApproveSummaryDetailListsByEmpId >>" + ex.Message);
+            }
+        }
+
+
     }
 }
