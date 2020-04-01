@@ -204,7 +204,8 @@
                                     var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
                                     totalAll = totalAll + rowtotal;
                                 }
-                                 $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                                $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                                $("#totalEstimate").val(totalAll);
                             }
                 </script>
 

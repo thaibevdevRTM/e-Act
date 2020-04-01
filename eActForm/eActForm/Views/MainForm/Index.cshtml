@@ -232,7 +232,7 @@
 
 
             if ($("#txtdateDoc").val() == "") { required += "&emsp;วันที่เอกสาร*<br>"; validate = false; }
-            if ($("#txtEmpName").val() == "" || $("#txtEmpName").val() == null) { required += "&emsp;ข้อมูลพนักงาน*<br>"; validate = false; }
+            if ($("#lblEmpName").val() == "" || $("#lblEmpName").val() == null) { required += "&emsp;ข้อมูลพนักงาน*<br>"; validate = false; }
             if ($("#txtEmpTel").val() == "") { required += "&emsp;โทรศัพท์ติดต่อ*<br>"; validate = false; }
             if ($("#txtOrerOf").val() == "") { required += "&emsp;ตามคำสั่ง*<br>"; validate = false; }
 
@@ -244,7 +244,7 @@
                 $("#txtArrivalDate_0").val() != "")) {
                 required += "&emsp;รายละเอียดการเดินทาง*<br>"; validate = false;
             }
-
+           
             if ($("#totalEstimate").val() == "" || $("#totalEstimate").val() == "0.00") {
                 required += "&emsp;ประมาณค่าใช้จ่ายในการเดินทาง*<br>"; validate = false;
             }
