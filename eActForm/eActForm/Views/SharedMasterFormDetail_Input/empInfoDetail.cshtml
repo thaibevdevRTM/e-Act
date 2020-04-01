@@ -70,7 +70,7 @@
                         รหัสพนักงาน :
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpId", onchange = "getEmpDetail();" })
+                        @Html.TextBoxFor(x => x.requestEmpModel[0].empId, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpId", onchange = "getEmpDetail();" })
                     </div>
                 </div>
             </div>
@@ -151,7 +151,7 @@
                         โทรศัพท์ติดต่อ :
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpTel" })
+                        @Html.TextBoxFor(x => x.requestEmpModel[0].empTel, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpTel" })
                     </div>
                 </div>
             </div>
@@ -161,7 +161,7 @@
                         ตามคำสั่ง :
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtOrerOf" })
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.orderOf, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtOrerOf" })
 
                     </div>
                 </div>
