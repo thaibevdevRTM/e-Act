@@ -15,7 +15,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Mvc;
 using System.Web.UI;
 using WebLibrary;
 using static eActForm.Models.TB_Act_Image_Model;
@@ -24,6 +23,8 @@ namespace eActForm.Models
 {
     public class AppCode
     {
+        
+        public static string StrConAuthen = ConfigurationManager.ConnectionStrings["ActDBAuthen_ConnectionString"].ConnectionString;
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
         public static string nonAL = "1D1097F4-246F-4DC2-BB69-B7BB6E678299";
@@ -57,13 +58,19 @@ namespace eActForm.Models
             doc // document
         }
 
+        public enum Mode
+        {
+            addNew, 
+            edit
+        }
+
 
         public static string checkNullorEmpty(string p)
         {
             return p == "" || p == null || p == "0" || p == "0.00" || p == "0.000" || p == "0.0000" || p == "0.00000" ? "0" : p;
         }
 
-        public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc,string serverMapPath)
+        public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc, string serverMapPath)
         {
             MemoryStream ms = new MemoryStream();
             try
@@ -102,7 +109,7 @@ namespace eActForm.Models
                     using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
                     {
 
-                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"))))
+                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>").Replace(".jfif\">", ".jfif\"/>"))))
                         {
                             XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
                         }
@@ -233,7 +240,7 @@ namespace eActForm.Models
             return genPdfFile(GridHtml, doc, rootPath, HttpContext.Current.Server.MapPath("~"));
         }
 
-        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath,string serverMapPath)
+        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath, string serverMapPath)
         {
             //GridHtml = GridHtml.Replace("\n", "");
             ContentType xlsxContent = new ContentType("application/pdf");

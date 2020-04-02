@@ -1,18 +1,15 @@
-﻿using System;
+﻿using eActForm.BusinessLayer;
+using eActForm.Models;
+using eForms.Models.Forms;
+using iTextSharp.text;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using System.Configuration;
-using eActForm.BusinessLayer;
-using eActForm.Models;
-using iTextSharp.text;
 using WebLibrary;
-using static eActForm.Models.ReportActivityBudgetModels;
-using Microsoft.VisualBasic;
-using static eActForm.Models.RepDetailModel;
 
 namespace eActForm.Controllers
 {
@@ -22,8 +19,10 @@ namespace eActForm.Controllers
         // GET: actFormRepDetail
         public ActionResult Index(string typeForm)
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
             ViewBag.TypeForm = typeForm;
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            models.showUIModel = new searchParameterFilterModel();
+            
 
             if (typeForm == Activity_Model.activityType.MT.ToString())
             {

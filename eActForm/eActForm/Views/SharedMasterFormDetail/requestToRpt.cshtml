@@ -13,9 +13,18 @@
 
             if (item.approveGroupId == ConfigurationManager.AppSettings["approveGrouApplicant"])
             {
-                reqName = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
-                pos = item.empPositionTitleTH;
-                bu = item.bu;
+                if (Model.activityFormTBMMKT.chkUseEng)
+                {
+                    reqName = (item.empFNameEN + " " + item.empLNameEN);
+                    pos = item.empPositionTitleEN;
+                    bu = item.buEN;
+                }
+                else
+                {
+                    reqName = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
+                    pos = item.empPositionTitleTH;
+                    bu = item.bu;
+                }
             }
         }
     }

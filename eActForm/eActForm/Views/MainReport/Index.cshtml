@@ -1,6 +1,6 @@
 ﻿@*=====ของDEVทดลองprint pdf=========*@
 @*<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
-    @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
+    @using (Html.BeginForm("printDoc", "MainReport", FormMethod.Post))
     {
         <input type="hidden" name="gridHtml" />
         <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
@@ -37,7 +37,7 @@
             <div>
                 <p class="d-flex justify-content-center">
                     <div style="display:inline-block;">
-                        @using (Html.BeginForm("printDoc", "TBMMKT_ActivityBudgetReport", FormMethod.Post))
+                        @using (Html.BeginForm("printDoc", "MainReport", FormMethod.Post))
                         {
                             <input type="hidden" name="gridHtml" />
                             <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>

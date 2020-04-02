@@ -6,27 +6,33 @@
 <script>
 
     function checkBeforeDelete(actId, statusId) {
-        chkInvoiceBeforeDel(actId, statusId);
+      //  if (statusId == "6") { }
+            //get statusNOte
+                   $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getStatusNote", "Home")',
+                data: {
+                    actId: actId
+                }
+            }).done(function (response) {
+                if (response.Message != "") {
+                    $('#hdStatusNote').val("สาเหตุการยกเลิก : " + response.Message + "<br/>");
+                } else {
+                    $('#hdStatusNote').val("");
+                }
+                chkInvoiceBeforeDel(actId, statusId);
+            });
     }
 
     function checkDelete(actId, statusId) {
         var msg = "";
-        if (statusId == "1"
-            ||
-            (statusId == "6" && ("@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true"
-                || "@UtilsAppCode.Session.User.isAdmin.ToString().ToLower()" == "true"
-                || "@UtilsAppCode.Session.User.isSuperAdmin.ToString().ToLower()" == "true"))
-            ||
-            (statusId == "5" && ("@UtilsAppCode.Session.User.empCompanyId" == '@ConfigurationManager.AppSettings["companyId_TBM"]'
-                || "@UtilsAppCode.Session.User.empCompanyId" == '@ConfigurationManager.AppSettings["companyId_HCM"]'
-                || "@UtilsAppCode.Session.User.isAdminOMT.ToString().ToLower()" == "true"
-                || "@UtilsAppCode.Session.User.isAdmin.ToString().ToLower()" == "true"
-                || "@UtilsAppCode.Session.User.isAdminTBM.ToString().ToLower()" == "true"
-                || "@UtilsAppCode.Session.User.isAdminHCM.ToString().ToLower()" == "true"
-                || "@UtilsAppCode.Session.User.isSuperAdmin.ToString().ToLower()" == "true")))
-        {
+
+        if (statusId == "1" ||
+            (statusId == "6" && '@ActFormAppCode.isAdmin()' == "True") ||
+            (statusId == "5" && ('@ActFormAppCode.isOtherCompanyMT()' == "True" || '@ActFormAppCode.isAdmin()' == "True"))
+        ) {
             // can be delete
-            msg = "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
+            msg = document.getElementById("hdStatusNote").value + "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
         }
         else {
             // can't delete
@@ -35,6 +41,7 @@
 
         bootbox.confirm({
             title: "Confirm Message",
+
             message: msg,
             buttons: {
                 confirm: {
@@ -48,23 +55,25 @@
             },
             callback: function (result) {
                 if (result) {
-                    $("#WaitDialog").show();
-                    $.ajax({
-                        url: '@Url.Action("requestDeleteDoc", "Home")',
-                        data: {
-                            actId: actId,
-                            statusId: statusId,
-                        },
-                    }).done(function (htmlResponse) {
-                        $("#getQuery").html(htmlResponse);
-                        $("#WaitDialog").hide();
-                        doMsgSuccess("ดำเนินการยกเลิกเอกสารเรียบร้อย")
-                    });
+                    requestDeleteDoc(actId, statusId, "")
                 }
-
             }
         });
-
+    }
+    function requestDeleteDoc(actId, statusId, statusNote) {
+        $("#WaitDialog").show();
+        $.ajax({
+            url: '@Url.Action("requestDeleteDoc", "Home")',
+            data: {
+                actId: actId,
+                statusId: statusId,
+                statusNote: statusNote,
+            },
+        }).done(function (htmlResponse) {
+            $("#getQuery").html(htmlResponse);
+            $("#WaitDialog").hide();
+            doMsgSuccess("ดำเนินการยกเลิกเอกสารเรียบร้อย")
+        });
     }
 
     function chkInvoiceBeforeDel(actId, statusId) {
@@ -81,7 +90,24 @@
                 return false;
             }
             else {
-                checkDelete(actId, statusId);
+
+                //ถ้าเป็น TBM HCM จะแสดง popup ให้ใส่เหตุผล
+                if ((statusId == "3" || statusId == "5") && ('@ActFormAppCode.isOtherCompanyMT()' == "True")) {
+                    document.getElementById("hdActId").value = actId;
+                    document.getElementById("hdStatusId").value = statusId;
+                    document.getElementById("txtStatusNote").value = "";
+
+                    if (statusId == "5") {
+                        document.getElementById("lblMess").textContent = "คุณต้องการยกเลิกเอกสารนี้หรือไม่ กรุณาระบุเหตุผลในการยกเลิก";
+                    } else {
+                        document.getElementById("lblMess").textContent = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ กรุณาระบุเหตุผลในการยกเลิก";
+                    }
+                    $('#modalStatusNote').modal('show');
+                }
+                else {
+                    checkDelete(actId, statusId);
+                }
+
             }
         });
     }
@@ -103,7 +129,7 @@
         $("#WaitDialog").show();
         $.ajax({
             type: 'POST',
-            url:  '@Url.Action("resendApprove", "Base")',
+            url: '@Url.Action("resendApprove", "Base")',
             data: {
                 actId: actId
             }
@@ -115,11 +141,25 @@
                 doMsgFail(response.Message);
             }
         });
-      }
-
+    }
+    function confirmCc() {
+        var actId = document.getElementById("hdActId").value;
+        var statusId = document.getElementById("hdStatusId").value;
+        var StatusNote = document.getElementById("txtStatusNote").value;
+        if (StatusNote==""){
+            alert("กรุณาระบุเหตุผล");
+        } else {
+            $('#modalStatusNote').modal('hide');
+            requestDeleteDoc(actId, statusId, StatusNote);
+            document.getElementById("txtStatusNote").value = "";
+        }
+    }
 
 </script>
 <div class="row">
+    <input type="hidden" id="hdActId" value="" />
+    <input type="hidden" id="hdStatusId" value="" />
+    <input type="hidden" id="hdStatusNote" value="" />
 
     <div class="col-md-12 col-xs-12">
 
@@ -158,8 +198,7 @@
                                     <i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
                                 </a>
                             }
-                            @if (item.statusId == "1" || item.statusId == "3" || item.statusId == "5" ||
-(item.statusId == "6" && (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isSuperAdmin)))
+                            @if (item.statusId == "1" || item.statusId == "3" || item.statusId == "5" || (item.statusId == "6" && @ActFormAppCode.isAdmin()))
                             {
                                 <a href="javascript:" onclick="return checkBeforeDelete('@item.id','@item.statusId');">
                                     <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
@@ -175,11 +214,17 @@
                             }
                             else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && item.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])
                             {
-                                @Html.ActionLink(" ", "Index", "TBMMKT_ActivityBudgetInput", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @*@Html.ActionLink(" ", "Index", "TBMMKT_ActivityBudgetInput", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })*@
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
                             else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || item.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]))
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+
+                                if (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] && item.statusId == "3")
+                                {
+                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", onclick = "waitpopup();", })
+                                }
                             }
                             else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && item.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"]) /*ใบเบิกผลิตภัณฑ์,POS / PREMIUM*/
                             {
@@ -192,6 +237,13 @@
                             else if (Model.typeForm == Activity_Model.activityType.HCM.ToString() && (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvHcmId"]))
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
+                            else if (item.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                            {
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();"})
+                            }
+                            else
+                            {
                             }
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
@@ -212,7 +264,7 @@
 
                         </td>
                         <td>@item.statusName</td>
-                        <td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
+                        <td>@{var date = item.documentDate == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.documentDate, ConfigurationManager.AppSettings["formatDateUse"]);} @date </td>
                         <td>@item.activityNo</td>
                         <td>@item.activityName</td>
                         <td>@item.cusShortName</td>
@@ -225,7 +277,7 @@
                                 @result.ToString();
                             }
                         </td>
-                        <td>@{ date = item.createdDate == null ? "" : item.createdDate.Value.ToString("dd/MM/yyyy");} @date</td>
+                        <td>@{ date = item.createdDate == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.createdDate, ConfigurationManager.AppSettings["formatDateUse"]);} @date</td>
                         <td>@item.createByUserName</td>
                     </tr>
                 }
@@ -234,10 +286,49 @@
 
     </div>
 </div>
+
 <div class="modal fade" id="modalApprovelist" role="dialog" style="display:none">
     <div id="divModalApprovelist">
     </div>
 </div>
+
+<div class="modal fade" id="modalStatusNote" role="dialog" style="display:none">
+    <div id="divModalStatusNote">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <h5>  <label class="col-md-10 col-xs-10"> Confirm Message</label></h5>
+                        <div class="col-md-2 col-xs-2">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-body">
+                    @*<div id="Grid" style="width:97%; margin-left:20px;"> </div>*@
+                    <label id="lblMess"></label>
+                    @*<textarea class="form-control textboxcss" cols="20" id="txtStatusNote" rows="2"></textarea>*@
+                    <textarea name="txtStatusNote" id="txtStatusNote" class="form-control textboxcss" rows="3" cols="50"
+                              required="" style="border:solid;border-color:#ddd;border-width:thin;"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <p class="d-flex justify-content-center">
+
+                            <button type="button" class="btn btn-danger bootbox-cancel" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-success bootbox-accept" onclick="confirmCc();">Yes</button>
+
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         $('#datatable').DataTable({
@@ -265,18 +356,10 @@
 
     function callPreviewApprove(actId, statusId, typeForm, master_type_form_id) {
 
-        if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]") {
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Index", "TBMMKT_ActivityBudgetReport")',
-                data: {
-                    activityId: actId
-                }
-            }).done(function (htmlResponse) {
-                genPdf(actId, statusId, htmlResponse);
-            });
-        }
-        else if (master_type_form_id == "@ConfigurationManager.AppSettings["formAdvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formPosTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]") {
+        if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvTbmId"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formPosTbmId"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["masterEmpExpense"]") {
              $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Index", "MainReport")',

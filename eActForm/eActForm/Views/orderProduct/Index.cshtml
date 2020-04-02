@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BlankLayout.cshtml";
+}
+<style>
+    input[data-val-required] {
+        background: #E0F7FA
+    }
+
+    select.input-validation-error {
+        border-color: red
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css">
+
+<body class="login">
+    <div class="d-flex justify-content-around">
+
+        <div class="card">
+            <img src="~/images/crystal.png" class="card-img-top img-thumbnail" alt="...">
+            <div class="card-body">
+                <h3 class="card-title">น้ำดื่มราคาสวัสดิการพนักงาน</h3>
+                <p class="card-text">รายละเอียดการสั่งซื้อ.</p>
+                <p class="card-text">1. ซื้อได้ครั้งละ 10 แพ็ค/ 1 คน / สัปดาห์ (ขนาดใดก็ได้)</p>
+                <p class="card-text">2. ตัดรอบทุกวันอังคาร 24.00 น.</p>
+                <p class="card-text">3. รับสินค้าทุกวันเสาร์ เวลา 10.00 -15.00 น.  พร้อมชำระเงินตามหน่วยขายที่ระบุ</p>
+                <p class="card-text text-warning">* requied</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+
+
+            @using (Ajax.BeginForm("submitOrder", "orderProduct", new AjaxOptions
+            {
+                HttpMethod = "post",
+                OnBegin = "return beginQuery()",
+                OnSuccess = "successQuery",
+                OnFailure = "failureQuery"
+            }
+            , new
+            {
+                id = "divFrmOrderProduct",
+                @class = "form-horizontal form-label-left"
+            }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.Action("index", "partialEmpInfo", new { actId = ViewBag.actId })
+                @Html.Action("index", "partialByProduct", new { actId = ViewBag.actId })
+                @Html.Action("index", "partialSaleTeam")
+
+                <div class="text-center">
+                    <button id="btnsubmit" type="submit" class="btn ink-reaction btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;สั่งซื้อ</button>
+                </div>
+                <input type="hidden" value="@ViewBag.actId" name="activityFormModel.id" />
+            }
+        </div>
+
+
+    </div>
+</body>
+
+
+
+<script>
+
+
+    function beginQuery() {
+
+
+        if ($("#totalQty").text() == "" || $("#totalQty").text() == "0") {
+            alert("กรุณาระบุจำนวนที่ต้องการสั่งค่ะ");
+            return false;
+        } else if ($("#totalQty").text() > 10) {
+            alert("การสั่งซื้อแต่ละครั้งยอดรวมไม่เกิน 10 Pack ค่ะ");
+            return false;
+        } else if ($("#customerName").val() == "") {
+            alert("ไม่พบรหัสพนักงานค่ะ กรุณาติดต่อ hotline : 063-1970586");
+            return false;
+        } else if ($("#txtTel").val().length < 10) {
+            alert("กรุณาระบุเบอร์ติดต่อให้ถูกต้องค่ะ");
+            $("#txtTel").focus();
+            return false;
+        }
+
+        $("#WaitDialog").show();
+    }
+
+    function successQuery(data) {
+
+        $("#WaitDialog").hide();
+        if (data.Code == "200") {
+            alert("ดำเนินการเรียบร้อยค่ะ");
+            location.reload(true);
+        } else if (data.Code == "501") {
+            alert(data.Message);
+        } else {
+            alert("ไม่สามารถดำเนินการได้ค่ะ กรุณาติดต่อ hotline : 063-1970586");
+        }
+
+    }
+
+    function failureQuery(data) {
+        console.log(data);
+        alert("ไม่สามารถดำเนินการได้ค่ะ กรุณาติดต่อ hotline : 063-1970586");
+    }
+</script>

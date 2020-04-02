@@ -9,7 +9,6 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -152,7 +151,7 @@ namespace eActForm.Controllers
                 string statusId = "";
                 Activity_Model activityModel = TempData["actForm" + activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + activityFormModel.id];
                 activityModel.activityFormModel = activityFormModel;
-                 statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
+                statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
                 if (statusId == "1" || statusId == "5" || statusId == "")
                 {
                     int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, activityFormModel.id);
@@ -207,7 +206,7 @@ namespace eActForm.Controllers
                 activityModel = (Activity_Model)TempData["actForm" + activityFormModel.id];
                 activityModel.activityFormModel = activityFormModel;
                 activityModel.activityFormModel.activityNo = "";
-                activityModel.activityFormModel.dateDoc = DateTime.Now.ToString("dd-MM-yyyy");
+                activityModel.activityFormModel.dateDoc = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]);
                 int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, actId);
                 TempData.Keep();
                 result.ActivityId = actId;
@@ -243,9 +242,9 @@ namespace eActForm.Controllers
                     resultFilePath = UploadDirectory;
                     BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
                     httpPostedFile.SaveAs(UploadDirectory);
-                    
+
                     imageFormModel.activityId = actId;
-                    imageFormModel._image = b.ReadBytes(0); 
+                    imageFormModel._image = b.ReadBytes(0);
                     imageFormModel.imageType = "UploadFile";
                     imageFormModel._fileName = _fileName.ToLower();
                     imageFormModel.extension = extension.ToLower();
@@ -343,7 +342,7 @@ namespace eActForm.Controllers
             return Json(resultAjax, "text/plain");
         }
 
-       
+
     }
 }
 

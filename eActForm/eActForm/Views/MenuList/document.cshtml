@@ -45,7 +45,7 @@
             @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>@Html.ActionLink(" Report Summary", "IndexDoc", "SummaryReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-            }
+            } 
             <!-- <li>Html.ActionLink(" Sale", "sale", "SaleActual")</li> -->
         </ul>
     </li>

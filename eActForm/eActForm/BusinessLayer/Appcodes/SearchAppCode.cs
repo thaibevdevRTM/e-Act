@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using eActForm.Models;
+using eForms.Models.Forms;
+using System;
 using System.Linq;
-using System.Web;
-using eActForm.Models;
-using eActForm.BusinessLayer;
 namespace eActForm.BusinessLayer
 {
     public class SearchAppCode
@@ -14,6 +12,7 @@ namespace eActForm.BusinessLayer
             {
                 SearchActivityModels models = new SearchActivityModels
                 {
+                    showUIModel = new searchParameterFilterModel(),
                     approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app),
                     productGroupList = QueryGetAllProductGroup.getAllProductGroup(),
                     customerslist = QueryGetAllCustomers.getCustomersByEmpId().Where(x => x.cusNameEN != "").ToList(),

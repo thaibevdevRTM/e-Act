@@ -1,5 +1,6 @@
 ﻿@using eActForm.Models
 @using eActForm.BusinessLayer
+@using System.Configuration;
 @model eActForm.Models.Budget_Approve_Detail_Model.budgetForms
 <style type="text/css">
 
@@ -100,7 +101,7 @@
 
 							</td>
 							<td>@item.statusName</td>
-							<td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
+							<td style="font-size:12.5px;">@{var date = item.documentDate == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.documentDate, ConfigurationManager.AppSettings["formatDateUse"]);} @date </td>
 							<td>@item.activityNo</td>
 							<td>@item.activityName</td>
 							<td>@item.cusShortName</td>
@@ -121,7 +122,7 @@
 
 	</div>
 </div>
-<div class="modal fade" id="modalmyDocBudgetList" role="dialog" >
+<div class="modal fade" id="modalmyDocBudgetList" role="dialog">
 	<div id="divModalmyDocBudgetList">
 	</div>
 </div>

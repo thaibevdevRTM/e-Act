@@ -1,0 +1,163 @@
+﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr>
+        <td>
+            <div class="form-group">
+
+                <label class="control-label col-md-2 col-xs-12">
+                    วันที่เสนอกิจกรรม :
+                </label>
+
+                <div class="col-md-10 col-xs-12">
+                    <div class="row">
+                        @*@Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", style = "width:320px;", autocomplete = "off" })*@
+                        @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateDoc", style = "width:320px;", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="control-label col-md-2 col-xs-12">
+                    ชื่อผู้เสนอกิจกรรม :
+                </label>
+                @if (Model.activityFormModel.mode == "new")
+                {
+                    <div class="col-md-4 col-xs-12">
+                        <div class="row">
+                            <label class="form-control textboxcss" style="width:320px;">@UtilsAppCode.Session.User.empFNameTH  @UtilsAppCode.Session.User.empLNameTH </label>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-4 col-xs-12">
+                        <div class="row">
+                            @Html.TextBoxFor(x => x.activityFormTBMMKT.createdByName, new { @class = "form-control textboxcss", @id = "lblcreatedByName" })
+                        </div>
+                    </div>
+                }
+                <label class="control-label col-md-2 col-xs-12">
+                    เบอร์โทรศัพท์ :
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss", @id = "txtactivityTel", style = "width:320px;" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label class="control-label col-md-2 col-xs-12">
+                    สินค้า :
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityProduct, new { @class = "form-control textboxcss", @id = "txtactivityProduct", style = "width:320px;" })
+                    </div>
+                </div>
+
+                <label class="control-label col-md-2 col-xs-12">
+                    เอกสารเลขที่ :
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly", style = "width:320px;" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label class="control-label col-md-2 col-xs-12">
+                    ชื่อกิจกรรม :
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.TextBoxFor(x => x.activityFormTBMMKT.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", style = "width:320px;" })
+                    </div>
+                </div>
+
+                <label class="control-label col-md-2 col-xs-12">
+                    EO :
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "form-control textboxcss", @id = "txtEO", style = "width:320px;" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="control-label col-md-2 col-xs-12">
+                    เริ่มกิจกรรม :
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-5 col-sm-5 col-xs-12">
+                                <div class="row">
+                                    @*@Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "width:140px;", autocomplete = "off" })*@
+                                    @Html.TextBox("activityFormModel.activityPeriodStStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "width:140px;", autocomplete = "off" })
+                                </div>
+                            </div>
+                            <label class="control-label col-md-1 col-xs-12">
+                                ถึง
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="row">
+                                    @*@Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:MM-dd-yyyy}", new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;", autocomplete = "off" })*@
+                                    @Html.TextBox("activityFormModel.activityPeriodEndStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtactivityPeriodEnd", style = "width:140px;", autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <label class="control-label col-md-2 col-xs-12">
+                    Budget Number :
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+
+                        @if (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)
+                        {
+                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.BudgetNumber, new { @class = "form-control textboxcss", @id = "txtBudgetNumber", style = "width:320px;" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.BudgetNumber, new { @class = "form-control textboxcss", @id = "txtBudgetNumber", style = "width:320px;", @readonly = "readonly" })
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label class="control-label col-md-2 col-xs-12">
+                    วัตถุประสงค์ :
+                </label>
+
+                <div class="col-md-10 col-xs-12">
+                    <div class="row">
+                        @Html.TextAreaFor(x => x.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

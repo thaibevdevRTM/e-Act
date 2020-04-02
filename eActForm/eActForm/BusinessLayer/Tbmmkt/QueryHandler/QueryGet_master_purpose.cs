@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -22,7 +21,7 @@ namespace eActForm.BusinessLayer
                              select new PurposeModel()
                              {
                                  id = d["id"].ToString(),
-                                 detailTh = d["detailTh"].ToString()+" : "+ d["detailEn"].ToString(),
+                                 detailTh = d["detailTh"].ToString() + " : " + d["detailEn"].ToString(),
                                  detailEn = d["detailEn"].ToString(),
                                  chk = false,
                              });
@@ -46,7 +45,7 @@ namespace eActForm.BusinessLayer
                                  id = d["id"].ToString(),
                                  detailTh = d["detailTh"].ToString() + " : " + d["detailEn"].ToString(),
                                  detailEn = d["detailEn"].ToString(),
-                                 chk = d["chk"].ToString()=="1" ? true : false ,
+                                 chk = d["chk"].ToString() == "1" ? true : false,
                              });
                 return lists.OrderBy(x => x.detailTh).ToList();
             }
@@ -57,6 +56,6 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        
+
     }
 }

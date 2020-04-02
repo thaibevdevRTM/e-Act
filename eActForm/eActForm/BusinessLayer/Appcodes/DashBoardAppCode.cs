@@ -1,11 +1,10 @@
-﻿using System;
+﻿using eActForm.Models;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Data.SqlClient;
-using eActForm.Models;
-using Microsoft.ApplicationBlocks.Data;
+using System.Linq;
 
 namespace eActForm.BusinessLayer
 {
@@ -67,7 +66,7 @@ namespace eActForm.BusinessLayer
                              select new DashBoardModel.infoMonthTotalSpending()
                              {
                                  monthDate = dr["monthDate"].ToString(),
-                                 sumTotal = dr["totalSpending"] is DBNull ? 0 : decimal.ToInt32( (decimal)dr["totalSpending"]),
+                                 sumTotal = dr["totalSpending"] is DBNull ? 0 : decimal.ToInt32((decimal)dr["totalSpending"]),
                              }).ToList();
                 return lists;
 

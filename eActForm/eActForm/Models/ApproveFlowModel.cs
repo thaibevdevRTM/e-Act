@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace eActForm.Models
 {
@@ -41,6 +38,10 @@ namespace eActForm.Models
             public string imgSignature { get; set; }
             public bool? isApproved { get; set; }
             public string bu { get; set; }
+            public string buEN { get; set; }
+            public string empFNameEN { get; set; }
+            public string empLNameEN { get; set; }
+            public string empPositionTitleEN { get; set; }
         }
     }
 }

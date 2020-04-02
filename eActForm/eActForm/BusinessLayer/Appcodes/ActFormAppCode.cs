@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
+﻿using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
-using System.Data.SqlClient;
-using eActForm.BusinessLayer.Appcodes;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 
 namespace eActForm.BusinessLayer
 {
     public class ActFormAppCode
     {
-        public static int updateWaitingCancel(string actId, string remark)
+        public static int updateWaitingCancel(string actId, string remark, string statusNote)
         {
             try
             {
@@ -23,6 +22,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@statusNote",statusNote)
                     });
                 return rtn;
             }
@@ -50,7 +50,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("checkActInvoice >>" + ex.Message);
             }
         }
-        public static int deleteActForm(string actId, string remark)
+        public static int deleteActForm(string actId, string remark, string statusNote)
         {
             try
             {
@@ -60,6 +60,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@statusNote",statusNote)
                     });
                 return rtn;
             }
@@ -105,13 +106,17 @@ namespace eActForm.BusinessLayer
             {
                 string strCall = "";
 
-                if(typeForm == Activity_Model.activityType.MT.ToString())
+                if (typeForm == Activity_Model.activityType.MT.ToString())
                 {
                     strCall = "usp_getActivityCustomersFormByEmpId";
                 }
-                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                else if (typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
+                }
+                else if (typeForm == Activity_Model.activityType.EXPENSE.ToString())
+                {
+                    strCall = "usp_getExpensePerryFormByEmpId";
                 }
                 else
                 {
@@ -120,7 +125,7 @@ namespace eActForm.BusinessLayer
 
 
                 if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin ||
-                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM|| UtilsAppCode.Session.User.isAdminHCM )
+                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)
                 {
                     strCall = "usp_getActivityFormAll";
                 }
@@ -214,10 +219,70 @@ namespace eActForm.BusinessLayer
         }
 
 
+        public static string convertThaiBaht(decimal? txbaht)
+        {
+            string result = "";
+            try
+            {
+                result = GreatFriends.ThaiBahtText.ThaiBahtTextUtil.ThaiBahtText(txbaht);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return result;
+                throw new Exception("convertThaiBaht >>" + ex.Message);
+            }
+        }
+
+
         public static bool isOtherCompanyMT()
         {
             return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] ||
                 UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+        }
+        public static bool isOtherCompanyMTOfDoc(string compId)
+        {
+            return compId == ConfigurationManager.AppSettings["companyId_TBM"] ||
+               compId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+        }
+        public static bool isAdmin()
+        {
+            return
+                UtilsAppCode.Session.User.isAdminOMT
+                || UtilsAppCode.Session.User.isAdmin
+                || UtilsAppCode.Session.User.isAdminTBM
+                || UtilsAppCode.Session.User.isAdminHCM
+                || UtilsAppCode.Session.User.isSuperAdmin ? true : false;
+        }
+
+        public static string getStatusNote(string actId)
+        {
+            try
+            {
+                string statusNote = "";
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getStatusNote"
+                    , new SqlParameter[] { new SqlParameter("@actId", actId) });
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    statusNote = ds.Tables[0].Rows[0]["statusNote"].ToString();
+                }
+                return statusNote;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getStatusNote >>" + ex.Message);
+            }
+        }
+        public static string getStatusNeedDocColor(string val)
+        {
+            if (val == ConfigurationManager.AppSettings["normal"])
+                val = "1d8110";
+            else if (val == ConfigurationManager.AppSettings["urgently"])
+                val = "fba222";
+            else if (val == ConfigurationManager.AppSettings["veryUrgently"])
+                val = "f80014";
+
+            return val;
         }
     }
 }

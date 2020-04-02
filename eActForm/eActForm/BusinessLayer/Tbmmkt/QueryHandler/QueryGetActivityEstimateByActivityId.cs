@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -26,16 +25,18 @@ namespace eActForm.BusinessLayer
                                   activityId = d["activityId"].ToString(),
                                   activityTypeId = d["activityTypeId"].ToString(),
                                   productId = d["productId"].ToString(),
-                                  productDetail = d["productDetail"].ToString(),                                
+                                  productDetail = d["productDetail"].ToString(),
                                   unit = int.Parse(d["unit"].ToString()),
                                   unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
                                   unitPriceDisplay = d["unitPrice"].ToString() == "" ? "0.00" : string.Format("{0:n2}", decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString()))),
-                                  unitPriceDisplayReport ="",//ปัจจุบันไม่ได้ใช้งานฟิลด์นี้ เก็บไว้เพื่ออยากเอาไปใช้อนาคต
+                                  unitPriceDisplayReport = "",//ปัจจุบันไม่ได้ใช้งานฟิลด์นี้ เก็บไว้เพื่ออยากเอาไปใช้อนาคต
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
                                   IO = d["IO"].ToString(),
                                   QtyName = d["QtyName"].ToString(),
                                   remark = d["remark"].ToString(),
                                   typeTheme = d["typeTheme"].ToString(),
+                                  detail = d["detail"].ToString(),
+                                  date = !string.IsNullOrEmpty(d["date"].ToString()) ? DateTime.Parse(d["date"].ToString()) : (DateTime?)null,
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),

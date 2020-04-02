@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Configuration;
-using eActForm.BusinessLayer;
+﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using iTextSharp.text;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Web.Mvc;
 using WebLibrary;
-using eActForm.BusinessLayer.Appcodes;
 
 namespace eActForm.Controllers
 {
@@ -18,43 +17,53 @@ namespace eActForm.Controllers
         // GET: Approve
         public ActionResult Index(string actId)
         {
-            if (actId == null) return RedirectToAction("index", "Home");
-            else
+
+            try
             {
-
-                ActSignatureModel.SignModels signModels = SignatureAppCode.currentSignatureByEmpId(UtilsAppCode.Session.User.empId);
-                if (signModels.lists == null || signModels.lists.Count == 0)
-                {
-                    ViewBag.messCannotFindSignature = true;
-                }
-                ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
-                models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app).Where(x => x.id == "3" || x.id == "5").ToList();
-                models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
-
-                List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
-                if (getActList.Any())
-                {
-
-                    models.typeForm = BaseAppCodes.getCompanyTypeForm().ToString();
-                   
-                }
+                if (actId == null) return RedirectToAction("index", "Home");
                 else
                 {
-                    models.typeForm = "";
+
+                    ActSignatureModel.SignModels signModels = SignatureAppCode.currentSignatureByEmpId(UtilsAppCode.Session.User.empId);
+                    if (signModels.lists == null || signModels.lists.Count == 0)
+                    {
+                        ViewBag.messCannotFindSignature = true;
+                    }
+                    ApproveModel.approveModels models = ApproveAppCode.getApproveByActFormId(actId);
+                    models.approveStatusLists = ApproveAppCode.getApproveStatus(AppCode.StatusType.app).Where(x => x.id == "3" || x.id == "5").ToList();
+
+                    List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
+                    if (getActList.Any() && getActList.FirstOrDefault().master_type_form_id != null)
+                    {
+                        models.masterTypeFormId = getActList.FirstOrDefault().master_type_form_id.ToString();
+                    }
+
+                    return View(models);
                 }
-
-
-                return View(models);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("Approve >> Index >>" + ex.Message);
+                return null;
             }
         }
 
-        [HttpPost]
-        public JsonResult insertApprove()
+        [HttpPost] //post method
+        [ValidateInput(false)]
+        public JsonResult insertApprove(ApproveModel.approveModels model)
         {
             var result = new AjaxResult();
             result.Success = false;
+
+
             try
             {
+                //if (model.activity_TBMMKT_Model.activityOfEstimateList.Any())
+                //{
+                //    ApproveAppCode.manageApproveEmpExpense(model, Request.Form["lblActFormId"]);
+                //}
+
+
                 if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"]) > 0)
                 {
                     result.Success = true;
@@ -112,7 +121,7 @@ namespace eActForm.Controllers
                 models.approveFlowDetail = flowModel.flowDetail;
                 //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
-                models.activity_TBMMKT_Model= ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
+                models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
 
             }
@@ -159,7 +168,7 @@ namespace eActForm.Controllers
             try
             {
                 //add Condition Admin For Regen PDF
-                if (actTypeName == "FOC" && ConfigurationManager.AppSettings["empIdShowAtCommentApproved"].Contains(UtilsAppCode.Session.User.empId) 
+                if (actTypeName == "FOC" && ConfigurationManager.AppSettings["empIdShowAtCommentApproved"].Contains(UtilsAppCode.Session.User.empId)
                     || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdmin)
                 {
                     model.approveDetailLists = ApproveAppCode.getRemarkApprovedByEmpId(actId, ConfigurationManager.AppSettings["empIdShowAtCommentApproved"]);
@@ -184,7 +193,7 @@ namespace eActForm.Controllers
             {
                 if (statusId == ConfigurationManager.AppSettings["statusReject"])
                 {
-                    EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form , UtilsAppCode.Session.User.empId);
+                    EmailAppCodes.sendReject(activityId, AppCode.ApproveType.Activity_Form, UtilsAppCode.Session.User.empId);
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {

@@ -8,7 +8,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -21,17 +20,16 @@ namespace eActForm.BusinessLayer
             int rtnIO = 0;
             try
             {
-
                 model.activityFormModel.id = activityId;
-                model.activityFormModel.documentDate = BaseAppCodes.converStrToDate(model.activityFormModel.dateDoc);
+                model.activityFormModel.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.dateDoc, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodSt) ? (DateTime?)null :
-                  BaseAppCodes.converStrToDate(model.activityFormModel.str_activityPeriodSt);
+                  BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodEnd) ? (DateTime?)null :
-                   BaseAppCodes.converStrToDate(model.activityFormModel.str_activityPeriodEnd);
+                   BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null :
-                   BaseAppCodes.converStrToDate(model.activityFormModel.str_costPeriodSt);
+                   BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
-                   BaseAppCodes.converStrToDate(model.activityFormModel.str_costPeriodEnd);
+                   BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
                 model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
                 model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -189,7 +187,7 @@ namespace eActForm.BusinessLayer
                 {
                     if (getActList.FirstOrDefault().activityNo.ToString() == "---")
                     {
-                        
+
                         string getYear = "";
                         if (getActList.FirstOrDefault().activityPeriodSt != null)
                         {
@@ -243,7 +241,7 @@ namespace eActForm.BusinessLayer
                             else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_HCM"])
                             {
                                 result[1] = Activity_Model.activityType.HCM.ToString();
-                            }                                   
+                            }
                             //====END=====แบบใหม่ Gen In USP=======By Peerapop=========
                         }
                     }
@@ -285,12 +283,6 @@ namespace eActForm.BusinessLayer
             }
         }
 
-
-
-
-
-
-
         public static int deleteActivityOfProductByActivityId(string activityId)
         {
 
@@ -327,7 +319,7 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        protected static int insertActivityForm(ActivityForm model)
+        public static int insertActivityForm(ActivityForm model)
         {
             int result = 0;
             try
@@ -352,6 +344,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@trade",model.trade)
                     ,new SqlParameter("@activityDetail",model.activityDetail)
                     ,new SqlParameter("@companyId",model.companyId)
+                    ,new SqlParameter("@empId",model.empId)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
@@ -445,7 +438,7 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        protected static int insertEstimate(CostThemeDetail model)
+        public static int insertEstimate(CostThemeDetail model)
         {
             int result = 0;
             try

@@ -6,8 +6,8 @@
 <div class="row">
 
     <div class="col-md-12 col-xs-12">
-        <a class="btn ink-reaction btn-info fa fa-search" href="#"></a>คือ View
-        <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" href="#"></a>คือ Approve
+        <a class="btn ink-reaction btn-info fa fa-search" href="#"></a>@Resources.Global.toViewDocument
+        <a class="btn ink-reaction btn-success fa fa-thumbs-o-up" href="#"></a>@Resources.Global.toApproveDocument
     </div>
     <div class="col-md-12 col-xs-12">
 
@@ -32,10 +32,10 @@
                     <th>Status</th>
                     <th>Doc.Date</th>
                     <th>Act.No</th>
-                    <th>วัตถุประสงค์</th>
-                    <th align="center">ยอดขายช่วงกิจกรรม</th>
-                    <th align="center">ค่าใช้จ่าย</th>
-                    <th align="center">% ต่อยอดขาย</th>
+                    <th>@Resources.Global.headerTableObjective</th>
+                    <th align="center">@Resources.Global.headerTableSales</th>
+                    <th align="center">@Resources.Global.headerTableCost</th>
+                    <th align="center">@Resources.Global.headerTableSalesPercent</th>
                     <th align="center">createBy</th>
                     <th align="center">วันที่ส่งอนุมัติ</th>
                 </tr>
@@ -59,8 +59,15 @@
                             </a>
                             @Html.ActionLink(" ", "index", "approve", new { actId = item.id, type = AppCode.ApproveType.Activity_Form }, new { @class = "btn ink-reaction btn-success fa fa-thumbs-o-up" })
                         </td>
-                        <td>@item.statusName</td>
-                        <td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
+                        @if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"])
+                        {
+                            <td>@item.statusNameEN</td>
+                        }
+                        else
+                        {
+                            <td>@item.statusName</td>
+                        }
+                        <td>@{var date = item.documentDate == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.documentDate, ConfigurationManager.AppSettings["formatDateUse"]);} @date </td>
                         <td>@item.activityNo</td>
                         <td>@item.objective</td>
                         <td align="center">@string.Format("{0:n2}", item.themeCost)</td>
@@ -69,7 +76,7 @@
                             @string.Format("{0:n2}", @item.perTotal)
                         </td>
                         <td>@item.createByUserName</td>
-                        <td>@item.dateSentApprove.Value.ToString("dd/MM/yyyy")</td>
+                        <td>@DocumentsAppCode.convertDateTHToShowCultureDateEN(item.dateSentApprove, ConfigurationManager.AppSettings["formatDateUse"])</td>
                     </tr>
                 }
             </tbody>

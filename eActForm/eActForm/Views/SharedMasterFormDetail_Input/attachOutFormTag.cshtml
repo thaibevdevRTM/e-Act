@@ -1,0 +1,30 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.Models
+<div id="divtabelAttach" runat="server" style="width: 97%;border-style: solid;border-width: 0px 0px 0px 0px;margin-left:20px;padding-left:15px;">
+    <table style="width: 100%;" id="tabelAttach" runat="server">
+        <tr>
+            <td style="width: 15%;">
+                &nbsp;
+            </td>
+            <td style="width: 85%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;border-right:none;border-bottom:none;">
+                @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString() || Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
+                {
+                    <div class="" id="divUploadFiles">
+                        <form action="@Url.Action("uploadFilesImage", "Activity", new { actId = Model.activityFormModel.id })" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
+                            <div class="dz-message">
+                                <span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
+                            </div>
+                        </form>
+                    </div>
+                }
+                <div class="col-md-12">
+                    <div id="divgetimage" class="col-md-12">
+                        @Html.Action("ImageList", "Activity", new { activityId = Model.activityFormModel.id })
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>

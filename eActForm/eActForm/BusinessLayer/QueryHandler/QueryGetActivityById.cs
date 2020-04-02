@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -59,6 +58,7 @@ namespace eActForm.BusinessLayer
                                   actClaim = d["actClaim"].ToString(),
                                   actIO = d["actIO"].ToString(),
                                   companyId = d["companyId"].ToString(),
+                                  master_type_form_id = d["master_type_form_id"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),

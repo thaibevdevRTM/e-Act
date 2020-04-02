@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace eActForm.Models
 {
@@ -31,7 +29,6 @@ namespace eActForm.Models
             public decimal? specialDiscBaht { get; set; }
             public decimal? promotionCost { get; set; }
             public decimal? compensate { get; set; }
-            public string reference { get; set; }
             public decimal? perGrowth { get; set; }
             public decimal? perSE { get; set; }
             public decimal? perToSale { get; set; }

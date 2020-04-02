@@ -5,14 +5,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
     public class QueryGet_ReqEmpByActivityId
     {
-        public static List<RequestEmpModel> getReqEmpByActivityId(string activityId)
+        public static List<RequestEmpModel> getReqEmpByActivityId(string activityId, bool langEn)
         {
             try
             {
@@ -24,11 +23,16 @@ namespace eActForm.BusinessLayer
                                  id = d["id"].ToString(),
                                  rowNo = Convert.ToInt32(d["rowNo"].ToString()),
                                  empId = d["empId"].ToString(),
-                                 empName = "คุณ" + d["empFNameTH"].ToString() + " " + d["empLNameTH"].ToString(),
-                                 position = d["empPositionTitleTH"].ToString(),
+                                 empName = !langEn ? "คุณ" + d["empFNameTH"].ToString() + " " + d["empLNameTH"].ToString() : d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
+                                 position = !langEn ? d["empPositionTitleTH"].ToString() : d["empPositionTitleEN"].ToString(),
                                  level = d["empLevel"].ToString(),
-                                 department = d["empDepartmentTH"].ToString(),
-                                 bu = d["empDivisionTH"].ToString(),
+                                 department = !langEn ? d["empDepartmentTH"].ToString() : d["empDepartmentEN"].ToString(),
+                                 bu = !langEn ? d["empDivisionTH"].ToString() : d["empDivisionEN"].ToString(),
+                                 empNameEN = d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
+                                 positionEN = d["empPositionTitleEN"].ToString(),
+                                 departmentEN = d["empDepartmentEN"].ToString(),
+                                 buEN = d["empDivisionEN"].ToString(),
+
                              });
                 return lists.OrderBy(x => x.rowNo).ToList();
             }

@@ -1,8 +1,5 @@
 ﻿using eActForm.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Configuration;
 using System.Globalization;
 
@@ -59,6 +56,10 @@ namespace eActForm.BusinessLayer.Appcodes
                 else if (actType == Activity_Model.activityType.HCM.ToString())
                 {
                     return ConfigurationManager.AppSettings["companyId_HCM"].ToString();
+                }
+                else if(actType == Activity_Model.activityType.EXPENSE.ToString())
+                {
+                    return ConfigurationManager.AppSettings["companyId_EXPENSE"].ToString();
                 }
                 else
                 {
@@ -128,5 +129,10 @@ namespace eActForm.BusinessLayer.Appcodes
             return DateTime.ParseExact(p_date, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
         }
 
+        public static DateTime converStrToDatetimeWithFormat(string p_date, string formatDate)
+        {
+            return DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
+        }
+       
     }
 }
