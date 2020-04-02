@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System;
@@ -357,6 +358,21 @@ namespace eActForm.Controllers
             return Json(getOtherList, JsonRequestBehavior.AllowGet);
         }
 
-       
+
+        public JsonResult getEmpByChannel(string subjectId, string channelId,string filter)
+        {
+            List<RequestEmpModel> empList = new List<RequestEmpModel>();
+            try
+            {
+                empList = exPerryCashAppCode.getEmpByChannel(subjectId, channelId, filter);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getEmpByChannel => " + ex.Message);
+            }
+            return Json(empList, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }
