@@ -7,19 +7,6 @@
 
 
 <div class="col-md-12 col-xs-12">
-    <div class="col-md-12 col-xs-12 form-group">
-        <div class="col-md-6 col-xs-12">
-        </div>
-        <div class="col-md-3 col-xs-12">
-            <label class="control-label pull-right">
-                ประจำเดือน :
-            </label>
-        </div>
-        <div class="col-md-3 col-xs-12">
-            @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"])
-            , new { @class = "form-control textboxcss", @id = "txtExMonth", Style = "text-align:center;", autocomplete = "off" })
-        </div>
-    </div>
 
     <div class="col-md-12 col-xs-12 form-group">
         <div class="col-md-6 col-xs-12">
@@ -46,6 +33,20 @@
             @Html.TextBoxFor(m => m.activityFormTBMMKT.reference, new { @class = "form-control textboxcss", Style = "width:5; text-align:center;", @id = "txtReference", @readonly = true })
         </div>
     </div>
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-12">
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <label class="control-label pull-right">
+                ประจำเดือน :
+            </label>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, "yyyy-MM")
+            , new {type = "month", @class = "form-control textboxcss", @id = "txtExMonth", Style = "text-align:center;", autocomplete = "off" })
+        </div>
+    </div>
+
 </div>
 
 
@@ -54,11 +55,11 @@
 <script type="text/javascript">
 
 
-    $(function () {
-        $("#txtExMonth").datepicker({
-            format: 'dd/mm/yyyy'
-        });
-    });
+    //$(function () {
+    //    $("#txtExMonth").datepicker({
+    //        format: 'dd/mm/yyyy'
+    //    });
+    //});
 
 
 

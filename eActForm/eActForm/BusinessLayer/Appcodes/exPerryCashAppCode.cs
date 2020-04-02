@@ -177,7 +177,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 //ค่าที่ insert จะไปยัดใน tB_Act_ActivityForm_DetailOther อีกที
                 activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
                 activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
-                activity_TBMMKT_Model.activityFormTBMMKT.piorityDoc = ConfigurationManager.AppSettings["normal"];
+                activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-01", "yyyy-MM-dd").ToString("dd/MM/yyyy") ; 
             }
             catch (Exception ex)
             {
