@@ -2,7 +2,7 @@
 <table class="boxTableFormMainV1 fontDocV1">
     <tr>
         <td style="width:100%;" class="boxTableFormV1">
-            <table style="width:100%;border-collapse:collapse;background-color: #ccffff;" cellpadding="-4" cellspacing="-4">
+            <table class="borderWidthMaxCollape" style="background-color: #ccffff;" cellpadding="-4" cellspacing="-4">
                 <tr>
                     <td class="fontRedV1">
                         &nbsp;&nbsp;ส่วนที่ 6)
@@ -73,7 +73,7 @@
                     width: 11%;
                 }
             </style>
-            <table style="width:100%;border-collapse:collapse;" cellpadding="-4" cellspacing="-4">
+            <table class="borderWidthMaxCollape" cellpadding="-4" cellspacing="-4">
                 <tr>
                     <td colspan="3" class="txtLeft dssBorderBotRight fontRedV1">
                         &nbsp;&nbsp;รายละเอียด ค่าใช้จ่าย ในงวดนี้
@@ -94,64 +94,221 @@
                         เลขที่ใบสั่งจ่าย
                     </td>
                 </tr>
-                @for (int i = 1; i <= 6; i++)
+                @for (int i = 1; i <= 5; i++)
                 {
-                    <tr>
-                        <td class="dCol1 tdTopLeft">
-                            &nbsp;&nbsp;86S02017L021
-                        </td>
-                        <td class="dCol2 tdTopLeft">
-                            งาน Big Mountain Music Festival 2019<br />ค่า Event Production
-                        </td>
-                        <td class="dCol3 tdTopRight borderRight fontBlueV1">
-                            4,600,000.00&nbsp;&nbsp;
-                        </td>
-                        <td class="vatTitleColumn verticalTop vatWidth borderRight">
-                            Include
-                        </td>
-                        <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
-                            @i
-                        </td>
-                        <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
-                            01/02/2020
-                        </td>
-                        <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
-                            4,850,000.00
-                        </td>
-                        <td class="tdTopCenter pvNoWidth">
-                            PV005/2020
-                        </td>
-                    </tr>
+                    if (i == 1)
+                    {
+                        <tr>
+                            <td class="dCol1 tdTopLeft">
+                                &nbsp;&nbsp;86S02017L021
+                            </td>
+                            <td class="dCol2 tdTopLeft">
+                                งาน Big Mountain Music Festival 2019<br />ค่า Event Production
+                            </td>
+                            <td class="dCol3 tdTopRight borderRight fontBlueV1">
+                                4,600,000.00&nbsp;&nbsp;
+                            </td>
+                            <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                                Include
+                            </td>
+                            <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                                @i
+                            </td>
+                            <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                                01/02/2020
+                            </td>
+                            <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                                4,850,000.00
+                            </td>
+                            <td class="tdTopCenter pvNoWidth">
+                                PV005/2020
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="dCol1 tdTopLeft">
+                                <table style="border-collapse:collapse;">
+                                    <tr>
+                                        <td class="paddingRowTable">
+                                            &nbsp;&nbsp;86S02017L021
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="dCol2 tdTopLeft">
+                                <table style="border-collapse:collapse;">
+                                    <tr>
+                                        <td class="paddingRowTable">
+                                            งาน Big Mountain Music Festival 2019<br />ค่า Event Production
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="dCol3 tdTopRight borderRight fontBlueV1">
+                                <table class="borderWidthMaxCollape">
+                                    <tr>
+                                        <td class="paddingRowTable tdTopRight fontBlueV1">
+                                            4,600,000.00&nbsp;&nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                                <table class="borderWidthMaxCollape">
+                                    <tr>
+                                        <td class="paddingRowTable vatTitleColumn">
+                                            Include
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                                <table class="borderWidthMaxCollape">
+                                    <tr>
+                                        <td class="paddingRowTable eventNoTitleColumn fontRedV1">
+                                            @i
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                                <table class="borderWidthMaxCollape">
+                                    <tr>
+                                        <td class="paddingRowTable dateTitleColumn fontRedV1">
+                                            01/02/2020
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                                <table class="borderWidthMaxCollape">
+                                    <tr>
+                                        <td class="paddingRowTable totalTitleColumn fontOrangeV1">
+                                            4,850,000.00
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="tdTopCenter pvNoWidth">
+                                <table class="borderWidthMaxCollape">
+                                    <tr>
+                                        <td class="paddingRowTable tdTopCenter">
+                                            PV005/2020
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    }
                 }
-                </table>
-            @*<table style="width:100%;border-collapse:collapse;" cellpadding="-4" cellspacing="-4">
-                    <tr>
-                        <td class="dCol1 tdTopLeft borderBottomV2">
-                            &nbsp;&nbsp;86S02017L021
-                        </td>
-                        <td class="dCol2 tdTopLeft borderBottomV2">
-                            งาน Big Mountain Music Festival 2019<br />ค่า Event Production
-                        </td>
-                        <td class="dCol3 tdTopRight dssBorderBotRight">
-                            4,600,000.00&nbsp;
-                        </td>
-                        <td class="vatTitleColumn verticalTop vatWidth dssBorderBotRight">
-                            Include
-                        </td>
-                        <td class="eventNoTitleColumn verticalTop eventNoWidth dssBorderBotRight fontRedV1">
-                            1
-                        </td>
-                        <td class="dateTitleColumn verticalTop dateWidth dssBorderBotRight fontRedV1">
-                            01/02/2020
-                        </td>
-                        <td class="totalTitleColumn verticalTop totalWidth dssBorderBotRight fontOrangeV1">
-                            4,850,000.00
-                        </td>
-                        <td class="pvNoTitleColumn verticalTop pvNoWidth">
-                            PV005/2020
-                        </td>
-                    </tr>
-                </table>*@
+                <tr>
+                    <td colspan="2" class="txtRight">
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTable txtRight ">
+                                    รวม
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="dCol3 txtRight borderRight fontBlueV1">
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTable txtRight fontBlueV1">
+                                    23,000,000.00&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                        &nbsp;
+                    </td>
+                    <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                        &nbsp;
+                    </td>
+                    <td class="tdTopCenter pvNoWidth">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="txtRight fontRedV2">
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTableV2 txtRight fontRedV2">
+                                    ภาษีมูลค่าเพิ่ม 7%
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="dCol3 txtRight borderRight fontBlueV1">
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTableV2 txtRight fontBlueV1">
+                                    1,610,000.00&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                        &nbsp;
+                    </td>
+                    <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                        &nbsp;
+                    </td>
+                    <td class="tdTopCenter pvNoWidth">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="txtRight">
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTableV3 txtRight">
+                                    รวมทั้งสิ้น (บาท)
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="dCol3 txtRight borderRight fontBlueV1">
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTableV3 txtRight fontBlueV1">
+                                    24,610,000.00&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                        &nbsp;
+                    </td>
+                    <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                        &nbsp;
+                    </td>
+                    <td class="tdTopCenter pvNoWidth">
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 </table>
