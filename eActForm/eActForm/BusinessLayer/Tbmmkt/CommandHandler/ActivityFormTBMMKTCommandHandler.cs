@@ -436,7 +436,7 @@ namespace eActForm.BusinessLayer
 
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
                 {
-                    totalCostThisActivity = !string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.objective) ? decimal.Parse(activity_TBMMKT_Model.activityFormTBMMKT.objective) : 0;
+                    totalCostThisActivity = !string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.benefit) ? decimal.Parse(activity_TBMMKT_Model.activityFormTBMMKT.benefit) : 0;
                 }
 
 
