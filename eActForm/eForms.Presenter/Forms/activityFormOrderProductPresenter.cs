@@ -15,7 +15,7 @@ namespace eForms.Presenter.Forms
                     ,new SqlParameter("@startDate",startDate)
                     ,new SqlParameter("@endDate",endDate)
                     });
-                return obj != null ? (int)obj : 0;
+                return obj != null && obj.ToString() != "" ? (int)obj : 0;
             }
             catch (Exception ex)
             {
