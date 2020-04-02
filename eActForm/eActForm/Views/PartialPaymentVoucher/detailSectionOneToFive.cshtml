@@ -74,35 +74,102 @@
                     </td>
                 </tr>
             </table>
-
         </td>
         <td style="width: 400px;height:20px;" class="boxTableFormV1 borderLeft">
-            <table style="border-collapse: collapse;">
+            <style>
+                .oneColumn {
+                    text-align: left;
+                    width: 5%;
+                }
+
+                .oneColumnCenter {
+                    text-align: center;
+                    width: 5%;
+                }
+
+                .ioColumn {
+                    text-align: left;
+                    width: 30%;
+                }
+
+                .glColumnLeft {
+                    text-align: left;
+                    width: 20%;
+                }
+
+                .glColumnCenter {
+                    text-align: center;
+                    width: 20%;
+                }
+
+                .chColumnCenter {
+                    text-align: center;
+                    width: 17%;
+                }
+
+                .chColumnLeft {
+                    text-align: left;
+                    width: 17%;
+                }
+
+                .brandColumnLeft {
+                    text-align: left;
+                    width: 28%;
+                }
+
+                .brandColumnCenter {
+                    text-align: center;
+                    width: 28%;
+                }
+            </style>
+            <table style="width:100%;border-collapse:collapse;background-color: #ccffff;" cellpadding="-4" cellspacing="-4">
                 <tr>
-                    <td style="width:27%;text-align:left;">
-                        &nbsp;วันที่:
+                    <td class="oneColumn fontRedV1">&nbsp;</td>
+                    <td class="ioColumn fontRedV1">
+                        &nbsp;ส่วนที่ 3)
                     </td>
-                    <td style="width:73%;text-align:center;">
-                        01/02/2020
+                    <td class="glColumnLeft fontRedV1">
+                        &nbsp;ส่วนที่ 4)
+                    </td>
+                    <td class="chColumn">&nbsp;</td>
+                    <td class="brandColumnLeft fontRedV1">
+                        &nbsp;ส่วนที่ 5)
                     </td>
                 </tr>
+            </table>
+            <table style="width:100%;border-collapse:collapse;">
                 <tr>
-                    <td style="text-align: left;" class="paddingRowTable">
-                        &nbsp;เลขที่:
+                    <td class="oneColumn fontRedV1">&nbsp;</td>
+                    <td class="ioColumn fontRedV1">
+                        IO (Internal Order: SAP)
                     </td>
-                    <td style="text-align:center;" class="paddingRowTable">
-                        PV005/2020
+                    <td class="glColumnCenter fontRedV1">
+                        GL
+                    </td>
+                    <td class="chColumnCenter fontRedV1">
+                        Ch + Reg.
+                    </td>
+                    <td class="brandColumnCenter fontRedV1">
+                        Brand
                     </td>
                 </tr>
-                @for (int i = 1; i <= 4; i++)
+            </table>
+            <table style="width:100%;border-collapse:collapse;">
+                @for (int i = 1; i <= 10; i++)
                 {
                     <tr>
-                        <td style="text-align:left;" class="paddingRowTable">
-                            &nbsp;งบประมาณเลขที่:
+                        <td class="oneColumnCenter fontRedV1 paddingRowTable">@i</td>
+                        <td class="ioColumn fontRedV1 paddingRowTable">
+                            86S02017L021
                         </td>
-                        <td style="text-align:center;" class="paddingRowTable">
-                            EO: S017 10 A6 20/0124
-                            <br />
+                        <td class="glColumnCenter fontRedV1 paddingRowTable">
+                            650007940
+                        </td>
+                        <td class="chColumnCenter fontRedV1 paddingRowTable">
+                            EV-03
+                        </td>
+                        <td class="brandColumnCenter paddingRowTable">
+                            BLEND 285
                         </td>
                     </tr>
                 }
