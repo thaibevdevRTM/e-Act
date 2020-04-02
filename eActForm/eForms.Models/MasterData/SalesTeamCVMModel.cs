@@ -19,5 +19,8 @@ namespace eForms.Models.MasterData
         public string nameContact { get; set; }
         public string latitude { get; set; }
         public string longitude { get; set; }
+        public string nameCashier { get; set; }
+        public string telCashier { get; set; }
+        public string emailCashier { get; set; }
     }
 }
