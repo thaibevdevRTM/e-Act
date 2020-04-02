@@ -306,4 +306,13 @@
   <data name="verify" xml:space="preserve">
     <value>ผู้ตรวจสอบ</value>
   </data>
+  <data name="btnApprove" xml:space="preserve">
+    <value>อนุมัติ</value>
+  </data>
+  <data name="btnBack" xml:space="preserve">
+    <value>ย้อนกลับ</value>
+  </data>
+  <data name="btnReject" xml:space="preserve">
+    <value>ไม่อนุมัติ</value>
+  </data>
 </root>
