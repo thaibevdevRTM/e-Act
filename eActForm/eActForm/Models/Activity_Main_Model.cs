@@ -39,6 +39,8 @@ namespace eActForm.Models
         public List<TB_Act_ActivityChoiceSelectModel> tB_Act_ActivityChoiceSelectModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model_2 { get; set; }
         public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
+        public RequestEmpModel empInfoModel { get; set; }
+
         public Activity_TBMMKT_Model()
         {
             activityFormTBMMKT = new ActivityFormTBMMKT();
@@ -51,6 +53,7 @@ namespace eActForm.Models
             approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
             exPerryCashList = new List<exPerryCashModel>();
             exPerryCashModel = new exPerryCashModel();
+            empInfoModel = new RequestEmpModel();
         }
 
     }
@@ -189,6 +192,7 @@ namespace eActForm.Models
         public string departmentEN { get; set; }
         public string buEN { get; set; }
         public string empTel { get; set; }
+        public string compId { get; set; }
     }
 
     public class PurposeModel : ActBaseModel

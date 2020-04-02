@@ -60,6 +60,8 @@ namespace eActForm.BusinessLayer
                                     UtilsAppCode.Session.User.isAdminTBM = true; break;
                                 case "7":
                                     UtilsAppCode.Session.User.isAdminHCM = true; break;
+                                case "8":
+                                    UtilsAppCode.Session.User.isAdminNUM = true; break;
                             }
 
                             UtilsAppCode.Session.User.empCompanyId = dr["companyId"].ToString();

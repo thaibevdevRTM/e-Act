@@ -55,6 +55,7 @@ namespace eActForm.Models
             TBM,
             EXPENSE,
             HCM,
+            NUM,
             OtherCompany
         }
 

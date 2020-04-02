@@ -105,6 +105,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.typeTheme = item.typeTheme;
                     costThemeDetail.date = string.IsNullOrEmpty(item.dateInput) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(item.dateInput, ConfigurationManager.AppSettings["formatDateUse"]);
                     costThemeDetail.detail = item.detail;
+                    costThemeDetail.listChoiceId = item.listChoiceId;
                     rtn += insertEstimate(costThemeDetail);
 
                     insertIndex++;
@@ -236,7 +237,7 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.toAddress = model.tB_Act_ActivityForm_DetailOther.toAddress;
                 tB_Act_ActivityForm_DetailOther.toContact = model.tB_Act_ActivityForm_DetailOther.toContact;
                 tB_Act_ActivityForm_DetailOther.detailContact = model.tB_Act_ActivityForm_DetailOther.detailContact;
-
+                tB_Act_ActivityForm_DetailOther.orderOf = model.tB_Act_ActivityForm_DetailOther.orderOf;
                 rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
 
                 insertIndex++;
@@ -1053,6 +1054,7 @@ namespace eActForm.BusinessLayer
                     requestEmpModel.activityId = activityId;
                     requestEmpModel.rowNo = insertIndex;
                     requestEmpModel.empId = item.empId;
+                    requestEmpModel.empTel = item.empTel;
                     requestEmpModel.delFlag = false;
                     requestEmpModel.createdByUserId = model.activityFormModel.createdByUserId;
                     requestEmpModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -1090,6 +1092,8 @@ namespace eActForm.BusinessLayer
                BaseAppCodes.converStrToDatetimeWithFormat(item.departureDateStr, ConfigurationManager.AppSettings["formatDatetimeUse"]);
                     placeDetailModel.arrivalDate = string.IsNullOrEmpty(item.arrivalDateStr) ? (DateTime?)null :
                BaseAppCodes.converStrToDatetimeWithFormat(item.arrivalDateStr, ConfigurationManager.AppSettings["formatDatetimeUse"]);
+                    placeDetailModel.depart = item.depart;
+                    placeDetailModel.arrived = item.arrived;
                     placeDetailModel.delFlag = false;
                     placeDetailModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate; ;
                     placeDetailModel.createdByUserId = model.activityFormModel.createdByUserId;

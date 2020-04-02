@@ -8,61 +8,8 @@
     @*<div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;@Model.TB_Reg_RequestEmp.empName&nbsp;&nbsp;</div>
         <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
     <fieldset>
-        @*<legend>พนักงาน</legend>*@
+        @*<legend>พนักงาน</legend> <br />*@
 
-
-        @*<div class="col-lg-3 col-xs-12">
-                <div class="col-md-12 col-xs-12">
-                    <label id="lblEmpId">รหัสพนักงาน </label>
-                    @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
-                </div>
-            </div>
-
-            <div class="col-lg-9 col-xs-12" style="margin-top:15px;">
-                <div class="col-md-5 col-xs-12">
-                    <label style="width:90px;">ชื่อ :</label> &nbsp;<lable id="lblEmpName"></lable>
-                </div>
-                <div class="col-md-6 col-xs-12">
-                    <label style="width:130px;">ตำแหน่ง :</label>&nbsp;<lable id="lblEmpPosition"></lable>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-xs-12">
-            </div>
-            <div class="col-lg-9 col-xs-12">
-                <div class="col-md-5 col-xs-12">
-                    <label style="width:90px;">ระดับ :</label> &nbsp<lable id="lblLvl" />
-                </div>
-                <div class="col-md-6 col-xs-12">
-                    <label style="width:130px;">หน่วยงาน :</label>&nbsp;<lable id="lblDept" />
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-xs-12">
-            </div>
-            <div class="col-lg-9 col-xs-12">
-                <div class="col-md-12 col-xs-12">
-                    <label style="width:90px;">สังกัดบริษัท :</label> &nbsp<lable id="lblComp" />
-                </div>
-
-            </div>
-
-
-            <div class="col-lg-3 col-xs-12">
-            </div>
-            <div class="col-lg-9 col-xs-12">
-                <div class="col-md-5 col-xs-12">
-                    <label style="width:95px;">โทรศัพท์ติดต่อ :</label> &nbsp; @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "textboxcss textRight", Style = "text-align:center;", id = "txtEmpTel" })
-
-                </div>
-                <div class="col-md-6 col-xs-12">
-                    <label style="width:130px;">ตามคำสั่ง :</label>&nbsp; @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "textboxcss textRight", Style = "text-align:center;", id = "txtOrerOf" })
-
-                </div>
-            </div>*@
-
-
-        <br />
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
@@ -70,7 +17,7 @@
                         รหัสพนักงาน :
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.requestEmpModel[0].empId, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpId", onchange = "getEmpDetail();" })
+                        @Html.TextBoxFor(x => x.empInfoModel.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpId", onchange = "getEmpDetail();" })
                     </div>
                 </div>
             </div>
@@ -129,6 +76,7 @@
                         สังกัดบริษัท :
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="hidden" id="hdCompId" name="activityFormTBMMKT.formCompanyId" class="form-control textboxcss" />
                         <lable id="lblComp" class="form-control textboxcss" readonly></lable>
                     </div>
                 </div>
@@ -151,7 +99,7 @@
                         โทรศัพท์ติดต่อ :
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.requestEmpModel[0].empTel, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpTel" })
+                        @Html.TextBoxFor(x => x.empInfoModel.empTel, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpTel" })
                     </div>
                 </div>
             </div>
@@ -191,15 +139,18 @@
             console.log(response);
             if (response.Data != null) {
                 $("#lblEmpName").val(response.Data.empName);
+                $("#hdCompId").val(response.Data.compId);
                 document.getElementById('lblEmpName').innerHTML = response.Data.empName;
                 document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
                 document.getElementById('lblLvl').innerHTML = response.Data.level;
                 document.getElementById('lblDept').innerHTML = response.Data.department;
                 document.getElementById('lblComp').innerHTML = response.Data.companyName;
-              
+
+
             }
             else {
                 $("#lblEmpName").val('');
+                $("#hdCompId").val('');
                 document.getElementById('lblEmpName').innerHTML ='';
                 document.getElementById('lblEmpPosition').innerHTML = '';
                 document.getElementById('lblLvl').innerHTML = '';
