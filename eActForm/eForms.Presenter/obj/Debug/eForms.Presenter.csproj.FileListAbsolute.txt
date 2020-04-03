@@ -42,7 +42,6 @@ D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\Microsoft.ApplicationBlocks.Data.dll
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.pdb
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csprojAssemblyReference.cache
-D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CoreCompileInputs.cache
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb
