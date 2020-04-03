@@ -81,6 +81,10 @@
             alert("กรุณาระบุเบอร์ติดต่อให้ถูกต้องค่ะ");
             $("#txtTel").focus();
             return false;
+        } else if ($("#txtCustomerId").val().length < 13) {
+             alert("กรุณาระบุเลขบัตรประชาชนให้ถูกต้องค่ะ");
+            $("#txtCustomerId").focus();
+            return false;
         }
 
         $("#WaitDialog").show();
