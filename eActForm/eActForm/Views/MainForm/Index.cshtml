@@ -149,6 +149,17 @@
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'){//travelling TBM
             $('#preview').modal('show');
         }
+
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
+            if (@Model.activityFormTBMMKT.statusId != "1" || @Model.activityFormTBMMKT.statusId == "5" || '@Model.activityFormTBMMKT.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
+                var arrayOfElements = document.getElementsByClassName('divDelImg');
+                var lengthOfArray = arrayOfElements.length;
+                for (var i = 0; i < lengthOfArray; i++) {
+                    arrayOfElements[i].style.display = 'none';
+                }
+            }
+        }
+
     });
 
     function validatesubmit() {
