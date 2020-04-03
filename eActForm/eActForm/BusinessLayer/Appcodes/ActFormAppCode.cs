@@ -123,9 +123,7 @@ namespace eActForm.BusinessLayer
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
 
-
-                if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin ||
-                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)
+                if (isAdmin())
                 {
                     strCall = "usp_getActivityFormAll";
                 }
@@ -284,6 +282,14 @@ namespace eActForm.BusinessLayer
                 val = "f80014";
 
             return val;
+        }
+
+        public static bool isCompanyNUM()
+        {
+            List<ActUserModel.UserAuthorized> lst = new List<ActUserModel.UserAuthorized>();
+            lst = UserAppCode.GetUserAuthorizedsByCompany(Activity_Model.activityType.NUM.ToString());
+            return lst.Count > 0 ? true : false;
+
         }
     }
 }

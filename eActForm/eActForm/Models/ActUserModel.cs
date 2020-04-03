@@ -11,6 +11,7 @@ namespace eActForm.Models
             public string customerId { get; set; }
             public string productTypeId { get; set; }
             public string productCateId { get; set; }
+            public string companyId { get; set; }
         }
         public class RequestUsreAPI
         {

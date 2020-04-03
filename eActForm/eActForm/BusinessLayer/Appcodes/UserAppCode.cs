@@ -21,7 +21,8 @@ namespace eActForm.BusinessLayer
                                  empId = dr["empId"].ToString(),
                                  customerId = dr["customerId"].ToString(),
                                  productCateId = dr["productCateId"].ToString(),
-                                 productTypeId = dr["productTypeId"].ToString()
+                                 productTypeId = dr["productTypeId"].ToString(),
+                                 companyId = dr["companyId"].ToString()
                              }).ToList();
                 return lists;
             }
@@ -77,5 +78,30 @@ namespace eActForm.BusinessLayer
                 throw new Exception("setRoleUser>>" + ex.Message);
             }
         }
+
+        public static List<ActUserModel.UserAuthorized> GetUserAuthorizedsByCompany(string subType)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserAuthorizedByCompany"
+                    , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
+                    , new SqlParameter("@subType",subType) });
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ActUserModel.UserAuthorized
+                             {
+                                 empId = dr["empId"].ToString(),
+                                 customerId = dr["customerId"].ToString(),
+                                 productCateId = dr["productCateId"].ToString(),
+                                 productTypeId = dr["productTypeId"].ToString(),
+                                 companyId = dr["companyId"].ToString()
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetUserAuthorizeds>>" + ex.Message);
+            }
+        }
+
     }
 }

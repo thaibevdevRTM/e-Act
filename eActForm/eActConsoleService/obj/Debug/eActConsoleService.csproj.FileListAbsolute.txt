@@ -81,6 +81,8 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleSe
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CopyComplete
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\ApplicationInsights.config
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\ActRepDetail\0c0ec151-e347-46b7-a92f-e58df434eb21.pdf
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\ActRepDetail\37349052-6886-424d-9f7d-9d76c40fc63b.pdf
@@ -121,8 +123,6 @@ D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\WebLibrary.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eForms.Models.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eForms.Presenter.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\en\eActForm.resources.dll
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CopyComplete
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
