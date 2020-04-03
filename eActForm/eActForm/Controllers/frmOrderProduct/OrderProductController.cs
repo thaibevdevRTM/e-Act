@@ -95,6 +95,7 @@ namespace eActForm.Controllers
                         , contactModel[0].nameContact
                         , contactModel[0].emailContact
                         , contactModel[0].telContact
+                        , thisWeekEnd.AddDays(4).ToString("dd/MM/yyyy")
                         );
 
                     EmailAppCodes.sendEmail(model.activityFormModel.empEmail
