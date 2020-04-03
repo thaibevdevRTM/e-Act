@@ -220,6 +220,11 @@
                             else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || item.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]))
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+
+                                if (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] && item.statusId == "3")
+                                {
+                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", onclick = "waitpopup();", })
+                                }
                             }
                             else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && item.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"]) /*ใบเบิกผลิตภัณฑ์,POS / PREMIUM*/
                             {
@@ -233,9 +238,12 @@
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
+                            else if (item.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                            {
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();"})
+                            }
                             else
                             {
-                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.EXPENSE.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
@@ -348,7 +356,10 @@
 
     function callPreviewApprove(actId, statusId, typeForm, master_type_form_id) {
 
-        if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formPosTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]") {
+        if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvTbmId"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formPosTbmId"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["masterEmpExpense"]") {
              $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Index", "MainReport")',

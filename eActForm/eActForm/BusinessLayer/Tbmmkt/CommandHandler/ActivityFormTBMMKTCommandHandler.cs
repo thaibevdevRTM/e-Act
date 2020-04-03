@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
@@ -29,7 +30,6 @@ namespace eActForm.BusinessLayer
                 }
                 else
                 {
-
                     model.activityFormTBMMKT.id = activityId;
                     model.activityFormTBMMKT.statusId = 1;
                     model.activityFormTBMMKT.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
@@ -334,7 +334,7 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activityId);  //TB_Act_ActivityOfEstimate
                 activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activityId);
                 activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(
-                 activity_TBMMKT_Model.activityFormTBMMKT.languageDoc
+                activity_TBMMKT_Model.activityFormTBMMKT.languageDoc
                 , en
                 , activity_TBMMKT_Model.activityFormTBMMKT.statusId);
                 if (activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Count > 0)
@@ -410,6 +410,45 @@ namespace eActForm.BusinessLayer
             return activity_TBMMKT_Model;
         }
 
+
+        public static Activity_TBMMKT_Model getDataForEditActivityByActNo(string actNo)
+        {
+            Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+            try
+            {
+                string en = ConfigurationManager.AppSettings["cultureEng"];
+
+                activity_TBMMKT_Model.activityFormTBMMKT = QueryGetActivityByActNo.getCheckRefActivityByActNo(actNo).FirstOrDefault(); // TB_Act_ActivityForm
+                activity_TBMMKT_Model.activityFormModel = activity_TBMMKT_Model.activityFormTBMMKT;
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id).FirstOrDefault(); // TB_Act_ActivityForm_DetailOther                
+                activity_TBMMKT_Model.activityOfEstimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);  //TB_Act_ActivityOfEstimate
+                activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel = QueryGet_TB_Act_ActivityChoiceSelect.get_TB_Act_ActivityChoiceSelectModel(activity_TBMMKT_Model.activityFormTBMMKT.id);
+                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = DocumentsAppCode.checkLanguageDoc(
+                activity_TBMMKT_Model.activityFormTBMMKT.languageDoc
+                , en
+                , activity_TBMMKT_Model.activityFormTBMMKT.statusId);
+
+                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng);
+                activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);
+                activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);
+                activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
+
+                Decimal? totalCostThisActivity = 0;
+
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                {
+                    totalCostThisActivity = !string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.benefit) ? decimal.Parse(activity_TBMMKT_Model.activityFormTBMMKT.benefit) : 0;
+                }
+
+
+                activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> getDataForEditActivityTBMMKT");
+            }
+            return activity_TBMMKT_Model;
+        }
         public static int updateActivityForm(Activity_Model model, string activityId)
         {
             int rtn = 0;
@@ -610,7 +649,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@costPeriodST", model.costPeriodSt)
                     ,new SqlParameter("@costPeriodEND", model.costPeriodEnd)
                     ,new SqlParameter("@empId", model.empId)
-
 
                   });
             }

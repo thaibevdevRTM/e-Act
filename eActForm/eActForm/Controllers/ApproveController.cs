@@ -58,10 +58,10 @@ namespace eActForm.Controllers
 
             try
             {
-                if (model.activity_TBMMKT_Model.activityOfEstimateList.Any())
-                {
-                    ApproveAppCode.manageApproveEmpExpense(model, Request.Form["lblActFormId"]);
-                }
+                //if (model.activity_TBMMKT_Model.activityOfEstimateList.Any())
+                //{
+                //    ApproveAppCode.manageApproveEmpExpense(model, Request.Form["lblActFormId"]);
+                //}
 
 
                 if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"]) > 0)

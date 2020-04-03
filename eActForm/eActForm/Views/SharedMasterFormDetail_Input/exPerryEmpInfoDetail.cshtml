@@ -7,72 +7,93 @@
 <div class="col-md-12" id="divExpenseCashEmpInfo">
     @*<div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;@Model.TB_Reg_RequestEmp.empName&nbsp;&nbsp;</div>
         <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
-    <fieldset>
-        <legend>พนักงาน</legend>
 
-        <div class="col-lg-3 col-xs-12">
-            <div class="col-md-12 col-xs-12">
-                <label id="lblEmpId">รหัสพนักงาน </label>
-                @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
-            </div>
+    <div class="col-md-12 col-xs-12 form-group">
+        <div class="col-md-6 col-xs-12">
         </div>
+        <div class="col-md-3 col-xs-12">
+            <label class="control-label pull-right">
+                <label id="lblEmpId">รหัสพนักงาน :</label>
+            </label>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            @Html.TextBoxFor(x => x.activityFormTBMMKT.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
+        </div>
+    </div>
 
-        <div class="col-lg-9 col-xs-12" style="margin-top:15px;">
-            <div class="col-md-5 col-xs-12">
-                <label style="width:90px;">ชื่อ :</label> &nbsp;<lable id="lblEmpName"></lable>
+    <div><h4>ข้อมูลพนักงาน</h4></div>
+    <hr />
+    <div class="col-lg-11 col-xs-12">
+        <div class="col-lg-12 col-xs-12" style="margin-top:15px;">
+            <div class="col-md-6 col-xs-12">
+                <label style="width:80px; text-align:right;">ชื่อ :</label> &nbsp;<lable style="text-align:left" id="lblEmpName"></lable>
             </div>
             <div class="col-md-6 col-xs-12">
-                <label style="width:130px;">ตำแหน่ง :</label>&nbsp;<lable id="lblEmpPosition"></lable>
+                <label style="width:80px; text-align:right;">ตำแหน่ง :</label>&nbsp;<lable style="text-align:left" id="lblEmpPosition"></lable>
             </div>
         </div>
 
-        <div class="col-lg-3 col-xs-12">
-        </div>
-        <div class="col-lg-9 col-xs-12">
-            <div class="col-md-5 col-xs-12">
-                <label style="width:90px;">ระดับ :</label> &nbsp<lable id="lblLvl" />
+        <div class="col-lg-12 col-xs-12">
+            <div class="col-md-6 col-xs-12">
+                <label style="width:80px; text-align:right;">ระดับ :</label> &nbsp;<lable style="text-align:left" id="lblLvl" />
             </div>
             <div class="col-md-6 col-xs-12">
-                <label style="width:130px;">หน่วยงาน :</label>&nbsp;<lable id="lblDept" />
+                <label style="width:80px; text-align:right;">หน่วยงาน :</label>&nbsp;<lable style="text-align:left" id="lblDept" />
             </div>
         </div>
+    </div>
 
-        <div class="col-lg-3 col-xs-12">
-        </div>
-        <div class="col-lg-9 col-xs-12">
-            <div class="col-md-5 col-xs-12">
-                <label style="width:90px;">สังกัดบริษัท :</label> &nbsp<lable id="lblLvl" />
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <label style="width:130px;">โทรศัพท์ติดต่อ :</label>&nbsp;<lable id="lblDept" />
-            </div>
-        </div>
 
-        <div class="col-lg-3 col-xs-12">
-        </div>
-        <div class="col-lg-9 col-xs-12">
-            <div class="col-md-5 col-xs-12">
-                <label style="width:90px;">ตามคำสั่ง :</label> &nbsp<lable id="lblLvl" />
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <label style="width:130px;"></label>&nbsp;<lable id="lblDept" />
-            </div>
-        </div>
-    </fieldset>
-    <br />
-   
 </div>
 
 <script type="text/javascript">
 
-     $(document).ready(function () {
+    $(document).ready(function () {
 
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
         });
         getEmpDetail();
+
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
+
+            $("#txtEmpId").autocomplete({
+                source: function (request, response) {
+                    var channel = $("#ddlChannel").val() == "" ? $("#ddlBrand").val() : $("#ddlChannel").val();
+                    $.ajax({
+                        url: '@Url.Action("getEmpByChannel", "eAct")',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            subjectId: $("#ddlSubject").val(),
+                            channelId: channel,
+                            filter: $("#txtEmpId").val(),
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.empName, value: item.empId, id: item.empId };
+
+                            }))
+
+                        }
+                    })
+                },
+                minLength: 0,
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) {
+                    }
+                }, select: function (event, ui) {
+                    $("#" + i.id).val(ui.item.id)
+                },
+                close: function( event, ui ) { getEmpDetail(); }
+            }).focus(function () {
+                $(this).data("uiAutocomplete").search($(this).val());
+            });
+        }
     });
-     function getEmpDetail() {
+
+    function getEmpDetail() {
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getEmpDetailById", "eAct")',
@@ -80,7 +101,6 @@
                 empId: $("#txtEmpId").val(),
             }
         }).done(function (response) {
-            console.log(response);
             if (response.Data != null) {
                 $("#txtEmpName").val(response.Data.empName);
                 document.getElementById('lblEmpName').innerHTML = response.Data.empName;
@@ -89,14 +109,15 @@
                 document.getElementById('lblDept').innerHTML = response.Data.department;
             }
             else {
-                 $("#txtEmpName").val('');
-                document.getElementById('lblEmpName').innerHTML ='';
+                $("#txtEmpName").val('');
+                document.getElementById('lblEmpName').innerHTML = '';
                 document.getElementById('lblEmpPosition').innerHTML = '';
                 document.getElementById('lblLvl').innerHTML = '';
                 document.getElementById('lblDept').innerHTML = '';
             }
         });
     }
+
 
 
         //document.getElementById("lblVehicleregis").style.display = "none";

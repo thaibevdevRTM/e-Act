@@ -488,7 +488,7 @@ namespace eActForm.BusinessLayer
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 var emailTypeTxt = "";
-                string[] arrayFormStyleV1 = { ConfigurationManager.AppSettings["formBgTbmId"], ConfigurationManager.AppSettings["formAdvTbmId"], ConfigurationManager.AppSettings["formAdvHcmId"] };
+                string[] arrayFormStyleV1 = { ConfigurationManager.AppSettings["formBgTbmId"], ConfigurationManager.AppSettings["formAdvTbmId"], ConfigurationManager.AppSettings["formAdvHcmId"], ConfigurationManager.AppSettings["masterEmpExpense"] };
                 string[] arrayFormStyleV2 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formTrvTbmId"], ConfigurationManager.AppSettings["formTrvHcmId"] };
                 string[] arrayFormStyleV3 = { ConfigurationManager.AppSettings["formPosTbmId"] };
                 if (activity_TBMMKT_Model.activityFormTBMMKT != null)
@@ -706,7 +706,7 @@ namespace eActForm.BusinessLayer
             //slog = slog + "cc=>" + cc;
             //ExceptionManager.WriteError("sendEmail >> " + slog);
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
-
+            mailTo = mailTo == null || mailTo == "" ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
             GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
             GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
             GMailer mailer = new GMailer();

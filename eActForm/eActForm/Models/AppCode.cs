@@ -23,6 +23,8 @@ namespace eActForm.Models
 {
     public class AppCode
     {
+        
+        public static string StrConAuthen = ConfigurationManager.ConnectionStrings["ActDBAuthen_ConnectionString"].ConnectionString;
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
         public static string nonAL = "1D1097F4-246F-4DC2-BB69-B7BB6E678299";
@@ -107,7 +109,7 @@ namespace eActForm.Models
                     using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
                     {
 
-                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"))))
+                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>").Replace(".jfif\">", ".jfif\"/>"))))
                         {
                             XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
                         }

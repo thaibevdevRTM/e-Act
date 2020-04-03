@@ -56,7 +56,9 @@ namespace eActForm.Models
             empInfoModel = new RequestEmpModel();
         }
 
-    }
+        public ApproveModel.approveModels approveModels { get; set; }
+
+}
 
     public class ActivityFormTBMMKT : ActivityForm
     {
@@ -193,6 +195,7 @@ namespace eActForm.Models
         public string buEN { get; set; }
         public string empTel { get; set; }
         public string compId { get; set; }
+        public string email { get; set; }
     }
 
     public class PurposeModel : ActBaseModel

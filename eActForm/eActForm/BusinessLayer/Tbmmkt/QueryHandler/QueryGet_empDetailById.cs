@@ -35,6 +35,7 @@ namespace eActForm.BusinessLayer
                                  buEN = d["empDivisionEN"].ToString(),
                                  companyNameEN = d["companyNameEN"].ToString(),
                                  compId = d["empCompanyId"].ToString(),
+                                 email = d["empEmail"].ToString()
                              });
                 return lists.OrderBy(x => x.empName).ToList();
             }
