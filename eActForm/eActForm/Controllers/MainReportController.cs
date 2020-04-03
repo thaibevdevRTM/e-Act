@@ -20,10 +20,14 @@ namespace eActForm.Controllers
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
             //=========for=====test=================
+            TB_Act_ActivityForm_DetailOther dummy_TB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
             ActivityFormTBMMKT dummy_activityFormTBMMKT = new ActivityFormTBMMKT();
             activity_TBMMKT_Model.activityFormTBMMKT = dummy_activityFormTBMMKT;
             activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["formPaymentVoucherTbmId"];
             activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
+            activity_TBMMKT_Model.activityFormModel.id = "10b11628-5133-4c9a-a11b-8aa79503a196"; //ไว้ทดสอบแสดงPartial Signature หรืออื่นๆ
+            dummy_TB_Act_ActivityForm_DetailOther.SubjectId = "F0F06055-04F5-4BF3-94B5-5DCE97F438B9";//ไว้ทดสอบแสดงPartial Signature หรืออื่นๆ
+            activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = dummy_TB_Act_ActivityForm_DetailOther;
             ViewBag.classFont = "formBorderStyle2";
             ViewBag.padding = "paddingFormV3";
             //====END====for======test=================
@@ -34,7 +38,7 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
                 activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
                 activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm_EN;
-                
+
                 activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
                 activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
                 activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
