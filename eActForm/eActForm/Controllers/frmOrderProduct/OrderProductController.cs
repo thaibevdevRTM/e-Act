@@ -56,6 +56,8 @@ namespace eActForm.Controllers
                     model.activityFormModel.theme = model.activityFormModel.customerName;
                     model.activityFormModel.objective = model.activityFormModel.empTel;
                     model.activityFormModel.productCateId = model.activityFormModel.empEmail;
+                    model.activityFormModel.str_activityPeriodSt = thisWeekStart.ToString("MM/dd/yyyy");
+                    model.activityFormModel.str_activityPeriodEnd = thisWeekEnd.ToString("MM/dd/yyyy");
                     model.activityFormModel.documentDate = DateTime.Now;
                     model.activityFormModel.createdDate = DateTime.Now;
                     model.activityFormModel.updatedDate = DateTime.Now;
