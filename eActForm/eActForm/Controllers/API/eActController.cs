@@ -304,7 +304,7 @@ namespace eActForm.Controllers
                     department = !langEn ? empDetailList.FirstOrDefault().department : empDetailList.FirstOrDefault().departmentEN,
                     bu = !langEn ? empDetailList.FirstOrDefault().bu : empDetailList.FirstOrDefault().buEN,
                     companyName = !langEn ? empDetailList.FirstOrDefault().companyName : empDetailList.FirstOrDefault().companyNameEN,
-                    compId = empDetailList.FirstOrDefault().compId
+                    compId = empDetailList.FirstOrDefault().compId,
                     email = empDetailList.FirstOrDefault().email
                 };
                 result.Data = resultData;
