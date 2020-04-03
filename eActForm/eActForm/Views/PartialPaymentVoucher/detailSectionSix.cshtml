@@ -107,7 +107,7 @@
                                 งาน Big Mountain Music Festival 2019<br />ค่า Event Production
                             </td>
                             <td class="dCol3 tdTopRight borderRight fontBlueV1">
-                                4,600,000.00&nbsp;&nbsp;
+                                4,123,546.50&nbsp;&nbsp;
                             </td>
                             <td class="vatTitleColumn verticalTop vatWidth borderRight">
                                 Include
@@ -119,7 +119,7 @@
                                 01/02/2020
                             </td>
                             <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
-                                4,850,000.00
+                                99,999,999.00
                             </td>
                             <td class="tdTopCenter pvNoWidth">
                                 PV005/2020
@@ -151,7 +151,7 @@
                                 <table class="borderWidthMaxCollape">
                                     <tr>
                                         <td class="paddingRowTable tdTopRight fontBlueV1">
-                                            4,600,000.00&nbsp;&nbsp;
+                                            4,123,546.50&nbsp;&nbsp;
                                         </td>
                                     </tr>
                                 </table>
@@ -187,7 +187,7 @@
                                 <table class="borderWidthMaxCollape">
                                     <tr>
                                         <td class="paddingRowTable totalTitleColumn fontOrangeV1">
-                                            4,850,000.00
+                                            99,999,999.00
                                         </td>
                                     </tr>
                                 </table>
@@ -218,7 +218,7 @@
                         <table class="borderWidthMaxCollape">
                             <tr>
                                 <td class="paddingRowTable txtRight fontBlueV1">
-                                    23,000,000.00&nbsp;&nbsp;
+                                    20,617,732.50&nbsp;&nbsp;
                                 </td>
                             </tr>
                         </table>
@@ -253,7 +253,7 @@
                         <table class="borderWidthMaxCollape">
                             <tr>
                                 <td class="paddingRowTableV2 txtRight fontBlueV1">
-                                    1,610,000.00&nbsp;&nbsp;
+                                    1,443,241.28&nbsp;&nbsp;
                                 </td>
                             </tr>
                         </table>
@@ -288,7 +288,7 @@
                         <table class="borderWidthMaxCollape">
                             <tr>
                                 <td class="paddingRowTableV3 txtRight fontBlueV1">
-                                    24,610,000.00&nbsp;&nbsp;
+                                    22,060,973.78&nbsp;&nbsp;
                                 </td>
                             </tr>
                         </table>
@@ -310,21 +310,21 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="dCol3 txtRight borderRight fontBlueV1">
+                    <td colspan="3" class="dCol3 txtRight borderRight fontBlueV1 ">
                         <table class="borderWidthMaxCollape">
                             <tr>
                                 <td class="paddingRowTableV3 txtRight fontBlueV1">
                                     <table class="borderWidthMaxCollape txtRight">
                                         <tr>
-                                            <td style="width:200px" class="paddingRowTableMin txtRight fontRedV1">
-                                                บาท(ตัวอักษร) :
+                                            <td style="width:70px;" class="paddingRowTableMin txtLeft fontRedV1">
+                                                &nbsp;&nbsp;บาท(ตัวอักษร)
                                             </td>
                                             <td class="paddingRowTableMin txtRight fontBlueV1">
                                                 @{
                                                     //string totalWithVat = DocumentsAppCode.ThaiBahtText(Model.totalCostThisActivity.Value.ToString());
-                                                    string totalWithVat = DocumentsAppCode.ThaiBahtText("24,610,000.00");
+                                                    string totalWithVat = DocumentsAppCode.ThaiBahtText("22,060,973.78");
                                                 }
-                                                @totalWithVat&nbsp;&nbsp;
+                                                @totalWithVat &nbsp;
                                             </td>
                                         </tr>
                                     </table>
@@ -346,6 +346,38 @@
                     </td>
                     <td class="tdTopCenter pvNoWidth">
                         &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="txtLeft fontRedV1 borderTop">
+                        &nbsp;&nbsp;งบฯ ผูกพันรวม(ตัวเลข)
+                    </td>
+                    <td colspan="4" class="txtRight borderRight fontBlueV1 borderTop">
+                        30,800,00.00&nbsp;&nbsp;
+                    </td>
+                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1 borderTop">
+                        4,850,000.00&nbsp;
+                    </td>
+                    <td class="txtLeft pvNoWidth fontRedV1 borderTop">
+                        &nbsp;&nbsp;<< งบฯ สะสม
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" class="txtLeft fontRedV1">
+                        &nbsp;&nbsp;บาท (ตัวอักษร)
+                    </td>
+                    <td colspan="5" class="txtRight borderRight fontBlueV1">
+                        @{
+                            //string totalWithVat = DocumentsAppCode.ThaiBahtText(Model.totalCostThisActivity.Value.ToString());
+                            string totalIoAll = DocumentsAppCode.ThaiBahtText("99,999,999.00");
+                        }
+                        @totalIoAll&nbsp;&nbsp;
+                    </td>
+                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                        99,999,999.00&nbsp;
+                    </td>
+                    <td class="txtLeft pvNoWidth fontRedV1">
+                        &nbsp;&nbsp;<< คงเหลือ (บาท)
                     </td>
                 </tr>
             </table>
