@@ -16,7 +16,7 @@ namespace eActForm.Controllers
     {
         string strRemark = "พนักงาน {0} ชื่อ {1} เบอร์ติดต่อ {2} email {3} สั่งสินค้าส่งจังหวัด {4} หน่วย {5}";
         string strBodyDetail = "สินค้า {0} ราคาต่อหน่วย {1} จำนวน {2} ราคา {3} <br/>";
-        string strOrderDupInWeek = "สามารถสั่งได้สัปดาห์ละ 1 ครั้งค่ะ";
+        string strOrderDupInWeek = "สามารถสั่งได้สัปดาห์ละ 10 แพ็คค่ะ";
         // GET: OrderProduct
         public ActionResult index()
         {
@@ -35,22 +35,27 @@ namespace eActForm.Controllers
                 DateTime baseDate = DateTime.Today;
                 switch (DateTime.Now.DayOfWeek)
                 {
-                    case DayOfWeek.Monday: baseDate = baseDate.AddDays(-2); break ;
+                    case DayOfWeek.Monday: baseDate = baseDate.AddDays(-2); break;
                     case DayOfWeek.Tuesday: baseDate = baseDate.AddDays(-3); break;
                 }
                 var yesterday = baseDate.AddDays(-1);
                 var thisWeekStart = baseDate.AddDays(-(int)baseDate.DayOfWeek).AddDays(+3);
                 var thisWeekEnd = thisWeekStart.AddDays(7).AddSeconds(-1);
-
-                if (activityFormOrderProductPresenter.getCountOrderProductOnweek(AppCode.StrCon, model.activityFormModel.empId, thisWeekStart.ToString(), thisWeekEnd.ToString()) > 0)
+                int countOrderUnit = activityFormOrderProductPresenter.getCountOrderProductOnweek(AppCode.StrCon, model.activityFormModel.empId, thisWeekStart.ToString(), thisWeekEnd.ToString());
+                int sumOrder = model.costthemedetail.Select(x => x.unit).Sum();//(from CostThemeDetail x in model.costthemedetail select x).Sum();
+                if ((countOrderUnit + sumOrder) > 10)
                 {
                     resultAjax.Code = 501;
                     resultAjax.Message = strOrderDupInWeek;
+                    resultAjax.Message += (countOrderUnit > 0) ? " ท่านได้สั่งซื้อไปแล้วจำนวน " + countOrderUnit + " แพ็คค่ะ " : "";
                 }
                 else
                 {
                     #region order product
                     string strProductDetail = "";
+                    model.activityFormModel.theme = model.activityFormModel.customerName;
+                    model.activityFormModel.objective = model.activityFormModel.empTel;
+                    model.activityFormModel.productCateId = model.activityFormModel.empEmail;
                     model.activityFormModel.documentDate = DateTime.Now;
                     model.activityFormModel.createdDate = DateTime.Now;
                     model.activityFormModel.updatedDate = DateTime.Now;
@@ -84,12 +89,16 @@ namespace eActForm.Controllers
                         , model.activityFormModel.customerName
                         , strProductDetail
                         , "จังหวัด " + model.activityFormModel.regionName + " " + model.activityFormModel.activityName
+                        , contactModel[0].nameCashier
+                        , contactModel[0].telCashier
+                        , string.Format(ConfigurationManager.AppSettings["bodyEmailLinkLocation"], contactModel[0].latitude, contactModel[0].longitude)
                         , contactModel[0].nameContact
+                        , contactModel[0].emailContact
                         , contactModel[0].telContact
-                        , string.Format(ConfigurationManager.AppSettings["bodyEmailLinkLocation"],contactModel[0].latitude,contactModel[0].longitude));
+                        );
 
                     EmailAppCodes.sendEmail(model.activityFormModel.empEmail
-                        , ConfigurationManager.AppSettings["emailApproveCC"] // contactModel[0].emailContact
+                        , ConfigurationManager.AppSettings["emailApproveCC"] // contactModel[0].emailCashier
                         , ConfigurationManager.AppSettings["subjectEmailConfirm"]
                         , strBody
                         , null);

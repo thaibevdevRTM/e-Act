@@ -320,13 +320,11 @@
                             }
                             else
                             {
-                                if (item.detailGroup != null)
+                                if (item.detailGroup.Count >= 1)
                                 {
-                                    for (int i = 0; i < @item.detailGroup.Count; i++)
-                                    {
-                                        <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[i].productName) (@Html.DisplayFor(m => item.pack))</td>
-                                    }
+                                    <td class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[0].productName) (@Html.DisplayFor(m => item.pack))</td>
                                 }
+
 
                             }
 

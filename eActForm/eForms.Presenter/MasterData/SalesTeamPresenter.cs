@@ -42,13 +42,16 @@ namespace eForms.Presenter.MasterData
                                 id = dr["id"].ToString(),
                                 nameTH = dr["nameTH"].ToString(),
                                 telContact = dr["telContact"].ToString(),
-                                telManager = dr["telManager"].ToString(),
                                 emailContact = dr["emailContact"].ToString(),
-                                emailManager = dr["emailManager"].ToString(),
-                                address = dr["address"].ToString(),
                                 nameContact = dr["nameContact"].ToString(),
+
+                                address = dr["address"].ToString(),
                                 latitude = dr["latitude"].ToString(),
-                                longitude = dr["longitude"].ToString()
+                                longitude = dr["longitude"].ToString(),
+
+                                telCashier = dr["telManager"].ToString(),
+                                emailCashier = dr["emailManager"].ToString(),
+                                nameCashier = dr["nameCashier"].ToString()
                             }).ToList();
                 return list;
             }

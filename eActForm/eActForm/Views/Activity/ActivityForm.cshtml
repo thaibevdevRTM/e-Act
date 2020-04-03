@@ -972,9 +972,10 @@
                         bootbox.alert("กรุณาทำรายการใหม่ เอกสารฉบับนี้ ส่งอนุมัติ ไปแล้ว");
                     }
                     else {
-                           callPreviewData('@Model.activityFormModel.id');
+                        callPreviewData('@Model.activityFormModel.id');
+                      
                     }
-                    $("#WaitDialog").hide();
+                    
                 }
             });
     }
@@ -1260,6 +1261,7 @@
             $("#WaitDialog").hide();
             $("#divPreview").html(htmlResponse)
             $('#previewModal').modal('show');
+             $("#WaitDialog").hide();
         });
     }
 
