@@ -55,7 +55,7 @@ namespace eActForm.Controllers
                     string strProductDetail = "";
                     model.activityFormModel.theme = model.activityFormModel.customerName;
                     model.activityFormModel.objective = model.activityFormModel.empTel;
-                    model.activityFormModel.trade = model.activityFormModel.empEmail;
+                    model.activityFormModel.productCateId = model.activityFormModel.empEmail;
                     model.activityFormModel.documentDate = DateTime.Now;
                     model.activityFormModel.createdDate = DateTime.Now;
                     model.activityFormModel.updatedDate = DateTime.Now;
