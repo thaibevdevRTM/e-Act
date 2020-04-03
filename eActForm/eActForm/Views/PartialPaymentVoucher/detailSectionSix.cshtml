@@ -1,4 +1,5 @@
-﻿@model eActForm.Models.Activity_TBMMKT_Model
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
 <table class="boxTableFormMainV1 fontDocV1">
     <tr>
         <td style="width:100%;" class="boxTableFormV1">
@@ -288,6 +289,45 @@
                             <tr>
                                 <td class="paddingRowTableV3 txtRight fontBlueV1">
                                     24,610,000.00&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                        &nbsp;
+                    </td>
+                    <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                        &nbsp;
+                    </td>
+                    <td class="tdTopCenter pvNoWidth">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="dCol3 txtRight borderRight fontBlueV1">
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTableV3 txtRight fontBlueV1">
+                                    <table class="borderWidthMaxCollape txtRight">
+                                        <tr>
+                                            <td style="width:200px" class="paddingRowTableMin txtRight fontRedV1">
+                                                บาท(ตัวอักษร) :
+                                            </td>
+                                            <td class="paddingRowTableMin txtRight fontBlueV1">
+                                                @{
+                                                    //string totalWithVat = DocumentsAppCode.ThaiBahtText(Model.totalCostThisActivity.Value.ToString());
+                                                    string totalWithVat = DocumentsAppCode.ThaiBahtText("24,610,000.00");
+                                                }
+                                                @totalWithVat&nbsp;&nbsp;
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
                         </table>
