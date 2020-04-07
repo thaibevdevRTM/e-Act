@@ -24,3 +24,4 @@ eActForm/eForms.Presenter/obj/*
 eActForm/webLibrary/obj/*
 eActForm/eActForm/Properties/*
 eActForm/eActConsoleServiceWeekly/obj/*
+*.xlsx
