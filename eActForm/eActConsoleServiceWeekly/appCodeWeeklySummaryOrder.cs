@@ -58,7 +58,8 @@ namespace eActConsoleServiceWeekly
 
                     if (dsOrder.Tables.Count > 0 && dsOrder.Tables[0].Rows.Count > 0)
                     {
-                        string filePath = ExportDataSetToExcel(dsOrder, "orderProductBySaleTeam" + dr["saleTeamId"].ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmm") + ".xlsx");
+                        DataTable dt = setRecivedDate(dsOrder.Tables[0]);
+                        string filePath = ExportDataSetToExcel(dt, "orderProductBySaleTeam" + dr["saleTeamId"].ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmm") + ".xlsx");
                         List<Attachment> fileLists = new List<Attachment>
                     {
                         new Attachment(filePath)
@@ -82,7 +83,7 @@ namespace eActConsoleServiceWeekly
             }
         }
 
-        private static string ExportDataSetToExcel(DataSet ds, string fileName)
+        private static string ExportDataSetToExcel(DataTable dt, string fileName)
         {
             string AppLocation = "";
             AppLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
@@ -90,7 +91,7 @@ namespace eActConsoleServiceWeekly
             string file = AppLocation + "\\excelFiles\\" + fileName;
             using (XLWorkbook wb = new XLWorkbook())
             {
-                wb.Worksheets.Add(ds.Tables[0]);
+                wb.Worksheets.Add(dt);
                 wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 wb.Style.Font.Bold = true;
                 wb.SaveAs(file);
@@ -124,6 +125,25 @@ namespace eActConsoleServiceWeekly
                 string str = string.Format(Properties.Settings.Default.logsFileName, new string[] { Path.GetDirectoryName(location), DateTime.Now.ToString("ddMMyyyy") });
                 return str;
             }
+        }
+
+        private static DataTable setRecivedDate(DataTable dt)
+        {
+            foreach(DataRow dr in dt.Rows)
+            {
+                DateTime baseDate = (DateTime)dr["orderDate"];
+                switch (DateTime.Now.DayOfWeek)
+                {
+                    case DayOfWeek.Monday: baseDate = baseDate.AddDays(-2); break;
+                    case DayOfWeek.Tuesday: baseDate = baseDate.AddDays(-3); break;
+                }
+                var thisWeekStart = baseDate.AddDays(-(int)baseDate.DayOfWeek).AddDays(+3);
+                var thisWeekEnd = thisWeekStart.AddDays(7).AddSeconds(-1);
+                //dr["orderDate"] = baseDate.ToString("dd/MM/yyyy HH:mm");
+                dr["recivedDate"] = thisWeekEnd.AddDays(+4).ToString("dd/MM/yyyy HH:mm");
+            }
+
+            return dt;
         }
 
     }
