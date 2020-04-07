@@ -5,9 +5,10 @@
 
 <h2>Import Material PRODUCT POS PREMIUM</h2>
 
-@using (Ajax.BeginForm("Index", "ImportMaterial_PRODUCT_POS_PREMIUM", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { enctype = "multipart/form-data", id = "divUpload" }))
+@using (Html.BeginForm("Index", "ImportMaterial_PRODUCT_POS_PREMIUM", FormMethod.Post, new { enctype = "multipart/form-data", id = "divUpload" }))
 {
-
+    @*@using (Ajax.BeginForm("Index", "ImportMaterial_PRODUCT_POS_PREMIUM", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { enctype = "multipart/form-data", id = "divUpload" }))
+        {*@
     @Html.TextBoxFor(m => m.file, new { type = "file" })
     <br />
     <div>
@@ -58,5 +59,15 @@
             $("#WaitDialog").show();
             $("#divUpload").submit();
         }
+    }
+    function beginQuery() {
+
+    }
+    function successQuery() {
+
+    }
+    function failureQuery(data) {
+        console.log('fail');
+        console.log(data);
     }
 </script>

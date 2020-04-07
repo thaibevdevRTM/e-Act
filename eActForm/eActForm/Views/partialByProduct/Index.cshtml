@@ -87,7 +87,10 @@
 
     <script>
         function clearText(txt) {
-            txt.value = '';
+            if (txt.value == 0) {
+                txt.value = '';
+            }
+            
         }
         function sumall() {
             var totalAll = 0.00;
