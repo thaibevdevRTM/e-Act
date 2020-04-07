@@ -4,6 +4,8 @@ using System;
 using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
+using WebLibrary;
+
 namespace eActForm.Controllers
 {
     [LoginExpire]
@@ -76,29 +78,36 @@ namespace eActForm.Controllers
 
         public ActionResult requestDeleteDoc(string actId, string statusId, string statusNote)
         {
-            //return RedirectToAction("index");
-            AjaxResult result = new AjaxResult();
-            result.Success = false;
-            if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isOtherCompanyMT()))
+            try
             {
-                // case delete
-                result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
-                if (statusId == "6" && result.Success && !ActFormAppCode.isOtherCompanyMT())
+                AjaxResult result = new AjaxResult();
+                result.Success = false;
+                if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isOtherCompanyMT()))
                 {
-                    EmailAppCodes.sendRequestCancelToAdmin(actId);
+                    // case delete
+                    result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
+                    if (statusId == "6" && result.Success && !ActFormAppCode.isOtherCompanyMT())
+                    {
+                        EmailAppCodes.sendRequestCancelToAdmin(actId);
+                    }
                 }
+                else if (statusId == "5" || statusId == "3")
+                {
+                    // waiting delete
+                    result.Success = ActFormAppCode.updateWaitingCancel(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
+                    if (result.Success)
+                    {
+                        EmailAppCodes.sendRequestCancelToAdmin(actId);
+                    }
+                }
+                TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];
+                ApproveAppCode.setCountWatingApprove();
             }
-            else if (statusId == "5" || statusId == "3")
+            catch(Exception ex)
             {
-                // waiting delete
-                result.Success = ActFormAppCode.updateWaitingCancel(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
-                if (result.Success)
-                {
-                    EmailAppCodes.sendRequestCancelToAdmin(actId);
-                }
+                ExceptionManager.WriteError("requestDeleteDoc => " + ex.Message);
             }
-          
-            TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];
+            
             return RedirectToAction("myDoc");
         }
 
@@ -163,7 +172,7 @@ namespace eActForm.Controllers
             };
 
             TempData["SearchDataModel"] = model;
-            return RedirectToAction("myDoc");
+            return RedirectToAction("Index");
         }
 
         public ActionResult logOut()
