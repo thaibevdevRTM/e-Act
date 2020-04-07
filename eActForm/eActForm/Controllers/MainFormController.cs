@@ -26,7 +26,7 @@ namespace eActForm.Controllers
                 if (!string.IsNullOrEmpty(activityId))
                 {
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-                    if (ConfigurationManager.AppSettings["masterEmpExpense"] == master_type_form_id )
+                    if (ConfigurationManager.AppSettings["masterEmpExpense"] == master_type_form_id)
                     {
                         activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"];
                         activity_TBMMKT_Model = exPerryCashAppCode.processDataExpense(activity_TBMMKT_Model, activityId);
@@ -34,7 +34,7 @@ namespace eActForm.Controllers
 
                     activityFormTBMMKT.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
                     activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
-                    activityFormTBMMKT.formCompanyId = activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId;
+                    activityFormTBMMKT.formCompanyId = string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId) ? activity_TBMMKT_Model.activityFormTBMMKT.companyId : activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId;
 
                     //===================Get Subject=======================
                     objGetDataSubjectByChanelOrBrand objGetDataSubjectBy = new objGetDataSubjectByChanelOrBrand();

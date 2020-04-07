@@ -180,6 +180,12 @@ namespace eActForm.Controllers
         }
         public ActionResult empInfoDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            if (activity_TBMMKT_Model.activityFormTBMMKT.mode == AppCode.Mode.edit.ToString())
+            {
+                activity_TBMMKT_Model.empInfoModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng).FirstOrDefault();
+
+            }
+                      
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult expensesTrvDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)

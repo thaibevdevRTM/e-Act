@@ -52,6 +52,40 @@ namespace eActForm.BusinessLayer
                 return new List<CostThemeDetailOfGroupByPriceTBMMKT>();
             }
         }
+        public static List<CostThemeDetailOfGroupByPriceTBMMKT> getWithListChoice(string activityId, string formId, string type)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEstimateWithListchoiceByActivityId"
+                 , new SqlParameter("@activityId", activityId)
+                  , new SqlParameter("@formId", formId)
+                   , new SqlParameter("@type", type));
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new CostThemeDetailOfGroupByPriceTBMMKT()
+                              {
+
+                                  listChoiceId = d["listChoiceId"].ToString(),
+                                  listChoiceName = d["listChoiceName"].ToString(),
+                                  productDetail = d["productDetail"].ToString(),
+                                  unit = d["unit"].ToString() == "" ? 0 : int.Parse(d["unit"].ToString()),
+                                  unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
+                                  unitPriceDisplay = d["unitPrice"].ToString() == "" ? "0.00" : string.Format("{0:n2}", decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString()))),
+                                  total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
+                                  displayType = d["displayType"].ToString(),
+                                  subDisplayType = d["subDisplayType"].ToString()
+
+
+                              });
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getWithListChoice => " + ex.Message);
+                return new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+            }
+        }
 
     }
 }

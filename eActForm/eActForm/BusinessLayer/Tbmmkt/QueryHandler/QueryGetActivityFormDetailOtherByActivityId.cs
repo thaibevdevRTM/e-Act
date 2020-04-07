@@ -47,6 +47,7 @@ namespace eActForm.BusinessLayer
                                   toAddress = d["toAddress"].ToString(),
                                   toContact = d["toContact"].ToString(),
                                   detailContact = d["detailContact"].ToString(),
+                                  orderOf = d["orderOf"].ToString(),
                               });
 
                 return result.ToList();

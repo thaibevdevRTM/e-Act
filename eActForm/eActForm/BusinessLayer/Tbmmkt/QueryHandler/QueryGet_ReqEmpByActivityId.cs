@@ -32,7 +32,8 @@ namespace eActForm.BusinessLayer
                                  positionEN = d["empPositionTitleEN"].ToString(),
                                  departmentEN = d["empDepartmentEN"].ToString(),
                                  buEN = d["empDivisionEN"].ToString(),
-
+                                 empTel = d["empTel"].ToString(),
+                                 
                              });
                 return lists.OrderBy(x => x.rowNo).ToList();
             }

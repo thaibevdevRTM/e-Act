@@ -65,12 +65,18 @@
                                             @if (item.displayType == ConfigurationManager.AppSettings["dropdownHtml"])
                                             {
 
-                                                @Html.DropDownListFor(x => x.expensesDetailModel.costDetailLists[index].productDetail, new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1, "name", "name"), "", new
-                                           {
-                                               @class = "form-control selectpicker",
-                                               @id = "ProductDetail_" + @index,
+                                                @Html.DropDownListFor(x => x.expensesDetailModel.costDetailLists[index].productDetail,
+                                               new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
+                                               "name",
+                                               "name", @item.productDetail), "", new
+                                               {
+                                                   @class = "form-control selectpicker",
+                                                   @id = "ProductDetail_" + index,
+                                                   @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
 
-                                           })
+                                               })
+
+
                                             }
 
 
@@ -115,7 +121,7 @@
 
                                 <script>
 
-                                   
+
 
                                     $("#txtUnitPrice_@index").blur(function () {
 
@@ -199,6 +205,7 @@
 
 
                 <script>
+
                             function sumall() {
                                 var totalAll = 0.00;
                                 var rowCount = '@Model.expensesDetailModel.costDetailLists.Count';
@@ -209,7 +216,8 @@
                                 }
                                 $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                                 $("#totalEstimate").val(totalAll);
-                            }
+                    }
+                    sumall();
                 </script>
 
             </div>

@@ -716,6 +716,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    ,new SqlParameter("@orderOf",(model.orderOf == null ? "" : model.orderOf))
                     });
             }
             catch (Exception ex)
@@ -794,8 +795,9 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@typeTheme",(model.typeTheme == null ? "" : model.typeTheme))
                     ,new SqlParameter("@date",model.date)
                     ,new SqlParameter("@detail",model.detail)
+                    ,new SqlParameter("@listChoiceId",(model.listChoiceId == null ? "" : model.listChoiceId))
 
-            });
+                });
             }
             catch (Exception ex)
             {
@@ -1190,8 +1192,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
-
-                    });
+                    ,new SqlParameter("@empTel",(model.empTel == null ? "" : model.empTel))
+                });
             }
             catch (Exception ex)
             {
@@ -1219,8 +1221,9 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
-
-                    });
+                    ,new SqlParameter("@depart",(model.depart == null ? "" : model.depart))
+                    ,new SqlParameter("@arrived",(model.arrived == null ? "" : model.arrived))
+                });
             }
             catch (Exception ex)
             {
