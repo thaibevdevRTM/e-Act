@@ -33,10 +33,8 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAsse
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
-D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.dll
-D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.pdb
-D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\bin\Debug\Microsoft.Exchange.WebServices.xml
-D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
-D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
-D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
-D:\work\project\source code\e-Act MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
+D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.dll
+D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.pdb
+D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
+D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
+D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb

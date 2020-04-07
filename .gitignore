@@ -23,3 +23,7 @@ eActForm/eForms.Presenter/obj/*
 *.cache
 eActForm/webLibrary/obj/*
 eActForm/eActForm/Properties/*
+eActForm/eActConsoleServiceWeekly/obj/*
+*.xlsx
+*.cache
+eActForm/eActConsoleServiceWeekly/bin/*

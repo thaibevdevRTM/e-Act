@@ -168,6 +168,30 @@
                     <td class="textRight"></td>
                 </tr>
             </table>
+            <br />
+            <br />
+
+
+            <table border="1" cellpadding="0" cellspacing="0" style="width: 969px">
+                <tr height="20">
+                    <td width="64">หน่วย</td>
+                    <td width="64">ชื่อผู้สั่ง</td>
+                    <td align="right" width="64">เบอร์</td>
+                    <td width="64">สินค้า</td>
+                    <td align="right" width="64">จำนวน</td>
+                    <td align="right" width="64">ราคา</td>
+                    <td width="64">รายละเอียด</td>
+                </tr>
+                <tr height="20">
+                    <td width="64">หน่วยเมืองชัยนาท</td>
+                    <td width="64">ภาณุพงศ์ คณานุกูล</td>
+                    <td align="right" width="64">9E+08</td>
+                    <td width="64">crystal 600 ml. pack 12</td>
+                    <td align="right" width="64">7</td>
+                    <td align="right" width="64">350</td>
+                    <td width="64">พนักงาน 11035585 ชื่อ ภาณุพงศ์ คณานุกูล เบอร์ติดต่อ 0899999999 email parnupong.k@thaibev.com สั่งสินค้าส่งจังหวัด ชัยนาท หน่วย หน่วยเมืองชัยนาท</td>
+                </tr>
+            </table>
         </div>
 
     </div>

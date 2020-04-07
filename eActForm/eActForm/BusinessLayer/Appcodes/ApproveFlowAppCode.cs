@@ -125,7 +125,14 @@ namespace eActForm.BusinessLayer
                     string checkFlowApprove = checkFlowBeforeByActId(actFormId);
                     if (!string.IsNullOrEmpty(checkFlowApprove))
                     {
-                        model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
+                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType)
+                        {
+                            model.flowDetail = getFlowDetailExpense(checkFlowApprove, actFormId);
+                        }
+                        else
+                        {
+                            model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
+                        }
                     }
                     else
                     {

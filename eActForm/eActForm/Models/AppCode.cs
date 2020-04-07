@@ -109,7 +109,7 @@ namespace eActForm.Models
                     using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
                     {
 
-                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"))))
+                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>").Replace(".jfif\">", ".jfif\"/>"))))
                         {
                             XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
                         }
@@ -284,13 +284,13 @@ namespace eActForm.Models
         public static string mergePDF(string rootPathOutput, string[] pathFile)
         {
             string result = string.Empty;
+            PdfReader reader = null/* TODO Change to default(_) if this is not a reference type */;
+            Document sourceDocument = null/* TODO Change to default(_) if this is not a reference type */;
+            PdfCopy pdfCopyProvider = null/* TODO Change to default(_) if this is not a reference type */;
+            PdfImportedPage importedPage;
+            sourceDocument = new Document();
             try
             {
-                PdfReader reader = null/* TODO Change to default(_) if this is not a reference type */;
-                Document sourceDocument = null/* TODO Change to default(_) if this is not a reference type */;
-                PdfCopy pdfCopyProvider = null/* TODO Change to default(_) if this is not a reference type */;
-                PdfImportedPage importedPage;
-                sourceDocument = new Document();
                 pdfCopyProvider = new PdfCopy(sourceDocument, new System.IO.FileStream(rootPathOutput, System.IO.FileMode.Create));
                 sourceDocument.Open();
 
@@ -312,6 +312,11 @@ namespace eActForm.Models
             }
             catch (Exception ex)
             {
+
+                sourceDocument.Close();
+                File.Delete(rootPathOutput);
+                string replace = rootPathOutput.Replace(".pdf", "_.pdf");
+                File.Copy(replace, rootPathOutput);
                 result = "error" + ex.Message;
                 ExceptionManager.WriteError(ex.Message + ">> mergePDF");
             }
