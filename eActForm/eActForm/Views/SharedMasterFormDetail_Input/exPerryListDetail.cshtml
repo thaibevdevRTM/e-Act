@@ -35,7 +35,7 @@
                       new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail(this)" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].unitPrice, new { @class = "form-control textboxcss font10 textRight", onkeyup = "getLite()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].compensate, "{0:0.000}",new { @class = "form-control textboxcss font10 textRight", onkeyup = "getLite()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getValues()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
 
@@ -306,12 +306,12 @@
         var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowTravel').length);
 
         for (i = 0; i < rowCount; i++) {
-            var x = document.getElementsByName("activityOfEstimateList[" + i + "].unitPrice");
+            var x = document.getElementsByName("activityOfEstimateList[" + i + "].compensate");
             var rowtotal = parseFloat($(x).val());
             if (isNaN(rowtotal)) rowtotal = 0;
             totalAll = totalAll + rowtotal;
         }
-        document.getElementById('lblLite').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        document.getElementById('lblLite').innerHTML = totalAll.toFixed(3).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     }
 
 
