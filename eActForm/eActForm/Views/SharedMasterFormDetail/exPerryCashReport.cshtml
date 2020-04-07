@@ -147,11 +147,11 @@
                             {@item.date.Value.ToString("dd/MM/yyyy")}
                         </td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="fontDocSmall">@item.productDetail</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="fontDocSmall">@item.unit</td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="fontDocSmall">@item.unitPrice</td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="fontDocSmall">@string.Format("{0:n2}", @item.total)</td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="fontDocSmall">@item.remark</td>
                     </tr>
-                    unit = item.unit + unit;
+                    unit = item.unitPrice + unit;
                     total = item.total == null ? 0 + total : item.total + total;
                 }
                 <tr>
