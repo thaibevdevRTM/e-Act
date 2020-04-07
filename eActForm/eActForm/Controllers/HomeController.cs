@@ -150,6 +150,22 @@ namespace eActForm.Controllers
             return RedirectToAction("myDoc");
         }
 
+
+
+        public ActionResult searchForIconReject()
+        {
+            string count = Request.Form.AllKeys.Count().ToString();
+
+            Activity_Model.actForms model;
+            model = new Activity_Model.actForms
+            {
+                actLists = ActFormAppCode.getActFormRejectByEmpId()
+            };
+
+            TempData["SearchDataModel"] = model;
+            return RedirectToAction("myDoc");
+        }
+
         public ActionResult logOut()
         {
             UtilsAppCode.Session.User = null;
