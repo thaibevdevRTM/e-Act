@@ -78,9 +78,9 @@ namespace eActForm.Controllers
 
         public ActionResult requestDeleteDoc(string actId, string statusId, string statusNote,string typeForm)
         {
+            AjaxResult result = new AjaxResult();
             try
             {
-                AjaxResult result = new AjaxResult();
                 result.Success = false;
                 if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isOtherCompanyMT()))
                 {
@@ -100,15 +100,13 @@ namespace eActForm.Controllers
                         EmailAppCodes.sendRequestCancelToAdmin(actId);
                     }
                 }
-                TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];
                 ApproveAppCode.setCountWatingApprove();
             }
             catch(Exception ex)
             {
                 ExceptionManager.WriteError("requestDeleteDoc => " + ex.Message);
             }
-          
-            TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];
+         
             return RedirectToAction("myDoc", new { typeForm = typeForm });
         }
 
