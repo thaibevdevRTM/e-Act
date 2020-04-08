@@ -76,7 +76,7 @@ namespace eActForm.Controllers
 
 
 
-        public ActionResult requestDeleteDoc(string actId, string statusId, string statusNote)
+        public ActionResult requestDeleteDoc(string actId, string statusId, string statusNote,string typeForm)
         {
             try
             {
@@ -107,8 +107,9 @@ namespace eActForm.Controllers
             {
                 ExceptionManager.WriteError("requestDeleteDoc => " + ex.Message);
             }
-            
-            return RedirectToAction("myDoc");
+          
+            TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];
+            return RedirectToAction("myDoc", new { typeForm = typeForm });
         }
 
         public ActionResult searchActForm(string activityType)
