@@ -235,13 +235,13 @@ namespace eActForm.BusinessLayer
 
         public static bool isOtherCompanyMT()
         {
-            return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] ||
-                UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+            return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] ||
+                UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] ? false : true;
         }
         public static bool isOtherCompanyMTOfDoc(string compId)
         {
-            return compId == ConfigurationManager.AppSettings["companyId_TBM"] ||
-               compId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+            return compId == ConfigurationManager.AppSettings["companyId_MT"] ||
+               compId == ConfigurationManager.AppSettings["companyId_OMT"] ? false : true;
         }
         public static bool isAdmin()
         {

@@ -542,7 +542,7 @@ namespace eActForm.BusinessLayer
                             }
                         }
 
-                        if (ActFormAppCode.isOtherCompanyMTOfDoc(activity_TBMMKT_Model.activityFormTBMMKT.companyId))
+                        if (ActFormAppCode.isOtherCompanyMTOfDoc(activity_TBMMKT_Model.activityFormTBMMKT.companyId) && activity_TBMMKT_Model.activityFormTBMMKT.piorityDoc != "")
                         {
                             string strPiorityDoc = "";
                             strPiorityDoc = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]) ?
