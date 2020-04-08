@@ -37,10 +37,9 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-
-
         public ActionResult myDoc(string actId, string typeForm)
         {
+
             Activity_Model.actForms model;
             if (TempData["SearchDataModel"] != null)
             {
@@ -62,7 +61,6 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-
         public JsonResult checkActInvoice(string actId)
         {
             AjaxResult result = new AjaxResult();
@@ -72,18 +70,16 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-
-
-        public ActionResult requestDeleteDoc(string actId, string statusId, string statusNote)
+        public ActionResult requestDeleteDoc(string actId, string statusId, string statusNote, string typeForm)
         {
             //return RedirectToAction("index");
             AjaxResult result = new AjaxResult();
             result.Success = false;
-            if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isOtherCompanyMT()))
+            if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isOtherCompanyMTOfDocByActId(actId)))
             {
                 // case delete
                 result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
-                if (statusId == "6" && result.Success && !ActFormAppCode.isOtherCompanyMT())
+                if (statusId == "6" && result.Success && !ActFormAppCode.isOtherCompanyMTOfDocByActId(actId))
                 {
                     EmailAppCodes.sendRequestCancelToAdmin(actId);
                 }
@@ -97,9 +93,8 @@ namespace eActForm.Controllers
                     EmailAppCodes.sendRequestCancelToAdmin(actId);
                 }
             }
-          
             TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];
-            return RedirectToAction("myDoc");
+            return RedirectToAction("myDoc", new { actId = "", typeForm = typeForm });
         }
 
         public ActionResult searchActForm(string activityType)
@@ -166,6 +161,14 @@ namespace eActForm.Controllers
             AjaxResult result = new AjaxResult();
 
             result.Message = ActFormAppCode.getStatusNote(actId);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult checkCompany(string actId)
+        {
+            AjaxResult result = new AjaxResult();
+
+            result.Success = ActFormAppCode.isOtherCompanyMTOfDocByActId(actId);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

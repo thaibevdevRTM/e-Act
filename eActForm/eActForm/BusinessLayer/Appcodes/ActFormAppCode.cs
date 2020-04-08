@@ -233,7 +233,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static bool isOtherCompanyMT()
+        public static bool _isOtherCompanyMT()
         {
             return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] ||
                 UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] ? false : true;
@@ -242,6 +242,16 @@ namespace eActForm.BusinessLayer
         {
             return compId == ConfigurationManager.AppSettings["companyId_MT"] ||
                compId == ConfigurationManager.AppSettings["companyId_OMT"] ? false : true;
+        }
+        public static bool isOtherCompanyMTOfDocByActId(string actId)
+        {
+            string compId = "";
+            if (actId != "")
+            {
+                compId = QueryGetActivityByIdTBMMKT.getActivityById(actId).FirstOrDefault().companyId;
+            }
+            return compId == ConfigurationManager.AppSettings["companyId_MT"] ||
+                 compId == ConfigurationManager.AppSettings["companyId_OMT"] ? false : true;
         }
         public static bool isAdmin()
         {
