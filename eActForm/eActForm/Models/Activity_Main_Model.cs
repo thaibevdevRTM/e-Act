@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using eForms.Models.MasterData;
 
 namespace eActForm.Models
 {
@@ -55,7 +56,9 @@ namespace eActForm.Models
 
         public ApproveModel.approveModels approveModels { get; set; }
 
-}
+        public List<FiscalYearModel> listFiscalYearModel { get; set; }
+        
+    }
 
     public class ActivityFormTBMMKT : ActivityForm
     {
@@ -80,7 +83,8 @@ namespace eActForm.Models
         public string formNameEn { get; set; }
         public bool chkUseEng { get; set; }
         public string createdByNameEN { get; set; }
-       
+        public string listFiscalYearModelSelect { get; set; }
+
     }
 
     public class TB_Reg_Subject
