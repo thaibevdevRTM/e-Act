@@ -105,6 +105,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.typeTheme = item.typeTheme;
                     costThemeDetail.date = string.IsNullOrEmpty(item.dateInput) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(item.dateInput, ConfigurationManager.AppSettings["formatDateUse"]);
                     costThemeDetail.detail = item.detail;
+                    costThemeDetail.compensate = item.compensate;
                     rtn += insertEstimate(costThemeDetail);
 
                     insertIndex++;
@@ -793,6 +794,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@typeTheme",(model.typeTheme == null ? "" : model.typeTheme))
                     ,new SqlParameter("@date",model.date)
                     ,new SqlParameter("@detail",model.detail)
+                    ,new SqlParameter("@compensate",model.compensate)
 
             });
             }

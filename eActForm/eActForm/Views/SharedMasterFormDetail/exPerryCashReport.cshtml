@@ -6,7 +6,6 @@
     decimal? total = 0;
     decimal? totalEntertainment = 0;
     decimal? totalAdvance = 0;
-    decimal? totalExpenses = 0;
 }
 
 
@@ -147,11 +146,11 @@
                             {@item.date.Value.ToString("dd/MM/yyyy")}
                         </td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="fontDocSmall">@item.productDetail</td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="fontDocSmall">@item.unit</td>
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="fontDocSmall">@string.Format("{0:0.###}", @item.compensate)</td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="fontDocSmall">@string.Format("{0:n2}", @item.total)</td>
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:center;" class="fontDocSmall">@item.remark</td>
                     </tr>
-                    unit = item.unit + unit;
+                    unit = item.compensate + unit;
                     total = item.total == null ? 0 + total : item.total + total;
                 }
                 <tr>
@@ -162,7 +161,7 @@
                     <td class="fontDocSmall" style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse; text-align:center">
                         @if (unit != 0)
                         {
-                            string result = String.Format("{0:n2}", @unit);
+                            string result = String.Format("{0:0.###}", @unit);
                             @result.ToString();
                         }
                     </td>
