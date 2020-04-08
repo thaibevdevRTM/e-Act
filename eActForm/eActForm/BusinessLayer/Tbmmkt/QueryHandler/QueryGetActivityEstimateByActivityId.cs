@@ -37,6 +37,7 @@ namespace eActForm.BusinessLayer
                                   typeTheme = d["typeTheme"].ToString(),
                                   detail = d["detail"].ToString(),
                                   date = !string.IsNullOrEmpty(d["date"].ToString()) ? DateTime.Parse(d["date"].ToString()) : (DateTime?)null,
+                                  compensate = string.IsNullOrEmpty(d["compensate"].ToString()) ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["compensate"].ToString())),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),
