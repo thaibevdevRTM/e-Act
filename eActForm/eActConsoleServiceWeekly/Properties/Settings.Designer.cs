@@ -25,8 +25,8 @@ namespace eActConsoleServiceWeekly.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.6.241.71; Initial Catalog=DBEAct_DEV;User ID=rtmDev;password=Thaib" +
-            "evRTM@DB;Max Pool Size=200;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.6.241.71; Initial Catalog=DBEAct;User ID=rtmDev;password=ThaibevRT" +
+            "M@DB;Max Pool Size=200;")]
         public string strConn {
             get {
                 return ((string)(this["strConn"]));

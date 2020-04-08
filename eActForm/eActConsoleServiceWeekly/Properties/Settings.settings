@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="strConn" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Data Source=10.6.241.71; Initial Catalog=DBEAct_DEV;User ID=rtmDev;password=ThaibevRTM@DB;Max Pool Size=200;</Value>
+      <Value Profile="(Default)">Data Source=10.6.241.71; Initial Catalog=DBEAct;User ID=rtmDev;password=ThaibevRTM@DB;Max Pool Size=200;</Value>
     </Setting>
     <Setting Name="strMailUser" Type="System.String" Scope="Application">
       <Value Profile="(Default)">devrtm@thaibev.com</Value>
