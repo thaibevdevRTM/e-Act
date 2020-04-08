@@ -68,6 +68,7 @@
                 actId: actId,
                 statusId: statusId,
                 statusNote: statusNote,
+                typeForm:'@Model.typeForm',
             },
         }).done(function (htmlResponse) {
             $("#getQuery").html(htmlResponse);
