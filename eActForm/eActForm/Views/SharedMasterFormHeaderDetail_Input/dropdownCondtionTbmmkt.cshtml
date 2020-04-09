@@ -204,6 +204,13 @@
                             $("#txtglName").val("");
                         }
                     }
+
+                         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]')
+                        {
+                             $("#ddl_EO_PV").multiselect('dataprovider', null);
+                             $('#ddlBrand').val("");
+                             $('#ddlChannel').val("");
+                        }
                 });
 
                 </script>
@@ -211,10 +218,10 @@
 
                 <script>
                     $('#ddlChannel').change(function () {
-                        bindDropdownSubject()
+                        bindDropdownSubject();
                     });
                     $('#ddlBrand').change(function () {
-                        bindDropdownSubject()
+                        bindDropdownSubject();
                     });
                     function bindDropdownSubject() {
                         var valDropdown = '';
@@ -251,6 +258,11 @@
                                     alert("Error Get Subject.");
                                 }
                             });
+
+                        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]')
+                        {
+                                bindDropdownEO();
+                        }
                 }
 
                 </script>

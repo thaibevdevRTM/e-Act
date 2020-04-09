@@ -5,6 +5,7 @@ using eForms.Presenter.MasterData;
 using System.Globalization;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace eActForm.Controllers
 {
@@ -51,6 +52,15 @@ namespace eActForm.Controllers
                 }
             }
             activity_TBMMKT_Model.listFiscalYearModel = FiscalYearPresenter.getFiscalYearByYear(AppCode.StrCon, yearFrom, yearTo).OrderByDescending(m => m.UseYear).ToList();
+
+            if(activity_TBMMKT_Model.listGetDataEO == null)
+            {
+                List<GetDataEO> getDataEO = new List<GetDataEO>();
+                activity_TBMMKT_Model.listGetDataEO = getDataEO;
+                //activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = "";
+            }
+            
+
 
             return PartialView(activity_TBMMKT_Model);
         }

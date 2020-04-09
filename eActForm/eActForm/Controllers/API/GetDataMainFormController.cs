@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Configuration;
 
 namespace eActForm.Controllers
 {
@@ -129,6 +130,32 @@ namespace eActForm.Controllers
                 var resultData = new
                 {
                     tB_Act_Master_Material_Models = tB_Act_Master_Material_Models.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDataEOPaymentVoucher(ObjGetDataEO objGetDataEO)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                if (objGetDataEO.channelId == null) { objGetDataEO.channelId = ""; }
+                if (objGetDataEO.productBrandId == null) { objGetDataEO.productBrandId = ""; }
+                if (objGetDataEO.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]) { objGetDataEO.master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"]; }
+
+                List<GetDataEO> tbToAjax = new List<GetDataEO>();
+                tbToAjax = QueryGetSelectMainForm.GetQueryDataEOPaymentVoucher(objGetDataEO);
+
+                var resultData = new
+                {
+                    tbToAjax = tbToAjax.ToList(),
                 };
                 result.Data = resultData;
             }

@@ -57,7 +57,8 @@ namespace eActForm.Models
         public ApproveModel.approveModels approveModels { get; set; }
 
         public List<FiscalYearModel> listFiscalYearModel { get; set; }
-        
+        public List<GetDataEO> listGetDataEO { get; set; }
+
     }
 
     public class ActivityFormTBMMKT : ActivityForm
@@ -251,4 +252,19 @@ namespace eActForm.Models
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
     }
+
+    public class ObjGetDataEO
+    {
+        public string fiscalYear { get; set; }
+        public string master_type_form_id { get; set; }
+        public string productBrandId { get; set; }
+        public string channelId { get; set; }
+    }
+
+    public class GetDataEO
+    {
+        public string EO { get; set; }
+        public string activityId { get; set; }
+    }
+
 }
