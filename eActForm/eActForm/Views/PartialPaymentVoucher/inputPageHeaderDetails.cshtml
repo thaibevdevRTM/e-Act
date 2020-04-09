@@ -47,6 +47,12 @@
                                         <script>
                                             $('#ddlFiscalYear').change(function () {
                                                 bindDropdownEO();
+                                                if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]')
+                                                {
+                                                    if ($('#ddlFiscalYear').val()=="") {
+                                                       $("#ddl_EO_PV").multiselect('dataprovider', null);
+                                                   }
+                                                }
                                             });
                                             function bindDropdownEO() {
                                                 var valproductBrandId = '';
