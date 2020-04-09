@@ -169,7 +169,7 @@
             if ('@UtilsAppCode.Session.User.isCreator' == 'True' && '@UtilsAppCode.Session.User.countRejectAct' != '0') {
                 (new PNotify({
                     title: 'แจ้งเตือน' ,
-                    text: 'คุณมีเอกสารไม่รับการอนุมัติ <br/>จำนวน '+'@UtilsAppCode.Session.User.countRejectAct' +' รายการ',
+                    text: '<a href="@Url.Action("searchForIconReject", "Home")">คุณมีเอกสารไม่รับการอนุมัติ <br/>จำนวน '+'@UtilsAppCode.Session.User.countRejectAct' +' รายการ</a>' ,
                     hide: false,
                     styling: 'bootstrap3',
                     addclass: "sizeFont15",

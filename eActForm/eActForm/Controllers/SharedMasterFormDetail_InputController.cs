@@ -129,7 +129,6 @@ namespace eActForm.Controllers
 
         public ActionResult exPerryCashDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            activity_TBMMKT_Model.companyList = QueryGetAllCompany.getAllCompany();
             return PartialView(activity_TBMMKT_Model);
         }
 
@@ -147,25 +146,16 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId.Equals("1")).ToList();
                 if (!activity_TBMMKT_Model.activityOfEstimateList.Any())
                 {
-                    //for (int i = 0; i < 6; i++)
-                    //{
                     activity_TBMMKT_Model.activityOfEstimateList.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
-                    // }
                     activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
                 }
 
                 activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId.Equals("2")).ToList();
                 if (!activity_TBMMKT_Model.activityOfEstimateList2.Any())
                 {
-                    //for (int i = 0; i < 6; i++)
-                    //{
                     activity_TBMMKT_Model.activityOfEstimateList2.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
-                    // }
                     activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
                 }
-
-                activity_TBMMKT_Model.exPerryCashList = exPerryCashAppCode.getCashPosition(UtilsAppCode.Session.User.empId);
-                activity_TBMMKT_Model.exPerryCashModel.rulesCash = activity_TBMMKT_Model.exPerryCashList.Any() ? activity_TBMMKT_Model.exPerryCashList.Where(x => x.cashLimitId.Equals(ConfigurationManager.AppSettings["limitCertification"])).FirstOrDefault().cash : 0;
             }
             catch (Exception ex)
             {

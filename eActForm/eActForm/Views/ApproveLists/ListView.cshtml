@@ -47,9 +47,10 @@
                         @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
                         {
                             <td class="a-center ">
-
-                                <input type="checkbox" id="chk_@item.id" class="icheckbox_flat-green" value="@item.id" name="chk_approve">
-
+                                @if (item.statusId == "2")
+                                {
+                                    <input type="checkbox" id="chk_@item.id" class="icheckbox_flat-green" value="@item.id" name="chk_approve">
+                                }
                             </td>
                         }
                         <td>
