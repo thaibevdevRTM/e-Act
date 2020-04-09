@@ -146,20 +146,14 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId.Equals("1")).ToList();
                 if (!activity_TBMMKT_Model.activityOfEstimateList.Any())
                 {
-                    //for (int i = 0; i < 6; i++)
-                    //{
                     activity_TBMMKT_Model.activityOfEstimateList.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
-                    // }
                     activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
                 }
 
                 activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId.Equals("2")).ToList();
                 if (!activity_TBMMKT_Model.activityOfEstimateList2.Any())
                 {
-                    //for (int i = 0; i < 6; i++)
-                    //{
                     activity_TBMMKT_Model.activityOfEstimateList2.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
-                    // }
                     activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
                 }
             }
