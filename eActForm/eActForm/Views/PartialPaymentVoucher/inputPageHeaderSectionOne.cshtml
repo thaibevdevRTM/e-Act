@@ -1,0 +1,84 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Configuration;
+
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr style="">
+        <td>
+            <div id="divHeaderDetails" runat="server" style="width: 100%;">
+                <table style="width: 100%;" id="tabelHeaderDetails" runat="server">
+                    <tr>
+                        <td>
+                            <style>
+                                .hrTab {
+                                    background-color: #d4c8c8;
+                                    height: 35px;
+                                }
+                            </style>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-xs-12 hrTab">
+                                    ส่วนที่ 1
+                                </label>
+                                <label class="control-label col-md-10 col-xs-12 hrTab">
+                                    &nbsp;
+                                </label>
+                            </div>
+                            <div class="form-group">
+
+                                <label class="control-label col-md-2 col-xs-12">
+                                    @Resources.Global.purpose
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextAreaFor(x => x.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective", style = "", @rows = "1" })
+                                    </div>
+                                </div>
+
+                                <label class="control-label col-md-2 col-xs-12">
+                                    ที่อยู่ :
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toAddress, new { @class = "form-control textboxcss", @id = "txttoAddress", @readonly = "readonly" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label class="control-label col-md-2 col-xs-12">
+                                    Supplier :
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+
+                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.listFiscalYearModelSelect, new SelectList(Model.listFiscalYearModel, "UseYear", "UseYear", ""), "", new
+                                   {
+                                       @class = "form-control selectpicker",
+                                       id = "ddlAP"
+                                   })
+                                    </div>
+                                </div>
+
+                                <label class="control-label col-md-2 col-xs-12">
+                                    Tel/Fax :
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txttoContact", style = "", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

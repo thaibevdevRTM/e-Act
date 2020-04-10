@@ -32,7 +32,6 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-
         public ActionResult inputPageHeaderDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             string yearFrom = "";
@@ -64,5 +63,11 @@ namespace eActForm.Controllers
 
             return PartialView(activity_TBMMKT_Model);
         }
+        
+        public ActionResult inputPageHeaderSectionOne(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            return PartialView(activity_TBMMKT_Model);
+        }
+
     }
 }
