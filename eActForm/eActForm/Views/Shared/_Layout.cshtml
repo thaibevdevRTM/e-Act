@@ -158,7 +158,7 @@
 
                 (new PNotify({
                     title: 'แจ้งเตือน',
-                    text: 'เอกสารที่คุณ"อนุมัติ"ไม่ได้รับการอนุมัติ <br/>จำนวน ' + '@UtilsAppCode.Session.User.countApproveReject' +' รายการ',
+                    text: '<a href="@Url.Action("getRejectApproveByEmpId", "ApproveLists")">เอกสารที่คุณ"อนุมัติ"ไม่ได้รับการอนุมัติ <br/>จำนวน ' + '@UtilsAppCode.Session.User.countApproveReject' +' รายการ',
 
                     hide: false,
                     styling: 'bootstrap3',

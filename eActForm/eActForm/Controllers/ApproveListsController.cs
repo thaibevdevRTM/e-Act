@@ -93,6 +93,18 @@ namespace eActForm.Controllers
             return RedirectToAction("ListView");
         }
 
+
+        public ActionResult getRejectApproveByEmpId()
+        {
+            Activity_Model.actForms model = new Activity_Model.actForms();
+            model = new Activity_Model.actForms();
+            model.actLists = ApproveListAppCode.getRejectApproveListsByEmpId(UtilsAppCode.Session.User.empId);
+            //model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.ไม่อนุมัติ);
+            TempData["ApproveSearchResult"] = model.actLists;
+            return RedirectToAction("Index");
+        }
+
+
         [HttpPost]
         public JsonResult insertApproveList(string actId, string status, string approveType)
         {

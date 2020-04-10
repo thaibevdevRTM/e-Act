@@ -174,6 +174,19 @@ namespace eActForm.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult searchForIconRejectApprove()
+        {
+            string count = Request.Form.AllKeys.Count().ToString();
+            Activity_Model.actForms model;
+            model = new Activity_Model.actForms
+            {
+                actLists = ActFormAppCode.getActFormRejectByEmpId()
+            };
+
+            TempData["SearchDataModel"] = model;
+            return RedirectToAction("Index");
+        }
+
         public ActionResult logOut()
         {
             UtilsAppCode.Session.User = null;
