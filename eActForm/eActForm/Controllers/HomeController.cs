@@ -162,8 +162,6 @@ namespace eActForm.Controllers
 
         public ActionResult searchForIconReject()
         {
-            string count = Request.Form.AllKeys.Count().ToString();
-
             Activity_Model.actForms model;
             model = new Activity_Model.actForms
             {
@@ -176,7 +174,6 @@ namespace eActForm.Controllers
 
         public ActionResult searchForIconRejectApprove()
         {
-            string count = Request.Form.AllKeys.Count().ToString();
             Activity_Model.actForms model;
             model = new Activity_Model.actForms
             {
