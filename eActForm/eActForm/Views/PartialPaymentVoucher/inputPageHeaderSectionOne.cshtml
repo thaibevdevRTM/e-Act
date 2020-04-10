@@ -33,7 +33,7 @@
 
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-                                        @Html.TextAreaFor(x => x.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective", style = "", @rows = "1" })
+                                        @Html.TextAreaFor(x => x.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective", style = "", @rows = "2" })
                                     </div>
                                 </div>
 
@@ -43,7 +43,7 @@
 
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toAddress, new { @class = "form-control textboxcss", @id = "txttoAddress", @readonly = "readonly" })
+                                        @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.toAddress, new { @class = "form-control textboxcss", @id = "txttoAddress", @readonly = "readonly", @rows = "2" })
                                     </div>
                                 </div>
 
@@ -64,12 +64,31 @@
                                        id = "ddlAP"
                                    })
 
-                                       <script>
-                                           $('#ddlAP').selectpicker({
-                                               liveSearch: true,
-                                               showSubtext: true
-                                           });
-                                       </script>
+                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.listAPSelect, new SelectList(Model.listAPModel, "APCode", "FullAddress", ""), "", new
+                                   {
+                                       @class = "form-control",
+                                       @style = "display:none;",
+                                       id = "ddlAPFullAddress"
+                                   })
+                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.listAPSelect, new SelectList(Model.listAPModel, "APCode", "TelAndFax", ""), "", new
+                                   {
+                                       @class = "form-control",
+                                       @style = "display:none;",
+                                       id = "ddlAPTelAndFax"
+                                   })
+
+                                        <script>
+                                            $('#ddlAP').selectpicker({
+                                                liveSearch: true,
+                                                showSubtext: true
+                                            });
+                                            $('#ddlAP').change(function () {
+                                                $('#ddlAPFullAddress').val($('#ddlAP').val());
+                                                $('#ddlAPTelAndFax').val($('#ddlAP').val());
+                                                $('#txttoAddress').val($('#ddlAPFullAddress option:selected').text());
+                                                $('#txttoContact').val($('#ddlAPTelAndFax option:selected').text());
+                                            });
+                                        </script>
                                     </div>
                                 </div>
 
