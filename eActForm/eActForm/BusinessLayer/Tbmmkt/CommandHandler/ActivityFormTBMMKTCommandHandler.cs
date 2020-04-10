@@ -239,7 +239,9 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.toContact = model.tB_Act_ActivityForm_DetailOther.toContact;
                 tB_Act_ActivityForm_DetailOther.detailContact = model.tB_Act_ActivityForm_DetailOther.detailContact;
                 tB_Act_ActivityForm_DetailOther.orderOf = model.tB_Act_ActivityForm_DetailOther.orderOf;
-                rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
+                tB_Act_ActivityForm_DetailOther.regionalId = model.tB_Act_ActivityForm_DetailOther.regionalId;
+                
+                 rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
 
                 insertIndex++;
             }
@@ -718,6 +720,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
                     ,new SqlParameter("@orderOf",(model.orderOf == null ? "" : model.orderOf))
+                    ,new SqlParameter("@regionalId",(model.regionalId == null ? "" : model.regionalId))
                     });
             }
             catch (Exception ex)

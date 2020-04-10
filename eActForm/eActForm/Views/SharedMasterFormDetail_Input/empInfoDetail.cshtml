@@ -9,7 +9,7 @@
         <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
     <fieldset>
         @*<legend>พนักงาน</legend> <br />*@
-
+        
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
@@ -84,9 +84,20 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">
-
+                        ภาค :
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="hidden" id="hdRegionalId"  class="form-control textboxcss" />
+                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.regionalId
+                       , new SelectList(Model.regionalModel,
+                        "id", Model.activityFormTBMMKT.chkUseEng ? "nameEN" : "nameTH"
+                        ), new
+                             {
+                            @class = "form-control selectpicker",
+                            @id = "ddlRegional",
+                            @name = "Model.tB_Act_ActivityForm_DetailOther.orderOf",
+
+                        })
 
                     </div>
                 </div>
@@ -121,14 +132,16 @@
 
 <script type="text/javascript">
 
-     $(document).ready(function () {
+    $(document).ready(function () {
 
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
         });
+        $("#hdRegionalId").val($("#ddlRegional").val());
         getEmpDetail();
+
     });
-     function getEmpDetail() {
+    function getEmpDetail() {
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getEmpDetailById", "eAct")',
@@ -146,12 +159,13 @@
                 document.getElementById('lblDept').innerHTML = response.Data.department;
                 document.getElementById('lblComp').innerHTML = response.Data.companyName;
 
+                getRegional();
 
             }
             else {
                 $("#lblEmpName").val('');
                 $("#hdCompId").val('');
-                document.getElementById('lblEmpName').innerHTML ='';
+                document.getElementById('lblEmpName').innerHTML = '';
                 document.getElementById('lblEmpPosition').innerHTML = '';
                 document.getElementById('lblLvl').innerHTML = '';
                 document.getElementById('lblDept').innerHTML = '';
@@ -176,6 +190,7 @@
                 document.getElementById('ProductDetail_1').innerHTML = response.Data.ProductDetail_1;
                 $("#ProductDetail_0").val(response.Data.ProductDetail_0);
                 $("#ProductDetail_1").val(response.Data.ProductDetail_1);
+
             }
             else {
                 if ($("#txtEmpId").val() != "") {
@@ -190,21 +205,37 @@
         });
     }
 
-        //document.getElementById("lblVehicleregis").style.display = "none";
-        //$("#ddlObjective").change(function () {
-        //    if ($("#ddlObjective").val() == '01F28E2A-A4DE-4221-9869-5FA02719822E') {
-        //        $("#lblVehicleregis").show();
-        //        //document.getElementById("lblVehicleregis").style.display = "block";
-        //        document.getElementById("divCertification").style.display = "none";
-        //        document.getElementById("divCashBill").style.display = "block";
-        //    }
-        //    else {
-        //        $("#lblVehicleregis").hide();
-        //        //document.getElementById("lblVehicleregis").style.display = "none";
-        //        document.getElementById("divCertification").style.display = "block";
-        //        document.getElementById("divCashBill").style.display = "none";
-        //    }
-        //});
+    function getRegional() {
+        var ddlRegional = $("#ddlRegional");
+        $.ajax({
+            url: '@Url.Action("getRegionalByCompany", "eAct")',
+            data: {
+                companyId: $("#hdCompId").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
 
+                if (response.Data.regional.length > 0) {
+                    $("#ddlRegional").empty();
+                    if (response.Data.regional.length > 1) {
+                        ddlRegional.append($("<option></option>").val('').html(''));
+                    }
+                    $("#ddlRegional option[value !='']").remove();
+                    $.each(response.Data.regional, function () {
+                        ddlRegional.append($("<option></option>").val(this['id']).html(this['nameTH']));
+                    });
 
+                    if ($("#hdRegionalId").val() != '') {
+                        $("#ddlRegional").val($("#hdRegionalId").val());
+                    }
+                    document.getElementById("ddlRegional").disabled = false;
+                }
+                else {
+                    document.getElementById("ddlRegional").disabled = true;
+                }
+            }
+        });
+    }
+    
 </script>

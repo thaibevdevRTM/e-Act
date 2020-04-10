@@ -40,7 +40,7 @@ namespace eActForm.Models
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model_2 { get; set; }
         public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
         public RequestEmpModel empInfoModel { get; set; }
-
+        public List<RegionalModel> regionalModel { get; set; }
         public Activity_TBMMKT_Model()
         {
             activityFormTBMMKT = new ActivityFormTBMMKT();
@@ -54,11 +54,12 @@ namespace eActForm.Models
             exPerryCashList = new List<exPerryCashModel>();
             exPerryCashModel = new exPerryCashModel();
             empInfoModel = new RequestEmpModel();
+            regionalModel = new List<RegionalModel>();
         }
 
         public ApproveModel.approveModels approveModels { get; set; }
 
-}
+    }
 
     public class ActivityFormTBMMKT : ActivityForm
     {
@@ -130,6 +131,7 @@ namespace eActForm.Models
         public string detailContact { get; set; }
         public string brand_select { get; set; }
         public string orderOf { get; set; }
+        public string regionalId { get; set; }
     }
 
 
@@ -264,5 +266,5 @@ namespace eActForm.Models
         public decimal cashPerDay { get; set; }
         public string empLevel { get; set; }
 
-    }    
+    }
 }

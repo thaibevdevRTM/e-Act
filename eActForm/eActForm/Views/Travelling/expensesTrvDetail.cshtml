@@ -66,15 +66,15 @@
                                             {
 
                                                 @Html.DropDownListFor(x => x.expensesDetailModel.costDetailLists[index].productDetail,
-                                               new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
-                                               "name",
-                                               "name", @item.productDetail), "", new
-                                               {
-                                                   @class = "form-control selectpicker",
-                                                   @id = "ProductDetail_" + index,
-                                                   @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
+                                new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
+                                "name",
+                                "name", @item.productDetail), "", new
+                                {
+                                    @class = "form-control selectpicker",
+                                    @id = "ProductDetail_" + index,
+                                    @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
 
-                                               })
+                                })
 
 
                                             }
@@ -109,15 +109,15 @@
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                                 <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss text-right hdTotal_@index" />
                                 @Html.TextBoxFor(x => item.total, "{0:n2}", new
-                                   {
-                                       @id = "txtTotal_" + @index
-                                       ,
-                                       Name = "expensesDetailModel.costDetailLists[" + index + "].total"
-                                       ,
-                                       @class = "form-control textboxcss text-right"
-                                       ,
-                                       @readonly = "readonly"
-                                   })
+                           {
+                               @id = "txtTotal_" + @index
+                                    ,
+                               Name = "expensesDetailModel.costDetailLists[" + index + "].total"
+                                    ,
+                               @class = "form-control textboxcss text-right"
+                                    ,
+                               @readonly = "readonly"
+                           })
 
                                 <script>
 
@@ -125,64 +125,48 @@
 
                                     $("#txtUnitPrice_@index").blur(function () {
 
-                                        var ProductDetail_0 = 0.00;
-                                        var ProductDetail_1 = 0.00;
-                                        ProductDetail_0 = parseFloat($("#ProductDetail_0").val().replace(",", ""));
-                                        ProductDetail_1 = parseFloat($("#ProductDetail_1").val().replace(",", ""));
 
+                                        var v_unitRow = 0.00;
+                                        var v_unitpriceRow = 0.00;
+                                        var v_totalRow = 0.00;
 
-                                    var v_unitRow = 0.00;
-                                    var v_unitpriceRow = 0.00;
-                                    var v_totalRow = 0.00;
-
-                                if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1";}
-                                    if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
-                                    v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
-                                    }
-                                    if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                        v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
-
-                                        //var v_unitRow = 0.00;
-                                        if (@index== 0) {
-                                            if (v_unitpriceRow > ProductDetail_0) { v_unitpriceRow = ProductDetail_0 }
-                                        } else if (@index== 1)  {
-                                            if (v_unitpriceRow > ProductDetail_1) { v_unitpriceRow = ProductDetail_1 }
+                                        if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
+                                        if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
+                                            v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
                                         }
-                                    }
-                                    v_totalRow = (v_unitRow * v_unitpriceRow);
+                                        if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
+                                            v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
 
-                                    $("#hdTotal_@index").val(v_totalRow.toFixed(2));
-                                    $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                    sumall();
-                            });
+                                            //var v_unitRow = 0.00;
+
+                                        }
+                                        v_totalRow = (v_unitRow * v_unitpriceRow);
+
+                                        $("#hdTotal_@index").val(v_totalRow.toFixed(2));
+                                        $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                                        sumall();
+                                    });
 
                                     $("#txtUnit_@index").blur(function () {
 
-                                        var ProductDetail_0 = 0.00;
-                                        var ProductDetail_1 = 0.00;
-                                        ProductDetail_0 = parseFloat($("#ProductDetail_0").val().replace(",", ""));
-                                        ProductDetail_1 = parseFloat($("#ProductDetail_1").val().replace(",", ""));
-                                    var v_unitRow = 0.00;
-                                    var v_unitpriceRow = 0.00;
-                                var v_totalRow = 0.00;
-                                 if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1";}
-                                    if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
-                                    v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
-                                    }
-                                    if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                        v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
-                                         if (@index== 0) {
-                                            if (v_unitpriceRow > ProductDetail_0) { v_unitpriceRow = ProductDetail_0 }
-                                        } else if (@index== 1)  {
-                                            if (v_unitpriceRow > ProductDetail_1) { v_unitpriceRow = ProductDetail_1 }
-                                        }
-                                    }
-                                    v_totalRow = (v_unitRow * v_unitpriceRow);
 
-                                    $("#hdTotal_@index").val(v_totalRow.toFixed(2));
-                                    $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                    sumall();
-                            });
+                                        var v_unitRow = 0.00;
+                                        var v_unitpriceRow = 0.00;
+                                        var v_totalRow = 0.00;
+                                        if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
+                                        if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
+                                            v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
+                                        }
+                                        if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
+                                            v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
+
+                                        }
+                                        v_totalRow = (v_unitRow * v_unitpriceRow);
+
+                                        $("#hdTotal_@index").val(v_totalRow.toFixed(2));
+                                        $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                                        sumall();
+                                    });
 
                                 </script>
                             </td>

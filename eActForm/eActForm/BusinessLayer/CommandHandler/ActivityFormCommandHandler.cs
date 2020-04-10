@@ -242,6 +242,9 @@ namespace eActForm.BusinessLayer
                             {
                                 result[1] = Activity_Model.activityType.HCM.ToString();
                             }
+                            else { 
+                             //ffffffffff
+                            }
                             //====END=====แบบใหม่ Gen In USP=======By Peerapop=========
                         }
                     }

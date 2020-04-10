@@ -293,10 +293,16 @@ namespace eActForm.BusinessLayer
 
             return val;
         }
-
-        public static bool isCompanyNUM()
+        public static bool checkGrpCompByUser(string typeComp)
         {
             List<ActUserModel.UserAuthorized> lst = new List<ActUserModel.UserAuthorized>();
+            lst = UserAppCode.GetUserAuthorizedsByCompany(typeComp);
+            return lst.Count > 0 ? true : false;
+
+        }
+        public static bool checkGrpComp(string compId, string typeComp)
+        {
+       List<ActUserModel.UserAuthorized> lst = new List<ActUserModel.UserAuthorized>();
             lst = UserAppCode.GetUserAuthorizedsByCompany(Activity_Model.activityType.NUM.ToString());
             return lst.Count > 0 ? true : false;
 

@@ -400,6 +400,7 @@
     <Compile Include="BusinessLayer\Appcodes\SignatureAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UtilsAppCode.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetRegional.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetSubject.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryOtherMaster.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
@@ -481,6 +482,7 @@
     <Compile Include="Models\exPerryCashModel.cs" />
     <Compile Include="Models\ImportExcel.cs" />
     <Compile Include="Models\DataMasterModels\salesTeamModel.cs" />
+    <Compile Include="Models\RegionalModel.cs" />
     <Compile Include="Models\TB_Act_ActivityChoiceSelectModel.cs" />
     <Compile Include="Models\TB_Act_master_list_choiceModel.cs" />
     <Compile Include="Models\Master_Company_Model.cs" />

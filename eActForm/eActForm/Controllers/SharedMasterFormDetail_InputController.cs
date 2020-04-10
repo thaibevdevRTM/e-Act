@@ -183,16 +183,23 @@ namespace eActForm.Controllers
             if (activity_TBMMKT_Model.activityFormTBMMKT.mode == AppCode.Mode.edit.ToString())
             {
                 activity_TBMMKT_Model.empInfoModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng).FirstOrDefault();
-
+                if (activity_TBMMKT_Model.regionalModel == null || activity_TBMMKT_Model.regionalModel.Count == 0)
+                {
+                    activity_TBMMKT_Model.regionalModel = QueryGetRegional.getRegionalByCompanyId(activity_TBMMKT_Model.activityFormModel.companyId).OrderBy(x => x.nameEN).ToList();
+                }
             }
-                      
+            else
+            {
+                activity_TBMMKT_Model.regionalModel.Add(new RegionalModel() { id = "", companyId = "", nameEN = "", nameTH = "" });
+            }
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult expensesTrvDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             return PartialView(activity_TBMMKT_Model);
         }
-        public ActionResult test(Activity_TBMMKT_Model activity_TBMMKT_Model) { 
+        public ActionResult test(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
             return PartialView(activity_TBMMKT_Model);
         }
     }

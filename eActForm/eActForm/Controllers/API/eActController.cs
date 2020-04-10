@@ -397,6 +397,32 @@ namespace eActForm.Controllers
             return Json(empList, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getRegionalByCompany(string companyId)
+        {
+                  var result = new AjaxResult();
+            try
+            {
+                var getRegional = QueryGetRegional.getRegionalByCompanyId(companyId).ToList();
+                var resultData = new
+                {
+                    //productGroup = getProductGroup.GroupBy(item => item.productGroup)
+                    //.Select(group => new TB_Act_Product_Cate_Model.Product_Cate_Model
+                    //{
+                    //    id = group.First().id,
+                    //    productGroup = group.First().productGroup,
+                    //}).ToList(),
+                    regional = getRegional.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }
