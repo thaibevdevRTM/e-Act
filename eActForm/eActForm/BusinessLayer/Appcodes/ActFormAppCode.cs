@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
@@ -302,9 +303,21 @@ namespace eActForm.BusinessLayer
         }
         public static bool checkGrpComp(string compId, string typeComp)
         {
-       List<ActUserModel.UserAuthorized> lst = new List<ActUserModel.UserAuthorized>();
-            lst = UserAppCode.GetUserAuthorizedsByCompany(Activity_Model.activityType.NUM.ToString());
-            return lst.Count > 0 ? true : false;
+            try
+            {
+                List<TB_Act_Other_Model> lst = new List<TB_Act_Other_Model>();
+                lst = QueryOtherMaster.getOhterMaster("company", typeComp).ToList();
+                if (lst.Count > 0)
+                {
+                    lst = lst.Where(x => x.val1 == compId).ToList();
+                }
+                return lst.Count > 0 ? true : false;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkGrpComp >>" + ex.Message);
+            }
 
         }
     }

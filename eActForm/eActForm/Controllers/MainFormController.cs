@@ -98,7 +98,8 @@ namespace eActForm.Controllers
                     //=END==mock data for first input=====
 
                     //===================Get Subject=======================
-                    List<TB_Reg_Subject> tB_Reg_Subjects = new List<TB_Reg_Subject>(); activity_TBMMKT_Model.tB_Reg_Subject = tB_Reg_Subjects;
+                    List<TB_Reg_Subject> tB_Reg_Subjects = new List<TB_Reg_Subject>();
+                    activity_TBMMKT_Model.tB_Reg_Subject = tB_Reg_Subjects;
                     //======END=============Get Subject=======================
 
                     TempData["actForm" + actId] = activity_TBMMKT_Model;

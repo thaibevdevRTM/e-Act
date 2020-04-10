@@ -69,6 +69,29 @@ namespace eActForm.BusinessLayer
                 return new List<TB_Reg_Subject>();
             }
         }
+        public static List<TB_Reg_Subject> getSubjectFlowByEmpId(string typeFormId, string empid)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getSubjectFlowByEmpId"
+                    , new SqlParameter("@typeFormId", typeFormId)
+                    , new SqlParameter("@empid", empid)
+                    );
 
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new TB_Reg_Subject()
+                             {
+                                 id = d["subjectId"].ToString(),
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getSubjectFlowByEmpId => " + ex.Message);
+                return new List<TB_Reg_Subject>();
+            }
+        }
+
+        
     }
 }

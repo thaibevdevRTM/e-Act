@@ -9,7 +9,7 @@
         <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
     <fieldset>
         @*<legend>พนักงาน</legend> <br />*@
-        
+
         <div class="form-group">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
@@ -87,7 +87,7 @@
                         ภาค :
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="hidden" id="hdRegionalId"  class="form-control textboxcss" />
+                        <input type="hidden" id="hdRegionalId" class="form-control textboxcss" />
                         @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.regionalId
                        , new SelectList(Model.regionalModel,
                         "id", Model.activityFormTBMMKT.chkUseEng ? "nameEN" : "nameTH"
@@ -126,6 +126,9 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="hdSubjectId" name="activityFormTBMMKT.SubjectId" class="form-control textboxcss" />
+
+
     </fieldset>
     <br />
 </div>
@@ -142,6 +145,7 @@
 
     });
     function getEmpDetail() {
+
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getEmpDetailById", "eAct")',
@@ -160,7 +164,7 @@
                 document.getElementById('lblComp').innerHTML = response.Data.companyName;
 
                 getRegional();
-
+                getSubject();
             }
             else {
                 $("#lblEmpName").val('');
@@ -171,7 +175,9 @@
                 document.getElementById('lblDept').innerHTML = '';
                 document.getElementById('lblComp').innerHTML = '';
             }
+
             getCashEmp();
+
         });
     }
 
@@ -234,8 +240,31 @@
                 else {
                     document.getElementById("ddlRegional").disabled = true;
                 }
+
             }
         });
     }
-    
+
+
+
+    function getSubject() {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getSubjectByempId", "eAct")',
+            data: {
+                typeFormId: "@Model.activityFormTBMMKT.master_type_form_id",
+                empId: $("#txtEmpId").val(),
+            }
+        }).done(function (response) {
+            if (response.Data.subject.length > 0) {
+                $("#hdSubjectId").val(response.Data.subject[0]['id']);
+                // alert($("#hdSubjectId").val());
+            }
+            else {
+                alert('ไม่พบ Flow อนุมัติ');
+            }
+        });
+    }
+
 </script>

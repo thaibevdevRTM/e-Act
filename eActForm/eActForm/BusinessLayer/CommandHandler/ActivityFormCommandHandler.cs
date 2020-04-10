@@ -242,8 +242,9 @@ namespace eActForm.BusinessLayer
                             {
                                 result[1] = Activity_Model.activityType.HCM.ToString();
                             }
-                            else { 
-                             //ffffffffff
+                            else if (ActFormAppCode.checkGrpComp(getActList.FirstOrDefault().companyId, Activity_Model.activityType.NUM.ToString()))
+                            {
+                                result[1] = Activity_Model.activityType.NUM.ToString();
                             }
                             //====END=====แบบใหม่ Gen In USP=======By Peerapop=========
                         }

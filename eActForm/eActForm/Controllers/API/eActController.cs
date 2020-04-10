@@ -378,7 +378,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getEmpDetailById => " + ex.Message);
+                ExceptionManager.WriteError("getCashLimitByEmpId => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -405,12 +405,6 @@ namespace eActForm.Controllers
                 var getRegional = QueryGetRegional.getRegionalByCompanyId(companyId).ToList();
                 var resultData = new
                 {
-                    //productGroup = getProductGroup.GroupBy(item => item.productGroup)
-                    //.Select(group => new TB_Act_Product_Cate_Model.Product_Cate_Model
-                    //{
-                    //    id = group.First().id,
-                    //    productGroup = group.First().productGroup,
-                    //}).ToList(),
                     regional = getRegional.ToList(),
                 };
                 result.Data = resultData;
@@ -423,6 +417,24 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-
+        public JsonResult getSubjectByempId(string typeFormId,string empId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getSubject = QueryGetSelectAllTB_Reg_Subject.getSubjectFlowByEmpId(typeFormId,empId).ToList();
+                var resultData = new
+                {
+                    subject = getSubject.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }
