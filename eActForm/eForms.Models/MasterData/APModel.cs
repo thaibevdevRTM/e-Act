@@ -20,5 +20,7 @@ namespace eForms.Models.MasterData
         public string PostCode { get; set; }
         public string Tel { get; set; }
         public string FaxNo { get; set; }
+        public string FullAddress { get; set; }
+        public string TelAndFax { get; set; }
     }
 }

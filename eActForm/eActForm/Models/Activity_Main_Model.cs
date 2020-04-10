@@ -58,6 +58,7 @@ namespace eActForm.Models
 
         public List<FiscalYearModel> listFiscalYearModel { get; set; }
         public List<GetDataEO> listGetDataEO { get; set; }
+        public List<APModel> listAPModel { get; set; }
 
     }
 
@@ -85,6 +86,7 @@ namespace eActForm.Models
         public bool chkUseEng { get; set; }
         public string createdByNameEN { get; set; }
         public string listFiscalYearModelSelect { get; set; }
+        public string listAPSelect { get; set; }
 
     }
 

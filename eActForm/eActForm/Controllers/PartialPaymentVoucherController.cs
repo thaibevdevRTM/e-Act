@@ -66,6 +66,7 @@ namespace eActForm.Controllers
         
         public ActionResult inputPageHeaderSectionOne(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            activity_TBMMKT_Model.listAPModel = APPresenter.getDataAP(AppCode.StrCon, "watchAllActive");
             return PartialView(activity_TBMMKT_Model);
         }
 

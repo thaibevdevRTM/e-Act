@@ -122,18 +122,10 @@
                                             "activityId", "EO"),
                                             new
                                             {
-                                                @class = "form-control selectpicker",
+                                                @class = "form-control",
                                                 id = "ddl_EO_PV",
                                                 multiple = "multiple"
                                             })
-                                        @*@Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.listFiscalYearModel,
-                                            "UseYear", "UseYear"),
-                                            new
-                                            {
-                                                @class = "form-control selectpicker",
-                                                id = "ddl_EO_PV",
-                                                multiple = "multiple"
-                                            })*@
                                         <script>
                                             $(document).ready(function () {
                                                 $('#ddl_EO_PV').multiselect({
@@ -182,8 +174,8 @@
                                                 }
                                                 $("#ddlproduct_pos_premium").multiselect('select', valuesSelectChoiceFromDb);
                                             }*@
-                                                $(".caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
-                                                $(".caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+                                                $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+                                                $(".multiselect .caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
                                         });
                                         </script>
                                     </div>
