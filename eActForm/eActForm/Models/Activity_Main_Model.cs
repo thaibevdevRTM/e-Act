@@ -73,6 +73,7 @@ namespace eActForm.Models
         public string list_0_select { get; set; }
         public string list_0_select_value { get; set; }
         public string[] list_1_multi_select { get; set; }
+        public string[] list_2_multi_select { get; set; }
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }
         public string brand_select { get; set; }

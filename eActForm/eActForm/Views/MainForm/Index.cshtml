@@ -40,6 +40,13 @@
         text-align: right;
         width: 100%;
     }
+
+    /*==========20200413===========*/
+    .hrTab {
+        background-color: #d4c8c8;
+        height: 35px;
+    }
+    /*====END======20200413===========*/
 </style>
 
 @using (Ajax.BeginForm("insertDataActivity", "MainForm", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))

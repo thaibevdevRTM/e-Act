@@ -6,6 +6,7 @@ using System.Globalization;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using eActForm.BusinessLayer;
 
 namespace eActForm.Controllers
 {
@@ -52,21 +53,35 @@ namespace eActForm.Controllers
             }
             activity_TBMMKT_Model.listFiscalYearModel = FiscalYearPresenter.getFiscalYearByYear(AppCode.StrCon, yearFrom, yearTo).OrderByDescending(m => m.UseYear).ToList();
 
-            if(activity_TBMMKT_Model.listGetDataEO == null)
+            if (activity_TBMMKT_Model.listGetDataEO == null)
             {
                 List<GetDataEO> getDataEO = new List<GetDataEO>();
                 activity_TBMMKT_Model.listGetDataEO = getDataEO;
                 //activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = "";
             }
-            
+
 
 
             return PartialView(activity_TBMMKT_Model);
         }
-        
-        public ActionResult inputPageHeaderSectionOne(Activity_TBMMKT_Model activity_TBMMKT_Model)
+
+        public ActionResult inputPageSectionOne(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             activity_TBMMKT_Model.listAPModel = APPresenter.getDataAP(AppCode.StrCon, "watchAllActive");
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+        public ActionResult inputPageSectionTwo(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])//ãºÊÑè§¨èÒÂ
+            {
+                activity_TBMMKT_Model.list_0 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "attachPV").OrderBy(x => x.orderNum).ToList();
+            }
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+        public ActionResult inputPageSectionThreeToFive(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
             return PartialView(activity_TBMMKT_Model);
         }
 
