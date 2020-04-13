@@ -10,6 +10,7 @@ namespace eActForm.Models
         public List<Master_type_form_detail_Model> master_Type_Form_Detail_Models { get; set; }
         public ActivityFormTBMMKT activityFormTBMMKT { get; set; }
         public TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther { get; set; }
+        public List<TB_Act_ActivityForm_DetailOtherList> tB_Act_ActivityForm_DetailOtherList { get; set; }
         public List<TB_Act_Chanel_Model.Chanel_Model> tB_Act_Chanel_Model { get; set; }
         //public List<TB_Act_Chanel_Model.Chanel_Model> tBChanelHCModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model { get; set; }
@@ -59,6 +60,7 @@ namespace eActForm.Models
         public List<FiscalYearModel> listFiscalYearModel { get; set; }
         public List<GetDataEO> listGetDataEO { get; set; }
         public List<APModel> listAPModel { get; set; }
+        public List<GetDataIO> listGetDataIO { get; set; }
 
     }
 
@@ -269,5 +271,29 @@ namespace eActForm.Models
         public string EO { get; set; }
         public string activityId { get; set; }
     }
+
+    public class GetDataIO
+    {
+        public string IO { get; set; }
+        public string activityId { get; set; }
+    }
+
+    public class TB_Act_ActivityForm_DetailOtherList
+    {
+        public string id { get; set; }
+        public string activityId { get; set; }
+        public string typeKeep { get; set; }
+        public int rowNo { get; set; }
+        public string IO { get; set; }
+        public string GL { get; set; }
+        public string select_list_choice_id_ChReg { get; set; }
+        public string productBrandId { get; set; }
+        public Boolean delFlag { get; set; }
+        public DateTime? createdDate { get; set; }
+        public string createdByUserId { get; set; }
+        public DateTime? updatedDate { get; set; }
+        public string updatedByUserId { get; set; }
+    }
+
 
 }

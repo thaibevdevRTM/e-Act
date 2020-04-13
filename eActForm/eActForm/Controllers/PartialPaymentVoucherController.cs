@@ -57,7 +57,6 @@ namespace eActForm.Controllers
             {
                 List<GetDataEO> getDataEO = new List<GetDataEO>();
                 activity_TBMMKT_Model.listGetDataEO = getDataEO;
-                //activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = "";
             }
 
 
@@ -82,6 +81,17 @@ namespace eActForm.Controllers
 
         public ActionResult inputPageSectionThreeToFive(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])//ãºÊÑè§¨èÒÂ
+            {
+                activity_TBMMKT_Model.list_1 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(ConfigurationManager.AppSettings["formPosTbmId"], "channel_place").OrderBy(x => x.name).ToList();
+                activity_TBMMKT_Model.tB_Act_ProductBrand_Model_2 = QueryGetAllBrandByForm.GetAllBrand().Where(x => x.no_tbmmkt != "").ToList();
+            }
+            if (activity_TBMMKT_Model.listGetDataIO == null)
+            {
+                List<GetDataIO> getDataIO = new List<GetDataIO>();
+                activity_TBMMKT_Model.listGetDataIO = getDataIO;
+            }
+
             return PartialView(activity_TBMMKT_Model);
         }
 

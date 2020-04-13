@@ -10,61 +10,83 @@
                     <tr>
                         <td>
                             <div class="form-group">
-                                <label class="control-label col-md-2 col-xs-12 hrTab">
+                                <label class="control-label col-md-12 col-xs-12 hrTab" style="text-align:left;">
                                     ส่วนที่ 3 - 5
                                 </label>
-                                <label class="control-label col-md-10 col-xs-12 hrTab">
-                                    &nbsp;
-                                </label>
                             </div>
 
 
                         </td>
                     </tr>
                 </table>
-                <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
-                    <tr style="border-bottom:none;">
-                        <td>
-                            <div id="divHeaderDetailsCost" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
-                                <table class="table table-bordered" id="tabelHeaderDetails" runat="server">
-                                    <tr style="background-color:#2f74b5;color:white;height:25px;">
-                                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">IO</th>
-                                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">GL</th>
-                                        <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Ch.+Reg.</th>
-                                        <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Brand</th>
-                                    </tr>
-                                    @{ var index = 0;}
-                                    @foreach (var item in Model.activityOfEstimateList)
-                                    {
-                                        <tr class="tagCountRowinTable">
-                                            <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                                                @if (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)
-                                                {
-                                                    <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" />
-                                                }
-                                                else
-                                                {
-                                                    <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" readonly="readonly" />
-                                                }
-
-                                            </td>
-                                            <td style="width: 10%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                                @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control selectpicker" })
-                                            </td>
-                                            <td style="width: 30%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                                <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss" />
-                                            </td>
-                                            <td style="width: 8%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                                <input type="text" value="@item.QtyName" id="activityOfEstimateList[@index].QtyName" name="activityOfEstimateList[@index].QtyName" class="form-control textboxcss" />
-                                            </td>
-                                        </tr>
-                                        index++;
-                                    }
-                                </table>
-                            </div>
-                        </td>
+                <table class="table table-bordered" id="tabelSectionThreeToFive">
+                    <tr style="background-color:#2f74b5;color:white;height:25px;">
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">IO</th>
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">GL</th>
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Ch.+Reg.</th>
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Brand</th>
                     </tr>
+                    @{ var index = 0;}
+                    @foreach (var item in Model.tB_Act_ActivityForm_DetailOtherList)
+                    {
+                        <tr class="tagCountRowinTable tRow_@index">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                                @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].IO", new SelectList(Model.listGetDataIO, "IO", "activityId", item.IO), "", new { @class = "form-control selectpicker IO_" + index })
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.GL" id="tB_Act_ActivityForm_DetailOtherList[@index].GL" name="tB_Act_ActivityForm_DetailOtherList[@index].GL" class="form-control textboxcss" readonly="readonly" />
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].select_list_choice_id_ChReg", new SelectList(Model.list_1, "id", "name", item.select_list_choice_id_ChReg), "", new { @class = "form-control selectpicker CH_" + index })
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].productBrandId", new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", item.productBrandId), "", new { @class = "form-control selectpicker Brand_" + index })
+                                <script>
+                                    $('.IO_@index').selectpicker({
+                                        liveSearch: true,
+                                        showSubtext: true
+                                    });
+                                    $('.CH_@index').selectpicker({
+                                        liveSearch: true,
+                                        showSubtext: true
+                                    });
+                                    $('.Brand_@index').selectpicker({
+                                        liveSearch: true,
+                                        showSubtext: true
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        index++;
+                    }
                 </table>
+
+                <script>
+                    function tbAddRowSectionThreeToFive() {
+                        var nextNoId = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
+                        var trHTML = $('.tRow_0').html();
+                        trHTML = trHTML.replace('tB_Act_ActivityForm_DetailOtherList[0].IO', 'tB_Act_ActivityForm_DetailOtherList[' + nextNoId + '].IO');
+                        trHTML = trHTML.replace('tB_Act_ActivityForm_DetailOtherList[0].GL', 'tB_Act_ActivityForm_DetailOtherList[' + nextNoId + '].GL');
+                        trHTML = trHTML.replace('tB_Act_ActivityForm_DetailOtherList[0].select_list_choice_id_ChReg', 'tB_Act_ActivityForm_DetailOtherList[' + nextNoId + '].select_list_choice_id_ChReg');
+                        trHTML = trHTML.replace('tB_Act_ActivityForm_DetailOtherList[0].productBrandId', 'tB_Act_ActivityForm_DetailOtherList[' + nextNoId + '].productBrandId');
+                        trHTML = trHTML.replace('tB_Act_ActivityForm_DetailOtherList_0__IO', 'tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO');
+                        trHTML = trHTML.replace('tB_Act_ActivityForm_DetailOtherList_0__select_list_choice_id_ChReg', 'tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__select_list_choice_id_ChReg');
+                        trHTML = trHTML.replace('tB_Act_ActivityForm_DetailOtherList_0__productBrandId', 'tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__productBrandId');
+                        trHTML = trHTML.replace('.IO_0', '.IO_' + nextNoId);
+                        trHTML = trHTML.replace('.CH_0', '.CH_' + nextNoId);
+                        trHTML = trHTML.replace('.Brand_0', '.Brand_' + nextNoId);
+                        trHTML = trHTML.replace('selectpicker IO_0', 'selectpicker IO_' + nextNoId);
+                        trHTML = trHTML.replace('selectpicker CH_0', 'selectpicker CH_' + nextNoId);
+                        trHTML = trHTML.replace('selectpicker Brand_0', 'selectpicker Brand_' + nextNoId);
+                        trHTML = trHTML.replace('data-id=\"tB_Act_ActivityForm_DetailOtherList_0__IO\"', 'data-id=\"tB_Act_ActivityForm_DetailOtherList_0__IO\" style=\"display:none;\"');
+                        trHTML = trHTML.replace('data-id=\"tB_Act_ActivityForm_DetailOtherList_0__select_list_choice_id_ChReg\"', 'data-id=\"tB_Act_ActivityForm_DetailOtherList_0__select_list_choice_id_ChReg\" style=\"display:none;\"');
+                        trHTML = trHTML.replace('data-id=\"tB_Act_ActivityForm_DetailOtherList_0__productBrandId\"', 'data-id=\"tB_Act_ActivityForm_DetailOtherList_0__productBrandId\" style=\"display:none;\"');
+                        $('#tabelSectionThreeToFive').append("<tr class=\"tagCountRowinTable tRow_" + nextNoId + "\">" + trHTML + "<style></style></tr>");
+                    }
+                </script>
+            </div>
+            <div id="addEx" class="row pull-right" style="width:150px;margin-top:-15px;" onclick="tbAddRowSectionThreeToFive();">
+                <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
             </div>
         </td>
     </tr>

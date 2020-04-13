@@ -95,6 +95,13 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelRegionName = "";
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.glNo = "";
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.glName = "";
+
+                    List<TB_Act_ActivityForm_DetailOtherList> tB_Act_ActivityForm_DetailOtherList = new List<TB_Act_ActivityForm_DetailOtherList>();//dev date 20200413 fream
+                    for (int i = 0; i < 1; i++)
+                    {
+                        tB_Act_ActivityForm_DetailOtherList.Add(new TB_Act_ActivityForm_DetailOtherList() { id = "", IO = "", GL = "", select_list_choice_id_ChReg = "", productBrandId = "" });
+                    }
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList = tB_Act_ActivityForm_DetailOtherList;
                     //=END==mock data for first input=====
 
                     //===================Get Subject=======================
