@@ -272,6 +272,11 @@ namespace eActForm.Models
         public string activityId { get; set; }
     }
 
+    public class ObjGetDataIO
+    {
+        public string ActivityByEOSelect { get; set; }
+    }
+
     public class GetDataIO
     {
         public string IO { get; set; }
