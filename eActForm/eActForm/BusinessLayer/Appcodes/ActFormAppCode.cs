@@ -115,10 +115,6 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
-                else if (typeForm == Activity_Model.activityType.EXPENSE.ToString())
-                {
-                    strCall = "usp_getExpensePerryFormByEmpId";
-                }
                 else
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
@@ -187,6 +183,63 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static List<Activity_Model.actForm> getActFormRejectByEmpId()
+        {
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActRejectByEmpId"
+                , new SqlParameter[] {
+                         new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
+                });
+
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new Activity_Model.actForm()
+                             {
+                                 id = dr["id"].ToString(),
+                                 statusId = dr["statusId"].ToString(),
+                                 statusName = dr["statusName"].ToString(),
+                                 activityNo = dr["activityNo"].ToString(),
+                                 documentDate = dr["documentDate"] is DBNull ? null : (DateTime?)dr["documentDate"],
+                                 reference = dr["reference"].ToString(),
+                                 customerId = dr["customerId"].ToString(),
+                                 channelName = dr["channelName"].ToString(),
+                                 productTypeId = dr["productTypeId"].ToString(),
+                                 productTypeNameEN = dr["nameEN"].ToString(),
+                                 cusShortName = dr["cusShortName"].ToString(),
+                                 productCategory = dr["productCateText"].ToString(),
+                                 productGroupid = dr["productGroupId"].ToString(),
+                                 groupName = dr["groupName"].ToString(),
+                                 activityPeriodSt = dr["activityPeriodSt"] is DBNull ? null : (DateTime?)dr["activityPeriodSt"],
+                                 activityPeriodEnd = dr["activityPeriodEnd"] is DBNull ? null : (DateTime?)dr["activityPeriodEnd"],
+                                 costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
+                                 costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
+                                 activityName = dr["activityName"].ToString(),
+                                 theme = dr["theme"].ToString(),
+                                 objective = dr["objective"].ToString(),
+                                 trade = dr["trade"].ToString(),
+                                 activityDetail = dr["activityDetail"].ToString(),
+                                 delFlag = (bool)dr["delFlag"],
+                                 createdDate = (DateTime?)dr["createdDate"],
+                                 createdByUserId = dr["createdByUserId"].ToString(),
+                                 updatedDate = (DateTime?)dr["updatedDate"],
+                                 updatedByUserId = dr["updatedByUserId"].ToString(),
+                                 normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
+                                 themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
+                                 totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
+                                 createByUserName = dr["createByUserName"].ToString(),
+                                 master_type_form_id = dr["master_type_form_id"].ToString(),
+
+                             }).ToList();
+
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getActFormRejectByEmpId >> " + ex.Message);
+            }
+        }
         public static string getDigitGroup(string activityTypeId)
         {
             try
