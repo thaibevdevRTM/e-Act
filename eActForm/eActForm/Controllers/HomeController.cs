@@ -80,11 +80,11 @@ namespace eActForm.Controllers
             try
             {
                 result.Success = false;
-                if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isOtherCompanyMTOfDocByActId()))
+                if (statusId == "1" || statusId == "6" || (statusId == "5" && ActFormAppCode.isOtherCompanyMTOfDocByActId(actId)))
                 {
                     // case delete
                     result.Success = ActFormAppCode.deleteActForm(actId, ConfigurationManager.AppSettings["messRequestDeleteActForm"], statusNote) > 0 ? true : false;
-                    if (statusId == "6" && result.Success && !ActFormAppCode.isOtherCompanyMTOfDocByActId())
+                    if (statusId == "6" && result.Success && !ActFormAppCode.isOtherCompanyMTOfDocByActId(actId))
                     {
                         EmailAppCodes.sendRequestCancelToAdmin(actId);
                     }
