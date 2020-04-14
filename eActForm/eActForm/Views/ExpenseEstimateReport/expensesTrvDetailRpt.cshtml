@@ -1,0 +1,80 @@
+﻿@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+@*<div id="divEstimateDetails" runat="server" style="width: 100%;"></div>*@
+
+<div class=" fontDocSmall " style="padding-left:5em;">
+    <b>ข้าพเจ้าขอเบิกเงินค่าใช้จ่ายในการเดินทางไปปฏิบัติงานนอกสถานที่ทำงานปกติของบริษัทฯ ตามรายละเอียดดังนี้</b>
+</div>
+<div style="height:15px;"></div>
+<table class="tablethin fontDocSmall " style="width:100%; text-align:center;" border="1" cellpadding="2" cellspacing="0">
+    <tr style="background-color:#E5E2E2;height:25px;">
+        <td colspan="4" style="text-align :center;  ">
+            <b>  Total estimate of travelling expenses ( ประมาณค่าใช้จ่ายในการเดินทาง ดังนี้ )</b>
+        </td>
+    </tr>
+    <tr style="height:20px;">
+        <td style="width: 40%;text-align:center;">
+            <b>รายละเอียด</b>
+        </td>
+
+        <td style="width: 10%;text-align:center;">
+            <b>จำนวน/วัน</b>
+        </td>
+        <td style="width: 10%;text-align:center;">
+            <b>ราคา/หน่วย</b>
+        </td>
+        <td style="width: 10%; text-align:center;">
+            <b>    Total/รวม(บาท)</b>
+        </td>
+    </tr>
+
+    @{ var index = 0;}
+    @for (index = 0; index < Model.expensesDetailModel.costDetailLists.Count; index++)
+    {
+
+        <tr style="height:20px;">
+
+            <td style="text-align:left; padding-left:5px;">
+                @Model.expensesDetailModel.costDetailLists[@index].listChoiceName
+                @if (@Model.expensesDetailModel.costDetailLists[@index].displayType == ConfigurationManager.AppSettings["labelHtml"])
+                {
+                    <label> สิทธิเบิก @Model.expensesDetailModel.costDetailLists[@index].productDetail  บาท / วัน</label>
+                }
+                else
+                {
+                    @Model.expensesDetailModel.costDetailLists[@index].productDetail
+                }
+            </td>
+            <td style="text-align:center;">
+
+                @if (@Model.expensesDetailModel.costDetailLists[@index].subDisplayType == "showDay")
+                {
+                    @Model.expensesDetailModel.costDetailLists[@index].unit
+                }
+            </td>
+            <td style="text-align:right; padding-right:5px;">
+                @if (@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") != ".00")
+                {
+                    <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
+                }
+            </td>
+            <td style="text-align:right; padding-right:5px;">
+                @if (@Model.expensesDetailModel.costDetailLists[@index].total.Value.ToString("#,###.00") != ".00")
+                {
+                    <label>@Model.expensesDetailModel.costDetailLists[@index].total.Value.ToString("#,###.00") </label>
+                }
+            </td>
+        </tr>
+    }
+    <tr>
+        <td colspan="3" style="width: 85%;text-align:right;">
+            จำนวนเงินรวม(บาท)&nbsp;
+        </td>
+        <td style="width: 15%;text-align:right; padding-right:5px;">
+            @* <label id="totalEstimate" type="text" readonly="readonly"></label>&nbsp;*@
+            @Model.totalCostThisActivity.Value.ToString("#,###.00")
+        </td>
+    </tr>
+</table>
+
+<div style="height:15px;"></div>

@@ -97,5 +97,26 @@ namespace eActForm.Controllers
         {
             return PartialView(activity_TBMMKT_Model);
         }
+
+        public ActionResult travellingDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+
+            return PartialView(activity_TBMMKT_Model);
+        }
+        public ActionResult confirmDirectorRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+
+            return PartialView(activity_TBMMKT_Model);
+        }
+        public ActionResult recordByHcRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+
+            return PartialView(activity_TBMMKT_Model);
+        }
+        public ActionResult attachfileDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+
+            return PartialView(activity_TBMMKT_Model);
+        }
     }
 }

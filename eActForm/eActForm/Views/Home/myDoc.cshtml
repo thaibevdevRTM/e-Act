@@ -386,7 +386,8 @@
         if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvTbmId"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formPosTbmId"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["masterEmpExpense"]") {
+            || master_type_form_id == "@ConfigurationManager.AppSettings["masterEmpExpense"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formExpTrvNumId"]") {
              $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Index", "MainReport")',

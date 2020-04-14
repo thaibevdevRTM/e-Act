@@ -53,9 +53,9 @@
                                             {
                                                 <label> สิทธิเบิก  </label>
                                                 @*<label id="ProductDetail_@index" value="@item.productDetail" name="expensesDetailModel.costDetailLists[@index].productDetail" />*@
-                                                @*<input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" readonly class="form-control  textboxcss" />*@
+                                                <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" readonly style="border:hidden; text-align:center;"  />
 
-                                                <label id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail">....</label>
+                                                @*<label id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail">....</label>*@
                                                 <label id="lblBath_@index"> บาท/วัน </label>
                                             }
                                             @if (item.displayType == ConfigurationManager.AppSettings["textboxHtml"])

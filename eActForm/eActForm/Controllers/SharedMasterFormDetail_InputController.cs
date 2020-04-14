@@ -178,29 +178,19 @@ namespace eActForm.Controllers
         {
             return PartialView(activity_TBMMKT_Model);
         }
-        public ActionResult empInfoDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public ActionResult travellingDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            if (activity_TBMMKT_Model.activityFormTBMMKT.mode == AppCode.Mode.edit.ToString())
+            if (activity_TBMMKT_Model.placeDetailModel.Count == 0)
             {
-                activity_TBMMKT_Model.empInfoModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng).FirstOrDefault();
-                if (activity_TBMMKT_Model.regionalModel == null || activity_TBMMKT_Model.regionalModel.Count == 0)
+                List<PlaceDetailModel> placeDetailModel = new List<PlaceDetailModel>();
+                for (int i = 0; i < 8; i++)
                 {
-                    activity_TBMMKT_Model.regionalModel = QueryGetRegional.getRegionalByCompanyId(activity_TBMMKT_Model.activityFormModel.companyId).OrderBy(x => x.nameEN).ToList();
+                    placeDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = null, arrivalDate = null });
                 }
-            }
-            else
-            {
-                activity_TBMMKT_Model.regionalModel.Add(new RegionalModel() { id = "", companyId = "", nameEN = "", nameTH = "" });
+                activity_TBMMKT_Model.placeDetailModel = placeDetailModel;
             }
             return PartialView(activity_TBMMKT_Model);
         }
-        public ActionResult expensesTrvDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
-        {
-            return PartialView(activity_TBMMKT_Model);
-        }
-        public ActionResult test(Activity_TBMMKT_Model activity_TBMMKT_Model)
-        {
-            return PartialView(activity_TBMMKT_Model);
-        }
+
     }
 }

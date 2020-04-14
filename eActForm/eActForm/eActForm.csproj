@@ -458,7 +458,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportMaterial_PRODUCT_POS_PREMIUMController.cs" />
     <Compile Include="Controllers\MainFormController.cs" />
-    <Compile Include="Controllers\ExpenseEstimate.cs" />
     <Compile Include="Controllers\frmOrderProduct\orderProductController.cs" />
     <Compile Include="Controllers\partailViewByItem\partialByProductController.cs" />
     <Compile Include="Controllers\partailViewDataMaster\partialSaleTeamController.cs" />
@@ -475,7 +474,10 @@
     <Compile Include="Controllers\SignatureController.cs" />
     <Compile Include="Controllers\SummaryReportController.cs" />
     <Compile Include="Controllers\MainReportController.cs" />
-    <Compile Include="Controllers\TravellingController.cs" />
+    <Compile Include="Controllers\EmpInfoInputController.cs" />
+    <Compile Include="Controllers\EmpInfoReportController.cs" />
+    <Compile Include="Controllers\ExpenseEstimateInputController.cs" />
+    <Compile Include="Controllers\ExpenseEstimateReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2748,7 +2750,9 @@
     <Content Include="images\adobe-acrobat-pdf-file-512.png" />
     <Content Include="images\al.jpeg" />
     <Content Include="images\blank.png" />
+    <Content Include="images\check.png" />
     <Content Include="images\checkmark.gif" />
+    <Content Include="images\check_b.png" />
     <Content Include="images\contact1.png" />
     <Content Include="images\contact2.png" />
     <Content Include="images\contact3.png" />
@@ -3250,17 +3254,20 @@
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerPiorityDoc.cshtml" />
     <Content Include="Views\MainReport\ReportPettyCashNum.cshtml" />
     <Content Include="Views\MenuList\hcForm.cshtml" />
-    <Content Include="Views\Travelling\travellingDetail.cshtml" />
-    <Content Include="Views\SharedMasterFormDetail_Input\empInfoDetail.cshtml" />
-    <Content Include="Views\Travelling\expensesTrvDetail.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\travellingDetail.cshtml" />
+    <Content Include="Views\EmpInfoInput\empInfoDetail.cshtml" />
+    <Content Include="Views\ExpenseEstimateInput\expensesTrvDetail.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\test.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\headerDetailsDateV2.cshtml" />
-    <Content Include="Views\Travelling - Copy\expensesTrvDetail.cshtml" />
-    <Content Include="Views\Travelling - Copy\test.cshtml" />
-    <Content Include="Views\Travelling - Copy\travellingDetail.cshtml" />
     <Content Include="Views\partialByProduct\Index.cshtml" />
     <Content Include="Views\partialSaleTeam\index.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\showSignatureDiv.cshtml" />
+    <Content Include="Views\EmpInfoReport\empInfoRpt.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail\travellingDetailRpt.cshtml" />
+    <Content Include="Views\ExpenseEstimateReport\expensesTrvDetailRpt.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail\confirmDirectorRpt.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail\recordByHcRpt.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail\attachfileDetailRpt.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
@@ -3279,7 +3286,6 @@
     <Folder Include="Uploadfiles\ActivityForm\" />
     <Folder Include="Uploadfiles\ImportMatProductPosPremium\template\" />
     <Folder Include="Views\ApiApprove\" />
-    <Folder Include="Views\ExpenseEstimate\" />
     <Folder Include="Views\exPerryCash\" />
     <Folder Include="Views\getDataMaster\" />
   </ItemGroup>

@@ -12,23 +12,8 @@ using WebLibrary;
 namespace eActForm.Controllers
 {
     [LoginExpire]
-    public class TravellingController : Controller
+    public class ExpenseEstimateInputController : Controller
     {
-
-        public ActionResult travellingDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
-        {
-            if (activity_TBMMKT_Model.placeDetailModel.Count == 0)
-            {
-                List<PlaceDetailModel> placeDetailModel = new List<PlaceDetailModel>();
-                for (int i = 0; i < 8; i++)
-                {
-                    placeDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = null, arrivalDate = null });
-                }
-                activity_TBMMKT_Model.placeDetailModel = placeDetailModel;
-            }
-            return PartialView(activity_TBMMKT_Model);
-        }
-
         public ActionResult expensesTrvDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
 
@@ -82,9 +67,5 @@ namespace eActForm.Controllers
 
             return PartialView(activity_TBMMKT_Model);
         }
-        //public ActionResult testExpensesDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
-        //{
-        //    return PartialView(activity_TBMMKT_Model);
-        //}
     }
 }
