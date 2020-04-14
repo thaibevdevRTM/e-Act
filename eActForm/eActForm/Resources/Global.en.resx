@@ -312,4 +312,7 @@
   <data name="btnReject" xml:space="preserve">
     <value>Reject</value>
   </data>
+  <data name="empId" xml:space="preserve">
+    <value>empId</value>
+  </data>
 </root>
