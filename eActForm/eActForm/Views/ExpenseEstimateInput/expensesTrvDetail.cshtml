@@ -45,7 +45,7 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="row">
 
-                                            @if (item.displayType == AppCode.CodeHtml.labelHtml)
+                                            @if (item.displayType == AppCode.CodeHtml.LabelHtml)
                                                                         {
                                                 <label> สิทธิเบิก  </label>
                                                 @*<label id="ProductDetail_@index" value="@item.productDetail" name="expensesDetailModel.costDetailLists[@index].productDetail" />*@
@@ -54,11 +54,11 @@
                                                 @*<label id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail">....</label>*@
                                                 <label id="lblBath_@index"> บาท/วัน </label>
                                             }
-                                            @if (item.displayType == AppCode.CodeHtml.textboxHtml)
+                                            @if (item.displayType == AppCode.CodeHtml.TextboxHtml)
                                             {
                                                 <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" class="form-control textboxcss" />
                                             }
-                                            @if (item.displayType == AppCode.CodeHtml.dropdownHtml)
+                                            @if (item.displayType == AppCode.CodeHtml.DropdownHtml)
                                             {
 
                                                 @Html.DropDownListFor(x => x.expensesDetailModel.costDetailLists[index].productDetail,

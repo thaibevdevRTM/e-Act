@@ -75,7 +75,9 @@ namespace eActForm.BusinessLayer
                                   unitPriceDisplay = d["unitPrice"].ToString() == "" ? "0.00" : string.Format("{0:n2}", decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString()))),
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
                                   displayType = d["displayType"].ToString(),
-                                  subDisplayType = d["subDisplayType"].ToString()
+                                  subDisplayType = d["subDisplayType"].ToString(),
+                                   updatedByUserId = d["updatedByUserId"].ToString(),
+                                  createdByUserId = d["createdByUserId"].ToString(),
 
 
                               });

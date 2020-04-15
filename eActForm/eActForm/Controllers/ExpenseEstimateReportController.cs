@@ -43,7 +43,9 @@ namespace eActForm.Controllers
                         unitPrice = model2.costDetailLists[i].unitPrice,
                         total = model2.costDetailLists[i].total,
                         displayType = model2.costDetailLists[i].displayType,
-                        subDisplayType = model2.costDetailLists[i].subDisplayType
+                        subDisplayType = model2.costDetailLists[i].subDisplayType,
+                        updatedByUserId = model2.costDetailLists[i].updatedByUserId,
+                        createdByUserId = model2.costDetailLists[i].createdByUserId,
                     });
                 }
             }

@@ -76,10 +76,15 @@ namespace eActForm.Models
         }
         public static class CodeHtml
         {
-            public const string labelHtml = "label";
-            public const string textboxHtml = "textbox";
-            public const string dropdownHtml = "dropdown";
+            public const string LabelHtml = "label";
+            public const string TextboxHtml = "textbox";
+            public const string DropdownHtml = "dropdown";
 
+
+        }
+        public static class Expenses
+        {
+            public const string Allowance = "06FF853F-EBB0-48E8-9620-520D0B8F6E0C";
 
         }
         public static string checkNullorEmpty(string p)
