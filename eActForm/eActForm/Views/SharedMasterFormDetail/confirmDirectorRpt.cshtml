@@ -1,21 +1,35 @@
-﻿@*@model eActForm.Models.Activity_TBMMKT_Model*@
+﻿@*@model eActForm.Models.ApproveModel.approveModels*@
 @using System.Configuration;
+@using eActForm.Models;
 @{
 
-    var rootPathWeb = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
+    var rootPathWeb = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped) + ConfigurationManager.AppSettings["renderPathFile"];
     var urlImg1 = "";
     var urlImg2 = "";
-    if (true)
+
+    if (Model.approveDetailLists.Count > 0)
     {
-        urlImg1 = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "images/check.png";
-        urlImg2 = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "images/check_b.png";
+        if (Model.approveDetailLists[0].statusId == Convert.ToString((int)AppCode.ApproveStatus.อนุมัติ))
+        {
+            urlImg1 = rootPathWeb + "images/check_b.png";
+            urlImg2 = rootPathWeb + "images/check.png";
+        }
+        else if (Model.approveDetailLists[0].statusId == Convert.ToString(((int)AppCode.ApproveStatus.ไม่อนุมัติ)))
+        {
+            urlImg1 = rootPathWeb + "images/check.png";
+            urlImg2 = rootPathWeb + "images/check_b.png";
+        }
+        else
+        {
+            urlImg1 = rootPathWeb + "images/check.png";
+            urlImg2 = rootPathWeb + "images/check.png";
+        }
     }
     else
     {
-        urlImg1 = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "images/check.png";
-        urlImg2 = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "images/check_b.png";
+        urlImg1 = rootPathWeb + "images/check.png";
+        urlImg2 = rootPathWeb + "images/check.png";
     }
-
 }
 
 

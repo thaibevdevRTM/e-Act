@@ -1,10 +1,6 @@
-﻿@*@using eActForm.BusinessLayer;
-    @model eActForm.Models.CostDetailOfGroupPriceTBMMKT*@
-
-
-@using eActForm.BusinessLayer;
-@using System.Configuration;
+﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.Models;
 
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
@@ -49,20 +45,20 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="row">
 
-                                            @if (item.displayType == ConfigurationManager.AppSettings["labelHtml"])
-                                            {
+                                            @if (item.displayType == AppCode.CodeHtml.labelHtml)
+                                                                        {
                                                 <label> สิทธิเบิก  </label>
                                                 @*<label id="ProductDetail_@index" value="@item.productDetail" name="expensesDetailModel.costDetailLists[@index].productDetail" />*@
-                                                <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" readonly style="border:hidden; text-align:center;"  />
+                                                <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" readonly style="border:hidden; text-align:center;" />
 
                                                 @*<label id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail">....</label>*@
                                                 <label id="lblBath_@index"> บาท/วัน </label>
                                             }
-                                            @if (item.displayType == ConfigurationManager.AppSettings["textboxHtml"])
+                                            @if (item.displayType == AppCode.CodeHtml.textboxHtml)
                                             {
                                                 <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" class="form-control textboxcss" />
                                             }
-                                            @if (item.displayType == ConfigurationManager.AppSettings["dropdownHtml"])
+                                            @if (item.displayType == AppCode.CodeHtml.dropdownHtml)
                                             {
 
                                                 @Html.DropDownListFor(x => x.expensesDetailModel.costDetailLists[index].productDetail,

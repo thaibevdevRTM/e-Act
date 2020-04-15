@@ -2,6 +2,7 @@
 @using eActForm.BusinessLayer;
 @using System.Configuration;
 @using System.Globalization;
+@using eActForm.Models;
 @*=====ของDEVทดลองprint pdf=========*@
 <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
 @using (Html.BeginForm("printDoc", "MainReport", FormMethod.Post))
@@ -29,7 +30,7 @@
     {
         foreach (var item in Model.approveFlowDetail)
         {
-            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGrouApplicant"] || item.approveGroupId == ConfigurationManager.AppSettings["approveGrouApplicantTwo"])
+            if (item.approveGroupId == AppCode.ApproveGroup.ApplicantApp || item.approveGroupId == AppCode.ApproveGroup.Applicant)
             {
                 if (Model.activityFormTBMMKT.chkUseEng)
                 {
@@ -293,7 +294,7 @@
                         {
                             if (writeoneHit == 0)
                             {
-                                if (itemFlowByDoc.approveGroupId == ConfigurationManager.AppSettings["approveGroupApproveby"] && itemFlowByDoc.statusId == "3")
+                                if (itemFlowByDoc.approveGroupId == AppCode.ApproveGroup.Approveby && itemFlowByDoc.statusId == "3")
                                 {
                                     <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;">
                                         <img style="text-align: center;" width="80" height="30" src="@itemFlowByDoc.ImgName" />

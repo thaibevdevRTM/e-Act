@@ -1,5 +1,6 @@
-﻿@using System.Configuration;
+﻿
 @model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.Models;
 @*<div id="divEstimateDetails" runat="server" style="width: 100%;"></div>*@
 
 <div class=" fontDocSmall " style="padding-left:5em;">
@@ -36,7 +37,7 @@
 
             <td style="text-align:left; padding-left:5px;">
                 @Model.expensesDetailModel.costDetailLists[@index].listChoiceName
-                @if (@Model.expensesDetailModel.costDetailLists[@index].displayType == ConfigurationManager.AppSettings["labelHtml"])
+                @if (@Model.expensesDetailModel.costDetailLists[@index].displayType == AppCode.CodeHtml.labelHtml)
                 {
                     <label> สิทธิเบิก @Model.expensesDetailModel.costDetailLists[@index].productDetail  บาท / วัน</label>
                 }

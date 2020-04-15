@@ -1,7 +1,10 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using static eActForm.Models.ApproveModel;
 
 namespace eActForm.Controllers
 {
@@ -105,8 +108,17 @@ namespace eActForm.Controllers
         }
         public ActionResult confirmDirectorRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            ApproveModel.approveModels models = new ApproveModel.approveModels();
+            models = ApproveAppCode.getApproveByActFormId(activity_TBMMKT_Model.activityFormTBMMKT.id, "");
+            //List<approveDetailModel> approveDetailLists = new List<approveDetailModel>();
 
-            return PartialView(activity_TBMMKT_Model);
+                if (models.approveDetailLists.Count > 0)
+                {
+                models.approveDetailLists = models.approveDetailLists.Where(x => x.approveGroupId == AppCode.ApproveGroup.Director).ToList();
+                }
+           
+            // int count  =   models.approveFlowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Director).Where(x=>x.statusId == "3").ToList().Count;
+            return PartialView(models);
         }
         public ActionResult recordByHcRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
@@ -115,8 +127,8 @@ namespace eActForm.Controllers
         }
         public ActionResult attachfileDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-
-            return PartialView(activity_TBMMKT_Model);
+            List<TB_Act_Image_Model.ImageModel> lists = ImageAppCode.GetImage(activity_TBMMKT_Model.activityFormTBMMKT.id);
+            return PartialView(lists);
         }
     }
 }
