@@ -283,6 +283,17 @@ namespace eActForm.Models
         public string activityId { get; set; }
     }
 
+    public class ObjGetDataGL
+    {
+        public string IOCode { get; set; }
+        public string SubGroupCode { get; set; }
+    }
+
+    public class GetDataGL
+    {
+        public string GL { get; set; }
+    }
+
     public class TB_Act_ActivityForm_DetailOtherList
     {
         public string id { get; set; }

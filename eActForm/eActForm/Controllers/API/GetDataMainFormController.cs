@@ -189,6 +189,27 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetDataGLPaymentVoucher(ObjGetDataGL objGetDataGL)
+        {
+            var result = new AjaxResult();
+            try
+            {
 
+                List<GetDataGL> tbToAjax = new List<GetDataGL>();
+                tbToAjax = QueryGetSelectMainForm.GetQueryDataGLPaymentVoucher(objGetDataGL);
+
+                var resultData = new
+                {
+                    tbToAjax = tbToAjax.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

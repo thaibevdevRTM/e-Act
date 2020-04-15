@@ -49,5 +49,23 @@ namespace eActForm.BusinessLayer
                 return new List<GetDataIO>();
             }
         }
+        public static List<GetDataGL> GetQueryDataGLPaymentVoucher(ObjGetDataGL objGetDataGL)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDataGLPaymentVoucher", new SqlParameter("@IOCode", objGetDataGL.IOCode), new SqlParameter("@SubGroupCode", objGetDataGL.SubGroupCode));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new GetDataGL()
+                             {
+                                 GL = d["GL"].ToString()
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("GetQueryDataIOPaymentVoucher => " + ex.Message);
+                return new List<GetDataGL>();
+            }
+        }
     }
 }

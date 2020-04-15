@@ -135,16 +135,13 @@
                                                 nonSelectedText: '',
                                                 buttonWidth: '100%',
                                                 onChange: function (option, checked) {
-                                                    clearDropdownIOSectionThree();
                                                     if ($("#ddl_EO_PV").val() != "") {
                                                         if (checked === true) {
                                                             ActivityByEOSelect.push(option.val());
                                                         } else {
                                                             removeArray(ActivityByEOSelect, option.val());
                                                         }
-                                                        //alert(ActivityByEOSelect.toString());
                                                         if (ActivityByEOSelect.toString() != "") {
-                                                            //alert("go get data");
                                                             var dataToBeSend = {
                                                                 ActivityByEOSelect: ActivityByEOSelect.toString()
                                                             };
@@ -162,7 +159,7 @@
                                                                                 var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
                                                                                 for (i = 0; i < rowCount; i++) {
                                                                                     $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").append($("<option></option>").val(this['IO']).html(this['IO']));
-                                                                                    $('.IO_' + i.toString()).selectpicker('refresh');
+                                                                                    $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").selectpicker('refresh');
                                                                                 }
                                                                             });
                                                                             //==END===insertdata all from ajax============
@@ -181,12 +178,6 @@
                                                 $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
                                                 $(".multiselect .caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
                                             });
-                                            function clearDropdownIOSectionThree() {
-                                                var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
-                                                for (i = 0; i < rowCount; i++) {
-                                                    $("#tB_Act_ActivityForm_DetailOtherList[" + i.toString() +"].IO").empty();
-                                                }
-                                            }
                                             function removeArray(arr, what) {
                                                 var found = arr.indexOf(what);
 
@@ -200,7 +191,7 @@
                                             //====remove data old in dropdown====
                                             for (i = 0; i < rowCount; i++) {
                                                 $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO option[value !='']").remove();
-                                                $('.IO_' + i.toString()).selectpicker('refresh');
+                                                $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").selectpicker('refresh');
                                             }
                                            //====remove data old in dropdown====
                                         }

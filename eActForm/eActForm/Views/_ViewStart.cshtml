@@ -14,3 +14,17 @@
     DocumentsAppCode.setCulture(Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString());
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script>
+    //==============Global Function Javascript=============
+    String.prototype.replaceAll = function (stringToFind, stringToReplace) {
+        if (stringToFind === stringToReplace) return this;
+        var temp = this;
+        var index = temp.indexOf(stringToFind);
+        while (index != -1) {
+            temp = temp.replace(stringToFind, stringToReplace);
+            index = temp.indexOf(stringToFind);
+        }
+        return temp;
+    };
+    //======END========Global Function Javascript=============
+</script>
