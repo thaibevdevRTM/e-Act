@@ -34,10 +34,10 @@
                                 @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].IO", new SelectList(Model.listGetDataIO, "IO", "activityId", item.IO), "", new { @class = "form-control"})
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.GL" id="tB_Act_ActivityForm_DetailOtherList[@index].GL" name="tB_Act_ActivityForm_DetailOtherList[@index].GL" class="form-control textboxcss" readonly="readonly" />
+                                <input type="text" value="@item.GL" id="tB_Act_ActivityForm_DetailOtherList[@index].GL" name="tB_Act_ActivityForm_DetailOtherList[@index].GL" class="form-control textboxcss txtGL_@index" readonly="readonly" />
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].select_list_choice_id_ChReg", new SelectList(Model.list_1, "id", "name", item.select_list_choice_id_ChReg), "", new { @class = "form-control"})
+                                @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].select_list_choice_id_ChReg", new SelectList(Model.list_1, "id", "name", item.select_list_choice_id_ChReg), "", new { @class = "form-control" })
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].productBrandId", new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", item.productBrandId), "", new { @class = "form-control"})
@@ -59,6 +59,7 @@
                                     {
                                         getGL(indexJava);
                                     });
+                                    
                                 </script>
                             </td>
                         </tr>
@@ -78,15 +79,17 @@
                         trHTML = trHTML.replaceAll('_0__GL', '_' + nextNoId + '__GL');
                         trHTML = trHTML.replaceAll('_0__select_list_choice_id_ChReg', '_' + nextNoId + '__select_list_choice_id_ChReg');
                         trHTML = trHTML.replaceAll('_0__productBrandId', '_' + nextNoId + '__productBrandId');
+                        trHTML = trHTML.replaceAll('txtGL_0', 'txtGL_' + nextNoId);
                         trHTML = ("<tr class=\"tagCountRowinTable tRow_" + nextNoId + "\">" + trHTML );
                         trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__IO').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
                         trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__select_list_choice_id_ChReg').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
                         trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__productBrandId').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
-                        //===========ต้องมี3บรรทัดล่างไม่งั้น DropdownFilter จะขึ้นมาเบิ้ล=================
-                        trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO" title="Nothing selected" aria-expanded="false">', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO" title="Nothing selected" aria-expanded="false" style="display:none;">');
-                        trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__select_list_choice_id_ChReg" title="Nothing selected" aria-expanded="false">', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__select_list_choice_id_ChReg" title="Nothing selected" aria-expanded="false" style="display:none;">');
-                        trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__productBrandId" title="Nothing selected" aria-expanded="false">', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__productBrandId" title="Nothing selected" aria-expanded="false" style="display:none;">');
-                        //=====END======ต้องมี3บรรทัดล่างไม่งั้น DropdownFilter จะขึ้นมาเบิ้ล=================
+                        trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " + '__IO').change(function () { getGL(" + nextNoId + ");});<\/script>");
+                        /*===========ต้องมี6บรรทัดล่างไม่งั้น DropdownFilter จะขึ้นมาเบิ้ล=================*/ 
+                        trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO" title', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO" style="display:none;" title>');
+                        trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__select_list_choice_id_ChReg" title', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__select_list_choice_id_ChReg" style="display:none;" title>');
+                        trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__productBrandId" title', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__productBrandId" style="display:none;" title>');
+                       /*=====END======ต้องมี6บรรทัดล่างไม่งั้น DropdownFilter จะขึ้นมาเบิ้ล=================*/
                         trHTML = (trHTML + "</tr>");
                         $('#tabelSectionThreeToFive').append(trHTML);
                     }
@@ -106,18 +109,18 @@
                                     type: "POST",
                                     success: function (response) {
                                         if (response.Data.tbToAjax.length > 0) {
+                                            //tB_Act_ActivityForm_DetailOtherList[0].GL
                                             $.each(response.Data.tbToAjax, function () {
-                                                $('#tB_Act_ActivityForm_DetailOtherList[' + indexRow.toString() + '].GL').val(this['GL']);
+                                                $(".txtGL_" + indexRow).val(this['GL']);
                                             });
-                                        }
-                                        else {
-
                                         }
                                     },
                                     error: function (data) {
                                         alert("Error GetDataEOPaymentVoucher.");
                                     }
                                 });
+                        } else {
+                            $(".txtGL_" + indexRow).val('');
                         }
                     }
                 </script>

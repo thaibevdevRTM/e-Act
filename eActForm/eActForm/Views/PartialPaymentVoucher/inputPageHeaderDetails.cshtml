@@ -190,6 +190,7 @@
                                             var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
                                             //====remove data old in dropdown====
                                             for (i = 0; i < rowCount; i++) {
+                                                $(".txtGL_" + i.toString()).val(this['GL']);
                                                 $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO option[value !='']").remove();
                                                 $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").selectpicker('refresh');
                                             }
