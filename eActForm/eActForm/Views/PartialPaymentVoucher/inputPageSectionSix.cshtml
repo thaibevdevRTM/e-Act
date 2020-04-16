@@ -1,0 +1,195 @@
+﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+<table style="width: 100%;">
+    <tr>
+        <td>
+            <div class="form-group">
+                <label class="control-label col-md-12 col-xs-12 hrTab" style="text-align:left;">
+                    ส่วนที่ 6 : รายละเอียด ค่าใช้จ่าย (รวมภาษีมูลค่าเพิ่ม) ในงวดนี้
+                </label>
+            </div>
+        </td>
+    </tr>
+</table>
+<table style="width: 100%;">
+    <tr>
+        <td>
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    สั่งจ่ายครั้งที่ :
+                </label>
+
+                <div class="col-md-3 col-xs-12">
+                    <div class="row">
+                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtpayNo" })
+                        <script>
+                            $('#txtpayNo').blur(function () {
+                                checktxtpayNo();
+                            });
+                            function checktxtpayNo() {
+                                if ($('#txtpayNo').val() == "1" || $('#txtpayNo').val().replace(' ', '') == "") {
+                                    $('#ddlActivityNoSub').val("");
+                                    $('#ddlActivityNoSub').prop('disabled', true);
+                                    $('#linkViewActNoOld').hide();
+                                } else {
+                                    $('#ddlActivityNoSub').prop('disabled', false);
+                                }
+                                $("#ddlActivityNoSub").selectpicker('refresh');
+                            }
+                        </script>
+                    </div>
+                </div>
+                <label class="control-label col-md-2 col-xs-12" style="text-align:left;">
+                    สั่งจ่ายต่อจากเอกสาร :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownListFor(x => x.activityFormTBMMKT.listAPSelect, new SelectList(Model.listAPModel, "APCode", "Name1", ""), "", new
+                   {
+                       @class = "form-control selectpicker",
+                       @title = "สำหรับกรณีสั่งจ่ายตั้งแต่ครั้งที่2ขึ้นไป",
+                       disabled = "disabled",
+                       id = "ddlActivityNoSub"
+                   })
+                        <script>
+                            $('#ddlActivityNoSub').selectpicker({
+                                liveSearch: true,
+                                showSubtext: true
+                            });
+                            $('#ddlActivityNoSub').change(function () {
+                                if ($('#ddlActivityNoSub').val() != '') {
+                                    $("#linkViewActNoOld").attr("href", "/MainForm?activityId=" + $('#ddlActivityNoSub').val() +"&mode=edit&typeForm=TBM&master_type_form_id=" + "@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]");
+                                    $('#linkViewActNoOld').show();
+                                } else {
+                                    $('#linkViewActNoOld').hide();
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="col-md-1 col-xs-12">
+                    <div class="row" style="padding-top:3px;">
+                        &nbsp;
+                        @Html.ActionLink(" ", "Index", "MainForm", null, new { id = "linkViewActNoOld", @class = "btn ink-reaction btn-info fa fa-search", title = "กดเพื่อดูข้อมูลใบสั่งจ่ายที่เลือก", target = "_blank", style = "display:none;" })
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+<table id="tabelSectionSix" style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+
+    <tr style="background-color:#2f74b5;color:white;" class="highHeadFooterTable">
+        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">IO</th>
+        <th style="width: 45%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">รายละเอียด</th>
+        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">VAT</th>
+        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">จำนวนเงิน(บาท)</th>
+    </tr>
+    @{ var index = 0;}
+    @foreach (var item in Model.activityOfEstimateList)
+    {
+        <tr class="tagCountRowinTable tRow2_@index">
+            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" style="text-align:center;" />
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss" />
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                @Html.DropDownList("activityOfEstimateList[" + index + "].list_1_select", new SelectList(Model.list_1, "id", "name", item.activityTypeId), "", new { @class = "form-control" })
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                <input type="hidden" value="@item.normalCost" id="activityOfEstimateList[@index].normalCost" name="activityOfEstimateList[@index].normalCost" class="form-control textboxcss text-right hidnormalCost_@index" />
+                @Html.TextBoxFor(x => item.normalCost, "{0:n2}", new { @id = "activityOfEstimateList[" + index + "].normalCost", Name = "activityOfEstimateList[" + index + "].normalCost", @class = "form-control textboxcss text-right txtnormalCost_" + index })
+                <script>
+                     $(".txtnormalCost_@index").blur(function () {
+                         sumall();
+                     });
+                </script>
+            </td>
+        </tr>
+        index++;
+    }
+</table>
+<table id="tableTotal" style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr class="highHeadFooterTable">
+        <td colspan="3" style="width:75%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:right;">
+            รวม&nbsp;
+        </td>
+        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+            <label id="totalnormalCostEstimate" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+        </td>
+    </tr>
+    <tr class="highHeadFooterTable">
+        <td colspan="3" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:right;">
+            ภาษีมูลค่าเพิ่ม 7%&nbsp;
+        </td>
+        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+            <label id="totalVat" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalvat.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+        </td>
+    </tr>
+    <tr class="highHeadFooterTable" style="background-color:#faf7b9">
+        <td colspan="3" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            รวมทั้งสิ้น(บาท)&nbsp;
+        </td>
+        <td style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            <label id="totalnormalCostEstimateWithVat" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+        </td>
+    </tr>
+    <tr class="highHeadFooterTable">
+        <td colspan="3" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            งบผูกพันรวม&nbsp;
+        </td>
+        <td style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            <label id="totalallPayByIO" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalallPayByIO.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+        </td>
+    </tr>
+    <tr class="highHeadFooterTable">
+        <td colspan="3" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            งบฯ สะสม&nbsp;
+        </td>
+        <td style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            <label id="totalallPayNo" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalallPayNo.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+        </td>
+    </tr>
+    <tr class="highHeadFooterTable" style="background-color:#faf7b9">
+        <td colspan="3" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            คงเหลือ(บาท)&nbsp;
+        </td>
+        <td style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            <label id="totalallPayByIOBalance" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+        </td>
+    </tr>
+
+</table>
+<div id="addEx" class="row pull-right" style="width:150px;margin-top: 5px;" onclick="tbAddRowSectionSix();">
+    <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
+</div>
+<div style="height:10px;">&nbsp;</div>
+<script>
+    function sumall() {
+        var normalCostAll = 0.00;
+        var rowCount = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
+
+        for (i = 0; i < rowCount; i++) {
+            var rownormalCost = parseFloat($(".txtnormalCost_" + i.toString()).val().replace(",", ""));
+            $(".hidnormalCost_" + i.toString()).val(rownormalCost.toFixed(2));
+            normalCostAll = normalCostAll + rownormalCost;
+        }
+
+        $("#totalnormalCostEstimate").text(normalCostAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+    }
+    function tbAddRowSectionSix() {
+        var nextNoId = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length).toString();
+        var trHTML = $('.tRow2_0').html();
+        trHTML = trHTML.replaceAll('[0].IO', '[' + nextNoId + '].IO');
+        trHTML = trHTML.replaceAll('[0].productDetail', '[' + nextNoId + '].productDetail');
+        trHTML = trHTML.replaceAll('[0].list_1_select', '[' + nextNoId + '].list_1_select');
+        trHTML = trHTML.replaceAll('[0].normalCost', '[' + nextNoId + '].normalCost');
+        trHTML = ("<tr class=\"tagCountRowinTable tRow_" + nextNoId + "\">" + trHTML);
+        trHTML = (trHTML + "</tr>");
+        $('#tabelSectionSix').append(trHTML);
+    }
+</script>
+

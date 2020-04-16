@@ -20,7 +20,7 @@ namespace eActForm.Models
         public List<TB_Reg_Subject> tB_Reg_Subject { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalCostThisActivity { get; set; }
-
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public List<RequestEmpModel> masterRequestEmp { get; set; }
         public List<RequestEmpModel> requestEmpModel { get; set; }
         public List<PurposeModel> purposeModel { get; set; }
@@ -76,6 +76,7 @@ namespace eActForm.Models
         public string list_0_select_value { get; set; }
         public string[] list_1_multi_select { get; set; }
         public string[] list_2_multi_select { get; set; }
+        public string list_1_select { get; set; }
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }
         public string brand_select { get; set; }
@@ -136,6 +137,17 @@ namespace eActForm.Models
         public string toContact { get; set; }
         public string detailContact { get; set; }
         public string brand_select { get; set; }
+        public decimal? totalnormalCostEstimate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalvat { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalnormalCostEstimateWithVat { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalallPayByIO { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalallPayNo { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalallPayByIOBalance { get; set; }
     }
 
 

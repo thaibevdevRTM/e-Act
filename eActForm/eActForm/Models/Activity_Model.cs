@@ -220,7 +220,7 @@ namespace eActForm.Models
         public string activityId { get; set; }
         public string typeTheme { get; set; }
         public string activityTypeId { get; set; }
-
+        public string list_1_select { get; set; }
         public string productDetail { get; set; }
         public string productId { get; set; }
         public string productName { get; set; }

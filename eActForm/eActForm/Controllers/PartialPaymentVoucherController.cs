@@ -95,5 +95,39 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
+        public ActionResult inputPageSectionSix(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])//ãºÊÑè§¨èÒÂ
+            {
+                activity_TBMMKT_Model.list_1 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "haveVat").OrderBy(x => x.orderNum).ToList();
+            }
+            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate == null)
+            {
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate = decimal.Parse("0.00");
+            }
+            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalvat == null)
+            {
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalvat = decimal.Parse("0.00");
+            }
+            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat == null)
+            {
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat = decimal.Parse("0.00");
+            }
+            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalallPayByIO == null)
+            {
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalallPayByIO = decimal.Parse("0.00");
+            }
+            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalallPayNo == null)
+            {
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalallPayNo = decimal.Parse("0.00");
+            }
+            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance == null)
+            {
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance = decimal.Parse("0.00");
+            }
+
+            return PartialView(activity_TBMMKT_Model);
+        }
+
     }
 }
