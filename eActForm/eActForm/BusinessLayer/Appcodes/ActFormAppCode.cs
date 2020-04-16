@@ -349,10 +349,16 @@ namespace eActForm.BusinessLayer
         }
         public static bool checkGrpCompByUser(string typeComp)
         {
-            List<ActUserModel.UserAuthorized> lst = new List<ActUserModel.UserAuthorized>();
-            lst = UserAppCode.GetUserAuthorizedsByCompany(typeComp);
-            return lst.Count > 0 ? true : false;
-
+            try
+            {
+                List<ActUserModel.UserAuthorized> lst = new List<ActUserModel.UserAuthorized>();
+                lst = UserAppCode.GetUserAuthorizedsByCompany(typeComp);
+                return lst.Count > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkGrpCompByUser >>" + ex.Message);
+            }
         }
         public static bool checkGrpComp(string compId, string typeComp)
         {
@@ -365,11 +371,31 @@ namespace eActForm.BusinessLayer
                     lst = lst.Where(x => x.val1 == compId).ToList();
                 }
                 return lst.Count > 0 ? true : false;
-
             }
             catch (Exception ex)
             {
                 throw new Exception("checkGrpComp >>" + ex.Message);
+            }
+        }
+
+        public static bool checkRecorderByUser(string actId)
+        {
+            try
+            {
+                ApproveModel.approveModels models = new ApproveModel.approveModels();
+                models = ApproveAppCode.getApproveByActFormId(actId, "");
+
+                if (models.approveDetailLists.Count > 0)
+                {
+                    models.approveDetailLists = models.approveDetailLists
+                        .Where(x => x.approveGroupId == AppCode.ApproveGroup.Recorder)
+                        .Where(x => x.empId == UtilsAppCode.Session.User.empId).ToList();
+                }
+                return models.approveDetailLists.Count > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkRecorderByUser >>" + ex.Message);
             }
 
         }

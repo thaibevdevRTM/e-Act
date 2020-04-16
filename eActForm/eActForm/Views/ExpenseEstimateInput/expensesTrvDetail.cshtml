@@ -5,10 +5,10 @@
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
         <td>
-            <div id="divPlaceDetail" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
+            <div id="divExpensesTrv" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
 
 
-                <table class="table table-bordered" id="tabelPlaceDetail" runat="server">
+                <table class="table table-bordered" id="tabelExpensesTrv" runat="server">
                     <tr style="background-color:#E5E2E2;height:25px; ">
                         <th colspan="6" style="text-align :center;">
                             ประมาณค่าใช้จ่ายในการเดินทาง ดังนี้
@@ -46,7 +46,7 @@
                                         <div class="row">
 
                                             @if (item.displayType == AppCode.CodeHtml.LabelHtml)
-                                                                        {
+                                            {
                                                 <label> สิทธิเบิก  </label>
                                                 @*<label id="ProductDetail_@index" value="@item.productDetail" name="expensesDetailModel.costDetailLists[@index].productDetail" />*@
                                                 <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" readonly style="border:hidden; text-align:center;" />
@@ -103,7 +103,7 @@
                                 <input type="text" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" />
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                                <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss text-right hdTotal_@index" />
+                                <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss text-right hdTotal_@index " />
                                 @Html.TextBoxFor(x => item.total, "{0:n2}", new
                            {
                                @id = "txtTotal_" + @index
@@ -185,7 +185,7 @@
 
 
                 <script>
-
+                   
                             function sumall() {
                                 var totalAll = 0.00;
                                 var rowCount = '@Model.expensesDetailModel.costDetailLists.Count';
@@ -204,3 +204,4 @@
         </td>
     </tr>
 </table>
+

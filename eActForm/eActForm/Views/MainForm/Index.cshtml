@@ -83,9 +83,11 @@
 <div style="margin-left:25px;" class="text-center">
     <a href="@Url.Action("index", "Home", new { typeForm = @Model.activityFormModel.typeForm }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
     @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString()
-                                                || Model.activityFormTBMMKT.statusId == 1
-                                                || Model.activityFormTBMMKT.statusId == 5
-                                                || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)))
+            || Model.activityFormTBMMKT.statusId == 1
+            || Model.activityFormTBMMKT.statusId == 5
+            || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
+            || (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] && ActFormAppCode.checkRecorderByUser(Model.activityFormTBMMKT.id))
+        )
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
     }
@@ -123,19 +125,26 @@
 
 <script>
 
-    if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId)' == "False")
-    {
-           $("#GridPDF :input").prop("disabled", true);
-           $("#txtdescAttach").prop("disabled", true);
+    if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' == "False") {
+
+        $("#GridPDF :input").prop("disabled", true);
+        $("#txtdescAttach").prop("disabled", true);
+
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' &&
+            '@ActFormAppCode.checkRecorderByUser(Model.activityFormTBMMKT.id)' == 'True') {
+            $("#divExpensesTrv :input").prop("disabled", false);
+        }
     }
 
-        if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
-            var arrayOfElements = document.getElementsByClassName('clstxtIO');
-            var lengthOfArray = arrayOfElements.length;
-            for (var i = 0; i < lengthOfArray; i++) {
-                arrayOfElements[i].disabled = 'disabled';
-            }
+    if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
+        var arrayOfElements = document.getElementsByClassName('clstxtIO');
+        var lengthOfArray = arrayOfElements.length;
+        for (var i = 0; i < lengthOfArray; i++) {
+            arrayOfElements[i].disabled = 'disabled';
         }
+    }
+
+
 
     $("#btnExportPDF").click(function () {
         $("input[name='gridHtml']").val($("#GridPDF").html());
@@ -244,7 +253,7 @@
 
             if ($("#txtdateDoc").val() == "") { required += "&emsp;วันที่เอกสาร*<br>"; validate = false; }
             if ($("#lblEmpName").val() == "" || $("#lblEmpName").val() == null) { required += "&emsp;ข้อมูลพนักงาน*<br>"; validate = false; }
-            if ($("#ddlRegional").val() == "") { required += "&emsp;ภาค*<br>"; validate = false; }  
+            if ($("#ddlRegional").val() == "") { required += "&emsp;ภาค*<br>"; validate = false; }
             if ($("#txtEmpTel").val() == "") { required += "&emsp;โทรศัพท์ติดต่อ*<br>"; validate = false; }
             if ($("#txtOrerOf").val() == "") { required += "&emsp;ตามคำสั่ง*<br>"; validate = false; }
 
@@ -256,7 +265,7 @@
                 $("#txtArrivalDate_0").val() != "")) {
                 required += "&emsp;รายละเอียดการเดินทาง*<br>"; validate = false;
             }
-           
+
             if ($("#totalEstimate").val() == "" || $("#totalEstimate").val() == "0.00") {
                 required += "&emsp;ประมาณค่าใช้จ่ายในการเดินทาง*<br>"; validate = false;
             }

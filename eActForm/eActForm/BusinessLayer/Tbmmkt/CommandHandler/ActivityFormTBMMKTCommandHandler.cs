@@ -28,6 +28,9 @@ namespace eActForm.BusinessLayer
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
                 }
+                else if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && ActFormAppCode.checkRecorderByUser(activityId)) {
+                    rtn = ProcessInsertEstimate(rtn, model, activityId);
+                }
                 else
                 {
                     model.activityFormTBMMKT.id = activityId;
