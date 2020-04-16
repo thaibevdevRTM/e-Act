@@ -263,7 +263,7 @@ namespace eActForm.Models
         }
         public string listChoiceId { get; set; }
         public string listChoiceName { get; set; }
-
+        public string statusEdit { get; set; }
         public string displayType { get; set; }
         public string subDisplayType { get; set; }
     }

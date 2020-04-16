@@ -90,6 +90,40 @@ namespace eActForm.BusinessLayer
                 return new List<CostThemeDetailOfGroupByPriceTBMMKT>();
             }
         }
+        public static List<CostThemeDetailOfGroupByPriceTBMMKT> getHistoryByActivityId(string activityId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityOfEstimateHistoryByActivityId"
+                 , new SqlParameter("@activityId", activityId));
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new CostThemeDetailOfGroupByPriceTBMMKT()
+                              {
+                                  id = d["id"].ToString(),
+                                  activityId = d["activityId"].ToString(),
+                                  activityTypeId = d["activityTypeId"].ToString(),                              
+                                  productDetail = d["productDetail"].ToString(),
+                                  unit = int.Parse(d["unit"].ToString()),
+                                  unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
+                                  unitPriceDisplay = d["unitPrice"].ToString() == "" ? "0.00" : string.Format("{0:n2}", decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString()))),
+                                  total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
+                                listChoiceId = d["listChoiceId"].ToString(),
+                                  delFlag = bool.Parse(d["delFlag"].ToString()),
+                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
+                                  createdByUserId = d["createdByUserId"].ToString(),
+                                  updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
+                                  updatedByUserId = d["updatedByUserId"].ToString(),
+                              });
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                return new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+            }
+        }
 
     }
 }

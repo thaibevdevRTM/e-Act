@@ -57,7 +57,7 @@
                 @if (@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") != ".00")
                 {
                     <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
-                    if (@Model.expensesDetailModel.costDetailLists[@index].updatedByUserId != @Model.expensesDetailModel.costDetailLists[@index].createdByUserId)
+                    if (@Model.expensesDetailModel.costDetailLists[@index].statusEdit !="")
                     {
                         <span style="color:red">*</span>
                     }

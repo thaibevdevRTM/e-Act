@@ -17,7 +17,7 @@ namespace eActForm.Controllers
 
         public ActionResult expensesTrvDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT
+            CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT
             {
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
@@ -27,14 +27,29 @@ namespace eActForm.Controllers
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
 
+            CostDetailOfGroupPriceTBMMKT modelHistory = new CostDetailOfGroupPriceTBMMKT
+            {
+                costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
+            };
+
+            modelHistory.costDetailLists = QueryGetActivityEstimateByActivityId.getHistoryByActivityId(activity_TBMMKT_Model.activityFormModel.id);
             model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
 
+            decimal? unitPrice = 0;
             for (int i = 0; i < 8; i++)
             {
                 if (model2.costDetailLists[i].unitPrice != 0)
                 {
+                    if (modelHistory.costDetailLists.Count > 0)
+                    {
+                        unitPrice= modelHistory.costDetailLists.Where(x => x.listChoiceId == model2.costDetailLists[i].listChoiceId).FirstOrDefault().unitPrice;
+                    }
+                    else
+                    {
+                        unitPrice = model2.costDetailLists[i].unitPrice;
+                    }
 
-                    model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                    modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                     {
                         listChoiceId = model2.costDetailLists[i].listChoiceId,
                         listChoiceName = model2.costDetailLists[i].listChoiceName,
@@ -46,15 +61,18 @@ namespace eActForm.Controllers
                         subDisplayType = model2.costDetailLists[i].subDisplayType,
                         updatedByUserId = model2.costDetailLists[i].updatedByUserId,
                         createdByUserId = model2.costDetailLists[i].createdByUserId,
-                    });
+                        statusEdit = model2.costDetailLists[i].createdByUserId == "" ? "" :
+                        (model2.costDetailLists[i].createdByUserId != model2.costDetailLists[i].updatedByUserId
+                        && model2.costDetailLists[i].unitPrice != unitPrice ? "*" : ""),
+                    }); ;
                 }
             }
 
-            int rowAdd = 8 - model.costDetailLists.Count;
+            int rowAdd = 8 - modelResult.costDetailLists.Count;
             for (int i = 0; i < rowAdd; i++)
             {
 
-                model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                 {
                     listChoiceId = "",
                     listChoiceName = "",
@@ -63,16 +81,17 @@ namespace eActForm.Controllers
                     unitPrice = 0,
                     total = 0,
                     displayType = "",
-                    subDisplayType = ""
+                    subDisplayType = "",
+                    statusEdit = ""
                 });
 
             }
 
 
-            model.costDetailLists = model.costDetailLists.ToList();
+            modelResult.costDetailLists = modelResult.costDetailLists.ToList();
 
 
-            activity_TBMMKT_Model.expensesDetailModel = model;
+            activity_TBMMKT_Model.expensesDetailModel = modelResult;
 
 
             return PartialView(activity_TBMMKT_Model);
