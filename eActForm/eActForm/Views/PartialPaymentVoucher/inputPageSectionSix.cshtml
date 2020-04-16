@@ -81,16 +81,27 @@
 <table id="tabelSectionSix" style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
 
     <tr style="background-color:#2f74b5;color:white;" class="highHeadFooterTable">
-        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">IO</th>
-        <th style="width: 45%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">รายละเอียด</th>
-        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">VAT</th>
-        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">จำนวนเงิน(บาท)</th>
-        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">&nbsp;</th>
+        <th style="width: 5%;border-style: solid;border-width: 0px 0px 1px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">&nbsp;</th>
+        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">IO</th>
+        <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">รายละเอียด</th>
+        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">VAT</th>
+        <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">จำนวนเงิน(บาท)</th>
+
     </tr>
     @{ var index = 0;}
     @foreach (var item in Model.activityOfEstimateList)
     {
         <tr class="tagCountRowinTable tRow2_@index">
+            <td style="border-style: solid;border-width: 1px 0px 0px 1px; border-collapse: collapse;text-align:center;padding-left:5px;padding-top:5px;">
+                @if (index == 0)
+                {
+                    <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" id="btnDeleteRowTables" disabled="disabled"></button>
+                }
+                else
+                {
+                    <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" id="btnDeleteRowTables" onclick="deleteRowTable(this);"></button>
+                }
+            </td>
             <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
                 @Html.DropDownList("activityOfEstimateList[" + index + "].IO", new SelectList(Model.listGetDataIO, "IO", "IO", item.IO), "", new { @class = "form-control" })
             </td>
@@ -109,23 +120,13 @@
                      });
                 </script>
             </td>
-            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;padding-left:5px;padding-top:5px;">
-                @if (index == 0)
-                {
-                    <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" id="btnDeleteRowTables" disabled="disabled"></button>
-                }
-                else
-                {
-                    <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" id="btnDeleteRowTables" onclick="deleteRowTable(this);"></button>
-                }
-            </td>
         </tr>
         index++;
     }
 </table>
 <table id="tableTotal" style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr class="highHeadFooterTable">
-        <td colspan="3" style="width:75%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:right;">
+        <td colspan="3" style="width:70%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:right;">
             รวม&nbsp;
         </td>
         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
@@ -185,8 +186,8 @@
 
         for (i = 0; i < rowCount; i++) {
             if ($(".txtnormalCost_" + i.toString()).val() != '') {
-            var rownormalCost = parseFloat($(".txtnormalCost_" + i.toString()).val().replace(",", ""));
-            $(".hidnormalCost_" + i.toString()).val(rownormalCost.toFixed(2));
+                var rownormalCost = parseFloat($(".txtnormalCost_" + i.toString()).val().replace(",", ""));
+                $(".hidnormalCost_" + i.toString()).val(rownormalCost.toFixed(2));
                 normalCostAll = normalCostAll + rownormalCost;
             }
         }
