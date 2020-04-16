@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using System;
 using System.Configuration;
@@ -162,16 +163,15 @@ namespace eActForm.Controllers
 
         public ActionResult searchForIconReject()
         {
-            string count = Request.Form.AllKeys.Count().ToString();
-
             Activity_Model.actForms model;
             model = new Activity_Model.actForms
             {
                 actLists = ActFormAppCode.getActFormRejectByEmpId()
             };
 
+            model.typeForm = BaseAppCodes.getCompanyTypeForm().ToString();
             TempData["SearchDataModel"] = model;
-            return RedirectToAction("Index");
+            return RedirectToAction("Index",new { typeForm = model.typeForm });
         }
 
         public ActionResult logOut()
