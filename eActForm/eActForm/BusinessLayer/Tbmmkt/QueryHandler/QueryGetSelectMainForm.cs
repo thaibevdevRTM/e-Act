@@ -39,7 +39,8 @@ namespace eActForm.BusinessLayer
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new GetDataIO()
                              {
-                                 IO = d["IO"].ToString()
+                                 IO = d["IO"].ToString(),
+                                 totalPayByIO = d["totalPayByIO"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalPayByIO"].ToString())),
                              });
                 return lists.ToList();
             }

@@ -340,6 +340,12 @@ function CallImageView(obj) {
     }).done(function (htmlResponse) {
             $("#divgetimage").html(htmlResponse)
         });
-}
+    }
+
+    function deleteRowTable(btn) {
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        getValues();
+    }
 
 </script>

@@ -157,9 +157,13 @@
                                                                             //=====insertdata all from ajax===========
                                                                             $.each(response.Data.tbToAjax, function () {
                                                                                 var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
+                                                                                var rowCount2 = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
                                                                                 for (i = 0; i < rowCount; i++) {
                                                                                     $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").append($("<option></option>").val(this['IO']).html(this['IO']));
-                                                                                    $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").selectpicker('refresh');
+                                                                                    //$("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").selectpicker('refresh');
+                                                                                }
+                                                                                for (i = 0; i < rowCount2; i++) {//activityOfEstimateList_0__IO
+                                                                                    $("#activityOfEstimateList_" + i.toString() + "__IO").append($("<option></option>").val(this['IO']).html(this['IO']));
                                                                                 }
                                                                             });
                                                                             //==END===insertdata all from ajax============
@@ -188,11 +192,15 @@
                                         }
                                         function removeDropdownIO() {
                                             var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
+                                            var rowCount2 = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
                                             //====remove data old in dropdown====
                                             for (i = 0; i < rowCount; i++) {
                                                 $(".txtGL_" + i.toString()).val(this['GL']);
                                                 $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO option[value !='']").remove();
-                                                $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").selectpicker('refresh');
+                                                //$("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").selectpicker('refresh');
+                                            }
+                                            for (i = 0; i < rowCount2; i++) {
+                                                $("#activityOfEstimateList_" + i.toString() + "__IO option[value !='']").remove();
                                             }
                                            //====remove data old in dropdown====
                                         }

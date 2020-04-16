@@ -292,7 +292,9 @@ namespace eActForm.Models
     public class GetDataIO
     {
         public string IO { get; set; }
-        public string activityId { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalPayByIO { get; set; }
     }
 
     public class ObjGetDataGL

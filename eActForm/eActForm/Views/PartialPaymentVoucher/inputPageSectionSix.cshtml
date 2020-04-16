@@ -85,13 +85,14 @@
         <th style="width: 45%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">รายละเอียด</th>
         <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">VAT</th>
         <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">จำนวนเงิน(บาท)</th>
+        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">&nbsp;</th>
     </tr>
     @{ var index = 0;}
     @foreach (var item in Model.activityOfEstimateList)
     {
         <tr class="tagCountRowinTable tRow2_@index">
             <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" style="text-align:center;" />
+                @Html.DropDownList("activityOfEstimateList[" + index + "].IO", new SelectList(Model.listGetDataIO, "IO", "IO", item.IO), "", new { @class = "form-control" })
             </td>
             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                 <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss" />
@@ -107,6 +108,16 @@
                          sumall();
                      });
                 </script>
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;padding-left:5px;padding-top:5px;">
+                @if (index == 0)
+                {
+                    <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" id="btnDeleteRowTables" disabled="disabled"></button>
+                }
+                else
+                {
+                    <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" id="btnDeleteRowTables" onclick="deleteRowTable(this);"></button>
+                }
             </td>
         </tr>
         index++;
@@ -173,9 +184,11 @@
         var rowCount = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
 
         for (i = 0; i < rowCount; i++) {
+            if ($(".txtnormalCost_" + i.toString()).val() != '') {
             var rownormalCost = parseFloat($(".txtnormalCost_" + i.toString()).val().replace(",", ""));
             $(".hidnormalCost_" + i.toString()).val(rownormalCost.toFixed(2));
-            normalCostAll = normalCostAll + rownormalCost;
+                normalCostAll = normalCostAll + rownormalCost;
+            }
         }
 
         $("#totalnormalCostEstimate").text(normalCostAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
@@ -187,6 +200,9 @@
         trHTML = trHTML.replaceAll('[0].productDetail', '[' + nextNoId + '].productDetail');
         trHTML = trHTML.replaceAll('[0].list_1_select', '[' + nextNoId + '].list_1_select');
         trHTML = trHTML.replaceAll('[0].normalCost', '[' + nextNoId + '].normalCost');
+        trHTML = trHTML.replaceAll('_0__IO', '_' + nextNoId + '__IO');
+        trHTML = trHTML.replaceAll('txtnormalCost_0', 'txtnormalCost_' + nextNoId);
+        trHTML = trHTML.replaceAll('id="btnDeleteRowTables" disabled="disabled"', 'id="btnDeleteRowTables" onclick="deleteRowTable(this);"');
         trHTML = ("<tr class=\"tagCountRowinTable tRow_" + nextNoId + "\">" + trHTML);
         trHTML = (trHTML + "</tr>");
         $('#tabelSectionSix').append(trHTML);

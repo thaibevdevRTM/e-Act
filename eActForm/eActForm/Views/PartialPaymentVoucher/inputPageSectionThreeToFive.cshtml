@@ -25,13 +25,14 @@
                         <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">GL</th>
                         <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Ch.+Reg.</th>
                         <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Brand</th>
+                        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">&nbsp;</th>
                     </tr>
                     @{ var index = 0;}
                     @foreach (var item in Model.tB_Act_ActivityForm_DetailOtherList)
                     {
                         <tr class="tagCountRowinTable tRow_@index">
                             <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                                @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].IO", new SelectList(Model.listGetDataIO, "IO", "activityId", item.IO), "", new { @class = "form-control"})
+                                @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].IO", new SelectList(Model.listGetDataIO, "IO", "IO", item.IO), "", new { @class = "form-control"})
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <input type="text" value="@item.GL" id="tB_Act_ActivityForm_DetailOtherList[@index].GL" name="tB_Act_ActivityForm_DetailOtherList[@index].GL" class="form-control textboxcss txtGL_@index" readonly="readonly" />
@@ -43,10 +44,6 @@
                                 @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].productBrandId", new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", item.productBrandId), "", new { @class = "form-control"})
                                 <script>
                                     var indexJava = "@index";
-                                    $('#tB_Act_ActivityForm_DetailOtherList_' +indexJava +'__IO').selectpicker({
-                                        liveSearch: true,
-                                        showSubtext: true
-                                    });
                                     $('#tB_Act_ActivityForm_DetailOtherList_' + indexJava +'__select_list_choice_id_ChReg').selectpicker({
                                         liveSearch: true,
                                         showSubtext: true
@@ -58,9 +55,18 @@
                                     $('#tB_Act_ActivityForm_DetailOtherList_' + indexJava + '__IO').change(function ()
                                     {
                                         getGL(indexJava);
-                                    });
-                                    
+                                    }); 
                                 </script>
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;padding-left:12px;padding-top:12px;">
+                                @if (index == 0)
+                                {
+                                    <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" id="btnDeleteRowTables" disabled="disabled"></button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" id="btnDeleteRowTables" onclick="deleteRowTable(this);"></button>
+                                }
                             </td>
                         </tr>
                         index++;
@@ -80,16 +86,17 @@
                         trHTML = trHTML.replaceAll('_0__select_list_choice_id_ChReg', '_' + nextNoId + '__select_list_choice_id_ChReg');
                         trHTML = trHTML.replaceAll('_0__productBrandId', '_' + nextNoId + '__productBrandId');
                         trHTML = trHTML.replaceAll('txtGL_0', 'txtGL_' + nextNoId);
+                        trHTML = trHTML.replaceAll('id="btnDeleteRowTables" disabled="disabled"', 'id="btnDeleteRowTables" onclick="deleteRowTable(this);"');
                         trHTML = ("<tr class=\"tagCountRowinTable tRow_" + nextNoId + "\">" + trHTML );
-                        trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__IO').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
+                        //trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__IO').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
                         trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__select_list_choice_id_ChReg').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
                         trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__productBrandId').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
                         trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " + '__IO').change(function () { getGL(" + nextNoId + ");});<\/script>");
-                        /*===========ต้องมี6บรรทัดล่างไม่งั้น DropdownFilter จะขึ้นมาเบิ้ล=================*/ 
-                        trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO" title', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO" style="display:none;" title>');
+                        /*===========ต้องมีบรรทัดล่างไม่งั้น DropdownFilter จะขึ้นมาเบิ้ล=================*/ 
+                        //trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO" title', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO" style="display:none;" title>');
                         trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__select_list_choice_id_ChReg" title', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__select_list_choice_id_ChReg" style="display:none;" title>');
                         trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__productBrandId" title', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__productBrandId" style="display:none;" title>');
-                       /*=====END======ต้องมี6บรรทัดล่างไม่งั้น DropdownFilter จะขึ้นมาเบิ้ล=================*/
+                       /*=====END======ต้องมีบรรทัดล่างไม่งั้น DropdownFilter จะขึ้นมาเบิ้ล=================*/
                         trHTML = (trHTML + "</tr>");
                         $('#tabelSectionThreeToFive').append(trHTML);
                     }
