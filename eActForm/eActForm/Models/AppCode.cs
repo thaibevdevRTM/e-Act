@@ -72,7 +72,7 @@ namespace eActForm.Models
             public const string Recorder = "8A6A0CA2-E9CC-4A6C-9E17-E0B212C12DAF";//ผู้บันทึก   
             public const string Director = "2354EFCB-174F-48FE-B634-2DE926D7F836";// ผู้บังคับบัญชา  
             public const string Approveby = "7C308168-B155-4684-A2CD-906EC94AA49C";//เรียน/อนุมัติ 
-
+            public const string PettyCashApprover = "BD48756C-12CC-4267-AD6F-A6C37F9B2B32";//ผู้อนุมัติเงินสดย่อย
         }
         public static class CodeHtml
         {

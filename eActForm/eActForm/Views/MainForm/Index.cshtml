@@ -312,6 +312,7 @@
                 dataType: "json",
                 type: 'POST',
             }).done(function (response) {
+               
                 $("#WaitDialog").hide();
                 $("#divPreview").html(htmlResponse);
                 $('#previewModal').modal('show');
