@@ -62,10 +62,9 @@
 
 @if (1 == 1)
 {
-	var count_wait_approve = 0;
-
-
-
+    var count_wait_approve = 0;
+    //var count_req_approve = 0;
+	
 	<div class="modal-dialog modal-lg" style="width:95%;">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -273,6 +272,12 @@
 											<td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
 											<td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
 
+											@*status == 4 ปรับยอด status == 5 จบรายการปรับยอด ไม่ต้องขออนุมัติ*@
+											@*@if (item.invoiceBudgetStatusId != 4 && item.invoiceBudgetStatusId != 5)
+											{
+												count_req_approve++;
+											}*@
+
 											@if (item.invoiceApproveStatusId == 1)
 											{
 												<td style="text-align:center;font-size:12px;"></td>
@@ -314,7 +319,7 @@
 							<table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
 						</div>
 
-						@if (Model.Budget_Approve_detail_list.Count > 0)
+						@if (Model.Budget_Activity.budget_id != null)
 						{
 							@Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = Model.Budget_Approve_detail_list.ElementAt(0).budgetApproveId })
 						}

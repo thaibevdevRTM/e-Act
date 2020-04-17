@@ -45,3 +45,12 @@ D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Present
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.dll
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.pdb
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.dll
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\eForms.Presenter\bin\Debug\Microsoft.ApplicationBlocks.Data.dll
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.pdb
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csprojAssemblyReference.cache
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
+D:\work\project\source code\e-Act MTM\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb

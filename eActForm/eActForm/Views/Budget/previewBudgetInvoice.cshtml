@@ -3,7 +3,7 @@
 @using eActForm.Models
 @model eActForm.Models.Budget_Approve_Detail_Model
 @{
-	Layout = null;
+    Layout = null;
 }
 
 <script type="text/javascript">
@@ -20,7 +20,8 @@
         data: {
 			GridHtml: $("#GridPDF").html(),
 			budgetActivityId: $("#HbudgetId").val(),
-			companyEN: $("#HcompanyEN").val()
+            companyEN: $("#HcompanyEN").val(),
+            count_req_approve: $("#Hcount_req_approve").val()
         },
         dataType: "json",
         type: 'POST',
@@ -31,318 +32,363 @@
 		});
 	}
 
+    function onClickSubmitRegenPdf() {
+		$("#WaitDialog").show();
+
+		$.ajax({
+        url: '@Url.Action("submitPreviewBudgetRegenPdf", "BudgetApprove")',
+        data: {
+			GridHtml: $("#GridPDF").html(),
+			budgetActivityId: $("#HbudgetId").val(),
+            companyEN: $("#HcompanyEN").val(),
+            count_req_approve: $("#Hcount_req_approve").val()
+        },
+        dataType: "json",
+        type: 'POST',
+		}).done(function (response) {
+			$("#WaitDialog").hide();
+			var url = '@Url.Action("activityProduct", "Budget")';
+			window.location.href = url;
+		});
+	}
+  
 </script>
 
 <style type="text/css">
 
-	.my-bootbox-class .modal-dialog {
-		width: 400px;
-		font-size: 18px;
-	}
+    .my-bootbox-class .modal-dialog {
+        width: 400px;
+        font-size: 18px;
+    }
 </style>
 
 @Html.HiddenFor(m => m.Budget_Activity.budget_id, new { id = "HbudgetId" })
 @Html.HiddenFor(m => m.Budget_Activity.act_companyEN, new { id = "HcompanyEN" })
 @Html.HiddenFor(m => m.Budget_Activity.act_form_id, new { id = "Hact_form_id" })
+@*@Html.HiddenFor(m => m.Budget_Activity.count_req_approve, new { id = "Hcount_req_approve" })*@
 
 @if (1 == 1)
 {
-	var count_wait_approve = 0;
+    var count_wait_approve = 0;
+    var count_req_approve = 0;
+    var count_draft_approve = 0;
 
-	<div class="modal-dialog modal-lg" style="width:95%;">
-		<div class="modal-content">
-			<div class="modal-header">
-				<div style=""></div>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
+    <div class="modal-dialog modal-lg" style="width:95%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div style=""></div>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-			<div class="modal-body">
-				<div id="GridPDF" style="width:100%; margin-left:10px;">
-					<style>
-						.cssborderbottom {
-							border-bottom-width: 1px;
-							border-bottom-style: solid;
-							border-bottom-color: gray;
-						}
-					</style>
+            <div class="modal-body">
+                <div id="GridPDF" style="width:100%; margin-left:10px;">
+                    <style>
+                        .cssborderbottom {
+                            border-bottom-width: 1px;
+                            border-bottom-style: solid;
+                            border-bottom-color: gray;
+                        }
+                    </style>
 
-					<div>
-						<div style="text-align:center;"><h5>รายละเอียดตัดจ่ายจริง</h5></div>
-					</div>
+                    <div>
+                        <div style="text-align:center;"><h5>รายละเอียดตัดจ่ายจริง</h5></div>
+                    </div>
 
-					<div>
-						<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
-					</div>
+                    <div>
+                        <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                    </div>
 
-					<div>
-						<table style="border-bottom-width:0px; border-bottom-style:solid; border-bottom-color:gray; width:100%;">
-							<tr>
-								<td style="width:50%;">&nbsp;</td>
-								<td style="width:50%;">&nbsp;</td>
-							</tr>
-
-
-							<tr>
-								<td style="text-align:left;"></td>
-								<td style="text-align:right;">
-									<label> Activity No : </label>
-
-									@if (Model.Budget_Activity.act_activityNo.ToString() != "")
-									{
-										@Html.DisplayFor(x => x.Budget_Activity.act_activityNo)
-									}
-								</td>
-							</tr>
+                    <div>
+                        <table style="border-bottom-width:0px; border-bottom-style:solid; border-bottom-color:gray; width:100%;">
+                            <tr>
+                                <td style="width:50%;">&nbsp;</td>
+                                <td style="width:50%;">&nbsp;</td>
+                            </tr>
 
 
-							<tr>
-								<td style="text-align:left">
-									<label> ชื่อกิจกรรม (Activity Name) : </label>
-									@if (Model.Budget_Activity.act_activityName.ToString() != "")
-									{
-										@Html.DisplayFor(x => x.Budget_Activity.act_activityName)
-									}
-								</td>
-								<td style="text-align:right;">
-									<label> Document Date : </label>
-									@Html.Label("docDate", DateTime.Now.ToString("dd-MM-yyyy"))
-								</td>
-							</tr>
+                            <tr>
+                                <td style="text-align:left;"></td>
+                                <td style="text-align:right;">
+                                    <label> Activity No : </label>
 
-							<tr>
-								<td style="text-align:left;">
-									<label> ประเภทกิจกรรม (Theme) : </label>
-									@if (Model.Budget_Activity.act_theme.ToString() != "")
-									{
-										@Html.DisplayFor(x => x.Budget_Activity.act_theme)
-									}
-								</td>
-								<td style="text-align:right;">
-									<label> ลูกค้า (Customer Name) : </label>
-									@if (Model.Budget_Activity.cus_cusShortName.ToString() != "")
-									{
-										@Html.DisplayFor(x => x.Budget_Activity.cus_cusShortName)
-									}
-								</td>
-							</tr>
-
-							<tr>
-								<td style="text-align:left;">
-									<label> ระยะเวลากิจกรรม (Activity Period) : </label>
-									@if (Model.Budget_Activity.act_activityPeriodSt.ToString() != "")
-									{
-										@Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodSt)
-									}
-									ถึง
-									@if (Model.Budget_Activity.act_activityPeriodEnd.ToString() != "")
-									{
-										@Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodEnd)
-									}
-								</td>
-								<td style="text-align:right;">
-									<label> ช่องทาง (Channel) : </label>
-									@if (Model.Budget_Activity.ch_chanelGroup.ToString() != "")
-									{
-										@Html.DisplayFor(x => x.Budget_Activity.ch_chanelGroup)
-									}
-								</td>
-							</tr>
-
-							<tr>
-								<td style="text-align:left;">
-									<label> ระยะเวลาการให้ทุนพิเศษ (Cast Period) : </label>
-									@if (Model.Budget_Activity.act_costPeriodSt.ToString() != "")
-									{
-										@Html.DisplayFor(x => x.Budget_Activity.act_costPeriodSt)
-									}
-
-									@if (Model.Budget_Activity.act_costPeriodEnd.ToString() != "")
-									{
-										@Html.DisplayFor(x => x.Budget_Activity.act_costPeriodEnd)
-									}
-								</td>
-								<td style="text-align:right;">
-									<label> กลุ่มสินค้า (Product Group) : </label>
-									@if (Model.Budget_Activity.prd_groupShort.ToString() != "")
-									{
-										@Html.DisplayFor(x => x.Budget_Activity.act_brandName)
-									}
-								</td>
-							</tr>
-
-							<tr>
-								<td style="text-align:left;">
-									<label> วัตถุประสงค์ (Objective) : </label>
-									@if (Model.Budget_Activity.act_objective.ToString() != "")
-									{
-										@Html.DisplayFor(x => x.Budget_Activity.act_objective)
-									}
-								</td>
-								<td style="text-align:right;"></td>
-							</tr>
-
-							<tr>
-								<td style="text-align:left;"></td>
-								<td style="text-align:right;"></td>
-							</tr>
-
-							<tr>
-								<td style="text-align:left;"></td>
-								<td style="text-align:right;"></td>
-							</tr>
-
-							<tr>
-								<td style="text-align:left;"></td>
-								<td style="text-align:right;"></td>
-							</tr>
-
-						</table>
-					</div>
-
-					<div>
-						<div>
-							<table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
-							<label> รายละเอียดการใช้จ่ายจริง (Actual) : </label>
-						</div>
+                                    @if (Model.Budget_Activity.act_activityNo.ToString() != "")
+                                    {
+                                        @Html.DisplayFor(x => x.Budget_Activity.act_activityNo)
+                                    }
+                                </td>
+                            </tr>
 
 
-						<table class="tablethin" style="width:100%; text-align:center; border-color:gray;" border="1" cellpadding="0" cellspacing="0">
-							<tr>
-								<td rowspan="2" style="width:10%; font-size:11px;">ประเภทกิจกรรม</td>
-								<td rowspan="2" style="width:20%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
-								<td colspan="4" style="width:40%; font-size:11px;">จ่ายจริง (Actual)</td>
+                            <tr>
+                                <td style="text-align:left">
+                                    <label> ชื่อกิจกรรม (Activity Name) : </label>
+                                    @if (Model.Budget_Activity.act_activityName.ToString() != "")
+                                    {
+                                        @Html.DisplayFor(x => x.Budget_Activity.act_activityName)
+                                    }
+                                </td>
+                                <td style="text-align:right;">
+                                    <label> Document Date : </label>
+                                    @Html.Label("docDate", DateTime.Now.ToString("dd-MM-yyyy"))
+                                </td>
+                            </tr>
 
-								<td rowspan="2" style="width:7%; font-size:11px;">คงเหลือ</td>
-								<td rowspan="2" style="width:7%; font-size:11px;">วันที่ทำรายการ</td>
-								<td rowspan="2" style="width:7%; font-size:11px;">สถานะ</td>
-								<td rowspan="2" style="width:7%; font-size:11px;">สถานะอนุมัติ</td>
-							</tr>
-							<tr>
-								<td style="font-size:11px;">จำนวนเงินที่ตั้ง</td>
-								<td style="font-size:11px;">เลขที่ใบแจ้งหนี้</td>
-								<td style="font-size:11px;">เลขที่ใบสำคัญจ่าย</td>
-								<td style="font-size:11px;">จำนวนเงินจ่าย (฿)</td>
-							</tr>
+                            <tr>
+                                <td style="text-align:left;">
+                                    <label> ประเภทกิจกรรม (Theme) : </label>
+                                    @if (Model.Budget_Activity.act_theme.ToString() != "")
+                                    {
+                                        @Html.DisplayFor(x => x.Budget_Activity.act_theme)
+                                    }
+                                </td>
+                                <td style="text-align:right;">
+                                    <label> ลูกค้า (Customer Name) : </label>
+                                    @if (Model.Budget_Activity.cus_cusShortName.ToString() != "")
+                                    {
+                                        @Html.DisplayFor(x => x.Budget_Activity.cus_cusShortName)
+                                    }
+                                </td>
+                            </tr>
 
-							@if (Model.Budget_Invoce_History_list.Any())
-							{
-								var index = 0;
-								foreach (var item in Model.Budget_Invoce_History_list)
-								{
+                            <tr>
+                                <td style="text-align:left;">
+                                    <label> ระยะเวลากิจกรรม (Activity Period) : </label>
+                                    @if (Model.Budget_Activity.act_activityPeriodSt.ToString() != "")
+                                    {
+                                        @Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodSt)
+                                    }
+                                    ถึง
+                                    @if (Model.Budget_Activity.act_activityPeriodEnd.ToString() != "")
+                                    {
+                                        @Html.DisplayFor(x => x.Budget_Activity.act_activityPeriodEnd)
+                                    }
+                                </td>
+                                <td style="text-align:right;">
+                                    <label> ช่องทาง (Channel) : </label>
+                                    @if (Model.Budget_Activity.ch_chanelGroup.ToString() != "")
+                                    {
+                                        @Html.DisplayFor(x => x.Budget_Activity.ch_chanelGroup)
+                                    }
+                                </td>
+                            </tr>
 
-									if (@item.invoiceNo == "")
-									{
-										<tr>
-											<td style="text-align:left;font-size:12px;">&nbsp;@item.activityTypeTheme</td>
-											<td style="text-align:left;font-size:12px;">&nbsp;@item.productDetail</td>
-											<td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.productStandBath)&nbsp;</td>
-											<td style="text-align:center;font-size:12px;">@item.invoiceNo</td>
-											<td></td>
-											<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.invoiceTotalBath)&nbsp;</td>
-											<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)&nbsp;</td>
-											<td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
-											<td style="text-align:center;font-size:12px;">&nbsp;ตั้งจ่าย</td>
-											<td></td>
-										</tr>
-									}
-									else
-									{
-										<tr>
-											<td style="text-align:left;font-size:12px;border-right-style:none;"></td>
-											<td style="text-align:left;font-size:12px;border-left-style:none;"></td>
-											<td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.productStandBath)&nbsp;</td>
-											<td style="text-align:center;font-size:12px;">@item.invoiceNo</td>
-											<td></td>
-											<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.invoiceTotalBath)&nbsp;</td>
-											<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)&nbsp;</td>
-											<td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
-											<td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
+                            <tr>
+                                <td style="text-align:left;">
+                                    <label> ระยะเวลาการให้ทุนพิเศษ (Cast Period) : </label>
+                                    @if (Model.Budget_Activity.act_costPeriodSt.ToString() != "")
+                                    {
+                                        @Html.DisplayFor(x => x.Budget_Activity.act_costPeriodSt)
+                                    }
 
-											@*status == 1 Draft
-												status == 2 รออนุมัติ*@
-											@if (item.invoiceApproveStatusId == 1)
-											{
-												<td style="text-align:center;font-size:12px;"></td>
-											}
-											else
-											{
-												<td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
-											}
+                                    @if (Model.Budget_Activity.act_costPeriodEnd.ToString() != "")
+                                    {
+                                        @Html.DisplayFor(x => x.Budget_Activity.act_costPeriodEnd)
+                                    }
+                                </td>
+                                <td style="text-align:right;">
+                                    <label> กลุ่มสินค้า (Product Group) : </label>
+                                    @if (Model.Budget_Activity.prd_groupShort.ToString() != "")
+                                    {
+                                        @Html.DisplayFor(x => x.Budget_Activity.act_brandName)
+                                    }
+                                </td>
+                            </tr>
 
-											@if (item.invoiceApproveStatusId == 2)
-											{
-												count_wait_approve++;
-											}
-										</tr>
-									}
+                            <tr>
+                                <td style="text-align:left;">
+                                    <label> วัตถุประสงค์ (Objective) : </label>
+                                    @if (Model.Budget_Activity.act_objective.ToString() != "")
+                                    {
+                                        @Html.DisplayFor(x => x.Budget_Activity.act_objective)
+                                    }
+                                </td>
+                                <td style="text-align:right;"></td>
+                            </tr>
 
-									index++;
-									if (index == Model.Budget_Invoce_History_list.Count)
-									{
-										<tr>
-											<td style="text-align:left;font-size:12px;"></td>
-											<td style="text-align:right;font-size:12px;">Total &nbsp;</td>
-											<td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.sum_cost_product_inv)&nbsp;</td>
-											<td style="text-align:center;font-size:12px;"></td>
-											<td></td>
-											<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.sum_total_invoice)&nbsp;</td>
-											<td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.sum_balance_product_inv)&nbsp;</td>
-											<td style="text-align:center;font-size:12px;"></td>
-											<td style="text-align:center;font-size:12px;"></td>
-											<td></td>
-										</tr>
-									}
+                            <tr>
+                                <td style="text-align:left;"></td>
+                                <td style="text-align:right;"></td>
+                            </tr>
 
-								}
-							}
-						</table>
+                            <tr>
+                                <td style="text-align:left;"></td>
+                                <td style="text-align:right;"></td>
+                            </tr>
 
-						<div>
-							<table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
-						</div>
+                            <tr>
+                                <td style="text-align:left;"></td>
+                                <td style="text-align:right;"></td>
+                            </tr>
 
-						@if (Model.Budget_Activity.budget_id != null)
-						{
-							@Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
-						}
-					</div>
-				</div>
-			</div>
+                        </table>
+                    </div>
 
-			<div class="modal-footer">
-				<div>
-					<p class="d-flex justify-content-center">
-
-						<button type="button" class="btn btn-sm btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-						@if (count_wait_approve == 0)
-						{
-							<button type="button" class="btn btn-sm btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
-						}
-					</p>
-				</div>
+                    <div>
+                        <div>
+                            <table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                            <label> รายละเอียดการใช้จ่ายจริง (Actual) : </label>
+                        </div>
 
 
-				@*<div>
-						<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: lightgray; width:100%;"><tr><td>&nbsp;</td></tr></table>
-					</div>*@
+                        <table class="tablethin" style="width:100%; text-align:center; border-color:gray;" border="1" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td rowspan="2" style="width:10%; font-size:11px;">ประเภทกิจกรรม</td>
+                                <td rowspan="2" style="width:20%; font-size:11px;">กลุ่มสินค้า / ชื่อสินค้า</td>
+                                <td colspan="4" style="width:40%; font-size:11px;">จ่ายจริง (Actual)</td>
 
-				<div class="row" style="width:97%; margin-left:10px;">
-					@if (Model.Budget_Invoice_list.Any())
-					{
-						<br />
-						<div style="text-align:left;"><h5>รายการเอกสารแนบ (@Model.Budget_Invoice_list.Count รายการ) </h5></div>
-						<br />
+                                <td rowspan="2" style="width:7%; font-size:11px;">คงเหลือ</td>
+                                <td rowspan="2" style="width:7%; font-size:11px;">วันที่ทำรายการ</td>
+                                <td rowspan="2" style="width:7%; font-size:11px;">สถานะ</td>
+                                <td rowspan="2" style="width:7%; font-size:11px;">สถานะอนุมัติ</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:11px;">จำนวนเงินที่ตั้ง</td>
+                                <td style="font-size:11px;">เลขที่ใบแจ้งหนี้</td>
+                                <td style="font-size:11px;">เลขที่ใบสำคัญจ่าย</td>
+                                <td style="font-size:11px;">จำนวนเงินจ่าย (฿)</td>
+                            </tr>
 
-						foreach (var item in Model.Budget_Invoice_list)
-						{
-							<div class="col-md-6">
-								<div style="text-align:right;"><h5>เลขที่ใบแจ้งหนี้ @item.invoiceNo</h5></div>
-								@Html.Action("invoicePDFView", "BudgetViewer", new { fileName = item._fileName })
-							</div>
-						}
-					}
-				</div>
-			</div>
-		</div>
-	</div>
+                            @if (Model.Budget_Invoce_History_list.Any())
+                            {
+                                var index = 0;
+                                foreach (var item in Model.Budget_Invoce_History_list)
+                                {
+
+                                    if (@item.invoiceNo == "")
+                                    {
+                                        <tr>
+                                            <td style="text-align:left;font-size:12px;">&nbsp;@item.activityTypeTheme</td>
+                                            <td style="text-align:left;font-size:12px;">&nbsp;@item.productDetail</td>
+                                            <td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.productStandBath)&nbsp;</td>
+                                            <td style="text-align:center;font-size:12px;">@item.invoiceNo</td>
+                                            <td></td>
+                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.invoiceTotalBath)&nbsp;</td>
+                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)&nbsp;</td>
+                                            <td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
+                                            <td style="text-align:center;font-size:12px;">&nbsp;ตั้งจ่าย</td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                        <tr>
+                            <td style="text-align:left;font-size:12px;border-right-style:none;"></td>
+                            <td style="text-align:left;font-size:12px;border-left-style:none;"></td>
+                            <td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.productStandBath)&nbsp;</td>
+                            <td style="text-align:center;font-size:12px;">@item.invoiceNo</td>
+                            <td></td>
+                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.invoiceTotalBath)&nbsp;</td>
+                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)&nbsp;</td>
+                            <td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
+
+
+                            @*status == 4 ปรับยอด status == 5 จบรายการปรับยอด ไม่ต้องขออนุมัติ*@
+
+                            @if (item.invoiceBudgetStatusId != 4 && item.invoiceBudgetStatusId != 5 && item.invoiceApproveStatusId != 3)
+                            {
+                                count_req_approve++;
+                            }
+
+                            @if (item.invoiceApproveStatusId == 1)
+                            {
+                                count_draft_approve++;
+                            }
+
+                            @if (item.invoiceApproveStatusId == 2)
+                            {
+                                count_wait_approve++;
+                            }
+
+                            @*status == 1 Draft status == 2 รออนุมัติ*@
+                            @if (item.invoiceApproveStatusId == 1)
+                            {
+                                <td style="text-align:center;font-size:12px;"></td>
+                            }
+                            else
+                            {
+                                <td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
+                            }
+
+
+                        </tr>
+                                    }
+
+                                    index++;
+                                    if (index == Model.Budget_Invoce_History_list.Count)
+                                    {
+                                        <tr>
+                                            <td style="text-align:left;font-size:12px;"></td>
+                                            <td style="text-align:right;font-size:12px;">Total &nbsp;</td>
+                                            <td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.sum_cost_product_inv)&nbsp;</td>
+                                            <td style="text-align:center;font-size:12px;"></td>
+                                            <td></td>
+                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.sum_total_invoice)&nbsp;</td>
+                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.sum_balance_product_inv)&nbsp;</td>
+                                            <td style="text-align:center;font-size:12px;"></td>
+                                            <td style="text-align:center;font-size:12px;"></td>
+                                            <td></td>
+                                        </tr>
+                                    }
+
+                                }
+                            }
+                        </table>
+
+                        <div>
+                            <table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                        </div>
+
+
+
+
+
+
+                        @if (Model.Budget_Activity.budget_id != null && count_req_approve > 0)
+                        {
+                            @Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div>
+                    <p class="d-flex justify-content-center">
+
+                        <button type="button" class="btn btn-sm btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                        @if (count_wait_approve == 0 && count_draft_approve > 0)
+                        {
+                            @Html.Hidden("Hcount_req_approve", count_req_approve.ToString())
+                            <button type="button" class="btn btn-sm btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-sm btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitRegenPdf();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Regen Pdf</button>
+                        }
+
+                    </p>
+                </div>
+
+                <div class="row" style="width:97%; margin-left:10px;">
+                    @if (Model.Budget_Invoice_list.Any())
+                    {
+                        <br />
+                        <div style="text-align:left;"><h5>รายการเอกสารแนบ (@Model.Budget_Invoice_list.Count รายการ) </h5></div>
+                        <br />
+
+                        foreach (var item in Model.Budget_Invoice_list)
+                        {
+                            <div class="col-md-6">
+                                <div style="text-align:right;"><h5>เลขที่ใบแจ้งหนี้ @item.invoiceNo</h5></div>
+                                @Html.Action("invoicePDFView", "BudgetViewer", new { fileName = item._fileName })
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 }
