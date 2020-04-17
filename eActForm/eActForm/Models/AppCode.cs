@@ -312,13 +312,18 @@ namespace eActForm.Models
             }
             catch (Exception ex)
             {
-
-                sourceDocument.Close();
-                File.Delete(rootPathOutput);
-                string replace = rootPathOutput.Replace(".pdf", "_.pdf");
-                File.Copy(replace, rootPathOutput);
-                result = "error" + ex.Message;
-                ExceptionManager.WriteError(ex.Message + ">> mergePDF");
+                try
+                {
+                    sourceDocument.Close();
+                    File.Delete(rootPathOutput);
+                    string replace = rootPathOutput.Replace(".pdf", "_.pdf");
+                    File.Copy(replace, rootPathOutput);
+                }
+                catch (Exception exc)
+                {
+                    result = "error" + exc.Message;
+                    ExceptionManager.WriteError(exc.Message + ">> mergePDF >> CopyError");
+                }
             }
             return result;
         }

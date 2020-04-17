@@ -158,7 +158,7 @@
 
                 (new PNotify({
                     title: 'แจ้งเตือน',
-                    text: 'เอกสารที่คุณ"อนุมัติ"ไม่ได้รับการอนุมัติ <br/>จำนวน ' + '@UtilsAppCode.Session.User.countApproveReject' +' รายการ',
+                    text: '<a href="@Url.Action("getRejectApproveByEmpId", "ApproveLists")">เอกสารที่คุณ"อนุมัติ"ไม่ได้รับการอนุมัติ <br/>จำนวน ' + '@UtilsAppCode.Session.User.countApproveReject' +' รายการ',
 
                     hide: false,
                     styling: 'bootstrap3',
@@ -169,7 +169,7 @@
             if ('@UtilsAppCode.Session.User.isCreator' == 'True' && '@UtilsAppCode.Session.User.countRejectAct' != '0') {
                 (new PNotify({
                     title: 'แจ้งเตือน' ,
-                    text: 'คุณมีเอกสารไม่รับการอนุมัติ <br/>จำนวน '+'@UtilsAppCode.Session.User.countRejectAct' +' รายการ',
+                    text: '<a href="@Url.Action("searchForIconReject", "Home")">คุณมีเอกสารไม่รับการอนุมัติ <br/>จำนวน '+'@UtilsAppCode.Session.User.countRejectAct' +' รายการ</a>' ,
                     hide: false,
                     styling: 'bootstrap3',
                     addclass: "sizeFont15",
