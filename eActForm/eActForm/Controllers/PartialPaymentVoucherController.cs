@@ -46,9 +46,9 @@ namespace eActForm.Controllers
                 nowPhysicalYear = FiscalYearPresenter.getFiscalNow(AppCode.StrCon, ConfigurationManager.AppSettings["typePeriodTBVGroup"]).FirstOrDefault().UseYear;
                 yearFrom = (Convert.ToInt32(nowPhysicalYear) - 1).ToString();
                 yearTo = nowPhysicalYear;
-                if (activity_TBMMKT_Model.activityFormTBMMKT.listFiscalYearModelSelect == null)
+                if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.fiscalYear == null)
                 {
-                    activity_TBMMKT_Model.activityFormTBMMKT.listFiscalYearModelSelect = nowPhysicalYear;
+                    activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.fiscalYear = nowPhysicalYear;
                 }
             }
             activity_TBMMKT_Model.listFiscalYearModel = FiscalYearPresenter.getFiscalYearByYear(AppCode.StrCon, yearFrom, yearTo).OrderByDescending(m => m.UseYear).ToList();

@@ -47,6 +47,7 @@ namespace eActForm.BusinessLayer
                                   toAddress = d["toAddress"].ToString(),
                                   toContact = d["toContact"].ToString(),
                                   detailContact = d["detailContact"].ToString(),
+                                  fiscalYear = d["fiscalYear"].ToString(),
                               });
 
                 return result.ToList();

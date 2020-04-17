@@ -144,7 +144,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                /*string statusId = "";
+                string statusId = "";
 
                 statusId = ActivityFormCommandHandler.getStatusActivity(activity_TBMMKT_Model.activityFormModel.id);
                 if (statusId == "")
@@ -172,7 +172,7 @@ namespace eActForm.Controllers
 
                 int countSuccess = ActivityFormTBMMKTCommandHandler.insertAllActivity(activity_TBMMKT_Model, activity_TBMMKT_Model.activityFormModel.id);
 
-                result.Data = activity_TBMMKT_Model.activityFormModel.id;*/
+                result.Data = activity_TBMMKT_Model.activityFormModel.id;
                 result.Success = true;
             }
             catch (Exception ex)

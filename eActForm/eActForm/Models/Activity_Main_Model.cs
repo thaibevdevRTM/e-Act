@@ -89,7 +89,6 @@ namespace eActForm.Models
         public string formNameEn { get; set; }
         public bool chkUseEng { get; set; }
         public string createdByNameEN { get; set; }
-        public string listFiscalYearModelSelect { get; set; }
         public string listAPSelect { get; set; }
 
     }
@@ -148,6 +147,7 @@ namespace eActForm.Models
         public decimal? totalallPayNo { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalallPayByIOBalance { get; set; }
+        public string fiscalYear { get; set; }
     }
 
 

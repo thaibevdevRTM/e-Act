@@ -39,12 +39,14 @@
                                 </label>
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.listFiscalYearModelSelect, new SelectList(Model.listFiscalYearModel, "UseYear", "UseYear", ""), "", new
-                                   {
-                                       @class = "form-control selectpicker",
-                                       id = "ddlFiscalYear"
-                                   })
-                                        <script>
+                                        @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
+                                        {
+                                            @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.fiscalYear, new SelectList(Model.listFiscalYearModel, "UseYear", "UseYear", ""), "", new
+                                       {
+                                           @class = "form-control selectpicker",
+                                           id = "ddlFiscalYear"
+                                       })
+                                            <script>
                                             $('#ddlFiscalYear').change(function () {
                                                 bindDropdownEO();
                                                 if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]')
@@ -99,7 +101,12 @@
                                                     });
                                             }
 
-                                        </script>
+                                            </script>
+                                        }
+                                        else
+                                        {
+                                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.fiscalYear, new { @class = "form-control textboxcss", @id = "txtfiscalYear", style = "" })
+                                        }
                                     </div>
                                 </div>
 

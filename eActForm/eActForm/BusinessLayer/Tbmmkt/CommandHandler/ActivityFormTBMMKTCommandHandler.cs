@@ -277,7 +277,7 @@ namespace eActForm.BusinessLayer
                 {
                     if (model.activityFormTBMMKT.list_1_multi_select.Length > 0)
                     {
-                        for (int i = 0; i < model.activityFormTBMMKT.list_1_multi_select.Length; i++)//ขอเบิก
+                        for (int i = 0; i < model.activityFormTBMMKT.list_1_multi_select.Length; i++)
                         {
                             tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                             tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
