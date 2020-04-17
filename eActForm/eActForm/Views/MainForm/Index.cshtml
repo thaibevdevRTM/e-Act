@@ -345,7 +345,16 @@ function CallImageView(obj) {
     function deleteRowTable(btn) {
         var row = btn.parentNode.parentNode;
         row.parentNode.removeChild(row);
-        getValues();
+    }
+
+    function checkValInArray(arryFind,valCheck) {
+        var detect = false;
+        for (i = 0; i < arryFind.length; i++) {
+            if (arryFind[i] == valCheck) {
+                detect = true;
+            }
+        }
+        return detect;
     }
 
 </script>

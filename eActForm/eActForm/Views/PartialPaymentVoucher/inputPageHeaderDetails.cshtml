@@ -126,15 +126,18 @@
                                                 id = "ddl_EO_PV",
                                                 multiple = "multiple"
                                             })
-                                    <script>
+                                        <script>
                                             var ActivityByEOSelect = [];
+                                            var payByIOSelect = [];/*ไว้เก็บว่าเงินทั้งหมดของIOที่อยู่ในEOดังกล่าวต้องจ่ายทั้งหมดเท่าไร*/
                                             $(document).ready(function () {
                                                 $('#ddl_EO_PV').multiselect({
                                                 numberDisplayed: 2,
                                                 enableFiltering: true,
                                                 nonSelectedText: '',
                                                 buttonWidth: '100%',
-                                                onChange: function (option, checked) {
+                                                    onChange: function (option, checked) {
+                                                     payByIOSelect = [];
+                                                     payByIOSelect.push("");/*ใส่BlankRowการดึงข้อมูลจะได้เริ่มที่Index=1*/
                                                     if ($("#ddl_EO_PV").val() != "") {
                                                         if (checked === true) {
                                                             ActivityByEOSelect.push(option.val());
@@ -156,13 +159,14 @@
                                                                             removeDropdownIO();
                                                                             //=====insertdata all from ajax===========
                                                                             $.each(response.Data.tbToAjax, function () {
+                                                                                payByIOSelect.push(this['totalPayByIO']);
                                                                                 var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
                                                                                 var rowCount2 = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
                                                                                 for (i = 0; i < rowCount; i++) {
                                                                                     $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").append($("<option></option>").val(this['IO']).html(this['IO']));
                                                                                     //$("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").selectpicker('refresh');
                                                                                 }
-                                                                                for (i = 0; i < rowCount2; i++) {//activityOfEstimateList_0__IO
+                                                                                for (i = 0; i < rowCount2; i++) {
                                                                                     $("#activityOfEstimateList_" + i.toString() + "__IO").append($("<option></option>").val(this['IO']).html(this['IO']));
                                                                                 }
                                                                             });
@@ -202,9 +206,11 @@
                                             for (i = 0; i < rowCount2; i++) {
                                                 $("#activityOfEstimateList_" + i.toString() + "__IO option[value !='']").remove();
                                             }
+                                            $("#totalallPayByIO").text("0.00");
+                                            calCulateAll();
                                            //====remove data old in dropdown====
                                         }
-                                    </script>
+                                        </script>
                                     </div>
                                 </div>
                             </div>

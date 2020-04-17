@@ -54,7 +54,7 @@
                         var rowCount = parseInt($('#tabelHeaderDetails tr.tagCountRowinTable').length);
 
                         for (i = 0; i < rowCount; i++) {
-                            var rowtotal = parseFloat($(".txttotal_" + i.toString()).val().replace(",", ""));
+                            var rowtotal = parseFloat($(".txttotal_" + i.toString()).val().replaceAll(",", ""));
                             $(".hidtotal_" + i.toString()).val(rowtotal.toFixed(2));
                             totalAll = totalAll + rowtotal;
                         }
