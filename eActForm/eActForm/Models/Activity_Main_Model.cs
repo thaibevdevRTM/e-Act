@@ -89,7 +89,6 @@ namespace eActForm.Models
         public string formNameEn { get; set; }
         public bool chkUseEng { get; set; }
         public string createdByNameEN { get; set; }
-        public string listAPSelect { get; set; }
 
     }
 
@@ -148,10 +147,25 @@ namespace eActForm.Models
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalallPayByIOBalance { get; set; }
         public string fiscalYear { get; set; }
+        public string APCode { get; set; }
+        public string payNo { get; set; }
+        public string activityIdNoSub { get; set; }
     }
 
+    public class TB_Act_ActivityForm_DetailOtherList : ActBaseModel
+    {
+        public string id { get; set; }
+        public string activityId { get; set; }
+        public string typeKeep { get; set; }
+        public int rowNo { get; set; }
+        public string activityIdEO { get; set; }
+        public string IO { get; set; }
+        public string GL { get; set; }
+        public string select_list_choice_id_ChReg { get; set; }
+        public string productBrandId { get; set; }
+    }
 
-    public class TB_Act_ActivityLayout
+        public class TB_Act_ActivityLayout
     {
         public string id { get; set; }
         public string activityId { get; set; }
@@ -308,22 +322,6 @@ namespace eActForm.Models
         public string GL { get; set; }
     }
 
-    public class TB_Act_ActivityForm_DetailOtherList
-    {
-        public string id { get; set; }
-        public string activityId { get; set; }
-        public string typeKeep { get; set; }
-        public int rowNo { get; set; }
-        public string IO { get; set; }
-        public string GL { get; set; }
-        public string select_list_choice_id_ChReg { get; set; }
-        public string productBrandId { get; set; }
-        public Boolean delFlag { get; set; }
-        public DateTime? createdDate { get; set; }
-        public string createdByUserId { get; set; }
-        public DateTime? updatedDate { get; set; }
-        public string updatedByUserId { get; set; }
-    }
 
 
 }

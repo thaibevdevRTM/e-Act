@@ -408,6 +408,7 @@
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_empDetailById.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllBrandByForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetAllChanelByForm.cs" />
+    <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_ActivityForm_DetailOtherList.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_master_cost_center.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_TB_Act_ActivityChoiceSelect.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryProcess_TB_Act_master_material.cs" />

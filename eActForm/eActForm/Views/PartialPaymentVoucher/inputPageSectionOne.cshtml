@@ -48,20 +48,20 @@
 
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-
-                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.listAPSelect, new SelectList(Model.listAPModel, "APCode", "Name1", ""), "", new
+                                        APCode
+                                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.APCode, new SelectList(Model.listAPModel, "APCode", "Name1", ""), "", new
                                    {
                                        @class = "form-control selectpicker",
                                        id = "ddlAP"
                                    })
 
-                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.listAPSelect, new SelectList(Model.listAPModel, "APCode", "FullAddress", ""), "", new
+                                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.APCode, new SelectList(Model.listAPModel, "APCode", "FullAddress", ""), "", new
                                    {
                                        @class = "form-control",
                                        @style = "display:none;",
                                        id = "ddlAPFullAddress"
                                    })
-                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.listAPSelect, new SelectList(Model.listAPModel, "APCode", "TelAndFax", ""), "", new
+                                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.APCode, new SelectList(Model.listAPModel, "APCode", "TelAndFax", ""), "", new
                                    {
                                        @class = "form-control",
                                        @style = "display:none;",

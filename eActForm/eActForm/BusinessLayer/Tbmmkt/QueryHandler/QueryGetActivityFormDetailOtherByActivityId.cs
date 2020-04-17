@@ -48,6 +48,15 @@ namespace eActForm.BusinessLayer
                                   toContact = d["toContact"].ToString(),
                                   detailContact = d["detailContact"].ToString(),
                                   fiscalYear = d["fiscalYear"].ToString(),
+                                  APCode = d["APCode"].ToString(),
+                                  payNo = d["payNo"].ToString(),
+                                  activityIdNoSub = d["activityIdNoSub"].ToString(),
+                                  totalnormalCostEstimate = d["totalnormalCostEstimate"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalnormalCostEstimate"].ToString())),
+                                  totalvat = d["totalvat"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalvat"].ToString())),
+                                  totalnormalCostEstimateWithVat = d["totalnormalCostEstimateWithVat"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalnormalCostEstimateWithVat"].ToString())),
+                                  totalallPayByIO = d["totalallPayByIO"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayByIO"].ToString())),
+                                  totalallPayNo = d["totalallPayNo"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayNo"].ToString())),
+                                  totalallPayByIOBalance = d["totalallPayByIOBalance"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayByIOBalance"].ToString())),
                               });
 
                 return result.ToList();
