@@ -41,17 +41,30 @@
                                         <script>
                                             $(document).ready(function () {
                                                 $('#ddlAttach').multiselect({
-                                                numberDisplayed: 2,
-                                                enableFiltering: true,
-                                                nonSelectedText: '',
-                                                buttonWidth: '100%',
-                                                onChange: function (option, checked) {
+                                                    numberDisplayed: 2,
+                                                    enableFiltering: true,
+                                                    nonSelectedText: '',
+                                                    buttonWidth: '100%',
+                                                    onChange: function (option, checked) {
 
-                                                },
-                                            });
+                                                    },
+                                                });
                                                 $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
                                                 $(".multiselect .caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
-                                        });
+                                            });
+                                        </script>
+                                        <script>
+                                                $(function () {
+                                                    var valuesSelect_list_2_multi_select_FromDb = [];
+                                                    @if (Model.activityFormTBMMKT.list_2_multi_select != null)
+                                                    {
+                                                        foreach (var itemArray in Model.activityFormTBMMKT.list_2_multi_select)
+                                                        {
+                                                        @:valuesSelect_list_2_multi_select_FromDb.push("@itemArray");
+                                                        }
+                                                         @:$("#ddlAttach").multiselect('select', valuesSelect_list_2_multi_select_FromDb);
+                                                    }
+                                                });
                                         </script>
                                     </div>
                                 </div>

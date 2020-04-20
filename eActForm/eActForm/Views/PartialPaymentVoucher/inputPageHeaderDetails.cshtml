@@ -218,6 +218,19 @@
                                            //====remove data old in dropdown====
                                         }
                                         </script>
+                                        <script>
+                                                $(function () {
+                                                    var valuesSelectChoiceFromDb = [];
+                                                    @if (Model.activityFormTBMMKT.list_1_multi_select != null)
+                                                    {
+                                                        foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
+                                                        {
+                                                        @:valuesSelectChoiceFromDb.push("@itemArray");
+                                                        }
+                                                         @:$("#ddl_EO_PV").multiselect('select', valuesSelectChoiceFromDb);
+                                                    }
+                                                });
+                                        </script>
                                     </div>
                                 </div>
                             </div>

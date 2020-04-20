@@ -111,12 +111,12 @@
                 </script>
             </td>
             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss" />
+                <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss txtproductDetail_@index" />
             </td>
             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                @Html.DropDownList("activityOfEstimateList[" + index + "].list_1_select", new SelectList(Model.list_1, "id", "name", item.list_1_select), "", new { @class = "form-control" })
+                @Html.DropDownList("activityOfEstimateList[" + index + "].listChoiceId", new SelectList(Model.list_1, "id", "name", item.listChoiceId), "", new { @class = "form-control" })
                 <script>
-                    $('#activityOfEstimateList_0__list_1_select').change(function () {
+                    $('#activityOfEstimateList_0__listChoiceId').change(function () {
                         calCulateAll();
                     });
                 </script>
@@ -141,6 +141,7 @@
         </td>
         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
             <label id="totalnormalCostEstimate" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+             @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate, new { @id = "hdtotalnormalCostEstimate" })
         </td>
     </tr>
     <tr class="highHeadFooterTable">
@@ -149,6 +150,7 @@
         </td>
         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
             <label id="totalVat" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalvat.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+            @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalvat, new { @id = "hdtotalVat" })
         </td>
     </tr>
     <tr class="highHeadFooterTable" style="background-color:#faf7b9">
@@ -157,6 +159,7 @@
         </td>
         <td style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
             <label id="totalnormalCostEstimateWithVat" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+            @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat, new { @id = "hdtotalnormalCostEstimateWithVat" })
         </td>
     </tr>
     <tr class="highHeadFooterTable">
@@ -165,6 +168,7 @@
         </td>
         <td style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
             <label id="totalallPayByIO" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalallPayByIO.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+            @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalallPayByIO, new { @id = "hdtotalallPayByIO" })
         </td>
     </tr>
     <tr class="highHeadFooterTable">
@@ -173,6 +177,7 @@
         </td>
         <td style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
             <label id="totalallPayNo" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalallPayNo.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+            @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalallPayNo, new { @id = "hdtotalallPayNo" })
         </td>
     </tr>
     <tr class="highHeadFooterTable" style="background-color:#faf7b9">
@@ -181,6 +186,7 @@
         </td>
         <td style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
             <label id="totalallPayByIOBalance" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+            @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance, new { @id = "hdtotalallPayByIOBalance" })
         </td>
     </tr>
 </table>
@@ -189,6 +195,17 @@
 </div>
 <div style="height:10px;">&nbsp;</div>
 <script>
+    $(function () {
+         @if (Model.listGetDataIO != null)
+         {
+             @:payByIOSelect.push('');
+             foreach (var itemData in Model.listGetDataIO)
+             {
+             @:payByIOSelect.push("@itemData.totalPayByIO");
+             }
+         }
+        calCulateAll();
+    });
     function calCulateAll() {
         sumall();
         caltotalallPayByIO();
@@ -208,18 +225,23 @@
                 normalCostAll = normalCostAll + rownormalCost;
             }
         }
-
+        $("#hdtotalnormalCostEstimate").val(normalCostAll);
         $("#totalnormalCostEstimate").text(normalCostAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     }
     function tbAddRowSectionSix() {
         var nextNoId = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length).toString();
         var trHTML = $('.tRow2_0').html();
+        trHTML = (trHTML + "<script> $('#activityOfEstimateList_0__IO').val('');<\/script>");
+        trHTML = (trHTML + "<script> $('.txtproductDetail_0').val('');<\/script>"); 
+        trHTML = (trHTML + "<script> $('#activityOfEstimateList_0__listChoiceId').val('');<\/script>");  
+        trHTML = (trHTML + "<script> $('.txtnormalCost_0').val('');<\/script>"); 
         trHTML = trHTML.replaceAll('[0].IO', '[' + nextNoId + '].IO');
         trHTML = trHTML.replaceAll('[0].productDetail', '[' + nextNoId + '].productDetail');
-        trHTML = trHTML.replaceAll('[0].list_1_select', '[' + nextNoId + '].list_1_select');
+        trHTML = trHTML.replaceAll('[0].listChoiceId', '[' + nextNoId + '].listChoiceId');
         trHTML = trHTML.replaceAll('[0].normalCost', '[' + nextNoId + '].normalCost');
         trHTML = trHTML.replaceAll('_0__IO', '_' + nextNoId + '__IO');
-        trHTML = trHTML.replaceAll('_0__list_1_select', '_' + nextNoId + '__list_1_select');
+        trHTML = trHTML.replaceAll("txtproductDetail_0", "txtproductDetail_" + nextNoId);
+        trHTML = trHTML.replaceAll('_0__listChoiceId', '_' + nextNoId + '__listChoiceId');
         trHTML = trHTML.replaceAll('txtnormalCost_0', 'txtnormalCost_' + nextNoId);
         trHTML = trHTML.replaceAll('id="btnDeleteRowTables" disabled="disabled"', 'id="btnDeleteRowTables" onclick="deleteRowTableSectionSix(this);"');
         trHTML = ("<tr class=\"tagCountRowinTable tRow_" + nextNoId + "\">" + trHTML);
@@ -244,9 +266,10 @@
                 {
                     payIOIncludeSelectAlready.push(txtIOByrow);
                     sumtotalallPayByIO = (sumtotalallPayByIO + parseFloat(payByIOSelect[selectIndexDropdown]));
-                } 
+                }
             }
         }
+        $("#hdtotalallPayByIO").val(sumtotalallPayByIO);
         $("#totalallPayByIO").text(sumtotalallPayByIO.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     }
     function calVat() {
@@ -255,7 +278,7 @@
         for (i = 0; i < rowCount2; i++) {
             var selectIndexDropdown = $("#activityOfEstimateList_" + i + "__IO option:selected").index()
             var txtIOByrow = $("#activityOfEstimateList_" + i + "__IO").val().replace(",", "");
-            var txtVat = $("#activityOfEstimateList_" + i + "__list_1_select option:selected").text();
+            var txtVat = $("#activityOfEstimateList_" + i + "__listChoiceId option:selected").text();
 
             if (txtIOByrow != '' && txtVat != '' && txtVat != '-' && $(".txtnormalCost_" + i.toString()).val() != '') {
                 var rownormalCost = parseFloat($(".txtnormalCost_" + i.toString()).val().replaceAll(",", ""));
@@ -263,19 +286,25 @@
                 sumVat = (sumVat + rownormalCost);
             }
         }
+        $("#hdtotalVat").val(sumVat);
         $("#totalVat").text(sumVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     }
     function caltotalnormalCostEstimateWithVat() {
-        var sumcaltotalnormalCostEstimateWithVat = (parseFloat($("#totalnormalCostEstimate").text().replaceAll(",", "")) + parseFloat($("#totalVat").text().replaceAll(",", "")));
+        var sumcaltotalnormalCostEstimateWithVat = 0;
+        sumcaltotalnormalCostEstimateWithVat = (parseFloat($("#totalnormalCostEstimate").text().replaceAll(",", "")) + parseFloat($("#totalVat").text().replaceAll(",", "")));
+        $("#hdtotalnormalCostEstimateWithVat").val(sumcaltotalnormalCostEstimateWithVat);
         $('#totalnormalCostEstimateWithVat').text(sumcaltotalnormalCostEstimateWithVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     }
     function caltotalallPayNo() {
         var totalFromPreviousPvNo = 0;//ใส่0ไปก่อนทำครั้งแรก Dummyไว้
         var sumtotalallPayByIOBalance = (parseFloat($("#totalnormalCostEstimate").text().replaceAll(",", "")) + totalFromPreviousPvNo);
+        $("#hdtotalallPayNo").val(sumtotalallPayByIOBalance);
         $('#totalallPayNo').text(sumtotalallPayByIOBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     }
     function catotalallPayByIOBalance() {
-        var sumtotalallPayByIOBalance = (parseFloat($("#totalallPayByIO").text().replaceAll(",", "")) - parseFloat($("#totalallPayNo").text().replaceAll(",", "")));
+        var sumtotalallPayByIOBalance = 0;
+        sumtotalallPayByIOBalance = (parseFloat($("#totalallPayByIO").text().replaceAll(",", "")) - parseFloat($("#totalallPayNo").text().replaceAll(",", "")));
+        $("#hdtotalallPayByIOBalance").val(sumtotalallPayByIOBalance);
         $('#totalallPayByIOBalance').text(sumtotalallPayByIOBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     }
 

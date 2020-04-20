@@ -90,6 +90,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.activityTypeId = item.activityTypeId;
                     costThemeDetail.productDetail = item.productDetail;
                     costThemeDetail.total = item.total == null ? 0 : item.total;
+                    costThemeDetail.normalCost = item.normalCost == null ? 0 : item.normalCost;
                     costThemeDetail.IO = item.IO;
                     costThemeDetail.rowNo = insertIndex;
                     costThemeDetail.delFlag = false;
@@ -106,6 +107,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.date = string.IsNullOrEmpty(item.dateInput) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(item.dateInput, ConfigurationManager.AppSettings["formatDateUse"]);
                     costThemeDetail.detail = item.detail;
                     costThemeDetail.compensate = item.compensate;
+                    costThemeDetail.listChoiceId = item.listChoiceId;
                     rtn += insertEstimate(costThemeDetail);
 
                     insertIndex++;
@@ -239,6 +241,7 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.detailContact = model.tB_Act_ActivityForm_DetailOther.detailContact;
                 tB_Act_ActivityForm_DetailOther.fiscalYear = model.tB_Act_ActivityForm_DetailOther.fiscalYear;
                 tB_Act_ActivityForm_DetailOther.APCode = model.tB_Act_ActivityForm_DetailOther.APCode;
+                tB_Act_ActivityForm_DetailOther.payNo = model.tB_Act_ActivityForm_DetailOther.payNo;
                 tB_Act_ActivityForm_DetailOther.activityIdNoSub = model.tB_Act_ActivityForm_DetailOther.activityIdNoSub;
                 tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate = model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate == null? 0 : model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate;
                 tB_Act_ActivityForm_DetailOther.totalvat = model.tB_Act_ActivityForm_DetailOther.totalvat == null ? 0 : model.tB_Act_ActivityForm_DetailOther.totalvat;
@@ -266,7 +269,10 @@ namespace eActForm.BusinessLayer
 
             if (model.activityFormTBMMKT.list_0_select != null || model.activityFormTBMMKT.list_1_multi_select != null ||
                  model.activityFormTBMMKT.list_2_select != null || model.activityFormTBMMKT.brand_select != null ||
-                 model.activityFormTBMMKT.list_3_select != null)
+                 model.activityFormTBMMKT.list_3_select != null 
+                 || model.activityFormTBMMKT.list_1_select != null
+                 || model.activityFormTBMMKT.list_2_multi_select != null
+                 )
             {
                 rtn += deleteActivityTB_Act_ActivityChoiceSelect(activityId);
                 okProcessInsert = true;
@@ -274,11 +280,18 @@ namespace eActForm.BusinessLayer
 
             if (okProcessInsert == true)
             {
-                if (model.activityFormTBMMKT.list_0_select != "")//สต๊อก
+                if (model.activityFormTBMMKT.list_0_select != "")//สต๊อก[ฟอร์มPOS,premium]
                 {
                     tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                     tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
                     tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_0_select;
+                    rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                }
+                if (model.activityFormTBMMKT.list_1_select != "")//VAT[ฟอร์มใบสั่งจ่าย]
+                {
+                    tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                    tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                    tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_1_select;
                     rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
                 }
                 if (model.activityFormTBMMKT.list_1_multi_select != null)
@@ -309,7 +322,7 @@ namespace eActForm.BusinessLayer
                 }
                 if (model.activityFormTBMMKT.list_2_select != null)
                 {
-                    if (model.activityFormTBMMKT.list_2_select != "")//เพื่อ
+                    if (model.activityFormTBMMKT.list_2_select != "")//เพื่อ[ฟอร์มPOS,premium]
                     {
                         tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                         tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
@@ -319,7 +332,7 @@ namespace eActForm.BusinessLayer
                 }
                 if (model.activityFormTBMMKT.brand_select != null)
                 {
-                    if (model.activityFormTBMMKT.brand_select != "")//Brand/ผลิตภัณฑ์ 
+                    if (model.activityFormTBMMKT.brand_select != "")//Brand/ผลิตภัณฑ์ [ฟอร์มPOS,premium]
                     {
                         tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                         tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
@@ -329,7 +342,7 @@ namespace eActForm.BusinessLayer
                 }
                 if (model.activityFormTBMMKT.list_3_select != null)
                 {
-                    if (model.activityFormTBMMKT.list_3_select != "")//Channel+Region
+                    if (model.activityFormTBMMKT.list_3_select != "")//Channel+Region [ฟอร์มPOS,premium]
                     {
                         tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                         tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
@@ -411,6 +424,7 @@ namespace eActForm.BusinessLayer
                             activity_TBMMKT_Model.activityFormTBMMKT.list_2_multi_select[index_each] = item.select_list_choice_id;
                             index_each++;
                         }
+
                     }
 
                     activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng);
@@ -840,6 +854,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@productDetail",model.productDetail)
                     ,new SqlParameter("@IO",model.IO)
                     ,new SqlParameter("@remark",model.remark)
+                    ,new SqlParameter("@normalCost",decimal.Parse(string.Format("{0:0.00000}", model.normalCost)))
                     ,new SqlParameter("@total",decimal.Parse(string.Format("{0:0.00000}", model.total)))
                     ,new SqlParameter("@rowNo",model.rowNo)
                     ,new SqlParameter("@delFlag",model.delFlag)
@@ -855,7 +870,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@date",model.date)
                     ,new SqlParameter("@detail",model.detail)
                     ,new SqlParameter("@compensate",model.compensate)
-
+                    ,new SqlParameter("@listChoiceId",model.listChoiceId)
             });
             }
             catch (Exception ex)

@@ -26,7 +26,7 @@ namespace eActForm.Controllers
                 if (!string.IsNullOrEmpty(activityId))
                 {
                     activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-                    if (ConfigurationManager.AppSettings["masterEmpExpense"] == master_type_form_id )
+                    if (ConfigurationManager.AppSettings["masterEmpExpense"] == master_type_form_id)
                     {
                         activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"];
                         activity_TBMMKT_Model = exPerryCashAppCode.processDataExpense(activity_TBMMKT_Model, activityId);
@@ -57,6 +57,25 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
                     //====END===============Get Subject=======================
                     activity_TBMMKT_Model.channelMasterTypeList = QueryGet_channelByGroup.get_channelByGroup(activityFormTBMMKT.master_type_form_id, activityFormTBMMKT.formCompanyId, activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel);
+                    
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                    {
+                        ObjGetDataEO objGetDataEO = new ObjGetDataEO();
+                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId == "") { objGetDataEO.channelId = ""; } else { objGetDataEO.channelId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId; }
+                        if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId == "") { objGetDataEO.productBrandId = ""; } else { objGetDataEO.productBrandId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId; }
+                        if (activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]) { objGetDataEO.master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"]; }
+                        objGetDataEO.fiscalYear = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.fiscalYear;
+                        activity_TBMMKT_Model.listGetDataEO = QueryGetSelectMainForm.GetQueryDataEOPaymentVoucher(objGetDataEO);
+                       
+                        ObjGetDataIO objGetDataIO = new ObjGetDataIO();
+                        objGetDataIO.ActivityByEOSelect = "";
+                        foreach (var item in activity_TBMMKT_Model.listGetDataEO)
+                        {
+                            objGetDataIO.ActivityByEOSelect += (item.activityId+",");
+                        }
+                        activity_TBMMKT_Model.listGetDataIO= QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
+                    }
+
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
 
                 }
@@ -77,7 +96,7 @@ namespace eActForm.Controllers
                     {
                         rowEstimateTable = 1;
                     }
-                        List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+                    List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
                     for (int i = 0; i < rowEstimateTable; i++)
                     {
                         costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { id = "", IO = "", activityTypeId = "", productDetail = "", unit = 0, unitPrice = 0, total = 0 });

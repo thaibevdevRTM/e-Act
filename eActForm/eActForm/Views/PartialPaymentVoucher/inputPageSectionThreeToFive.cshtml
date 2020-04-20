@@ -92,6 +92,10 @@
                         trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__select_list_choice_id_ChReg').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
                         trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__productBrandId').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
                         trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " + '__IO').change(function () { getGL(" + nextNoId + ");});<\/script>");
+                        trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__IO').val('');<\/script>");
+                        trHTML = (trHTML + "<script> $('.txtGL_' + " + nextNoId + " +'').val('');<\/script>");
+                        trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__select_list_choice_id_ChReg').selectpicker('val',null).selectpicker('refresh');<\/script>");
+                        trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__productBrandId').selectpicker('val',null).selectpicker('refresh');<\/script>");
                         /*===========ต้องมีบรรทัดล่างไม่งั้น DropdownFilter จะขึ้นมาเบิ้ล=================*/
                         //trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO" title', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO" style="display:none;" title>');
                         trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__select_list_choice_id_ChReg" title', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__select_list_choice_id_ChReg" style="display:none;" title>');
