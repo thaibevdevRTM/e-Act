@@ -1,5 +1,6 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
@@ -101,6 +102,7 @@ namespace eActForm.Controllers
                     List<TB_Reg_Subject> tB_Reg_Subjects = new List<TB_Reg_Subject>();
                     activity_TBMMKT_Model.tB_Reg_Subject = tB_Reg_Subjects;
                     //======END=============Get Subject=======================
+       
 
                     TempData["actForm" + actId] = activity_TBMMKT_Model;
                 }

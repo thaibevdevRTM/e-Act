@@ -417,15 +417,15 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getSubjectByempId(string typeFormId,string empId)
+        public JsonResult getFlowBytypeFormId(string typeFormId,string empId)
         {
             var result = new AjaxResult();
             try
             {
-                var getSubject = QueryGetSelectAllTB_Reg_Subject.getSubjectFlowByEmpId(typeFormId,empId).ToList();
+                var getFlowDetail= QueryGetFlow.getFlowDetailBytypeFormId(typeFormId).ToList().Where(x=>x.description==empId);
                 var resultData = new
                 {
-                    subject = getSubject.ToList(),
+                    flow = getFlowDetail.ToList(),
                 };
                 result.Data = resultData;
             }

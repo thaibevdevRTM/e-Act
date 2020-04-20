@@ -4,7 +4,7 @@
 
 
 
-<div class="col-md-12" id="divExpenseCashEmpInfo">
+<div class="col-md-12" id="divEmpInfo">
     @*<div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;@Model.TB_Reg_RequestEmp.empName&nbsp;&nbsp;</div>
         <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
     <fieldset>
@@ -95,7 +95,7 @@
                              {
                             @class = "form-control selectpicker",
                             @id = "ddlRegional",
-                            @name = "Model.tB_Act_ActivityForm_DetailOther.orderOf",
+                            @name = "Model.tB_Act_ActivityForm_DetailOther.regionalId",
 
                         })
 
@@ -126,9 +126,7 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" id="hdSubjectId" name="activityFormTBMMKT.SubjectId" class="form-control textboxcss" />
-
-
+        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.SubjectId, new { @id = "hdSubjectId"})
     </fieldset>
     <br />
 </div>
@@ -142,7 +140,7 @@
         });
         $("#hdRegionalId").val($("#ddlRegional").val());
         getEmpDetail();
-
+       // alert($("#hdSubjectId").val());
     });
     function getEmpDetail() {
 
@@ -164,8 +162,9 @@
                 document.getElementById('lblComp').innerHTML = response.Data.companyName;
 
                 getRegional();
-              $("#hdSubjectId").val('C67164E4-A891-43D6-B4F7-090F62C6290E');
-                  //getSubject();
+            
+             // $("#hdSubjectId").val('C67164E4-A891-43D6-B4F7-090F62C6290E');
+                getFlow();
             }
             else {
                 $("#lblEmpName").val('');
@@ -248,23 +247,25 @@
 
 
 
-    function getSubject() {
+    function getFlow() {
 
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("getSubjectByempId", "eAct")',
+            url: '@Url.Action("getFlowBytypeFormId", "eAct")',
             data: {
                 typeFormId: "@Model.activityFormTBMMKT.master_type_form_id",
                 empId: $("#txtEmpId").val(),
             }
         }).done(function (response) {
-            if (response.Data.subject.length > 0) {
-                $("#hdSubjectId").val(response.Data.subject[0]['id']);
+            if (response.Data.flow.length == 0) {
+               // $("#hdSubjectId").val(response.Data.subject[0]['id']);
                 // alert($("#hdSubjectId").val());
+               // document.getElementById("txtEmpId").innerHTML = "";  
+                alert('ไม่พบ Flow อนุมัติของรหัสพนักงาน ' + $("#txtEmpId").val());
+
+           
             }
-            else {
-                alert('ไม่พบ Flow อนุมัติ');
-            }
+           
         });
     }
 

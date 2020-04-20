@@ -28,7 +28,8 @@ namespace eActForm.BusinessLayer
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
                 }
-                else if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && ActFormAppCode.checkRecorderByUser(activityId)) {
+                else if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && ActFormAppCode.checkRecorderByUser(activityId))
+                {
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
                 }
                 else
@@ -220,7 +221,7 @@ namespace eActForm.BusinessLayer
                     tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId;
                 }
 
-                tB_Act_ActivityForm_DetailOther.SubjectId = model.activityFormTBMMKT.SubjectId;
+                tB_Act_ActivityForm_DetailOther.SubjectId = string.IsNullOrEmpty(model.activityFormTBMMKT.SubjectId) ? model.tB_Act_ActivityForm_DetailOther.SubjectId : model.activityFormTBMMKT.SubjectId;
                 tB_Act_ActivityForm_DetailOther.activityProduct = model.tB_Act_ActivityForm_DetailOther.activityProduct;
                 tB_Act_ActivityForm_DetailOther.activityTel = model.tB_Act_ActivityForm_DetailOther.activityTel;
                 tB_Act_ActivityForm_DetailOther.IO = model.tB_Act_ActivityForm_DetailOther.IO;
@@ -243,8 +244,8 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.detailContact = model.tB_Act_ActivityForm_DetailOther.detailContact;
                 tB_Act_ActivityForm_DetailOther.orderOf = model.tB_Act_ActivityForm_DetailOther.orderOf;
                 tB_Act_ActivityForm_DetailOther.regionalId = model.tB_Act_ActivityForm_DetailOther.regionalId;
-                
-                 rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
+
+                rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
 
                 insertIndex++;
             }

@@ -23,6 +23,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                                  nameTH = d["nameTH"].ToString(),
                                  nameEn = d["nameEn"].ToString(),
                                  description = d["description"].ToString(),
+                                 typeFormId = d["master_type_form_id"].ToString(),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),

@@ -378,6 +378,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllChanel.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllCompany.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllCustomers.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetFlow.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllPrice.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllProduct.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QuerygetAllProductCate.cs" />
@@ -3269,6 +3270,7 @@
     <Content Include="Views\SharedMasterFormDetail\recordByHcRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\attachfileDetailRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\textGeneral.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderCompany\headerFormName.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
