@@ -17,8 +17,11 @@
 </style>
 
 @Html.HiddenFor(x => x.Budget_Activity_list.ElementAt(0).act_form_id, new { @id = "hd_activityId" })
+@Html.HiddenFor(x => x.Budget_Activity_list.ElementAt(0).act_customerId, new { @id = "hd_customerId" })
+@*@Html.HiddenFor(x => x.Budget_Activity_Last_Approve.budgetApproveId, new { @id = "hd_lastApprove" })*@
 
 <div class="row">
+
 	<div id="divPreviewProductList">
 
 	</div>
@@ -50,7 +53,6 @@
 <script>
 
 	$('document').ready(function () {
-		//alert('test ==>' +  '@var_companyEN');
 		callProductList($("#hd_activityId").val());
 	});
 
@@ -79,19 +81,17 @@
         });
 	}
 
-	function callInvoiceList(activityId, activityOfEstimateId) {
+    function callInvoiceList(activityId, activityOfEstimateId) {
+
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("activityProductInvoiceList", "Budget")',
             data: {
 				activityId: activityId,
-				activityOfEstimateId: activityOfEstimateId
+                activityOfEstimateId: activityOfEstimateId
             }
         }).done(function (htmlResponse) {
 			$("#divPreviewInvoiceList").html(htmlResponse);
-
-			//var elmnt = document.getElementById("divPreviewInvoiceList");
-			//elmnt.scrollIntoView();
 
 			onSelectInvoice(activityId, activityOfEstimateId);
         });
@@ -110,8 +110,8 @@
 			data: {
 				"activityId": var_activityId,
 				"activityOfEstimateId": var_estId,
-				"invoiceId": var_invoiceId,
-				"company": '@var_companyEN'
+				"invoiceId": var_invoiceId
+
 			}
 		}).done(function (htmlResponse) {
 			$("#myModalInvoiceContent").html(htmlResponse);
@@ -119,7 +119,6 @@
 	}
 
 	function submitInvoice() {
-
 		var var_activityId = $("#hd_activityId").val();
 		var var_activityOfEstimateId = $("#hd_activityOfEstimateId").val();
 
@@ -251,12 +250,12 @@
         });
 	}
 
-	
+
 
 	function onInvoicePrintPreview(actId,companyEN) {
 		//var $buttonClicked = $(this);
+		//var var_company = companyEN;
 		var var_activityId = actId;
-		var var_company = companyEN;
 		var options = { "backdrop": "static", keyboard: true };
 
 

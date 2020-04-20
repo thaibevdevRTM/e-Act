@@ -101,6 +101,7 @@ namespace eActForm.Controllers
 			Budget_Approve_Detail_Model Budget_Model = new Budget_Approve_Detail_Model();
 			Budget_Model.Budget_Invoce_History_list = QueryGetBudgetApprove.getBudgetInvoiceHistory(activityId,null);
 			Budget_Model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivity(null, activityId, null, null,null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault();
+			Budget_Model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
 
 			var_actNo = Budget_Model.Budget_Activity.act_activityNo;
 			var_cusId = Budget_Model.Budget_Activity.act_customerId;
@@ -187,25 +188,19 @@ namespace eActForm.Controllers
 
 
 		//---------------------------------------------------------------------------------------
-		public PartialViewResult activityProductInvoiceEdit(string activityId, string activityOfEstimateId, string invoiceId , string company)
+		public PartialViewResult activityProductInvoiceEdit(string activityId, string activityOfEstimateId, string invoiceId)
 		{
+			Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
+			Budget_Activity.Budget_Activity_Product = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId).FirstOrDefault();
+			Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
+			Budget_Activity.Budget_Count_Wait_Approve = QueryGetBudgetActivity.getBudgetActivityWaitApprove(activityId).FirstOrDefault();
+
+
 			if (!string.IsNullOrEmpty(invoiceId))
-			{// for edit invoice 
-				Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
-				Budget_Activity.Budget_Activity_Product = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId).FirstOrDefault();
-				Budget_Activity.Budget_Activity_Invoice = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, invoiceId).FirstOrDefault();
-				Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
-				Budget_Activity.Budget_Count_Wait_Approve = QueryGetBudgetActivity.getBudgetActivityWaitApprove(activityId).FirstOrDefault();
-				return PartialView(Budget_Activity);
+			{// for get invoice history 
+				Budget_Activity.Budget_Activity_Invoice = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, invoiceId).FirstOrDefault();				
 			}
-			else
-			{// for insert invoice
-				Budget_Activity_Model Budget_Activity = new Budget_Activity_Model();
-				Budget_Activity.Budget_Activity_Product = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, activityOfEstimateId).FirstOrDefault();
-				Budget_Activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
-				Budget_Activity.Budget_Count_Wait_Approve = QueryGetBudgetActivity.getBudgetActivityWaitApprove(activityId).FirstOrDefault();
-				return PartialView(Budget_Activity);
-			}
+			return PartialView(Budget_Activity);
 		}
 
 		public PartialViewResult activityProductInvoiceList(string activityId , string activityOfEstimateId )
@@ -236,7 +231,7 @@ namespace eActForm.Controllers
 			return PartialView(budget_activity);
 		}
 		
-		public ActionResult activityProduct(string activityId)
+		public ActionResult activityProduct( string activityId)
 		{
 			Budget_Activity_Model budget_activity = new Budget_Activity_Model();
 
@@ -248,6 +243,7 @@ namespace eActForm.Controllers
 				try
 				{
 					budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).ToList();
+					//budget_activity.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
 				}
 				catch (Exception ex)
 				{

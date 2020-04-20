@@ -4,6 +4,12 @@
 @model eActForm.Models.Budget_Approve_Detail_Model
 @{
     Layout = null;
+    var var_lastApprove = Model.Budget_Activity_Last_Approve;
+
+    var count_wait_approve = 0;
+    var count_req_approve = 0;
+    var count_draft_approve = 0;
+    var count_history_inv = 0;
 }
 
 <script type="text/javascript">
@@ -31,6 +37,35 @@
 			window.location.href = url;
 		});
 	}
+
+    @*function onClickSubmitRegenPdf(budgetapproveId, activityId, statusId) {
+		$.ajax({
+            type: 'POST',
+            url: '@Url.Action("regenBudgetApprovePdf", "BudgetViewer")',
+            data: {
+				budgetApproveId: budgetapproveId,
+				activityId: activityId
+            }
+        }).done(function (htmlResponse) {
+			genPdf(budgetapproveId, activityId,statusId, htmlResponse);
+        });
+	}
+
+	function genPdf(budgetapproveId, activityId, statusId, htmlResponse) {
+        $.ajax({
+            url: '@Url.Action("genPdfApprove", "BudgetMyDoc")',
+            data: {
+                GridHtml: htmlResponse,
+                statusId: statusId,
+				budgetApproveId: budgetapproveId,
+				activityId: activityId,
+            },
+            dataType: "json",
+            type: 'POST',
+        }).done(function (response) {
+            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+        });
+    }*@
 
     function onClickSubmitRegenPdf() {
 		$("#WaitDialog").show();
@@ -65,13 +100,12 @@
 @Html.HiddenFor(m => m.Budget_Activity.budget_id, new { id = "HbudgetId" })
 @Html.HiddenFor(m => m.Budget_Activity.act_companyEN, new { id = "HcompanyEN" })
 @Html.HiddenFor(m => m.Budget_Activity.act_form_id, new { id = "Hact_form_id" })
+
 @*@Html.HiddenFor(m => m.Budget_Activity.count_req_approve, new { id = "Hcount_req_approve" })*@
 
 @if (1 == 1)
 {
-    var count_wait_approve = 0;
-    var count_req_approve = 0;
-    var count_draft_approve = 0;
+
 
     <div class="modal-dialog modal-lg" style="width:95%;">
         <div class="modal-content">
@@ -283,8 +317,13 @@
                             <td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
 
 
-                            @*status == 4 ปรับยอด status == 5 จบรายการปรับยอด ไม่ต้องขออนุมัติ*@
+                            @if (item.invoiceBudgetStatusId != 4 && item.invoiceBudgetStatusId != 5 && item.invoiceApproveStatusId == 3)
+                            {
+                                count_history_inv++;
+                            }
 
+
+                            @*status == 4 ปรับยอด status == 5 จบรายการปรับยอด ไม่ต้องขออนุมัติ*@
                             @if (item.invoiceBudgetStatusId != 4 && item.invoiceBudgetStatusId != 5 && item.invoiceApproveStatusId != 3)
                             {
                                 count_req_approve++;
@@ -340,14 +379,32 @@
                         </div>
 
 
+                        @if (count_history_inv == 0 && count_req_approve == 0)
+                        {
 
-
-
-
-                        @if (Model.Budget_Activity.budget_id != null && count_req_approve > 0)
+                        }
+                        else if (Model.Budget_Activity.budget_id != null && count_req_approve > 0)
                         {
                             @Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
                         }
+                        else if(var_lastApprove != null)
+                        {
+                            @Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = var_lastApprove.budgetApproveId })
+                        }
+
+
+                        @*@if (Model.Budget_Activity.budget_id != null && count_req_approve > 0)
+                        {
+                            @Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
+                        }
+                        else if (count_history_inv != 0)
+                        {
+                            @Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = var_lastApprove.budgetApproveId })
+                        }
+                        else
+                        {
+
+                        }*@
                     </div>
                 </div>
             </div>
@@ -362,7 +419,7 @@
                             @Html.Hidden("Hcount_req_approve", count_req_approve.ToString())
                             <button type="button" class="btn btn-sm btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>
                         }
-                        else
+                        else if (var_lastApprove != null )
                         {
                             <button type="button" class="btn btn-sm btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitRegenPdf();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Regen Pdf</button>
                         }

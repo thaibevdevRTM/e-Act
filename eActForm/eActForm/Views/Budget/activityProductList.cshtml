@@ -2,42 +2,9 @@
 @using eActForm.BusinessLayer
 @{
 	ViewBag.Title = "";
-	var last = Model.Budget_Activity_Last_Approve;
+	var var_lastApprove = Model.Budget_Activity_Last_Approve;
 
 }
-
-<script>
-	@*function CallReBudgetApprovePdf(budgetapproveId, activityId) {
-		$.ajax({
-            type: 'POST',
-            url: '@Url.Action("regenBudgetApprovePdf", "BudgetViewer")',
-			data: {
-			budgetApproveId: budgetapproveId,
-			activityId: activityId
-			}
-			}).done(function (htmlResponse) {
-				doMsgSuccess("ต่อไป");
-				genPdf(budgetapproveId, activityId,statusId, htmlResponse);
-			});
-	}
-
-	function genPdf(budgetapproveId, activityId, statusId, htmlResponse) {
-        $.ajax({
-            url: '@Url.Action("genPdfApprove", "BudgetMyDoc")',
-            data: {
-                GridHtml: htmlResponse,
-                statusId: statusId,
-				budgetApproveId: budgetapproveId,
-				activityId: activityId,
-            },
-            dataType: "json",
-            type: 'POST',
-        }).done(function (response) {
-            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
-        });
-	}*@
-
-</script>
 
 <div class="alert alert-success" role="alert">
 
@@ -54,10 +21,10 @@
 
 </div>
 
-@if (last != null)
+@if (var_lastApprove != null)
 {
-	<a onclick="callApproveList('@(last == null ? "" : last.budgetApproveId)');"> <i class="btn ink-reaction btn-dark fa fa-eye"></i> รายการอนุมัติครั้งล่าสุด </a>
-	@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = last == null ? null : last.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank", })
+	<a onclick="callApproveList('@(var_lastApprove == null ? "" : var_lastApprove.budgetApproveId)');"> <i class="btn ink-reaction btn-dark fa fa-eye"></i> รายการอนุมัติครั้งล่าสุด </a>
+	@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = var_lastApprove == null ? null : var_lastApprove.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank", })
 	<span>รายละเอียดค่าใช้จ่าย(pdf)</span>
 }
 
@@ -65,7 +32,7 @@
 @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
 {
 	<button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="javascript:onInvoicePrintPreview('@Model.Budget_Activity.act_form_id','@Model.Budget_Activity.act_companyEN');"><i class="fa fa-file-o fa-fw"></i>&nbsp;Preview</button>
-	
+
 }
 
 @*<div id="ModalPreviewPDF" > xxxxx
