@@ -371,7 +371,11 @@
                 data: {
                     activityId: actId
                 }
-            }).done(function (htmlResponse) {
+             }).done(function (htmlResponse) {
+                 @*//=========ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย====มันจะได้Genถูกต้องสวยงาม====dev date 20200421=====*@
+                 $("#newGenReportFromMaster").html(htmlResponse);
+                 htmlResponse = $("#divForm").html();
+                  @*//====END=====ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย=====มันจะได้Genถูกต้องสวยงาม====dev date 20200421======*@
                 genPdf(actId, statusId, htmlResponse);
             });
         }
@@ -408,3 +412,6 @@
 
 
 </script>
+<div id="newGenReportFromMaster" style="display:none;">
+
+</div>

@@ -274,7 +274,12 @@ else
                     activityId: obj,
                 }
             }).done(function (htmlResponse) {
+                //$("#dataFromPDF").val(htmlResponse);//ของเดิม
+                @*//=========ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย====มันจะได้Genถูกต้องสวยงาม====dev date 20200421=====*@
+                $("#newGenReportFromMaster").html(htmlResponse);
+                htmlResponse = $("#divForm").html();
                 $("#dataFromPDF").val(htmlResponse);
+                @*//====END=====ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย=====มันจะได้Genถูกต้องสวยงาม====dev date 20200421======*@
                 genFileActForm();
                 });
 
@@ -357,5 +362,7 @@ else
 
 
 </script>
+<div id="newGenReportFromMaster" style="display:none;">
 
+</div>
 
