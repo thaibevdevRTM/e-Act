@@ -171,21 +171,23 @@
                 </tr>
             </table>
             <table class="borderWidthMaxCollape">
-                @for (int i = 1; i <= 10; i++)
+                @foreach (var item in Model.tB_Act_ActivityForm_DetailOtherList)
                 {
+                    var valByCHReg = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choiceByID(item.select_list_choice_id_ChReg).FirstOrDefault().name;
+                    var valByProductBrand = QueryGetAllBrand.GetAllBrand().Where(x => x.id == item.productBrandId).FirstOrDefault().brandName;
                     <tr>
-                        <td class="oneColumnCenter fontRedV1 paddingRowTable">@i</td>
+                        <td class="oneColumnCenter fontRedV1 paddingRowTable">@item.rowNo</td>
                         <td class="ioColumn fontRedV1 paddingRowTable">
-                            86S02017L021
+                            @item.IO
                         </td>
                         <td class="glColumnCenter fontRedV1 paddingRowTable">
-                            650007940
+                            @item.GL
                         </td>
                         <td class="chColumnCenter fontRedV1 paddingRowTable">
-                            EV-03
+                            @valByCHReg
                         </td>
                         <td class="brandColumnCenter paddingRowTable">
-                            BLEND 285
+                            @valByProductBrand
                         </td>
                     </tr>
                 }
