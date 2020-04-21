@@ -1,4 +1,37 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Globalization;
+@using System.Configuration;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@{
+    var dearGroup = "";
+    var Khun = "คุณ";
+    if (Model.approveFlowDetail != null)
+    {
+        foreach (var item in Model.approveFlowDetail)
+        {
+            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGroupApproveby"])
+            {
+                if (Model.activityFormTBMMKT.chkUseEng)
+                {
+                    dearGroup = (item.empFNameEN + " " + item.empLNameEN);
+                }
+                else
+                {
+                    dearGroup = (Khun + item.empFNameTH + " " + item.empLNameTH);
+                }
+            }
+        }
+    }
+    else
+    {
+        dearGroup = "";
+    }
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+}
 <table class="boxTableFormMainV1 fontDocV1">
     <tr>
         <td style="width:400px;" class="boxTableFormV1">
@@ -8,7 +41,7 @@
                         &nbsp;เรื่อง:
                     </td>
                     <td style="width:85%;text-align:left;" class="fontBlueV1">
-                        ค่า Event Production <br />งาน Big Mountain Music Festival 2019
+                        @Html.Raw(Model.activityFormTBMMKT.activityName.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
                     </td>
                 </tr>
                 <tr>
@@ -16,7 +49,7 @@
                         &nbsp;เรียน:
                     </td>
                     <td style="text-align:left;" class="fontBlueV1 paddingRowTable">
-                        คุณประภากร ทองเทพไพโรจน์
+                        @dearGroup
                     </td>
                 </tr>
             </table>
@@ -28,7 +61,7 @@
                         &nbsp;วันที่:
                     </td>
                     <td style="width:70%;text-align:center;" class="fontBlueV1">
-                        01/02/2020
+                        @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
                     </td>
                 </tr>
                 <tr>
@@ -36,25 +69,19 @@
                         &nbsp;เลขที่:
                     </td>
                     <td style="text-align:center;" class="fontBlueV1 paddingRowTable">
-                        PV005/2020
+                        @Model.activityFormModel.activityNo
                     </td>
                 </tr>
-                @for (int i = 1; i <= 2; i++)
+                @foreach (var item in Model.activityFormTBMMKT.list_1_multi_select)
                 {
+                    string valEO = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(item).FirstOrDefault().EO;
                     <tr>
                         <td style="text-align:left;" class="fontRedV1 paddingRowTable">
                             &nbsp;งบประมาณเลขที่EO:
                         </td>
                         <td style="text-align:center;" class="paddingRowTable">
-                            S017 10 A6 20/0124
+                            @valEO
                             <br />
-                            @*<table style="width:100%;">
-                                    <tr>
-                                        <td class="borderBottom">
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                </table>*@
                         </td>
                     </tr>
                 }

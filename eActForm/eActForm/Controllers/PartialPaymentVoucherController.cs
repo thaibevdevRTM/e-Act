@@ -30,6 +30,10 @@ namespace eActForm.Controllers
         }
         public ActionResult detailSectionSix(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            ObjGetDataDetailPaymentAll objGetDataDetailPaymentAll = new ObjGetDataDetailPaymentAll();
+            objGetDataDetailPaymentAll.activityId = activity_TBMMKT_Model.activityFormModel.id;
+            objGetDataDetailPaymentAll.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
+            activity_TBMMKT_Model.listGetDataDetailPaymentAll = QueryGetSelectMainForm.GetDetailPaymentAll(objGetDataDetailPaymentAll);
             return PartialView(activity_TBMMKT_Model);
         }
 
@@ -128,7 +132,21 @@ namespace eActForm.Controllers
             if (activity_TBMMKT_Model.listGetDataPVPrevious == null)
             {
                 List<GetDataPVPrevious> getDataPVPrevious = new List<GetDataPVPrevious>();
+                if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo != null)
+                {
+                    if (int.Parse(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo) >= 2)
+                    {
+                        ObjGetDataPVPrevious objGetDataPVPrevious = new ObjGetDataPVPrevious();
+                        objGetDataPVPrevious.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
+                        objGetDataPVPrevious.payNo = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.payNo;
+                        getDataPVPrevious = QueryGetSelectMainForm.GetQueryDataPVPrevious(objGetDataPVPrevious); ;
+                    }
+                }
                 activity_TBMMKT_Model.listGetDataPVPrevious = getDataPVPrevious;
+            }
+            if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.activityIdNoSub == null)
+            {
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.activityIdNoSub = "";
             }
 
             return PartialView(activity_TBMMKT_Model);

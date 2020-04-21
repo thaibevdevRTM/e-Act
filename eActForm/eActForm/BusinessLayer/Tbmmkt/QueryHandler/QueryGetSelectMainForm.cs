@@ -93,5 +93,34 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static List<GetDataDetailPaymentAll> GetDetailPaymentAll(ObjGetDataDetailPaymentAll objGetDataDetailPaymentAll)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetDetailPaymentAll", new SqlParameter("@activityId", objGetDataDetailPaymentAll.activityId), new SqlParameter("@payNo", objGetDataDetailPaymentAll.payNo));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new GetDataDetailPaymentAll()
+                             {
+                                 payNo = d["payNo"].ToString(),
+                                 rowNo = int.Parse(d["rowNo"].ToString()),
+                                 IO = d["IO"].ToString(),
+                                 productDetail = d["productDetail"].ToString(),
+                                 vat = d["vat"].ToString(),
+                                 normalCost = d["normalCost"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["normalCost"].ToString())),
+                                 documentDate = DateTime.Parse(d["documentDate"].ToString()),
+                                 totalnormalCostEstimate = d["totalnormalCostEstimate"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalnormalCostEstimate"].ToString())),
+                                 activityNo = d["activityNo"].ToString(),
+                                 activityId = d["activityId"].ToString(),
+                                 activityIdNoSub = d["activityIdNoSub"].ToString()
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("GetDetailPaymentAll => " + ex.Message);
+                return new List<GetDataDetailPaymentAll>();
+            }
+        }
+
     }
 }

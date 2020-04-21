@@ -1,4 +1,7 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eForms.Presenter.MasterData;
+@using eActForm.Models;
+@using eActForm.BusinessLayer;
 <table class="boxTableFormMainV1 fontDocV1">
     <tr>
         <td style="width:300px;" class="boxTableFormV1">
@@ -15,15 +18,27 @@
                         &nbsp;วัตถุประสงค์:
                     </td>
                     <td style="text-align:left;">
-                        เพื่อส่งเสริมภาพลักษณ์และ <br />ใช้ประชาสัมพันธ์ผลิตภัณฑ์
+                        @Html.Raw(Model.activityFormTBMMKT.objective.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
                     </td>
                 </tr>
                 <tr>
                     <td class="tdTopLeft fontRedV1 paddingRowTable">
                         &nbsp;Supplier:
+                        @{
+                            var apName = "";
+                            var apAddress = "";
+                            var apTelFax = "";
+                            Model.listAPModel = APPresenter.getDataAP(AppCode.StrCon, Model.tB_Act_ActivityForm_DetailOther.APCode);
+                            foreach (var itemAp in Model.listAPModel)
+                            {
+                                apName = itemAp.Name1;
+                                apAddress = itemAp.FullAddress;
+                                apTelFax = itemAp.TelAndFax;
+                            }
+                        }
                     </td>
                     <td style="text-align: left;" class="paddingRowTable">
-                        ตรีเพชรอีซูซุ เซลส์
+                        @apName
                     </td>
                 </tr>
                 <tr>
@@ -31,7 +46,7 @@
                         &nbsp;ที่อยู่:
                     </td>
                     <td style="text-align:left;" class="paddingRowTable">
-                        1088 ถ.วิภาวดีรังสิต แขวงจตุจักร<br />เขตจตุจักร กรุงเทพมหานคร 10900
+                        @apAddress
                     </td>
                 </tr>
                 <tr>
@@ -39,7 +54,7 @@
                         &nbsp;Tel/Fax:
                     </td>
                     <td style="text-align:left;" class="paddingRowTable">
-                        0-2966-2111/0-2966-2191
+                        @apTelFax
                     </td>
                 </tr>
             </table>
@@ -56,12 +71,23 @@
                         &nbsp;เอกสารแนบ:
                     </td>
                     <td style="text-align:left;" class="fontBlueV1">
-                        1.เอกสารแนบที่หนึ่ง<br />2.เอกสารแนบที่สอง<br />3.เอกสารแนบที่สาม<br />4.เอกสารแนบที่สี่
+                        @{ var indexAtch = 1;}
+                        @foreach (var itemAtch in Model.activityFormTBMMKT.list_2_multi_select)
+                        {
+                            var valById = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choiceByID(itemAtch).FirstOrDefault().name;
+                            @:@indexAtch.@valById<br />
+                            indexAtch++;
+                        }
                     </td>
+
                 </tr>
+
             </table>
+
             <table style="border-collapse: collapse;">
+
                 <tr>
+
                     <td class="tdTopLeft fontRedV1 paddingRowTable">
                         &nbsp;ข้อมูลสนับสนุน/หมายเหตุ:
                     </td>
@@ -70,7 +96,7 @@
             <table style="border-collapse: collapse;">
                 <tr>
                     <td class="tdTopLeft paddingRowTable">
-                        &nbsp;สั่งจ่ายเพราะงานเสร็จแล้ว<br />&nbsp;ควรดำเนินการให้เร็วที่สุด
+                        &nbsp;@Html.Raw(Model.activityFormModel.remark.Replace("\n", "<br/>&nbsp;").Replace("\r\n", "<br/>&nbsp;"))
                     </td>
                 </tr>
             </table>
