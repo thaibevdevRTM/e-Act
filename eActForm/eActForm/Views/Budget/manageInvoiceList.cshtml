@@ -1,56 +1,48 @@
 ﻿@model eActForm.Models.TB_Bud_Image_Model
 @{
-	ViewBag.Title = "";
+    //update 21-04-2020
+    ViewBag.Title = "";
 }
 
-<!-- Custom Theme Scripts -->
-@*<script src="~/Content/vendors/build/js/custom.min.js"></script>*@
-
 <div class="row">
-	<table id="datatable" class="table table-striped table-hover">
-		<thead>
-			<tr style="background-color:#2B5D95;color:#ffffff;">
-				<th class="text-center" style="width:10%;"></th>
-				<th class="text-center" style="width:25%;">ชื่อไฟล์</th>
-				<th class="text-center" style="width:15%;">เลขที่ใบแจ้งหนี้</th>
-				<th class="text-center" style="width:15%;">จำนวนกิจกรรม</th>
-				<th class="text-center" style="width:25%;">ลูกค้า</th>
-				<th class="text-center" style="width:10%;">วันที่สร้าง</th>
-			</tr>
-		</thead>
+    <table id="datatable" class="table table-striped table-hover">
+        <thead>
+            <tr style="background-color:#2B5D95;color:#ffffff;">
+                <th class="text-center" style="width:10%;"></th>
+                <th class="text-center" style="width:25%;">ชื่อไฟล์</th>
+                <th class="text-center" style="width:15%;">เลขที่ใบแจ้งหนี้</th>
+                <th class="text-center" style="width:15%;">จำนวนกิจกรรม</th>
+                <th class="text-center" style="width:25%;">ลูกค้า</th>
+                <th class="text-center" style="width:10%;">วันที่สร้าง</th>
+            </tr>
+        </thead>
 
-		@*@if (Model.tbBudImageList != null)
-			{*@
-		<tbody>
-			@foreach (var item in Model.BudImageList)
-			{
-				<tr class="gradeX">
-					<td class="text-left">
+        <tbody>
+            @foreach (var item in Model.BudImageList)
+            {
+                <tr class="gradeX">
+                    <td class="text-left">
 
-						<a href="javascript:" id="selFile" class="anchorDetail btn ink-reaction btn-sm btn-success fa fa-search" onclick="javascript:callManageInvoiceView('@item.id');"></a>
-						@*<a href="javascript:" id="editFile" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onClickManageInvoiceEdit('@item.id');"></a>*@
+                        <a href="javascript:" id="selFile" class="anchorDetail btn ink-reaction btn-sm btn-success fa fa-search" onclick="javascript:callManageInvoiceView('@item.id');"></a>
 
-						@if (item.count_activityNo <= 0)
-						{
-							<a href="javascript:" id="delFile" onclick="return onclickDelImageBudget('@item.id','@item._fileName');">
-								<i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-							</a>
-						}
+                        @if (item.count_activityNo <= 0)
+                        {
+                            <a href="javascript:" id="delFile" onclick="return onclickDelImageBudget('@item.id','@item._fileName');">
+                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                            </a>
+                        }
 
-					</td>
-					<td class="text-left">@item._fileName</td>
-					<td class="text-center">@item.invoiceNo</td>
-					<td class="text-center">@item.count_activityNo</td>
-					<td class="text-left">@item.customerName</td>
+                    </td>
+                    <td class="text-left">@item._fileName</td>
+                    <td class="text-center">@item.invoiceNo</td>
+                    <td class="text-center">@item.count_activityNo</td>
+                    <td class="text-left">@item.customerName</td>
 
-					<td class="text-center">@{ var date = item.createdDate.Value.ToString("dd/MM/yyyy");} @date</td>
-				</tr>
-			}
-		</tbody>
-
-
-		@*}*@
-	</table>
+                    <td class="text-center">@{ var date = item.createdDate.Value.ToString("dd/MM/yyyy");} @date</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 <script>

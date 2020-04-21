@@ -11,7 +11,7 @@ using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
 
-namespace eActForm.Controllers
+namespace eActForm.Controllers //update 21-04-2020
 {
     [LoginExpire]
     public class BudgetApproveController : Controller
@@ -441,11 +441,15 @@ namespace eActForm.Controllers
 
         }
 
-        public static int insertApproveByFlowBudget(ApproveFlowModel.approveFlowModel flowModel, string budgetId)
+        public static int insertApproveByFlowBudget(ApproveFlowModel.approveFlowModel flowModel, string budgetId, Int32 count_req_app)
         {
             try
             {
+                string statusId = "";
                 int rtn = 0;
+
+                if (count_req_app == 0) { statusId = "3"; }
+
                 List<ApproveModel.approveModel> list = new List<ApproveModel.approveModel>();
                 ApproveModel.approveModel model = new ApproveModel.approveModel();
                 model.id = Guid.NewGuid().ToString();
@@ -471,7 +475,7 @@ namespace eActForm.Controllers
                             ,new SqlParameter("@approveId",model.id)
                             ,new SqlParameter("@rangNo",m.rangNo)
                             ,new SqlParameter("@empId",m.empId)
-                            ,new SqlParameter("@statusId","")
+                            ,new SqlParameter("@statusId",statusId)
                             ,new SqlParameter("@isSendEmail",false)
                             ,new SqlParameter("@remark","")
 
@@ -493,7 +497,7 @@ namespace eActForm.Controllers
             }
         }
 
-        public static int insertApproveForBudgetForm(string budgetActivityId, string companyEN)
+        public static int insertApproveForBudgetForm(string budgetActivityId, string companyEN, Int32 count_req_app)
         {
             try
             {
@@ -505,12 +509,12 @@ namespace eActForm.Controllers
                     if (companyEN == "MT")
                     {
                         ApproveFlowModel.approveFlowModel flowModel = getFlowIdBudgetByBudgetActivityId(ConfigurationManager.AppSettings["subjectBudgetFormId"], budgetActivityId);
-                        return insertApproveByFlowBudget(flowModel, budget_approve_id);
+                        return insertApproveByFlowBudget(flowModel, budget_approve_id, count_req_app);
                     }
                     else
                     {
                         ApproveFlowModel.approveFlowModel flowModel = getFlowIdBudgetByBudgetActivityIdOMT(ConfigurationManager.AppSettings["subjectBudgetFormId"], budgetActivityId);
-                        return insertApproveByFlowBudget(flowModel, budget_approve_id);
+                        return insertApproveByFlowBudget(flowModel, budget_approve_id, count_req_app);
                     }
                 }
                 else return 999; // alredy approve
@@ -646,14 +650,16 @@ namespace eActForm.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult submitPreviewBudget(string GridHtml, string budgetActivityId, string companyEN)
+        public JsonResult submitPreviewBudget(string GridHtml, string budgetActivityId, string companyEN, string count_req_approve)
         {
 
             var resultAjax = new AjaxResult();
             try
             {
-                var budget_approve_id = "";
-                if (BudgetApproveController.insertApproveForBudgetForm(budgetActivityId, companyEN) > 0) //usp_insertApproveDetail
+                string budget_approve_id = "";
+                int count_req_app = Int32.Parse(count_req_approve);
+
+                if (BudgetApproveController.insertApproveForBudgetForm(budgetActivityId, companyEN, count_req_app) > 0) //usp_insertApproveDetail
                 {
                     budget_approve_id = BudgetApproveController.getApproveBudgetId(budgetActivityId); // get last approve id
                     BudgetApproveController.updateApproveWaitingByRangNo(budget_approve_id);
@@ -689,9 +695,11 @@ namespace eActForm.Controllers
                     var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
                     var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
 
-                    EmailAppCodes.sendApproveBudget(budget_approve_id, AppCode.ApproveType.Budget_form, false);
                     BudgetApproveController.setCountWatingApproveBudget();
-
+                    if (count_req_app > 0)
+                    {
+                        EmailAppCodes.sendApproveBudget(budget_approve_id, AppCode.ApproveType.Budget_form, false);
+                    }
                 }
 
                 resultAjax.Success = true;
@@ -704,5 +712,62 @@ namespace eActForm.Controllers
             }
             return Json(resultAjax, "text/plain");
         }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult submitPreviewBudgetRegenPdf(string GridHtml, string budgetActivityId, string companyEN, string count_req_approve)
+        {
+
+            var resultAjax = new AjaxResult();
+            try
+            {
+                string budget_approve_id = "";
+
+                budget_approve_id = BudgetApproveController.getApproveBudgetId(budgetActivityId); // get last approve id
+
+
+                var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id + "_");
+                GridHtml = GridHtml.Replace("<br>", "<br/>");
+
+                AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
+
+                TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
+                getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budget_approve_id);
+
+                string[] pathFile = new string[getBudgetImageModel.BudImageList.Count + 1];
+                pathFile[0] = Server.MapPath(rootPathInsert);
+
+                if (getBudgetImageModel.BudImageList.Any())
+                {
+                    int i = 1;
+                    foreach (var item in getBudgetImageModel.BudImageList)
+                    {
+                        if (System.IO.File.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName))))
+                        {
+                            pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfilesBudget"], item._fileName));
+                        }
+                        else
+                        {
+                            pathFile = pathFile.Where((val, idx) => idx != i).ToArray();
+                        }
+                        i++;
+                    }
+                }
+
+                var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id));
+                var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+
+
+                resultAjax.Success = true;
+            }
+            catch (Exception ex)
+            {
+                resultAjax.Success = false;
+                resultAjax.Message = ex.Message;
+                ExceptionManager.WriteError(ex.Message);
+            }
+            return Json(resultAjax, "text/plain");
+        }
+
     }
 }

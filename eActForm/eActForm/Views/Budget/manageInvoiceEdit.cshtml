@@ -1,7 +1,8 @@
 ﻿@model eActForm.Models.TB_Bud_Image_Model.BudImageModel
 @{
-	Layout = null;
-	ViewBag.Title = "";
+    //update 21-04-2020
+    Layout = null;
+    ViewBag.Title = "";
 }
 
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
@@ -10,81 +11,81 @@
 @Html.HiddenFor(x => x.id, new { @id = "hd_imageId" })
 
 <style type="text/css">
-	.my-bootbox-class .modal-dialog {
-		width: 400px;
-		font-size: 18px;
-	}
+    .my-bootbox-class .modal-dialog {
+        width: 400px;
+        font-size: 18px;
+    }
 
-	.wide-nolimit {
-		max-width: 100%;
-	}
+    .wide-nolimit {
+        max-width: 100%;
+    }
 </style>
 
 <div class="modal-dialog modal-lg" style="width:60%;">
-	<div class="modal-content">
-		<div class="modal-header">
-			<div style=""></div>
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-		</div>
-		<div class="modal-body">
-			<div id="Grid" style="width:97%; margin-left:20px;">
-				<style>
-					.cssborderbottom {
-						border-bottom-width: 1px;
-						border-bottom-style: solid;
-						border-bottom-color: gray;
-					}
-				</style>
+    <div class="modal-content">
+        <div class="modal-header">
+            <div style=""></div>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="Grid" style="width:97%; margin-left:20px;">
+                <style>
+                    .cssborderbottom {
+                        border-bottom-width: 1px;
+                        border-bottom-style: solid;
+                        border-bottom-color: gray;
+                    }
+                </style>
 
-				@*<div>
-						<table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
-					</div>*@
+                @*<div>
+                        <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+                    </div>*@
 
-				<div style="margin-top:5px; width:100%;" class="font-weight-bold">
-					<h5><strong>รายละเอียดเอกสาร</strong></h5>
-					<h5>
-						<strong>
-							ชื่อไฟล์ :
-						</strong>
+                <div style="margin-top:5px; width:100%;" class="font-weight-bold">
+                    <h5><strong>รายละเอียดเอกสาร</strong></h5>
+                    <h5>
+                        <strong>
+                            ชื่อไฟล์ :
+                        </strong>
 
-						@if (Model._fileName != "")
-						{
-							@Html.DisplayFor(x => x._fileName)
-						}
+                        @if (Model._fileName != "")
+                        {
+                            @Html.DisplayFor(x => x._fileName)
+                        }
 
-					</h5>
-				</div>
+                    </h5>
+                </div>
 
-				<div class="row">
-					<table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
-						<tr>
-							<td width="40%"> <h5>เลขที่ใบแจ้งหนี้</h5></td>
-							<td width="60%"> <h5>หมายเหตุ</h5></td>
-						</tr>
+                <div class="row">
+                    <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td width="40%"> <h5>เลขที่ใบแจ้งหนี้</h5></td>
+                            <td width="60%"> <h5>หมายเหตุ</h5></td>
+                        </tr>
 
-						<tr>
-							<td>
-								@Html.TextBoxFor(item => item.invoiceNo, new { @class = "form-control textboxcss wide-nolimit", @id = "txt_invoice_no" })
-							</td>
+                        <tr>
+                            <td>
+                                @Html.TextBoxFor(item => item.invoiceNo, new { @class = "form-control textboxcss wide-nolimit", @id = "txt_invoice_no" })
+                            </td>
 
-							<td>
-								@Html.TextBoxFor(item => item.remark, new { @class = "form-control textboxcss wide-nolimit", @id = "txt_remark" })
-							</td>
-						</tr>
-					</table>
-				</div>
+                            <td>
+                                @Html.TextBoxFor(item => item.remark, new { @class = "form-control textboxcss wide-nolimit", @id = "txt_remark" })
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
-			</div>
-		</div>
+            </div>
+        </div>
 
-		<div class="modal-footer">
-			<div>
-				<p class="d-flex justify-content-center">
-					<button type="button" class="btn ink-reaction btn-success" onclick="submitManageInvoiceUpdate();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-				</p>
-			</div>
+        <div class="modal-footer">
+            <div>
+                <p class="d-flex justify-content-center">
+                    <button type="button" class="btn ink-reaction btn-success" onclick="submitManageInvoiceUpdate();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                </p>
+            </div>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
