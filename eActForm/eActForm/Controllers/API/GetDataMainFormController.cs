@@ -211,5 +211,27 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetDataPVPrevious(ObjGetDataPVPrevious objGetDataPVPrevious)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                List<GetDataPVPrevious> tbToAjax = new List<GetDataPVPrevious>();
+                tbToAjax = QueryGetSelectMainForm.GetQueryDataPVPrevious(objGetDataPVPrevious);
+
+                var resultData = new
+                {
+                    tbToAjax = tbToAjax.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

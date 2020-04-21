@@ -61,7 +61,7 @@ namespace eActForm.Models
         public List<GetDataEO> listGetDataEO { get; set; }
         public List<APModel> listAPModel { get; set; }
         public List<GetDataIO> listGetDataIO { get; set; }
-
+        public List<GetDataPVPrevious> listGetDataPVPrevious { get; set; }
     }
 
     public class ActivityFormTBMMKT : ActivityForm
@@ -323,6 +323,24 @@ namespace eActForm.Models
         public string GL { get; set; }
     }
 
+
+    public class ObjGetDataPVPrevious
+    {
+        public string master_type_form_id { get; set; }
+        public string payNo { get; set; }
+    }
+    public class GetDataPVPrevious
+    {
+        public string activityNo { get; set; }
+        public string activityId { get; set; }
+        public string payNo { get; set; }
+        public string statusId { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalallPayByIO { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalallPayNo { get; set; }
+    }
 
 
 }

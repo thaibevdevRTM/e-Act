@@ -125,6 +125,11 @@ namespace eActForm.Controllers
             {
                 activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance = decimal.Parse("0.00");
             }
+            if (activity_TBMMKT_Model.listGetDataPVPrevious == null)
+            {
+                List<GetDataPVPrevious> getDataPVPrevious = new List<GetDataPVPrevious>();
+                activity_TBMMKT_Model.listGetDataPVPrevious = getDataPVPrevious;
+            }
 
             return PartialView(activity_TBMMKT_Model);
         }

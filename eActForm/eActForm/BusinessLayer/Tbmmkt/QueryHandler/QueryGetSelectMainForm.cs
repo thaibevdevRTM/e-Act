@@ -68,5 +68,30 @@ namespace eActForm.BusinessLayer
                 return new List<GetDataGL>();
             }
         }
+        
+        public static List<GetDataPVPrevious> GetQueryDataPVPrevious(ObjGetDataPVPrevious objGetGetDataPVPrevious)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetQueryDataPVPrevious", new SqlParameter("@master_type_form_id", objGetGetDataPVPrevious.master_type_form_id), new SqlParameter("@payNo", objGetGetDataPVPrevious.payNo));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new GetDataPVPrevious()
+                             {
+                                 activityNo = d["activityNo"].ToString(),
+                                 activityId = d["activityId"].ToString(),
+                                 payNo = d["payNo"].ToString(),
+                                 statusId = d["statusId"].ToString(),
+                                 totalallPayByIO = d["totalallPayByIO"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayByIO"].ToString())),
+                                 totalallPayNo = d["totalallPayNo"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayNo"].ToString()))
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("GetQueryDataPVPrevious => " + ex.Message);
+                return new List<GetDataPVPrevious>();
+            }
+        }
+
     }
 }

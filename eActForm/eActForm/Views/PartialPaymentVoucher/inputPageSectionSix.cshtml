@@ -33,6 +33,39 @@
                                     $('#ddlActivityNoSub').prop('disabled', true);
                                     $('#linkViewActNoOld').hide();
                                 } else {
+                                    var dataToBeSend = {
+                                    fiscalYear:$('#ddlFiscalYear').val()
+                                    ,master_type_form_id:"@Model.activityFormTBMMKT.master_type_form_id"
+                                    ,payNo:$('#txtpayNo').val()
+                                    };
+
+                                    $.ajax('@Url.Action("GetDataPVPrevious", "GetDataMainForm")',
+                                    {
+                                        contentType:"application/json;charset=utf-8",
+                                        data:JSON.stringify(dataToBeSend),
+                                        dataType:'json',
+                                        type:"POST",
+                                        success:function(response){
+                                            if(response.Data.tbToAjax.length>0){
+                                                $("#ddlActivityNoSub option[value!='']").remove();
+                                                $("#pvPrevious_totalallPayNo option[value!='']").remove(); 
+                                                $("#pvPrevious_totalallPayNo option[value!='']").remove();
+                                                $.each(response.Data.tbToAjax,function(){
+                                                    $("#ddlActivityNoSub").append($("<option></option>").val(this['activityId']).html(this['activityNo']));
+                                                    $("#ddlActivityNoSub").selectpicker('refresh');
+                                                    $("#pvPrevious_totalallPayNo").append($("<option></option>").val(this['activityId']).html(this['totalallPayNo']));
+                                                    $("#pvPrevious_totalallPayByIO").append($("<option></option>").val(this['activityId']).html(this['totalallPayByIO']));
+                                                });
+                                            }
+                                            else{
+
+                                            }
+                                        },
+                                        error:function(data){
+                                            alert("ErrorGetDataGLPaymentVoucher.");
+                                        }
+                                    });
+
                                     $('#ddlActivityNoSub').prop('disabled', false);
                                 }
                                 $("#ddlActivityNoSub").selectpicker('refresh');
@@ -45,12 +78,26 @@
                 </label>
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
-                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.activityIdNoSub, new SelectList(Model.listAPModel, "APCode", "Name1", ""), "", new
+                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.activityIdNoSub, new SelectList(Model.listGetDataPVPrevious, "activityId", "activityNo", ""), "", new
                    {
                        @class = "form-control selectpicker",
                        @title = "สำหรับกรณีสั่งจ่ายตั้งแต่ครั้งที่2ขึ้นไป",
                        disabled = "disabled",
                        id = "ddlActivityNoSub"
+                   })
+                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.activityIdNoSub, new SelectList(Model.listGetDataPVPrevious, "totalallPayByIO", "activityNo", ""), "", new
+                   {
+                       @class = "form-control",
+                       @style = "display: none;",
+                       disabled = "disabled",
+                       id = "pvPrevious_totalallPayByIO"
+                   })
+                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.activityIdNoSub, new SelectList(Model.listGetDataPVPrevious, "totalallPayNo", "activityNo", ""), "", new
+                   {
+                       @class = "form-control",
+                       @style = "display: none;",
+                       disabled = "disabled",
+                       id = "pvPrevious_totalallPayNo"
                    })
                         <script>
                             $('#ddlActivityNoSub').selectpicker({
@@ -59,11 +106,16 @@
                             });
                             $('#ddlActivityNoSub').change(function () {
                                 if ($('#ddlActivityNoSub').val() != '') {
-                                    $("#linkViewActNoOld").attr("href", "/MainForm?activityId=" + $('#ddlActivityNoSub').val() +"&mode=edit&typeForm=TBM&master_type_form_id=" + "@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]");
+                                    $("#linkViewActNoOld").attr("href", "/MainForm?activityId=" + $('#ddlActivityNoSub').val() + "&mode=edit&typeForm=TBM&master_type_form_id=" + "@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]");
+                                    $("#pvPrevious_totalallPayByIO").val($("#ddlActivityNoSub").val()); 
+                                    $("#pvPrevious_totalallPayNo").val($("#ddlActivityNoSub").val());
                                     $('#linkViewActNoOld').show();
                                 } else {
+                                    $("#pvPrevious_totalallPayByIO").val('');
+                                    $("#pvPrevious_totalallPayNo").val('');
                                     $('#linkViewActNoOld').hide();
                                 }
+                                calCulateAll();
                             });
                         </script>
                     </div>
@@ -255,8 +307,13 @@
     }
 
     function caltotalallPayByIO() {
+        var previousPayTotal = 0;
+        if ($("#pvPrevious_totalallPayByIO").val() != '') {
+            previousPayTotal = parseFloat($("#pvPrevious_totalallPayByIO>option:selected").html());
+        }
+
         var payIOIncludeSelectAlready = [];
-        var sumtotalallPayByIO = 0.00;
+        var sumtotalallPayByIO = 0.00 + previousPayTotal;
         var rowCount2 = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
         for (i = 0; i < rowCount2; i++) {
             var selectIndexDropdown = $("#activityOfEstimateList_" + i + "__IO option:selected").index()
@@ -265,7 +322,7 @@
                 if (checkValInArray(payIOIncludeSelectAlready, txtIOByrow)==false)/*ถ้าเคยรวมวงเงินด้วยIOเลขดังกล่าวแล้วจะไม่นำไปรวมในงบผูกพันอีก เช่น กรอก IO เลขเดียวกันมา2แถวขึ้นไป (กันเผื่อมี)*/
                 {
                     payIOIncludeSelectAlready.push(txtIOByrow);
-                    sumtotalallPayByIO = (sumtotalallPayByIO + parseFloat(payByIOSelect[selectIndexDropdown]));
+                    sumtotalallPayByIO = (sumtotalallPayByIO + parseFloat(payByIOSelect[selectIndexDropdown])) + previousPayTotal;
                 }
             }
         }
@@ -290,14 +347,20 @@
         $("#totalVat").text(sumVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     }
     function caltotalnormalCostEstimateWithVat() {
+
         var sumcaltotalnormalCostEstimateWithVat = 0;
         sumcaltotalnormalCostEstimateWithVat = (parseFloat($("#totalnormalCostEstimate").text().replaceAll(",", "")) + parseFloat($("#totalVat").text().replaceAll(",", "")));
         $("#hdtotalnormalCostEstimateWithVat").val(sumcaltotalnormalCostEstimateWithVat);
         $('#totalnormalCostEstimateWithVat').text(sumcaltotalnormalCostEstimateWithVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     }
     function caltotalallPayNo() {
+        var previoustotalallPayNo = 0;
+        if ($("#pvPrevious_totalallPayNo").val() != '') {
+            previoustotalallPayNo = parseFloat($("#pvPrevious_totalallPayNo>option:selected").html());
+        }
+
         var totalFromPreviousPvNo = 0;//ใส่0ไปก่อนทำครั้งแรก Dummyไว้
-        var sumtotalallPayByIOBalance = (parseFloat($("#totalnormalCostEstimate").text().replaceAll(",", "")) + totalFromPreviousPvNo);
+        var sumtotalallPayByIOBalance = (parseFloat($("#totalnormalCostEstimate").text().replaceAll(",", "")) + previoustotalallPayNo);
         $("#hdtotalallPayNo").val(sumtotalallPayByIOBalance);
         $('#totalallPayNo').text(sumtotalallPayByIOBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     }
