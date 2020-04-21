@@ -11,11 +11,13 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGet_ReqEmpByActivityId
     {
-        public static List<RequestEmpModel> getReqEmpByActivityId(string activityId, bool langEn)
+        public static List<RequestEmpModel> getReqEmpByActivityId(string activityId, bool langEn,bool typeForm = false)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getRequestEmpByActivityId"
+                string strore = typeForm ? "usp_getRequestEmpFlowByActivityId" : "usp_getRequestEmpByActivityId";
+                
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strore
                      , new SqlParameter("@activityId", activityId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new RequestEmpModel()
@@ -43,6 +45,7 @@ namespace eActForm.BusinessLayer
                 ExceptionManager.WriteError("getAllActivityGroup => " + ex.Message);
                 return new List<RequestEmpModel>();
             }
-        }
+        }  
+
     }
 }

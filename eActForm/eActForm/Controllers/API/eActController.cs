@@ -287,14 +287,16 @@ namespace eActForm.Controllers
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getEmpDetailById(string empId)
+        public JsonResult getEmpDetailById(string empId, string typeFormId = "")
         {
             bool langEn = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
             List<RequestEmpModel> empDetailList = new List<RequestEmpModel>();
             var result = new AjaxResult();
             try
             {
-                empDetailList = QueryGet_empDetailById.getEmpDetailById(empId).ToList();
+
+                empDetailList = typeFormId == "" ? QueryGet_empDetailById.getEmpDetailById(empId).ToList()
+                                                 : QueryGet_empDetailById.getEmpDetailFlowById(empId, typeFormId).ToList();
 
                 var resultData = new
                 {
@@ -315,6 +317,7 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult getAllRegion(string txtRegion)
         {
 
@@ -383,7 +386,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getEmpByChannel(string subjectId, string channelId,string filter)
+        public JsonResult getEmpByChannel(string subjectId, string channelId, string filter)
         {
             List<RequestEmpModel> empList = new List<RequestEmpModel>();
             try
@@ -399,7 +402,7 @@ namespace eActForm.Controllers
 
         public JsonResult getRegionalByCompany(string companyId)
         {
-                  var result = new AjaxResult();
+            var result = new AjaxResult();
             try
             {
                 var getRegional = QueryGetRegional.getRegionalByCompanyId(companyId).ToList();
@@ -416,17 +419,37 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
-        public JsonResult getFlowBytypeFormId(string typeFormId,string empId)
+        public JsonResult getRegionalOfFlow(string empId)
         {
             var result = new AjaxResult();
             try
             {
-                var getFlowDetail= QueryGetFlow.getFlowDetailBytypeFormId(typeFormId).ToList().Where(x=>x.description==empId);
+                var getRegional = QueryGetRegional.getRegionalByCompanyId(empId).ToList();
+                var resultData = new
+                {
+                    regional = getRegional.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getFlowBytypeFormId(string typeFormId, string empId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getFlowDetail = QueryGetFlow.getFlowDetailBytypeFormId(typeFormId).ToList().Where(x => x.description == empId);
                 var resultData = new
                 {
                     flow = getFlowDetail.ToList(),
+                    regional = getFlowDetail.ToList().Count == 0 ? null : QueryGetRegional.getRegionalByCompanyId((getFlowDetail.ToList().FirstOrDefault().companyId)).ToList(),
                 };
+
                 result.Data = resultData;
             }
             catch (Exception ex)

@@ -126,7 +126,7 @@
                 </div>
             </div>
         </div>
-        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.SubjectId, new { @id = "hdSubjectId"})
+        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.SubjectId, new { @id = "hdSubjectId" })
     </fieldset>
     <br />
 </div>
@@ -149,6 +149,7 @@
             url: '@Url.Action("getEmpDetailById", "eAct")',
             data: {
                 empId: $("#txtEmpId").val(),
+                typeFormId: "@Model.activityFormTBMMKT.master_type_form_id",
             }
         }).done(function (response) {
             console.log(response);
@@ -161,14 +162,17 @@
                 document.getElementById('lblDept').innerHTML = response.Data.department;
                 document.getElementById('lblComp').innerHTML = response.Data.companyName;
 
+
                 getRegional();
-            
              // $("#hdSubjectId").val('C67164E4-A891-43D6-B4F7-090F62C6290E');
-                getFlow();
+             //   getFlow();
+               // alert($("#hdSubjectId").val());
             }
             else {
+                if ($("#txtEmpId").val() != '') { alert('ไม่พบ Flow อนุมัติของรหัสพนักงาน ' + $("#txtEmpId").val()); }
                 $("#lblEmpName").val('');
                 $("#hdCompId").val('');
+                $("#ddlRegional").empty();
                 document.getElementById('lblEmpName').innerHTML = '';
                 document.getElementById('lblEmpPosition').innerHTML = '';
                 document.getElementById('lblLvl').innerHTML = '';
@@ -248,7 +252,7 @@
 
 
     function getFlow() {
-
+        var ddlRegional = $("#ddlRegional");
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getFlowBytypeFormId", "eAct")',
@@ -257,15 +261,41 @@
                 empId: $("#txtEmpId").val(),
             }
         }).done(function (response) {
-            if (response.Data.flow.length == 0) {
-               // $("#hdSubjectId").val(response.Data.subject[0]['id']);
-                // alert($("#hdSubjectId").val());
-               // document.getElementById("txtEmpId").innerHTML = "";  
+            if (response.Data.flow.length > 0) {
+                //เจอ flow ไปหาภาคต่อ ใช้ภาคของ flow ไม่ใช้ของ DBAuthen เพราะไม่อัพเดท
+                if (response.Data.regional.length > 0) {
+                    $("#ddlRegional").empty();
+                    if (response.Data.regional.length > 1) {
+
+                        ddlRegional.append($("<option></option>").val('').html(''));
+                    }
+                    $("#ddlRegional option[value !='']").remove();
+                    $.each(response.Data.regional, function () {
+                        ddlRegional.append($("<option></option>").val(this['id']).html(this['nameTH']));
+                    });
+
+                    if ($("#hdRegionalId").val() != '') {
+                        $("#ddlRegional").val($("#hdRegionalId").val());
+                    }
+                    document.getElementById("ddlRegional").disabled = false;
+                }
+                else {
+
+                    document.getElementById("ddlRegional").disabled = true;
+                }
+            }
+            else {
+
                 alert('ไม่พบ Flow อนุมัติของรหัสพนักงาน ' + $("#txtEmpId").val());
 
-           
+                $('#txtEmpId').val('');
+                $('#divEmpInfo select').empty();
+                document.getElementById('lblEmpName').innerHTML = '';
+                document.getElementById('lblEmpPosition').innerHTML = '';
+                document.getElementById('lblLvl').innerHTML = '';
+                document.getElementById('lblDept').innerHTML = '';
+                document.getElementById('lblComp').innerHTML = '';
             }
-           
         });
     }
 
