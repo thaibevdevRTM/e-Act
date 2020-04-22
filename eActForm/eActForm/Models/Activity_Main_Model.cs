@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using eForms.Models.MasterData;
 
 namespace eActForm.Models
 {
@@ -61,9 +60,9 @@ namespace eActForm.Models
 
         public ApproveModel.approveModels approveModels { get; set; }
 
-        public List<FiscalYearModel> listFiscalYearModel { get; set; }
+        public List<eForms.Models.MasterData.FiscalYearModel> listFiscalYearModel { get; set; }
         public List<GetDataEO> listGetDataEO { get; set; }
-        public List<APModel> listAPModel { get; set; }
+        public List<eForms.Models.MasterData.APModel> listAPModel { get; set; }
         public List<GetDataIO> listGetDataIO { get; set; }
         public List<GetDataPVPrevious> listGetDataPVPrevious { get; set; }
         public List<GetDataDetailPaymentAll> listGetDataDetailPaymentAll { get; set; }

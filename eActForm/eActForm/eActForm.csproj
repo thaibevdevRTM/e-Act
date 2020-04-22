@@ -2809,7 +2809,6 @@
     <Content Include="Content\themes\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="bin\ApplicationInsights.config" />
     <Content Include="bin\eActForm.dll.config" />
-    <Content Include="bin\Microsoft.ApplicationBlocks.Data.rar" />
     <Content Include="bin\roslyn\csc.exe.config" />
     <Content Include="bin\roslyn\csc.rsp" />
     <Content Include="bin\roslyn\csi.exe.config" />
@@ -3620,7 +3619,6 @@
     <Content Include="Views\PartialPaymentVoucher\inputPageSectionTwo.cshtml" />
     <Content Include="Views\PartialPaymentVoucher\inputPageSectionThreeToFive.cshtml" />
     <Content Include="Views\PartialPaymentVoucher\inputPageSectionSix.cshtml" />
-    <Content Include="Views\MainReport\IndexBackup.cshtml" />
     <Content Include="Views\EmpInfoReport\empInfoRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\travellingDetailRpt.cshtml" />
     <Content Include="Views\ExpenseEstimateReport\expensesTrvDetailRpt.cshtml" />
