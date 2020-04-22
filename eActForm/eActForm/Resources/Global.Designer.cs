@@ -322,6 +322,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to รหัสพนักงาน.
+        /// </summary>
+        public static string empId {
+            get {
+                return ResourceManager.GetString("empId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to empName.
         /// </summary>
         public static string empName {

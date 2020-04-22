@@ -315,4 +315,7 @@
   <data name="btnReject" xml:space="preserve">
     <value>ไม่อนุมัติ</value>
   </data>
+  <data name="empId" xml:space="preserve">
+    <value>รหัสพนักงาน</value>
+  </data>
 </root>
