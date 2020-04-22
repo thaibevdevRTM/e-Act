@@ -1,5 +1,6 @@
-eActForm/eActForm/UploadfilesBudget/
-eActForm/eActForm/ActBudget/
+eActForm/eActForm/UploadfilesBudget/*
+eActForm/eActForm/ActBudget/*
+eActForm/eActForm/UploadfilesBudget/*
 eActForm/.vs/*
 eActForm/eActForm/Uploadfiles/*
 eActForm/eActForm/error/*
@@ -7,7 +8,7 @@ eActForm/eActForm/ActivityFormPdf/*
 eActForm/eActForm/ActRepDetail/
 eActForm/eActForm/Properties/PublishProfiles/*
 eActForm/eActForm/signature/*
-eActForm/eActConsoleService/obj/*
+eActForm/eActForm/obj/*
 eActForm/Properties/PublishProfiles/*
 eActForm/eActForm/Properties/PublishProfiles/*
 eActForm/eActConsoleService/obj/*
@@ -24,6 +25,16 @@ eActForm/eForms.Presenter/obj/*
 eActForm/webLibrary/obj/*
 eActForm/eActForm/Properties/*
 eActForm/eActConsoleServiceWeekly/obj/*
+eActForm/WebLibrary/obj/*
+
+eActForm/eForms.Models/obj/*
+
 *.xlsx
 *.cache
 eActForm/eActConsoleServiceWeekly/bin/*
+eActForm/eActConsoleService/obj/*
+eActForm/eActConsoleService/obj/Debug/eActConsoleService.csproj.FileListAbsolute.txt
+eActForm/eActConsoleServiceWeekly/obj/Debug/eActConsoleServiceWeekly.exe
+eActForm/eActConsoleServiceWeekly/obj/Debug/eActConsoleServiceWeekly.pdb
+eActForm/eActForm/Web.config
+

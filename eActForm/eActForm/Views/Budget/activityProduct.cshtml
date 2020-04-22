@@ -1,8 +1,9 @@
 ﻿
 @model eActForm.Models.Budget_Activity_Model
 @{
-	ViewBag.Title = "Edit Page";
-	var var_companyEN = Request.QueryString["companyEN"];
+    //update 21-04-2020
+    ViewBag.Title = "Edit Page";
+    var var_companyEN = Request.QueryString["companyEN"];
 }
 
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
@@ -10,18 +11,21 @@
 
 <style type="text/css">
 
-	.my-bootbox-class .modal-dialog {
-		width: 400px;
-		font-size: 18px;
-	}
+    .my-bootbox-class .modal-dialog {
+        width: 400px;
+        font-size: 18px;
+    }
 </style>
 
 @Html.HiddenFor(x => x.Budget_Activity_list.ElementAt(0).act_form_id, new { @id = "hd_activityId" })
+@Html.HiddenFor(x => x.Budget_Activity_list.ElementAt(0).act_customerId, new { @id = "hd_customerId" })
+@*@Html.HiddenFor(x => x.Budget_Activity_Last_Approve.budgetApproveId, new { @id = "hd_lastApprove" })*@
 
 <div class="row">
-	<div id="divPreviewProductList">
 
-	</div>
+    <div id="divPreviewProductList">
+
+    </div>
 </div>
 
 <hr />
@@ -30,27 +34,26 @@
 
 
 <div class="row">
-	<div id="divPreviewInvoiceList">
+    <div id="divPreviewInvoiceList">
 
-	</div>
+    </div>
 
-	<div class="btn btn-sm ink-reaction pull-left btn-dark"> <i class="fa fa-arrow-left fa-fw"></i> @Html.ActionLink("ย้อนกลับ", "activityIndex", "Budget", new { @typeForm = var_companyEN }, new { style = "color:white" })</div>
+    <div class="btn btn-sm ink-reaction pull-left btn-dark"> <i class="fa fa-arrow-left fa-fw"></i> @Html.ActionLink("ย้อนกลับ", "activityIndex", "Budget", new { @typeForm = var_companyEN }, new { style = "color:white" })</div>
 </div>
 
 <div id='myModalInvoicePreview' class="modal fade" role="dialog">
-	<div id='myModalInvoicePreviewContent'></div>
+    <div id='myModalInvoicePreviewContent'></div>
 </div>
 
 <div class="modal fade" id="modalmyDocBudgetList" role="dialog" style="display:none">
-	<div id="divModalmyDocBudgetList">
-	</div>
+    <div id="divModalmyDocBudgetList">
+    </div>
 </div>
 
 
 <script>
 
 	$('document').ready(function () {
-		//alert('test ==>' +  '@var_companyEN');
 		callProductList($("#hd_activityId").val());
 	});
 
@@ -79,19 +82,17 @@
         });
 	}
 
-	function callInvoiceList(activityId, activityOfEstimateId) {
+    function callInvoiceList(activityId, activityOfEstimateId) {
+
         $.ajax({
             type: 'POST',
             url:  '@Url.Action("activityProductInvoiceList", "Budget")',
             data: {
 				activityId: activityId,
-				activityOfEstimateId: activityOfEstimateId
+                activityOfEstimateId: activityOfEstimateId
             }
         }).done(function (htmlResponse) {
 			$("#divPreviewInvoiceList").html(htmlResponse);
-
-			//var elmnt = document.getElementById("divPreviewInvoiceList");
-			//elmnt.scrollIntoView();
 
 			onSelectInvoice(activityId, activityOfEstimateId);
         });
@@ -110,8 +111,8 @@
 			data: {
 				"activityId": var_activityId,
 				"activityOfEstimateId": var_estId,
-				"invoiceId": var_invoiceId,
-				"company": '@var_companyEN'
+				"invoiceId": var_invoiceId
+
 			}
 		}).done(function (htmlResponse) {
 			$("#myModalInvoiceContent").html(htmlResponse);
@@ -119,7 +120,6 @@
 	}
 
 	function submitInvoice() {
-
 		var var_activityId = $("#hd_activityId").val();
 		var var_activityOfEstimateId = $("#hd_activityOfEstimateId").val();
 
@@ -251,12 +251,12 @@
         });
 	}
 
-	
+
 
 	function onInvoicePrintPreview(actId,companyEN) {
 		//var $buttonClicked = $(this);
+		//var var_company = companyEN;
 		var var_activityId = actId;
-		var var_company = companyEN;
 		var options = { "backdrop": "static", keyboard: true };
 
 
