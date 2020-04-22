@@ -489,7 +489,7 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 var emailTypeTxt = "";
                 string[] arrayFormStyleV1 = { ConfigurationManager.AppSettings["formBgTbmId"], ConfigurationManager.AppSettings["formAdvTbmId"], ConfigurationManager.AppSettings["formAdvHcmId"], ConfigurationManager.AppSettings["masterEmpExpense"] };
-                string[] arrayFormStyleV2 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formTrvTbmId"], ConfigurationManager.AppSettings["formTrvHcmId"] };
+                string[] arrayFormStyleV2 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formTrvTbmId"], ConfigurationManager.AppSettings["formTrvHcmId"], ConfigurationManager.AppSettings["formExpTrvNumId"] };
                 string[] arrayFormStyleV3 = { ConfigurationManager.AppSettings["formPosTbmId"] };
                 if (activity_TBMMKT_Model.activityFormTBMMKT != null)
                 {
