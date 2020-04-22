@@ -8,6 +8,7 @@
         function checkBeforeDelete(actId, statusId) {
             //get statusNOte
             checkComp(actId);
+           
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("getStatusNote", "Home")',
