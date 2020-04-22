@@ -112,7 +112,6 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.detail = item.detail;
                     costThemeDetail.listChoiceId = item.listChoiceId;
                     costThemeDetail.compensate = item.compensate;
-                    costThemeDetail.listChoiceId = item.listChoiceId;
                     rtn += insertEstimate(costThemeDetail);
 
                     insertIndex++;
@@ -248,7 +247,7 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.APCode = model.tB_Act_ActivityForm_DetailOther.APCode;
                 tB_Act_ActivityForm_DetailOther.payNo = model.tB_Act_ActivityForm_DetailOther.payNo;
                 tB_Act_ActivityForm_DetailOther.activityIdNoSub = model.tB_Act_ActivityForm_DetailOther.activityIdNoSub;
-                tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate = model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate == null? 0 : model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate;
+                tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate = model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate == null ? 0 : model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate;
                 tB_Act_ActivityForm_DetailOther.totalvat = model.tB_Act_ActivityForm_DetailOther.totalvat == null ? 0 : model.tB_Act_ActivityForm_DetailOther.totalvat;
                 tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat = model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat == null ? 0 : model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat;
                 tB_Act_ActivityForm_DetailOther.totalallPayByIO = model.tB_Act_ActivityForm_DetailOther.totalallPayByIO == null ? 0 : model.tB_Act_ActivityForm_DetailOther.totalallPayByIO;
@@ -276,7 +275,7 @@ namespace eActForm.BusinessLayer
 
             if (model.activityFormTBMMKT.list_0_select != null || model.activityFormTBMMKT.list_1_multi_select != null ||
                  model.activityFormTBMMKT.list_2_select != null || model.activityFormTBMMKT.brand_select != null ||
-                 model.activityFormTBMMKT.list_3_select != null 
+                 model.activityFormTBMMKT.list_3_select != null
                  || model.activityFormTBMMKT.list_1_select != null
                  || model.activityFormTBMMKT.list_2_multi_select != null
                  )
@@ -433,33 +432,27 @@ namespace eActForm.BusinessLayer
                         }
 
                     }
-
-
+                }
                 bool chk = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ? true : false;
                 activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
                 activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
 
-                    activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng);
-                    activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
-                    activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
-                    activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
-
-                    Decimal? totalCostThisActivity = 0;
-                    foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
+                Decimal? totalCostThisActivity = 0;
+                foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
+                {
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
                     {
-                        if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
-                        {
-                            totalCostThisActivity += item.unit;
-                        }
-                        else
-                        {
-                            totalCostThisActivity += item.total;
-                        }
+                        totalCostThisActivity += item.unit;
                     }
-                    activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
+                    else
+                    {
+                        totalCostThisActivity += item.total;
+                    }
                 }
+                activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
+
 
                 if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Count > 0)
                 {
@@ -508,7 +501,7 @@ namespace eActForm.BusinessLayer
 
 
                 bool chk = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ? true : false;
-                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng,chk);
+                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);
                 activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
@@ -889,7 +882,6 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@detail",model.detail)
                     ,new SqlParameter("@listChoiceId",(model.listChoiceId == null ? "" : model.listChoiceId))
                     ,new SqlParameter("@compensate",model.compensate)
-                    ,new SqlParameter("@listChoiceId",model.listChoiceId)
             });
             }
             catch (Exception ex)
@@ -1385,8 +1377,8 @@ namespace eActForm.BusinessLayer
                 }
                 rtn += delete_TB_Act_ActivityForm_DetailOtherList(activityId, tB_Act_ActivityForm_DetailOtherList.typeKeep);
                 indexEach = 0;
-                foreach (var item in model.tB_Act_ActivityForm_DetailOtherList) 
-                { 
+                foreach (var item in model.tB_Act_ActivityForm_DetailOtherList)
+                {
                     tB_Act_ActivityForm_DetailOtherList.activityId = activityId;
                     tB_Act_ActivityForm_DetailOtherList.rowNo = (indexEach + 1);
                     tB_Act_ActivityForm_DetailOtherList.activityIdEO = "";
