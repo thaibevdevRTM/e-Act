@@ -58,10 +58,10 @@
                             var v_unitpriceRow = 0.00;
                             var v_totalRow = 0.00;
                              if ($(".txtUnit_@index").val() != "" && $(".txtUnit_@index").val() != "0.00" && $(".txtUnit_@index").val() != "0") {
-                                v_unitRow = parseFloat($(".txtUnit_@index").val().replace(",",""));
+                                 v_unitRow = parseFloat($(".txtUnit_@index").val().replaceAll(",",""));
                             }
                              if ($(".txtunitPriceDisplay__@index").val() != "" && $(".txtunitPriceDisplay__@index").val() != "0.00" && $(".txtunitPriceDisplay__@index").val() != "0") {
-                                 v_unitpriceRow = parseFloat($(".txtunitPriceDisplay__@index").val().replace(",", ""));
+                                 v_unitpriceRow = parseFloat($(".txtunitPriceDisplay__@index").val().replaceAll(",", ""));
                             }
                              v_totalRow = (v_unitRow * v_unitpriceRow);
 
@@ -79,7 +79,7 @@
                                 v_unitRow = parseFloat($(".txtUnit_@index").val().replace(",", ""));
                             }
                             if ($(".txtunitPriceDisplay__@index").val() != "" && $(".txtunitPriceDisplay__@index").val() != "0.00" && $(".txtunitPriceDisplay__@index").val() != "0") {
-                                v_unitpriceRow = parseFloat($(".txtunitPriceDisplay__@index").val().replace(",", ""));
+                                v_unitpriceRow = parseFloat($(".txtunitPriceDisplay__@index").val().replaceAll(",", ""));
                             }
                             v_totalRow = (v_unitRow * v_unitpriceRow);
 
@@ -110,7 +110,7 @@
 
                         for (i = 0; i < rowCount; i++) {
 
-                            var rowtotal = parseFloat($(".hidtotal_" + i.toString()).val().replace(",", ""));
+                            var rowtotal = parseFloat($(".hidtotal_" + i.toString()).val().replaceAll(",", ""));
                             totalAll = totalAll + rowtotal;
                         }
 

@@ -1,0 +1,430 @@
+﻿@using eActForm.BusinessLayer;
+@using System.Globalization;
+@model eActForm.Models.Activity_TBMMKT_Model
+@{
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+}
+<table class="boxTableFormMainV1 fontDocV1">
+    <tr>
+        <td style="width:100%;" class="boxTableFormV1">
+            <table class="borderWidthMaxCollape" style="background-color: #ccffff;" cellpadding="-4" cellspacing="-4">
+                <tr>
+                    <td class="fontRedV1">
+                        &nbsp;&nbsp;ส่วนที่ 6)
+                    </td>
+                </tr>
+            </table>
+            <style>
+                .dssBorderBotRight {
+                    border-right: 1px solid black;
+                    border-bottom: 1px solid black;
+                }
+
+                .dCol1 {
+                    width: 11%;
+                }
+
+                .dCol2 {
+                    width: 26%;
+                }
+
+                .dCol3 {
+                    width: 12%;
+                }
+
+                .vatTitleColumn {
+                    text-align: center;
+                    font-weight: bold;
+                }
+
+                .vatWidth {
+                    width: 7%;
+                }
+
+                .eventNoTitleColumn {
+                    text-align: center;
+                    font-weight: bold;
+                }
+
+                .eventNoWidth {
+                    width: 5%;
+                }
+
+                .dateTitleColumn {
+                    text-align: center;
+                    font-weight: bold;
+                }
+
+                .dateWidth {
+                    width: 9%;
+                }
+
+                .totalTitleColumn {
+                    text-align: center;
+                    font-weight: bold;
+                }
+
+                .totalWidth {
+                    width: 14%;
+                }
+
+                .pvNoTitleColumn {
+                    text-align: center;
+                    border-bottom: 1px solid black;
+                    font-weight: bold;
+                }
+
+                .pvNoWidth {
+                    width: 11%;
+                }
+            </style>
+            <table class="borderWidthMaxCollape" cellpadding="-4" cellspacing="-4">
+                <tr>
+                    <td colspan="3" class="txtLeft dssBorderBotRight fontRedV1">
+                        &nbsp;&nbsp;รายละเอียด ค่าใช้จ่าย ในงวดนี้
+                    </td>
+                    <td class="vatTitleColumn vatWidth dssBorderBotRight">
+                        VAT
+                    </td>
+                    <td class="eventNoTitleColumn eventNoWidth dssBorderBotRight fontRedV1">
+                        ครั้งที่
+                    </td>
+                    <td class="dateTitleColumn dateWidth dssBorderBotRight fontRedV1">
+                        วันที่
+                    </td>
+                    <td class="totalTitleColumn totalWidth dssBorderBotRight fontOrangeV1">
+                        จำนวนเงิน(บาท)
+                    </td>
+                    <td class="pvNoTitleColumn pvNoWidth">
+                        เลขที่ใบสั่งจ่าย
+                    </td>
+                </tr>
+                @{ var index = 0;}
+                @foreach (var item in Model.listGetDataDetailPaymentAll)
+                {
+                    if (index == 0)
+                    {
+                        <tr>
+                            <td class="dCol1 tdTopLeft">
+                                &nbsp;&nbsp;@item.IO
+                            </td>
+                            <td class="dCol2 tdTopLeft">
+                                @Html.Raw(item.productDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                            </td>
+                            <td class="dCol3 tdTopRight borderRight fontBlueV1">
+                                @item.normalCost.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                            </td>
+                            <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                                @item.vat
+                            </td>
+                            <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                                @item.payNo
+                            </td>
+                            <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                                @item.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
+                            </td>
+                            <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                                @item.totalnormalCostEstimate.Value.ToString("#,##0.00")
+                            </td>
+                            <td class="tdTopCenter pvNoWidth">
+                                @item.activityNo
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="dCol1 tdTopLeft">
+                                <table style="border-collapse:collapse;">
+                                    <tr>
+                                        <td class="paddingRowTable">
+                                            &nbsp;&nbsp;@item.IO
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="dCol2 tdTopLeft">
+                                <table style="border-collapse:collapse;">
+                                    <tr>
+                                        <td class="paddingRowTable">
+                                            @Html.Raw(item.productDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="dCol3 tdTopRight borderRight fontBlueV1">
+                                <table class="borderWidthMaxCollape">
+                                    <tr>
+                                        <td class="paddingRowTable tdTopRight fontBlueV1">
+                                            @item.normalCost.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                                <table class="borderWidthMaxCollape">
+                                    <tr>
+                                        <td class="paddingRowTable vatTitleColumn">
+                                            @item.vat
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                                <table class="borderWidthMaxCollape">
+                                    <tr>
+                                        @if (@item.rowNo == 1)
+                                        {
+                                            <td class="paddingRowTable eventNoTitleColumn fontRedV1">
+                                                @item.payNo
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="paddingRowTable eventNoTitleColumn fontRedV1">
+                                                &nbsp;
+                                            </td>
+                                        }
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                                <table class="borderWidthMaxCollape">
+                                    <tr>
+                                        @if (@item.rowNo == 1)
+                                        {
+                                            <td class="paddingRowTable dateTitleColumn fontRedV1">
+                                                @item.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="paddingRowTable dateTitleColumn fontRedV1">
+                                                &nbsp;
+                                            </td>
+                                        }
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                                <table class="borderWidthMaxCollape">
+                                    <tr>
+                                        @if (@item.rowNo == 1)
+                                        {
+                                            <td class="paddingRowTable totalTitleColumn fontOrangeV1">
+                                                @item.totalnormalCostEstimate.Value.ToString("#,##0.00")
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="paddingRowTable totalTitleColumn fontOrangeV1">
+                                                &nbsp;
+                                            </td>
+                                        }
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="tdTopCenter pvNoWidth">
+                                <table class="borderWidthMaxCollape">
+                                    <tr>
+                                        @if (@item.rowNo == 1)
+                                        {
+                                            <td class="paddingRowTable tdTopCenter">
+                                                @item.activityNo
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="paddingRowTable tdTopCenter">
+                                                &nbsp;
+                                            </td>
+                                        }
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    }
+                    index++;
+                }
+                <tr>
+                    <td colspan="2" class="txtRight">
+                        <br />
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTableN txtRight">
+                                    รวม
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="dCol3 txtRight borderRight fontBlueV1">
+                        <br />
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTableN txtRight fontBlueV1">
+                                   @Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                        &nbsp;
+                    </td>
+                    <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                        &nbsp;
+                    </td>
+                    <td class="tdTopCenter pvNoWidth">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="txtRight fontRedV2">
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTableV2N txtRight fontRedV2">
+                                    ภาษีมูลค่าเพิ่ม 7%
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="dCol3 txtRight borderRight fontBlueV1">
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTableV2N txtRight fontBlueV1">
+                                    @Model.tB_Act_ActivityForm_DetailOther.totalvat.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                        &nbsp;
+                    </td>
+                    <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                        &nbsp;
+                    </td>
+                    <td class="tdTopCenter pvNoWidth">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="txtRight">
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTableV3N txtRight">
+                                    รวมทั้งสิ้น (บาท)
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="dCol3 txtRight borderRight fontBlueV1">
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTableV3N txtRight fontBlueV1">
+                                    @Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                        &nbsp;
+                    </td>
+                    <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                        &nbsp;
+                    </td>
+                    <td class="tdTopCenter pvNoWidth">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="dCol3 txtRight borderRight fontBlueV1">
+                        <table class="borderWidthMaxCollape">
+                            <tr>
+                                <td class="paddingRowTableN txtRight fontBlueV1">
+                                    <table class="borderWidthMaxCollape txtRight">
+                                        <tr>
+                                            <td style="width:100px;" class="paddingRowTableV3N txtLeft fontRedV1">
+                                                &nbsp;&nbsp;บาท (ตัวอักษร)
+                                            </td>
+                                            <td class="paddingRowTableV3N txtRight fontBlueV1">
+                                                @{
+                                                    string totalWithVat = DocumentsAppCode.ThaiBahtText(Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat.Value.ToString("#,##0.00"));
+                                                }
+                                                @totalWithVat &nbsp;
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                        &nbsp;
+                    </td>
+                    <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                        &nbsp;
+                    </td>
+                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                        &nbsp;
+                    </td>
+                    <td class="tdTopCenter pvNoWidth">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" class="txtLeft fontRedV1 borderTop">
+                        &nbsp;&nbsp;งบฯ ผูกพันรวม
+                    </td>
+                    <td colspan="5" class="txtLeft borderRight fontBlueV1 borderTop" style="margin-left:-100px;">
+                        @Model.tB_Act_ActivityForm_DetailOther.totalallPayByIO.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                    </td>
+                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1 borderTop">
+                        @Model.tB_Act_ActivityForm_DetailOther.totalallPayNo.Value.ToString("#,##0.00")&nbsp;
+                    </td>
+                    <td class="txtLeft pvNoWidth fontRedV1 borderTop">
+                        &nbsp;&nbsp;<< งบฯ สะสม
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" class="txtLeft fontRedV1 borderBottomV2">
+                        &nbsp;&nbsp;บาท (ตัวอักษร)
+                    </td>
+                    <td colspan="5" class="txtLeft borderRight fontBlueV1 borderBottomV2">
+                        @{
+                            string totalIoAll = DocumentsAppCode.ThaiBahtText(Model.tB_Act_ActivityForm_DetailOther.totalallPayByIO.Value.ToString("#,##0.00"));
+                        }
+                        @totalIoAll&nbsp;&nbsp;
+                    </td>
+                    <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1 borderBottomV2">
+                        @Model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance.Value.ToString("#,##0.00")&nbsp;
+                    </td>
+                    <td class="txtLeft pvNoWidth fontRedV1 borderBottomV2">
+                        &nbsp;&nbsp;<< คงเหลือ (บาท)
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+

@@ -9,6 +9,7 @@ namespace eActForm.Models
         public List<Master_type_form_detail_Model> master_Type_Form_Detail_Models { get; set; }
         public ActivityFormTBMMKT activityFormTBMMKT { get; set; }
         public TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther { get; set; }
+        public List<TB_Act_ActivityForm_DetailOtherList> tB_Act_ActivityForm_DetailOtherList { get; set; }
         public List<TB_Act_Chanel_Model.Chanel_Model> tB_Act_Chanel_Model { get; set; }
         //public List<TB_Act_Chanel_Model.Chanel_Model> tBChanelHCModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model { get; set; }
@@ -18,7 +19,7 @@ namespace eActForm.Models
         public List<TB_Reg_Subject> tB_Reg_Subject { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalCostThisActivity { get; set; }
-
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public List<RequestEmpModel> masterRequestEmp { get; set; }
         public List<RequestEmpModel> requestEmpModel { get; set; }
         public List<PurposeModel> purposeModel { get; set; }
@@ -39,6 +40,8 @@ namespace eActForm.Models
         public List<TB_Act_ActivityChoiceSelectModel> tB_Act_ActivityChoiceSelectModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model_2 { get; set; }
         public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
+        public RequestEmpModel empInfoModel { get; set; }
+        public List<RegionalModel> regionalModel { get; set; }
         public Activity_TBMMKT_Model()
         {
             activityFormTBMMKT = new ActivityFormTBMMKT();
@@ -51,11 +54,19 @@ namespace eActForm.Models
             approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
             exPerryCashList = new List<exPerryCashModel>();
             exPerryCashModel = new exPerryCashModel();
+            empInfoModel = new RequestEmpModel();
+            regionalModel = new List<RegionalModel>();
         }
 
         public ApproveModel.approveModels approveModels { get; set; }
 
-}
+        public List<eForms.Models.MasterData.FiscalYearModel> listFiscalYearModel { get; set; }
+        public List<GetDataEO> listGetDataEO { get; set; }
+        public List<eForms.Models.MasterData.APModel> listAPModel { get; set; }
+        public List<GetDataIO> listGetDataIO { get; set; }
+        public List<GetDataPVPrevious> listGetDataPVPrevious { get; set; }
+        public List<GetDataDetailPaymentAll> listGetDataDetailPaymentAll { get; set; }
+    }
 
     public class ActivityFormTBMMKT : ActivityForm
     {
@@ -68,6 +79,8 @@ namespace eActForm.Models
         public string list_0_select { get; set; }
         public string list_0_select_value { get; set; }
         public string[] list_1_multi_select { get; set; }
+        public string[] list_2_multi_select { get; set; }
+        public string list_1_select { get; set; }
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }
         public string brand_select { get; set; }
@@ -80,7 +93,7 @@ namespace eActForm.Models
         public string formNameEn { get; set; }
         public bool chkUseEng { get; set; }
         public string createdByNameEN { get; set; }
-       
+
     }
 
     public class TB_Reg_Subject
@@ -126,10 +139,39 @@ namespace eActForm.Models
         public string toContact { get; set; }
         public string detailContact { get; set; }
         public string brand_select { get; set; }
+        public decimal? totalnormalCostEstimate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalvat { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalnormalCostEstimateWithVat { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalallPayByIO { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalallPayNo { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalallPayByIOBalance { get; set; }
+        public string fiscalYear { get; set; }
+        public string APCode { get; set; }
+        public string payNo { get; set; }
+        public string activityIdNoSub { get; set; }
+        public string orderOf { get; set; }
+        public string regionalId { get; set; }
     }
 
+    public class TB_Act_ActivityForm_DetailOtherList : ActBaseModel
+    {
+        public string id { get; set; }
+        public string activityId { get; set; }
+        public string typeKeep { get; set; }
+        public int rowNo { get; set; }
+        public string activityIdEO { get; set; }
+        public string IO { get; set; }
+        public string GL { get; set; }
+        public string select_list_choice_id_ChReg { get; set; }
+        public string productBrandId { get; set; }
+    }
 
-    public class TB_Act_ActivityLayout
+        public class TB_Act_ActivityLayout
     {
         public string id { get; set; }
         public string activityId { get; set; }
@@ -169,6 +211,7 @@ namespace eActForm.Models
         public string unitPriceDisplayReport { get; set; }
         public string QtyName { get; set; }
         public string remark { get; set; }
+        public string listChoiceId { get; set; }
     }
 
     public class RequestEmpModel : ActBaseModel
@@ -189,6 +232,8 @@ namespace eActForm.Models
         public string positionEN { get; set; }
         public string departmentEN { get; set; }
         public string buEN { get; set; }
+        public string empTel { get; set; }
+        public string compId { get; set; }
         public string email { get; set; }
     }
 
@@ -218,6 +263,8 @@ namespace eActForm.Models
         public DateTime? arrivalDate { get; set; }
         public string departureDateStr { get; set; }
         public string arrivalDateStr { get; set; }
+        public string depart { get; set; }
+        public string arrived { get; set; }
 
     }
 
@@ -246,5 +293,95 @@ namespace eActForm.Models
         public string companyId { get; set; }
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
+    }
+
+    public class ObjGetDataEO
+    {
+        public string fiscalYear { get; set; }
+        public string master_type_form_id { get; set; }
+        public string productBrandId { get; set; }
+        public string channelId { get; set; }
+    }
+
+    public class GetDataEO
+    {
+        public string EO { get; set; }
+        public string activityId { get; set; }
+    }
+
+    public class ObjGetDataIO
+    {
+        public string ActivityByEOSelect { get; set; }
+    }
+
+    public class GetDataIO
+    {
+        public string IO { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalPayByIO { get; set; }
+    }
+
+    public class ObjGetDataGL
+    {
+        public string IOCode { get; set; }
+        public string SubGroupCode { get; set; }
+    }
+
+    public class GetDataGL
+    {
+        public string GL { get; set; }
+    }
+
+
+    public class ObjGetDataPVPrevious
+    {
+        public string master_type_form_id { get; set; }
+        public string payNo { get; set; }
+    }
+    public class GetDataPVPrevious
+    {
+        public string activityNo { get; set; }
+        public string activityId { get; set; }
+        public string payNo { get; set; }
+        public string statusId { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalallPayByIO { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalallPayNo { get; set; }
+    }
+
+    public class ObjGetDataDetailPaymentAll
+    {
+        public string activityId { get; set; }
+        public string payNo { get; set; }
+    }
+    public class GetDataDetailPaymentAll
+    {
+        public string payNo { get; set; }
+        public int rowNo { get; set; }
+        public string IO { get; set; }
+        public string productDetail { get; set; }
+        public string vat { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? normalCost { get; set; }
+        public DateTime? documentDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalnormalCostEstimate { get; set; }
+        public string activityNo { get; set; }
+        public string activityId { get; set; }
+        public string activityIdNoSub { get; set; }
+    }
+
+
+    public class CashEmpModel
+    {
+        public string empId { get; set; }
+        public string choiceID { get; set; }
+        public string choiceName { get; set; }
+        public decimal cashPerDay { get; set; }
+        public string empLevel { get; set; }
+
     }
 }

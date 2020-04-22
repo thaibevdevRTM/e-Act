@@ -1,0 +1,144 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Configuration;
+
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr style="">
+        <td>
+            <div id="divHeaderDetails" runat="server" style="width: 100%;">
+                <table style="width: 100%;" id="tabelHeaderDetails" runat="server">
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label class="control-label col-md-12 col-xs-12 hrTab" style="text-align:left;">
+                                    ส่วนที่ 3 - 5
+                                </label>
+                            </div>
+
+
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-bordered" id="tabelSectionThreeToFive">
+                    <tr style="background-color:#2f74b5;color:white;height:25px;">
+                        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">&nbsp;</th>
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">IO</th>
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">GL</th>
+                        <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Ch.+Reg.</th>
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Brand</th>
+                    </tr>
+                    @{ var index = 0;}
+                    @foreach (var item in Model.tB_Act_ActivityForm_DetailOtherList)
+                    {
+                        <tr class="tagCountRowinTable tRow_@index">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;padding-left:12px;padding-top:12px;">
+                                @if (index == 0)
+                                {
+                                    <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" id="btnDeleteRowTables" disabled="disabled"></button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" id="btnDeleteRowTables" onclick="deleteRowTable(this);"></button>
+                                }
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                                @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].IO", new SelectList(Model.listGetDataIO, "IO", "IO", item.IO), "", new { @class = "form-control" })
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.GL" id="tB_Act_ActivityForm_DetailOtherList[@index].GL" name="tB_Act_ActivityForm_DetailOtherList[@index].GL" class="form-control textboxcss txtGL_@index" readonly="readonly" />
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].select_list_choice_id_ChReg", new SelectList(Model.list_1, "id", "name", item.select_list_choice_id_ChReg), "", new { @class = "form-control" })
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @Html.DropDownList("tB_Act_ActivityForm_DetailOtherList[" + index + "].productBrandId", new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", item.productBrandId), "", new { @class = "form-control" })
+                                <script>
+                                    var indexJava = "@index";
+                                    $('#tB_Act_ActivityForm_DetailOtherList_' + indexJava +'__select_list_choice_id_ChReg').selectpicker({
+                                        liveSearch: true,
+                                        showSubtext: true
+                                    });
+                                    $('#tB_Act_ActivityForm_DetailOtherList_' + indexJava + '__productBrandId').selectpicker({
+                                        liveSearch: true,
+                                        showSubtext: true
+                                    });
+                                    $('#tB_Act_ActivityForm_DetailOtherList_' + indexJava + '__IO').change(function ()
+                                    {
+                                        getGL(indexJava);
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        index++;
+                    }
+                </table>
+
+                <script>
+                    function tbAddRowSectionThreeToFive() {
+                        var nextNoId = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length).toString();
+                        var trHTML = $('.tRow_0').html();
+                        trHTML = trHTML.replaceAll('[0].IO', '[' + nextNoId + '].IO');
+                        trHTML = trHTML.replaceAll('[0].GL', '[' + nextNoId + '].GL');
+                        trHTML = trHTML.replaceAll('[0].select_list_choice_id_ChReg', '[' + nextNoId + '].select_list_choice_id_ChReg');
+                        trHTML = trHTML.replaceAll('[0].productBrandId', '[' + nextNoId + '].productBrandId');
+                        trHTML = trHTML.replaceAll('_0__IO', '_' + nextNoId + '__IO');
+                        trHTML = trHTML.replaceAll('_0__GL', '_' + nextNoId + '__GL');
+                        trHTML = trHTML.replaceAll('_0__select_list_choice_id_ChReg', '_' + nextNoId + '__select_list_choice_id_ChReg');
+                        trHTML = trHTML.replaceAll('_0__productBrandId', '_' + nextNoId + '__productBrandId');
+                        trHTML = trHTML.replaceAll('txtGL_0', 'txtGL_' + nextNoId);
+                        trHTML = trHTML.replaceAll('id="btnDeleteRowTables" disabled="disabled"', 'id="btnDeleteRowTables" onclick="deleteRowTable(this);"');
+                        trHTML = ("<tr class=\"tagCountRowinTable tRow_" + nextNoId + "\">" + trHTML );
+                        //trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__IO').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
+                        trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__select_list_choice_id_ChReg').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
+                        trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__productBrandId').selectpicker({liveSearch: true,showSubtext: true});<\/script>");
+                        trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " + '__IO').change(function () { getGL(" + nextNoId + ");});<\/script>");
+                        trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__IO').val('');<\/script>");
+                        trHTML = (trHTML + "<script> $('.txtGL_' + " + nextNoId + " +'').val('');<\/script>");
+                        trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__select_list_choice_id_ChReg').selectpicker('val',null).selectpicker('refresh');<\/script>");
+                        trHTML = (trHTML + "<script> $('#tB_Act_ActivityForm_DetailOtherList_' + " + nextNoId + " +'__productBrandId').selectpicker('val',null).selectpicker('refresh');<\/script>");
+                        /*===========ต้องมีบรรทัดล่างไม่งั้น DropdownFilter จะขึ้นมาเบิ้ล=================*/
+                        //trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO" title', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__IO" style="display:none;" title>');
+                        trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__select_list_choice_id_ChReg" title', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__select_list_choice_id_ChReg" style="display:none;" title>');
+                        trHTML = trHTML.replaceAll('data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__productBrandId" title', 'data-id="tB_Act_ActivityForm_DetailOtherList_' + nextNoId + '__productBrandId" style="display:none;" title>');
+                       /*=====END======ต้องมีบรรทัดล่างไม่งั้น DropdownFilter จะขึ้นมาเบิ้ล=================*/
+                        trHTML = (trHTML + "</tr>");
+                        $('#tabelSectionThreeToFive').append(trHTML);
+                    }
+                    function getGL(indexRow) {
+                        //alert('getGl' + indexRow);
+                        var IOSelect = $('#tB_Act_ActivityForm_DetailOtherList_' + indexRow + '__IO').val().toString();
+                        var dataToBeSend = {
+                            IOCode: IOSelect.substring(6, 8)
+                            , SubGroupCode: IOSelect.substring(8, 9)
+                        };
+                        if (IOSelect != "") {
+                            $.ajax('@Url.Action("GetDataGLPaymentVoucher", "GetDataMainForm")',
+                                {
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify(dataToBeSend),
+                                    dataType: 'json',
+                                    type: "POST",
+                                    success: function (response) {
+                                        if (response.Data.tbToAjax.length > 0) {
+                                            //tB_Act_ActivityForm_DetailOtherList[0].GL
+                                            $.each(response.Data.tbToAjax, function () {
+                                                $(".txtGL_" + indexRow).val(this['GL']);
+                                            });
+                                        }
+                                    },
+                                    error: function (data) {
+                                        alert("Error GetDataEOPaymentVoucher." + data);
+                                    }
+                                });
+                        } else {
+                            $(".txtGL_" + indexRow).val('');
+                        }
+                    }
+                </script>
+            </div>
+            <div id="addEx" class="row pull-right" style="width:150px;margin-top:-15px;" onclick="tbAddRowSectionThreeToFive();">
+                <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
+            </div>
+        </td>
+    </tr>
+</table>

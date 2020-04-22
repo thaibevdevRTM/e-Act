@@ -58,7 +58,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static bool manageApproveEmpExpense(ApproveModel.approveModels model,string actId)
+        public static bool manageApproveEmpExpense(ApproveModel.approveModels model, string actId)
         {
             int resultInsert = 0;
             string newID = Guid.NewGuid().ToString();
@@ -86,7 +86,7 @@ namespace eActForm.BusinessLayer
                 resultInsert += ActivityFormTBMMKTCommandHandler.insertActivityForm(model.activity_TBMMKT_Model.activityFormTBMMKT);
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("manageApproveEmpExpense => " + ex.Message);
                 return false;
@@ -464,6 +464,19 @@ namespace eActForm.BusinessLayer
                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
                     var empDetail = models.approveDetailLists.Where(r => r.empId == empId).ToList(); //
+
+                    if (empDetail.Count > 1)
+                    {
+                        foreach (var item in empDetail)
+                        {
+                            if (item.statusId == "2")
+                            {
+                                empDetail[0] = item;
+                                break;
+                            }
+                        }
+                    }
+
                     var lists = (from DataRow dr in ds.Tables[0].Rows
                                  select new ApproveModel.approveModel()
                                  {
@@ -478,9 +491,10 @@ namespace eActForm.BusinessLayer
                                      updatedDate = (DateTime?)dr["updatedDate"],
                                      updatedByUserId = dr["updatedByUserId"].ToString(),
                                      isPermisionApprove = getPremisionApproveByEmpid(models.approveDetailLists, empId)
-                                 }).ToList();
+                                 }).ToList();           
+                        models.approveModel = lists[0];
+                   
 
-                    models.approveModel = lists[0];
 
                 }
 

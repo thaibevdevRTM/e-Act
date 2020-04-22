@@ -1,0 +1,102 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Configuration;
+
+<link href="~/Scripts/bootstrap-select.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-select.min.js"></script>
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr style="">
+        <td>
+            <div id="divHeaderDetails" runat="server" style="width: 100%;">
+                <table style="width: 100%;" id="tabelHeaderDetails" runat="server">
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label class="control-label col-md-12 col-xs-12 hrTab" style="text-align:left;">
+                                    ส่วนที่ 1
+                                </label>
+                            </div>
+                            <div class="form-group">
+
+                                <label class="control-label col-md-2 col-xs-12">
+                                    @Resources.Global.purpose :
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextAreaFor(x => x.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective", style = "", @rows = "2" })
+                                    </div>
+                                </div>
+
+                                <label class="control-label col-md-2 col-xs-12">
+                                    ที่อยู่ :
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextAreaFor(x => x.tB_Act_ActivityForm_DetailOther.toAddress, new { @class = "form-control textboxcss", @id = "txttoAddress", @readonly = "readonly", @rows = "2" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label class="control-label col-md-2 col-xs-12">
+                                    Supplier :
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.APCode, new SelectList(Model.listAPModel, "APCode", "Name1", ""), "", new
+                                   {
+                                       @class = "form-control selectpicker",
+                                       id = "ddlAP"
+                                   })
+
+                                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.APCode, new SelectList(Model.listAPModel, "APCode", "FullAddress", ""), "", new
+                                   {
+                                       @class = "form-control",
+                                       @style = "display:none;",
+                                       id = "ddlAPFullAddress"
+                                   })
+                                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.APCode, new SelectList(Model.listAPModel, "APCode", "TelAndFax", ""), "", new
+                                   {
+                                       @class = "form-control",
+                                       @style = "display:none;",
+                                       id = "ddlAPTelAndFax"
+                                   })
+
+                                        <script>
+                                            $('#ddlAP').selectpicker({
+                                                liveSearch: true,
+                                                showSubtext: true
+                                            });
+                                            $('#ddlAP').change(function () {
+                                                $('#ddlAPFullAddress').val($('#ddlAP').val());
+                                                $('#ddlAPTelAndFax').val($('#ddlAP').val());
+                                                $('#txttoAddress').val($('#ddlAPFullAddress option:selected').text());
+                                                $('#txttoContact').val($('#ddlAPTelAndFax option:selected').text());
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+
+                                <label class="control-label col-md-2 col-xs-12">
+                                    Tel/Fax :
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txttoContact", style = "", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

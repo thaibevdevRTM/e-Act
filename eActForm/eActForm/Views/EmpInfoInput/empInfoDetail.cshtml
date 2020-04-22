@@ -1,0 +1,302 @@
+﻿@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+
+
+<div class="col-md-12" id="divEmpInfo">
+    @*<div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;@Model.TB_Reg_RequestEmp.empName&nbsp;&nbsp;</div>
+        <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
+    <fieldset>
+        @*<legend>พนักงาน</legend> <br />*@
+
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
+                        รหัสพนักงาน :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.empInfoModel.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpId", onchange = "getEmpDetail();" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpName">
+                        ชื่อ :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <lable id="lblEmpName" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
+                        ตำแหน่ง :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <lable id="lblEmpPosition" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblLvl">
+                        ระดับ :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <lable id="lblLvl" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblDept">
+                        หน่วยงาน :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <lable id="lblDept" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblComp">
+                        สังกัดบริษัท :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="hidden" id="hdCompId" name="activityFormTBMMKT.formCompanyId" class="form-control textboxcss" />
+                        <lable id="lblComp" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                        ภาค :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="hidden" id="hdRegionalId" class="form-control textboxcss" />
+                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.regionalId
+                       , new SelectList(Model.regionalModel,
+                        "id", Model.activityFormTBMMKT.chkUseEng ? "nameEN" : "nameTH"
+                        ), new
+                             {
+                            @class = "form-control selectpicker",
+                            @id = "ddlRegional",
+                            @name = "Model.tB_Act_ActivityForm_DetailOther.regionalId",
+
+                        })
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtEmpTel">
+                        โทรศัพท์ติดต่อ :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.empInfoModel.empTel, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpTel" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
+                        ตามคำสั่ง :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.orderOf, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtOrerOf" })
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.SubjectId, new { @id = "hdSubjectId" })
+    </fieldset>
+    <br />
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        $("#hdRegionalId").val($("#ddlRegional").val());
+        getEmpDetail();
+       // alert($("#hdSubjectId").val());
+    });
+    function getEmpDetail() {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getEmpDetailById", "eAct")',
+            data: {
+                empId: $("#txtEmpId").val(),
+                typeFormId: "@Model.activityFormTBMMKT.master_type_form_id",
+            }
+        }).done(function (response) {
+            console.log(response);
+            if (response.Data != null) {
+                $("#lblEmpName").val(response.Data.empName);
+                $("#hdCompId").val(response.Data.compId);
+                document.getElementById('lblEmpName').innerHTML = response.Data.empName;
+                document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
+                document.getElementById('lblLvl').innerHTML = response.Data.level;
+                document.getElementById('lblDept').innerHTML = response.Data.department;
+                document.getElementById('lblComp').innerHTML = response.Data.companyName;
+
+
+                getRegional();
+             // $("#hdSubjectId").val('C67164E4-A891-43D6-B4F7-090F62C6290E');
+             //   getFlow();
+               // alert($("#hdSubjectId").val());
+            }
+            else {
+                if ($("#txtEmpId").val() != '') { alert('ไม่พบ Flow อนุมัติของรหัสพนักงาน ' + $("#txtEmpId").val()); }
+                $("#lblEmpName").val('');
+                $("#hdCompId").val('');
+                $("#ddlRegional").empty();
+                document.getElementById('lblEmpName').innerHTML = '';
+                document.getElementById('lblEmpPosition').innerHTML = '';
+                document.getElementById('lblLvl').innerHTML = '';
+                document.getElementById('lblDept').innerHTML = '';
+                document.getElementById('lblComp').innerHTML = '';
+            }
+
+            getCashEmp();
+
+        });
+    }
+
+    function getCashEmp() {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getCashLimitByEmpId", "eAct")',
+            data: {
+                empId: $("#txtEmpId").val(),
+            }
+        }).done(function (response) {
+            console.log(response);
+            if (response.Data != null) {
+
+                document.getElementById('ProductDetail_0').innerHTML = response.Data.ProductDetail_0;
+                document.getElementById('ProductDetail_1').innerHTML = response.Data.ProductDetail_1;
+                $("#ProductDetail_0").val(response.Data.ProductDetail_0);
+                $("#ProductDetail_1").val(response.Data.ProductDetail_1);
+
+            }
+            else {
+                if ($("#txtEmpId").val() != "") {
+                    document.getElementById('ProductDetail_0').innerHTML = "ไม่พบข้อมูลกรุณาติดต่อ...";
+                    document.getElementById('ProductDetail_1').innerHTML = "ไม่พบข้อมูลกรุณาติดต่อ...";
+                    document.getElementById('lblBath_0').innerHTML = "";
+                    document.getElementById('lblBath_1').innerHTML = "";
+                    $("#ProductDetail_0").val(0);
+                    $("#ProductDetail_1").val(0);
+                }
+            }
+        });
+    }
+
+    function getRegional() {
+        var ddlRegional = $("#ddlRegional");
+        $.ajax({
+            url: '@Url.Action("getRegionalByCompany", "eAct")',
+            data: {
+                companyId: $("#hdCompId").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+
+                if (response.Data.regional.length > 0) {
+                    $("#ddlRegional").empty();
+                    if (response.Data.regional.length > 1) {
+                        ddlRegional.append($("<option></option>").val('').html(''));
+                    }
+                    $("#ddlRegional option[value !='']").remove();
+                    $.each(response.Data.regional, function () {
+                        ddlRegional.append($("<option></option>").val(this['id']).html(this['nameTH']));
+                    });
+
+                    if ($("#hdRegionalId").val() != '') {
+                        $("#ddlRegional").val($("#hdRegionalId").val());
+                    }
+                    document.getElementById("ddlRegional").disabled = false;
+                }
+                else {
+                    document.getElementById("ddlRegional").disabled = true;
+                }
+
+            }
+        });
+    }
+
+
+
+    function getFlow() {
+        var ddlRegional = $("#ddlRegional");
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getFlowBytypeFormId", "eAct")',
+            data: {
+                typeFormId: "@Model.activityFormTBMMKT.master_type_form_id",
+                empId: $("#txtEmpId").val(),
+            }
+        }).done(function (response) {
+            if (response.Data.flow.length > 0) {
+                //เจอ flow ไปหาภาคต่อ ใช้ภาคของ flow ไม่ใช้ของ DBAuthen เพราะไม่อัพเดท
+                if (response.Data.regional.length > 0) {
+                    $("#ddlRegional").empty();
+                    if (response.Data.regional.length > 1) {
+
+                        ddlRegional.append($("<option></option>").val('').html(''));
+                    }
+                    $("#ddlRegional option[value !='']").remove();
+                    $.each(response.Data.regional, function () {
+                        ddlRegional.append($("<option></option>").val(this['id']).html(this['nameTH']));
+                    });
+
+                    if ($("#hdRegionalId").val() != '') {
+                        $("#ddlRegional").val($("#hdRegionalId").val());
+                    }
+                    document.getElementById("ddlRegional").disabled = false;
+                }
+                else {
+
+                    document.getElementById("ddlRegional").disabled = true;
+                }
+            }
+            else {
+
+                alert('ไม่พบ Flow อนุมัติของรหัสพนักงาน ' + $("#txtEmpId").val());
+
+                $('#txtEmpId').val('');
+                $('#divEmpInfo select').empty();
+                document.getElementById('lblEmpName').innerHTML = '';
+                document.getElementById('lblEmpPosition').innerHTML = '';
+                document.getElementById('lblLvl').innerHTML = '';
+                document.getElementById('lblDept').innerHTML = '';
+                document.getElementById('lblComp').innerHTML = '';
+            }
+        });
+    }
+
+</script>
