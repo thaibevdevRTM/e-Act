@@ -16,6 +16,7 @@ namespace eActForm.Models
         public List<TB_Act_Other_Model> getDDlApproveList { get; set; }
         public List<TB_Reg_ApproveGroup_Model> approveGroupList { get; set; }
         public ApproveFlowModel.approveFlowModel approveFlow { get; set; }
+        public List<RequestEmpModel> empList { get; set; }
 
         public List<string> p_rangNoList { get; set; }
         public List<string> p_empIdList { get; set; }
@@ -25,7 +26,7 @@ namespace eActForm.Models
         public List<string> p_flowId { get; set; }
         public List<string> p_productType { get; set; }
         public string p_companyId { get; set; }
-
+        public List<string> p_empGroup { get; set; }
         public ManagementFlow_Model()
         {
             approveFlow = new ApproveFlowModel.approveFlowModel();
@@ -38,6 +39,7 @@ namespace eActForm.Models
             getDDLShowApproveList = new List<TB_Act_Other_Model>();
             getDDlApproveList = new List<TB_Act_Other_Model>();
             approveGroupList = new List<TB_Reg_ApproveGroup_Model>();
+            empList = new List<RequestEmpModel>();
         }
     }
 
@@ -52,5 +54,6 @@ namespace eActForm.Models
         public string flowLimitId { get; set; }
         public string channelId { get; set; }
         public string productBrandId { get; set; }
+        public string empId { get; set; }
     }
 }
