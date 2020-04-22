@@ -109,23 +109,16 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="excelFiles\" />
+    <Folder Include="logs\" />
+    <Folder Include="obj\Debug\logs\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebLibrary\WebLibrary.csproj">
       <Project>{915ae4ce-4607-4e97-9329-2f6d8b5c4569}</Project>
       <Name>WebLibrary</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="excelFiles\file.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="logs\logs.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="obj\Debug\logs\logs.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
