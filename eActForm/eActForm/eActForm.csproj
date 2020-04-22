@@ -64,27 +64,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Antiforgery, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Antiforgery.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Antiforgery.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.Internal.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.DataProtection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.DataProtection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.Diagnostics.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Diagnostics.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Diagnostics.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.Html.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Html.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Html.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.JsonPatch, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.JsonPatch.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.JsonPatch.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Extensions.WebEncoders, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.WebEncoders.2.2.0\lib\netstandard2.0\Microsoft.Extensions.WebEncoders.dll</HintPath>
@@ -458,13 +437,9 @@
     <Content Include="bin\Microsoft.AspNetCore.DataProtection.Abstractions.dll" />
     <Content Include="bin\Microsoft.AspNetCore.DataProtection.dll" />
     <Content Include="bin\Microsoft.AspNetCore.Diagnostics.Abstractions.dll" />
-    <Content Include="bin\Microsoft.AspNetCore.Hosting.Abstractions.dll" />
-    <Content Include="bin\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll" />
     <Content Include="bin\Microsoft.AspNetCore.Html.Abstractions.dll" />
-    <Content Include="bin\Microsoft.AspNetCore.Http.Abstractions.dll" />
     <Content Include="bin\Microsoft.AspNetCore.Http.dll" />
     <Content Include="bin\Microsoft.AspNetCore.Http.Extensions.dll" />
-    <Content Include="bin\Microsoft.AspNetCore.Http.Features.dll" />
     <Content Include="bin\Microsoft.AspNetCore.JsonPatch.dll" />
     <Content Include="bin\Microsoft.AspNetCore.Mvc.Abstractions.dll" />
     <Content Include="bin\Microsoft.AspNetCore.Mvc.Core.dll" />
@@ -474,25 +449,16 @@
     <Content Include="bin\Microsoft.AspNetCore.ResponseCaching.Abstractions.dll" />
     <Content Include="bin\Microsoft.AspNetCore.Routing.Abstractions.dll" />
     <Content Include="bin\Microsoft.AspNetCore.Routing.dll" />
-    <Content Include="bin\Microsoft.AspNetCore.WebUtilities.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.DotNet.PlatformAbstractions.dll" />
     <Content Include="bin\Microsoft.Exchange.WebServices.dll" />
     <Content Include="bin\Microsoft.Exchange.WebServices.xml" />
-    <Content Include="bin\Microsoft.Extensions.Configuration.Abstractions.dll" />
-    <Content Include="bin\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
     <Content Include="bin\Microsoft.Extensions.DependencyInjection.dll" />
     <Content Include="bin\Microsoft.Extensions.DependencyModel.dll" />
-    <Content Include="bin\Microsoft.Extensions.FileProviders.Abstractions.dll" />
     <Content Include="bin\Microsoft.Extensions.Hosting.Abstractions.dll" />
     <Content Include="bin\Microsoft.Extensions.Localization.Abstractions.dll" />
     <Content Include="bin\Microsoft.Extensions.Localization.dll" />
-    <Content Include="bin\Microsoft.Extensions.Logging.Abstractions.dll" />
-    <Content Include="bin\Microsoft.Extensions.ObjectPool.dll" />
-    <Content Include="bin\Microsoft.Extensions.Options.dll" />
-    <Content Include="bin\Microsoft.Extensions.Primitives.dll" />
     <Content Include="bin\Microsoft.Extensions.WebEncoders.dll" />
-    <Content Include="bin\Microsoft.Net.Http.Headers.dll" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Microsoft.Win32.Primitives.dll" />
     <Content Include="bin\Microsoft.Win32.Registry.dll" />
@@ -628,7 +594,6 @@
     <Content Include="bin\System.Security.SecureString.dll" />
     <Content Include="bin\System.Text.Encoding.dll" />
     <Content Include="bin\System.Text.Encoding.Extensions.dll" />
-    <Content Include="bin\System.Text.Encodings.Web.dll" />
     <Content Include="bin\System.Text.RegularExpressions.dll" />
     <Content Include="bin\System.Threading.dll" />
     <Content Include="bin\System.Threading.Overlapped.dll" />
