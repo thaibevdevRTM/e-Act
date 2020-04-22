@@ -41,6 +41,8 @@ namespace eActForm.Models
         public List<TB_Act_ActivityChoiceSelectModel> tB_Act_ActivityChoiceSelectModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model_2 { get; set; }
         public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
+        public RequestEmpModel empInfoModel { get; set; }
+        public List<RegionalModel> regionalModel { get; set; }
         public Activity_TBMMKT_Model()
         {
             activityFormTBMMKT = new ActivityFormTBMMKT();
@@ -53,6 +55,8 @@ namespace eActForm.Models
             approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
             exPerryCashList = new List<exPerryCashModel>();
             exPerryCashModel = new exPerryCashModel();
+            empInfoModel = new RequestEmpModel();
+            regionalModel = new List<RegionalModel>();
         }
 
         public ApproveModel.approveModels approveModels { get; set; }
@@ -151,6 +155,8 @@ namespace eActForm.Models
         public string APCode { get; set; }
         public string payNo { get; set; }
         public string activityIdNoSub { get; set; }
+        public string orderOf { get; set; }
+        public string regionalId { get; set; }
     }
 
     public class TB_Act_ActivityForm_DetailOtherList : ActBaseModel
@@ -227,6 +233,8 @@ namespace eActForm.Models
         public string positionEN { get; set; }
         public string departmentEN { get; set; }
         public string buEN { get; set; }
+        public string empTel { get; set; }
+        public string compId { get; set; }
         public string email { get; set; }
     }
 
@@ -256,6 +264,8 @@ namespace eActForm.Models
         public DateTime? arrivalDate { get; set; }
         public string departureDateStr { get; set; }
         public string arrivalDateStr { get; set; }
+        public string depart { get; set; }
+        public string arrived { get; set; }
 
     }
 
@@ -366,4 +376,13 @@ namespace eActForm.Models
     }
 
 
+    public class CashEmpModel
+    {
+        public string empId { get; set; }
+        public string choiceID { get; set; }
+        public string choiceName { get; set; }
+        public decimal cashPerDay { get; set; }
+        public string empLevel { get; set; }
+
+    }
 }

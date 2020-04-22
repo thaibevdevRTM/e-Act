@@ -7,6 +7,6 @@
         public string nameTH { get; set; }
         public string nameEn { get; set; }
         public string description { get; set; }
-
+        public string typeFormId { get; set; }
     }
 }

@@ -85,7 +85,9 @@ namespace eActForm.BusinessLayer.Appcodes
             {
 
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteFlowApprove"
-                      , new SqlParameter[] { new SqlParameter("@flowId", model.p_flowId[0]) });
+                      , new SqlParameter[] { new SqlParameter("@flowId", model.p_flowId[0])
+                      , new SqlParameter("@empId", model.p_empGroup[0])
+                      });
                 foreach (var item in model.p_appovedGroupList)
                 {
                     result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
@@ -94,6 +96,7 @@ namespace eActForm.BusinessLayer.Appcodes
                     ,new SqlParameter("@empId",model.p_empIdList[i])
                     ,new SqlParameter("@approveGroupId",model.p_appovedGroupList[i])
                     ,new SqlParameter("@rangNo",model.p_rangNoList[i])
+                    ,new SqlParameter("@description",model.p_empGroup[0])
                     ,new SqlParameter("@showInDoc",model.p_isShowList[i])
                     ,new SqlParameter("@isApprove",model.p_isApproveList[i])
                     ,new SqlParameter("@delFlag",'0')
@@ -112,9 +115,6 @@ namespace eActForm.BusinessLayer.Appcodes
 
             return result;
         }
-
-
-
 
     }
 }

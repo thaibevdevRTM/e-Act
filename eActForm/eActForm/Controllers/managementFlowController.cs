@@ -2,6 +2,7 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -145,6 +146,20 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError("getLimitBySubject => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getEmp(string subjectId , string limitId, string channelId)
+        {
+            List<RequestEmpModel> empList = new List<RequestEmpModel>();
+            try
+            {
+                empList = ApproveFlowAppCode.getEmpByConditon(subjectId, limitId, channelId);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("ManagementFlowController >> getEmp => " + ex.Message);
+            }
+            return Json(empList, JsonRequestBehavior.AllowGet);
         }
     }
 }

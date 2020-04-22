@@ -265,8 +265,8 @@ else
             || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formAdvHcmId"]'
             || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["masterEmpExpense"]'
             || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]'
         ) {
-
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("index", "MainReport")',
@@ -281,7 +281,7 @@ else
                 $("#dataFromPDF").val(htmlResponse);
                 @*//====END=====ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย=====มันจะได้Genถูกต้องสวยงาม====dev date 20200421======*@
                 genFileActForm();
-                });
+            });
 
         }
         else {

@@ -23,7 +23,7 @@ namespace eActForm.Models
 {
     public class AppCode
     {
-        
+
         public static string StrConAuthen = ConfigurationManager.ConnectionStrings["ActDBAuthen_ConnectionString"].ConnectionString;
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
@@ -60,11 +60,33 @@ namespace eActForm.Models
 
         public enum Mode
         {
-            addNew, 
+            addNew,
             edit
         }
 
 
+        public static class ApproveGroup
+        {
+            public const string Applicant = "D0A49169-8697-4001-9CD4-896976E964F5";//ผู้ขอเบิก   
+            public const string ApplicantApp = "A2D5B3D5-610D-4D7E-B311-25717B3457F8";// ผู้ขออนุมัติ  
+            public const string Recorder = "8A6A0CA2-E9CC-4A6C-9E17-E0B212C12DAF";//ผู้บันทึก   
+            public const string Director = "2354EFCB-174F-48FE-B634-2DE926D7F836";// ผู้บังคับบัญชา  
+            public const string Approveby = "7C308168-B155-4684-A2CD-906EC94AA49C";//เรียน/อนุมัติ 
+            public const string PettyCashApprover = "BD48756C-12CC-4267-AD6F-A6C37F9B2B32";//ผู้อนุมัติเงินสดย่อย
+        }
+        public static class CodeHtml
+        {
+            public const string LabelHtml = "label";
+            public const string TextboxHtml = "textbox";
+            public const string DropdownHtml = "dropdown";
+
+
+        }
+        public static class Expenses
+        {
+            public const string Allowance = "06FF853F-EBB0-48E8-9620-520D0B8F6E0C";
+
+        }
         public static string checkNullorEmpty(string p)
         {
             return p == "" || p == null || p == "0" || p == "0.00" || p == "0.000" || p == "0.0000" || p == "0.00000" ? "0" : p;

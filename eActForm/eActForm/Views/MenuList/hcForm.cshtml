@@ -1,0 +1,13 @@
+﻿@using eActForm.BusinessLayer
+@using System.Configuration;
+@using eActForm.Models;
+
+@if (UtilsAppCode.Session.User.isSuperAdmin ||( UtilsAppCode.Session.User.isCreator && ActFormAppCode.checkGrpCompByUser(@Activity_Model.activityType.NUM.ToString())))
+    {
+<li>
+    <a><i class="fa fa-edit"></i>HC Forms <span class="fa fa-chevron-down"></span></a>
+    <ul class="nav child_menu">
+        <li>@Html.ActionLink("expense travelling", "Index", "MainForm", new { typeForm = Activity_Model.activityType.NUM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formExpTrvNumId"] }, null)</li>
+    </ul>
+</li>
+}

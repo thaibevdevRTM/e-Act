@@ -125,7 +125,7 @@ namespace eActForm.BusinessLayer
                     string checkFlowApprove = checkFlowBeforeByActId(actFormId);
                     if (!string.IsNullOrEmpty(checkFlowApprove))
                     {
-                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType)
+                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || ConfigurationManager.AppSettings["formExpTrvNumId"] == getMasterType)
                         {
                             model.flowDetail = getFlowDetailExpense(checkFlowApprove, actFormId);
                         }
@@ -136,7 +136,7 @@ namespace eActForm.BusinessLayer
                     }
                     else
                     {
-                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType)
+                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || ConfigurationManager.AppSettings["formExpTrvNumId"] == getMasterType)
                         {
                             model.flowDetail = getFlowDetailExpense(model.flowMain.id ,actFormId);
                         }
@@ -147,6 +147,7 @@ namespace eActForm.BusinessLayer
                     }
 
                 }
+
                 return model;
             }
             catch (Exception ex)
@@ -370,10 +371,13 @@ namespace eActForm.BusinessLayer
                                  empFNameTH = dr["empName"].ToString(),
                                  approveGroupId = dr["approveGroupId"].ToString(),
                                  rangNo = int.Parse(dr["rangNo"].ToString()),
+                                 description = dr["description"].ToString(),
                                  isShowInDoc = !string.IsNullOrEmpty(dr["showInDoc"].ToString()) ? bool.Parse(dr["showInDoc"].ToString()) : true,
                                  isApproved = !string.IsNullOrEmpty(dr["isApproved"].ToString()) ? bool.Parse(dr["isApproved"].ToString()) : true,
                              }).ToList();
-                approveFlow_Model.flowDetail = lists.ToList();
+
+                var result = !string.IsNullOrEmpty(model.empId) ? lists.Where(x => x.description == model.empId).ToList() : lists.ToList();
+                approveFlow_Model.flowDetail = result;
                 return approveFlow_Model;
             }
             catch (Exception ex)
@@ -412,5 +416,29 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static List<RequestEmpModel> getEmpByConditon(string subjectId, string limitId ,string channelId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmpSettingFlow"
+                    ,new SqlParameter[] { new SqlParameter("@subjectId", subjectId)
+                    ,new SqlParameter("@flowLimitId", limitId)
+                    ,new SqlParameter("@channelId", channelId)
+                    });
+                var result = (from DataRow dr in ds.Tables[0].Rows
+                             select new RequestEmpModel
+                             {
+                                 empId = dr["empId"].ToString(),
+                                 empName = dr["empName"].ToString(),
+                             }).ToList();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getEmpByConditon >>" + ex.Message);
+            }
+        }
     }
 }

@@ -57,6 +57,8 @@ namespace eActForm.BusinessLayer
                                   totalallPayByIO = d["totalallPayByIO"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayByIO"].ToString())),
                                   totalallPayNo = d["totalallPayNo"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayNo"].ToString())),
                                   totalallPayByIOBalance = d["totalallPayByIOBalance"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayByIOBalance"].ToString())),
+                                  orderOf = d["orderOf"].ToString(),
+                                  regionalId = d["regionalId"].ToString(),                          
                               });
 
                 return result.ToList();

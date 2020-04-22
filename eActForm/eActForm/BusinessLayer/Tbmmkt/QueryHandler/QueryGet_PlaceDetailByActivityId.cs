@@ -28,6 +28,8 @@ namespace eActForm.BusinessLayer
                                  period = d["period"].ToString(),
                                  departureDateStr = d["departureDateStr"].ToString(),
                                  arrivalDateStr = d["arrivalDateStr"].ToString(),
+                                 depart = d["depart"].ToString(),
+                                 arrived = d["arrived"].ToString(),
                                  // departureDate =d["departureDate"].ToString() == "" ? (DateTime?)null : (Convert.ToDateTime(d["departureDate"].ToString())),
                                  //  arrivalDate= Convert.ToDateTime(d["arrivalDate"].ToString()),
 

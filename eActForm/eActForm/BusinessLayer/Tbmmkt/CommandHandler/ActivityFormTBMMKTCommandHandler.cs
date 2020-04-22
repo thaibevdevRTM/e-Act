@@ -28,6 +28,10 @@ namespace eActForm.BusinessLayer
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
                 }
+                else if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && ActFormAppCode.checkRecorderByUser(activityId))
+                {
+                    rtn = ProcessInsertEstimate(rtn, model, activityId);
+                }
                 else
                 {
                     model.activityFormTBMMKT.id = activityId;
@@ -106,6 +110,7 @@ namespace eActForm.BusinessLayer
                     costThemeDetail.typeTheme = item.typeTheme;
                     costThemeDetail.date = string.IsNullOrEmpty(item.dateInput) ? (DateTime?)null : BaseAppCodes.converStrToDatetimeWithFormat(item.dateInput, ConfigurationManager.AppSettings["formatDateUse"]);
                     costThemeDetail.detail = item.detail;
+                    costThemeDetail.listChoiceId = item.listChoiceId;
                     costThemeDetail.compensate = item.compensate;
                     costThemeDetail.listChoiceId = item.listChoiceId;
                     rtn += insertEstimate(costThemeDetail);
@@ -218,7 +223,7 @@ namespace eActForm.BusinessLayer
                     tB_Act_ActivityForm_DetailOther.channelId = model.activityFormTBMMKT.channelId;
                 }
 
-                tB_Act_ActivityForm_DetailOther.SubjectId = model.activityFormTBMMKT.SubjectId;
+                tB_Act_ActivityForm_DetailOther.SubjectId = string.IsNullOrEmpty(model.activityFormTBMMKT.SubjectId) ? model.tB_Act_ActivityForm_DetailOther.SubjectId : model.activityFormTBMMKT.SubjectId;
                 tB_Act_ActivityForm_DetailOther.activityProduct = model.tB_Act_ActivityForm_DetailOther.activityProduct;
                 tB_Act_ActivityForm_DetailOther.activityTel = model.tB_Act_ActivityForm_DetailOther.activityTel;
                 tB_Act_ActivityForm_DetailOther.IO = model.tB_Act_ActivityForm_DetailOther.IO;
@@ -249,6 +254,8 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.totalallPayByIO = model.tB_Act_ActivityForm_DetailOther.totalallPayByIO == null ? 0 : model.tB_Act_ActivityForm_DetailOther.totalallPayByIO;
                 tB_Act_ActivityForm_DetailOther.totalallPayNo = model.tB_Act_ActivityForm_DetailOther.totalallPayNo == null ? 0 : model.tB_Act_ActivityForm_DetailOther.totalallPayNo;
                 tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance = model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance == null ? 0 : model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance;
+                tB_Act_ActivityForm_DetailOther.orderOf = model.tB_Act_ActivityForm_DetailOther.orderOf;
+                tB_Act_ActivityForm_DetailOther.regionalId = model.tB_Act_ActivityForm_DetailOther.regionalId;
 
                 rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
 
@@ -427,6 +434,13 @@ namespace eActForm.BusinessLayer
 
                     }
 
+
+                bool chk = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ? true : false;
+                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
+                activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
+                activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
+                activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
+
                     activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng);
                     activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
                     activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
@@ -492,7 +506,9 @@ namespace eActForm.BusinessLayer
                 , en
                 , activity_TBMMKT_Model.activityFormTBMMKT.statusId);
 
-                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng);
+
+                bool chk = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ? true : false;
+                activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng,chk);
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);
                 activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
@@ -790,6 +806,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    ,new SqlParameter("@orderOf",(model.orderOf == null ? "" : model.orderOf))
+                    ,new SqlParameter("@regionalId",(model.regionalId == null ? "" : model.regionalId))
                     });
             }
             catch (Exception ex)
@@ -869,6 +887,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@typeTheme",(model.typeTheme == null ? "" : model.typeTheme))
                     ,new SqlParameter("@date",model.date)
                     ,new SqlParameter("@detail",model.detail)
+                    ,new SqlParameter("@listChoiceId",(model.listChoiceId == null ? "" : model.listChoiceId))
                     ,new SqlParameter("@compensate",model.compensate)
                     ,new SqlParameter("@listChoiceId",model.listChoiceId)
             });
@@ -1168,6 +1187,7 @@ namespace eActForm.BusinessLayer
                     requestEmpModel.activityId = activityId;
                     requestEmpModel.rowNo = insertIndex;
                     requestEmpModel.empId = item.empId;
+                    requestEmpModel.empTel = item.empTel;
                     requestEmpModel.delFlag = false;
                     requestEmpModel.createdByUserId = model.activityFormModel.createdByUserId;
                     requestEmpModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -1205,6 +1225,8 @@ namespace eActForm.BusinessLayer
                BaseAppCodes.converStrToDatetimeWithFormat(item.departureDateStr, ConfigurationManager.AppSettings["formatDatetimeUse"]);
                     placeDetailModel.arrivalDate = string.IsNullOrEmpty(item.arrivalDateStr) ? (DateTime?)null :
                BaseAppCodes.converStrToDatetimeWithFormat(item.arrivalDateStr, ConfigurationManager.AppSettings["formatDatetimeUse"]);
+                    placeDetailModel.depart = item.depart;
+                    placeDetailModel.arrived = item.arrived;
                     placeDetailModel.delFlag = false;
                     placeDetailModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate; ;
                     placeDetailModel.createdByUserId = model.activityFormModel.createdByUserId;
@@ -1263,8 +1285,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
-
-                    });
+                    ,new SqlParameter("@empTel",(model.empTel == null ? "" : model.empTel))
+                });
             }
             catch (Exception ex)
             {
@@ -1292,8 +1314,9 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
                     ,new SqlParameter("@updatedDate",model.updatedDate)
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
-
-                    });
+                    ,new SqlParameter("@depart",(model.depart == null ? "" : model.depart))
+                    ,new SqlParameter("@arrived",(model.arrived == null ? "" : model.arrived))
+                });
             }
             catch (Exception ex)
             {

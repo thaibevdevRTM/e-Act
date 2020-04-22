@@ -48,7 +48,7 @@ namespace eActForm.Controllers
         }
         public ActionResult requestEmp(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-           
+
             //string cultureLocal = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
             //string en = ConfigurationManager.AppSettings["cultureEng"];
 
@@ -68,7 +68,7 @@ namespace eActForm.Controllers
         }
         public ActionResult purposeDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-           
+
 
             if (activity_TBMMKT_Model.purposeModel.Count == 0)
             {
@@ -78,7 +78,7 @@ namespace eActForm.Controllers
         }
         public ActionResult placeDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-           
+
             if (activity_TBMMKT_Model.placeDetailModel.Count == 0)
             {
                 List<PlaceDetailModel> placeDetailModel = new List<PlaceDetailModel>();
@@ -92,8 +92,8 @@ namespace eActForm.Controllers
         }
         public ActionResult expensesDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-           
-            if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null|| !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
+
+            if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             {
                 CostDetailOfGroupPriceTBMMKT model = new CostDetailOfGroupPriceTBMMKT
                 {
@@ -166,6 +166,19 @@ namespace eActForm.Controllers
 
         public ActionResult exTravelDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            return PartialView(activity_TBMMKT_Model);
+        }
+        public ActionResult travellingDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            if (activity_TBMMKT_Model.placeDetailModel.Count == 0)
+            {
+                List<PlaceDetailModel> placeDetailModel = new List<PlaceDetailModel>();
+                for (int i = 0; i < 8; i++)
+                {
+                    placeDetailModel.Add(new PlaceDetailModel() { place = "", forProject = "", period = "", departureDate = null, arrivalDate = null });
+                }
+                activity_TBMMKT_Model.placeDetailModel = placeDetailModel;
+            }
             return PartialView(activity_TBMMKT_Model);
         }
 

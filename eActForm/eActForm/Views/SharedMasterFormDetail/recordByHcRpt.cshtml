@@ -1,0 +1,69 @@
+﻿@*@model eActForm.Models.Activity_TBMMKT_Model*@
+@using eActForm.BusinessLayer;
+@{
+    var val1 = "..........................";
+    var val2 = "..........................";
+    var txt1 = "..........................";
+    var txt2 = "..........................";
+    if (Model.costDetailLists[0].total > 0)
+    {
+        val1 = Model.costDetailLists[0].total.ToString("#,###.00");
+        txt1 = DocumentsAppCode.ThaiBahtText(Model.costDetailLists[0].total.ToString());
+    }
+
+    if (Model.costDetailLists[1].total > 0)
+    {
+        val2 = Model.costDetailLists[1].total.ToString("#,###.00");
+        txt2 = DocumentsAppCode.ThaiBahtText(Model.costDetailLists[1].total.ToString());
+    }
+
+}
+<table class="tablethin fontDocSmall " style="width:100%; text-align:center;" border="1" cellpadding="3" cellspacing="0">
+    <tr style="height:25px;">
+        <td colspan="6" style=" text-align:left; border-bottom:0px;">
+            <div class=" fontDocSmall " style="padding-left:5em;">
+                <b>บันทึกสำนักทรัพยากรบุคคล</b>
+            </div>
+
+        </td>
+    </tr>
+    <tr style="height:20px;">
+        <td style="width: 15%;text-align: left;border-top: 0px;border-right: 0px;border-bottom: 0px;">
+        </td>
+        <td style="width: 25%;text-align: left; border-width:0px 0px 0px 0px;">
+            1.เห็นควรพิจารณาอนุมัติ ค่าเบี้ยเลี้ยง
+        </td>
+        <td style="width: 5%;text-align: center;border-width: 0px 0px 0px 0px;">
+            จำนวน
+        </td>
+        <td style="padding-right:2em; width: 10%; text-align: right; border-width: 0px 0px 0px 0px;">
+            @val1
+        </td>
+        <td style="width: 20%; text-align: left; border-width: 0px 0px 0px 0px;">
+            บาท (@txt1)
+        </td>
+        <td style="width: 25%;text-align: left;border-top: 0px;border-left: 0px;border-bottom: 0px;">
+            โดยรวมเข้ากับเงินเดือน
+        </td>
+    </tr>
+    <tr style="height: 20px;">
+        <td style="text-align:left; border-top:0px;  border-right:0px;">
+        </td>
+        <td style="width: 30%;text-align: left;border-top: 0px;border-right: 0px;border-left: 0px;">
+            2.เห็นควรพิจารณาอนุมัติ ค่าที่พัก ค่าพาหนะ
+        </td>
+        <td style="text-align:center;  border-top:0px;border-right:0px; border-left:0px;">
+            จำนวน
+        </td>
+        <td style="padding-right:2em;text-align:right; border-top:0px;border-right:0px;  border-left:0px;">
+            @val2
+        </td>
+        <td style="text-align:left; border-top:0px;border-right:0px;  border-left:0px;">
+            บาท (@txt2)
+        </td>
+        <td style="text-align:left; border-top:0px; border-left:0px; ">
+            โดยตั้งเบิกจ่ายต่อไป
+        </td>
+    </tr>
+</table>
+<div style="height:15px;"></div>
