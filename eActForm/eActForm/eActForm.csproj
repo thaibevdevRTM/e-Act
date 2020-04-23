@@ -264,6 +264,7 @@
     <Compile Include="BusinessLayer\Appcodes\UserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UtilsAppCode.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetRegional.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetPosition.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetSubject.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryOtherMaster.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
@@ -350,6 +351,7 @@
     <Compile Include="Models\exPerryCashModel.cs" />
     <Compile Include="Models\ImportExcel.cs" />
     <Compile Include="Models\DataMasterModels\salesTeamModel.cs" />
+    <Compile Include="Models\positionModel.cs" />
     <Compile Include="Models\RegionalModel.cs" />
     <Compile Include="Models\TB_Act_ActivityChoiceSelectModel.cs" />
     <Compile Include="Models\TB_Act_master_list_choiceModel.cs" />
@@ -2818,7 +2820,6 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
-    <Content Include="ActBudget\fileNotFound.pdf" />
     <Content Include="ActivityFormPdf\fileNotFound.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -3138,6 +3139,7 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ActBudget\" />
     <Folder Include="App_Data\" />
     <Folder Include="bin\bin\en\" />
     <Folder Include="BusinessLayer\Tbmmkt\Appcodes\" />
