@@ -264,7 +264,7 @@ namespace eActForm.Models
 
         public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath, string serverMapPath)
         {
-            GridHtml = GridHtml.Replace("./images", (ConfigurationManager.AppSettings["renderHost"] + ConfigurationManager.AppSettings["renderPathFile"] + "images"));
+            GridHtml = GridHtml.Replace("./images/check", (ConfigurationManager.AppSettings["renderHost"] + ConfigurationManager.AppSettings["renderPathFile"] + "images/check"));
             ContentType xlsxContent = new ContentType("application/pdf");
             MemoryStream msPreview = new MemoryStream();
             byte[] PreviewBytes = new byte[0];
