@@ -117,7 +117,7 @@
                                         calCulateAll();
                             });
                             function activeLinkViewPreviousPV() {
-                                $("#linkViewActNoOld").attr("href", "/MainForm?activityId=" + $('#ddlActivityNoSub').val() + "&mode=edit&typeForm=TBM&master_type_form_id=" + "@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]");
+                                $("#linkViewActNoOld").attr("href", "@ConfigurationManager.AppSettings["renderPathFile"]"+"MainForm?activityId=" + $('#ddlActivityNoSub').val() + "&mode=edit&typeForm=TBM&master_type_form_id=" + "@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]");
                             }
                         </script>
                     </div>
