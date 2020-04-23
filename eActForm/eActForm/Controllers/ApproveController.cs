@@ -118,6 +118,7 @@ namespace eActForm.Controllers
             {
                 models = ApproveAppCode.getApproveByActFormId(actId);
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
+                //เพิ่มตัดตำแหน่ง
                 models.approveFlowDetail = flowModel.flowDetail;
                 //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
@@ -240,6 +241,8 @@ namespace eActForm.Controllers
             {
                 models = ApproveAppCode.getApproveByActFormId(actId);
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
+                //เพิ่มตัดตำแหน่ง
+
                 models.approveFlowDetail = flowModel.flowDetail;
                 //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();

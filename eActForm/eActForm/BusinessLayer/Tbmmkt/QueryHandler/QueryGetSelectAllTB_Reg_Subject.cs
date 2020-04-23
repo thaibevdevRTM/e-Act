@@ -68,7 +68,6 @@ namespace eActForm.BusinessLayer
                 ExceptionManager.WriteError("GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow => " + ex.Message);
                 return new List<TB_Reg_Subject>();
             }
-        }
-
+        }           
     }
 }

@@ -1,0 +1,399 @@
+﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+<table style="width: 100%;">
+    <tr>
+        <td>
+            <div class="form-group">
+                <label class="control-label col-md-12 col-xs-12 hrTab" style="text-align:left;">
+                    ส่วนที่ 6 : รายละเอียด ค่าใช้จ่าย (รวมภาษีมูลค่าเพิ่ม) ในงวดนี้
+                </label>
+            </div>
+        </td>
+    </tr>
+</table>
+<table style="width: 100%;">
+    <tr>
+        <td>
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    สั่งจ่ายครั้งที่ :
+                </label>
+
+                <div class="col-md-3 col-xs-12">
+                    <div class="row">
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.payNo, new { @class = "form-control textboxcss", @id = "txtpayNo" })
+                        <script>
+                            $('#txtpayNo').blur(function () {
+                                checktxtpayNo();
+                            });
+                            function checktxtpayNo() {
+                                if ($('#txtpayNo').val() == "1" || $('#txtpayNo').val().replace(' ', '') == "") {
+                                    $('#ddlActivityNoSub').val("");
+                                    $('#ddlActivityNoSub').prop('disabled', true);
+                                    $('#linkViewActNoOld').hide();
+                                } else {
+                                    var dataToBeSend = {
+                                    fiscalYear:$('#ddlFiscalYear').val()
+                                    ,master_type_form_id:"@Model.activityFormTBMMKT.master_type_form_id"
+                                    ,payNo:$('#txtpayNo').val()
+                                    };
+
+                                    $.ajax('@Url.Action("GetDataPVPrevious", "GetDataMainForm")',
+                                    {
+                                        contentType:"application/json;charset=utf-8",
+                                        data:JSON.stringify(dataToBeSend),
+                                        dataType:'json',
+                                        type:"POST",
+                                        success:function(response){
+                                            if(response.Data.tbToAjax.length>0){
+                                                $("#ddlActivityNoSub option[value!='']").remove();
+                                                $("#pvPrevious_totalallPayNo option[value!='']").remove();
+                                                $("#pvPrevious_totalallPayNo option[value!='']").remove();
+                                                $.each(response.Data.tbToAjax,function(){
+                                                    $("#ddlActivityNoSub").append($("<option></option>").val(this['activityId']).html(this['activityNo']));
+                                                    $("#ddlActivityNoSub").selectpicker('refresh');
+                                                    $("#pvPrevious_totalallPayNo").append($("<option></option>").val(this['activityId']).html(this['totalallPayNo']));
+                                                    $("#pvPrevious_totalallPayByIO").append($("<option></option>").val(this['activityId']).html(this['totalallPayByIO']));
+                                                });
+                                            }
+                                            else{
+
+                                            }
+                                        },
+                                        error:function(data){
+                                            alert("ErrorGetDataGLPaymentVoucher.");
+                                        }
+                                    });
+
+                                    $('#ddlActivityNoSub').prop('disabled', false);
+                                }
+                                $("#ddlActivityNoSub").selectpicker('refresh');
+                            }
+                        </script>
+                    </div>
+                </div>
+                <label class="control-label col-md-2 col-xs-12" style="text-align:left;">
+                    สั่งจ่ายต่อจากเอกสาร :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.activityIdNoSub, new SelectList(Model.listGetDataPVPrevious, "activityId", "activityNo", Model.tB_Act_ActivityForm_DetailOther.activityIdNoSub), "", new
+                   {
+                       @class = "form-control selectpicker",
+                       @title = "สำหรับกรณีสั่งจ่ายตั้งแต่ครั้งที่2ขึ้นไป",
+                       id = "ddlActivityNoSub"
+                   })
+                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.activityIdNoSub, new SelectList(Model.listGetDataPVPrevious, "activityId", "totalallPayByIO", Model.tB_Act_ActivityForm_DetailOther.activityIdNoSub), "", new
+                   {
+                       @class = "form-control",
+                       @style = "display: none;",
+                       disabled = "disabled",
+                       id = "pvPrevious_totalallPayByIO"
+                   })
+                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.activityIdNoSub, new SelectList(Model.listGetDataPVPrevious, "activityId", "totalallPayNo", Model.tB_Act_ActivityForm_DetailOther.activityIdNoSub), "", new
+                   {
+                       @class = "form-control",
+                       @style = "display: none;",
+                       disabled = "disabled",
+                       id = "pvPrevious_totalallPayNo"
+                   })
+                        <script>
+                            $('#ddlActivityNoSub').selectpicker({
+                                    liveSearch: true,
+                                showSubtext: true
+                            });
+                            $('#ddlActivityNoSub').change(function () {
+                                        if ($('#ddlActivityNoSub').val() != '') {
+                                            activeLinkViewPreviousPV();
+                                    $("#pvPrevious_totalallPayByIO").val($("#ddlActivityNoSub").val());
+                                    $("#pvPrevious_totalallPayNo").val($("#ddlActivityNoSub").val());
+                                    $('#linkViewActNoOld').show();
+                                        } else {
+                                    $("#pvPrevious_totalallPayByIO").val('');
+                                    $("#pvPrevious_totalallPayNo").val('');
+                                    $('#linkViewActNoOld').hide();
+                                        }
+                                        calCulateAll();
+                            });
+                            function activeLinkViewPreviousPV() {
+                                $("#linkViewActNoOld").attr("href", "/MainForm?activityId=" + $('#ddlActivityNoSub').val() + "&mode=edit&typeForm=TBM&master_type_form_id=" + "@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]");
+                            }
+                        </script>
+                    </div>
+                </div>
+                <div class="col-md-1 col-xs-12">
+                    <div class="row" style="padding-top:3px;">
+                        &nbsp;
+                        @Html.ActionLink(" ", "Index", "MainForm", null, new { id = "linkViewActNoOld", @class = "btn ink-reaction btn-info fa fa-search", title = "กดเพื่อดูข้อมูลใบสั่งจ่ายที่เลือก", target = "_blank", style = "display:none;" })
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+<table id="tabelSectionSix" style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+
+    <tr style="background-color:#2f74b5;color:white;" class="highHeadFooterTable">
+        <th style="width: 5%;border-style: solid;border-width: 0px 0px 1px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">&nbsp;</th>
+        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">IO</th>
+        <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">รายละเอียด</th>
+        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">VAT</th>
+        <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;border-color: #b4a0a0;">จำนวนเงิน(บาท)</th>
+
+    </tr>
+    @{ var index = 0;}
+    @foreach (var item in Model.activityOfEstimateList)
+    {
+        <tr class="tagCountRowinTable tRow2_@index">
+            <td style="border-style: solid;border-width: 1px 0px 0px 1px; border-collapse: collapse;text-align:center;padding-left:5px;padding-top:5px;">
+                @if (index == 0)
+                {
+                    <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" id="btnDeleteRowTables" disabled="disabled"></button>
+                }
+                else
+                {
+                    <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" id="btnDeleteRowTables" onclick="deleteRowTableSectionSix(this);"></button>
+                }
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                @Html.DropDownList("activityOfEstimateList[" + index + "].IO", new SelectList(Model.listGetDataIO, "IO", "IO", item.IO), "", new { @class = "form-control" })
+                <script>
+                    $('#activityOfEstimateList_0__IO').change(function () {
+                        calCulateAll();
+                    });
+                </script>
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss txtproductDetail_@index" />
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                @Html.DropDownList("activityOfEstimateList[" + index + "].listChoiceId", new SelectList(Model.list_1, "id", "name", item.listChoiceId), "", new { @class = "form-control" })
+                <script>
+                    $('#activityOfEstimateList_0__listChoiceId').change(function () {
+                        calCulateAll();
+                    });
+                </script>
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                <input type="hidden" value="@item.normalCost" id="activityOfEstimateList[@index].normalCost" name="activityOfEstimateList[@index].normalCost" class="form-control textboxcss text-right hidnormalCost_@index" />
+                @Html.TextBoxFor(x => item.normalCost, "{0:n2}", new { @id = "activityOfEstimateList[" + index + "].normalCost", Name = "activityOfEstimateList[" + index + "].normalCost", @class = "form-control textboxcss text-right txtnormalCost_" + index })
+                <script>
+                     $(".txtnormalCost_@index").blur(function () {
+                         calCulateAll();
+                         $(".hidnormalCost_0").val($(".txtnormalCost_0").val());
+                        });
+                </script>
+            </td>
+        </tr>
+        index++;
+    }
+</table>
+<table id="tableTotal" style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr class="highHeadFooterTable">
+        <td colspan="3" style="width:70%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:right;">
+            รวม&nbsp;
+        </td>
+        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+            <label id="totalnormalCostEstimate" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+            @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate, new { @id = "hdtotalnormalCostEstimate" })
+        </td>
+    </tr>
+    <tr class="highHeadFooterTable">
+        <td colspan="3" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:right;">
+            ภาษีมูลค่าเพิ่ม 7%&nbsp;
+        </td>
+        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+            <label id="totalVat" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalvat.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+            @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalvat, new { @id = "hdtotalVat" })
+        </td>
+    </tr>
+    <tr class="highHeadFooterTable" style="background-color:#faf7b9">
+        <td colspan="3" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            รวมทั้งสิ้น(บาท)&nbsp;
+        </td>
+        <td style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            <label id="totalnormalCostEstimateWithVat" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+            @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimateWithVat, new { @id = "hdtotalnormalCostEstimateWithVat" })
+        </td>
+    </tr>
+    <tr class="highHeadFooterTable">
+        <td colspan="3" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            งบผูกพันรวม&nbsp;
+        </td>
+        <td style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            <label id="totalallPayByIO" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalallPayByIO.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+            @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalallPayByIO, new { @id = "hdtotalallPayByIO" })
+        </td>
+    </tr>
+    <tr class="highHeadFooterTable">
+        <td colspan="3" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            งบฯ สะสม&nbsp;
+        </td>
+        <td style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            <label id="totalallPayNo" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalallPayNo.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+            @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalallPayNo, new { @id = "hdtotalallPayNo" })
+        </td>
+    </tr>
+    <tr class="highHeadFooterTable" style="background-color:#faf7b9">
+        <td colspan="3" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            คงเหลือ(บาท)&nbsp;
+        </td>
+        <td style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;text-align:right;">
+            <label id="totalallPayByIOBalance" type="text" readonly="readonly">@Model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance.Value.ToString("#,##0.00")</label>&nbsp;&nbsp;
+            @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance, new { @id = "hdtotalallPayByIOBalance" })
+        </td>
+    </tr>
+</table>
+<div id="addEx" class="row pull-right" style="width:150px;margin-top: 5px;" onclick="tbAddRowSectionSix();">
+    <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
+</div>
+<div style="height:10px;">&nbsp;</div>
+<script>
+    $(function () {
+         @if (Model.listGetDataIO != null)
+                        {
+             @:payByIOSelect.push('');
+             foreach (var itemData in Model.listGetDataIO)
+             {
+             @:payByIOSelect.push("@itemData.totalPayByIO");
+             }
+         }
+        calCulateAll();
+    });
+    function calCulateAll() {
+        sumall();
+        caltotalallPayByIO();
+        calVat();
+        caltotalnormalCostEstimateWithVat();
+        caltotalallPayNo();
+        catotalallPayByIOBalance();
+    }
+    function sumall() {
+        var normalCostAll = 0.00;
+        var rowCount = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
+
+        for (i = 0; i < rowCount; i++) {
+            if ($(".txtnormalCost_" + i.toString()).val() != '') {
+                var rownormalCost = parseFloat($(".txtnormalCost_" + i.toString()).val().replaceAll(",", ""));
+                $(".hidnormalCost_" + i.toString()).val(rownormalCost.toFixed(2));
+                normalCostAll = normalCostAll + rownormalCost;
+            }
+        }
+        $("#hdtotalnormalCostEstimate").val(normalCostAll);
+        $("#totalnormalCostEstimate").text(normalCostAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+    }
+    function tbAddRowSectionSix() {
+        var nextNoId = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length).toString();
+        var trHTML = $('.tRow2_0').html();
+        trHTML = (trHTML + "<script> $('#activityOfEstimateList_0__IO').val('');<\/script>");
+        trHTML = (trHTML + "<script> $('.txtproductDetail_0').val('');<\/script>");
+        trHTML = (trHTML + "<script> $('#activityOfEstimateList_0__listChoiceId').val('');<\/script>");
+        trHTML = (trHTML + "<script> $('.txtnormalCost_0').val('');<\/script>");
+        trHTML = trHTML.replaceAll('[0].IO', '[' + nextNoId + '].IO');
+        trHTML = trHTML.replaceAll('[0].productDetail', '[' + nextNoId + '].productDetail');
+        trHTML = trHTML.replaceAll('[0].listChoiceId', '[' + nextNoId + '].listChoiceId');
+        trHTML = trHTML.replaceAll('[0].normalCost', '[' + nextNoId + '].normalCost');
+        trHTML = trHTML.replaceAll('_0__IO', '_' + nextNoId + '__IO');
+        trHTML = trHTML.replaceAll("txtproductDetail_0", "txtproductDetail_" + nextNoId);
+        trHTML = trHTML.replaceAll('_0__listChoiceId', '_' + nextNoId + '__listChoiceId');
+        trHTML = trHTML.replaceAll('txtnormalCost_0', 'txtnormalCost_' + nextNoId);
+        trHTML = trHTML.replaceAll('hidnormalCost_0', 'hidnormalCost_' + nextNoId);
+        trHTML = trHTML.replaceAll('id="btnDeleteRowTables" disabled="disabled"', 'id="btnDeleteRowTables" onclick="deleteRowTableSectionSix(this);"');
+        trHTML = ("<tr class=\"tagCountRowinTable tRow_" + nextNoId + "\">" + trHTML);
+        trHTML = (trHTML + "</tr>");
+        $('#tabelSectionSix').append(trHTML);
+    }
+    function deleteRowTableSectionSix(btn) {
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        calCulateAll();
+    }
+
+    function caltotalallPayByIO() {
+        var previousPayTotal = 0;
+        var sumtotalallPayByIO = 0.00;
+        if ($("#pvPrevious_totalallPayByIO").val() != '') {
+            previousPayTotal = parseFloat($("#pvPrevious_totalallPayByIO>option:selected").html());
+            sumtotalallPayByIO = previousPayTotal;
+        }
+        else {
+
+            var payIOIncludeSelectAlready = [];
+            var rowCount2 = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
+            for (i = 0; i < rowCount2; i++) {
+                var selectIndexDropdown = $("#activityOfEstimateList_" + i + "__IO option:selected").index()
+                var txtIOByrow = $("#activityOfEstimateList_" + i + "__IO").val().replace(",", "");
+                    if (txtIOByrow != '') {
+                        if (checkValInArray(payIOIncludeSelectAlready, txtIOByrow)==false)/*ถ้าเคยรวมวงเงินด้วยIOเลขดังกล่าวแล้วจะไม่นำไปรวมในงบผูกพันอีก เช่น กรอก IO เลขเดียวกันมา2แถวขึ้นไป (กันเผื่อมี)*/
+                        {
+                            payIOIncludeSelectAlready.push(txtIOByrow);
+                            sumtotalallPayByIO = (sumtotalallPayByIO + parseFloat(payByIOSelect[selectIndexDropdown])) + previousPayTotal;
+                        }
+                    }
+                }
+        }
+        $("#hdtotalallPayByIO").val(sumtotalallPayByIO);
+        $("#totalallPayByIO").text(sumtotalallPayByIO.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+    }
+    function calVat() {
+        var sumVat = 0.00;
+        var rowCount2 = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
+        for (i = 0; i < rowCount2; i++) {
+            var selectIndexDropdown = $("#activityOfEstimateList_" + i + "__IO option:selected").index()
+            var txtIOByrow = $("#activityOfEstimateList_" + i + "__IO").val().replace(",", "");
+            var txtVat = $("#activityOfEstimateList_" + i + "__listChoiceId option:selected").text();
+
+            if (txtIOByrow != '' && txtVat != '' && txtVat != '-' && $(".txtnormalCost_" + i.toString()).val() != '') {
+                var rownormalCost = parseFloat($(".txtnormalCost_" + i.toString()).val().replaceAll(",", ""));
+                rownormalCost = (rownormalCost*0.07)
+                sumVat = (sumVat + rownormalCost);
+            }
+        }
+        $("#hdtotalVat").val(sumVat);
+        $("#totalVat").text(sumVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+    }
+    function caltotalnormalCostEstimateWithVat() {
+
+        var sumcaltotalnormalCostEstimateWithVat = 0;
+        sumcaltotalnormalCostEstimateWithVat = (parseFloat($("#totalnormalCostEstimate").text().replaceAll(",", "")) + parseFloat($("#totalVat").text().replaceAll(",", "")));
+        $("#hdtotalnormalCostEstimateWithVat").val(sumcaltotalnormalCostEstimateWithVat);
+        $('#totalnormalCostEstimateWithVat').text(sumcaltotalnormalCostEstimateWithVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+    }
+    function caltotalallPayNo() {
+        var previoustotalallPayNo = 0;
+        if ($("#pvPrevious_totalallPayNo").val() != '') {
+            previoustotalallPayNo = parseFloat($("#pvPrevious_totalallPayNo>option:selected").html());
+        }
+
+        var totalFromPreviousPvNo = 0;//ใส่0ไปก่อนทำครั้งแรก Dummyไว้
+        var sumtotalallPayByIOBalance = (parseFloat($("#totalnormalCostEstimate").text().replaceAll(",", "")) + previoustotalallPayNo);
+        $("#hdtotalallPayNo").val(sumtotalallPayByIOBalance);
+        $('#totalallPayNo').text(sumtotalallPayByIOBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+    }
+    function catotalallPayByIOBalance() {
+        var sumtotalallPayByIOBalance = 0;
+        sumtotalallPayByIOBalance = (parseFloat($("#totalallPayByIO").text().replaceAll(",", "")) - parseFloat($("#totalallPayNo").text().replaceAll(",", "")));
+        $("#hdtotalallPayByIOBalance").val(sumtotalallPayByIOBalance);
+        $('#totalallPayByIOBalance').text(sumtotalallPayByIOBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+    }
+
+</script>
+@if (Model.tB_Act_ActivityForm_DetailOther.activityIdNoSub != "")
+{
+    <script>
+        $(function () {
+            $('#ddlActivityNoSub').prop('disabled', false);
+            activeLinkViewPreviousPV();
+            $('#linkViewActNoOld').show();
+        });
+    </script>
+}
+else
+{
+    <script>
+        $(function () {
+            $('#ddlActivityNoSub').prop('disabled', true);
+        });
+    </script>
+}

@@ -1,0 +1,91 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Globalization;
+@using System.Configuration;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@{
+    var dearGroup = "";
+    var Khun = "คุณ";
+    if (Model.approveFlowDetail != null)
+    {
+        foreach (var item in Model.approveFlowDetail)
+        {
+            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGroupApproveby"])
+            {
+                if (Model.activityFormTBMMKT.chkUseEng)
+                {
+                    dearGroup = (item.empFNameEN + " " + item.empLNameEN);
+                }
+                else
+                {
+                    dearGroup = (Khun + item.empFNameTH + " " + item.empLNameTH);
+                }
+            }
+        }
+    }
+    else
+    {
+        dearGroup = "";
+    }
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+}
+<table class="boxTableFormMainV1 fontDocV1">
+    <tr>
+        <td style="width:400px;" class="boxTableFormV1">
+            <table class="borderWidthMaxCollape">
+                <tr>
+                    <td style="width:10%;" class="tdTopLeft fontRedV1">
+                        &nbsp;เรื่อง:
+                    </td>
+                    <td style="width:85%;text-align:left;" class="fontBlueV1">
+                        @Html.Raw(Model.activityFormTBMMKT.activityName.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTopLeft fontRedV1 paddingRowTable">
+                        &nbsp;เรียน:
+                    </td>
+                    <td style="text-align:left;" class="fontBlueV1 paddingRowTable">
+                        @dearGroup
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td style="width: 305px;" class="boxTableFormV1 borderLeft">
+            <table class="borderWidthMaxCollape">
+                <tr>
+                    <td style="width:30%;text-align:left;" class="fontRedV1">
+                        &nbsp;วันที่:
+                    </td>
+                    <td style="width:70%;text-align:center;" class="fontBlueV1">
+                        @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;" class="fontRedV1 paddingRowTable">
+                        &nbsp;เลขที่:
+                    </td>
+                    <td style="text-align:center;" class="fontBlueV1 paddingRowTable">
+                        @Model.activityFormModel.activityNo
+                    </td>
+                </tr>
+                @foreach (var item in Model.activityFormTBMMKT.list_1_multi_select)
+                {
+                    string valEO = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(item).FirstOrDefault().EO;
+                    <tr>
+                        <td style="text-align:left;" class="fontRedV1 paddingRowTable">
+                            &nbsp;งบประมาณเลขที่EO:
+                        </td>
+                        <td style="text-align:center;" class="paddingRowTable">
+                            @valEO
+                            <br />
+                        </td>
+                    </tr>
+                }
+            </table>
+        </td>
+    </tr>
+</table>

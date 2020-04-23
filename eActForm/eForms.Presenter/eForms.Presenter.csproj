@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="BasePresenter.cs" />
     <Compile Include="Forms\activityFormOrderProductPresenter.cs" />
+    <Compile Include="MasterData\APPresenter.cs" />
+    <Compile Include="MasterData\FiscalYearPresenter.cs" />
     <Compile Include="MasterData\AmphuresPresenter.cs" />
     <Compile Include="MasterData\ProvincePresenter.cs" />
     <Compile Include="MasterData\SalesTeamPresenter.cs" />
