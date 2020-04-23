@@ -198,7 +198,7 @@ border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
                                     </td>
 
                                     <td style="vertical-align:middle;width: 16%;text-align: center; border-bottom: 1.1px solid black; border-top: 1.1px solid black; border-right: 1.1px solid black;">
-                                        <label ID="label6" style="font-weight:bold;">@Resources.Global.amount</label>
+                                            <label ID="label6" style="font-weight:bold;">@Resources.Global.amount</label>
                                     </td>
                                 </tr>
                                 @{ var index = 0;}
@@ -214,7 +214,14 @@ border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
                                             &nbsp;
                                         </td>
                                         <td style="text-align: right; border-bottom: 0.05px solid black; border-right: 1.1px solid black;">
-                                            @string.Format("{0:#,0.00}", @item.total) &nbsp;&nbsp;
+                                            @if (item.total == 0)
+                                            {
+                                                @:&nbsp;
+                                            }
+                                            else
+                                            {
+                                                @:@string.Format("{0:#,0.00}", @item.total)&nbsp; &nbsp;
+                                            }
                                         </td>
                                     </tr>
                                     index++;
