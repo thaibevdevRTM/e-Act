@@ -117,7 +117,7 @@
                             </td>
                             <td class="vatTitleColumn verticalTop vatWidth borderRight">
                                 @{ var vatTxt = ""; }
-                                @if (item.vat=="")
+                                @if (item.vat=="" || item.vat==null)
                                 {
                                     vatTxt = "NonVat";
                                 }
@@ -175,7 +175,16 @@
                                 <table class="borderWidthMaxCollape">
                                     <tr>
                                         <td class="paddingRowTable vatTitleColumn">
-                                            @item.vat
+                                            @{ var vatTxt = ""; }
+                                            @if (item.vat == "" || item.vat == null)
+                                            {
+                                                vatTxt = "NonVat";
+                                            }
+                                            else
+                                            {
+                                                vatTxt = item.vat;
+                                            }
+                                            @vatTxt
                                         </td>
                                     </tr>
                                 </table>
