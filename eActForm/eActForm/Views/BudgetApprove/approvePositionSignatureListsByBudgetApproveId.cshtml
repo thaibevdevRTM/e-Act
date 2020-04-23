@@ -1,78 +1,81 @@
 ﻿
 @model eActForm.Models.ApproveModel.approveModels
 
+@if (Model.approveFlowDetail != null)
+{ 
+    <table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
+        <tr>
 
-<table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
-	<tr>
 
-		@foreach (var item in Model.approveFlowDetail)
-		{
-			if (item.isShowInDoc)
-			{
-				<td style="width:150px;">
-					<div style="font-size:12.5px;">
-						@item.approveGroupName
-					</div>
-					<div style="font-size:12.5px;">
-						(@item.approveGroupNameEN)
-					</div>
-				</td>
-			}
-		}
-	</tr>
+            @foreach (var item in Model.approveFlowDetail)
+            {
+                if (item.isShowInDoc)
+                {
+                    <td style="width:150px;">
+                        <div style="font-size:12.5px;">
+                            @item.approveGroupName
+                        </div>
+                        <div style="font-size:12.5px;">
+                            (@item.approveGroupNameEN)
+                        </div>
+                    </td>
+                }
+            }
 
-	<tr>
-		@{ var index = 0;}
-		@foreach (var item in Model.approveFlowDetail)
-		{
-			if (item.isShowInDoc) 
-			{
-				if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3") // show img for approv only
-				{
-		<td>
-			@if (Model.approveDetailLists[index].signature.Length > 0)
-			{
-				@*var base64 = Convert.ToBase64String(Model.approveDetailLists[index].signature);
-				var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-				<img src="@imgSrc" class="img-thumbnail" style="text-align:center;margin:auto;" />*@
+        </tr>
 
-				<img style="text-align:center;" width="150" height="90" src="@Model.approveDetailLists[index].ImgName" />
-			}
-		</td>
-				}
-				else
-				{
-					<td>
-						<div style="text-align:center;height:100px;"></div>
-					</td>
-				}
-			}
-			index++;
-		}
-	</tr>
+        <tr>
+            @{ var index = 0;}
+            @foreach (var item in Model.approveFlowDetail)
+            {
+                if (item.isShowInDoc)
+                {
+                    if (Model.approveDetailLists != null && Model.approveDetailLists.Count > index && Model.approveDetailLists[index].empId == item.empId && Model.approveDetailLists[index].statusId == "3") // show img for approv only
+                    {
+                        <td>
+                            @if (Model.approveDetailLists[index].signature.Length > 0)
+                            {
+                                @*var base64 = Convert.ToBase64String(Model.approveDetailLists[index].signature);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                    <img src="@imgSrc" class="img-thumbnail" style="text-align:center;margin:auto;" />*@
 
-	<tr>
-		@foreach (var item in Model.approveFlowDetail)
-		{
-			if (item.isShowInDoc)
-			{
-				<td>
-					<div style="text-align:center; margin-top:20px; font-size:12.5px;">@item.empFNameTH @item.empLNameTH</div>
-				</td>
-			}
-		}
-	</tr>
-	<tr>
-		@foreach (var item in Model.approveFlowDetail)
-		{
-			if (item.isShowInDoc)
-			{
-				<td>
-					<div style="text-align:center; height:50px; font-size:12.5px;">@item.empPositionTitleTH</div>
-				</td>
-			}
-		}
-	</tr>
+                                <img style="text-align:center;" width="150" height="90" src="@Model.approveDetailLists[index].ImgName" />
+                            }
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <div style="text-align:center;height:100px;"></div>
+                        </td>
+                    }
+                }
+                index++;
+            }
+        </tr>
 
-</table>
+        <tr>
+            @foreach (var item in Model.approveFlowDetail)
+            {
+                if (item.isShowInDoc)
+                {
+                    <td>
+                        <div style="text-align:center; margin-top:20px; font-size:12.5px;">@item.empFNameTH @item.empLNameTH</div>
+                    </td>
+                }
+            }
+        </tr>
+        <tr>
+            @foreach (var item in Model.approveFlowDetail)
+            {
+                if (item.isShowInDoc)
+                {
+                    <td>
+                        <div style="text-align:center; height:50px; font-size:12.5px;">@item.empPositionTitleTH</div>
+                    </td>
+                }
+            }
+        </tr>
 
+    </table>
+}
