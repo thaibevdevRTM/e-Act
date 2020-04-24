@@ -67,16 +67,8 @@ D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Web
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eActForm.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eActForm.dll.config
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\WebLibrary.pdb
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Optimization.xml
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Mvc.xml
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eForms.Models.pdb
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\Newtonsoft.Json.xml
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\eForms.Presenter.pdb
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.xml
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.Razor.xml
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.Razor.xml
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\Antlr3.Runtime.pdb
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\System.Web.WebPages.Deployment.xml
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\en\eActForm.resources.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
@@ -176,3 +168,4 @@ D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleServ
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CopyComplete
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\ThaiBahtText.dll
