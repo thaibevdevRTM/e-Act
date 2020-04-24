@@ -11,6 +11,7 @@
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] && UtilsAppCode.Session.User.isAdminTBM || (UtilsAppCode.Session.User.isSuperAdmin))
             {
                 <li>@Html.ActionLink("TBM Import PRODUCT-POS/PREMIUM", "Index", "ImportMaterial_PRODUCT_POS_PREMIUM", new { }, null)</li>
+                <li>@Html.ActionLink("TBM Import Master AP", "Index", "ImportMaterial_PRODUCT_POS_PREMIUM", new { }, null)</li>
             }
         </ul>
     </li>
