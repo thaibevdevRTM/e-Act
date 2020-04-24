@@ -6,7 +6,7 @@
     || UtilsAppCode.Session.User.isCreator)
 {
     <li>
-        <a><i class="glyphicon glyphicon-tasks"></i>&nbsp;Import Data <span class="fa fa-chevron-down"></span></a>
+        <a><i class="fa fa-tasks"></i>&nbsp;Import Data <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] && UtilsAppCode.Session.User.isAdminTBM || (UtilsAppCode.Session.User.isSuperAdmin))
             {
