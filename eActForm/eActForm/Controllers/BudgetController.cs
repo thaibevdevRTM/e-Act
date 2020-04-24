@@ -112,7 +112,7 @@ namespace eActForm.Controllers  //update 21-04-2020
 			List<TB_Bud_Image_Model.BudImageModel> Result = new List<TB_Bud_Image_Model.BudImageModel>();
 			foreach (var inv_his in Budget_Model.Budget_Invoce_History_list) // preview invoice pdf non approved
 			{
-				if (inv_his.invoiceApproveStatusId == 1 || inv_his.invoiceApproveStatusId == 2) // draft or wait
+				if (inv_his.invoiceApproveStatusId == 1 || inv_his.invoiceApproveStatusId == 2) //draft or wait
 				{
 					Result.Add(Budget_Model.Budget_Invoice_list.Find(x => (x.invoiceNo == inv_his.invoiceNo)));
 				}
