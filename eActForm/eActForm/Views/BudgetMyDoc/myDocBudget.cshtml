@@ -173,9 +173,12 @@
             url: '@Url.Action("genPdfApprove", "BudgetMyDoc")',
             data: {
                 GridHtml: htmlResponse,
-                statusId: statusId,
-				budgetApproveId: budgetapproveId,
-				activityId: activityId,
+                budgetApproveId: budgetapproveId,
+
+                //GridHtml: htmlResponse,
+                //statusId: statusId,
+				//budgetApproveId: budgetapproveId,
+				//activityId: activityId,
             },
             dataType: "json",
             type: 'POST',
