@@ -28,10 +28,6 @@
                 <li>@Html.ActionLink("TBM ใบสั่งจ่าย", "Index", "MainForm", new { typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] }, null)</li>
 
             }
-            @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] && UtilsAppCode.Session.User.isAdminTBM || (UtilsAppCode.Session.User.isSuperAdmin))
-            {
-                <li>@Html.ActionLink("TBM Import PRODUCT-POS/PREMIUM", "Index", "ImportMaterial_PRODUCT_POS_PREMIUM", new { }, null)</li>
-            }
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] || UtilsAppCode.Session.User.isAdminHCM || (UtilsAppCode.Session.User.isSuperAdmin))
             {
                 <li>@Html.ActionLink("Horeca ยืมเงินทดรอง", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formAdvHcmId"] }, null)</li>
