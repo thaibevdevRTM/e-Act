@@ -31,19 +31,19 @@
 <hr />
 <div>
     <h2>
-        Download template file upload <a href="~/Uploadfiles/ImportMasterAP/template/TemplateImportAP.xlsx">[Click]</a>
+        Download template file upload <a href="~/Uploadfiles/ImportMasterAP/template/TemplateImportAP.xlsx" style="color:blue;">[Click]</a>
     </h2><br />
     1.ชื่อชีตต้องใช้ :dataimport<br />
     2.คอลัมน์ APCode :ห้ามเป็นค่าว่าง<br />
     3.คอลัมน์ Name1 :ห้ามเป็นค่าว่าง<br />
-    4.คอลัมน์ CoNo,HouseNo,Street,Street4,District,City,PostCode,Tel,FaxNo :ดูตัวอย่างการกรอกจากไฟล์TemplateImport<br />
+    4.คอลัมน์ CoNo,HouseNo,Street,Street4,District,City,PostCode,Tel,FaxNo :ดูตัวอย่างการกรอกจากไฟล์ TemplateImportAP.xlsx<br />
     5.คอลัมน์ InActive :ระบุ 0 คือใช้งานAPCode ,ระบุ 1 คือปิดการใช้งานAPCode<br />
 </div>
 <hr />
 <div>
     <h2>
-        Download Material ที่มีอยู่ในระบบปัจจุบัน.
-        @using (Html.BeginForm("ExportMat", "ImportMaterial_PRODUCT_POS_PREMIUM", FormMethod.Post))
+        Download Master AP ที่มีอยู่ในระบบปัจจุบัน.
+        @using (Html.BeginForm("ExportMat", "ImportMasterAP", FormMethod.Post))
         {
             <input type="submit" value="Export" />
         }
