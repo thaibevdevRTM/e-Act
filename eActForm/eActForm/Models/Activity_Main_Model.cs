@@ -211,7 +211,7 @@ namespace eActForm.Models
         public string unitPriceDisplayReport { get; set; }
         public string QtyName { get; set; }
         public string remark { get; set; }
-        public string listChoiceId { get; set; }
+        //public string listChoiceId { get; set; }
     }
 
     public class RequestEmpModel : ActBaseModel

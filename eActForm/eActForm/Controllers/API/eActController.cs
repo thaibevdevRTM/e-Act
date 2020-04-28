@@ -459,5 +459,18 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult getAllHospital(string text)
+        {
+            List<HospitalModel> getList = new List<HospitalModel>();
+            try
+            {
+                getList = QueryGetAllHospital.getAllHospital().Where(x => x.hospNameTH.Contains(text)).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getAllHospital => " + ex.Message);
+            }
+            return Json(getList, JsonRequestBehavior.AllowGet);
+        }
     }
 }

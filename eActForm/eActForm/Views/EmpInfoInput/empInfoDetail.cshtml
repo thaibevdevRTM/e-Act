@@ -114,17 +114,50 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
-                        ตามคำสั่ง :
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.orderOf, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtOrerOf" })
 
+            @if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
+            {
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
+                            ตามคำสั่ง :
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.orderOf, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtOrerOf" })
+
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+            else if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+            {
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
+                            วันเริ่มเข้าทำงาน :
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.orderOf, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtOrerOf" })
+
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
+                           :
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">                         
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
         </div>
         @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.SubjectId, new { @id = "hdSubjectId" })
     </fieldset>

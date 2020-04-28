@@ -266,6 +266,8 @@ namespace eActForm.Models
         public string statusEdit { get; set; }
         public string displayType { get; set; }
         public string subDisplayType { get; set; }
+        public string hospId { get; set; }
+        public string hospName { get; set; }
     }
 
     public class CostThemeDetail : ActBaseModel
