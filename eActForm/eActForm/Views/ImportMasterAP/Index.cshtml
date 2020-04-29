@@ -3,9 +3,9 @@
 @using System.Configuration;
 @model eActForm.Models.ImportExcel
 
-<h2>Import Material PRODUCT POS PREMIUM</h2>
+<h2>Import Master AP</h2>
 
-@using (Html.BeginForm("Index", "ImportMaterial_PRODUCT_POS_PREMIUM", FormMethod.Post, new { enctype = "multipart/form-data", id = "divUpload" }))
+@using (Html.BeginForm("Index", "ImportMasterAP", FormMethod.Post, new { enctype = "multipart/form-data", id = "divUpload" }))
 {
     @Html.TextBoxFor(m => m.file, new { type = "file" })
     <br />
@@ -31,20 +31,19 @@
 <hr />
 <div>
     <h2>
-        Download template file upload <a href="~/Uploadfiles/ImportMatProductPosPremium/template/template_import_data_product_pos_premium.xlsx">[Click]</a>
+        Download template file upload <a href="~/Uploadfiles/ImportMasterAP/template/TemplateImportAP.xlsx" style="color:blue;">[Click]</a>
     </h2><br />
     1.ชื่อชีตต้องใช้ :dataimport<br />
-    2.คอลัมน์ Qty :ถ้าไม่มีให้ใส่เลขศูนย์<br />
-    3.คอลัมน์ Sub Group :ให้ใส่ PRODUCT หรือ POS หรือ PREMIUM<br />
-    4.คอลัมน์ Status Mat :ให้ใส่ ในสต๊อก หรือ นอกสต๊อก<br />
-    5.คอลัมน์ Material, Sub Group,Status Mat :ห้ามเป็นค่าว่าง<br />
-    6.คอลัมน์ Status Use :ให้ใส่ ใช้งาน หรือ ไม่ใช้งาน<br />
+    2.คอลัมน์ APCode :ห้ามเป็นค่าว่าง<br />
+    3.คอลัมน์ Name1 :ห้ามเป็นค่าว่าง<br />
+    4.คอลัมน์ CoNo,HouseNo,Street,Street4,District,City,PostCode,Tel,FaxNo :ดูตัวอย่างการกรอกจากไฟล์ TemplateImportAP.xlsx<br />
+    5.คอลัมน์ InActive :ระบุ 0 คือใช้งานAPCode ,ระบุ 1 คือปิดการใช้งานAPCode<br />
 </div>
 <hr />
 <div>
     <h2>
-        Download Material ที่มีอยู่ในระบบปัจจุบัน.
-        @using (Html.BeginForm("ExportMat", "ImportMaterial_PRODUCT_POS_PREMIUM", FormMethod.Post))
+        Download Master AP ที่มีอยู่ในระบบปัจจุบัน.
+        @using (Html.BeginForm("ExportMat", "ImportMasterAP", FormMethod.Post))
         {
             <input type="submit" value="Export" />
         }

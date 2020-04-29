@@ -46,5 +46,38 @@ namespace eForms.Presenter.MasterData
             }
         }
 
+        public static int insert_TB_Act_Master_AP(string strConn, APModel aPModel)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(strConn, CommandType.StoredProcedure, "usp_insert_TB_Act_Master_AP"
+                    , new SqlParameter[] {
+                     new SqlParameter("@APCode",aPModel.APCode)
+                    ,new SqlParameter("@Name1",aPModel.Name1)
+                    ,new SqlParameter("@CoNo",aPModel.CoNo)
+                    ,new SqlParameter("@HouseNo",aPModel.HouseNo)
+                    ,new SqlParameter("@Street",aPModel.Street)
+                    ,new SqlParameter("@Street4",aPModel.Street4)
+                    ,new SqlParameter("@District",aPModel.District)
+                    ,new SqlParameter("@City",aPModel.City)
+                    ,new SqlParameter("@PostCode",aPModel.PostCode)
+                    ,new SqlParameter("@Tel",aPModel.Tel)
+                    ,new SqlParameter("@FaxNo",aPModel.FaxNo)
+                    ,new SqlParameter("@delFlag",aPModel.delFlag)
+                    ,new SqlParameter("@createdDate",aPModel.createdDate)
+                    ,new SqlParameter("@createdByUserId",aPModel.createdByUserId)
+                    ,new SqlParameter("@updatedDate",aPModel.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",aPModel.updatedByUserId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("insert_TB_Act_Master_AP >>" + ex.Message);
+            }
+
+            return result;
+        }
+
     }
 }
