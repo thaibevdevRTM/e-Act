@@ -37,6 +37,9 @@ namespace eActForm.Models
         public List<TB_Act_master_list_choiceModel> list_1 { get; set; }
         public List<TB_Act_master_list_choiceModel> list_2 { get; set; }
         public List<TB_Act_master_list_choiceModel> list_3 { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_4 { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_5 { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_6 { get; set; }
         public List<TB_Act_ActivityChoiceSelectModel> tB_Act_ActivityChoiceSelectModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model_2 { get; set; }
         public List<TB_Act_master_list_choiceModel> listPiority { get; set; }

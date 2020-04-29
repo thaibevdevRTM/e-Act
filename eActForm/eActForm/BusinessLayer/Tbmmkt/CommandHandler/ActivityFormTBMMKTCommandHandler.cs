@@ -1437,6 +1437,17 @@ namespace eActForm.BusinessLayer
 
             return result;
         }
+        public static Activity_TBMMKT_Model getMasterChooseSystemCRFormIT314(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            activity_TBMMKT_Model.list_0 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "ProcuretoPay").OrderBy(x => x.orderNum).ToList();
+            activity_TBMMKT_Model.list_1 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "ERPSystem").OrderBy(x => x.orderNum).ToList();
+            activity_TBMMKT_Model.list_2 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "OrdertoCash").OrderBy(x => x.orderNum).ToList();
+            activity_TBMMKT_Model.list_3 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "ForecasttoDelivery").OrderBy(x => x.orderNum).ToList();
+            activity_TBMMKT_Model.list_4 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "FinanceAndAccounting").OrderBy(x => x.orderNum).ToList();
+            activity_TBMMKT_Model.list_5 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "HumanCapital").OrderBy(x => x.orderNum).ToList();
+            activity_TBMMKT_Model.list_6 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "Other").OrderBy(x => x.orderNum).ToList();
+            return activity_TBMMKT_Model;
+        }
 
     }
 
