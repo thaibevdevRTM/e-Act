@@ -1,0 +1,35 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using System.Globalization;
+@using System.Configuration;
+@{
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+    var urlLogoCompany = ConfigurationManager.AppSettings["renderHostPublicIP"] + ConfigurationManager.AppSettings["renderPathFile"] + "images/Thaibev-logo.png";
+}
+
+
+<div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;" class="fontDocV2">
+    <table style="border-color:none;width: 100%;" class="fontDocV1">
+        <tr>
+            <td rowspan="2" style="width:135px;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;">
+                &nbsp;
+                @if (urlLogoCompany != "")
+                {
+                    <img width="120px" height="30px" src="@urlLogoCompany" />
+                }
+            </td>
+            <td rowspan="2" style="width:415px;text-align: center;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="fontDocV3">
+                @*<b>@Model.activityFormTBMMKT.formName</b>*@
+                <b>Change Request Form</b>
+            </td>
+            <td style="width:150px;text-align: left;">No. @Model.activityFormModel.activityNo</td>
+        </tr>
+        <tr>
+            <td style="width: 150px;text-align: left;">
+                @*วันที่&nbsp;&nbsp;: @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)*@
+                Date 01/01/2020
+            </td>
+        </tr>
+    </table>
+</div>
+

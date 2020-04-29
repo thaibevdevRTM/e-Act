@@ -328,6 +328,7 @@
     <Compile Include="Controllers\frmOrderProduct\orderProductController.cs" />
     <Compile Include="Controllers\partailViewByItem\partialByProductController.cs" />
     <Compile Include="Controllers\partailViewDataMaster\partialSaleTeamController.cs" />
+    <Compile Include="Controllers\PartialChangeRequestFormController.cs" />
     <Compile Include="Controllers\partialViewEmpInfo\partialEmpInfoController.cs" />
     <Compile Include="Controllers\SharedMasterFormDetail_InputController.cs" />
     <Compile Include="Controllers\SharedMasterFormHeaderCompany_InputController.cs" />
@@ -2624,6 +2625,7 @@
     <Content Include="images\maintain.png" />
     <Content Include="images\non_al.jpeg" />
     <Content Include="images\tbmmktLogo.png" />
+    <Content Include="images\Thaibev-logo.png" />
     <Content Include="images\warning_error.png" />
     <Content Include="images\xlx.png" />
     <Content Include="Scripts\Admin\adminPage.js" />
@@ -3136,6 +3138,8 @@
     <Content Include="Views\MenuList\importData.cshtml" />
     <Content Include="Views\ImportMasterAP\Index.cshtml" />
     <Content Include="Uploadfiles\ImportMasterAP\template\TemplateImportAP.xlsx" />
+    <Content Include="Views\PartialChangeRequestForm\crHeader.cshtml" />
+    <Content Include="Views\MenuList\itForm.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

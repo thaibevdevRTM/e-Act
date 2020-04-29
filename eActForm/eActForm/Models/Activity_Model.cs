@@ -64,6 +64,7 @@ namespace eActForm.Models
             EXPENSE,
             HCM,
             NUM,
+            ITForm,
             OtherCompany
         }
 

@@ -1,5 +1,5 @@
 ﻿@*=====ของDEVทดลองprint pdf=========*@
-@*<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
 @using (Html.BeginForm("printDoc", "MainReport", FormMethod.Post))
 {
     <input type="hidden" name="gridHtml" />
@@ -16,11 +16,11 @@
     $("#btnExportPDF").click(function () {
         $("input[name='gridHtml']").val($("#divForm").html());
     });
-</script>*@
+</script>
 @*===END==ของงDEVทดลองprint pdf=========*@
 
 @*=====ของใช้งานจริง=========*@
-@model eActForm.Models.Activity_TBMMKT_Model
+@*@model eActForm.Models.Activity_TBMMKT_Model
     @using eActForm.Models;
 
     <div class="modal-dialog modal-lg">
@@ -118,4 +118,4 @@
             $("input[name='gridHtml']").val($("#divForm").html());
         });
         //==========for production============
-    </script>
+    </script>*@
