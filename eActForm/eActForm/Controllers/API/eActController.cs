@@ -307,7 +307,9 @@ namespace eActForm.Controllers
                     bu = !langEn ? empDetailList.FirstOrDefault().bu : empDetailList.FirstOrDefault().buEN,
                     companyName = !langEn ? empDetailList.FirstOrDefault().companyName : empDetailList.FirstOrDefault().companyNameEN,
                     compId = empDetailList.FirstOrDefault().compId,
-                    email = empDetailList.FirstOrDefault().email
+                    email = empDetailList.FirstOrDefault().email,
+                    //hireDate = empDetailList.FirstOrDefault().hireDate
+                    hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(empDetailList.FirstOrDefault().hireDate), ConfigurationManager.AppSettings["formatDateUse"]),
                 };
                 result.Data = resultData;
             }

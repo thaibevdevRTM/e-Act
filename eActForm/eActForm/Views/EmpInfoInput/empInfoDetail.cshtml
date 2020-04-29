@@ -137,8 +137,8 @@
                             วันเริ่มเข้าทำงาน :
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.orderOf, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtOrerOf" })
-
+                            <input type="hidden" id="hdYears" class="form-control textboxcss" />
+                            <lable id="lblHireDate" class="form-control textboxcss" readonly></lable>
                         </div>
                     </div>
                 </div>
@@ -148,9 +148,9 @@
                 <div class="col-md-6 col-xs-12">
                     <div class="row">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtOrerOf">
-                           :
+                            :
                         </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">                         
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                         </div>
                     </div>
                 </div>
@@ -194,12 +194,13 @@
                 document.getElementById('lblLvl').innerHTML = response.Data.level;
                 document.getElementById('lblDept').innerHTML = response.Data.department;
                 document.getElementById('lblComp').innerHTML = response.Data.companyName;
-
+                document.getElementById('lblHireDate').innerHTML = response.Data.hireDate;
+                if (response.Data.hireDate == '') { alert("ไม่มีข้อมูลเริ่มทำงานกรุณาติดต่อเจ้าหน้าที่"); }
 
                 getRegional();
-             // $("#hdSubjectId").val('C67164E4-A891-43D6-B4F7-090F62C6290E');
-             //   getFlow();
-               // alert($("#hdSubjectId").val());
+                // $("#hdSubjectId").val('C67164E4-A891-43D6-B4F7-090F62C6290E');
+                //   getFlow();
+                // alert($("#hdSubjectId").val());
             }
             else {
                 if ($("#txtEmpId").val() != '') { alert('ไม่พบ Flow อนุมัติของรหัสพนักงาน ' + $("#txtEmpId").val()); }
@@ -211,9 +212,14 @@
                 document.getElementById('lblLvl').innerHTML = '';
                 document.getElementById('lblDept').innerHTML = '';
                 document.getElementById('lblComp').innerHTML = '';
+                document.getElementById('lblHireDate').innerHTML = '';
             }
 
-            getCashEmp();
+            if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]') {
+                getCashEmp();
+            } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
+
+            }
 
         });
     }
@@ -328,6 +334,7 @@
                 document.getElementById('lblLvl').innerHTML = '';
                 document.getElementById('lblDept').innerHTML = '';
                 document.getElementById('lblComp').innerHTML = '';
+                document.getElementById('lblHireDate').innerHTML = '';
             }
         });
     }
