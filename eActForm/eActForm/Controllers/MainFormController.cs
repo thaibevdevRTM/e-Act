@@ -70,9 +70,9 @@ namespace eActForm.Controllers
                        
                         ObjGetDataIO objGetDataIO = new ObjGetDataIO();
                         objGetDataIO.ActivityByEOSelect = "";
-                        foreach (var item in activity_TBMMKT_Model.listGetDataEO)
+                        foreach (var item in activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select)
                         {
-                            objGetDataIO.ActivityByEOSelect += (item.activityId+",");
+                            objGetDataIO.ActivityByEOSelect += (item+",");
                         }
                         activity_TBMMKT_Model.listGetDataIO= QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
                     }

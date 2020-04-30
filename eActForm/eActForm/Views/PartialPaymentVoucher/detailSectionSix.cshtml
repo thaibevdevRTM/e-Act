@@ -117,7 +117,7 @@
                             </td>
                             <td class="vatTitleColumn verticalTop vatWidth borderRight">
                                 @{ var vatTxt = ""; }
-                                @if (item.vat=="")
+                                @if (item.vat=="" || item.vat==null)
                                 {
                                     vatTxt = "NonVat";
                                 }
@@ -175,7 +175,16 @@
                                 <table class="borderWidthMaxCollape">
                                     <tr>
                                         <td class="paddingRowTable vatTitleColumn">
-                                            @item.vat
+                                            @{ var vatTxt = ""; }
+                                            @if (item.vat == "" || item.vat == null)
+                                            {
+                                                vatTxt = "NonVat";
+                                            }
+                                            else
+                                            {
+                                                vatTxt = item.vat;
+                                            }
+                                            @vatTxt
                                         </td>
                                     </tr>
                                 </table>
@@ -216,14 +225,14 @@
                                     </tr>
                                 </table>
                             </td>
-                            <td class="totalTitleColumn verticalTop totalWidth borderRight fontOrangeV1">
+                            <td class="verticalTop totalWidth borderRight fontOrangeV1 txtRight">
                                 <table class="borderWidthMaxCollape">
                                     <tr>
                                         @if (@item.rowNo == 1)
                                         {
-                                            <td class="paddingRowTable totalTitleColumn fontOrangeV1">
-                                                @item.totalnormalCostEstimate.Value.ToString("#,##0.00")
-                                            </td>
+                                        <td class="paddingRowTable  fontOrangeV1 txtRight" style="font-weight:bold;">
+                                            @item.totalnormalCostEstimate.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                        </td>
                                         }
                                         else
                                         {

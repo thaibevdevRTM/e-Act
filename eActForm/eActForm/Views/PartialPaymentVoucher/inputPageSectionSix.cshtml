@@ -117,7 +117,7 @@
                                         calCulateAll();
                             });
                             function activeLinkViewPreviousPV() {
-                                $("#linkViewActNoOld").attr("href", "/MainForm?activityId=" + $('#ddlActivityNoSub').val() + "&mode=edit&typeForm=TBM&master_type_form_id=" + "@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]");
+                                $("#linkViewActNoOld").attr("href", "@ConfigurationManager.AppSettings["renderPathFile"]"+"MainForm?activityId=" + $('#ddlActivityNoSub').val() + "&mode=edit&typeForm=TBM&master_type_form_id=" + "@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]");
                             }
                         </script>
                     </div>
@@ -343,8 +343,9 @@
             var selectIndexDropdown = $("#activityOfEstimateList_" + i + "__IO option:selected").index()
             var txtIOByrow = $("#activityOfEstimateList_" + i + "__IO").val().replace(",", "");
             var txtVat = $("#activityOfEstimateList_" + i + "__listChoiceId option:selected").text();
+            var txtVatValue = $("#activityOfEstimateList_" + i + "__listChoiceId").val();
 
-            if (txtIOByrow != '' && txtVat != '' && txtVat != '-' && $(".txtnormalCost_" + i.toString()).val() != '') {
+            if (txtIOByrow != '' && txtVat != '' && txtVatValue != '@ConfigurationManager.AppSettings["idNonVat"]' && $(".txtnormalCost_" + i.toString()).val() != '') {
                 var rownormalCost = parseFloat($(".txtnormalCost_" + i.toString()).val().replaceAll(",", ""));
                 rownormalCost = (rownormalCost*0.07)
                 sumVat = (sumVat + rownormalCost);
