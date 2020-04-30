@@ -1,202 +1,236 @@
 ﻿
 @model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.Models;
+@using System.Configuration;
+<div id="divForm" style="width:97%;">
+    <style>
+        .fontDocV1 {
+            font-family: 'TH SarabunPSK';
+            font-size: 18px;
+            color: black;
+        }
 
-    <div id="divForm" style="width:97%;">
-        <style>
-            .fontDocV1 {
-                font-family: 'TH SarabunPSK';
-                font-size: 18px;
-                color: black;
-            }
+        .fontDocV2 {
+            font-family: 'TH SarabunPSK';
+            font-size: 22px;
+            color: black;
+        }
 
-            .fontDocV2 {
-                font-family: 'TH SarabunPSK';
-                font-size: 22px;
-                color: black;
-            }
+        .fontDocSmall {
+            font-family: 'TH SarabunPSK';
+            font-size: 14px;
+            color: black;
+        }
 
-            .fontDocSmall {
-                font-family: 'TH SarabunPSK';
-                font-size: 14px;
-                color: black;
-            }
+        .fontDocSmallV2 {
+            font-family: 'TH SarabunPSK';
+            font-size: 16px;
+            color: black;
+        }
 
-            .fontDocSmallV2 {
-                font-family: 'TH SarabunPSK';
-                font-size: 16px;
-                color: black;
-            }
+        .fontDocSmallV2Bold {
+            font-family: 'TH SarabunPSK';
+            font-size: 16px;
+            color: black;
+            font-weight: bold;
+        }
 
-            .fontDocSmallV2Bold {
-                font-family: 'TH SarabunPSK';
-                font-size: 16px;
-                color: black;
-                font-weight: bold;
-            }
+        .fontSigV1 {
+            font-family: 'TH SarabunPSK';
+            font-size: 14px;
+            color: black;
+        }
 
-            .fontSigV1 {
-                font-family: 'TH SarabunPSK';
-                font-size: 14px;
-                color: black;
-            }
+        .paddingFormV1 {
+            width: 100%;
+            padding-left: 35px;
+        }
 
-            .paddingFormV1 {
-                width: 100%;
-                padding-left: 35px;
-            }
+        .formListDetailV1 {
+            height: 450px;
+            vertical-align: top;
+        }
 
-            .formListDetailV1 {
-                height: 450px;
-                vertical-align: top;
-            }
+        .formListDetailV2 {
+            height: 400px;
+            vertical-align: top;
+        }
 
-            .formListDetailV2 {
-                height: 400px;
-                vertical-align: top;
-            }
+        .fontDocV3 {
+            font-family: 'TH SarabunPSK';
+            font-size: 28px;
+            color: black;
+        }
 
-            .fontDocV3 {
-                font-family: 'TH SarabunPSK';
-                font-size: 28px;
-                color: black;
-            }
+        .paddingFormV2 {
+            width: 100%;
+        }
 
-            .paddingFormV2 {
-                width: 100%;
-            }
+        .paddingFormV3 {
+            width: 100%;
+        }
 
-            .paddingFormV3 {
-                width: 100%;
-            }
+        .formBorderStyle1 {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
 
-            .formBorderStyle1 {
-                border: 1px solid black;
-                border-collapse: collapse;
-            }
+        /*==========20200401===========*/
+        .formBorderStyle2 {
+            border: 1px solid black;
+            font-family: 'TH SarabunPSK';
+            font-size: 18px;
+            color: black;
+            border-collapse: collapse;
+        }
 
-            /*==========20200401===========*/
-            .formBorderStyle2 {
-                border: 1px solid black;
-                font-family: 'TH SarabunPSK';
-                font-size: 18px;
-                color: black;
-                border-collapse: collapse;
-            }
-            .txtLeft {
-                text-align: left;
-            }
-            .txtRight {
-                text-align: right;
-            }
-            .borderWidthMaxCollape {
-                width: 100%;
-                border-collapse: collapse;
-            }
-            .borderTop {
-                border-top: 1px solid black;
-            }
+        .txtLeft {
+            text-align: left;
+        }
 
-            .borderLeft {
-                border-left: 1px solid black;
-            }
-            .borderRight {
-                border-right: 1px solid black;
-            }
-            .borderBottomV2 {
-                border-bottom: 1px solid black;
-            }
-            .paddingRowTableMin {
-                padding-top: -12px;
-            }
+        .txtRight {
+            text-align: right;
+        }
 
-            .paddingRowTable {
-                padding-top: -15px;
-            }
-            .paddingRowTableV2 {
-                padding-top: -22px;
-            }
-            .paddingRowTableV3 {
-                padding-top: -27px;
-            }
+        .borderWidthMaxCollape {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-            .paddingRowTableN {
-                padding-top: -9px;
-            }
+        .borderTop {
+            border-top: 1px solid black;
+        }
 
-            .paddingRowTableV2N {
-                padding-top: -16px;
-            }
+        .borderLeft {
+            border-left: 1px solid black;
+        }
 
-            .paddingRowTableV3N {
-                padding-top: -21px;
-            }
+        .borderRight {
+            border-right: 1px solid black;
+        }
+
+        .borderBottomV2 {
+            border-bottom: 1px solid black;
+        }
+
+        .paddingRowTableMin {
+            padding-top: -12px;
+        }
+
+        .paddingRowTable {
+            padding-top: -15px;
+        }
+
+        .paddingRowTableV2 {
+            padding-top: -22px;
+        }
+
+        .paddingRowTableV3 {
+            padding-top: -27px;
+        }
+
+        .paddingRowTableN {
+            padding-top: -9px;
+        }
+
+        .paddingRowTableV2N {
+            padding-top: -16px;
+        }
+
+        .paddingRowTableV3N {
+            padding-top: -21px;
+        }
 
 
-            .borderBottom {
-                padding-top: -30px;
-                text-align: center;
-                border-top: 1px solid black;
+        .borderBottom {
+            padding-top: -30px;
+            text-align: center;
+            border-top: 1px solid black;
+        }
+
+        .tdTopLeft {
+            vertical-align: top;
+            text-align: left;
+        }
+
+        .tdTopRight {
+            vertical-align: top;
+            text-align: right;
+        }
+
+        .tdTopCenter {
+            vertical-align: top;
+            text-align: center;
+        }
+
+        .verticalTop {
+            vertical-align: top;
+        }
+
+        .boxTableFormMainV1 {
+            width: 100%;
+            border-top: 1px solid black;
+            border-right: 0px solid black;
+            border-bottom: 0px solid black;
+            border-left: 0px solid black;
+            border-collapse: collapse;
+        }
+
+        .boxTableFormV1 {
+            vertical-align: top;
+            padding-top: -9px;
+        }
+
+        .fontRedV1 {
+            color: #961930;
+        }
+
+        .fontRedV2 {
+            color: red;
+        }
+
+        .fontBlueV1 {
+            color: darkblue;
+        }
+
+        .fontOrangeV1 {
+            color: #942c00;
+        }
+
+        .cssCheckBoxV1 {
+            height: 10px;
+            width: 10px;
+        }
+
+        .picSigV1 {
+            height: 30px;
+            width: 100px;
+        }
+
+        .verAlignMid {
+            vertical-align: middle;
+        }
+
+        .formBorderStyle3 {
+            border-style: solid;
+            border-width: 0px 0px 0px 0px;
+            border-collapse: collapse;
+            font-family: 'TH SarabunPSK';
+            font-size: 18px;
+            color: black;
+        }
+        /*=====END=====20200401===========*/
+    </style>
+    <div class="@ViewBag.padding">
+        <table style="width: 100%;" id="tabel_report" class="@ViewBag.classFont">
+            @foreach (var item in Model.master_Type_Form_Detail_Models)
+            {
+                <tr>
+                    <td>
+                        @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+                    </td>
+                </tr>
             }
-            .tdTopLeft {
-                vertical-align: top;
-                text-align: left;
-            }
-            .tdTopRight {
-                vertical-align: top;
-                text-align: right;
-            }
-            .tdTopCenter {
-                vertical-align: top;
-                text-align: center;
-            }
-            .verticalTop {
-                vertical-align: top;
-            }
-            .boxTableFormMainV1 {
-                width: 100%;
-                border-top: 1px solid black;
-                border-right: 0px solid black;
-                border-bottom: 0px solid black;
-                border-left: 0px solid black;
-                border-collapse: collapse;
-            }
-            .boxTableFormV1 {
-                vertical-align: top;
-                padding-top: -9px;
-            }
-            .fontRedV1{
-               color:#961930;
-            }
-            .fontRedV2 {
-                color: red;
-            }
-            .fontBlueV1 {
-                color: darkblue;
-            }
-            .fontOrangeV1 {
-                color: #942c00;
-            }
-            .cssCheckBoxV1{
-                height:10px;
-                width:10px;
-            }
-            .picSigV1 {
-                height: 30px;
-                width: 100px;
-            }
-            /*=====END=====20200401===========*/
-        </style>
-        <div class="@ViewBag.padding">
-            <table style="width: 100%;" id="tabel_report" class="@ViewBag.classFont">
-                @foreach (var item in Model.master_Type_Form_Detail_Models)
-                {
-                    <tr>
-                        <td>
-                            @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
+        </table>
     </div>
+</div>
