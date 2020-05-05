@@ -369,7 +369,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                cashEmpList = QueryGetBenafit.getCashLimitByEmpId(empId).ToList();
+                cashEmpList = QueryGetBenefit.getCashLimitByEmpId(empId).ToList();
                 if (cashEmpList.Count > 0)
                 {
                     var resultData = new
@@ -473,6 +473,57 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError("getAllHospital => " + ex.Message);
             }
             return Json(getList, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult getCashLimitByTypeId(string typeId,string hireDate, string jobLevel)
+        {
+            List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
+            var result = new AjaxResult();
+            try
+            {
+
+              
+                 hireDate =   (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
+                cashEmpList = QueryGetBenefit.getCashLimitByTypeId(typeId, hireDate, jobLevel).ToList();
+                if (cashEmpList.Count > 0)
+                {
+                    var resultData = new
+                    {
+                        cashPerDay = cashEmpList[0].cashPerDay,
+                       
+                    };
+
+                    result.Data = resultData;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCashLimitByEmpId => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getCumulativeByEmpId(string empId)
+        {
+            List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
+            var result = new AjaxResult();
+            try
+            {
+                cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId).ToList();
+                if (cashEmpList.Count > 0)
+                {
+                    var resultData = new
+                    {
+                        cashPerDay = cashEmpList[0].cashPerDay,
+                    };
+                    result.Data = resultData;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCumulativeByEmpId => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

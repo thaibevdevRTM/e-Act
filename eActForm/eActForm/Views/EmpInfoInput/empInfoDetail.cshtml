@@ -188,6 +188,8 @@
             console.log(response);
             if (response.Data != null) {
                 $("#lblEmpName").val(response.Data.empName);
+                $("#lblLvl").val(response.Data.level);
+                $("#lblHireDate").val(response.Data.hireDate);
                 $("#hdCompId").val(response.Data.compId);
                 document.getElementById('lblEmpName').innerHTML = response.Data.empName;
                 document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
@@ -205,6 +207,8 @@
             else {
                 if ($("#txtEmpId").val() != '') { alert('ไม่พบ Flow อนุมัติของรหัสพนักงาน ' + $("#txtEmpId").val()); }
                 $("#lblEmpName").val('');
+                $("#lblLvl").val('');
+                $("#lblHireDate").val('');
                 $("#hdCompId").val('');
                 $("#ddlRegional").empty();
                 document.getElementById('lblEmpName').innerHTML = '';
@@ -218,9 +222,13 @@
             if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]') {
                 getCashEmp();
             } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
-
+                getCashLimit();
+                getCumulative();
+                alert($("#lblLimit").val() + "/" + $("#lblCumulative").val());
+                var balance = 0.00;
+                balance = parseFloat($("#lblLimit").val().replace(",", "")) - parseFloat($("#lblCumulative").val().replace(",", "")); 
+                $("#lblBalance").val(balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));                            
             }
-
         });
     }
 
@@ -249,6 +257,52 @@
                     document.getElementById('lblBath_1').innerHTML = "";
                     $("#ProductDetail_0").val(0);
                     $("#ProductDetail_1").val(0);
+                }
+            }
+        });
+    }
+     function getCashLimit() {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getCashLimitByTypeId", "eAct")',
+            data: {
+                typeId:'6BB0F68F-4B07-4E00-9B1E-B776D003D992',
+                hireDate: $("#lblHireDate").val(),
+                jobLevel: $("#lblLvl").val(),
+            }
+        }).done(function (response) {
+            console.log(response);
+            if (response.Data != null) {
+                document.getElementById('lblLimit').innerHTML = response.Data.cashPerDay;
+                $("#lblLimit").val(response.Data.cashPerDay);
+            }
+            else {
+                if ($("#txtEmpId").val() != "") {
+                    document.getElementById('lblLimit').innerHTML = "ไม่พบข้อมูลกรุณาติดต่อ...";
+                    $("#lblLimit").val(0);
+                }
+            }
+        });
+    }
+    function getCumulative() {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getCumulativeByEmpId", "eAct")',
+            data: {
+                empId: $("#txtEmpId").val(),
+                docDate: $("#txtdateDoc").val(),
+
+            }
+        }).done(function (response) {
+            console.log(response);
+            if (response.Data != null) {
+                document.getElementById('lblCumulative').innerHTML = response.Data.cashPerDay;
+                $("#lblCumulative").val(response.Data.cashPerDay);
+            }
+            else {
+                if ($("#txtEmpId").val() != "") {
+                    document.getElementById('lblCumulative').innerHTML = "ไม่พบข้อมูลกรุณาติดต่อ...";
+                    $("#lblCumulative").val(0);
                 }
             }
         });

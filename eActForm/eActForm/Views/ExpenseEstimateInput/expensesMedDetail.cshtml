@@ -207,7 +207,7 @@
                                 <label class="col-md-5 col-xs-12"> ค่ารักษาพยาบาลตามระเบียบบริษัทฯจากที่จ่ายจริงจำนวน</label>
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-                                        <label id="lblPercent" >0</label> %
+                                        <label id="lblPercent">0</label> %
                                     </div>
                                 </div>
                                 <label class="col-md-3 col-xs-12">  </label>
@@ -223,7 +223,7 @@
                                 <label class="col-md-5 col-xs-12">วงเงินช่วยเหลือค่ารักษาพยาบาลตามระดับ ปีละ</label>
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-                                        <label id="lblLimit">8,000</label>
+                                        <label id="lblLimit">0</label>
                                     </div>
                                 </div>
                                 <label class="col-md-3 col-xs-12"> บาท </label>
@@ -232,7 +232,6 @@
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
                                         <label id="lblCumulative">3,750.00</label>
-
                                     </div>
                                 </div>
                                 <label class="col-md-3 col-xs-12"> บาท </label>
@@ -240,8 +239,7 @@
                                 <label class="col-md-5 col-xs-12">คงเหลือสิทธิในการเบิกค่ารักษาพยาบาล                                </label>
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-                                        <label id="lblBalance">3,750.00</label>
-
+                                        <label id="lblBalance">0</label>
                                     </div>
                                 </div>
                                 <label class="col-md-3 col-xs-12"> บาท </label>
@@ -253,6 +251,8 @@
                                     </div>
                                 </div>
                                 <label class="col-md-3 col-xs-12"> บาท ( หนึ่งพันบาทถ้วน)</label>
+
+
                             </div>
                         </td>
                     </tr>
@@ -322,9 +322,9 @@
                         var amount = 0.00;
                         if (total != "" && per != "") {
                             amount = parseFloat(total) * (parseFloat(per) / 100);
-                            $("#lblAmount").val(amount);
-                            document.getElementById('lblAmount').innerHTML = amount;
-                           // $("#lblAmount").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                            //$("#lblAmount").val(amount);
+                            //document.getElementById('lblAmount').innerHTML = amount;
+                            $("#lblAmount").text(amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                         } else {
                             $("#lblAmount").val(0);
                             document.getElementById('lblAmount').innerHTML = "0";

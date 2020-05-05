@@ -256,7 +256,7 @@
     <Compile Include="BusinessLayer\Appcodes\ExcelAppCode.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetInvoiceActivityStstus.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetMessage.cs" />
-    <Compile Include="BusinessLayer\QueryHandler\QueryGetBenafit.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetBenefit.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetProductCostDetail.cs" />
     <Compile Include="BusinessLayer\Appcodes\AuthenAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\RepDetailAppCode.cs" />
