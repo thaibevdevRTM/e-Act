@@ -7,6 +7,7 @@
     var picCheckBoxTrue = "./images/check_b.png";
     var picCheckBoxFalse = "./images/check.png";
     var pathWeb = ConfigurationManager.AppSettings["renderHostPublicIP"] + ConfigurationManager.AppSettings["renderPathFile"];
+    var index = 0;
 }
 
 
@@ -19,13 +20,99 @@
         </tr>
         <tr>
             <td colspan="2" style="border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;">
-                &nbsp;<u>Choose system</u>
+                &nbsp;<u>Change type / ประเภทของการเปลี่ยนแปลง</u>
                 <br />
                 <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
                     <tr>
+                        @{
+                            index = 0;
+                        }
                         @foreach (var item in Model.list_7)
                         {
-                            <td><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                            if (index >= 0 && index <= 2)
+                            {
+                                if (index == 0)
+                                {
+                                    @:<td style="padding-left:40px;width:35%;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                                }
+                                else if (index == 1)
+                                {
+                                    @:<td colspan="2" style="padding-left:10px;width:65%;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                                }
+                            }
+                            index++;
+                        }
+                    </tr>
+                    <tr>
+                        @{
+                            index = 0;
+                        }
+                        @foreach (var item in Model.list_7)
+                        {
+                            if (index >= 2 && index <= 4)
+                            {
+                                if (index == 2)
+                                {
+                                    @:<td style="padding-left:40px;width:35%;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                                }
+                                else if (index == 3)
+                                {
+                                    @:<td style="padding-left:10px;width:27%;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                                }
+                                else
+                                {
+                                    @:<td style="width:38%;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                                }
+                            }
+                            index++;
+                        }
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;">
+                &nbsp;<u>Change Authorizations  / สิทธิ์การใช้งาน</u>
+                <br />
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr>
+                        @{
+                            index = 0;
+                        }
+                        @foreach (var item in Model.list_8)
+                        {
+                            if (index >= 0 && index <= 3)
+                            {
+                                if (index == 3)
+                                {
+                                    @:<td style="padding-left:40px;width:43%;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                                }
+                                else
+                                {
+                                    @:<td style="padding-left:40px;width:19%;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                                }
+                            }
+                            index++;
+                        }
+                    </tr>
+                    <tr>
+                        @{
+                            index = 0;
+                        }
+                        @foreach (var item in Model.list_8)
+                        {
+                            if (index >= 4 && index <= 7)
+                            {
+                                if (index == 7)
+                                {
+                                    @:<td style="padding-left:40px;width:43%;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                                }
+                                else
+                                {
+                                    @:<td style="padding-left:40px;width:19%;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                                }
+                            }
+                            index++;
                         }
                     </tr>
                 </table>
@@ -33,14 +120,21 @@
         </tr>
         <tr>
             <td colspan="2" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;padding-top:3px;">
-                &nbsp;Objectives and requirements / วัตถุประสงค์และรายละเอียดความต้องการ :
+                &nbsp;<u>List name (For more user, Please attach Excel file) / รายงานชื่อผู้ใช้งาน (ถ้ามีมากกว่า 5 คนขึ้นไป สามารถแนบไฟล์ Excel เพิ่มเติมได้)</u><br />
+
+                *****เดียวเอาตารางใส่<br />
+                *****เดียวเอาตารางใส่<br />
+                *****เดียวเอาตารางใส่<br />
+                *****เดียวเอาตารางใส่<br />
+
+                &nbsp;<u>More detail authorizations / รายละเอียดของสิทธิ์เพิ่มเติม</u><br />
+                &nbsp;More detail / อธิบายเพิ่มเติม :<br />
                 <br />&nbsp;
                 <br />&nbsp;
                 <br />&nbsp;
                 <br />&nbsp;
             </td>
         </tr>
-
         <tr>
             <td style="width: 50%;border-style: solid;border-width: 1px 0px 0px 0px;border-collapse: collapse;padding-top:3px;">
                 IT-FRM-314-Change Request Form
