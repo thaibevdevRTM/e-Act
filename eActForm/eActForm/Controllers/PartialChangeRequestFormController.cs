@@ -26,5 +26,11 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
+        public ActionResult cr_IT_Frm314_page2(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getMasterChooseSystemCRFormIT314_page2(activity_TBMMKT_Model);
+            return PartialView(activity_TBMMKT_Model);
+        }
+
     }
 }

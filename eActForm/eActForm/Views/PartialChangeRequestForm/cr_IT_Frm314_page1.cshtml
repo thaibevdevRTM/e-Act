@@ -10,7 +10,7 @@
 }
 
 
-<div id="divHeadCompany" runat="server" style="width: 100%;">
+<div id="divPage1" style="width: 100%;">
     <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
         <tr>
             <td colspan="2" style="width:100%;border-color:black;border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;background-color:#008000;color:white;" class="fontDocSmallV2Bold">
@@ -43,16 +43,25 @@
         </tr>
         <tr>
             <td colspan="2" style="border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;">
+                @{
+                    var index = 0;
+                    string[] valChooseRequest = new string[Model.list_chooseRequest.Count];
+                    foreach (var item in Model.list_chooseRequest)
+                    {
+                        valChooseRequest[index] = item.name;
+                        index++;
+                    }
+                }
                 &nbsp;<u>Choose request</u>
-                &nbsp;<img class="cssCheckBoxV1" src="@picCheckBoxFalse" />System change request / ขอเปลี่ยนแปลงระบบ
+                &nbsp;<img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@valChooseRequest[0]
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;<img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Reset SAP Password / รีเซ็ตรหัสผ่าน SAP
+                &nbsp;<img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@valChooseRequest[1]
                 <br />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Authorizations change request (Next page 2) / ขอเปลี่ยน นแปลงการใชสิ้ทธิ (ต่อหน้า 2)
+                <img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@valChooseRequest[2]
                 <br />
                 &nbsp;<u>Choose system</u>
                 <br />
@@ -374,4 +383,4 @@
         </tr>
     </table>
 </div>
-
+<div style="page-break-before: always;height:25px;">&nbsp;</div>
