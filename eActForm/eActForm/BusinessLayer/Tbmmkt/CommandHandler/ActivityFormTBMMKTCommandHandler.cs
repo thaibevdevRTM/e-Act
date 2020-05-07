@@ -97,6 +97,8 @@ namespace eActForm.BusinessLayer
         public static int insertEstimateToStored(List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList, string activityId, string createdByUserId, DateTime? createdDate)
         {
             int rtn = 0;
+            int insertIndex = 1;
+
             foreach (var item in activityOfEstimateList.ToList())
             {
 
@@ -127,7 +129,7 @@ namespace eActForm.BusinessLayer
                 rtn += insertEstimate(costThemeDetail);
             }
 
-            return rtn;
+            return insertIndex;
         }
 
         public static int processInsertTBProduct(int rtn, Activity_TBMMKT_Model model, string activityId)
