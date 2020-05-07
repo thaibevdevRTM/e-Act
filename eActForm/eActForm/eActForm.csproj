@@ -2823,6 +2823,8 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="ActBudget\fileNotFound.pdf" />
+    <Content Include="ActivityFormPdf\fileNotFound.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <Content Include="Scripts\bootstrap-select.js.map" />
@@ -3148,8 +3150,6 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ActBudget\" />
-    <Folder Include="ActivityFormPdf\" />
     <Folder Include="App_Data\" />
     <Folder Include="bin\bin\en\" />
     <Folder Include="BusinessLayer\Tbmmkt\Appcodes\" />
