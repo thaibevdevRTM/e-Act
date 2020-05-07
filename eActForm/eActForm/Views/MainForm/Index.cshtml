@@ -410,10 +410,11 @@ function CallImageView(obj) {
         row.parentNode.removeChild(row);
     }
 
-    function checkValInArray(arryFind,valCheck) {
+    function checkValInArray(arryFind, valCheck) {
+        var loopcheckValInArray = 0;
         var detect = false;
-        for (i = 0; i < arryFind.length; i++) {
-            if (arryFind[i] == valCheck) {
+        for (loopcheckValInArray = 0; loopcheckValInArray < arryFind.length; loopcheckValInArray++) {
+            if (arryFind[loopcheckValInArray] == valCheck) {
                 detect = true;
             }
         }
