@@ -127,6 +127,7 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.listChoiceId = item.listChoiceId;
                 costThemeDetail.compensate = item.compensate;
                 rtn += insertEstimate(costThemeDetail);
+                insertIndex ++;
             }
 
             return insertIndex;
