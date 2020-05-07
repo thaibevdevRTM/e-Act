@@ -3,35 +3,15 @@
 @using eActForm.Models;
 @using System.Configuration;
 
+<style>
+    .cssLabel {
+        text-align: right;
+        background-color: transparent;
+        border-color: transparent;
+    }
+</style>
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
-    @*<tr style="border-bottom:none;">
-            <td>
 
-
-                <div class="form-group">
-                    <div class="col-md-6 col-xs-12">
-                        <div class="row">
-                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
-                            สถานพยาบาลที่ไปตรวจรักษา  :
-                        </label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].hospName, new
-                               {
-                                        id = "txthospName_0",
-                                   @class = "form-control textboxcss font10  text-center  expenseList",
-                                   name = "expensesDetailModel.costDetailLists[0].hospName",
-                                   onkeyup = "autocompleDetail(this,0)"
-                               })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                        <div class="row"></div>
-                    </div>
-                </div>
-
-            </td>
-        </tr>*@
     <tr style="border-bottom:none;">
         <td>
             <div id="divExpensesMed" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
@@ -207,7 +187,8 @@
                                 <label class="col-md-5 col-xs-12"> ค่ารักษาพยาบาลตามระเบียบบริษัทฯจากที่จ่ายจริงจำนวน</label>
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-                                        <label id="lblPercent">0</label> %
+                                        <label id="lblPercent">0</label>
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.hospPercent, new { @id = "hdlPercent" })
                                     </div>
                                 </div>
                                 <label class="col-md-3 col-xs-12">  </label>
@@ -216,6 +197,7 @@
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
                                         <label id="lblAmount">0</label>
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amount, new { @id = "hdAmount" })
                                     </div>
                                 </div>
                                 <label class="col-md-3 col-xs-12"> บาท </label>
@@ -224,6 +206,7 @@
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
                                         <label id="lblLimit">0</label>
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountLimit, new { @id = "hdLimit" })
                                     </div>
                                 </div>
                                 <label class="col-md-3 col-xs-12"> บาท </label>
@@ -231,15 +214,17 @@
                                 <label class="col-md-5 col-xs-12">วงเงินใช้ไปสะสมยกมา</label>
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-                                        <label id="lblCumulative">3,750.00</label>
+                                        <label id="lblCumulative">0</label>
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountCumulative, new { @id = "hdCumulative" })
                                     </div>
                                 </div>
                                 <label class="col-md-3 col-xs-12"> บาท </label>
 
-                                <label class="col-md-5 col-xs-12">คงเหลือสิทธิในการเบิกค่ารักษาพยาบาล                                </label>
+                                <label class="col-md-5 col-xs-12">คงเหลือสิทธิในการเบิกค่ารักษาพยาบาล</label>
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
                                         <label id="lblBalance">0</label>
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountBalance, new { @id = "hdBalance" })
                                     </div>
                                 </div>
                                 <label class="col-md-3 col-xs-12"> บาท </label>
@@ -247,10 +232,11 @@
                                 <label class="col-md-5 col-xs-12">จำนวนเงินที่พนักงานได้รับทั้งสิ้น</label>
                                 <div class="col-md-4 col-xs-12">
                                     <div class="row">
-                                        <label id="lblReceived">3,750.00</label>
+                                        <label id="lblReceived">0.00</label>
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountReceived, new { @id = "hdReceived" })
                                     </div>
                                 </div>
-                                <label class="col-md-3 col-xs-12"> บาท ( หนึ่งพันบาทถ้วน)</label>
+                                <label class="col-md-3 col-xs-12"> บาท</label>
 
 
                             </div>
@@ -265,17 +251,17 @@
 
                 <script>
 
-                            function sumall() {
-                                var totalAll = 0.00;
-                                var rowCount = '@Model.expensesDetailModel.costDetailLists.Count';
+                    function sumall() {
+                        var totalAll = 0.00;
+                        var rowCount = '@Model.expensesDetailModel.costDetailLists.Count';
 
-                                for (i = 0; i < rowCount; i++) {
-                                    var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
-                                    totalAll = totalAll + rowtotal;
-                                }
-                                $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                $("#totalEstimate").val(totalAll);
-                                calAmount();
+                        for (i = 0; i < rowCount; i++) {
+                            var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
+                            totalAll = totalAll + rowtotal;
+                        }
+                        $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#totalEstimate").val(totalAll);
+                        calAmount();
                     }
                     sumall();
 
@@ -307,6 +293,7 @@
                                 //alert(ui.item.chk);
                                 // $("#" + i.id).val(ui.item.id)i.id + "/" + ui.item.label + "/" + i.label + "/" + i.value + "/" +
                                 $("#lblPercent").val(ui.item.chk);
+                                $("#hdPercent").val(ui.item.chk);
                                 document.getElementById('lblPercent').innerHTML = ui.item.chk;
                                 $("#hdHospId_" + index).val(ui.item.id);
                                 calAmount();
@@ -322,20 +309,32 @@
                         var amount = 0.00;
                         if (total != "" && per != "") {
                             amount = parseFloat(total) * (parseFloat(per) / 100);
-                            //$("#lblAmount").val(amount);
-                            //document.getElementById('lblAmount').innerHTML = amount;
                             $("#lblAmount").text(amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                            $("#lblAmount").val(amount);
+                            $("#hdAmount").val(amount);
+                            calReceived();
                         } else {
                             $("#lblAmount").val(0);
-                            document.getElementById('lblAmount').innerHTML = "0";
+                            $("#hdAmount").val(0);
+                            $("#lblAmount").text("0.00");
                         }
+                    }
 
-
-                        //$("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                    function calReceived() {
+                        var received = 0.00;
+                        var balance = parseFloat($("#lblBalance").val().replace(",", ""));
+                        var amount = parseFloat($("#lblAmount").val().replace(",", ""));
+                        if (amount > balance) {
+                            received = balance;
+                        } else {
+                            received = amount;
+                        }
+                        $("#lblReceived").text(received.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#lblReceived").val(received);
+                        $("#hdReceived").val(received);
                     }
 
                 $(function () {
-
                     $('#txtdateMed').datetimepicker({
                         language: 'th',
                         format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]',
@@ -347,8 +346,6 @@
                         minView: 2,
                         forceParse: 0
                     });
-
-
                 });
 
                 </script>

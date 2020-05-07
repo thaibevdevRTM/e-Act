@@ -156,6 +156,12 @@ namespace eActForm.Models
         public string activityIdNoSub { get; set; }
         public string orderOf { get; set; }
         public string regionalId { get; set; }
+        public int hospPercent { get; set; }
+        public decimal? amount { get; set; }
+        public decimal? amountLimit { get; set; }
+        public decimal? amountCumulative { get; set; }
+        public decimal? amountBalance { get; set; }
+        public decimal? amountReceived { get; set; }
     }
 
     public class TB_Act_ActivityForm_DetailOtherList : ActBaseModel

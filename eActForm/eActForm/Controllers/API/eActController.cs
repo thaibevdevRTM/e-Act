@@ -2,6 +2,7 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -476,25 +477,27 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult getCashLimitByTypeId(string typeId,string hireDate, string jobLevel)
+        public JsonResult getCashLimitByTypeId(string typeId, string hireDate, string jobLevel)
         {
             List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
             var result = new AjaxResult();
             try
             {
 
-              
-                 hireDate =   (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
-                cashEmpList = QueryGetBenefit.getCashLimitByTypeId(typeId, hireDate, jobLevel).ToList();
-                if (cashEmpList.Count > 0)
+                if (!string.IsNullOrEmpty(hireDate))
                 {
-                    var resultData = new
+                    hireDate = (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
+                    cashEmpList = QueryGetBenefit.getCashLimitByTypeId(typeId, hireDate, jobLevel).ToList();
+                    if (cashEmpList.Count > 0)
                     {
-                        cashPerDay = cashEmpList[0].cashPerDay,
-                       
-                    };
+                        var resultData = new
+                        {
+                            cashPerDay = cashEmpList[0].cashPerDay,
 
-                    result.Data = resultData;
+                        };
+
+                        result.Data = resultData;
+                    }
                 }
             }
             catch (Exception ex)
@@ -509,14 +512,60 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId).ToList();
-                if (cashEmpList.Count > 0)
+                if (!string.IsNullOrEmpty(empId))
                 {
+                    cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId).ToList();
+                    if (cashEmpList.Count > 0)
+                    {
+                        var resultData = new
+                        {
+                            cashPerDay = cashEmpList[0].cashPerDay,
+                        };
+                        result.Data = resultData;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCumulativeByEmpId => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getCashDetailByEmpId(string empId, string typeId, string hireDate, string jobLevel)
+        {
+            List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
+            var result = new AjaxResult();
+            try
+            {
+                decimal limit = 0, cumulative = 0, balance = 0;
+
+                if (!string.IsNullOrEmpty(empId))
+                {
+
+
+                    hireDate = (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
+                    cashEmpList = QueryGetBenefit.getCashLimitByTypeId(typeId, hireDate, jobLevel).ToList();
+                    if (cashEmpList.Count > 0)
+                    { 
+                        limit = cashEmpList[0].cashPerDay;
+                    }
+
+                    cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId).ToList();
+                    if (cashEmpList.Count > 0)
+                    {
+                        cumulative = cashEmpList[0].cashPerDay;
+                    }
+                    balance = limit - cumulative;
+
                     var resultData = new
                     {
+                        limit = limit,
+                        cumulative = cumulative,
+                        balance = balance,
                         cashPerDay = cashEmpList[0].cashPerDay,
                     };
                     result.Data = resultData;
+
                 }
             }
             catch (Exception ex)

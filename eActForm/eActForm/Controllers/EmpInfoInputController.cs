@@ -28,7 +28,7 @@ namespace eActForm.Controllers
             }
             else
             {
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]|| activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
                 {
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId = QueryGetSubject.getAllSubject().Where(x => x.typeFormId == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().id;
                     activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId;

@@ -2,8 +2,6 @@
 @using System.Configuration;
 @model eActForm.Models.Activity_TBMMKT_Model
 
-
-
 <div class="col-md-12" id="divEmpInfo">
     @*<div style="display:inline-block;"><label>ข้าพเจ้า</label> &nbsp;@Model.TB_Reg_RequestEmp.empName&nbsp;&nbsp;</div>
         <div style="display:inline-block;"><label>ตำแหน่ง </label>&nbsp;@Model.TB_Reg_RequestEmp.position&nbsp;&nbsp;</div>*@
@@ -167,7 +165,6 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
         });
@@ -175,6 +172,7 @@
         getEmpDetail();
        // alert($("#hdSubjectId").val());
     });
+
     function getEmpDetail() {
 
         $.ajax({
@@ -191,13 +189,16 @@
                 $("#lblLvl").val(response.Data.level);
                 $("#lblHireDate").val(response.Data.hireDate);
                 $("#hdCompId").val(response.Data.compId);
-                document.getElementById('lblEmpName').innerHTML = response.Data.empName;
-                document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
-                document.getElementById('lblLvl').innerHTML = response.Data.level;
-                document.getElementById('lblDept').innerHTML = response.Data.department;
-                document.getElementById('lblComp').innerHTML = response.Data.companyName;
-                document.getElementById('lblHireDate').innerHTML = response.Data.hireDate;
-                if (response.Data.hireDate == '') { alert("ไม่มีข้อมูลเริ่มทำงานกรุณาติดต่อเจ้าหน้าที่"); }
+
+
+                 $("#lblEmpName").text(response.Data.empName);
+                $("#lblEmpPosition").text(response.Data.position);
+                $("#lblLvl").text(response.Data.level);
+                $("#lblDept").text(response.Data.department);
+                $("#lblComp").text(response.Data.companyName);
+                $("#lblHireDate").text(response.Data.hireDate);
+
+             if (response.Data.hireDate == '') { alert("ไม่มีข้อมูลเริ่มทำงานกรุณาติดต่อเจ้าหน้าที่"); }
 
                 getRegional();
                 // $("#hdSubjectId").val('C67164E4-A891-43D6-B4F7-090F62C6290E');
@@ -211,25 +212,24 @@
                 $("#lblHireDate").val('');
                 $("#hdCompId").val('');
                 $("#ddlRegional").empty();
-                document.getElementById('lblEmpName').innerHTML = '';
-                document.getElementById('lblEmpPosition').innerHTML = '';
-                document.getElementById('lblLvl').innerHTML = '';
-                document.getElementById('lblDept').innerHTML = '';
-                document.getElementById('lblComp').innerHTML = '';
-                document.getElementById('lblHireDate').innerHTML = '';
+
+                $("#lblEmpName").text("");
+                $("#lblEmpPosition").text("");
+                $("#lblLvl").text("");
+                $("#lblDept").text("");
+                $("#lblComp").text("");
+                $("#lblHireDate").text("");             
             }
 
-            if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]') {
+
+        });
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]') {
                 getCashEmp();
             } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
-                getCashLimit();
-                getCumulative();
-                alert($("#lblLimit").val() + "/" + $("#lblCumulative").val());
-                var balance = 0.00;
-                balance = parseFloat($("#lblLimit").val().replace(",", "")) - parseFloat($("#lblCumulative").val().replace(",", "")); 
-                $("#lblBalance").val(balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));                            
+                //getCashLimit();
+                //getCumulative();
+                getCashDetail();
             }
-        });
     }
 
     function getCashEmp() {
@@ -261,7 +261,8 @@
             }
         });
     }
-     function getCashLimit() {
+
+    function getCashLimit() {
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getCashLimitByTypeId", "eAct")',
@@ -273,8 +274,9 @@
         }).done(function (response) {
             console.log(response);
             if (response.Data != null) {
-                document.getElementById('lblLimit').innerHTML = response.Data.cashPerDay;
+                document.getElementById('lblLimit').innerHTML = response.Data.cashPerDay.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                 $("#lblLimit").val(response.Data.cashPerDay);
+                getBalance();
             }
             else {
                 if ($("#txtEmpId").val() != "") {
@@ -282,8 +284,11 @@
                     $("#lblLimit").val(0);
                 }
             }
+           // alert($("#lblLimit").val());
         });
+
     }
+
     function getCumulative() {
         $.ajax({
             type: 'POST',
@@ -296,8 +301,9 @@
         }).done(function (response) {
             console.log(response);
             if (response.Data != null) {
-                document.getElementById('lblCumulative').innerHTML = response.Data.cashPerDay;
+                document.getElementById('lblCumulative').innerHTML = response.Data.cashPerDay.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                 $("#lblCumulative").val(response.Data.cashPerDay);
+                getBalance();
             }
             else {
                 if ($("#txtEmpId").val() != "") {
@@ -305,7 +311,20 @@
                     $("#lblCumulative").val(0);
                 }
             }
+          //  alert($("#lblCumulative").val());
         });
+
+    }
+
+    function getBalance() {
+       // alert($("#lblLimit").val() + "/" + $("#lblCumulative").val());
+        var balance = 0.00;
+        balance = parseFloat($("#lblLimit").val().replace(",", "")) - parseFloat($("#lblCumulative").val().replace(",", ""));
+alert(balance);
+        if (balance == NaN) { balance = 0.00; }
+
+        $("#lblBalance").text(balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        $("#lblBalance").val(balance);
     }
 
     function getRegional() {
@@ -341,8 +360,6 @@
             }
         });
     }
-
-
 
     function getFlow() {
         var ddlRegional = $("#ddlRegional");
@@ -391,6 +408,52 @@
                 document.getElementById('lblHireDate').innerHTML = '';
             }
         });
+    }
+
+    function getCashDetail() {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getCashDetailByEmpId", "eAct")',
+            data: {
+                empId: $("#txtEmpId").val(),
+                docDate: $("#txtdateDoc").val(),
+                typeId: '6BB0F68F-4B07-4E00-9B1E-B776D003D992',
+                hireDate: $("#lblHireDate").val(),
+                jobLevel: $("#lblLvl").val(),
+            }
+        }).done(function (response) {
+            console.log(response);
+            if (response.Data != null) {
+
+                $("#lblLimit").text(response.Data.limit.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                $("#lblLimit").val(response.Data.limit);
+
+                $("#lblCumulative").text(response.Data.cumulative.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                $("#lblCumulative").val(response.Data.cumulative);
+
+                $("#lblBalance").text(response.Data.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                $("#lblBalance").val(response.Data.balance);
+
+                $("#hdLimit").val(response.Data.limit);
+                $("#hdCumulative").val(response.Data.cumulative);
+                $("#hdBalance").val(response.Data.balance);
+            }
+            else {
+                if ($("#txtEmpId").val() != "") {
+                  // alert( "ไม่พบข้อมูลกรุณาติดต่อ...");
+
+                }
+                $("#lblLimit").text("0.00");
+                $("#lblCumulative").text("0.00");
+                $("#lblBalance").text("0.00");
+
+                $("#lblLimit").val(0.00);
+                $("#lblCumulative").val(0.00);
+                $("#lblBalance").val(0.00);
+            }
+          //  alert($("#lblCumulative").val());
+        });
+
     }
 
 </script>
