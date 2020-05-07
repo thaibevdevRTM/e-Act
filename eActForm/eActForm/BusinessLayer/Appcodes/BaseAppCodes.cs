@@ -1,7 +1,10 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Models;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.Linq;
 
 namespace eActForm.BusinessLayer.Appcodes
 {
@@ -57,9 +60,34 @@ namespace eActForm.BusinessLayer.Appcodes
                 {
                     return ConfigurationManager.AppSettings["companyId_HCM"].ToString();
                 }
-                else if(actType == Activity_Model.activityType.EXPENSE.ToString())
+                else if (actType == Activity_Model.activityType.EXPENSE.ToString())
                 {
                     return ConfigurationManager.AppSettings["companyId_EXPENSE"].ToString();
+                }
+                else if (actType == Activity_Model.activityType.NUM.ToString())
+                {
+                    String compId = "";
+                    if (UtilsAppCode.Session.User.isSuperAdmin)
+                    {
+                        List<TB_Act_Other_Model> lst = new List<TB_Act_Other_Model>();
+                        lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.activityType.NUM.ToString());
+                        foreach (var item in lst) {
+                            compId += item.val1+",";
+                        }
+                        compId = compId.Substring(0, compId.Length - 1);
+                    }
+                    else
+                    {
+                        List<ActUserModel.UserAuthorized> lst = new List<ActUserModel.UserAuthorized>();
+                        lst = UserAppCode.GetUserAuthorizedsByCompany(Activity_Model.activityType.NUM.ToString());
+                        compId =  lst.Count > 0 ? lst.FirstOrDefault().companyId : "";
+                    }
+
+
+                    return compId; //ถ้เป็น superadmim ถึงจะดึงทั้ง 8 ถ้าไม่ดึงตัวเอง
+
+
+
                 }
                 else
                 {
@@ -133,6 +161,6 @@ namespace eActForm.BusinessLayer.Appcodes
         {
             return DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
         }
-       
+
     }
 }

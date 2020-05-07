@@ -154,7 +154,7 @@
                         var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
 
                         for (i = 0; i < rowCount; i++) {
-                            var rowunit = parseFloat($(".txtunit_" + i.toString()).val().replace(",", ""));
+                            var rowunit = parseFloat($(".txtunit_" + i.toString()).val().replaceAll(",", ""));
                             $(".hidunit_" + i.toString()).val(rowunit.toFixed(0));
                             totalAll = totalAll + rowunit;
                         }

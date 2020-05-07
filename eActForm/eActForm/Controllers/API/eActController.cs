@@ -287,14 +287,16 @@ namespace eActForm.Controllers
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getEmpDetailById(string empId)
+        public JsonResult getEmpDetailById(string empId, string typeFormId = "")
         {
             bool langEn = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
             List<RequestEmpModel> empDetailList = new List<RequestEmpModel>();
             var result = new AjaxResult();
             try
             {
-                empDetailList = QueryGet_empDetailById.getEmpDetailById(empId).ToList();
+
+                empDetailList = typeFormId == "" ? QueryGet_empDetailById.getEmpDetailById(empId).ToList()
+                                                 : QueryGet_empDetailById.getEmpDetailFlowById(empId, typeFormId).ToList();
 
                 var resultData = new
                 {
@@ -303,10 +305,10 @@ namespace eActForm.Controllers
                     level = empDetailList.FirstOrDefault().level,
                     department = !langEn ? empDetailList.FirstOrDefault().department : empDetailList.FirstOrDefault().departmentEN,
                     bu = !langEn ? empDetailList.FirstOrDefault().bu : empDetailList.FirstOrDefault().buEN,
+                    companyName = !langEn ? empDetailList.FirstOrDefault().companyName : empDetailList.FirstOrDefault().companyNameEN,
+                    compId = empDetailList.FirstOrDefault().compId,
                     email = empDetailList.FirstOrDefault().email
                 };
-
-
                 result.Data = resultData;
             }
             catch (Exception ex)
@@ -315,6 +317,7 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult getAllRegion(string txtRegion)
         {
 
@@ -344,12 +347,12 @@ namespace eActForm.Controllers
             return Json(txtBaht, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getOtherMasterByType(string type, string subType ,string text)
+        public JsonResult getOtherMasterByType(string type, string subType, string text)
         {
-          List<TB_Act_Other_Model> getOtherList = new List<TB_Act_Other_Model>();
+            List<TB_Act_Other_Model> getOtherList = new List<TB_Act_Other_Model>();
             try
             {
-                getOtherList =  QueryOtherMaster.getOhterMaster(type, subType).Where(x => x.displayVal.Contains(text)).ToList();
+                getOtherList = QueryOtherMaster.getOhterMaster(type, subType).Where(x => x.displayVal.Contains(text)).ToList();
             }
             catch (Exception ex)
             {
@@ -358,8 +361,32 @@ namespace eActForm.Controllers
             return Json(getOtherList, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getCashLimitByEmpId(string empId)
+        {
+            List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
+            var result = new AjaxResult();
+            try
+            {
+                cashEmpList = QueryGetBenafit.getCashLimitByEmpId(empId).ToList();
+                if (cashEmpList.Count > 0)
+                {
+                    var resultData = new
+                    {
+                        ProductDetail_0 = cashEmpList[0].cashPerDay,
+                        ProductDetail_1 = cashEmpList[1].cashPerDay,
+                    };
 
-        public JsonResult getEmpByChannel(string subjectId, string channelId,string filter)
+                    result.Data = resultData;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCashLimitByEmpId => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getEmpByChannel(string subjectId, string channelId, string filter)
         {
             List<RequestEmpModel> empList = new List<RequestEmpModel>();
             try
@@ -373,6 +400,64 @@ namespace eActForm.Controllers
             return Json(empList, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getRegionalByCompany(string companyId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getRegional = QueryGetRegional.getRegionalByCompanyId(companyId).ToList();
+                var resultData = new
+                {
+                    regional = getRegional.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getRegionalOfFlow(string empId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getRegional = QueryGetRegional.getRegionalByCompanyId(empId).ToList();
+                var resultData = new
+                {
+                    regional = getRegional.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getFlowBytypeFormId(string typeFormId, string empId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                var getFlowDetail = QueryGetFlow.getFlowDetailBytypeFormId(typeFormId).ToList().Where(x => x.description == empId);
+                var resultData = new
+                {
+                    flow = getFlowDetail.ToList(),
+                    regional = getFlowDetail.ToList().Count == 0 ? null : QueryGetRegional.getRegionalByCompanyId((getFlowDetail.ToList().FirstOrDefault().companyId)).ToList(),
+                };
 
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

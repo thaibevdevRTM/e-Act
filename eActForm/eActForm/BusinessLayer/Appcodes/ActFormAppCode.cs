@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
@@ -119,9 +120,7 @@ namespace eActForm.BusinessLayer
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
 
-
-                if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin ||
-                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)
+                if (isAdmin())
                 {
                     strCall = "usp_getActivityFormAll";
                 }
@@ -288,15 +287,25 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static bool isOtherCompanyMT()
+        public static bool _isOtherCompanyMT()
         {
-            return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] ||
-                UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+            return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] ||
+                UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] ? false : true;
         }
         public static bool isOtherCompanyMTOfDoc(string compId)
         {
-            return compId == ConfigurationManager.AppSettings["companyId_TBM"] ||
-               compId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+            return compId == ConfigurationManager.AppSettings["companyId_MT"] ||
+               compId == ConfigurationManager.AppSettings["companyId_OMT"] ? false : true;
+        }
+        public static bool isOtherCompanyMTOfDocByActId(string actId)
+        {
+            string compId = "";
+            if (actId != "")
+            {
+                compId = QueryGetActivityByIdTBMMKT.getActivityById(actId).FirstOrDefault().companyId;
+            }
+            return compId == ConfigurationManager.AppSettings["companyId_MT"] ||
+                 compId == ConfigurationManager.AppSettings["companyId_OMT"] ? false : true;
         }
         public static bool isAdmin()
         {
@@ -305,6 +314,7 @@ namespace eActForm.BusinessLayer
                 || UtilsAppCode.Session.User.isAdmin
                 || UtilsAppCode.Session.User.isAdminTBM
                 || UtilsAppCode.Session.User.isAdminHCM
+                || UtilsAppCode.Session.User.isAdminNUM
                 || UtilsAppCode.Session.User.isSuperAdmin ? true : false;
         }
 
@@ -336,6 +346,58 @@ namespace eActForm.BusinessLayer
                 val = "f80014";
 
             return val;
+        }
+        public static bool checkGrpCompByUser(string typeComp)
+        {
+            try
+            {
+                List<ActUserModel.UserAuthorized> lst = new List<ActUserModel.UserAuthorized>();
+                lst = UserAppCode.GetUserAuthorizedsByCompany(typeComp);
+                return lst.Count > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkGrpCompByUser >>" + ex.Message);
+            }
+        }
+        public static bool checkGrpComp(string compId, string typeComp)
+        {
+            try
+            {
+                List<TB_Act_Other_Model> lst = new List<TB_Act_Other_Model>();
+                lst = QueryOtherMaster.getOhterMaster("company", typeComp).ToList();
+                if (lst.Count > 0)
+                {
+                    lst = lst.Where(x => x.val1 == compId).ToList();
+                }
+                return lst.Count > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkGrpComp >>" + ex.Message);
+            }
+        }
+
+        public static bool checkRecorderByUser(string actId)
+        {
+            try
+            {
+                ApproveModel.approveModels models = new ApproveModel.approveModels();
+                models = ApproveAppCode.getApproveByActFormId(actId, "");
+
+                if (models.approveDetailLists.Count > 0)
+                {
+                    models.approveDetailLists = models.approveDetailLists
+                        .Where(x => x.approveGroupId == AppCode.ApproveGroup.Recorder)
+                        .Where(x => x.empId == UtilsAppCode.Session.User.empId).ToList();
+                }
+                return models.approveDetailLists.Count > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkRecorderByUser >>" + ex.Message);
+            }
+
         }
     }
 }

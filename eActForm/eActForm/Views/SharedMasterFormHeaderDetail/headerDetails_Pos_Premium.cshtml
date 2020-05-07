@@ -2,6 +2,7 @@
 @using eActForm.BusinessLayer;
 @using System.Globalization;
 @using System.Configuration;
+@using eActForm.Models;
 @{
     var dearGroup = "คุณกมล เศวตทวี"; //form pos/premium fixคนนี้เลยจนกว่าจะลาออก
     var signBook = "";
@@ -10,14 +11,14 @@
     {
         foreach (var item in Model.approveFlowDetail)
         {
-            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGrouApplicantTwo"])//ผู้ขอเบิก
-            {
-                signBook = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
-                if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                if (item.approveGroupId == AppCode.ApproveGroup.Applicant)//ผู้ขอเบิก
                 {
-                    signBookDepartment = Model.activityFormTBMMKT.labelBrandOrChannel + " Marketing";//พี่อ้วนบอกเอา Brandหรือ Channel มาแสดงเลย
+                    signBook = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
+                    if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
+                    {
+                        signBookDepartment = Model.activityFormTBMMKT.labelBrandOrChannel + " Marketing";//พี่อ้วนบอกเอา Brandหรือ Channel มาแสดงเลย
+                    }
                 }
-            }
         }
     }
     else

@@ -1,7 +1,8 @@
 ﻿@{
-	ViewBag.Title = "activityIndex";
-	Layout = "~/Views/Shared/_Layout.cshtml";
-	var var_companyEN = Request.QueryString["typeForm"];
+    //update 21-04-2020
+    ViewBag.Title = "activityIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var var_companyEN = Request.QueryString["typeForm"];
 }
 
 <style type="text/css">
@@ -23,7 +24,7 @@
             , new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
             , new { id = "form", @class = "form-horizontal form-label-left" }))
             {
-            @RenderPage("~/Views/Shared/_searchBudgetActivity.cshtml")
+                @RenderPage("~/Views/Shared/_searchBudgetActivity.cshtml")
             }
         </div>
     </div>

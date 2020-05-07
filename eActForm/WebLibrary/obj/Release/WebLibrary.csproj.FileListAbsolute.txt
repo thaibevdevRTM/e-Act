@@ -40,3 +40,11 @@ D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.pdb
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csprojAssemblyReference.cache
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
+D:\work\project\source code\e-act local\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.dll
+D:\work\project\source code\e-act local\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.pdb
+D:\work\project\source code\e-act local\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.xml
+D:\work\project\source code\e-act local\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csprojAssemblyReference.cache
+D:\work\project\source code\e-act local\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CoreCompileInputs.cache
+D:\work\project\source code\e-act local\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
+D:\work\project\source code\e-act local\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
+D:\work\project\source code\e-act local\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb

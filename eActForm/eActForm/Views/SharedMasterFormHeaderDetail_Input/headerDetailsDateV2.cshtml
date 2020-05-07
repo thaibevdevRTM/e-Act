@@ -1,0 +1,20 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Configuration;
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
+                        @Resources.Global.documentDate :
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateDoc", style = "", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row"></div>
+            </div>
+        </div>
+    </div>

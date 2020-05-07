@@ -1,0 +1,198 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eForms.Presenter.MasterData;
+@using eActForm.Models;
+@using eActForm.BusinessLayer;
+<table class="boxTableFormMainV1 fontDocV1">
+    <tr>
+        <td style="width:300px;" class="boxTableFormV1">
+            <table style="background-color: #ccffff;" cellpadding="-4" cellspacing="-4" class="borderWidthMaxCollape">
+                <tr>
+                    <td class="fontRedV1">
+                        &nbsp;&nbsp;ส่วนที่ 1)
+                    </td>
+                </tr>
+            </table>
+            <table class="borderWidthMaxCollape">
+                <tr>
+                    <td style="width:75px;" class="tdTopLeft fontRedV1">
+                        &nbsp;วัตถุประสงค์:
+                    </td>
+                    <td style="text-align:left;">
+                        @Html.Raw(Model.activityFormTBMMKT.objective.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTopLeft fontRedV1 paddingRowTable">
+                        &nbsp;Supplier:
+                        @{
+                            var apName = "";
+                            var apAddress = "";
+                            var apTelFax = "";
+                            Model.listAPModel = APPresenter.getDataAP(AppCode.StrCon, Model.tB_Act_ActivityForm_DetailOther.APCode);
+                            foreach (var itemAp in Model.listAPModel)
+                            {
+                                apName = itemAp.Name1;
+                                apAddress = itemAp.FullAddress;
+                                apTelFax = itemAp.TelAndFax;
+                            }
+                        }
+                    </td>
+                    <td style="text-align: left;" class="paddingRowTable">
+                        @apName
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTopLeft fontRedV1 paddingRowTable">
+                        &nbsp;ที่อยู่:
+                    </td>
+                    <td style="text-align:left;" class="paddingRowTable">
+                        @apAddress
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTopLeft fontRedV1 paddingRowTable">
+                        &nbsp;Tel/Fax:
+                    </td>
+                    <td style="text-align:left;" class="paddingRowTable">
+                        @apTelFax
+                    </td>
+                </tr>
+            </table>
+            <table class="borderWidthMaxCollape" style="background-color: #ccffff;" cellpadding="-4" cellspacing="-4">
+                <tr>
+                    <td class="fontRedV1">
+                        &nbsp;&nbsp;ส่วนที่ 2)
+                    </td>
+                </tr>
+            </table>
+            <table class="borderWidthMaxCollape">
+                <tr>
+                    <td style="width:75px;" class="tdTopLeft fontBlueV1">
+                        &nbsp;เอกสารแนบ:
+                    </td>
+                    <td style="text-align:left;" class="fontBlueV1">
+                        @{ var indexAtch = 1;}
+                        @foreach (var itemAtch in Model.activityFormTBMMKT.list_2_multi_select)
+                        {
+                            var valById = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choiceByID(itemAtch).FirstOrDefault().name;
+                            @:@indexAtch.@valById<br />
+                            indexAtch++;
+                        }
+                    </td>
+
+                </tr>
+
+            </table>
+
+            <table style="border-collapse: collapse;">
+
+                <tr>
+
+                    <td class="tdTopLeft fontRedV1 paddingRowTable">
+                        &nbsp;ข้อมูลสนับสนุน/หมายเหตุ:
+                    </td>
+                </tr>
+            </table>
+            <table style="border-collapse: collapse;">
+                <tr>
+                    <td class="tdTopLeft paddingRowTable">
+                        &nbsp;@Html.Raw(Model.activityFormModel.remark.Replace("\n", "<br/>&nbsp;").Replace("\r\n", "<br/>&nbsp;"))
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td style="width: 400px;height:20px;" class="boxTableFormV1 borderLeft">
+            <style>
+                .oneColumn {
+                    text-align: left;
+                    width: 5%;
+                }
+
+                .oneColumnCenter {
+                    text-align: center;
+                    width: 5%;
+                }
+
+                .ioColumn {
+                    text-align: left;
+                    width: 30%;
+                }
+
+                .glColumnCenter {
+                    text-align: center;
+                    width: 20%;
+                }
+
+                .chColumnCenter {
+                    text-align: center;
+                    width: 17%;
+                }
+
+                .brandColumnLeft {
+                    text-align: left;
+                    width: 28%;
+                }
+
+                .brandColumnCenter {
+                    text-align: center;
+                    width: 28%;
+                }
+            </style>
+            <table class="borderWidthMaxCollape" style="background-color: #ccffff;" cellpadding="-4" cellspacing="-4">
+                <tr>
+                    <td class="oneColumn fontRedV1">&nbsp;</td>
+                    <td class="ioColumn fontRedV1">
+                        &nbsp;ส่วนที่ 3)
+                    </td>
+                    <td class="glColumnCenter fontRedV1">
+                        &nbsp;ส่วนที่ 4)
+                    </td>
+                    <td class="chColumnCenter">&nbsp;</td>
+                    <td class="brandColumnCenter fontRedV1">
+                        &nbsp;ส่วนที่ 5)
+                    </td>
+                </tr>
+            </table>
+            <table class="borderWidthMaxCollape">
+                <tr>
+                    <td class="oneColumn fontRedV1">&nbsp;</td>
+                    <td class="ioColumn fontRedV1">
+                        IO (Internal Order: SAP)
+                    </td>
+                    <td class="glColumnCenter fontRedV1">
+                        GL
+                    </td>
+                    <td class="chColumnCenter fontRedV1">
+                        Ch + Reg.
+                    </td>
+                    <td class="brandColumnCenter fontRedV1">
+                        Brand
+                    </td>
+                </tr>
+            </table>
+            <table class="borderWidthMaxCollape">
+                @foreach (var item in Model.tB_Act_ActivityForm_DetailOtherList.OrderBy(x => x.rowNo).ToList())
+                {
+                    var valByCHReg = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choiceByID(item.select_list_choice_id_ChReg).FirstOrDefault().name;
+                    var valByProductBrand = QueryGetAllBrand.GetAllBrand().Where(x => x.id == item.productBrandId).FirstOrDefault().brandName;
+                    <tr>
+                        <td class="oneColumnCenter fontRedV1 paddingRowTable">@item.rowNo</td>
+                        <td class="ioColumn fontRedV1 paddingRowTable">
+                            @item.IO
+                        </td>
+                        <td class="glColumnCenter fontRedV1 paddingRowTable">
+                            @item.GL
+                        </td>
+                        <td class="chColumnCenter fontRedV1 paddingRowTable">
+                            @valByCHReg
+                        </td>
+                        <td class="brandColumnCenter paddingRowTable">
+                            @valByProductBrand
+                        </td>
+                    </tr>
+                }
+            </table>
+        </td>
+    </tr>
+</table>
+

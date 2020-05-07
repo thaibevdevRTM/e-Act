@@ -11,6 +11,7 @@ namespace eActForm.Models
             public string customerId { get; set; }
             public string productTypeId { get; set; }
             public string productCateId { get; set; }
+            public string companyId { get; set; }
         }
         public class RequestUsreAPI
         {
@@ -72,6 +73,7 @@ namespace eActForm.Models
             public bool isAdminOMT { get; set; }
             public bool isAdminTBM { get; set; }
             public bool isAdminHCM { get; set; }
+            public bool isAdminNUM { get; set; }
             public string countWatingActForm { get; set; }
             public string counteatingRepDetail { get; set; }
             public string counteatingSummaryDetail { get; set; }

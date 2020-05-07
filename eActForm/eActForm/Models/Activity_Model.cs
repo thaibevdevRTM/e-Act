@@ -63,6 +63,7 @@ namespace eActForm.Models
             TBM,
             EXPENSE,
             HCM,
+            NUM,
             OtherCompany
         }
 
@@ -220,7 +221,7 @@ namespace eActForm.Models
         public string activityId { get; set; }
         public string typeTheme { get; set; }
         public string activityTypeId { get; set; }
-
+        public string list_1_select { get; set; }
         public string productDetail { get; set; }
         public string productId { get; set; }
         public string productName { get; set; }
@@ -260,7 +261,11 @@ namespace eActForm.Models
         {
             detailGroup = new List<ProductCostOfGroupByPrice>();
         }
-
+        public string listChoiceId { get; set; }
+        public string listChoiceName { get; set; }
+        public string statusEdit { get; set; }
+        public string displayType { get; set; }
+        public string subDisplayType { get; set; }
     }
 
     public class CostThemeDetail : ActBaseModel

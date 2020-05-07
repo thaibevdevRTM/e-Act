@@ -7,8 +7,6 @@
 
 @using (Html.BeginForm("Index", "ImportMaterial_PRODUCT_POS_PREMIUM", FormMethod.Post, new { enctype = "multipart/form-data", id = "divUpload" }))
 {
-    @*@using (Ajax.BeginForm("Index", "ImportMaterial_PRODUCT_POS_PREMIUM", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { enctype = "multipart/form-data", id = "divUpload" }))
-        {*@
     @Html.TextBoxFor(m => m.file, new { type = "file" })
     <br />
     <div>
@@ -40,7 +38,7 @@
     3.คอลัมน์ Sub Group :ให้ใส่ PRODUCT หรือ POS หรือ PREMIUM<br />
     4.คอลัมน์ Status Mat :ให้ใส่ ในสต๊อก หรือ นอกสต๊อก<br />
     5.คอลัมน์ Material, Sub Group,Status Mat :ห้ามเป็นค่าว่าง<br />
-    6.คอลัมน์ Status Use ::ให้ใส่ ใช้งาน หรือ ไม่ใช้งาน<br />
+    6.คอลัมน์ Status Use :ให้ใส่ ใช้งาน หรือ ไม่ใช้งาน<br />
 </div>
 <hr />
 <div>
