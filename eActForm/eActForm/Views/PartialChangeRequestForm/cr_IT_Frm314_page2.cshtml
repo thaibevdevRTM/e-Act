@@ -122,13 +122,46 @@
             <td colspan="2" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;padding-top:3px;">
                 &nbsp;<u>List name (For more user, Please attach Excel file) / รายงานชื่อผู้ใช้งาน (ถ้ามีมากกว่า 5 คนขึ้นไป สามารถแนบไฟล์ Excel เพิ่มเติมได้)</u><br />
 
-                *****เดียวเอาตารางใส่<br />
-                *****เดียวเอาตารางใส่<br />
-                *****เดียวเอาตารางใส่<br />
-                *****เดียวเอาตารางใส่<br />
+                <table style="width: 100%;border-collapse: collapse;margin-top:5px;" class="fontDocSmallV2">
+                    <tr>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            No.
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            EmpOD / รหัสพนักงาน
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            Name / ชื่อ - สกุล
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 0px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            Detail authorizations / รายละเอียดของสิทธิ์
+                        </td>
+                    </tr>
+                    @for (var i = 0; i <= 4; i++)
+                    {
+                        <tr>
+                            <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="tdTopCenter">
+                                @(i+1)
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="tdTopCenter">
+                                11035272
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="tdTopLeft">
+                                &nbsp;
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 0px 1px 0px; border-collapse: collapse;" class="tdTopLeft">
+                                &nbsp;
+                                <br /><br /><br /><br />
+                            </td>
+                        </tr>
+                    }
+                </table>
 
-                &nbsp;<u>More detail authorizations / รายละเอียดของสิทธิ์เพิ่มเติม</u><br />
-                &nbsp;More detail / อธิบายเพิ่มเติม :<br />
+                &nbsp;
+                <u>More detail authorizations / รายละเอียดของสิทธิ์เพิ่มเติม</u>
+                <br />
+                &nbsp;More detail / อธิบายเพิ่มเติม :
+                <br />
                 <br />&nbsp;
                 <br />&nbsp;
                 <br />&nbsp;
