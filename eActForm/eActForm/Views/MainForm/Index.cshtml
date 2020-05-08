@@ -292,7 +292,7 @@
             var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val() == '') { required += "&emsp;ส่วนที่3-5 [IO]*<br>"; validate = false; }
-                if ($(".txtGL_" + i).val() == '') { required += "&emsp;ส่วนที่3-5 [GL]*<br>"; validate = false; }
+                if ($(".txtGL_" + i).val() == '' && $("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val().toLowerCase() != 'เข้าstock') { required += "&emsp;ส่วนที่3-5 [GL]*<br>"; validate = false; }
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__select_list_choice_id_ChReg").val() == '') { required += "&emsp;ส่วนที่3-5 [Ch.+Reg.]*<br>"; validate = false; }
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__productBrandId").val() == '') { required += "&emsp;ส่วนที่3-5 [Brand]*<br>"; validate = false; }
             }
