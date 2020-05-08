@@ -117,7 +117,7 @@
                                     {
                                         <td></td>
                                     }
-                                    @if (item.costPeriodSt != null)
+                                    @*@if (item.costPeriodSt != null)
                                     {
                                         <td width="100px" style="text-align:center;">@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
                                     }
@@ -132,7 +132,11 @@
                                     else
                                     {
                                         <td></td>
-                                    }
+                                    }*@
+
+                                    <td width="100px" style="text-align:center;">@item.costPeriodSt.Value.ToString()</td>
+                                    <td width="100px" style="text-align:center;">@item.costPeriodEnd.Value.ToString()</td>
+
                                     <td style="text-align:center;">@string.Format("{0:n2}", item.le)</td>
                                     <td style="text-align:center;">@string.Format("{0:n2}", item.unit)</td>
                                     <td style="text-align:center;">@string.Format("{0:n2}", item.compensate)</td>
