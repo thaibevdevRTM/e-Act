@@ -18,6 +18,10 @@ namespace eActForm.Controllers
         }
         public ActionResult headerDetailsDate(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])//ใบสั่งจ่าย dev date 20200408 Peerapop
+            {
+                activity_TBMMKT_Model.activityFormModel.documentDate = DateTime.Now;
+            }
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult headerDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
@@ -74,6 +78,11 @@ namespace eActForm.Controllers
 
                 activity_TBMMKT_Model.listPiority = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "piorityDoc").OrderBy(x => x.orderNum).ToList();
             }
+            return PartialView(activity_TBMMKT_Model);
+        }
+
+        public ActionResult headerDetailsDateV2(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
             return PartialView(activity_TBMMKT_Model);
         }
         

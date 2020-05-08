@@ -3,7 +3,7 @@
 @using eActForm.Models
 @model eActForm.Models.Budget_Approve_Detail_Model
 @{
-    //update 21-04-2020
+    //update 23-04-2020
     Layout = null;
     var var_lastApprove = Model.Budget_Activity_Last_Approve;
 
@@ -13,7 +13,7 @@
     var count_history_inv = 0;
 }
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
 	$('document').ready(function () {
 
@@ -39,35 +39,6 @@
 		});
 	}
 
-    @*function onClickSubmitRegenPdf(budgetapproveId, activityId, statusId) {
-		$.ajax({
-            type: 'POST',
-            url: '@Url.Action("regenBudgetApprovePdf", "BudgetViewer")',
-            data: {
-				budgetApproveId: budgetapproveId,
-				activityId: activityId
-            }
-        }).done(function (htmlResponse) {
-			genPdf(budgetapproveId, activityId,statusId, htmlResponse);
-        });
-	}
-
-	function genPdf(budgetapproveId, activityId, statusId, htmlResponse) {
-        $.ajax({
-            url: '@Url.Action("genPdfApprove", "BudgetMyDoc")',
-            data: {
-                GridHtml: htmlResponse,
-                statusId: statusId,
-				budgetApproveId: budgetapproveId,
-				activityId: activityId,
-            },
-            dataType: "json",
-            type: 'POST',
-        }).done(function (response) {
-            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
-        });
-    }*@
-
     function onClickSubmitRegenPdf() {
 		$("#WaitDialog").show();
 
@@ -88,7 +59,7 @@
 		});
 	}
 
-</script>
+    </script>
 
 <style type="text/css">
 
@@ -264,7 +235,6 @@
                             <label> รายละเอียดการใช้จ่ายจริง (Actual) : </label>
                         </div>
 
-
                         <table class="tablethin" style="width:100%; text-align:center; border-color:gray;" border="1" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td rowspan="2" style="width:10%; font-size:11px;">ประเภทกิจกรรม</td>
@@ -323,7 +293,6 @@
                                                 count_history_inv++;
                                             }
 
-
                                             @*status == 4 ปรับยอด status == 5 จบรายการปรับยอด ไม่ต้องขออนุมัติ*@
                                             @if (item.invoiceBudgetStatusId != 4 && item.invoiceBudgetStatusId != 5 && item.invoiceApproveStatusId != 3)
                                             {
@@ -349,8 +318,6 @@
                                             {
                                                 <td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
                                             }
-
-
                                         </tr>
                                     }
 
@@ -379,33 +346,28 @@
                             <table style="border-bottom-width:0px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
                         </div>
 
-
+                        @*Model.Budget_Activity.budget_id != null *@
                         @if (count_history_inv == 0 && count_req_approve == 0)
                         {
 
                         }
-                        else if (Model.Budget_Activity.budget_id != null && count_req_approve > 0)
-                        {
-                            @Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
-                        }
-                        else if (var_lastApprove != null)
+                        @* wait approve in process show signature approved *@
+                        else if (count_wait_approve > 0)
                         {
                             @Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = var_lastApprove.budgetApproveId })
                         }
+                        @* new approve *@
+                        else if (count_wait_approve == 0 && count_req_approve > 0)
+                        {
+                            @Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
+                        }
+                        @* show last signature approved *@
+                        else if (count_wait_approve == 0 && count_req_approve == 0 && count_history_inv > 0)
+                        {
+                            @Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = var_lastApprove.budgetApproveId })
+                        }
+                        else { }
 
-
-                        @*@if (Model.Budget_Activity.budget_id != null && count_req_approve > 0)
-                            {
-                                @Html.Action("approvePositionSignatureLists", "BudgetApprove", new { actId = Model.Budget_Activity.budget_id, companyEN = Model.Budget_Activity.act_companyEN })
-                            }
-                            else if (count_history_inv != 0)
-                            {
-                                @Html.Action("approvePositionSignatureListsByBudgetApproveId", "BudgetApprove", new { budgetApproveId = var_lastApprove.budgetApproveId })
-                            }
-                            else
-                            {
-
-                            }*@
                     </div>
                 </div>
             </div>

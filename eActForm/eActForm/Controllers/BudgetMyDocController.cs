@@ -173,7 +173,8 @@ namespace eActForm.Controllers   //update 21-04-2020
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult genPdfApprove(string GridHtml, string statusId, string budgetApproveId, string activityId)
+        public JsonResult genPdfApprove(string GridHtml, string budgetApproveId)
+        //public JsonResult genPdfApprove(string GridHtml, string statusId, string budgetApproveId, string activityId)
         {
             var resultAjax = new AjaxResult();
             try

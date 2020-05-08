@@ -5,10 +5,11 @@
 
 <script>
 
-    function checkBeforeDelete(actId, statusId) {
-      //  if (statusId == "6") { }
+        function checkBeforeDelete(actId, statusId) {
             //get statusNOte
-                   $.ajax({
+            checkComp(actId);
+           
+            $.ajax({
                 type: 'POST',
                 url: '@Url.Action("getStatusNote", "Home")',
                 data: {
@@ -22,145 +23,159 @@
                 }
                 chkInvoiceBeforeDel(actId, statusId);
             });
-    }
-
-    function checkDelete(actId, statusId) {
-        var msg = "";
-
-        if (statusId == "1" ||
-            (statusId == "6" && '@ActFormAppCode.isAdmin()' == "True") ||
-            (statusId == "5" && ('@ActFormAppCode.isOtherCompanyMT()' == "True" || '@ActFormAppCode.isAdmin()' == "True"))
-        ) {
-            // can be delete
-            msg = document.getElementById("hdStatusNote").value + "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
-        }
-        else {
-            // can't delete
-            msg = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ <br/> ท่านต้องการยกเลิกเอกสารหรือไม่ค่ะ?";
         }
 
-        bootbox.confirm({
-            title: "Confirm Message",
-
-            message: msg,
-            buttons: {
-                confirm: {
-                    label: "Yes",
-                    className: "btn-success"
-                },
-                cancel: {
-                    label: "No",
-                    className: "btn-danger"
+        function chkInvoiceBeforeDel(actId, statusId) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("checkActInvoice", "Home")',
+                data: {
+                    actId: actId
                 }
-            },
-            callback: function (result) {
-                if (result) {
-                    requestDeleteDoc(actId, statusId, "")
-                }
-            }
-        });
-    }
-    function requestDeleteDoc(actId, statusId, statusNote) {
-        $("#WaitDialog").show();
-        $.ajax({
-            url: '@Url.Action("requestDeleteDoc", "Home")',
-            data: {
-                actId: actId,
-                statusId: statusId,
-                statusNote: statusNote,
-                typeForm:'@Model.typeForm',
-            },
-        }).done(function (htmlResponse) {
-            $("#getQuery").html(htmlResponse);
-            $("#WaitDialog").hide();
-            doMsgSuccess("ดำเนินการยกเลิกเอกสารเรียบร้อย")
-        });
-    }
-
-    function chkInvoiceBeforeDel(actId, statusId) {
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("checkActInvoice", "Home")',
-            data: {
-                actId: actId
-            }
-        }).done(function (response) {
-            if (response.Success) {
-                doMsgFail("เอกสารฉบับนี้ไม่สามารถ ยกเลิกได้ <br/> เนื่องจากเปิด Invoice ไปแล้ว");
-                console.log(response.Success);
-                return false;
-            }
-            else {
-
-                //ถ้าเป็น TBM HCM จะแสดง popup ให้ใส่เหตุผล
-                if ((statusId == "3" || statusId == "5") && ('@ActFormAppCode.isOtherCompanyMT()' == "True")) {
-                    document.getElementById("hdActId").value = actId;
-                    document.getElementById("hdStatusId").value = statusId;
-                    document.getElementById("txtStatusNote").value = "";
-
-                    if (statusId == "5") {
-                        document.getElementById("lblMess").textContent = "คุณต้องการยกเลิกเอกสารนี้หรือไม่ กรุณาระบุเหตุผลในการยกเลิก";
-                    } else {
-                        document.getElementById("lblMess").textContent = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ กรุณาระบุเหตุผลในการยกเลิก";
-                    }
-                    $('#modalStatusNote').modal('show');
+            }).done(function (response) {
+                if (response.Success) {
+                    doMsgFail("เอกสารฉบับนี้ไม่สามารถ ยกเลิกได้ <br/> เนื่องจากเปิด Invoice ไปแล้ว");
+                    console.log(response.Success);
+                    return false;
                 }
                 else {
-                    checkDelete(actId, statusId);
+
+                    //ถ้าเป็น TBM HCM จะแสดง popup ให้ใส่เหตุผล
+                    if ((statusId == "3" || statusId == "5") && ($("#hdChkComp").val() == "true")) {
+                        document.getElementById("hdActId").value = actId;
+                        document.getElementById("hdStatusId").value = statusId;
+                        document.getElementById("txtStatusNote").value = "";
+
+                        if (statusId == "5") {
+                            document.getElementById("lblMess").textContent = "คุณต้องการยกเลิกเอกสารนี้หรือไม่ กรุณาระบุเหตุผลในการยกเลิก";
+                        } else {
+                            document.getElementById("lblMess").textContent = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ กรุณาระบุเหตุผลในการยกเลิก";
+                        }
+                        $('#modalStatusNote').modal('show');
+                    }
+                    else {
+                        checkDelete(actId, statusId);
+                    }
+
                 }
-
-            }
-        });
-    }
-
-    function callApproveList(actId) {
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("approveLists", "Home")',
-            data: {
-                actId: actId
-            }
-        }).done(function (response) {
-            $("#divModalApprovelist").html(response)
-            $('#modalApprovelist').modal('show');
-        });
-    }
-
-    function resendApprove(actId) {
-        $("#WaitDialog").show();
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("resendApprove", "Base")',
-            data: {
-                actId: actId
-            }
-        }).done(function (response) {
-            $("#WaitDialog").hide();
-            if (response.Success) {
-                doMsgSuccess("ดำเนินการเรียบร้อยครับ")
-            } else {
-                doMsgFail(response.Message);
-            }
-        });
-    }
-    function confirmCc() {
-        var actId = document.getElementById("hdActId").value;
-        var statusId = document.getElementById("hdStatusId").value;
-        var StatusNote = document.getElementById("txtStatusNote").value;
-        if (StatusNote==""){
-            alert("กรุณาระบุเหตุผล");
-        } else {
-            $('#modalStatusNote').modal('hide');
-            requestDeleteDoc(actId, statusId, StatusNote);
-            document.getElementById("txtStatusNote").value = "";
+            });
         }
-    }
+
+        function checkDelete(actId, statusId) {
+
+            var msg = "";
+            if (statusId == "1" ||
+                (statusId == "6" && '@ActFormAppCode.isAdmin()' == "True") ||
+                (statusId == "5" && ($("#hdChkComp").val() == "true" || '@ActFormAppCode.isAdmin()' == "True"))
+            ) {
+                // can be delete
+                msg = document.getElementById("hdStatusNote").value + "คุณต้องการยกเลิกเอกสารนี้หรือไม่?"
+            }
+            else {
+                // can't delete
+                msg = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ <br/> ท่านต้องการยกเลิกเอกสารหรือไม่ค่ะ?";
+            }
+
+            bootbox.confirm({
+                title: "Confirm Message",
+
+                message: msg,
+                buttons: {
+                    confirm: {
+                        label: "Yes",
+                        className: "btn-success"
+                    },
+                    cancel: {
+                        label: "No",
+                        className: "btn-danger"
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        requestDeleteDoc(actId, statusId, "")
+                    }
+                }
+            });
+        }
+
+        function requestDeleteDoc(actId, statusId, statusNote) {
+            $("#WaitDialog").show();
+            $.ajax({
+                url: '@Url.Action("requestDeleteDoc", "Home")',
+                data: {
+                    actId: actId,
+                    statusId: statusId,
+                    statusNote: statusNote,
+                    typeForm: '@Model.typeForm',
+                },
+            }).done(function (htmlResponse) {
+                $("#getQuery").html(htmlResponse);
+                $("#WaitDialog").hide();
+                doMsgSuccess("ดำเนินการยกเลิกเอกสารเรียบร้อย")
+            });
+        }
+
+        function callApproveList(actId) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("approveLists", "Home")',
+                data: {
+                    actId: actId
+                }
+            }).done(function (response) {
+                $("#divModalApprovelist").html(response)
+                $('#modalApprovelist').modal('show');
+            });
+        }
+
+        function resendApprove(actId) {
+            $("#WaitDialog").show();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("resendApprove", "Base")',
+                data: {
+                    actId: actId
+                }
+            }).done(function (response) {
+                $("#WaitDialog").hide();
+                if (response.Success) {
+                    doMsgSuccess("ดำเนินการเรียบร้อยครับ")
+                } else {
+                    doMsgFail(response.Message);
+                }
+            });
+        }
+        function confirmCc() {
+            var actId = document.getElementById("hdActId").value;
+            var statusId = document.getElementById("hdStatusId").value;
+            var StatusNote = document.getElementById("txtStatusNote").value;
+            if (StatusNote == "") {
+                alert("กรุณาระบุเหตุผล");
+            } else {
+                $('#modalStatusNote').modal('hide');
+                requestDeleteDoc(actId, statusId, StatusNote);
+                document.getElementById("txtStatusNote").value = "";
+            }
+        }
+
+        function checkComp(actId) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("checkCompany", "Home")',
+                data: {
+                    actId: actId
+                }
+            }).done(function (response) {
+                $("#hdChkComp").val(response.Success);
+            });
+        }
 
 </script>
 <div class="row">
     <input type="hidden" id="hdActId" value="" />
     <input type="hidden" id="hdStatusId" value="" />
     <input type="hidden" id="hdStatusNote" value="" />
+    <input type="hidden" id="hdChkComp" value="" />
 
     <div class="col-md-12 col-xs-12">
 
@@ -241,11 +256,22 @@
                             }
                             else if (item.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
                             {
-                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();"})
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();" })
                             }
-                            else
+                            else if (Model.typeForm == Activity_Model.activityType.TBM.ToString() && item.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]) /*ใบสั่งจ่าย*/
                             {
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
+                            else if (Model.typeForm == Activity_Model.activityType.NUM.ToString() && (item.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]))
+                            {
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.NUM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+
+                                if (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] && item.statusId == "3")
+                                {
+                                    @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", onclick = "waitpopup();", })
+                                }
+                            }
+
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
                                 @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
@@ -360,14 +386,20 @@
         if (master_type_form_id == "@ConfigurationManager.AppSettings["formBgTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvTbmId"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvTbmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formPosTbmId"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["masterEmpExpense"]") {
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["masterEmpExpense"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formExpTrvNumId"]") {
              $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Index", "MainReport")',
                 data: {
                     activityId: actId
                 }
-            }).done(function (htmlResponse) {
+             }).done(function (htmlResponse) {
+                 @*//=========ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย====มันจะได้Genถูกต้องสวยงาม====dev date 20200421=====*@
+                 $("#newGenReportFromMaster").html(htmlResponse);
+                 htmlResponse = $("#divForm").html();
+                  @*//====END=====ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย=====มันจะได้Genถูกต้องสวยงาม====dev date 20200421======*@
                 genPdf(actId, statusId, htmlResponse);
             });
         }
@@ -404,3 +436,6 @@
 
 
 </script>
+<div id="newGenReportFromMaster" style="display:none;">
+
+</div>

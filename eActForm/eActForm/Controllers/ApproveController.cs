@@ -1,5 +1,6 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using iTextSharp.text;
 using System;
@@ -118,7 +119,8 @@ namespace eActForm.Controllers
             {
                 models = ApproveAppCode.getApproveByActFormId(actId);
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
-                models.approveFlowDetail = flowModel.flowDetail;
+                //เพิ่มตัดตำแหน่ง
+                models.approveFlowDetail = newlinePosition(flowModel).flowDetail;
                 //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
@@ -240,7 +242,8 @@ namespace eActForm.Controllers
             {
                 models = ApproveAppCode.getApproveByActFormId(actId);
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
-                models.approveFlowDetail = flowModel.flowDetail;
+                //เพิ่มตัดตำแหน่ง
+                models.approveFlowDetail = newlinePosition(flowModel).flowDetail;
                 //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
@@ -253,6 +256,35 @@ namespace eActForm.Controllers
                 TempData["approvePositionSignatureError"] = AppCode.StrMessFail + ex.Message;
             }
             return PartialView(models);
+        }
+
+        public ApproveFlowModel.approveFlowModel newlinePosition(ApproveFlowModel.approveFlowModel flowModel)
+        {
+
+            List<positionModel> positionList = new List<positionModel>();
+            positionList = QueryGetPosition.getNewlinePosition().ToList();
+            if (positionList.Count > 0)
+            {
+                int index = 0;
+                foreach (var item in flowModel.flowDetail)
+                {
+
+                    var positionEN = positionList.Where(x => x.positionName == item.empPositionTitleEN).FirstOrDefault()?.newPositionName;
+                    if (positionEN != null)
+                    {
+                        flowModel.flowDetail[index].empPositionTitleEN = positionEN;
+                    }
+
+                    var positionTH = positionList.Where(x => x.positionName == item.empPositionTitleTH).FirstOrDefault()?.newPositionName;
+                    if (positionTH != null)
+                    {
+                        flowModel.flowDetail[index].empPositionTitleTH = positionTH;
+                    }
+
+                    index++;
+                }
+            }
+            return flowModel;
         }
     }
 }

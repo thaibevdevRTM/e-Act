@@ -2,6 +2,7 @@
 @using eActForm.BusinessLayer;
 @using System.Globalization;
 @using System.Configuration;
+@using eActForm.Models;
 @{
     var dearGroup = "";
     var signBook = "";
@@ -11,7 +12,7 @@
     {
         foreach (var item in Model.approveFlowDetail)
         {
-            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGroupApproveby"])
+            if (item.approveGroupId == AppCode.ApproveGroup.Approveby)
             {
                 if (Model.activityFormTBMMKT.chkUseEng)
                 {
@@ -22,7 +23,7 @@
                     dearGroup = (Khun + item.empFNameTH + " " + item.empLNameTH);
                 }
             }
-            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGrouApplicantTwo"])
+            if (item.approveGroupId == AppCode.ApproveGroup.Applicant)
             {
                 if (Model.activityFormTBMMKT.chkUseEng)
                 {

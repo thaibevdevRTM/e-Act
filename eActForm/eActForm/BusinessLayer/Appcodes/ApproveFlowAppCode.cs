@@ -125,7 +125,7 @@ namespace eActForm.BusinessLayer
                     string checkFlowApprove = checkFlowBeforeByActId(actFormId);
                     if (!string.IsNullOrEmpty(checkFlowApprove))
                     {
-                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType)
+                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || ConfigurationManager.AppSettings["formExpTrvNumId"] == getMasterType)
                         {
                             model.flowDetail = getFlowDetailExpense(checkFlowApprove, actFormId);
                         }
@@ -136,7 +136,7 @@ namespace eActForm.BusinessLayer
                     }
                     else
                     {
-                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType)
+                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || ConfigurationManager.AppSettings["formExpTrvNumId"] == getMasterType)
                         {
                             model.flowDetail = getFlowDetailExpense(model.flowMain.id ,actFormId);
                         }
@@ -147,6 +147,7 @@ namespace eActForm.BusinessLayer
                     }
 
                 }
+
                 return model;
             }
             catch (Exception ex)

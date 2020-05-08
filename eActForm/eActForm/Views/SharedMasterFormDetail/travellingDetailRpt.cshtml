@@ -1,0 +1,53 @@
+﻿@*@model eActForm.Models.Activity_TBMMKT_Model*@
+
+<div id="divPlaceDetails" runat="server" style="width: 100%;">
+    <table class="tablethin  fontDocSmall" style="width:100%; text-align:center;" border="1" cellpadding="1" cellspacing="0">
+
+        <tr style="background-color:#E5E2E2;height:25px;  ">
+            <td colspan="6" style="text-align :center;">
+                <b>รายละเอียดการเดินทาง</b>
+            </td>
+        </tr>
+        <tr style="height:25px;">
+            <td style="width: 15%;text-align:center;"><b>เริ่มต้นจาก	</b></td>
+            <td style="width: 15%;text-align:center;"><b>ถึงปลายทาง</b></td>
+            <td style="width: 39%;text-align:center;"><b>รายละเอียดการเดินทาง</b></td>
+            <td style="width: 7%;text-align:center;"><b>จำนวน/วัน</b> </td>
+            <td style="width: 12%;text-align:center;"><b>วันออกเดินทาง</b></td>
+            <td style="width: 12%;text-align:center;"><b>วันที่กลับ</b></td>
+        </tr>
+        @{ var index = 0;}
+
+        @for (index = 0; index < Model.placeDetailModel.Count; index++)
+
+        {
+
+            <tr style="height:20px;">
+                <td style="text-align:left; padding-left:5px;">
+                    @Model.placeDetailModel[@index].depart
+                </td>
+                <td style="text-align:left; padding-left:5px;">
+                    @Model.placeDetailModel[@index].arrived
+                </td>
+                <td style="text-align:left; padding-left:5px;">
+                    @Model.placeDetailModel[@index].forProject
+                </td>
+                <td style="text-align:center; padding-left:5px;">
+                    @Model.placeDetailModel[@index].period
+                </td>
+                <td style="text-align:center; padding-left:5px;">
+                    @Model.placeDetailModel[@index].departureDateStr.Replace("-", "/")
+                </td>
+                <td style="text-align:center; padding-left:5px;">
+                    @Model.placeDetailModel[@index].arrivalDateStr.Replace("-", "/")
+                </td>
+            </tr>
+
+
+        }
+
+
+    </table>
+
+</div>
+<div style="height:15px;"></div>

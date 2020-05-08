@@ -40,6 +40,16 @@
         text-align: right;
         width: 100%;
     }
+
+    /*==========20200413===========*/
+    .hrTab {
+        background-color: #d4c8c8;
+        height: 35px;
+    }
+    .highHeadFooterTable {
+        height: 35px;
+    }
+    /*====END======20200413===========*/
 </style>
 
 @using (Ajax.BeginForm("insertDataActivity", "MainForm", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
@@ -47,17 +57,17 @@
     @Html.AntiForgeryToken()
     <div id="GridPDF" style="width:97%; margin-left:20px;">
         @*<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">*@
-            @*=================for test====================*@
-            @*<tr>
-                    <td>
-                        @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
-                    </td>
-                </tr>*@
-            @*=========END========for test==================*@
-            @foreach (var item in Model.master_Type_Form_Detail_Models)
-            {
-                @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
-            }
+        @*=================for test====================*@
+        @*<tr>
+                <td>
+                    @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
+                </td>
+            </tr>*@
+        @*=========END========for test==================*@
+        @foreach (var item in Model.master_Type_Form_Detail_Models)
+        {
+            @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+        }
         @*</table>*@
     </div>
 
@@ -83,9 +93,11 @@
 <div style="margin-left:25px;" class="text-center">
     <a href="@Url.Action("index", "Home", new { typeForm = @Model.activityFormModel.typeForm }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
     @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString()
-                                                || Model.activityFormTBMMKT.statusId == 1
-                                                || Model.activityFormTBMMKT.statusId == 5
-                                                || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)))
+            || Model.activityFormTBMMKT.statusId == 1
+            || Model.activityFormTBMMKT.statusId == 5
+            || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
+            || (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] && ActFormAppCode.checkRecorderByUser(Model.activityFormTBMMKT.id))
+        )
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
     }
@@ -123,19 +135,26 @@
 
 <script>
 
-    if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId)' == "False")
-    {
-           $("#GridPDF :input").prop("disabled", true);
-           $("#txtdescAttach").prop("disabled", true);
+    if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' == "False") {
+
+        $("#GridPDF :input").prop("disabled", true);
+        $("#txtdescAttach").prop("disabled", true);
+
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' &&
+            '@ActFormAppCode.checkRecorderByUser(Model.activityFormTBMMKT.id)' == 'True') {
+            $("#divExpensesTrv :input").prop("disabled", false);
+        }
     }
 
-        if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
-            var arrayOfElements = document.getElementsByClassName('clstxtIO');
-            var lengthOfArray = arrayOfElements.length;
-            for (var i = 0; i < lengthOfArray; i++) {
-                arrayOfElements[i].disabled = 'disabled';
-            }
+    if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
+        var arrayOfElements = document.getElementsByClassName('clstxtIO');
+        var lengthOfArray = arrayOfElements.length;
+        for (var i = 0; i < lengthOfArray; i++) {
+            arrayOfElements[i].disabled = 'disabled';
         }
+    }
+
+
 
     $("#btnExportPDF").click(function () {
         $("input[name='gridHtml']").val($("#GridPDF").html());
@@ -177,8 +196,7 @@
             if ($("#txtdateActivitySt").val() == "") { required += "ต้องการเช็ควันที่*<br>"; validate = false; }
             if ($("#txtactivityPeriodEnd").val() == "") { required += "เคลียร์เงินทดรองในวันที่*<br>"; validate = false; }
             if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
-        } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]' || '@Model.activityFormTBMMKT.master_type_form_id' =='@ConfigurationManager.AppSettings["formTrvHcmId"]')
-        {
+        } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]' || '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvHcmId"]') {
 
             //Travelling form TBM
             if ($("#txtdateDoc2").val() == "") { required += "&emsp;Document Date*<br>"; validate = false; }
@@ -199,7 +217,7 @@
                 $("#txtForProject_0").val() != "" &&
                 $("#txtPeriod_0").val() != "" &&
                 $("#txtDepartureDate_0").val() != "" &&
-                $("#txtArrivalDate_0").val() != "")){
+                $("#txtArrivalDate_0").val() != "")) {
                 required += "&emsp;รายละเอียดของกิจกรรม/Description of activity*<br>"; validate = false;
             }
 
@@ -234,11 +252,65 @@
 
             var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
-                if ($("#ddlin_or_out_stock").val()=='@ConfigurationManager.AppSettings["idInStock"]' && $(".txtInTable_productId_" + i).val() != '' && $(".txtInTable_IO_" + i).val() == '') {
-                    required += "กรุณาระบุIOในMatรายการที่: " + (i+1) +"<br>"; validate = false;
+                if ($("#ddlin_or_out_stock").val() == '@ConfigurationManager.AppSettings["idInStock"]' && $(".txtInTable_productId_" + i).val() != '' && $(".txtInTable_IO_" + i).val() == '') {
+                    required += "กรุณาระบุIOในMatรายการที่: " + (i + 1) + "<br>"; validate = false;
                 }
             }
 
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' ) {
+
+
+            if ($("#txtdateDoc").val() == "") { required += "&emsp;วันที่เอกสาร*<br>"; validate = false; }
+            if ($("#lblEmpName").val() == "" || $("#lblEmpName").val() == null) { required += "&emsp;ข้อมูลพนักงาน*<br>"; validate = false; }
+            if ($("#ddlRegional").val() == "") { required += "&emsp;ภาค*<br>"; validate = false; }
+            if ($("#txtEmpTel").val() == "") { required += "&emsp;โทรศัพท์ติดต่อ*<br>"; validate = false; }
+            if ($("#txtOrerOf").val() == "") { required += "&emsp;ตามคำสั่ง*<br>"; validate = false; }
+
+            if (!($("#txtDeparture_0").val() != "" &&
+                $("#txtArrival_0").val() != "" &&
+                $("#txtForProject_0").val() != "" &&
+                $("#txtPeriod_0").val() != "" &&
+                $("#txtDepartureDate_0").val() != "" &&
+                $("#txtArrivalDate_0").val() != "")) {
+                required += "&emsp;รายละเอียดการเดินทาง*<br>"; validate = false;
+            }
+
+            if ($("#totalEstimate").val() == "" || $("#totalEstimate").val() == "0.00") {
+                required += "&emsp;ประมาณค่าใช้จ่ายในการเดินทาง*<br>"; validate = false;
+            }
+
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]') {
+            if ($("#txtdateDoc").val() == "") { required += "&emsp;Document Date*<br>"; validate = false; }
+            if ($("#txtActivityName").val() == "") { required += "&emsp;ชื่องาน*<br>"; validate = false; }
+            if ($("#ddlFiscalYear").val() == "" || $("#ddlFiscalYear").val() == null) { required += "&emsp;ปีงบประมาณ*<br>"; validate = false; }
+            if ($("#ddl_EO_PV").val() == "" || $("#ddl_EO_PV").val() == null) { required += "&emsp;งบประมาณเลขที่EO*<br>"; validate = false; }
+            if ($("#txtObjective").val() == "") { required += "&emsp;วัตถุประสงค์*<br>"; validate = false; }
+            if ($("#ddlAP").val() == "" || $("#ddlAP").val() == null) { required += "&emsp;Supplier*<br>"; validate = false; }
+            if ($("#ddlAttach").val() == "" || $("#ddlAttach").val() == null) { required += "&emsp;เอกสารแนบ*<br>"; validate = false; }
+            var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
+            for (i = 0; i < rowCount; i++) {
+                if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val() == '') { required += "&emsp;ส่วนที่3-5 [IO]*<br>"; validate = false; }
+                if ($(".txtGL_" + i).val() == '') { required += "&emsp;ส่วนที่3-5 [GL]*<br>"; validate = false; }
+                if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__select_list_choice_id_ChReg").val() == '') { required += "&emsp;ส่วนที่3-5 [Ch.+Reg.]*<br>"; validate = false; }
+                if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__productBrandId").val() == '') { required += "&emsp;ส่วนที่3-5 [Brand]*<br>"; validate = false; }
+            }
+            if ($("#txtpayNo").val() == "" || $("#txtpayNo").val() == null) { required += "&emsp;ส่วนที่6 [สั่งจ่ายครั้งที่]*<br>"; validate = false; }
+            if ($("#txtpayNo").val() != "") {
+                if (parseInt($("#txtpayNo").val()) >= 2) {
+                    if ($("#ddlActivityNoSub").val() == "" || $("#ddlActivityNoSub").val() == null) {
+                        required += "&emsp;ส่วนที่6 [สั่งจ่ายต่อจากเอกสาร]*<br>"; validate = false;
+                    }
+                }
+            }
+            rowCount = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
+            for (i = 0; i < rowCount; i++) {
+                if ($("#activityOfEstimateList_" + i + "__IO").val() == '') { required += "&emsp;ส่วนที่6 [IO]*<br>"; validate = false; }
+                if ($(".txtproductDetail_" + i).val() == '') { required += "&emsp;ส่วนที่6 [รายละเอียด]*<br>"; validate = false; }
+                if ($("#activityOfEstimateList_" + i + "__listChoiceId").val() == '') { required += "&emsp;ส่วนที่6 [VAT]*<br>"; validate = false; }
+                if ($(".txtnormalCost_" + i).val() == '') { required += "&emsp;ส่วนที่6 [จำนวนเงิน(บาท)]*<br>"; validate = false; }
+            }
         }
         else {
 
@@ -281,6 +353,7 @@
                 dataType: "json",
                 type: 'POST',
             }).done(function (response) {
+
                 $("#WaitDialog").hide();
                 $("#divPreview").html(htmlResponse);
                 $('#previewModal').modal('show');
@@ -330,6 +403,22 @@ function CallImageView(obj) {
     }).done(function (htmlResponse) {
             $("#divgetimage").html(htmlResponse)
         });
-}
+    }
+
+    function deleteRowTable(btn) {
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
+    function checkValInArray(arryFind, valCheck) {
+        var loopcheckValInArray = 0;
+        var detect = false;
+        for (loopcheckValInArray = 0; loopcheckValInArray < arryFind.length; loopcheckValInArray++) {
+            if (arryFind[loopcheckValInArray] == valCheck) {
+                detect = true;
+            }
+        }
+        return detect;
+    }
 
 </script>
