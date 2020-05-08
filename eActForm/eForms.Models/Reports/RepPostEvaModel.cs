@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eForms.Models.Reports
 {
-    
+
     public class RepPostEvaModels
     {
         public List<RepPostEvaModel> repPostEvaLists { get; set; }
@@ -40,8 +40,8 @@ namespace eForms.Models.Reports
         public string size { get; set; }
         public DateTime? activityPeriodSt { get; set; }
         public DateTime? activityPeriodEnd { get; set; }
-        public string costPeriodSt { get; set; }
-        public string costPeriodEnd { get; set; }
+        public DateTime? costPeriodSt { get; set; }
+        public DateTime? costPeriodEnd { get; set; }
         public double? le { get; set; }
         public string unit { get; set; }
         public string compensate { get; set; }
@@ -60,13 +60,13 @@ namespace eForms.Models.Reports
         public double? specialDiscountMT { get; set; }
         public double? presentToSale { get { return estimateSaleBathAll == 0 ? 0 : (total / estimateSaleBathAll) * 100; } set { } }
         public double? bathParti { get { return estimateSaleBathAll * (le / 100); } }
-        public double? presentToSaleParti { get { return total / bathParti;  } }
-        public double? presentSE { get { return activitySales == "Promotion Support" ? 0 : (specialDiscountMT / (netValueMT + specialDiscountMT)) * 100;  } } //([specialDiscountMT] / [netValueMT] + [specialDiscountMT]) * 100
-        public double? salePartiCase { get { return activitySales == "Promotion Support" ? actReportQuantity * (le/100) : 0; } }
+        public double? presentToSaleParti { get { return total / bathParti; } }
+        public double? presentSE { get { return activitySales == "Promotion Support" ? 0 : (specialDiscountMT / (netValueMT + specialDiscountMT)) * 100; } } //([specialDiscountMT] / [netValueMT] + [specialDiscountMT]) * 100
+        public double? salePartiCase { get { return activitySales == "Promotion Support" ? actReportQuantity * (le / 100) : 0; } }
         public double? salePartiBath { get { return activitySales == "Promotion Support" ? actAmount * (le / 100) : 0; } }
-        public double? accuracySaleCase { get { return activitySales == "Promotion Support" ? actReportQuantity / tempAPNormalCost : billedQuantityMT / tempAPNormalCost; } }
+        public double? accuracySaleCase { get { return (actReportQuantity / themeCost) * 100; } }//activitySales == "Promotion Support" ?  : billedQuantityMT / tempAPNormalCost; }
         public double? accuracySaleBath { get { return activitySales == "Promotion Support" ? actAmount / estimateSaleBathAll : 0; } }
-        public double? accuracySpendingBath { get { return activitySales == "Promotion Support" ? 0 : specialDiscountMT/ estimateSaleBathAll; } }
+        public double? accuracySpendingBath { get { return activitySales == "Promotion Support" ? 0 : specialDiscountMT / estimateSaleBathAll; } }
         public double? saleActual { get; set; }
         public double? presentAcctual { get { return activitySales == "Promotion Support" ? 0 : saleActual / total; } }
         public string dayAddStart { get; set; }
