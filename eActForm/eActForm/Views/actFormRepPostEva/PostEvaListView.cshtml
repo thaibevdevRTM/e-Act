@@ -50,9 +50,12 @@
                                     <th style="text-align:center;" rowspan="2">Brand Name</th>
                                     <th style="text-align:center;" rowspan="2">ลูกค้า</th>
                                     <th style="text-align:center;" rowspan="2">กลุ่มสินค้า</th>
+                                    <th style="text-align:center;" rowspan="2">productCode</th>
                                     <th style="text-align:center;" rowspan="2">size</th>
                                     <th style="text-align:center;" rowspan="2">ระยะเวลากิจกรรม</th>
                                     <th style="text-align:center;" rowspan="2">สิ้นสุดเวลากิจกรรม</th>
+                                    <th style="text-align:center;" rowspan="2">ระยะเวลาการให้ทุน</th>
+                                    <th style="text-align:center;" rowspan="2">สิ้นสุดเวลาให้ทุน</th>
                                     <th style="text-align:center;" rowspan="2">SE</th>
                                     <th style="text-align:center;" rowspan="2">Unit</th>
                                     <th style="text-align:center;" rowspan="2">compensate</th>
@@ -88,76 +91,93 @@
                                 {
 
 
-                                    <tr class="even pointer">
-                                        <td>@index</td>
-                                        <td>@item.activitySales</td>
-                                        <td>@item.activityNo</td>
-                                        <th style="text-align:center;">@item.activityName</th>
-                                        <td style="text-align:center;">@item.brandName</td>
-                                        <td style="text-align:center;">@item.customerName</td>
-                                        <td style="text-align:center;">@item.groupName</td>
-                                        <td style="text-align:center;">@item.size</td>
-                                        @if (item.activityPeriodSt != null)
-                                        {
-                                            <td width="100px" style="text-align:center;">@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
-                                        }
-                                        else
-                                        {
-                                            <td></td>
-                                        }
-                                        @if (item.activityPeriodEnd != null)
-                                        {
-                                            <td width="100px" style="text-align:center;">@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
-                                        }
-                                        else
-                                        {
-                                            <td></td>
-                                        }
-                                        <td style="text-align:center;">@string.Format("{0:n2}", item.le)</td>
-                                        <td style="text-align:center;">@string.Format("{0:n2}", item.unit)</td>
-                                        <td style="text-align:center;">@string.Format("{0:n2}", item.compensate)</td>
-                                        <td style="text-align:center;">@string.Format("{0:n2}", item.normalCost)</td>
-                                        <td style="text-align:center;">@string.Format("{0:n2}", item.themeCost)</td>
-                                        <td style="text-align:center;">@string.Format("{0:n2}", item.total)</td>
-                                        <td style="text-align:center;">@string.Format("{0:n2}", item.tempAPNormalCost)</td>
-                                        <td style="text-align:center;">@string.Format("{0:n2}", item.estimateSaleBathAll)</td>
-                                        <td style="text-align:center;">@string.Format("{0:n2}", item.presentToSale)</td>
+                                <tr class="even pointer">
+                                    <td>@index</td>
+                                    <td>@item.activitySales</td>
+                                    <td>@item.activityNo</td>
+                                    <th style="text-align:center;">@item.activityName</th>
+                                    <td style="text-align:center;">@item.brandName</td>
+                                    <td style="text-align:center;">@item.customerName</td>
+                                    <td style="text-align:center;">@item.groupName</td>
+                                    <td style="text-align:center;">@item.productCode</td>
+                                    <td style="text-align:center;">@item.size</td>
+                                    @if (item.activityPeriodSt != null)
+                                    {
+                                        <td width="100px" style="text-align:center;">@item.activityPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    @if (item.activityPeriodEnd != null)
+                                    {
+                                        <td width="100px" style="text-align:center;">@item.activityPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    @if (item.costPeriodSt != null)
+                                    {
+                                        <td width="100px" style="text-align:center;">@item.costPeriodSt.Value.ToString("dd/MM/yyyy")</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    @if (item.costPeriodEnd != null)
+                                    {
+                                        <td width="100px" style="text-align:center;">@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    <td style="text-align:center;">@string.Format("{0:n2}", item.le)</td>
+                                    <td style="text-align:center;">@string.Format("{0:n2}", item.unit)</td>
+                                    <td style="text-align:center;">@string.Format("{0:n2}", item.compensate)</td>
+                                    <td style="text-align:center;">@string.Format("{0:n2}", item.normalCost)</td>
+                                    <td style="text-align:center;">@string.Format("{0:n2}", item.themeCost)</td>
+                                    <td style="text-align:center;">@string.Format("{0:n2}", item.total)</td>
+                                    <td style="text-align:center;">@string.Format("{0:n2}", item.tempAPNormalCost)</td>
+                                    <td style="text-align:center;">@string.Format("{0:n2}", item.estimateSaleBathAll)</td>
+                                    <td style="text-align:center;">@string.Format("{0:n2}", item.presentToSale)</td>
 
-                                        @if (item.activitySales == "Promotion Support")
-                                        {
-                                            <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.actReportQuantity)</td>
-                                            <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.actVolumeQuantity)</td>
-                                            <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.actAmount)</td>
-                                            <td style="text-align:center;background-color:#f0ffcb;"></td>
-                                            <td style="text-align:center;background-color:#f0ffcb;"></td>
-                                            <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.salePartiCase)</td>
-                                            <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.salePartiBath)</td>
-                                            <td style="text-align:center;background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleCase)</td>
-                                            <td style="text-align:center;background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleBath)</td>
-                                            <td style="text-align:center;background-color:#beefff;"></td>
-                                            <td style="text-align:center;">@string.Format("{0:n2}", @item.saleActual)</td>
-                                            <td style="text-align:center;">@string.Format("{0:n2}", item.presentAcctual)</td>
-                                        }
-                                        else
-                                        {
-                                            <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.billedQuantityMT)</td>
-                                            <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.volumeMT)</td>
-                                            <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.netValueMT)</td>
-                                            <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.specialDiscountMT)</td>
-                                            <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.presentSE)</td>
-                                            <td style="text-align:center;background-color:#f0ffcb;"></td>
-                                            <td style="text-align:center;background-color:#f0ffcb;"></td>
-                                            <td style="text-align:center;background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleCase)</td>
-                                            <td style="text-align:center;background-color:#beefff;"></td>
-                                            <td style="text-align:center;background-color:#beefff;">@string.Format("{0:n2}", item.accuracySpendingBath)</td>
-                                            <td style="text-align:center;"></td>
-                                            <td style="text-align:center;"></td>
-                                        }
+                                    @if (item.activitySales == "Promotion Support")
+                                    {
+                                        <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.actReportQuantity)</td>
+                                        <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.actVolumeQuantity)</td>
+                                        <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.actAmount)</td>
+                                        <td style="text-align:center;background-color:#f0ffcb;"></td>
+                                        <td style="text-align:center;background-color:#f0ffcb;"></td>
+                                        <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.salePartiCase)</td>
+                                        <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.salePartiBath)</td>
+                                        <td style="text-align:center;background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleCase)</td>
+                                        <td style="text-align:center;background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleBath)</td>
+                                        <td style="text-align:center;background-color:#beefff;"></td>
+                                        <td style="text-align:center;">@string.Format("{0:n2}", @item.saleActual)</td>
+                                        <td style="text-align:center;">@string.Format("{0:n2}", item.presentAcctual)</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.billedQuantityMT)</td>
+                                        <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.volumeMT)</td>
+                                        <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.netValueMT)</td>
+                                        <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.specialDiscountMT)</td>
+                                        <td style="text-align:center;background-color:#f0ffcb;">@string.Format("{0:n2}", item.presentSE)</td>
+                                        <td style="text-align:center;background-color:#f0ffcb;"></td>
+                                        <td style="text-align:center;background-color:#f0ffcb;"></td>
+                                        <td style="text-align:center;background-color:#beefff;">@string.Format("{0:n2}", item.accuracySaleCase)</td>
+                                        <td style="text-align:center;background-color:#beefff;"></td>
+                                        <td style="text-align:center;background-color:#beefff;">@string.Format("{0:n2}", item.accuracySpendingBath)</td>
+                                        <td style="text-align:center;"></td>
+                                        <td style="text-align:center;"></td>
+                                    }
 
-                                        @{strActNo = item.activityNo;
-                                            index++;
-                                        }
-                                    </tr>
+                                    @{strActNo = item.activityNo;
+                                        index++;
+                                    }
+                                </tr>
 
                                 }
 
