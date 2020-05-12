@@ -79,7 +79,7 @@ namespace eActForm.BusinessLayer
                                   subDisplayType = d["subDisplayType"].ToString(),
                                    updatedByUserId = d["updatedByUserId"].ToString(),
                                   createdByUserId = d["createdByUserId"].ToString(),
-
+                                  glCode = d["glCode"].ToString(),
 
                               });
 

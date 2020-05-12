@@ -388,7 +388,7 @@ namespace eActForm.BusinessLayer
                 if (models.approveDetailLists.Count > 0)
                 {
                     models.approveDetailLists = models.approveDetailLists
-                        .Where(x => x.approveGroupId == AppCode.ApproveGroup.Recorder)
+                        .Where(x => x.approveGroupId == AppCode.ApproveGroup.Recorder ||  x.approveGroupId == AppCode.ApproveGroup.PettyCashVerify)
                         .Where(x => x.empId == UtilsAppCode.Session.User.empId).ToList();
                 }
                 return models.approveDetailLists.Count > 0 ? true : false;

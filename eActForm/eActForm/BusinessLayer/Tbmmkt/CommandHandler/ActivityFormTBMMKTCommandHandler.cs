@@ -126,8 +126,9 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.detail = item.detail;
                 costThemeDetail.listChoiceId = item.listChoiceId;
                 costThemeDetail.compensate = item.compensate;
+                costThemeDetail.glCode = item.glCode;
                 rtn += insertEstimate(costThemeDetail);
-                insertIndex ++;
+                insertIndex++;
             }
 
             return insertIndex;
@@ -864,6 +865,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@detail",model.detail)
                     ,new SqlParameter("@listChoiceId",(model.listChoiceId == null ? "" : model.listChoiceId))
                     ,new SqlParameter("@compensate",model.compensate)
+                    ,new SqlParameter("@glCode",(model.glCode == null ? "" : model.glCode))
             });
             }
             catch (Exception ex)

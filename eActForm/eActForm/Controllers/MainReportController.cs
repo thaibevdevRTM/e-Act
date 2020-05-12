@@ -138,6 +138,7 @@ namespace eActForm.Controllers
                        ? model2.costDetailLists[i].unit+ "วัน (สิทธิเบิก " +model2.costDetailLists[i].productDetail + " บาท/วัน)"
                        : model2.costDetailLists[i].productDetail),                      
                        total = model2.costDetailLists[i].total,
+                       glCode = model2.costDetailLists[i].glCode,
                        
                         
                         
@@ -153,7 +154,8 @@ namespace eActForm.Controllers
                     listChoiceName = "",
                     productDetail = "",                
                     total = 0,
-                    displayType = "",       
+                    displayType = "",    
+                    glCode="",
                     
                 });
 
