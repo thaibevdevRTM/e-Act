@@ -1,5 +1,5 @@
 ﻿using eActForm.Models;
-using Microsoft.ApplicationBlocks.Data;
+//using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,8 +12,9 @@ namespace eActConsoleService
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(Properties.Settings.Default.strConn, CommandType.StoredProcedure, "usp_getCountWaitingApproveGroupByEmpId");
-                var lists = (from DataRow dr in ds.Tables[0].Rows
+                // DataSet ds = SqlHelper.ExecuteDataset(Properties.Settings.Default.strConn, CommandType.StoredProcedure, "usp_getCountWaitingApproveGroupByEmpId");
+                DataSet ds = new DataSet();
+               var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveModel.approveWaitingModel()
                              {
                                  empId = dr["empId"].ToString()
