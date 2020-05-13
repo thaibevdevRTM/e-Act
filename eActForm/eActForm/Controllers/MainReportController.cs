@@ -78,8 +78,6 @@ namespace eActForm.Controllers
             DocumentsAppCode.setCulture(activity_TBMMKT_Model.activityFormModel.languageDoc);
             //====END=======Set Language By Document Dev date 20200310 Peerapop==================
 
-            //return PartialView(activity_TBMMKT_Model);  //ไว้ใช้เวลาจะใส่กับ Modal            
-            //return View(activity_TBMMKT_Model); // test
             return PartialView(activity_TBMMKT_Model);// production
         }
 
