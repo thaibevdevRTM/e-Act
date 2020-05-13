@@ -18,14 +18,6 @@ D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
-D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.dll
-D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.pdb
-D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.dll
-D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.xml
-D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csprojAssemblyReference.cache
-D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
-D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
-D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.xml
@@ -48,3 +40,11 @@ D:\work\project\source code\e-act local\e-Act\eActForm\WebLibrary\obj\Release\We
 D:\work\project\source code\e-act local\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
 D:\work\project\source code\e-act local\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
 D:\work\project\source code\e-act local\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
+D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.dll
+D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.pdb
+D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.dll
+D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.xml
+D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csprojAssemblyReference.cache
+D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
+D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
+D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb

@@ -279,7 +279,7 @@
                                         <tr>
                                             <td style="text-align:left;font-size:12px;border-right-style:none;"></td>
                                             <td style="text-align:left;font-size:12px;border-left-style:none;"></td>
-                                            <td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.productStandBath)&nbsp;</td>
+                                            <td style="text-align:right;font-size:12px;"> @*@string.Format("{0:n2}", item.productStandBath)*@&nbsp;</td>
                                             <td style="text-align:center;font-size:12px;">@item.invoiceNo</td>
                                             <td></td>
                                             <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.invoiceTotalBath)&nbsp;</td>
@@ -322,7 +322,7 @@
                                     }
 
                                     index++;
-                                    if (index == Model.Budget_Invoce_History_list.Count)
+                                    if (index == Model.Budget_Invoce_History_list.Count) /*total footer*/
                                     {
                                         <tr>
                                             <td style="text-align:left;font-size:12px;"></td>
