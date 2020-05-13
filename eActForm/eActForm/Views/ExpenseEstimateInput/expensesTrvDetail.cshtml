@@ -106,7 +106,7 @@
                         @if (item.listChoiceId != AppCode.Expenses.Allowance)
                         {
                             @*<input type="text" value="xxxxxxxxx" id="txtUnit_@index" class="form-control textboxcss text-center " />*@
-                            <input type="text" value="@item.glCode" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" />
+                            <input type="text" value="@item.glCode" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" readonly />
 
                         }
                         else
