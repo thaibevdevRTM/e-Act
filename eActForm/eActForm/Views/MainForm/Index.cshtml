@@ -46,6 +46,7 @@
         background-color: #d4c8c8;
         height: 35px;
     }
+
     .highHeadFooterTable {
         height: 35px;
     }
@@ -96,7 +97,7 @@
             || Model.activityFormTBMMKT.statusId == 1
             || Model.activityFormTBMMKT.statusId == 5
             || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
-            || (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] && ActFormAppCode.checkRecorderByUser(Model.activityFormTBMMKT.id))
+            || (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
         )
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
@@ -141,8 +142,19 @@
         $("#txtdescAttach").prop("disabled", true);
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' &&
-            '@ActFormAppCode.checkRecorderByUser(Model.activityFormTBMMKT.id)' == 'True') {
+            '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
             $("#divExpensesTrv :input").prop("disabled", false);
+
+            $("#divExpensesTrv :input").prop("readonly", true);
+            $("#divExpensesTrv :btn").prop("readonly", true);
+            
+            for (var i = 0; i < '@Model.expensesDetailModel.costDetailLists.Count'; i++) {
+                if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "Recorder")' == 'True') {
+                    $("#txtUnitPrice_" + i + "").prop("readonly", false);
+                } else if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
+                    $("#txtGlCode_" + i + "").prop("readonly", false);
+                }
+            }
         }
     }
 
