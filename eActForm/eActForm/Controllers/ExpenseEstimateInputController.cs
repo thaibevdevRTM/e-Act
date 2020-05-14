@@ -38,7 +38,8 @@ namespace eActForm.Controllers
                         unitPrice = 0,
                         total = 0,
                         displayType = lst[i].displayType,
-                        subDisplayType = lst[i].subDisplayType
+                        subDisplayType = lst[i].subDisplayType,
+                        glCode = "",
                     });
                 }
 
@@ -120,6 +121,7 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
+     
 
     }
 }

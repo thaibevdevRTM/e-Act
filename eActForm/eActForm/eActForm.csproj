@@ -323,6 +323,7 @@
     <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\API\apiGetDataMasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportMasterAPController.cs" />
     <Compile Include="Controllers\ImportMaterial_PRODUCT_POS_PREMIUMController.cs" />
     <Compile Include="Controllers\MainFormController.cs" />
     <Compile Include="Controllers\frmOrderProduct\orderProductController.cs" />
@@ -3030,7 +3031,7 @@
     <Content Include="Views\Approve\previewActBudget.cshtml" />
     <Content Include="Views\Shared\_previewActFormBudget.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetActivityIndex.cshtml" />
-    <Content Include="Views\MenuList\account.cshtml" />
+    <Content Include="Views\MenuList\budgetAccount.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetAccSeIndex.cshtml" />
     <Content Include="Views\managementFlow\Index.cshtml" />
     <Content Include="Views\managementFlow\dropDetail.cshtml" />
@@ -3136,6 +3137,8 @@
     <Content Include="Views\SharedMasterFormHeaderCompany\headerFormName.cshtml" />
     <Content Include="Views\ExpenseEstimateInput\expensesMedDetail.cshtml" />
     <Content Include="Views\ExpenseEstimateInput\expensesMedDetail_old.cshtml" />
+    <Content Include="Views\MenuList\importData.cshtml" />
+    <Content Include="Views\ImportMasterAP\Index.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
@@ -3153,10 +3156,23 @@
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
+    <Folder Include="Uploadfiles\ImportMasterAP\template\" />
     <Folder Include="Uploadfiles\ImportMatProductPosPremium\template\" />
     <Folder Include="Views\ApiApprove\" />
     <Folder Include="Views\exPerryCash\" />
     <Folder Include="Views\getDataMaster\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Global.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Global.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Global.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Global.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\eForms.Models\eForms.Models.csproj">
@@ -3171,18 +3187,6 @@
       <Project>{915ae4ce-4607-4e97-9329-2f6d8b5c4569}</Project>
       <Name>WebLibrary</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Global.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Global.en.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Resources</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Global.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Global.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Resources</CustomToolNamespace>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

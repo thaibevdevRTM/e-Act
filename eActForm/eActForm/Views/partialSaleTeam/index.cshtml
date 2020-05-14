@@ -13,7 +13,7 @@
 
             @Html.DropDownList("activityFormModel.regionId", new SelectList(Model.provinceList, "id", "nameTH", ""), "Please Select", new
                {
-                   @class = "form-control selectpicker",
+                   @class = "form-control",
                    onchange = "fillOnChange()",
                    id = "ddlProvince",
                    required = "required"
@@ -26,7 +26,7 @@
             <div class="col-lg-3 col-3"><p class="pull-right text-warning">*</p><p class="pull-right">หน่วย:</p></div>
             <div class="col-lg-9 col-9">
                 <div style="margin-left:9px;margin-right:9px;">
-                    <select id="ddlSaleTeam" name="activityFormModel.reference" class="form-control selectpicker" required onchange="ddlSaleTeamChange()">
+                    <select id="ddlSaleTeam" name="activityFormModel.reference" class="form-control" required onchange="ddlSaleTeamChange()">
                         <option style="color:#0e0d0d;" value>Please Select</option>
                     </select>
                 </div>
@@ -44,6 +44,8 @@
         $("#saleTeamName").val($("#ddlSaleTeam option:selected").text());
     }
     function fillOnChange() {
+
+        console.log($("#ddlProvince option:selected").text());
         $("#provinceName").val($("#ddlProvince option:selected").text());
         $.ajax({
             url: '@Url.Action("getDataSaleTeam", "apiGetDataMaster")',
@@ -53,6 +55,7 @@
             dataType: "json",
             type: 'POST',
             success: function (response) {
+               
                 fillData(response);
             }
         });
@@ -63,6 +66,7 @@
         if (response.Data.saleTeamList.length > 0) {
             $("#ddlSaleTeam option[value !='']").remove();
             $.each(response.Data.saleTeamList, function () {
+                console.log(this['id'] + "," +this['nameTH']);
                 $("#ddlSaleTeam").append($("<option></option>").val(this['id']).html(this['nameTH']));
             });
         }

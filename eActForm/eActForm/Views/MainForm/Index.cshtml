@@ -46,6 +46,7 @@
         background-color: #d4c8c8;
         height: 35px;
     }
+
     .highHeadFooterTable {
         height: 35px;
     }
@@ -96,7 +97,7 @@
             || Model.activityFormTBMMKT.statusId == 1
             || Model.activityFormTBMMKT.statusId == 5
             || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
-            || (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] && ActFormAppCode.checkRecorderByUser(Model.activityFormTBMMKT.id))
+            || (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
         )
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
@@ -141,8 +142,19 @@
         $("#txtdescAttach").prop("disabled", true);
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' &&
-            '@ActFormAppCode.checkRecorderByUser(Model.activityFormTBMMKT.id)' == 'True') {
+            '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
+
             $("#divExpensesTrv :input").prop("disabled", false);
+            $("#divExpensesTrv :input").prop("readonly", true);
+
+
+            for (var i = 0; i < '@Model.expensesDetailModel.costDetailLists.Count'; i++) {
+                if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "Recorder")' == 'True') {
+                 $("#txtUnitPrice_" + i + "").prop("readonly", false);
+                } else if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
+                    $("#txtGlCode_" + i + "").prop("readonly", false);
+                }
+            }
         }
     }
 
@@ -292,7 +304,7 @@
             var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val() == '') { required += "&emsp;ส่วนที่3-5 [IO]*<br>"; validate = false; }
-                if ($(".txtGL_" + i).val() == '') { required += "&emsp;ส่วนที่3-5 [GL]*<br>"; validate = false; }
+                if ($(".txtGL_" + i).val() == '' && $("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val().toLowerCase() != 'เข้าstock') { required += "&emsp;ส่วนที่3-5 [GL]*<br>"; validate = false; }
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__select_list_choice_id_ChReg").val() == '') { required += "&emsp;ส่วนที่3-5 [Ch.+Reg.]*<br>"; validate = false; }
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__productBrandId").val() == '') { required += "&emsp;ส่วนที่3-5 [Brand]*<br>"; validate = false; }
             }
@@ -378,10 +390,10 @@
 
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
-        maxFiles: 5,
+        maxFiles: 10,
         acceptedFiles: "",
         paramName: "file",
-        maxFilesize: 10,
+        maxFilesize: 25,
         //addRemoveLinks: true,
         init: function () {
 
@@ -410,10 +422,11 @@ function CallImageView(obj) {
         row.parentNode.removeChild(row);
     }
 
-    function checkValInArray(arryFind,valCheck) {
+    function checkValInArray(arryFind, valCheck) {
+        var loopcheckValInArray = 0;
         var detect = false;
-        for (i = 0; i < arryFind.length; i++) {
-            if (arryFind[i] == valCheck) {
+        for (loopcheckValInArray = 0; loopcheckValInArray < arryFind.length; loopcheckValInArray++) {
+            if (arryFind[loopcheckValInArray] == valCheck) {
                 detect = true;
             }
         }

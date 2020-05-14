@@ -39,3 +39,14 @@ eActForm/eActConsoleServiceWeekly/obj/Debug/eActConsoleServiceWeekly.pdb
 eActForm/eActForm/Web.config
 
 eActForm/eActForm/Web.config
+eActForm/eForms.Models/bin/Debug/eForms.Models.dll
+eActForm/eForms.Models/bin/Debug/eForms.Models.pdb
+eActForm/eForms.Models/obj/Debug/eForms.Models.dll
+eActForm/eForms.Models/obj/Debug/eForms.Models.pdb
+eActForm/eForms.Presenter/bin/Debug/eForms.Models.dll
+eActForm/eForms.Presenter/bin/Debug/eForms.Models.pdb
+eActForm/eForms.Presenter/bin/Debug/eForms.Presenter.dll
+eActForm/eForms.Presenter/bin/Debug/eForms.Presenter.pdb
+eActForm/eForms.Presenter/obj/Debug/eForms.Presenter.csprojAssemblyReference.cache
+eActForm/eForms.Presenter/obj/Debug/eForms.Presenter.dll
+eActForm/eForms.Presenter/obj/Debug/eForms.Presenter.pdb

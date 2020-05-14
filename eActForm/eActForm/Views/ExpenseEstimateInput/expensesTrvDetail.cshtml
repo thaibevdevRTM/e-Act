@@ -6,116 +6,137 @@
     <tr style="border-bottom:none;">
         <td>
             <div id="divExpensesTrv" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
-
+                 
 
                 <table class="table table-bordered" id="tabelExpensesTrv" runat="server">
                     <tr style="background-color:#E5E2E2;height:25px; ">
-                        <th colspan="6" style="text-align :center;">
+                        <th colspan="5" style="text-align :center;">
                             ประมาณค่าใช้จ่ายในการเดินทาง ดังนี้
                         </th>
                     </tr>
                     <tr style="height:25px;">
-                        <th style="width: 60%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <th style="width: 58%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             รายละเอียด
                         </th>
-                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             จำนวน/วัน
                         </th>
-                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            ราคาต่อหน่วย(บาท)
+                        <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:left;">
+                            รหัสบัญชี(GL)
                         </th>
-                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <th style="width: 11%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            ราคา/หน่วย(บาท)
+                        </th>
+                        <th style="width: 11%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             รวม(บาท)
                         </th>
                     </tr>
                     @{ var index = 0;}
                     @foreach (var item in Model.expensesDetailModel.costDetailLists)
                     {
-                        <tr class="tagCountRowinTable">
+                <tr class="tagCountRowinTable">
 
-                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;">
+                    <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;">
 
-                                <div class="form-group">
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="row">
-                                            <input type="hidden" value="@item.listChoiceId" id="hdListChoiceId_@index" name="expensesDetailModel.costDetailLists[@index].listChoiceId" class="form-control textboxcss" />
-                                            <label>@item.listChoiceName</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="row">
-
-                                            @if (item.displayType == AppCode.CodeHtml.LabelHtml)
-                                            {
-                                                <label> สิทธิเบิก  </label>
-                                                @*<label id="ProductDetail_@index" value="@item.productDetail" name="expensesDetailModel.costDetailLists[@index].productDetail" />*@
-                                                <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" readonly style="border:hidden; text-align:center;" />
-
-                                                @*<label id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail">....</label>*@
-                                                <label id="lblBath_@index"> บาท/วัน </label>
-                                            }
-                                            @if (item.displayType == AppCode.CodeHtml.TextboxHtml)
-                                            {
-                                                <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" class="form-control textboxcss" />
-                                            }
-                                            @if (item.displayType == AppCode.CodeHtml.DropdownHtml)
-                                            {
-
-                                                @Html.DropDownListFor(x => x.expensesDetailModel.costDetailLists[index].productDetail,
-                                new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
-                                "name",
-                                "name", @item.productDetail), "", new
-                                {
-                                    @class = "form-control selectpicker",
-                                    @id = "ProductDetail_" + index,
-                                    @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
-
-                                })
-
-
-                                            }
-
-
-
-                                        </div>
-                                    </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-xs-12">
+                                <div class="row">
+                                    <input type="hidden" value="@item.listChoiceId" id="hdListChoiceId_@index" name="expensesDetailModel.costDetailLists[@index].listChoiceId" class="form-control textboxcss" />
+                                    <label>@item.listChoiceName</label>
                                 </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="row">
 
-                            </td>
+                                    @if (item.displayType == AppCode.CodeHtml.LabelHtml)
+                                    {
+                                        <label> สิทธิเบิก  </label>
+                                        @*<label id="ProductDetail_@index" value="@item.productDetail" name="expensesDetailModel.costDetailLists[@index].productDetail" />*@
+                                        <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" readonly style="border:hidden; text-align:center;" />
+
+                                        @*<label id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail">....</label>*@
+                                        <label id="lblBath_@index"> บาท/วัน </label>
+                                    }
+                                    @if (item.displayType == AppCode.CodeHtml.TextboxHtml)
+                                    {
+                                        <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" class="form-control textboxcss" />
+                                    }
+                                    @if (item.displayType == AppCode.CodeHtml.DropdownHtml)
+                                    {
+
+                                        @Html.DropDownListFor(x => x.expensesDetailModel.costDetailLists[index].productDetail,
+                        new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
+                        "name",
+                        "name", @item.productDetail), "", new
+                        {
+                            @class = "form-control selectpicker",
+                            @id = "ProductDetail_" + index,
+                            @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
+
+                        })
 
 
-                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                    }
 
-                                @if (item.subDisplayType == "showDay")
-                                {
-                                    <input type="number" value="@item.unit" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" min="0" class="form-control textboxcss text-center " />
 
-                                }
-                                else
-                                {
-                                    <input type="hidden" value="1" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" min="0" class="form-control textboxcss text-center " />
 
-                                }
+                                </div>
+                            </div>
+                        </div>
 
-                            </td>
+                    </td>
 
-                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" />
-                            </td>
-                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                                <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss text-right hdTotal_@index " />
-                                @Html.TextBoxFor(x => item.total, "{0:n2}", new
-                           {
-                               @id = "txtTotal_" + @index
-                                    ,
-                               Name = "expensesDetailModel.costDetailLists[" + index + "].total"
-                                    ,
-                               @class = "form-control textboxcss text-right"
-                                    ,
-                               @readonly = "readonly"
-                           })
 
-                                <script>
+                    <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
+                        @if (item.subDisplayType == "showDay")
+                        {
+                            <input type="number" value="@item.unit" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" min="0" class="form-control textboxcss text-center " />
+
+                        }
+                        else
+                        {
+                            <input type="hidden" value="1" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" min="0" class="form-control textboxcss text-center " />
+
+                        }
+
+                    </td>
+                    <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
+                        @if (item.listChoiceId != AppCode.Expenses.Allowance)
+                        {
+                            @*<input type="text" value="xxxxxxxxx" id="txtUnit_@index" class="form-control textboxcss text-center " />*@
+                            <input type="text" value="@item.glCode" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" readonly />
+
+                        }
+                        else
+                        {
+                            <input type="hidden" value="" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" min="0" class="form-control textboxcss text-center " />
+
+                        }
+
+
+
+                    </td>
+                    <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                      
+                        
+                        <input type="text" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" />
+                    </td>
+                    <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                        <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss text-right hdTotal_@index " />
+                        @Html.TextBoxFor(x => item.total, "{0:n2}", new
+                   {
+                       @id = "txtTotal_" + @index
+                            ,
+                       Name = "expensesDetailModel.costDetailLists[" + index + "].total"
+                            ,
+                       @class = "form-control textboxcss text-right"
+                            ,
+                       @readonly = "readonly"
+                   })
+
+                        <script>
 
 
 
@@ -164,13 +185,13 @@
                                         sumall();
                                     });
 
-                                </script>
-                            </td>
-                        </tr>
+                        </script>
+                    </td>
+                </tr>
                         index++;
                     }
                     <tr>
-                        <td colspan="3" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                        <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                             จำนวนเงินรวม(บาท)&nbsp;
                         </td>
                         <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
