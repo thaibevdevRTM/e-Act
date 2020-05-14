@@ -218,18 +218,20 @@
                 $("#lblLvl").text("");
                 $("#lblDept").text("");
                 $("#lblComp").text("");
-                $("#lblHireDate").text("");             
+                $("#lblHireDate").text("");
             }
 
 
-        });
+
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]') {
                 getCashEmp();
             } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
                 //getCashLimit();
                 //getCumulative();
+            alert("1."+$("#lblHireDate").val());
                 getCashDetail();
             }
+        });
     }
 
     function getCashEmp() {
@@ -411,6 +413,7 @@ alert(balance);
     }
 
     function getCashDetail() {
+        alert($("#lblHireDate").val());
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getCashDetailByEmpId", "eAct")',
