@@ -88,6 +88,9 @@ namespace eActForm.Controllers
 
         public ActionResult dropdownConditionSubject(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            objGetDataSubjectByFormOnly objGetDataSubjectByFormOnly = new objGetDataSubjectByFormOnly();
+            objGetDataSubjectByFormOnly.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
+            activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormOnlyAndFlow(objGetDataSubjectByFormOnly);
             return PartialView(activity_TBMMKT_Model);
         }
 

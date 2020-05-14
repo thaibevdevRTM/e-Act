@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eForms.Models.MasterData;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -72,6 +73,7 @@ namespace eActForm.Models
         public List<GetDataIO> listGetDataIO { get; set; }
         public List<GetDataPVPrevious> listGetDataPVPrevious { get; set; }
         public List<GetDataDetailPaymentAll> listGetDataDetailPaymentAll { get; set; }
+        public List<departmentMasterModel> listGetDepartmentMaster { get; set; }
     }
 
     public class ActivityFormTBMMKT : ActivityForm
@@ -162,6 +164,7 @@ namespace eActForm.Models
         public string activityIdNoSub { get; set; }
         public string orderOf { get; set; }
         public string regionalId { get; set; }
+        public string departmentId { get; set; }
     }
 
     public class TB_Act_ActivityForm_DetailOtherList : ActBaseModel
@@ -390,4 +393,15 @@ namespace eActForm.Models
         public string empLevel { get; set; }
 
     }
+
+    public class objGetDataSubjectByFormOnly
+    {
+        public string master_type_form_id { get; set; }
+    }
+
+    public class objGetDepartmentMaster
+    {
+        public string companyId { get; set; }
+    }
+
 }
