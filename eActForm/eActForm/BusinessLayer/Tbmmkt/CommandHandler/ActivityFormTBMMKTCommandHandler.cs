@@ -84,7 +84,7 @@ namespace eActForm.BusinessLayer
             if (model.activityOfEstimateList != null)
             {
                 rtn += deleteActivityOfEstimateByActivityId(activityId);
-                rtn += insertEstimateToStored(model.activityOfEstimateList, activityId, model.activityFormModel.createdByUserId, model.activityFormModel.createdDate);
+                rtn += insertEstimateToStored(model.activityOfEstimateList, activityId, string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId, model.activityFormModel.createdDate);
             }
             if (model.activityOfEstimateList2 != null)
             {
@@ -212,7 +212,7 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.EO = model.tB_Act_ActivityForm_DetailOther.EO;
                 tB_Act_ActivityForm_DetailOther.descAttach = model.tB_Act_ActivityForm_DetailOther.descAttach;
                 tB_Act_ActivityForm_DetailOther.delFlag = false;
-                tB_Act_ActivityForm_DetailOther.createdByUserId = model.activityFormModel.createdByUserId;
+                tB_Act_ActivityForm_DetailOther.createdByUserId = string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId;
                 tB_Act_ActivityForm_DetailOther.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                 tB_Act_ActivityForm_DetailOther.updatedByUserId = UtilsAppCode.Session.User.empId;
                 tB_Act_ActivityForm_DetailOther.updatedDate = DateTime.Now;
@@ -1165,7 +1165,7 @@ namespace eActForm.BusinessLayer
                     requestEmpModel.empId = item.empId;
                     requestEmpModel.empTel = item.empTel;
                     requestEmpModel.delFlag = false;
-                    requestEmpModel.createdByUserId = model.activityFormModel.createdByUserId;
+                    requestEmpModel.createdByUserId = string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId;
                     requestEmpModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                     requestEmpModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                     requestEmpModel.updatedDate = DateTime.Now;
@@ -1205,7 +1205,7 @@ namespace eActForm.BusinessLayer
                     placeDetailModel.arrived = item.arrived;
                     placeDetailModel.delFlag = false;
                     placeDetailModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate; ;
-                    placeDetailModel.createdByUserId = model.activityFormModel.createdByUserId;
+                    placeDetailModel.createdByUserId = string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId;
                     placeDetailModel.updatedDate = DateTime.Now;
                     placeDetailModel.updatedByUserId = UtilsAppCode.Session.User.empId;
 
@@ -1233,7 +1233,7 @@ namespace eActForm.BusinessLayer
                         purposeModel.id = item;
                         //  purposeModel.status =item.status;
                         purposeModel.delFlag = false;
-                        purposeModel.createdByUserId = model.activityFormModel.createdByUserId;
+                        purposeModel.createdByUserId = string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId;
                         purposeModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                         purposeModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                         purposeModel.updatedDate = DateTime.Now;
