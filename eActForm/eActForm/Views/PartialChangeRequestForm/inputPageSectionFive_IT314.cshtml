@@ -1,0 +1,94 @@
+﻿@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr>
+        <td style="">
+            <div class="form-group">
+                <label class="control-label col-md-4 col-xs-12" style="text-align:left;">
+                    <u>Change type / ประเภทของการเปลี่ยนแปลง</u>&nbsp;&nbsp;
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_7_multi_select", new SelectList(Model.list_7,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlChangetype",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-xs-12" style="text-align:left;">
+                    <u>Change Authorizations / สิทธิ์การใช้งาน</u>&nbsp;&nbsp;
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_8_multi_select", new SelectList(Model.list_8,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlChangeAuthorizations",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<style>
+    td div span {
+        line-height: 0px;
+    }
+
+    .multiselect-container {
+        width: 100% !important;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+</style>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#ddlChangetype').multiselect({
+            numberDisplayed: 1,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+        $('#ddlChangeAuthorizations').multiselect({
+            numberDisplayed: 2,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+        $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+        $(".multiselect .caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+    });
+
+</script>

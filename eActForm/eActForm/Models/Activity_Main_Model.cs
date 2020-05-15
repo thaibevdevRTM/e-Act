@@ -86,8 +86,14 @@ namespace eActForm.Models
         public string companyName { get; set; }
         public string list_0_select { get; set; }
         public string list_0_select_value { get; set; }
+        public string[] list_0_multi_select { get; set; }
         public string[] list_1_multi_select { get; set; }
         public string[] list_2_multi_select { get; set; }
+        public string[] list_3_multi_select { get; set; }
+        public string[] list_4_multi_select { get; set; }
+        public string[] list_5_multi_select { get; set; }
+        public string[] list_7_multi_select { get; set; }
+        public string[] list_8_multi_select { get; set; }
         public string list_1_select { get; set; }
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }
@@ -101,6 +107,7 @@ namespace eActForm.Models
         public string formNameEn { get; set; }
         public bool chkUseEng { get; set; }
         public string createdByNameEN { get; set; }
+        public string[] list_chooseRequest_multi_select { get; set; }
 
     }
 
