@@ -3033,7 +3033,7 @@
     <Content Include="Views\Approve\previewActBudget.cshtml" />
     <Content Include="Views\Shared\_previewActFormBudget.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetActivityIndex.cshtml" />
-    <Content Include="Views\MenuList\account.cshtml" />
+    <Content Include="Views\MenuList\budgetAccount.cshtml" />
     <Content Include="Views\BudgetReport\reportBudgetAccSeIndex.cshtml" />
     <Content Include="Views\managementFlow\Index.cshtml" />
     <Content Include="Views\managementFlow\dropDetail.cshtml" />

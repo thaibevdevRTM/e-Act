@@ -45,3 +45,13 @@ D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presente
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb
+D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.dll
+D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.pdb
+D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.dll
+D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\bin\Debug\Microsoft.ApplicationBlocks.Data.dll
+D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.pdb
+D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csprojAssemblyReference.cache
+D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CoreCompileInputs.cache
+D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
+D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
+D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb

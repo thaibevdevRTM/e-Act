@@ -117,7 +117,6 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\eActForm.dll.
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\WebLibrary.pdb
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\eForms.Models.pdb
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\eForms.Presenter.pdb
-D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\Microsoft.Exchange.WebServices.xml
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\bin\Debug\en\eActForm.resources.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CopyComplete

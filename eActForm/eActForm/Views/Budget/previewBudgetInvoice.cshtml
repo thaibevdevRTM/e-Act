@@ -276,53 +276,56 @@
                                     }
                                     else
                                     {
-                                        <tr>
-                                            <td style="text-align:left;font-size:12px;border-right-style:none;"></td>
-                                            <td style="text-align:left;font-size:12px;border-left-style:none;"></td>
-                                            <td style="text-align:right;font-size:12px;"> @string.Format("{0:n2}", item.productStandBath)&nbsp;</td>
-                                            <td style="text-align:center;font-size:12px;">@item.invoiceNo</td>
-                                            <td></td>
-                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.invoiceTotalBath)&nbsp;</td>
-                                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)&nbsp;</td>
-                                            <td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
-                                            <td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
+                        <tr>
+                            <td style="text-align:left;font-size:12px;border-right-style:none;"></td>
+                            <td style="text-align:left;font-size:12px;border-left-style:none;"></td>
+                            <td style="text-align:right;font-size:12px;"> @*@string.Format("{0:n2}", item.productStandBath)*@&nbsp;</td>
+                            <td style="text-align:center;font-size:12px;">@item.invoiceNo</td>
+                            <td></td>
+                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.invoiceTotalBath)&nbsp;</td>
+                            <td style="text-align:right;font-size:12px;">@string.Format("{0:n2}", item.productBalanceBath)&nbsp;</td>
+                            <td style="text-align:center;font-size:12px;">@item.invoiceActionDate.Value.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align:center;font-size:12px;">&nbsp;@item.invoiceBudgetStatusNameTH</td>
 
 
-                                            @if (item.invoiceBudgetStatusId != 4 && item.invoiceBudgetStatusId != 5 && item.invoiceApproveStatusId == 3)
-                                            {
-                                                count_history_inv++;
-                                            }
+                            @*@if (item.invoiceBudgetStatusId != 4 && item.invoiceBudgetStatusId != 5 && item.invoiceApproveStatusId == 3)*@
+                            @if (item.invoiceBudgetStatusId == 2 && item.invoiceApproveStatusId == 3)
+                            {
+                                count_history_inv++;
+                            }
 
-                                            @*status == 4 ปรับยอด status == 5 จบรายการปรับยอด ไม่ต้องขออนุมัติ*@
-                                            @if (item.invoiceBudgetStatusId != 4 && item.invoiceBudgetStatusId != 5 && item.invoiceApproveStatusId != 3)
-                                            {
-                                                count_req_approve++;
-                                            }
+                            @* status == 3 จบรายการ status == 4 ปรับยอด status == 5 จบรายการปรับยอด ไม่ต้องขออนุมัติ*@
+                            @*@if (item.invoiceBudgetStatusId != 3 && item.invoiceBudgetStatusId != 4 && item.invoiceBudgetStatusId != 5 && item.invoiceApproveStatusId != 3)*@
 
-                                            @if (item.invoiceApproveStatusId == 1)
-                                            {
-                                                count_draft_approve++;
-                                            }
+                            @if (item.invoiceBudgetStatusId == 2 && item.invoiceApproveStatusId != 3)
+                            {
+                                count_req_approve++;
+                            }
 
-                                            @if (item.invoiceApproveStatusId == 2)
-                                            {
-                                                count_wait_approve++;
-                                            }
+                            @if (item.invoiceApproveStatusId == 1)
+                            {
+                                count_draft_approve++;
+                            }
 
-                                            @*status == 1 Draft status == 2 รออนุมัติ*@
-                                            @if (item.invoiceApproveStatusId == 1)
-                                            {
-                                                <td style="text-align:center;font-size:12px;"></td>
-                                            }
-                                            else
-                                            {
-                                                <td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
-                                            }
-                                        </tr>
+                            @if (item.invoiceApproveStatusId == 2)
+                            {
+                                count_wait_approve++;
+                            }
+
+                            @*status == 1 Draft status == 2 รออนุมัติ*@
+                            @if (item.invoiceApproveStatusId == 1)
+                            {
+                                <td style="text-align:center;font-size:12px;"></td>
+                            }
+                            else
+                            {
+                                <td style="text-align:center;font-size:12px;">@item.invoiceApproveStatusName</td>
+                            }
+                        </tr>
                                     }
 
                                     index++;
-                                    if (index == Model.Budget_Invoce_History_list.Count)
+                                    if (index == Model.Budget_Invoce_History_list.Count) /*total footer*/
                                     {
                                         <tr>
                                             <td style="text-align:left;font-size:12px;"></td>

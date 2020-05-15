@@ -1,5 +1,7 @@
 ﻿@using eActForm.BusinessLayer;
 @using System.Globalization;
+@using eActForm.Models;
+@using System.Linq;
 @model eActForm.Models.Activity_TBMMKT_Model
 @{
     CultureInfo DateThai = new CultureInfo("th-TH");
@@ -100,167 +102,343 @@
                         เลขที่ใบสั่งจ่าย
                     </td>
                 </tr>
-                @{ var index = 0;}
+                @{
+                    var index = 0;
+                    List<GetDataDetailPaymentAll> filterNowPayOnly = new List<GetDataDetailPaymentAll>(Model.listGetDataDetailPaymentAll);
+                    List<GetDataDetailPaymentAll> filterDataHistoryPay = new List<GetDataDetailPaymentAll>(Model.listGetDataDetailPaymentAll);
+                    filterNowPayOnly.RemoveAll(r => r.payNo != Model.tB_Act_ActivityForm_DetailOther.payNo);
+                    var NowPayOnlyArray = filterNowPayOnly.ToArray();
+                    var haveDataInArrayNowPay = filterNowPayOnly.Count;
+
+
+                    filterDataHistoryPay.RemoveAll(r => r.rowNo != 1);
+                    var filterDataHistoryPayArray = filterDataHistoryPay.ToArray();
+                    var havefilterDataHistoryPayArray = filterDataHistoryPay.Count;
+                }
                 @foreach (var item in Model.listGetDataDetailPaymentAll)
                 {
                     if (index == 0)
                     {
                         <tr>
-                            <td class="dCol1 tdTopLeft">
-                                &nbsp;&nbsp;@item.IO
-                            </td>
-                            <td class="dCol2 tdTopLeft">
-                                @Html.Raw(item.productDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
-                            </td>
-                            <td class="dCol3 tdTopRight borderRight fontBlueV1">
-                                @item.normalCost.Value.ToString("#,##0.00")&nbsp;&nbsp;
-                            </td>
-                            <td class="vatTitleColumn verticalTop vatWidth borderRight">
-                                @{ var vatTxt = ""; }
-                                @if (item.vat=="" || item.vat==null)
+                            @if (Model.tB_Act_ActivityForm_DetailOther.payNo == "1")
+                            {
+                                <td class="dCol1 tdTopLeft">
+                                    &nbsp;&nbsp;@item.IO
+                                </td>
+                                <td class="dCol2 tdTopLeft">
+                                    @Html.Raw(item.productDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                                </td>
+                                <td class="dCol3 tdTopRight borderRight fontBlueV1">
+                                    @item.normalCost.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                </td>
+                                <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                                    @{ var vatTxt = ""; }
+                                    @if (item.vat == "" || item.vat == null)
+                                    {
+                                        vatTxt = "NonVat";
+                                    }
+                                    else
+                                    {
+                                        vatTxt = item.vat;
+                                    }
+                                    @vatTxt
+                                </td>
+
+                            }
+                            else
+                            {
+                                if (index < haveDataInArrayNowPay)
                                 {
-                                    vatTxt = "NonVat";
+                                    <td class="dCol1 tdTopLeft">
+                                        &nbsp;&nbsp;@NowPayOnlyArray[index].IO
+                                    </td>
+                                    <td class="dCol2 tdTopLeft">
+                                        @Html.Raw(NowPayOnlyArray[index].productDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                                    </td>
+                                    <td class="dCol3 tdTopRight borderRight fontBlueV1">
+                                        @NowPayOnlyArray[index].normalCost.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                    </td>
+                                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                                        @{ var vatTxt = ""; }
+                                        @if (NowPayOnlyArray[index].vat == "" || NowPayOnlyArray[index].vat == null)
+                                        {
+                                            vatTxt = "NonVat";
+                                        }
+                                        else
+                                        {
+                                            vatTxt = NowPayOnlyArray[index].vat;
+                                        }
+                                        @vatTxt
+                                    </td>
                                 }
                                 else
                                 {
-                                    vatTxt = item.vat;
+                                    <td class="dCol1 tdTopLeft">
+                                        &nbsp;
+                                    </td>
+                                    <td class="dCol2 tdTopLeft">
+                                        &nbsp;
+                                    </td>
+                                    <td class="dCol3 tdTopRight borderRight fontBlueV1">
+                                        &nbsp;
+                                    </td>
+                                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                                        &nbsp;
+                                    </td>
                                 }
-                                @vatTxt
-                            </td>
-                            <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
-                                @item.payNo
-                            </td>
-                            <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
-                                @item.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
-                            </td>
-                            <td class="txtRight verticalTop totalWidth borderRight fontOrangeV1" style="font-weight:bold;">
-                                @item.totalnormalCostEstimate.Value.ToString("#,##0.00")&nbsp;&nbsp;
-                            </td>
-                            <td class="tdTopCenter pvNoWidth">
-                                @item.activityNo
-                            </td>
+                            }
+                            @if (index < havefilterDataHistoryPayArray)
+                            {
+                                <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                                    @filterDataHistoryPayArray[index].payNo
+                                </td>
+                                <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                                    @filterDataHistoryPayArray[index].documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
+                                </td>
+                                <td class="txtRight verticalTop totalWidth borderRight fontOrangeV1" style="font-weight:bold;">
+                                    @filterDataHistoryPayArray[index].totalnormalCostEstimate.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                </td>
+                                <td class="tdTopCenter pvNoWidth">
+                                    @filterDataHistoryPayArray[index].activityNo
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                                    &nbsp;
+                                </td>
+                                <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                                    &nbsp;
+                                </td>
+                                <td class="txtRight verticalTop totalWidth borderRight fontOrangeV1" style="font-weight:bold;">
+                                    &nbsp;
+                                </td>
+                                <td class="tdTopCenter pvNoWidth">
+                                    &nbsp;
+                                </td>
+                            }
                         </tr>
                     }
                     else
                     {
                         <tr>
-                            <td class="dCol1 tdTopLeft">
-                                <table style="border-collapse:collapse;">
-                                    <tr>
-                                        <td class="paddingRowTable">
-                                            &nbsp;&nbsp;@item.IO
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td class="dCol2 tdTopLeft">
-                                <table style="border-collapse:collapse;">
-                                    <tr>
-                                        <td class="paddingRowTable">
-                                            @Html.Raw(item.productDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td class="dCol3 tdTopRight borderRight fontBlueV1">
-                                <table class="borderWidthMaxCollape">
-                                    <tr>
-                                        <td class="paddingRowTable tdTopRight fontBlueV1">
-                                            @item.normalCost.Value.ToString("#,##0.00")&nbsp;&nbsp;
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td class="vatTitleColumn verticalTop vatWidth borderRight">
-                                <table class="borderWidthMaxCollape">
-                                    <tr>
-                                        <td class="paddingRowTable vatTitleColumn">
-                                            @{ var vatTxt = ""; }
-                                            @if (item.vat == "" || item.vat == null)
-                                            {
-                                                vatTxt = "NonVat";
-                                            }
-                                            else
-                                            {
-                                                vatTxt = item.vat;
-                                            }
-                                            @vatTxt
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
-                                <table class="borderWidthMaxCollape">
-                                    <tr>
-                                        @if (@item.rowNo == 1)
-                                        {
+                            @if (Model.tB_Act_ActivityForm_DetailOther.payNo == "1")
+                            {
+                                <td class="dCol1 tdTopLeft">
+                                    <table style="border-collapse:collapse;">
+                                        <tr>
+                                            <td class="paddingRowTable">
+                                                &nbsp;&nbsp;@item.IO
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="dCol2 tdTopLeft">
+                                    <table style="border-collapse:collapse;">
+                                        <tr>
+                                            <td class="paddingRowTable">
+                                                @Html.Raw(item.productDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="dCol3 tdTopRight borderRight fontBlueV1">
+                                    <table class="borderWidthMaxCollape">
+                                        <tr>
+                                            <td class="paddingRowTable tdTopRight fontBlueV1">
+                                                @item.normalCost.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                                    <table class="borderWidthMaxCollape">
+                                        <tr>
+                                            <td class="paddingRowTable vatTitleColumn">
+                                                @{ var vatTxt = ""; }
+                                                @if (item.vat == "" || item.vat == null)
+                                                {
+                                                    vatTxt = "NonVat";
+                                                }
+                                                else
+                                                {
+                                                    vatTxt = item.vat;
+                                                }
+                                                @vatTxt
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            }
+                            else
+                            {
+                                if (index < haveDataInArrayNowPay)
+                                {
+                                    <td class="dCol1 tdTopLeft">
+                                        <table style="border-collapse:collapse;">
+                                            <tr>
+                                                <td class="paddingRowTable">
+                                                    &nbsp;&nbsp;@NowPayOnlyArray[index].IO
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="dCol2 tdTopLeft">
+                                        <table style="border-collapse:collapse;">
+                                            <tr>
+                                                <td class="paddingRowTable">
+                                                    @Html.Raw(NowPayOnlyArray[index].productDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="dCol3 tdTopRight borderRight fontBlueV1">
+                                        <table class="borderWidthMaxCollape">
+                                            <tr>
+                                                <td class="paddingRowTable tdTopRight fontBlueV1">
+                                                    @NowPayOnlyArray[index].normalCost.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                                        <table class="borderWidthMaxCollape">
+                                            <tr>
+                                                <td class="paddingRowTable vatTitleColumn">
+                                                    @{ var vatTxt = ""; }
+                                                    @if (NowPayOnlyArray[index].vat == "" || NowPayOnlyArray[index].vat == null)
+                                                    {
+                                                        vatTxt = "NonVat";
+                                                    }
+                                                    else
+                                                    {
+                                                        vatTxt = NowPayOnlyArray[index].vat;
+                                                    }
+                                                    @vatTxt
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="dCol1 tdTopLeft">
+                                        <table style="border-collapse:collapse;">
+                                            <tr>
+                                                <td class="paddingRowTable">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="dCol2 tdTopLeft">
+                                        <table style="border-collapse:collapse;">
+                                            <tr>
+                                                <td class="paddingRowTable">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="dCol3 tdTopRight borderRight fontBlueV1">
+                                        <table class="borderWidthMaxCollape">
+                                            <tr>
+                                                <td class="paddingRowTable tdTopRight fontBlueV1">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                                        <table class="borderWidthMaxCollape">
+                                            <tr>
+                                                <td class="paddingRowTable vatTitleColumn">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                }
+                            }
+                            @if (index < havefilterDataHistoryPayArray)
+                            {
+                                <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                                    <table class="borderWidthMaxCollape">
+                                        <tr>
                                             <td class="paddingRowTable eventNoTitleColumn fontRedV1">
-                                                @item.payNo
+                                                @filterDataHistoryPayArray[index].payNo
                                             </td>
-                                        }
-                                        else
-                                        {
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                                    <table class="borderWidthMaxCollape">
+                                        <tr>
+                                            <td class="paddingRowTable dateTitleColumn fontRedV1">
+                                                @filterDataHistoryPayArray[index].documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="verticalTop totalWidth borderRight fontOrangeV1 txtRight">
+                                    <table class="borderWidthMaxCollape">
+                                        <tr>
+                                            <td class="paddingRowTable  fontOrangeV1 txtRight" style="font-weight:bold;">
+                                                @filterDataHistoryPayArray[index].totalnormalCostEstimate.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="tdTopCenter pvNoWidth">
+                                    <table class="borderWidthMaxCollape">
+                                        <tr>
+                                            <td class="paddingRowTable tdTopCenter">
+                                                @filterDataHistoryPayArray[index].activityNo
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                                    <table class="borderWidthMaxCollape">
+                                        <tr>
                                             <td class="paddingRowTable eventNoTitleColumn fontRedV1">
-                                                &nbsp;
+                                               &nbsp;
                                             </td>
-                                        }
-                                    </tr>
-                                </table>
-                            </td>
-                            <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
-                                <table class="borderWidthMaxCollape">
-                                    <tr>
-                                        @if (@item.rowNo == 1)
-                                        {
-                                            <td class="paddingRowTable dateTitleColumn fontRedV1">
-                                                @item.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
-                                            </td>
-                                        }
-                                        else
-                                        {
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                                    <table class="borderWidthMaxCollape">
+                                        <tr>
                                             <td class="paddingRowTable dateTitleColumn fontRedV1">
                                                 &nbsp;
                                             </td>
-                                        }
-                                    </tr>
-                                </table>
-                            </td>
-                            <td class="verticalTop totalWidth borderRight fontOrangeV1 txtRight">
-                                <table class="borderWidthMaxCollape">
-                                    <tr>
-                                        @if (@item.rowNo == 1)
-                                        {
-                                        <td class="paddingRowTable  fontOrangeV1 txtRight" style="font-weight:bold;">
-                                            @item.totalnormalCostEstimate.Value.ToString("#,##0.00")&nbsp;&nbsp;
-                                        </td>
-                                        }
-                                        else
-                                        {
-                                            <td class="paddingRowTable totalTitleColumn fontOrangeV1">
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="verticalTop totalWidth borderRight fontOrangeV1 txtRight">
+                                    <table class="borderWidthMaxCollape">
+                                        <tr>
+                                            <td class="paddingRowTable  fontOrangeV1 txtRight" style="font-weight:bold;">
                                                 &nbsp;
                                             </td>
-                                        }
-                                    </tr>
-                                </table>
-                            </td>
-                            <td class="tdTopCenter pvNoWidth">
-                                <table class="borderWidthMaxCollape">
-                                    <tr>
-                                        @if (@item.rowNo == 1)
-                                        {
-                                            <td class="paddingRowTable tdTopCenter">
-                                                @item.activityNo
-                                            </td>
-                                        }
-                                        else
-                                        {
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="tdTopCenter pvNoWidth">
+                                    <table class="borderWidthMaxCollape">
+                                        <tr>
                                             <td class="paddingRowTable tdTopCenter">
                                                 &nbsp;
                                             </td>
-                                        }
-                                    </tr>
-                                </table>
-                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            }
                         </tr>
                     }
                     index++;
@@ -281,7 +459,7 @@
                         <table class="borderWidthMaxCollape">
                             <tr>
                                 <td class="paddingRowTableN txtRight fontBlueV1">
-                                   @Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate.Value.ToString("#,##0.00")&nbsp;&nbsp;
+                                    @Model.tB_Act_ActivityForm_DetailOther.totalnormalCostEstimate.Value.ToString("#,##0.00")&nbsp;&nbsp;
                                 </td>
                             </tr>
                         </table>
