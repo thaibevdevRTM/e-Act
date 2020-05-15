@@ -84,7 +84,7 @@ namespace eActForm.BusinessLayer
             if (model.activityOfEstimateList != null)
             {
                 rtn += deleteActivityOfEstimateByActivityId(activityId);
-                rtn += insertEstimateToStored(model.activityOfEstimateList, activityId,  string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId, model.activityFormModel.createdDate);
+                rtn += insertEstimateToStored(model.activityOfEstimateList, activityId, string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId, model.activityFormModel.createdDate);
             }
             if (model.activityOfEstimateList2 != null)
             {
@@ -127,6 +127,7 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.listChoiceId = item.listChoiceId;
                 costThemeDetail.compensate = item.compensate;
                 costThemeDetail.glCode = item.glCode;
+                costThemeDetail.hospId = item.hospId;
                 rtn += insertEstimate(costThemeDetail);
                 insertIndex++;
             }
@@ -212,7 +213,7 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.EO = model.tB_Act_ActivityForm_DetailOther.EO;
                 tB_Act_ActivityForm_DetailOther.descAttach = model.tB_Act_ActivityForm_DetailOther.descAttach;
                 tB_Act_ActivityForm_DetailOther.delFlag = false;
-                tB_Act_ActivityForm_DetailOther.createdByUserId  = string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId;
+                tB_Act_ActivityForm_DetailOther.createdByUserId = string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId;
                 tB_Act_ActivityForm_DetailOther.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                 tB_Act_ActivityForm_DetailOther.updatedByUserId = UtilsAppCode.Session.User.empId;
                 tB_Act_ActivityForm_DetailOther.updatedDate = DateTime.Now;
@@ -238,6 +239,12 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance = model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance == null ? 0 : model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance;
                 tB_Act_ActivityForm_DetailOther.orderOf = model.tB_Act_ActivityForm_DetailOther.orderOf;
                 tB_Act_ActivityForm_DetailOther.regionalId = model.tB_Act_ActivityForm_DetailOther.regionalId;
+                tB_Act_ActivityForm_DetailOther.hospPercent = model.tB_Act_ActivityForm_DetailOther.hospPercent;
+                tB_Act_ActivityForm_DetailOther.amount = model.tB_Act_ActivityForm_DetailOther.amount;
+                tB_Act_ActivityForm_DetailOther.amountLimit = model.tB_Act_ActivityForm_DetailOther.amountLimit;
+                tB_Act_ActivityForm_DetailOther.amountCumulative = model.tB_Act_ActivityForm_DetailOther.amountCumulative;
+                tB_Act_ActivityForm_DetailOther.amountBalance = model.tB_Act_ActivityForm_DetailOther.amountBalance;
+                tB_Act_ActivityForm_DetailOther.amountReceived = model.tB_Act_ActivityForm_DetailOther.amountReceived;
 
                 rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
 
@@ -416,7 +423,7 @@ namespace eActForm.BusinessLayer
 
                     }
                 }
-                bool chk = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ? true : false;
+                bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
                 activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activityId, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activityId);
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
@@ -483,7 +490,7 @@ namespace eActForm.BusinessLayer
                 , activity_TBMMKT_Model.activityFormTBMMKT.statusId);
 
 
-                bool chk = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ? true : false;
+                bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
                 activity_TBMMKT_Model.requestEmpModel = QueryGet_ReqEmpByActivityId.getReqEmpByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng, chk);
                 activity_TBMMKT_Model.purposeModel = QueryGet_master_purpose.getPurposeByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activity_TBMMKT_Model.activityFormTBMMKT.id);
@@ -784,6 +791,13 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
                     ,new SqlParameter("@orderOf",(model.orderOf == null ? "" : model.orderOf))
                     ,new SqlParameter("@regionalId",(model.regionalId == null ? "" : model.regionalId))
+                    ,new SqlParameter("@hospPercent", model.hospPercent)
+                    ,new SqlParameter("@amount",model.amount)
+                    ,new SqlParameter("@amountLimit",model.amountLimit)
+                    ,new SqlParameter("@amountCumulative", model.amountCumulative)
+                    ,new SqlParameter("@amountBalance",model.amountBalance)
+                    ,new SqlParameter("@amountReceived", model.amountReceived)
+
                     });
             }
             catch (Exception ex)
@@ -866,6 +880,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@listChoiceId",(model.listChoiceId == null ? "" : model.listChoiceId))
                     ,new SqlParameter("@compensate",model.compensate)
                     ,new SqlParameter("@glCode",(model.glCode == null ? "" : model.glCode))
+                    ,new SqlParameter("@hospId",(model.hospId == null ? "" : model.hospId))
             });
             }
             catch (Exception ex)
@@ -1165,10 +1180,10 @@ namespace eActForm.BusinessLayer
                     requestEmpModel.empId = item.empId;
                     requestEmpModel.empTel = item.empTel;
                     requestEmpModel.delFlag = false;
-                    requestEmpModel.createdByUserId = string.IsNullOrEmpty( model.activityFormModel.createdByUserId ) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId;
+                    requestEmpModel.createdByUserId = string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId;
                     requestEmpModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
                     requestEmpModel.updatedByUserId = UtilsAppCode.Session.User.empId;
-                    requestEmpModel.updatedDate = DateTime.Now;              
+                    requestEmpModel.updatedDate = DateTime.Now;
                     rtn += insertRequestEmp(requestEmpModel);
 
                     insertIndex++;
@@ -1204,7 +1219,7 @@ namespace eActForm.BusinessLayer
                     placeDetailModel.arrived = item.arrived;
                     placeDetailModel.delFlag = false;
                     placeDetailModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate; ;
-                    placeDetailModel.createdByUserId  = string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId;
+                    placeDetailModel.createdByUserId = string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId;
                     placeDetailModel.updatedDate = DateTime.Now;
                     placeDetailModel.updatedByUserId = UtilsAppCode.Session.User.empId;
 

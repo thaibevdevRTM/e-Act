@@ -227,8 +227,7 @@
                 getCashEmp();
             } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
                 //getCashLimit();
-                //getCumulative();
-            alert("1."+$("#lblHireDate").val());
+                //getCumulative();           
                 getCashDetail();
             }
         });
@@ -413,7 +412,7 @@ alert(balance);
     }
 
     function getCashDetail() {
-        alert($("#lblHireDate").val());
+       
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getCashDetailByEmpId", "eAct")',

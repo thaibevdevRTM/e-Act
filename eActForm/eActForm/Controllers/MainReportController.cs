@@ -43,9 +43,9 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
                 activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
 
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] 
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
                     || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
+                    || (AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                     )//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
                 {
                     ViewBag.classFont = "fontDocSmall";
@@ -83,9 +83,9 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);// production
         }
 
-        public ActionResult ReportPettyCashNum(string activityId , Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public ActionResult ReportPettyCashNum(string activityId, Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-             
+
             //=============for test=====================
             //activityId = "d57d1303-ded1-4927-bd31-4d9f85dfabe4";
             //activityId = "0a8517fb-0bc1-4c63-a545-718af4b9095c";
@@ -121,27 +121,24 @@ namespace eActForm.Controllers
             {
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
-          
+
             model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
 
-           
+
             for (int i = 0; i < 8; i++)
             {
                 if (model2.costDetailLists[i].unitPrice != 0 && model2.costDetailLists[i].listChoiceId != AppCode.Expenses.Allowance)
-                {                
+                {
                     modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                     {
                         listChoiceId = model2.costDetailLists[i].listChoiceId,
                         listChoiceName = model2.costDetailLists[i].listChoiceName,
-                        productDetail = model2.costDetailLists[i].listChoiceName +" "+
+                        productDetail = model2.costDetailLists[i].listChoiceName + " " +
                        (model2.costDetailLists[i].displayType == AppCode.CodeHtml.LabelHtml
-                       ? model2.costDetailLists[i].unit+ "วัน (สิทธิเบิก " +model2.costDetailLists[i].productDetail + " บาท/วัน)"
-                       : model2.costDetailLists[i].productDetail),                      
-                       total = model2.costDetailLists[i].total,
-                       glCode = model2.costDetailLists[i].glCode,
-                       
-                        
-                        
+                       ? model2.costDetailLists[i].unit + "วัน (สิทธิเบิก " + model2.costDetailLists[i].productDetail + " บาท/วัน)"
+                       : model2.costDetailLists[i].productDetail),
+                        total = model2.costDetailLists[i].total,
+                        glCode = model2.costDetailLists[i].glCode,
                     }); ;
                 }
             }
@@ -152,13 +149,11 @@ namespace eActForm.Controllers
                 {
                     listChoiceId = "",
                     listChoiceName = "",
-                    productDetail = "",                
+                    productDetail = "",
                     total = 0,
-                    displayType = "",    
-                    glCode="",
-                    
+                    displayType = "",
+                    glCode = "",
                 });
-
             }
             activity_Model.totalCostThisActivity = activity_Model.totalCostThisActivity - model2.costDetailLists.Where(X => X.listChoiceId == AppCode.Expenses.Allowance).FirstOrDefault().total;
 

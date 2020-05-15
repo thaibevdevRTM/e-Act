@@ -97,7 +97,8 @@
             || Model.activityFormTBMMKT.statusId == 1
             || Model.activityFormTBMMKT.statusId == 5
             || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
-            || (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
+            || ( Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)        
+            && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
         )
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
@@ -156,6 +157,7 @@
                 }
             }
         }
+        //ค่ารักษาพยาบาล ใครมีสิทธิแก้อะไร ยังไม่ได้ทำ
     }
 
     if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {

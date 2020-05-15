@@ -29,6 +29,7 @@ namespace eActForm.Models
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
         public static string nonAL = "1D1097F4-246F-4DC2-BB69-B7BB6E678299";
         public static string AL = "FC696EB5-B058-445E-B605-977C5067AEBA";
+        public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
 
         public enum ApproveEmailype
         {
@@ -107,8 +108,8 @@ namespace eActForm.Models
                 StringReader sr = new StringReader(sw.ToString());
 
 
-                
-                 StringBuilder GridBuilder = new StringBuilder();
+
+                StringBuilder GridBuilder = new StringBuilder();
                 GridBuilder.Append("<html>");
                 GridBuilder.Append("<style>");
                 GridBuilder.Append(".fontt{font-family:TH SarabunPSK;}");

@@ -90,6 +90,7 @@ namespace eActForm.Controllers
                         date = null,
                         detail = "",
                         hospId = "",
+                        glCode = "",
                         unit = 0,
                         unitPrice = 0,
                         total = 0,
@@ -100,7 +101,7 @@ namespace eActForm.Controllers
             else
             {
                 //edit
-                model.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
+                model.costDetailLists = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
             }
             activity_TBMMKT_Model.expensesDetailModel = model;
 
@@ -121,7 +122,7 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-     
+
 
     }
 }
