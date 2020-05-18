@@ -12,7 +12,7 @@ using WebLibrary;
 namespace eActForm.Controllers
 {
     [LoginExpire]
-    public class ExpenseEstimateReportController : Controller
+    public partial class ExpenseEstimateReportController : Controller
     {
 
         public ActionResult expensesTrvDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
