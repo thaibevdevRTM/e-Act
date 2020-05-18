@@ -116,6 +116,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
+                else if (typeForm == Activity_Model.activityType.NUM.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_HCPomNum"; 
+                }
                 else
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
@@ -379,7 +383,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-              public static bool checkGroupApproveByUser(string actId,string groupApprove)
+        public static bool checkGroupApproveByUser(string actId, string groupApprove)
         {
             try
             {
@@ -389,9 +393,9 @@ namespace eActForm.BusinessLayer
                         groupApprove = AppCode.ApproveGroup.Recorder;
                         break;
                     case "PettyCashVerify":
-                        groupApprove =  AppCode.ApproveGroup.PettyCashVerify;
+                        groupApprove = AppCode.ApproveGroup.PettyCashVerify;
                         break;
-                    default:                     
+                    default:
                         break;
                 }
 

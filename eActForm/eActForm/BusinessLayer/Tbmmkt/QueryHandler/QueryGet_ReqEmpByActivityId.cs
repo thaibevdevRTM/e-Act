@@ -1,7 +1,9 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -37,6 +39,7 @@ namespace eActForm.BusinessLayer
                                  empTel = d["empTel"].ToString(),
                                  companyName = d["companyNameTH"].ToString(),
                                  companyNameEN = d["companyNameEN"].ToString(),
+                                 hireDate = !string.IsNullOrEmpty(d["hireDate"].ToString()) ? DateTime.Parse(d["hireDate"].ToString()).ToString(ConfigurationManager.AppSettings["formatDateUse"]) : "",
                              });
                 return lists.OrderBy(x => x.rowNo).ToList();
             }

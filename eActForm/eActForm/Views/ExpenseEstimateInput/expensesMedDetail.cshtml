@@ -293,7 +293,7 @@
                             }, select: function (event, ui) {
                                 //alert(ui.item.chk);
                                 // $("#" + i.id).val(ui.item.id)i.id + "/" + ui.item.label + "/" + i.label + "/" + i.value + "/" +
-                                $("#lblPercent").val(ui.item.chk);
+                                //$("#lblPercent").val(ui.item.chk);
                                 $("#hdPercent").val(ui.item.chk);
                                 document.getElementById('lblPercent').innerHTML = ui.item.chk;
                                 $("#hdHospId_" + index).val(ui.item.id);
@@ -306,32 +306,29 @@
 
                     function calAmount() {
                         var total = $("#totalEstimate").val().replace(",", "");
-                        var per = $("#lblPercent").val().replace(",", "");
+                        var per = $("#hdPercent").val().replace(",", "");
                         var amount = 0.00;
                         if (total != "" && per != "") {
                             amount = parseFloat(total) * (parseFloat(per) / 100);
                             $("#lblAmount").text(amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                            $("#lblAmount").val(amount);
                             $("#hdAmount").val(amount);
                             calReceived();
                         } else {
                             $("#lblAmount").val(0);
-                            $("#hdAmount").val(0);
                             $("#lblAmount").text("0.00");
                         }
                     }
 
                     function calReceived() {
                         var received = 0.00;
-                        var balance = parseFloat($("#lblBalance").val().replace(",", ""));
-                        var amount = parseFloat($("#lblAmount").val().replace(",", ""));
+                        var balance = parseFloat($("#hdBalance").val().replace(",", ""));
+                        var amount = parseFloat($("#hdAmount").val().replace(",", ""));
                         if (amount > balance) {
                             received = balance;
                         } else {
                             received = amount;
                         }
                         $("#lblReceived").text(received.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                        $("#lblReceived").val(received);
                         $("#hdReceived").val(received);
                     }
 
@@ -347,6 +344,30 @@
                         minView: 2,
                         forceParse: 0
                     });
+
+
+                    if ('@Model.activityFormTBMMKT.mode' =='@AppCode.Mode.edit.ToString()') {
+
+                        var percent = @Model.tB_Act_ActivityForm_DetailOther.hospPercent;
+                        var amount = parseFloat(@Model.tB_Act_ActivityForm_DetailOther.amount);
+                        var limit = parseFloat(@Model.tB_Act_ActivityForm_DetailOther.amountLimit);
+                        var cumulative = parseFloat(@Model.tB_Act_ActivityForm_DetailOther.amountCumulative);
+                        var balance = parseFloat(@Model.tB_Act_ActivityForm_DetailOther.amountBalance);
+                        var received = parseFloat(@Model.tB_Act_ActivityForm_DetailOther.amountReceived);
+
+                        $("#lblPercent").text(percent);
+                        $("#hdPercent").val(percent);
+                        $("#lblAmount").text(amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#hdAmount").val(amount);
+                        $("#lblLimit").text(limit.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#hdLimit").val(limit);
+                        $("#lblCumulative").text(cumulative.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#hdCumulative").val(cumulative);
+                        $("#lblBalance").text(balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#hdBalance").val(balance);
+                        $("#lblReceived").text(received.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#hdReceived").val(received);
+                    }
                 });
 
                 </script>

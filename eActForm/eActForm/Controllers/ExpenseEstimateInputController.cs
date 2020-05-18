@@ -102,6 +102,9 @@ namespace eActForm.Controllers
             {
                 //edit
                 model.costDetailLists = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
+
+                model.costDetailLists[0].hospName= QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(model.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;
+                                                         
             }
             activity_TBMMKT_Model.expensesDetailModel = model;
 
