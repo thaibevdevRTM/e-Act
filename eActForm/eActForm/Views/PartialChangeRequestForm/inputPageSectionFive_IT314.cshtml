@@ -6,7 +6,7 @@
     <tr>
         <td style="">
             <div class="form-group">
-                <label class="control-label col-md-4 col-xs-12" style="text-align:left;">
+                <label class="control-label col-md-4 col-xs-12" style="text-align:left;margin-bottom:8px;">
                     <u>Change type / ประเภทของการเปลี่ยนแปลง</u>&nbsp;&nbsp;
                 </label>
 
@@ -24,12 +24,12 @@
                 </div>
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
-                        &nbsp;
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.other1, new { @class = "form-control textboxcss", Style = "text-align:left;display:none;", id = "txtother1" })
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-md-4 col-xs-12" style="text-align:left;">
+                <label class="control-label col-md-4 col-xs-12" style="text-align: left;margin-bottom:8px;">
                     <u>Change Authorizations / สิทธิ์การใช้งาน</u>&nbsp;&nbsp;
                 </label>
 
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
-                        &nbsp;
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.other2, new { @class = "form-control textboxcss", Style = "text-align:left;display:none;", id = "txtother2" })
                     </div>
                 </div>
             </div>
@@ -67,6 +67,8 @@
     }
 </style>
 <script type="text/javascript">
+    var valueOther1 = "9AE210F8-7945-4985-A6E3-A5C156E06AFA";
+    var valueOther2 = "6C1DA2D7-790B-4275-88FD-7415BA77AB98";
 
     $(document).ready(function () {
         $('#ddlChangetype').multiselect({
@@ -74,8 +76,12 @@
             enableFiltering: true,
             nonSelectedText: '',
             buttonWidth: '100%',
-            onChange: function (option, checked) {
-
+            onChange: function (option, checked) {                
+                if (option.val() == valueOther1 && checked === true) {
+                    $('#txtother1').show();
+                } else if(option.val() == valueOther1) {
+                    $('#txtother1').hide();
+                }
             },
         });
         $('#ddlChangeAuthorizations').multiselect({
@@ -83,8 +89,12 @@
             enableFiltering: true,
             nonSelectedText: '',
             buttonWidth: '100%',
-            onChange: function (option, checked) {
-
+            onChange: function (option, checked) {                
+                if (option.val() == valueOther2 && checked === true) {
+                    $('#txtother2').show();
+                } else if (option.val() == valueOther2) {
+                    $('#txtother2').hide();
+                }
             },
         });
         $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ

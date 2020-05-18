@@ -1,0 +1,87 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr style="border-bottom:none;">
+        <td>
+            <div id="divRequestEmp" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
+                <table class="table table-bordered" id="tabelRequestEmp" runat="server">
+                    <tr style="background-color:#E5E2E2;height:25px; ">
+                        <th colspan="5" style="text-align :center;">
+                            List name (For more user, Please attach Excel file) / รายงานชื่อผู้ใช้งาน (ถ้ามีมากกว่า 5 คนขึ้นไป สามารถแนบไฟล์ Excel เพิ่มเติมได้)
+                        </th>
+                    </tr>
+                    <tr style="height:25px;">
+                        <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Name / ชื่อ</th>
+                        <th style="width: 22%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Position / ตำแหน่ง</th>
+                        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">level </th>
+                        <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Department  / หน่วยงาน</th>
+                        <th style="width: 23%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">BU / หน่วยธุรกิจ</th>
+                    </tr>
+                    @{ var index = 0;}
+                    @foreach (var item in Model.requestEmpModel)
+                    {
+                        <tr class="tagCountRowinTable">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                                @*<input type="text" value="@(index+1)" id="activityOfEstimateList[@index].rowNo" name="activityOfEstimateList[@index].rowNo" class="form-control textboxcss clstxtIO" readonly="readonly" style="text-align:center;" />
+                                    </td>
+                                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">*@
+                                @Html.DropDownList("requestEmpModel[" + index + "].empId",
+                               new SelectList(Model.masterRequestEmp, "empId", Model.activityFormTBMMKT.chkUseEng ? "empNameEN" : "empName", item.empId), ""
+                               , new
+                               {
+                                   @id = "ddlEmp_" + index,
+                                   @class = "form-control selectpicker",
+                                   @onchange = "changeGetEmp(" + index + ")",
+
+                               })
+
+                                @*data-live-search-placeholder="Search" data-max-options="1"*@
+                            </td>
+
+
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.position" id="position_@index" name="requestEmpModel[@index].position" readonly class="form-control position" />
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.level" id="level_@index" name="requestEmpModel[@index].level" readonly class="form-control textboxcss" />
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.department" id="department_@index" name="requestEmpModel[@index].department" readonly class="form-control textboxcss" />
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.bu" id="bu_@index" name="requestEmpModel[@index].bu" readonly class="form-control textboxcss" />
+                            </td>
+                        </tr>
+                        index++;
+                    }
+                </table>
+                <script>
+
+                $('.selectpicker').selectpicker({
+                    liveSearch: true,
+                    showSubtext: true
+                });
+
+                function changeGetEmp(rowIndex) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("getEmpDetailById", "eAct")',
+                        data: {
+                            empId: $('#ddlEmp_' + rowIndex).val(),
+                        }
+                    }).done(function (response) {
+                        $('#position_' + rowIndex).val(response.Data.position);
+                        $('#level_' + rowIndex).val(response.Data.level);
+                        $('#department_' + rowIndex).val(response.Data.department);
+                        $('#bu_' + rowIndex).val(response.Data.bu);
+                    });
+
+                }
+
+                </script>
+            </div>
+        </td>
+    </tr>
+</table>

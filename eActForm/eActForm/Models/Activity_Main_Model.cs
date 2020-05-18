@@ -172,6 +172,8 @@ namespace eActForm.Models
         public string orderOf { get; set; }
         public string regionalId { get; set; }
         public string departmentId { get; set; }
+        public string other1 { get; set; }
+        public string other2 { get; set; }
     }
 
     public class TB_Act_ActivityForm_DetailOtherList : ActBaseModel
@@ -251,6 +253,7 @@ namespace eActForm.Models
         public string empTel { get; set; }
         public string compId { get; set; }
         public string email { get; set; }
+        public string detail { get; set; }
     }
 
     public class PurposeModel : ActBaseModel
