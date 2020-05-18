@@ -12,7 +12,7 @@ namespace eActForm.Controllers
 {
     public partial class partialActivityDetailController
     {
-        public ActionResult partialactSetPriceMT(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public ActionResult partialSetPriceMT(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             try
             {
