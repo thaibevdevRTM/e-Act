@@ -12,7 +12,7 @@ using WebLibrary;
 namespace eActForm.Controllers
 {
     [LoginExpire]
-    public class EmpInfoInputController : Controller
+    public partial class EmpInfoInputController : Controller
     {
         public ActionResult empInfoDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
