@@ -10,7 +10,7 @@ namespace eActForm.Controllers
 
     public partial class partialActivityDetailReportController
     {
-        public ActionResult actSetPriceMTRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public ActionResult partialactSetPriceMTRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
 
             return PartialView(activity_TBMMKT_Model);
