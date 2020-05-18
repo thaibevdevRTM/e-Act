@@ -7,7 +7,7 @@
 {
 	<li>
 		<a><i class="fa fa-calculator"></i> Account <span class="fa fa-chevron-down"></span></a>
-		<ul class="nav child_menu">
+		@*<ul class="nav child_menu">
 			@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
 			{
 				<li>@Html.ActionLink(" Report Activity SE MT", "reportBudgetAccSeIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
@@ -18,6 +18,20 @@
 				<li>@Html.ActionLink(" Report Activity SE OMT", "reportBudgetAccSeIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
 			}
 
+		</ul>*@
+
+		<ul class="nav child_menu">
+			@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+			{
+				<li>@Html.ActionLink(" Report Claim Product Group MT", "reportBudgetAccSeIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+			}
+
+			@if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
+			{
+				<li>@Html.ActionLink(" Report Claim Product Group OMT", "reportBudgetAccSeIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
+			}
+
 		</ul>
+
 	</li>
 }
