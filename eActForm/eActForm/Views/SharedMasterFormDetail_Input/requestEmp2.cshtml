@@ -4,8 +4,8 @@
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
         <td>
-            <div id="divRequestEmp" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
-                <table class="table table-bordered" id="tabelRequestEmp" runat="server">
+            <div id="divRequestEmp" style="width: 100%;padding-left:15px;padding-right:15px;">
+                <table class="table table-bordered" id="tabelRequestEmp">
                     <tr style="background-color:#E5E2E2;height:25px; ">
                         <th colspan="5" style="text-align :center;">
                             List name (For more user, Please attach Excel file) / รายงานชื่อผู้ใช้งาน (ถ้ามีมากกว่า 5 คนขึ้นไป สามารถแนบไฟล์ Excel เพิ่มเติมได้)
@@ -31,7 +31,7 @@
                                 <input type="text" value="@item.empName" id="empName_@index" name="requestEmpModel[@index].empName" readonly class="form-control textboxcss" />
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.detail" id="detail_@index" name="requestEmpModel[@index].detail" class="form-control textboxcss" />
+                                <textarea rows="1" value="@item.detail" id="detail_@index" name="requestEmpModel[@index].detail" class="form-control textboxcss" ></textarea>
                             </td>
                         </tr>
                         index++;
@@ -39,8 +39,15 @@
                 </table>
                 <script>
 
-                function changeGetEmp(rowIndex) {
-                    $('#empId_' + rowIndex).val($('#empId_' + rowIndex).val().replaceAll("i", "1").replaceAll("I", "1"));
+                    function changeGetEmp(rowIndex) {
+                        $('#empId_' + rowIndex).val($('#empId_' + rowIndex).val().replaceAll("i", "1").replaceAll("I", "1"));
+
+                        if ($('#empId_' + rowIndex).val() == $('#txtEmpId').val()) {
+                            alert('ข้อมูลพนักงานเพิ่มเติม ต้องไม่ซ้ำกับข้อมูลพนักงานผู้แจ้ง');
+                            clearDataUser(rowIndex);
+                            return;
+                        }
+
                     $.ajax({
                         type: 'POST',
                         url: '@Url.Action("getEmpDetailById", "eAct")',
@@ -52,12 +59,15 @@
                             $('#empName_' + rowIndex).val(response.Data.empName);
                         } else {
                             alert('ไม่พบ ข้อมูลพนักงาน ' + $('#empId_' + rowIndex).val());
-                            $('#empName_' + rowIndex).val('');
-                            $('#empId_' + rowIndex).val('');
+                            clearDataUser(rowIndex);
                         }
                     });
+                    }
 
-                }
+                    function clearDataUser(rowIndex) {
+                        $('#empName_' + rowIndex).val('');
+                        $('#empId_' + rowIndex).val('');
+                    }
 
                 </script>
             </div>

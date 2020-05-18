@@ -42,12 +42,11 @@ namespace eActForm.Controllers
         }
         public ActionResult inputPageSectionFiveTitle_IT314(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getMasterChooseSystemCRFormIT314_page2(activity_TBMMKT_Model);
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult inputPageSectionFive_IT314(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getMasterChooseSystemCRFormIT314(activity_TBMMKT_Model);
+            activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getMasterChooseSystemCRFormIT314_page2(activity_TBMMKT_Model);
             return PartialView(activity_TBMMKT_Model);
         }
 

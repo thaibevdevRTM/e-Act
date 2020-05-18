@@ -127,7 +127,7 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.listChoiceId = item.listChoiceId;
                 costThemeDetail.compensate = item.compensate;
                 rtn += insertEstimate(costThemeDetail);
-                insertIndex ++;
+                insertIndex++;
             }
 
             return insertIndex;
@@ -237,6 +237,9 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance = model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance == null ? 0 : model.tB_Act_ActivityForm_DetailOther.totalallPayByIOBalance;
                 tB_Act_ActivityForm_DetailOther.orderOf = model.tB_Act_ActivityForm_DetailOther.orderOf;
                 tB_Act_ActivityForm_DetailOther.regionalId = model.tB_Act_ActivityForm_DetailOther.regionalId;
+                tB_Act_ActivityForm_DetailOther.departmentId = model.tB_Act_ActivityForm_DetailOther.departmentId == null ? "" : model.tB_Act_ActivityForm_DetailOther.departmentId;
+                tB_Act_ActivityForm_DetailOther.other1 = model.tB_Act_ActivityForm_DetailOther.other1 == null ? "" : model.tB_Act_ActivityForm_DetailOther.other1;
+                tB_Act_ActivityForm_DetailOther.other2 = model.tB_Act_ActivityForm_DetailOther.other2 == null ? "" : model.tB_Act_ActivityForm_DetailOther.other2;
 
                 rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
 
@@ -255,11 +258,21 @@ namespace eActForm.BusinessLayer
             tB_Act_ActivityChoiceSelectModel.updatedByUserId = UtilsAppCode.Session.User.empId;
             tB_Act_ActivityChoiceSelectModel.updatedDate = DateTime.Now;
 
-            if (model.activityFormTBMMKT.list_0_select != null || model.activityFormTBMMKT.list_1_multi_select != null ||
-                 model.activityFormTBMMKT.list_2_select != null || model.activityFormTBMMKT.brand_select != null ||
-                 model.activityFormTBMMKT.list_3_select != null
-                 || model.activityFormTBMMKT.list_1_select != null
-                 || model.activityFormTBMMKT.list_2_multi_select != null
+            if (model.activityFormTBMMKT.list_0_select != null
+                || model.activityFormTBMMKT.list_1_select != null
+                || model.activityFormTBMMKT.list_2_select != null
+                || model.activityFormTBMMKT.list_3_select != null
+                || model.activityFormTBMMKT.list_0_multi_select != null
+                || model.activityFormTBMMKT.list_1_multi_select != null
+                || model.activityFormTBMMKT.list_2_multi_select != null
+                || model.activityFormTBMMKT.list_3_multi_select != null
+                || model.activityFormTBMMKT.list_4_multi_select != null
+                || model.activityFormTBMMKT.list_5_multi_select != null
+                || model.activityFormTBMMKT.list_6_multi_select != null
+                || model.activityFormTBMMKT.list_7_multi_select != null
+                || model.activityFormTBMMKT.list_8_multi_select != null
+                || model.activityFormTBMMKT.brand_select != null
+                || model.activityFormTBMMKT.list_chooseRequest_multi_select != null
                  )
             {
                 rtn += deleteActivityTB_Act_ActivityChoiceSelect(activityId);
@@ -282,7 +295,20 @@ namespace eActForm.BusinessLayer
                     tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_1_select;
                     rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
                 }
-                if (model.activityFormTBMMKT.list_1_multi_select != null)
+                if (model.activityFormTBMMKT.list_0_multi_select != null)//ฟอร์มIT314_(Procure to Pay)
+                {
+                    if (model.activityFormTBMMKT.list_0_multi_select.Length > 0)
+                    {
+                        for (int i = 0; i < model.activityFormTBMMKT.list_0_multi_select.Length; i++)
+                        {
+                            tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                            tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                            tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_0_multi_select[i];
+                            rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                        }
+                    }
+                }
+                if (model.activityFormTBMMKT.list_1_multi_select != null)//ฟอร์มIT314_(ERP System)
                 {
                     if (model.activityFormTBMMKT.list_1_multi_select.Length > 0)
                     {
@@ -295,7 +321,7 @@ namespace eActForm.BusinessLayer
                         }
                     }
                 }
-                if (model.activityFormTBMMKT.list_2_multi_select != null)
+                if (model.activityFormTBMMKT.list_2_multi_select != null)//ฟอร์มIT314_(Order to Cash)
                 {
                     if (model.activityFormTBMMKT.list_2_multi_select.Length > 0)
                     {
@@ -304,6 +330,84 @@ namespace eActForm.BusinessLayer
                             tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
                             tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
                             tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_2_multi_select[i];
+                            rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                        }
+                    }
+                }
+                if (model.activityFormTBMMKT.list_3_multi_select != null)//ฟอร์มIT314_(Forecast to Delivery)
+                {
+                    if (model.activityFormTBMMKT.list_3_multi_select.Length > 0)
+                    {
+                        for (int i = 0; i < model.activityFormTBMMKT.list_3_multi_select.Length; i++)
+                        {
+                            tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                            tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                            tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_3_multi_select[i];
+                            rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                        }
+                    }
+                }
+                if (model.activityFormTBMMKT.list_4_multi_select != null)//ฟอร์มIT314_(Finance&Accounting)
+                {
+                    if (model.activityFormTBMMKT.list_4_multi_select.Length > 0)
+                    {
+                        for (int i = 0; i < model.activityFormTBMMKT.list_4_multi_select.Length; i++)
+                        {
+                            tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                            tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                            tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_4_multi_select[i];
+                            rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                        }
+                    }
+                }
+                if (model.activityFormTBMMKT.list_5_multi_select != null)//ฟอร์มIT314_(Human Capital)
+                {
+                    if (model.activityFormTBMMKT.list_5_multi_select.Length > 0)
+                    {
+                        for (int i = 0; i < model.activityFormTBMMKT.list_5_multi_select.Length; i++)
+                        {
+                            tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                            tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                            tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_5_multi_select[i];
+                            rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                        }
+                    }
+                }
+                if (model.activityFormTBMMKT.list_6_multi_select != null)//ฟอร์มIT314_(Change type / ประเภทของการเปลี่ยนแปลง)
+                {
+                    if (model.activityFormTBMMKT.list_6_multi_select.Length > 0)
+                    {
+                        for (int i = 0; i < model.activityFormTBMMKT.list_6_multi_select.Length; i++)
+                        {
+                            tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                            tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                            tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_6_multi_select[i];
+                            rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                        }
+                    }
+                }
+                if (model.activityFormTBMMKT.list_7_multi_select != null)//ฟอร์มIT314_(Change type / ประเภทของการเปลี่ยนแปลง)
+                {
+                    if (model.activityFormTBMMKT.list_7_multi_select.Length > 0)
+                    {
+                        for (int i = 0; i < model.activityFormTBMMKT.list_7_multi_select.Length; i++)
+                        {
+                            tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                            tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                            tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_7_multi_select[i];
+                            rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                        }
+                    }
+                }
+                if (model.activityFormTBMMKT.list_8_multi_select != null)//ฟอร์มIT314_(Change Authorizations / สิทธิ์การใช้งาน)
+                {
+                    if (model.activityFormTBMMKT.list_8_multi_select.Length > 0)
+                    {
+                        for (int i = 0; i < model.activityFormTBMMKT.list_8_multi_select.Length; i++)
+                        {
+                            tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                            tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                            tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_8_multi_select[i];
                             rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
                         }
                     }
@@ -336,6 +440,19 @@ namespace eActForm.BusinessLayer
                         tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
                         tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_3_select;
                         rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                    }
+                }
+                if (model.activityFormTBMMKT.list_chooseRequest_multi_select != null)
+                {
+                    if (model.activityFormTBMMKT.list_chooseRequest_multi_select.Length > 0)
+                    {
+                        for (int i = 0; i < model.activityFormTBMMKT.list_chooseRequest_multi_select.Length; i++)
+                        {
+                            tB_Act_ActivityChoiceSelectModel.id = Guid.NewGuid().ToString();
+                            tB_Act_ActivityChoiceSelectModel.actFormId = activityId;
+                            tB_Act_ActivityChoiceSelectModel.select_list_choice_id = model.activityFormTBMMKT.list_chooseRequest_multi_select[i];
+                            rtn += insertActivityChoiceSelect(tB_Act_ActivityChoiceSelectModel);
+                        }
                     }
                 }
             }
@@ -783,6 +900,9 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
                     ,new SqlParameter("@orderOf",(model.orderOf == null ? "" : model.orderOf))
                     ,new SqlParameter("@regionalId",(model.regionalId == null ? "" : model.regionalId))
+                    ,new SqlParameter("@departmentId",model.departmentId)
+                    ,new SqlParameter("@other1",model.other1)
+                    ,new SqlParameter("@other2",model.other2)
                     });
             }
             catch (Exception ex)

@@ -115,6 +115,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
+                else if (typeForm == Activity_Model.activityType.ITForm.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_ITForm";
+                }
                 else
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
@@ -124,6 +128,7 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivityFormAll";
                 }
+
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
                 , new SqlParameter[] {

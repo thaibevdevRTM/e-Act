@@ -92,6 +92,7 @@ namespace eActForm.Models
         public string[] list_3_multi_select { get; set; }
         public string[] list_4_multi_select { get; set; }
         public string[] list_5_multi_select { get; set; }
+        public string[] list_6_multi_select { get; set; }
         public string[] list_7_multi_select { get; set; }
         public string[] list_8_multi_select { get; set; }
         public string list_1_select { get; set; }
