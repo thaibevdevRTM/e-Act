@@ -47,6 +47,7 @@ namespace eActForm.BusinessLayer
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                                   glCode = d["glCode"].ToString(),
                                   hospId = d["hospId"].ToString(),
+                                  rowNo = Convert.ToInt32(d["rowNo"].ToString()),
                               });
 
                 return result.ToList();
