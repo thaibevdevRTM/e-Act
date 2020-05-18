@@ -184,6 +184,15 @@ namespace eActForm.Controllers
 
         public ActionResult requestEmp2(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            if (activity_TBMMKT_Model.requestEmpModel.Count == 0)
+            {
+                List<RequestEmpModel> RequestEmp = new List<RequestEmpModel>();
+                for (int i = 0; i < 5; i++)
+                {
+                    RequestEmp.Add(new RequestEmpModel() { id = "", empId = "", empName = "", position = "", bu = "" });
+                }
+                activity_TBMMKT_Model.requestEmpModel = RequestEmp;
+            }
             return PartialView(activity_TBMMKT_Model);
         }
 

@@ -12,45 +12,26 @@
                         </th>
                     </tr>
                     <tr style="height:25px;">
-                        <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Name / ชื่อ</th>
-                        <th style="width: 22%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">Position / ตำแหน่ง</th>
-                        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">level </th>
-                        <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Department  / หน่วยงาน</th>
-                        <th style="width: 23%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">BU / หน่วยธุรกิจ</th>
+                        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">No.</th>
+                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">EmpOD / รหัสพนักงาน</th>
+                        <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Name / ชื่อ - สกุล</th>
+                        <th style="width: 60%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Detail authorizations / รายละเอียดของสิทธิ์</th>
                     </tr>
                     @{ var index = 0;}
                     @foreach (var item in Model.requestEmpModel)
                     {
                         <tr class="tagCountRowinTable">
                             <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                                @*<input type="text" value="@(index+1)" id="activityOfEstimateList[@index].rowNo" name="activityOfEstimateList[@index].rowNo" class="form-control textboxcss clstxtIO" readonly="readonly" style="text-align:center;" />
-                                    </td>
-                                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">*@
-                                @Html.DropDownList("requestEmpModel[" + index + "].empId",
-                               new SelectList(Model.masterRequestEmp, "empId", Model.activityFormTBMMKT.chkUseEng ? "empNameEN" : "empName", item.empId), ""
-                               , new
-                               {
-                                   @id = "ddlEmp_" + index,
-                                   @class = "form-control selectpicker",
-                                   @onchange = "changeGetEmp(" + index + ")",
-
-                               })
-
-                                @*data-live-search-placeholder="Search" data-max-options="1"*@
-                            </td>
-
-
-                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.position" id="position_@index" name="requestEmpModel[@index].position" readonly class="form-control position" />
+                                <input type="text" value="@(index+1)" id="requestEmpModel[@index].rowNo" name="requestEmpModel[@index].rowNo" class="form-control textboxcss clstxtIO" readonly="readonly" style="text-align:center;" />
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.level" id="level_@index" name="requestEmpModel[@index].level" readonly class="form-control textboxcss" />
+                                <input type="text" value="@item.empId" id="empId_@index" name="requestEmpModel[@index].empId" class="form-control position" onchange="changeGetEmp(@index);" />
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.department" id="department_@index" name="requestEmpModel[@index].department" readonly class="form-control textboxcss" />
+                                <input type="text" value="@item.empName" id="empName_@index" name="requestEmpModel[@index].empName" readonly class="form-control textboxcss" />
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.bu" id="bu_@index" name="requestEmpModel[@index].bu" readonly class="form-control textboxcss" />
+                                <input type="text" value="@item.detail" id="detail_@index" name="requestEmpModel[@index].detail" class="form-control textboxcss" />
                             </td>
                         </tr>
                         index++;
@@ -58,24 +39,22 @@
                 </table>
                 <script>
 
-                $('.selectpicker').selectpicker({
-                    liveSearch: true,
-                    showSubtext: true
-                });
-
                 function changeGetEmp(rowIndex) {
-
+                    $('#empId_' + rowIndex).val($('#empId_' + rowIndex).val().replaceAll("i", "1").replaceAll("I", "1"));
                     $.ajax({
                         type: 'POST',
                         url: '@Url.Action("getEmpDetailById", "eAct")',
                         data: {
-                            empId: $('#ddlEmp_' + rowIndex).val(),
+                            empId: $('#empId_' + rowIndex).val(),
                         }
                     }).done(function (response) {
-                        $('#position_' + rowIndex).val(response.Data.position);
-                        $('#level_' + rowIndex).val(response.Data.level);
-                        $('#department_' + rowIndex).val(response.Data.department);
-                        $('#bu_' + rowIndex).val(response.Data.bu);
+                        if (response.Data != null) {
+                            $('#empName_' + rowIndex).val(response.Data.empName);
+                        } else {
+                            alert('ไม่พบ ข้อมูลพนักงาน ' + $('#empId_' + rowIndex).val());
+                            $('#empName_' + rowIndex).val('');
+                            $('#empId_' + rowIndex).val('');
+                        }
                     });
 
                 }
