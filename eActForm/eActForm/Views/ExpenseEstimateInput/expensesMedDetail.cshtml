@@ -18,7 +18,7 @@
 
                 <table class="table table-bordered" id="tabelExpensesTrv" runat="server">
                     <tr style="background-color:#E5E2E2;height:25px; ">
-                        <th colspan="3" style="text-align :center;">
+                        <th colspan="4" style="text-align :center;">
                             ขอเบิกเงินค่ารักษาพยาบาลตามรายการดังนี้
                         </th>
                     </tr>
@@ -37,7 +37,7 @@
                             </th>
                         </tr> *@
                     <tr>
-                        <th colspan="3" style="text-align :center;">
+                        <th colspan="4" style="text-align :center;">
                             <div class="form-group">
                                 <div class="col-md-10 col-xs-12">
                                     <div class="row">
@@ -59,19 +59,46 @@
                                     <div class="row"></div>
                                 </div>
                             </div>
+
+                            @*<div class="form-group">
+                                    <div class="col-md-10 col-xs-12">
+                                        <div class="row">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
+                                                รหัสบัญชี :
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].glCode, new
+                                           {
+                                               @class = "form-control textboxcss ",
+                                               id = "txtGlCode_0",
+                                               name = "expensesDetailModel.costDetailLists[0].glCode",
+                                               style = "",
+                                               @readonly = true
+                                           })
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-xs-12">
+                                        <div class="row"></div>
+                                    </div>
+                                </div>*@
                         </th>
                     </tr>
 
                     <tr style="height:25px;">
 
 
-                        <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             วันที่ที่รักษา
                         </th>
-                        <th style="width: 65%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <th style="width: 57%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             เจ็บป่วยเนื่องจาก
                         </th>
-
+                        <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            รหัสบัญชี
+                        </th>
                         <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             จำนวนเงินตามใบเสร็จ
                         </th>
@@ -85,24 +112,40 @@
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
 
 
-                                @Html.TextBox("expensesDetailModel.costDetailLists[" + index + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.expensesDetailModel.costDetailLists[index].date, ConfigurationManager.AppSettings["formatDateUse"]),
-                    new { @class = "form-control textboxcss font10  text-center datepicker", autocomplete = "off" })
+                                @Html.TextBox("expensesDetailModel.costDetailLists[" + index + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.expensesDetailModel.costDetailLists[index].date, ConfigurationManager.AppSettings["formatDateUse"]), new
+                           {
+                               @class = "form-control textboxcss font10  text-center datepicker",
+                               id = "txtDateInput_" + index,
+                               autocomplete = "off"
+                           })
                             </td>
 
 
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
                                 @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[index].detail, new
                                 {
                                     @class = "form-control textboxcss ",
-                                    id = "txtdetail",
+                                    id = "txtdetail_" + index,
                                     name = "expensesDetailModel.costDetailLists[" + index + "].detail",
                                     style = ""
                                 })
 
                             </td>
 
-
-
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @if (index == 0)
+                                {
+                                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].glCode, new
+                                   {
+                                       @class = "form-control textboxcss ",
+                                       id = "txtGlCode_0",
+                                       name = "expensesDetailModel.costDetailLists[0].glCode",
+                                       style = "",
+                                       @readonly = true
+                                   })
+                                }
+                            </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
 
 
@@ -119,47 +162,47 @@
                                     $("#txtUnitPrice_@index").blur(function () {
 
 
-                                        var v_unitRow = 0.00;
-                                        var v_unitpriceRow = 0.00;
-                                        var v_totalRow = 0.00;
+                                            var v_unitRow = 0.00;
+                                            var v_unitpriceRow = 0.00;
+                                            var v_totalRow = 0.00;
 
-                                        if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
-                                        if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
-                                            v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
-                                        }
-                                        if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                            v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
+                                            if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
+                                            if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
+                                                v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
+                                            }
+                                            if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
+                                                v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
 
-                                            //var v_unitRow = 0.00;
+                                                //var v_unitRow = 0.00;
 
-                                        }
-                                        v_totalRow = (v_unitRow * v_unitpriceRow);
+                                            }
+                                            v_totalRow = (v_unitRow * v_unitpriceRow);
 
                                         $("#hdTotal_@index").val(v_totalRow.toFixed(2));
                                         $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                        sumall();
-                                    });
+                                            sumall();
+                                        });
 
                                     $("#txtUnit_@index").blur(function () {
 
 
-                                        var v_unitRow = 0.00;
-                                        var v_unitpriceRow = 0.00;
-                                        var v_totalRow = 0.00;
-                                        if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
-                                        if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
-                                            v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
-                                        }
-                                        if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                            v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
+                                            var v_unitRow = 0.00;
+                                            var v_unitpriceRow = 0.00;
+                                            var v_totalRow = 0.00;
+                                            if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
+                                            if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
+                                                v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
+                                            }
+                                            if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
+                                                v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
 
-                                        }
-                                        v_totalRow = (v_unitRow * v_unitpriceRow);
+                                            }
+                                            v_totalRow = (v_unitRow * v_unitpriceRow);
 
                                         $("#hdTotal_@index").val(v_totalRow.toFixed(2));
                                         $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                        sumall();
-                                    });
+                                            sumall();
+                                        });
 
                                 </script>
                             </td>
@@ -167,7 +210,7 @@
                         index++;
                     }
                     <tr>
-                        <td colspan="2" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                        <td colspan="3" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                             จำนวนเงินรวม(บาท)&nbsp;
                         </td>
                         <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">

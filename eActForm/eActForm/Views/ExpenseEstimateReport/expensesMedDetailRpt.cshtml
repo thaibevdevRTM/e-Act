@@ -6,15 +6,15 @@
 @*<div id="divEstimateDetails" runat="server" style="width: 100%;"></div>*@
 
 <div class=" fontDocSmall " style="padding-left:5em;">
-    <b>ข้าพเจ้าขอเบิกเงินค่าใช้จ่ายในการเดินทางไปปฏิบัติงานนอกสถานที่ทำงานปกติของบริษัทฯ ตามรายละเอียดดังนี้</b>
+    <b>ขอเบิกเงินค่ารักษาพยาบาลตามรายการดังนี้</b>
 </div>
 <div style="height:15px;"></div>
 <table class="tablethin fontDocSmall " style="width:100%; text-align:center;" border="1" cellpadding="2" cellspacing="0">
-    <tr style="background-color:#E5E2E2;height:25px;">
+    @*<tr style="background-color:#E5E2E2;height:25px;">
         <td colspan="5" style="text-align :center;  ">
             <b> ขอเบิกเงินค่ารักษาพยาบาลตามรายการดังนี้</b>
         </td>
-    </tr>
+    </tr>*@
     <tr style="height:20px;">
         <td style="width: 5%;text-align:center;">
             <b>ลำดับ</b>
@@ -46,10 +46,9 @@
             <td style="text-align:center; padding-left:5px;">
                 <label>
 
-                    @if (string.IsNullOrEmpty(Model.expensesDetailModel.costDetailLists[@index].date.ToString()))
-                    {
-                        DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.expensesDetailModel.costDetailLists[@index].date, ConfigurationManager.AppSettings["formatDateUse"]);
-                    }
+                  
+                        @DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.expensesDetailModel.costDetailLists[@index].date, ConfigurationManager.AppSettings["formatDateUse"])
+                   
                 </label>
             </td>
             <td style="text-align:left;">
