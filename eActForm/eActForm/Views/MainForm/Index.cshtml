@@ -142,6 +142,9 @@
         $("#GridPDF :input").prop("disabled", true);
         $("#txtdescAttach").prop("disabled", true);
 
+        $("#ProductDetail_5").prop("disabled", true);
+        $("#ProductDetail_6").prop("disabled", true);
+        
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' &&
             '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
 
@@ -160,6 +163,7 @@
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]' &&
             '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
+
             $("#divExpensesMed :input").prop("disabled", false);
             $("#divExpensesMed :input").prop("readonly", true);
             if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
@@ -341,10 +345,11 @@
             if ($("#txtEmpTel").val() == "") { required += "&emsp;โทรศัพท์ติดต่อ*<br>"; validate = false; }
             if ($("#lblHireDate").val() == "") { required += "&emsp;วันที่เข้างาน(กรุณาติดต่อ Admin)*<br>"; validate = false; }
             if ($("#txthospName_0").val() == "") { required += "&emsp;โรงพยาบาล*<br>"; validate = false; }
-            if (!($("#txtDateInput__0").val() != "" && $("#txtdetail_0").val() != "" && $("#txtUnitPrice_0").val() != ""))
+            if (!($("#txtDateInput_0").val() != "" && $("#txtdetail_0").val() != "" && $("#txtUnitPrice_0").val() != ""))
             {
                 required += "&emsp;รายละเอียดขอเบิกเงินค่ารักษาพยาบาล*<br>"; validate = false;
             }
+
         }
         else {
 

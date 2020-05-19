@@ -227,7 +227,7 @@
                 getCashEmp();
             } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
                 //getCashLimit();
-                //getCumulative();           
+                //getCumulative();
                 getCashDetail();
             }
         });
@@ -358,6 +358,9 @@ alert(balance);
                     document.getElementById("ddlRegional").disabled = true;
                 }
 
+                if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' == "False") {
+                    document.getElementById("ddlRegional").disabled = true;
+                }
             }
         });
     }
@@ -412,7 +415,7 @@ alert(balance);
     }
 
     function getCashDetail() {
-       
+
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getCashDetailByEmpId", "eAct")',

@@ -1,71 +1,103 @@
 ﻿@*=====ของDEVทดลองprint pdf=========*@
 @*<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
-@using (Html.BeginForm("printDoc", "MainReport", FormMethod.Post))
-{
-    <input type="hidden" name="gridHtml" />
-    <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
-    <br />
-    <br />
-}
+    @using (Html.BeginForm("printDoc", "MainReport", FormMethod.Post))
+    {
+        <input type="hidden" name="gridHtml" />
+        <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
+        <br />
+        <br />
+    }
 
-<center>
-    @RenderPage("~/Views/Shared/_previewMainReport.cshtml")
-</center>
+    <center>
+        @RenderPage("~/Views/Shared/_previewMainReport.cshtml")
+    </center>
 
-<script>
-    $("#btnExportPDF").click(function () {
-        $("input[name='gridHtml']").val($("#divForm").html());
-    });
-</script>*@
+    <script>
+        $("#btnExportPDF").click(function () {
+            $("input[name='gridHtml']").val($("#divForm").html());
+        });
+    </script>*@
 @*===END==ของงDEVทดลองprint pdf=========*@
 
 @*=====ของใช้งานจริง=========*@
 @model eActForm.Models.Activity_TBMMKT_Model
-    @using eActForm.Models;
+@using System.Configuration;
+@using eActForm.Models;
 
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div style=""></div>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <center>
-                @RenderPage("~/Views/Shared/_previewMainReport.cshtml")
-            </center>
-            <div class="modal-footer">
-                <div>
-                    <p class="d-flex justify-content-center">
-                        <div style="display:inline-block;">
-                            @using (Html.BeginForm("printDoc", "MainReport", FormMethod.Post))
-                            {
-                                <input type="hidden" name="gridHtml" />
-                                <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
-                            }
-                        </div>
-                        <div style="display:inline-block;">
-                            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-                        </div>
-                        <div style="display:inline-block;">
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div style=""></div>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <center>
+            @RenderPage("~/Views/Shared/_previewMainReport.cshtml")
+        </center>
+        <div class="modal-footer">
+            <div>
+                <p class="d-flex justify-content-center">
+                    <div style="display:inline-block;">
+                        @using (Html.BeginForm("printDoc", "MainReport", FormMethod.Post))
+                        {
+                            <input type="hidden" name="gridHtml" />
+                            <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
+                        }
+                    </div>
+                    <div style="display:inline-block;">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                    </div>
+                    <div style="display:inline-block;">
 
-                            @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
-                            {
-                                <button type="button" class="btn ink-reaction btn-success" onclick="submitPreview();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
-                            }
-                        </div>
+                        @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
+                        {
+                            <button type="button" class="btn ink-reaction btn-success" onclick="submitCheckForm();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                        }
+                    </div>
 
 
-                    </p>
-                </div>
-
-            </div>
-            <div class="center-block">
-
+                </p>
             </div>
 
         </div>
-    </div>
+        <div class="center-block">
 
-    <script>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+
+        function submitCheckForm() {
+
+            if ('@Model.activityFormTBMMKT.master_type_form_id'=='@ConfigurationManager.AppSettings["formExpMedNumId"]') {
+
+               
+                $.ajax({
+                    url: '@Url.Action("getAllActivityFormByEmpId", "eAct")',
+                    data: {
+                        typeFormId: '@Model.activityFormTBMMKT.master_type_form_id',
+                        empId: '@Model.activityFormTBMMKT.empId',
+                    },
+                    dataType: "json",
+                    type: 'POST',
+                }).done(function (response) {
+
+                    if (response.Data.chk == 'true') {
+                        submitPreview();
+                    } else {
+                        alert('ไม่สารถยืนยันเอกสารได้เนื่องจากมีเอกสารรออนุมัติ');
+                    }
+
+                });
+
+
+            } else {
+                submitPreview();
+            }
+        }
+
 
 
            function submitPreview() {
@@ -110,12 +142,12 @@
 
                 });
             }
-    </script>
+</script>
 
-    <script>
+<script>
+    //==========for production============
+    $("#btnExportPDF").click(function () {
+        $("input[name='gridHtml']").val($("#divForm").html());
+    });
         //==========for production============
-        $("#btnExportPDF").click(function () {
-            $("input[name='gridHtml']").val($("#divForm").html());
-        });
-        //==========for production============
-    </script>
+</script>

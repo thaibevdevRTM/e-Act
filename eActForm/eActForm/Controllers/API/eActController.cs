@@ -574,5 +574,27 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult getAllActivityFormByEmpId(string typeFormId, string empId)
+        {
+            List <ActivityFormTBMMKT> activityFormTBMMKT = new List<ActivityFormTBMMKT>();
+            var result = new AjaxResult();
+            try
+            {                         
+                activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getAllActivityFormByEmpId(typeFormId,empId).Where(x => x.statusId==2).ToList();                
+                var resultData = new
+                {
+                    chk = activityFormTBMMKT.Count > 0 ? "false" :"true",
+                   
+                };
+
+ result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }
