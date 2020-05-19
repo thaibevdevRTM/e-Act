@@ -76,27 +76,59 @@
             enableFiltering: true,
             nonSelectedText: '',
             buttonWidth: '100%',
-            onChange: function (option, checked) {                
+            onChange: function (option, checked) {
                 if (option.val() == valueOther1 && checked === true) {
                     $('#txtother1').show();
                 } else if(option.val() == valueOther1) {
                     $('#txtother1').hide();
+                    $('#txtother1').val('');
                 }
             },
         });
+        var valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_7_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_7_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlChangetype").multiselect('select', valuesSelectChoiceFromDb);
+
         $('#ddlChangeAuthorizations').multiselect({
             numberDisplayed: 2,
             enableFiltering: true,
             nonSelectedText: '',
             buttonWidth: '100%',
-            onChange: function (option, checked) {                
+            onChange: function (option, checked) {
                 if (option.val() == valueOther2 && checked === true) {
                     $('#txtother2').show();
                 } else if (option.val() == valueOther2) {
                     $('#txtother2').hide();
+                    $('#txtother2').val('');
                 }
             },
         });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_8_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_8_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlChangeAuthorizations").multiselect('select', valuesSelectChoiceFromDb);
+
+        @if(Model.tB_Act_ActivityForm_DetailOther.other1 != null)
+        {
+            @:$('#txtother1').show();
+        }
+        @if(Model.tB_Act_ActivityForm_DetailOther.other2 != null)
+        {
+            @:$('#txtother2').show();
+        }
+
+
         $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
         $(".multiselect .caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
     });

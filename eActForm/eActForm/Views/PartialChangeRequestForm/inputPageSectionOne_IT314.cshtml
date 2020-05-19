@@ -134,6 +134,30 @@
                     </div>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    Other :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_6_multi_select", new SelectList(Model.list_6,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlOther",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label class="control-label col-md-2 col-xs-12">
                     <u>@Resources.Global.purpose</u>&nbsp;&nbsp;
@@ -172,6 +196,16 @@
 
             },
         });
+         var valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_chooseRequest_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_chooseRequest_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlchooseRequest").multiselect('select', valuesSelectChoiceFromDb);
+
         $('#ddlProcuretoPay').multiselect({
             numberDisplayed: 4,
             enableFiltering: true,
@@ -181,6 +215,16 @@
 
             },
         });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_0_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_0_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlProcuretoPay").multiselect('select', valuesSelectChoiceFromDb);
+
         $('#ddlERPSystem').multiselect({
             numberDisplayed: 4,
             enableFiltering: true,
@@ -190,6 +234,16 @@
 
             },
         });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_1_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlERPSystem").multiselect('select', valuesSelectChoiceFromDb);
+
         $('#ddlOrdertoCash').multiselect({
             numberDisplayed: 4,
             enableFiltering: true,
@@ -199,6 +253,16 @@
 
             },
         });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_2_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_2_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlOrdertoCash").multiselect('select', valuesSelectChoiceFromDb);
+
         $('#ddlForecasttoDelivery').multiselect({
             numberDisplayed: 4,
             enableFiltering: true,
@@ -208,6 +272,17 @@
 
             },
         });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_3_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_3_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlForecasttoDelivery").multiselect('select', valuesSelectChoiceFromDb);
+
+
         $('#ddlFinanceAccounting').multiselect({
             numberDisplayed: 4,
             enableFiltering: true,
@@ -217,6 +292,17 @@
 
             },
         });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_4_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_4_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlFinanceAccounting").multiselect('select', valuesSelectChoiceFromDb);
+
+
         $('#ddlHumanCapital').multiselect({
             numberDisplayed: 4,
             enableFiltering: true,
@@ -226,6 +312,36 @@
 
             },
         });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_5_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_5_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlHumanCapital").multiselect('select', valuesSelectChoiceFromDb);
+
+
+        $('#ddlOther').multiselect({
+            numberDisplayed: 4,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_6_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_6_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlOther").multiselect('select', valuesSelectChoiceFromDb);
+
         $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
         $(".multiselect .caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
     });

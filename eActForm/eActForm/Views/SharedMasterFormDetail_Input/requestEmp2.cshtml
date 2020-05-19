@@ -13,7 +13,7 @@
                     </tr>
                     <tr style="height:25px;">
                         <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">No.</th>
-                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">EmpOD / รหัสพนักงาน</th>
+                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">EmpID / รหัสพนักงาน</th>
                         <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Name / ชื่อ - สกุล</th>
                         <th style="width: 60%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Detail authorizations / รายละเอียดของสิทธิ์</th>
                     </tr>
@@ -21,17 +21,17 @@
                     @foreach (var item in Model.requestEmpModel)
                     {
                         <tr class="tagCountRowinTable">
-                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@(index+1)" id="requestEmpModel[@index].rowNo" name="requestEmpModel[@index].rowNo" class="form-control textboxcss clstxtIO" readonly="readonly" style="text-align:center;" />
+                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;vertical-align:middle">
+                                @(index+1)
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <input type="text" value="@item.empId" id="empId_@index" name="requestEmpModel[@index].empId" class="form-control position" onchange="changeGetEmp(@index);" />
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.empName" id="empName_@index" name="requestEmpModel[@index].empName" readonly class="form-control textboxcss" />
+                                <input type="text" value="@item.empName.Replace("คุณ","")" id="empName_@index" name="requestEmpModel[@index].empName" readonly class="form-control textboxcss" />
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <textarea rows="1" value="@item.detail" id="detail_@index" name="requestEmpModel[@index].detail" class="form-control textboxcss" ></textarea>
+                                <textarea rows="1" id="detail_@index" name="requestEmpModel[@index].detail" class="form-control textboxcss">@item.detail</textarea>
                             </td>
                         </tr>
                         index++;

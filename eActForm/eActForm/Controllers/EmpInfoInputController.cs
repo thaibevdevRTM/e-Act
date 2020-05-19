@@ -42,6 +42,7 @@ namespace eActForm.Controllers
 
         public ActionResult empInfoDetailV2(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            activity_TBMMKT_Model.empInfoModel = QueryGet_ReqEmpByActivityId.getReqEmpByMainTableActivityId(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng).FirstOrDefault();
             return PartialView(activity_TBMMKT_Model);
         }
 

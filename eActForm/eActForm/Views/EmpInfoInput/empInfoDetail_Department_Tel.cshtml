@@ -8,32 +8,32 @@
         <td style="">
             <div class="form-group">
                 <label class="control-label col-md-2 col-xs-12">
-                    หน่วยงาน :
+                    Department/หน่วยงาน :
                 </label>
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
-                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.departmentId, new SelectList(Model.listGetDepartmentMaster, "id", "name", Model.tB_Act_ActivityForm_DetailOther.departmentId), "", new
+                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.departmentId, new SelectList(Model.listGetDepartmentMaster, "id", "name", ""), "", new
                    {
-                       @class = "form-control selectpicker",
+                       @class = "form-control SelectValddlDepartment",
                        id = "ddlDepartment"
                    })
+                        <script>
+                            $('#ddlDepartment').selectpicker({
+                                liveSearch: true,
+                                showSubtext: true
+                            });
+                        </script>
                     </div>
                 </div>
                 <label class="control-label col-md-2 col-xs-12">
-                    โทรศัพท์ติดต่อ :
+                    Phone/เบอร์ติดต่อ :
                 </label>
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
-                        @Html.TextBoxFor(x => x.empInfoModel.empTel, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpTel" })
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpTel" })
                     </div>
                 </div>
             </div>
         </td>
     </tr>
 </table>
-<script>
-    $('#ddlDepartment').selectpicker({
-        liveSearch: true,
-        showSubtext: true
-    });
-</script>

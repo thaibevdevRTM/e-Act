@@ -373,7 +373,7 @@ namespace eActForm.BusinessLayer
                         }
                     }
                 }
-                if (model.activityFormTBMMKT.list_6_multi_select != null)//ฟอร์มIT314_(Change type / ประเภทของการเปลี่ยนแปลง)
+                if (model.activityFormTBMMKT.list_6_multi_select != null)//ฟอร์มIT314_(Other)
                 {
                     if (model.activityFormTBMMKT.list_6_multi_select.Length > 0)
                     {
@@ -528,6 +528,213 @@ namespace eActForm.BusinessLayer
                         {
                             activity_TBMMKT_Model.activityFormTBMMKT.list_2_multi_select[index_each] = item.select_list_choice_id;
                             index_each++;
+                        }
+                    }
+                    else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
+                    {
+                        index_each = 0;
+                        List<TB_Act_ActivityChoiceSelectModel> tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ChooseRequest").ToList();
+                        if (tempList.Count > 0)
+                        {
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_chooseRequest_multi_select = new string[tempList.Count];
+                            foreach (var item in tempList)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_chooseRequest_multi_select[index_each] = item.select_list_choice_id;
+                                if (index_each == 0)
+                                {
+                                    sumTxtLabelRequired += item.name;
+                                }
+                                else
+                                {
+                                    sumTxtLabelRequired += ("," + item.name);
+                                }
+                                index_each++;
+                            }
+                        }
+
+                        index_each = 0;
+                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ProcuretoPay").ToList();
+                        if (tempList.Count > 0)
+                        {
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_0_multi_select = new string[tempList.Count];
+                            foreach (var item in tempList)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_0_multi_select[index_each] = item.select_list_choice_id;
+                                if (index_each == 0)
+                                {
+                                    sumTxtLabelRequired += item.name;
+                                }
+                                else
+                                {
+                                    sumTxtLabelRequired += ("," + item.name);
+                                }
+                                index_each++;
+                            }
+                        }
+
+                        index_each = 0;
+                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ERPSystem").ToList();
+                        if (tempList.Count > 0)
+                        {
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select = new string[tempList.Count];
+                            foreach (var item in tempList)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = item.select_list_choice_id;
+                                if (index_each == 0)
+                                {
+                                    sumTxtLabelRequired += item.name;
+                                }
+                                else
+                                {
+                                    sumTxtLabelRequired += ("," + item.name);
+                                }
+                                index_each++;
+                            }
+                        }
+
+                        index_each = 0;
+                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "OrdertoCash").ToList();
+                        if (tempList.Count > 0)
+                        {
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_2_multi_select = new string[tempList.Count];
+                            foreach (var item in tempList)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_2_multi_select[index_each] = item.select_list_choice_id;
+                                if (index_each == 0)
+                                {
+                                    sumTxtLabelRequired += item.name;
+                                }
+                                else
+                                {
+                                    sumTxtLabelRequired += ("," + item.name);
+                                }
+                                index_each++;
+                            }
+                        }
+
+
+                        index_each = 0;
+                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ForecasttoDelivery").ToList();
+                        if (tempList.Count > 0)
+                        {
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_3_multi_select = new string[tempList.Count];
+                            foreach (var item in tempList)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_3_multi_select[index_each] = item.select_list_choice_id;
+                                if (index_each == 0)
+                                {
+                                    sumTxtLabelRequired += item.name;
+                                }
+                                else
+                                {
+                                    sumTxtLabelRequired += ("," + item.name);
+                                }
+                                index_each++;
+                            }
+                        }
+
+
+                        index_each = 0;
+                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "FinanceAndAccounting").ToList();
+                        if (tempList.Count > 0)
+                        {
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_4_multi_select = new string[tempList.Count];
+                            foreach (var item in tempList)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_4_multi_select[index_each] = item.select_list_choice_id;
+                                if (index_each == 0)
+                                {
+                                    sumTxtLabelRequired += item.name;
+                                }
+                                else
+                                {
+                                    sumTxtLabelRequired += ("," + item.name);
+                                }
+                                index_each++;
+                            }
+                        }
+
+
+                        index_each = 0;
+                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "HumanCapital").ToList();
+                        if (tempList.Count > 0)
+                        {
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_5_multi_select = new string[tempList.Count];
+                            foreach (var item in tempList)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_5_multi_select[index_each] = item.select_list_choice_id;
+                                if (index_each == 0)
+                                {
+                                    sumTxtLabelRequired += item.name;
+                                }
+                                else
+                                {
+                                    sumTxtLabelRequired += ("," + item.name);
+                                }
+                                index_each++;
+                            }
+                        }
+
+                        index_each = 0;
+                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "Other").ToList();
+                        if (tempList.Count > 0)
+                        {
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_6_multi_select = new string[tempList.Count];
+                            foreach (var item in tempList)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_6_multi_select[index_each] = item.select_list_choice_id;
+                                if (index_each == 0)
+                                {
+                                    sumTxtLabelRequired += item.name;
+                                }
+                                else
+                                {
+                                    sumTxtLabelRequired += ("," + item.name);
+                                }
+                                index_each++;
+                            }
+                        }
+
+
+                        index_each = 0;
+                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "Changetype").ToList();
+                        if (tempList.Count > 0)
+                        {
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_7_multi_select = new string[tempList.Count];
+                            foreach (var item in tempList)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_7_multi_select[index_each] = item.select_list_choice_id;
+                                if (index_each == 0)
+                                {
+                                    sumTxtLabelRequired += item.name;
+                                }
+                                else
+                                {
+                                    sumTxtLabelRequired += ("," + item.name);
+                                }
+                                index_each++;
+                            }
+                        }
+
+
+                        index_each = 0;
+                        tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ChangeAuthorizations").ToList();
+                        if (tempList.Count > 0)
+                        {
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_8_multi_select = new string[tempList.Count];
+                            foreach (var item in tempList)
+                            {
+                                activity_TBMMKT_Model.activityFormTBMMKT.list_8_multi_select[index_each] = item.select_list_choice_id;
+                                if (index_each == 0)
+                                {
+                                    sumTxtLabelRequired += item.name;
+                                }
+                                else
+                                {
+                                    sumTxtLabelRequired += ("," + item.name);
+                                }
+                                index_each++;
+                            }
                         }
 
                     }
@@ -1282,6 +1489,7 @@ namespace eActForm.BusinessLayer
                     requestEmpModel.rowNo = insertIndex;
                     requestEmpModel.empId = item.empId;
                     requestEmpModel.empTel = item.empTel;
+                    requestEmpModel.detail = item.detail == null ? "" : item.detail;
                     requestEmpModel.delFlag = false;
                     requestEmpModel.createdByUserId = model.activityFormModel.createdByUserId;
                     requestEmpModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -1374,6 +1582,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] {new SqlParameter("@activityId",model.activityId)
                     ,new SqlParameter("@rowNo",model.rowNo)
                     ,new SqlParameter("@empId ",model.empId)
+                    ,new SqlParameter("@detail ",model.detail)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
@@ -1384,7 +1593,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> insertEstimateTBMMKT");
+                ExceptionManager.WriteError(ex.Message + ">> insertRequestEmp");
             }
 
             return result;
