@@ -320,6 +320,7 @@
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\API\eActController.cs" />
     <Compile Include="Controllers\ExpenseEstimateInput\parialPriceStructure.cs" />
+    <Compile Include="Controllers\ExpenseEstimateReport\parialPriceStructureRpt.cs" />
     <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\API\apiGetDataMasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -3143,7 +3144,7 @@
     <Content Include="Views\ImportMasterAP\Index.cshtml" />
     <Content Include="Views\partialActivityDetail\partialSetPriceMT.cshtml" />
     <Content Include="Views\partialActivityDetailReport\partialSetPriceMTRpt.cshtml" />
-    <Content Include="Views\ExpenseEstimateInput\parialPriceStructure.cshtml" />
+    <Content Include="Views\ExpenseEstimateReport\partialProductCost.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
@@ -3167,6 +3168,7 @@
     <Folder Include="Views\exPerryCash\" />
     <Folder Include="Views\getDataMaster\" />
     <Folder Include="Views\parialPriceStructureList\" />
+    <Folder Include="Views\parialPriceStructureRpt\" />
     <Folder Include="Views\partailViewDataMaster\" />
     <Folder Include="Views\partialTest\" />
     <Folder Include="Views\test\" />
