@@ -745,6 +745,11 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model.placeDetailModel = QueryGet_PlaceDetailByActivityId.getPlaceDetailByActivityId(activityId);
                 activity_TBMMKT_Model.expensesDetailModel.costDetailLists = activity_TBMMKT_Model.activityOfEstimateList;
 
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
+                {
+                    activity_TBMMKT_Model.dataRequesterToShows = QueryGetSelectMainForm.GetDataRequesterToShow(activityId);
+                }
+
                 Decimal? totalCostThisActivity = 0;
                 foreach (var item in activity_TBMMKT_Model.activityOfEstimateList)
                 {
@@ -758,7 +763,6 @@ namespace eActForm.BusinessLayer
                     }
                 }
                 activity_TBMMKT_Model.totalCostThisActivity = totalCostThisActivity;
-
 
                 if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Count > 0)
                 {

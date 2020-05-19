@@ -74,6 +74,7 @@ namespace eActForm.Models
         public List<GetDataPVPrevious> listGetDataPVPrevious { get; set; }
         public List<GetDataDetailPaymentAll> listGetDataDetailPaymentAll { get; set; }
         public List<departmentMasterModel> listGetDepartmentMaster { get; set; }
+        public List<DataRequesterToShow> dataRequesterToShows { get; set; }
     }
 
     public class ActivityFormTBMMKT : ActivityForm
@@ -413,6 +414,18 @@ namespace eActForm.Models
     public class objGetDepartmentMaster
     {
         public string companyId { get; set; }
+    }
+
+    public class DataRequesterToShow
+    {
+        public string empName { get; set; }
+        public string empId { get; set; }
+        public string empDepartment { get; set; }
+        public string empPhone { get; set; }
+        public string empCompany { get; set; }
+        public string empEmail { get; set; }
+        public string languageDoc { get; set; }
+
     }
 
 }

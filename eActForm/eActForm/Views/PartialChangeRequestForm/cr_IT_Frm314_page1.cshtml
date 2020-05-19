@@ -12,56 +12,73 @@
 
 <div id="divPage1" style="width: 100%;">
     <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
-        <tr>
-            <td colspan="2" style="width:100%;border-color:black;border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;background-color:#008000;color:white;" class="fontDocSmallV2Bold">
-                &nbsp;Part 1 : For Requester / ส่วนที่ 1 : สำหรับ ผู้แจ้ง
-            </td>
-        </tr>
-        <tr>
-            <td style="width:50%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;">
-                &nbsp;Name / ชื่อ :
-            </td>
-            <td style="width:50%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;">
-                &nbsp;Employee ID / รหัสพนักงาน :
-            </td>
-        </tr>
-        <tr>
-            <td style="width:50%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;">
-                &nbsp;Department / หน่วยงาน :
-            </td>
-            <td style="width:50%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;">
-                &nbsp;Phone / เบอร์ติดต่อ :
-            </td>
-        </tr>
-        <tr>
-            <td style="width:50%;border-style: solid;border-width: 0px 1px 1px 1px; border-collapse: collapse;">
-                &nbsp;Company / บริษัท :
-            </td>
-            <td style="width: 50%;border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;">
-                &nbsp;E-mail :
-            </td>
-        </tr>
+        @foreach (var item in Model.dataRequesterToShows)
+        {
+            <tr>
+                <td colspan="2" style="width:100%;border-color:black;border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;background-color:#008000;color:white;" class="fontDocSmallV2Bold">
+                    &nbsp;Part 1 : For Requester / ส่วนที่ 1 : สำหรับ ผู้แจ้ง
+                </td>
+            </tr>
+            <tr>
+                <td style="width:50%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;">
+                    &nbsp;Name / ชื่อ : @item.empName
+                </td>
+                <td style="width:50%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;">
+                    &nbsp;Employee ID / รหัสพนักงาน :  @item.empId
+                </td>
+            </tr>
+            <tr>
+                <td style="width:50%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;">
+                    &nbsp;Department / หน่วยงาน : @item.empDepartment
+                </td>
+                <td style="width:50%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;">
+                    &nbsp;Phone / เบอร์ติดต่อ : @item.empPhone
+                </td>
+            </tr>
+            <tr>
+                <td style="width:50%;border-style: solid;border-width: 0px 1px 1px 1px; border-collapse: collapse;">
+                    &nbsp;Company / บริษัท : @item.empCompany
+                </td>
+                <td style="width: 50%;border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;">
+                    &nbsp;E-mail : @item.empEmail
+                </td>
+            </tr>
+        }
         <tr>
             <td colspan="2" style="border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;">
                 @{
                     var index = 0;
                     string[] valChooseRequest = new string[Model.list_chooseRequest.Count];
+                    string[] valCheckChooseRequest = new string[Model.list_chooseRequest.Count];
                     foreach (var item in Model.list_chooseRequest)
                     {
                         valChooseRequest[index] = item.name;
+                        valCheckChooseRequest[index] = picCheckBoxFalse;
+                        if (Model.activityFormTBMMKT.list_chooseRequest_multi_select != null)
+                        {
+                            var i_loop = 0;
+                            foreach (var itemArray in Model.activityFormTBMMKT.list_chooseRequest_multi_select)
+                            {
+                                if (itemArray == item.id)
+                                {
+                                    valCheckChooseRequest[index] = picCheckBoxTrue;
+                                }
+                                i_loop++;
+                            }
+                        }
                         index++;
                     }
                 }
                 &nbsp;<u>Choose request</u>
-                &nbsp;<img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@valChooseRequest[0]
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;<img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@valChooseRequest[1]
+                &nbsp;<img class="cssCheckBoxV1" src="@valCheckChooseRequest[0]" />@valChooseRequest[0]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;<img class="cssCheckBoxV1" src="@valCheckChooseRequest[1]" />@valChooseRequest[1]
                 <br />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@valChooseRequest[2]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img class="cssCheckBoxV1" src="@valCheckChooseRequest[2]" />@valChooseRequest[2]
                 <br />
                 &nbsp;<u>Choose system</u>
                 <br />
@@ -70,55 +87,143 @@
                         <td>&nbsp;<b>Procure to Pay :</b></td>
                         @foreach (var item in Model.list_0)
                         {
-                            <td><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_0_multi_select != null)
+                            {
+                                var i_loop = 0;
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_0_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+                                    i_loop++;
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
                         }
                         <td><b>ERP System :</b></td>
                         @foreach (var item in Model.list_1)
                         {
-                            <td><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_1_multi_select != null)
+                            {
+                                var i_loop = 0;
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+                                    i_loop++;
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
                         }
                     </tr>
                     <tr>
                         <td>&nbsp;<b>Order to Cash :</b></td>
                         @foreach (var item in Model.list_2)
                         {
-                            <td><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_2_multi_select != null)
+                            {
+                                var i_loop = 0;
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_2_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+                                    i_loop++;
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
                         }
                     </tr>
                     <tr>
                         <td>&nbsp;<b>Forecast to Delivery :</b></td>
                         @foreach (var item in Model.list_3)
                         {
-                            <td><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_3_multi_select != null)
+                            {
+                                var i_loop = 0;
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_3_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+                                    i_loop++;
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
                         }
                         <td colspan="2"><b>Finance&Accounting :</b></td>
                         @foreach (var item in Model.list_4)
                         {
-                            <td><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_4_multi_select != null)
+                            {
+                                var i_loop = 0;
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_4_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+                                    i_loop++;
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
                         }
                     </tr>
                     <tr>
                         <td>&nbsp;<b>Human Capital :</b></td>
                         @foreach (var item in Model.list_5)
                         {
-                            <td><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_5_multi_select != null)
+                            {
+                                var i_loop = 0;
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_5_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+                                    i_loop++;
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
                         }
                         <td><b>Other :</b></td>
                         @foreach (var item in Model.list_6)
                         {
-                            <td><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />@item.name&nbsp;&nbsp;</td>
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_6_multi_select != null)
+                            {
+                                var i_loop = 0;
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_6_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+                                    i_loop++;
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
                         }
                     </tr>
                 </table>
             </td>
         </tr>
         <tr>
-            <td colspan="2" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;padding-top:3px;">
+            <td colspan="2" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;height:119px;vertical-align:top;">
                 &nbsp;Objectives and requirements / วัตถุประสงค์และรายละเอียดความต้องการ :
-                <br />&nbsp;
-                <br />&nbsp;
-                <br />&nbsp;
-                <br />&nbsp;
+                <br />&nbsp;@Html.Raw(Model.activityFormModel.objective.Replace("\n", "<br/>&nbsp;").Replace("\r\n", "<br/>&nbsp;"))
             </td>
         </tr>
         <tr>

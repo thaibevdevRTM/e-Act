@@ -20,58 +20,63 @@ namespace eActForm.Controllers
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
             //=========for=====test=================
-            TB_Act_ActivityForm_DetailOther dummy_TB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
-            ActivityFormTBMMKT dummy_activityFormTBMMKT = new ActivityFormTBMMKT();
-            activity_TBMMKT_Model.activityFormTBMMKT = dummy_activityFormTBMMKT;
-            activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["formCR_IT_FRM_314"];
-            activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
-            //activity_TBMMKT_Model.activityFormModel.id = "10b11628-5133-4c9a-a11b-8aa79503a196"; //ไว้ทดสอบแสดงPartial Signature หรืออื่นๆ
-            //dummy_TB_Act_ActivityForm_DetailOther.SubjectId = "F0F06055-04F5-4BF3-94B5-5DCE97F438B9";//ไว้ทดสอบแสดงPartial Signature หรืออื่นๆ
-            //activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = dummy_TB_Act_ActivityForm_DetailOther;
-            ViewBag.classFont = "formBorderStyle3";
-            ViewBag.padding = "paddingFormV3";
+            //TB_Act_ActivityForm_DetailOther dummy_TB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+            //ActivityFormTBMMKT dummy_activityFormTBMMKT = new ActivityFormTBMMKT();
+            //activity_TBMMKT_Model.activityFormTBMMKT = dummy_activityFormTBMMKT;
+            //activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id = ConfigurationManager.AppSettings["formCR_IT_FRM_314"];
+            //activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
+            ////activity_TBMMKT_Model.activityFormModel.id = "10b11628-5133-4c9a-a11b-8aa79503a196"; //ไว้ทดสอบแสดงPartial Signature หรืออื่นๆ
+            ////dummy_TB_Act_ActivityForm_DetailOther.SubjectId = "F0F06055-04F5-4BF3-94B5-5DCE97F438B9";//ไว้ทดสอบแสดงPartial Signature หรืออื่นๆ
+            ////activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = dummy_TB_Act_ActivityForm_DetailOther;
+            //ViewBag.classFont = "formBorderStyle3";
+            //ViewBag.padding = "paddingFormV3";
             //====END====for======test=================
 
-            //if (!string.IsNullOrEmpty(activityId))
-            //{
-            //    activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
-            //    activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
-            //    activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
-            //    activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm_EN;
+            if (!string.IsNullOrEmpty(activityId))
+            {
+                activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(activityId);
+                activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
+                activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+                activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm_EN;
 
-            //    activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
-            //    activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
-            //    activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
+                activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
+                activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
+                activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
 
-            //    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] 
-            //        || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
-            //        || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
-            //        )//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
-            //    {
-            //        ViewBag.classFont = "fontDocSmall";
-            //        ViewBag.padding = "paddingFormV2";
-            //    }
-            //    else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])//แบบฟอร์มอนุมัติจัดกิจกรรม dev date 20200313
-            //    {
-            //        ViewBag.classFont = "formBorderStyle1";
-            //        ViewBag.padding = "paddingFormV3";
-            //    }
-            //    else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])//ใบสั่งจ่ายTBM dev date 20200420 peerapop
-            //    {
-            //        ViewBag.classFont = "formBorderStyle2";
-            //        ViewBag.padding = "paddingFormV3";
-            //    }
-            //    else
-            //    {
-            //        ViewBag.classFont = "fontDocV1";
-            //        ViewBag.padding = "paddingFormV1";
-            //    }
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
+                    )//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+                {
+                    ViewBag.classFont = "fontDocSmall";
+                    ViewBag.padding = "paddingFormV2";
+                }
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])//แบบฟอร์มอนุมัติจัดกิจกรรม dev date 20200313
+                {
+                    ViewBag.classFont = "formBorderStyle1";
+                    ViewBag.padding = "paddingFormV3";
+                }
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])//ใบสั่งจ่ายTBM dev date 20200420 peerapop
+                {
+                    ViewBag.classFont = "formBorderStyle2";
+                    ViewBag.padding = "paddingFormV3";
+                }
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
+                {
+                    ViewBag.classFont = "formBorderStyle3";
+                    ViewBag.padding = "paddingFormV3";
+                }
+                else
+                {
+                    ViewBag.classFont = "fontDocV1";
+                    ViewBag.padding = "paddingFormV1";
+                }
 
 
-            //    //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-            //    activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
-            //    //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
-            //}
+                //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+                activity_TBMMKT_Model.approveFlowDetail = ActivityFormTBMMKTCommandHandler.get_flowApproveDetail(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId, activityId);
+                //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
+            }
 
             //===========Set Language By Document Dev date 20200310 Peerapop=====================
             //ไม่ต้องไปกังวลว่าภาษาหลักของWebที่Userใช้งานอยู่จะมีปัญหาเพราะ _ViewStart จะเปลี่ยนภาษาปัจจุบันที่Userใช้เว็บปรับCultureกลับให้เอง
