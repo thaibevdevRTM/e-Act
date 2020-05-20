@@ -191,14 +191,14 @@
                 $("#hdCompId").val(response.Data.compId);
 
 
-                 $("#lblEmpName").text(response.Data.empName);
+                $("#lblEmpName").text(response.Data.empName);
                 $("#lblEmpPosition").text(response.Data.position);
                 $("#lblLvl").text(response.Data.level);
                 $("#lblDept").text(response.Data.department);
                 $("#lblComp").text(response.Data.companyName);
                 $("#lblHireDate").text(response.Data.hireDate);
 
-             if (response.Data.hireDate == '') { alert("ไม่มีข้อมูลเริ่มทำงานกรุณาติดต่อเจ้าหน้าที่"); }
+                if (response.Data.hireDate == '') { alert("ไม่มีข้อมูลเริ่มทำงานกรุณาติดต่อเจ้าหน้าที่"); }
 
                 getRegional();
                 // $("#hdSubjectId").val('C67164E4-A891-43D6-B4F7-090F62C6290E');
@@ -223,11 +223,9 @@
 
 
 
-        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]') {
+            if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]') {
                 getCashEmp();
             } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
-                //getCashLimit();
-                //getCumulative();
                 getCashDetail();
             }
         });
@@ -429,19 +427,24 @@ alert(balance);
         }).done(function (response) {
             console.log(response);
             if (response.Data != null) {
+                //0 2 3 6 ต้องดึงตามที่เคยสร้าง 1 ,5 ดึงข้อมูลปัจจุบัน
+                if (
+                    '@Model.activityFormTBMMKT.statusId' == "1" ||
+                    '@Model.activityFormTBMMKT.statusId' == "5"  )
+                {
+                    $("#lblLimit").text(response.Data.limit.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                    $("#lblLimit").val(response.Data.limit);
 
-                $("#lblLimit").text(response.Data.limit.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                $("#lblLimit").val(response.Data.limit);
+                    $("#lblCumulative").text(response.Data.cumulative.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                    $("#lblCumulative").val(response.Data.cumulative);
 
-                $("#lblCumulative").text(response.Data.cumulative.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                $("#lblCumulative").val(response.Data.cumulative);
+                    $("#lblBalance").text(response.Data.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                    $("#lblBalance").val(response.Data.balance);
 
-                $("#lblBalance").text(response.Data.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                $("#lblBalance").val(response.Data.balance);
-
-                $("#hdLimit").val(response.Data.limit);
-                $("#hdCumulative").val(response.Data.cumulative);
-                $("#hdBalance").val(response.Data.balance);
+                    $("#hdLimit").val(response.Data.limit);
+                    $("#hdCumulative").val(response.Data.cumulative);
+                    $("#hdBalance").val(response.Data.balance);
+                }
             }
             else {
                 if ($("#txtEmpId").val() != "") {
@@ -456,6 +459,7 @@ alert(balance);
                 $("#lblCumulative").val(0.00);
                 $("#lblBalance").val(0.00);
             }
+            calReceived();
           //  alert($("#lblCumulative").val());
         });
 

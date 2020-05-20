@@ -63,7 +63,7 @@ namespace eActForm.Models
             TBM,
             EXPENSE,
             HCM,
-            NUM,
+            NUM,//คือ form HC 
             OtherCompany
         }
 

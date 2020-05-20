@@ -130,6 +130,12 @@ namespace eActForm.BusinessLayer
                     strCall = "usp_getActivityFormAll";
                 }
 
+                //เดิมผูกแค่บริษัท ต้องผูกเนื่องฟอร์มเพิ่ม boom 20200520
+                if (isAdmin() && typeForm == Activity_Model.activityType.NUM.ToString())
+                {
+                    strCall = "usp_getActivityFormAll_HCPomNum";
+                }
+
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
                 , new SqlParameter[] {
                          new SqlParameter("@empId", UtilsAppCode.Session.User.empId)

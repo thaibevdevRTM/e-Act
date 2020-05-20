@@ -72,26 +72,28 @@
         function submitCheckForm() {
 
             if ('@Model.activityFormTBMMKT.master_type_form_id'=='@ConfigurationManager.AppSettings["formExpMedNumId"]') {
+                if ('@Model.tB_Act_ActivityForm_DetailOther.amountReceived' > 0) {
 
-               
-                $.ajax({
-                    url: '@Url.Action("getAllActivityFormByEmpId", "eAct")',
-                    data: {
-                        typeFormId: '@Model.activityFormTBMMKT.master_type_form_id',
-                        empId: '@Model.activityFormTBMMKT.empId',
-                    },
-                    dataType: "json",
-                    type: 'POST',
-                }).done(function (response) {
+                    $.ajax({
+                        url: '@Url.Action("getAllActivityFormByEmpId", "eAct")',
+                        data: {
+                            typeFormId: '@Model.activityFormTBMMKT.master_type_form_id',
+                            empId: '@Model.activityFormTBMMKT.empId',
+                        },
+                        dataType: "json",
+                        type: 'POST',
+                    }).done(function (response) {
 
-                    if (response.Data.chk == 'true') {
-                        submitPreview();
-                    } else {
-                        alert('ไม่สารถยืนยันเอกสารได้เนื่องจากมีเอกสารรออนุมัติ');
-                    }
+                        if (response.Data.chk == 'true') {
+                            submitPreview();
+                        } else {
+                            alert('ไม่สารถยืนยันเอกสารได้ เนื่องจากมีเอกสารรออนุมัติ');
+                        }
 
-                });
-
+                    });
+                } else {
+                    alert('ไม่สารถยืนยันเอกสารได้ เนื่องจากวงเงินครบตามสิทธิที่ได้รับ');
+                }
 
             } else {
                 submitPreview();
