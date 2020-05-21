@@ -327,12 +327,17 @@
     <Compile Include="Controllers\MainFormController.cs" />
     <Compile Include="Controllers\frmOrderProduct\orderProductController.cs" />
     <Compile Include="Controllers\partailViewByItem\partialByProductController.cs" />
-    <Compile Include="Controllers\partailViewDataMaster\partialSaleTeamController.cs" />
+    <Compile Include="Controllers\partailViewDataMaster\partailViewDataMasterController.cs" />
+    <Compile Include="Controllers\partialActivityDetailReport\partialSetPriceMTRpt.cs" />
+    <Compile Include="Controllers\partialActivityDetailReport\partialActivityDetailReportController.cs" />
+    <Compile Include="Controllers\partialActivityDetail\partialSetPriceMT.cs" />
+    <Compile Include="Controllers\partialSaleTeam\partialSaleTeamController.cs" />
+    <Compile Include="Controllers\partialActivityDetail\partialActivityDetailController.cs" />
     <Compile Include="Controllers\partialViewEmpInfo\partialEmpInfoController.cs" />
     <Compile Include="Controllers\SharedMasterFormDetail_InputController.cs" />
     <Compile Include="Controllers\SharedMasterFormHeaderCompany_InputController.cs" />
     <Compile Include="Controllers\SharedMasterFormHeaderCompanyController.cs" />
-    <Compile Include="Controllers\PartialPaymentVoucherController.cs" />
+    <Compile Include="Controllers\PartialPaymentVoucher\PartialPaymentVoucherController.cs" />
     <Compile Include="Controllers\SharedMasterFormHeaderDetail_InputController.cs" />
     <Compile Include="Controllers\SharedMasterFormHeaderDetailController.cs" />
     <Compile Include="Controllers\SharedMasterFormDetailController.cs" />
@@ -342,10 +347,10 @@
     <Compile Include="Controllers\SignatureController.cs" />
     <Compile Include="Controllers\SummaryReportController.cs" />
     <Compile Include="Controllers\MainReportController.cs" />
-    <Compile Include="Controllers\EmpInfoInputController.cs" />
-    <Compile Include="Controllers\EmpInfoReportController.cs" />
-    <Compile Include="Controllers\ExpenseEstimateInputController.cs" />
-    <Compile Include="Controllers\ExpenseEstimateReportController.cs" />
+    <Compile Include="Controllers\EmpInfoInput\EmpInfoInputController.cs" />
+    <Compile Include="Controllers\EmpInfoReport\EmpInfoReportController.cs" />
+    <Compile Include="Controllers\ExpenseEstimateInput\ExpenseEstimateInputController.cs" />
+    <Compile Include="Controllers\ExpenseEstimateReport\ExpenseEstimateReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3135,6 +3140,8 @@
     <Content Include="Views\SharedMasterFormHeaderCompany\headerFormName.cshtml" />
     <Content Include="Views\MenuList\importData.cshtml" />
     <Content Include="Views\ImportMasterAP\Index.cshtml" />
+    <Content Include="Views\partialActivityDetail\partialSetPriceMT.cshtml" />
+    <Content Include="Views\partialActivityDetailReport\partialSetPriceMTRpt.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
@@ -3157,6 +3164,8 @@
     <Folder Include="Views\ApiApprove\" />
     <Folder Include="Views\exPerryCash\" />
     <Folder Include="Views\getDataMaster\" />
+    <Folder Include="Views\partailViewDataMaster\" />
+    <Folder Include="Views\test\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\eForms.Models\eForms.Models.csproj">
