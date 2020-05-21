@@ -22,12 +22,11 @@
                 @*<b>@Model.activityFormTBMMKT.formName</b>*@
                 <b>Change Request Form</b>
             </td>
-            <td style="width:20%;text-align: left;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="fontDocSmallV2">&nbsp;No. @Model.activityFormModel.activityNo</td>
+            <td style="width:20%;text-align: left;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="fontDocSmallV2">&nbsp;No.</td>
         </tr>
         <tr style="height:30px;">
             <td style="text-align: left;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="fontDocSmallV2">
-                @*วันที่&nbsp;&nbsp;: @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)*@
-                &nbsp;Date 01/01/2020
+                Date&nbsp;&nbsp;@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
             </td>
         </tr>
     </table>
