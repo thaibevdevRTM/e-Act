@@ -1,5 +1,6 @@
 ﻿@using eActForm.BusinessLayer
 @using System.Configuration;
+@using eActForm.Models;
 @model eActForm.Models.Activity_TBMMKT_Model
 
 <div class="col-md-12" id="divEmpInfo">
@@ -266,7 +267,7 @@
             type: 'POST',
             url: '@Url.Action("getCashLimitByTypeId", "eAct")',
             data: {
-                typeId:'6BB0F68F-4B07-4E00-9B1E-B776D003D992',
+                typeId:'@AppCode.Expenses.Medical',
                 hireDate: $("#lblHireDate").val(),
                 jobLevel: $("#lblLvl").val(),
             }
@@ -420,7 +421,7 @@ alert(balance);
             data: {
                 empId: $("#txtEmpId").val(),
                 docDate: $("#txtdateDoc").val(),
-                typeId: '6BB0F68F-4B07-4E00-9B1E-B776D003D992',
+                typeId: '@AppCode.Expenses.Medical',
                 hireDate: $("#lblHireDate").val(),
                 jobLevel: $("#lblLvl").val(),
             }
