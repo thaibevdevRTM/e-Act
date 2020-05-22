@@ -119,11 +119,11 @@
          }
         $("#ddlChangeAuthorizations").multiselect('select', valuesSelectChoiceFromDb);
 
-        @if(Model.tB_Act_ActivityForm_DetailOther.other1 != null)
+        @if(Model.tB_Act_ActivityForm_DetailOther.other1 != null && Model.tB_Act_ActivityForm_DetailOther.other1 !="")
         {
             @:$('#txtother1').show();
         }
-        @if(Model.tB_Act_ActivityForm_DetailOther.other2 != null)
+        @if(Model.tB_Act_ActivityForm_DetailOther.other2 != null && Model.tB_Act_ActivityForm_DetailOther.other2 != "")
         {
             @:$('#txtother2').show();
         }
