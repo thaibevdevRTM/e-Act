@@ -144,7 +144,7 @@
 
         $("#ProductDetail_5").prop("disabled", true);
         $("#ProductDetail_6").prop("disabled", true);
-        
+
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' &&
             '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
 
@@ -345,9 +345,24 @@
             if ($("#txtEmpTel").val() == "") { required += "&emsp;โทรศัพท์ติดต่อ*<br>"; validate = false; }
             if ($("#lblHireDate").val() == "") { required += "&emsp;วันที่เข้างาน(กรุณาติดต่อ Admin)*<br>"; validate = false; }
             if ($("#txthospName_0").val() == "") { required += "&emsp;โรงพยาบาล*<br>"; validate = false; }
-            if (!($("#txtDateInput_0").val() != "" && $("#txtdetail_0").val() != "" && $("#txtUnitPrice_0").val() != ""))
-            {
-                required += "&emsp;รายละเอียดขอเบิกเงินค่ารักษาพยาบาล*<br>"; validate = false;
+            //if (!($("#txtDateInput_0").val() != "" && $("#txtdetail_0").val() != "" && $("#txtUnitPrice_0").val() != ""))
+            //{
+            //    required += "&emsp;รายละเอียดขอเบิกเงินค่ารักษาพยาบาล*<br>"; validate = false;
+            //}
+
+            var rowCount = parseInt($('#tabelExpensesMed tr.tagCountRowinTable').length);
+
+            for (i = 0; i < rowCount; i++) {
+
+                if ($("#txtDateInput_" + i).val() != "" ||
+                    $("#txtdetail_" + i).val() != "" ||
+                    $("#txtUnitPrice_" + i).val() != "0.00")
+                {
+                    if ($("#txtDateInput_" + i).val() == "" || $("#txtdetail_" + i).val() == "" || $("#txtUnitPrice_" + i).val() == "0.00") {
+                        required += "&emsp;รายละเอียดขอเบิกเงินค่ารักษาพยาบาลบรรทัดที่ "+(i+1)+" ให้ครบถ้วน*<br>"; validate = false;
+                    }
+                }
+
             }
 
         }
@@ -459,5 +474,10 @@ function CallImageView(obj) {
         }
         return detect;
     }
+    function CheckNum() {
 
+        if ((event.keyCode < 48 || event.keyCode > 57) && event.keyCode != 46) {
+            event.returnValue = false;
+        }
+    }
 </script>

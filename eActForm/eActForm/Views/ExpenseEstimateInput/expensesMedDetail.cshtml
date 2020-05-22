@@ -16,7 +16,7 @@
         <td>
             <div id="divExpensesMed" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
 
-                <table class="table table-bordered" id="tabelExpensesTrv" runat="server">
+                <table class="table table-bordered" id="tabelExpensesMed" runat="server">
                     <tr style="background-color:#E5E2E2;height:25px; ">
                         <th colspan="4" style="text-align :center;">
                             ขอเบิกเงินค่ารักษาพยาบาลตามรายการดังนี้
@@ -149,7 +149,7 @@
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
 
 
-                                <input type="text" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" />
+                                <input type="text" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" onKeyPress="CheckNum()" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" />
                                 <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss text-right hdTotal_@index " />
                                 <input type="hidden" value="1" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" class="form-control textboxcss text-center " />
                                 <input type="hidden" value="@item.hospId" id="hdHospId_@index" name="expensesDetailModel.costDetailLists[@index].hospId" class="form-control textboxcss" />
