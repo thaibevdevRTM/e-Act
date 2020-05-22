@@ -35,14 +35,13 @@
                     CreateByPostition = item.empPositionTitleTH;
                 }
 
-                if (item.statusId == "3")
+                foreach (var itemFlowByDoc in Model.approveModels.approveDetailLists)
                 {
-                    CreateByEmpId = item.empId;
-                }
-
-                if (item.updatedDate != null)
-                {
-                    CreateByStampDateSignature = item.updatedDate.Value.ToString("dd/MM/yyyy", DateEnglish);
+                    if (item.empId == itemFlowByDoc.empId && item.approveGroupId == itemFlowByDoc.approveGroupId && itemFlowByDoc.statusId=="3")
+                    {
+                        CreateByEmpId = itemFlowByDoc.ImgName;
+                        CreateByStampDateSignature = itemFlowByDoc.updatedDate.Value.ToString("dd/MM/yyyy", DateEnglish);
+                    }
                 }
 
             }
@@ -59,14 +58,13 @@
                     ApproveByPostition = item.empPositionTitleTH;
                 }
 
-                if (item.statusId == "3")
+                foreach (var itemFlowByDoc in Model.approveModels.approveDetailLists)
                 {
-                    ApproveByEmpId = item.empId;
-                }
-
-                if (item.updatedDate != null)
-                {
-                    ApproveByStampDateSignature = item.updatedDate.Value.ToString("dd/MM/yyyy", DateEnglish);
+                    if (item.empId == itemFlowByDoc.empId && item.approveGroupId == itemFlowByDoc.approveGroupId && itemFlowByDoc.statusId == "3")
+                    {
+                        ApproveByEmpId = itemFlowByDoc.ImgName;
+                        ApproveByStampDateSignature = itemFlowByDoc.updatedDate.Value.ToString("dd/MM/yyyy", DateEnglish);
+                    }
                 }
 
             }
@@ -121,14 +119,14 @@
                         valCheckChooseRequest[index] = picCheckBoxFalse;
                         if (Model.activityFormTBMMKT.list_chooseRequest_multi_select != null)
                         {
-                            
+
                             foreach (var itemArray in Model.activityFormTBMMKT.list_chooseRequest_multi_select)
                             {
                                 if (itemArray == item.id)
                                 {
                                     valCheckChooseRequest[index] = picCheckBoxTrue;
                                 }
-                                
+
                             }
                         }
                         index++;
@@ -155,14 +153,14 @@
                             string valCheckPic = picCheckBoxFalse;
                             if (Model.activityFormTBMMKT.list_0_multi_select != null)
                             {
-                                
+
                                 foreach (var itemArray in Model.activityFormTBMMKT.list_0_multi_select)
                                 {
                                     if (itemArray == item.id)
                                     {
                                         valCheckPic = picCheckBoxTrue;
                                     }
-                                    
+
                                 }
                             }
                             <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
@@ -173,14 +171,14 @@
                             string valCheckPic = picCheckBoxFalse;
                             if (Model.activityFormTBMMKT.list_1_multi_select != null)
                             {
-                                
+
                                 foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
                                 {
                                     if (itemArray == item.id)
                                     {
                                         valCheckPic = picCheckBoxTrue;
                                     }
-                                    
+
                                 }
                             }
                             <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
@@ -193,14 +191,14 @@
                             string valCheckPic = picCheckBoxFalse;
                             if (Model.activityFormTBMMKT.list_2_multi_select != null)
                             {
-                                
+
                                 foreach (var itemArray in Model.activityFormTBMMKT.list_2_multi_select)
                                 {
                                     if (itemArray == item.id)
                                     {
                                         valCheckPic = picCheckBoxTrue;
                                     }
-                                    
+
                                 }
                             }
                             <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
@@ -213,14 +211,14 @@
                             string valCheckPic = picCheckBoxFalse;
                             if (Model.activityFormTBMMKT.list_3_multi_select != null)
                             {
-                                
+
                                 foreach (var itemArray in Model.activityFormTBMMKT.list_3_multi_select)
                                 {
                                     if (itemArray == item.id)
                                     {
                                         valCheckPic = picCheckBoxTrue;
                                     }
-                                    
+
                                 }
                             }
                             <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
@@ -231,14 +229,14 @@
                             string valCheckPic = picCheckBoxFalse;
                             if (Model.activityFormTBMMKT.list_4_multi_select != null)
                             {
-                                
+
                                 foreach (var itemArray in Model.activityFormTBMMKT.list_4_multi_select)
                                 {
                                     if (itemArray == item.id)
                                     {
                                         valCheckPic = picCheckBoxTrue;
                                     }
-                                    
+
                                 }
                             }
                             <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
@@ -251,14 +249,14 @@
                             string valCheckPic = picCheckBoxFalse;
                             if (Model.activityFormTBMMKT.list_5_multi_select != null)
                             {
-                                
+
                                 foreach (var itemArray in Model.activityFormTBMMKT.list_5_multi_select)
                                 {
                                     if (itemArray == item.id)
                                     {
                                         valCheckPic = picCheckBoxTrue;
                                     }
-                                    
+
                                 }
                             }
                             <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
@@ -269,14 +267,14 @@
                             string valCheckPic = picCheckBoxFalse;
                             if (Model.activityFormTBMMKT.list_6_multi_select != null)
                             {
-                                
+
                                 foreach (var itemArray in Model.activityFormTBMMKT.list_6_multi_select)
                                 {
                                     if (itemArray == item.id)
                                     {
                                         valCheckPic = picCheckBoxTrue;
                                     }
-                                    
+
                                 }
                             }
                             <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
@@ -299,12 +297,12 @@
                     <tr>
                         <td style="width:20%;vertical-align:top;">&nbsp;ลายเซ็น<br /></td>
                         <td style="width:80%;text-align:center;">
-                            @{
+                            @*@{
                                 var pathSigRequest = pathWeb + "signatureFile/" + CreateByEmpId + ".png";
-                            }
+                            }*@
                             @if (CreateByEmpId != "")
                             {
-                                <img class="picSigV1" src="@pathSigRequest" />
+                                <img class="picSigV1" src="@CreateByEmpId" />
                             }
                         </td>
                     </tr>
@@ -336,12 +334,12 @@
                     <tr>
                         <td style="width:20%;vertical-align:top;">&nbsp;ลายเซ็น<br /></td>
                         <td style="width:80%;text-align:center;">
-                            @{
+                            @*@{
                                 pathSigRequest = pathWeb + "signatureFile/" + ApproveByEmpId + ".png";
-                            }
+                            }*@
                             @if (ApproveByEmpId != "")
                             {
-                                <img class="picSigV1" src="@pathSigRequest" />
+                                <img class="picSigV1" src="@ApproveByEmpId" />
                             }
                         </td>
                     </tr>

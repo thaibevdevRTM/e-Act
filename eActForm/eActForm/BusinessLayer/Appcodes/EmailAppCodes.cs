@@ -489,8 +489,8 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 var emailTypeTxt = "";
                 string[] arrayFormStyleV1 = { ConfigurationManager.AppSettings["formBgTbmId"], ConfigurationManager.AppSettings["formAdvTbmId"], ConfigurationManager.AppSettings["formAdvHcmId"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] };
-                string[] arrayFormStyleV2 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formTrvTbmId"], ConfigurationManager.AppSettings["formTrvHcmId"], ConfigurationManager.AppSettings["formExpTrvNumId"] };
-                string[] arrayFormStyleV3 = { ConfigurationManager.AppSettings["formPosTbmId"] };
+                string[] arrayFormStyleV2 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formTrvTbmId"], ConfigurationManager.AppSettings["formTrvHcmId"], ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
+                string[] arrayFormStyleV3 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
                 if (activity_TBMMKT_Model.activityFormTBMMKT != null)
                 {
                     if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV2.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV3.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))

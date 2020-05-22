@@ -75,6 +75,7 @@ namespace eActForm.Models
         public List<GetDataDetailPaymentAll> listGetDataDetailPaymentAll { get; set; }
         public List<departmentMasterModel> listGetDepartmentMaster { get; set; }
         public List<DataRequesterToShow> dataRequesterToShows { get; set; }
+
     }
 
     public class ActivityFormTBMMKT : ActivityForm
