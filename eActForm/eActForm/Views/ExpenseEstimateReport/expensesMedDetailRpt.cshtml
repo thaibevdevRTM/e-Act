@@ -11,10 +11,10 @@
 <div style="height:15px;"></div>
 <table class="tablethin fontDocSmall " style="width:100%; text-align:center;" border="1" cellpadding="2" cellspacing="0">
     @*<tr style="background-color:#E5E2E2;height:25px;">
-        <td colspan="5" style="text-align :center;  ">
-            <b> ขอเบิกเงินค่ารักษาพยาบาลตามรายการดังนี้</b>
-        </td>
-    </tr>*@
+            <td colspan="5" style="text-align :center;  ">
+                <b> ขอเบิกเงินค่ารักษาพยาบาลตามรายการดังนี้</b>
+            </td>
+        </tr>*@
     <tr style="height:20px;">
         <td style="width: 5%;text-align:center;">
             <b>ลำดับ</b>
@@ -41,14 +41,21 @@
         <tr style="height:20px;">
 
             <td style="text-align:center; padding-left:5px;">
-                <label>@Model.expensesDetailModel.costDetailLists[@index].rowNo.ToString() </label>
+                @if (!(
+                    String.IsNullOrEmpty(@Model.expensesDetailModel.costDetailLists[@index].date.ToString()) &&
+                    String.IsNullOrEmpty(@Model.expensesDetailModel.costDetailLists[@index].detail.ToString()) &&
+                    @Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") == ".00"
+                    ))
+                {
+                    <label>@Model.expensesDetailModel.costDetailLists[@index].rowNo.ToString() </label>
+                }
             </td>
             <td style="text-align:center; padding-left:5px;">
                 <label>
 
-                  
-                        @DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.expensesDetailModel.costDetailLists[@index].date, ConfigurationManager.AppSettings["formatDateUse"])
-                   
+
+                    @DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.expensesDetailModel.costDetailLists[@index].date, ConfigurationManager.AppSettings["formatDateUse"])
+
                 </label>
             </td>
             <td style="text-align:left;">
