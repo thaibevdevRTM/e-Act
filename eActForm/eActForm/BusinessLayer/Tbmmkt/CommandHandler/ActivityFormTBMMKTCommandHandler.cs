@@ -65,6 +65,7 @@ namespace eActForm.BusinessLayer
                     rtn = ProcessInsertPlaceDetail(rtn, model, activityId);
                     rtn = ProcessInsertPurpose(rtn, model, activityId);
                     rtn = ProcessInsertProduct(rtn, model, activityId);
+                    rtn = ProcessInsertCliamIO(rtn, model, activityId);
 
                 }
 
@@ -673,7 +674,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static int insertActivityForm(ActivityForm model)
+        public static int insertActivityForm(ActivityFormTBMMKT model)
         {
             int result = 0;
             try
@@ -704,6 +705,12 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@costPeriodST", model.costPeriodSt)
                     ,new SqlParameter("@costPeriodEND", model.costPeriodEnd)
                     ,new SqlParameter("@empId", model.empId)
+                    ,new SqlParameter("@productCateId", model.productCateId)
+                    ,new SqlParameter("@productGroupId", model.productGroupId)
+                    ,new SqlParameter("@brandId", model.productBrandId)
+                    ,new SqlParameter("@theme", model.theme)
+                    ,new SqlParameter("@trade", model.trade)
+
 
                   });
             }
@@ -1484,7 +1491,29 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        protected static int ProcessInsertCliamIO(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            try
+            {
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertClaimIO"
+                    , new SqlParameter[] {new SqlParameter("@actId",model.activityFormTBMMKT.id)
+                     ,new SqlParameter("@claim",model.activityFormTBMMKT.actClaim)
+                    ,new SqlParameter("@IO",model.activityFormTBMMKT.actIO)
+                    ,new SqlParameter("@checkbox",model.activityFormTBMMKT.chkAddIO)
+                    ,new SqlParameter("@delFlag",model.activityFormTBMMKT.delFlag)
+                    ,new SqlParameter("@createdDate",model.activityFormTBMMKT.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.activityFormTBMMKT.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.activityFormTBMMKT.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.activityFormTBMMKT.updatedByUserId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertCliamIO");
+            }
 
+            return rtn;
+        }
     }
 
 }
