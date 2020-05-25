@@ -310,6 +310,10 @@
                 if ($(".txtnormalCost_" + i).val() == '') { required += "&emsp;ส่วนที่6 [จำนวนเงิน(บาท)]*<br>"; validate = false; }
             }
         }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]') {
+            if ($("#txtEmpId").val() == "") { required += "&emsp;EmpID/รหัสพนักงาน*<br>"; validate = false; }
+            if ($("#ddlDepartment").val() == "") { required += "&emsp;Department/หน่วยงาน*<br>"; validate = false; }
+        }
         else {
 
         }

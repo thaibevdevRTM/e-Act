@@ -391,13 +391,13 @@ namespace eActForm.BusinessLayer
                             //=============New Process Peerapop ส่งเมลล์ ในรูปแบบเหมือนส่งอนุมัติปกติ แต่ส่งหลังApproveครบ========peerapop.i dev date 20200525======
                             if (formNeedStyleEdocAfterApproved.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                             {
-                                string[] groupMailForCC_CreatedBy = { ConfigurationManager.AppSettings["emailTbvGroupSuraSupport"], ConfigurationManager.AppSettings["emailTbvGroupBeerSupport"], ConfigurationManager.AppSettings["emailTbvGroupRTMSupport"] };
+                                string[] groupApproveForCC_CreatedBy = { ConfigurationManager.AppSettings["approveGroupForProcess"] };
 
                                 lists = getDataEmpGroupFinishApprovedFormatLikeEdoc(actFormId);
                                 foreach (ApproveModel.approveEmailDetailModel item in lists)
                                 {
                                     string ccEmailgetEmailGroupContinueProcess = "";
-                                    if (groupMailForCC_CreatedBy.Contains(item.empEmail))
+                                    if (groupApproveForCC_CreatedBy.Contains(item.approveGroupId))
                                     {
                                         ccEmailgetEmailGroupContinueProcess = createUsers.FirstOrDefault().empEmail;
                                     }
