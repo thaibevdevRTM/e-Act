@@ -623,7 +623,8 @@ namespace eActForm.BusinessLayer
                         {
                             if (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"])
                             {
-                                txtApprove = "You have list of pending "+ item.approveGroupEN +" follow by below details ";
+                                strBody = strBody.Replace("You have list of pending approval requests <b>{1}</b> follow by below details", "You have list of pending <b>{1}</b> follow by below details");
+                                txtApprove = item.approveGroupEN;
                             }
                             else
                             {
