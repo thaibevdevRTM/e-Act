@@ -50,3 +50,4 @@ eActForm/eForms.Presenter/bin/Debug/eForms.Presenter.pdb
 eActForm/eForms.Presenter/obj/Debug/eForms.Presenter.csprojAssemblyReference.cache
 eActForm/eForms.Presenter/obj/Debug/eForms.Presenter.dll
 eActForm/eForms.Presenter/obj/Debug/eForms.Presenter.pdb
+*.cache
