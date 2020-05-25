@@ -210,10 +210,8 @@ border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
                                         <td style="text-align: left; border-left: 1.1px solid black; border-bottom: 0.05px  solid black; border-right: 1.1px solid black;">
                                             &nbsp;&nbsp; @item.productDetail
                                         </td>
-                                        <td style="text-align: center; border-bottom: 0.05px solid black; border-right: 1.1px solid black;">
-                                       
-                                             @item.glCode
-                                            
+                                        <td style="text-align: left; border-bottom: 0.05px solid black; border-right: 1.1px solid black;">
+                                            &nbsp;
                                         </td>
                                         <td style="text-align: right; border-bottom: 0.05px solid black; border-right: 1.1px solid black;">
                                             @if (item.total == 0)
@@ -301,28 +299,8 @@ border-left: 1.1px solid black; padding-top: -15px; text-align: left;">
                     <tr>
                         <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; border-left: 1.1px solid black; text-align: center;"></td>
                         <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;"></td>
+                        <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;"></td>
                         @{int writeoneHit = 0; }
-                        @foreach (var itemFlowByDoc in Model.approveModels.approveDetailLists)
-                        {
-                            if (writeoneHit == 0)
-                            {
-                                if ( itemFlowByDoc.approveGroupId == AppCode.ApproveGroup.PettyCashVerify && itemFlowByDoc.statusId == "3")
-                                {
-                                    <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;">
-                                        <img style="text-align: center;" width="80" height="30" src="@itemFlowByDoc.ImgName" />
-                                    </td>
-                                    writeoneHit += 1;
-                                }
-                            }
-                        }
-                        @if (writeoneHit == 0)
-                        {
-                            <td style="width: 25%; height: 45pt; border-top: 0px solid black; border-right: 1.1px solid black; border-bottom: 1.1px solid black; text-align: center;">
-                                &nbsp;
-                            </td>
-                        }
-
-                        @{ writeoneHit = 0; }
                         @foreach (var itemFlowByDoc in Model.approveModels.approveDetailLists)
                         {
                             if (writeoneHit == 0)

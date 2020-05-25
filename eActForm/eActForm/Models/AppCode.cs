@@ -29,7 +29,6 @@ namespace eActForm.Models
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
         public static string nonAL = "1D1097F4-246F-4DC2-BB69-B7BB6E678299";
         public static string AL = "FC696EB5-B058-445E-B605-977C5067AEBA";
-        public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
 
         public enum ApproveEmailype
         {
@@ -52,7 +51,6 @@ namespace eActForm.Models
             , Success = 4
             , ไม่อนุมัติ = 5
             , เพิ่มเติม = 7 // for Report Detail
-            , เรียนเพื่อทราบ
         }
         public enum StatusType
         {
@@ -75,7 +73,6 @@ namespace eActForm.Models
             public const string Director = "2354EFCB-174F-48FE-B634-2DE926D7F836";// ผู้บังคับบัญชา  
             public const string Approveby = "7C308168-B155-4684-A2CD-906EC94AA49C";//เรียน/อนุมัติ 
             public const string PettyCashApprover = "BD48756C-12CC-4267-AD6F-A6C37F9B2B32";//ผู้อนุมัติเงินสดย่อย
-            public const string PettyCashVerify = "FA88EB4E-26C1-49FB-BEC7-D161AA9CC0A0";//ผู้ตรวจสอบเงินสดย่อย
         }
         public static class CodeHtml
         {
@@ -88,7 +85,7 @@ namespace eActForm.Models
         public static class Expenses
         {
             public const string Allowance = "06FF853F-EBB0-48E8-9620-520D0B8F6E0C";
-            public const string Medical = "6BB0F68F-4B07-4E00-9B1E-B776D003D992";
+
         }
         public static string checkNullorEmpty(string p)
         {
@@ -108,8 +105,8 @@ namespace eActForm.Models
                 StringReader sr = new StringReader(sw.ToString());
 
 
-
-                StringBuilder GridBuilder = new StringBuilder();
+                
+                 StringBuilder GridBuilder = new StringBuilder();
                 GridBuilder.Append("<html>");
                 GridBuilder.Append("<style>");
                 GridBuilder.Append(".fontt{font-family:TH SarabunPSK;}");

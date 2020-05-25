@@ -83,10 +83,6 @@ namespace eActForm.Controllers
 
         public ActionResult headerDetailsDateV2(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            if (string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormModel.documentDate.ToString()))
-            {
-                activity_TBMMKT_Model.activityFormModel.documentDate =DateTime.Now;
-            }
             return PartialView(activity_TBMMKT_Model);
         }
         

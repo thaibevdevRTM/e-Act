@@ -18,7 +18,6 @@ namespace eActForm.Controllers
 
         public ActionResult Index(string activityId, string mode, string typeForm, string master_type_form_id)
         {
-
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
 
@@ -59,7 +58,7 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormAndFlow(objGetDataSubjectBy);
                     //====END===============Get Subject=======================
                     activity_TBMMKT_Model.channelMasterTypeList = QueryGet_channelByGroup.get_channelByGroup(activityFormTBMMKT.master_type_form_id, activityFormTBMMKT.formCompanyId, activity_TBMMKT_Model.activityFormTBMMKT.selectedBrandOrChannel);
-
+                    
                     if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
                     {
                         ObjGetDataEO objGetDataEO = new ObjGetDataEO();
@@ -68,14 +67,14 @@ namespace eActForm.Controllers
                         if (activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]) { objGetDataEO.master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"]; }
                         objGetDataEO.fiscalYear = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.fiscalYear;
                         activity_TBMMKT_Model.listGetDataEO = QueryGetSelectMainForm.GetQueryDataEOPaymentVoucher(objGetDataEO);
-
+                       
                         ObjGetDataIO objGetDataIO = new ObjGetDataIO();
                         objGetDataIO.ActivityByEOSelect = "";
                         foreach (var item in activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select)
                         {
-                            objGetDataIO.ActivityByEOSelect += (item + ",");
+                            objGetDataIO.ActivityByEOSelect += (item+",");
                         }
-                        activity_TBMMKT_Model.listGetDataIO = QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
+                        activity_TBMMKT_Model.listGetDataIO= QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
                     }
 
                     TempData["actForm" + activityId] = activity_TBMMKT_Model;
@@ -134,7 +133,7 @@ namespace eActForm.Controllers
                     List<TB_Reg_Subject> tB_Reg_Subjects = new List<TB_Reg_Subject>();
                     activity_TBMMKT_Model.tB_Reg_Subject = tB_Reg_Subjects;
                     //======END=============Get Subject=======================
-
+       
 
                     TempData["actForm" + actId] = activity_TBMMKT_Model;
                 }
@@ -182,14 +181,14 @@ namespace eActForm.Controllers
                 }
 
 
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] // แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"] // แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
-                    || (AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
-                    )
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
+                    )//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
                 {
                     activity_TBMMKT_Model.activityOfEstimateList = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
                     //activity_TBMMKT_Model.activityFormModel.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                    if (AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))//ฟอร์มเบิกค่าเดินทางและเบี้ยเลี่ยงnum
+                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])//ฟอร์มเบิกค่าเดินทางและเบี้ยเลี่ยงnum
                     {
                         activity_TBMMKT_Model.requestEmpModel.Add(new RequestEmpModel() { empId = activity_TBMMKT_Model.empInfoModel.empId, empTel = activity_TBMMKT_Model.empInfoModel.empTel });
                         activity_TBMMKT_Model.activityFormTBMMKT.empId = activity_TBMMKT_Model.empInfoModel.empId;

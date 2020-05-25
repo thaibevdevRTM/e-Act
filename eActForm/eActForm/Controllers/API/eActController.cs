@@ -2,7 +2,6 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
-using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -308,9 +307,7 @@ namespace eActForm.Controllers
                     bu = !langEn ? empDetailList.FirstOrDefault().bu : empDetailList.FirstOrDefault().buEN,
                     companyName = !langEn ? empDetailList.FirstOrDefault().companyName : empDetailList.FirstOrDefault().companyNameEN,
                     compId = empDetailList.FirstOrDefault().compId,
-                    email = empDetailList.FirstOrDefault().email,
-                    //hireDate = empDetailList.FirstOrDefault().hireDate
-                    hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(empDetailList.FirstOrDefault().hireDate), ConfigurationManager.AppSettings["formatDateUse"]),
+                    email = empDetailList.FirstOrDefault().email
                 };
                 result.Data = resultData;
             }
@@ -370,7 +367,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                cashEmpList = QueryGetBenefit.getCashLimitByEmpId(empId).ToList();
+                cashEmpList = QueryGetBenafit.getCashLimitByEmpId(empId).ToList();
                 if (cashEmpList.Count > 0)
                 {
                     var resultData = new
@@ -459,140 +456,6 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult getAllHospital(string text)
-        {
-            List<HospitalModel> getList = new List<HospitalModel>();
-            try
-            {
-                getList = QueryGetAllHospital.getAllHospital().Where(x => x.hospNameTH.Contains(text)).ToList();
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("getAllHospital => " + ex.Message);
-            }
-            return Json(getList, JsonRequestBehavior.AllowGet);
-        }
-
-
-        public JsonResult getCashLimitByTypeId(string typeId, string hireDate, string jobLevel)
-        {
-            List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
-            var result = new AjaxResult();
-            try
-            {
-
-                if (!string.IsNullOrEmpty(hireDate))
-                {
-                    hireDate = (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
-                    cashEmpList = QueryGetBenefit.getCashLimitByTypeId(typeId, hireDate, jobLevel).ToList();
-                    if (cashEmpList.Count > 0)
-                    {
-                        var resultData = new
-                        {
-                            cashPerDay = cashEmpList[0].cashPerDay,
-
-                        };
-
-                        result.Data = resultData;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("getCashLimitByEmpId => " + ex.Message);
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult getCumulativeByEmpId(string empId)
-        {
-            List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
-            var result = new AjaxResult();
-            try
-            {
-                if (!string.IsNullOrEmpty(empId))
-                {
-                    cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId).ToList();
-                    if (cashEmpList.Count > 0)
-                    {
-                        var resultData = new
-                        {
-                            cashPerDay = cashEmpList[0].cashPerDay,
-                        };
-                        result.Data = resultData;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("getCumulativeByEmpId => " + ex.Message);
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult getCashDetailByEmpId(string empId, string typeId, string hireDate, string jobLevel)
-        {
-            List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
-            var result = new AjaxResult();
-            try
-            {
-                decimal limit = 0, cumulative = 0, balance = 0;
-
-                if (!string.IsNullOrEmpty(empId))
-                {
-
-
-                    hireDate = (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
-                    cashEmpList = QueryGetBenefit.getCashLimitByTypeId(typeId, hireDate, jobLevel).ToList();
-                    if (cashEmpList.Count > 0)
-                    { 
-                        limit = cashEmpList[0].cashPerDay;
-                    }
-
-                    cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId).ToList();
-                    if (cashEmpList.Count > 0)
-                    {
-                        cumulative = cashEmpList[0].cashPerDay;
-                    }
-                    balance = limit - cumulative;
-
-                    var resultData = new
-                    {
-                        limit = limit,
-                        cumulative = cumulative,
-                        balance = balance,
-                        cashPerDay = cashEmpList[0].cashPerDay,
-                    };
-                    result.Data = resultData;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("getCumulativeByEmpId => " + ex.Message);
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult getAllActivityFormByEmpId(string typeFormId, string empId)
-        {
-            List <ActivityFormTBMMKT> activityFormTBMMKT = new List<ActivityFormTBMMKT>();
-            var result = new AjaxResult();
-            try
-            {                         
-                activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getAllActivityFormByEmpId(typeFormId,empId).Where(x => x.statusId==2).ToList();                
-                var resultData = new
-                {
-                    chk = activityFormTBMMKT.Count > 0 ? "false" :"true",
-                   
-                };
-
- result.Data = resultData;
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }

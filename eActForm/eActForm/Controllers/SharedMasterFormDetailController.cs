@@ -116,6 +116,7 @@ namespace eActForm.Controllers
             {
                 models.approveDetailLists = models.approveDetailLists.Where(x => x.approveGroupId == AppCode.ApproveGroup.Director).ToList();
             }
+
             // int count  =   models.approveFlowDetail.Where(x => x.approveGroupId == AppCode.ApproveGroup.Director).Where(x=>x.statusId == "3").ToList().Count;
             return PartialView(models);
         }
@@ -142,11 +143,11 @@ namespace eActForm.Controllers
 
                     for (int i = 0; i < model2.costDetailLists.Count; i++)
                     {
-                        if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.Allowance)
+                        if (model2.costDetailLists[i].listChoiceId==AppCode.Expenses.Allowance)
                         {
                             calSum1 += model2.costDetailLists[i].total;
                         }
-                        else
+                        else 
                         {
                             calSum2 += model2.costDetailLists[i].total;
                         }
@@ -168,32 +169,12 @@ namespace eActForm.Controllers
         public ActionResult attachfileDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             List<TB_Act_Image_Model.ImageModel> lists = ImageAppCode.GetImage(activity_TBMMKT_Model.activityFormTBMMKT.id);
-           
-            TB_Act_ActivityForm_SelectBrandOrChannel models = new TB_Act_ActivityForm_SelectBrandOrChannel();
-            models.txt = lists.Count.ToString();
-            models.val=activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
-            return PartialView(models);
-           // return PartialView(activity_TBMMKT_Model);
+            return PartialView(lists);
         }
 
         public ActionResult textGeneral(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             return PartialView(activity_TBMMKT_Model.activityFormTBMMKT);
-        }
-        public ActionResult recordByHcMedRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
-        {
-            TB_Act_ActivityForm_DetailOther models = new TB_Act_ActivityForm_DetailOther();
-            ApproveModel.approveModels modelApprove = new ApproveModel.approveModels();
-            modelApprove = ApproveAppCode.getApproveByActFormId(activity_TBMMKT_Model.activityFormTBMMKT.id, "");
-            bool delFlag = false;//ยังไม่อนุมัตื
-            modelApprove.approveDetailLists = modelApprove.approveDetailLists.Where(x => x.approveGroupId == AppCode.ApproveGroup.Recorder).Where(x => x.statusId == "3").ToList();
-            if (modelApprove.approveDetailLists.Count > 0)
-            {
-                delFlag = true;//อนุมัติแล้ว
-            }
-            models = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther;
-            models.delFlag = delFlag;
-            return PartialView(models);
         }
     }
 }

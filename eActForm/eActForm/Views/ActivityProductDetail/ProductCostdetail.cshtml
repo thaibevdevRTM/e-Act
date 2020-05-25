@@ -58,98 +58,98 @@
             @if (Model.productcostdetaillist1 != null)
             {
                 var index = 0;
-                for (int i = 0; i < Model.productcostdetaillist1.Count; i++)
+                foreach (var item in Model.productcostdetaillist1)
                 {
 
-                    <tr>
-                        <td onclick="onDelCostDetail('@Model.productcostdetaillist1[i].productGroupId')">
-                            <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
-                            @Html.HiddenFor(x => x.productcostdetaillist1[i].productId, new { @id = "hdProductId_" + index })
-                        </td>
-                        @if (Model.productcostdetaillist1[i].isShowGroup == true)
-                        {
-                            <td class="font10 textLeft" onclick="showdetail('@Model.productcostdetaillist1[i].productGroupId')"><span role="button">@Model.productcostdetaillist1[i].brandName @Model.productcostdetaillist1[i].size ALL(@Model.productcostdetaillist1[i].detailGroup.Count) @Model.productcostdetaillist1[i].pack</span></td>
-                        }
-                        else
-                        {
-                            if (Model.productcostdetaillist1[i].detailGroup.Count >= 1)
-                            {
+            <tr>
+                <td onclick="onDelCostDetail('@item.productGroupId')">
+                    <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
+                    @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
+                </td>
+                @if (item.isShowGroup == true)
+                {
+                    <td class="font10 textLeft" onclick="showdetail('@item.productGroupId')"><span role="button">@item.brandName @item.size ALL(@item.detailGroup.Count) @item.pack</span></td>
+                }
+                else
+                {
+                    if (item.detailGroup.Count >= 1)
+                    {
 
-                                <td class="font10 textLeft" onclick="showdetail('@Model.productcostdetaillist1[i].productGroupId')"><span role="button">@Model.productcostdetaillist1[i].detailGroup[0].productName @Model.productcostdetaillist1[i].pack</span></td>
+                        <td class="font10 textLeft" onclick="showdetail('@item.productGroupId')"><span role="button">@item.detailGroup[0].productName @item.pack</span></td>
 
-                            }
-                        }
+                    }
+                }
 
-                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                        {
-                            <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @onfocus = "setZero(wholeSalesPrice_" + index + ")" })</td>
-                        }
-                        else
-                        {
-                            <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
-                        }
+                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(wholeSalesPrice_" + index + ")" })</td>
+                }
+                else
+                {
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.wholeSalesPrice, "{0:n2}", new { @id = "wholeSalesPrice_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
+                }
 
-                        <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].saleNormal, "{0:n2}", new { @id = "saleNormal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @onfocus = "setZero(saleNormal_" + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].saleIn, "{0:n2}", new { @id = "saleIn_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @onfocus = "setZero(saleIn_" + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].disCount1, "{0:n3}", new { @id = "disCount1_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @onfocus = "setZero(disCount1_" + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].disCount2, "{0:n3}", new { @id = "disCount2_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @onfocus = "setZero(disCount2_" + index + ")" })</td>
-                        <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].disCount3, "{0:n3}", new { @id = "disCount3_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @onfocus = "setZero(disCount3_" + index + ")" })</td>
-                        <td style="text-align:right">
-                            @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                            {
-                                @Html.TextBoxFor(model => Model.productcostdetaillist1[i].normalCost, "{0:n2}", new { Style = "background:#c5f0c5;", @id = "normalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")" })
-                            }
-                            else
-                            {
-                                @Html.TextBoxFor(model => Model.productcostdetaillist1[i].normalCost, "{0:n2}", new { Style = "background:#c5f0c5;", @id = "normalCost_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })
+                <td style="text-align:right">@Html.TextBoxFor(model => item.saleNormal, "{0:n2}", new { @id = "saleNormal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(saleNormal_" + index + ")" })</td>
+                <td style="text-align:right">@Html.TextBoxFor(model => item.saleIn, "{0:n2}", new { @id = "saleIn_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(saleIn_" + index + ")" })</td>
+                <td style="text-align:right">@Html.TextBoxFor(model => item.disCount1, "{0:n3}", new { @id = "disCount1_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(disCount1_" + index + ")" })</td>
+                <td style="text-align:right">@Html.TextBoxFor(model => item.disCount2, "{0:n3}", new { @id = "disCount2_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(disCount2_" + index + ")" })</td>
+                <td style="text-align:right">@Html.TextBoxFor(model => item.disCount3, "{0:n3}", new { @id = "disCount3_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(disCount3_" + index + ")" })</td>
+                <td style="text-align:right">
+                    @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                    {
+                        @Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { Style = "background:#c5f0c5;", @id = "normalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")" })
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { Style = "background:#c5f0c5;", @id = "normalCost_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })
 
-                            }
+                    }
 
-                        </td>
-                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                        {
-                            <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].normalGp, "{0:n2}", new { @id = "normalGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")" })</td>
-                        }
-                        else
-                        {
-                            <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].normalGp, "{0:n2}", new { @id = "normalGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @readonly = true })</td>
-                        }
-                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                        {
-                            <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].promotionGp, "{0:n2}", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")" })</td>
-                        }
-                        else
-                        {
-                            <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].promotionGp, "{0:n2}", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @readonly = true })</td>
-                        }
-                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                        {
-                            @Html.HiddenFor(model => Model.productcostdetaillist1[i].specialDiscBaht, new { @id = "specialDiscBaht_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @onfocus = "setZero(specialDiscBaht_" + index + ")" })
-                        }
-                        else
-                        {
-                            <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].specialDiscBaht, "{0:n2}", new { @id = "specialDiscBaht_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @onfocus = "setZero(specialDiscBaht_" + index + ")" })</td>
-                        }
+                </td>
+                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp, "{0:n2}", new { @id = "normalGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")" })</td>
+                }
+                else
+                {
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.normalGp, "{0:n2}", new { @id = "normalGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @readonly = true })</td>
+                }
+                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:n2}", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")" })</td>
+                }
+                else
+                {
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.promotionGp, "{0:n2}", new { @id = "promotionGp_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @readonly = true })</td>
+                }
+                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    @Html.HiddenFor(model => item.specialDiscBaht, new { @id = "specialDiscBaht_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(specialDiscBaht_" + index + ")" })
+                }
+                else
+                {
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.specialDiscBaht, "{0:n2}", new { @id = "specialDiscBaht_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(specialDiscBaht_" + index + ")" })</td>
+                }
 
-                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                        {
-                            @Html.HiddenFor(model => Model.productcostdetaillist1[i].specialDisc, new { @id = "specialDisc_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @onfocus = "setZero(specialDisc_" + index + ")" })
-                        }
-                        else
-                        {
-                            <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].specialDisc, "{0:n2}", new { @id = "specialDisc_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @onfocus = "setZero(specialDisc_" + index + ")" })</td>
-                        }
+                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    @Html.HiddenFor(model => item.specialDisc, new { @id = "specialDisc_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(specialDisc_" + index + ")" })
+                }
+                else
+                {
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.specialDisc, "{0:n2}", new { @id = "specialDisc_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(specialDisc_" + index + ")" })</td>
+                }
 
-                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                        {
-                            @Html.HiddenFor(model => Model.productcostdetaillist1[i].promotionCost, new { @id = "promotionCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + Model.productcostdetaillist1[i].productGroupId + "', " + index + ")", @onfocus = "setZero(promotionCost_" + index + ")" })
-                        }
-                        else
-                        {
-                            <td style="text-align:right">@Html.TextBoxFor(model => Model.productcostdetaillist1[i].promotionCost, "{0:n2}", new { @id = "promotionCost_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
-                        }
-                    </tr>
-                    promotionTotal = Model.productcostdetaillist1[i].promotionCost == null ? 0 + promotionTotal : Model.productcostdetaillist1[i].promotionCost + promotionTotal;
+                @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    @Html.HiddenFor(model => item.promotionCost, new { @id = "promotionCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calProductDiscount('" + item.productGroupId + "', " + index + ")", @onfocus = "setZero(promotionCost_" + index + ")" })
+                }
+                else
+                {
+                    <td style="text-align:right">@Html.TextBoxFor(model => item.promotionCost, "{0:n2}", new { @id = "promotionCost_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true })</td>
+                }
+            </tr>
+                    promotionTotal = item.promotionCost == null ? 0 + promotionTotal : item.promotionCost + promotionTotal;
 
                     index++;
                 }

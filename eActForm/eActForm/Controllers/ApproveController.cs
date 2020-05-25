@@ -118,8 +118,6 @@ namespace eActForm.Controllers
             try
             {
                 models = ApproveAppCode.getApproveByActFormId(actId);
-                models = setSrcSignature(models, actId);
-
                 ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
                 //เพิ่มตัดตำแหน่ง
                 models.approveFlowDetail = newlinePosition(flowModel).flowDetail;
@@ -288,24 +286,5 @@ namespace eActForm.Controllers
             }
             return flowModel;
         }
-
-        public ApproveModel.approveModels setSrcSignature(ApproveModel.approveModels models, string actId)
-        {
-            List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
-            if (getActList.Any() && getActList.FirstOrDefault().master_type_form_id != null)
-            {
-                if (AppCode.hcForm.Contains(getActList.FirstOrDefault().master_type_form_id.ToString()))
-                {
-                    int index = 0;
-                    foreach (var item in models.approveDetailLists)
-                    {
-                        models.approveDetailLists[index].ImgName = models.approveDetailLists[index].ImgName.Replace(ConfigurationManager.AppSettings["renderHost"], ConfigurationManager.AppSettings["renderHostPublicIP"]);
-                        index++;
-                    }
-                }
-            }
-            return models;
-        }
-
     }
 }
