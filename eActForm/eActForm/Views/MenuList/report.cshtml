@@ -29,11 +29,13 @@
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
                 {
                     <li>@Html.ActionLink(" Report Budget Activity MT", "reportBudgetActivityIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                    <li>@Html.ActionLink(" Report Claim PDG MT", "claimReportIndex", "ClaimReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
                 }
 
                 if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
                 {
                     <li>@Html.ActionLink(" Report Budget Activity OMT", "reportBudgetActivityIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
+                    <li>@Html.ActionLink(" Report Claim PDG OMT", "claimReportIndex", "ClaimReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                 }
 
 

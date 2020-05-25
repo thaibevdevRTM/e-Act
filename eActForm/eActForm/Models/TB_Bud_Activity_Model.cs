@@ -78,6 +78,10 @@ namespace eActForm.Models
             public decimal act_balance { get; set; } /*ผลต่าง*/
             public decimal act_total_invoive { get; set; }/*ยอดยกมา*/
 
+            public string act_claimNo { get; set; }
+            public string act_claimShare { get; set; }
+            public string act_claimStatus { get; set; }
+
             public string bud_ActivityStatusId { get; set; }
             public string bud_ActivityStatus { get; set; }
 
