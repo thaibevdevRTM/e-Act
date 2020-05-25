@@ -1,0 +1,89 @@
+﻿
+@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.Models;
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@*<div id="divEstimateDetails" runat="server" style="width: 100%;"></div>*@
+
+<div class=" fontDocSmall " style="padding-left:5em;">
+    <b>ขอเบิกเงินค่ารักษาพยาบาลตามรายการดังนี้</b>
+</div>
+<div style="height:15px;"></div>
+<table class="tablethin fontDocSmall " style="width:100%; text-align:center;" border="1" cellpadding="2" cellspacing="0">
+    @*<tr style="background-color:#E5E2E2;height:25px;">
+            <td colspan="5" style="text-align :center;  ">
+                <b> ขอเบิกเงินค่ารักษาพยาบาลตามรายการดังนี้</b>
+            </td>
+        </tr>*@
+    <tr style="height:20px;">
+        <td style="width: 5%;text-align:center;">
+            <b>ลำดับ</b>
+        </td>
+        <td style="width: 7%;text-align:center;">
+            <b>วันที่รักษา</b>
+        </td>
+
+        <td style="width: 40%;text-align:center;">
+            <b>เจ็บป่วยเนื่องจาก</b>
+        </td>
+        <td style="width: 35%;text-align:center;">
+            <b>สภานพยาบาลที่ไปตรวจรักษา</b>
+        </td>
+        <td style="width: 13%; text-align:center;">
+            <b>  จำนวนเงินตามใบเสร็จ</b>
+        </td>
+    </tr>
+
+    @{ var index = 0;}
+    @for (index = 0; index < Model.expensesDetailModel.costDetailLists.Count; index++)
+    {
+
+        <tr style="height:20px;">
+
+            <td style="text-align:center; padding-left:5px;">
+                @if (!(
+                    String.IsNullOrEmpty(@Model.expensesDetailModel.costDetailLists[@index].date.ToString()) &&
+                    String.IsNullOrEmpty(@Model.expensesDetailModel.costDetailLists[@index].detail.ToString()) &&
+                    @Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") == ".00"
+                    ))
+                {
+                    <label>@Model.expensesDetailModel.costDetailLists[@index].rowNo.ToString() </label>
+                }
+            </td>
+            <td style="text-align:center; padding-left:5px;">
+                <label>
+
+
+                    @DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.expensesDetailModel.costDetailLists[@index].date, ConfigurationManager.AppSettings["formatDateUse"])
+
+                </label>
+            </td>
+            <td style="text-align:left;">
+                <label>@Model.expensesDetailModel.costDetailLists[@index].detail.ToString() </label>
+            </td>
+            <td style="text-align:left; padding-right:5px;">
+                @if (@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") != ".00")
+                {
+                    <label>@Model.expensesDetailModel.costDetailLists[0].hospName.ToString() </label>
+                }
+            </td>
+            <td style="text-align:right; padding-right:5px;">
+                @if (@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") != ".00")
+                {
+                    <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
+                }
+            </td>
+        </tr>
+    }
+    <tr>
+        <td colspan="4" style="width: 85%;text-align:right;">
+            จำนวนเงินรวม(บาท)&nbsp;
+        </td>
+        <td style="width: 15%;text-align:right; padding-right:5px;">
+            @* <label id="totalEstimate" type="text" readonly="readonly"></label>&nbsp;*@
+            @Model.totalCostThisActivity.Value.ToString("#,###.00")
+        </td>
+    </tr>
+</table>
+
+<div style="height:15px;"></div>

@@ -1,0 +1,135 @@
+﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
+@using eActForm.Models;
+@{
+
+    var percent = Model.hospPercent;
+    var amount = Model.amount > 0 ? Model.amount.ToString("#,###.00") : "0";
+    var limit = Model.amountLimit > 0 ? Model.amountLimit.ToString("#,###.00") : "0";
+    var cumulative = Model.amountCumulative > 0 ? Model.amountCumulative.ToString("#,###.00") : "0";
+    var balance = Model.amountBalance > 0 ? Model.amountBalance.ToString("#,###.00") : "0";
+    var received = Model.amountReceived > 0 ? Model.amountReceived.ToString("#,###.00") : "0";
+
+    var txt = "..........................";
+    txt = DocumentsAppCode.ThaiBahtText(Model.amountReceived.ToString());
+
+    var rootPathWeb = "./";
+    var urlImg1 = "";
+    var urlImg2 = "";
+    urlImg2 = rootPathWeb + "images/check.png";
+
+    if (Model.delFlag)
+    {
+        urlImg1 = rootPathWeb + "images/check_b.png";
+    }
+    else
+    {
+        urlImg1 = rootPathWeb + "images/check.png";
+    }
+}
+<table class="tablethin fontDocSmall " style="width:100%; text-align:center;" border="1" cellpadding="3" cellspacing="0">
+    <tr style="height:25px;">
+        <td colspan="2" style=" text-align:left; border-bottom:0px;">
+            <div class=" fontDocSmall " style="padding-left:5em;">
+                <b>บันทึกสำนักทรัพยากรบุคคล</b>
+            </div>
+
+        </td>
+    </tr>
+
+
+
+    <tr style="height:20px;">
+        <td style="vertical-align:text-top; width:15%;text-align:right; border-top:0px;  border-right:0px;border-bottom: 0px;">
+
+            <img width="10px" height="10px" src="@urlImg1" />
+
+        </td>
+
+        <td style="text-align:left; border-top:0px;  border-left:0px;border-bottom: 0px;">
+            ได้ตรวจสอบหลักฐานแล้ว เห็นสมควรพิจารณาอนุมัติเงินค่ารักษาพยาบาลตามระเบียบบริษัทฯจากที่จ่ายจริงจำนวน @percent %
+            @*<br />
+                เป็นจำนวนเงิน @amount บาท*@
+        </td>
+    </tr>
+    <tr style="height:20px;">
+        <td style="border-top: 0px;border-right: 0px;border-bottom: 0px;">
+        </td>
+        <td style="text-align:left; border-top:0px;  border-left:0px;border-bottom: 0px;">
+            เป็นจำนวนเงิน @amount บาท
+        </td>
+    </tr>
+    <tr style="height:20px;">
+        <td style="border-top: 0px;border-right: 0px;border-bottom: 0px;"></td>
+        <td style="text-align:left; border-top:0px; border-left:0px;border-bottom: 0px;">
+            <table class=" fontDocSmall " style="width:100%; text-align:center;" border="0" cellpadding="3" cellspacing="0">
+                <tr>
+
+                    <td style="text-align:left ; border-width:0px 0px 0px 0px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;วงเงินช่วยเหลือค่ารักษาพยาบาลตามระดับ ปีละ
+                    </td>
+                    <td style="text-align:right; border-width:0px 0px 0px 0px;">
+                        @limit
+                    </td>
+                    <td style="text-align:left; border-width:0px 0px 0px 0px;">
+                        บาท
+                    </td>
+                    <td style="text-align:left; border-width:0px 0px 0px 0px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left; border-width:0px 0px 0px 0px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;วงเงินใช้ไปสะสมยกมา
+                    </td>
+                    <td style="text-align:right; border-width:0px 0px 0px 0px;">
+                        @cumulative
+                    </td>
+                    <td style="text-align: left; border-width:0px 0px 0px 0px;">
+                        บาท
+                    </td>
+                    <td style="text-align:left; border-width:0px 0px 0px 0px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left; border-width:0px 0px 0px 0px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;คงเหลือสิทธิในการเบิกค่ารักษาพยาบาล
+                    </td>
+                    <td style="text-align:right; border-width:0px 0px 0px 0px;">
+                        @balance
+                    </td>
+                    <td style="text-align:left; border-width:0px 0px 0px 0px;">
+                        บาท
+                    </td>
+                    <td style="text-align:left; border-width:0px 0px 0px 0px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left; border-width:0px 0px 0px 0px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;จำนวนเงินที่พนักงานได้รับทั้งสิ้น
+                    </td>
+                    <td style="text-align:right; border-width:0px 0px 0px 0px;">
+                        @received
+                    </td>
+                    <td style="text-align:left; border-width:0px 0px 0px 0px;">
+                        บาท
+                    </td>
+                    <td style="text-align:left; border-width:0px 0px 0px 0px;">
+                        (@txt)
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="height:20px;">
+        <td style="text-align:right; border-right:0px; border-top:0px;  border-left:0px;">
+            <img width="10px" height="10px" src="@urlImg2" />
+        </td>
+        <td style="text-align:left; border-top:0px; border-left:0px; ">
+            ได้ตรวจสอบหลักฐานแล้วไม่เข้าหลักเกณฑ์ตามระเบียบบริษัทฯ ................................................................................
+        </td>
+    </tr>
+
+</table>
+
+
+<div style="height:15px;"></div>
