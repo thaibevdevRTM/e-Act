@@ -1,0 +1,294 @@
+﻿
+
+@model eActForm.Models.Budget_Activity_Model
+@using eActForm.BusinessLayer;
+@{
+    //update 21-04-2020
+    Layout = null;
+}
+
+
+<style type="text/css">
+
+    .font8 {
+        font-size: 8px;
+    }
+
+    .font10 {
+        font-size: 10px;
+    }
+
+    .textRight {
+        text-align: right;
+    }
+
+    .textLeft {
+        text-align: left;
+    }
+
+    .inner {
+        display: inline-block;
+    }
+
+    #outer {
+        width: 100%;
+        text-align: center;
+    }
+</style>
+
+
+<input type="hidden" id="hd_activity">
+@Html.HiddenFor(x => x.Budget_Activity.act_customerId, new { @id = "hd_act_customerId" })
+@Html.HiddenFor(x => x.Budget_Activity_Product.act_activityId, new { @id = "hd_activityId" })
+@Html.HiddenFor(x => x.Budget_Activity_Product.act_activityNo, new { @id = "hd_activityNo" })
+@Html.HiddenFor(x => x.Budget_Activity_Product.activityOfEstimateId, new { @id = "hd_activityOfEstimateId" })
+@Html.HiddenFor(x => x.Budget_Activity.act_companyEN, new { @id = "hd_company" })
+
+
+@if (Model.Budget_Activity_Invoice != null)
+{
+    @Html.HiddenFor(x => x.Budget_Activity_Invoice.invoiceId, new { @id = "hd_invoiceId" })
+}
+
+<style>
+    .font14 {
+        font-size: 14px;
+    }
+</style>
+
+
+
+<div class="row">
+
+    <div>
+        <div style="text-align:left;">
+            <h5><strong>รายละเอียดค่าใช้จ่าย</strong></h5>
+            @Html.DisplayFor(x => x.Budget_Activity.act_customerId, new { @id = "d_act_customerId" })
+            <h5>
+                ประเภทกิจกรรม :
+                @if (Model.Budget_Activity_Product.act_typeTheme.ToString() != "")
+                {
+                    @Html.DisplayFor(x => x.Budget_Activity_Product.act_typeTheme)
+                }
+            </h5>
+
+            <h5>
+                กลุ่มสินค้า/ชื่อสินค้า :
+                @if (Model.Budget_Activity_Product.prd_productDetail.ToString() != "")
+                {
+                    @Html.DisplayFor(x => x.Budget_Activity_Product.prd_productDetail)
+                }
+            </h5>
+
+            <h5>
+                ประมานการค่าใช้จ่าย (Estimate) :
+                @if (Model.Budget_Activity_Product.prd_productDetail.ToString() != "")
+                {
+                    string result = String.Format("{0:n2}", Model.Budget_Activity_Product.totalCost);
+                    @result.ToString();
+                }
+            </h5>
+
+            <h5>
+                </br>
+                @*ค่าใช้จ่ายที่เกิดขึ้นจริง :
+                @if (Model.Budget_Activity_Product.productBalanceBath != null)
+                {
+                    string result = String.Format("{0:n2}", Model.Budget_Activity_Product.productBalanceBath);
+                    @result.ToString();
+                }*@
+            </h5>
+
+        </div>
+
+        @if (Model.Budget_Activity_Invoice_list != null)
+        {
+            <div style="text-align:left;">
+                <h4>
+                    เลขที่ใบแจ้งหนี้ :
+                    @if (Model.Budget_Activity_Invoice.invoiceNo.ToString() != "")
+                    {
+                        @Html.DisplayFor(x => x.Budget_Activity_Invoice.invoiceNo)
+                    }
+                </h4>
+            </div>
+        }
+    </div>
+
+    <div>
+        <table class="tablethin" style="width:100%; text-align:center;" border="1" cellpadding="0" cellspacing="0">
+            <tr>
+                <td rowspan="2" width="20%" class="font12">รายละเอียด (text)</td>
+                <td colspan="10" class="font12">รายการใบแจ้งหนี้ (Invoice)</td>
+            </tr>
+            <tr>
+
+                <td width="10%" class="font12">เลขที่ใบแจ้งหนี้</td>
+                <td width="10%" class="font12">จำนวนเงิน</td>
+                <td width="10%" class="font12">GL(40)</td>
+                <td width="10%" class="font12">Order(40)</td>
+                <td width="10%" class="font12">วันที่ทำรายการ(40)</td>
+
+                <td width="10%" class="font12">Reference(40)</td>
+                <td width="10%" class="font12">Doc.No(40)</td>
+
+                <td width="10%" class="font12">วันที่ Claim PDG(20)</td>
+                <td width="10%" class="font12">Doc.No(20)</td>
+                <td width="10%" class="font12">จำนวนเงิน(20)</td>
+
+            </tr>
+
+            <tr>
+                <td width="10%" class="font12" style="text-align:left;">
+                    @if (Model.Budget_Activity_Product.prd_productDetail.ToString() != "")
+                    {
+                        @Html.DisplayFor(x => x.Budget_Activity_Product.prd_productDetail)
+                    }
+                </td>
+
+                @*เลขที่ใบแจ้งหนี้*@
+                <td width="10%" class="font12" style="text-align:right;">
+                    @if (Model.Budget_Activity_Invoice != null)
+                    {
+                        string result = String.Format("{0:n2}", Model.Budget_Activity_Invoice.invoiceNo);
+                        @result.ToString();
+
+                        @Html.HiddenFor(x => x.Budget_Activity_Invoice.invoiceId, new { id = "imgInvoiceId" })
+                    }
+                    else
+                    {
+                        @*string result = String.Format("{0:n2}", Model.Budget_Activity_Product.productBalanceBath);
+                        @result.ToString();*@
+                    }
+                    &nbsp;
+                </td>
+
+                @if (Model.Budget_Activity_Invoice != null)
+                {
+                    @*<td width="10%">
+                @Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceNo, new { @class = "form-control textboxcss", @id = "txt_invoice_no", @name = "txt_invoice_no" })
+                @Html.HiddenFor(x => x.Budget_Activity_Invoice.invoiceId, new { id = "imgInvoiceId" })
+            </td>
+            <td width="10%"><input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht" value="@Html.DisplayFor(item => item.Budget_Activity_Invoice.invoiceTotalBath)"></td>
+            <td width="10%">
+                @if (Model.Budget_Activity_Invoice.invoiceActionDate.ToString() != "")
+                {
+                    @Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txt_date_action" })
+                }
+            </td>
+            <td width="10%">
+                @Html.DropDownListFor(item => Model.Budget_Activity_Invoice.invoiceBudgetStatusId, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", Model.Budget_Activity_Invoice.invoiceBudgetStatusId), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus" })
+            </td>*@
+
+                    //จำนวนเงิน invoice
+                    <td width="10%">@Html.DisplayFor(x => x.Budget_Activity_Invoice.invoiceTotalBath)</td>
+                    //GL(40)
+                    <td width="10%">@Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceNo, new { @class = "form-control textboxcss", @id = "txt_gl40", @name = "txt_gl40" })</td>
+                    //Order(40)
+                    <td width="10%">3</td>
+                    //วันที่ทำรายการ(40)
+                    <td width="10%">4</td>
+                    //Reference(40)
+                    <td width="10%">5</td>
+                    //Reference(40)
+                    <td width="10%">6</td>
+                    //วันที่ Claim PDG(20)
+                    <td width="10%">7</td>
+                    //Doc.No(20)
+                    <td width="10%">8</td>
+                    //จำนวนเงิน(20)
+                    <td width="10%">9</td>
+                }
+                else
+                {
+                    @*<td width="10%">
+                @Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceNo, new { @class = "form-control textboxcss", @id = "txt_invoice_no", @name = "txt_invoice_no" })
+                @Html.HiddenFor(x => x.Budget_Activity_Invoice.invoiceId, new { id = "imgInvoiceId" })
+            </td>
+            <td width="10%">
+                <input class="form-control textboxcss font14" style="text-align:right;" id="txt_invoice_baht">
+            </td>
+            <td width="10%">
+                @Html.TextBoxFor(x => x.Budget_Activity_Invoice.invoiceActionDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txt_date_action", @Value = @DateTime.Now.ToString("dd") + "-" + @DateTime.Now.ToString("MM") + "-" + @DateTime.Now.Year.ToString() })
+            </td>
+            <td width="10%">
+                @Html.DropDownListFor(item => Model.Budget_Activity_Ststus_list.ElementAt(0).id, new SelectList(Model.Budget_Activity_Ststus_list, "id", "nameTH", 2), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", @onchange = "CallChangefunc(this.value)" })
+            </td>*@
+                    <td width="10%">1</td>
+                    <td width="10%">2</td>
+                    <td width="10%">3</td>
+                    <td width="10%">4</td>
+                    <td width="10%">5</td>
+
+                    <td width="10%">6</td>
+                    <td width="10%">7</td>
+                    <td width="10%">8</td>
+                    <td width="10%">9</td>
+
+                }
+            </tr>
+        </table>
+
+        <p></p>
+
+        <button type="button" class="btn btn-sm ink-reaction pull-right btn-success" onclick="submitInvoice();"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+        <button type="button" class="btn btn-sm ink-reaction pull-right btn-default" onclick="refreshInvoice();"><i class="fa fa fa-refresh fa-fw"></i>&nbsp;Refresh</button>
+
+        <div>
+            <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color:white; width:100%;"><tr><td>&nbsp;</td></tr></table>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		ObjModel = {};
+
+
+		$("#txt_date_action").datepicker({
+			format: 'dd-mm-yyyy',
+			autoclose: true,
+		});
+
+		$('tr').click(function () {
+			$('tr').removeClass('info');
+			$(this).addClass('info');
+
+			var id = $(this).data('id');
+			$('.links a').each(function () {
+				this.href = this.href.split("cshtml")[0] + "cshtml/" + id;
+			});
+		});
+
+	});
+
+
+	//function CallChangefunc(invoice_type) {
+	//	if (invoice_type == 3 || invoice_type == 5) {
+	//		document.getElementById("txt_invoice_no").value = "-";
+	//		document.getElementById("txt_invoice_baht").value = "0";
+	//	} else if (invoice_type == 4) {
+	//		document.getElementById("txt_invoice_no").value = "ปรับยอด";
+	//		document.getElementById("txt_invoice_baht").value = "0";
+	//	} else if (invoice_type == 5) {
+	//		document.getElementById("txt_invoice_no").value = "-";
+	//		document.getElementById("txt_invoice_baht").value = "0";
+	//	} else {
+	//		document.getElementById("txt_invoice_no").value = "";
+	//		document.getElementById("txt_invoice_baht").value = "";
+	//	}
+	//}
+
+	function refreshInvoice() {
+		callInvoiceList($('#hd_activityId').val(), $("#hd_activityOfEstimateId").val());
+	}
+
+
+</script>

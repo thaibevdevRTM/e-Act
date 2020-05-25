@@ -123,7 +123,6 @@ namespace eActForm.Controllers
                 actLists = ActFormAppCode.getActFormByEmpId(startDate, endDate, activityType)
             };
 
-
             if (!string.IsNullOrEmpty(Request.Form["txtActivityNo"]))
             {
                 model.actLists = model.actLists.Where(r => r.activityNo == Request.Form["txtActivityNo"]).ToList();

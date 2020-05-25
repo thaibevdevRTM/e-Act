@@ -1,0 +1,241 @@
+﻿
+@model eActForm.Models.Budget_Activity_Model
+@{
+    //update 21-04-2020
+    ViewBag.Title = "Edit Page";
+    var var_companyEN = Request.QueryString["companyEN"];
+}
+
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+
+<style type="text/css">
+
+    .my-bootbox-class .modal-dialog {
+        width: 400px;
+        font-size: 18px;
+    }
+</style>
+
+@Html.HiddenFor(x => x.Budget_Activity_list.ElementAt(0).act_form_id, new { @id = "hd_activityId" })
+@Html.HiddenFor(x => x.Budget_Activity_list.ElementAt(0).act_customerId, new { @id = "hd_customerId" })
+@*@Html.HiddenFor(x => x.Budget_Activity_Last_Approve.budgetApproveId, new { @id = "hd_lastApprove" })*@
+
+<div class="row">
+
+    <div id="divPreviewProductList">
+
+    </div>
+</div>
+
+<hr />
+
+<div id='myModalInvoiceContent'></div>
+
+
+<div class="row">
+    <div id="divPreviewInvoiceList">
+
+    </div>
+
+    <div class="btn btn-sm ink-reaction pull-left btn-dark"> <i class="fa fa-arrow-left fa-fw"></i> @Html.ActionLink("ย้อนกลับ", "claimIndex", "Claim", new { @typeForm = var_companyEN }, new { style = "color:white" })</div>
+</div>
+
+<div id='myModalInvoicePreview' class="modal fade" role="dialog">
+    <div id='myModalInvoicePreviewContent'></div>
+</div>
+
+<div class="modal fade" id="modalmyDocBudgetList" role="dialog" style="display:none">
+    <div id="divModalmyDocBudgetList">
+    </div>
+</div>
+
+
+<script>
+
+	$('document').ready(function () {
+		callProductList($("#hd_activityId").val());
+	});
+
+	function callProductList(activityId) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("claimProductList", "Claim")',
+            data: {
+				activityId: activityId
+            }
+        }).done(function (htmlResponse) {
+			$("#divPreviewProductList").html(htmlResponse);
+        });
+	}
+
+    function callInvoiceList(activityId, activityOfEstimateId) {
+
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("claimProductInvoiceList", "Claim")',
+            data: {
+				activityId: activityId,
+                activityOfEstimateId: activityOfEstimateId
+            }
+        }).done(function (htmlResponse) {
+			$("#divPreviewInvoiceList").html(htmlResponse);
+
+			onSelectInvoice(activityId, activityOfEstimateId);
+        });
+		}
+
+	function onSelectInvoice(actId, estId, invId) {
+
+		var var_activityId = actId;
+		var var_estId = estId;
+		var var_invoiceId = invId;
+
+		$.ajax({
+			type: "GET",
+			url:  '@Url.Action("claimProductInvoiceEdit", "Claim")',
+			contentType: "application/json; charset=utf-8",
+			data: {
+				"activityId": var_activityId,
+				"activityOfEstimateId": var_estId,
+				"invoiceId": var_invoiceId
+
+			}
+		}).done(function (htmlResponse) {
+			$("#myModalInvoiceContent").html(htmlResponse);
+		});;
+	}
+
+	function submitInvoice() {
+		var var_activityId = $("#hd_activityId").val();
+		var var_activityOfEstimateId = $("#hd_activityOfEstimateId").val();
+
+		if ($("#txt_invoice_no").val() == '') {
+			alert('กรุณาระบุหมายเลขใบแจ้งหนี้*');
+		} else if ($("#txt_invoice_baht").val() == '') {
+			alert('กรุณาระบุจำนวนเงิน*');
+		}
+		else {
+
+
+			$.ajax({
+				url: '@Url.Action("submitInvoice", "Budget")',
+				data: {
+					budgetInvoiceModel: ObjModel,
+					Id: $("#hd_invoiceId").val(),
+					activityId: $("#hd_activityId").val(),
+					budgetImageId: $("#imgInvoiceId").val(),
+					activityNo: $("#hd_activityNo").val(),
+					productId: $("#hd_productId").val(),
+					activityOfEstimateId: $("#hd_activityOfEstimateId").val(),
+					invoiceId: $("#hd_invoiceId").val(),
+					invoiceNo: $("#txt_invoice_no").val(),
+					invoiceTotalBath: $("#txt_invoice_baht").val().replace(/,/g, ''),
+					invoiceActionDate: $("#txt_date_action").val(),
+					invoiceBudgetStatusId: $("#ddlStatus").val(),
+					count_invoice: "1",
+				},
+				dataType: "json",
+				type: 'POST',
+				success: function (result) {
+
+					if (result.Message != null) {
+					var msg = "";
+					msg = "<h5>เอกสารใบแจ้งหนี้หมายเลข <b style='color:red'> " + result.Message + "</b> มีการตัดจ่ายแล้ว </h5>";
+					bootbox.alert({
+						title: "แจ้งเตือน" ,
+						message: msg
+					});
+					}
+
+					callProductList(var_activityId);
+					callInvoiceList(var_activityId, var_activityOfEstimateId);
+				}
+			})
+
+		}
+	}
+
+    function onDelete(actId,estId,invId,invNo) {
+        var msg = "";
+		// can be delete
+		msg = "คุณต้องการลบเอกสาร " + invNo + " นี้หรือไม่?";
+        bootbox.confirm({
+            title: "Confirm Message",
+            message: msg,
+            buttons: {
+                confirm: {
+                    label: "Yes",
+                    className: "btn-success"
+                },
+                cancel: {
+                    label: "No",
+                    className: "btn-danger"
+                }
+            },
+			callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("delInvoiceDetail", "Budget")',
+                        data: {
+                            actId: actId,
+							estId: estId,
+							invId: invId,
+						},
+						success: function (response) {
+							console.log(response.success);
+							callProductList(actId);
+							callInvoiceList(actId, estId);
+							//window.location.reload()
+						}
+
+					})
+                }
+            }
+        });
+    }
+
+	function onCancel(actId,estId,invId,invNo) {
+        var msg = "";
+		// can be delete
+		msg = "คุณต้องการยกเลิกเอกสาร " + invNo + " นี้หรือไม่?";
+        bootbox.confirm({
+            title: "Confirm Message",
+            message: msg,
+            buttons: {
+                confirm: {
+                    label: "Yes",
+                    className: "btn-success"
+                },
+                cancel: {
+                    label: "No",
+                    className: "btn-danger"
+                }
+            },
+			callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("delInvoiceDetail", "Budget")',
+                        data: {
+                            actId: actId,
+							estId: estId,
+							invId: invId,
+							delType: "cancel",
+						},
+						success: function (response) {
+							console.log(response.success);
+							callProductList(actId);
+							callInvoiceList(actId, estId);
+							//window.location.reload()
+						}
+
+					})
+                }
+            }
+        });
+	}
+
+
+
+
+</script>

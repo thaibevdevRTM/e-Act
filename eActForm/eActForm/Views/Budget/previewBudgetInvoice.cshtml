@@ -380,7 +380,12 @@
                     <p class="d-flex justify-content-center">
 
                         <button type="button" class="btn btn-sm btn-primary pull-right" data-dismiss="modal" onclick="onClickClose();"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
-                        @if (count_wait_approve == 0 && count_draft_approve > 0)
+                        @if (count_wait_approve == 0 && count_draft_approve > 0 && count_req_approve == 0)
+                        {
+                            @Html.Hidden("Hcount_req_approve", count_req_approve.ToString())
+                            <button type="button" class="btn btn-sm btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit </button>
+                        }
+                        else if (count_wait_approve == 0 && count_draft_approve > 0)
                         {
                             @Html.Hidden("Hcount_req_approve", count_req_approve.ToString())
                             <button type="button" class="btn btn-sm btn-success pull-right" data-dismiss="modal" onclick="onClickSubmitApprove();"><i class="fa fa fa-print fa-fw"></i>&nbsp;Submit to Approve</button>

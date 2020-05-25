@@ -1,0 +1,110 @@
+﻿
+@model eActForm.Models.Budget_Activity_Model
+@{
+    //update 21-04-2020
+    ViewBag.Title = "";
+    var last = Model.Budget_Activity_Last_Approve;
+
+}
+
+
+<style type="text/css">
+
+    .my-bootbox-class .modal-dialog {
+        width: 400px;
+        font-size: 18px;
+    }
+</style>
+
+<div class="alert-link" role="alert">
+
+</div>
+
+
+<table class="table table-bordered" id="content">
+    <thead class="thead-dark">
+        <tr>
+            <th class="align-content-center font12B" style="width:10%;"></th>
+            <th class="align-content-center font12B" style="text-align:center;">เลขที่ใบแจ้งหนี้</th>
+            <th class="align-content-center font12B" style="text-align:right;">จำนวนเงิน</th>
+            @*<th class="align-content-center font12B" style="text-align:right;">คงเหลือ</th>*@
+            <th class="align-content-center font12B" style="text-align:center;">วันที่ทำรายการ</th>
+            <th class="align-content-center font12B" style="text-align:center;">สถานะ</th>
+            <th class="align-content-center font12B" style="text-align:center;">สถานะอนุมัติ</th>
+        </tr>
+    </thead>
+
+    @*------------------------------------------------------------------------------------------------*@
+<tbody>
+    @if (Model.Budget_Activity_Invoice_list.Count > 0)
+    {
+        var index = 0;
+        foreach (var item in Model.Budget_Activity_Invoice_list)
+        {
+
+            index++;
+            if (item.invoiceApproveStatusId == 3 && item.invoiceBudgetStatusId == 2) // approve & จ่ายบางส่วน
+            {
+            <tr class="gradeX">
+                <td style="text-align:left;">
+                    <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+                    <a href="javascript:" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');"><i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;</a>
+                </td>
+
+                <td style="font-size:12.5px;text-align:center;">
+                    @if (item.invoiceNo != null)
+                    {
+                        string result = String.Format("{0:n2}", @item.invoiceNo);
+                        @result.ToString();
+                    }
+                </td>
+
+                <td style="font-size:12.5px;text-align:right;">
+                    @*จำนวนเงินจ่าย*@
+                    @if (item.invoiceTotalBath != null)
+                    {
+                        string result = String.Format("{0:n2}", @item.invoiceTotalBath);
+                        @result.ToString();
+                    }
+                </td>
+
+                <td style="font-size:12.5px;text-align:center;">
+                    @item.dateInvoiceAction.Value.ToString("dd/MM/yyyy")
+                </td>
+
+                @if (item.invoiceBudgetStatusId == 1)
+                {
+                    <td style="font-size:12.5px;text-align:center; color:firebrick;">@item.invoiceBudgetStatusNameTH</td>
+                }
+                else if (item.invoiceBudgetStatusId == 2)
+                {
+                    <td style="font-size:12.5px;text-align:center; color:darkorange;">@item.invoiceBudgetStatusNameTH</td>
+                }
+                else
+                {
+                    <td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.invoiceBudgetStatusNameTH</td>
+                }
+
+                <td style="font-size:12.5px;text-align:center;">
+                    @*สถานะการอนุมัติ invoice*@
+                    @if (item.invoiceApproveStatusName != null)
+                    {
+                        if (item.invoiceApproveStatusId != 1)
+                        {
+                            string result = String.Format("{0:n2}", @item.invoiceApproveStatusName);
+                            @result.ToString();
+                        }
+
+                    }
+                </td>
+            </tr>
+            }
+            else
+            {
+
+            }
+        }
+    }
+</tbody>
+    @*------------------------------------------------------------------------------------------------*@
+</table>

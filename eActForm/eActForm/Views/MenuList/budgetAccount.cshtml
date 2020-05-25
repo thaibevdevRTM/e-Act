@@ -1,37 +1,29 @@
 ﻿@using eActForm.BusinessLayer
-@using eActForm.Models;
 @using System.Configuration;
+@using eActForm.Models;
 
 @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin
-	|| UtilsAppCode.Session.User.isCreator)
+    || UtilsAppCode.Session.User.isCreator)
 {
-	<li>
-		<a><i class="fa fa-calculator"></i> Account <span class="fa fa-chevron-down"></span></a>
-		@*<ul class="nav child_menu">
-			@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-			{
-				<li>@Html.ActionLink(" Report Activity SE MT", "reportBudgetAccSeIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-			}
+    <li>
+        <a><i class="fa fa-calculator"></i> Account <span class="fa fa-chevron-down"></span></a>
+    <ul class="nav child_menu">
+        @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+        {
+            @*<li>
+                <a href="@Url.Action("claimIndex", "Claim", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
+                    Claim Product Group
+                </a>
+            </li>*@
 
-			@if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
-			{
-				<li>@Html.ActionLink(" Report Activity SE OMT", "reportBudgetAccSeIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
-			}
+            <li>
+                <a href="@Url.Action("claimReportIndex", "ClaimReport", new { typeForm = Budget_Activity_Model.budgetType.MT.ToString() })">
+                    Report Claim Product Group
+                </a>
+            </li>
 
-		</ul>*@
+        }
+    </ul>
 
-		<ul class="nav child_menu">
-			@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-			{
-				<li>@Html.ActionLink(" Report Claim Product Group MT", "reportBudgetAccSeIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
-			}
-
-			@if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
-			{
-				<li>@Html.ActionLink(" Report Claim Product Group OMT", "reportBudgetAccSeIndex", "BudgetReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
-			}
-
-		</ul>
-
-	</li>
+    </li>
 }
