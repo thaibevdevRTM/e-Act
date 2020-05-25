@@ -18,10 +18,15 @@
     <div class="col-md-6 col-xs-12">
         <div class="row">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
-                Status
+                Claim Status
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
+                @*@Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })*@
+                <select class="form-control" id="ddlClaimStatus" name="ddlClaimStatus">
+                    <option value="0">Select All</option>
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                </select>
             </div>
         </div>
     </div>
@@ -33,7 +38,7 @@
             Start date
         </label>
         <div class="col-md-9 col-sm-9 col-xs-12">
-            <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-45), ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
+            <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-15), ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
         </div>
 
     </div>
@@ -79,51 +84,28 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <div class="col-md-6 col-xs-12">
-            <div class="row">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                    Product Type<span class="required"></span>
-                </label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.productTypelist, new SelectList(Model.productTypelist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductType", Name = "ddlProductType" })
+    @*<div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
+                        Product Type<span class="required"></span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.DropDownListFor(model => model.productTypelist, new SelectList(Model.productTypelist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductType", Name = "ddlProductType" })
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6 col-xs-12">
-            <div class="row">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
-                    Product Group<span class="required"></span>
-                </label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.productGroupList, new SelectList(Model.productGroupList, "id", "groupName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductGrp", Name = "ddlProductGrp" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-6 col-xs-12">
-            <div class="row">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                    Budget Status<span class="required"></span>
-                </label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Html.DropDownListFor(model => model.budgetStstuslist, new SelectList(Model.budgetStstuslist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlBudgetStatus", Name = "ddlBudgetStatus" })
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xs-12">
-            <div class="row">
-                @*<label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
                         Product Group<span class="required"></span>
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @Html.DropDownListFor(model => model.productGroupList, new SelectList(Model.productGroupList, "id", "groupName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductGrp", Name = "ddlProductGrp" })
-                    </div>*@
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </div>*@
 }
 
 
@@ -139,21 +121,18 @@
     </div>
 </div>
 
-<script>
-    $(function () {
-        $("#startDate").datepicker();
-        $("#endDate").datepicker();
-    });
+<script>$(function () {
+		$("#startDate").datepicker();
+		$("#endDate").datepicker();
+	});
 
-    function toggle() {
-        if (document.getElementById("chk_all").checked) {
-            document.getElementById("startDate").disabled = true;
-            document.getElementById("endDate").disabled = true;
-        }
-        else {
-            document.getElementById("startDate").disabled = false;
-            document.getElementById("endDate").disabled = false;
-        }
-    }
-
-</script>
+	function toggle() {
+		if (document.getElementById("chk_all").checked) {
+			document.getElementById("startDate").disabled = true;
+			document.getElementById("endDate").disabled = true;
+		}
+		else {
+			document.getElementById("startDate").disabled = false;
+			document.getElementById("endDate").disabled = false;
+		}
+	}</script>

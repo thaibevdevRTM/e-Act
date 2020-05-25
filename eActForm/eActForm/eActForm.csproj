@@ -317,6 +317,8 @@
     <Compile Include="Controllers\BudgetMyDocController.cs" />
     <Compile Include="Controllers\BudgetReportController.cs" />
     <Compile Include="Controllers\BudgetViewerController.cs" />
+    <Compile Include="Controllers\ClaimController.cs" />
+    <Compile Include="Controllers\ClaimReportController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\API\eActController.cs" />
@@ -355,6 +357,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Claim_Report_Model.cs" />
     <Compile Include="Models\exPerryCashModel.cs" />
     <Compile Include="Models\ImportExcel.cs" />
     <Compile Include="Models\DataMasterModels\salesTeamModel.cs" />
@@ -3148,6 +3151,9 @@
     <Content Include="Views\partialActivityDetailReport\partialSetPriceMTRpt.cshtml" />
     <Content Include="Views\ExpenseEstimateReport\expensesMedDetailRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\recordByHcMedRpt.cshtml" />
+    <Content Include="Views\ClaimReport\claimReportIndex.cshtml" />
+    <Content Include="Views\ClaimReport\claimReportList.cshtml" />
+    <Content Include="Views\Shared\_searchClaimReport.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
