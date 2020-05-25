@@ -168,3 +168,7 @@ D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleServ
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eActConsoleService\bin\Debug\ThaiBahtText.dll
+D:\work\project\source code\e-act local\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
+D:\work\project\source code\e-act local\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
+D:\work\project\source code\e-act local\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
+D:\work\project\source code\e-act local\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
