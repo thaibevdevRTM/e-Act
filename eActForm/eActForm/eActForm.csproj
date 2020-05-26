@@ -330,6 +330,7 @@
     <Compile Include="Controllers\MainFormController.cs" />
     <Compile Include="Controllers\frmOrderProduct\orderProductController.cs" />
     <Compile Include="Controllers\partailViewByItem\partialByProductController.cs" />
+    <Compile Include="Controllers\PartialChangeRequestFormController.cs" />
     <Compile Include="Controllers\partailViewDataMaster\partailViewDataMasterController.cs" />
     <Compile Include="Controllers\partialActivityDetailReport\partialSetPriceMTRpt.cs" />
     <Compile Include="Controllers\partialActivityDetailReport\partialActivityDetailReportController.cs" />
@@ -2634,6 +2635,7 @@
     <Content Include="images\maintain.png" />
     <Content Include="images\non_al.jpeg" />
     <Content Include="images\tbmmktLogo.png" />
+    <Content Include="images\Thaibev-logo.png" />
     <Content Include="images\warning_error.png" />
     <Content Include="images\xlx.png" />
     <Content Include="Scripts\Admin\adminPage.js" />
@@ -2831,6 +2833,8 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="ActBudget\fileNotFound.pdf" />
+    <Content Include="ActivityFormPdf\fileNotFound.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <Content Include="Scripts\bootstrap-select.js.map" />
@@ -3147,6 +3151,19 @@
     <Content Include="Views\ExpenseEstimateInput\expensesMedDetail_old.cshtml" />
     <Content Include="Views\MenuList\importData.cshtml" />
     <Content Include="Views\ImportMasterAP\Index.cshtml" />
+    <Content Include="Uploadfiles\ImportMasterAP\template\TemplateImportAP.xlsx" />
+    <Content Include="Views\PartialChangeRequestForm\crHeader.cshtml" />
+    <Content Include="Views\MenuList\itForm.cshtml" />
+    <Content Include="Views\PartialChangeRequestForm\cr_IT_Frm314_page1.cshtml" />
+    <Content Include="Views\PartialChangeRequestForm\cr_IT_Frm314_page2.cshtml" />
+    <Content Include="Views\SharedMasterFormHeaderDetail_Input\dropdownConditionSubject.cshtml" />
+    <Content Include="Views\EmpInfoInput\empInfoDetailV2.cshtml" />
+    <Content Include="Views\EmpInfoInput\empInfoDetail_Department_Tel.cshtml" />
+    <Content Include="Views\PartialChangeRequestForm\inputPageSectionOneTitle_IT314.cshtml" />
+    <Content Include="Views\PartialChangeRequestForm\inputPageSectionOne_IT314.cshtml" />
+    <Content Include="Views\PartialChangeRequestForm\inputPageSectionFiveTitle_IT314.cshtml" />
+    <Content Include="Views\PartialChangeRequestForm\inputPageSectionFive_IT314.cshtml" />
+    <Content Include="Views\SharedMasterFormDetail_Input\requestEmp2.cshtml" />
     <Content Include="Views\partialActivityDetail\partialSetPriceMT.cshtml" />
     <Content Include="Views\partialActivityDetailReport\partialSetPriceMTRpt.cshtml" />
     <Content Include="Views\ExpenseEstimateReport\expensesMedDetailRpt.cshtml" />
@@ -3160,8 +3177,6 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ActBudget\" />
-    <Folder Include="ActivityFormPdf\" />
     <Folder Include="App_Data\" />
     <Folder Include="bin\bin\en\" />
     <Folder Include="BusinessLayer\Tbmmkt\Appcodes\" />
@@ -3171,7 +3186,6 @@
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
-    <Folder Include="Uploadfiles\ImportMasterAP\template\" />
     <Folder Include="Uploadfiles\ImportMatProductPosPremium\template\" />
     <Folder Include="Views\ApiApprove\" />
     <Folder Include="Views\exPerryCash\" />

@@ -215,7 +215,7 @@ namespace eActForm.BusinessLayer
 
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-                        strBody = getEmailBody(item, emailType, actFormId);
+                        strBody = getEmailBody(item, emailType, actFormId,false);
                         strSubject = emailAllApprovedSubject;
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
@@ -270,6 +270,7 @@ namespace eActForm.BusinessLayer
                             , emailAllApprovedSubject
                             , strBody
                             , emailType);
+
                         }
                     }
                 }
@@ -323,7 +324,7 @@ namespace eActForm.BusinessLayer
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-                        strBody = getEmailBody(item, emailType, actFormId);
+                        strBody = getEmailBody(item, emailType, actFormId,false);
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
                             , item.empEmail
@@ -371,12 +372,48 @@ namespace eActForm.BusinessLayer
                                     , createUsersName
                                     , string.Format(ConfigurationManager.AppSettings["urlDocument_Activity_Form"], actFormId));
 
+                            //=============New Process Peerapop ส่งเมลล์ CC===============peerapop.i dev date 20200525======
+                            string[] formNeedStyleEdocAfterApproved = { ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
+                            string ccEmailNormalProcess = ApproveAppCode.getEmailCCByActId(actFormId);
+                            if (formNeedStyleEdocAfterApproved.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                            {
+                                ccEmailNormalProcess = "";
+                            }
+                            //=====END========New Process Peerapop ส่งเมลล์ CC===============peerapop.i dev date 20200525======
+
                             sendEmailActForm(actFormId
                             , createUsers.FirstOrDefault().empEmail
-                            , ApproveAppCode.getEmailCCByActId(actFormId)
+                            , ccEmailNormalProcess
                             , emailAllApprovedSubject
                             , strBody
                             , emailType);
+
+                            //=============New Process Peerapop ส่งเมลล์ ในรูปแบบเหมือนส่งอนุมัติปกติ แต่ส่งหลังApproveครบ========peerapop.i dev date 20200525======
+                            if (formNeedStyleEdocAfterApproved.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                            {
+                                string[] groupApproveForCC_CreatedBy = { ConfigurationManager.AppSettings["approveGroupForProcess"] };
+
+                                lists = getDataEmpGroupFinishApprovedFormatLikeEdoc(actFormId);
+                                foreach (ApproveModel.approveEmailDetailModel item in lists)
+                                {
+                                    string ccEmailgetEmailGroupContinueProcess = "";
+                                    if (groupApproveForCC_CreatedBy.Contains(item.approveGroupId))
+                                    {
+                                        ccEmailgetEmailGroupContinueProcess = createUsers.FirstOrDefault().empEmail;
+                                    }
+                                    strBody = getEmailBody(item, emailType, actFormId,true);
+                                    strSubject = isResend ? "RE: " + strSubject : strSubject;
+                                    sendEmailActForm(actFormId
+                                        , item.empEmail
+                                        , ccEmailgetEmailGroupContinueProcess
+                                        , emailAllApprovedSubject
+                                        , strBody
+                                        , emailType);
+                                }
+                            }
+                            //=====END========New Process Peerapop ส่งเมลล์ ในรูปแบบเหมือนส่งอนุมัติปกติ แต่ส่งหลังApproveครบ========peerapop.i dev date 20200525====
+
+
                         }
                     }
                 }
@@ -478,7 +515,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        private static string getEmailBody(ApproveModel.approveEmailDetailModel item, AppCode.ApproveType emailType, string actId)
+        private static string getEmailBody(ApproveModel.approveEmailDetailModel item, AppCode.ApproveType emailType, string actId,bool statusApproveSuccess)
         {
             try
             {
@@ -489,8 +526,10 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 var emailTypeTxt = "";
                 string[] arrayFormStyleV1 = { ConfigurationManager.AppSettings["formBgTbmId"], ConfigurationManager.AppSettings["formAdvTbmId"], ConfigurationManager.AppSettings["formAdvHcmId"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] };
-                string[] arrayFormStyleV2 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formTrvTbmId"], ConfigurationManager.AppSettings["formTrvHcmId"], ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
-                string[] arrayFormStyleV3 = { ConfigurationManager.AppSettings["formPosTbmId"] };
+                string[] arrayFormStyleV2 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formTrvTbmId"], ConfigurationManager.AppSettings["formTrvHcmId"], ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
+                string[] arrayFormStyleV3 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
+                string[] arrayFormStyleV4 = { ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
+
                 if (activity_TBMMKT_Model.activityFormTBMMKT != null)
                 {
                     if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV2.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV3.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
@@ -573,17 +612,39 @@ namespace eActForm.BusinessLayer
                             strBody = strBody.Replace("<b>จำนวนเงินที่ขอนุมัติ :</b> {6} บาท<br>", "");
                             strBody = strBody.Replace("<b>Amount Requested :</b> {6} Bath<br>", "");
                         }
+                        if (arrayFormStyleV4.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) && statusApproveSuccess==true)
+                        {
+                            strBody = strBody.Replace("คุณสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ :<a href=\"{9} \" > {9} </a>", "");
+                            strBody = strBody.Replace("To approve and review expenses details, please click here: :<a href=\"{9} \" > {9} </a>", "");
+                        }
+
+                        //==============peerapop dev date 20200525=====formNeedStyleEdocAfterApproved=========
+                        string[] formNeedStyleEdocAfterApproved = { ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
+                        if (formNeedStyleEdocAfterApproved.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                        {
+                            if (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"])
+                            {
+                                strBody = strBody.Replace("You have list of pending approval requests <b>{1}</b> follow by below details", "You have list of pending <b>{1}</b> follow by below details");
+                                txtApprove = item.approveGroupEN;
+                            }
+                            else
+                            {
+                                txtApprove = item.approveGroupTH;
+                            }
+                        }
+                        //======END========peerapop dev date 20200525=====formNeedStyleEdocAfterApproved=========
+
                         strBody = string.Format(strBody
-                            , item.empPrefix + " " + empNameResult
-                            , txtApprove
-                            , emailTypeTxt
-                            , item.activityName
-                            , item.activitySales
-                            , item.activityNo
-                            , String.Format("{0:0,0.00}", item.sumTotal)
-                            , (models != null && models.Count > 0) ? txtCompanyname : ""
-                            , txtcreateBy
-                            , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId));
+                        , item.empPrefix + " " + empNameResult
+                        , txtApprove
+                        , emailTypeTxt
+                        , item.activityName
+                        , item.activitySales
+                        , item.activityNo
+                        , String.Format("{0:0,0.00}", item.sumTotal)
+                        , (models != null && models.Count > 0) ? txtCompanyname : ""
+                        , txtcreateBy
+                        , string.Format(ConfigurationManager.AppSettings["urlApprove_" + emailType.ToString()], actId));
                         break;
                     case AppCode.ApproveType.Report_Detail:
                         strBody = string.Format(ConfigurationManager.AppSettings["emailApproveRepDetailBody"]
@@ -983,6 +1044,37 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        private static List<ApproveModel.approveEmailDetailModel> getDataEmpGroupFinishApprovedFormatLikeEdoc(string actFormId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDataEmpGroupFinishApprovedFormatLikeEdoc"
+                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
+
+                var models = (from DataRow dr in ds.Tables[0].Rows
+                              select new ApproveModel.approveEmailDetailModel()
+                              {
+                                  empEmail = dr["empEmail"].ToString(),
+                                  empPrefix = dr["empPrefix"].ToString(),
+                                  empName = dr["empName"].ToString(),
+                                  empName_EN = dr["empName_EN"].ToString(),
+                                  activityName = dr["activityName"].ToString(),
+                                  activitySales = dr["activitySales"].ToString(),
+                                  activityNo = dr["activityNo"].ToString(),
+                                  sumTotal = dr["sumTotal"] is DBNull ? 0 : (decimal)dr["sumTotal"],
+                                  createBy = dr["createBy"].ToString(),
+                                  createBy_EN = dr["createBy_EN"].ToString(),
+                                  approveGroupId = dr["approveGroupId"].ToString(),
+                                  approveGroupTH = dr["approveGroupTH"].ToString(),
+                                  approveGroupEN = dr["approveGroupEN"].ToString(),
+                              }).ToList();
+                return models;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getDataEmpGroupFinishApprovedFormatLikeEdoc >> " + ex.Message);
+            }
+        }
 
     }
 }

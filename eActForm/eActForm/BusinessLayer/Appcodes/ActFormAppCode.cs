@@ -116,6 +116,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
+                else if (typeForm == Activity_Model.activityType.ITForm.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_ITForm";
+                }
                 else if (typeForm == Activity_Model.activityType.NUM.ToString())
                 {
                     strCall = "usp_getActivityFormByEmpId_HCPomNum"; 
@@ -128,6 +132,11 @@ namespace eActForm.BusinessLayer
                 if (isAdmin())
                 {
                     strCall = "usp_getActivityFormAll";
+                }
+
+                if (isAdmin() && typeForm == Activity_Model.activityType.ITForm.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_ITForm_Admin";
                 }
 
                 //เดิมผูกแค่บริษัท ต้องผูกเนื่องฟอร์มเพิ่ม boom 20200520

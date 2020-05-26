@@ -15,10 +15,8 @@
 
 }
 
-
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
-
 <link href="~/Scripts/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
 <script src="~/Scripts/locales/bootstrap-datetimepicker.th.js"></script>
@@ -365,6 +363,10 @@
 
             }
 
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]') {
+            if ($("#txtEmpId").val() == "") { required += "&emsp;EmpID/รหัสพนักงาน*<br>"; validate = false; }
+            if ($("#ddlDepartment").val() == "") { required += "&emsp;Department/หน่วยงาน*<br>"; validate = false; }
         }
         else {
 
