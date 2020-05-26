@@ -330,7 +330,6 @@
     <Compile Include="Controllers\MainFormController.cs" />
     <Compile Include="Controllers\frmOrderProduct\orderProductController.cs" />
     <Compile Include="Controllers\partailViewByItem\partialByProductController.cs" />
-    <Compile Include="Controllers\partailViewDataMaster\partialSaleTeamController.cs" />
     <Compile Include="Controllers\PartialChangeRequestFormController.cs" />
     <Compile Include="Controllers\partailViewDataMaster\partailViewDataMasterController.cs" />
     <Compile Include="Controllers\partialActivityDetailReport\partialSetPriceMTRpt.cs" />
