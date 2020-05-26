@@ -470,16 +470,14 @@ namespace eActForm.BusinessLayer
                         companyId = QueryGetActivityById.getActivityById(actFormId)[0].companyId;
                     }
                     // ==================================================
-                    if (companyId == ConfigurationManager.AppSettings["companyId_TBM"])
+                    if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
                     {
-                        pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
+                        pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], item._fileName));
+                       
                     }
                     else
                     {
-                        if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
-                        {
-                            pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], item._fileName));
-                        }
+                        pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
                     }
                     i++;
                 }
