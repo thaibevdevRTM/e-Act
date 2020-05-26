@@ -215,7 +215,7 @@ namespace eActForm.BusinessLayer
 
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-                        strBody = getEmailBody(item, emailType, actFormId);
+                        strBody = getEmailBody(item, emailType, actFormId,false);
                         strSubject = emailAllApprovedSubject;
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
@@ -324,7 +324,7 @@ namespace eActForm.BusinessLayer
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-                        strBody = getEmailBody(item, emailType, actFormId);
+                        strBody = getEmailBody(item, emailType, actFormId,false);
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
                             , item.empEmail
@@ -401,7 +401,7 @@ namespace eActForm.BusinessLayer
                                     {
                                         ccEmailgetEmailGroupContinueProcess = createUsers.FirstOrDefault().empEmail;
                                     }
-                                    strBody = getEmailBody(item, emailType, actFormId);
+                                    strBody = getEmailBody(item, emailType, actFormId,true);
                                     strSubject = isResend ? "RE: " + strSubject : strSubject;
                                     sendEmailActForm(actFormId
                                         , item.empEmail
@@ -515,7 +515,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        private static string getEmailBody(ApproveModel.approveEmailDetailModel item, AppCode.ApproveType emailType, string actId)
+        private static string getEmailBody(ApproveModel.approveEmailDetailModel item, AppCode.ApproveType emailType, string actId,bool statusApproveSuccess)
         {
             try
             {
@@ -611,7 +611,7 @@ namespace eActForm.BusinessLayer
                             strBody = strBody.Replace("<b>จำนวนเงินที่ขอนุมัติ :</b> {6} บาท<br>", "");
                             strBody = strBody.Replace("<b>Amount Requested :</b> {6} Bath<br>", "");
                         }
-                        if (arrayFormStyleV4.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                        if (arrayFormStyleV4.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) && statusApproveSuccess==true)
                         {
                             strBody = strBody.Replace("คุณสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ :<a href=\"{9} \" > {9} </a>", "");
                             strBody = strBody.Replace("To approve and review expenses details, please click here: :<a href=\"{9} \" > {9} </a>", "");
