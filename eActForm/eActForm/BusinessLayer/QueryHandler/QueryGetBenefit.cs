@@ -9,7 +9,7 @@ using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
-    public class QueryGetBenafit
+    public class QueryGetBenefit
     {
         public static List<CashEmpModel> getCashLimitByEmpId(string empId)
         {
@@ -30,7 +30,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getProductCostByProductId => " + ex.Message);
+                ExceptionManager.WriteError("getCashLimitByEmpId => " + ex.Message);
                 return new List<CashEmpModel>();
             }
         }
@@ -127,5 +127,47 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getProductcostdetail >>" + ex.Message);
             }
         }
+
+        public static List<CashEmpModel> getCashLimitByTypeId(string typeId, string hireDate, string jobLevel)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCashLimitByTypeId"
+                     , new SqlParameter("@typeId", typeId)
+                      , new SqlParameter("@hireDate", hireDate)
+                       , new SqlParameter("@jobLevel", jobLevel));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new CashEmpModel()
+                             {                           
+                                 cashPerDay = d["cash"] is DBNull ? 0 : decimal.Parse(d["cash"].ToString()),
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCashLimitByTypeId => " + ex.Message);
+                return new List<CashEmpModel>();
+            }
+        }
+        public static List<CashEmpModel> getCumulativeByEmpId(string empId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCumulativeByEmpId"
+                     , new SqlParameter("@empId", empId));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new CashEmpModel()
+                             {
+                                 cashPerDay = d["amountReceived"] is DBNull ? 0 : decimal.Parse(d["amountReceived"].ToString()),
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCumulativeByEmpId => " + ex.Message);
+                return new List<CashEmpModel>();
+            }
+        }
+
     }
 }

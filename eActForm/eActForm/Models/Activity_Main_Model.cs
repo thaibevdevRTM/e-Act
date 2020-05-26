@@ -156,6 +156,12 @@ namespace eActForm.Models
         public string activityIdNoSub { get; set; }
         public string orderOf { get; set; }
         public string regionalId { get; set; }
+        public int hospPercent { get; set; }
+        public decimal? amount { get; set; }
+        public decimal? amountLimit { get; set; }
+        public decimal? amountCumulative { get; set; }
+        public decimal? amountBalance { get; set; }
+        public decimal? amountReceived { get; set; }
     }
 
     public class TB_Act_ActivityForm_DetailOtherList : ActBaseModel
@@ -211,7 +217,7 @@ namespace eActForm.Models
         public string unitPriceDisplayReport { get; set; }
         public string QtyName { get; set; }
         public string remark { get; set; }
-        public string listChoiceId { get; set; }
+     
     }
 
     public class RequestEmpModel : ActBaseModel
@@ -235,6 +241,7 @@ namespace eActForm.Models
         public string empTel { get; set; }
         public string compId { get; set; }
         public string email { get; set; }
+        public string hireDate { get; set; }
     }
 
     public class PurposeModel : ActBaseModel

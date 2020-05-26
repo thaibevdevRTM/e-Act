@@ -489,7 +489,7 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 var emailTypeTxt = "";
                 string[] arrayFormStyleV1 = { ConfigurationManager.AppSettings["formBgTbmId"], ConfigurationManager.AppSettings["formAdvTbmId"], ConfigurationManager.AppSettings["formAdvHcmId"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] };
-                string[] arrayFormStyleV2 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formTrvTbmId"], ConfigurationManager.AppSettings["formTrvHcmId"], ConfigurationManager.AppSettings["formExpTrvNumId"] };
+                string[] arrayFormStyleV2 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formTrvTbmId"], ConfigurationManager.AppSettings["formTrvHcmId"], ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
                 string[] arrayFormStyleV3 = { ConfigurationManager.AppSettings["formPosTbmId"] };
                 if (activity_TBMMKT_Model.activityFormTBMMKT != null)
                 {
@@ -525,7 +525,7 @@ namespace eActForm.BusinessLayer
                         strBody = ConfigurationManager.AppSettings["emailApproveBody"];
                         strPiority = ConfigurationManager.AppSettings["emailpiority"];
                         empNameResult = item.empName;
-                        txtApprove = AppCode.ApproveStatus.รออนุมัติ.ToString();
+                        txtApprove = string.IsNullOrEmpty( item.statusId ) ? AppCode.ApproveStatus.เรียนเพื่อทราบ.ToString() : AppCode.ApproveStatus.รออนุมัติ.ToString();
                         txtcreateBy = item.createBy;
                         txtCompanyname = models[0].companyName;
 
@@ -634,6 +634,7 @@ namespace eActForm.BusinessLayer
                                   sumTotal = dr["sumTotal"] is DBNull ? 0 : (decimal)dr["sumTotal"],
                                   createBy = dr["createBy"].ToString(),
                                   createBy_EN = dr["createBy_EN"].ToString(),
+                                  statusId = dr["statusId"].ToString(),
                               }).ToList();
                 return models;
             }
