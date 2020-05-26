@@ -526,9 +526,10 @@ namespace eActForm.BusinessLayer
                 activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 var emailTypeTxt = "";
                 string[] arrayFormStyleV1 = { ConfigurationManager.AppSettings["formBgTbmId"], ConfigurationManager.AppSettings["formAdvTbmId"], ConfigurationManager.AppSettings["formAdvHcmId"], ConfigurationManager.AppSettings["masterEmpExpense"], ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] };
-                string[] arrayFormStyleV2 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formTrvTbmId"], ConfigurationManager.AppSettings["formTrvHcmId"], ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
+                string[] arrayFormStyleV2 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formTrvTbmId"], ConfigurationManager.AppSettings["formTrvHcmId"], ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"], ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
                 string[] arrayFormStyleV3 = { ConfigurationManager.AppSettings["formPosTbmId"], ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
                 string[] arrayFormStyleV4 = { ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
+
                 if (activity_TBMMKT_Model.activityFormTBMMKT != null)
                 {
                     if (arrayFormStyleV1.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV2.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) || arrayFormStyleV3.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
@@ -563,7 +564,7 @@ namespace eActForm.BusinessLayer
                         strBody = ConfigurationManager.AppSettings["emailApproveBody"];
                         strPiority = ConfigurationManager.AppSettings["emailpiority"];
                         empNameResult = item.empName;
-                        txtApprove = AppCode.ApproveStatus.รออนุมัติ.ToString();
+                        txtApprove = string.IsNullOrEmpty( item.statusId ) ? AppCode.ApproveStatus.เรียนเพื่อทราบ.ToString() : AppCode.ApproveStatus.รออนุมัติ.ToString();
                         txtcreateBy = item.createBy;
                         txtCompanyname = models[0].companyName;
 
@@ -694,6 +695,7 @@ namespace eActForm.BusinessLayer
                                   sumTotal = dr["sumTotal"] is DBNull ? 0 : (decimal)dr["sumTotal"],
                                   createBy = dr["createBy"].ToString(),
                                   createBy_EN = dr["createBy_EN"].ToString(),
+                                  statusId = dr["statusId"].ToString(),
                               }).ToList();
                 return models;
             }

@@ -11,6 +11,8 @@
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>@Html.ActionLink("MT Activity Form", "ActivityForm", "Activity", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                @*<li>@Html.ActionLink("MT Set Price", "Index", "MainForm", new { typeForm = Activity_Model.activityType.MT.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formSetPriceMT"] }, null)</li>*@
+
             }
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)
             {

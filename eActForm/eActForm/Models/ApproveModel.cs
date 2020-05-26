@@ -92,6 +92,7 @@ namespace eActForm.Models
             public string approveGroupId { get; set; }
             public string approveGroupTH { get; set; }
             public string approveGroupEN { get; set; }
+            public string statusId { get; set; }
         }
     }
 }

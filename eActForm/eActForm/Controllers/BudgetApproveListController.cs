@@ -20,7 +20,7 @@ namespace eActForm.Controllers
 
         public ActionResult searchActForm()
         {
-       
+
             string count = Request.Form.AllKeys.Count().ToString();
             DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
             DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);

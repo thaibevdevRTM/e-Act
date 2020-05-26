@@ -262,7 +262,7 @@
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
-                            else if (Model.typeForm == Activity_Model.activityType.NUM.ToString() && (item.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]))
+                            else if (Model.typeForm == Activity_Model.activityType.NUM.ToString() && (item.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]|| item.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"]))
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.NUM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
 
@@ -393,6 +393,7 @@
             || master_type_form_id == "@ConfigurationManager.AppSettings["masterEmpExpense"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formExpTrvNumId"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formExpMedNumId"]"
         ) {
              $.ajax({
                 type: 'POST',

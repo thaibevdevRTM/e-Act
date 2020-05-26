@@ -18,6 +18,7 @@ namespace eActForm.Controllers
 
         public ActionResult Index(string activityId, string mode, string typeForm, string master_type_form_id)
         {
+
             Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
             ActivityFormTBMMKT activityFormTBMMKT = new ActivityFormTBMMKT();
 
@@ -190,14 +191,14 @@ namespace eActForm.Controllers
                 }
 
 
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
-                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
-                    )//แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"] // แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+                    || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"] // แบบฟอร์มเดินทางปฏิบัติงานนอกสถานที่
+                    || (AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                    )
                 {
                     activity_TBMMKT_Model.activityOfEstimateList = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
                     //activity_TBMMKT_Model.activityFormModel.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
-                    if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])//ฟอร์มเบิกค่าเดินทางและเบี้ยเลี่ยงnum
+                    if (AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))//ฟอร์มเบิกค่าเดินทางและเบี้ยเลี่ยงnum
                     {
                         activity_TBMMKT_Model.requestEmpModel.Add(new RequestEmpModel() { empId = activity_TBMMKT_Model.empInfoModel.empId, empTel = activity_TBMMKT_Model.empInfoModel.empTel });
                         activity_TBMMKT_Model.activityFormTBMMKT.empId = activity_TBMMKT_Model.empInfoModel.empId;

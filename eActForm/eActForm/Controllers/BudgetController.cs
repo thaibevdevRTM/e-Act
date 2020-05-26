@@ -124,7 +124,6 @@ namespace eActForm.Controllers  //update 21-04-2020
 			return PartialView(Budget_Model);
 		}
 
-
 		public JsonResult submitInvoice(Budget_Activity_Model.Budget_Activity_Invoice_Att budgetInvoiceModel)
 		{
 			var resultAjax = new AjaxResult();
@@ -186,7 +185,6 @@ namespace eActForm.Controllers  //update 21-04-2020
 			}
 			return Json(result, JsonRequestBehavior.AllowGet);
 		}
-
 
 		//---------------------------------------------------------------------------------------
 		public PartialViewResult activityProductInvoiceEdit(string activityId, string activityOfEstimateId, string invoiceId)

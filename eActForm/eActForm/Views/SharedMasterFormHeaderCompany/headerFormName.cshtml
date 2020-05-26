@@ -20,19 +20,21 @@
 
 }
 <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
-    <table style="border-color:none;">
+    <table style="border-color:none; width: 100%;">
 
         <tr>
-            <td style="width:80px;">&nbsp;</td>
-            <td style="width:545px;text-align: center;vertical-align:middle;" class="fontDocV2">@formName</td>
-            <td style="width:80px;"></td>
+            <td  style="text-align: center;vertical-align:middle;" class="fontDocV2">
+                <label>@formName</label></td>
+            @*<td style="width:80px;">&nbsp;</td>
+            <td style="width:555px;text-align: center;vertical-align:middle;" class="fontDocV2">@formName</td>
+            <td style="width:80px;"></td>*@
 
         </tr>
         <tr>
-            <td colspan="3">
-           
-                <table>
-                    <tr >
+            <td>
+
+                <table style="border-color:none; width: 100%;">
+                    <tr>
                         <td style="width:100%;text-align: right;vertical-align:middle;" class="fontDocSmall">
                             @Resources.Global.documentNo : @Model.activityFormModel.activityNo
                         </td>

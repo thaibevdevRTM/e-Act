@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace eActForm.Controllers
 {
-    public class partialByProductController : Controller
+    public partial class partialByProductController : Controller
     {
         // GET: partialByProduct
         public ActionResult index(string actId)

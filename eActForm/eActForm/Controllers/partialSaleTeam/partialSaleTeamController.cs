@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using eForms.Presenter.MasterData;
 namespace eActForm.Controllers
 {
-    public class partialSaleTeamController : Controller
+    public partial class partialSaleTeamController : Controller
     {
         // GET: partialSaleTeamCVM
         public ActionResult index()
