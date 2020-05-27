@@ -343,24 +343,25 @@
             if ($("#txtEmpTel").val() == "") { required += "&emsp;โทรศัพท์ติดต่อ*<br>"; validate = false; }
             if ($("#lblHireDate").val() == "") { required += "&emsp;วันที่เข้างาน(กรุณาติดต่อ Admin)*<br>"; validate = false; }
             if ($("#txthospName_0").val() == "") { required += "&emsp;โรงพยาบาล*<br>"; validate = false; }
-            //if (!($("#txtDateInput_0").val() != "" && $("#txtdetail_0").val() != "" && $("#txtUnitPrice_0").val() != ""))
-            //{
-            //    required += "&emsp;รายละเอียดขอเบิกเงินค่ารักษาพยาบาล*<br>"; validate = false;
-            //}
 
+            var price_1 = 0.00;
+            if ($("#txtUnitPrice_0").val() != "") { price_1 = parseFloat($("#txtUnitPrice_0").val().replace(",", "")); }
+            if (!($("#txtDateInput_0").val() != "" && $("#txtdetail_0").val() != "" && price_1 > 0 ))
+            {
+                required += "&emsp;รายละเอียดขอเบิกเงินค่ารักษาพยาบาลบรรทัดที่ 1 ให้ครบถ้วน*<br>"; validate = false;
+            }
             var rowCount = parseInt($('#tabelExpensesMed tr.tagCountRowinTable').length);
-
-            for (i = 0; i < rowCount; i++) {
-
+            for (i = 1; i < rowCount; i++) {
+                var price = 0.00;
+                if ($("#txtUnitPrice_" + i).val() != "") { price = parseFloat($("#txtUnitPrice_" + i).val().replace(",", "")); }
                 if ($("#txtDateInput_" + i).val() != "" ||
                     $("#txtdetail_" + i).val() != "" ||
-                    $("#txtUnitPrice_" + i).val() != "0.00")
+                    price > 0)
                 {
-                    if ($("#txtDateInput_" + i).val() == "" || $("#txtdetail_" + i).val() == "" || $("#txtUnitPrice_" + i).val() == "0.00") {
+                    if ($("#txtDateInput_" + i).val() == "" || $("#txtdetail_" + i).val() == "" || price <= 0 ) {
                         required += "&emsp;รายละเอียดขอเบิกเงินค่ารักษาพยาบาลบรรทัดที่ "+(i+1)+" ให้ครบถ้วน*<br>"; validate = false;
                     }
                 }
-
             }
 
         }
