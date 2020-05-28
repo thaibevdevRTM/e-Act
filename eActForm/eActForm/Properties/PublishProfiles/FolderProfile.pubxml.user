@@ -88,13 +88,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/03/2020 12:41:46</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
-      <publishTime>05/28/2020 12:32:20</publishTime>
+      <publishTime>05/28/2020 14:29:18</publishTime>
     </File>
     <File Include="bin/eActForm.dll.config">
       <publishTime>05/26/2020 15:54:40</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
-      <publishTime>05/28/2020 12:32:20</publishTime>
+      <publishTime>05/28/2020 14:29:18</publishTime>
     </File>
     <File Include="bin/eForms.Models.dll">
       <publishTime>05/27/2020 13:24:28</publishTime>
@@ -109,7 +109,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/27/2020 13:24:29</publishTime>
     </File>
     <File Include="bin/en/eActForm.resources.dll">
-      <publishTime>05/28/2020 12:32:22</publishTime>
+      <publishTime>05/28/2020 14:29:18</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.xml">
       <publishTime>04/03/2020 12:41:46</publishTime>
@@ -7756,7 +7756,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/12/2019 14:57:42</publishTime>
     </File>
     <File Include="Views/MainForm/Index.cshtml">
-      <publishTime>05/27/2020 09:01:02</publishTime>
+      <publishTime>05/28/2020 14:25:35</publishTime>
     </File>
     <File Include="Views/MainReport/Index.cshtml">
       <publishTime>05/26/2020 13:56:17</publishTime>
@@ -8131,7 +8131,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/07/2020 10:58:21</publishTime>
     </File>
     <File Include="Views/SharedMasterFormHeaderDetail_Input/headerDetailsBg.cshtml">
-      <publishTime>04/07/2020 10:58:21</publishTime>
+      <publishTime>05/28/2020 14:13:14</publishTime>
     </File>
     <File Include="Views/SharedMasterFormHeaderDetail_Input/headerDetailsDate.cshtml">
       <publishTime>04/07/2020 10:58:21</publishTime>
