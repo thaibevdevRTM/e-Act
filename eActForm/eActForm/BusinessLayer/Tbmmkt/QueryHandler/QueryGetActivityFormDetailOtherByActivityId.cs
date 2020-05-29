@@ -58,7 +58,16 @@ namespace eActForm.BusinessLayer
                                   totalallPayNo = d["totalallPayNo"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayNo"].ToString())),
                                   totalallPayByIOBalance = d["totalallPayByIOBalance"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["totalallPayByIOBalance"].ToString())),
                                   orderOf = d["orderOf"].ToString(),
-                                  regionalId = d["regionalId"].ToString(),                          
+                                  regionalId = d["regionalId"].ToString(),
+                                  departmentId = d["departmentId"].ToString(),
+                                  other1 = d["other1"].ToString(),
+                                  other2 = d["other2"].ToString(),
+                                  hospPercent= d["hospPercent"].ToString() == "" ? 0 : int.Parse(AppCode.checkNullorEmpty(d["hospPercent"].ToString())),
+                                  amount = d["amount"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amount"].ToString())),
+                                  amountLimit = d["amountLimit"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountLimit"].ToString())),
+                                  amountCumulative = d["amountCumulative"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountCumulative"].ToString())),
+                                  amountBalance = d["amountBalance"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountBalance"].ToString())),
+                                  amountReceived = d["amountReceived"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountReceived"].ToString())),
                               });
 
                 return result.ToList();

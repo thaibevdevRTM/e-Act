@@ -1,6 +1,7 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -115,6 +116,14 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
+                else if (typeForm == Activity_Model.activityType.ITForm.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_ITForm";
+                }
+                else if (typeForm == Activity_Model.activityType.NUM.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_HCPomNum"; 
+                }
                 else
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
@@ -123,6 +132,17 @@ namespace eActForm.BusinessLayer
                 if (isAdmin())
                 {
                     strCall = "usp_getActivityFormAll";
+                }
+
+                if (isAdmin() && typeForm == Activity_Model.activityType.ITForm.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_ITForm_Admin";
+                }
+
+                //เดิมผูกแค่บริษัท ต้องผูกเนื่องฟอร์มเพิ่ม boom 20200520
+                if (isAdmin() && typeForm == Activity_Model.activityType.NUM.ToString())
+                {
+                    strCall = "usp_getActivityFormAll_HCPomNum";
                 }
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
@@ -378,7 +398,41 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static bool checkRecorderByUser(string actId)
+        public static bool checkGroupApproveByUser(string actId, string groupApprove)
+        {
+            try
+            {
+                switch (groupApprove)
+                {
+                    case "Recorder":
+                        groupApprove = AppCode.ApproveGroup.Recorder;
+                        break;
+                    case "PettyCashVerify":
+                        groupApprove = AppCode.ApproveGroup.PettyCashVerify;
+                        break;
+                    default:
+                        break;
+                }
+
+
+                ApproveModel.approveModels models = new ApproveModel.approveModels();
+                models = ApproveAppCode.getApproveByActFormId(actId, "");
+
+                if (models.approveDetailLists.Count > 0)
+                {
+                    models.approveDetailLists = models.approveDetailLists
+                        .Where(x => x.approveGroupId == groupApprove)
+                        .Where(x => x.empId == UtilsAppCode.Session.User.empId).ToList();
+                }
+                return models.approveDetailLists.Count > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkGroupApproveByUser >>" + ex.Message);
+            }
+
+        }
+        public static bool checkCanEditByUser(string actId)
         {
             try
             {
@@ -388,14 +442,14 @@ namespace eActForm.BusinessLayer
                 if (models.approveDetailLists.Count > 0)
                 {
                     models.approveDetailLists = models.approveDetailLists
-                        .Where(x => x.approveGroupId == AppCode.ApproveGroup.Recorder)
+                        .Where(x => x.approveGroupId == AppCode.ApproveGroup.Recorder || x.approveGroupId == AppCode.ApproveGroup.PettyCashVerify)
                         .Where(x => x.empId == UtilsAppCode.Session.User.empId).ToList();
                 }
                 return models.approveDetailLists.Count > 0 ? true : false;
             }
             catch (Exception ex)
             {
-                throw new Exception("checkRecorderByUser >>" + ex.Message);
+                throw new Exception("checkCanEditByUser >>" + ex.Message);
             }
 
         }

@@ -266,7 +266,7 @@
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
-                            else if (Model.typeForm == Activity_Model.activityType.NUM.ToString() && (item.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]))
+                            else if (Model.typeForm == Activity_Model.activityType.NUM.ToString() && (item.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]|| item.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"]))
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.NUM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
 
@@ -275,7 +275,10 @@
                                     @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["masterEmpExpense"] }, new { @class = "btn ink-reaction btn-warning fa fa-bitcoin", onclick = "waitpopup();", })
                                 }
                             }
-
+                            else if (Model.typeForm == Activity_Model.activityType.ITForm.ToString() && item.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
+                            {                                
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.ITForm.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
                             @if (item.statusId == "2" || item.statusId == "3")
                             {
                                 @Html.ActionLink(" ", "getPDF", "ActivityViewer", new { actId = item.id, type = AppCode.ApproveType.Activity_Form.ToString() }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
@@ -392,7 +395,10 @@
             || master_type_form_id == "@ConfigurationManager.AppSettings["formTrvHcmId"]" || master_type_form_id == "@ConfigurationManager.AppSettings["formAdvHcmId"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["masterEmpExpense"]"
-            || master_type_form_id == "@ConfigurationManager.AppSettings["formExpTrvNumId"]") {
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formExpTrvNumId"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formExpMedNumId"]"
+        ) {
              $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Index", "MainReport")',

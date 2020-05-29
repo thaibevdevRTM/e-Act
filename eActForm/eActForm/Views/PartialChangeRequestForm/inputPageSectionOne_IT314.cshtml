@@ -1,0 +1,349 @@
+﻿@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr>
+        <td style="">
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    <u>Choose request</u>&nbsp;&nbsp;
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_chooseRequest_multi_select", new SelectList(Model.list_chooseRequest,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlchooseRequest",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    <u>Choose system</u>&nbsp;&nbsp;
+                </label>
+                <div class="col-md-10 col-xs-12">
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    Procure to Pay :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_0_multi_select", new SelectList(Model.list_0,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlProcuretoPay",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+                <label class="control-label col-md-2 col-xs-12">
+                    ERP System :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.list_1,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlERPSystem",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    Order to Cash :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_2_multi_select", new SelectList(Model.list_2,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlOrdertoCash",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+                <label class="control-label col-md-2 col-xs-12">
+                    Forecast to Delivery :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_3_multi_select", new SelectList(Model.list_3,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlForecasttoDelivery",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    Finance&Accounting :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_4_multi_select", new SelectList(Model.list_4,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlFinanceAccounting",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+                <label class="control-label col-md-2 col-xs-12">
+                    Human Capital :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_5_multi_select", new SelectList(Model.list_5,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlHumanCapital",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    Other :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_6_multi_select", new SelectList(Model.list_6,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlOther",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    <u>@Resources.Global.purpose</u>&nbsp;&nbsp;
+                </label>
+
+                <div class="col-md-10 col-xs-12">
+                    <div class="row">
+                        @Html.TextAreaFor(x => x.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<style>
+    td div span {
+        line-height: 0px;
+    }
+
+    .multiselect-container {
+        width: 100% !important;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+</style>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#ddlchooseRequest').multiselect({
+            numberDisplayed: 1,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+         var valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_chooseRequest_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_chooseRequest_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlchooseRequest").multiselect('select', valuesSelectChoiceFromDb);
+
+        $('#ddlProcuretoPay').multiselect({
+            numberDisplayed: 4,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_0_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_0_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlProcuretoPay").multiselect('select', valuesSelectChoiceFromDb);
+
+        $('#ddlERPSystem').multiselect({
+            numberDisplayed: 4,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_1_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlERPSystem").multiselect('select', valuesSelectChoiceFromDb);
+
+        $('#ddlOrdertoCash').multiselect({
+            numberDisplayed: 4,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_2_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_2_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlOrdertoCash").multiselect('select', valuesSelectChoiceFromDb);
+
+        $('#ddlForecasttoDelivery').multiselect({
+            numberDisplayed: 4,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_3_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_3_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlForecasttoDelivery").multiselect('select', valuesSelectChoiceFromDb);
+
+
+        $('#ddlFinanceAccounting').multiselect({
+            numberDisplayed: 4,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_4_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_4_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlFinanceAccounting").multiselect('select', valuesSelectChoiceFromDb);
+
+
+        $('#ddlHumanCapital').multiselect({
+            numberDisplayed: 4,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_5_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_5_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlHumanCapital").multiselect('select', valuesSelectChoiceFromDb);
+
+
+        $('#ddlOther').multiselect({
+            numberDisplayed: 4,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+            },
+        });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_6_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_6_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlOther").multiselect('select', valuesSelectChoiceFromDb);
+
+        $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+        $(".multiselect .caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+    });
+
+</script>

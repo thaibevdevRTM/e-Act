@@ -1,0 +1,34 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using System.Globalization;
+@using System.Configuration;
+@{
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+    var urlLogoCompany = ConfigurationManager.AppSettings["renderHostPublicIP"] + ConfigurationManager.AppSettings["renderPathFile"] + "images/Thaibev-logo.png";
+}
+
+
+<div id="divHeadCompany" style="width: 100%; align-content: center; text-align: center;">
+    <table style="border-color:none;width: 100%;border-collapse: collapse;" class="fontDocV1">
+        <tr style="height:30px;">
+            <td rowspan="2" style="width:20%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;">
+                &nbsp;
+                @if (urlLogoCompany != "")
+                {
+                    <img width="120px" height="30px" src="@urlLogoCompany" />
+                }
+            </td>
+            <td rowspan="2" style="width:60%;text-align: center;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="fontDocV3">
+                @*<b>@Model.activityFormTBMMKT.formName</b>*@
+                <b>Change Request Form</b>
+            </td>
+            <td style="width:20%;text-align: left;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="fontDocSmallV2">&nbsp;No.</td>
+        </tr>
+        <tr style="height:30px;">
+            <td style="text-align: left;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="fontDocSmallV2">
+                Date&nbsp;&nbsp;@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
+            </td>
+        </tr>
+    </table>
+</div>
+

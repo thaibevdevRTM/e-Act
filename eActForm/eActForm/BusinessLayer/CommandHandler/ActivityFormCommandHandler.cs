@@ -276,6 +276,12 @@ namespace eActForm.BusinessLayer
                         //==END===update by fream devDate 20200214=======
                         result[1] = typeFormCompany;
                     }
+
+                    if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
+                    {
+                        result[1] = Activity_Model.activityType.ITForm.ToString();
+                    }
+
                 }
 
                 return result;

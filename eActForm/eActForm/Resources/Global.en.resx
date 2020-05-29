@@ -315,4 +315,7 @@
   <data name="empId" xml:space="preserve">
     <value>empId</value>
   </data>
+  <data name="dearForProcess" xml:space="preserve">
+    <value>Dear for process</value>
+  </data>
 </root>

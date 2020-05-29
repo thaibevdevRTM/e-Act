@@ -24,9 +24,13 @@
             {
                 <li>@Html.ActionLink(" Documents Horeca", "Index", "Home", new { typeForm = Activity_Model.activityType.HCM.ToString() }, null)</li>
             }
-            @if (UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && ActFormAppCode.checkGrpCompByUser(@Activity_Model.activityType.NUM.ToString())))//boom ยังไม่แน่ใจเงื่อนไขในการแสดง
+            @if (UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && ActFormAppCode.checkGrpCompByUser(@Activity_Model.activityType.NUM.ToString())))
             {
                 <li>@Html.ActionLink(" Documents HC", "Index", "Home", new { typeForm = Activity_Model.activityType.NUM.ToString() }, null)</li>
+            }
+            @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isCreator )
+            {
+                <li>@Html.ActionLink(" Documents IT", "Index", "Home", new { typeForm = Activity_Model.activityType.ITForm.ToString() }, null)</li>
             }
             @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
             {

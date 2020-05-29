@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eForms.Models.MasterData;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -33,10 +34,16 @@ namespace eActForm.Models
         public List<TB_Act_Other_Model> objExpenseCashList { get; set; }
         public List<exPerryCashModel> exPerryCashList { get; set; }
         public exPerryCashModel exPerryCashModel { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_chooseRequest { get; set; }
         public List<TB_Act_master_list_choiceModel> list_0 { get; set; }
         public List<TB_Act_master_list_choiceModel> list_1 { get; set; }
         public List<TB_Act_master_list_choiceModel> list_2 { get; set; }
         public List<TB_Act_master_list_choiceModel> list_3 { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_4 { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_5 { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_6 { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_7 { get; set; }
+        public List<TB_Act_master_list_choiceModel> list_8 { get; set; }
         public List<TB_Act_ActivityChoiceSelectModel> tB_Act_ActivityChoiceSelectModel { get; set; }
         public List<TB_Act_ProductBrand_Model> tB_Act_ProductBrand_Model_2 { get; set; }
         public List<TB_Act_master_list_choiceModel> listPiority { get; set; }
@@ -66,6 +73,9 @@ namespace eActForm.Models
         public List<GetDataIO> listGetDataIO { get; set; }
         public List<GetDataPVPrevious> listGetDataPVPrevious { get; set; }
         public List<GetDataDetailPaymentAll> listGetDataDetailPaymentAll { get; set; }
+        public List<departmentMasterModel> listGetDepartmentMaster { get; set; }
+        public List<DataRequesterToShow> dataRequesterToShows { get; set; }
+
     }
 
     public class ActivityFormTBMMKT : ActivityForm
@@ -78,8 +88,15 @@ namespace eActForm.Models
         public string companyName { get; set; }
         public string list_0_select { get; set; }
         public string list_0_select_value { get; set; }
+        public string[] list_0_multi_select { get; set; }
         public string[] list_1_multi_select { get; set; }
         public string[] list_2_multi_select { get; set; }
+        public string[] list_3_multi_select { get; set; }
+        public string[] list_4_multi_select { get; set; }
+        public string[] list_5_multi_select { get; set; }
+        public string[] list_6_multi_select { get; set; }
+        public string[] list_7_multi_select { get; set; }
+        public string[] list_8_multi_select { get; set; }
         public string list_1_select { get; set; }
         public string list_2_select { get; set; }
         public string list_3_select { get; set; }
@@ -93,6 +110,7 @@ namespace eActForm.Models
         public string formNameEn { get; set; }
         public bool chkUseEng { get; set; }
         public string createdByNameEN { get; set; }
+        public string[] list_chooseRequest_multi_select { get; set; }
 
     }
 
@@ -156,6 +174,15 @@ namespace eActForm.Models
         public string activityIdNoSub { get; set; }
         public string orderOf { get; set; }
         public string regionalId { get; set; }
+        public string departmentId { get; set; }
+        public string other1 { get; set; }
+        public string other2 { get; set; }
+        public int hospPercent { get; set; }
+        public decimal? amount { get; set; }
+        public decimal? amountLimit { get; set; }
+        public decimal? amountCumulative { get; set; }
+        public decimal? amountBalance { get; set; }
+        public decimal? amountReceived { get; set; }
     }
 
     public class TB_Act_ActivityForm_DetailOtherList : ActBaseModel
@@ -211,7 +238,7 @@ namespace eActForm.Models
         public string unitPriceDisplayReport { get; set; }
         public string QtyName { get; set; }
         public string remark { get; set; }
-        public string listChoiceId { get; set; }
+     
     }
 
     public class RequestEmpModel : ActBaseModel
@@ -235,6 +262,8 @@ namespace eActForm.Models
         public string empTel { get; set; }
         public string compId { get; set; }
         public string email { get; set; }
+        public string detail { get; set; }
+        public string hireDate { get; set; }
     }
 
     public class PurposeModel : ActBaseModel
@@ -384,4 +413,27 @@ namespace eActForm.Models
         public string empLevel { get; set; }
 
     }
+
+    public class objGetDataSubjectByFormOnly
+    {
+        public string master_type_form_id { get; set; }
+    }
+
+    public class objGetDepartmentMaster
+    {
+        public string companyId { get; set; }
+    }
+
+    public class DataRequesterToShow
+    {
+        public string empName { get; set; }
+        public string empId { get; set; }
+        public string empDepartment { get; set; }
+        public string empPhone { get; set; }
+        public string empCompany { get; set; }
+        public string empEmail { get; set; }
+        public string languageDoc { get; set; }
+
+    }
+
 }

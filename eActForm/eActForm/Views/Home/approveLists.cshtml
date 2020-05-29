@@ -50,11 +50,15 @@
                                             else if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"])
                                             {
                                                 valStatusName = item.statusNameEN;
-                                            }                                            
+                                            }
 
                                             var status = item.statusId == "" ? Resources.Global.notApprove : valStatusName;
 
-                                            if (item.isApprove == false)
+                                            if (item.isApprove == false && item.approveGroupId== ConfigurationManager.AppSettings["approveGroupForProcess"])
+                                            {
+                                                status = Resources.Global.dearForProcess;
+                                            }
+                                            else if (item.isApprove == false)
                                             {
                                                 status = Resources.Global.dearToInform;
                                             }

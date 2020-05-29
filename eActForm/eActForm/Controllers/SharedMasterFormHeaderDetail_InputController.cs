@@ -18,7 +18,7 @@ namespace eActForm.Controllers
         }
         public ActionResult headerDetailsDate(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-            if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])//ใบสั่งจ่าย dev date 20200408 Peerapop
+            if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
             {
                 activity_TBMMKT_Model.activityFormModel.documentDate = DateTime.Now;
             }
@@ -83,8 +83,20 @@ namespace eActForm.Controllers
 
         public ActionResult headerDetailsDateV2(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            if (string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormModel.documentDate.ToString()))
+            {
+                activity_TBMMKT_Model.activityFormModel.documentDate =DateTime.Now;
+            }
             return PartialView(activity_TBMMKT_Model);
         }
-        
+
+        public ActionResult dropdownConditionSubject(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            objGetDataSubjectByFormOnly objGetDataSubjectByFormOnly = new objGetDataSubjectByFormOnly();
+            objGetDataSubjectByFormOnly.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
+            activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormOnlyAndFlow(objGetDataSubjectByFormOnly);
+            return PartialView(activity_TBMMKT_Model);
+        }
+
     }
 }
