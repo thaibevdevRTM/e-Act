@@ -1,6 +1,8 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer;
 @using System.Configuration;
+<link href="~/Scripts/bootstrap-select.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-select.min.js"></script>
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr>
         <td style="">
@@ -16,6 +18,12 @@
                             @class = "form-control ",
                             id = "ddlSubject"
                         })
+                        <script>
+                            $('#ddlSubject').selectpicker({
+                                liveSearch: true,
+                                showSubtext: true
+                            });
+                        </script>
                     </div>
                 </div>
                 <div class="col-md-6 col-xs-12">
