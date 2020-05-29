@@ -589,7 +589,9 @@ namespace eActForm.BusinessLayer
             {
                 object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCheckStatusActivity"
                     , new SqlParameter[] { new SqlParameter("@actId", actId) });
-                result = obj.ToString();
+                if(obj != null) {
+                    result = obj.ToString();
+                }               
                 return result;
 
             }

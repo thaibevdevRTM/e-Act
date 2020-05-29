@@ -324,11 +324,15 @@ namespace eActForm.Controllers
                     var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
 
-                    if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
+                    if (QueryGetActivityByIdTBMMKT.getActivityById(activityId).FirstOrDefault().statusId != 3)
                     {
-                        ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                        var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                        if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
+                        {
+                            ApproveAppCode.updateApproveWaitingByRangNo(activityId);
+                            var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                        }
                     }
+
                 }
                 resultAjax.Success = true;
                 resultAjax.Message = genDoc[1];

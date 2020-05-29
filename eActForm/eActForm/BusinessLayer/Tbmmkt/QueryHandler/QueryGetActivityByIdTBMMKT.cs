@@ -50,7 +50,7 @@ namespace eActForm.BusinessLayer
                                   createdByName = "คุณ" + d["createdByName"].ToString(),
                                   createdByNameEN = d["createdByNameEN"].ToString(),
                                   piorityDoc = d["piorityDoc"].ToString(),
-
+                                  statusNote = d["statusNote"].ToString(),
                               });
 
                 return result.ToList();
