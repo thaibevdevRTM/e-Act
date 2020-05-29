@@ -52,6 +52,7 @@ namespace eActForm.BusinessLayer
                     model.activityFormTBMMKT.master_type_form_id = model.activityFormTBMMKT.master_type_form_id == null ? "" : model.activityFormTBMMKT.master_type_form_id;
                     model.activityFormTBMMKT.languageDoc = model.activityFormTBMMKT.languageDoc == null ? "" : model.activityFormTBMMKT.languageDoc;
                     model.activityFormTBMMKT.piorityDoc = model.activityFormTBMMKT.piorityDoc == null ? "" : model.activityFormTBMMKT.piorityDoc;
+                    model.activityFormTBMMKT.statusNote = model.activityFormTBMMKT.statusNote == null ? "" : model.activityFormTBMMKT.statusNote;
 
                     rtn = insertActivityForm(model.activityFormTBMMKT);
 
@@ -1040,7 +1041,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@costPeriodST", model.costPeriodSt)
                     ,new SqlParameter("@costPeriodEND", model.costPeriodEnd)
                     ,new SqlParameter("@empId", model.empId)
-
+                    ,new SqlParameter("@statusNote", model.statusNote)
                   });
             }
             catch (Exception ex)
