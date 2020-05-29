@@ -153,7 +153,7 @@
                 <div class="col-md-4 col-xs-12">
                     <div class="row">
 
-                        @if (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)
+                        @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)|| (UtilsAppCode.Session.User.isAdminTBM))
                         {
                             @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.BudgetNumber, new { @class = "form-control textboxcss", @id = "txtBudgetNumber", style = "width:320px;" })
                         }
