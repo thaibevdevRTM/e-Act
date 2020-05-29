@@ -368,6 +368,10 @@
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]') {
             if ($("#txtEmpId").val() == "") { required += "&emsp;EmpID/รหัสพนักงาน*<br>"; validate = false; }
             if ($("#ddlDepartment").val() == "") { required += "&emsp;Department/หน่วยงาน*<br>"; validate = false; }
+            if ($("#ddlchooseRequest").val() == null) { required += "&emsp;Choose request*<br>"; validate = false; }
+            if ($("#ddlProcuretoPay").val() == null && $("#ddlERPSystem").val() == null && $("#ddlOrdertoCash").val() == null && $("#ddlForecasttoDelivery").val() == null && $("#ddlFinanceAccounting").val() == null && $("#ddlHumanCapital").val() == null && $("#ddlOther").val() == null) { required += "&emsp;Choose system*<br>"; validate = false; }
+            if ($("#ddlChangetype").val() == null) { required += "&emsp;Change type / ประเภทของการเปลี่ยนแปลง*<br>"; validate = false; }
+            if ($("#ddlChangeAuthorizations").val() == null) { required += "&emsp;Change Authorizations / สิทธิ์การใช้งาน*<br>"; validate = false; }
         }
         else {
 
