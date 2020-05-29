@@ -88,7 +88,12 @@ namespace eActForm.Controllers
             {
                 model.actLists = model.actLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
             }
-
+            //============เดิมไม่ได้ใช้ เพิ่มการกรอกง createDate กรอง เฟรมเพิ่ม ให้ทำงานได้ 20200527=============
+            if (!string.IsNullOrEmpty(Request.Form["startDate"]) && !string.IsNullOrEmpty(Request.Form["endDate"]))
+            {
+                model.actLists = model.actLists.Where(r => r.documentDate >= DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null) && r.documentDate <= DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null)).ToList();
+            }
+            //===END=========เดิมไม่ได้ใช้ เพิ่มการกรอกง createDate กรอง เฟรมเพิ่ม ให้ทำงานได้ 20200527=============
             TempData["ApproveSearchResult"] = model.actLists;
             return RedirectToAction("ListView");
         }

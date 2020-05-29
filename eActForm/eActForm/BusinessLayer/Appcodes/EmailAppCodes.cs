@@ -41,7 +41,7 @@ namespace eActForm.BusinessLayer
                     mailTo += mailTo == "" ? dr["empEmail"].ToString() : "," + dr["empEmail"].ToString();
                 }
 
-                sendEmail(mailTo
+                sendEmailWithActId(actFormId, mailTo
                     , ConfigurationManager.AppSettings["emailApproveCC"]
                     , ConfigurationManager.AppSettings["emailRequestCancelSubject"]
                     , strBody
@@ -433,8 +433,10 @@ namespace eActForm.BusinessLayer
 
             List<Attachment> files = new List<Attachment>();
             string[] pathFile = new string[10];
-            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
-            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail
+            //mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
+            //mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail            
+            mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
+            mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : mailCC;
 
             switch (emailType)
             {
@@ -500,7 +502,7 @@ namespace eActForm.BusinessLayer
                 }
             }
 
-            sendEmail(mailTo
+            sendEmailWithActId(actFormId,mailTo
                     , mailCC
                     , strSubject
                     , strBody
@@ -757,14 +759,6 @@ namespace eActForm.BusinessLayer
 
         public static void sendEmail(string mailTo, string cc, string subject, string body, List<Attachment> files)
         {
-            //string slog = "";
-            //slog = "begin sendEmail ";
-            //slog = slog + "emailFrom=>" + ConfigurationManager.AppSettings["emailFrom"];
-            //slog = slog + "emailFromPass=>" + ConfigurationManager.AppSettings["emailFromPass"];
-            //slog = slog + "mailTo=>" + mailTo;
-            //slog = slog + "subject=>" + subject;
-            //slog = slog + "cc=>" + cc;
-            //ExceptionManager.WriteError("sendEmail >> " + slog);
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
             mailTo = mailTo == null || mailTo == "" ? ConfigurationManager.AppSettings["emailForDevelopSite"] : mailTo;
             GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
@@ -781,10 +775,23 @@ namespace eActForm.BusinessLayer
 
             mailer.IsHtml = true;
             mailer.Send();
+        }
 
-
-            //slog = "mailer.Send() => ok";
-            //ExceptionManager.WriteError("sendEmail=> " + slog);
+        public static void sendEmailWithActId(string actFormId, string mailTo, string cc, string subject, string body, List<Attachment> files)
+        {
+            GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
+            GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
+            GMailer mailer = new GMailer();
+            mailer.ToEmail = mailTo;
+            mailer.Subject = subject;
+            mailer.Body = body;
+            mailer.p_Attachment = files;
+            if (!String.IsNullOrEmpty(cc))
+            {
+                mailer.CC = cc;
+            }
+            mailer.IsHtml = true;
+            mailer.Send();
         }
 
         public static void resendHistory(string actId)
@@ -1071,6 +1078,35 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 throw new Exception("getDataEmpGroupFinishApprovedFormatLikeEdoc >> " + ex.Message);
+            }
+        }
+
+
+        public class getEmailisDevelop
+        {
+            public string e_to { get; set; }
+            public string e_cc { get; set; }
+            public string e_bcc { get; set; }
+        }
+
+        public static List<getEmailisDevelop> GetDataEmailIsDev(string activityId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetDataEmailIsDev", new SqlParameter("@activityId", activityId));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new getEmailisDevelop()
+                             {
+                                 e_to = d["e_to"].ToString(),
+                                 e_cc = d["e_cc"].ToString(),
+                                 e_bcc = d["e_bcc"].ToString(),
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("GetDataEmailIsDev => " + ex.Message);
+                return new List<getEmailisDevelop>();
             }
         }
 
