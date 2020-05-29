@@ -23,19 +23,19 @@
                         </th>
                     </tr>
                     @*  <tr>
-                            <th style="text-align :center;"> สถานพยาบาลที่ไปตรวจรักษา</th>
-                            <th colspan="2" style="text-align :center;">
+                <th style="text-align :center;"> สถานพยาบาลที่ไปตรวจรักษา</th>
+                <th colspan="2" style="text-align :center;">
 
-                                @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].hospName, new
-                               {
-                                        id = "txthospName_0",
-                                   @class = "form-control textboxcss font10  text-center  expenseList",
-                                   name = "expensesDetailModel.costDetailLists[0].hospName",
-                                   onkeyup = "autocompleDetail(this,0)"
-                               })
+                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].hospName, new
+                   {
+                            id = "txthospName_0",
+                       @class = "form-control textboxcss font10  text-center  expenseList",
+                       name = "expensesDetailModel.costDetailLists[0].hospName",
+                       onkeyup = "autocompleDetail(this,0)"
+                   })
 
-                            </th>
-                        </tr> *@
+                </th>
+            </tr> *@
                     <tr>
                         <th colspan="4" style="text-align :center;">
                             <div class="form-group">
@@ -61,29 +61,29 @@
                             </div>
 
                             @*<div class="form-group">
-                                    <div class="col-md-10 col-xs-12">
-                                        <div class="row">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
-                                                รหัสบัญชี :
-                                            </label>
-                                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                                @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].glCode, new
-                                           {
-                                               @class = "form-control textboxcss ",
-                                               id = "txtGlCode_0",
-                                               name = "expensesDetailModel.costDetailLists[0].glCode",
-                                               style = "",
-                                               @readonly = true
-                                           })
+                        <div class="col-md-10 col-xs-12">
+                            <div class="row">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
+                                    รหัสบัญชี :
+                                </label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].glCode, new
+                               {
+                                   @class = "form-control textboxcss ",
+                                   id = "txtGlCode_0",
+                                   name = "expensesDetailModel.costDetailLists[0].glCode",
+                                   style = "",
+                                   @readonly = true
+                               })
 
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 col-xs-12">
-                                        <div class="row"></div>
-                                    </div>
-                                </div>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-xs-12">
+                            <div class="row"></div>
+                        </div>
+                    </div>*@
                         </th>
                     </tr>
 
@@ -227,60 +227,60 @@
                     <tr>
                         <td style="text-align:right">
                             <div class="form-group">
-                                <label class="col-md-5 col-xs-12"> ค่ารักษาพยาบาลตามระเบียบบริษัทฯจากที่จ่ายจริงจำนวน</label>
-                                <div class="col-md-4 col-xs-12">
+                                <label class="col-md-9 col-xs-12"> ค่ารักษาพยาบาลตามระเบียบบริษัทฯจากที่จ่ายจริงจำนวน</label>
+                                <div class="col-md-3 col-xs-12">
                                     <div class="row">
                                         <label id="lblPercent">0</label>
                                         @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.hospPercent, new { @id = "hdPercent" }) %
 
                                     </div>
                                 </div>
-                                <label class="col-md-3 col-xs-12">  </label>
+                                @*<label class="col-md-3 col-xs-12">  </label>*@
 
-                                <label class="col-md-5 col-xs-12">เป็นจำนวนเงิน</label>
-                                <div class="col-md-4 col-xs-12">
+                                <label class="col-md-9 col-xs-12">เป็นจำนวนเงิน</label>
+                                <div class="col-md-3 col-xs-12">
                                     <div class="row">
                                         <label id="lblAmount">0</label>
-                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amount, new { @id = "hdAmount" })
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amount, new { @id = "hdAmount" }) บาท
                                     </div>
                                 </div>
-                                <label class="col-md-3 col-xs-12"> บาท </label>
+                                @*<label class="col-md-3 col-xs-12">  </label>*@
 
-                                <label class="col-md-5 col-xs-12">วงเงินช่วยเหลือค่ารักษาพยาบาลตามระดับ ปีละ</label>
-                                <div class="col-md-4 col-xs-12">
+                                <label class="col-md-9 col-xs-12">วงเงินช่วยเหลือค่ารักษาพยาบาลตามระดับ ปีละ</label>
+                                <div class="col-md-3 col-xs-12">
                                     <div class="row">
                                         <label id="lblLimit">0</label>
-                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountLimit, new { @id = "hdLimit" })
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountLimit, new { @id = "hdLimit" }) บาท
                                     </div>
                                 </div>
-                                <label class="col-md-3 col-xs-12"> บาท </label>
+                                @*<label class="col-md-3 col-xs-12"> บาท </label>*@
 
-                                <label class="col-md-5 col-xs-12">วงเงินใช้ไปสะสมยกมา</label>
-                                <div class="col-md-4 col-xs-12">
+                                <label class="col-md-9 col-xs-12">วงเงินใช้ไปสะสมยกมา</label>
+                                <div class="col-md-3 col-xs-12">
                                     <div class="row">
                                         <label id="lblCumulative">0</label>
-                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountCumulative, new { @id = "hdCumulative" })
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountCumulative, new { @id = "hdCumulative" }) บาท
                                     </div>
                                 </div>
-                                <label class="col-md-3 col-xs-12"> บาท </label>
+                                @*<label class="col-md-3 col-xs-12"> บาท </label>*@
 
-                                <label class="col-md-5 col-xs-12">คงเหลือสิทธิในการเบิกค่ารักษาพยาบาล</label>
-                                <div class="col-md-4 col-xs-12">
+                                <label class="col-md-9 col-xs-12">คงเหลือสิทธิในการเบิกค่ารักษาพยาบาล</label>
+                                <div class="col-md-3 col-xs-12">
                                     <div class="row">
                                         <label id="lblBalance">0</label>
-                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountBalance, new { @id = "hdBalance" })
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountBalance, new { @id = "hdBalance" }) บาท
                                     </div>
                                 </div>
-                                <label class="col-md-3 col-xs-12"> บาท </label>
+                                @*<label class="col-md-3 col-xs-12"> บาท </label>*@
 
-                                <label class="col-md-5 col-xs-12">จำนวนเงินที่พนักงานได้รับทั้งสิ้น</label>
-                                <div class="col-md-4 col-xs-12">
+                                <label class="col-md-9 col-xs-12">จำนวนเงินที่พนักงานได้รับทั้งสิ้น</label>
+                                <div class="col-md-3 col-xs-12">
                                     <div class="row">
                                         <label id="lblReceived">0.00</label>
-                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountReceived, new { @id = "hdReceived" })
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountReceived, new { @id = "hdReceived" }) บาท
                                     </div>
                                 </div>
-                                <label class="col-md-3 col-xs-12"> บาท</label>
+                                @*<label class="col-md-3 col-xs-12"> บาท</label>*@
 
 
                             </div>
