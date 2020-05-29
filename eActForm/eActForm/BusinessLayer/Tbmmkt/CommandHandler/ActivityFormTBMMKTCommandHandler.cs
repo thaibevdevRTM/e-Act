@@ -1457,6 +1457,8 @@ namespace eActForm.BusinessLayer
                         productcostdetail.promotionCost = item.promotionCost;
                         productcostdetail.isShowGroup = item.isShowGroup;
                         productcostdetail.rowNo = insertIndex;
+                        productcostdetail.detail = item.detail;
+                        productcostdetail.unit = item.unit;
                         productcostdetail.delFlag = itemIn.delFlag;
                         productcostdetail.createdByUserId = model.activityFormModel.createdByUserId;
                         productcostdetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;

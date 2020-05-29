@@ -11,6 +11,7 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGetActivityByIdTBMMKT
     {
+
         public static List<ActivityFormTBMMKT> getActivityById(string activityId)
         {
             try
