@@ -153,6 +153,8 @@ namespace eActForm.Controllers
                         r.specialDiscBaht = specDiscBath;
                         r.normalCost = p_disCount3 == 0 ? model.normalCost : p_disCount3;
                         r.promotionCost = Math.Round(p_PromotionCost, 3);
+                        r.rsp = model.rsp;
+                        r.unitTxt = model.unitTxt;
                         return r;
                     }).ToList();
                 TempData["actForm" + model.activityId] = activityModel;

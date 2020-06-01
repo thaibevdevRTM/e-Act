@@ -453,5 +453,42 @@ namespace eActForm.BusinessLayer
             }
 
         }
+
+        public static bool checkFormAddTBDetailOther(string masterForm)
+        {
+            bool check = false;
+            if(ConfigurationManager.AppSettings["masterEmpExpense"] == masterForm
+                || ConfigurationManager.AppSettings["formSetPriceMT"] == masterForm)
+            {
+                check = true;
+            }
+
+            return check;
+        }
+
+        public static Activity_TBMMKT_Model addDataToDetailOther(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            try
+            {
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId = activity_TBMMKT_Model.activityFormTBMMKT.BrandlId;
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId = activity_TBMMKT_Model.activityFormTBMMKT.channelId;
+
+                //ค่าที่ insert จะไปยัดใน tB_Act_ActivityForm_DetailOther อีกที ไม่งั้น Get Flow ไม่ได้ ???????
+                activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
+                activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+
+                if (ConfigurationManager.AppSettings["masterEmpExpense"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)
+                {
+                    activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-01", "yyyy-MM-dd").ToString("dd/MM/yyyy");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("addDataToDetailOther >>" + ex.Message);
+            }
+            return activity_TBMMKT_Model;
+        }
     }
 }

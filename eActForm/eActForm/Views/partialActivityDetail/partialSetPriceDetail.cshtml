@@ -306,18 +306,14 @@
             }
         });
 
-        fillProductOnChange();
-        document.getElementById("ddlProductfilter").disabled = true;
-        document.getElementById("ddlProductSize").disabled = true;
-        getFormatCus();
+      
 
-        @*var chkClaim = '@ViewBag.chkClaim'
-        if (chkClaim == 'True') {
-            document.getElementById("divIO").style.display = "block";
+        if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' != "False") {
+             fillProductOnChange();
+             document.getElementById("ddlProductfilter").disabled = true;
+             document.getElementById("ddlProductSize").disabled = true;
+             getFormatCus();
         }
-        else {
-            document.getElementById("divIO").style.display = "none";
-        }*@
 
 
         $("#txtCustomerName").autocomplete({
