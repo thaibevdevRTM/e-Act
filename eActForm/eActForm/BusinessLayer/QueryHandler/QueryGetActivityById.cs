@@ -31,7 +31,7 @@ namespace eActForm.BusinessLayer
                                   customerId = d["customerId"].ToString(),
                                   chanel = d["channelName"].ToString(),
                                   chanelShort = d["chanelShort"].ToString(),
-                                  chanel_Id = string.IsNullOrEmpty(d["master_type_form_id"].ToString()) ? d["chanel_Id"].ToString() : d["master_type_form_id"].ToString(),
+                                  chanel_Id = string.IsNullOrEmpty(d["master_type_form_id"].ToString()) ? d["chanel_Id"].ToString() : d["master_type_form_id"].ToString(), //ถ้ามี master_type_form_id is Set Price Form
                                   regionId = d["regionId"].ToString(),
                                   regionName = d["regionName"].ToString() + "(" + d["regionShort"].ToString() + ")",
                                   regionShort = d["regionShort"].ToString(),
