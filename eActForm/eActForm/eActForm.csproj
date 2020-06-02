@@ -3166,8 +3166,6 @@
     <Content Include="Views\PartialChangeRequestForm\inputPageSectionFiveTitle_IT314.cshtml" />
     <Content Include="Views\PartialChangeRequestForm\inputPageSectionFive_IT314.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\requestEmp2.cshtml" />
-    <Content Include="Views\partialActivityDetail\partialSetPriceMT.cshtml" />
-    <Content Include="Views\partialActivityDetailReport\partialSetPriceMTRpt.cshtml" />
     <Content Include="Views\ExpenseEstimateReport\expensesMedDetailRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\recordByHcMedRpt.cshtml" />
     <Content Include="Views\ClaimReport\claimReportIndex.cshtml" />
@@ -3190,7 +3188,6 @@
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
-    <Folder Include="Uploadfiles\ImportMasterAP\template\" />
     <Folder Include="Uploadfiles\ImportMatProductPosPremium\template\" />
     <Folder Include="Views\ApiApprove\" />
     <Folder Include="Views\exPerryCash\" />

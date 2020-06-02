@@ -97,6 +97,7 @@
                     @Html.DropDownListFor(x => x.activityFormTBMMKT.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
                {
                    @class = "form-control textboxcss",
+                   onchange = "onchangeCustomer();",
                    id = "ddlCustomer"
                })
 
