@@ -17,14 +17,16 @@
         formName = @Model.activityFormTBMMKT.formName;
     }
 
-
 }
 <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
     <table style="border-color:none; width: 100%;">
 
         <tr>
-            <td  style="text-align: center;vertical-align:middle;" class="fontDocV2">
-                <label>@formName</label></td>
+            <td style="text-align: center;vertical-align:middle;" class="fontDocV2">
+                <label>
+                    @Html.Raw(@formName.Replace(Environment.NewLine, "<br/>"))
+                </label>
+            </td> 
             @*<td style="width:80px;">&nbsp;</td>
             <td style="width:555px;text-align: center;vertical-align:middle;" class="fontDocV2">@formName</td>
             <td style="width:80px;"></td>*@

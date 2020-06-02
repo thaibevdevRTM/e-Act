@@ -242,9 +242,10 @@ namespace eActForm.BusinessLayer
                             {
                                 result[1] = Activity_Model.activityType.HCM.ToString();
                             }
-                            else if (ActFormAppCode.checkGrpComp(getActList.FirstOrDefault().companyId, Activity_Model.activityType.NUM.ToString()))
+                            else if (AppCode.hcForm.Contains(getActList.FirstOrDefault().master_type_form_id))
+                            //else if (ActFormAppCode.checkGrpComp(getActList.FirstOrDefault().companyId, Activity_Model.activityType.NUM.ToString()))
                             {
-                                result[1] = Activity_Model.activityType.NUM.ToString();
+                                result[1] = Activity_Model.activityType.HCForm.ToString();// result[1] = Activity_Model.activityType.NUM.ToString();
                             }
                             //====END=====แบบใหม่ Gen In USP=======By Peerapop=========
                         }

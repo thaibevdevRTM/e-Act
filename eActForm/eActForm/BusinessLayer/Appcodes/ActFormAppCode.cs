@@ -120,9 +120,9 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivityFormByEmpId_ITForm";
                 }
-                else if (typeForm == Activity_Model.activityType.NUM.ToString())
+                else if (typeForm == Activity_Model.activityType.HCForm.ToString())
                 {
-                    strCall = "usp_getActivityFormByEmpId_HCPomNum"; 
+                    strCall = "usp_getActivityFormByEmpId_HCPomNum";
                 }
                 else
                 {
@@ -140,7 +140,7 @@ namespace eActForm.BusinessLayer
                 }
 
                 //เดิมผูกแค่บริษัท ต้องผูกเนื่องฟอร์มเพิ่ม boom 20200520
-                if (isAdmin() && typeForm == Activity_Model.activityType.NUM.ToString())
+                if (isAdmin() && typeForm == Activity_Model.activityType.HCForm.ToString())
                 {
                     strCall = "usp_getActivityFormAll_HCPomNum";
                 }
@@ -452,6 +452,39 @@ namespace eActForm.BusinessLayer
                 throw new Exception("checkCanEditByUser >>" + ex.Message);
             }
 
+        }
+
+        public static string getGrpCompByCompId(string compId)
+        {
+            try
+            {
+                string grpComp = "";
+                List<TB_Act_Other_Model> lst = new List<TB_Act_Other_Model>();
+                lst = AdminUserAppCode.getCompany();
+
+                if (lst.Count > 0)
+                {
+                    lst = lst.Where(x => x.val1 == compId).ToList();
+                }
+                if (lst.Count > 0)
+                {
+                    if (string.IsNullOrEmpty(lst[0].subType))
+                    {
+                        grpComp = lst[0].displayVal;
+                    }
+                    else
+                    {
+                        grpComp = lst[0].subType;
+                    }
+
+
+                }
+                return grpComp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkCanEditByUser >>" + ex.Message);
+            }
         }
     }
 }
