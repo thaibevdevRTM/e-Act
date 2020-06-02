@@ -75,6 +75,7 @@ namespace eActForm.BusinessLayer
                                   actClaim = d["actClaim"].ToString(),
                                   actIO = d["actIO"].ToString(),
 
+                                  statusNote = d["statusNote"].ToString(),
                               });
 
                 return result.ToList();

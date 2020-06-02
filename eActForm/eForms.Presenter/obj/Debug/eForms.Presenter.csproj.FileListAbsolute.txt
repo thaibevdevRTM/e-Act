@@ -38,7 +38,6 @@ D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\obj\Debu
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.dll
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\Microsoft.ApplicationBlocks.Data.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csprojAssemblyReference.cache
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CoreCompileInputs.cache
