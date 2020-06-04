@@ -325,6 +325,7 @@
     <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\API\apiGetDataMasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportMasterHospital.cs" />
     <Compile Include="Controllers\ImportMasterAPController.cs" />
     <Compile Include="Controllers\ImportMaterial_PRODUCT_POS_PREMIUMController.cs" />
     <Compile Include="Controllers\MainFormController.cs" />
