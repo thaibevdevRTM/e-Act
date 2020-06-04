@@ -12,7 +12,7 @@ namespace eActForm.Controllers
 {
     public partial class partialActivityDetailController
     {
-        public ActionResult partialSetPriceMT(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public ActionResult partialSetPriceDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             try
             {
@@ -24,20 +24,18 @@ namespace eActForm.Controllers
                     .Where(x => x.activityCondition.Equals("mtm".ToLower()))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
-
                 if (activity_TBMMKT_Model.activityFormModel.mode == Activity_Model.modeForm.edit.ToString())
                 {
-
-                    activity_TBMMKT_Model.activityFormModel = QueryGetActivityById.getActivityById(activity_TBMMKT_Model.activityFormTBMMKT.id).FirstOrDefault();
-                    //activityModel.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activityId);
-                    //activityModel.activitydetaillist = QueryGetActivityDetailById.getActivityDetailById(activityId);
                     activity_TBMMKT_Model.productSmellLists = QueryGetAllProduct.getProductSmellByGroupId(activity_TBMMKT_Model.activityFormModel.productGroupId);
                     activity_TBMMKT_Model.productBrandList = QueryGetAllBrand.GetAllBrand().Where(x => x.productGroupId == activity_TBMMKT_Model.activityFormModel.productGroupId).ToList();
                     activity_TBMMKT_Model.productGroupList = QueryGetAllProductGroup.getAllProductGroup().Where(x => x.cateId == activity_TBMMKT_Model.activityFormModel.productCateId).ToList();
-                    //TempData["actForm" + activity_TBMMKT_Model.activityFormTBMMKT.id] = activity_TBMMKT_Model;
                     ViewBag.chkClaim = activity_TBMMKT_Model.activityFormModel.chkAddIO;
-                }
 
+                    //เก็บใส่ Temp ใช้กับหน้า Productlist เพราะ สูตรการคำนวณของเดิม ใช้Temp เก็บค่า
+                    activity_TBMMKT_Model.productcostdetaillist1 = QueryGetCostDetailById.getcostDetailById(activity_TBMMKT_Model.activityFormTBMMKT.id);
+
+                }
+                TempData["actForm" + activity_TBMMKT_Model.activityFormModel.id] = activity_TBMMKT_Model;
             }
             catch (Exception ex)
             {
@@ -48,5 +46,6 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
+    
     }
 }

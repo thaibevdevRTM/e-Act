@@ -61,7 +61,6 @@
       <HintPath>..\..\..\MAS_WebAPI\TBWebApi\bin\itextsharp.xmlworker.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -322,6 +321,8 @@
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\API\eActController.cs" />
+    <Compile Include="Controllers\ExpenseEstimateInput\parialPriceStructure.cs" />
+    <Compile Include="Controllers\ExpenseEstimateReport\parialPriceStructureRpt.cs" />
     <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\API\apiGetDataMasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -332,9 +333,9 @@
     <Compile Include="Controllers\partailViewByItem\partialByProductController.cs" />
     <Compile Include="Controllers\PartialChangeRequestFormController.cs" />
     <Compile Include="Controllers\partailViewDataMaster\partailViewDataMasterController.cs" />
-    <Compile Include="Controllers\partialActivityDetailReport\partialSetPriceMTRpt.cs" />
+    <Compile Include="Controllers\partialActivityDetailReport\partialSetPriceDetailRpt.cs" />
     <Compile Include="Controllers\partialActivityDetailReport\partialActivityDetailReportController.cs" />
-    <Compile Include="Controllers\partialActivityDetail\partialSetPriceMT.cs" />
+    <Compile Include="Controllers\partialActivityDetail\partialSetPriceDetail.cs" />
     <Compile Include="Controllers\partialSaleTeam\partialSaleTeamController.cs" />
     <Compile Include="Controllers\partialActivityDetail\partialActivityDetailController.cs" />
     <Compile Include="Controllers\partialViewEmpInfo\partialEmpInfoController.cs" />
@@ -3148,6 +3149,11 @@
     <Content Include="Views\ExpenseEstimateInput\expensesMedDetail_old.cshtml" />
     <Content Include="Views\MenuList\importData.cshtml" />
     <Content Include="Views\ImportMasterAP\Index.cshtml" />
+    <Content Include="Views\partialActivityDetail\partialSetPriceDetail.cshtml" />
+    <Content Include="Views\partialActivityDetailReport\partialSetPriceDetailRpt.cshtml" />
+    <Content Include="Views\ExpenseEstimateReport\parialPriceStructureRpt.cshtml" />
+    <Content Include="Views\ExpenseEstimateInput\productSetPriceList.cshtml" />
+    <Content Include="Uploadfiles\ImportMasterAP\template\TemplateImportAP.xlsx" />
     <Content Include="Views\PartialChangeRequestForm\crHeader.cshtml" />
     <Content Include="Views\MenuList\itForm.cshtml" />
     <Content Include="Views\PartialChangeRequestForm\cr_IT_Frm314_page1.cshtml" />
@@ -3160,8 +3166,6 @@
     <Content Include="Views\PartialChangeRequestForm\inputPageSectionFiveTitle_IT314.cshtml" />
     <Content Include="Views\PartialChangeRequestForm\inputPageSectionFive_IT314.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\requestEmp2.cshtml" />
-    <Content Include="Views\partialActivityDetail\partialSetPriceMT.cshtml" />
-    <Content Include="Views\partialActivityDetailReport\partialSetPriceMTRpt.cshtml" />
     <Content Include="Views\ExpenseEstimateReport\expensesMedDetailRpt.cshtml" />
     <Content Include="Views\SharedMasterFormDetail\recordByHcMedRpt.cshtml" />
     <Content Include="Views\ClaimReport\claimReportIndex.cshtml" />
@@ -3184,12 +3188,14 @@
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
-    <Folder Include="Uploadfiles\ImportMasterAP\template\" />
     <Folder Include="Uploadfiles\ImportMatProductPosPremium\template\" />
     <Folder Include="Views\ApiApprove\" />
     <Folder Include="Views\exPerryCash\" />
     <Folder Include="Views\getDataMaster\" />
+    <Folder Include="Views\parialPriceStructureList\" />
+    <Folder Include="Views\parialPriceStructureRpt\" />
     <Folder Include="Views\partailViewDataMaster\" />
+    <Folder Include="Views\partialTest\" />
     <Folder Include="Views\test\" />
   </ItemGroup>
   <ItemGroup>

@@ -65,7 +65,8 @@ namespace eActForm.BusinessLayer
                     rtn = ProcessInsertRequestEmp(rtn, model, activityId);
                     rtn = ProcessInsertPlaceDetail(rtn, model, activityId);
                     rtn = ProcessInsertPurpose(rtn, model, activityId);
-
+                    rtn = ProcessInsertProduct(rtn, model, activityId);
+                    rtn = ProcessInsertCliamIO(rtn, model, activityId);
 
                 }
 
@@ -1010,7 +1011,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static int insertActivityForm(ActivityForm model)
+        public static int insertActivityForm(ActivityFormTBMMKT model)
         {
             int result = 0;
             try
@@ -1041,6 +1042,13 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@costPeriodST", model.costPeriodSt)
                     ,new SqlParameter("@costPeriodEND", model.costPeriodEnd)
                     ,new SqlParameter("@empId", model.empId)
+                    ,new SqlParameter("@productCateId", model.productCateId)
+                    ,new SqlParameter("@productGroupId", model.productGroupId)
+                    ,new SqlParameter("@brandId", model.productBrandId)
+                    ,new SqlParameter("@theme", model.theme)
+                    ,new SqlParameter("@trade", model.trade)
+
+
                     ,new SqlParameter("@statusNote", model.statusNote)
                   });
             }
@@ -1789,6 +1797,95 @@ namespace eActForm.BusinessLayer
             return activity_TBMMKT_Model;
         }
 
+
+        public static int ProcessInsertProduct(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            int insertIndex = 1;
+            List<ProductCostOfGroupByPrice> insertProductlist = new List<ProductCostOfGroupByPrice>();
+            if (model.productcostdetaillist1 != null)
+            {
+                foreach (var item in model.productcostdetaillist1)
+                {
+                    foreach (var itemIn in item.detailGroup)
+                    {
+                        ProductCostOfGroupByPrice productcostdetail = new ProductCostOfGroupByPrice();
+                        productcostdetail.id = itemIn.id;
+                        productcostdetail.productGroupId = item.productGroupId;
+                        productcostdetail.activityId = activityId;
+                        productcostdetail.productId = itemIn.productId;
+                        productcostdetail.wholeSalesPrice = item.wholeSalesPrice;
+                        productcostdetail.saleIn = item.saleIn;
+                        productcostdetail.saleOut = item.saleNormal;
+                        productcostdetail.disCount1 = item.disCount1;
+                        productcostdetail.disCount2 = item.disCount2;
+                        productcostdetail.disCount3 = item.disCount3;
+                        productcostdetail.normalCost = item.normalCost;
+                        productcostdetail.normalGp = item.normalGp;
+                        productcostdetail.promotionGp = item.promotionGp;
+                        productcostdetail.specialDisc = item.specialDisc;
+                        productcostdetail.specialDiscBaht = item.specialDiscBaht;
+                        productcostdetail.promotionCost = item.promotionCost;
+                        productcostdetail.isShowGroup = item.isShowGroup;
+                        productcostdetail.rowNo = insertIndex;
+                        productcostdetail.rsp = item.rsp;
+                        productcostdetail.unitTxt = item.unitTxt;
+                        productcostdetail.delFlag = itemIn.delFlag;
+                        productcostdetail.createdByUserId = model.activityFormModel.createdByUserId;
+                        productcostdetail.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
+                        productcostdetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                        productcostdetail.updatedDate = DateTime.Now;
+                        insertProductlist.Add(productcostdetail);
+                    }
+                    insertIndex++;
+                }
+            }
+            DataTable dt = AppCode.ToDataTable(insertProductlist);
+            rtn += deleteActivityOfProductByActivityId(activityId);
+            rtn += insertProductCost(dt);
+
+            return rtn;
+        }
+        protected static int insertProductCost(DataTable dt)
+        {
+            try
+            {
+                int rtn = 0;
+                foreach (DataRow dr in dt.Rows)
+                {
+
+                    rtn += SqlHelper.ExecuteNonQueryTypedParams(AppCode.StrCon, "usp_insertProductCostdetail", dr);
+                }
+                return rtn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("insertProductCost >> " + ex.Message);
+            }
+        }
+
+        protected static int ProcessInsertCliamIO(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            try
+            {
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertClaimIO"
+                    , new SqlParameter[] {new SqlParameter("@actId",model.activityFormTBMMKT.id)
+                     ,new SqlParameter("@claim",model.activityFormTBMMKT.actClaim)
+                    ,new SqlParameter("@IO",model.activityFormTBMMKT.actIO)
+                    ,new SqlParameter("@checkbox",model.activityFormTBMMKT.chkAddIO)
+                    ,new SqlParameter("@delFlag",model.activityFormTBMMKT.delFlag)
+                    ,new SqlParameter("@createdDate",model.activityFormTBMMKT.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.activityFormTBMMKT.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.activityFormTBMMKT.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.activityFormTBMMKT.updatedByUserId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertCliamIO");
+            }
+
+            return rtn;
+        }
     }
 
 }

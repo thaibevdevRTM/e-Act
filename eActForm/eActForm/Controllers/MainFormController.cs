@@ -86,7 +86,7 @@ namespace eActForm.Controllers
                     mode = AppCode.Mode.addNew.ToString();
                     string actId = Guid.NewGuid().ToString();
                     activityFormTBMMKT.statusId = 1;
-                    activityFormTBMMKT.createdByUserId = @UtilsAppCode.Session.User.empId;
+                    activityFormTBMMKT.createdByUserId = @UtilsAppCode.Session.User.empId; 
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
                     //activityFormTBMMKT.subjectId = subjectId;
@@ -210,9 +210,9 @@ namespace eActForm.Controllers
                     activity_TBMMKT_Model.activityFormTBMMKT.empId = activity_TBMMKT_Model.empInfoModel.empId;
                 }
 
-                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["masterEmpExpense"])
+                if (ActFormAppCode.checkFormAddTBDetailOther(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                 {
-                    activity_TBMMKT_Model = exPerryCashAppCode.addDataToDetailOther(activity_TBMMKT_Model);
+                    activity_TBMMKT_Model = ActFormAppCode.addDataToDetailOther(activity_TBMMKT_Model);
                 }
 
                 activity_TBMMKT_Model.activityFormTBMMKT.languageDoc = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();

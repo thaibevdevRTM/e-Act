@@ -373,6 +373,27 @@
             if ($("#ddlChangetype").val() == null) { required += "&emsp;Change type / ประเภทของการเปลี่ยนแปลง*<br>"; validate = false; }
             if ($("#ddlChangeAuthorizations").val() == null) { required += "&emsp;Change Authorizations / สิทธิ์การใช้งาน*<br>"; validate = false; }
         }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceMT"]') {
+            if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
+            if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; }
+            if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
+            if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
+            if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
+            if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม *<br>"; validate = false; }
+            if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
+            if ($("#txtdateActivitySt").val() == "" || $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivityEnd").focus(); }
+            else {
+                var startDate = $("#txtdateActivitySt").val().split("-");
+                var endDate = $("#txtdateActivityEnd").val().split("-");
+                if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1], endDate[0])) {
+                    required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
+                }
+            }
+            if ($("input[name='activityFormTBMMKT.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
+
+            if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
+                $("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]")) { required += "Reference*<br>"; validate = false; }
+        }
         else {
 
         }
@@ -442,7 +463,7 @@
         maxFiles: 10,
         acceptedFiles: "",
         paramName: "file",
-        maxFilesize: 25,
+        maxFilesize: 20,
         //addRemoveLinks: true,
         init: function () {
 
