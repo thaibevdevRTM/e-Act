@@ -113,6 +113,7 @@
             <tr>
                 @{ int index = 0;
                     countisShowInDoc = 0;}
+
                 @foreach (var item in Model.approveFlowDetail)
                 {
                     if (item.isShowInDoc)
@@ -125,7 +126,7 @@
                             {
                                 if (writeoneHit == 0)
                                 {
-                                    if (itemFlowByDoc.empId == item.empId && itemFlowByDoc.statusId == "3" && itemFlowByDoc.rangNo == item.rangNo)
+                                    if (itemFlowByDoc.empId == item.empId && itemFlowByDoc.statusId == "3")
                                     {
                                         <td height="85">
                                             <img style="text-align:center;" width="135" height="80" src="@itemFlowByDoc.ImgName" />
@@ -276,7 +277,7 @@
                             {
                                 if (writeoneHit == 0)
                                 {
-                                    if (itemFlowByDoc.empId == item.empId && itemFlowByDoc.statusId == "3" && itemFlowByDoc.rangNo == item.rangNo)
+                                    if (itemFlowByDoc.empId == item.empId && itemFlowByDoc.statusId == "3")
                                     {
                                         <td height="85">
                                             <img style="text-align:center;" width="135" height="80" src="@itemFlowByDoc.ImgName" />

@@ -220,9 +220,13 @@
                                     <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
                                 </a>
                             }
-                            @if (Model.typeForm == Activity_Model.activityType.MT.ToString())
+                            @if (Model.typeForm == Activity_Model.activityType.MT.ToString() && item.master_type_form_id == "")
                             {
                                 @Html.ActionLink(" ", "ActivityForm", "Activity", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.MT.ToString() }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                            }
+                            else if (Model.typeForm == Activity_Model.activityType.MT.ToString() && item.master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
+                            {
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.MT.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
                             else if (Model.typeForm == Activity_Model.activityType.OMT.ToString())
                             {
@@ -394,6 +398,7 @@
             || master_type_form_id == "@ConfigurationManager.AppSettings["formExpTrvNumId"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]"
             || master_type_form_id == "@ConfigurationManager.AppSettings["formExpMedNumId"]"
+            || master_type_form_id == "@ConfigurationManager.AppSettings["formSetPriceMT"]"
         ) {
              $.ajax({
                 type: 'POST',

@@ -11,6 +11,7 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGetActivityByIdTBMMKT
     {
+
         public static List<ActivityFormTBMMKT> getActivityById(string activityId)
         {
             try
@@ -50,6 +51,30 @@ namespace eActForm.BusinessLayer
                                   createdByName = "คุณ" + d["createdByName"].ToString(),
                                   createdByNameEN = d["createdByNameEN"].ToString(),
                                   piorityDoc = d["piorityDoc"].ToString(),
+                                  customerName = d["customerName"].ToString() + "(" + d["cusShortName"].ToString() + ")",
+                                  cusShortName = d["cusShortName"].ToString(),
+                                  chanel = d["channelName"].ToString(),
+                                  chanelShort = d["chanelShort"].ToString(),
+                                  chanel_Id = d["chanel_Id"].ToString(),
+                                  regionId = d["regionId"].ToString(),
+                                  regionName = d["regionName"].ToString() + "(" + d["regionShort"].ToString() + ")",
+                                  regionShort = d["regionShort"].ToString(),
+                                  productCateText = d["productCateText"].ToString(),
+                                  productCateId = d["productCateId"].ToString(),
+                                  productGroupText = d["productGroupText"].ToString(),
+                                  productGroupId = d["productGroupId"].ToString(),
+                                  productBrandId = d["brandId"].ToString(),
+                                  productTypeId = d["productTypeId"].ToString(),
+                                  groupShort = d["groupShort"].ToString(),
+                                  brandName = d["brandName"].ToString(),
+                                  shortBrand = d["shortBrand"].ToString(),
+                                  theme = d["theme"].ToString(),
+                                  txttheme = d["activitySales"].ToString(),
+                                  trade = d["trade"].ToString(),
+                                  chkAddIO = !string.IsNullOrEmpty(d["chkAddIO"].ToString()) ? bool.Parse(d["chkAddIO"].ToString()) : false,
+                                  actClaim = d["actClaim"].ToString(),
+                                  actIO = d["actIO"].ToString(),
+
                                   statusNote = d["statusNote"].ToString(),
                               });
 

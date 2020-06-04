@@ -1,6 +1,4 @@
-﻿
-
-@model eActForm.Models.Activity_TBMMKT_Model
+﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
 @using System.Configuration;
 @using eActForm.Models;
@@ -43,71 +41,73 @@
                 white-space: pre-line;
             }
         </style>
-
-        <div>
-            <div style="text-align:center;"><h5>แบบฟอร์มกิจกรรมส่งเสริมการขาย (Activity Form)</h5></div>
+        <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center; " class="fontDocV2">
+            @Model.activityFormTBMMKT.companyName<br />
+            @Model.activityFormTBMMKT.formName / @Model.activityFormTBMMKT.formNameEn
         </div>
         <div>
+
+
             <table style="width:100%; margin-top:30px;">
                 <tr>
                     <td width="140px;"></td>
                     <td width="260px;" style="margin-left:10px;"></td>
                     <td width="20px;"></td>
-                    <td width="150px;" style="text-align:right; font-size:12.5px;">Activity No.</td>
+                    <td class="fontDocSmall" width="150px;" style="text-align:right;">Activity No.</td>
                     <td width="5px;"></td>
-                    <td width="160px;" class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormTBMMKT.activityNo) </td>
+                    <td class="cssborderbottom fontDocSmall" width="160px;"> @Html.DisplayFor(item => item.activityFormTBMMKT.activityNo) </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">Document Date</td>
+                    <td class="fontDocSmall" style="text-align:right;">Document Date</td>
                     <td></td>
-                    <td class="cssborderbottom" style="font-size:12.5px;">@Model.activityFormTBMMKT.documentDate.Value.ToString("dd/MM/yyyy") </td>
+                    <td class="cssborderbottom fontDocSmall">@Model.activityFormTBMMKT.documentDate.Value.ToString("dd/MM/yyyy") </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">Reference</td>
+                    <td class="fontDocSmall" style="text-align:right;">Reference</td>
                     <td></td>
-                    <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormTBMMKT.reference) </td>
+                    <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.reference) </td>
                 </tr>
                 <tr>
                     <td></td>
                 </tr>
                 <tr>
-                    <td style="font-size:12.5px;">ชื่อกิจกรรม</td>
-                    <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormTBMMKT.activityName) </td>
+                    <td class="fontDocSmall">ชื่อกิจกรรม</td>
+                    <td class="cssborderbottom fontDocSmall">@Html.DisplayFor(item => item.activityFormTBMMKT.activityName) </td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">ลูกค้า(Customer Name)</td>
+                    <td class="fontDocSmall" style="text-align:right;">ลูกค้า(Customer Name)</td>
                     <td></td>
-                    <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormTBMMKT.customerName) </td>
+                    <td class="cssborderbottom fontDocSmall">@Html.DisplayFor(item => item.activityFormTBMMKT.customerName) </td>
                 </tr>
                 <tr>
-                    <td style="font-size:12.5px;">ประเภทกิจกรรม(Theme)</td>
-                    <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormTBMMKT.txttheme) </td>
+                    <td class="fontDocSmall">ประเภทกิจกรรม(Theme)</td>
+                    <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.txttheme) </td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">ช่องทาง(Channel)</td>
+                    <td class="fontDocSmall" style="text-align:right;">ช่องทาง(Channel)</td>
                     <td></td>
                     @if (string.IsNullOrEmpty(Model.activityFormTBMMKT.chanel))
                     {
-                        <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormTBMMKT.regionName) </td>
+                        <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.regionName) </td>
 
                     }
                     else
                     {
-                        <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormTBMMKT.chanel) </td>
+                        <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.chanel) </td>
                     }
 
                 </tr>
                 <tr>
-                    <td style="font-size:12.5px;">วัตถุประสงค์</td>
-                    <td class="cssborderbottom" style="font-size:12.5px;">@Html.DisplayFor(item => item.activityFormTBMMKT.objective)</td>
+                    <td class="fontDocSmall">วัตถุประสงค์</td>
+                    <td class="cssborderbottom fontDocSmall">@Html.DisplayFor(item => item.activityFormTBMMKT.objective)</td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">กลุ่มสินค้า(Product Group)</td>
+                    <td class="fontDocSmall" style="text-align:right;">กลุ่มสินค้า(Product Group)</td>
                     <td></td>
-                    <td class="cssborderbottom" style="font-size:12.5px;"> @Html.DisplayFor(item => item.activityFormTBMMKT.brandName) </td>
+                    <td class="cssborderbottom fontDocSmall"> @Html.DisplayFor(item => item.activityFormTBMMKT.brandName) </td>
 
                 </tr>
                 <tr>
@@ -125,11 +125,11 @@
                             <td style="text-align:right"></td>
                         }
                     }
-                    <td style="font-size:12.5px;">รายการส่งเสริมการขาย (Trade Term)</td>
+                    <td class="fontDocSmall">รายการส่งเสริมการขาย (Trade Term)</td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">ระยะเวลากิจกรรม</td>
+                    <td class="fontDocSmall" style="text-align:right;">ระยะเวลากิจกรรม</td>
                     <td></td>
-                    <td style="font-size:12.5px;">
+                    <td class="fontDocSmall">
                         @if (Model.activityFormTBMMKT.activityPeriodSt != null)
                         {
                             @Model.activityFormTBMMKT.activityPeriodSt.Value.ToString("dd/MM/yyyy")
@@ -153,9 +153,9 @@
                             <td style="text-align:right"></td>
                         }
                     }
-                    <td style="font-size:12.5px;">รายการส่งเสริมการขาย (นอกTrade Term)</td>
+                    <td class="fontDocSmall">รายการส่งเสริมการขาย (นอกTrade Term)</td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">(Activity Period)</td>
+                    <td class="fontDocSmall" style="text-align:right;">(Activity Period)</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -169,11 +169,11 @@
                     {
                         showIO = "IO:" + @Model.activityFormTBMMKT.actIO + " / Claim :" + @Model.activityFormTBMMKT.actClaim + "%";
                     }
-                    <td td style="font-size:12.5px;">@showIO</td>
+                    <td class="fontDocSmall">@showIO</td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">ระยะเวลาการให้ทุนพิเศษ</td>
+                    <td class="fontDocSmall" style="text-align:right;">ระยะเวลาการให้ทุนพิเศษ</td>
                     <td></td>
-                    <td style="font-size:12.5px;">
+                    <td class="fontDocSmall">
                         @if (Model.activityFormTBMMKT.costPeriodSt != null)
                         {
                             @Model.activityFormTBMMKT.costPeriodSt.Value.ToString("dd/MM/yyyy")
@@ -189,7 +189,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td style="text-align:right; font-size:12.5px;">(Cost Period)</td>
+                    <td class="fontDocSmall" style="text-align:right;">(Cost Period)</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -201,13 +201,13 @@
         </div>
 
         <div style="width:100%; ">
-            <div style="margin-top:5px; font-size:12.5px;">
+            <div class="fontDocSmall" style="margin-top:5px;">
                 รายละเอียดของการทำกิจกรรม(Activity Detail)
             </div>
             @if (string.IsNullOrEmpty(Model.activityFormTBMMKT.chanel) && Model.activityFormTBMMKT.txttheme == "FOC")
             {
                 <div>
-                    <p style="font-size:12px;">
+                    <p class="fontDocSmall">
                         @System.Configuration.ConfigurationManager.AppSettings["mssFOCWording"]
                     </p>
                 </div>
@@ -216,7 +216,7 @@
                 <table style="width:100%">
                     <tr>
                         <td width="50%">
-                            <p style="font-size:12px;">
+                            <p class="fontDocSmall">
                                 @Html.Raw(Model.activityFormTBMMKT.activityDetail.Replace("\n", "<br/>").Replace("\r\n", "<br/>"))
                             </p>
                         </td>
