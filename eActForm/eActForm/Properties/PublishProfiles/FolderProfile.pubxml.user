@@ -80,24 +80,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/ApplicationInsights.config">
       <publishTime>04/23/2020 08:46:05</publishTime>
     </File>
-    <File Include="bin/eActForm.dll">
-<<<<<<< Updated upstream
-      <publishTime>05/29/2020 17:14:18</publishTime>
-    </File>
     <File Include="bin/eActForm.dll.config">
-      <publishTime>05/29/2020 15:48:24</publishTime>
+      <publishTime>06/04/2020 16:29:37</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
-      <publishTime>05/29/2020 17:14:18</publishTime>
-=======
       <publishTime>06/05/2020 14:34:26</publishTime>
     </File>
     <File Include="bin/eActForm.dll.config">
       <publishTime>06/04/2020 09:37:42</publishTime>
-    </File>
-    <File Include="bin/eActForm.pdb">
-      <publishTime>06/05/2020 14:34:26</publishTime>
->>>>>>> Stashed changes
     </File>
     <File Include="bin/eForms.Models.dll">
       <publishTime>06/05/2020 09:22:56</publishTime>
@@ -110,13 +100,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/eForms.Presenter.pdb">
       <publishTime>06/05/2020 14:34:08</publishTime>
-    </File>
-    <File Include="bin/en/eActForm.resources.dll">
-<<<<<<< Updated upstream
-      <publishTime>05/29/2020 17:14:18</publishTime>
-=======
-      <publishTime>06/05/2020 14:34:26</publishTime>
->>>>>>> Stashed changes
     </File>
     <File Include="bin/EntityFramework.SqlServer.xml">
       <publishTime>03/31/2020 20:02:01</publishTime>
@@ -7498,13 +7481,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/ActivityCostDetail/activityCostDetail.cshtml">
       <publishTime>06/02/2020 13:34:54</publishTime>
     </File>
-    <File Include="Views/ActivityProductDetail/ProductCostdetail.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>05/20/2020 16:28:59</publishTime>
-=======
-      <publishTime>06/04/2020 09:37:42</publishTime>
->>>>>>> Stashed changes
-    </File>
     <File Include="Views/ActivityProductDetail/showDetailGroup.cshtml">
       <publishTime>04/22/2020 11:28:59</publishTime>
     </File>
@@ -7520,35 +7496,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Admin/productPriceDetail.cshtml">
       <publishTime>04/22/2020 11:28:59</publishTime>
     </File>
-    <File Include="Views/AdminUser/Index.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>05/26/2020 16:48:02</publishTime>
-=======
-      <publishTime>06/05/2020 09:27:49</publishTime>
->>>>>>> Stashed changes
-    </File>
+
     <File Include="Views/Approve/approveLists.cshtml">
       <publishTime>06/02/2020 13:34:55</publishTime>
-    </File>
-    <File Include="Views/Approve/approvePositionSignatureLists.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>05/29/2020 17:11:55</publishTime>
-=======
-      <publishTime>06/04/2020 09:37:42</publishTime>
->>>>>>> Stashed changes
     </File>
     <File Include="Views/Approve/approvePositionSignatureListsV2.cshtml">
       <publishTime>06/02/2020 13:34:55</publishTime>
     </File>
     <File Include="Views/Approve/getApproveComment.cshtml">
       <publishTime>04/22/2020 11:28:59</publishTime>
-    </File>
-    <File Include="Views/Approve/Index.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>05/26/2020 16:48:02</publishTime>
-=======
-      <publishTime>06/04/2020 10:42:46</publishTime>
->>>>>>> Stashed changes
     </File>
     <File Include="Views/Approve/previewActBudget.cshtml">
       <publishTime>04/22/2020 11:28:59</publishTime>
@@ -7688,13 +7644,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/EmpInfoInput/empInfoDetail_Department_Tel.cshtml">
       <publishTime>06/02/2020 13:34:55</publishTime>
     </File>
-    <File Include="Views/EmpInfoReport/empInfoRpt.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>05/21/2020 12:56:25</publishTime>
-=======
-      <publishTime>06/05/2020 09:27:49</publishTime>
->>>>>>> Stashed changes
-    </File>
     <File Include="Views/ExpenseEstimateInput/expensesMedDetail.cshtml">
       <publishTime>06/02/2020 13:34:55</publishTime>
     </File>
@@ -7704,25 +7653,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/ExpenseEstimateInput/expensesTrvDetail.cshtml">
       <publishTime>06/02/2020 13:34:55</publishTime>
     </File>
-<<<<<<< Updated upstream
-    <File Include="Views/ExpenseEstimateReport/expensesMedDetailRpt.cshtml">
-      <publishTime>05/22/2020 13:57:39</publishTime>
-    </File>
-    <File Include="Views/ExpenseEstimateReport/expensesTrvDetailRpt.cshtml">
-      <publishTime>04/23/2020 08:32:54</publishTime>
-=======
-    <File Include="Views/ExpenseEstimateInput/productSetPriceList.cshtml">
-      <publishTime>06/04/2020 10:33:28</publishTime>
-    </File>
     <File Include="Views/ExpenseEstimateReport/expensesMedDetailRpt.cshtml">
       <publishTime>06/05/2020 09:27:49</publishTime>
     </File>
     <File Include="Views/ExpenseEstimateReport/expensesTrvDetailRpt.cshtml">
       <publishTime>06/05/2020 09:27:49</publishTime>
-    </File>
-    <File Include="Views/ExpenseEstimateReport/parialPriceStructureRpt.cshtml">
-      <publishTime>06/04/2020 11:42:24</publishTime>
->>>>>>> Stashed changes
     </File>
     <File Include="Views/Home/approveLists.cshtml">
       <publishTime>06/02/2020 13:34:55</publishTime>
@@ -7732,13 +7667,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>04/22/2020 11:29:00</publishTime>
-    </File>
-    <File Include="Views/Home/myDoc.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>05/26/2020 16:48:02</publishTime>
-=======
-      <publishTime>06/05/2020 09:27:49</publishTime>
->>>>>>> Stashed changes
     </File>
     <File Include="Views/ImportMasterAP/Index.cshtml">
       <publishTime>05/07/2020 10:58:01</publishTime>
@@ -7751,13 +7679,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Login/Maintain.cshtml">
       <publishTime>04/22/2020 11:29:00</publishTime>
-    </File>
-    <File Include="Views/MainForm/Index.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>05/29/2020 15:41:59</publishTime>
-=======
-      <publishTime>06/04/2020 10:26:25</publishTime>
->>>>>>> Stashed changes
     </File>
     <File Include="Views/MainReport/Index.cshtml">
       <publishTime>06/02/2020 13:34:56</publishTime>
@@ -7774,13 +7695,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/managementFlow/Index.cshtml">
       <publishTime>05/07/2020 10:58:02</publishTime>
     </File>
-    <File Include="Views/MenuList/activityForm.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>05/20/2020 16:29:00</publishTime>
-=======
-      <publishTime>06/04/2020 09:37:42</publishTime>
->>>>>>> Stashed changes
-    </File>
+
     <File Include="Views/MenuList/admin.cshtml">
       <publishTime>04/22/2020 11:29:00</publishTime>
     </File>
@@ -7799,19 +7714,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/MenuList/dashboard.cshtml">
       <publishTime>04/22/2020 11:29:00</publishTime>
     </File>
-    <File Include="Views/MenuList/document.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>05/26/2020 16:48:02</publishTime>
-    </File>
-    <File Include="Views/MenuList/hcForm.cshtml">
-      <publishTime>05/21/2020 12:56:25</publishTime>
-=======
-      <publishTime>06/05/2020 10:28:33</publishTime>
-    </File>
-    <File Include="Views/MenuList/hcForm.cshtml">
-      <publishTime>06/05/2020 09:27:49</publishTime>
->>>>>>> Stashed changes
-    </File>
     <File Include="Views/MenuList/importData.cshtml">
       <publishTime>05/07/2020 10:58:01</publishTime>
     </File>
@@ -7827,11 +7729,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/orderProduct/Index.cshtml">
       <publishTime>04/22/2020 11:29:02</publishTime>
     </File>
-<<<<<<< Updated upstream
-    <File Include="Views/partialActivityDetail/partialSetPriceMT.cshtml">
-      <publishTime>05/20/2020 16:29:00</publishTime>
-    </File>
-=======
     <File Include="Views/partialActivityDetail/partialSetPriceDetail.cshtml">
       <publishTime>06/05/2020 10:19:00</publishTime>
     </File>
@@ -7841,7 +7738,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/partialActivityDetailReport/partialSetPriceDetailRpt.cshtml">
       <publishTime>06/04/2020 09:37:42</publishTime>
     </File>
->>>>>>> Stashed changes
     <File Include="Views/partialActivityDetailReport/partialSetPriceMTRpt.cshtml">
       <publishTime>05/20/2020 16:29:00</publishTime>
     </File>
@@ -7973,13 +7869,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/SharedMasterFormDetail/expensesDetailsRpt.cshtml">
       <publishTime>04/22/2020 11:29:01</publishTime>
-    </File>
-    <File Include="Views/SharedMasterFormDetail/exPerryCashReport.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>04/23/2020 08:32:56</publishTime>
-=======
-      <publishTime>06/04/2020 09:37:42</publishTime>
->>>>>>> Stashed changes
     </File>
     <File Include="Views/SharedMasterFormDetail/lastwordForFYI.cshtml">
       <publishTime>04/22/2020 11:29:01</publishTime>
@@ -8125,13 +8014,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/SharedMasterFormHeaderCompany/headerCompanyWithLogoV2.cshtml">
       <publishTime>04/22/2020 11:29:02</publishTime>
     </File>
-    <File Include="Views/SharedMasterFormHeaderCompany/headerFormName.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>05/22/2020 11:48:52</publishTime>
-=======
-      <publishTime>06/05/2020 09:27:49</publishTime>
->>>>>>> Stashed changes
-    </File>
     <File Include="Views/SharedMasterFormHeaderCompany_Input/headerCompany.cshtml">
       <publishTime>06/02/2020 13:34:56</publishTime>
     </File>
@@ -8212,13 +8094,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>05/07/2020 10:58:02</publishTime>
-    </File>
-    <File Include="Web.config">
-<<<<<<< Updated upstream
-      <publishTime>05/29/2020 15:53:59</publishTime>
-=======
-      <publishTime>06/04/2020 15:10:15</publishTime>
->>>>>>> Stashed changes
     </File>
     <File Include="WebForm1.aspx">
       <publishTime>04/22/2020 11:29:03</publishTime>

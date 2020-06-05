@@ -266,9 +266,9 @@
                             {
                                 @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.TBM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
-                            else if (Model.typeForm == Activity_Model.activityType.NUM.ToString() && (item.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]|| item.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"]))
+                            else if (Model.typeForm == Activity_Model.activityType.HCForm.ToString() && (item.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]|| item.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"]))
                             {
-                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.NUM.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.HCForm.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
 
                                 if (item.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] && item.statusId == "3")
                                 {
@@ -300,7 +300,7 @@
                         <td>@item.statusName</td>
                         <td>@{var date = item.documentDate == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.documentDate, ConfigurationManager.AppSettings["formatDateUse"]);} @date </td>
                         <td>@item.activityNo</td>
-                        <td>@item.activityName</td>
+                        <td>@item.activityName.Replace("<br/>","")</td>
                         <td>@item.cusShortName</td>
                         <td>@item.productCategory</td>
                         <td>

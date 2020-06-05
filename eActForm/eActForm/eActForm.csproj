@@ -326,6 +326,7 @@
     <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\API\apiGetDataMasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportMasterHospital.cs" />
     <Compile Include="Controllers\ImportMasterAPController.cs" />
     <Compile Include="Controllers\ImportMaterial_PRODUCT_POS_PREMIUMController.cs" />
     <Compile Include="Controllers\MainFormController.cs" />
@@ -3153,7 +3154,6 @@
     <Content Include="Views\partialActivityDetailReport\partialSetPriceDetailRpt.cshtml" />
     <Content Include="Views\ExpenseEstimateReport\parialPriceStructureRpt.cshtml" />
     <Content Include="Views\ExpenseEstimateInput\productSetPriceList.cshtml" />
-    <Content Include="Uploadfiles\ImportMasterAP\template\TemplateImportAP.xlsx" />
     <Content Include="Views\PartialChangeRequestForm\crHeader.cshtml" />
     <Content Include="Views\MenuList\itForm.cshtml" />
     <Content Include="Views\PartialChangeRequestForm\cr_IT_Frm314_page1.cshtml" />
@@ -3188,6 +3188,7 @@
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
+    <Folder Include="Uploadfiles\ImportMasterAP\template\" />
     <Folder Include="Uploadfiles\ImportMatProductPosPremium\template\" />
     <Folder Include="Views\ApiApprove\" />
     <Folder Include="Views\exPerryCash\" />
