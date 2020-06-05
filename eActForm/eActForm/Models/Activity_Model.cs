@@ -64,10 +64,15 @@ namespace eActForm.Models
             EXPENSE,
             HCM,
             ITForm,
-            NUM,//คือ form HC 
+            HCForm,        
             OtherCompany
         }
-
+        public enum groupCompany
+        {
+            NUM,//คือ form HC 
+            POM,
+            CVM,
+        }
 
         public class actForms
         {
