@@ -8,11 +8,12 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web.Mvc;
+using WebLibrary;
 
 namespace eActForm.Controllers
 {
     [LoginExpire]
-    public class ImportMasterHospital : Controller
+    public class ImportMasterHospitalController : Controller
     {
         public ActionResult Index()
         {
@@ -101,13 +102,38 @@ namespace eActForm.Controllers
 
 
         [HttpPost]
-        public ActionResult ExportMat()
+        public ActionResult ExportHospital()
         {
-            DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_get_TB_Act_Master_AP_Export");
-            DataTable dt = ds.Tables[0];
-            string fileNameExport = ("MasterAP" + DateTime.Now.ToString("yyyyMMddHHmmss"));
-            ExcelAppCode.ExportExcelEpPlus(dt, "dataimport", fileNameExport, "systemExportAuthor", "systemExportSubject", this.HttpContext, "MasterAP");
-            return View("Index");
+
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_exportAllHospital");
+                DataTable dt = new DataTable();
+
+
+                DataView dv = ds.Tables[0].DefaultView;
+                dv.Sort = "percentage, hospNameTH asc";
+                dt = dv.ToTable(false, "hospNameTH", "provName", "region", "percentage", "status");
+
+             
+
+                dt.Columns["hospNameTH"].ColumnName = "ชื่อสถานพยาบาล";
+                dt.Columns["provName"].ColumnName = "จังหวัด";
+                dt.Columns["region"].ColumnName = "ภาคการขายที่";
+                dt.Columns["percentage"].ColumnName = "ประเภทสถานพยาบาล";
+                dt.Columns["status"].ColumnName = "สถานะ";
+
+                //  dt = sortedDT.Copy();
+                string fileNameExport = ("MasterHospital" + DateTime.Now.ToString("yyyyMMddHHmmss"));
+                ExcelAppCode.ExportExcelEpPlus(dt, "dataimport", fileNameExport, "systemExportAuthor", "systemExportSubject", this.HttpContext, "MasterHospital");
+                return View("Index");
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                return View("Index");
+            }
         }
 
     }

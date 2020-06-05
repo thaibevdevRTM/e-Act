@@ -3,7 +3,7 @@
 @using System.Configuration;
 @model eActForm.Models.ImportExcel
 
-<h2>Import Master AP</h2>
+<h2>Import Master Hospital</h2>
 
 @using (Html.BeginForm("Index", "ImportMasterHospital", FormMethod.Post, new { enctype = "multipart/form-data", id = "divUpload" }))
 {
@@ -31,20 +31,23 @@
 <hr />
 <div>
     <h2>
-        Download template file upload <a href="~/Uploadfiles/ImportMasterAP/template/TemplateImportAP.xlsx" style="color:blue;">[Click]</a>
+        Download template file upload <a href="~/Uploadfiles/ImportHospital/template/TemplateHospital.xlsx" style="color:blue;">[Click]</a>
     </h2><br />
     1.ชื่อชีตต้องใช้ :dataimport<br />
     2.คอลัมน์ A : ชื่อสถานพยาบาล ห้ามเป็นค่าว่าง<br />
     3.คอลัมน์ B : จังหวัด ห้ามเป็นค่าว่าง<br />
     4.คอลัมน์ C : ภาคการขายที่ ระบุ 1-8<br />
-    5.คอลัมน์ D : ประเภทสถานพยาบาล :ระบุ 0 คือใช้งานAPCode ,ระบุ 1 คือปิดการใช้งานAPCode<br />
+    5.คอลัมน์ D : ประเภทสถานพยาบาล<br />
+    &emsp;&emsp;ระบุ 100% คือ สถานพยาบาลของรัฐบาล ,<br />
+    &emsp;&emsp;ระบุ &nbsp;&nbsp;75% คือ สถานพยาบาลของเอกชนที่บริษัทฯ ทำสัญญา ,<br />
+    &emsp;&emsp;ระบุ &nbsp;&nbsp;50% คือ สถานพยาบาลของเอกชนที่บริษัทฯ ไม่ได้ทำสัญญา  <br />
     6.คอลัมน์ E : สถานะ  ระบุ 1 คือใช้งาน ,ระบุ 0 คือปิดการใช้งาน<br />
 </div>
 <hr />
 <div>
     <h2>
-        Download Master AP ที่มีอยู่ในระบบปัจจุบัน.
-        @using (Html.BeginForm("ExportMat", "ImportMasterAP", FormMethod.Post))
+        Download สถานพยาบาล ที่มีอยู่ในระบบปัจจุบัน.
+        @using (Html.BeginForm("ExportHospital", "ImportMasterHospital", FormMethod.Post))
         {
             <input type="submit" value="Export" />
         }

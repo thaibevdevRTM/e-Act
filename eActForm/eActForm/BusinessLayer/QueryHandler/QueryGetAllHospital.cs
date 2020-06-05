@@ -28,6 +28,7 @@ namespace eActForm.BusinessLayer
                                  hospTypeId = d["hospTypeId"].ToString(),
                                  hospTypeName = d["hospTypeName"].ToString(),
                                  percentage = int.Parse(d["percentage"].ToString()),
+                                 delFlag = d["delFlag"].ToString(),
                              });
                 return lists.ToList();
             }

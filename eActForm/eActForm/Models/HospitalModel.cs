@@ -13,6 +13,7 @@ namespace eActForm.Models
         public string hospTypeId { get; set; }
         public string hospTypeName { get; set; }
         public int percentage { get; set; }
+        public string delFlag { get; set; }
      
 
     }
