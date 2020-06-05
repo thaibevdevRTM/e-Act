@@ -61,3 +61,4 @@ D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Present
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CoreCompileInputs.cache
