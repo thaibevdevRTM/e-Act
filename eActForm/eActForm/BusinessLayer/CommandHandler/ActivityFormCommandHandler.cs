@@ -201,16 +201,20 @@ namespace eActForm.BusinessLayer
                             }
                         }
 
-                        if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
+                        if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"] ||
+                            getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
-
                             if (getActList.FirstOrDefault().documentDate != null)
                             {
                                 int updateNoDoc = checkUpdateNoDoc(getActList.FirstOrDefault().chanel_Id, getActList.FirstOrDefault().documentDate.Value.AddYears(1).Year.ToString(), getActList.FirstOrDefault().id);
                             }
+                        }
 
+                        if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
+                        {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id, activityId).FirstOrDefault().docNo);
 
+                            if(getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"]) { result[0] += ConfigurationManager.AppSettings["docSetPrice"]; }
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().chanelShort.Trim();
@@ -244,6 +248,7 @@ namespace eActForm.BusinessLayer
                             //==========แบบเก่า================
 
                             //=========แบบใหม่ Gen In USP=======By Peerapop=========
+
                             result[0] += getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId).FirstOrDefault().docNo;
                             if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_TBM"])
                             {
