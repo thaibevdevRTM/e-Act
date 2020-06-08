@@ -51,6 +51,7 @@ namespace eActForm.BusinessLayer
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new TB_Act_ProductPrice_Model.ProductPrice()
                              {
+                                 id = d["id"].ToString(),
                                  productCode = d["productId"].ToString(),
                                  productName = d["productName"].ToString(),
                                  customerName = d["cusNameEN"].ToString(),
