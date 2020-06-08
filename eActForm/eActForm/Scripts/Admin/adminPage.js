@@ -295,7 +295,7 @@
 
         onchangePrice: function (cusId, rowIndex) {
 
-            var productId = $('#hdProductCode').val();
+            var p_id = $('#hdId_' + rowIndex).val();
             var p_normalCost = $('#normalCost_' + rowIndex).val();
             var p_wholeSalesPrice = $('#wholeSalesPrice_' + rowIndex).val();
             var p_discount1 = $('#discount1_' + rowIndex).val();
@@ -308,7 +308,7 @@
                 url: $adminPage.urlOnchangePrice,
                 data: {
                     customerId: cusId,
-                    productCode: productId,
+                    id: p_id,
                     normalCost: p_normalCost.replace(",", ""),
                     wholeSalesPrice: p_wholeSalesPrice.replace(",", ""),
                     discount1: p_discount1.replace(",", ""),

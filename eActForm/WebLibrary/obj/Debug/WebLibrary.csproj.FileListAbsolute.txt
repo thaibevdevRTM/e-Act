@@ -36,3 +36,5 @@ D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.Core
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
+D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
+D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CoreCompileInputs.cache
