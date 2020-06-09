@@ -1,0 +1,39 @@
+﻿@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+<link href="~/Scripts/bootstrap-select.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-select.min.js"></script>
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr>
+        <td style="">
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    Department/หน่วยงาน :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.departmentId, new SelectList(Model.listGetDepartmentMaster, "id", "name", ""), "", new
+                   {
+                       @class = "form-control SelectValddlDepartment",
+                       id = "ddlDepartment"
+                   })
+                        <script>
+                            $('#ddlDepartment').selectpicker({
+                                liveSearch: true,
+                                showSubtext: true
+                            });
+                        </script>
+                    </div>
+                </div>
+                <label class="control-label col-md-2 col-xs-12">
+                    Phone/เบอร์ติดต่อ :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.activityTel, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpTel" })
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

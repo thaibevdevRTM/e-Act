@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer;
+using eActForm.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,8 @@ namespace eActForm.Controllers
 
     public partial class partialActivityDetailReportController
     {
-        public ActionResult partialSetPriceMTRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        public ActionResult partialSetPriceDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-
             return PartialView(activity_TBMMKT_Model);
         }
 

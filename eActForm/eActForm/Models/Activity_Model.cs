@@ -60,13 +60,20 @@ namespace eActForm.Models
         {
             OMT,
             MT,
+            SetPrice,
             TBM,
             EXPENSE,
             HCM,
-            NUM,//คือ form HC 
+            ITForm,
+            HCForm,        
             OtherCompany
         }
-
+        public enum groupCompany
+        {
+            NUM,//คือ form HC 
+            POM,
+            CVM,
+        }
 
         public class actForms
         {
@@ -196,6 +203,7 @@ namespace eActForm.Models
         public Boolean chkAddIO { get; set; }
         public string actIO { get; set; }
         public string actClaim { get; set; }
+        public int actClaimInt { get; set; }
         public string master_type_form_id { get; set; }
         public string benefit { get; set; }
         public string companyNameEN { get; set; }
@@ -349,6 +357,7 @@ namespace eActForm.Models
         public decimal? total { get; set; }
         public decimal? perTotal { get; set; }
         public int unit { get; set; }
+        public string unitTxt { get; set; }
         public decimal? compensate { get; set; }
         public decimal? LE { get; set; }
         public Boolean isShowGroup { get; set; }
@@ -361,6 +370,7 @@ namespace eActForm.Models
         public string place { get; set; }
         public string detail { get; set; }
         public string customer { get; set; }
+        public decimal? rsp { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public ProductCostOfGroupByPrice()

@@ -15,8 +15,7 @@ namespace eActForm.BusinessLayer.CommandHandler
             try
             {
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateProductPrice"
-                    , new SqlParameter[] {new SqlParameter("@productId",model.productCode)
-                     ,new SqlParameter("@customerId",model.customerId)
+                    ,new SqlParameter[] {new SqlParameter("@id",model.id)
                     ,new SqlParameter("@normalCost",model.normalCost)
                     ,new SqlParameter("@wholeSalesPrice",model.wholeSalesPrice)
                     ,new SqlParameter("@discount1",model.discount1)

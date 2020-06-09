@@ -191,15 +191,30 @@ namespace eActForm.BusinessLayer
                         string getYear = "";
                         if (getActList.FirstOrDefault().activityPeriodSt != null)
                         {
-                            getYear = getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9 ?
-                                   new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2)
-                                 : new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
+                            if (getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9)
+                            {
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
+                            }
+                            else
+                            {
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value).ToString().Substring(2, 2);
+                            }
+                        }
+
+                        if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"] ||
+                            getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            if (getActList.FirstOrDefault().documentDate != null)
+                            {
+                                int updateNoDoc = checkUpdateNoDoc(getActList.FirstOrDefault().chanel_Id, getActList.FirstOrDefault().documentDate.Value.AddYears(1).Year.ToString(), getActList.FirstOrDefault().id);
+                            }
                         }
 
                         if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
                         {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id, activityId).FirstOrDefault().docNo);
 
+                            if(getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"]) { result[0] += ConfigurationManager.AppSettings["docSetPrice"]; }
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().chanelShort.Trim();
@@ -233,6 +248,7 @@ namespace eActForm.BusinessLayer
                             //==========แบบเก่า================
 
                             //=========แบบใหม่ Gen In USP=======By Peerapop=========
+
                             result[0] += getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId).FirstOrDefault().docNo;
                             if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_TBM"])
                             {
@@ -242,9 +258,10 @@ namespace eActForm.BusinessLayer
                             {
                                 result[1] = Activity_Model.activityType.HCM.ToString();
                             }
-                            else if (ActFormAppCode.checkGrpComp(getActList.FirstOrDefault().companyId, Activity_Model.activityType.NUM.ToString()))
+                            else if (AppCode.hcForm.Contains(getActList.FirstOrDefault().master_type_form_id))
+                            //else if (ActFormAppCode.checkGrpComp(getActList.FirstOrDefault().companyId, Activity_Model.activityType.NUM.ToString()))
                             {
-                                result[1] = Activity_Model.activityType.NUM.ToString();
+                                result[1] = Activity_Model.activityType.HCForm.ToString();// result[1] = Activity_Model.activityType.NUM.ToString();
                             }
                             //====END=====แบบใหม่ Gen In USP=======By Peerapop=========
                         }
@@ -276,6 +293,12 @@ namespace eActForm.BusinessLayer
                         //==END===update by fream devDate 20200214=======
                         result[1] = typeFormCompany;
                     }
+
+                    if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
+                    {
+                        result[1] = Activity_Model.activityType.ITForm.ToString();
+                    }
+
                 }
 
                 return result;
@@ -557,7 +580,9 @@ namespace eActForm.BusinessLayer
                 }
                 else
                 {
-                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertDocNoByChanelId", new SqlParameter("@chanel_Id", chanel_Id));
+
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertDocNoByChanelId",
+                         new SqlParameter("@chanel_Id", chanel_Id));
                 }
 
                 var lists = (from DataRow d in ds.Tables[0].Rows
@@ -583,7 +608,10 @@ namespace eActForm.BusinessLayer
             {
                 object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCheckStatusActivity"
                     , new SqlParameter[] { new SqlParameter("@actId", actId) });
-                result = obj.ToString();
+                if (obj != null)
+                {
+                    result = obj.ToString();
+                }
                 return result;
 
             }
@@ -595,6 +623,27 @@ namespace eActForm.BusinessLayer
 
         }
 
+
+        protected static int checkUpdateNoDoc(string chanelId, string year, string activityId)
+        {
+            int rtn = 0;
+            try
+            {
+                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateDocNoByChanelId"
+                    , new SqlParameter[] { new SqlParameter("@chanelId", chanelId)
+                    , new SqlParameter("@year", year) });
+
+                return rtn;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkUpdateNoDoc >>" + ex.Message);
+            }
+
+
+
+        }
     }
 
 }

@@ -546,7 +546,7 @@ namespace eActForm.Controllers
                     hireDate = (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
                     cashEmpList = QueryGetBenefit.getCashLimitByTypeId(typeId, hireDate, jobLevel).ToList();
                     if (cashEmpList.Count > 0)
-                    { 
+                    {
                         limit = cashEmpList[0].cashPerDay;
                     }
 
@@ -577,18 +577,18 @@ namespace eActForm.Controllers
 
         public JsonResult getAllActivityFormByEmpId(string typeFormId, string empId)
         {
-            List <ActivityFormTBMMKT> activityFormTBMMKT = new List<ActivityFormTBMMKT>();
+            List<ActivityFormTBMMKT> activityFormTBMMKT = new List<ActivityFormTBMMKT>();
             var result = new AjaxResult();
             try
-            {                         
-                activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getAllActivityFormByEmpId(typeFormId,empId).Where(x => x.statusId==2).ToList();                
+            {
+                activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getAllActivityFormByEmpId(typeFormId, empId).Where(x => x.statusId == 2).ToList();
                 var resultData = new
                 {
-                    chk = activityFormTBMMKT.Count > 0 ? "false" :"true",
-                   
+                    chk = activityFormTBMMKT.Count > 0 ? "false" : "true",
+
                 };
 
- result.Data = resultData;
+                result.Data = resultData;
             }
             catch (Exception ex)
             {

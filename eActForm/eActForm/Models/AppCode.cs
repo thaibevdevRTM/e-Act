@@ -30,6 +30,7 @@ namespace eActForm.Models
         public static string nonAL = "1D1097F4-246F-4DC2-BB69-B7BB6E678299";
         public static string AL = "FC696EB5-B058-445E-B605-977C5067AEBA";
         public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
+        public static string[] compHcForm = { Activity_Model.groupCompany.NUM.ToString(), Activity_Model.groupCompany.POM.ToString(), Activity_Model.groupCompany.CVM.ToString() };
 
         public enum ApproveEmailype
         {
@@ -75,6 +76,7 @@ namespace eActForm.Models
             public const string Director = "2354EFCB-174F-48FE-B634-2DE926D7F836";// ผู้บังคับบัญชา  
             public const string Approveby = "7C308168-B155-4684-A2CD-906EC94AA49C";//เรียน/อนุมัติ 
             public const string PettyCashApprover = "BD48756C-12CC-4267-AD6F-A6C37F9B2B32";//ผู้อนุมัติเงินสดย่อย
+            public const string CreateBy = "1AFEFF8D-C980-4628-8550-78AE619AC31A";//ผู้จัดทำ
             public const string PettyCashVerify = "FA88EB4E-26C1-49FB-BEC7-D161AA9CC0A0";//ผู้ตรวจสอบเงินสดย่อย
         }
         public static class CodeHtml
