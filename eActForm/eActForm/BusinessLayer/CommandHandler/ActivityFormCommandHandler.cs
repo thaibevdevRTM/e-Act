@@ -201,15 +201,6 @@ namespace eActForm.BusinessLayer
                             }
                         }
 
-                        if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"] ||
-                            getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
-                        {
-                            if (getActList.FirstOrDefault().documentDate != null)
-                            {
-                                int updateNoDoc = checkUpdateNoDoc(getActList.FirstOrDefault().chanel_Id, getActList.FirstOrDefault().documentDate.Value.AddYears(1).Year.ToString(), getActList.FirstOrDefault().id);
-                            }
-                        }
-
                         if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
                         {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id, activityId).FirstOrDefault().docNo);
@@ -221,7 +212,7 @@ namespace eActForm.BusinessLayer
                             result[0] += getActList.FirstOrDefault().cusShortName.Trim();
                             result[0] += getYear;
                             result[0] += string.Format("{0:0000}", genNumber);
-                            result[1] = Activity_Model.activityType.MT.ToString();
+                            result[1] = getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"] ? Activity_Model.activityType.SetPrice.ToString() : Activity_Model.activityType.MT.ToString();
                         }
                         else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
@@ -275,9 +266,15 @@ namespace eActForm.BusinessLayer
                         {
                             typeFormCompany = Activity_Model.activityType.OMT.ToString();
                         }
-                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
+                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] &&
+                            getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"])
                         {
                             typeFormCompany = Activity_Model.activityType.MT.ToString();
+                        }
+                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] &&
+                            getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
+                        {
+                            typeFormCompany = Activity_Model.activityType.SetPrice.ToString();
                         }
                         else
                         {
@@ -581,8 +578,9 @@ namespace eActForm.BusinessLayer
                 else
                 {
 
-                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertDocNoByChanelId",
-                         new SqlParameter("@chanel_Id", chanel_Id));
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertDocNoByChanelId"
+                         , new SqlParameter[] { new SqlParameter("@chanel_Id", chanel_Id)
+                         , new SqlParameter("@activityId", activityId) });
                 }
 
                 var lists = (from DataRow d in ds.Tables[0].Rows
