@@ -299,25 +299,30 @@ namespace eActForm.Controllers
                 empDetailList = typeFormId == "" ? QueryGet_empDetailById.getEmpDetailById(empId).ToList()
                                                  : QueryGet_empDetailById.getEmpDetailFlowById(empId, typeFormId).ToList();
 
-                var resultData = new
+                if (empDetailList.Any())
                 {
-                    empName = !langEn ? empDetailList.FirstOrDefault().empName : empDetailList.FirstOrDefault().empNameEN,
-                    position = !langEn ? empDetailList.FirstOrDefault().position : empDetailList.FirstOrDefault().positionEN,
-                    level = empDetailList.FirstOrDefault().level,
-                    department = !langEn ? empDetailList.FirstOrDefault().department : empDetailList.FirstOrDefault().departmentEN,
-                    bu = !langEn ? empDetailList.FirstOrDefault().bu : empDetailList.FirstOrDefault().buEN,
-                    companyName = !langEn ? empDetailList.FirstOrDefault().companyName : empDetailList.FirstOrDefault().companyNameEN,
-                    compId = empDetailList.FirstOrDefault().compId,
-                    email = empDetailList.FirstOrDefault().email,
-                    //hireDate = empDetailList.FirstOrDefault().hireDate
-                    hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(empDetailList.FirstOrDefault().hireDate), ConfigurationManager.AppSettings["formatDateUse"]),
-                };
-                result.Data = resultData;
+                    var resultData = new
+                    {
+                        empName = !langEn ? empDetailList.FirstOrDefault().empName : empDetailList.FirstOrDefault().empNameEN,
+                        position = !langEn ? empDetailList.FirstOrDefault().position : empDetailList.FirstOrDefault().positionEN,
+                        level = empDetailList.FirstOrDefault().level,
+                        department = !langEn ? empDetailList.FirstOrDefault().department : empDetailList.FirstOrDefault().departmentEN,
+                        bu = !langEn ? empDetailList.FirstOrDefault().bu : empDetailList.FirstOrDefault().buEN,
+                        companyName = !langEn ? empDetailList.FirstOrDefault().companyName : empDetailList.FirstOrDefault().companyNameEN,
+                        compId = empDetailList.FirstOrDefault().compId,
+                        email = empDetailList.FirstOrDefault().email,
+                        //hireDate = empDetailList.FirstOrDefault().hireDate
+                        hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(empDetailList.FirstOrDefault().hireDate), ConfigurationManager.AppSettings["formatDateUse"]),
+                    };
+                    result.Data = resultData;
+                }
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("getEmpDetailById => " + ex.Message);
             }
+
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

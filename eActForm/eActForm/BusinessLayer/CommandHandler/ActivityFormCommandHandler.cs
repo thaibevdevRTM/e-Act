@@ -201,15 +201,6 @@ namespace eActForm.BusinessLayer
                             }
                         }
 
-                        //if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"] ||
-                        //    getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
-                        //{
-                        //    if (getActList.FirstOrDefault().documentDate != null)
-                        //    {
-                        //        int updateNoDoc = checkUpdateNoDoc(getActList.FirstOrDefault().chanel_Id, getActList.FirstOrDefault().documentDate.Value.AddYears(1).Year.ToString(), getActList.FirstOrDefault().id);
-                        //    }
-                        //}
-
                         if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
                         {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id, activityId).FirstOrDefault().docNo);
