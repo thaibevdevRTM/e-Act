@@ -194,11 +194,19 @@ namespace eActForm.BusinessLayer
                             if (getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9)
                             {
                                 getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
-                                int updateNoDoc = checkUpdateNoDoc(getActList.FirstOrDefault().chanel_Id, getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1).Year.ToString() , getActList.FirstOrDefault().id);
                             }
                             else
                             {
-                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value).ToString().Substring(2, 2);
+                            }
+                        }
+
+                        if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"] ||
+                            getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                        {
+                            if (getActList.FirstOrDefault().documentDate != null)
+                            {
+                                int updateNoDoc = checkUpdateNoDoc(getActList.FirstOrDefault().chanel_Id, getActList.FirstOrDefault().documentDate.Value.AddYears(1).Year.ToString(), getActList.FirstOrDefault().id);
                             }
                         }
 
@@ -206,6 +214,7 @@ namespace eActForm.BusinessLayer
                         {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id, activityId).FirstOrDefault().docNo);
 
+                            if(getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"]) { result[0] += ConfigurationManager.AppSettings["docSetPrice"]; }
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().chanelShort.Trim();
@@ -239,6 +248,7 @@ namespace eActForm.BusinessLayer
                             //==========แบบเก่า================
 
                             //=========แบบใหม่ Gen In USP=======By Peerapop=========
+
                             result[0] += getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId).FirstOrDefault().docNo;
                             if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_TBM"])
                             {
@@ -598,9 +608,10 @@ namespace eActForm.BusinessLayer
             {
                 object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCheckStatusActivity"
                     , new SqlParameter[] { new SqlParameter("@actId", actId) });
-                if(obj != null) {
+                if (obj != null)
+                {
                     result = obj.ToString();
-                }               
+                }
                 return result;
 
             }
@@ -613,13 +624,13 @@ namespace eActForm.BusinessLayer
         }
 
 
-        protected static int checkUpdateNoDoc(string chanelId , string year , string activityId)
+        protected static int checkUpdateNoDoc(string chanelId, string year, string activityId)
         {
             int rtn = 0;
             try
             {
                 rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateDocNoByChanelId"
-                    , new SqlParameter[] { new SqlParameter("@chanelId", chanelId) 
+                    , new SqlParameter[] { new SqlParameter("@chanelId", chanelId)
                     , new SqlParameter("@year", year) });
 
                 return rtn;
@@ -631,7 +642,7 @@ namespace eActForm.BusinessLayer
             }
 
 
-      
+
         }
     }
 

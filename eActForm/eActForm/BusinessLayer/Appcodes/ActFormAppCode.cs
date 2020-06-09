@@ -112,6 +112,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivityCustomersFormByEmpId";
                 }
+                else if(typeForm == Activity_Model.activityType.SetPrice.ToString())
+                {
+                    strCall = "usp_getActivitySetPriceByEmpId";
+                }
                 else if (typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
@@ -132,6 +136,10 @@ namespace eActForm.BusinessLayer
                 if (isAdmin())
                 {
                     strCall = "usp_getActivityFormAll";
+                }
+                if (isAdmin() && typeForm == Activity_Model.activityType.SetPrice.ToString())
+                {
+                    strCall = "usp_getActivitySetPriceFormAll";
                 }
 
                 if (isAdmin() && typeForm == Activity_Model.activityType.ITForm.ToString())
