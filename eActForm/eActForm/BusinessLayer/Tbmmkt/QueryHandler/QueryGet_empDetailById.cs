@@ -35,7 +35,8 @@ namespace eActForm.BusinessLayer
                                  buEN = d["empDivisionEN"].ToString(),
                                  companyNameEN = d["companyNameEN"].ToString(),
                                  compId = d["empCompanyId"].ToString(),
-                                 email = d["empEmail"].ToString()
+                                 email = d["empEmail"].ToString(),
+                                 hireDate  = d["hireDate"].ToString()
                              });
                 return lists.OrderBy(x => x.empName).ToList();
             }
@@ -72,13 +73,14 @@ namespace eActForm.BusinessLayer
                                  buEN = d["empDivisionEN"].ToString(),
                                  companyNameEN = d["companyNameEN"].ToString(),
                                  compId = d["empCompanyId"].ToString(),
-                                 email = d["empEmail"].ToString()
+                                 email = d["empEmail"].ToString(),
+                                 hireDate = d["hireDate"].ToString()
                              });
                 return lists.OrderBy(x => x.empName).ToList();
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getEmpDetailById => " + ex.Message);
+                ExceptionManager.WriteError("getEmpDetailFlowById => " + ex.Message);
                 return new List<RequestEmpModel>();
             }
         }

@@ -1,0 +1,170 @@
+﻿
+@model eActForm.Models.Claim_Report_Model
+@using eActForm.BusinessLayer;
+@using System.Configuration;
+
+@*//update 21-04-2020*@
+
+<div class="row" style="width:1100px;overflow-x:scroll;">
+    @if (Model != null && Model.Claim_Activity_List != null && Model.Claim_Activity_List.Count > 0)
+    {
+        <div class="col-md-12 col-xs-12">
+
+            <div class="row">
+                @using (Html.BeginForm("claimExportExcel", "ClaimReport", FormMethod.Post))
+                {
+                    <div class="col-md-12 col-xs-12">
+                        <input type="hidden" name="gridHtml" id="gridHtml" />
+                        <button type="submit" class="btn ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
+                            <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
+                        </button>
+                    </div>
+
+
+                }
+            </div>
+
+            <div class="row">
+                <div id="gridDataClaim" class="col-md-12 col-xs-12">
+                    <table class="table table-hover border-dark" id="datatable" style="width:100%;">
+                        <thead>
+                            <tr style="background-color:#2B5D95;color:#ffffff;">
+                                <th class="align-content-center font12B">เลขที่กิจกรรม</th>
+                                <th class="align-content-center font12B">Claim IO</th>
+                                @*<th class="align-content-center font12B">% Claim</th>*@
+                                @*<th class="align-content-center font12B">G/L</th>*@
+                                <th class="align-content-center font12B">Detail</th>
+                                @*<th class="align-content-center font12B">Order No.</th>*@
+                                <th class="align-content-center font12B">Customer</th>
+                                <th class="align-content-center font12B">ชนิดสินค้า</th>
+                                <th class="align-content-center font12B">Pstng Date(40)</th>
+                                <th class="align-content-center font12B">Reference(40)</th>
+                                <th class="align-content-center font12B">Doc. No(40)</th>
+                                <th class="align-content-center font12B">Amount(40)</th>
+                                <th class="align-content-center font12B">Claim PDG Date(20)</th>
+                                <th class="align-content-center font12B">Doc. No(20)</th>
+                                <th class="align-content-center font12B">Amount(20)</th>
+                            </tr>
+                        </thead>
+
+                        @if (Model.Claim_Activity_List != null)
+                        {
+                            var index = 0;
+                            foreach (var item in Model.Claim_Activity_List)
+                            {
+                                <tr class="gradeX">
+                                    <th style="text-align:center;font-weight:normal;">@item.act_subCode</th>
+                                    <th style="font-weight:normal;">@item.claim_actIO</th>
+                                    @*<th style="font-weight:normal;">@item.claim_actValue</th>*@
+                                    @*<th style="font-weight:normal;">@item.s40_GL</th>*@
+                                    <th style="font-weight:normal;">@item.prd_productDetailShort</th>
+                                    @*<th style="font-weight:normal;">@item.s40_Order</th>*@
+
+                                    <th style="font-weight:normal;">@item.cus_cusNameEN</th>
+                                    <th style="font-weight:normal;">@item.prd_brandName</th>
+                                    <th style="font-weight:normal;">@item.s40_PstngDate</th>
+                                    <th style="font-weight:normal;">@item.s40_Reference</th>
+                                    <th style="font-weight:normal;">@item.s40_DocumentNo</th>
+                                    <th style="font-weight:normal;text-align:right;">@string.Format("{0:n2}", item.s40_Amount)</th>
+
+                                    <th style="font-weight:normal;">@item.s20_DocumentDate</th>
+                                    <th style="font-weight:normal;">@item.s20_DocumentNo</th>
+                                    <th style="font-weight:normal;text-align:right;">@string.Format("{0:n2}", item.s20_Amount)</th>
+                                </tr>
+                                index++;
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+
+            <div class="row hidden">
+                <div id="gridDataClaim_export" class="col-md-12 col-xs-12">
+                    <table class="table table-hover border-dark" id="datatable_export" style="width:100%;">
+                        <thead>
+                            <tr style="background-color:#2B5D95;color:#ffffff;">
+                                <th class="align-content-center font12B">เลขที่กิจกรรม</th>
+                                <th class="align-content-center font12B">Claim IO</th>
+                                <th class="align-content-center font12B">% Claim</th>
+                                <th class="align-content-center font12B">G/L</th>
+                                <th class="align-content-center font12B">Detail</th>
+                                <th class="align-content-center font12B">Order No.</th>
+                                <th class="align-content-center font12B">Customer</th>
+                                <th class="align-content-center font12B">ชนิดสินค้า</th>
+                                <th class="align-content-center font12B">Pstng Date(40)</th>
+                                <th class="align-content-center font12B">Reference(40)</th>
+                                <th class="align-content-center font12B">Doc. No(40)</th>
+                                <th class="align-content-center font12B">Amount(40)</th>
+                                <th class="align-content-center font12B">Claim PDG Date(20)</th>
+                                <th class="align-content-center font12B">Doc. No(20)</th>
+                                <th class="align-content-center font12B">Amount(20)</th>
+                            </tr>
+                        </thead>
+
+                        @if (Model.Claim_Activity_List != null)
+                        {
+                            var index = 0;
+                            foreach (var item in Model.Claim_Activity_List)
+                            {
+                                <tr class="gradeX">
+                                    <th style="font-weight:normal;text-align:center;">@item.act_subCode</th>
+                                    <th style="font-weight:normal;text-align:center;">@item.claim_actIO</th>
+                                    <th style="font-weight:normal;text-align:right;">@item.claim_actValue</th>
+                                    <th style="font-weight:normal;text-align:center;">@item.s40_GL</th>
+                                    <th style="font-weight:normal;text-align:left;">@item.prd_productDetailShort</th>
+                                    <th style="font-weight:normal;text-align:center;">@item.s40_Order</th>
+
+                                    <th style="font-weight:normal;text-align:left;">@item.cus_cusNameEN</th>
+                                    <th style="font-weight:normal;text-align:left;">@item.prd_brandName</th>
+                                    <th style="font-weight:normal;text-align:center;">@item.s40_PstngDate</th>
+                                    <th style="font-weight:normal;text-align:center;">@item.s40_Reference</th>
+                                    <th style="font-weight:normal;text-align:center;">@item.s40_DocumentNo</th>
+                                    <th style="font-weight:normal;text-align:right;">@string.Format("{0:n2}", item.s40_Amount)</th>
+
+                                    <th style="font-weight:normal;text-align:center;">@item.s20_DocumentDate</th>
+                                    <th style="font-weight:normal;text-align:center;">@item.s20_DocumentNo</th>
+                                    <th style="font-weight:normal;text-align:right;">@string.Format("{0:n2}", item.s20_Amount)</th>
+                                </tr>
+                                index++;
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+
+<script>$(document).ready(function () {
+                $('#datatable').DataTable({
+                    "columnDefs": [
+                        { "orderable": true, "targets": 0 }
+                        //, { "orderable": false, "targets": 1 }
+                        //, { "orderable": false, "targets": 2 }
+                        //, { "orderable": false, "targets": 3 }
+                    ],
+                    "dom": 'lCfrtip',
+                    "order": [],
+                    "language": {
+                        "lengthMenu": '_MENU_ entries per page',
+                        "search": '<i class="fa fa-search"></i>',
+                        "paginate": {
+                            "previous": '<i class="fa fa-angle-left"></i>',
+                            "next": '<i class="fa fa-angle-right"></i>'
+                        }
+                    }
+                });
+            })
+
+            $(function () {
+                $("#btnExportExcel").click(function () {
+                    $("input[name='gridHtml']").val($("#gridDataClaim_export").html());
+                });
+            });</script>
+
+
+
+
+
+

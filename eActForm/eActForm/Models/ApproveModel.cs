@@ -89,6 +89,10 @@ namespace eActForm.Models
             public string empName_EN { get; set; }
             public string createBy { get; set; }
             public string createBy_EN { get; set; }
+            public string approveGroupId { get; set; }
+            public string approveGroupTH { get; set; }
+            public string approveGroupEN { get; set; }
+            public string statusId { get; set; }
         }
     }
 }

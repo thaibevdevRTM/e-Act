@@ -15,10 +15,8 @@
 
 }
 
-
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
-
 <link href="~/Scripts/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
 <script src="~/Scripts/locales/bootstrap-datetimepicker.th.js"></script>
@@ -46,6 +44,7 @@
         background-color: #d4c8c8;
         height: 35px;
     }
+
     .highHeadFooterTable {
         height: 35px;
     }
@@ -96,7 +95,8 @@
             || Model.activityFormTBMMKT.statusId == 1
             || Model.activityFormTBMMKT.statusId == 5
             || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
-            || (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] && ActFormAppCode.checkRecorderByUser(Model.activityFormTBMMKT.id))
+            || (Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)
+            && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
         )
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
@@ -140,9 +140,33 @@
         $("#GridPDF :input").prop("disabled", true);
         $("#txtdescAttach").prop("disabled", true);
 
+        $("#ProductDetail_5").prop("disabled", true);
+        $("#ProductDetail_6").prop("disabled", true);
+
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' &&
-            '@ActFormAppCode.checkRecorderByUser(Model.activityFormTBMMKT.id)' == 'True') {
+            '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
+
             $("#divExpensesTrv :input").prop("disabled", false);
+            $("#divExpensesTrv :input").prop("readonly", true);
+
+
+            for (var i = 0; i < '@Model.expensesDetailModel.costDetailLists.Count'; i++) {
+                if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "Recorder")' == 'True') {
+                    $("#txtUnitPrice_" + i + "").prop("readonly", false);
+                } else if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
+                    $("#txtGlCode_" + i + "").prop("readonly", false);
+                }
+            }
+        }
+
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]' &&
+            '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
+
+            $("#divExpensesMed :input").prop("disabled", false);
+            $("#divExpensesMed :input").prop("readonly", true);
+            if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
+                $("#txtGlCode_0").prop("readonly", false);
+            }
         }
     }
 
@@ -178,6 +202,7 @@
                 }
             }
         }
+
 
     });
 
@@ -228,8 +253,7 @@
                 required += "&emsp;ประมาณค่าใช้จ่าย/Estimate of travelling expenses*<br>"; validate = false;
             }
 
-        } else if ('@Model.activityFormTBMMKT.master_type_form_id' =='@ConfigurationManager.AppSettings["masterEmpExpense"]')
-        {
+        } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
             if ($("#ddlCompany").val() == "") { required += "บริษัท*<br>"; validate = false; }
             if ($("#txtExMonth").val() == "") { required += "ประจำเดือน*<br>"; validate = false; }
             if ($("#ddlTravelling").val() == "") { required += "ระบุความเร่งด่วน*<br>"; validate = false; }
@@ -258,7 +282,7 @@
             }
 
         }
-        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' ) {
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]') {
 
 
             if ($("#txtdateDoc").val() == "") { required += "&emsp;วันที่เอกสาร*<br>"; validate = false; }
@@ -292,7 +316,7 @@
             var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val() == '') { required += "&emsp;ส่วนที่3-5 [IO]*<br>"; validate = false; }
-                if ($(".txtGL_" + i).val() == '') { required += "&emsp;ส่วนที่3-5 [GL]*<br>"; validate = false; }
+                if ($(".txtGL_" + i).val() == '' && $("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val().toLowerCase() != 'เข้าstock') { required += "&emsp;ส่วนที่3-5 [GL]*<br>"; validate = false; }
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__select_list_choice_id_ChReg").val() == '') { required += "&emsp;ส่วนที่3-5 [Ch.+Reg.]*<br>"; validate = false; }
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__productBrandId").val() == '') { required += "&emsp;ส่วนที่3-5 [Brand]*<br>"; validate = false; }
             }
@@ -311,6 +335,64 @@
                 if ($("#activityOfEstimateList_" + i + "__listChoiceId").val() == '') { required += "&emsp;ส่วนที่6 [VAT]*<br>"; validate = false; }
                 if ($(".txtnormalCost_" + i).val() == '') { required += "&emsp;ส่วนที่6 [จำนวนเงิน(บาท)]*<br>"; validate = false; }
             }
+        } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
+
+            if ($("#txtdateDoc").val() == "") { required += "&emsp;วันที่เอกสาร*<br>"; validate = false; }
+            if ($("#lblEmpName").val() == "" || $("#lblEmpName").val() == null) { required += "&emsp;ข้อมูลพนักงาน*<br>"; validate = false; }
+            if ($("#ddlRegional").val() == "") { required += "&emsp;ภาค*<br>"; validate = false; }
+            if ($("#txtEmpTel").val() == "") { required += "&emsp;โทรศัพท์ติดต่อ*<br>"; validate = false; }
+            if ($("#lblHireDate").val() == "") { required += "&emsp;วันที่เข้างาน(กรุณาติดต่อ Admin)*<br>"; validate = false; }
+            if ($("#txthospName_0").val() == "") { required += "&emsp;โรงพยาบาล*<br>"; validate = false; }
+
+            var price_1 = 0.00;
+            if ($("#txtUnitPrice_0").val() != "") { price_1 = parseFloat($("#txtUnitPrice_0").val().replace(",", "")); }
+            if (!($("#txtDateInput_0").val() != "" && $("#txtdetail_0").val() != "" && price_1 > 0 ))
+            {
+                required += "&emsp;รายละเอียดขอเบิกเงินค่ารักษาพยาบาลบรรทัดที่ 1 ให้ครบถ้วน*<br>"; validate = false;
+            }
+            var rowCount = parseInt($('#tabelExpensesMed tr.tagCountRowinTable').length);
+            for (i = 1; i < rowCount; i++) {
+                var price = 0.00;
+                if ($("#txtUnitPrice_" + i).val() != "") { price = parseFloat($("#txtUnitPrice_" + i).val().replace(",", "")); }
+                if ($("#txtDateInput_" + i).val() != "" ||
+                    $("#txtdetail_" + i).val() != "" ||
+                    price > 0)
+                {
+                    if ($("#txtDateInput_" + i).val() == "" || $("#txtdetail_" + i).val() == "" || price <= 0 ) {
+                        required += "&emsp;รายละเอียดขอเบิกเงินค่ารักษาพยาบาลบรรทัดที่ "+(i+1)+" ให้ครบถ้วน*<br>"; validate = false;
+                    }
+                }
+            }
+
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]') {
+            if ($("#txtEmpId").val() == "") { required += "&emsp;EmpID/รหัสพนักงาน*<br>"; validate = false; }
+            if ($("#ddlDepartment").val() == "") { required += "&emsp;Department/หน่วยงาน*<br>"; validate = false; }
+            if ($("#ddlchooseRequest").val() == null) { required += "&emsp;Choose request*<br>"; validate = false; }
+            if ($("#ddlProcuretoPay").val() == null && $("#ddlERPSystem").val() == null && $("#ddlOrdertoCash").val() == null && $("#ddlForecasttoDelivery").val() == null && $("#ddlFinanceAccounting").val() == null && $("#ddlHumanCapital").val() == null && $("#ddlOther").val() == null) { required += "&emsp;Choose system*<br>"; validate = false; }
+            if ($("#ddlChangetype").val() == null) { required += "&emsp;Change type / ประเภทของการเปลี่ยนแปลง*<br>"; validate = false; }
+            if ($("#ddlChangeAuthorizations").val() == null) { required += "&emsp;Change Authorizations / สิทธิ์การใช้งาน*<br>"; validate = false; }
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceMT"]') {
+            if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
+            if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; }
+            if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
+            if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
+            if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
+            if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม *<br>"; validate = false; }
+            if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
+            if ($("#txtdateActivitySt").val() == "" || $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivityEnd").focus(); }
+            else {
+                var startDate = $("#txtdateActivitySt").val().split("-");
+                var endDate = $("#txtdateActivityEnd").val().split("-");
+                if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1], endDate[0])) {
+                    required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
+                }
+            }
+            if ($("input[name='activityFormTBMMKT.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
+
+            if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
+                $("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]")) { required += "Reference*<br>"; validate = false; }
         }
         else {
 
@@ -378,10 +460,10 @@
 
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
-        maxFiles: 5,
+        maxFiles: 10,
         acceptedFiles: "",
         paramName: "file",
-        maxFilesize: 10,
+        maxFilesize: 20,
         //addRemoveLinks: true,
         init: function () {
 
@@ -420,5 +502,10 @@ function CallImageView(obj) {
         }
         return detect;
     }
+    function CheckNum() {
 
+        if ((event.keyCode < 48 || event.keyCode > 57) && event.keyCode != 46) {
+            event.returnValue = false;
+        }
+    }
 </script>

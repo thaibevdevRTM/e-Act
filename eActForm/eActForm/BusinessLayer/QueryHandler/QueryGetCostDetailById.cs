@@ -47,6 +47,8 @@ namespace eActForm.BusinessLayer
                                  isShowGroup = bool.Parse(d["isShowGroup"].ToString()),
                                  rowNo = int.Parse(d["rowNo"].ToString()),
                                  EO = d["EO"].ToString(),
+                                 rsp = d["RSP"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["RSP"].ToString())),
+                                 unitTxt = d["unitTxt"].ToString(),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                  createdByUserId = d["createdByUserId"].ToString(),
@@ -81,6 +83,8 @@ namespace eActForm.BusinessLayer
                    promotionCost = group.First().promotionCost,
                    pack = group.First().pack == "" ? "" : "Pack " + group.First().pack,//QueryGetAllProduct.getProductById(group.First().productId).Any() ? "Pack" + QueryGetAllProduct.getProductById(group.First().productId).FirstOrDefault().pack.ToString() : "",
                    rowNo = group.First().rowNo,
+                   rsp = group.First().rsp,
+                   unitTxt = group.First().unitTxt,
                    isShowGroup = group.First().isShowGroup,
                    detailGroup = group.ToList()
                }).ToList();

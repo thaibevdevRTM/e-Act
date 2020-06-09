@@ -6,9 +6,22 @@
             <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;font-size:large;" class="alert alert-success">
 
                 @if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureEng"])
-                {@Model.activityFormTBMMKT.companyNameEN<br />@Model.activityFormTBMMKT.formNameEn}
-            else
-            { @Model.activityFormTBMMKT.companyName<br />@Model.activityFormTBMMKT.formName}
+                {
+
+                    if (Model.activityFormTBMMKT.companyNameEN != "")
+                    {
+                        @Model.activityFormTBMMKT.companyNameEN<br />
+                    }
+                    @Model.activityFormTBMMKT.formNameEn
+                }
+                else
+                {
+                    if (Model.activityFormTBMMKT.companyName != "")
+                    {
+                        @Model.activityFormTBMMKT.companyName<br />
+                    }
+                    @Model.activityFormTBMMKT.formName
+                }
 
             </div>
         </td>

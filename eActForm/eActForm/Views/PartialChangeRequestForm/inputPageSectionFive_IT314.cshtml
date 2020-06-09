@@ -1,0 +1,136 @@
+﻿@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr>
+        <td style="">
+            <div class="form-group">
+                <label class="control-label col-md-4 col-xs-12" style="text-align:left;margin-bottom:8px;">
+                    <u>Change type / ประเภทของการเปลี่ยนแปลง</u>&nbsp;&nbsp;
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_7_multi_select", new SelectList(Model.list_7,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlChangetype",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.other1, new { @class = "form-control textboxcss", Style = "text-align:left;display:none;", id = "txtother1" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4 col-xs-12" style="text-align: left;margin-bottom:8px;">
+                    <u>Change Authorizations / สิทธิ์การใช้งาน</u>&nbsp;&nbsp;
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownList("activityFormTBMMKT.list_8_multi_select", new SelectList(Model.list_8,
+                            "id", "name"),
+                            new
+                            {
+                                @class = "form-control",
+                                id = "ddlChangeAuthorizations",
+                                multiple = "multiple"
+                            })
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.other2, new { @class = "form-control textboxcss", Style = "text-align:left;display:none;", id = "txtother2" })
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<style>
+    td div span {
+        line-height: 0px;
+    }
+
+    .multiselect-container {
+        width: 100% !important;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+</style>
+<script type="text/javascript">
+    var valueOther1 = "9AE210F8-7945-4985-A6E3-A5C156E06AFA";
+    var valueOther2 = "6C1DA2D7-790B-4275-88FD-7415BA77AB98";
+
+    $(document).ready(function () {
+        $('#ddlChangetype').multiselect({
+            numberDisplayed: 1,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+                if (option.val() == valueOther1 && checked === true) {
+                    $('#txtother1').show();
+                } else if(option.val() == valueOther1) {
+                    $('#txtother1').hide();
+                    $('#txtother1').val('');
+                }
+            },
+        });
+        var valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_7_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_7_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlChangetype").multiselect('select', valuesSelectChoiceFromDb);
+
+        $('#ddlChangeAuthorizations').multiselect({
+            numberDisplayed: 2,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+                if (option.val() == valueOther2 && checked === true) {
+                    $('#txtother2').show();
+                } else if (option.val() == valueOther2) {
+                    $('#txtother2').hide();
+                    $('#txtother2').val('');
+                }
+            },
+        });
+        valuesSelectChoiceFromDb = [];
+         @if (Model.activityFormTBMMKT.list_8_multi_select != null)
+         {
+             foreach (var itemArray in Model.activityFormTBMMKT.list_8_multi_select)
+             {
+             @:valuesSelectChoiceFromDb.push("@itemArray");
+             }
+         }
+        $("#ddlChangeAuthorizations").multiselect('select', valuesSelectChoiceFromDb);
+
+        @if(Model.tB_Act_ActivityForm_DetailOther.other1 != null && Model.tB_Act_ActivityForm_DetailOther.other1 !="")
+        {
+            @:$('#txtother1').show();
+        }
+        @if(Model.tB_Act_ActivityForm_DetailOther.other2 != null && Model.tB_Act_ActivityForm_DetailOther.other2 != "")
+        {
+            @:$('#txtother2').show();
+        }
+
+
+        $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+        $(".multiselect .caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+    });
+
+</script>

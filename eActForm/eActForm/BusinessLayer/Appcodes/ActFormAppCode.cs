@@ -1,6 +1,7 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -111,18 +112,45 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivityCustomersFormByEmpId";
                 }
+                else if(typeForm == Activity_Model.activityType.SetPrice.ToString())
+                {
+                    strCall = "usp_getActivitySetPriceByEmpId";
+                }
                 else if (typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
+                }
+                else if (typeForm == Activity_Model.activityType.ITForm.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_ITForm";
+                }
+                else if (typeForm == Activity_Model.activityType.HCForm.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_HCPomNum";
                 }
                 else
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
 
-                if (isAdmin())
+                if (isAdmin() && typeForm == Activity_Model.activityType.MT.ToString())
                 {
                     strCall = "usp_getActivityFormAll";
+                }
+                if (isAdmin() && typeForm == Activity_Model.activityType.SetPrice.ToString())
+                {
+                    strCall = "usp_getActivitySetPriceFormAll";
+                }
+
+                if (isAdmin() && typeForm == Activity_Model.activityType.ITForm.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_ITForm_Admin";
+                }
+
+                //เดิมผูกแค่บริษัท ต้องผูกเนื่องฟอร์มเพิ่ม boom 20200520
+                if (isAdmin() && typeForm == Activity_Model.activityType.HCForm.ToString())
+                {
+                    strCall = "usp_getActivityFormAll_HCPomNum";
                 }
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
@@ -315,6 +343,8 @@ namespace eActForm.BusinessLayer
                 || UtilsAppCode.Session.User.isAdminTBM
                 || UtilsAppCode.Session.User.isAdminHCM
                 || UtilsAppCode.Session.User.isAdminNUM
+                || UtilsAppCode.Session.User.isAdminPOM
+                || UtilsAppCode.Session.User.isAdminCVM
                 || UtilsAppCode.Session.User.isSuperAdmin ? true : false;
         }
 
@@ -378,7 +408,41 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static bool checkRecorderByUser(string actId)
+        public static bool checkGroupApproveByUser(string actId, string groupApprove)
+        {
+            try
+            {
+                switch (groupApprove)
+                {
+                    case "Recorder":
+                        groupApprove = AppCode.ApproveGroup.Recorder;
+                        break;
+                    case "PettyCashVerify":
+                        groupApprove = AppCode.ApproveGroup.PettyCashVerify;
+                        break;
+                    default:
+                        break;
+                }
+
+
+                ApproveModel.approveModels models = new ApproveModel.approveModels();
+                models = ApproveAppCode.getApproveByActFormId(actId, "");
+
+                if (models.approveDetailLists.Count > 0)
+                {
+                    models.approveDetailLists = models.approveDetailLists
+                        .Where(x => x.approveGroupId == groupApprove)
+                        .Where(x => x.empId == UtilsAppCode.Session.User.empId).ToList();
+                }
+                return models.approveDetailLists.Count > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkGroupApproveByUser >>" + ex.Message);
+            }
+
+        }
+        public static bool checkCanEditByUser(string actId)
         {
             try
             {
@@ -388,16 +452,85 @@ namespace eActForm.BusinessLayer
                 if (models.approveDetailLists.Count > 0)
                 {
                     models.approveDetailLists = models.approveDetailLists
-                        .Where(x => x.approveGroupId == AppCode.ApproveGroup.Recorder)
+                        .Where(x => x.approveGroupId == AppCode.ApproveGroup.Recorder || x.approveGroupId == AppCode.ApproveGroup.PettyCashVerify)
                         .Where(x => x.empId == UtilsAppCode.Session.User.empId).ToList();
                 }
                 return models.approveDetailLists.Count > 0 ? true : false;
             }
             catch (Exception ex)
             {
-                throw new Exception("checkRecorderByUser >>" + ex.Message);
+                throw new Exception("checkCanEditByUser >>" + ex.Message);
             }
 
+        }
+
+        public static string getGrpCompByCompId(string compId)
+        {
+            try
+            {
+                string grpComp = "";
+                List<TB_Act_Other_Model> lst = new List<TB_Act_Other_Model>();
+                lst = AdminUserAppCode.getCompany();
+
+                if (lst.Count > 0)
+                {
+                    lst = lst.Where(x => x.val1 == compId).ToList();
+                }
+                if (lst.Count > 0)
+                {
+                    if (string.IsNullOrEmpty(lst[0].subType))
+                    {
+                        grpComp = lst[0].displayVal;
+                    }
+                    else
+                    {
+                        grpComp = lst[0].subType;
+                    }
+
+
+                }
+                return grpComp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkCanEditByUser >>" + ex.Message);
+            }
+        }
+        public static bool checkFormAddTBDetailOther(string masterForm)
+        {
+            bool check = false;
+            if(ConfigurationManager.AppSettings["masterEmpExpense"] == masterForm
+                || ConfigurationManager.AppSettings["formSetPriceMT"] == masterForm)
+            {
+                check = true;
+            }
+
+            return check;
+        }
+
+        public static Activity_TBMMKT_Model addDataToDetailOther(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            try
+            {
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId = activity_TBMMKT_Model.activityFormTBMMKT.BrandlId;
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId = activity_TBMMKT_Model.activityFormTBMMKT.channelId;
+
+                //ค่าที่ insert จะไปยัดใน tB_Act_ActivityForm_DetailOther อีกที ไม่งั้น Get Flow ไม่ได้ ???????
+                activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
+                activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+
+                if (ConfigurationManager.AppSettings["masterEmpExpense"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)
+                {
+                    activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-01", "yyyy-MM-dd").ToString("dd/MM/yyyy");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("addDataToDetailOther >>" + ex.Message);
+            }
+            return activity_TBMMKT_Model;
         }
     }
 }

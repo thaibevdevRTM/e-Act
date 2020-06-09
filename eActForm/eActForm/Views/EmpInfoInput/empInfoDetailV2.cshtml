@@ -1,0 +1,144 @@
+﻿@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr>
+        <td style="">
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    <u>EmpID/รหัสพนักงาน</u>&nbsp;&nbsp;
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.TextBoxFor(x => x.empInfoModel.empId, new { @class = "form-control textboxcss textRight", Style = "text-align:left;", id = "txtEmpId", onchange = "getEmpDetail();" })
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    Name/ชื่อ :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        <lable id="lblEmpName" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
+                <label class="control-label col-md-2 col-xs-12">
+                    Position/ตำแหน่ง :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        <lable id="lblEmpPosition" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    Email :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        <lable id="lblEmail" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
+                <label class="control-label col-md-2 col-xs-12">
+                    Company/บริษัท :
+                </label>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        <input type="hidden" id="hdCompId" name="activityFormTBMMKT.formCompanyId" class="form-control textboxcss" />
+                        <lable id="lblComp" class="form-control textboxcss" readonly></lable>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        $("#hdRegionalId").val($("#ddlRegional").val());
+
+        if ($("#txtEmpId").val() != '') {
+            getEmpDetail();
+        }
+    });
+    function getEmpDetail() {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getEmpDetailById", "eAct")',
+            data: {
+                empId: $("#txtEmpId").val(),
+                typeFormId: "",
+            }
+        }).done(function (response) {
+            //console.log(response);
+            if (response.Data != null) {
+                $("#lblEmpName").val(response.Data.empName);
+                $("#hdCompId").val(response.Data.compId);
+                document.getElementById('lblEmpName').innerHTML = response.Data.empName;
+                document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
+                document.getElementById('lblEmail').innerHTML = response.Data.email;
+                document.getElementById('lblComp').innerHTML = response.Data.companyName;
+                getDepartment();
+            }
+            else {
+                if ($("#txtEmpId").val() != '') { alert('ไม่พบ ข้อมูลพนักงาน ' + $("#txtEmpId").val()); }
+                $("#lblEmpName").val('');
+                $("#hdCompId").val('');
+                $("#ddlRegional").empty();
+                document.getElementById('lblEmpName').innerHTML = '';
+                document.getElementById('lblEmpPosition').innerHTML = '';
+                document.getElementById('lblEmail').innerHTML = '';
+                document.getElementById('lblComp').innerHTML = '';
+                $("#ddlDepartment option[value!='']").remove();
+                $("#ddlDepartment").selectpicker('refresh');
+            }
+
+
+        });
+    }
+
+    function getDepartment() {
+        var dataToBeSend = {
+            companyId: $("#hdCompId").val()
+        };
+         $.ajax('@Url.Action("GetDepartmentMaster", "GetDataMainForm")',
+        {
+            contentType:"application/json;charset=utf-8",
+            data:JSON.stringify(dataToBeSend),
+            dataType:'json',
+            type:"POST",
+            success:function(response){
+                if (response.Data.tbToAjax.length > 0) {
+                    $("#ddlDepartment option[value!='']").remove();
+                    $.each(response.Data.tbToAjax,function(){
+                        $("#ddlDepartment").append($("<option></option>").val(this['id']).html(this['name']));
+                        var departmentFromEdit = '@Model.tB_Act_ActivityForm_DetailOther.departmentId';
+                        if (departmentFromEdit != '') {
+                            $("#ddlDepartment").selectpicker('val', departmentFromEdit);
+                        }
+                        $("#ddlDepartment").selectpicker('refresh');
+                    });
+                }
+            },
+            error:function(data){
+                alert("ErrorGetDataEOPaymentVoucher."+data);
+            }
+        });
+    }
+
+</script>

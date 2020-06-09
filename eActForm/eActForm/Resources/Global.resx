@@ -318,4 +318,7 @@
   <data name="empId" xml:space="preserve">
     <value>รหัสพนักงาน</value>
   </data>
+  <data name="dearForProcess" xml:space="preserve">
+    <value>เรียน เพื่อดำเนินการ</value>
+  </data>
 </root>

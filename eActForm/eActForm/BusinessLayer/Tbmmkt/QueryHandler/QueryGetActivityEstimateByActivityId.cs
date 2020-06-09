@@ -45,6 +45,9 @@ namespace eActForm.BusinessLayer
                                   createdByUserId = d["createdByUserId"].ToString(),
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
+                                  glCode = d["glCode"].ToString(),
+                                  hospId = d["hospId"].ToString(),
+                                  rowNo = Convert.ToInt32(d["rowNo"].ToString()),
                               });
 
                 return result.ToList();
@@ -77,10 +80,9 @@ namespace eActForm.BusinessLayer
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
                                   displayType = d["displayType"].ToString(),
                                   subDisplayType = d["subDisplayType"].ToString(),
-                                   updatedByUserId = d["updatedByUserId"].ToString(),
+                                  updatedByUserId = d["updatedByUserId"].ToString(),
                                   createdByUserId = d["createdByUserId"].ToString(),
-
-
+                                  glCode = d["glCode"].ToString(),
                               });
 
                 return result.ToList();
@@ -103,13 +105,13 @@ namespace eActForm.BusinessLayer
                               {
                                   id = d["id"].ToString(),
                                   activityId = d["activityId"].ToString(),
-                                  activityTypeId = d["activityTypeId"].ToString(),                              
+                                  activityTypeId = d["activityTypeId"].ToString(),
                                   productDetail = d["productDetail"].ToString(),
                                   unit = int.Parse(d["unit"].ToString()),
                                   unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
                                   unitPriceDisplay = d["unitPrice"].ToString() == "" ? "0.00" : string.Format("{0:n2}", decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString()))),
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
-                                listChoiceId = d["listChoiceId"].ToString(),
+                                  listChoiceId = d["listChoiceId"].ToString(),
                                   delFlag = bool.Parse(d["delFlag"].ToString()),
                                   createdDate = DateTime.Parse(d["createdDate"].ToString()),
                                   createdByUserId = d["createdByUserId"].ToString(),
