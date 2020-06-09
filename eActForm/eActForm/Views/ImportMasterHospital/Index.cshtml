@@ -7,7 +7,7 @@
 
 @using (Html.BeginForm("Index", "ImportMasterHospital", FormMethod.Post, new { enctype = "multipart/form-data", id = "divUpload" }))
 {
-    @Html.TextBoxFor(m => m.file, new { type = "file" })
+    @Html.TextBoxFor(m => m.file, new { type = "file", id="fileImport" })
     <br />
     <div>
         &nbsp;<button id="submitButton" type="button" onclick="uploadClicked()">Upload Data Click Here</button>
@@ -46,9 +46,18 @@
 <hr />
 <div>
     <h2>
-        Download สถานพยาบาล ที่มีอยู่ในระบบปัจจุบัน.
-        @using (Html.BeginForm("ExportHospital", "ImportMasterHospital", FormMethod.Post))
+        @using (Html.BeginForm("exportHospital", "ImportMasterHospital", FormMethod.Post))
         {
+            <lebel>Download สถานพยาบาล ที่มีอยู่ในระบบปัจจุบัน.</lebel>
+            <input type="submit" value="Export" />
+        }
+    </h2>
+</div>
+<div>
+    <h2>
+        @using (Html.BeginForm("exportProvince", "ImportMasterHospital", FormMethod.Post))
+        {
+            <lebel>Download จังหวัด ที่มีอยู่ในระบบปัจจุบัน.</lebel>
             <input type="submit" value="Export" />
         }
     </h2><br />
