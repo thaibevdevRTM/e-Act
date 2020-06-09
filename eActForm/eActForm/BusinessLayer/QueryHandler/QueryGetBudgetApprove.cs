@@ -76,8 +76,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                //throw new Exception("getApproveListsByStatusId >> " + ex.Message);
-                ExceptionManager.WriteError("getApproveListsByStatusId >> " + ex.Message);
+                ExceptionManager.WriteError("getApproveListsByEmpId >> " + ex.Message);
                 return new List<Budget_Approve_Detail_Model.budgetForm>();
             }
         }
