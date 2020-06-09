@@ -31,7 +31,7 @@ namespace eActForm.BusinessLayer
                                   customerId = d["customerId"].ToString(),
                                   chanel = d["channelName"].ToString(),
                                   chanelShort = d["chanelShort"].ToString(),
-                                  chanel_Id = d["chanel_Id"].ToString(),
+                                  chanel_Id = string.IsNullOrEmpty(d["master_type_form_id"].ToString()) ? d["chanel_Id"].ToString() : d["master_type_form_id"].ToString(), //ถ้ามี master_type_form_id is Set Price Form
                                   regionId = d["regionId"].ToString(),
                                   regionName = d["regionName"].ToString() + "(" + d["regionShort"].ToString() + ")",
                                   regionShort = d["regionShort"].ToString(),
@@ -66,6 +66,7 @@ namespace eActForm.BusinessLayer
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                               });
 
+                var test = result.ToList();
                 return result.ToList();
             }
             catch (Exception ex)
@@ -73,7 +74,8 @@ namespace eActForm.BusinessLayer
                 ExceptionManager.WriteError("getActivityById => " + ex.Message);
                 return new List<ActivityForm>();
             }
-        }
 
+        }
+        
     }
 }

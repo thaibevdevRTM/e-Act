@@ -1,0 +1,118 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@using eActForm.Models;
+@{
+    Layout = null;
+    decimal? perTotal = 0;
+    decimal? totalActCost = 0;
+    decimal? costActivity = 0;
+    decimal? costProduct = 0;
+    decimal? growthPerTotal = 0;
+    decimal? sumGrowth = 0;
+}
+
+<div style="margin-top:5px; width:100%;">
+    โครงสร้างราคา-ไม่รวม Vat(Product Cost - Bath Per Case)
+</div>
+
+<div>
+    <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;">
+        <tr style="background-color: #E5E2E2; height: 25px;">
+            <td rowspan="2" style="width:20%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 1px; border-collapse: collapse; text-align:center;">ชื่อสินค้า (product Name)</td>
+            <td rowspan="2" style="width:10%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Std. Wholesales Price</td>
+            <td colspan="3" style="width:20%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Normal Discount (Baht)</td>
+            <td style="width:7%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Normal</td>
+            <td style="width:7%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Normal</td>
+            <td style="width:7%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Promotion</td>
+            <td style="width:7%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Special</td>
+            <td style="width:7%; font-size:12.5px; border-style:solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Promotion</td>
+            <td rowspan="2" style="width:6%; font-size:12.5px; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">RSP</td>
+            <td rowspan="2" style="width:8%; font-size:12.5px; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse; text-align:center;">Unit</td>
+        </tr>
+        <tr>
+            <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">(1)</td>
+            <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">(2)</td>
+            <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">(3)</td>
+            <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">Cost</td>
+            <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">GP%</td>
+            <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">GP%</td>
+
+
+            @if (Model.productcostdetaillist1.Any())
+            {
+                if (Model.productcostdetaillist1[0].specialDiscBaht != 0)
+                {
+                    <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">Discount Baht</td>
+                }
+                else
+                {
+                    <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">Discount %</td>
+                }
+            }
+            else
+            {
+                <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">Discount %</td>
+            }
+            <td style="font-size:12.5px; border-style:solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">Cost (BHT)</td>
+
+
+        </tr>
+
+        @if (Model.productcostdetaillist1.Any())
+        {
+            foreach (var item in Model.productcostdetaillist1)
+            {
+                <tr>
+                    @if (item.isShowGroup == true)
+                    {
+                        <td style="border-style: solid;border-width: 1px 1px 0px 1px;  border-collapse: collapse;" class="font11 textLeft">@Html.DisplayFor(m => item.brandName)@Html.DisplayFor(m => item.size) ALL(@Html.DisplayFor(m => item.detailGroup.Count)) @Html.DisplayFor(m => item.pack) </td>
+                    }
+                    else
+                    {
+                        if (item.detailGroup.Count >= 1)
+                        {
+                            <td style="border-style: solid;border-width: 1px 1px 0px 1px;  border-collapse: collapse;" class="font11 textLeft">@Html.DisplayFor(m => item.detailGroup[0].productName) (@Html.DisplayFor(m => item.pack))</td>
+                        }
+                    }
+
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.wholeSalesPrice)</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.disCount1)</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.disCount2)</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.disCount3)</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.normalGp)</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.promotionGp)</td>
+
+                    @if (Model.activityFormTBMMKT.typeForm != Activity_TBMMKT_Model.activityType.OMT.ToString())
+                    {
+                        if (item.specialDiscBaht != 0)
+                        {
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.specialDiscBaht)</td>
+                        }
+                        else
+                        {
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.specialDisc)</td>
+                        }
+                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.promotionCost)</td>
+                    }
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11 textRight">@Html.DisplayFor(m => item.rsp)</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;" class="font11">@Html.DisplayFor(m => item.unitTxt)</td>
+                </tr>
+
+            }
+        }
+    <tr>
+        <td colspan="9" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;" class="font11">&nbsp;</td>
+        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="font11">&nbsp;</td>
+        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="font11">&nbsp;</td>
+        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="font11">&nbsp;</td>
+    </tr>
+
+    </table>
+</div>
+
+
+<div>
+    <table style="border-bottom-width:1px; border-bottom-style: solid; border-bottom-color: gray; width:100%;"><tr><td>&nbsp;</td></tr></table>
+</div>

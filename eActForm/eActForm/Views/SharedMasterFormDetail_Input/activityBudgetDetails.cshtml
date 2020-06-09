@@ -19,7 +19,7 @@
                     {
                         <tr class="tagCountRowinTable">
                             <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                                @if (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM)
+                                @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
                                 {
                                     <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" />
                                 }

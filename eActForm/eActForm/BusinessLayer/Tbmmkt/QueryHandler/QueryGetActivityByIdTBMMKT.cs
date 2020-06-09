@@ -11,6 +11,7 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGetActivityByIdTBMMKT
     {
+
         public static List<ActivityFormTBMMKT> getActivityById(string activityId)
         {
             try
@@ -50,7 +51,31 @@ namespace eActForm.BusinessLayer
                                   createdByName = "คุณ" + d["createdByName"].ToString(),
                                   createdByNameEN = d["createdByNameEN"].ToString(),
                                   piorityDoc = d["piorityDoc"].ToString(),
+                                  customerName = d["customerName"].ToString() + "(" + d["cusShortName"].ToString() + ")",
+                                  cusShortName = d["cusShortName"].ToString(),
+                                  chanel = d["channelName"].ToString(),
+                                  chanelShort = d["chanelShort"].ToString(),
+                                  chanel_Id = d["chanel_Id"].ToString(),
+                                  regionId = d["regionId"].ToString(),
+                                  regionName = d["regionName"].ToString() + "(" + d["regionShort"].ToString() + ")",
+                                  regionShort = d["regionShort"].ToString(),
+                                  productCateText = d["productCateText"].ToString(),
+                                  productCateId = d["productCateId"].ToString(),
+                                  productGroupText = d["productGroupText"].ToString(),
+                                  productGroupId = d["productGroupId"].ToString(),
+                                  productBrandId = d["brandId"].ToString(),
+                                  productTypeId = d["productTypeId"].ToString(),
+                                  groupShort = d["groupShort"].ToString(),
+                                  brandName = d["brandName"].ToString(),
+                                  shortBrand = d["shortBrand"].ToString(),
+                                  theme = d["theme"].ToString(),
+                                  txttheme = d["activitySales"].ToString(),
+                                  trade = d["trade"].ToString(),
+                                  chkAddIO = !string.IsNullOrEmpty(d["chkAddIO"].ToString()) ? bool.Parse(d["chkAddIO"].ToString()) : false,
+                                  actClaim = d["actClaim"].ToString(),
+                                  actIO = d["actIO"].ToString(),
 
+                                  statusNote = d["statusNote"].ToString(),
                               });
 
                 return result.ToList();
@@ -62,5 +87,37 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static List<ActivityFormTBMMKT> getAllActivityFormByEmpId(String typeFormId,string empId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getAllActivityFormByEmpId"
+                 , new SqlParameter("@typeFormId", typeFormId)
+                 , new SqlParameter("@empId", empId));
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new ActivityFormTBMMKT()
+                              {
+                                  id = d["Id"].ToString(),
+                                  statusId = int.Parse(d["statusId"].ToString()),
+                                  activityNo = d["activityNo"].ToString(),
+                                  documentDate = !string.IsNullOrEmpty(d["documentDate"].ToString()) ? DateTime.Parse(d["documentDate"].ToString()) : (DateTime?)null,                          
+                                  companyId = d["companyId"].ToString(),
+                                  master_type_form_id = d["master_type_form_id"].ToString(),                               
+                                  empId = d["empId"].ToString(),
+                                       
+                              });
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                return new List<ActivityFormTBMMKT>();
+            }
+        }
+
+        
     }
 }

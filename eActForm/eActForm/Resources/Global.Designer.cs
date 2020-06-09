@@ -241,6 +241,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to เรียน เพื่อดำเนินการ.
+        /// </summary>
+        public static string dearForProcess {
+            get {
+                return ResourceManager.GetString("dearForProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to เรียน เพื่อทราบ.
         /// </summary>
         public static string dearToInform {

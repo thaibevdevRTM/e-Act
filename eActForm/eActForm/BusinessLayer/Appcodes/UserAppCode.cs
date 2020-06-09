@@ -1,4 +1,5 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -63,11 +64,20 @@ namespace eActForm.BusinessLayer
                                     UtilsAppCode.Session.User.isAdminHCM = true; break;
                                 case "8":
                                     UtilsAppCode.Session.User.isAdminNUM = true; break;
+                                case "9":
+                                    UtilsAppCode.Session.User.isAdminPOM = true; break;
+                                case "10":
+                                    UtilsAppCode.Session.User.isAdminChangInter = true; break;
+                                case "11":
+                                    UtilsAppCode.Session.User.isAdminCVM = true; break;
                             }
 
                             UtilsAppCode.Session.User.empCompanyId = dr["companyId"].ToString();
                             UtilsAppCode.Session.User.regionId = dr["regionId"].ToString();
                             UtilsAppCode.Session.User.customerId = dr["customerId"].ToString();
+                            UtilsAppCode.Session.User.empCompanyGroup = ActFormAppCode.getGrpCompByCompId(dr["companyId"].ToString());
+
+
                         }
                     }
                 }

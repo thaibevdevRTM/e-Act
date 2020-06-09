@@ -1,0 +1,347 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using System.Globalization;
+@using System.Configuration;
+@{
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+    var picCheckBoxTrue = "./images/check_b.png";
+    var picCheckBoxFalse = "./images/check.png";
+    var pathWeb = ConfigurationManager.AppSettings["renderHostPublicIP"] + ConfigurationManager.AppSettings["renderPathFile"];
+    var index = 0;
+}
+
+
+<div id="divPage2" style="width: 100%;">
+    <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+        <tr>
+            <td colspan="2" style="width:100%;border-color:black;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;background-color:#008000;color:white;" class="fontDocSmallV2Bold">
+                &nbsp;Part 5 : For Authorizations / ส่วนที่ 5 : สำหรับเปลี่ยนแปลงสิทธิ์
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;">
+                &nbsp;<u>Change type / ประเภทของการเปลี่ยนแปลง</u>
+                <br />
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr>
+                        @{
+                            index = 0;
+                        }
+                        @foreach (var item in Model.list_7)
+                        {
+                            if (index >= 0 && index <= 2)
+                            {
+                                string valCheckPic = picCheckBoxFalse;
+                                if (Model.activityFormTBMMKT.list_7_multi_select != null)
+                                {
+                                    foreach (var itemArray in Model.activityFormTBMMKT.list_7_multi_select)
+                                    {
+                                        if (itemArray == item.id)
+                                        {
+                                            valCheckPic = picCheckBoxTrue;
+                                        }
+                                    }
+                                }
+                                if (index == 0)
+                                {
+                                    @:<td style="padding-left:40px;width:35%;"><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                                }
+                                else if (index == 1)
+                                {
+                                    @:<td colspan="2" style="padding-left:10px;width:65%;"><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                                }
+                            }
+                            index++;
+                        }
+                    </tr>
+                    <tr>
+                        @{
+                            index = 0;
+                        }
+                        @foreach (var item in Model.list_7)
+                        {
+                            if (index >= 2 && index <= 4)
+                            {
+                                string valCheckPic = picCheckBoxFalse;
+                                if (Model.activityFormTBMMKT.list_7_multi_select != null)
+                                {
+                                    foreach (var itemArray in Model.activityFormTBMMKT.list_7_multi_select)
+                                    {
+                                        if (itemArray == item.id)
+                                        {
+                                            valCheckPic = picCheckBoxTrue;
+                                        }
+                                    }
+                                }
+                                if (index == 2)
+                                {
+                                    @:<td style="padding-left:40px;width:35%;"><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                                }
+                                else if (index == 3)
+                                {
+                                    @:<td style="padding-left:10px;width:27%;"><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                                }
+                                else
+                                {
+                                    @:<td style="width:38%;"><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;@Model.tB_Act_ActivityForm_DetailOther.other1</td>
+                                }
+                            }
+                            index++;
+                        }
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;">
+                &nbsp;<u>Change Authorizations  / สิทธิ์การใช้งาน</u>
+                <br />
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr>
+                        @{
+                            index = 0;
+                        }
+                        @foreach (var item in Model.list_8)
+                        {
+                            if (index >= 0 && index <= 3)
+                            {
+                                string valCheckPic = picCheckBoxFalse;
+                                if (Model.activityFormTBMMKT.list_8_multi_select != null)
+                                {
+                                    foreach (var itemArray in Model.activityFormTBMMKT.list_8_multi_select)
+                                    {
+                                        if (itemArray == item.id)
+                                        {
+                                            valCheckPic = picCheckBoxTrue;
+                                        }
+                                    }
+                                }
+                                if (index == 3)
+                                {
+                                    @:<td style="padding-left:40px;width:43%;"><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                                }
+                                else
+                                {
+                                    @:<td style="padding-left:40px;width:19%;"><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                                }
+                            }
+                            index++;
+                        }
+                    </tr>
+                    <tr>
+                        @{
+                            index = 0;
+                        }
+                        @foreach (var item in Model.list_8)
+                        {
+                            if (index >= 4 && index <= 7)
+                            {
+                                string valCheckPic = picCheckBoxFalse;
+                                if (Model.activityFormTBMMKT.list_8_multi_select != null)
+                                {
+                                    foreach (var itemArray in Model.activityFormTBMMKT.list_8_multi_select)
+                                    {
+                                        if (itemArray == item.id)
+                                        {
+                                            valCheckPic = picCheckBoxTrue;
+                                        }
+                                    }
+                                }
+                                if (index == 7)
+                                {
+                                    @:<td style="padding-left:40px;width:43%;"><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;@Model.tB_Act_ActivityForm_DetailOther.other2</td>
+                                }
+                                else
+                                {
+                                    @:<td style="padding-left:40px;width:19%;"><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                                }
+                            }
+                            index++;
+                        }
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;padding-top:3px;">
+                &nbsp;<u>List name (For more user, Please attach Excel file) / รายงานชื่อผู้ใช้งาน (ถ้ามีมากกว่า 5 คนขึ้นไป สามารถแนบไฟล์ Excel เพิ่มเติมได้)</u><br />
+
+                <table style="width: 100%;border-collapse: collapse;margin-top:5px;" class="fontDocSmallV2">
+                    <tr>
+                        <td style="width:5%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            No.
+                        </td>
+                        <td style="width:12%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            EmpOD / รหัสพนักงาน
+                        </td>
+                        <td style="width:23%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            Name / ชื่อ - สกุล
+                        </td>
+                        <td style="width:60%;border-style: solid;border-width: 1px 0px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            Detail authorizations / รายละเอียดของสิทธิ์
+                        </td>
+                    </tr>
+                    @{ index = 0;}
+                    @foreach (var item in Model.requestEmpModel)
+                    {
+                        <tr>
+                            <td style="height:75px;border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;" class="tdTopCenter">
+                                @(index+1)
+                            </td>
+                            <td style="border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;" class="tdTopCenter">
+                                @item.empId
+                            </td>
+                            <td style="border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;" class="tdTopCenter">
+                                @item.empName.Replace("คุณ", "")
+                            </td>
+                            <td style="border-style: solid;border-width: 0px 0px 1px 0px; border-collapse: collapse;" class="tdTopLeft">
+                                &nbsp;@Html.Raw(item.detail.Replace("\n", "<br/>&nbsp;").Replace("\r\n", "<br/>&nbsp;"))
+                            </td>
+                        </tr>
+                        index++;
+                    }
+                </table>
+                &nbsp;<u>More detail authorizations / รายละเอียดของสิทธิ์เพิ่มเติม</u>
+                <br />
+                &nbsp;More detail / อธิบายเพิ่มเติม :
+                <br />&nbsp;
+                <br />&nbsp;
+                <br />&nbsp;
+                <br />&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;padding-top:3px;">
+                &nbsp;About inventory / ใช้เกี่ยวกับ Inventory
+                <br />
+                <table style="width: 100%;border-collapse: collapse;margin-top:5px;" class="fontDocSmallV2">
+                    <tr>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            No.
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            GI
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            TP
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            Allow Plant
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            Deny Plant
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            Allow SLoc
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            Deny Sloc
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            Allow MVT
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 0px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            Deny MVT
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            MD
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            RD
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;" class="txtCenter">
+                            PY
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" class="txtCenter">
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%;border-style: solid;border-width: 1px 0px 0px 0px;border-collapse: collapse;padding-top:3px;">
+                IT-FRM-314-Change Request Form
+            </td>
+            <td style="width:50%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:right;padding-top:3px;">
+                เอกสารE-actเลขที่ @Model.activityFormModel.activityNo หน้า 2/2
+            </td>
+        </tr>
+    </table>
+</div>
+

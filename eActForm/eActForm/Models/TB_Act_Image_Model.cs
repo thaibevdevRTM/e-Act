@@ -9,6 +9,11 @@ namespace eActForm.Models
         public class ImageModels
         {
             public List<ImageModel> tbActImageList { get; set; }
+
+            public ImageModels()
+            {
+                tbActImageList = new List<ImageModel>();
+            }
         }
         public class ImageModel : ActBaseModel
         {

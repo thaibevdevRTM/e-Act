@@ -2,6 +2,7 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -298,23 +299,30 @@ namespace eActForm.Controllers
                 empDetailList = typeFormId == "" ? QueryGet_empDetailById.getEmpDetailById(empId).ToList()
                                                  : QueryGet_empDetailById.getEmpDetailFlowById(empId, typeFormId).ToList();
 
-                var resultData = new
+                if (empDetailList.Any())
                 {
-                    empName = !langEn ? empDetailList.FirstOrDefault().empName : empDetailList.FirstOrDefault().empNameEN,
-                    position = !langEn ? empDetailList.FirstOrDefault().position : empDetailList.FirstOrDefault().positionEN,
-                    level = empDetailList.FirstOrDefault().level,
-                    department = !langEn ? empDetailList.FirstOrDefault().department : empDetailList.FirstOrDefault().departmentEN,
-                    bu = !langEn ? empDetailList.FirstOrDefault().bu : empDetailList.FirstOrDefault().buEN,
-                    companyName = !langEn ? empDetailList.FirstOrDefault().companyName : empDetailList.FirstOrDefault().companyNameEN,
-                    compId = empDetailList.FirstOrDefault().compId,
-                    email = empDetailList.FirstOrDefault().email
-                };
-                result.Data = resultData;
+                    var resultData = new
+                    {
+                        empName = !langEn ? empDetailList.FirstOrDefault().empName : empDetailList.FirstOrDefault().empNameEN,
+                        position = !langEn ? empDetailList.FirstOrDefault().position : empDetailList.FirstOrDefault().positionEN,
+                        level = empDetailList.FirstOrDefault().level,
+                        department = !langEn ? empDetailList.FirstOrDefault().department : empDetailList.FirstOrDefault().departmentEN,
+                        bu = !langEn ? empDetailList.FirstOrDefault().bu : empDetailList.FirstOrDefault().buEN,
+                        companyName = !langEn ? empDetailList.FirstOrDefault().companyName : empDetailList.FirstOrDefault().companyNameEN,
+                        compId = empDetailList.FirstOrDefault().compId,
+                        email = empDetailList.FirstOrDefault().email,
+                        //hireDate = empDetailList.FirstOrDefault().hireDate
+                        hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(empDetailList.FirstOrDefault().hireDate), ConfigurationManager.AppSettings["formatDateUse"]),
+                    };
+                    result.Data = resultData;
+                }
             }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("getEmpDetailById => " + ex.Message);
             }
+
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -352,7 +360,7 @@ namespace eActForm.Controllers
             List<TB_Act_Other_Model> getOtherList = new List<TB_Act_Other_Model>();
             try
             {
-                getOtherList = QueryOtherMaster.getOhterMaster(type, subType).Where(x => x.displayVal.Contains(text)).ToList();
+                getOtherList = QueryOtherMaster.getOhterMaster(type, subType).Where(x => x.displayVal.ToLower().Contains(text.ToLower())).ToList();
             }
             catch (Exception ex)
             {
@@ -367,7 +375,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                cashEmpList = QueryGetBenafit.getCashLimitByEmpId(empId).ToList();
+                cashEmpList = QueryGetBenefit.getCashLimitByEmpId(empId).ToList();
                 if (cashEmpList.Count > 0)
                 {
                     var resultData = new
@@ -456,6 +464,140 @@ namespace eActForm.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getAllHospital(string text)
+        {
+            List<HospitalModel> getList = new List<HospitalModel>();
+            try
+            {
+                getList = QueryGetAllHospital.getAllHospital().Where(x => x.hospNameTH.Contains(text)).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getAllHospital => " + ex.Message);
+            }
+            return Json(getList, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult getCashLimitByTypeId(string typeId, string hireDate, string jobLevel)
+        {
+            List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
+            var result = new AjaxResult();
+            try
+            {
+
+                if (!string.IsNullOrEmpty(hireDate))
+                {
+                    hireDate = (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
+                    cashEmpList = QueryGetBenefit.getCashLimitByTypeId(typeId, hireDate, jobLevel).ToList();
+                    if (cashEmpList.Count > 0)
+                    {
+                        var resultData = new
+                        {
+                            cashPerDay = cashEmpList[0].cashPerDay,
+
+                        };
+
+                        result.Data = resultData;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCashLimitByEmpId => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getCumulativeByEmpId(string empId)
+        {
+            List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
+            var result = new AjaxResult();
+            try
+            {
+                if (!string.IsNullOrEmpty(empId))
+                {
+                    cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId).ToList();
+                    if (cashEmpList.Count > 0)
+                    {
+                        var resultData = new
+                        {
+                            cashPerDay = cashEmpList[0].cashPerDay,
+                        };
+                        result.Data = resultData;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCumulativeByEmpId => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getCashDetailByEmpId(string empId, string typeId, string hireDate, string jobLevel)
+        {
+            List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
+            var result = new AjaxResult();
+            try
+            {
+                decimal limit = 0, cumulative = 0, balance = 0;
+
+                if (!string.IsNullOrEmpty(empId))
+                {
+
+
+                    hireDate = (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
+                    cashEmpList = QueryGetBenefit.getCashLimitByTypeId(typeId, hireDate, jobLevel).ToList();
+                    if (cashEmpList.Count > 0)
+                    {
+                        limit = cashEmpList[0].cashPerDay;
+                    }
+
+                    cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId).ToList();
+                    if (cashEmpList.Count > 0)
+                    {
+                        cumulative = cashEmpList[0].cashPerDay;
+                    }
+                    balance = limit - cumulative;
+
+                    var resultData = new
+                    {
+                        limit = limit,
+                        cumulative = cumulative,
+                        balance = balance,
+                        cashPerDay = cashEmpList[0].cashPerDay,
+                    };
+                    result.Data = resultData;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getCumulativeByEmpId => " + ex.Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getAllActivityFormByEmpId(string typeFormId, string empId)
+        {
+            List<ActivityFormTBMMKT> activityFormTBMMKT = new List<ActivityFormTBMMKT>();
+            var result = new AjaxResult();
+            try
+            {
+                activityFormTBMMKT = QueryGetActivityByIdTBMMKT.getAllActivityFormByEmpId(typeFormId, empId).Where(x => x.statusId == 2).ToList();
+                var resultData = new
+                {
+                    chk = activityFormTBMMKT.Count > 0 ? "false" : "true",
+
+                };
+
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }

@@ -122,5 +122,31 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static List<DataRequesterToShow> GetDataRequesterToShow(string activityId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_GetDataRequesterToShow", new SqlParameter("@activityId", activityId));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new DataRequesterToShow()
+                             {
+                                 empName = d["empName"].ToString(),
+                                 empId = d["empId"].ToString(),
+                                 empDepartment = d["empDepartment"].ToString(),
+                                 empPhone = d["empPhone"].ToString(),
+                                 empCompany = d["empCompany"].ToString(),
+                                 empEmail = d["empEmail"].ToString(),
+                                 languageDoc = d["languageDoc"].ToString()
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("GetDataRequesterToShow => " + ex.Message);
+                return new List<DataRequesterToShow>();
+            }
+        }
+
     }
 }
