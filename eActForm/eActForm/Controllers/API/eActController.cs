@@ -355,7 +355,7 @@ namespace eActForm.Controllers
             List<TB_Act_Other_Model> getOtherList = new List<TB_Act_Other_Model>();
             try
             {
-                getOtherList = QueryOtherMaster.getOhterMaster(type, subType).Where(x => x.displayVal.Contains(text)).ToList();
+                getOtherList = QueryOtherMaster.getOhterMaster(type, subType).Where(x => x.displayVal.ToLower().Contains(text.ToLower())).ToList();
             }
             catch (Exception ex)
             {
