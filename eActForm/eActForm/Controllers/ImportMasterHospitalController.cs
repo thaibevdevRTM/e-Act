@@ -23,11 +23,15 @@ namespace eActForm.Controllers
         [HttpPost]
         public ActionResult Index(ImportExcel importExcel)
         {
+            //if(importExcel.file.ContentLength)
             if (ModelState.IsValid)
             {
+
                 string folderKeepFile = "ImportMasterHospital";
                 string UploadDirectory = Server.MapPath("~") + "\\Uploadfiles\\" + folderKeepFile;
                 string path = UploadDirectory + "\\" + importExcel.file.FileName;
+
+                //string extension = Path.GetExtension(upload.FileName);
                 //UtilsAppCode.Session.User.empId
                 if (!System.IO.Directory.Exists(UploadDirectory))
                 {
@@ -93,7 +97,7 @@ namespace eActForm.Controllers
                         }
                         else
                         {
-                            dr = dt.Select("nameTH = " + dt.Rows[i][1].ToString().Trim() + "");
+                            dr = dtProvinces.Select("nameTH = '" + dt.Rows[i][1].ToString().Trim() + "'");
                             if (dr.Count() > 0)
                             {
                                 provinceId = dr[0]["id"].ToString();
