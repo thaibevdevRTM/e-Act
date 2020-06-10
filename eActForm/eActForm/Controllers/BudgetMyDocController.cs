@@ -166,7 +166,7 @@ namespace eActForm.Controllers   //update 21-04-2020
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getApproveListsByStatusId >> " + ex.Message);
+                ExceptionManager.WriteError("getBudgetListsByEmpId >> " + ex.Message);
                 return new List<Budget_Approve_Detail_Model.budgetForm>();
             }
         }
