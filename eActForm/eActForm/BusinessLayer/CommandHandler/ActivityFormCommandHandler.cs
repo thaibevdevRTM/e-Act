@@ -621,27 +621,6 @@ namespace eActForm.BusinessLayer
 
         }
 
-
-        protected static int checkUpdateNoDoc(string chanelId, string year, string activityId)
-        {
-            int rtn = 0;
-            try
-            {
-                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateDocNoByChanelId"
-                    , new SqlParameter[] { new SqlParameter("@chanelId", chanelId)
-                    , new SqlParameter("@year", year) });
-
-                return rtn;
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("checkUpdateNoDoc >>" + ex.Message);
-            }
-
-
-
-        }
     }
 
 }
