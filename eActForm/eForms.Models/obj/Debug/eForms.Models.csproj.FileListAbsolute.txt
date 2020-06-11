@@ -23,7 +23,6 @@ D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Models\obj\Debug\e
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csproj.CoreCompileInputs.cache
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.pdb
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csprojAssemblyReference.cache
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csproj.CoreCompileInputs.cache
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.pdb
