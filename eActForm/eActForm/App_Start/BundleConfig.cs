@@ -64,7 +64,7 @@ namespace eActForm
                "~/Content/Site.min.css",
                "~/content/vendors/build/css/custom.min.css",
                "~/Scripts/pnotify/dist/pnotify.min.css",
-               "~/Content/vendors/multiselect/bootstrap-multiselect.min.css",
+               "~/Content/vendors/multiselect/bootstrap-multiselect.css",
                "~/Scripts/bootstrap-select.min.css"
                ));
 
