@@ -24,7 +24,7 @@ namespace eActForm.BusinessLayer
                                  hospNameEN = d["hospNameEN"].ToString(),
                                  hospNameTH = d["hospNameTH"].ToString(),
                                  provName = d["provName"].ToString(),
-                                 region = d["hospNameTH"].ToString(),
+                                 region = d["region"].ToString(),
                                  hospTypeId = d["hospTypeId"].ToString(),
                                  hospTypeName = d["hospTypeName"].ToString(),
                                  percentage = int.Parse(d["percentage"].ToString()),
@@ -65,9 +65,12 @@ namespace eActForm.BusinessLayer
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new HospitalModel()
                              {
-                                 id = d["id"].ToString(),                              
+                                 id = d["id"].ToString(),
                                  hospNameTH = d["hospNameTH"].ToString(),
-                               
+                                 provName = d["provName"].ToString(),
+                                 region = d["region"].ToString(),
+                                 percentage = int.Parse(d["percentage"].ToString()),
+                                 delFlag = d["status"].ToString(),
                              });
                 return lists.ToList();
             }

@@ -11,6 +11,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web.Mvc;
 using WebLibrary;
+using System.Reflection;
+using eForms.Models.MasterData;
 
 namespace eActForm.Controllers
 {
@@ -57,16 +59,11 @@ namespace eActForm.Controllers
 
                     string hospitalId = "", hospitalName = "", hospTypeId = "", provinceId = "", regionId = "", delFlag = "";
 
-                    DataTable dtProvinces = getProvinces().Tables[0];
+                    // DataTable dtProvinces = getProvinces().Tables[0];
+                    List<ProvinceModel> provinceList = new List<ProvinceModel>();
+                    provinceList = ProvincePresenter.getProvince(AppCode.StrConAuthen);
 
 
-                    //DataTable dtImport = new DataTable();
-                    //dtImport.Columns.Add("hospitalId");
-                    //dtImport.Columns.Add("hospitalName");
-                    //dtImport.Columns.Add("hospTypeId");
-                    //dtImport.Columns.Add("provinceId");
-                    //dtImport.Columns.Add("regionId");
-                    //dtImport.Columns.Add("delFlag");
                     List<HospitalModel> hospList = new List<HospitalModel>();
                     //valid data          
 
@@ -102,10 +99,13 @@ namespace eActForm.Controllers
                             }
                             else
                             {
-                                dr = dtProvinces.Select("nameTH = '" + dt.Rows[i][1].ToString().Trim() + "'");
-                                if (dr.Count() > 0)
+                                var listProv = provinceList.Where(x => x.nameTH.Equals(dt.Rows[i][1].ToString().Trim())).ToList();
+                                //dr = dtProvinces.Select("nameTH = '" + dt.Rows[i][1].ToString().Trim() + "'");
+                                //if (dr.Count() > 0)
+                                if (listProv.Count > 0)
                                 {
-                                    provinceId = dr[0]["id"].ToString();
+                                    // provinceId = dr[0]["id"].ToString();
+                                    provinceId = listProv[0].id;
                                 }
                                 else
                                 {
@@ -227,22 +227,25 @@ namespace eActForm.Controllers
             try
             {
 
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_exportAllHospital");
+                // DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_exportAllHospital");
                 DataTable dt = new DataTable();
 
+                List<HospitalModel> getList = new List<HospitalModel>();
+                getList = QueryGetAllHospital.exportHospital().ToList();
 
-                DataView dv = ds.Tables[0].DefaultView;
+                dt = eForms.Presenter.BasePresenter.ToDataTable(getList);
+
+                //DataView dv = ds.Tables[0].DefaultView;
+                DataView dv = dt.DefaultView;
                 dv.Sort = "percentage, hospNameTH asc";
-                dt = dv.ToTable(false, "hospNameTH", "provName", "region", "percentage", "status");
-
-
+                dt = dv.ToTable(false, "hospNameTH", "provName", "region", "percentage", "delFlag");
 
                 dt.Columns["hospNameTH"].ColumnName = "ชื่อสถานพยาบาล";
                 dt.Columns["provName"].ColumnName = "จังหวัด";
                 dt.Columns["region"].ColumnName = "ภาคการขายที่";
                 dt.Columns["percentage"].ColumnName = "ประเภทสถานพยาบาล(%)";
-                dt.Columns["status"].ColumnName = "สถานะ";
-
+                dt.Columns["delFlag"].ColumnName = "สถานะ";
+                //delFlag set เป็น status ที่ stored แล้ว
                 //  dt = sortedDT.Copy();
                 string fileNameExport = ("MasterHospital" + DateTime.Now.ToString("yyyyMMddHHmmss"));
                 ExcelAppCode.ExportExcelEpPlus(dt, "dataimport", fileNameExport, "systemExportAuthor", "systemExportSubject", this.HttpContext, "MasterHospital");
@@ -260,9 +263,15 @@ namespace eActForm.Controllers
 
             try
             {
-                DataSet ds = getProvinces();
+                //DataSet ds = getProvinces();
+
+                List<ProvinceModel> provinceList = new List<ProvinceModel>();
+                provinceList = ProvincePresenter.getProvince(AppCode.StrConAuthen);
+
                 DataTable dt = new DataTable();
-                DataView dv = ds.Tables[0].DefaultView;
+                dt = eForms.Presenter.BasePresenter.ToDataTable(provinceList);
+
+                DataView dv = dt.DefaultView;
                 dv.Sort = "nameTH asc";
                 dt = dv.ToTable(false, "nameTH");
                 dt.Columns["nameTH"].ColumnName = "ชื่อจังหวัด";
@@ -298,19 +307,45 @@ namespace eActForm.Controllers
             }
             return hospitalId;
         }
-        public DataSet getProvinces()
-        {
-            try
-            {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrConAuthen, CommandType.StoredProcedure, "usp_getProvinceMaster");
-                return ds;
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("getProvinces => " + ex.Message);
-                return null;
-            }
-        }
+        //public DataSet getProvinces()
+        //{
+        //    try
+        //    {
+        //        DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrConAuthen, CommandType.StoredProcedure, "usp_getProvinceMaster");
+        //        return ds;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionManager.WriteError("getProvinces => " + ex.Message);
+        //        return null;
+        //    }
+        //}
 
     }
+    //public class ListtoDataTable
+    //{
+    //    public DataTable ToDataTable<T>(List<T> items)
+    //    {
+    //        DataTable dataTable = new DataTable(typeof(T).Name);
+    //        //Get all the properties by using reflection   
+    //        PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+    //        foreach (PropertyInfo prop in Props)
+    //        {
+    //            //Setting column names as Property names  
+    //            dataTable.Columns.Add(prop.Name);
+    //        }
+    //        foreach (T item in items)
+    //        {
+    //            var values = new object[Props.Length];
+    //            for (int i = 0; i < Props.Length; i++)
+    //            {
+
+    //                values[i] = Props[i].GetValue(item, null);
+    //            }
+    //            dataTable.Rows.Add(values);
+    //        }
+
+    //        return dataTable;
+    //    }
+    //}
 }
