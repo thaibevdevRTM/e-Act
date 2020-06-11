@@ -384,7 +384,7 @@
             if ($("input[name='activityFormTBMMKT.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
             if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
                 $("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]")) { required += "Reference*<br>"; validate = false; }
-
+            if ($("#txtdateActivitySt").val() == "") { required += "เลือก เวลาเริ่มกิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivitySt").focus(); }
             var rowCount = parseInt($('#tbl_productDetail tr.tagTR').length);
             for (i = 0; i < rowCount; i++) {
                 if ($("#wholeSalesPrice_" + i).val() == 0 || $("#wholeSalesPrice_" + i).val() == "") { required += "&emsp; ระบุราคา wholeSalesPrice แถวที่ " + (i+1) + "*<br>"; validate = false; }
