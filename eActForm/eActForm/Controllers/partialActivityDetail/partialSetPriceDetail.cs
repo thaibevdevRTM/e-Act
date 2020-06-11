@@ -21,7 +21,7 @@ namespace eActForm.Controllers
 
                 activity_TBMMKT_Model.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
                 activity_TBMMKT_Model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
-                    .Where(x => x.activityCondition.Equals("mtm".ToLower()))
+                    .Where(x => x.activityCondition.Contains("sp".ToLower()))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
                 if (activity_TBMMKT_Model.activityFormModel.mode == Activity_Model.modeForm.edit.ToString())

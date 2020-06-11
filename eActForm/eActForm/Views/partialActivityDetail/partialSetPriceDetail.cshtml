@@ -624,7 +624,7 @@
 
         $("#WaitDialog").show();
          $.ajax({
-                url: '@Url.Action("addItemProduct", "ActivityProductDetail")',
+                url: '@Url.Action("addItemProduct", "ExpenseEstimateInput")',
              data: {
              productid: $("#ddlProductfilter").val(),
                  brandid: $("#ddlProductBrand").val(),
@@ -634,7 +634,6 @@
                  theme: $("#ddlTheme").val(),
                  actId: '@Model.activityFormModel.id',
                  typeForm: '@Model.activityFormModel.typeForm',
-                 dateActivitySt: $("#txtdateActivitySt").val(),
              },
                 dataType: "json",
                 type: 'POST',
