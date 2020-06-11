@@ -24,7 +24,8 @@ namespace eActForm.Controllers
         [HttpPost]
         public ActionResult Index(ImportExcel importExcel)
         {
-           
+            try
+            {
                 if (ModelState.IsValid)
                 {
 
@@ -78,7 +79,7 @@ namespace eActForm.Controllers
                         for (int i = 0; i < countDataHaveRows; i++)
                         {
                             int rowInExcelAlert = (i + 2);
-                     
+
                             //a ต้องไม่เป็นค่าว่า เป็นคีย์ที่ใช้ในการ update หรือ insert(ขณะเช็ค ก็ไป get id มาเลย ถ้าไม่มี id เป็น ค่าว่าง )
                             if (dt.Rows[i][0].ToString() == "")
                             {
@@ -137,7 +138,7 @@ namespace eActForm.Controllers
                             if (dt.Rows[i][3].ToString() == "")
                             {
                                 validateValue = false;
-                                txtError += "บรรทัดที่ " + rowInExcelAlert + " กรุณาระบุ ประเภทสถานพยาบาล<br />";
+                                txtError += "บรรทัดที่ " + rowInExcelAlert + " กรุณาระบุ ประเภทสถานพยาบาล(%)<br />";
                             }
                             else
                             {
@@ -154,8 +155,6 @@ namespace eActForm.Controllers
                                 }
 
                             }
-
-
 
                             //E ต้องเป็น 0 - 1 เท่านั้น
                             if (dt.Rows[i][4].ToString() == "0")//ปิด
@@ -203,7 +202,7 @@ namespace eActForm.Controllers
                             //ไม่มี error insert data
                             for (int i = 0; i < hospList.Count; i++)
                             {
-                                int result=  QueryProcessHospital.updateHospital(hospList[i]);
+                                int result = QueryProcessHospital.updateHospital(hospList[i]);
 
                             }
 
@@ -212,7 +211,12 @@ namespace eActForm.Controllers
 
                     ViewBag.Result = "Successfully Imported";
                 }
-         
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("ImportMasterHospitalController.Index => " + ex.Message);
+                ViewBag.Error = "ไม่สามารถอ่านไฟล์ได้กรุณาตรวจสอบชื่อชีต หรือ ติดต่อ Admin";
+            }
             return View();
         }
 
@@ -236,7 +240,7 @@ namespace eActForm.Controllers
                 dt.Columns["hospNameTH"].ColumnName = "ชื่อสถานพยาบาล";
                 dt.Columns["provName"].ColumnName = "จังหวัด";
                 dt.Columns["region"].ColumnName = "ภาคการขายที่";
-                dt.Columns["percentage"].ColumnName = "ประเภทสถานพยาบาล";
+                dt.Columns["percentage"].ColumnName = "ประเภทสถานพยาบาล(%)";
                 dt.Columns["status"].ColumnName = "สถานะ";
 
                 //  dt = sortedDT.Copy();

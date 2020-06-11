@@ -35,15 +35,6 @@ D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\obj\Debu
 D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
 D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
 D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.dll
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.pdb
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.dll
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.pdb
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csprojAssemblyReference.cache
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CoreCompileInputs.cache
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
-D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb
 D:\work\project\source code\e-act code\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.dll
 D:\work\project\source code\e-act code\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.pdb
 D:\work\project\source code\e-act code\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.dll
@@ -62,3 +53,12 @@ D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Present
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CoreCompileInputs.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.dll
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.pdb
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.dll
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.pdb
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csprojAssemblyReference.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CoreCompileInputs.cache
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
+D:\WORK\PROJECT\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb

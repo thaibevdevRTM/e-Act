@@ -7,7 +7,7 @@
 
 @using (Html.BeginForm("Index", "ImportMasterHospital", FormMethod.Post, new { enctype = "multipart/form-data", id = "divUpload" }))
 {
-    @Html.TextBoxFor(m => m.file, new { type = "file", id="fileImport" })
+    @Html.TextBoxFor(m => m.file, new { type = "file", id = "fileImport" })
     <br />
     <div>
         &nbsp;<button id="submitButton" type="button" onclick="uploadClicked()">Upload Data Click Here</button>
@@ -64,10 +64,15 @@
 </div>
 <script>
     function uploadClicked() {
-        var r = confirm("Please confirm for upload file.");
-        if (r == true) {
-            $("#WaitDialog").show();
-            $("#divUpload").submit();
+
+        if (document.getElementById("fileImport").files.length == 0) {
+            alert("no files selected");
+        } else {
+            var r = confirm("Please confirm for upload file.");
+            if (r == true) {
+                $("#WaitDialog").show();
+                $("#divUpload").submit();
+            }
         }
     }
     function beginQuery() {
