@@ -3167,7 +3167,6 @@
     <Content Include="Views\SharedMasterFormDetail\textGeneral.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany\headerFormName.cshtml" />
     <Content Include="Views\ExpenseEstimateInput\expensesMedDetail.cshtml" />
-    <Content Include="Views\ExpenseEstimateInput\expensesMedDetail_old.cshtml" />
     <Content Include="Views\MenuList\importData.cshtml" />
     <Content Include="Views\ImportMasterAP\Index.cshtml" />
     <Content Include="Views\ExpenseEstimateReport\expensesMedDetailRpt.cshtml" />
