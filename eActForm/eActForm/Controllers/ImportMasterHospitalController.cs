@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web.Mvc;
@@ -23,181 +24,195 @@ namespace eActForm.Controllers
         [HttpPost]
         public ActionResult Index(ImportExcel importExcel)
         {
-            //if(importExcel.file.ContentLength)
-            if (ModelState.IsValid)
-            {
-
-                string folderKeepFile = "ImportMasterHospital";
-                string UploadDirectory = Server.MapPath("~") + "\\Uploadfiles\\" + folderKeepFile;
-                string path = UploadDirectory + "\\" + importExcel.file.FileName;
-
-                //string extension = Path.GetExtension(upload.FileName);
-                //UtilsAppCode.Session.User.empId
-                if (!System.IO.Directory.Exists(UploadDirectory))
+           
+                if (ModelState.IsValid)
                 {
-                    System.IO.Directory.CreateDirectory(UploadDirectory);
+
+                    string folderKeepFile = "ImportMasterHospital";
+                    string UploadDirectory = Server.MapPath("~") + "Uploadfiles\\" + folderKeepFile;
+
+
+                    string extension = Path.GetExtension(importExcel.file.FileName);
+                    string fileName = Path.GetFileNameWithoutExtension(importExcel.file.FileName);
+                    fileName = "impHosp_" + DateTime.Now.ToString("yyMMddHHmmss") + "_" + UtilsAppCode.Session.User.empId + extension;
+
+                    string path = UploadDirectory + "\\" + fileName;
+
+                    if (!System.IO.Directory.Exists(UploadDirectory))
+                    {
+                        System.IO.Directory.CreateDirectory(UploadDirectory);
+                    }
+                    importExcel.file.SaveAs(path);
+
+                    var dt = new DataTable();
+                    dt = ExcelAppCode.ReadExcel(path, "dataimport", "A:E");
+                    var countDataHaveRows = dt.Rows.Count;
+
+                    string[] region = { "1", "2", "3", "4", "5", "6", "7", "8", };
+
+
+                    List<HospitalModel> typeList = new List<HospitalModel>();
+                    typeList = QueryGetAllHospital.getHospitalType().ToList();
+
+                    string hospitalId = "", hospitalName = "", hospTypeId = "", provinceId = "", regionId = "", delFlag = "";
+
+                    DataTable dtProvinces = getProvinces().Tables[0];
+
+
+                    //DataTable dtImport = new DataTable();
+                    //dtImport.Columns.Add("hospitalId");
+                    //dtImport.Columns.Add("hospitalName");
+                    //dtImport.Columns.Add("hospTypeId");
+                    //dtImport.Columns.Add("provinceId");
+                    //dtImport.Columns.Add("regionId");
+                    //dtImport.Columns.Add("delFlag");
+                    List<HospitalModel> hospList = new List<HospitalModel>();
+                    //valid data          
+
+                    if (countDataHaveRows > 0)
+                    {
+                        //=====validate=======
+                        bool validateValue = true;
+                        string txtError = "";
+
+                        for (int i = 0; i < countDataHaveRows; i++)
+                        {
+                            int rowInExcelAlert = (i + 2);
+                     
+                            //a ต้องไม่เป็นค่าว่า เป็นคีย์ที่ใช้ในการ update หรือ insert(ขณะเช็ค ก็ไป get id มาเลย ถ้าไม่มี id เป็น ค่าว่าง )
+                            if (dt.Rows[i][0].ToString() == "")
+                            {
+                                validateValue = false;
+                                txtError += "บรรทัดที่ " + rowInExcelAlert + " กรุณาระบุ ชื่อสถานพยาบาล<br />";
+                            }
+                            else
+                            {
+                                hospitalId = getHospitalId(dt.Rows[i][0].ToString());
+                                hospitalName = dt.Rows[i][0].ToString();
+                                //txtError += hospitalId + "<br />";
+                            }
+
+                            DataRow[] dr;
+                            //b ต้อง เป็น จังหวัดใน DB(ต้องหาวิธีแสดงชื่อจังหวัด)(ขณะเช็ค ก็ไป get id มาเลย)
+                            if (dt.Rows[i][1].ToString() == "")
+                            {
+                                validateValue = false;
+                                txtError += "บรรทัดที่ " + rowInExcelAlert + " กรุณาระบุ จังหวัด<br />";
+                            }
+                            else
+                            {
+                                dr = dtProvinces.Select("nameTH = '" + dt.Rows[i][1].ToString().Trim() + "'");
+                                if (dr.Count() > 0)
+                                {
+                                    provinceId = dr[0]["id"].ToString();
+                                }
+                                else
+                                {
+                                    validateValue = false;
+                                    txtError += "บรรทัดที่ " + rowInExcelAlert + " ชื่อจังหวัดไม่ตรงกับข้อมูล Master<br />";
+                                }
+                                //txtError += hospitalId + "<br />";
+                            }
+
+                            //c ต้องเป็น 1 - 8 เท่านั้น
+                            if (dt.Rows[i][2].ToString() == "")
+                            {
+                                validateValue = false;
+                                txtError += "บรรทัดที่ " + rowInExcelAlert + " กรุณาระบุ ภาคการขาย<br />";
+                            }
+                            else
+                            {
+                                if (region.Contains(dt.Rows[i][2].ToString().Trim()))
+                                {
+                                    regionId = dt.Rows[i][2].ToString().Trim();
+                                }
+                                else
+                                {
+                                    validateValue = false;
+                                    txtError += "บรรทัดที่ " + rowInExcelAlert + " ภาคการขายระบุได้ 1-8 เท่านั้น<br />";
+                                }
+                            }
+
+                            //D ต้องเป็น 100  75  50  เท่านั้น(ขณะเช็ค ก็ไป get id มาเลย)
+                            if (dt.Rows[i][3].ToString() == "")
+                            {
+                                validateValue = false;
+                                txtError += "บรรทัดที่ " + rowInExcelAlert + " กรุณาระบุ ประเภทสถานพยาบาล<br />";
+                            }
+                            else
+                            {
+                                string per = dt.Rows[i][3].ToString().Trim();
+                                var list = typeList.Where(x => Convert.ToString(x.percentage).Equals(per)).ToList();
+                                if (list.Count > 0)
+                                {
+                                    hospTypeId = list[0].id.ToString();
+                                }
+                                else
+                                {
+                                    validateValue = false;
+                                    txtError += "บรรทัดที่ " + rowInExcelAlert + " ประเภทสถานพยาบาลระบุได้ 100 ,75 ,50 เท่านั้น<br />";
+                                }
+
+                            }
+
+
+
+                            //E ต้องเป็น 0 - 1 เท่านั้น
+                            if (dt.Rows[i][4].ToString() == "0")//ปิด
+                            {
+                                delFlag = "1";
+                            }
+                            else if (dt.Rows[i][4].ToString() == "1")//เปิด
+                            {
+                                delFlag = "0";
+                            }
+                            else
+                            {
+                                validateValue = false;
+                                txtError += "บรรทัดที่ " + rowInExcelAlert + " สถานะระบุได้ 0-1 เท่านั้น<br />";
+
+                            }
+
+                            hospList.Add(new HospitalModel()
+                            {
+                                id = hospitalId
+                            ,
+                                hospTypeId = hospTypeId
+                            ,
+                                hospNameTH = hospitalName
+                            ,
+                                hospNameEN = ""
+                            ,
+                                provinceId = provinceId
+                            ,
+                                region = regionId
+                            ,
+                                delFlag = delFlag
+                            });
+                        }
+
+                        if (validateValue == false)
+                        {
+                            //ถ้ามี error ลบไฟล์ทิ้ง
+                            System.IO.File.Delete(path);
+                            ViewBag.Error = txtError;
+                            return View();
+                        }
+                        else
+                        {
+                            //ไม่มี error insert data
+                            for (int i = 0; i < hospList.Count; i++)
+                            {
+                                int result=  QueryProcessHospital.updateHospital(hospList[i]);
+
+                            }
+
+                        }
+                    }
+
+                    ViewBag.Result = "Successfully Imported";
                 }
-                importExcel.file.SaveAs(path);
-
-                var dt = new DataTable();
-                dt = ExcelAppCode.ReadExcel(path, "dataimport", "A:E");
-                var countDataHaveRows = dt.Rows.Count;
-
-                string[] region = { "1", "2", "3", "4", "5", "6", "7", "8", };
-
-
-                List<HospitalModel> getList = new List<HospitalModel>();
-                getList = QueryGetAllHospital.getAllHospital().ToList();
-
-                string hospitalId = "", hospitalName = "", hospTypeId = "", provinceId = "", regionId = "", delFlag = "";
-
-                DataTable dtProvinces = getProvinces().Tables[0];
-
-
-                //DataTable dtImport = new DataTable();
-                //dtImport.Columns.Add("hospitalId");
-                //dtImport.Columns.Add("hospitalName");
-                //dtImport.Columns.Add("hospTypeId");
-                //dtImport.Columns.Add("provinceId");
-                //dtImport.Columns.Add("regionId");
-                //dtImport.Columns.Add("delFlag");
-                List<HospitalModel> hospList = new List<HospitalModel>();
-                //valid data          
-
-                if (countDataHaveRows > 0)
-                {
-                    //=====validate=======
-                    bool validateValue = true;
-                    string txtError = "";
-
-                    for (int i = 0; i < countDataHaveRows; i++)
-                    {
-                        int rowInExcelAlert = (i + 2);
-                        validateValue = false;
-
-                        //a ต้องไม่เป็นค่าว่า เป็นคีย์ที่ใช้ในการ update หรือ insert(ขณะเช็ค ก็ไป get id มาเลย ถ้าไม่มี id เป็น ค่าว่าง )
-                        if (dt.Rows[i][0].ToString() == "")
-                        {
-                            validateValue = false;
-                            txtError += "บรรทัดที่ " + rowInExcelAlert + " กรุณาระบุ ชื่อสถานพยาบาล<br />";
-                        }
-                        else
-                        {
-                            hospitalId = getHospitalId(dt.Rows[i][0].ToString());
-                            hospitalName = dt.Rows[i][0].ToString();
-                            //txtError += hospitalId + "<br />";
-                        }
-
-                        DataRow[] dr;
-                        //b ต้อง เป็น จังหวัดใน DB(ต้องหาวิธีแสดงชื่อจังหวัด)(ขณะเช็ค ก็ไป get id มาเลย)
-                        if (dt.Rows[i][1].ToString() == "")
-                        {
-                            validateValue = false;
-                            txtError += "บรรทัดที่ " + rowInExcelAlert + " กรุณาระบุ จังหวัด<br />";
-                        }
-                        else
-                        {
-                            dr = dtProvinces.Select("nameTH = '" + dt.Rows[i][1].ToString().Trim() + "'");
-                            if (dr.Count() > 0)
-                            {
-                                provinceId = dr[0]["id"].ToString();
-                            }
-                            else
-                            {
-                                validateValue = false;
-                                txtError += "บรรทัดที่ " + rowInExcelAlert + " ชื่อจังหวัดไม่ตรงกับข้อมูล Master<br />";
-                            }
-                            //txtError += hospitalId + "<br />";
-                        }
-
-                        //c ต้องเป็น 1 - 8 เท่านั้น
-                        if (dt.Rows[i][2].ToString() == "")
-                        {
-                            validateValue = false;
-                            txtError += "บรรทัดที่ " + rowInExcelAlert + " กรุณาระบุ ภาคการขาย<br />";
-                        }
-                        else
-                        {
-                            if (region.Contains(dt.Rows[i][2].ToString().Trim()))
-                            {
-                                regionId = dt.Rows[i][2].ToString().Trim();
-                            }
-                            else
-                            {
-                                validateValue = false;
-                                txtError += "บรรทัดที่ " + rowInExcelAlert + " ภาคการขายระบุได้ 1-8 เท่านั้น<br />";
-                            }
-                        }
-
-                        //D ต้องเป็น 100 % 75 % 50 % เท่านั้น(ขณะเช็ค ก็ไป get id มาเลย)
-                        if (dt.Rows[i][3].ToString() == "")
-                        {
-                            validateValue = false;
-                            txtError += "บรรทัดที่ " + rowInExcelAlert + " กรุณาระบุ ประเภทสถานพยาบาล<br />";
-                        }
-                        else
-                        {
-
-                            var list = getList.Where(x => x.percentage.Equals(dt.Rows[i][3].ToString().Trim().Replace("%", ""))).ToList();
-                            if (list.Count > 0)
-                            {
-                                hospTypeId = list[0].id.ToString();
-                            }
-                            else
-                            {
-                                validateValue = false;
-                                txtError += "บรรทัดที่ " + rowInExcelAlert + " ประเภทสถานพยาบาลระบุได้ 100% ,75% ,50% เท่านั้น<br />";
-                            }
-
-                        }
-
-
-
-                        //E ต้องเป็น 0 - 1 เท่านั้น
-                        if (dt.Rows[i][4].ToString() == "0")//ปิด
-                        {
-                            delFlag = "1";
-                        }
-                        else if (dt.Rows[i][4].ToString() == "1")//เปิด
-                        {
-                            delFlag = "0";
-                        }
-                        else { 
-                         validateValue = false;
-                            txtError += "บรรทัดที่ " + rowInExcelAlert + " สถานะระบุได้ 0-1 เท่านั้น<br />";
-                        
-                        }
-
-                        hospList.Add(new HospitalModel() 
-                        {id=hospitalId
-                        ,hospTypeId=hospTypeId
-                        ,hospNameTH= hospitalName
-                        ,hospNameEN=""
-                        ,provinceId= provinceId
-                        ,region= regionId
-                        ,delFlag= delFlag
-                        });                       
-                    }
-
-                    if (validateValue == false)
-                    {
-                        ViewBag.Error = txtError;
-                        return View();
-                    }
-                    else
-                    {
-                        //ไม่มี error insert data
-                        for (int i = 0; i < hospList.Count; i++)
-                        {
-                            QueryProcessHospital.updateHospital(hospList[i]);
-
-                        }
-                       
-                    }
-                }
-
-                ViewBag.Result = "Successfully Imported";
-            }
+         
             return View();
         }
 
@@ -260,12 +275,12 @@ namespace eActForm.Controllers
 
         public string getHospitalId(string hospitalName)
         {
-
+            //แก้stored ดึงให้หมดทุก delflag
             string hospitalId = "";
             List<HospitalModel> getList = new List<HospitalModel>();
             try
             {
-                getList = QueryGetAllHospital.getAllHospital().Where(x => x.hospNameTH.Replace(" ", "").Equals(hospitalName.Replace(" ", ""))).ToList();
+                getList = QueryGetAllHospital.exportHospital().Where(x => x.hospNameTH.Replace(" ", "").Equals(hospitalName.Replace(" ", ""))).ToList();
 
                 if (getList.Count > 0)
                 {

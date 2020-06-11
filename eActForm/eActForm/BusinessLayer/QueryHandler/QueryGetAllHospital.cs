@@ -57,6 +57,25 @@ namespace eActForm.BusinessLayer
                 return new List<HospitalModel>();
             }
         }
-
+        public static List<HospitalModel> exportHospital()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_exportAllHospital");
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new HospitalModel()
+                             {
+                                 id = d["id"].ToString(),                              
+                                 hospNameTH = d["hospNameTH"].ToString(),
+                               
+                             });
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                return new List<HospitalModel>();
+            }
+        }
     }
 }
