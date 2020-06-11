@@ -67,7 +67,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception("getApproveListsByStatusId >> " + ex.Message);
+                throw new Exception("getApproveListsByEmpId >> " + ex.Message);
             }
         }
     }
