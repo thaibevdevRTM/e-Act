@@ -84,6 +84,8 @@ namespace eActForm.BusinessLayer
                                  disCount2 = d["discount2"] is DBNull ? 0 : decimal.Parse(d["discount2"].ToString()),
                                  disCount3 = d["discount3"] is DBNull ? 0 : decimal.Parse(d["discount3"].ToString()),
                                  saleNormal = d["saleNormal"] is DBNull ? 0 : decimal.Parse(d["saleNormal"].ToString()),
+                                 rsp =  0,
+
                              }).ToList();
                 if (p_productId != "")
                 {
@@ -94,7 +96,7 @@ namespace eActForm.BusinessLayer
                     lists = lists.Where(x => x.brandId == brandId && x.smellId == smellId).ToList();
                 }
 
-                if (typeForm != Activity_Model.activityType.OMT.ToString())
+                if (typeForm == Activity_Model.activityType.MT.ToString())
                 {
                     lists = lists.Where(x => x.wholeSalesPrice > 0).ToList();
                 }
@@ -122,7 +124,8 @@ namespace eActForm.BusinessLayer
                    disCount3 = group.First().disCount3,
                    saleNormal = group.First().saleNormal,
                    isShowGroup = p_productId != "" ? false : true,
-                   detailGroup = group.ToList()
+                   detailGroup = group.ToList(),
+                   rsp = group.First().rsp,
                }).ToList();
 
                 return groupByPrice;

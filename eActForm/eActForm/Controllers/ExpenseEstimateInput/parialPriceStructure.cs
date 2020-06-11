@@ -29,8 +29,7 @@ namespace eActForm.Controllers
       , string cusid
       , string theme
       , string actId
-      , string typeForm
-      , string dateActivitySt)
+      , string typeForm)
         {
             var result = new AjaxResult();
             try
@@ -39,37 +38,6 @@ namespace eActForm.Controllers
                 var productlist = new Activity_TBMMKT_Model();
                 productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme, typeForm);
                 activityModel.productcostdetaillist1.AddRange(productlist.productcostdetaillist1);
-
-
-                CostThemeDetailOfGroupByPrice costthememodel = new CostThemeDetailOfGroupByPrice();
-                int i = 0;
-                foreach (var item in productlist.productcostdetaillist1)
-                {
-                    costthememodel = new CostThemeDetailOfGroupByPrice();
-                    costthememodel.activityId = actId;
-                    costthememodel.productGroupId = item.productGroupId;
-                    costthememodel.typeTheme = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.id == theme).FirstOrDefault().activitySales;
-                    costthememodel.productId = item.productId;
-                    costthememodel.activityTypeId = theme;
-                    costthememodel.brandName = item.brandName.Trim() + " " + item.size + "ALL(" + item.detailGroup.Count + ") " + item.pack;
-                    costthememodel.productName = item.isShowGroup ? costthememodel.brandName : item.productName + " " + item.pack;
-                    costthememodel.size = item.size;
-                    costthememodel.smellName = item.smellName;
-                    costthememodel.smellId = item.smellId;
-                    costthememodel.brandId = item.brandId;
-                    costthememodel.unit = item.unit;
-                    costthememodel.isShowGroup = item.isShowGroup;
-                    costthememodel.detailGroup = item.detailGroup;
-                    //if (ActFormAppCode.getDigitGroup(theme) != "")
-                    //{
-
-                    //    DateTime getDoc = DateTime.ParseExact(dateActivitySt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                    //    string getYear = getDoc.Month > 9 ? getDoc.AddYears(1).ToString("yy") : getDoc.Year.ToString().Substring(2);
-                    //    costthememodel.IO = "56S0" + getYear + ActFormAppCode.getDigitGroup(theme) + ActFormAppCode.getDigitRunnigGroup(item.productId);
-                    //}
-                    activityModel.activitydetaillist.Add(costthememodel);
-                    i++;
-                }
 
                 //calculate Cost GP
                 foreach (var item in productlist.productcostdetaillist1)
