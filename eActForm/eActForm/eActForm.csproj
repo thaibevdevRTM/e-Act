@@ -322,6 +322,8 @@
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\API\eActController.cs" />
+    <Compile Include="Controllers\ExpenseEstimateInput\parialPriceStructure.cs" />
+    <Compile Include="Controllers\ExpenseEstimateReport\parialPriceStructureRpt.cs" />
     <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\API\apiGetDataMasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -3176,6 +3178,8 @@
     <Content Include="Views\Shared\_searchClaimReport.cshtml" />
     <Content Include="Views\partialActivityDetail\partialSetPriceDetail.cshtml" />
     <Content Include="Views\partialActivityDetailReport\partialSetPriceDetailRpt.cshtml" />
+    <Content Include="Views\ExpenseEstimateInput\productSetPriceList.cshtml" />
+    <Content Include="Views\ExpenseEstimateReport\parialPriceStructureRpt.cshtml" />
     <Content Include="Views\PartialChangeRequestForm\crHeader.cshtml" />
     <Content Include="Views\PartialChangeRequestForm\cr_IT_Frm314_page1.cshtml" />
     <Content Include="Views\PartialChangeRequestForm\cr_IT_Frm314_page2.cshtml" />
