@@ -302,7 +302,7 @@ namespace eActForm.Controllers
                 if (empDetailList.Any())
                 {
                     var resultData = new
-                    {
+                    { 
                         empName = !langEn ? empDetailList.FirstOrDefault().empName : empDetailList.FirstOrDefault().empNameEN,
                         position = !langEn ? empDetailList.FirstOrDefault().position : empDetailList.FirstOrDefault().positionEN,
                         level = empDetailList.FirstOrDefault().level,

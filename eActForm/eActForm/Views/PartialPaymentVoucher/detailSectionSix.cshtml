@@ -114,9 +114,12 @@
                     filterDataHistoryPay.RemoveAll(r => r.rowNo != 1);
                     var filterDataHistoryPayArray = filterDataHistoryPay.ToArray();
                     var havefilterDataHistoryPayArray = filterDataHistoryPay.Count;
+                    var NoNeedRow = 0;
+
                 }
                 @foreach (var item in Model.listGetDataDetailPaymentAll)
                 {
+                    NoNeedRow = 0;
                     if (index == 0)
                     {
                         <tr>
@@ -173,18 +176,22 @@
                                 }
                                 else
                                 {
-                                    <td class="dCol1 tdTopLeft">
-                                        &nbsp;
-                                    </td>
-                                    <td class="dCol2 tdTopLeft">
-                                        &nbsp;
-                                    </td>
-                                    <td class="dCol3 tdTopRight borderRight fontBlueV1">
-                                        &nbsp;
-                                    </td>
-                                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
-                                        &nbsp;
-                                    </td>
+                                    if (index < haveDataInArrayNowPay || index < havefilterDataHistoryPayArray)
+                                    {
+                                        NoNeedRow = 1;
+                                        <td class="dCol1 tdTopLeft">
+                                            &nbsp;
+                                        </td>
+                                        <td class="dCol2 tdTopLeft">
+                                            &nbsp;
+                                        </td>
+                                        <td class="dCol3 tdTopRight borderRight fontBlueV1">
+                                            &nbsp;
+                                        </td>
+                                        <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                                            &nbsp;
+                                        </td>
+                                    }
                                 }
                             }
                             @if (index < havefilterDataHistoryPayArray)
@@ -204,18 +211,21 @@
                             }
                             else
                             {
-                                <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
-                                    &nbsp;
-                                </td>
-                                <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
-                                    &nbsp;
-                                </td>
-                                <td class="txtRight verticalTop totalWidth borderRight fontOrangeV1" style="font-weight:bold;">
-                                    &nbsp;
-                                </td>
-                                <td class="tdTopCenter pvNoWidth">
-                                    &nbsp;
-                                </td>
+                                if (index < haveDataInArrayNowPay || index < havefilterDataHistoryPayArray)
+                                {
+                                    <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                                        &nbsp;
+                                    </td>
+                                    <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                                        &nbsp;
+                                    </td>
+                                    <td class="txtRight verticalTop totalWidth borderRight fontOrangeV1" style="font-weight:bold;">
+                                        &nbsp;
+                                    </td>
+                                    <td class="tdTopCenter pvNoWidth">
+                                        &nbsp;
+                                    </td>
+                                }
                             }
                         </tr>
                     }
@@ -322,43 +332,45 @@
                                 }
                                 else
                                 {
-                                    <td class="dCol1 tdTopLeft">
-                                        <table style="border-collapse:collapse;">
-                                            <tr>
-                                                <td class="paddingRowTable">
-                                                    &nbsp;
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td class="dCol2 tdTopLeft">
-                                        <table style="border-collapse:collapse;">
-                                            <tr>
-                                                <td class="paddingRowTable">
-                                                    &nbsp;
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td class="dCol3 tdTopRight borderRight fontBlueV1">
-                                        <table class="borderWidthMaxCollape">
-                                            <tr>
-                                                <td class="paddingRowTable tdTopRight fontBlueV1">
-                                                    &nbsp;
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td class="vatTitleColumn verticalTop vatWidth borderRight">
-                                        <table class="borderWidthMaxCollape">
-                                            <tr>
-                                                <td class="paddingRowTable vatTitleColumn">
-                                                    &nbsp;
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-
+                                    if (NoNeedRow != 1 && (index < haveDataInArrayNowPay || index < havefilterDataHistoryPayArray))
+                                    {
+                                        <td class="dCol1 tdTopLeft">
+                                            <table style="border-collapse:collapse;">
+                                                <tr>
+                                                    <td class="paddingRowTable">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td class="dCol2 tdTopLeft">
+                                            <table style="border-collapse:collapse;">
+                                                <tr>
+                                                    <td class="paddingRowTable">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td class="dCol3 tdTopRight borderRight fontBlueV1">
+                                            <table class="borderWidthMaxCollape">
+                                                <tr>
+                                                    <td class="paddingRowTable tdTopRight fontBlueV1">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td class="vatTitleColumn verticalTop vatWidth borderRight">
+                                            <table class="borderWidthMaxCollape">
+                                                <tr>
+                                                    <td class="paddingRowTable vatTitleColumn">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    }
                                 }
                             }
                             @if (index < havefilterDataHistoryPayArray)
@@ -402,42 +414,45 @@
                             }
                             else
                             {
-                                <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
-                                    <table class="borderWidthMaxCollape">
-                                        <tr>
-                                            <td class="paddingRowTable eventNoTitleColumn fontRedV1">
-                                               &nbsp;
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
-                                    <table class="borderWidthMaxCollape">
-                                        <tr>
-                                            <td class="paddingRowTable dateTitleColumn fontRedV1">
-                                                &nbsp;
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td class="verticalTop totalWidth borderRight fontOrangeV1 txtRight">
-                                    <table class="borderWidthMaxCollape">
-                                        <tr>
-                                            <td class="paddingRowTable  fontOrangeV1 txtRight" style="font-weight:bold;">
-                                                &nbsp;
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td class="tdTopCenter pvNoWidth">
-                                    <table class="borderWidthMaxCollape">
-                                        <tr>
-                                            <td class="paddingRowTable tdTopCenter">
-                                                &nbsp;
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
+                                if (NoNeedRow != 1 && (index < haveDataInArrayNowPay || index < havefilterDataHistoryPayArray))
+                                {
+                                    <td class="eventNoTitleColumn verticalTop eventNoWidth borderRight fontRedV1">
+                                        <table class="borderWidthMaxCollape">
+                                            <tr>
+                                                <td class="paddingRowTable eventNoTitleColumn fontRedV1">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="dateTitleColumn verticalTop dateWidth borderRight fontRedV1">
+                                        <table class="borderWidthMaxCollape">
+                                            <tr>
+                                                <td class="paddingRowTable dateTitleColumn fontRedV1">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="verticalTop totalWidth borderRight fontOrangeV1 txtRight">
+                                        <table class="borderWidthMaxCollape">
+                                            <tr>
+                                                <td class="paddingRowTable  fontOrangeV1 txtRight" style="font-weight:bold;">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="tdTopCenter pvNoWidth">
+                                        <table class="borderWidthMaxCollape">
+                                            <tr>
+                                                <td class="paddingRowTable tdTopCenter">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                }
                             }
                         </tr>
                     }

@@ -304,6 +304,17 @@
                 required += "&emsp;ประมาณค่าใช้จ่ายในการเดินทาง*<br>"; validate = false;
             }
 
+            //เช็คถ้ากรอกว่าเกินสิทธิ
+            var ProductDetail_0 = 0.00, ProductDetail_1 = 0.00, txtUnitPrice_0 = 0.00, txtUnitPrice_1 = 0.00;
+            if ($("#ProductDetail_0").val() != "") { ProductDetail_0 = parseFloat($("#ProductDetail_0").val().replace(",", "")); }
+            if ($("#ProductDetail_1").val() != "") { ProductDetail_1 = parseFloat($("#ProductDetail_1").val().replace(",", "")); }
+            if ($("#txtUnitPrice_0").val() != "") { txtUnitPrice_0 = parseFloat($("#txtUnitPrice_0").val().replace(",", "")); }
+            if ($("#txtUnitPrice_1").val() != "") { txtUnitPrice_1 = parseFloat($("#txtUnitPrice_1").val().replace(",", "")); }
+
+            if (txtUnitPrice_0 > ProductDetail_0 || txtUnitPrice_1 > ProductDetail_1) {
+                required += "&emsp;ท่านกรอกยอดเงินเกินสิทธิ์*<br>"; validate = false;
+            }
+
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]') {
             if ($("#txtdateDoc").val() == "") { required += "&emsp;Document Date*<br>"; validate = false; }
@@ -343,7 +354,8 @@
             if ($("#txtEmpTel").val() == "") { required += "&emsp;โทรศัพท์ติดต่อ*<br>"; validate = false; }
             if ($("#lblHireDate").val() == "") { required += "&emsp;วันที่เข้างาน(กรุณาติดต่อ Admin)*<br>"; validate = false; }
             if ($("#txthospName_0").val() == "") { required += "&emsp;โรงพยาบาล*<br>"; validate = false; }
-
+            if (document.getElementById('lblPercent').innerHTML == "0") { required += "&emsp;กรุณาเลือกโรงพยาบาลให้ถูกต้อง*<br>"; validate = false; }
+            
             var price_1 = 0.00;
             if ($("#txtUnitPrice_0").val() != "") { price_1 = parseFloat($("#txtUnitPrice_0").val().replace(",", "")); }
             if (!($("#txtDateInput_0").val() != "" && $("#txtdetail_0").val() != "" && price_1 > 0 ))
@@ -381,18 +393,21 @@
             if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
             if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม *<br>"; validate = false; }
             if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
-            if ($("#txtdateActivitySt").val() == "" || $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivityEnd").focus(); }
-            else {
-                var startDate = $("#txtdateActivitySt").val().split("-");
-                var endDate = $("#txtdateActivityEnd").val().split("-");
-                if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1], endDate[0])) {
-                    required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
-                }
-            }
             if ($("input[name='activityFormTBMMKT.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
-
             if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
                 $("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]")) { required += "Reference*<br>"; validate = false; }
+            if ($("#txtdateActivitySt").val() == "") { required += "เลือก เวลาเริ่มกิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivitySt").focus(); }
+            if ($("#txtdateCostPerSt").val() == "") { required += "เลือก เวลาเริ่มให้ทุนพิเศษ  *<br>"; validate = false; document.getElementById("txtdateCostPerSt").focus(); }
+            
+            var rowCount = parseInt($('#tbl_productDetail tr.tagTR').length);
+            for (i = 0; i < rowCount; i++) {
+                if ($("#wholeSalesPrice_" + i).val() == 0 || $("#wholeSalesPrice_" + i).val() == "") { required += "&emsp; ระบุราคา wholeSalesPrice แถวที่ " + (i+1) + "*<br>"; validate = false; }
+                if ($("#saleNormal_" + i).val() == 0 || $("#saleNormal_" + i).val() == "") { required += "&emsp; ระบุราคา saleNormal แถวที่ " + (i + 1) + "*<br>"; validate = false; }
+                if ($("#rsp_" + i).val() == 0 || $("#rsp_" + i).val() == "") { required += "&emsp; ระบุราคา RSP แถวที่ " + (i + 1) + "*<br>"; validate = false; }
+                if ($("#unitTxt_" + i).val() == 0 || $("#unitTxt_" + i).val() == "") { required += "&emsp; ระบุ Unit แถวที่ " + (i + 1) + "*<br>"; validate = false; }
+
+            }
+
         }
         else {
 

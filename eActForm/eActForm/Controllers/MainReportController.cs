@@ -139,7 +139,7 @@ namespace eActForm.Controllers
                 model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
                 for (int i = 0; i < 8; i++)
                 {
-                    if (model2.costDetailLists[i].unitPrice != 0 && model2.costDetailLists[i].listChoiceId != AppCode.Expenses.Allowance)
+                    if (model2.costDetailLists[i].total != 0 && model2.costDetailLists[i].listChoiceId != AppCode.Expenses.Allowance)
                     {
                         modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                         {
