@@ -54,7 +54,7 @@ namespace eActForm
             //   "~/Scripts/bootstrap-select.css"
             //   ));
 
-            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
+            bundles.Add(new StyleBundle("~/Content/themes/css").Include(
                "~/Scripts/jquery-ui.min.css",
                "~/content/vendors/bootstrap/dist/css/bootstrap.min.css",
                "~/content/fontawesome/font-awesome.min.css",

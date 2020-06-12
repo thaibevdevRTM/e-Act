@@ -2060,9 +2060,6 @@
     <Content Include="Content\vendors\Flot\jquery.flot.time.js" />
     <Content Include="Content\vendors\Flot\jquery.js" />
     <Content Include="Content\vendors\Flot\LICENSE.txt" />
-    <Content Include="Content\vendors\font-awesome\css\font-awesome.css" />
-    <Content Include="Content\vendors\font-awesome\css\font-awesome.min.css" />
-    <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\vendors\iCheck\icheck.js" />
     <Content Include="Content\vendors\iCheck\icheck.min.js" />
     <Content Include="Content\vendors\iCheck\skins\all.css" />
@@ -2703,14 +2700,8 @@
     <Content Include="Content\vendors\bootstrap\dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\vendors\bootstrap\dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\vendors\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\vendors\font-awesome\css\font-awesome.css.map" />
     <Content Include="Content\vendors\jquery\dist\jquery.min.map" />
     <Content Include="Content\vendors\jquery\src\.jshintrc" />
-    <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\vendors\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Content\vendors\datatables.net-bs\.bower.json" />
     <Content Include="Content\vendors\datatables.net-bs\bower.json" />
     <Content Include="Content\vendors\datatables.net-bs\Readme.md" />
@@ -2833,12 +2824,7 @@
     <Content Include="Content\vendors\iCheck\icheck.jquery.json" />
     <Content Include="ActSummaryDetail\f063c365-1e86-433e-bbb9-1fc6b58a386c.pdf" />
     <Content Include="Content\vendors\echarts\build\build.sh" />
-    <Content Include="Content\themes\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\themes\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\themes\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\themes\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\themes\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="bin\ApplicationInsights.config" />
     <Content Include="bin\eActForm.dll.config" />
     <Content Include="bin\roslyn\csc.exe.config" />
