@@ -247,6 +247,15 @@
                 document.getElementById('ProductDetail_1').innerHTML = response.Data.ProductDetail_1;
                 $("#ProductDetail_0").val(response.Data.ProductDetail_0);
                 $("#ProductDetail_1").val(response.Data.ProductDetail_1);
+                document.getElementById('lblBath_0').innerHTML = "บาท/วัน";
+                document.getElementById('lblBath_1').innerHTML = "บาท/วัน";
+
+
+                //ต้องทำในกรณีที่ไม่ใช่ดึงมาครั้งแรก
+                if ($("#txtUnitPrice_0").val()=="" || '@Model.activityFormTBMMKT.id'=="") {
+                    $("#txtUnitPrice_0").val(response.Data.ProductDetail_0);
+                    $("#txtUnitPrice_1").val(response.Data.ProductDetail_1);
+                }
 
             }
             else {
@@ -257,6 +266,10 @@
                     document.getElementById('lblBath_1').innerHTML = "";
                     $("#ProductDetail_0").val(0);
                     $("#ProductDetail_1").val(0);
+
+                    $("#txtUnitPrice_0").val("");
+                    $("#txtUnitPrice_1").val("");
+
                 }
             }
         });

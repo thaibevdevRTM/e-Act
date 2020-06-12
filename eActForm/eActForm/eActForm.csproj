@@ -268,6 +268,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetPosition.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetSubject.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryOtherMaster.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryProcessHospital.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\CommandHandler\ActivityFormTBMMKTCommandHandler.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGetSelectMainForm.cs" />
     <Compile Include="BusinessLayer\Tbmmkt\QueryHandler\QueryGet_PlaceDetailByActivityId.cs" />
@@ -327,6 +328,7 @@
     <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\API\apiGetDataMasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportMasterHospitalController.cs" />
     <Compile Include="Controllers\ImportMasterAPController.cs" />
     <Compile Include="Controllers\ImportMaterial_PRODUCT_POS_PREMIUMController.cs" />
     <Compile Include="Controllers\MainFormController.cs" />
@@ -3168,7 +3170,6 @@
     <Content Include="Views\SharedMasterFormDetail\textGeneral.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderCompany\headerFormName.cshtml" />
     <Content Include="Views\ExpenseEstimateInput\expensesMedDetail.cshtml" />
-    <Content Include="Views\ExpenseEstimateInput\expensesMedDetail_old.cshtml" />
     <Content Include="Views\MenuList\importData.cshtml" />
     <Content Include="Views\ImportMasterAP\Index.cshtml" />
     <Content Include="Views\ExpenseEstimateReport\expensesMedDetailRpt.cshtml" />
@@ -3176,6 +3177,7 @@
     <Content Include="Views\ClaimReport\claimReportIndex.cshtml" />
     <Content Include="Views\ClaimReport\claimReportList.cshtml" />
     <Content Include="Views\Shared\_searchClaimReport.cshtml" />
+    <Content Include="Views\ImportMasterHospital\Index.cshtml" />
     <Content Include="Views\partialActivityDetail\partialSetPriceDetail.cshtml" />
     <Content Include="Views\partialActivityDetailReport\partialSetPriceDetailRpt.cshtml" />
     <Content Include="Views\ExpenseEstimateInput\productSetPriceList.cshtml" />
@@ -3204,6 +3206,7 @@
     <Folder Include="signatureFile\" />
     <Folder Include="UploadfilesBudget\" />
     <Folder Include="Uploadfiles\ActivityForm\" />
+    <Folder Include="Uploadfiles\ImportHospital\template\" />
     <Folder Include="Uploadfiles\ImportMasterAP\template\" />
     <Folder Include="Uploadfiles\ImportMatProductPosPremium\template\" />
     <Folder Include="Views\ApiApprove\" />
