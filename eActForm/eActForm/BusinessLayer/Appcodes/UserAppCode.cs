@@ -41,7 +41,7 @@ namespace eActForm.BusinessLayer
                 {
                     DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserByEmpId"
                         , new SqlParameter[] { new SqlParameter("@empId", strUserName) });
-                    if (ds.Tables.Count > 0)
+                    if (ds.Tables[0].Rows.Count > 0)
                     {
                         rtn = ds.Tables[0].Rows.Count;
                         foreach (DataRow dr in ds.Tables[0].Rows)
@@ -80,6 +80,12 @@ namespace eActForm.BusinessLayer
 
                         }
                     }
+                    else
+                    {
+                        bool checkRoleForInsert = getCheckRoleUserForInsert();
+                        rtn = setRoleUser(strUserName);
+                    }
+
                 }
                 return rtn;
             }
@@ -110,6 +116,28 @@ namespace eActForm.BusinessLayer
             catch (Exception ex)
             {
                 throw new Exception("GetUserAuthorizeds>>" + ex.Message);
+            }
+        }
+
+
+        public static bool getCheckRoleUserForInsert()
+        {
+            try
+            {
+                bool result = false;
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_checkRoleByEmpId"
+                    , new SqlParameter[] { new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
+                                         , new SqlParameter("@companyId",UtilsAppCode.Session.User.empCompanyId) });
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    result = true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getCheckRoleUser >>" + ex.Message);
             }
         }
 
