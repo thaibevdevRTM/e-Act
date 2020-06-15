@@ -38,7 +38,7 @@ namespace eActForm.Controllers
             decimal? unitPrice = 0;
             for (int i = 0; i < 8; i++)
             {
-                if (model2.costDetailLists[i].unitPrice != 0)
+                if (model2.costDetailLists[i].total != 0)
                 {
                     if (modelHistory.costDetailLists.Count > 0)
                     {

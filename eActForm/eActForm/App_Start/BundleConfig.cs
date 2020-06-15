@@ -54,10 +54,10 @@ namespace eActForm
             //   "~/Scripts/bootstrap-select.css"
             //   ));
 
-            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
+            bundles.Add(new StyleBundle("~/Content/themes/css").Include(
                "~/Scripts/jquery-ui.min.css",
                "~/content/vendors/bootstrap/dist/css/bootstrap.min.css",
-               "~/content/vendors/font-awesome/css/font-awesome.min.css",
+               "~/content/fontawesome/font-awesome.min.css",
                "~/Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css",
                "~/Content/vendors/iCheck/skins/flat/green.min.css",
                "~/Content/vendors/bootstrap-datepicker/datepicker3.min.css",

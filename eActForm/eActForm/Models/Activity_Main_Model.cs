@@ -183,6 +183,7 @@ namespace eActForm.Models
         public decimal? amountCumulative { get; set; }
         public decimal? amountBalance { get; set; }
         public decimal? amountReceived { get; set; }
+        public string departmentIdFlow { get; set; }
     }
 
     public class TB_Act_ActivityForm_DetailOtherList : ActBaseModel
