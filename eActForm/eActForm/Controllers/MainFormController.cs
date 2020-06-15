@@ -206,8 +206,10 @@ namespace eActForm.Controllers
                 }
 
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])//ฟอร์มChangeRequest_IT314
-                {
+                {                    
                     activity_TBMMKT_Model.activityFormTBMMKT.empId = activity_TBMMKT_Model.empInfoModel.empId;
+                    string formCompanyIdBySubject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetDataSubjectByid(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId).FirstOrDefault().companyId;
+                    activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = formCompanyIdBySubject;
                 }
 
                 if (ActFormAppCode.checkFormAddTBDetailOther(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
