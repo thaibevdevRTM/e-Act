@@ -4,6 +4,8 @@ using System;
 using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
+using eForms.Models.MasterData;
+using System.Collections.Generic;
 
 namespace eActForm.Controllers
 {
@@ -92,6 +94,11 @@ namespace eActForm.Controllers
 
         public ActionResult dropdownConditionSubject(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            if (activity_TBMMKT_Model.listGetDepartmentMaster == null)
+            {
+                List<departmentMasterModel> departmentMasterModels = new List<departmentMasterModel>();
+                activity_TBMMKT_Model.listGetDepartmentMaster = departmentMasterModels;
+            }
             objGetDataSubjectByFormOnly objGetDataSubjectByFormOnly = new objGetDataSubjectByFormOnly();
             objGetDataSubjectByFormOnly.master_type_form_id = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
             activity_TBMMKT_Model.tB_Reg_Subject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetSelectAllTB_Reg_Subject_ByFormOnlyAndFlow(objGetDataSubjectByFormOnly);

@@ -68,6 +68,7 @@ namespace eActForm.BusinessLayer
                                   amountCumulative = d["amountCumulative"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountCumulative"].ToString())),
                                   amountBalance = d["amountBalance"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountBalance"].ToString())),
                                   amountReceived = d["amountReceived"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountReceived"].ToString())),
+                                  departmentIdFlow = d["departmentIdFlow"].ToString(),
                               });
 
                 return result.ToList();
