@@ -81,16 +81,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2020 08:46:05</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
-      <publishTime>06/16/2020 08:55:57</publishTime>
+      <publishTime>06/16/2020 14:20:46</publishTime>
     </File>
     <File Include="bin/eActForm.dll.config">
-      <publishTime>06/16/2020 08:51:50</publishTime>
+      <publishTime>06/16/2020 14:19:12</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
-      <publishTime>06/16/2020 08:55:57</publishTime>
+      <publishTime>06/16/2020 14:20:46</publishTime>
     </File>
     <File Include="bin/eActForm.dll.config">
-      <publishTime>06/16/2020 08:51:50</publishTime>
+      <publishTime>06/16/2020 14:19:12</publishTime>
     </File>
     <File Include="bin/eForms.Models.dll">
       <publishTime>06/16/2020 08:55:42</publishTime>
@@ -105,7 +105,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/16/2020 08:55:43</publishTime>
     </File>
     <File Include="bin/en/eActForm.resources.dll">
-      <publishTime>06/16/2020 08:55:59</publishTime>
+      <publishTime>06/16/2020 14:20:46</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.xml">
       <publishTime>03/31/2020 20:02:01</publishTime>
@@ -7731,7 +7731,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/07/2020 10:58:01</publishTime>
     </File>
     <File Include="Views/Login/index.cshtml">
-      <publishTime>04/22/2020 11:29:00</publishTime>
+      <publishTime>06/16/2020 14:17:20</publishTime>
     </File>
     <File Include="Views/Login/Maintain.cshtml">
       <publishTime>04/22/2020 11:29:00</publishTime>
@@ -8145,7 +8145,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/22/2020 11:29:02</publishTime>
     </File>
     <File Include="Views/Signature/listsSignature.cshtml">
-      <publishTime>04/22/2020 11:29:02</publishTime>
+      <publishTime>06/16/2020 14:17:32</publishTime>
     </File>
     <File Include="Views/summaryReport/Index.cshtml">
       <publishTime>04/22/2020 11:29:03</publishTime>
