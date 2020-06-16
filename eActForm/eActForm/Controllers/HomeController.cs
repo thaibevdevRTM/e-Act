@@ -4,6 +4,7 @@ using eActForm.Models;
 using System;
 using System.Configuration;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -177,6 +178,11 @@ namespace eActForm.Controllers
         public ActionResult logOut()
         {
             UtilsAppCode.Session.User = null;
+
+            HttpCookie delCookie = new HttpCookie("cookieLogin");
+            delCookie.Expires = DateTime.Now.AddDays(-1D);
+            Response.Cookies.Add(delCookie);
+
             return RedirectToAction("index", "home");
         }
 

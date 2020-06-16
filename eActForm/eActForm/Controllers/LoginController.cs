@@ -2,7 +2,9 @@
 using eActForm.Models;
 using System;
 using System.Configuration;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using WebLibrary;
 
 namespace eActForm.Controllers
@@ -27,17 +29,40 @@ namespace eActForm.Controllers
             {
                 ModelState.AddModelError("CustomerError", TempData["CustomerError"].ToString());
             }
+
+            if (Request.Cookies["cookieLogin"] != null )
+            {
+                var user = Request.Cookies["cookieLogin"]["loginName"];
+                var password = Request.Cookies["cookieLogin"]["loginName"];
+                var chkRemember = Request.Cookies["cookieLogin"]["chkRemember"];
+                Login(user, password);
+                return RedirectToAction("index", "DashBoard");
+            }
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult Login()
+        public ActionResult Login(string strUserName , string strPassword)
         {
             try
             {
                 UtilsAppCode.Session.User = new ActUserModel.User();
-                string strUserName = EncrptHelper.MD5Encryp(Request.Form["txtUserName"].ToString().ToLower().Replace("i", "1"));
-                string strPassword = EncrptHelper.MD5Encryp(Request.Form["txtPassword"].ToString());
+                strUserName = !string.IsNullOrEmpty(strUserName) ? strUserName : EncrptHelper.MD5Encryp(Request.Form["txtUserName"].ToString().ToLower().Replace("i", "1"));
+                strPassword = !string.IsNullOrEmpty(strPassword) ? strPassword : EncrptHelper.MD5Encryp(Request.Form["txtPassword"].ToString());
+
+                bool chkRemember = Request.Form["chkRemember"] == "true" ? true : false;
+                if (chkRemember == true)
+                {
+                    HttpCookie newCookie = new HttpCookie("cookieLogin");
+                    newCookie["loginName"] = strUserName;
+                    newCookie["password"] = strPassword;
+                    newCookie["chkRemember"] = chkRemember.ToString();
+                    newCookie.Expires = DateTime.Today.AddDays(7);
+                    Response.Cookies.Add(newCookie);
+
+                }
+
                 ActUserModel.ResponseUserAPI response = AuthenAppCode.doAuthen(strUserName, strPassword);
                 if (response != null && response.userModel.Count > 0)
                 {
