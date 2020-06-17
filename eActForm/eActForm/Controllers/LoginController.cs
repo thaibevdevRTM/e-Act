@@ -30,11 +30,11 @@ namespace eActForm.Controllers
                 ModelState.AddModelError("CustomerError", TempData["CustomerError"].ToString());
             }
 
-            if (Request.Cookies["cookieLogin"] != null )
+            if (Request.Cookies["CL"] != null )
             {
-                var user = Request.Cookies["cookieLogin"]["loginName"];
-                var password = Request.Cookies["cookieLogin"]["loginName"];
-                var chkRemember = Request.Cookies["cookieLogin"]["chkRemember"];
+                var user = Request.Cookies["CL"]["n"];
+                var password = Request.Cookies["CL"]["p"];
+                var chkRemember = Request.Cookies["CL"]["chkRemember"];
                 Login(user, password);
                 return RedirectToAction("index", "DashBoard");
             }
@@ -54,9 +54,9 @@ namespace eActForm.Controllers
                 bool chkRemember = Request.Form["chkRemember"] == "true" ? true : false;
                 if (chkRemember == true)
                 {
-                    HttpCookie newCookie = new HttpCookie("cookieLogin");
-                    newCookie["loginName"] = strUserName;
-                    newCookie["password"] = strPassword;
+                    HttpCookie newCookie = new HttpCookie("CL");
+                    newCookie["n"] = strUserName;
+                    newCookie["p"] = strPassword;
                     newCookie["chkRemember"] = chkRemember.ToString();
                     newCookie.Expires = DateTime.Today.AddDays(7);
                     Response.Cookies.Add(newCookie);
