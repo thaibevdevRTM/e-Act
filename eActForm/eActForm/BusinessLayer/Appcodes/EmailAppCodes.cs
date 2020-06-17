@@ -434,10 +434,13 @@ namespace eActForm.BusinessLayer
 
             List<Attachment> files = new List<Attachment>();
             string[] pathFile = new string[10];
+            var checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + mailCC;
             //mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
             //mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail            
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
             mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : mailCC;
+            strBody += (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? checkMail : strBody;
+
 
             switch (emailType)
             {
