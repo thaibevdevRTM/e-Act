@@ -25,31 +25,41 @@ namespace eActForm.Controllers
         }
         public ActionResult Index()
         {
+            string user = "";
+            string password = "";
             if (TempData["CustomerError"] != null)
             {
                 ModelState.AddModelError("CustomerError", TempData["CustomerError"].ToString());
             }
 
-            if (Request.Cookies["CL"] != null )
+            if (Request.Cookies["CL"] != null)
             {
-                var user = Request.Cookies["CL"]["n"];
-                var password = Request.Cookies["CL"]["p"];
+                user = Request.Cookies["CL"]["n"];
+                password = Request.Cookies["CL"]["p"];
                 var chkRemember = Request.Cookies["CL"]["chkRemember"];
-                Login(user, password);
-                return RedirectToAction("index", "DashBoard");
+                return redirectResult(user, password );
+
             }
 
             return View();
+
         }
 
         [HttpPost]
-        public ActionResult Login(string strUserName , string strPassword)
+        public ActionResult Login(string strUserName, string strPassword)
+        {
+
+            strUserName = !string.IsNullOrEmpty(strUserName) ? strUserName : EncrptHelper.MD5Encryp(Request.Form["txtUserName"].ToString().ToLower().Replace("i", "1"));
+            strPassword = !string.IsNullOrEmpty(strPassword) ? strPassword : EncrptHelper.MD5Encryp(Request.Form["txtPassword"].ToString());
+            return redirectResult(strUserName, strPassword);
+
+        }
+
+        public ActionResult redirectResult(string strUserName, string strPassword)
         {
             try
             {
                 UtilsAppCode.Session.User = new ActUserModel.User();
-                strUserName = !string.IsNullOrEmpty(strUserName) ? strUserName : EncrptHelper.MD5Encryp(Request.Form["txtUserName"].ToString().ToLower().Replace("i", "1"));
-                strPassword = !string.IsNullOrEmpty(strPassword) ? strPassword : EncrptHelper.MD5Encryp(Request.Form["txtPassword"].ToString());
 
                 bool chkRemember = Request.Form["chkRemember"] == "true" ? true : false;
                 if (chkRemember == true)
@@ -92,6 +102,10 @@ namespace eActForm.Controllers
                 else
                 {
                     TempData["CustomerError"] = ConfigurationManager.AppSettings["messLoginFail"];
+
+                    HttpCookie delCookie = new HttpCookie("CL");
+                    delCookie.Expires = DateTime.Now.AddDays(-1D);
+                    Response.Cookies.Add(delCookie);
                 }
 
             }
@@ -101,7 +115,6 @@ namespace eActForm.Controllers
 
             }
             return RedirectToAction("Index");
-
         }
     }
 }

@@ -179,7 +179,7 @@ namespace eActForm.Controllers
         {
             UtilsAppCode.Session.User = null;
 
-            HttpCookie delCookie = new HttpCookie("cookieLogin");
+            HttpCookie delCookie = new HttpCookie("CL");
             delCookie.Expires = DateTime.Now.AddDays(-1D);
             Response.Cookies.Add(delCookie);
 
