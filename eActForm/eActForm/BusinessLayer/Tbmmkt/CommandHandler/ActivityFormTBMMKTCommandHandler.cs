@@ -250,6 +250,7 @@ namespace eActForm.BusinessLayer
                 tB_Act_ActivityForm_DetailOther.amountCumulative = model.tB_Act_ActivityForm_DetailOther.amountCumulative;
                 tB_Act_ActivityForm_DetailOther.amountBalance = model.tB_Act_ActivityForm_DetailOther.amountBalance;
                 tB_Act_ActivityForm_DetailOther.amountReceived = model.tB_Act_ActivityForm_DetailOther.amountReceived;
+                tB_Act_ActivityForm_DetailOther.departmentIdFlow = model.tB_Act_ActivityForm_DetailOther.departmentIdFlow == null ? "" : model.tB_Act_ActivityForm_DetailOther.departmentIdFlow;
 
                 rtn += usp_insertTB_Act_ActivityForm_DetailOther(tB_Act_ActivityForm_DetailOther);
 
@@ -1137,7 +1138,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@amountCumulative", model.amountCumulative)
                     ,new SqlParameter("@amountBalance",model.amountBalance)
                     ,new SqlParameter("@amountReceived", model.amountReceived)
-
+                    ,new SqlParameter("@departmentIdFlow", model.departmentIdFlow)
                     });
             }
             catch (Exception ex)

@@ -17,6 +17,9 @@ namespace eActForm.Controllers
                 customerSpendingLists = DashBoardAppCode.getInfoGroupCustomerSpending(),
                 sumSpendingOfYear = DashBoardAppCode.getInfoSumSepndingOfYear(),
             };
+
+
+
             if (Request.QueryString["s"] != null)
             {
                 if (Request.QueryString["s"] == AppCode.ApproveEmailype.document.ToString())
