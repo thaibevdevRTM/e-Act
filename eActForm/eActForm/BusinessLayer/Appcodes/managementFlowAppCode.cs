@@ -91,8 +91,9 @@ namespace eActForm.BusinessLayer.Appcodes
                 foreach (var item in model.p_appovedGroupList)
                 {
                     result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
-                      , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
-                     ,new SqlParameter("@flowId",model.p_flowId[0])
+
+                    , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
+                    ,new SqlParameter("@flowId",model.p_flowId[0])
                     ,new SqlParameter("@empId",model.p_empIdList[i])
                     ,new SqlParameter("@approveGroupId",model.p_appovedGroupList[i])
                     ,new SqlParameter("@rangNo",model.p_rangNoList[i])
