@@ -61,7 +61,7 @@
                 source: function (request, response) {
                     var channel = $("#ddlChannel").val() == "" ? $("#ddlBrand").val() : $("#ddlChannel").val();
                     $.ajax({
-                        url: '@Url.Action("getEmpByChannel", "eAct")',
+                        url: '@Url.Action("getEmpDetailById", "eAct")',
                         type: "POST",
                         dataType: "json",
                         data: {
