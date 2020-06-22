@@ -259,6 +259,29 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetDepartmentMasterBySubjectFlow(objGetDepartmentMaster objGetDepartmentMaster)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                List<departmentMasterModel> tbToAjax = new List<departmentMasterModel>();
+                tbToAjax = departmentMasterPresenter.getdepartmentMasterBySubjectFlow(AppCode.StrCon, objGetDepartmentMaster.master_type_form_id, objGetDepartmentMaster.subjectId);
+
+                var resultData = new
+                {
+                    tbToAjax = tbToAjax.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }
