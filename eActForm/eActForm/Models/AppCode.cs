@@ -360,13 +360,21 @@ namespace eActForm.Models
 
         private static int get_pageCcount(string file)
         {
-            var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            using (StreamReader sr = new StreamReader(fs))
+            //var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            //using (StreamReader sr = new StreamReader(fs))
+            //{
+            //    Regex regex = new Regex(@"/Type\s*/Page[^s]");
+            //    MatchCollection matches = regex.Matches(sr.ReadToEnd());
+            //    return matches.Count;
+            //}
+            //แก้ปัญหามีเอกสารแนบ 4 หน้า ฟังก์ชันเดิมอ่านได้ 6 หน้า ทำให้ merge pdf ไม่ได้ By Kanokpun 2020622
+            int resultPagesCount = 0;
+            using ( var reader = new PdfReader(file))
             {
-                Regex regex = new Regex(@"/Type\s*/Page[^s]");
-                MatchCollection matches = regex.Matches(sr.ReadToEnd());
-                return matches.Count;
+                resultPagesCount = reader.NumberOfPages;
             }
+            return resultPagesCount;
+    
         }
 
 
