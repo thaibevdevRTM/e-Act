@@ -439,4 +439,9 @@ namespace eActForm.Models
 
     }
 
+    public class objGetDataCheckUploadFile
+    {
+        public string activityId { get; set; }
+    }
+
 }
