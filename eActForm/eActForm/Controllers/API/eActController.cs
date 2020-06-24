@@ -298,9 +298,7 @@ namespace eActForm.Controllers
 
                 empDetailList = typeFormId == "" ? QueryGet_empDetailById.getEmpDetailById(empId).ToList()
                                                  : QueryGet_empDetailById.getEmpDetailFlowById(empId, typeFormId).ToList();
-                ActUserModel.ResponseUserAPI response = AuthenAppCode.doAuthenInfo(empId);
-                if (response != null && response.userModel.Count > 0)
-                {
+              
                     if (empDetailList.Any())
                     {
                         var resultData = new
@@ -315,13 +313,12 @@ namespace eActForm.Controllers
                             email = empDetailList.FirstOrDefault().email,
                             //hireDate = empDetailList.FirstOrDefault().hireDate
                             //hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(empDetailList.FirstOrDefault().hireDate), ConfigurationManager.AppSettings["formatDateUse"]),
-                            hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(response.userModel[0].empProbationEndDate), ConfigurationManager.AppSettings["formatDateUse"]),//  empProbationEndDate
+                            hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(BaseAppCodes.getEmpFromApi(empId).empProbationEndDate), ConfigurationManager.AppSettings["formatDateUse"]),//  empProbationEndDate
 
-                    };
+                        };
                         result.Data = resultData;
                     }
-                }
-            }
+                           }
             catch (Exception ex)
             {
                 ExceptionManager.WriteError("getEmpDetailById => " + ex.Message);
@@ -606,5 +603,6 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-    }
+
+                   }
 }

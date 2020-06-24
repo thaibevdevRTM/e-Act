@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using static eActForm.Models.ActUserModel;
 
 namespace eActForm.BusinessLayer.Appcodes
 {
@@ -172,6 +173,21 @@ namespace eActForm.BusinessLayer.Appcodes
         public static DateTime converStrToDatetimeWithFormat(string p_date, string formatDate)
         {
             return DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
+        }
+        public static User getEmpFromApi(string empId)
+        {
+            ActUserModel.ResponseUserAPI response = new ActUserModel.ResponseUserAPI();
+            if (!string.IsNullOrEmpty(empId))
+            {
+                response = AuthenAppCode.doAuthenInfo(empId);
+            }
+            User userModel = new User();
+
+            if (response != null && response.userModel.Count > 0)
+            {
+                userModel = response.userModel[0];
+            }
+            return userModel;
         }
     }
 }
