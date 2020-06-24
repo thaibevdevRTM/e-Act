@@ -27,6 +27,16 @@
                                             id = "ddlin_or_out_stock"
                                         })
                                         <script>
+                                            $(document).ready(function () {
+                                                if ('@Model.activityFormModel.activityNo' == '---' || '@Model.activityFormModel.activityNo' == '') {
+                                                    $('#ddlin_or_out_stock').prop('disabled', false);
+                                                } else {
+                                                    $('#ddlin_or_out_stock').prop('disabled', true);
+                                                    if ($("#ddlin_or_out_stock").val() == '@ConfigurationManager.AppSettings["idInStock"]') {
+                                                        $('#ddlproduct_pos_premium').multiselect('disable');
+                                                    }
+                                                }
+                                            });
                                             $("#ddlin_or_out_stock").change(function () {
                                                 if ($("#ddlin_or_out_stock").val() != "") {
                                                     $('#ddlproduct_pos_premium').multiselect('enable');

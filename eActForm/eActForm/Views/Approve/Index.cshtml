@@ -110,7 +110,7 @@ else
                             @if (Model.approveModel.statusId != "2")
                             {
                                 <h4 class="text-danger text-center">
-                                    เอกสารฉบับนี้ได้ถูกอนุมัติเรียบร้อยแล้วครับ
+                                    เอกสารฉบับนี้ได้ถูกอนุมัติเรียบร้อยแล้ว
                                 </h4>
                             }
                             else if (Model.approveModel.isPermisionApprove)
@@ -168,12 +168,12 @@ else
         $("#lblstatusId").val(statusId);
         $("#ddlStatus").val(statusId);
         if (statusId == "5" && mess == "") {
-            doMsgFail("กรุณาระบุ เหตุผล(เพิ่มเติม) ค่ะ")
+            doMsgFail("กรุณาระบุ เหตุผล(เพิ่มเติม)")
             $("#txtRemark").focus();
             return false;
         }
         else if (statusId == "") {
-            doMsgFail("กรุณาระบุ(สถานะ) ค่ะ")
+            doMsgFail("กรุณาระบุ(สถานะ)")
             $("#ddlStatus").focus();
             return false;
         }
@@ -222,13 +222,13 @@ else
             }
         }else {
             $("#WaitDialog").hide();
-            bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + response.Message);
+            bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin <br/>" + response.Message);
         }
 
     }
 
     function failureQuery(data) {
-        bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
+        bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin <br/>" + data.responseText);
     }
 
 
@@ -346,7 +346,7 @@ else
             console.log(reponse);
 
             bootbox.confirm({
-                message: "ดำเนินการเรียบร้อยครับ",
+                message: "ดำเนินการเรียบร้อย",
                 buttons: {
                     confirm: {
                         label: 'OK',

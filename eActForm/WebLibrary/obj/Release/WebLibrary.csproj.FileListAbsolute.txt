@@ -13,7 +13,6 @@ D:\project\GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
 D:\project\GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.dll
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.pdb
-D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\bin\Release\Microsoft.Exchange.WebServices.xml
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CoreCompileInputs.cache
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CopyComplete
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
