@@ -290,6 +290,7 @@ namespace eActForm.Controllers
 
         public JsonResult getEmpDetailById(string empId, string typeFormId = "")
         {
+            
             bool langEn = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
             List<RequestEmpModel> empDetailList = new List<RequestEmpModel>();
             var result = new AjaxResult();

@@ -86,6 +86,8 @@ namespace eActForm.Models
             public string exception { get; set; }
             public string regionId { get; set; }
             public string customerId { get; set; }
+            public string empProbationEndDate { get; set; }
+
         }
     }
 }
