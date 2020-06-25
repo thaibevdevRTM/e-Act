@@ -81,13 +81,21 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/25/2019 09:28:54</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
+<<<<<<< HEAD
       <publishTime>06/25/2020 10:35:18</publishTime>
+=======
+      <publishTime>06/24/2020 14:21:19</publishTime>
+>>>>>>> parent of c1a04a95... 20200624_1736
     </File>
     <File Include="bin/eActForm.dll.config">
       <publishTime>06/25/2020 09:36:10</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
+<<<<<<< HEAD
       <publishTime>06/25/2020 10:35:18</publishTime>
+=======
+      <publishTime>06/24/2020 14:21:19</publishTime>
+>>>>>>> parent of c1a04a95... 20200624_1736
     </File>
     <File Include="bin/eActForm.dll.config">
       <publishTime>06/25/2020 09:36:10</publishTime>
@@ -105,7 +113,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/25/2020 09:48:07</publishTime>
     </File>
     <File Include="bin/en/eActForm.resources.dll">
+<<<<<<< HEAD
       <publishTime>06/25/2020 10:35:18</publishTime>
+=======
+      <publishTime>06/24/2020 14:21:21</publishTime>
+>>>>>>> parent of c1a04a95... 20200624_1736
     </File>
     <File Include="bin/EntityFramework.SqlServer.xml">
       <publishTime>11/25/2019 09:29:12</publishTime>
@@ -8130,7 +8142,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2020 08:32:57</publishTime>
     </File>
     <File Include="Views/SharedMasterFormHeaderDetail_Input/headerDetails_Pos_Premium.cshtml">
+<<<<<<< HEAD
       <publishTime>06/25/2020 09:39:08</publishTime>
+=======
+      <publishTime>06/23/2020 16:51:31</publishTime>
+>>>>>>> parent of c1a04a95... 20200624_1736
     </File>
     <File Include="Views/SharedMasterFormHeaderDetail_Input/headerPiorityDoc.cshtml">
       <publishTime>04/23/2020 08:32:57</publishTime>
