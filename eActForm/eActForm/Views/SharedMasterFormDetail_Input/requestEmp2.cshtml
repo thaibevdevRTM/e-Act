@@ -1,5 +1,4 @@
 ﻿@using eActForm.BusinessLayer;
-@using System.Configuration;
 @model eActForm.Models.Activity_TBMMKT_Model
 
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
@@ -43,12 +42,10 @@
                     function changeGetEmp(rowIndex) {
                         $('#empId_' + rowIndex).val($('#empId_' + rowIndex).val().replaceAll("i", "1").replaceAll("I", "1"));
 
-                        if ('@Model.activityFormTBMMKT.master_type_form_id' != '@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]') {
-                            if ($('#empId_' + rowIndex).val() == $('#txtEmpId').val()) {
-                                alert('ข้อมูลพนักงานเพิ่มเติม ต้องไม่ซ้ำกับข้อมูลพนักงานผู้แจ้ง');
-                                clearDataUser(rowIndex);
-                                return;
-                            }
+                        if ($('#empId_' + rowIndex).val() == $('#txtEmpId').val()) {
+                            alert('ข้อมูลพนักงานเพิ่มเติม ต้องไม่ซ้ำกับข้อมูลพนักงานผู้แจ้ง');
+                            clearDataUser(rowIndex);
+                            return;
                         }
 
                     $.ajax({
