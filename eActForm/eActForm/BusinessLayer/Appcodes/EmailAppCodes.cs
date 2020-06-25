@@ -796,7 +796,7 @@ namespace eActForm.BusinessLayer
             GMailer.Mail_From = ConfigurationManager.AppSettings["emailFrom"];
             GMailer.GmailPassword = ConfigurationManager.AppSettings["emailFromPass"];
             GMailer mailer = new GMailer();
-            mailer.ToEmail = "kanokpun.b@thaibev.com";//mailTo;
+            mailer.ToEmail = mailTo;
             mailer.Subject = subject;
             mailer.Body = body;
             mailer.p_Attachment = files;
