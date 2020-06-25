@@ -54,8 +54,9 @@ namespace eActForm.Controllers
             DocumentsModel.actRepDetailModels models = new DocumentsModel.actRepDetailModels();
             try
             {
-                DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
-                DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
+                DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
+                DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
+
                 models.actRepDetailLists = DocumentsAppCode.getActRepDetailLists(startDate, endDate, typeForm);
 
                 if (Request.Form["txtActivityNo"] != "")
