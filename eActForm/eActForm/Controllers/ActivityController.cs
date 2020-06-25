@@ -334,6 +334,8 @@ namespace eActForm.Controllers
                     }
 
                 }
+
+                //ApproveAppCode.setCountWatingApprove();
                 resultAjax.Success = true;
                 resultAjax.Message = genDoc[1];
             }
