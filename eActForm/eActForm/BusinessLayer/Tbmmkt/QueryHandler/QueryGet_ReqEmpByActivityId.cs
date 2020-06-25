@@ -1,5 +1,4 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
-using eActForm.Controllers;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
@@ -14,12 +13,12 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGet_ReqEmpByActivityId
     {
-        public static List<RequestEmpModel> getReqEmpByActivityId(string activityId, bool langEn, bool typeForm = false)
+        public static List<RequestEmpModel> getReqEmpByActivityId(string activityId, bool langEn,bool typeForm = false)
         {
             try
             {
                 string strore = typeForm ? "usp_getRequestEmpFlowByActivityId" : "usp_getRequestEmpByActivityId";
-               
+                
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strore
                      , new SqlParameter("@activityId", activityId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
@@ -41,10 +40,8 @@ namespace eActForm.BusinessLayer
                                  companyName = d["companyNameTH"].ToString(),
                                  companyNameEN = d["companyNameEN"].ToString(),
                                  detail = d["detail"].ToString(),
-                                 hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(BaseAppCodes.getEmpFromApi(d["empId"].ToString()).empProbationEndDate), ConfigurationManager.AppSettings["formatDateUse"]),//  empProbationEndDate
-                                 //!string.IsNullOrEmpty(d["hireDate"].ToString()) ? DateTime.Parse(d["hireDate"].ToString()).ToString(ConfigurationManager.AppSettings["formatDateUse"]) : "",
+                                 hireDate = !string.IsNullOrEmpty(d["hireDate"].ToString()) ? DateTime.Parse(d["hireDate"].ToString()).ToString(ConfigurationManager.AppSettings["formatDateUse"]) : "",
                              });
-
                 return lists.OrderBy(x => x.rowNo).ToList();
             }
             catch (Exception ex)
@@ -89,5 +86,6 @@ namespace eActForm.BusinessLayer
                 return new List<RequestEmpModel>();
             }
         }
+
     }
 }

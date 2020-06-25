@@ -383,7 +383,7 @@
             if ($("#ddlchooseRequest").val() == null) { required += "&emsp;Choose request*<br>"; validate = false; }
             if ($("#ddlProcuretoPay").val() == null && $("#ddlERPSystem").val() == null && $("#ddlOrdertoCash").val() == null && $("#ddlForecasttoDelivery").val() == null && $("#ddlFinanceAccounting").val() == null && $("#ddlHumanCapital").val() == null && $("#ddlOther").val() == null) { required += "&emsp;Choose system*<br>"; validate = false; }
             if ($("#ddlChangetype").val() == null) { required += "&emsp;Change type / ประเภทของการเปลี่ยนแปลง*<br>"; validate = false; }
-            if ($("#ddlChangeAuthorizations").val() == null) { required += "&emsp;Change Authorizations / สิทธิ์การใช้งาน*<br>"; validate = false; }
+            @*if ($("#ddlChangeAuthorizations").val() == null) { required += "&emsp;Change Authorizations / สิทธิ์การใช้งาน*<br>"; validate = false; }*@
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceMT"]') {
             if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
@@ -397,7 +397,6 @@
             if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
                 $("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]")) { required += "Reference*<br>"; validate = false; }
             if ($("#txtdateActivitySt").val() == "") { required += "เลือก เวลาเริ่มกิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivitySt").focus(); }
-            if ($("#txtdateCostPerSt").val() == "") { required += "เลือก เวลาเริ่มให้ทุนพิเศษ  *<br>"; validate = false; document.getElementById("txtdateCostPerSt").focus(); }
             
             var rowCount = parseInt($('#tbl_productDetail tr.tagTR').length);
             for (i = 0; i < rowCount; i++) {
