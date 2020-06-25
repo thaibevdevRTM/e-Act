@@ -64,11 +64,11 @@ namespace eForms.Models.Reports
         public double? presentSE { get { return activitySales == "Promotion Support" ? 0 : (specialDiscountMT / (netValueMT + specialDiscountMT)) * 100; } } //([specialDiscountMT] / [netValueMT] + [specialDiscountMT]) * 100
         public double? salePartiCase { get { return activitySales == "Promotion Support" ? actReportQuantity * (le / 100) : 0; } }
         public double? salePartiBath { get { return activitySales == "Promotion Support" ? actAmount * (le / 100) : 0; } }
-        public double? accuracySaleCase { get { return activitySales == "Promotion Support" ? (actReportQuantity / themeCost) * 100  : (billedQuantityMT / themeCost) * 100; } }
+        public double? accuracySaleCase { get { return activitySales == "Promotion Support" ? (actReportQuantity / themeCost) * 100 : (billedQuantityMT / themeCost) * 100; } }
         public double? accuracySaleBath { get { return activitySales == "Promotion Support" ? (actAmount / estimateSaleBathAll) * 100 : 0; } }
         public double? accuracySpendingBath { get { return activitySales == "Promotion Support" ? 0 : (specialDiscountMT / total) * 100; } }
         public double? saleActual { get; set; }
-        public double? presentAcctual { get { return activitySales == "Promotion Support" ? 0 : saleActual / total; } }
+        public double? presentAcctual { get { return (saleActual / total) * 100; } }
         public string dayAddStart { get; set; }
         public string dayAddEnd { get; set; }
         public int countGroup { get; set; }
