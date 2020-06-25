@@ -23,7 +23,7 @@
             </tr>
         </thead>
         <tbody>
-            @{int i = 0;}
+
             @if (Model.approveFlow.flowDetail.Any())
             {
                 foreach (var item in Model.approveFlow.flowDetail.OrderBy(x => x.rangNo))
@@ -40,11 +40,11 @@
                         </td>
                         <td>
 
-                            @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", id= "empId_"+i , onchange = "getEmpDetail("+ i +");" })
+                            @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", @id = "txtempId" })
                         </td>
                         <td>
 
-                            @Html.TextBox("empName", item.empFNameTH, new { @class = "form-control textboxcss", @id = "txtempName_"+i , @readonly="true"})
+                            @Html.TextBox("empName", item.empFNameTH, new { @class = "form-control textboxcss", @id = "txtempName", @readonly = true })
                         </td>
                         <td>
                             @Html.DropDownList("Model.p_appovedGroupList", new SelectList(Model.approveGroupList, "id", "nameTH", item.approveGroupId), "Please Select", new
@@ -71,7 +71,7 @@
                         @Html.Hidden("Model.p_companyId", item.companyId)
                         @Html.Hidden("Model.p_empGroup", item.description)
                     </tr>
-                    i++;
+
                 }
             }
     </table>
@@ -132,26 +132,4 @@
     function beginQuery() {
 
     }
-
-    function getEmpDetail(row) {
-        $.ajax({
-
-            url: '@Url.Action("getEmpDetailById", "eAct")',
-            data: {
-                empId: $("#empId_"+row).val(),
-            },
-            type: 'POST',
-            dataType: "json",
-            success: function (response) {
-                if (response.Data != null) {
-                    $("#txtempName_" + row).val(response.Data.empName);
-                }
-                else {
-                    $("#txtempName_" + row).val('');
-                }
-               
-            }
-        });
-    }
-
 </script>

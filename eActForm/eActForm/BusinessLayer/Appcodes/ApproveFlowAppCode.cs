@@ -108,9 +108,8 @@ namespace eActForm.BusinessLayer
             {
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
 
-                var getActivityDetail = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault();
-
-                string stor = ConfigurationManager.AppSettings["masterEmpExpense"] == getActivityDetail.master_type_form_id ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
+                var getMasterType = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault().master_type_form_id;
+                string stor = ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stor
                     , new SqlParameter[] {new SqlParameter("@subId",subId)
@@ -126,24 +125,24 @@ namespace eActForm.BusinessLayer
                     string checkFlowApprove = checkFlowBeforeByActId(actFormId);
                     if (!string.IsNullOrEmpty(checkFlowApprove))
                     {
-                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getActivityDetail.master_type_form_id || (AppCode.hcForm.Contains(getActivityDetail.master_type_form_id)))
+                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || (AppCode.hcForm.Contains(getMasterType)))
                         {
                             model.flowDetail = getFlowDetailExpense(checkFlowApprove, actFormId);
                         }
                         else
                         {
-                            model.flowDetail = getFlowDetail(checkFlowApprove, actFormId, getActivityDetail.companyId);
+                            model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
                         }
                     }
                     else
                     {
-                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getActivityDetail.master_type_form_id || (AppCode.hcForm.Contains(getActivityDetail.master_type_form_id)))
+                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || (AppCode.hcForm.Contains( getMasterType)))
                         {
                             model.flowDetail = getFlowDetailExpense(model.flowMain.id ,actFormId);
                         }
                         else
                         {
-                            model.flowDetail = getFlowDetail(model.flowMain.id, actFormId, getActivityDetail.companyId);
+                            model.flowDetail = getFlowDetail(model.flowMain.id, actFormId);
                         }
                     }
 
@@ -273,13 +272,11 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getFlowDetail >>" + ex.Message);
             }
         }
-        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetail(string flowId, string actId , string company)
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetail(string flowId, string actId)
         {
             try
             {
-
-                var getStord = AppCode.compModernTrade.Contains(company) ? "usp_getFlowApproveDetailForActFormMT" : "usp_getFlowApproveDetailForActForm";
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, getStord
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveDetailForActForm"
                     , new SqlParameter[] { new SqlParameter("@flowId", flowId)
                                             , new SqlParameter("@actFormId",actId)
                     });
