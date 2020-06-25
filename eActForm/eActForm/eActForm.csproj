@@ -480,6 +480,7 @@
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.DotNet.PlatformAbstractions.dll" />
     <Content Include="bin\Microsoft.Exchange.WebServices.dll" />
+    <Content Include="bin\Microsoft.Exchange.WebServices.xml" />
     <Content Include="bin\Microsoft.Extensions.DependencyInjection.dll" />
     <Content Include="bin\Microsoft.Extensions.DependencyModel.dll" />
     <Content Include="bin\Microsoft.Extensions.Hosting.Abstractions.dll" />
@@ -3179,7 +3180,6 @@
     <Content Include="Views\SharedMasterFormHeaderCompany_Input\headerCompanySubject.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\requestEmp2.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\dropdownConditionSubject.cshtml" />
-    <Content Include="Views\MenuList\itForm.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />

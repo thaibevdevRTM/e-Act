@@ -23,6 +23,16 @@ namespace eActForm.Models
                 password = pass;
             }
         }
+        public class RequestUserInfoAPI
+        {
+            public string userName { get; set; }
+            public string keyToken { get; set; }
+            public RequestUserInfoAPI(string user, string token)
+            {
+                userName = user;
+                keyToken = token;
+            }
+        }
         public class ResponseUserAPI
         {
             public string code { get; set; }
@@ -86,6 +96,7 @@ namespace eActForm.Models
             public string exception { get; set; }
             public string regionId { get; set; }
             public string customerId { get; set; }
+            public string empProbationEndDate { get; set; }
         }
     }
 }

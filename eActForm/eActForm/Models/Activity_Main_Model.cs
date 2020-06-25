@@ -423,8 +423,6 @@ namespace eActForm.Models
     public class objGetDepartmentMaster
     {
         public string companyId { get; set; }
-        public string master_type_form_id { get; set; }
-        public string subjectId { get; set; }
     }
 
     public class DataRequesterToShow
