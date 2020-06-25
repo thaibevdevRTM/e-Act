@@ -19,7 +19,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 string strore = typeForm ? "usp_getRequestEmpFlowByActivityId" : "usp_getRequestEmpByActivityId";
-                BaseAppCodes.getEmpFromApi("");
+               
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strore
                      , new SqlParameter("@activityId", activityId));
                 var lists = (from DataRow d in ds.Tables[0].Rows

@@ -177,12 +177,8 @@ namespace eActForm.BusinessLayer.Appcodes
         public static User getEmpFromApi(string empId)
         {
             ActUserModel.ResponseUserAPI response = new ActUserModel.ResponseUserAPI();
-            if (!string.IsNullOrEmpty(empId))
-            {
-                response = AuthenAppCode.doAuthenInfo(empId);
-            }
+            response = AuthenAppCode.doAuthenInfo(empId);
             User userModel = new User();
-
             if (response != null && response.userModel.Count > 0)
             {
                 userModel = response.userModel[0];

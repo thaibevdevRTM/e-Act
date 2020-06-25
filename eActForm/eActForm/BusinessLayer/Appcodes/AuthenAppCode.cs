@@ -45,7 +45,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception("doAuthen >> " + ex.Message);
+                throw new Exception("doAuthenInfo >> " + ex.Message);
             }
         }
     }
