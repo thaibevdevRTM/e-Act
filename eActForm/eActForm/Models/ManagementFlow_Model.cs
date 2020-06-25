@@ -18,6 +18,7 @@ namespace eActForm.Models
         public ApproveFlowModel.approveFlowModel approveFlow { get; set; }
         public List<RequestEmpModel> empList { get; set; }
 
+        public List<string> p_idList { get; set; }
         public List<string> p_rangNoList { get; set; }
         public List<string> p_empIdList { get; set; }
         public List<string> p_appovedGroupList { get; set; }

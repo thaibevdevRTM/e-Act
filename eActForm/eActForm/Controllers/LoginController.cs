@@ -2,7 +2,9 @@
 using eActForm.Models;
 using System;
 using System.Configuration;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using WebLibrary;
 
 namespace eActForm.Controllers
@@ -23,21 +25,54 @@ namespace eActForm.Controllers
         }
         public ActionResult Index()
         {
+            string user = "";
+            string password = "";
             if (TempData["CustomerError"] != null)
             {
                 ModelState.AddModelError("CustomerError", TempData["CustomerError"].ToString());
             }
+
+            if (Request.Cookies["CL"] != null)
+            {
+                user = Request.Cookies["CL"]["n"];
+                password = Request.Cookies["CL"]["p"];
+                var chkRemember = Request.Cookies["CL"]["chkRemember"];
+                return redirectResult(user, password );
+
+            }
+
             return View();
+
         }
 
         [HttpPost]
-        public ActionResult Login()
+        public ActionResult Login(string strUserName, string strPassword)
+        {
+
+            strUserName = !string.IsNullOrEmpty(strUserName) ? strUserName : EncrptHelper.MD5Encryp(Request.Form["txtUserName"].ToString().ToLower().Replace("i", "1"));
+            strPassword = !string.IsNullOrEmpty(strPassword) ? strPassword : EncrptHelper.MD5Encryp(Request.Form["txtPassword"].ToString());
+            return redirectResult(strUserName, strPassword);
+
+        }
+
+        public ActionResult redirectResult(string strUserName, string strPassword)
         {
             try
             {
                 UtilsAppCode.Session.User = new ActUserModel.User();
-                string strUserName = EncrptHelper.MD5Encryp(Request.Form["txtUserName"].ToString().ToLower().Replace("i", "1"));
-                string strPassword = EncrptHelper.MD5Encryp(Request.Form["txtPassword"].ToString());
+
+                bool chkRemember = Request.Form["chkRemember"] == "true" ? true : false;
+                if (chkRemember == true)
+                {
+                    HttpCookie newCookie = new HttpCookie("CL");
+                    newCookie["n"] = strUserName;
+                    newCookie["p"] = strPassword;
+                    newCookie["chkRemember"] = chkRemember.ToString();
+                    newCookie.Expires = DateTime.Today.AddDays(7);
+                    Response.Cookies.Add(newCookie);
+
+                }
+
                 ActUserModel.ResponseUserAPI response = AuthenAppCode.doAuthen(strUserName, strPassword);
                 if (response != null && response.userModel.Count > 0)
                 {
@@ -67,6 +102,10 @@ namespace eActForm.Controllers
                 else
                 {
                     TempData["CustomerError"] = ConfigurationManager.AppSettings["messLoginFail"];
+
+                    HttpCookie delCookie = new HttpCookie("CL");
+                    delCookie.Expires = DateTime.Now.AddDays(-1D);
+                    Response.Cookies.Add(delCookie);
                 }
 
             }
@@ -76,7 +115,6 @@ namespace eActForm.Controllers
 
             }
             return RedirectToAction("Index");
-
         }
     }
 }
