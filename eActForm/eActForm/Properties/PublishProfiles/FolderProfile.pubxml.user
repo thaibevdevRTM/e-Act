@@ -84,6 +84,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <publishTime>06/25/2020 10:35:18</publishTime>
 =======
       <publishTime>06/24/2020 14:21:19</publishTime>
@@ -94,6 +95,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 =======
       <publishTime>06/24/2020 13:29:57</publishTime>
 >>>>>>> parent of 2f9883a7... Merge pull request #313 from thaibevdevRTM/updateLimitMedForm
+=======
+      <publishTime>06/24/2020 14:21:19</publishTime>
+>>>>>>> parent of c1a04a95... 20200624_1736
     </File>
     <File Include="bin/eActForm.dll.config">
       <publishTime>06/23/2020 14:17:28</publishTime>
@@ -102,6 +106,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <publishTime>06/25/2020 10:35:18</publishTime>
 =======
       <publishTime>06/24/2020 14:21:19</publishTime>
@@ -112,6 +117,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 =======
       <publishTime>06/24/2020 13:29:57</publishTime>
 >>>>>>> parent of 2f9883a7... Merge pull request #313 from thaibevdevRTM/updateLimitMedForm
+=======
+      <publishTime>06/24/2020 14:21:19</publishTime>
+>>>>>>> parent of c1a04a95... 20200624_1736
     </File>
     <File Include="bin/eActForm.dll.config">
       <publishTime>06/23/2020 14:17:28</publishTime>
@@ -132,6 +140,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <publishTime>06/25/2020 10:35:18</publishTime>
 =======
       <publishTime>06/24/2020 14:21:21</publishTime>
@@ -142,6 +151,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 =======
       <publishTime>06/24/2020 13:29:58</publishTime>
 >>>>>>> parent of 2f9883a7... Merge pull request #313 from thaibevdevRTM/updateLimitMedForm
+=======
+      <publishTime>06/24/2020 14:21:21</publishTime>
+>>>>>>> parent of c1a04a95... 20200624_1736
     </File>
     <File Include="bin/EntityFramework.SqlServer.xml">
       <publishTime>03/31/2020 20:02:01</publishTime>
@@ -8169,6 +8181,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <publishTime>06/25/2020 09:39:08</publishTime>
 =======
       <publishTime>06/23/2020 16:51:31</publishTime>
@@ -8179,6 +8192,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 =======
       <publishTime>06/24/2020 13:19:44</publishTime>
 >>>>>>> parent of 2f9883a7... Merge pull request #313 from thaibevdevRTM/updateLimitMedForm
+=======
+      <publishTime>06/23/2020 16:51:31</publishTime>
+>>>>>>> parent of c1a04a95... 20200624_1736
     </File>
     <File Include="Views/SharedMasterFormHeaderDetail_Input/headerPiorityDoc.cshtml">
       <publishTime>04/22/2020 11:29:02</publishTime>
