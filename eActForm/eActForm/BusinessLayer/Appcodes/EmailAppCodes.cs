@@ -376,9 +376,12 @@ namespace eActForm.BusinessLayer
                             //=============New Process Peerapop ส่งเมลล์ CC===============peerapop.i dev date 20200525======
                             string[] formNeedStyleEdocAfterApproved = { ConfigurationManager.AppSettings["formCR_IT_FRM_314"] };
                             string ccEmailNormalProcess = ApproveAppCode.getEmailCCByActId(actFormId);
-                            if (formNeedStyleEdocAfterApproved.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                            if (activity_TBMMKT_Model.activityFormTBMMKT != null)
                             {
-                                ccEmailNormalProcess = "";
+                                if (formNeedStyleEdocAfterApproved.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                                {
+                                    ccEmailNormalProcess = "";
+                                }
                             }
                             //=====END========New Process Peerapop ส่งเมลล์ CC===============peerapop.i dev date 20200525======
 
@@ -390,26 +393,29 @@ namespace eActForm.BusinessLayer
                             , emailType);
 
                             //=============New Process Peerapop ส่งเมลล์ ในรูปแบบเหมือนส่งอนุมัติปกติ แต่ส่งหลังApproveครบ========peerapop.i dev date 20200525======
-                            if (formNeedStyleEdocAfterApproved.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                            if (activity_TBMMKT_Model.activityFormTBMMKT != null)
                             {
-                                string[] groupApproveForCC_CreatedBy = { ConfigurationManager.AppSettings["approveGroupForProcess"] };
-
-                                lists = getDataEmpGroupFinishApprovedFormatLikeEdoc(actFormId);
-                                foreach (ApproveModel.approveEmailDetailModel item in lists)
+                                if (formNeedStyleEdocAfterApproved.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
                                 {
-                                    string ccEmailgetEmailGroupContinueProcess = "";
-                                    if (groupApproveForCC_CreatedBy.Contains(item.approveGroupId))
+                                    string[] groupApproveForCC_CreatedBy = { ConfigurationManager.AppSettings["approveGroupForProcess"] };
+
+                                    lists = getDataEmpGroupFinishApprovedFormatLikeEdoc(actFormId);
+                                    foreach (ApproveModel.approveEmailDetailModel item in lists)
                                     {
-                                        ccEmailgetEmailGroupContinueProcess = createUsers.FirstOrDefault().empEmail;
+                                        string ccEmailgetEmailGroupContinueProcess = "";
+                                        if (groupApproveForCC_CreatedBy.Contains(item.approveGroupId))
+                                        {
+                                            ccEmailgetEmailGroupContinueProcess = createUsers.FirstOrDefault().empEmail;
+                                        }
+                                        strBody = getEmailBody(item, emailType, actFormId, true);
+                                        strSubject = isResend ? "RE: " + strSubject : strSubject;
+                                        sendEmailActForm(actFormId
+                                            , item.empEmail
+                                            , ccEmailgetEmailGroupContinueProcess
+                                            , emailAllApprovedSubject
+                                            , strBody
+                                            , emailType);
                                     }
-                                    strBody = getEmailBody(item, emailType, actFormId,true);
-                                    strSubject = isResend ? "RE: " + strSubject : strSubject;
-                                    sendEmailActForm(actFormId
-                                        , item.empEmail
-                                        , ccEmailgetEmailGroupContinueProcess
-                                        , emailAllApprovedSubject
-                                        , strBody
-                                        , emailType);
                                 }
                             }
                             //=====END========New Process Peerapop ส่งเมลล์ ในรูปแบบเหมือนส่งอนุมัติปกติ แต่ส่งหลังApproveครบ========peerapop.i dev date 20200525====
