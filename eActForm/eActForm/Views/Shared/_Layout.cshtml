@@ -7,14 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>e-ActForm T&D Sale Support</title>
 
-
     @Styles.Render("~/Content/themes/css")
 
-    @Scripts.RenderFormat(@"<script src="" {0}"" ></script>", "~/bundles/modernizr")
-
     @Scripts.RenderFormat(@"<script src="" {0}"" ></script>", "~/bundles/jquery")
-
-
 </head>
 <body class="nav-md">
     <div id="WaitDialog" class="loading" style="text-align: center;display:none;">
@@ -96,11 +91,18 @@
         </div>
     </div>
 
+
+
+    @Scripts.RenderFormat(@"<script src="" {0}"" ></script>", "~/bundles/modernizr")
+
+    
+
     @Scripts.RenderFormat(@"<script src="" {0}"" ></script>", "~/bundles/jqueryui")
 
     @Scripts.RenderFormat(@"<script src="" {0}"" ></script>", "~/bundles/bootstrap")
 
     <script src="~/Content/vendors/build/js/custom.js" type="text/javascript"></script>
+
 
     @RenderSection("scripts", required: false)
 
