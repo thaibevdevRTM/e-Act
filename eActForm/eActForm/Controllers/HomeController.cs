@@ -4,6 +4,7 @@ using eActForm.Models;
 using System;
 using System.Configuration;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -18,7 +19,7 @@ namespace eActForm.Controllers
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
             if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
-                if (typeForm == Activity_Model.activityType.MT.ToString())
+                if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
                 {
                     models.customerslist = QueryGetAllCustomers.getCustomersMT();
                 }
@@ -177,6 +178,11 @@ namespace eActForm.Controllers
         public ActionResult logOut()
         {
             UtilsAppCode.Session.User = null;
+
+            HttpCookie delCookie = new HttpCookie("CL");
+            delCookie.Expires = DateTime.Now.AddDays(-1D);
+            Response.Cookies.Add(delCookie);
+
             return RedirectToAction("index", "home");
         }
 

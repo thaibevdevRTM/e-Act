@@ -133,7 +133,7 @@ namespace eActForm.BusinessLayer
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
 
-                if (isAdmin() && typeForm == Activity_Model.activityType.MT.ToString())
+                if (isAdmin())
                 {
                     strCall = "usp_getActivityFormAll";
                 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -433,10 +434,13 @@ namespace eActForm.BusinessLayer
 
             List<Attachment> files = new List<Attachment>();
             string[] pathFile = new string[10];
+            var checkMail = "<br>mailTo : " + mailTo + "<br> mailCC : " + mailCC;
             //mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailForDevelopSite"].ToString() : mailTo;
             //mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail            
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
             mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : mailCC;
+            strBody += (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? checkMail : strBody;
+
 
             switch (emailType)
             {
@@ -490,14 +494,24 @@ namespace eActForm.BusinessLayer
             {
                 if (System.IO.File.Exists(item))
                 {
-                    //files.Add(new Attachment(item));// ของเดิมก่อนทำเปลี่ยนชื่อไฟล์ 20191213
+                    string extTypeFile = Path.GetExtension(item);
                     Attachment attachment;
                     attachment = new Attachment(item);
                     if (i_loop_change_name == 0 && emailType == AppCode.ApproveType.Activity_Form)
                     {
                         attachment.Name = replaceWordDangerForNameFile(activityFormTBMMKT.activityNo) + ".pdf";
                     }
-                    files.Add(attachment);
+
+                    var dontAttach = 0;
+                    if(extTypeFile.ToLower() == ".pdf" && i_loop_change_name > 0)
+                    {
+                        dontAttach = 1;
+                    }
+                    if (dontAttach == 0)
+                    {
+                        files.Add(attachment);
+                    }                  
+
                     i_loop_change_name++;
                 }
             }

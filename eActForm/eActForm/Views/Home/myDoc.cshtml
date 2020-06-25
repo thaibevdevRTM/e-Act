@@ -186,7 +186,7 @@
         <a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit
         <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
         <a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>คือ History Approve
-        <a class="btn ink-reaction btn-info fa fa-send-o" href="#"></a>คือ Resend Email
+        <a class="btn ink-reaction btn-info fa fa-envelope-o" href="#"></a>คือ Resend Email
 
         <table id="datatable" class="table table-striped table-hover">
             <thead>
@@ -226,7 +226,7 @@
                             }
                             else if (Model.typeForm == Activity_Model.activityType.SetPrice.ToString() && item.master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
                             {
-                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.MT.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
+                                @Html.ActionLink(" ", "Index", "MainForm", new { activityId = item.id, mode = Activity_Model.modeForm.edit, typeForm = Activity_Model.activityType.SetPrice.ToString(), master_type_form_id = item.master_type_form_id }, new { @class = "btn ink-reaction btn-info fa fa-edit", onclick = "waitpopup();", })
                             }
                             else if (Model.typeForm == Activity_Model.activityType.OMT.ToString())
                             {
@@ -292,7 +292,7 @@
                             {
 
                                 <a onclick="resendApprove('@item.id');">
-                                    <i class="btn ink-reaction btn-info fa fa-send-o"></i>
+                                    <i class="btn ink-reaction btn-info fa fa-envelope-o"></i>
                                 </a>
                             }
 
