@@ -10,7 +10,6 @@ D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Models\o
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.pdb
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.dll
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.pdb
-D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csprojAssemblyReference.cache
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.dll
 D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.pdb
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csprojAssemblyReference.cache
