@@ -321,4 +321,7 @@
   <data name="dearForProcess" xml:space="preserve">
     <value>เรียน เพื่อดำเนินการ</value>
   </data>
+  <data name="msgMaximumFilesSave" xml:space="preserve">
+    <value>ไม่สามารถบันทึกได้ ไฟล์อัพโหลดสูงสุดไม่เกิน</value>
+  </data>
 </root>
