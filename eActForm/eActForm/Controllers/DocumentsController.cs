@@ -4,6 +4,7 @@ using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -142,6 +143,11 @@ namespace eActForm.Controllers
                 }
                 var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                 var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+
+                bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
+                if (folderExists)
+                    Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)), true);
+
                 resultAjax.Success = true;
             }
             catch (Exception ex)
