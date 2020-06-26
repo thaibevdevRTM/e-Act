@@ -282,6 +282,28 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetDataCheckFileSize(objGetDataCheckUploadFile objGetDataCheckUploadFile)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
+                getImageModel.tbActImageList = ImageAppCode.GetSizeFiles(objGetDataCheckUploadFile.activityId);
+
+                var resultData = new
+                {
+                    tbToAjax = getImageModel.tbActImageList,
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

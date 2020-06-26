@@ -427,6 +427,11 @@ namespace eActForm.Models
         public string subjectId { get; set; }
     }
 
+    public class objGetDataCheckUploadFile
+    {
+        public string activityId { get; set; }
+    }
+
     public class DataRequesterToShow
     {
         public string empName { get; set; }
