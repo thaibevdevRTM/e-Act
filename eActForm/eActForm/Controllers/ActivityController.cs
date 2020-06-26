@@ -334,6 +334,7 @@ namespace eActForm.Controllers
                     }
 
                 }
+                ApproveAppCode.setCountWatingApprove(); // เพิ่มให้อัพเดทเอกสารที่ต้องอนุมัติเลย กรณีผู้สร้างเอกสารต้องอนุมัติด้วยหลังจากส่งอนุมัติหนังสือ fream dev date 20200622
                 resultAjax.Success = true;
                 resultAjax.Message = genDoc[1];
             }
