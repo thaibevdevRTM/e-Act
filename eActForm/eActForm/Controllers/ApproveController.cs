@@ -6,6 +6,7 @@ using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -127,6 +128,21 @@ namespace eActForm.Controllers
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
+
+                var modelApproveDetail = models.approveDetailLists.Where(x => x.statusId.Equals("3")).ToList();
+                if (modelApproveDetail.Any())
+                {
+                    bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], actId)));
+                    if (!folderExists)
+                        Directory.CreateDirectory(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], actId)));
+
+                    foreach (var item in modelApproveDetail)
+                    {
+                        UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
+                            , item.signature
+                            , string.Format(ConfigurationManager.AppSettings["rootSignaByActURL"], actId, item.empId));
+                    }
+                }
 
             }
             catch (Exception ex)
@@ -250,6 +266,21 @@ namespace eActForm.Controllers
                 Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
+
+                var modelApproveDetail = models.approveDetailLists.Where(x => x.statusId.Equals("3")).ToList();
+                if (modelApproveDetail.Any())
+                {
+                    bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], actId)));
+                    if (!folderExists)
+                        Directory.CreateDirectory(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], actId)));
+
+                    foreach (var item in modelApproveDetail)
+                    {
+                        UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
+                            , item.signature
+                            , string.Format(ConfigurationManager.AppSettings["rootSignaByActURL"], actId, item.empId));
+                    }
+                }
 
             }
             catch (Exception ex)
