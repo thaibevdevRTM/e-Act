@@ -434,18 +434,18 @@
                 data:JSON.stringify(dataToBeSend),
                 dataType:'json',
                 type:"POST",
-                success:function(response){
+                success: function (response) {
+                    var sizeFileAllBytes = 0;
                     if (response.Data.tbToAjax.length > 0) {
-                        var sizeFileAllBytes = 0;
                         $.each(response.Data.tbToAjax,function(){
                             sizeFileAllBytes += parseInt(this['sizeFiles']);
                         });
-                        if (sizeFileAllBytes > 25000000) {//25mb = 25000000 bytes
-                            checkUpload = false;
-                            bootbox.alert("@Resources.Global.msgMaximumFilesSave" + " 25MB");
-                        } else {
-                            SubmitData();
-                        }
+                    }
+                    if (sizeFileAllBytes > 25000000) {//25mb = 25000000 bytes
+                        checkUpload = false;
+                        bootbox.alert("@Resources.Global.msgMaximumFilesSave" + " 25MB");
+                    } else {
+                        SubmitData();
                     }
                 },
                 error:function(data){
