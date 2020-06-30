@@ -219,5 +219,12 @@ namespace eActForm.Controllers
             return File(file[0].ContentStream, "application/pdf", "reportPDF.pdf");
 
         }
+
+        //public ActionResult ReportIndex(string typeForm, string master_type_form_id)
+        //{
+        //    string TypeForm
+        //    SearchBudgetActivityModels models = getMasterDataForSearch(TypeForm);
+        //    return View(models);
+        //}
     }
 }

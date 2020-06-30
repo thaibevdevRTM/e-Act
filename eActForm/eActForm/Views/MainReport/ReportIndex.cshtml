@@ -1,0 +1,63 @@
+﻿
+@{
+	ViewBag.Title = "index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	var typeForm = Request.QueryString["typeForm"];
+}
+
+
+<h2>Budget Activity Report</h2>
+<hr />
+<div class="row tile_count">
+
+	<div class="row tile_count">
+		<div class="col-md-12 col-xs-12">
+			@using (Ajax.BeginForm("reportBudgetActivityListView", "BudgetReport", typeForm
+, new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
+, new { id = "form", @class = "form-horizontal form-label-left" }))
+			{
+				@RenderPage("~/Views/Shared/_searchForBudgetReport.cshtml")
+			}
+		</div>
+	</div>
+</div>
+
+<div class="row tile_count">
+	<div id="getQuery" class="col-md-12 col-xs-12">
+		@Html.Action("reportBudgetActivityListView", "BudgetReport", typeForm)
+	</div>
+</div>
+
+<script type="text/javascript">
+
+    function beginQuery() {
+
+		$("#getQuery").fadeOut(300);
+
+         @*if ($("#ddlProductType").val() == "") {
+            doMsgFail("กรุณาระบุ Product Type ครับ");
+            return false;
+         }
+
+        if ('@UtilsAppCode.Session.User.isAdmin' == 'True' || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
+            if ($("#ddlCustomer").val() == "") {
+                doMsgFail("กรุณาระบุ ลูกค้า ครับ");
+                return false;
+            }
+        }
+        else {
+            $("#getQuery").fadeOut(300);
+        }*@
+    }
+
+    function successQuery(htmlResponse) {
+        $("#getQuery").html(htmlResponse)
+        $("#getQuery").fadeIn(300);
+    }
+
+    function failureQuery(data) {
+        doMsgFail(data.responseText);
+    }
+
+</script>
+

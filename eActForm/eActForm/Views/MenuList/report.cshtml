@@ -38,7 +38,10 @@
                     <li>@Html.ActionLink(" Report Claim PDG OMT", "claimReportIndex", "ClaimReport", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                 }
 
-
+                if (UtilsAppCode.Session.User.isAdminNUM || UtilsAppCode.Session.User.isSuperAdmin)
+                {
+                    <li>@Html.ActionLink(" Report Medical", "ReportIndex", "MainReport", new { typeForm = Activity_Model.activityType.HCForm.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formExpMedNumId"] }, null)</li>
+                }
             }
 
         </ul>
