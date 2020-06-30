@@ -424,7 +424,6 @@ namespace eActForm.BusinessLayer
                         break;
                 }
 
-
                 ApproveModel.approveModels models = new ApproveModel.approveModels();
                 models = ApproveAppCode.getApproveByActFormId(actId, "");
 
