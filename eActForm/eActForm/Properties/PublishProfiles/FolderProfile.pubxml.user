@@ -81,31 +81,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/12/2019 14:57:40</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
-      <publishTime>07/03/2020 13:20:59</publishTime>
+      <publishTime>07/03/2020 13:28:51</publishTime>
     </File>
     <File Include="bin/eActForm.dll.config">
-      <publishTime>06/29/2020 13:33:36</publishTime>
+      <publishTime>07/03/2020 13:26:47</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
-      <publishTime>07/03/2020 13:20:59</publishTime>
+      <publishTime>07/03/2020 13:28:51</publishTime>
     </File>
     <File Include="bin/eActForm.dll.config">
-      <publishTime>06/29/2020 13:33:36</publishTime>
+      <publishTime>07/03/2020 13:26:47</publishTime>
     </File>
     <File Include="bin/eForms.Models.dll">
-      <publishTime>07/03/2020 13:16:55</publishTime>
+      <publishTime>07/03/2020 13:26:33</publishTime>
     </File>
     <File Include="bin/eForms.Models.pdb">
-      <publishTime>07/03/2020 13:16:55</publishTime>
+      <publishTime>07/03/2020 13:26:33</publishTime>
     </File>
     <File Include="bin/eForms.Presenter.dll">
-      <publishTime>07/03/2020 13:16:56</publishTime>
+      <publishTime>07/03/2020 13:28:35</publishTime>
     </File>
     <File Include="bin/eForms.Presenter.pdb">
-      <publishTime>07/03/2020 13:16:56</publishTime>
+      <publishTime>07/03/2020 13:28:35</publishTime>
     </File>
     <File Include="bin/en/eActForm.resources.dll">
-      <publishTime>07/03/2020 13:20:59</publishTime>
+      <publishTime>07/03/2020 13:28:51</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.xml">
       <publishTime>04/03/2020 12:41:46</publishTime>
@@ -7938,7 +7938,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/07/2020 10:58:21</publishTime>
     </File>
     <File Include="Views/SharedMasterFormDetail/exPerryCashReport.cshtml">
-      <publishTime>06/09/2020 16:26:12</publishTime>
+      <publishTime>07/03/2020 13:26:47</publishTime>
     </File>
     <File Include="Views/SharedMasterFormDetail/lastwordForFYI.cshtml">
       <publishTime>04/07/2020 10:58:21</publishTime>
@@ -7950,7 +7950,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/07/2020 10:58:21</publishTime>
     </File>
     <File Include="Views/SharedMasterFormDetail/listDetailsPosPremium.cshtml">
-      <publishTime>07/03/2020 13:08:31</publishTime>
+      <publishTime>07/03/2020 13:26:32</publishTime>
     </File>
     <File Include="Views/SharedMasterFormDetail/placeDetailRpt.cshtml">
       <publishTime>04/07/2020 10:46:27</publishTime>
@@ -8031,7 +8031,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/09/2020 16:25:40</publishTime>
     </File>
     <File Include="Views/SharedMasterFormDetail_Input/listDetailsPosPremium.cshtml">
-      <publishTime>07/03/2020 13:17:55</publishTime>
+      <publishTime>07/03/2020 13:26:32</publishTime>
     </File>
     <File Include="Views/SharedMasterFormDetail_Input/placeDetail.cshtml">
       <publishTime>04/07/2020 10:58:21</publishTime>
