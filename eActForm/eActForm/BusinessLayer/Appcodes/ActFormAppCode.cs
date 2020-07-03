@@ -521,7 +521,7 @@ namespace eActForm.BusinessLayer
 
                 if (ConfigurationManager.AppSettings["masterEmpExpense"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)
                 {
-                    activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-"+DateTime.Now.Day, "yyyy-MM-dd").ToString("dd/MM/yyyy");
+                    activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-"+DateTime.Today.ToString("dd"), "yyyy-MM-dd").ToString("dd/MM/yyyy");
                 }
 
             }
