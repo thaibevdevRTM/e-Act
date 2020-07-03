@@ -8,9 +8,10 @@
                     <tr style="background-color:#2f74b5;color:white;height:25px;">
                         <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ที่</th>
                         <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รหัสสินค้า</th>
-                        <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายการ</th>
+                        <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายการ</th>
                         <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
                         <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วย</th>
+                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อ<br />หน่วย(บาท)</th>
                         <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
                         <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หมายเหตุ</th>
                     </tr>
@@ -19,29 +20,31 @@
                     {
                         if (item.productDetail != "")
                         {
-                            <tr>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">@(index + 1)</td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.productId</td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;@item.productDetail</td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.unit</td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.QtyName</td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.IO</td>
-                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.remark</td>
-                            </tr>
+                <tr>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">@(index + 1)</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.productId</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;@item.productDetail</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.unit</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.QtyName</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">@item.unitPriceDisplay &nbsp;</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.IO</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">@item.remark</td>
+                </tr>
                         }
                         index++;
                     }
-                    <tr>
-                        <td colspan="3" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                            รวม&nbsp;
-                        </td>
-                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;">
-                            @Model.totalCostThisActivity.Value.ToString("#,##0")&nbsp;
-                        </td>
-                        <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
-                        <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
-                        <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
-                    </tr>
+                <tr>
+                    <td colspan="3" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                        รวม&nbsp;
+                    </td>
+                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;">
+                        @Model.totalCostThisActivity.Value.ToString("#,##0")&nbsp;
+                    </td>
+                    <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
+                    <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
+                    <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
+                    <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
+                </tr>
 
                 </table>
 
