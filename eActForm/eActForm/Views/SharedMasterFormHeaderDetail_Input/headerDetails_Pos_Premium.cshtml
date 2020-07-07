@@ -26,7 +26,19 @@
                                             @class = "form-control selectpicker",
                                             id = "ddlin_or_out_stock"
                                         })
+                                        @Html.HiddenFor(m => m.activityFormTBMMKT.list_0_select)
                                         <script>
+                                            $(document).ready(function () {
+                                                if ('@Model.activityFormModel.activityNo' == '---' || '@Model.activityFormModel.activityNo' == '') {
+                                                    $('#ddlin_or_out_stock').prop('disabled', false);
+                                                } else {
+                                                    $('#ddlin_or_out_stock').prop('disabled', true);
+                                                    if ($("#ddlin_or_out_stock").val() == '@ConfigurationManager.AppSettings["idInStock"]') {
+                                                        $('#div_ddlproduct_pos_premium').hide();
+                                                        $('#div_showData_ddlproduct_pos_premium').show();
+                                                    }
+                                                }
+                                            });
                                             $("#ddlin_or_out_stock").change(function () {
                                                 if ($("#ddlin_or_out_stock").val() != "") {
                                                     $('#ddlproduct_pos_premium').multiselect('enable');
@@ -88,14 +100,19 @@
                                                 min-width: 262px;
                                             }
                                         </style>
-                                        @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.list_1,
-                                                                                                               "id", "name"),
-                                                                                                               new
-                                                                                                               {
-                                                                                                                   @class = "form-control",
-                                                                                                                   id = "ddlproduct_pos_premium",
-                                                                                                                   multiple = "multiple"
-                                                                                                               })
+                                        <div id="div_ddlproduct_pos_premium">
+                                            @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.list_1,
+                                                                                                                   "id", "name"),
+                                                                                                                   new
+                                                                                                                   {
+                                                                                                                       @class = "form-control",
+                                                                                                                       id = "ddlproduct_pos_premium",
+                                                                                                                       multiple = "multiple"
+                                                                                                                   })
+                                        </div>
+                                        <div id="div_showData_ddlproduct_pos_premium" style="display:none;">
+                                            <input type="text" id="showData_ddlproduct_pos_premium" class="form-control textboxcss" readonly="readonly"  />
+                                        </div>
                                         <script>
                                         $(document).ready(function () {
                                             $('#ddlproduct_pos_premium').multiselect({
@@ -140,6 +157,20 @@
                                                     }
                                                 }
                                                 $("#ddlproduct_pos_premium").multiselect('select', valuesSelectChoiceFromDb);
+
+                                                var txtSelectshowData_ddlproduct_pos_premium = "";
+                                                $("#ddlproduct_pos_premium option:selected").each(function () {
+                                                    var $this = $(this);
+                                                    var loop_i = 0;
+                                                    if ($this.length) {
+                                                        txtSelectshowData_ddlproduct_pos_premium = $this.text();
+                                                        if (loop_i > 0) {
+                                                            txtSelectshowData_ddlproduct_pos_premium += ",";
+                                                        }
+                                                        loop_i += 1;
+                                                    }
+                                                });
+                                                $("#showData_ddlproduct_pos_premium").val(txtSelectshowData_ddlproduct_pos_premium);
                                             }
                                         });
                                         </script>

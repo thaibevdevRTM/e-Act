@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
+using System.IO;
 
 namespace eActForm.Controllers   //update 21-04-2020
 {
@@ -174,7 +175,6 @@ namespace eActForm.Controllers   //update 21-04-2020
         [HttpPost]
         [ValidateInput(false)]
         public JsonResult genPdfApprove(string GridHtml, string budgetApproveId)
-        //public JsonResult genPdfApprove(string GridHtml, string statusId, string budgetApproveId, string activityId)
         {
             var resultAjax = new AjaxResult();
             try
@@ -183,6 +183,12 @@ namespace eActForm.Controllers   //update 21-04-2020
                 var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId + "_");
                 GridHtml = GridHtml.Replace("<br>", "<br/>");
                 AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
+
+                //del signature file
+                bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)));
+                if (folderExists)
+                    Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)), true);
+
 
                 TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
                 getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budgetApproveId);

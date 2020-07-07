@@ -39,6 +39,7 @@ namespace eActForm.Models
             public string extension { get; set; }
             public string remark { get; set; }
             public string typeFiles { get; set; }
+            public string sizeFiles { get; set; }
         }
 
     }

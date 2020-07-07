@@ -37,7 +37,7 @@
 
                 foreach (var itemFlowByDoc in Model.approveModels.approveDetailLists)
                 {
-                    if (item.empId == itemFlowByDoc.empId && item.approveGroupId == itemFlowByDoc.approveGroupId && itemFlowByDoc.statusId=="3")
+                    if (item.empId == itemFlowByDoc.empId && item.approveGroupId == itemFlowByDoc.approveGroupId && itemFlowByDoc.statusId == "3")
                     {
                         CreateByEmpId = itemFlowByDoc.ImgName;
                         CreateByStampDateSignature = itemFlowByDoc.updatedDate.Value.ToString("dd/MM/yyyy", DateEnglish);
@@ -243,7 +243,7 @@
                         }
                     </tr>
                     <tr>
-                        <td>&nbsp;<b>Human Capital :</b></td>
+                        <td>&nbsp;<b>Recruit to Retire :</b></td>
                         @foreach (var item in Model.list_5)
                         {
                             string valCheckPic = picCheckBoxFalse;
@@ -291,15 +291,15 @@
         </tr>
         <tr>
             <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;padding-top:3px;">
-                &nbsp;Requestd by /ผู้ข้อดำเนินการ
+                &nbsp;Requestd by /ผู้ขอดำเนินการ
                 <br />
                 <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
                     <tr>
                         <td style="width:20%;vertical-align:top;">&nbsp;ลายเซ็น<br /></td>
                         <td style="width:80%;text-align:center;">
                             @*@{
-                                var pathSigRequest = pathWeb + "signatureFile/" + CreateByEmpId + ".png";
-                            }*@
+                                    var pathSigRequest = pathWeb + "signatureFile/" + CreateByEmpId + ".png";
+                                }*@
                             @if (CreateByEmpId != "")
                             {
                                 <img class="picSigV1" src="@CreateByEmpId" />
@@ -311,7 +311,7 @@
                         <td style="text-align:center;">@CreateByName</td>
                     </tr>
                     <tr>
-                        <td>&nbsp;คำแหน่ง</td>
+                        <td>&nbsp;ตำแหน่ง</td>
                         <td style="text-align:center;">@CreateByPostition</td>
                     </tr>
                     <tr>
@@ -335,8 +335,8 @@
                         <td style="width:20%;vertical-align:top;">&nbsp;ลายเซ็น<br /></td>
                         <td style="width:80%;text-align:center;">
                             @*@{
-                                pathSigRequest = pathWeb + "signatureFile/" + ApproveByEmpId + ".png";
-                            }*@
+                                    pathSigRequest = pathWeb + "signatureFile/" + ApproveByEmpId + ".png";
+                                }*@
                             @if (ApproveByEmpId != "")
                             {
                                 <img class="picSigV1" src="@ApproveByEmpId" />
@@ -348,7 +348,7 @@
                         <td style="text-align:center;">@ApproveByName</td>
                     </tr>
                     <tr>
-                        <td>&nbsp;คำแหน่ง</td>
+                        <td>&nbsp;ตำแหน่ง</td>
                         <td style="text-align:center;">@ApproveByPostition</td>
                     </tr>
                     <tr>

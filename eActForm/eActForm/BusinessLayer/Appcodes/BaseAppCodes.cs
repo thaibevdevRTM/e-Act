@@ -4,7 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Web;
+using static eActForm.Models.ActUserModel;
 
 namespace eActForm.BusinessLayer.Appcodes
 {
@@ -173,5 +176,37 @@ namespace eActForm.BusinessLayer.Appcodes
         {
             return DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
         }
+        public static User getEmpFromApi(string empId)
+        {
+            ActUserModel.ResponseUserAPI response = new ActUserModel.ResponseUserAPI();
+            response = AuthenAppCode.doAuthenInfo(empId);
+            User userModel = new User();
+            if (response != null && response.userModel.Count > 0)
+            {
+                userModel = response.userModel[0];
+            }
+            return userModel;
+        }
+
+        public static void WriteSignatureToDisk(ApproveModel.approveModels approveModels,string activityId)
+        {
+
+            var modelApproveDetail = approveModels.approveDetailLists.Where(x => x.statusId.Equals("3")).ToList();
+            if (modelApproveDetail.Any())
+            {
+                bool folderExists = Directory.Exists(HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
+                if (!folderExists)
+                    Directory.CreateDirectory(HttpContext.Current.Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
+
+                foreach (var item in modelApproveDetail)
+                {
+                    UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
+                        , item.signature
+                        , string.Format(ConfigurationManager.AppSettings["rootSignaByActURL"], activityId, item.empId));
+                }
+            }
+
+        }
+
     }
 }

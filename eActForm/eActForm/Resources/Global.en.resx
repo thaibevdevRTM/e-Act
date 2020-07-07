@@ -318,4 +318,7 @@
   <data name="dearForProcess" xml:space="preserve">
     <value>Dear for process</value>
   </data>
+  <data name="msgMaximumFilesSave" xml:space="preserve">
+    <value>System can't save.Files upload maximum</value>
+  </data>
 </root>

@@ -355,7 +355,7 @@
             if ($("#lblHireDate").val() == "") { required += "&emsp;วันที่เข้างาน(กรุณาติดต่อ Admin)*<br>"; validate = false; }
             if ($("#txthospName_0").val() == "") { required += "&emsp;โรงพยาบาล*<br>"; validate = false; }
             if (document.getElementById('lblPercent').innerHTML == "0") { required += "&emsp;กรุณาเลือกโรงพยาบาลให้ถูกต้อง*<br>"; validate = false; }
-            
+
             var price_1 = 0.00;
             if ($("#txtUnitPrice_0").val() != "") { price_1 = parseFloat($("#txtUnitPrice_0").val().replace(",", "")); }
             if (!($("#txtDateInput_0").val() != "" && $("#txtdetail_0").val() != "" && price_1 > 0 ))
@@ -383,7 +383,7 @@
             if ($("#ddlchooseRequest").val() == null) { required += "&emsp;Choose request*<br>"; validate = false; }
             if ($("#ddlProcuretoPay").val() == null && $("#ddlERPSystem").val() == null && $("#ddlOrdertoCash").val() == null && $("#ddlForecasttoDelivery").val() == null && $("#ddlFinanceAccounting").val() == null && $("#ddlHumanCapital").val() == null && $("#ddlOther").val() == null) { required += "&emsp;Choose system*<br>"; validate = false; }
             if ($("#ddlChangetype").val() == null) { required += "&emsp;Change type / ประเภทของการเปลี่ยนแปลง*<br>"; validate = false; }
-            if ($("#ddlChangeAuthorizations").val() == null) { required += "&emsp;Change Authorizations / สิทธิ์การใช้งาน*<br>"; validate = false; }
+            @*if ($("#ddlChangeAuthorizations").val() == null) { required += "&emsp;Change Authorizations / สิทธิ์การใช้งาน*<br>"; validate = false; }*@
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceMT"]') {
             if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
@@ -397,8 +397,6 @@
             if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
                 $("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]")) { required += "Reference*<br>"; validate = false; }
             if ($("#txtdateActivitySt").val() == "") { required += "เลือก เวลาเริ่มกิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivitySt").focus(); }
-            if ($("#txtdateCostPerSt").val() == "") { required += "เลือก เวลาเริ่มให้ทุนพิเศษ  *<br>"; validate = false; document.getElementById("txtdateCostPerSt").focus(); }
-            
             var rowCount = parseInt($('#tbl_productDetail tr.tagTR').length);
             for (i = 0; i < rowCount; i++) {
                 if ($("#wholeSalesPrice_" + i).val() == 0 || $("#wholeSalesPrice_" + i).val() == "") { required += "&emsp; ระบุราคา wholeSalesPrice แถวที่ " + (i+1) + "*<br>"; validate = false; }
@@ -413,13 +411,48 @@
 
         }
 
-            if (validate == true) {
-                SubmitData();
+        if (validate == true) {
+            //SubmitData();
+            validateUploadFileAndSubmit();
             }
             else {
                 bootbox.alert(required)
             }
         }
+
+    function validateUploadFileAndSubmit() {
+        var checkUpload = true;
+
+            var dataToBeSend = {
+                activityId: '@Model.activityFormModel.id'
+            };
+             $.ajax('@Url.Action("GetDataCheckFileSize", "GetDataMainForm")',
+            {
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(dataToBeSend),
+                dataType:'json',
+                type:"POST",
+                success: function (response) {
+                    var sizeFileAllBytes = 0;
+                    if (response.Data.tbToAjax.length > 0) {
+                        $.each(response.Data.tbToAjax,function(){
+                            sizeFileAllBytes += parseInt(this['sizeFiles']);
+                        });
+                    }
+                    if (sizeFileAllBytes > 25000000) {//25mb = 25000000 bytes
+                        checkUpload = false;
+                        bootbox.alert("@Resources.Global.msgMaximumFilesSave" + " 25MB");
+                    } else {
+                        SubmitData();
+                    }
+                },
+                error:function(data){
+                    alert("Error validateUploadFile."+data);
+                }
+            });
+
+        return checkUpload;
+    }
 
     function SubmitData() {
         console.log("submit");

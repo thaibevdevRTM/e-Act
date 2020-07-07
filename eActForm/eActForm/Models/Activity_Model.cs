@@ -320,7 +320,7 @@ namespace eActForm.Models
         public string productName { get; set; }
         public string productDetail { get; set; }
         public string typeTheme { get; set; }
-        [DisplayFormat(DataFormatString = "{0:0.##}")]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? wholeSalesPrice { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? disCount1 { get; set; }
