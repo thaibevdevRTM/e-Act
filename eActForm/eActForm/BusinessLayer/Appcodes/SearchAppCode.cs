@@ -1,6 +1,7 @@
 ﻿using eActForm.Models;
 using eForms.Models.Forms;
 using System;
+using System.Configuration;
 using System.Linq;
 namespace eActForm.BusinessLayer
 {
@@ -36,7 +37,7 @@ namespace eActForm.BusinessLayer
                 {
                     approveStatusList = ApproveAppCode.getApproveStatus(AppCode.StatusType.app),
                     productGroupList = QueryGetAllProductGroup.getAllProductGroup(),
-                    customerslist = QueryGetAllCustomers.getAllCustomers().Where(x => x.cusNameEN != "").ToList(),
+                    customerslist = @UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] ? QueryGetAllCustomers.getCustomersMT().Where(x => x.cusNameEN != "").ToList() : QueryGetAllCustomers.getCustomersOMT().Where(x => x.cusNameEN != "").ToList(),
                     productTypelist = QuerygetAllProductCate.getAllProductType(),
                     activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
                     .GroupBy(item => item.activitySales)
