@@ -262,12 +262,14 @@
         calCulateAll();
     });
     function calCulateAll() {
+        $("#WaitDialog").show();
         sumall();
         caltotalallPayByIO();
         calVat();
         caltotalnormalCostEstimateWithVat();
         caltotalallPayNo();
         catotalallPayByIOBalance();
+        $("#WaitDialog").hide();
     }
     function sumall() {
         var normalCostAll = 0.00;
