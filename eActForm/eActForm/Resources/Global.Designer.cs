@@ -421,6 +421,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ไม่สามารถบันทึกได้ ไฟล์อัพโหลดสูงสุดไม่เกิน.
+        /// </summary>
+        public static string msgMaximumFilesSave {
+            get {
+                return ResourceManager.GetString("msgMaximumFilesSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ชื่อ.
         /// </summary>
         public static string name {

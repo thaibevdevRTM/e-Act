@@ -85,9 +85,10 @@
 <script>
         function getDepartmentFlow() {
             var dataToBeSend = {
-                companyId: $("#ddlSubjectForGetCompany option:selected").text()
+                master_type_form_id: '@Model.activityFormTBMMKT.master_type_form_id'
+                , subjectId: $('#ddlSubject').val()
             };
-             $.ajax('@Url.Action("GetDepartmentMaster", "GetDataMainForm")',
+             $.ajax('@Url.Action("GetDepartmentMasterBySubjectFlow", "GetDataMainForm")',
             {
                 contentType:"application/json;charset=utf-8",
                 data:JSON.stringify(dataToBeSend),
@@ -111,4 +112,4 @@
                 }
             });
         }
-    </script>
+</script>
