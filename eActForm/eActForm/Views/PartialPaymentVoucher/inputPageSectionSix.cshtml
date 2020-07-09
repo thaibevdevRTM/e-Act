@@ -106,11 +106,11 @@
                             $('#ddlActivityNoSub').change(function () {
                                         if ($('#ddlActivityNoSub').val() != '') {
                                             activeLinkViewPreviousPV();
-                                   //$("#pvPrevious_totalallPayByIO").val($("#ddlActivityNoSub").val());
+                                    //$("#pvPrevious_totalallPayByIO").val($("#ddlActivityNoSub").val());//ยกเลิก 20200709 12:00 ไม่ดึงงบผูกพันรวมจากใบก่อนหน้าแล้ว กรณีสั่งจ่ายครั้งที่ 2 ขึ้นไป fream
                                     $("#pvPrevious_totalallPayNo").val($("#ddlActivityNoSub").val());
                                     $('#linkViewActNoOld').show();
                                         } else {
-                                    //$("#pvPrevious_totalallPayByIO").val('');
+                                    //$("#pvPrevious_totalallPayByIO").val('');//ยกเลิก 20200709 12:00 ไม่ดึงงบผูกพันรวมจากใบก่อนหน้าแล้ว กรณีสั่งจ่ายครั้งที่ 2 ขึ้นไป fream
                                     $("#pvPrevious_totalallPayNo").val('');
                                     $('#linkViewActNoOld').hide();
                                         }
