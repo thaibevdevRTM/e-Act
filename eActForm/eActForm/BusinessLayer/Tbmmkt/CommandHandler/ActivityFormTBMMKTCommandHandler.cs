@@ -796,6 +796,26 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
+                //===========Get All EO In Doc=======================
+                List<string> templistEoInDoc = new List<string>();
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                {
+                    if(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO!="" && activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != null)
+                    {
+                        templistEoInDoc.Add(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO);
+                    }
+                    foreach (var itemGetEO in activity_TBMMKT_Model.activityOfEstimateList)
+                    {
+                        if (!templistEoInDoc.Contains(itemGetEO.EO))
+                        {
+                            templistEoInDoc.Add(itemGetEO.EO);
+                        }
+                    }
+                    activity_TBMMKT_Model.listEoInDoc = templistEoInDoc;
+                }                    
+                //===END========Get All EO In Doc=======================
+
+
             }
             catch (Exception ex)
             {
