@@ -2,6 +2,7 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using eForms.Presenter.MasterData;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,6 +25,20 @@ namespace eActForm.Controllers
         }
         public ActionResult activityBudgetDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+            string yearFrom = "";
+            string yearTo = "";
+            string nowPhysicalYear = "";
+
+            if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"])
+            {
+                //เพิ่มปีงบเพื่อ Budget Control dev date 20200708 Peerapop
+                //ตั้งไว้ดึงจากปีงบปัจจุบันบวกไปอีก 10ปีหากต้องการเพิ่มหรือจัดการปีทำที่ตาราง TB_Act_master_period_year
+                nowPhysicalYear = FiscalYearPresenter.getFiscalNow(AppCode.StrCon, ConfigurationManager.AppSettings["typePeriodTBVGroup"]).FirstOrDefault().UseYear;
+                yearFrom = nowPhysicalYear;
+                yearTo = (Convert.ToInt32(nowPhysicalYear) + 10).ToString();
+            }
+            activity_TBMMKT_Model.listFiscalYearModel = FiscalYearPresenter.getFiscalYearByYear(AppCode.StrCon, yearFrom, yearTo).OrderBy(m => m.UseYear).ToList();
+
             return PartialView(activity_TBMMKT_Model);
         }
         public ActionResult textDetailsAttachPay(Activity_TBMMKT_Model activity_TBMMKT_Model)

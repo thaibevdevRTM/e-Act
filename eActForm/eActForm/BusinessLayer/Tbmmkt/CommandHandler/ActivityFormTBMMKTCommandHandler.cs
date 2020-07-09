@@ -130,6 +130,8 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.compensate = item.compensate;
                 costThemeDetail.glCode = item.glCode;
                 costThemeDetail.hospId = item.hospId;
+                costThemeDetail.UseYearSelect = item.UseYearSelect == null ? "" : item.UseYearSelect;
+                costThemeDetail.EO = item.EO == null ? "" : item.EO;
                 rtn += insertEstimate(costThemeDetail);
                 insertIndex++;
             }
@@ -1222,6 +1224,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@compensate",model.compensate)
                     ,new SqlParameter("@glCode",(model.glCode == null ? "" : model.glCode))
                     ,new SqlParameter("@hospId",(model.hospId == null ? "" : model.hospId))
+                    ,new SqlParameter("@UseYearSelect",model.UseYearSelect)
+                    ,new SqlParameter("@EO",model.EO)
             });
             }
             catch (Exception ex)
