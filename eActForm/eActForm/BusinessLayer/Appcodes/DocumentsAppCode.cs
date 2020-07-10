@@ -241,5 +241,17 @@ namespace eActForm.BusinessLayer
             }
             return valResult;
         }
+        public static string convertDateTHToShowCultureDateTH(DateTime? dateToShow, string formatDatetime)
+        {
+            string valResult = "";       
+
+                if (dateToShow != null)
+                {
+                    valResult = dateToShow.Value.ToString(formatDatetime, new CultureInfo(ConfigurationManager.AppSettings["cultureThai"], true));
+                }
+            return valResult;
+        }
+
+
     }
 }

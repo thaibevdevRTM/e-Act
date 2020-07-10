@@ -1117,9 +1117,9 @@ namespace eActForm.BusinessLayer
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new getEmailisDevelop()
                              {
-                                 e_to = d["e_to"].ToString(),
-                                 e_cc = d["e_cc"].ToString(),
-                                 e_bcc = d["e_bcc"].ToString(),
+                                 e_to = "kanokpun.b@thaibev.com",// d["e_to"].ToString(),
+                                 e_cc = "kanokpun.b@thaibev.com",//d["e_cc"].ToString(),
+                                 e_bcc = "kanokpun.b@thaibev.com",// d["e_bcc"].ToString(),
                              });
                 return lists.ToList();
             }
