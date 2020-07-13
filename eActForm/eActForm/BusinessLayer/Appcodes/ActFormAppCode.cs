@@ -108,7 +108,7 @@ namespace eActForm.BusinessLayer
             {
                 string strCall = "";
 
-                if (typeForm == Activity_Model.activityType.MT.ToString())
+                if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     strCall = "usp_getActivityCustomersFormByEmpId";
                 }
