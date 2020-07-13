@@ -73,7 +73,7 @@
             }
             else {
                 // can't delete
-                msg = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ <br/> ท่านต้องการยกเลิกเอกสารหรือไม่ค่ะ?";
+                msg = "ระบบจะดำเนินการส่งเรื่องไปยัง Admin เพื่อดำเนินการยกเลิกเอกสารนี้ <br/> ท่านต้องการยกเลิกเอกสารหรือไม่?";
             }
 
             bootbox.confirm({
@@ -139,7 +139,7 @@
             }).done(function (response) {
                 $("#WaitDialog").hide();
                 if (response.Success) {
-                    doMsgSuccess("ดำเนินการเรียบร้อยครับ")
+                    doMsgSuccess("ดำเนินการเรียบร้อย")
                 } else {
                     doMsgFail(response.Message);
                 }
@@ -439,7 +439,7 @@
             dataType: "json",
             type: 'POST',
         }).done(function (response) {
-            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+            doMsgSuccess("ดำเนินการเรียบร้อย");
         });
     }
 

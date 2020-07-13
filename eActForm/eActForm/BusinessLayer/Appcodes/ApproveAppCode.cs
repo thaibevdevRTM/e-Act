@@ -446,7 +446,7 @@ namespace eActForm.BusinessLayer
                                                  isSendEmail = (bool)dr["isSendEmail"],
                                                  remark = dr["remark"].ToString(),
                                                  signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
-                                                 ImgName = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
+                                                 ImgName = string.Format(ConfigurationManager.AppSettings["rootgetSignaByActURL"], actFormId, dr["empId"].ToString()),
                                                  isApprove = (bool)dr["isApproved"],
                                                  approveGroupId = dr["approveGroupId"].ToString(),
                                                  delFlag = (bool)dr["delFlag"],
