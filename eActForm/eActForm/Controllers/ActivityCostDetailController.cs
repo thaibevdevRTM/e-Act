@@ -26,7 +26,6 @@ namespace eActForm.Controllers
                 Activity_Model activityModel = (Activity_Model)TempData["actForm" + actId];
                 if (rowid != null)
                 {
-                    activityModel.activitydetaillist.RemoveAll(r => r.productGroupId == rowid);
                     activityModel.productcostdetaillist1.RemoveAll(r => r.productGroupId == rowid);
                 }
                 else
