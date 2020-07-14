@@ -345,6 +345,7 @@ namespace eActForm.Models
     public class ObjGetDataIO
     {
         public string ActivityByEOSelect { get; set; }
+        public string EOSelect { get; set; }
     }
 
     public class GetDataIO

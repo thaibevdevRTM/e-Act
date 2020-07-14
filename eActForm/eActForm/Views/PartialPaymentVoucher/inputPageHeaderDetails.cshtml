@@ -135,10 +135,14 @@
                                             })
                                         <script>
                                             var valuesSelectChoiceFromDb = [];/*ไว้ใช้เก็บค่าที่SelectของMultiSelect Dropdown*/
-                                            var ActivityByEOSelect = [];
+                                            var EOSelect = [];
                                             var payByIOSelect = [];/*ไว้เก็บว่าเงินทั้งหมดของIOที่อยู่ในEOดังกล่าวต้องจ่ายทั้งหมดเท่าไร*/
                                             function subStringGetActId(val) {
                                                 return val.substring(0, 36);
+                                            }
+                                            function subStringGetEO(val) {
+                                                var lenghtForCutOffGetEO = 37;
+                                                return val.substring(lenghtForCutOffGetEO, val.length);
                                             }
                                             $(document).ready(function () {
                                                 $('#ddl_EO_PV').multiselect({
@@ -151,15 +155,26 @@
                                                      payByIOSelect.push("");/*ใส่BlankRowการดึงข้อมูลจะได้เริ่มที่Index=1*/
                                                         if ($("#ddl_EO_PV").val() != "")
                                                         {
-                                                            var valActivityByEOSelect = subStringGetActId(option.val());
+                                                            var valEOSelect = subStringGetEO(option.val());
                                                         if (checked === true) {
-                                                            ActivityByEOSelect.push(valActivityByEOSelect);
+                                                            valuesSelectChoiceFromDb.push(option.val());
+                                                            EOSelect.push(valEOSelect);
                                                         } else {
-                                                            removeArray(ActivityByEOSelect, valActivityByEOSelect);
-                                                        }
-                                                        if (ActivityByEOSelect.toString() != "") {
+                                                            removeArray(valuesSelectChoiceFromDb, option.val());
+                                                            removeArray(EOSelect, valEOSelect);
+                                                            }
+                                                            /*======วนเพื่อผสม EOและคั่นด้วย  |  ==========*/
+                                                            var EOtext = "";
+                                                            var ActivityByEOSelect = "";
+                                                            for (var iLoopEO = 0; iLoopEO < EOSelect.length; iLoopEO++) {
+                                                                if (iLoopEO > 0) { EOtext += "|"; ActivityByEOSelect += "|"; }
+                                                                EOtext += EOSelect[iLoopEO]; ActivityByEOSelect += subStringGetActId(valuesSelectChoiceFromDb[iLoopEO]);                                                              
+                                                            }
+                                                            /*===END===วนเพื่อผสม EOและคั่นด้วย  |  ==========*/
+                                                            if (ActivityByEOSelect != "" && EOtext!="") {
                                                             var dataToBeSend = {
                                                                 ActivityByEOSelect: ActivityByEOSelect.toString()
+                                                                ,EOSelect: EOtext
                                                             };
                                                             $.ajax('@Url.Action("GetDataIOPaymentVoucher", "GetDataMainForm")',
                                                                 {
@@ -225,13 +240,13 @@
                                         }
                                         </script>
                                         <script>
-                                                $(function () {                                                   
+                                                $(function () {
                                                     @if (Model.activityFormTBMMKT.list_1_multi_select != null)
                                                     {
                                                         foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
                                                         {
                                                         @:valuesSelectChoiceFromDb.push("@itemArray");
-                                                        @:ActivityByEOSelect.push(subStringGetActId("@itemArray"));
+                                                        @:EOSelect.push(subStringGetEO("@itemArray"));
                                                         }
                                                          @:$("#ddl_EO_PV").multiselect('select', valuesSelectChoiceFromDb);
                                                     }
