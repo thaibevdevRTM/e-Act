@@ -108,17 +108,13 @@ namespace eActForm.BusinessLayer
             {
                 string strCall = "";
 
-                if (typeForm == Activity_Model.activityType.MT.ToString())
+                if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     strCall = "usp_getActivityCustomersFormByEmpId";
                 }
                 else if(typeForm == Activity_Model.activityType.SetPrice.ToString())
                 {
                     strCall = "usp_getActivitySetPriceByEmpId";
-                }
-                else if (typeForm == Activity_Model.activityType.OMT.ToString())
-                {
-                    strCall = "usp_tbm_getActivityFormByEmpId";
                 }
                 else if (typeForm == Activity_Model.activityType.ITForm.ToString())
                 {

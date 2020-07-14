@@ -42,7 +42,7 @@ namespace eActForm.Controllers
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
                 if (UtilsAppCode.Session.User.regionId != "")
                 {
-                    activityModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.id == UtilsAppCode.Session.User.regionId).ToList();
+                    activityModel.regionGroupList = QueryGetAllRegion.getRegoinByEmpId(UtilsAppCode.Session.User.empId);
                     activityModel.activityFormModel.regionId = UtilsAppCode.Session.User.regionId;
                 }
                 else
