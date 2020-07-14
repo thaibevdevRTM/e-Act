@@ -81,13 +81,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/12/2019 14:57:40</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
-      <publishTime>07/14/2020 14:44:20</publishTime>
+      <publishTime>07/14/2020 15:28:56</publishTime>
     </File>
     <File Include="bin/eActForm.dll.config">
       <publishTime>07/14/2020 13:19:33</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
-      <publishTime>07/14/2020 14:44:20</publishTime>
+      <publishTime>07/14/2020 15:28:56</publishTime>
     </File>
     <File Include="bin/eActForm.dll.config">
       <publishTime>07/14/2020 13:19:33</publishTime>
@@ -105,7 +105,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/14/2020 14:43:46</publishTime>
     </File>
     <File Include="bin/en/eActForm.resources.dll">
-      <publishTime>07/14/2020 14:44:21</publishTime>
+      <publishTime>07/14/2020 15:28:57</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.xml">
       <publishTime>04/03/2020 12:41:46</publishTime>

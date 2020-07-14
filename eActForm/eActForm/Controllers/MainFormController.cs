@@ -71,9 +71,13 @@ namespace eActForm.Controllers
 
                         ObjGetDataIO objGetDataIO = new ObjGetDataIO();
                         objGetDataIO.ActivityByEOSelect = "";
+                        objGetDataIO.EOSelect = "";
                         foreach (var item in activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select)
                         {
-                            objGetDataIO.ActivityByEOSelect += (item.Substring(0,36) + ",");
+                            int lenghtCut = 37;
+                            int maxLenght = item.Length;
+                            objGetDataIO.ActivityByEOSelect += (item.Substring(0,36) + "|");
+                            objGetDataIO.EOSelect += (item.Substring(lenghtCut, maxLenght-lenghtCut) + "|");
                         }
                         activity_TBMMKT_Model.listGetDataIO = QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
                     }
