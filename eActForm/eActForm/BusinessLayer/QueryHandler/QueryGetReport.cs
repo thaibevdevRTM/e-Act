@@ -64,6 +64,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                                  amountByDetail = d["amountByDetail"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountByDetail"].ToString())) 
                              });
                 //BaseAppCodes.converStrToDatetimeWithFormat(Request.Form["startDate"], ConfigurationManager.AppSettings["formatDateUse"])
+                //.OrderBy(x=>x.documentDate).OrderBy(x => x.rowNo)
                 return lists.ToList();
             }
             catch (Exception ex)
