@@ -22,6 +22,7 @@ namespace eActForm.BusinessLayer
                              {
                                  EO = d["EO"].ToString(),
                                  activityId = d["activityId"].ToString(),
+                                 activityIdAndEO = DocumentsAppCode.formatValueSelectEO_PVForm(d["activityId"].ToString(), d["EO"].ToString())
                              });
                 return lists.ToList();
             }
@@ -35,7 +36,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDataIOPaymentVoucher", new SqlParameter("@ActivityByEOSelect", objGetDataIO.ActivityByEOSelect));
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDataIOPaymentVoucher", new SqlParameter("@ActivityByEOSelect", objGetDataIO.ActivityByEOSelect), new SqlParameter("@EOSelect", objGetDataIO.EOSelect));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new GetDataIO()
                              {
