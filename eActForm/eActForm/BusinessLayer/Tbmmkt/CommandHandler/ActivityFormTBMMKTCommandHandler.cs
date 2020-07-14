@@ -786,7 +786,7 @@ namespace eActForm.BusinessLayer
                         index_each = 0;
                         foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Where(x => x.typeKeep == ConfigurationManager.AppSettings["typeEOPaymentVoucher"]).ToList())
                         {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = item.activityIdEO;
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = DocumentsAppCode.formatValueSelectEO_PVForm(item.activityIdEO, item.EO);
                             index_each++;
                         }
 
@@ -1722,14 +1722,17 @@ namespace eActForm.BusinessLayer
                 rtn += delete_TB_Act_ActivityForm_DetailOtherList(activityId, tB_Act_ActivityForm_DetailOtherList.typeKeep);
                 for (int i = 0; i < model.activityFormTBMMKT.list_1_multi_select.Length; i++)
                 {
+                    string txt_activityIdEO_And_EO = model.activityFormTBMMKT.list_1_multi_select[i]; //update for multi EO devdate 20200713 peerapop
+                    string[] splitValue = txt_activityIdEO_And_EO.Split('|'); 
                     tB_Act_ActivityForm_DetailOtherList.activityId = activityId;
                     tB_Act_ActivityForm_DetailOtherList.rowNo = (i + 1);
-                    tB_Act_ActivityForm_DetailOtherList.activityIdEO = model.activityFormTBMMKT.list_1_multi_select[i];
+                    tB_Act_ActivityForm_DetailOtherList.activityIdEO = splitValue[0]; //update for multi EO devdate 20200713 peerapop ของเดิม tB_Act_ActivityForm_DetailOtherList.activityIdEO  = model.activityFormTBMMKT.list_1_multi_select[i]
+                    tB_Act_ActivityForm_DetailOtherList.EO = splitValue[1]; 
                     tB_Act_ActivityForm_DetailOtherList.IO = "";
                     tB_Act_ActivityForm_DetailOtherList.GL = "";
                     tB_Act_ActivityForm_DetailOtherList.select_list_choice_id_ChReg = "";
                     tB_Act_ActivityForm_DetailOtherList.productBrandId = "";
-                    tB_Act_ActivityForm_DetailOtherList.createdByUserId = UtilsAppCode.Session.User.empId;
+                    tB_Act_ActivityForm_DetailOtherList.createdByUserId = UtilsAppCode.Session.User.empId;                    
                     rtn += usp_insertTB_Act_ActivityForm_DetailOtherList(tB_Act_ActivityForm_DetailOtherList);
                 }
             }
@@ -1793,6 +1796,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@select_list_choice_id_ChReg",model.select_list_choice_id_ChReg)
                     ,new SqlParameter("@productBrandId",model.productBrandId)
                     ,new SqlParameter("@ByUserId",model.createdByUserId)
+                    ,new SqlParameter("@EO",model.EO)
                     });
             }
             catch (Exception ex)

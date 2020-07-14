@@ -22,6 +22,7 @@ namespace eActForm.BusinessLayer
                              {
                                  EO = d["EO"].ToString(),
                                  activityId = d["activityId"].ToString(),
+                                 activityIdAndEO = DocumentsAppCode.formatValueSelectEO_PVForm(d["activityId"].ToString(), d["EO"].ToString())
                              });
                 return lists.ToList();
             }

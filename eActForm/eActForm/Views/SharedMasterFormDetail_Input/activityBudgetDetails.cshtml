@@ -45,7 +45,7 @@
                                     <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss" placeholder="กิจกรรมหรือรายละเอียด" />
                                 </div>
                                 <div style="display:inline-block;">
-                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO" placeholder="EO" maxlength="15" />
+                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO" placeholder="EO" maxlength="18" />
                                 </div>
                                 <div style="display:inline-block;">
                                     @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))

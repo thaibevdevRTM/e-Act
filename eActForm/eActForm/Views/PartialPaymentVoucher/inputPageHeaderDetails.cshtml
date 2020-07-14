@@ -87,7 +87,7 @@
                                                                 var data = [];
                                                                 $(nameDDl + " option[value !='']").remove();
                                                                 $.each(response.Data.tbToAjax, function () {
-                                                                    data.push({ label: this['EO'], value: this['activityId'], selected: false });
+                                                                    data.push({ label: this['EO'], value: this['activityIdAndEO'], selected: false });
                                                                 });
                                                                 $(nameDDl).multiselect('dataprovider', data);
                                                             }
@@ -126,7 +126,7 @@
                                             }
                                         </style>
                                         @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.listGetDataEO,
-                                            "activityId", "EO"),
+                                            "activityIdAndEO", "EO"),
                                             new
                                             {
                                                 @class = "form-control",
@@ -134,6 +134,10 @@
                                                 multiple = "multiple"
                                             })
                                         <script>
+                                            function subStringGetActId(val) {
+                                                return val.substring(0, 36);
+                                            }
+
                                             var ActivityByEOSelect = [];
                                             var payByIOSelect = [];/*ไว้เก็บว่าเงินทั้งหมดของIOที่อยู่ในEOดังกล่าวต้องจ่ายทั้งหมดเท่าไร*/
                                             $(document).ready(function () {
@@ -145,11 +149,13 @@
                                                     onChange: function (option, checked) {
                                                      payByIOSelect = [];
                                                      payByIOSelect.push("");/*ใส่BlankRowการดึงข้อมูลจะได้เริ่มที่Index=1*/
-                                                    if ($("#ddl_EO_PV").val() != "") {
+                                                        if ($("#ddl_EO_PV").val() != "")
+                                                        {
+                                                            var valActivityByEOSelect = subStringGetActId(option.val());
                                                         if (checked === true) {
-                                                            ActivityByEOSelect.push(option.val());
+                                                            ActivityByEOSelect.push(valActivityByEOSelect);
                                                         } else {
-                                                            removeArray(ActivityByEOSelect, option.val());
+                                                            removeArray(ActivityByEOSelect, valActivityByEOSelect);
                                                         }
                                                         if (ActivityByEOSelect.toString() != "") {
                                                             var dataToBeSend = {
@@ -226,6 +232,7 @@
                                                         foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
                                                         {
                                                         @:valuesSelectChoiceFromDb.push("@itemArray");
+                                                        @:ActivityByEOSelect.push(subStringGetActId("@itemArray"));
                                                         }
                                                          @:$("#ddl_EO_PV").multiselect('select', valuesSelectChoiceFromDb);
                                                     }
