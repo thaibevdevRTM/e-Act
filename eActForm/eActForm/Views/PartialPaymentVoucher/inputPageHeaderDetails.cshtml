@@ -134,12 +134,12 @@
                                                 multiple = "multiple"
                                             })
                                         <script>
+                                            var valuesSelectChoiceFromDb = [];/*ไว้ใช้เก็บค่าที่SelectของMultiSelect Dropdown*/
+                                            var ActivityByEOSelect = [];
+                                            var payByIOSelect = [];/*ไว้เก็บว่าเงินทั้งหมดของIOที่อยู่ในEOดังกล่าวต้องจ่ายทั้งหมดเท่าไร*/
                                             function subStringGetActId(val) {
                                                 return val.substring(0, 36);
                                             }
-
-                                            var ActivityByEOSelect = [];
-                                            var payByIOSelect = [];/*ไว้เก็บว่าเงินทั้งหมดของIOที่อยู่ในEOดังกล่าวต้องจ่ายทั้งหมดเท่าไร*/
                                             $(document).ready(function () {
                                                 $('#ddl_EO_PV').multiselect({
                                                 numberDisplayed: 2,
@@ -225,8 +225,7 @@
                                         }
                                         </script>
                                         <script>
-                                                $(function () {
-                                                    var valuesSelectChoiceFromDb = [];
+                                                $(function () {                                                   
                                                     @if (Model.activityFormTBMMKT.list_1_multi_select != null)
                                                     {
                                                         foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
