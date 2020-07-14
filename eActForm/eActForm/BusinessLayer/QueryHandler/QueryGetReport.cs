@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer.QueryHandler
             }
         }
 
-        public static List<MedIndividualDetail> getReportMedIndividualDetail(string empId, string typeFormId, string startDate, string endDate)
+        public static List<MedIndividualDetail> getReportMedIndividualDetail(string empId, string typeFormId, DateTime? startDate, DateTime? endDate)
         {
             try
             {

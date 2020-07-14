@@ -8,6 +8,10 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using eActForm.Controllers;
+using Newtonsoft.Json.Linq;
+using System.Web.Helpers;
+using Newtonsoft.Json;
 
 namespace eActForm.Controllers.ReportHc
 {
@@ -45,8 +49,8 @@ namespace eActForm.Controllers.ReportHc
 
             if (Request.Form["ddlReportType"] != null)
             {
-                string startDate = "";
-                string endDate = "";
+                DateTime? startDate;
+                DateTime? endDate;
                 string companyId = "";
                 string department = "";
                 string empId = "";
@@ -55,45 +59,76 @@ namespace eActForm.Controllers.ReportHc
                 reportType = Request.Form["ddlReportType"];
                 companyId = Request.Form["ddlCompany"];
                 department = Request.Form["ddlDepartment"];
-                startDate = DocumentsAppCode.convertDateTHToShowCultureDateTH(BaseAppCodes.converStrToDatetimeWithFormat(Request.Form["startDate"], ConfigurationManager.AppSettings["formatDateUse"]), ConfigurationManager.AppSettings["formatLongDate"]);
-                endDate = DocumentsAppCode.convertDateTHToShowCultureDateTH(BaseAppCodes.converStrToDatetimeWithFormat(Request.Form["endDate"], ConfigurationManager.AppSettings["formatDateUse"]), ConfigurationManager.AppSettings["formatLongDate"]);
+
+                startDate = BaseAppCodes.converStrToDatetimeWithFormat(Request.Form["startDate"], ConfigurationManager.AppSettings["formatDateUse"]);
+                endDate = BaseAppCodes.converStrToDatetimeWithFormat(Request.Form["endDate"], ConfigurationManager.AppSettings["formatDateUse"]);
+
+                //startDate = DocumentsAppCode.convertDateTHToShowCultureDateTH(BaseAppCodes.converStrToDatetimeWithFormat(Request.Form["startDate"], ConfigurationManager.AppSettings["formatDateUse"]), ConfigurationManager.AppSettings["formatLongDate"]);
+                //endDate = DocumentsAppCode.convertDateTHToShowCultureDateTH(BaseAppCodes.converStrToDatetimeWithFormat(Request.Form["endDate"], ConfigurationManager.AppSettings["formatDateUse"]), ConfigurationManager.AppSettings["formatLongDate"]);
 
                 MedReportHeader medReportHeader = new MedReportHeader();
                 medReportHeader.reportTypeId = reportType;
                 medReportHeader.reportTypeName = QueryGetReport.getReportTypeByTypeFormId(typeFormId).Where(x => x.id == reportType).FirstOrDefault().reportName;
                 medReportHeader.companyName = ReportAppCode.getCompanyByRole(typeFormId).Where(x => x.companyId == companyId).FirstOrDefault().companyNameTH;
-                medReportHeader.period = "วันที่ " + startDate + " ถึงวันที่ " + endDate;
+                medReportHeader.period = "วันที่ " + DocumentsAppCode.convertDateTHToShowCultureDateTH(startDate, ConfigurationManager.AppSettings["formatLongDate"])
+                + " ถึงวันที่ " + DocumentsAppCode.convertDateTHToShowCultureDateTH(endDate, ConfigurationManager.AppSettings["formatLongDate"]);
+
                 models.medReportHeader = medReportHeader;
 
                 //List<MedIndividualDetail> models = new List<MedIndividualDetail>();
-
+                List<RequestEmpModel> empModel = new List<RequestEmpModel>();
                 if (reportType == AppCode.ReportType.MedIndividual)
                 {
                     empId = Request.Form["ddlEmp"];
+
+                    empModel = QueryGet_empDetailById.getEmpDetailById(empId);
+                    models.empList = empModel;
+                    models.medIndividualDetail = QueryGetReport.getReportMedIndividualDetail(empId, typeFormId, startDate, endDate);
+                    if (models.medIndividualDetail.Where(x => x.amountByDetail == 0).Count() > 0)
+                    {
+                        //ลบกรณีไม่เคยเบิกนอกระบบ
+                        var itemToRemove = models.medIndividualDetail.Remove(models.medIndividualDetail.Single(x => x.amountByDetail == 0));
+                    }
+                    if (models.medIndividualDetail.Where(x => x.activityNo == "").Count() > 0 && models.medIndividualDetail.Count() == 1)
+                    {
+                        decimal? cashPerDay = 0;
+                        //กรณีมีนอกระบบ อย่างเดียว
+                        List<CashEmpModel> cashEmpList = new List<CashEmpModel>();
+                        cashEmpList = QueryGetBenefit.getCashLimitByTypeId(@AppCode.Expenses.Medical, BaseAppCodes.getEmpFromApi(empId).empProbationEndDate, empModel[0].level).ToList();
+                        if (cashEmpList.Count > 0)
+                        { cashPerDay = cashEmpList[0].cashPerDay; }
+
+                        models.medIndividualDetail.Where(x => x.activityNo == "").Select(c =>
+                        {
+                            c.treatmentDate = "-";
+                            c.amountLimit = cashPerDay;
+                            c.unitPrice = c.amountByDetail;
+                            c.typeName = "-";
+                            c.hospNameTH = "-";
+                            c.detail = "วงเงินที่ใช้ไปก่อนเข้าระบบ"; return c;
+                        }).ToList();
+                    }
+                    else
+                    {
+                        //มีนอกและมีในระบบ
+                        models.medIndividualDetail.Where(x => x.activityNo == "").Select(c =>
+                        {
+                            c.treatmentDate = "-";
+                            c.amountLimit = models.medIndividualDetail[1].amountLimit;
+                            c.unitPrice = c.amountByDetail;
+                            c.typeName = "-";
+                            c.hospNameTH = "-";
+                            c.detail = "วงเงินที่ใช้ไปก่อนเข้าระบบ"; return c;
+                        }).ToList();
+                    }
                 }
                 else
                 {
                     empId = Request.Form["ddlMutiEmp"];
+                    List<MedAllDetail> medAllDetail = new List<MedAllDetail>();
+                    medAllDetail.Add(new MedAllDetail() { activityNo = "", documentDate = "" });
+                    models.medAllDetail = medAllDetail;
                 }
-
-
-                //RequestEmpModel empModel = new RequestEmpModel();
-
-
-                List<RequestEmpModel> empModel = new List<RequestEmpModel>();
-
-                empModel = QueryGet_empDetailById.getEmpDetailById(empId);
-
-                models.empList = empModel;
-
-                models.medIndividualDetail = QueryGetReport.getReportMedIndividualDetail(empId, typeFormId, Request.Form["startDate"], Request.Form["endDate"]);
-
-                List<MedAllDetail> medAllDetail = new List<MedAllDetail>();
-                medAllDetail.Add(new MedAllDetail() { activityNo = "", documentDate = "" });
-                models.medAllDetail = medAllDetail;
-
-
-
             }
 
             return PartialView(models);

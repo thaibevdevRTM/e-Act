@@ -627,15 +627,13 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
 
         }
-
-
         public JsonResult getEmpByDepartment(string companyId, string department)
         {
             List<RequestEmpModel> empDetailList = new List<RequestEmpModel>();
             var result = new AjaxResult();
             try
             {
-                empDetailList = QueryGet_empByComp.getEmpByDepartment(companyId, department).ToList();                                             
+                empDetailList = QueryGet_empByComp.getEmpByDepartment(companyId, department).ToList();
                 if (empDetailList.Any())
                 {
                     var resultData = new
@@ -656,5 +654,6 @@ namespace eActForm.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
     }
 }

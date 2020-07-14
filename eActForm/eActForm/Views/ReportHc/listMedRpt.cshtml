@@ -74,7 +74,9 @@
 
                                     @for (int index_view = 0; index_view < Model.medIndividualDetail.Count; index_view++)
                                     {
+
                                         amountCumulative = amountCumulative + Model.medIndividualDetail[index_view].amountByDetail;
+
                                         <tr class="gradeX">
 
                                             <td style="text-align:center; border:1px solid #2e2e1f;">@(index_view + 1)</td>
@@ -93,7 +95,15 @@
                                             }
                                             <td style="text-align:left; border:1px solid #2e2e1f;"> @Model.medIndividualDetail[index_view].detail</td>
                                             <td style="text-align:right; border:1px solid #2e2e1f;"> @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].unitPrice)</td>
-                                            <td style="text-align:center; border:1px solid #2e2e1f;"> @Model.medIndividualDetail[index_view].hospPercent %</td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;">
+                                                @if (Model.medIndividualDetail[index_view].activityNo != "") {
+                                                @(Model.medIndividualDetail[index_view].hospPercent+"%");
+                                                } else {
+                                                   @('-');
+                                                }
+                                             
+
+                                            </td>
 
 
                                             <td style="text-align:right; border:1px solid #2e2e1f;">
@@ -144,6 +154,7 @@
 
 
                                         </tr>
+
                                     }
                                 </tbody>
                             </table>

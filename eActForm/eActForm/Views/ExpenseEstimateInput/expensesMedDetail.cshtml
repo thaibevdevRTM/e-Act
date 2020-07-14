@@ -23,19 +23,19 @@
                         </th>
                     </tr>
                     @*  <tr>
-                <th style="text-align :center;"> สถานพยาบาลที่ไปตรวจรักษา</th>
-                <th colspan="2" style="text-align :center;">
+                            <th style="text-align :center;"> สถานพยาบาลที่ไปตรวจรักษา</th>
+                            <th colspan="2" style="text-align :center;">
 
-                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].hospName, new
-                   {
-                            id = "txthospName_0",
-                       @class = "form-control textboxcss font10  text-center  expenseList",
-                       name = "expensesDetailModel.costDetailLists[0].hospName",
-                       onkeyup = "autocompleDetail(this,0)"
-                   })
+                                @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].hospName, new
+                               {
+                                        id = "txthospName_0",
+                                   @class = "form-control textboxcss font10  text-center  expenseList",
+                                   name = "expensesDetailModel.costDetailLists[0].hospName",
+                                   onkeyup = "autocompleDetail(this,0)"
+                               })
 
-                </th>
-            </tr> *@
+                            </th>
+                        </tr> *@
                     <tr>
                         <th colspan="4" style="text-align :center;">
                             <div class="form-group">
@@ -61,29 +61,29 @@
                             </div>
 
                             @*<div class="form-group">
-                        <div class="col-md-10 col-xs-12">
-                            <div class="row">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
-                                    รหัสบัญชี :
-                                </label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].glCode, new
-                               {
-                                   @class = "form-control textboxcss ",
-                                   id = "txtGlCode_0",
-                                   name = "expensesDetailModel.costDetailLists[0].glCode",
-                                   style = "",
-                                   @readonly = true
-                               })
+                                    <div class="col-md-10 col-xs-12">
+                                        <div class="row">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
+                                                รหัสบัญชี :
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].glCode, new
+                                           {
+                                               @class = "form-control textboxcss ",
+                                               id = "txtGlCode_0",
+                                               name = "expensesDetailModel.costDetailLists[0].glCode",
+                                               style = "",
+                                               @readonly = true
+                                           })
 
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-xs-12">
-                            <div class="row"></div>
-                        </div>
-                    </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-xs-12">
+                                        <div class="row"></div>
+                                    </div>
+                                </div>*@
                         </th>
                     </tr>
 
@@ -98,6 +98,9 @@
                         </th>
                         <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             รหัสบัญชี
+                            <br />  <lable style="color:red;font-size:7pt;">
+                                *สำหรับบัญชีเท่านั้น
+                            </lable>
                         </th>
                         <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             จำนวนเงินตามใบเสร็จ
@@ -137,14 +140,15 @@
                                 @if (index == 0)
                                 {
                                     @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].glCode, new
-                                   {
-                                       @class = "form-control textboxcss ",
-                                       id = "txtGlCode_0",
-                                       name = "expensesDetailModel.costDetailLists[0].glCode",
-                                       style = "",
-                                       @readonly = true
-                                   })
+                               {
+                                   @class = "form-control textboxcss ",
+                                   id = "txtGlCode_0",
+                                   name = "expensesDetailModel.costDetailLists[0].glCode",
+                                   style = "",
+                                   @readonly = true
+                               })
                                 }
+
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
 
@@ -162,47 +166,47 @@
                                     $("#txtUnitPrice_@index").blur(function () {
 
 
-                                            var v_unitRow = 0.00;
-                                            var v_unitpriceRow = 0.00;
-                                            var v_totalRow = 0.00;
+                                    var v_unitRow = 0.00;
+                                    var v_unitpriceRow = 0.00;
+                                    var v_totalRow = 0.00;
 
-                                            if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
-                                            if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
-                                                v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
-                                            }
-                                            if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                                v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
+                                    if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
+                                    if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
+                                        v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
+                                    }
+                                    if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
+                                        v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
 
-                                                //var v_unitRow = 0.00;
+                                        //var v_unitRow = 0.00;
 
-                                            }
-                                            v_totalRow = (v_unitRow * v_unitpriceRow);
+                                    }
+                                    v_totalRow = (v_unitRow * v_unitpriceRow);
 
                                         $("#hdTotal_@index").val(v_totalRow.toFixed(2));
                                         $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                            sumall();
-                                        });
+                                    sumall();
+                                });
 
                                     $("#txtUnit_@index").blur(function () {
 
 
-                                            var v_unitRow = 0.00;
-                                            var v_unitpriceRow = 0.00;
-                                            var v_totalRow = 0.00;
-                                            if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
-                                            if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
-                                                v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
-                                            }
-                                            if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                                v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
+                                    var v_unitRow = 0.00;
+                                    var v_unitpriceRow = 0.00;
+                                    var v_totalRow = 0.00;
+                                    if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
+                                    if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
+                                        v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
+                                    }
+                                    if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
+                                        v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
 
-                                            }
-                                            v_totalRow = (v_unitRow * v_unitpriceRow);
+                                    }
+                                    v_totalRow = (v_unitRow * v_unitpriceRow);
 
                                         $("#hdTotal_@index").val(v_totalRow.toFixed(2));
                                         $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                            sumall();
-                                        });
+                                    sumall();
+                                });
 
                                 </script>
                             </td>
