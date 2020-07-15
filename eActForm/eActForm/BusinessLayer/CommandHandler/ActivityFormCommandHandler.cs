@@ -105,7 +105,8 @@ namespace eActForm.BusinessLayer
 
                         DateTime getDoc = DateTime.Parse(model.activityFormModel.activityPeriodSt.ToString());
                         string getYear = getDoc.Month > 9 ? getDoc.AddYears(1).ToString("yy") : getDoc.Year.ToString().Substring(2);
-                        costThemeDetail.IO = "56S0" + getYear + ActFormAppCode.getDigitGroup(item.activityTypeId) + ActFormAppCode.getDigitRunnigGroup(item.productId);
+                        var getIO = QueryGetAllProduct.getBrandByProductId(item.productId).Any() ? "54" : "56";
+                        costThemeDetail.IO = getIO + "S0" + getYear + ActFormAppCode.getDigitGroup(item.activityTypeId) + ActFormAppCode.getDigitRunnigGroup(item.productId);
 
                         //costThemeDetail.IO = item.IO;
                         costThemeDetail.mechanics = item.mechanics;
