@@ -45,17 +45,27 @@
                                     <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss" placeholder="กิจกรรมหรือรายละเอียด" />
                                 </div>
                                 <div style="display:inline-block;">
-                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO" placeholder="EO" maxlength="18" />
+                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO_@index" placeholder="EO" maxlength="18" />
+                                    <script>
+                                        $(".clstxtEO_@index").blur(function () {
+                                            $(".clstxtEO_@index").val($(".clstxtEO_@index").val().replaceAll(" ", ""));
+                                        });
+                                    </script>
                                 </div>
                                 <div style="display:inline-block;">
                                     @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
                                     {
-                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" placeholder="IO" maxlength="12"/>
+                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO_@index" placeholder="IO" maxlength="12" />
                                     }
                                     else
                                     {
-                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" placeholder="IO" maxlength="12" readonly="readonly" />
+                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO_@index" placeholder="IO" maxlength="12" readonly="readonly" />
                                     }
+                                    <script>
+                                        $(".clstxtIO_@index").blur(function () {
+                                            $(".clstxtIO_@index").val($(".clstxtIO_@index").val().replaceAll(" ", ""));
+                                        });
+                                    </script>
                                 </div>
                             </td>
                             <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
