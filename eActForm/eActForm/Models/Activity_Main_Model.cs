@@ -75,6 +75,7 @@ namespace eActForm.Models
         public List<GetDataDetailPaymentAll> listGetDataDetailPaymentAll { get; set; }
         public List<departmentMasterModel> listGetDepartmentMaster { get; set; }
         public List<DataRequesterToShow> dataRequesterToShows { get; set; }
+        public List<string> listEoInDoc  { get; set; }
 
     }
 
@@ -192,11 +193,12 @@ namespace eActForm.Models
         public string activityId { get; set; }
         public string typeKeep { get; set; }
         public int rowNo { get; set; }
-        public string activityIdEO { get; set; }
+        public string activityIdEO { get; set; }        
         public string IO { get; set; }
         public string GL { get; set; }
         public string select_list_choice_id_ChReg { get; set; }
         public string productBrandId { get; set; }
+        public string EO { get; set; }
     }
 
         public class TB_Act_ActivityLayout
@@ -337,11 +339,13 @@ namespace eActForm.Models
     {
         public string EO { get; set; }
         public string activityId { get; set; }
+        public string activityIdAndEO { get; set; }
     }
 
     public class ObjGetDataIO
     {
         public string ActivityByEOSelect { get; set; }
+        public string EOSelect { get; set; }
     }
 
     public class GetDataIO

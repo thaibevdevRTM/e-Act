@@ -23,19 +23,19 @@
                         </th>
                     </tr>
                     @*  <tr>
-                <th style="text-align :center;"> สถานพยาบาลที่ไปตรวจรักษา</th>
-                <th colspan="2" style="text-align :center;">
+                            <th style="text-align :center;"> สถานพยาบาลที่ไปตรวจรักษา</th>
+                            <th colspan="2" style="text-align :center;">
 
-                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].hospName, new
-                   {
-                            id = "txthospName_0",
-                       @class = "form-control textboxcss font10  text-center  expenseList",
-                       name = "expensesDetailModel.costDetailLists[0].hospName",
-                       onkeyup = "autocompleDetail(this,0)"
-                   })
+                                @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].hospName, new
+                               {
+                                        id = "txthospName_0",
+                                   @class = "form-control textboxcss font10  text-center  expenseList",
+                                   name = "expensesDetailModel.costDetailLists[0].hospName",
+                                   onkeyup = "autocompleDetail(this,0)"
+                               })
 
-                </th>
-            </tr> *@
+                            </th>
+                        </tr> *@
                     <tr>
                         <th colspan="4" style="text-align :center;">
                             <div class="form-group">
@@ -61,29 +61,29 @@
                             </div>
 
                             @*<div class="form-group">
-                        <div class="col-md-10 col-xs-12">
-                            <div class="row">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
-                                    รหัสบัญชี :
-                                </label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].glCode, new
-                               {
-                                   @class = "form-control textboxcss ",
-                                   id = "txtGlCode_0",
-                                   name = "expensesDetailModel.costDetailLists[0].glCode",
-                                   style = "",
-                                   @readonly = true
-                               })
+                                    <div class="col-md-10 col-xs-12">
+                                        <div class="row">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
+                                                รหัสบัญชี :
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].glCode, new
+                                           {
+                                               @class = "form-control textboxcss ",
+                                               id = "txtGlCode_0",
+                                               name = "expensesDetailModel.costDetailLists[0].glCode",
+                                               style = "",
+                                               @readonly = true
+                                           })
 
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-xs-12">
-                            <div class="row"></div>
-                        </div>
-                    </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-xs-12">
+                                        <div class="row"></div>
+                                    </div>
+                                </div>*@
                         </th>
                     </tr>
 
@@ -97,7 +97,10 @@
                             เจ็บป่วยเนื่องจาก
                         </th>
                         <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            รหัสบัญชี
+                            รหัสบัญชี<br />
+                            <lable style="color:red;font-size:7pt;">
+                                *สำหรับบัญชีเท่านั้น
+                            </lable>
                         </th>
                         <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             จำนวนเงินตามใบเสร็จ

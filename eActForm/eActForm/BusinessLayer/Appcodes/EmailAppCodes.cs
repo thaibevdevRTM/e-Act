@@ -216,7 +216,7 @@ namespace eActForm.BusinessLayer
 
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-                        strBody = getEmailBody(item, emailType, actFormId,false);
+                        strBody = getEmailBody(item, emailType, actFormId, false);
                         strSubject = emailAllApprovedSubject;
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
@@ -325,7 +325,7 @@ namespace eActForm.BusinessLayer
                 {
                     foreach (ApproveModel.approveEmailDetailModel item in lists)
                     {
-                        strBody = getEmailBody(item, emailType, actFormId,false);
+                        strBody = getEmailBody(item, emailType, actFormId, false);
                         strSubject = isResend ? "RE: " + strSubject : strSubject;
                         sendEmailActForm(actFormId
                             , item.empEmail
@@ -445,8 +445,10 @@ namespace eActForm.BusinessLayer
             //mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? ConfigurationManager.AppSettings["emailApproveCC"].ToString() : mailCC;//ถ้าจะเทส ดึงCC จากDevไปเปลี่ยนรหัสพนักงานเองเลยที่ตาราง TB_Reg_ApproveDetail            
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
             mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : mailCC;
-            strBody += (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? checkMail : strBody;
 
+            if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])){
+                strBody += checkMail;
+            }
 
             switch (emailType)
             {
@@ -485,7 +487,7 @@ namespace eActForm.BusinessLayer
                     if (item.imageType == AppCode.ApproveType.Report_Detail.ToString())
                     {
                         pathFile[i] = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootRepDetailPdftURL"], item._fileName));
-                       
+
                     }
                     else
                     {
@@ -509,20 +511,20 @@ namespace eActForm.BusinessLayer
                     }
 
                     var dontAttach = 0;
-                    if(extTypeFile.ToLower() == ".pdf" && i_loop_change_name > 0)
+                    if (extTypeFile.ToLower() == ".pdf" && i_loop_change_name > 0)
                     {
                         dontAttach = 1;
                     }
                     if (dontAttach == 0)
                     {
                         files.Add(attachment);
-                    }                  
+                    }
 
                     i_loop_change_name++;
                 }
             }
 
-            sendEmailWithActId(actFormId,mailTo
+            sendEmailWithActId(actFormId, mailTo
                     , mailCC
                     , strSubject
                     , strBody
@@ -535,7 +537,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        private static string getEmailBody(ApproveModel.approveEmailDetailModel item, AppCode.ApproveType emailType, string actId,bool statusApproveSuccess)
+        private static string getEmailBody(ApproveModel.approveEmailDetailModel item, AppCode.ApproveType emailType, string actId, bool statusApproveSuccess)
         {
             try
             {
@@ -584,7 +586,7 @@ namespace eActForm.BusinessLayer
                         strBody = ConfigurationManager.AppSettings["emailApproveBody"];
                         strPiority = ConfigurationManager.AppSettings["emailpiority"];
                         empNameResult = item.empName;
-                        txtApprove = string.IsNullOrEmpty( item.statusId ) ? AppCode.ApproveStatus.เรียนเพื่อทราบ.ToString() : AppCode.ApproveStatus.รออนุมัติ.ToString();
+                        txtApprove = string.IsNullOrEmpty(item.statusId) ? AppCode.ApproveStatus.เรียนเพื่อทราบ.ToString() : AppCode.ApproveStatus.รออนุมัติ.ToString();
                         txtcreateBy = item.createBy;
                         txtCompanyname = models[0].companyName;
 
@@ -632,7 +634,7 @@ namespace eActForm.BusinessLayer
                             strBody = strBody.Replace("<b>จำนวนเงินที่ขอนุมัติ :</b> {6} บาท<br>", "");
                             strBody = strBody.Replace("<b>Amount Requested :</b> {6} Bath<br>", "");
                         }
-                        if (arrayFormStyleV4.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) && statusApproveSuccess==true)
+                        if (arrayFormStyleV4.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) && statusApproveSuccess == true)
                         {
                             strBody = strBody.Replace("คุณสามารถตรวจสอบรายละเอียดเพิ่มเติม และ Approve รายการได้ตามลิ้งค์นี้ :<a href=\"{9} \" > {9} </a>", "");
                             strBody = strBody.Replace("To approve and review expenses details, please click here: :<a href=\"{9} \" > {9} </a>", "");

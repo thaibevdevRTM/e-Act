@@ -277,7 +277,9 @@ namespace eActForm.Models
         public string glCode { get; set; }
         public string hospId { get; set; }
         public string hospName { get; set; }
-   
+        public string UseYearSelect { get; set; }
+        public string EO { get; set; }
+
     }
 
     public class CostThemeDetail : ActBaseModel
