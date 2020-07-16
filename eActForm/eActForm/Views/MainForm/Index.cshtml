@@ -412,12 +412,7 @@
             for (i = 0; i < rowCount; i++) {
                 if ($(".clstxtproductDetail_" + i).val() != "") {
                     if ($("#activityOfEstimateList_" + i + "__activityTypeId").val() != "") {
-                        if ($("#activityOfEstimateList_" + i + "__activityTypeId").val() == "@ConfigurationManager.AppSettings["ddlTypeActivity"]") {
-                            if ($("#activityOfEstimateList_" + i + "__UseYearSelect").val() == "") {
-                                required += "&emsp;ปีงบประมาณบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
-                            }
-                        }
-                        else if ($("#activityOfEstimateList_" + i + "__activityTypeId").val() == "@ConfigurationManager.AppSettings["ddlTypeDetails"]") {
+                        if ($("#activityOfEstimateList_" + i + "__activityTypeId").val() == "@ConfigurationManager.AppSettings["ddlTypeDetails"]") {
                             if ($("#activityOfEstimateList_" + i + "__UseYearSelect").val() == "") {
                                 required += "&emsp;ปีงบประมาณบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
                             }
