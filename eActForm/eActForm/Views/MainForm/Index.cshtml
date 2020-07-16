@@ -407,6 +407,31 @@
             }
 
         }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
+            var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
+            for (i = 0; i < rowCount; i++) {
+                if ($(".clstxtproductDetail_" + i).val() != "") {
+                    if ($("#activityOfEstimateList_" + i + "__activityTypeId").val() != "") {
+                        if ($("#activityOfEstimateList_" + i + "__activityTypeId").val() == "@ConfigurationManager.AppSettings["ddlTypeActivity"]") {
+                            if ($("#activityOfEstimateList_" + i + "__UseYearSelect").val() == "") {
+                                required += "&emsp;ปีงบประมาณบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                            }
+                        }
+                        else if ($("#activityOfEstimateList_" + i + "__activityTypeId").val() == "@ConfigurationManager.AppSettings["ddlTypeDetails"]") {
+                            if ($("#activityOfEstimateList_" + i + "__UseYearSelect").val() == "") {
+                                required += "&emsp;ปีงบประมาณบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                            }
+                            if ($(".clstxtEO_" + i).val() == "") {
+                                required += "&emsp;EOบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                            }
+                        }
+                    }
+                    else {
+                        required += "&emsp;ประเภทบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                    }
+                }
+            }
+        }
         else {
 
         }
