@@ -57,11 +57,11 @@ namespace eActForm.BusinessLayer.QueryHandler
                                  typeName = d["typeName"].ToString(),
                                  hospNameTH = d["hospNameTH"].ToString(),
                                  rowNo = d["rowNo"].ToString() == "" ? 0 : int.Parse(AppCode.checkNullorEmpty(d["rowNo"].ToString())),
-                                 treatmentDate = DocumentsAppCode.convertDateTHToShowCultureDateTH( DateTime.Parse(d["date"].ToString()), ConfigurationManager.AppSettings["formatDateUse"]),
+                                 treatmentDate = DocumentsAppCode.convertDateTHToShowCultureDateTH(DateTime.Parse(d["date"].ToString()), ConfigurationManager.AppSettings["formatDateUse"]),
                                  detail = d["detail"].ToString(),
                                  unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
                                  total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
-                                 amountByDetail = d["amountByDetail"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountByDetail"].ToString())) 
+                                 amountByDetail = d["amountByDetail"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountByDetail"].ToString()))
                              });
                 //BaseAppCodes.converStrToDatetimeWithFormat(Request.Form["startDate"], ConfigurationManager.AppSettings["formatDateUse"])
                 //.OrderBy(x=>x.documentDate).OrderBy(x => x.rowNo)
@@ -71,6 +71,38 @@ namespace eActForm.BusinessLayer.QueryHandler
             {
                 ExceptionManager.WriteError("getTypeReportByTypeFormId => " + ex.Message);
                 return new List<MedIndividualDetail>();
+            }
+        }
+        public static List<MedAllDetail> getReportMedAllDetail(string empCompanyId, string empDepartmentEN, string typeFormId, DateTime? startDate, DateTime? endDate)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getReportMedAllDetail"
+                     , new SqlParameter("@empCompanyId", empCompanyId)
+                      , new SqlParameter("@empDepartmentEN", empDepartmentEN)
+                     , new SqlParameter("@typeFormId", typeFormId)
+                      , new SqlParameter("@startDate", startDate)
+                       , new SqlParameter("@endDate", endDate));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new MedAllDetail()
+                             {
+                                 empId = d["empId"].ToString(),
+                                 empName = d["empName"].ToString(),
+                                 position = d["empPositionTitleTH"].ToString(),
+                                 level = d["empLevel"].ToString(),
+                                 department = d["empDepartmentEN"].ToString(),
+                                 amount = d["amount"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amount"].ToString())),
+                                 amountReceived = d["amountReceived"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountReceived"].ToString())),
+                                 amountLimit = d["amountLimit"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountLimit"].ToString())),
+                                 amountBalance = d["amountBalance"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["amountBalance"].ToString())),
+                             });
+
+                return lists.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getReportMedAllDetail => " + ex.Message);
+                return new List<MedAllDetail>();
             }
         }
 

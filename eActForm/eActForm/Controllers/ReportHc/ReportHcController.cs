@@ -12,6 +12,8 @@ using eActForm.Controllers;
 using Newtonsoft.Json.Linq;
 using System.Web.Helpers;
 using Newtonsoft.Json;
+using WebLibrary;
+using System.Text;
 
 namespace eActForm.Controllers.ReportHc
 {
@@ -124,14 +126,32 @@ namespace eActForm.Controllers.ReportHc
                 }
                 else
                 {
-                    empId = Request.Form["ddlMutiEmp"];
-                    List<MedAllDetail> medAllDetail = new List<MedAllDetail>();
-                    medAllDetail.Add(new MedAllDetail() { activityNo = "", documentDate = "" });
-                    models.medAllDetail = medAllDetail;
+                   // empId = Request.Form["ddlMutiEmp"];
+                    //  List<MedAllDetail> medAllDetail = new List<MedAllDetail>();
+                    //medAllDetail.Add(new MedAllDetail() { activityNo = "", documentDate = "" });
+                    //models.medAllDetail = medAllDetail;
+                    models.medAllDetail = QueryGetReport.getReportMedAllDetail(companyId,department, typeFormId, startDate, endDate);
                 }
             }
 
             return PartialView(models);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public FileResult repExportExcel(string gridHtml)
+        {
+            try
+            {
+                //RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                //gridHtml = gridHtml.Replace("\n", "<br>");
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return File(Encoding.UTF8.GetBytes(gridHtml), "application/vnd.ms-excel", "DetailReport.xls");
         }
     }
 }

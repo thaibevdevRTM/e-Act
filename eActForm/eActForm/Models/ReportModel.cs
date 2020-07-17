@@ -58,21 +58,17 @@ namespace eActForm.Models
         public string detail { get; set; }
         public decimal? unitPrice { get; set; }
         public decimal? total { get; set; }
-       public decimal? amountByDetail { get; set; }
-        //@Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.hospPercent, new { @id = "hdPercent" }) %
-        // @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amount, new { @id = "hdAmount" }) บาท
-        //@Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountLimit, new { @id = "hdLimit" }) บาท
-        //@Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountCumulative, new { @id = "hdCumulative" }) บาท
-        //@Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountBalance, new { @id = "hdBalance" }) บาท
-        //@Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountReceived, new { @id = "hdReceived" }) บาท
-
+        public decimal? amountByDetail { get; set; }
     }
     public class MedAllDetail
     {
-
+        public string empId { get; set; }
+        public string empName { get; set; }
+        public string position { get; set; }
+        public string level { get; set; }
+        public string department { get; set; }
         public string activityNo { get; set; }
         public string documentDate { get; set; }
-        public string hospPercent { get; set; }
         public decimal? amount { get; set; }
         public decimal? amountLimit { get; set; }
         public decimal? amountCumulative { get; set; }

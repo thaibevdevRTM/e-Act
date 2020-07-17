@@ -12,9 +12,9 @@
 
                     <div class="row">
                         <p class="d-flex justify-content-center">
-                            @using (Html.BeginForm("viewExportExcel", "BudgetReport", FormMethod.Post))
+                            @using (Html.BeginForm("repExportExcel", "ReportHc", FormMethod.Post))
                             {
-                                <input type="hidden" name="gridHtml" />
+                                <input type="hidden" name="gridHtml" id="gridHtml" />
                                 <button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
                                     <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
                                 </button>
@@ -96,12 +96,15 @@
                                             <td style="text-align:left; border:1px solid #2e2e1f;"> @Model.medIndividualDetail[index_view].detail</td>
                                             <td style="text-align:right; border:1px solid #2e2e1f;"> @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].unitPrice)</td>
                                             <td style="text-align:center; border:1px solid #2e2e1f;">
-                                                @if (Model.medIndividualDetail[index_view].activityNo != "") {
-                                                @(Model.medIndividualDetail[index_view].hospPercent+"%");
-                                                } else {
-                                                   @('-');
+                                                @if (Model.medIndividualDetail[index_view].activityNo != "")
+                                                {
+                                                    @(Model.medIndividualDetail[index_view].hospPercent+"%");
                                                 }
-                                             
+                                                else
+                                                {
+                                                    @('-');
+                                                }
+
 
                                             </td>
 
@@ -167,152 +170,99 @@
         }
         else if (Model.medReportHeader != null && Model.medReportHeader.reportTypeId == AppCode.ReportType.MedAll)
         {
-            <div class="form-group">
-                <div class="col-md-12 col-xs-12">
+            using (Html.BeginForm("repExportExcel", "ReportHc", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <div class="col-md-12 col-xs-12">
 
-                    <div class="row">
-                        <p class="d-flex justify-content-center">
-                            @using (Html.BeginForm("viewExportExcel", "BudgetReport", FormMethod.Post))
-                            {
-                                <input type="hidden" name="gridHtml" />
+                        <div class="row">
+                            <p class="d-flex justify-content-center">
+
+                                <input type="hidden" name="gridHtml" id="gridHtml" />
                                 <button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
                                     <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
                                 </button>
-                            }
-                        </p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-12 col-xs-12">
-                    <div class="row">
-                        @*  *@
-                        <div id="GridView">
-                            <table class="table table-hover border-dark" id="datatable" style="width:100%; color:#2e2e1f;">
-                                <thead>
-                                    <tr style="font-size:larger; ">
-                                        <td colspan="10" style="text-align:center;"><b>รายงานสรุปการเบิก-จ่ายสวัสดิการค่ารักษาพยาบาล </b></td>
-                                    </tr>
-                                    <tr style="">
-                                        <td colspan="10" style="text-align:center;"><b>บริษัท @Model.medReportHeader.companyName</b></td>
-                                    </tr>
-                                    <tr style="">
-                                        <td colspan="10" style="text-align:center;"><b>@Model.medReportHeader.period</b></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="10" style="text-align:center;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ลำดับที่</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"><b>รหัสพนักงาน</b> </td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ชื่อ-นามสกุล</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ตำแหน่ง</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ระดับ</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>กลุ่มงาน</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"><b>ค่ารักษาตามใบเสร็จ(บาท)</b> </td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ยอดเบิกสะสม/ปี(บาท)</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>วงเงินตามสิทธิ/ปี(บาท)</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"><b>วงเงินคงเหลือ(บาท)</b></td>
-
-                                    </tr>
-                                </thead>
-
-                                @*<tbody>
-
-                                        @{ decimal? amountCumulative = 0; }
-
-                                        @for (int index_view = 0; index_view < Model.medIndividualDetail.Count; index_view++)
-                                        {
-                                            amountCumulative = amountCumulative + Model.medIndividualDetail[index_view].amountByDetail;
-                                            <tr class="gradeX">
-
-                                                <td style="text-align:center; border:1px solid #2e2e1f;">@(index_view + 1)</td>
-                                                <td style="text-align:center; border:1px solid #2e2e1f;">
-                                                    @Model.medIndividualDetail[index_view].treatmentDate
-                                                </td>
-                                                @if (Model.medIndividualDetail[index_view].hospNameTH == "")
-                                                {
-                                                    <td style="text-align:left; border:1px solid #2e2e1f;">@Model.medIndividualDetail[index_view - 1].typeName </td>
-                                                    <td style="text-align:left; border:1px solid #2e2e1f;">  @Model.medIndividualDetail[index_view - 1].hospNameTH </td>
-                                                }
-                                                else
-                                                {
-                                                    <td style="text-align:left; border:1px solid #2e2e1f;">@Model.medIndividualDetail[index_view].typeName </td>
-                                                    <td style="text-align:left; border:1px solid #2e2e1f;">  @Model.medIndividualDetail[index_view].hospNameTH </td>
-                                                }
-                                                <td style="text-align:left; border:1px solid #2e2e1f;"> @Model.medIndividualDetail[index_view].detail</td>
-                                                <td style="text-align:right; border:1px solid #2e2e1f;"> @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].unitPrice)</td>
-                                                <td style="text-align:center; border:1px solid #2e2e1f;"> @Model.medIndividualDetail[index_view].hospPercent %</td>
-
-
-                                                <td style="text-align:right; border:1px solid #2e2e1f;">
-
-                                                    @if (amountCumulative > Model.medIndividualDetail[index_view].amountLimit)
-                                                    {
-                                                        @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].amountReceived)
-                                                    }
-                                                    else
-                                                    {
-                                                        @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].amountByDetail)
-                                                    }
-
-                                                </td>
-                                                <td style="text-align:right; border:1px solid #2e2e1f;">
-
-                                                    @if (amountCumulative > Model.medIndividualDetail[index_view].amountLimit)
-                                                    {
-                                                        @String.Format("{0:n2}", Model.medIndividualDetail[index_view].amountLimit)
-                                                    }
-                                                    else
-                                                    {
-                                                        @String.Format("{0:n2}", @amountCumulative)
-                                                    }
-                                                </td>
-                                                <td style="text-align:right; border:1px solid #2e2e1f;">
-                                                    @if (index_view == 0)
-                                                    {@String.Format("{0:n2}", Model.medIndividualDetail[index_view].amountLimit)}
-                                                </td>
-                                                <td style="text-align: right; border:1px solid #2e2e1f;">
-
-                                                    @if (@amountCumulative > Model.medIndividualDetail[index_view].amountLimit)
-                                                    {
-                                                        @String.Format("{0:n2}", 0)
-                                                    }
-                                                    else
-                                                    {
-                                                        @String.Format("{0:n2}", (Model.medIndividualDetail[index_view].amountLimit - amountCumulative))
-                                                    }
-                                                </td>
-
-
-
-
-
-
-
-
-
-                                            </tr>
-                                        }
-                                    </tbody>*@
-                            </table>
+                            </p>
                         </div>
                     </div>
                 </div>
-            </div>
 
+                <div class="form-group">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="row">
+                            @*  *@
+                            <div id="GridView">
+                                <table class="table table-hover border-dark" id="datatable" style="width:100%; color:#2e2e1f;background-color:#ffffff;">
+                                    <thead>
+                                        <tr style="font-size:larger; ">
+                                            <td colspan="10" style="text-align:center;"><b>รายงานสรุปการเบิก-จ่ายสวัสดิการค่ารักษาพยาบาล </b></td>
+                                        </tr>
+                                        <tr style="">
+                                            <td colspan="10" style="text-align:center;"><b>บริษัท @Model.medReportHeader.companyName</b></td>
+                                        </tr>
+                                        <tr style="">
+                                            <td colspan="10" style="text-align:center;"><b>@Model.medReportHeader.period</b></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="10" style="text-align:center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ลำดับที่</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"><b>รหัสพนักงาน</b> </td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ชื่อ-นามสกุล</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ตำแหน่ง</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ระดับ</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>กลุ่มงาน</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"><b>ค่ารักษาตามใบเสร็จ(บาท)</b> </td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ยอดเบิกสะสม/ปี(บาท)</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>วงเงินตามสิทธิ/ปี(บาท)</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"><b>วงเงินคงเหลือ(บาท)</b></td>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+
+
+                                        @for (int index_view = 0; index_view < Model.medAllDetail.Count; index_view++)
+                                        {
+
+                                            <tr class="gradeX">
+
+                                                <td style="text-align:center; border:1px solid #2e2e1f;">@(index_view + 1)</td>
+                                                <td style="text-align:left; border:1px solid #2e2e1f;">@Model.medAllDetail[index_view].empId </td>
+                                                <td style="text-align:left; border:1px solid #2e2e1f;">@Model.medAllDetail[index_view].empName </td>
+                                                <td style="text-align:left; border:1px solid #2e2e1f;">@Model.medAllDetail[index_view].position </td>
+                                                <td style="text-align:left; border:1px solid #2e2e1f;">@Model.medAllDetail[index_view].level </td>
+                                                <td style="text-align:left; border:1px solid #2e2e1f;">@Model.medAllDetail[index_view].department </td>
+
+                                                <td style="text-align:right; border:1px solid #2e2e1f;"> @String.Format("{0:n2}", @Model.medAllDetail[index_view].amount)</td>
+                                                <td style="text-align:right; border:1px solid #2e2e1f;"> @String.Format("{0:n2}", @Model.medAllDetail[index_view].amountReceived)</td>
+                                                <td style="text-align:right; border:1px solid #2e2e1f;"> @String.Format("{0:n2}", @Model.medAllDetail[index_view].amountLimit)</td>
+                                                <td style="text-align:right; border:1px solid #2e2e1f;"> @String.Format("{0:n2}", @Model.medAllDetail[index_view].amountBalance)</td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         }
 
     </div>
 </div>
 <script type="text/javascript">
-        $(function() {
-        $("#btnExportExcel").click(function() {
-        $("input[name='gridHtml']").val($("#GridView").html());
-        });
-        });
+        //$(function() {
+        //$("#btnExportExcel").click(function() {
+        //$("input[name='gridHtml']").val($("#GridView").html());
+        //});
+        //});
         function beginQuery()
         {
 
@@ -335,8 +285,28 @@
 
         function successQuery(htmlResponse)
         {
-        $("#getQuery").html(htmlResponse)
-        $("#getQuery").fadeIn(300);
+            $("#getQuery").html(htmlResponse);
+            $("#gridHtml").val($("#GridView").html());
+            $("#getQuery").fadeIn(300);
+
+            $('#datatable').DataTable({
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 }
+                    , { "orderable": false, "targets": 1 }
+                    , { "orderable": false, "targets": 2 }
+                    , { "orderable": false, "targets": 3 }
+                ],
+                "dom": 'lCfrtip',
+                "order": [],
+                "language": {
+                    "lengthMenu": '_MENU_ entries per page',
+                    "search": '<i class="fa fa-search"></i>',
+                    "paginate": {
+                        "previous": '<i class="fa fa-angle-left"></i>',
+                        "next": '<i class="fa fa-angle-right"></i>'
+                    }
+                }
+            });
         }
 
         function failureQuery(data)
