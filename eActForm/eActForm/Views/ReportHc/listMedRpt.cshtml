@@ -103,48 +103,20 @@
                                                     {
                                                         @('-');
                                                     }
-
-
                                                 </td>
 
-
                                                 <td style="text-align:right; border:1px solid #2e2e1f;">
-
-                                                    @if (amountCumulative > Model.medIndividualDetail[index_view].amountLimit)
-                                                    {
-                                                        @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].amountReceived)
-                                                    }
-                                                    else
-                                                    {
-                                                        @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].amountByDetail)
-                                                    }
-
+                                                    @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].amountReceived)
                                                 </td>
                                                 <td style="text-align:right; border:1px solid #2e2e1f;">
-
-                                                    @if (amountCumulative > Model.medIndividualDetail[index_view].amountLimit)
-                                                    {
-                                                        @String.Format("{0:n2}", Model.medIndividualDetail[index_view].amountLimit)
-                                                    }
-                                                    else
-                                                    {
-                                                        @String.Format("{0:n2}", @amountCumulative)
-                                                    }
+                                                    @String.Format("{0:n2}", Model.medIndividualDetail[index_view].amountCumulative)
                                                 </td>
                                                 <td style="text-align:right; border:1px solid #2e2e1f;">
                                                     @if (index_view == 0)
                                                     {@String.Format("{0:n2}", Model.medIndividualDetail[index_view].amountLimit)}
                                                 </td>
                                                 <td style="text-align: right; border:1px solid #2e2e1f;">
-
-                                                    @if (@amountCumulative > Model.medIndividualDetail[index_view].amountLimit)
-                                                    {
-                                                        @String.Format("{0:n2}", 0)
-                                                    }
-                                                    else
-                                                    {
-                                                        @String.Format("{0:n2}", (Model.medIndividualDetail[index_view].amountLimit - amountCumulative))
-                                                    }
+                                                    @String.Format("{0:n2}", (Model.medIndividualDetail[index_view].amountBalance))
                                                 </td>
 
 

@@ -57,7 +57,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                                  typeName = d["typeName"].ToString(),
                                  hospNameTH = d["hospNameTH"].ToString(),
                                  rowNo = d["rowNo"].ToString() == "" ? 0 : int.Parse(AppCode.checkNullorEmpty(d["rowNo"].ToString())),
-                                 treatmentDate = DocumentsAppCode.convertDateTHToShowCultureDateTH(DateTime.Parse(d["date"].ToString()), ConfigurationManager.AppSettings["formatDateUse"]),
+                                 treatmentDate = DocumentsAppCode.convertDateTHToShowCultureDateTH(DateTime.Parse(d["treatmentDate"].ToString()), ConfigurationManager.AppSettings["formatDateUse"]),
                                  detail = d["detail"].ToString(),
                                  unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
                                  total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
