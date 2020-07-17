@@ -88,8 +88,7 @@ namespace eActForm.Controllers
                 {
                     activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
                 }
-                    BaseAppCodes.WriteSignatureToDisk(activity_TBMMKT_Model.approveModels, activityId);
-                }                    
+                    BaseAppCodes.WriteSignatureToDisk(activity_TBMMKT_Model.approveModels, activityId);              
                 //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
             }
 

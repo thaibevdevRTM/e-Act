@@ -6,166 +6,165 @@
     <div id="getQuery" class="col-md-12 col-xs-12">
         @if (Model.medReportHeader != null && Model.medReportHeader.reportTypeId == AppCode.ReportType.MedIndividual)
         {
+            using (Html.BeginForm("repExportExcel", "ReportHc", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <div class="col-md-12 col-xs-12">
 
-            <div class="form-group">
-                <div class="col-md-12 col-xs-12">
-
-                    <div class="row">
-                        <p class="d-flex justify-content-center">
-                            @using (Html.BeginForm("repExportExcel", "ReportHc", FormMethod.Post))
-                            {
+                        <div class="row">
+                            <p class="d-flex justify-content-center">
                                 <input type="hidden" name="gridHtml" id="gridHtml" />
                                 <button type="submit" class="btn-sm ink-reaction btn-success pull-right" id="btnExportExcel" value="ExportExcel">
                                     <i class="fa fa-file-excel-o"></i>&nbsp;Export To Excel
                                 </button>
-                            }
-                        </p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-12 col-xs-12">
-                    <div class="row">
-                        @*  *@
-                        <div id="GridView">
-                            <table class="table table-hover border-dark" id="datatable" style="width:100%; color:#2e2e1f;">
-                                <thead>
-                                    <tr style="font-size:larger; ">
-                                        <td colspan="11" style="text-align:center;"><b>รายงานสรุปการเบิก-จ่ายสวัสดิการค่ารักษาพยาบาล @Model.medReportHeader.reportTypeName</b></td>
-                                    </tr>
-                                    <tr style="">
-                                        <td colspan="11" style="text-align:center;"><b>บริษัท @Model.medReportHeader.companyName</b></td>
-                                    </tr>
-                                    <tr style="">
-                                        <td colspan="11" style="text-align:center;"><b>@Model.medReportHeader.period</b></td>
-                                    </tr>
-                                    <tr style="">
-                                        <td colspan="11" style="text-align:center;">
-                                            <b>ชื่อ-นามสกุล</b> คุณ @Model.empList[0].empName
-                                            <b>รหัสพนักงาน</b> @Model.empList[0].empId
-                                            <b>ตำแหน่ง</b> @Model.empList[0].position
-                                            <b>ระดับ</b> @Model.empList[0].level
-                                            <b>กลุ่มงาน</b> @Model.empList[0].department
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="11" style="text-align:center;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ครั้งที่</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"><b>วันที่รักษา</b> </td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"><b>ประเภทสถานพยาบาล</b> </td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ชื่อสถานพยาบาล</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ประเภทการป่วย</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ค่ารักษาตามใบเสร็จ(บาท)</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>เบิกได้(%)</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"><b>เบิกได้(บาท)</b> </td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ยอดเบิกสะสม(บาท)</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"> <b>วงเงินตามสิทธิ/ปี(บาท)</b></td>
-                                        <td style="text-align:center; border:1px solid #2e2e1f;"><b>วงเงินคงเหลือ(บาท)</b></td>
-
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-
-                                    @{ decimal? amountCumulative = 0; }
-
-                                    @for (int index_view = 0; index_view < Model.medIndividualDetail.Count; index_view++)
-                                    {
-
-                                        amountCumulative = amountCumulative + Model.medIndividualDetail[index_view].amountByDetail;
-
-                                        <tr class="gradeX">
-
-                                            <td style="text-align:center; border:1px solid #2e2e1f;">@(index_view + 1)</td>
-                                            <td style="text-align:center; border:1px solid #2e2e1f;">
-                                                @Model.medIndividualDetail[index_view].treatmentDate
-                                            </td>
-                                            @if (Model.medIndividualDetail[index_view].hospNameTH == "")
-                                            {
-                                                <td style="text-align:left; border:1px solid #2e2e1f;">@Model.medIndividualDetail[index_view - 1].typeName </td>
-                                                <td style="text-align:left; border:1px solid #2e2e1f;">  @Model.medIndividualDetail[index_view - 1].hospNameTH </td>
-                                            }
-                                            else
-                                            {
-                                                <td style="text-align:left; border:1px solid #2e2e1f;">@Model.medIndividualDetail[index_view].typeName </td>
-                                                <td style="text-align:left; border:1px solid #2e2e1f;">  @Model.medIndividualDetail[index_view].hospNameTH </td>
-                                            }
-                                            <td style="text-align:left; border:1px solid #2e2e1f;"> @Model.medIndividualDetail[index_view].detail</td>
-                                            <td style="text-align:right; border:1px solid #2e2e1f;"> @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].unitPrice)</td>
-                                            <td style="text-align:center; border:1px solid #2e2e1f;">
-                                                @if (Model.medIndividualDetail[index_view].activityNo != "")
-                                                {
-                                                    @(Model.medIndividualDetail[index_view].hospPercent+"%");
-                                                }
-                                                else
-                                                {
-                                                    @('-');
-                                                }
-
-
-                                            </td>
-
-
-                                            <td style="text-align:right; border:1px solid #2e2e1f;">
-
-                                                @if (amountCumulative > Model.medIndividualDetail[index_view].amountLimit)
-                                                {
-                                                    @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].amountReceived)
-                                                }
-                                                else
-                                                {
-                                                    @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].amountByDetail)
-                                                }
-
-                                            </td>
-                                            <td style="text-align:right; border:1px solid #2e2e1f;">
-
-                                                @if (amountCumulative > Model.medIndividualDetail[index_view].amountLimit)
-                                                {
-                                                    @String.Format("{0:n2}", Model.medIndividualDetail[index_view].amountLimit)
-                                                }
-                                                else
-                                                {
-                                                    @String.Format("{0:n2}", @amountCumulative)
-                                                }
-                                            </td>
-                                            <td style="text-align:right; border:1px solid #2e2e1f;">
-                                                @if (index_view == 0)
-                                                {@String.Format("{0:n2}", Model.medIndividualDetail[index_view].amountLimit)}
-                                            </td>
-                                            <td style="text-align: right; border:1px solid #2e2e1f;">
-
-                                                @if (@amountCumulative > Model.medIndividualDetail[index_view].amountLimit)
-                                                {
-                                                    @String.Format("{0:n2}", 0)
-                                                }
-                                                else
-                                                {
-                                                    @String.Format("{0:n2}", (Model.medIndividualDetail[index_view].amountLimit - amountCumulative))
-                                                }
-                                            </td>
-
-
-
-
-
-
-
-
-
-                                        </tr>
-
-                                    }
-                                </tbody>
-                            </table>
+                            </p>
                         </div>
                     </div>
                 </div>
-            </div>
 
+                <div class="form-group">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="row">
+                            @*  *@
+                            <div id="GridView">
+                                <table class="table table-hover border-dark" id="datatable" style="width:100%; color:#2e2e1f;">
+                                    <thead>
+                                        <tr style="font-size:larger; ">
+                                            <td colspan="11" style="text-align:center;"><b>รายงานสรุปการเบิก-จ่ายสวัสดิการค่ารักษาพยาบาล @Model.medReportHeader.reportTypeName</b></td>
+                                        </tr>
+                                        <tr style="">
+                                            <td colspan="11" style="text-align:center;"><b>บริษัท @Model.medReportHeader.companyName</b></td>
+                                        </tr>
+                                        <tr style="">
+                                            <td colspan="11" style="text-align:center;"><b>@Model.medReportHeader.period</b></td>
+                                        </tr>
+                                        <tr style="">
+                                            <td colspan="11" style="text-align:center;">
+                                                <b>ชื่อ-นามสกุล</b> คุณ @Model.empList[0].empName
+                                                <b>รหัสพนักงาน</b> @Model.empList[0].empId
+                                                <b>ตำแหน่ง</b> @Model.empList[0].position
+                                                <b>ระดับ</b> @Model.empList[0].level
+                                                <b>กลุ่มงาน</b> @Model.empList[0].department
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="11" style="text-align:center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ครั้งที่</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"><b>วันที่รักษา</b> </td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"><b>ประเภทสถานพยาบาล</b> </td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ชื่อสถานพยาบาล</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ประเภทการป่วย</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ค่ารักษาตามใบเสร็จ(บาท)</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>เบิกได้(%)</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"><b>เบิกได้(บาท)</b> </td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>ยอดเบิกสะสม(บาท)</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"> <b>วงเงินตามสิทธิ/ปี(บาท)</b></td>
+                                            <td style="text-align:center; border:1px solid #2e2e1f;"><b>วงเงินคงเหลือ(บาท)</b></td>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        @{ decimal? amountCumulative = 0; }
+
+                                        @for (int index_view = 0; index_view < Model.medIndividualDetail.Count; index_view++)
+                                        {
+
+                                            amountCumulative = amountCumulative + Model.medIndividualDetail[index_view].amountByDetail;
+
+                                            <tr class="gradeX">
+
+                                                <td style="text-align:center; border:1px solid #2e2e1f;">@(index_view + 1)</td>
+                                                <td style="text-align:center; border:1px solid #2e2e1f;">
+                                                    @Model.medIndividualDetail[index_view].treatmentDate
+                                                </td>
+                                                @if (Model.medIndividualDetail[index_view].hospNameTH == "")
+                                                {
+                                                    <td style="text-align:left; border:1px solid #2e2e1f;">@Model.medIndividualDetail[index_view - 1].typeName </td>
+                                                    <td style="text-align:left; border:1px solid #2e2e1f;">  @Model.medIndividualDetail[index_view - 1].hospNameTH </td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="text-align:left; border:1px solid #2e2e1f;">@Model.medIndividualDetail[index_view].typeName </td>
+                                                    <td style="text-align:left; border:1px solid #2e2e1f;">  @Model.medIndividualDetail[index_view].hospNameTH </td>
+                                                }
+                                                <td style="text-align:left; border:1px solid #2e2e1f;"> @Model.medIndividualDetail[index_view].detail</td>
+                                                <td style="text-align:right; border:1px solid #2e2e1f;"> @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].unitPrice)</td>
+                                                <td style="text-align:center; border:1px solid #2e2e1f;">
+                                                    @if (Model.medIndividualDetail[index_view].activityNo != "")
+                                                    {
+                                                        @(Model.medIndividualDetail[index_view].hospPercent + "%");
+                                                    }
+                                                    else
+                                                    {
+                                                        @('-');
+                                                    }
+
+
+                                                </td>
+
+
+                                                <td style="text-align:right; border:1px solid #2e2e1f;">
+
+                                                    @if (amountCumulative > Model.medIndividualDetail[index_view].amountLimit)
+                                                    {
+                                                        @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].amountReceived)
+                                                    }
+                                                    else
+                                                    {
+                                                        @String.Format("{0:n2}", @Model.medIndividualDetail[index_view].amountByDetail)
+                                                    }
+
+                                                </td>
+                                                <td style="text-align:right; border:1px solid #2e2e1f;">
+
+                                                    @if (amountCumulative > Model.medIndividualDetail[index_view].amountLimit)
+                                                    {
+                                                        @String.Format("{0:n2}", Model.medIndividualDetail[index_view].amountLimit)
+                                                    }
+                                                    else
+                                                    {
+                                                        @String.Format("{0:n2}", @amountCumulative)
+                                                    }
+                                                </td>
+                                                <td style="text-align:right; border:1px solid #2e2e1f;">
+                                                    @if (index_view == 0)
+                                                    {@String.Format("{0:n2}", Model.medIndividualDetail[index_view].amountLimit)}
+                                                </td>
+                                                <td style="text-align: right; border:1px solid #2e2e1f;">
+
+                                                    @if (@amountCumulative > Model.medIndividualDetail[index_view].amountLimit)
+                                                    {
+                                                        @String.Format("{0:n2}", 0)
+                                                    }
+                                                    else
+                                                    {
+                                                        @String.Format("{0:n2}", (Model.medIndividualDetail[index_view].amountLimit - amountCumulative))
+                                                    }
+                                                </td>
+
+
+
+
+
+
+
+
+
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
 
         }
         else if (Model.medReportHeader != null && Model.medReportHeader.reportTypeId == AppCode.ReportType.MedAll)
