@@ -46,17 +46,30 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 15%;border-style: solid;border-width: 1px 0.5px 0px 0.5px; border-collapse: collapse;border-left:none;">
+                        <td style="width: 15%;border-style: solid;border-width: 1px 0.5px 0px 0.5px; border-collapse: collapse;border-left:none;vertical-align:top;">
                             &nbsp;ชื่อกิจกรรม
                         </td>
-                        <td style="width: 50%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;">
+                        <td style="width: 50%;border-style: solid;border-width: 1px 0px 0px 0.5px; border-collapse: collapse;border-right:none;vertical-align:top;">
                             &nbsp;ขออนุมัติงบประมาณกิจกรรม @Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "lblActivityName" })
                         </td>
-                        <td style="width: 15%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
+                        <td style="width: 15%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;vertical-align:top;">
                             &nbsp;EO
                         </td>
-                        <td style="width: 20%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;">
-                            &nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "lblEO" })
+                        <td style="width: 20%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;border-right:none;border-left:none;vertical-align:top;">
+                            @{ var indexEO = 0; }
+                            @foreach (var itemGetEO in Model.listEoInDoc)
+                            {
+                                if (itemGetEO != "")
+                                {
+                                    @:&nbsp;@itemGetEO
+                                    if (indexEO > 0)
+                                    {
+                                        @:<br />
+                                    }
+                                }
+                                indexEO++;
+                            }
+                            @*&nbsp;@Html.DisplayFor(x => x.tB_Act_ActivityForm_DetailOther.EO, new { @class = "", @id = "lblEO" })*@
                         </td>
                     </tr>
                     <tr>

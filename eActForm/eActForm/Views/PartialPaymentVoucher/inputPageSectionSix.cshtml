@@ -32,6 +32,7 @@
                                     $('#ddlActivityNoSub').val("");
                                     $('#ddlActivityNoSub').prop('disabled', true);
                                     $('#linkViewActNoOld').hide();
+                                    $("#pvPrevious_totalallPayNo").val('');
                                 } else {
                                     var dataToBeSend = {
                                     fiscalYear:$('#ddlFiscalYear').val()
@@ -68,6 +69,7 @@
 
                                     $('#ddlActivityNoSub').prop('disabled', false);
                                 }
+                                calCulateAll();
                                 $("#ddlActivityNoSub").selectpicker('refresh');
                             }
                         </script>
@@ -106,11 +108,11 @@
                             $('#ddlActivityNoSub').change(function () {
                                         if ($('#ddlActivityNoSub').val() != '') {
                                             activeLinkViewPreviousPV();
-                                    $("#pvPrevious_totalallPayByIO").val($("#ddlActivityNoSub").val());
+                                   //$("#pvPrevious_totalallPayByIO").val($("#ddlActivityNoSub").val());//แก้ดึงตรงจาก EO งบผูกพันรวม ไม่ต้องดึงจากเอกสารก่อนหน้าแล้วกรณีสั่งจ่ายครั้งที่ 2 ขึ้นไป 20200709 fream
                                     $("#pvPrevious_totalallPayNo").val($("#ddlActivityNoSub").val());
                                     $('#linkViewActNoOld').show();
                                         } else {
-                                    $("#pvPrevious_totalallPayByIO").val('');
+                                    //$("#pvPrevious_totalallPayByIO").val('');//แก้ดึงตรงจาก EO งบผูกพันรวม ไม่ต้องดึงจากเอกสารก่อนหน้าแล้วกรณีสั่งจ่ายครั้งที่ 2 ขึ้นไป 20200709 fream
                                     $("#pvPrevious_totalallPayNo").val('');
                                     $('#linkViewActNoOld').hide();
                                         }
@@ -262,12 +264,14 @@
         calCulateAll();
     });
     function calCulateAll() {
+        $("#WaitDialog").show();
         sumall();
         caltotalallPayByIO();
         calVat();
         caltotalnormalCostEstimateWithVat();
         caltotalallPayNo();
         catotalallPayByIOBalance();
+        $("#WaitDialog").hide();
     }
     function sumall() {
         var normalCostAll = 0.00;
@@ -313,11 +317,11 @@
     function caltotalallPayByIO() {
         var previousPayTotal = 0;
         var sumtotalallPayByIO = 0.00;
-        if ($("#pvPrevious_totalallPayByIO").val() != '') {
+        /*if ($("#pvPrevious_totalallPayByIO").val() != '') {//แก้ดึงตรงจาก EO งบผูกพันรวม ไม่ต้องดึงจากเอกสารก่อนหน้าแล้วกรณีสั่งจ่ายครั้งที่ 2 ขึ้นไป 20200709 fream
             previousPayTotal = parseFloat($("#pvPrevious_totalallPayByIO>option:selected").html());
             sumtotalallPayByIO = previousPayTotal;
         }
-        else {
+        else {*/
 
             var payIOIncludeSelectAlready = [];
             var rowCount2 = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
@@ -332,7 +336,7 @@
                         }
                     }
                 }
-        }
+        //}//แก้ดึงตรงจาก EO งบผูกพันรวม ไม่ต้องดึงจากเอกสารก่อนหน้าแล้วกรณีสั่งจ่ายครั้งที่ 2 ขึ้นไป 20200709 fream
         $("#hdtotalallPayByIO").val(sumtotalallPayByIO);
         $("#totalallPayByIO").text(sumtotalallPayByIO.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
     }

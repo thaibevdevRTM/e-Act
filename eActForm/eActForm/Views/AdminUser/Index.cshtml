@@ -364,7 +364,7 @@
 
                 if (response.Data.regionList.length > 0) {
                     $.each(response.Data.regionList, function () {
-                        $("#divRegionLists").append("<div id='" + this['Id'] + "'> <span class='pull-left close' onclick=javascript:onclickDelCusList('" + this['Id'] + "');>x</span><input type='hidden' name='model.regionList' value='" + this['Id'] + "'/>" + this['descTh'] + " <br/></div>");
+                        $("#divRegionLists").append("<div id='" + this['id'] + "'> <span class='pull-left close' onclick=javascript:onclickDelCusList('" + this['id'] + "');>x</span><input type='hidden' name='model.regionList' value='" + this['id'] + "'/>" + this['descTh'] + " <br/></div>");
                     });
                 }
 

@@ -253,5 +253,12 @@ namespace eActForm.BusinessLayer
         }
 
 
+
+        public static string formatValueSelectEO_PVForm(string activityIdEO, string EO)
+        {
+            string valResult = (activityIdEO+"|"+ EO);
+            return valResult;
+        }
+
     }
 }

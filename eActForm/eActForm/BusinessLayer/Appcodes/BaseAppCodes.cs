@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Web;
 using static eActForm.Models.ActUserModel;
 
 namespace eActForm.BusinessLayer.Appcodes
@@ -185,5 +187,26 @@ namespace eActForm.BusinessLayer.Appcodes
             }
             return userModel;
         }
+
+        public static void WriteSignatureToDisk(ApproveModel.approveModels approveModels,string activityId)
+        {
+
+            var modelApproveDetail = approveModels.approveDetailLists.Where(x => x.statusId.Equals("3")).ToList();
+            if (modelApproveDetail.Any())
+            {
+                bool folderExists = Directory.Exists(HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
+                if (!folderExists)
+                    Directory.CreateDirectory(HttpContext.Current.Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
+
+                foreach (var item in modelApproveDetail)
+                {
+                    UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
+                        , item.signature
+                        , string.Format(ConfigurationManager.AppSettings["rootSignaByActURL"], activityId, item.empId));
+                }
+            }
+
+        }
+
     }
 }

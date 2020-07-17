@@ -37,7 +37,7 @@
 
                 foreach (var itemFlowByDoc in Model.approveModels.approveDetailLists)
                 {
-                    if (item.empId == itemFlowByDoc.empId && item.approveGroupId == itemFlowByDoc.approveGroupId && itemFlowByDoc.statusId=="3")
+                    if (item.empId == itemFlowByDoc.empId && item.approveGroupId == itemFlowByDoc.approveGroupId && itemFlowByDoc.statusId == "3")
                     {
                         CreateByEmpId = itemFlowByDoc.ImgName;
                         CreateByStampDateSignature = itemFlowByDoc.updatedDate.Value.ToString("dd/MM/yyyy", DateEnglish);
@@ -298,8 +298,8 @@
                         <td style="width:20%;vertical-align:top;">&nbsp;ลายเซ็น<br /></td>
                         <td style="width:80%;text-align:center;">
                             @*@{
-                                var pathSigRequest = pathWeb + "signatureFile/" + CreateByEmpId + ".png";
-                            }*@
+                                    var pathSigRequest = pathWeb + "signatureFile/" + CreateByEmpId + ".png";
+                                }*@
                             @if (CreateByEmpId != "")
                             {
                                 <img class="picSigV1" src="@CreateByEmpId" />
@@ -335,8 +335,8 @@
                         <td style="width:20%;vertical-align:top;">&nbsp;ลายเซ็น<br /></td>
                         <td style="width:80%;text-align:center;">
                             @*@{
-                                pathSigRequest = pathWeb + "signatureFile/" + ApproveByEmpId + ".png";
-                            }*@
+                                    pathSigRequest = pathWeb + "signatureFile/" + ApproveByEmpId + ".png";
+                                }*@
                             @if (ApproveByEmpId != "")
                             {
                                 <img class="picSigV1" src="@ApproveByEmpId" />

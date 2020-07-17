@@ -1,10 +1,12 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.BusinessLayer.QueryHandler;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Web.Mvc;
@@ -86,6 +88,8 @@ namespace eActForm.Controllers
                 {
                     activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
                 }
+                    BaseAppCodes.WriteSignatureToDisk(activity_TBMMKT_Model.approveModels, activityId);
+                }                    
                 //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
             }
 

@@ -130,6 +130,8 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.compensate = item.compensate;
                 costThemeDetail.glCode = item.glCode;
                 costThemeDetail.hospId = item.hospId;
+                costThemeDetail.UseYearSelect = item.UseYearSelect == null ? "" : item.UseYearSelect;
+                costThemeDetail.EO = item.EO == null ? "" : item.EO;
                 rtn += insertEstimate(costThemeDetail);
                 insertIndex++;
             }
@@ -784,7 +786,7 @@ namespace eActForm.BusinessLayer
                         index_each = 0;
                         foreach (var item in activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOtherList.Where(x => x.typeKeep == ConfigurationManager.AppSettings["typeEOPaymentVoucher"]).ToList())
                         {
-                            activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = item.activityIdEO;
+                            activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select[index_each] = DocumentsAppCode.formatValueSelectEO_PVForm(item.activityIdEO, item.EO);
                             index_each++;
                         }
 
@@ -793,6 +795,26 @@ namespace eActForm.BusinessLayer
                         //====END======จากที่SelectทุกTypeมา==หลังจากใช้เสร็จก็กรองเหลือแค่ที่ตนเองจะใช้งาน====
                     }
                 }
+
+                //===========Get All EO In Doc=======================
+                List<string> templistEoInDoc = new List<string>();
+                if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
+                {
+                    if(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO!="" && activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != null)
+                    {
+                        templistEoInDoc.Add(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO);
+                    }
+                    foreach (var itemGetEO in activity_TBMMKT_Model.activityOfEstimateList)
+                    {
+                        if (!templistEoInDoc.Contains(itemGetEO.EO))
+                        {
+                            templistEoInDoc.Add(itemGetEO.EO);
+                        }
+                    }
+                    activity_TBMMKT_Model.listEoInDoc = templistEoInDoc;
+                }                    
+                //===END========Get All EO In Doc=======================
+
 
             }
             catch (Exception ex)
@@ -1222,6 +1244,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@compensate",model.compensate)
                     ,new SqlParameter("@glCode",(model.glCode == null ? "" : model.glCode))
                     ,new SqlParameter("@hospId",(model.hospId == null ? "" : model.hospId))
+                    ,new SqlParameter("@UseYearSelect",model.UseYearSelect)
+                    ,new SqlParameter("@EO",model.EO)
             });
             }
             catch (Exception ex)
@@ -1698,14 +1722,17 @@ namespace eActForm.BusinessLayer
                 rtn += delete_TB_Act_ActivityForm_DetailOtherList(activityId, tB_Act_ActivityForm_DetailOtherList.typeKeep);
                 for (int i = 0; i < model.activityFormTBMMKT.list_1_multi_select.Length; i++)
                 {
+                    string txt_activityIdEO_And_EO = model.activityFormTBMMKT.list_1_multi_select[i]; //update for multi EO devdate 20200713 peerapop
+                    string[] splitValue = txt_activityIdEO_And_EO.Split('|'); 
                     tB_Act_ActivityForm_DetailOtherList.activityId = activityId;
                     tB_Act_ActivityForm_DetailOtherList.rowNo = (i + 1);
-                    tB_Act_ActivityForm_DetailOtherList.activityIdEO = model.activityFormTBMMKT.list_1_multi_select[i];
+                    tB_Act_ActivityForm_DetailOtherList.activityIdEO = splitValue[0]; //update for multi EO devdate 20200713 peerapop ของเดิม tB_Act_ActivityForm_DetailOtherList.activityIdEO  = model.activityFormTBMMKT.list_1_multi_select[i]
+                    tB_Act_ActivityForm_DetailOtherList.EO = splitValue[1]; 
                     tB_Act_ActivityForm_DetailOtherList.IO = "";
                     tB_Act_ActivityForm_DetailOtherList.GL = "";
                     tB_Act_ActivityForm_DetailOtherList.select_list_choice_id_ChReg = "";
                     tB_Act_ActivityForm_DetailOtherList.productBrandId = "";
-                    tB_Act_ActivityForm_DetailOtherList.createdByUserId = UtilsAppCode.Session.User.empId;
+                    tB_Act_ActivityForm_DetailOtherList.createdByUserId = UtilsAppCode.Session.User.empId;                    
                     rtn += usp_insertTB_Act_ActivityForm_DetailOtherList(tB_Act_ActivityForm_DetailOtherList);
                 }
             }
@@ -1769,6 +1796,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@select_list_choice_id_ChReg",model.select_list_choice_id_ChReg)
                     ,new SqlParameter("@productBrandId",model.productBrandId)
                     ,new SqlParameter("@ByUserId",model.createdByUserId)
+                    ,new SqlParameter("@EO",model.EO)
                     });
             }
             catch (Exception ex)
