@@ -183,6 +183,12 @@
     });
 
     function getDepartment() {
+
+       
+        $("#ddlEmp").empty();
+        $("#ddlEmp").selectpicker('refresh');
+        $("#ddlEmp").selectpicker('render');
+
         $("#ddlDepartment").empty();
         $.ajax({
             url: '@Url.Action("getDepartmentByCompId", "eAct")',
@@ -192,6 +198,7 @@
             dataType: "json",
             type: 'POST',
             success: function (response) {
+                $("#ddlEmp").empty();
                 if (response.Data.departmentList.length > 0) {
 
                     $.each(response.Data.departmentList, function (i, j) {

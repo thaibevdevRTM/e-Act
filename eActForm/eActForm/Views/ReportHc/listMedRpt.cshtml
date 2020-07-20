@@ -234,25 +234,37 @@
         //$("input[name='gridHtml']").val($("#GridView").html());
         //});
         //});
-        function beginQuery()
-        {
+    function beginQuery() {
 
-@*   if ($("#ddlProductType").val() == "") {
-        doMsgFail("กรุณาระบุ Product Type ครับ");
-        return false;
-    }
+        required = "<b>กรุณาระบุ/Please input data :<br></b>";
+        var validate = true;
+       
 
-    if ('@UtilsAppCode.Session.User.isAdmin' == 'True' || '@UtilsAppCode.Session.User.isSuperAdmin' == 'True') {
-        if ($("#ddlCustomer").val() == "") {
-            doMsgFail("กรุณาระบุ ลูกค้า ครับ");
+        if ($("#ddlReportType").val() == "") { required += "&emsp;Report Type*<br>"; validate = false; }
+        if ($("#ddlCompany").val() == "") { required += "&emsp;Company*<br>"; validate = false; }
+        if ($("#ddlDepartment").val() == null) { required += "&emsp;Department*<br>"; validate = false; }
+
+
+        if (validate == true) {
+            $("#getQuery").fadeOut(300);
+        }
+        else {
+
+            bootbox.alert(required)
             return false;
         }
+
+        //if ($("#ddlReportType").val() == "") {
+        //    doMsgFail("กรุณาระบุ Report Type");
+        //    return false;
+        //}
+        //else {
+        //    $("#getQuery").fadeOut(300);
+        //}
+
+            @* $("#getQuery").fadeOut(300);*@
+
     }
-    else {
-        $("#getQuery").fadeOut(300);
-    }*@
-        $("#getQuery").fadeOut(300);
-        }
 
         function successQuery(htmlResponse)
         {
@@ -286,30 +298,5 @@
         }
 
 
-
-//        //function validatesubmit() {
-
-//        //   required = "
-//<b>กรุณาระบุ/Please input data :<br></b>";
-//        //    var validate = true;
-
-//        //    if ($("#ddlReportType").val() == "") { required += "&emsp;Condition Flow*
-//<br>"; validate = false; }
-//        //    if ($("#ddlCompany").val() == "" && $("#ddlBrand").val() == "") { required += "&emsp;BrandหรือChannel*
-//<br>"; validate = false; }
-//        //    if ($("#ddlDepartment").val() == "") { required += "&emsp;เรื่อง*
-//<br>"; validate = false; }
-
-
-
-
-//        //   if (validate == true) {
-//        //       //SubmitData();
-//        //       validateUploadFileAndSubmit();
-//        //       }
-//        //       else {
-//        //           bootbox.alert(required)
-//        //       }
-//        //   }
 </script>
 
