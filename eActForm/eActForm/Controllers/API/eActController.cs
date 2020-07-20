@@ -605,23 +605,10 @@ namespace eActForm.Controllers
         }
 
 
-        public ActionResult genImageStream1(string empId)
+        public ActionResult genImageStream(string empId)
         {
             var result = SignatureAppCode.currentSignatureByEmpId(empId);
-            //MemoryStream memStream = new MemoryStream();
-            //BinaryFormatter binForm = new BinaryFormatter();
-            //memStream.Write(result.lists[0].signature, 0, result.lists[0].signature.Length);
-            //memStream.Seek(0, SeekOrigin.Begin);
-
-
-            //string imageBase64Data = Convert.ToBase64String(result.lists[0].signature);
-            //string imageDataURL = string.Format("data:image/png;base64,{0}", imageBase64Data);
-            //ViewBag.ImageData = imageDataURL;
-
-            //return PartialView();
-            //return base.File(result.lists[0].signature, "image/jpeg");
-
-            return File(result.lists[0].signature, "image/jpg"); // if your image is jpg
+            return File(result.lists[0].signature, "image/jpg");
         }
     }
 }

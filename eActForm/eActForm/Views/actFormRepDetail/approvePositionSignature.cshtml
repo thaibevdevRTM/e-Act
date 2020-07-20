@@ -1,5 +1,5 @@
 ﻿@model eActForm.Models.ApproveFlowModel.approveFlowModel
-
+@using System.Configuration;
 <div class="row">
     @if (Model.flowDetail != null)
     {
@@ -35,8 +35,8 @@
 
                             if (item.statusId == "3")
                             {
-                                <td>
-                                    <img style="text-align:center;" width="135" height="80" src='@Url.Action("genImageStream", "eAct", new { empId = @item.empId }, Request.Url.Scheme)'/>
+                                <td height="85">
+                                    <img style="text-align:center;" width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@item.empId)" />
                                 </td>
                             }
                             else
