@@ -108,17 +108,13 @@ namespace eActForm.BusinessLayer
             {
                 string strCall = "";
 
-                if (typeForm == Activity_Model.activityType.MT.ToString())
+                if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     strCall = "usp_getActivityCustomersFormByEmpId";
                 }
                 else if(typeForm == Activity_Model.activityType.SetPrice.ToString())
                 {
                     strCall = "usp_getActivitySetPriceByEmpId";
-                }
-                else if (typeForm == Activity_Model.activityType.OMT.ToString())
-                {
-                    strCall = "usp_tbm_getActivityFormByEmpId";
                 }
                 else if (typeForm == Activity_Model.activityType.ITForm.ToString())
                 {
@@ -424,7 +420,6 @@ namespace eActForm.BusinessLayer
                         break;
                 }
 
-
                 ApproveModel.approveModels models = new ApproveModel.approveModels();
                 models = ApproveAppCode.getApproveByActFormId(actId, "");
 
@@ -522,7 +517,7 @@ namespace eActForm.BusinessLayer
 
                 if (ConfigurationManager.AppSettings["masterEmpExpense"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)
                 {
-                    activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-01", "yyyy-MM-dd").ToString("dd/MM/yyyy");
+                    activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-"+DateTime.Today.ToString("dd"), "yyyy-MM-dd").ToString("dd/MM/yyyy");
                 }
 
             }

@@ -74,7 +74,9 @@
                 </tr>
                 @foreach (var item in Model.activityFormTBMMKT.list_1_multi_select)
                 {
-                    string valEO = QueryGetActivityFormDetailOtherByActivityId.getByActivityId(item).FirstOrDefault().EO;
+                    int maxLenght = item.Length;
+                    int lenghtForCutOffGetEO = 37;
+                    string valEO = item.Substring(lenghtForCutOffGetEO, (maxLenght-lenghtForCutOffGetEO));
                     <tr>
                         <td style="text-align:left;" class="fontRedV1 paddingRowTable">
                             &nbsp;งบประมาณเลขที่EO:

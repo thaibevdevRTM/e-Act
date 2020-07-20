@@ -49,12 +49,12 @@ namespace eActForm.Controllers
             }
 
             int rtn = SignatureAppCode.signatureInsert(AppCode.ToDataTable(list));
-            if (rtn > 0)
-            {
-                UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
-                    , model.signature
-                    , string.Format(ConfigurationManager.AppSettings["rootSignaURL"], model.empId));
-            }
+            //if (rtn > 0)
+            //{
+            //    UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
+            //        , model.signature
+            //        , string.Format(ConfigurationManager.AppSettings["rootSignaURL"], model.empId));
+            //}
 
             model.signature = null;
             return RedirectToAction("Index", model);

@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
+using System.IO;
 
 namespace eActForm.Controllers //update 21-04-2020
 {
@@ -41,11 +42,30 @@ namespace eActForm.Controllers //update 21-04-2020
             {
                 ApproveFlowModel.approveFlowModel flowModel = BudgetApproveController.getFlowIdBudgetByBudgetActivityId(ConfigurationManager.AppSettings["subjectBudgetFormId"], actId);
                 models.approveFlowDetail = flowModel.flowDetail;
+
+                //ApproveFlowModel.approveFlowModel flowModel = BudgetApproveController.getFlowIdBudgetByBudgetActivityId(ConfigurationManager.AppSettings["subjectBudgetFormId"], actId);
+                //var modelApproveDetail = models.approveDetailLists;
+                //if (modelApproveDetail.Any())
+                //{
+                //    bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], actId)));
+                //    if (!folderExists)
+                //        Directory.CreateDirectory(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], actId)));
+
+                //    foreach (var item in modelApproveDetail)
+                //    {
+                //        UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
+                //            , item.signature
+                //            , string.Format(ConfigurationManager.AppSettings["rootSignaByActURL"], actId, item.empId));
+                //    }
+
+                //}
             }
             else
             {
                 ApproveFlowModel.approveFlowModel flowModel = BudgetApproveController.getFlowIdBudgetByBudgetActivityIdOMT(ConfigurationManager.AppSettings["subjectBudgetFormId"], actId);
                 models.approveFlowDetail = flowModel.flowDetail;
+
+
             }
             return PartialView(models);
         }
@@ -58,6 +78,22 @@ namespace eActForm.Controllers //update 21-04-2020
                 models = ApproveAppCode.getApproveByActFormId(budgetApproveId);
                 ApproveFlowModel.approveFlowModel flowModel = BudgetApproveController.getFlowIdByBudgetApproveId(budgetApproveId);
                 models.approveFlowDetail = flowModel.flowDetail;
+
+                var modelApproveDetail = models.approveDetailLists.ToList();
+
+                if (modelApproveDetail.Any())
+                {
+                    bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)));
+                    if (!folderExists)
+                        Directory.CreateDirectory(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)));
+
+                    foreach (var item in modelApproveDetail)
+                    {
+                        UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
+                            , item.signature
+                            , string.Format(ConfigurationManager.AppSettings["rootSignaByActURL"], budgetApproveId, item.empId));
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -345,6 +381,11 @@ namespace eActForm.Controllers //update 21-04-2020
                 var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budgetApproveId + "_");
                 GridHtml = GridHtml.Replace("<br>", "<br/>");
                 AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
+
+                //del signature file
+                bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)));
+                if (folderExists)
+                    Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)),true);
 
                 TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
                 getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budgetApproveId);
@@ -669,6 +710,12 @@ namespace eActForm.Controllers //update 21-04-2020
 
                     AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
 
+                    //del signature file
+                    bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)));
+                    if (folderExists)
+                        Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)),true);
+
+
                     TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
                     getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budget_approve_id);
 
@@ -701,6 +748,7 @@ namespace eActForm.Controllers //update 21-04-2020
                         EmailAppCodes.sendApproveBudget(budget_approve_id, AppCode.ApproveType.Budget_form, false);
                     }
                 }
+                
 
                 resultAjax.Success = true;
             }
@@ -730,6 +778,10 @@ namespace eActForm.Controllers //update 21-04-2020
                 GridHtml = GridHtml.Replace("<br>", "<br/>");
 
                 AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
+                // del signature file
+                bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)));
+                if (folderExists)
+                    Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)),true);
 
                 TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
                 getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budget_approve_id);

@@ -22,7 +22,10 @@ namespace eActForm.Controllers
         {
             if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
             {
+                if(activity_TBMMKT_Model.activityFormModel.documentDate == null)
+                { 
                 activity_TBMMKT_Model.activityFormModel.documentDate = DateTime.Now;
+                }
             }
             return PartialView(activity_TBMMKT_Model);
         }
