@@ -68,7 +68,7 @@ namespace eForms.Models.Reports
         public double? accuracySaleBath { get { return activitySales == "Promotion Support" ? (actAmount / estimateSaleBathAll) * 100 : 0; } }
         public double? accuracySpendingBath { get { return activitySales == "Promotion Support" ? 0 : (specialDiscountMT / total) * 100; } }
         public double? saleActual { get; set; }
-        public double? presentAcctual { get { return activitySales == "Promotion Support" ? 0 : saleActual / total; } }
+        public double? presentAcctual { get { return (saleActual / total) * 100; } }
         public string dayAddStart { get; set; }
         public string dayAddEnd { get; set; }
         public int countGroup { get; set; }
