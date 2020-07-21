@@ -155,13 +155,13 @@ namespace eActForm.BusinessLayer
             {
                 model.activityFormModel.id = activityId;
                 model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodSt) ? (DateTime?)null :
-                 DateTime.ParseExact(model.activityFormModel.str_activityPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodEnd) ? (DateTime?)null :
-                DateTime.ParseExact(model.activityFormModel.str_activityPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null :
-                 DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
-                  DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                    BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                 model.activityFormModel.updatedDate = DateTime.Now;
 
