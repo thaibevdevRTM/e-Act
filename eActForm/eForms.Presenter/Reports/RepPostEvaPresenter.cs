@@ -19,10 +19,10 @@ namespace eForms.Presenter.Reports
                                 {
                                     name = cl.First().brandName.Trim(),
                                     value = (cl.Sum(c => c.total) / 1000000 ).ToString(),
-                                    sumActSalesParti = (cl.Sum(c => c.salePartiBath) / 1000000).ToString(),
-                                    sumNormalCase = (cl.Sum(c => c.normalCost)/1000),
-                                    sumPromotionCase = (cl.Sum(c=> c.themeCost) / 1000),
-                                    sumSalesInCase = (cl.Sum(c=> c.salePartiCase) / 1000),
+                                    sumActSalesParti = (cl.Sum(c => c.actAmount)).ToString(),
+                                    sumNormalCase = (cl.Sum(c => c.normalCost)),
+                                    sumPromotionCase = (cl.Sum(c=> c.themeCost) ),
+                                    sumSalesInCase = (cl.Sum(c=> c.actReportQuantity)),
                                     countGroup = cl.Count().ToString()
                                 }).ToList();
                 return list;
