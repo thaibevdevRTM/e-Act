@@ -119,6 +119,9 @@ namespace eActForm.Models
                 GridBuilder.Append("</body>");
                 GridBuilder.Append("</html>");
 
+                // Replace 
+                GridBuilder = GridBuilder.Replace("signa\">", "signa\"/>");
+
                 GridBuilder.Append(sw.ToString());
 
 
@@ -264,6 +267,7 @@ namespace eActForm.Models
 
         public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath, string serverMapPath)
         {
+
             ContentType xlsxContent = new ContentType("application/pdf");
             MemoryStream msPreview = new MemoryStream();
             byte[] PreviewBytes = new byte[0];
