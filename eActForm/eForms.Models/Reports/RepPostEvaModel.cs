@@ -64,7 +64,14 @@ namespace eForms.Models.Reports
         public double? presentSE { get { return activitySales == "Promotion Support" ? 0 : (specialDiscountMT / (netValueMT + specialDiscountMT)) * 100; } } //([specialDiscountMT] / [netValueMT] + [specialDiscountMT]) * 100
         public double? salePartiCase { get { return activitySales == "Promotion Support" ? actReportQuantity * (le / 100) : 0; } }
         public double? salePartiBath { get { return activitySales == "Promotion Support" ? actAmount * (le / 100) : 0; } }
-        public double? accuracySaleCase { get { return activitySales == "Promotion Support" ? (actReportQuantity / themeCost) * 100  : (billedQuantityMT / themeCost) * 100; } }
+        public double? accuracySaleCase
+        {
+            get
+            {
+                double? obj = activitySales == "Promotion Support" ? (actReportQuantity / themeCost) * 100 : (billedQuantityMT / themeCost) * 100;
+                return obj == null || double.IsNaN(double.Parse(obj.ToString())) || double.IsInfinity(double.Parse(obj.ToString())) ? 0 : double.Parse(obj.ToString());
+            }
+        }
         public double? accuracySaleBath { get { return activitySales == "Promotion Support" ? (actAmount / estimateSaleBathAll) * 100 : 0; } }
         public double? accuracySpendingBath { get { return activitySales == "Promotion Support" ? 0 : (specialDiscountMT / total) * 100; } }
         public double? saleActual { get; set; }

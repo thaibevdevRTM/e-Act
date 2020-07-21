@@ -24,7 +24,7 @@
             </div>
             <div class="x_content" style="height:300px;">
 
-                <div id="echart_pie2" style="height:300px;"></div>
+                <div id="echartGroupBrandAndSpending" style="height:300px;"></div>
 
             </div>
         </div>
@@ -45,7 +45,7 @@
             </div>
             <div class="x_content" style="height:300px;">
 
-                <canvas id="myChart"></canvas>
+                <canvas id="chartGroupSumSaleIn"></canvas>
 
             </div>
         </div>
@@ -100,7 +100,6 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 genMonthlySpending(response);
             },
         });
@@ -144,8 +143,8 @@
                         yAxes: [{
                             ticks: {
                                 beginAtZero: true,
-                                max: 5000,
-                                stepSize: 500
+                                max: 1000000,
+                                stepSize: 50000
                             }
                         }],
                         scaleLabel: {
@@ -169,7 +168,7 @@
 
         mybarChart.update();
 
-        var ctx = document.getElementById('myChart').getContext('2d');
+        var ctx = document.getElementById('chartGroupSumSaleIn').getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'pie',
@@ -414,9 +413,9 @@
             }
         };
 
-        if ($('#echart_pie2').length) {
+        if ($('#echartGroupBrandAndSpending').length) {
 
-            var echartPieCollapse = echarts.init(document.getElementById('echart_pie2'), theme);
+            var echartPieCollapse = echarts.init(document.getElementById('echartGroupBrandAndSpending'), theme);
 
             echartPieCollapse.setOption({
                 tooltip: {
