@@ -7719,10 +7719,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2020 08:32:54</publishTime>
     </File>
     <File Include="Views/Home/myDoc.cshtml">
-      <publishTime>07/22/2020 09:48:38</publishTime>
-    </File>
-    <File Include="Views/ImportMasterAP/Index.cshtml">
-      <publishTime>05/14/2020 09:07:22</publishTime>
     </File>
     <File Include="Views/ImportMasterHospital/Index.cshtml">
       <publishTime>06/12/2020 09:57:33</publishTime>
@@ -8127,10 +8123,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2020 08:32:57</publishTime>
     </File>
     <File Include="Views/SharedMasterFormHeaderDetail_Input/headerDetailsBg.cshtml">
-      <publishTime>07/17/2020 10:58:12</publishTime>
-    </File>
-    <File Include="Views/SharedMasterFormHeaderDetail_Input/headerDetailsDate.cshtml">
-      <publishTime>04/23/2020 08:32:57</publishTime>
     </File>
     <File Include="Views/SharedMasterFormHeaderDetail_Input/headerDetailsDateV2.cshtml">
       <publishTime>04/23/2020 08:32:57</publishTime>
