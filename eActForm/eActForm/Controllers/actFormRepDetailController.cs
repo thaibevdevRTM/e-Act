@@ -5,8 +5,11 @@ using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Web.Mvc;
 using WebLibrary;
@@ -405,7 +408,12 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+        public ActionResult genImageStream(byte[] p_image,string empId)
+        {
+            return File(p_image, "image/png");
+        }
 
+      
 
     }
 }
