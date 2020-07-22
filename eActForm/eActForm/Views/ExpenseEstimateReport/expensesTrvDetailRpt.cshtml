@@ -14,14 +14,14 @@
         </td>
     </tr>
     <tr style="height:20px;">
-        <td style="width: 40%;text-align:center;">
+        <td style="width: 25%;text-align:center;">
             <b>รายละเอียด</b>
         </td>
 
-        <td style="width: 10%;text-align:center;">
+        <td style="width: 5%;text-align:center;">
             <b>จำนวน/วัน</b>
         </td>
-        <td style="width: 10%;text-align:center;">
+        <td style="width: 30%;text-align:center;">
             <b>ราคา/หน่วย</b>
         </td>
         <td style="width: 10%; text-align:center;">
@@ -56,12 +56,28 @@
             <td style="text-align:right; padding-right:5px;">
                 @if (@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") != ".00")
                 {
-                    <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
-                    if (@Model.expensesDetailModel.costDetailLists[@index].statusEdit !="")
+
+                    if (index == 1)
                     {
+
+                <label>
+                    1,000.00|1,000.00|800.00|800.00|1,000.00|1,000.00|1,000.00|1,000.00
+                </label>
+                    }
+                    else
+                    {
+                        <label>
+                            @Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00")
+                        </label>
+
+                }
+
+                if (@Model.expensesDetailModel.costDetailLists[@index].statusEdit != "")
+                {
                         <span style="color:red">*</span>
                     }
                 }
+
             </td>
             <td style="text-align:right; padding-right:5px;">
                 @if (@Model.expensesDetailModel.costDetailLists[@index].total.Value.ToString("#,###.00") != ".00")
