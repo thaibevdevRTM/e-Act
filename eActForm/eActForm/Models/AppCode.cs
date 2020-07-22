@@ -268,6 +268,10 @@ namespace eActForm.Models
         public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath, string serverMapPath)
         {
 
+            //===========ส่วน Replace เพราะ new server ออกเน็ทนอกไม่ได้ ตอน Gen ไฟล์ต้องสลับ IP เป็นวงใน=================
+            GridHtml = GridHtml.Replace("./images/check", (ConfigurationManager.AppSettings["renderHost"] + ConfigurationManager.AppSettings["renderPathFile"] + "images/check"));
+            GridHtml = GridHtml.Replace(ConfigurationManager.AppSettings["renderHostPublicIP"], ConfigurationManager.AppSettings["renderHost"]);
+            //====END=======ส่วน Replace เพราะ new server ออกเน็ทนอกไม่ได้ ตอน Gen ไฟล์ต้องสลับ IP เป็นวงใน=================
             ContentType xlsxContent = new ContentType("application/pdf");
             MemoryStream msPreview = new MemoryStream();
             byte[] PreviewBytes = new byte[0];
@@ -275,6 +279,14 @@ namespace eActForm.Models
 
             msPreview = GetFileReportTomail_Preview(GridHtml, doc, serverMapPath);
             PreviewBytes = msPreview.ToArray();
+            //msPreview.Position = 0;
+            //save in directory
+            if (rootPath != "")
+            {
+                File.Delete(rootPath);
+                File.WriteAllBytes(rootPath, PreviewBytes);
+            }
+
 
             if (PreviewBytes.Length != 0)
             {
