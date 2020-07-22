@@ -1,7 +1,7 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using System.Globalization;
-@using System.Configuration;
 @using eActForm.Models;
+@using System.Configuration;
 @{
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
@@ -39,7 +39,7 @@
                 {
                     if (item.empId == itemFlowByDoc.empId && item.approveGroupId == itemFlowByDoc.approveGroupId && itemFlowByDoc.statusId == "3")
                     {
-                        CreateByEmpId = itemFlowByDoc.ImgName;
+                        CreateByEmpId = item.empId;
                         CreateByStampDateSignature = itemFlowByDoc.updatedDate.Value.ToString("dd/MM/yyyy", DateEnglish);
                     }
                 }
@@ -62,7 +62,7 @@
                 {
                     if (item.empId == itemFlowByDoc.empId && item.approveGroupId == itemFlowByDoc.approveGroupId && itemFlowByDoc.statusId == "3")
                     {
-                        ApproveByEmpId = itemFlowByDoc.ImgName;
+                        ApproveByEmpId = item.empId;
                         ApproveByStampDateSignature = itemFlowByDoc.updatedDate.Value.ToString("dd/MM/yyyy", DateEnglish);
                     }
                 }
@@ -297,12 +297,10 @@
                     <tr>
                         <td style="width:20%;vertical-align:top;">&nbsp;ลายเซ็น<br /></td>
                         <td style="width:80%;text-align:center;">
-                            @*@{
-                                    var pathSigRequest = pathWeb + "signatureFile/" + CreateByEmpId + ".png";
-                                }*@
+
                             @if (CreateByEmpId != "")
                             {
-                                <img class="picSigV1" src="@CreateByEmpId" />
+                                <img src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], @CreateByEmpId)" alt="signa"/>
                             }
                         </td>
                     </tr>
@@ -334,12 +332,10 @@
                     <tr>
                         <td style="width:20%;vertical-align:top;">&nbsp;ลายเซ็น<br /></td>
                         <td style="width:80%;text-align:center;">
-                            @*@{
-                                    pathSigRequest = pathWeb + "signatureFile/" + ApproveByEmpId + ".png";
-                                }*@
+
                             @if (ApproveByEmpId != "")
                             {
-                                <img class="picSigV1" src="@ApproveByEmpId" />
+                                <img src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@ApproveByEmpId)" alt="signa"/>
                             }
                         </td>
                     </tr>

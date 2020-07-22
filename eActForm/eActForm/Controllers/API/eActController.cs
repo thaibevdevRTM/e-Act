@@ -656,5 +656,11 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+
+        public ActionResult genImageStream(string empId)
+        {
+            var result = SignatureAppCode.currentSignatureByEmpId(empId);
+            return File(result.lists[0].signature, "image/jpg");
+        }
     }
 }

@@ -129,7 +129,7 @@ namespace eActForm.Controllers
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
 
-                BaseAppCodes.WriteSignatureToDisk(models, actId);
+               // BaseAppCodes.WriteSignatureToDisk(models, actId);
 
             }
             catch (Exception ex)
@@ -254,7 +254,7 @@ namespace eActForm.Controllers
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
 
-                BaseAppCodes.WriteSignatureToDisk(models, actId);
+               // BaseAppCodes.WriteSignatureToDisk(models, actId);
 
             }
             catch (Exception ex)
@@ -312,5 +312,6 @@ namespace eActForm.Controllers
             return models;
         }
 
+  
     }
 }

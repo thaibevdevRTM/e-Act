@@ -136,9 +136,9 @@ namespace eActForm.BusinessLayer
                     }
                     else
                     {
-                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || (AppCode.hcForm.Contains( getMasterType)))
+                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || (AppCode.hcForm.Contains(getMasterType)))
                         {
-                            model.flowDetail = getFlowDetailExpense(model.flowMain.id ,actFormId);
+                            model.flowDetail = getFlowDetailExpense(model.flowMain.id, actFormId);
                         }
                         else
                         {
@@ -234,7 +234,20 @@ namespace eActForm.BusinessLayer
                                  statusId = dr["statusId"].ToString(),
                                  remark = dr["remark"].ToString(),
                                  imgSignature = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
+                                 signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
                              }).ToList();
+
+                if (lists.Any())
+                {
+                    int i = 0;
+                    foreach (var item in lists)
+                    {
+                        string imageBase64Data = Convert.ToBase64String(item.signature);
+                        string imageDataURL = string.Format("data:image/png;base64,{0}", imageBase64Data);
+                        lists[0].urlImg = imageDataURL;
+                        i++;
+                    }
+                }
                 return lists;
             }
             catch (Exception ex)
@@ -310,7 +323,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailExpense(string flowId ,string actId)
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailExpense(string flowId, string actId)
         {
             try
             {
@@ -418,21 +431,21 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<RequestEmpModel> getEmpByConditon(string subjectId, string limitId ,string channelId)
+        public static List<RequestEmpModel> getEmpByConditon(string subjectId, string limitId, string channelId)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmpSettingFlow"
-                    ,new SqlParameter[] { new SqlParameter("@subjectId", subjectId)
+                    , new SqlParameter[] { new SqlParameter("@subjectId", subjectId)
                     ,new SqlParameter("@flowLimitId", limitId)
                     ,new SqlParameter("@channelId", channelId)
                     });
                 var result = (from DataRow dr in ds.Tables[0].Rows
-                             select new RequestEmpModel
-                             {
-                                 empId = dr["empId"].ToString(),
-                                 empName = dr["empName"].ToString(),
-                             }).ToList();
+                              select new RequestEmpModel
+                              {
+                                  empId = dr["empId"].ToString(),
+                                  empName = dr["empName"].ToString(),
+                              }).ToList();
 
                 return result;
             }
