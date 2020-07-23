@@ -21,7 +21,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                              select new ApproveFlowModel.flowApproveDetail()
                              {                                 
                                  id = d["flowId"].ToString(),                    
-                                 description = d["description"].ToString(),
+                                 empGroup = d["empGroup"].ToString(),
                                  companyId = d["companyId"].ToString(),
                              });
                 return lists.ToList();

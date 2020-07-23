@@ -453,7 +453,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                var getFlowDetail = QueryGetFlow.getFlowDetailBytypeFormId(typeFormId).ToList().Where(x => x.description == empId);
+                var getFlowDetail = QueryGetFlow.getFlowDetailBytypeFormId(typeFormId).ToList().Where(x => x.empGroup == empId);
                 var resultData = new
                 {
                     flow = getFlowDetail.ToList(),

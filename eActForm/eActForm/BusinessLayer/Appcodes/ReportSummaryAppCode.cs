@@ -93,7 +93,7 @@ namespace eActForm.BusinessLayer
                                  approveGroupName = dr["approveGroupName"].ToString(),
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
                                  isShowInDoc = (bool)dr["showInDoc"],
-                                 description = dr["description"].ToString(),
+                                 empGroup = dr["empGroup"].ToString(),
                                  statusId = dr["statusId"].ToString(),
                                  remark = dr["remark"].ToString(),
                                  imgSignature = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
