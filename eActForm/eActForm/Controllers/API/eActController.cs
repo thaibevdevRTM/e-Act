@@ -580,7 +580,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getCumulativeByEmpId => " + ex.Message);
+                ExceptionManager.WriteError("getCashDetailByEmpId => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
