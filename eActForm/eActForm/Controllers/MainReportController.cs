@@ -87,7 +87,7 @@ namespace eActForm.Controllers
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                 {
                     activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
-                    BaseAppCodes.WriteSignatureToDisk(activity_TBMMKT_Model.approveModels, activityId);
+                    //BaseAppCodes.WriteSignatureToDisk(activity_TBMMKT_Model.approveModels, activityId);
                 }
                 //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
             }
