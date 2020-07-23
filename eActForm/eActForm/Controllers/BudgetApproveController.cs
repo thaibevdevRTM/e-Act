@@ -776,7 +776,7 @@ namespace eActForm.Controllers //update 21-04-2020
 
                 var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rootBudgetPdftURL"], budget_approve_id + "_");
                 GridHtml = GridHtml.Replace("<br>", "<br/>");
-
+                GridHtml = GridHtml.Replace("undefined", "");
                 AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
                 // del signature file
                 bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)));
