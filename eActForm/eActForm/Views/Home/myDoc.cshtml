@@ -429,7 +429,7 @@
 
 
     function genPdf(actId, statusId, htmlResponse) {
-
+        console.log(htmlResponse);
         $.ajax({
             url: '@Url.Action("genPdfApprove", "Documents")',
             data: {
