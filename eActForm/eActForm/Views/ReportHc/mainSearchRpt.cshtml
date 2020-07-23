@@ -1,0 +1,294 @@
+﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
+@using eActForm.Models;
+@model eActForm.Models.SearchReportModels
+
+@{
+    ViewBag.Title = "index";
+
+    var typeForm = Request.QueryString["typeForm"];
+    var typeFormId = Request.QueryString["typeFormId"];
+}
+
+@using (Ajax.BeginForm("listMedRpt", "ReportHc", new { typeForm = typeForm, typeFormId = typeFormId }
+, new AjaxOptions { UpdateTargetId = "getQuery", HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery", LoadingElementId = "WaitDialog" }
+, new { id = "form", @class = "form-horizontal form-label-left" }))
+{
+
+    <div class="form-group">
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlReportType">
+                    Report Type<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(model => model.reportTypeList, new SelectList(Model.reportTypeList, "id", "reportName"), "Please Select"
+                   , new { @class = "form-control selectpicker", id = "ddlReportType", Name = "ddlReportType", @onchange = "checkReportType()", })
+                    <input type="hidden" id="hdReportType" class="form-control textboxcss" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">
+
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCompany">
+                    Company<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(model => model.companyList,
+                   new SelectList(Model.companyList, "companyId", "companyNameTH"), "Please Select"
+                   , new
+                        {
+                            @class = "form-control selectpicker",
+                            id = "ddlCompany",
+                            Name = "ddlCompany",
+
+                       @onchange = "getDepartment()",
+                   })
+
+
+
+                    <input type="hidden" id="txtchanel" class="form-control textboxcss" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlDepartment">
+                Department<span class="required"></span>
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <input type="hidden" id="hdDepartment" class="form-control textboxcss" />
+
+
+                @Html.DropDownListFor(model => model.departmentList, new SelectList(Model.departmentList, "name", "name"), "Please Select",
+                     new { @class = "form-control ", @id = "ddlDepartment", @Name = "ddlDepartment", multiple = "multiple" })
+                <input type="hidden" id="hdDepartment" class="form-control textboxcss" readonly>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="divEmp" class="form-group">
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlMutiEmp">
+                    Employee<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div id="divddlMutiEmp">
+                        @Html.DropDownListFor(model => model.empList, new SelectList(Model.empList, "empId", "empName"), "Please Select",
+                                        new { @class = "form-control ", @id = "ddlMutiEmp", @Name = "ddlMutiEmp", multiple = "multiple" })
+                    </div>
+
+                    <div id="divddlEmp">
+                        @Html.DropDownListFor(model => model.empList, new SelectList(Model.empList, "empId", "empName"), "Please Select",
+                                        new { @class = "form-control ", @id = "ddlEmp", @Name = "ddlEmp" })
+                    </div>
+                    <input type="hidden" id="hdEmp" class="form-control textboxcss" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">
+
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">
+                    Start date<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-30), ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="endDate">
+                    End date<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"])" class="form-control fv">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr />
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <a href="#" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
+                    <button type="submit" class="btn btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        checkReportType();
+        $("#startDate").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#endDate").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $('#ddlDepartment').multiselect({
+            numberDisplayed: 1,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            onChange: function (option, checked) {
+
+                getEmplpoyee();
+            },
+        });
+
+        $('#ddlMutiEmp').multiselect({
+            numberDisplayed: 1,
+            enableFiltering: true,
+            nonSelectedText: '',
+            buttonWidth: '100%',
+            maxHeight: 450,
+            onChange: function (option, checked) {
+
+            },
+        });
+
+        $('#ddlEmp').selectpicker({
+            liveSearch: true,
+            showSubtext: true
+        });
+
+        $("#startDate").css('float', 'right');
+        $("#startDate").css('margin', '8px 0');
+        $("#endDate").css('float', 'right');
+        $("#endDate").css('margin', '8px 0');
+
+        $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+        $(".multiselect .caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+    });
+
+    function getDepartment() {
+
+       
+        $("#ddlEmp").empty();
+        $("#ddlEmp").selectpicker('refresh');
+        $("#ddlEmp").selectpicker('render');
+
+        $("#ddlDepartment").empty();
+        $.ajax({
+            url: '@Url.Action("getDepartmentByCompId", "eAct")',
+            data: {
+                companyId: $('#ddlCompany').val(),
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                $("#ddlEmp").empty();
+                if (response.Data.departmentList.length > 0) {
+
+                    $.each(response.Data.departmentList, function (i, j) {
+                        // alert(j.name);
+                        $("#ddlDepartment").append("<option value='" + j.name + "'>" + j.name + "</option>");
+                    });
+
+                    $("#ddlDepartment").multiselect('rebuild');
+                }
+                else {
+                    //document.getElementById("ddlDepartment").disabled = true;
+                }
+            }
+        });
+    }
+
+
+    function getEmplpoyee() {
+
+        //var selectedValues = $('#ddlDepartment').selectedValues();
+        //alert(selectedValues);
+
+        var selected = "";
+
+        $('#ddlDepartment :selected').each(function () {
+            selected += $(this).text() + ",";
+        });
+        selected = selected.substr(0, selected.length-1)
+       // alert(selected);
+
+        var ddlEmp = $("#ddlEmp");
+        $("#ddlEmp").empty();
+
+        $("#ddlMutiEmp").empty();
+        $.ajax({
+            url: '@Url.Action("getEmpByDepartment", "eAct")',
+            data: {
+                companyId: $('#ddlCompany').val(),
+                department: selected,
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+               // alert(response.Data.empList.length);
+
+
+                if (response.Data.empList.length > 0) {
+
+                    $("#ddlEmp option[value !='']").remove();
+                    $.each(response.Data.empList, function (i, j) {
+                        $("#ddlMutiEmp").append("<option value=" + j.empId + ">" + j.empName + "</option>");
+
+                       // ddlEmp.append($("<option></option>").val(j.empId).html(j.empName));
+
+                        $("#ddlEmp").append($('<option>').text(j.empName).attr('value', j.empId));
+                    });
+                    $("#ddlMutiEmp").multiselect('rebuild');
+
+
+                    $("#ddlEmp").selectpicker('refresh');
+                    $("#ddlEmp").selectpicker('render');
+
+                    //$.each(response.Data.empList, function () {
+                    //    ddlEmp.append($("<option></option>").val(this['empId']).html(this['empName']));
+                    //});
+                }
+                else {
+                    //document.getElementById("ddlDepartment").disabled = true;
+                }
+            }
+        });
+
+
+
+        //alert(selectedValues);
+    }
+
+    function checkReportType() {
+        var reportType = $('#ddlReportType').val();
+        //alert($('#ddlReportType').val());
+        if (reportType == '@AppCode.ReportType.MedIndividual') {
+            document.getElementById("divddlEmp").style.display = "block"
+            document.getElementById("divddlMutiEmp").style.display = "none"
+            document.getElementById("divEmp").style.display = "block"
+        } else {
+            // if (reportType == 'BF0BE76C-341E-4E56-8986-7A5B01248DE5')
+            document.getElementById("divddlEmp").style.display = "none"
+            document.getElementById("divddlMutiEmp").style.display = "none"
+            document.getElementById("divEmp").style.display = "none"
+        }
+    }
+
+</script>
