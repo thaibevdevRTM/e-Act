@@ -135,6 +135,10 @@
                     <input id="adminCVM" type="checkbox" name="model.chkRole" value="11">
                     adminCVM
                 </div>
+                <div>
+                    <input id="adminHCBP" type="checkbox" name="model.chkRole" value="12">
+                    adminHCBP
+                </div>
             </div>
 
             <div id="divProductType">
@@ -409,15 +413,17 @@
                         case '8':
                             document.getElementById("adminNUM").checked = true;
                             break;
-
-                        case '9':
+                        case "9":
                             document.getElementById("adminPOM").checked = true;
                             break;
-                        case '10':
+                        case "10":
                             document.getElementById("admin_CHANG_INTER").checked = true;
                             break;
-                        case '11':
+                        case "11":
                             document.getElementById("adminCVM").checked = true;
+                            break;
+                        case "12":
+                            document.getElementById("adminHCBP").checked = true;
                             break;
                     }
                 });

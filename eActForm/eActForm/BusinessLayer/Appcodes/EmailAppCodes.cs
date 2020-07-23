@@ -446,7 +446,8 @@ namespace eActForm.BusinessLayer
             mailTo = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_to : mailTo;
             mailCC = (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])) ? GetDataEmailIsDev(actFormId).FirstOrDefault().e_cc : mailCC;
 
-            if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"])){
+            if (bool.Parse(ConfigurationManager.AppSettings["isDevelop"]))
+            {
                 strBody += checkMail;
             }
 
