@@ -27,7 +27,7 @@ namespace eActForm.Controllers
             models.showUIModel = new searchParameterFilterModel();
             
 
-            if (typeForm == Activity_Model.activityType.MT.ToString())
+            if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
             {
                 models.customerslist = QueryGetAllCustomers.getCustomersMT();
             }

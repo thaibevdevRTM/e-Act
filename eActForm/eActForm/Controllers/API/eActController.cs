@@ -6,6 +6,8 @@ using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -607,8 +609,23 @@ namespace eActForm.Controllers
 
         public ActionResult genImageStream(string empId)
         {
+
             var result = SignatureAppCode.currentSignatureByEmpId(empId);
+            if (result.lists.Any())
+            {
+                Image img = Image.FromFile(Server.MapPath(ConfigurationManager.AppSettings["rootGetNoSigna"]));
+                result.lists[0].signature = imgToByteArray(img);
+            }
             return File(result.lists[0].signature, "image/jpg");
+        }
+
+        public byte[] imgToByteArray(Image img)
+        {
+            using (MemoryStream mStream = new MemoryStream())
+            {
+                img.Save(mStream, img.RawFormat);
+                return mStream.ToArray();
+            }
         }
     }
 }

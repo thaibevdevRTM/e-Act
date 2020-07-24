@@ -16,6 +16,7 @@
                     <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva")</li>
 
                     <li>@Html.ActionLink(" Report Detail MT", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                    <li>@Html.ActionLink(" Report Detail Set Price", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.SetPrice.ToString() }, null)</li>
                 }
                 if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
                 {

@@ -7,10 +7,11 @@ namespace eActForm.BusinessLayer
 {
     public class SearchAppCode
     {
-        public static SearchActivityModels getMasterDataForSearchForDetailReport()
+        public static SearchActivityModels getMasterDataForSearchForDetailReport(string typeForm)
         {
             try
             {
+
                 SearchActivityModels models = new SearchActivityModels
                 {
                     showUIModel = new searchParameterFilterModel(),
