@@ -1,6 +1,6 @@
 ﻿
 @model eActForm.Models.ApproveModel.approveModels
-
+@using System.Configuration;
 
 <table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
     <tr>
@@ -32,9 +32,11 @@
                     <td>
                         @if (Model.approveDetailLists[index].signature.Length > 0)
                         {
-                            var base64 = Convert.ToBase64String(Model.approveDetailLists[index].signature);
+                            @*var base64 = Convert.ToBase64String(Model.approveDetailLists[index].signature);
                             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                            <img src="@imgSrc" class="img-thumbnail" style="text-align:center;margin:auto;" />
+                            <img src="@imgSrc" class="img-thumbnail" style="text-align:center;margin:auto;" />*@
+
+                            <img style="text-align:center;" width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@item.empId)" alt="signa" />
                         }
                     </td>
                 }
