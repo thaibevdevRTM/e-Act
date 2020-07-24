@@ -105,7 +105,8 @@ namespace eActForm.BusinessLayer
 
                         DateTime getDoc = DateTime.Parse(model.activityFormModel.activityPeriodSt.ToString());
                         string getYear = getDoc.Month > 9 ? getDoc.AddYears(1).ToString("yy") : getDoc.Year.ToString().Substring(2);
-                        costThemeDetail.IO = "56S0" + getYear + ActFormAppCode.getDigitGroup(item.activityTypeId) + ActFormAppCode.getDigitRunnigGroup(item.productId);
+                        var getIO = QueryGetAllProduct.getBrandByProductId(item.productId).Any() ? "54" : "56";
+                        costThemeDetail.IO = getIO + "S0" + getYear + ActFormAppCode.getDigitGroup(item.activityTypeId) + ActFormAppCode.getDigitRunnigGroup(item.productId);
 
                         //costThemeDetail.IO = item.IO;
                         costThemeDetail.mechanics = item.mechanics;
@@ -154,13 +155,13 @@ namespace eActForm.BusinessLayer
             {
                 model.activityFormModel.id = activityId;
                 model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodSt) ? (DateTime?)null :
-                 DateTime.ParseExact(model.activityFormModel.str_activityPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodEnd) ? (DateTime?)null :
-                DateTime.ParseExact(model.activityFormModel.str_activityPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null :
-                 DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
-                  DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                    BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                 model.activityFormModel.updatedDate = DateTime.Now;
 

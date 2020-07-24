@@ -71,9 +71,13 @@ namespace eActForm.Controllers
 
                         ObjGetDataIO objGetDataIO = new ObjGetDataIO();
                         objGetDataIO.ActivityByEOSelect = "";
+                        objGetDataIO.EOSelect = "";
                         foreach (var item in activity_TBMMKT_Model.activityFormTBMMKT.list_1_multi_select)
                         {
-                            objGetDataIO.ActivityByEOSelect += (item + ",");
+                            int lenghtCut = 37;
+                            int maxLenght = item.Length;
+                            objGetDataIO.ActivityByEOSelect += (item.Substring(0,36) + "|");
+                            objGetDataIO.EOSelect += (item.Substring(lenghtCut, maxLenght-lenghtCut) + "|");
                         }
                         activity_TBMMKT_Model.listGetDataIO = QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
                     }
@@ -101,7 +105,7 @@ namespace eActForm.Controllers
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
                     for (int i = 0; i < rowEstimateTable; i++)
                     {
-                        costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { id = "", IO = "", activityTypeId = "", productDetail = "", unit = 0, unitPrice = 0, total = 0 });
+                        costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { id = "", IO = "", activityTypeId = "", productDetail = "", unit = 0, unitPrice = 0, total = 0 , EO = "",UseYearSelect ="" });
                     }
 
                     TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();

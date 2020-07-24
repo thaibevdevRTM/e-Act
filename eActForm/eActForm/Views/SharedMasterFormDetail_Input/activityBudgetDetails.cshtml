@@ -1,15 +1,17 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
-<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+<table style="border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
-        <td>
-            <div id="divHeaderDetailsCost" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
-                <table class="table table-bordered" id="tabelHeaderDetails" runat="server">
+        <td style="width: 100%;text-align:right;">
+            <div id="divHeaderDetailsCost">
+                <table class="table table-bordered" id="tableDetailsBG">
                     <tr style="background-color:#2f74b5;color:white;height:25px;">
-                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">IO</th>
-                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>
-                        <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรมหรือรายละเอียด</th>
-                        <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วยเรียก</th>
+                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ประเภท<br />ปีงบประมาณ</th>
+                        @*<th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">EO</th>
+                                <th style="width: 14%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
+                            <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ประเภท</th>*@
+                        <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">กิจกรรมหรือรายละเอียด<br />EO , IO</th>
+                        <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วย<br />เรียก</th>
                         <th style="width: 7%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
                         <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
                         <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</th>
@@ -18,38 +20,69 @@
                     @foreach (var item in Model.activityOfEstimateList)
                     {
                         <tr class="tagCountRowinTable">
-                            <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                                @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
-                                {
-                                    <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" />
-                                }
-                                else
-                                {
-                                    <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" readonly="readonly" />
-                                }
-
+                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                                @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control", @title = "เลือกประเภท" })
+                                @Html.DropDownList("activityOfEstimateList[" + index + "].UseYearSelect", new SelectList(Model.listFiscalYearModel, "id", "UseYear", item.UseYearSelect), "", new { @class = "form-control", @title = "เลือกปีงบประมาณ" })
                             </td>
-                            <td style="width: 10%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control selectpicker" })
+                            @*<td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO" />
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                    @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
+                                    {
+                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" />
+                                    }
+                                    else
+                                    {
+                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO" readonly="readonly" />
+                                    }
+                                </td>
+                                <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                    @Html.DropDownList("activityOfEstimateList[" + index + "].activityTypeId", new SelectList(Model.activityGroupList, "activityTypeId", "activitySales", item.activityTypeId), "", new { @class = "form-control" })
+                                </td>*@
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <div>
+                                    <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss clstxtproductDetail_@index" placeholder="กิจกรรมหรือรายละเอียด" />
+                                </div>
+                                <div style="display:inline-block;">
+                                    <input type="text" value="@item.EO" id="activityOfEstimateList[@index].EO" name="activityOfEstimateList[@index].EO" class="form-control textboxcss clstxtEO_@index" placeholder="EO" maxlength="18" />
+                                    <script>
+                                        $(".clstxtEO_@index").blur(function () {
+                                            $(".clstxtEO_@index").val($(".clstxtEO_@index").val().replaceAll(" ", ""));
+                                        });
+                                    </script>
+                                </div>
+                                <div style="display:inline-block;">
+                                    @if ((Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && UtilsAppCode.Session.User.isAdminTBM) || (UtilsAppCode.Session.User.isAdminTBM))
+                                    {
+                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO_@index" placeholder="IO" maxlength="12" />
+                                    }
+                                    else
+                                    {
+                                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss clstxtIO_@index" placeholder="IO" maxlength="12" readonly="readonly" />
+                                    }
+                                    <script>
+                                        $(".clstxtIO_@index").blur(function () {
+                                            $(".clstxtIO_@index").val($(".clstxtIO_@index").val().replaceAll(" ", ""));
+                                        });
+                                    </script>
+                                </div>
                             </td>
-                            <td style="width: 30%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss" />
-                            </td>
-                            <td style="width: 8%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <input type="text" value="@item.QtyName" id="activityOfEstimateList[@index].QtyName" name="activityOfEstimateList[@index].QtyName" class="form-control textboxcss" />
                             </td>
-                            <td style="width: 7%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <input type="text" value="@item.unit" id="activityOfEstimateList[@index].unit" name="activityOfEstimateList[@index].unit" class="form-control textboxcss txtUnit_@index" />
                                 <script>
-                        $(".txtUnit_@index").blur(function () {
-                            $(".txtUnit_@index").val($(".txtUnit_@index").val().replace(",", ""));
-                        });
+                                    $(".txtUnit_@index").blur(function () {
+                                        $(".txtUnit_@index").val($(".txtUnit_@index").val().replace(",", ""));
+                                    });
                                 </script>
                             </td>
-                            <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 @Html.TextBoxFor(x => item.unitPriceDisplay, new { @id = "activityOfEstimateList[" + index + "].unitPriceDisplay", Name = "activityOfEstimateList[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index })
                             </td>
-                            <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                                 <input type="hidden" value="@item.total" id="activityOfEstimateList[@index].total" name="activityOfEstimateList[@index].total" class="form-control textboxcss text-right hidtotal_@index" />
                                 @Html.TextBoxFor(x => item.total, "{0:n2}", new { @id = "activityOfEstimateList[" + index + "].total", Name = "activityOfEstimateList[" + index + "].total", @class = "form-control textboxcss text-right txttotal_" + index, @readonly = "readonly" })
                                 <script>
@@ -95,10 +128,10 @@
                         index++;
                     }
                     <tr>
-                        <td colspan="6" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                        <td colspan="5" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                             จำนวนเงินรวม(บาท)&nbsp;
                         </td>
-                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
                             <label id="totalEstimate" type="text" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###.00")</label>&nbsp;
                         </td>
                     </tr>
@@ -106,7 +139,7 @@
                 <script>
                     function sumall() {
                         var totalAll = 0.00;
-                        var rowCount = parseInt($('#tabelHeaderDetails tr.tagCountRowinTable').length);
+                        var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
 
                         for (i = 0; i < rowCount; i++) {
 

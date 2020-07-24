@@ -27,11 +27,11 @@ namespace eActForm.Controllers
                 if (rowid != null)
                 {
                     activityModel.activitydetaillist.RemoveAll(r => r.productGroupId == rowid);
-                    activityModel.productcostdetaillist1.RemoveAll(r => r.productGroupId == rowid);
                 }
                 else
                 {
                     activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
+                    activityModel.productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
                 }
                 TempData["actForm" + actId] = activityModel;
                 TempData.Keep();

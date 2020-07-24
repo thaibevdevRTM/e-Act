@@ -61,6 +61,7 @@ namespace eActForm.Controllers
                 else
                 {
                     activityModel.productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
+                    activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
                 }
 
                 TempData["actForm" + activityModel.activityFormModel.id] = activityModel;

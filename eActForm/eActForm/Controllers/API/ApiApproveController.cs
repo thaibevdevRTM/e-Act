@@ -52,11 +52,6 @@ namespace eActForm.Controllers
                     gridHtml = gridHtml.Replace("undefined", "");
                     AppCode.genPdfFile(gridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert), Server.MapPath("~"));
 
-                    bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
-                    if (folderExists)
-                        Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)), true);
-
-
                     TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
                     getImageModel.tbActImageList = ImageAppCode.GetImage(activityId, ".pdf");
                     string[] pathFile = new string[getImageModel.tbActImageList.Count + 1];

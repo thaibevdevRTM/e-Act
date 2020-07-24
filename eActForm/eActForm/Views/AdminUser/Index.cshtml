@@ -132,8 +132,8 @@
                     admin_CHANG_INTER
                 </div>
                 <div>
-                    <input id="admin_CHANG_INTER" type="checkbox" name="model.chkRole" value="11">
-                    admin_CVM
+                    <input id="adminCVM" type="checkbox" name="model.chkRole" value="11">
+                    adminCVM
                 </div>
             </div>
 
@@ -382,7 +382,7 @@
                             break;
                     }
                 });
-               
+
                 $.each(response.Data.userLists, function () {
                     switch (this['roleId']) {
                         case '1':
@@ -408,6 +408,16 @@
                             break;
                         case '8':
                             document.getElementById("adminNUM").checked = true;
+                            break;
+
+                        case '9':
+                            document.getElementById("adminPOM").checked = true;
+                            break;
+                        case '10':
+                            document.getElementById("admin_CHANG_INTER").checked = true;
+                            break;
+                        case '11':
+                            document.getElementById("adminCVM").checked = true;
                             break;
                     }
                 });

@@ -208,5 +208,23 @@ namespace eActForm.BusinessLayer.Appcodes
 
         }
 
+        //public static void WriteSignatureToDisk(ApproveFlowModel.approveFlowModel flowModel, string activityId)
+        //{
+
+           
+        //        bool folderExists = Directory.Exists(HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
+        //        if (!folderExists)
+        //            Directory.CreateDirectory(HttpContext.Current.Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
+
+        //        foreach (var item in flowModel.flowDetail)
+        //        {
+        //            UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
+        //                , item.signature
+        //                , string.Format(ConfigurationManager.AppSettings["rootSignaByActURL"], activityId, item.empId));
+        //        }
+            
+
+        //}
+
     }
 }

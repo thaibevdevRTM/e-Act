@@ -27,6 +27,11 @@ namespace eActForm.Controllers
         public ActionResult ListView(string fromPage, string StatusApprove)
         {
             Activity_Model.actForms model = new Activity_Model.actForms();
+            ActSignatureModel.SignModels signModels = SignatureAppCode.currentSignatureByEmpId(UtilsAppCode.Session.User.empId);
+            if (signModels.lists == null || signModels.lists.Count == 0)
+            {
+                ViewBag.messCannotFindSignature = true;
+            }
             if (TempData["ApproveSearchResult"] == null)
             {
                 model = new Activity_Model.actForms();

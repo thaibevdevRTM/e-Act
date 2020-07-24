@@ -1,4 +1,4 @@
-﻿
+﻿@using System.Configuration;
 @model eActForm.Models.ApproveModel.approveModels
 
 @if (Model.approveFlowDetail != null)
@@ -39,7 +39,8 @@
                                     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                                     <img src="@imgSrc" class="img-thumbnail" style="text-align:center;margin:auto;" />*@
 
-                                <img style="text-align:center;" width="150" height="90" src="@Model.approveDetailLists[index].ImgName" />
+                                @*<img style="text-align:center;" width="150" height="90" src="@Model.approveDetailLists[index].ImgName" />*@
+                                <img style="text-align:center;" width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@item.empId)" alt="signa" />
                             }
                         </td>
                     }
