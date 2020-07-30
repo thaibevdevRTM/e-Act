@@ -26,6 +26,7 @@ namespace eActForm.Models
         public List<PurposeModel> purposeModel { get; set; }
         public List<PlaceDetailModel> placeDetailModel { get; set; }
         public CostDetailOfGroupPriceTBMMKT expensesDetailModel { get; set; }
+        public CostDetailOfGroupPriceTBMMKT expensesDetailSubModel { get; set; }
         public List<string> chkPurpose { get; set; }
 
         public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
@@ -58,6 +59,7 @@ namespace eActForm.Models
             purposeModel = new List<PurposeModel>();
             placeDetailModel = new List<PlaceDetailModel>();
             expensesDetailModel = new CostDetailOfGroupPriceTBMMKT();
+            expensesDetailSubModel = new CostDetailOfGroupPriceTBMMKT();
             approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
             exPerryCashList = new List<exPerryCashModel>();
             exPerryCashModel = new exPerryCashModel();

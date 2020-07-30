@@ -1,7 +1,83 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.Models;
+<script>
+    function chkMultiPrice_change(){
+        var checkedValue = document.getElementById("chkMultiPrice").checked;
+        if (checkedValue == true) {
+            $('#preview').modal('show');
 
+        } else {
+            $('#preview').modal('hide');
+            $("#txtUnitPrice_1").val($("#ProductDetail_1").val());
+            document.getElementById("txtUnitPrice_1").readOnly = false;
+            $("#MultiPrice_1").val("");
+            $("#txtUnit_1").val(0);
+            $("#txtTotal_1").val(0.00);
+        }
+    }
+
+
+
+    function callMultiPrice() {
+       // var checkedValue = document.getElementById("chkMultiPrice").checked;
+        //alert(checkedValue);
+        var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
+
+        if (v_total > 0) {
+
+            document.getElementById("chkMultiPrice").checked = true;
+            $("#txtUnitPrice_1").val();
+            document.getElementById("txtUnitPrice_1").readOnly = true;
+
+        } else {
+            $("#MultiPrice_1").val("");
+            document.getElementById("chkMultiPrice").checked = false;
+            $("#txtUnitPrice_1").val($("#ProductDetail_1").val());
+            document.getElementById("txtUnitPrice_1").readOnly = false;
+
+
+        }
+
+        //if (checkedValue == true) {
+        //    $('#preview').modal('show');
+
+        //} else {
+        //    $('#preview').modal('hide');
+        //    $("#txtUnitPrice_1").val($("#ProductDetail_1").val());
+        //    document.getElementById("txtUnitPrice_1").readOnly = false;
+        //}
+    }
+
+
+        function sumData() {
+            var multiPrice = "";
+            var totalUnit = 0;
+            var rowCount = '@Model.expensesDetailSubModel.costDetailLists.Count';
+
+            for (i = 0; i < rowCount; i++) {
+
+                var rowtotal = parseInt($("#txtSubUnit_" + i.toString()).val().replace(",", ""));
+                totalUnit = totalUnit + rowtotal;
+                if (parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) > 0) {
+                    multiPrice = multiPrice + (parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) + parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", ""))).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "|";
+                }
+            }
+            multiPrice = multiPrice.substring(0, multiPrice.length - 1);
+
+
+            $("#MultiPrice_1").val( multiPrice);
+            document.getElementById('MultiPrice_1').innerHTML = "(" + multiPrice + ")";
+            $("#txtUnit_1").val(totalUnit);
+
+
+            $("#txtUnitPrice_1").val("");
+            document.getElementById("txtUnitPrice_1").readOnly = true;
+            var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
+            $("#txtTotal_1").val(v_total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+            $('#preview').modal('hide');
+        }
+</script>
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
         <td>
@@ -44,11 +120,10 @@
                                             <input type="hidden" value="@item.listChoiceId" id="hdListChoiceId_@index" name="expensesDetailModel.costDetailLists[@index].listChoiceId" class="form-control textboxcss" />
                                             <label>@item.listChoiceName</label>
 
-                                            @if (item.listChoiceId == AppCode.Expenses.hotelExpense)
-                                            {
-                                        <a href="#" onclick="$('#preview').modal('show');">ราคาที่พักต่างกันคลิ๊กที่นี้</a>
-                                                
-                                            }
+                                            <a onclick=" $('#preview').modal('show');" style="width: 100%">
+                                                <label  id="MultiPrice_@index" style=" text-decoration:underline; cursor:pointer"/>
+                                                    @*<input type="text" id="MultiPrice_@index" readonly style=" color:darkblue; border:hidden; text-align:center;" />*@
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-xs-12">
@@ -89,7 +164,12 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense)
+                                {
+                                    <div>
+                                        <input id="chkMultiPrice" type="checkbox" onchange="chkMultiPrice_change()" name=""> ราคาที่พักต่างกัน
+                                    </div>
+                                }
                             </td>
 
 
@@ -143,8 +223,6 @@
                            })
 
                                 <script>
-
-
 
                                     $("#txtUnitPrice_@index").blur(function () {
 
@@ -244,17 +322,172 @@
         <div class="modal-content">
             <div class="modal-header">
                 @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
-                <h4 class="modal-title">เทส</h4>
+                <h4 class="modal-title">ค่าที่พักกรณีราคาต่อคืนไม่เท่ากัน</h4>
             </div>
             <div class="modal-body">
+                <table class="table table-bordered" id="tabelExpensesTrv" runat="server" width="80%">
+                    @*<tr style="background-color:#E5E2E2;height:20px; ">
+                            <th colspan="4" style="text-align :center;">
+                                ค่าที่พัก
+                            </th>
+                        </tr>*@
+                    <tr style="background-color:#E5E2E2;height:20px; ">
+                        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            ลำดับ
+                        </th>
+                        <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            จำนวน/วัน
+                        </th>
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            ราคา/หน่วย(บาท)
+                        </th>
 
-                
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            vat(บาท)
+                        </th>
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            รวม(บาท)
+                        </th>
+                    </tr>
+                    @{ var indexSub = 0;}
+
+                    @foreach (var item in Model.expensesDetailSubModel.costDetailLists)
+
+                    {
+                        <tr class="tagCountRowinTable" style="height:20px;">
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @(indexSub+1)
+                            </td>
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="number" value="@item.unit" id="txtSubUnit_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].unit" min="0" class="form-control textboxcss text-center " />
+                            </td>
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.unitPrice" id="txtSubUnitPrice_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].unitPrice" class="form-control textboxcss text-right" />
+                            </td>
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
+                                <input type="text" value="@item.vat" id="txtSubVat_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].vat" class="form-control textboxcss text-right" />
+                            </td>
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                                <input type="hidden" value="@item.total" id="hdSubTotal_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].total" class="form-control textboxcss text-right hdTotal_@indexSub " />
+                                @Html.TextBoxFor(x => item.total, "{0:n2}", new
+                           {
+                               @id = "txtSubTotal_" + @indexSub
+                                                        ,
+                               Name = "expensesDetailSubModel.costDetailLists[" + indexSub + "].total"
+                                                        ,
+                               @class = "form-control textboxcss text-right"
+                                                        ,
+                               @readonly = "readonly"
+                           })
+
+
+
+                                <script>
+                                    $('#txtSubUnit_@indexSub,#txtSubUnitPrice_@indexSub,#txtSubVat_@indexSub').bind('blur', function () {
+                                        var v_unitRow = 0.00;
+                                        var v_unitpriceRow = 0.00;
+                                        var v_totalRow = 0.00;
+                                        if ($("#txtSubUnit_@indexSub").val() == "") { $("#txtSubUnit_@indexSub").val() == "1"; }
+                                        if ($("#txtSubUnit_@indexSub").val() != "" && $("#txtSubUnit_@indexSub").val() != "0.00" && $("#txtSubUnit_@indexSub").val() != "0") {
+                                            v_unitRow = parseFloat($("#txtSubUnit_@indexSub").val().replace(",", ""));
+                                        }
+                                        if ($("#txtSubUnitPrice_@indexSub").val() != "" && $("#txtSubUnitPrice_@indexSub").val() != "0.00" && $("#txtSubUnitPrice_@indexSub").val() != "0") {
+                                            v_unitpriceRow = parseFloat($("#txtSubUnitPrice_@indexSub").val().replace(",", "")) + parseFloat($("#txtSubVat_@indexSub").val().replace(",", ""));
+
+                                        }
+                                        v_totalRow = (v_unitRow * v_unitpriceRow);
+
+                                        $("#hdSubTotal_@indexSub").val(v_totalRow.toFixed(2));
+                                        $("#txtSubTotal_@indexSub").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                                        sumSubAll();
+                                    });
+
+                                </script>
+
+                            </td>
+                        </tr>
+                        indexSub++;
+                    }
+                    <tr>
+                        <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                            <b> จำนวนเงินรวม(บาท)</b>&nbsp;
+                        </td>
+                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                            <label id="totalSubEstimate" type="text" readonly="readonly"></label>&nbsp;
+                            @*@Model.totalCostThisActivity.Value.ToString("#,###.00")*@
+
+                        </td>
+                    </tr>
+                </table>
+
+                <script>
+
+                            function sumSubAll() {
+                                var totalAll = 0.00;
+                                var rowCount = '@Model.expensesDetailSubModel.costDetailLists.Count';
+
+                                for (i = 0; i < rowCount; i++) {
+                                    var rowtotal = parseFloat($("#hdSubTotal_" + i.toString()).val().replace(",", ""));
+                                    totalAll = totalAll + rowtotal;
+                                }
+                                $("#totalSubEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                                $("#totalSubEstimate").val(totalAll);
+                    }
+                    sumSubAll();
+                </script>
+
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    <div style="margin-left:25px;" class="text-center">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="callMultiPrice()">
+                            <i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel
+                        </button>
+
+                        @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString()
+                                || Model.activityFormTBMMKT.statusId == 1
+                                || Model.activityFormTBMMKT.statusId == 5
+                                || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
+                                || (Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)
+                                && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
+                            )
+                        {
+                            <button id="btnSaveDetailSub" type="button" class="btn ink-reaction btn-success" onclick="validateDetailSub()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+                        }
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+<script>
+
+    function validateDetailSub() {
+        var requiredSub = "<b>กรุณาระบุ/Please input data :<br></b>";
+        var validateSub = true;
+        if (parseFloat($("#totalSubEstimate").val().replace(",", "")) <= 0.00) {
+            requiredSub += "&emsp;ค่าที่พัก*<br>"; validateSub = false;
+        }
+
+        //เช็คถ้ากรอกว่าเกินสิทธิ
+        var rowCount = '@Model.expensesDetailSubModel.costDetailLists.Count';
+        var hotelExpense = 0.00
+        if ($("#ProductDetail_1").val() != "") { hotelExpense = parseFloat($("#ProductDetail_1").val().replace(",", "")); }
+
+        for (i = 0; i < rowCount; i++) {
+            if ((parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) + parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", ""))) > hotelExpense) {
+                requiredSub += "&emsp;ท่านกรอกยอดเงินเกินสิทธิ์ลำดับที่ " + (i + 1) + "*<br>";
+                validateSub = false;
+            }
+        }
+
+        if (validateSub == true) {
+            sumData();
+        }
+        else {
+            bootbox.alert(requiredSub)
+        }
+    }
+</script>
