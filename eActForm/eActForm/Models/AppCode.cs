@@ -351,7 +351,8 @@ namespace eActForm.Models
                 catch (Exception exc)
                 {
                     result = "error" + exc.Message;
-                    ExceptionManager.WriteError(exc.Message + ">> mergePDF >> CopyError");
+                    //ExceptionManager.WriteError(exc.Message + ">> mergePDF >> CopyError"); // backgroud can't write error 
+                    throw new Exception(">> mergePDF >> CopyError >> " + exc.Message); 
                 }
             }
             return result;
