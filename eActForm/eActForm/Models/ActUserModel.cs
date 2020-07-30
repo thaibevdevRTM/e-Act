@@ -87,6 +87,7 @@ namespace eActForm.Models
             public bool isAdminPOM { get; set; }
             public bool isAdminChangInter { get; set; }
             public bool isAdminCVM { get; set; }
+            public bool isAdminHCBP { get; set; }
             public string countWatingActForm { get; set; }
             public string counteatingRepDetail { get; set; }
             public string counteatingSummaryDetail { get; set; }
