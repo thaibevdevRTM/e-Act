@@ -1,12 +1,14 @@
-﻿@using eActForm.Models
-@using eActForm.BusinessLayer
+﻿
+@using eActForm.BusinessLayer;
+@using System.Configuration;
 @model eActForm.Models.Budget_Approve_Detail_Model.budgetForms
 <style type="text/css">
 
-	.my-bootbox-class .modal-dialog {
-		width: 200px;
-		font-size: 18px;
-	}
+
+    .my-bootbox-class .modal-dialog {
+        width: 200px;
+        font-size: 18px;
+    }
 </style>
 <script>
 
@@ -45,90 +47,91 @@
 </script>
 <div class="row">
 
-	<div class="col-md-12 col-xs-12">
+    <div class="col-md-12 col-xs-12">
 
-	</div>
-	<div class="col-md-12 col-xs-12">
+    </div>
+    <div class="col-md-12 col-xs-12">
 
 
 
-		@*<a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>คือ Delete
-			<a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit*@
-		<a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
-		<a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>คือ History Approve
-		<a class="btn ink-reaction btn-info fa fa-send-o" href="#"></a>คือ Resend Email
+        @*<a class="btn ink-reaction btn-danger fa fa-trash-o" href="#"></a>คือ Delete
+        <a class="btn ink-reaction btn-info fa fa-edit" href="#"></a>คือ Edit*@
+        <a class="btn ink-reaction glyphicon glyphicon-retweet" href="#"></a>คือ Regen PDF
+        <a class="btn ink-reaction btn-success fa fa-search" href="#"></a>คือ View PDF
+        <a class="btn ink-reaction btn-dark fa fa-eye" href="#"></a>คือ History Approve
+        <a class="btn ink-reaction btn-info fa fa-envelope-o" href="#"></a>คือ Resend Email
 
-		<table id="datatable" class="table table-striped table-hover">
-			<thead>
-				<tr style="background-color:#2B5D95;color:#ffffff;">
-					<th></th>
-					<th>สถานะ</th>
-					<th>วันที่เสนออนุมัติ</th>
-					<th>เลขกิจกรรม</th>
-					<th>ชื่อกิจกรรม</th>
-					<th>ลูกค้า</th>
-					<th>ประเภท</th>
-					<th>จำนวนเงิน</th>
-				</tr>
-			</thead>
-			<tbody>
-				@if (Model.budgetFormLists.Count > 0)
-				{
-					foreach (var item in Model.budgetFormLists)
-					{
-						<tr class="gradeX">
-							<td>
+        <table id="datatable" class="table table-striped table-hover">
+            <thead>
+                <tr style="background-color:#2B5D95;color:#ffffff;">
+                    <th></th>
+                    <th>สถานะ</th>
+                    <th>วันที่เสนออนุมัติ</th>
+                    <th>เลขกิจกรรม</th>
+                    <th>ชื่อกิจกรรม</th>
+                    <th>ลูกค้า</th>
+                    <th>ประเภท</th>
+                    <th>จำนวนเงิน</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.budgetFormLists.Count > 0)
+                {
+                    foreach (var item in Model.budgetFormLists)
+                    {
+                        <tr class="gradeX">
+                            <td>
 
-								@if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
-								{
-									<a href="javascript:" onclick="return CallReBudgetApprovePdf('@item.budgetApproveId','@item.activityId','@item.statusId');">
-										<i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
-									</a>
-								}
+                                @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
+                                {
+                                    <a href="javascript:" onclick="return CallReBudgetApprovePdf('@item.budgetApproveId','@item.activityId','@item.statusId');">
+                                        <i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
+                                    </a>
+                                }
 
-								@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = item.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
-								<a onclick="callApproveList('@item.budgetApproveId');">
-									<i class="btn ink-reaction btn-dark fa fa-eye"></i>
-								</a>
+                                @Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = item.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })
+                                <a onclick="callApproveList('@item.budgetApproveId');">
+                                    <i class="btn ink-reaction btn-dark fa fa-eye"></i>
+                                </a>
 
-								@if (item.statusId == "2")
-								{
-									<a onclick="resendApprove('@item.budgetApproveId');">
-										<i class="btn ink-reaction btn-info fa fa-send-o"></i>
-									</a>
-								}
+                                @if (item.statusId == "2")
+                                {
+                                    <a onclick="resendApprove('@item.budgetApproveId');">
+                                        <i class="btn ink-reaction btn-info fa fa-envelope-o"></i>
+                                    </a>
+                                }
 
-							</td>
-							<td>@item.statusName</td>
-							<td>@{var date = item.documentDate == null ? "" : item.documentDate.Value.ToString("dd/MM/yyyy");} @date </td>
-							<td>@item.activityNo</td>
-							<td>@item.activityName</td>
-							<td>@item.cusShortName</td>
-							<td>@item.productCategory</td>
-							<td align="right">
-								@if (@item.totalInvoiceApproveBath != 0)
-								{
-									string result = String.Format("{0:n2}", @item.totalInvoiceApproveBath);
-									@result.ToString();
-								}
+                            </td>
+                            <td>@item.statusName</td>
+                            <td style="font-size:12.5px;">@{var date = item.documentDate == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.documentDate, ConfigurationManager.AppSettings["formatDateUse"]);} @date </td>
+                            <td>@item.activityNo</td>
+                            <td>@item.activityName</td>
+                            <td>@item.cusShortName</td>
+                            <td>@item.productCategory</td>
+                            <td align="right">
+                                @if (@item.totalInvoiceApproveBath != 0)
+                                {
+                                    string result = String.Format("{0:n2}", @item.totalInvoiceApproveBath);
+                                    @result.ToString();
+                                }
 
-							</td>
-						</tr>
-					}
-				}
-			</tbody>
-		</table>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
 
-	</div>
+    </div>
 </div>
-<div class="modal fade" id="modalmyDocBudgetList" role="dialog" >
-	<div id="divModalmyDocBudgetList">
-	</div>
+<div class="modal fade" id="modalmyDocBudgetList" role="dialog">
+    <div id="divModalmyDocBudgetList">
+    </div>
 </div>
 
 <div id="ModalPreviewPDF" style="display:none">
-	<div id="divRegenBudgetApprovePdf">
-	</div>
+    <div id="divRegenBudgetApprovePdf">
+    </div>
 </div>
 
 <script>
@@ -172,9 +175,12 @@
             url: '@Url.Action("genPdfApprove", "BudgetMyDoc")',
             data: {
                 GridHtml: htmlResponse,
-                statusId: statusId,
-				budgetApproveId: budgetapproveId,
-				activityId: activityId,
+                budgetApproveId: budgetapproveId,
+
+                //GridHtml: htmlResponse,
+                //statusId: statusId,
+				//budgetApproveId: budgetapproveId,
+				//activityId: activityId,
             },
             dataType: "json",
             type: 'POST',

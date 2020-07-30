@@ -1,8 +1,29 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
-<tr>
-    <td>
-        <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;font-size:large;" class="alert alert-success">
-                @Model.activityFormTBMMKT.companyName<br />@Model.activityFormTBMMKT.formName
-        </div>
-    </td>
-</tr>
+@using System.Configuration;
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr>
+        <td>
+            <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;font-size:large;" class="alert alert-success">
+
+                @if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureEng"])
+                {
+
+                    if (Model.activityFormTBMMKT.companyNameEN != "")
+                    {
+                        @Model.activityFormTBMMKT.companyNameEN<br />
+                    }
+                    @Model.activityFormTBMMKT.formNameEn
+                }
+                else
+                {
+                    if (Model.activityFormTBMMKT.companyName != "")
+                    {
+                        @Model.activityFormTBMMKT.companyName<br />
+                    }
+                    @Model.activityFormTBMMKT.formName
+                }
+
+            </div>
+        </td>
+    </tr>
+</table>

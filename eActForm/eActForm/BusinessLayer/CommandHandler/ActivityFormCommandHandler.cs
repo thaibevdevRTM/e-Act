@@ -8,7 +8,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -21,17 +20,16 @@ namespace eActForm.BusinessLayer
             int rtnIO = 0;
             try
             {
-
                 model.activityFormModel.id = activityId;
-                model.activityFormModel.documentDate = BaseAppCodes.converStrToDate(model.activityFormModel.dateDoc);
+                model.activityFormModel.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.dateDoc, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodSt) ? (DateTime?)null :
-                  BaseAppCodes.converStrToDate(model.activityFormModel.str_activityPeriodSt);
+                  BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodEnd) ? (DateTime?)null :
-                   BaseAppCodes.converStrToDate(model.activityFormModel.str_activityPeriodEnd);
+                   BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null :
-                   BaseAppCodes.converStrToDate(model.activityFormModel.str_costPeriodSt);
+                   BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
-                   BaseAppCodes.converStrToDate(model.activityFormModel.str_costPeriodEnd);
+                   BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.activityNo = string.IsNullOrEmpty(model.activityFormModel.activityNo) ? "---" : model.activityFormModel.activityNo;
                 model.activityFormModel.createdByUserId = model.activityFormModel.createdByUserId != null ? model.activityFormModel.createdByUserId : UtilsAppCode.Session.User.empId;
                 model.activityFormModel.createdDate = model.activityFormModel.createdDate == null ? DateTime.Now : model.activityFormModel.createdDate;
@@ -107,7 +105,8 @@ namespace eActForm.BusinessLayer
 
                         DateTime getDoc = DateTime.Parse(model.activityFormModel.activityPeriodSt.ToString());
                         string getYear = getDoc.Month > 9 ? getDoc.AddYears(1).ToString("yy") : getDoc.Year.ToString().Substring(2);
-                        costThemeDetail.IO = "56S0" + getYear + ActFormAppCode.getDigitGroup(item.activityTypeId) + ActFormAppCode.getDigitRunnigGroup(item.productId);
+                        var getIO = QueryGetAllProduct.getBrandByProductId(item.productId).Any() ? "54" : "56";
+                        costThemeDetail.IO = getIO + "S0" + getYear + ActFormAppCode.getDigitGroup(item.activityTypeId) + ActFormAppCode.getDigitRunnigGroup(item.productId);
 
                         //costThemeDetail.IO = item.IO;
                         costThemeDetail.mechanics = item.mechanics;
@@ -156,13 +155,13 @@ namespace eActForm.BusinessLayer
             {
                 model.activityFormModel.id = activityId;
                 model.activityFormModel.activityPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodSt) ? (DateTime?)null :
-                 DateTime.ParseExact(model.activityFormModel.str_activityPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.activityPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_activityPeriodEnd) ? (DateTime?)null :
-                DateTime.ParseExact(model.activityFormModel.str_activityPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.costPeriodSt = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodSt) ? (DateTime?)null :
-                 DateTime.ParseExact(model.activityFormModel.str_costPeriodSt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.costPeriodEnd = string.IsNullOrEmpty(model.activityFormModel.str_costPeriodEnd) ? (DateTime?)null :
-                  DateTime.ParseExact(model.activityFormModel.str_costPeriodEnd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                    BaseAppCodes.converStrToDatetimeWithFormat(model.activityFormModel.str_costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);
                 model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
                 model.activityFormModel.updatedDate = DateTime.Now;
 
@@ -189,26 +188,32 @@ namespace eActForm.BusinessLayer
                 {
                     if (getActList.FirstOrDefault().activityNo.ToString() == "---")
                     {
-                        
+
                         string getYear = "";
                         if (getActList.FirstOrDefault().activityPeriodSt != null)
                         {
-                            getYear = getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9 ?
-                                   new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2)
-                                 : new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
+                            if (getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9)
+                            {
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
+                            }
+                            else
+                            {
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value).ToString().Substring(2, 2);
+                            }
                         }
 
                         if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
                         {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id, activityId).FirstOrDefault().docNo);
 
+                            if(getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"]) { result[0] += ConfigurationManager.AppSettings["docSetPrice"]; }
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().chanelShort.Trim();
                             result[0] += getActList.FirstOrDefault().cusShortName.Trim();
                             result[0] += getYear;
                             result[0] += string.Format("{0:0000}", genNumber);
-                            result[1] = Activity_Model.activityType.MT.ToString();
+                            result[1] = getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"] ? Activity_Model.activityType.SetPrice.ToString() : Activity_Model.activityType.MT.ToString();
                         }
                         else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
                         {
@@ -235,6 +240,7 @@ namespace eActForm.BusinessLayer
                             //==========แบบเก่า================
 
                             //=========แบบใหม่ Gen In USP=======By Peerapop=========
+
                             result[0] += getActivityDoc(Activity_Model.activityType.OtherCompany.ToString(), activityId).FirstOrDefault().docNo;
                             if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_TBM"])
                             {
@@ -243,7 +249,12 @@ namespace eActForm.BusinessLayer
                             else if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_HCM"])
                             {
                                 result[1] = Activity_Model.activityType.HCM.ToString();
-                            }                                   
+                            }
+                            else if (AppCode.hcForm.Contains(getActList.FirstOrDefault().master_type_form_id))
+                            //else if (ActFormAppCode.checkGrpComp(getActList.FirstOrDefault().companyId, Activity_Model.activityType.NUM.ToString()))
+                            {
+                                result[1] = Activity_Model.activityType.HCForm.ToString();// result[1] = Activity_Model.activityType.NUM.ToString();
+                            }
                             //====END=====แบบใหม่ Gen In USP=======By Peerapop=========
                         }
                     }
@@ -256,9 +267,15 @@ namespace eActForm.BusinessLayer
                         {
                             typeFormCompany = Activity_Model.activityType.OMT.ToString();
                         }
-                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
+                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] &&
+                            getActList.FirstOrDefault().master_type_form_id != ConfigurationManager.AppSettings["formSetPriceMT"])
                         {
                             typeFormCompany = Activity_Model.activityType.MT.ToString();
+                        }
+                        else if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] &&
+                            getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
+                        {
+                            typeFormCompany = Activity_Model.activityType.SetPrice.ToString();
                         }
                         else
                         {
@@ -274,6 +291,12 @@ namespace eActForm.BusinessLayer
                         //==END===update by fream devDate 20200214=======
                         result[1] = typeFormCompany;
                     }
+
+                    if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
+                    {
+                        result[1] = Activity_Model.activityType.ITForm.ToString();
+                    }
+
                 }
 
                 return result;
@@ -284,12 +307,6 @@ namespace eActForm.BusinessLayer
                 return null;
             }
         }
-
-
-
-
-
-
 
         public static int deleteActivityOfProductByActivityId(string activityId)
         {
@@ -327,7 +344,7 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        protected static int insertActivityForm(ActivityForm model)
+        public static int insertActivityForm(ActivityForm model)
         {
             int result = 0;
             try
@@ -352,6 +369,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@trade",model.trade)
                     ,new SqlParameter("@activityDetail",model.activityDetail)
                     ,new SqlParameter("@companyId",model.companyId)
+                    ,new SqlParameter("@empId",model.empId)
+                    ,new SqlParameter("@remark",model.remark)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
                     ,new SqlParameter("@createdByUserId",model.createdByUserId)
@@ -445,7 +464,7 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
-        protected static int insertEstimate(CostThemeDetail model)
+        public static int insertEstimate(CostThemeDetail model)
         {
             int result = 0;
             try
@@ -559,7 +578,10 @@ namespace eActForm.BusinessLayer
                 }
                 else
                 {
-                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertDocNoByChanelId", new SqlParameter("@chanel_Id", chanel_Id));
+
+                    ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertDocNoByChanelId"
+                         , new SqlParameter[] { new SqlParameter("@chanel_Id", chanel_Id)
+                         , new SqlParameter("@activityId", activityId) });
                 }
 
                 var lists = (from DataRow d in ds.Tables[0].Rows
@@ -585,7 +607,10 @@ namespace eActForm.BusinessLayer
             {
                 object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCheckStatusActivity"
                     , new SqlParameter[] { new SqlParameter("@actId", actId) });
-                result = obj.ToString();
+                if (obj != null)
+                {
+                    result = obj.ToString();
+                }
                 return result;
 
             }

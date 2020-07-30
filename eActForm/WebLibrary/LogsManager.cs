@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Globalization;
-using System.Data;
-using System.Data.OracleClient;
 
 namespace WebLibrary
 {
     public class LogsManager
     {
 
-        public static void WriteLogs(string fileName,string resultMessage,string logsMessage)
+        public static void WriteLogs(string fileName, string resultMessage, string logsMessage)
         {
             try
             {
-                string path = "~/Logs/" + fileName +DateTime.Today.ToString("dd-MM-yy") + ".txt";
+                string path = "~/Logs/" + fileName + DateTime.Today.ToString("dd-MM-yy") + ".txt";
                 if (!File.Exists(System.Web.HttpContext.Current.Server.MapPath(path)))
                 {
                     File.Create(System.Web.HttpContext.Current.Server.MapPath(path)).Close();
@@ -35,7 +30,7 @@ namespace WebLibrary
             }
             catch (Exception ex)
             {
-               // throw new Exception(ex.Message);
+                // throw new Exception(ex.Message);
                 ExceptionManager.WriteError("WriteLogs >> " + ex.Message);
             }
 

@@ -1,0 +1,122 @@
+﻿@model eActForm.Models.Activity_Model
+
+<div id="divHeaderDetailsCost" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
+    <table class="table table-bordered" id="tabelHeaderDetails" runat="server">
+        <tr style="background-color:#2f74b5;color:white;height:25px;">
+            <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายละเอียด</th>
+            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
+            <th style="width: 7%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
+            <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวนเงิน(บาท)</th>
+        </tr>
+        @{ var index = 0;}
+        @foreach (var item in Model.costthemedetail)
+        {
+            <tr class="tagCountRowinTable">
+
+                <td style="width: 30%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    <input type="text" value="@item.productDetail" id="costthemedetail[@index].productDetail" name="costthemedetail[@index].productDetail" class="form-control textboxcss" readonly />
+                </td>
+                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                    @Html.TextBoxFor(x => item.wholeSalesPrice, new { @id = "costthemedetail[" + index + "].wholeSalesPrice", Name = "costthemedetail[" + index + "].wholeSalesPrice", @class = "form-control textboxcss text-right txtwholeSalesPrice__" + index, @readonly = "readonly" })
+                </td>
+                <td style="width: 7%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                    <input type="number" value="@item.unit" id="costthemedetail[@index].unit" onclick="clearText(this)" name="costthemedetail[@index].unit" class="form-control textboxcss text-right  txtUnit_@index" />
+                    <script>
+                        $(".txtUnit_@index").blur(function () {
+                            $(".txtUnit_@index").val($(".txtUnit_@index").val().replace(",", ""));
+                        });
+                    </script>
+                </td>
+                <td style="width: 15%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                    <input type="hidden" value="@item.total" id="costthemedetail[@index].total" name="costthemedetail[@index].total" class="form-control textboxcss text-right hidtotal_@index" />
+                    @Html.TextBoxFor(x => item.total, "{0:n2}", new { @id = "costthemedetail[" + index + "].total", Name = "costthemedetail[" + index + "].total", @class = "form-control textboxcss text-right txttotal_" + index, @readonly = "readonly" })
+                    <script>
+                         $(".txtUnit_@index").blur(function () {
+                            var v_unitRow = 0.00;
+                            var v_unitpriceRow = 0.00;
+                            var v_totalRow = 0.00;
+                             if ($(".txtUnit_@index").val() != "" && $(".txtUnit_@index").val() != "0.00" && $(".txtUnit_@index").val() != "0") {
+                                 v_unitRow = parseFloat($(".txtUnit_@index").val().replace(",", ""));
+                             }
+                             if ($(".txtwholeSalesPrice__@index").val() != "" && $(".txtwholeSalesPrice__@index").val() != "0.00" && $(".txtwholeSalesPrice__@index").val() != "0") {
+                                 v_unitpriceRow = parseFloat($(".txtwholeSalesPrice__@index").val().replace(",", ""));
+                            }
+                             v_totalRow = (v_unitRow * v_unitpriceRow);
+
+                            $(".hidtotal_@index").val(v_totalRow.toFixed(2));
+                             $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+
+                             sumall();
+                        });
+
+                        $(".txtwholeSalesPrice__@index").blur(function () {
+                            var v_unitRow = 0.00;
+                            var v_unitpriceRow = 0.00;
+                            var v_totalRow = 0.00;
+                            if ($(".txtUnit_@index").val() != "" && $(".txtUnit_@index").val() != "0.00" && $(".txtUnit_@index").val() != "0") {
+                                v_unitRow = parseFloat($(".txtUnit_@index").val().replace(",", ""));
+                            }
+                            if ($(".txtwholeSalesPrice__@index").val() != "" && $(".txtwholeSalesPrice__@index").val() != "0.00" && $(".txtwholeSalesPrice__@index").val() != "0") {
+                                v_unitpriceRow = parseFloat($(".txtwholeSalesPrice__@index").val().replace(",", ""));
+                            }
+                            v_totalRow = (v_unitRow * v_unitpriceRow);
+
+                            $(".hidtotal_@index").val(v_totalRow.toFixed(2));
+                            $(".txttotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                            sumall();
+                        });
+
+
+                    </script>
+                </td>
+            </tr>
+            index++;
+        }
+        <tr>
+            <td colspan="2" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                Total&nbsp;
+            </td>
+            <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                <label id="totalQty" type="text" readonly="readonly"></label>
+            </td>
+            <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                <label id="totalEstimate" type="text" readonly="readonly"></label>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        function clearText(txt) {
+            if (txt.value == 0) {
+                txt.value = '';
+            }
+            
+        }
+        function sumall() {
+            var totalAll = 0.00;
+            var rowCount = parseInt($('#tabelHeaderDetails tr.tagCountRowinTable').length);
+            var sumUnit = 0.00;
+            for (i = 0; i < rowCount; i++) {
+                var rowtotal = 0;
+                if ($(".hidtotal_" + i.toString()).val() == "") {
+                    rowtotal = 0;
+                } else {
+                    rowtotal = parseFloat($(".hidtotal_" + i.toString()).val().replace(",", ""));
+                }
+
+                totalAll = totalAll + rowtotal;
+                rowtotal = parseFloat($(".txtUnit_" + i.toString()).val().replace(",", ""));
+                sumUnit = sumUnit + rowtotal;
+            }
+
+            $("#totalQty").text(sumUnit.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+            $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        }
+    </script>
+</div>
+
+
+
+
+
+

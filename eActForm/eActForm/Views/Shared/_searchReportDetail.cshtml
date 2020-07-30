@@ -1,106 +1,135 @@
 ﻿@model eActForm.Models.SearchActivityModels
+@using eActForm.BusinessLayer
+@using System.Configuration;
+
+
 
 <div class="form-group">
-    <div class="col-md-6 col-xs-12">
-        <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityNo">
-                Act No.
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                <input type="text" id="txtActivityNo" name="txtActivityNo" class="form-control textboxcss">
+    @if (Model.showUIModel != null && Model.showUIModel.isShowActNo)
+    {
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityNo">
+                    Act No.
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <input type="text" id="txtActivityNo" name="txtActivityNo" class="form-control textboxcss">
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6 col-xs-12">
-        <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
-                Status
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
-            </div>
-        </div>
-    </div>
-</div>
-<div class="form-group">
-    <div class="col-md-6 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">
-            Start date
-        </label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-            <input type="text" name="startDate" id="startDate" value="@DateTime.Now.AddDays(-15).ToString("MM/dd/yyyy")" class="form-control fv">
-        </div>
+    }
+    @if (Model.showUIModel != null && Model.showUIModel.isShowStatus)
+    {
 
-    </div>
-    <div class="col-md-6 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="endDate">
-            End date
-        </label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-            <input type="text" name="endDate" id="endDate" value="@DateTime.Now.ToString("MM/dd/yyyy")" class="form-control fv">
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
+                    Status
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(model => model.approveStatusList, new SelectList(Model.approveStatusList, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlStatus", Name = "ddlStatus" })
+                </div>
+            </div>
         </div>
+    }
+</div>
+@if (Model.showUIModel != null && Model.showUIModel.isShowDate)
+{
+    <div class="form-group">
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">
+                Start date
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <input type="text" name="startDate" id="startDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now.AddDays(-15), ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
+            </div>
 
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="endDate">
+                End date
+            </label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
+            </div>
+
+        </div>
     </div>
-</div>
+}
 <div class="form-group">
-    <div class="col-md-6 col-xs-12">
-        <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
-                Customer<span class="required"></span>
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.customerslist, new SelectList(Model.customerslist, "id", "cusNameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCustomer", Name = "ddlCustomer" })
-                <input type="hidden" id="txtchanel" class="form-control textboxcss" readonly>
+    @if (Model.showUIModel != null && Model.showUIModel.isShowCustomer)
+    {
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
+                    Customer<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(model => model.customerslist, new SelectList(Model.customerslist, "id", "cusNameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlCustomer", Name = "ddlCustomer" })
+                    <input type="hidden" id="txtchanel" class="form-control textboxcss" readonly>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
-            Activity Type<span class="required"></span>
-        </label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-            @Html.DropDownListFor(model => model.activityGroupList, new SelectList(Model.activityGroupList, "id", "activitySales"), "Please Select", new { @class = "form-control textboxcss", id = "ddlTheme", Name = "ddlTheme" })
-        </div>
-    </div>
-</div>
-<div class="form-group">
-    <div class="col-md-6 col-xs-12">
-        <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                Product Type<span class="required"></span>
+    }
+    @if (Model.showUIModel != null && Model.showUIModel.isShowActType)
+    {
+        <div class="col-md-6 col-xs-12">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
+                Activity Type<span class="required"></span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.productTypelist, new SelectList(Model.productTypelist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductType", Name = "ddlProductType" })
+                @Html.DropDownListFor(model => model.activityGroupList, new SelectList(Model.activityGroupList, "id", "activitySales"), "Please Select", new { @class = "form-control textboxcss", id = "ddlTheme", Name = "ddlTheme" })
             </div>
         </div>
-    </div>
-    <div class="col-md-6 col-xs-12">
-        <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
-                Product Group<span class="required"></span>
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                @Html.DropDownListFor(model => model.productGroupList, new SelectList(Model.productGroupList, "id", "groupName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductGrp", Name = "ddlProductGrp" })
-            </div>
-        </div>
-    </div>
+    }
 </div>
 
 <div class="form-group">
-    <div class="col-md-6 col-xs-12">
-        <div class="row">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
-                Report ประจำเดือน
-            </label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                <input type="text" name="reportDate" id="reportDate" value="@DateTime.Now.ToString("MM-yyyy")" class="form-control fv">
+    @if (Model.showUIModel != null && Model.showUIModel.isShowProductType)
+    {
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
+                    Product Type<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(model => model.productTypelist, new SelectList(Model.productTypelist, "id", "nameTH"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductType", Name = "ddlProductType" })
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6 col-xs-12">
-      
-    </div>
+    }
+    @if (Model.showUIModel != null && Model.showUIModel.isShowProductGroup)
+    {
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
+                    Product Group<span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(model => model.productGroupList, new SelectList(Model.productGroupList, "id", "groupName"), "Please Select", new { @class = "form-control textboxcss", id = "ddlProductGrp", Name = "ddlProductGrp" })
+                </div>
+            </div>
+        </div>
+    }
 </div>
+@if (Model.showUIModel != null && Model.showUIModel.isShowMonthText)
+{
+    <div class="form-group">
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
+                    Report ประจำเดือน
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <input type="text" name="reportDate" id="reportDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, ConfigurationManager.AppSettings["formatDateMMyyyy"])" class="form-control fv">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+
+        </div>
+    </div>
+}
 
 <hr />
 <div class="form-group">
@@ -114,11 +143,12 @@
     </div>
 </div>
 
+
 <script>
     $(function () {
         $("#startDate").datepicker();
         $("#endDate").datepicker();
-        
+
         $("#reportDate").datepicker({
             format: "mm-yyyy",
             viewMode: "months",

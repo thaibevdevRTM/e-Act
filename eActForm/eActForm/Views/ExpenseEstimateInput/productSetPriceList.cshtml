@@ -1,0 +1,292 @@
+﻿
+@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@{
+    /**/
+
+    /**/
+    decimal? promotionTotal = 0;
+    ViewBag.Title = "ProductCostdetail";
+    Session["promotionTotal"] = 0;
+
+
+}
+
+<style>
+    table.fixed {
+        table-layout: fixed;
+        width: 100px;
+    }
+
+        table.fixed td {
+            overflow: hidden;
+        }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <p class="lead">โครงสร้างราคา - ไม่รวม Vat (Product Cost - Bath Per Case)</p>
+    </div>
+    <div class="col-md-12 col-xs-12" style="width:100%;overflow-x:scroll;">
+        <table class="table table-striped jambo_table bulk_action fixed" id="tbl_productDetail" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
+            <thead>
+                <tr class="headings" style="text-align:center;">
+                    <th width="50px" class="align-content-center font10" rowspan="2"> <a onclick="onDelCostDetail();" class="btn ink-reaction btn-danger fa fa-trash-o"></a> </th>
+                    <th width="170px" class="align-content-center font10" rowspan="2">ชื่อสินค้า (product Name)</th>
+                    <th width="80px" class="align-content-center font10" rowspan="2">Std. Wholesales Price</th>
+                    <th width="170px" class="align-content-center font10" colspan="2">ราคาขาย</th>
+                    <th width="200px" class="align-content-center font10" colspan="3">Normal Discount (Baht)</th>
+                    <th width="80px" class="align-content-center font10">Normal</th>
+                    <th width="80px" class="align-content-center font10">Normal</th>
+                    <th width="80px" class="align-content-center font10">Promotion</th>
+                    <th width="170px" id="col_Special" class="align-content-center font10" colspan="2">Special Discount %</th>
+                    <th width="80px" id="col_Promotion" class="align-content-center font10">Promotion</th>
+                    <th width="80px" class="align-content-center font10" rowspan="2">RSP</th>
+                    <th width="100px" class="align-content-center font10" rowspan="2">Unit</th>
+                </tr>
+                <tr>
+                    <th class="align-content-center font10">&nbsp;&nbsp;Normal&nbsp;&nbsp;</th>
+                    <th class="align-content-center font8">Promotion</th>
+                    <th class="align-content-center font10">(1)</th>
+                    <th class="align-content-center font10">(2)</th>
+                    <th class="align-content-center font10">(3)</th>
+                    <th class="align-content-center font10">Cost</th>
+                    <th class="align-content-center font10">GP%</th>
+                    <th class="align-content-center font10">GP%</th>
+                    <th id="col_DisBaht" class="align-content-center font10">บาท</th>
+                    <th id="col_DisPer" class="align-content-center font10">&nbsp;&nbsp;&nbsp;%</th>
+                    <th id="col_Cost" class="align-content-center font10">Cost (BHT)</th>
+
+                </tr>
+            </thead>
+
+            @if (Model.productcostdetaillist1.Any())
+            {
+                int index = 0;
+                foreach (var item in Model.productcostdetaillist1)
+                {
+                    @Html.HiddenFor(x => Model.productcostdetaillist1[index].productGroupId)
+                    @Html.HiddenFor(x => item.productId, new { @id = "hdProductId_" + index })
+                    @Html.Hidden("productcostdetaillist1[" + index + "].isShowGroup", Model.productcostdetaillist1[index].isShowGroup)
+                    @*@Html.HiddenFor(x => Model.productcostdetaillist1[index].isShowGroup)*@
+
+
+                    <tr class="tagTR">
+                        <td onclick="onDelCostDetail('@item.productGroupId')">
+                            <a class="btn ink-reaction btn-danger fa fa-trash-o"></a>
+                        </td>
+                        @if (item.isShowGroup == true)
+                        {
+                            <td class="font10 textLeft" onclick="showdetail('@item.productGroupId')"><span role="button">@item.brandName @item.size ALL(@item.detailGroup.Count) @item.pack</span></td>
+                        }
+                        else
+                        {
+                            if (item.detailGroup.Count >= 1)
+                            {
+                                <td class="font10 textLeft" onclick="showdetail('@item.productGroupId')"><span role="button">@item.detailGroup[0].productName @item.pack</span></td>
+                            }
+                        }
+                        @if (item.detailGroup.Any())
+                        {
+                            for (int d = 0; d < item.detailGroup.Count; d++)
+                            {
+                                @Html.HiddenFor(x => Model.productcostdetaillist1[index].detailGroup[d].id)
+                                @Html.HiddenFor(x => Model.productcostdetaillist1[index].detailGroup[d].productId)
+                            }
+                        }
+
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(wholeSalesPrice_@index)" id="wholeSalesPrice_@index" name="productcostdetaillist1[@index].wholeSalesPrice" value="@item.wholeSalesPrice.Value.ToString("0.00")" /> </td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(saleNormal_@index)" id="saleNormal_@index" name="productcostdetaillist1[@index].saleNormal" value="@item.saleNormal.Value.ToString("0.00")" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(saleIn_@index)" id="saleIn_@index" name="productcostdetaillist1[@index].saleIn" value="@item.saleIn.Value.ToString("0.00")" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(disCount1_@index)" id="disCount1_@index" name="productcostdetaillist1[@index].disCount1" value="@item.disCount1.Value.ToString("0.00")" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(disCount2_@index)" id="disCount2_@index" name="productcostdetaillist1[@index].disCount2" value="@item.disCount2.Value.ToString("0.00")" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(disCount3_@index)" id="disCount3_@index" name="productcostdetaillist1[@index].disCount3" value="@item.disCount3.Value.ToString("0.00")" /></td>
+                        <td style="text-align:right; background:#c5f0c5;"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId' , '@index')" onfocus="setZero(normalCost_@index)" id="normalCost_@index" name="productcostdetaillist1[@index].normalCost" value="@item.normalCost.Value.ToString("0.00")" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(normalGp_@index)" id="normalGp_@index" name="productcostdetaillist1[@index].normalGp" value="@item.normalGp.Value.ToString("0.00")" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(promotionGp_@index)" id="promotionGp_@index" name="productcostdetaillist1[@index].promotionGp" value="@item.promotionGp.Value.ToString("0.00")" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(specialDiscBaht_@index)" id="specialDiscBaht_@index" name="productcostdetaillist1[@index].specialDiscBaht" value="@item.specialDiscBaht.Value.ToString("0.00")" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(specialDisc_@index)" id="specialDisc_@index" name="productcostdetaillist1[@index].specialDisc" value="@item.specialDisc.Value.ToString("0.00")" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(promotionCost_@index)" id="promotionCost_@index" name="productcostdetaillist1[@index].promotionCost" value="@item.promotionCost.Value.ToString("0.00")" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10 textRight" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(rsp_@index)" id="rsp_@index" name="productcostdetaillist1[@index].rsp" value="@item.rsp.Value.ToString("0.00")" /></td>
+                        <td style="text-align:right"><input type="text" class="form-control textboxcss font10" onchange="calProductDiscount('@item.productGroupId','@index')" onfocus="setZero(unitTxt_@index)" id="unitTxt_@index" name="productcostdetaillist1[@index].unitTxt" value="@item.unitTxt" /></td>
+                        <script>
+                            $(document).ready(function () {
+                                $(function () {
+
+                                    $("#unitTxt_@index").autocomplete({
+                                        source: function (request, response) {
+                                            $.ajax({
+                                                url: '@Url.Action("getOtherMasterByType", "eAct")',
+                                                type: "POST",
+                                                dataType: "json",
+                                                data: {
+                                                    type: 'unit',
+                                                    subType: '',
+                                                    text: $("#unitTxt_@index").val(),
+                                                },
+                                                success: function (data) {
+                                                    response($.map(data, function (item) {
+                                                        return { label: item.displayVal, value: item.displayVal, id: item.id };
+                                                    }))
+
+                                                }
+                                            })
+                                        },
+                                        minLength: 0,
+                                        messages: {
+                                            noResults: '',
+                                            results: function (resultsCount) {
+                                            }
+                                        }, select: function (event, ui) {
+                                            $("#unitTxt_@index").val(ui.item.id)
+                                        }
+                                    }).focus(function () {
+                                        $(this).data("uiAutocomplete").search($(this).val());
+                                    });
+
+                                });
+                            });
+
+
+
+                        </script>
+                    </tr>
+                    promotionTotal = item.promotionCost == null ? 0 + promotionTotal : item.promotionCost + promotionTotal;
+
+                    index++;
+                }
+                Session["promotionTotal"] = promotionTotal;
+
+            }
+
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+
+                <td class="auto-style3">&nbsp;</td>
+                <td class="auto-style3">&nbsp;</td>
+                <td class="auto-style3">&nbsp;</td>
+                <td>&nbsp;</td>
+                <td class="auto-style4">&nbsp;</td>
+                <td class="auto-style4">&nbsp;</td>
+
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+
+
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="modalProductDetaillist" role="dialog" style="display:none">
+    <div id="divModalProductDetaillist">
+    </div>
+</div>
+<input type="hidden" id="hdPromotionCost" value="@promotionTotal">
+<script>
+
+
+
+
+
+
+    var rowCount = @Model.productcostdetaillist1.Count;
+    function calProductDiscount(id, rowIndex) {
+        if ($('#wholeSalesPrice_' + rowIndex).val() != "") {
+            var productId = $('#hdProductId_' + rowIndex).val();
+            var wholeSalesPrice = $('#wholeSalesPrice_' + rowIndex).val();
+            var saleNormal = $('#saleNormal_' + rowIndex).val();
+            var saleIn = $('#saleIn_' + rowIndex).val();
+            var disCount1 = $('#disCount1_' + rowIndex).val();
+            var disCount2 = $('#disCount2_' + rowIndex).val();
+            var disCount3 = $('#disCount3_' + rowIndex).val();
+            var normalCost = $('#normalCost_' + rowIndex).val();
+            var normalGP = $('#normalGp_' + rowIndex).val();
+            var promotionGP = $('#promotionGp_' + rowIndex).val();
+            var specialDisc = $("#specialDisc_" + rowIndex).val();
+            var specialDiscBaht = $("#specialDiscBaht_" + rowIndex).val();
+            var rsp = $("#rsp_" + rowIndex).val();
+            var unitTxt = $("#unitTxt_" + rowIndex).val();
+
+            $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("calDiscountProduct", "ExpenseEstimateInput")',
+             data: {
+                 productGroupId: id,
+                 productId: productId,
+                 wholeSalesPrice: wholeSalesPrice.replace(",", ""),
+                 saleNormal: saleNormal.replace(",", ""),
+                 saleIn: saleIn.replace(",", ""),
+                 disCount1: disCount1.replace(",", ""),
+                 disCount2: disCount2.replace(",", ""),
+                 disCount3: disCount3.replace(",", ""),
+                 normalCost: normalCost.replace(",", ""),
+                 normalGP: normalGP.replace(",", ""),
+                 promotionGP: promotionGP.replace(",", ""),
+                 specialDisc: specialDisc.replace(",", ""),
+                 specialDiscBaht: specialDiscBaht.replace(",", ""),
+                 activityId: '@Model.activityFormModel.id',
+                 rsp: rsp,
+                 unitTxt: unitTxt
+
+            }
+         }).done(function (response) {
+             CallChangefunc('@Model.activityFormModel.id');
+        });
+
+        }
+    }
+
+    function setZero(txtId) {
+        if ($(txtId).val() == "0.00")
+            $(txtId).val("");
+    }
+
+  function showdetail(rowId) {
+        $.ajax({
+            type: 'POST',
+            url:  '@Url.Action("showDetailGroup", "ActivityProductDetail")',
+            data: {
+                rowId: rowId,
+                actId: '@Model.activityFormModel.id',
+            }
+        }).done(function (response) {
+            $("#divModalProductDetaillist").html(response)
+            $('#modalProductDetaillist').modal('show');
+        });
+    }
+
+
+    function onDelCostDetail(id) {
+
+
+
+            $.ajax({
+            url: '@Url.Action("delCostDetail", "ExpenseEstimateInput")',
+            data: {
+                rowid: id,
+                id: '@Model.activityFormModel.id',
+            },
+            dataType: "json",
+            type: 'POST',
+                success: function (response) {
+                    CallChangefunc('@Model.activityFormModel.id');
+                }
+
+            });
+    }
+
+
+
+
+
+</script>
+

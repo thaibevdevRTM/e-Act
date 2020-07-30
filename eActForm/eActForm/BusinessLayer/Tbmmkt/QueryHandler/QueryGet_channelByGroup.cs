@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 
@@ -19,7 +18,7 @@ namespace eActForm.BusinessLayer
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getChannelByGroup"
                        , new SqlParameter("@master_type_form_id", master_type_form_id)
-                         , new SqlParameter("@companyId", companyId)
+                         //, new SqlParameter("@companyId", companyId)
                            , new SqlParameter("@groupName", groupName));
                 //, new SqlParameter("@groupName", groupName)
                 var result = (from DataRow d in ds.Tables[0].Rows

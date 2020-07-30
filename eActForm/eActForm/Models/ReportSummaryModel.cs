@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace eActForm.Models
 {
@@ -23,7 +21,7 @@ namespace eActForm.Models
             activitySummaryList = new List<ReportSummaryModel>();
             summaryDetailLists = new List<actApproveSummaryDetailModel>();
             activitySummaryForecastList = new List<ReportSummaryModel>();
-    }
+        }
 
 
         public class ReportSummaryModel : ActBaseModel
@@ -86,7 +84,7 @@ namespace eActForm.Models
             [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
             public decimal? total { get; set; }
             public string remark { get; set; }
-            public int rowNo   { get; set; }
+            public int rowNo { get; set; }
         }
 
         public class actApproveSummaryDetailList

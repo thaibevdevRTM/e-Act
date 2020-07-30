@@ -1,10 +1,9 @@
-﻿using System;
+﻿using eActForm.BusinessLayer;
+using eActForm.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using eActForm.Models;
-using eActForm.BusinessLayer;
 using WebLibrary;
 
 namespace eActForm.Controllers
@@ -28,6 +27,11 @@ namespace eActForm.Controllers
         public ActionResult ListView(string fromPage, string StatusApprove)
         {
             Activity_Model.actForms model = new Activity_Model.actForms();
+            ActSignatureModel.SignModels signModels = SignatureAppCode.currentSignatureByEmpId(UtilsAppCode.Session.User.empId);
+            if (signModels.lists == null || signModels.lists.Count == 0)
+            {
+                ViewBag.messCannotFindSignature = true;
+            }
             if (TempData["ApproveSearchResult"] == null)
             {
                 model = new Activity_Model.actForms();
@@ -38,7 +42,7 @@ namespace eActForm.Controllers
                 {
                     if (fromPage == "DashboardPage")
                     {
-                        if(StatusApprove == "2")
+                        if (StatusApprove == "2")
                         {
                             model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.รออนุมัติ);
                         }
@@ -53,7 +57,7 @@ namespace eActForm.Controllers
                     model.actLists = ApproveListAppCode.getFilterFormByStatusId(model.actLists, (int)AppCode.ApproveStatus.รออนุมัติ);
                 }
 
-                      
+
             }
             else
             {
@@ -89,13 +93,29 @@ namespace eActForm.Controllers
             {
                 model.actLists = model.actLists.Where(r => r.productTypeId == Request.Form["ddlProductType"]).ToList();
             }
-
+            //============เดิมไม่ได้ใช้ เพิ่มการกรอกง createDate กรอง เฟรมเพิ่ม ให้ทำงานได้ 20200527=============
+            if (!string.IsNullOrEmpty(Request.Form["startDate"]) && !string.IsNullOrEmpty(Request.Form["endDate"]))
+            {
+                model.actLists = model.actLists.Where(r => r.documentDate >= DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null) && r.documentDate <= DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null)).ToList();
+            }
+            //===END=========เดิมไม่ได้ใช้ เพิ่มการกรอกง createDate กรอง เฟรมเพิ่ม ให้ทำงานได้ 20200527=============
             TempData["ApproveSearchResult"] = model.actLists;
             return RedirectToAction("ListView");
         }
 
+
+        public ActionResult getRejectApproveByEmpId()
+        {
+            Activity_Model.actForms model = new Activity_Model.actForms();
+            model = new Activity_Model.actForms();
+            model.actLists = ApproveListAppCode.getRejectApproveListsByEmpId(UtilsAppCode.Session.User.empId);
+            TempData["ApproveSearchResult"] = model.actLists;
+            return RedirectToAction("Index");
+        }
+
+
         [HttpPost]
-        public JsonResult insertApproveList(string actId,string status,string approveType)
+        public JsonResult insertApproveList(string actId, string status, string approveType)
         {
             var result = new AjaxResult();
             result.Success = false;

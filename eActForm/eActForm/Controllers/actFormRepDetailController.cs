@@ -1,18 +1,18 @@
-﻿using System;
+﻿using eActForm.BusinessLayer;
+using eActForm.Models;
+using eForms.Models.Forms;
+using iTextSharp.text;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using System.Configuration;
-using eActForm.BusinessLayer;
-using eActForm.Models;
-using iTextSharp.text;
 using WebLibrary;
-using static eActForm.Models.ReportActivityBudgetModels;
-using Microsoft.VisualBasic;
-using static eActForm.Models.RepDetailModel;
 
 namespace eActForm.Controllers
 {
@@ -22,8 +22,10 @@ namespace eActForm.Controllers
         // GET: actFormRepDetail
         public ActionResult Index(string typeForm)
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
             ViewBag.TypeForm = typeForm;
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            models.showUIModel = new searchParameterFilterModel();
+            
 
             if (typeForm == Activity_Model.activityType.MT.ToString())
             {
@@ -406,7 +408,12 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
+        public ActionResult genImageStream(byte[] p_image,string empId)
+        {
+            return File(p_image, "image/png");
+        }
 
+      
 
     }
 }

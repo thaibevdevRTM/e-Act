@@ -1,8 +1,6 @@
 ﻿using eActForm.BusinessLayer;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace eActForm.Models
 {
@@ -11,6 +9,11 @@ namespace eActForm.Models
         public class ImageModels
         {
             public List<ImageModel> tbActImageList { get; set; }
+
+            public ImageModels()
+            {
+                tbActImageList = new List<ImageModel>();
+            }
         }
         public class ImageModel : ActBaseModel
         {
@@ -36,6 +39,7 @@ namespace eActForm.Models
             public string extension { get; set; }
             public string remark { get; set; }
             public string typeFiles { get; set; }
+            public string sizeFiles { get; set; }
         }
 
     }

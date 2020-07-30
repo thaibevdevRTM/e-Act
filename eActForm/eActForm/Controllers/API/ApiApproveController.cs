@@ -3,6 +3,7 @@ using eActForm.Models;
 using iTextSharp.text;
 using System;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Hosting;
@@ -73,7 +74,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("genPdfApprove >> " + ex.Message);
+                ExceptionManager.WriteError("apiApprove genPdfApprove >> " + ex.Message);
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
             }

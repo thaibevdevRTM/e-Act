@@ -1,0 +1,13 @@
+﻿@using eActForm.BusinessLayer
+@using System.Configuration;
+@using eActForm.Models;
+
+@if(UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isCreator)
+    {
+<li>
+    <a><i class="fa fa-edit"></i>IT Forms <span class="fa fa-chevron-down"></span></a>
+    <ul class="nav child_menu">
+        <li>@Html.ActionLink("Change Request Form (IT_FRM_314)", "Index", "MainForm", new { typeForm = Activity_Model.activityType.ITForm.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formCR_IT_FRM_314"] }, null)</li>
+    </ul>
+</li>
+}

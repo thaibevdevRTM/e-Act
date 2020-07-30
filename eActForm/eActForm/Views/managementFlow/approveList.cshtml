@@ -1,8 +1,5 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
 
-<script src="~/Scripts/jquery-1.11.2.min.js"></script>
-<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <style>
     .center {
         text-align: center;
@@ -72,6 +69,7 @@
                         </td>
                         @Html.Hidden("Model.p_flowId", item.flowId)
                         @Html.Hidden("Model.p_companyId", item.companyId)
+                        @Html.Hidden("Model.p_empGroup", item.description)
                     </tr>
 
                 }

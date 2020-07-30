@@ -56,7 +56,7 @@
                         </tr>
                         @foreach (var item in Model.ProductPriceList)
                         {
-                            @Html.HiddenFor(x => x.ProductPriceList[0].productCode,new { @id= "hdProductCode" })
+                            @Html.HiddenFor(x => item.id,new { @id= "hdId_" + index})
                             <tr>
                                 <td>@Html.DisplayFor(x => item.customerName)</td>
                                 <td>@Html.TextBoxFor(x => item.normalCost, "{0:n2}", new { @step = "0.01" , @id = "normalCost_" + index, @class = "form-control textboxcss  textRight", @onchange = "return $adminPage.onchangePrice('" + item.customerId + "', " + index + ")"})</td>

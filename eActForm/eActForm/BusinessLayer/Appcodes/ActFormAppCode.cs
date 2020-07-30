@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
+﻿using eActForm.BusinessLayer.Appcodes;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.ApplicationBlocks.Data;
-using System.Data.SqlClient;
-using eActForm.BusinessLayer.Appcodes;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 
 namespace eActForm.BusinessLayer
 {
     public class ActFormAppCode
     {
-        public static int updateWaitingCancel(string actId, string remark)
+        public static int updateWaitingCancel(string actId, string remark, string statusNote)
         {
             try
             {
@@ -23,6 +24,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@statusNote",statusNote)
                     });
                 return rtn;
             }
@@ -50,7 +52,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception("checkActInvoice >>" + ex.Message);
             }
         }
-        public static int deleteActForm(string actId, string remark)
+        public static int deleteActForm(string actId, string remark, string statusNote)
         {
             try
             {
@@ -60,6 +62,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@remark",remark)
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updateDate",DateTime.Now)
+                    ,new SqlParameter("@statusNote",statusNote)
                     });
                 return rtn;
             }
@@ -105,24 +108,45 @@ namespace eActForm.BusinessLayer
             {
                 string strCall = "";
 
-                if(typeForm == Activity_Model.activityType.MT.ToString())
+                if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString())
                 {
                     strCall = "usp_getActivityCustomersFormByEmpId";
                 }
-                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                else if(typeForm == Activity_Model.activityType.SetPrice.ToString())
                 {
-                    strCall = "usp_tbm_getActivityFormByEmpId";
+                    strCall = "usp_getActivitySetPriceByEmpId";
+                }
+                else if (typeForm == Activity_Model.activityType.ITForm.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_ITForm";
+                }
+                else if (typeForm == Activity_Model.activityType.HCForm.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_HCPomNum";
                 }
                 else
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
                 }
 
-
-                if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isAdmin ||
-                UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM|| UtilsAppCode.Session.User.isAdminHCM )
+                if (isAdmin())
                 {
                     strCall = "usp_getActivityFormAll";
+                }
+                if (isAdmin() && typeForm == Activity_Model.activityType.SetPrice.ToString())
+                {
+                    strCall = "usp_getActivitySetPriceFormAll";
+                }
+
+                if (isAdmin() && typeForm == Activity_Model.activityType.ITForm.ToString())
+                {
+                    strCall = "usp_getActivityFormByEmpId_ITForm_Admin";
+                }
+
+                //เดิมผูกแค่บริษัท ต้องผูกเนื่องฟอร์มเพิ่ม boom 20200520
+                if (isAdmin() && typeForm == Activity_Model.activityType.HCForm.ToString())
+                {
+                    strCall = "usp_getActivityFormAll_HCPomNum";
                 }
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
@@ -183,6 +207,63 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static List<Activity_Model.actForm> getActFormRejectByEmpId()
+        {
+            try
+            {
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActRejectByEmpId"
+                , new SqlParameter[] {
+                         new SqlParameter("@empId", UtilsAppCode.Session.User.empId)
+                });
+
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new Activity_Model.actForm()
+                             {
+                                 id = dr["id"].ToString(),
+                                 statusId = dr["statusId"].ToString(),
+                                 statusName = dr["statusName"].ToString(),
+                                 activityNo = dr["activityNo"].ToString(),
+                                 documentDate = dr["documentDate"] is DBNull ? null : (DateTime?)dr["documentDate"],
+                                 reference = dr["reference"].ToString(),
+                                 customerId = dr["customerId"].ToString(),
+                                 channelName = dr["channelName"].ToString(),
+                                 productTypeId = dr["productTypeId"].ToString(),
+                                 productTypeNameEN = dr["nameEN"].ToString(),
+                                 cusShortName = dr["cusShortName"].ToString(),
+                                 productCategory = dr["productCateText"].ToString(),
+                                 productGroupid = dr["productGroupId"].ToString(),
+                                 groupName = dr["groupName"].ToString(),
+                                 activityPeriodSt = dr["activityPeriodSt"] is DBNull ? null : (DateTime?)dr["activityPeriodSt"],
+                                 activityPeriodEnd = dr["activityPeriodEnd"] is DBNull ? null : (DateTime?)dr["activityPeriodEnd"],
+                                 costPeriodSt = dr["costPeriodSt"] is DBNull ? null : (DateTime?)dr["costPeriodSt"],
+                                 costPeriodEnd = dr["costPeriodEnd"] is DBNull ? null : (DateTime?)dr["costPeriodEnd"],
+                                 activityName = dr["activityName"].ToString(),
+                                 theme = dr["theme"].ToString(),
+                                 objective = dr["objective"].ToString(),
+                                 trade = dr["trade"].ToString(),
+                                 activityDetail = dr["activityDetail"].ToString(),
+                                 delFlag = (bool)dr["delFlag"],
+                                 createdDate = (DateTime?)dr["createdDate"],
+                                 createdByUserId = dr["createdByUserId"].ToString(),
+                                 updatedDate = (DateTime?)dr["updatedDate"],
+                                 updatedByUserId = dr["updatedByUserId"].ToString(),
+                                 normalCost = dr["normalCost"] is DBNull ? 0 : (decimal?)dr["normalCost"],
+                                 themeCost = dr["themeCost"] is DBNull ? 0 : (decimal?)dr["themeCost"],
+                                 totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
+                                 createByUserName = dr["createByUserName"].ToString(),
+                                 master_type_form_id = dr["master_type_form_id"].ToString(),
+
+                             }).ToList();
+
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getActFormRejectByEmpId >> " + ex.Message);
+            }
+        }
         public static string getDigitGroup(string activityTypeId)
         {
             try
@@ -214,10 +295,237 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static bool isOtherCompanyMT()
+        public static string convertThaiBaht(decimal? txbaht)
         {
-            return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_TBM"] ||
-                UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_HCM"] ? true : false;
+            string result = "";
+            try
+            {
+                result = GreatFriends.ThaiBahtText.ThaiBahtTextUtil.ThaiBahtText(txbaht);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return result;
+                throw new Exception("convertThaiBaht >>" + ex.Message);
+            }
+        }
+
+
+        public static bool _isOtherCompanyMT()
+        {
+            return UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] ||
+                UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] ? false : true;
+        }
+        public static bool isOtherCompanyMTOfDoc(string compId)
+        {
+            return compId == ConfigurationManager.AppSettings["companyId_MT"] ||
+               compId == ConfigurationManager.AppSettings["companyId_OMT"] ? false : true;
+        }
+        public static bool isOtherCompanyMTOfDocByActId(string actId)
+        {
+            string compId = "";
+            if (actId != "")
+            {
+                compId = QueryGetActivityByIdTBMMKT.getActivityById(actId).FirstOrDefault().companyId;
+            }
+            return compId == ConfigurationManager.AppSettings["companyId_MT"] ||
+                 compId == ConfigurationManager.AppSettings["companyId_OMT"] ? false : true;
+        }
+        public static bool isAdmin()
+        {
+            return
+                UtilsAppCode.Session.User.isAdminOMT
+                || UtilsAppCode.Session.User.isAdmin
+                || UtilsAppCode.Session.User.isAdminTBM
+                || UtilsAppCode.Session.User.isAdminHCM
+                || UtilsAppCode.Session.User.isAdminNUM
+                || UtilsAppCode.Session.User.isAdminPOM
+                || UtilsAppCode.Session.User.isAdminCVM
+                || UtilsAppCode.Session.User.isSuperAdmin ? true : false;
+        }
+
+        public static string getStatusNote(string actId)
+        {
+            try
+            {
+                string statusNote = "";
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getStatusNote"
+                    , new SqlParameter[] { new SqlParameter("@actId", actId) });
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    statusNote = ds.Tables[0].Rows[0]["statusNote"].ToString();
+                }
+                return statusNote;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getStatusNote >>" + ex.Message);
+            }
+        }
+        public static string getStatusNeedDocColor(string val)
+        {
+            if (val == ConfigurationManager.AppSettings["normal"])
+                val = "1d8110";
+            else if (val == ConfigurationManager.AppSettings["urgently"])
+                val = "fba222";
+            else if (val == ConfigurationManager.AppSettings["veryUrgently"])
+                val = "f80014";
+
+            return val;
+        }
+        public static bool checkGrpCompByUser(string typeComp)
+        {
+            try
+            {
+                List<ActUserModel.UserAuthorized> lst = new List<ActUserModel.UserAuthorized>();
+                lst = UserAppCode.GetUserAuthorizedsByCompany(typeComp);
+                return lst.Count > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkGrpCompByUser >>" + ex.Message);
+            }
+        }
+        public static bool checkGrpComp(string compId, string typeComp)
+        {
+            try
+            {
+                List<TB_Act_Other_Model> lst = new List<TB_Act_Other_Model>();
+                lst = QueryOtherMaster.getOhterMaster("company", typeComp).ToList();
+                if (lst.Count > 0)
+                {
+                    lst = lst.Where(x => x.val1 == compId).ToList();
+                }
+                return lst.Count > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkGrpComp >>" + ex.Message);
+            }
+        }
+
+        public static bool checkGroupApproveByUser(string actId, string groupApprove)
+        {
+            try
+            {
+                switch (groupApprove)
+                {
+                    case "Recorder":
+                        groupApprove = AppCode.ApproveGroup.Recorder;
+                        break;
+                    case "PettyCashVerify":
+                        groupApprove = AppCode.ApproveGroup.PettyCashVerify;
+                        break;
+                    default:
+                        break;
+                }
+
+                ApproveModel.approveModels models = new ApproveModel.approveModels();
+                models = ApproveAppCode.getApproveByActFormId(actId, "");
+
+                if (models.approveDetailLists.Count > 0)
+                {
+                    models.approveDetailLists = models.approveDetailLists
+                        .Where(x => x.approveGroupId == groupApprove)
+                        .Where(x => x.empId == UtilsAppCode.Session.User.empId).ToList();
+                }
+                return models.approveDetailLists.Count > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkGroupApproveByUser >>" + ex.Message);
+            }
+
+        }
+        public static bool checkCanEditByUser(string actId)
+        {
+            try
+            {
+                ApproveModel.approveModels models = new ApproveModel.approveModels();
+                models = ApproveAppCode.getApproveByActFormId(actId, "");
+
+                if (models.approveDetailLists.Count > 0)
+                {
+                    models.approveDetailLists = models.approveDetailLists
+                        .Where(x => x.approveGroupId == AppCode.ApproveGroup.Recorder || x.approveGroupId == AppCode.ApproveGroup.PettyCashVerify)
+                        .Where(x => x.empId == UtilsAppCode.Session.User.empId).ToList();
+                }
+                return models.approveDetailLists.Count > 0 ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkCanEditByUser >>" + ex.Message);
+            }
+
+        }
+
+        public static string getGrpCompByCompId(string compId)
+        {
+            try
+            {
+                string grpComp = "";
+                List<TB_Act_Other_Model> lst = new List<TB_Act_Other_Model>();
+                lst = AdminUserAppCode.getCompany();
+
+                if (lst.Count > 0)
+                {
+                    lst = lst.Where(x => x.val1 == compId).ToList();
+                }
+                if (lst.Count > 0)
+                {
+                    if (string.IsNullOrEmpty(lst[0].subType))
+                    {
+                        grpComp = lst[0].displayVal;
+                    }
+                    else
+                    {
+                        grpComp = lst[0].subType;
+                    }
+
+
+                }
+                return grpComp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("checkCanEditByUser >>" + ex.Message);
+            }
+        }
+        public static bool checkFormAddTBDetailOther(string masterForm)
+        {
+            bool check = false;
+            if(ConfigurationManager.AppSettings["masterEmpExpense"] == masterForm
+                || ConfigurationManager.AppSettings["formSetPriceMT"] == masterForm)
+            {
+                check = true;
+            }
+
+            return check;
+        }
+
+        public static Activity_TBMMKT_Model addDataToDetailOther(Activity_TBMMKT_Model activity_TBMMKT_Model)
+        {
+            try
+            {
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.productBrandId = activity_TBMMKT_Model.activityFormTBMMKT.BrandlId;
+                activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.channelId = activity_TBMMKT_Model.activityFormTBMMKT.channelId;
+
+                //ค่าที่ insert จะไปยัดใน tB_Act_ActivityForm_DetailOther อีกที ไม่งั้น Get Flow ไม่ได้ ???????
+                activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
+                activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
+
+                if (ConfigurationManager.AppSettings["masterEmpExpense"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)
+                {
+                    activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-"+DateTime.Today.ToString("dd"), "yyyy-MM-dd").ToString("dd/MM/yyyy");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("addDataToDetailOther >>" + ex.Message);
+            }
+            return activity_TBMMKT_Model;
         }
     }
 }

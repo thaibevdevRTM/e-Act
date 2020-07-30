@@ -1,17 +1,18 @@
-﻿using System;
+﻿using eActForm.Models;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.ApplicationBlocks.Data;
-using eActForm.Models;
-using System.Configuration;
+using WebLibrary;
+using System.Linq;
 
 namespace eActForm.BusinessLayer
 {
     public class ApproveAppCode
     {
-      
+
 
         public static void setCountWatingApprove()
         {
@@ -56,12 +57,48 @@ namespace eActForm.BusinessLayer
             }
         }
 
+
+        public static bool manageApproveEmpExpense(ApproveModel.approveModels model, string actId)
+        {
+            int resultInsert = 0;
+            string newID = Guid.NewGuid().ToString();
+            try
+            {
+                model.activity_TBMMKT_Model.activityFormModel = QueryGetActivityById.getActivityById(actId).FirstOrDefault();
+
+                //---- ApprovePass-----//
+                var dataApproveList = model.activity_TBMMKT_Model.activityOfEstimateList.Where(w => w.chkBox == true).ToList();
+                var dataUnApproveList = model.activity_TBMMKT_Model.activityOfEstimateList.Where(w => w.chkBox == false).ToList();
+
+                model.activity_TBMMKT_Model.activityOfEstimateList = dataApproveList;
+                resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activity_TBMMKT_Model, actId);
+
+                //---- ApproveUnPass-----//
+                model.activity_TBMMKT_Model.activityOfEstimateList = dataUnApproveList;
+                resultInsert = ActivityFormTBMMKTCommandHandler.ProcessInsertEstimate(0, model.activity_TBMMKT_Model, newID);
+
+                model.activity_TBMMKT_Model.activityFormModel.reference = model.activity_TBMMKT_Model.activityFormModel.activityNo;
+                model.activity_TBMMKT_Model.activityFormModel.id = newID;
+                model.activity_TBMMKT_Model.activityFormModel.activityNo = "";
+                model.activity_TBMMKT_Model.activityFormModel.statusId = 1;
+                model.activity_TBMMKT_Model.activityFormModel.updatedByUserId = UtilsAppCode.Session.User.empId;
+                model.activity_TBMMKT_Model.activityFormModel.updatedDate = DateTime.Now;
+                resultInsert += ActivityFormTBMMKTCommandHandler.insertActivityForm(model.activity_TBMMKT_Model.activityFormTBMMKT);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("manageApproveEmpExpense => " + ex.Message);
+                return false;
+            }
+        }
+
         public static string getEmailCCByActId(string actId)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmailCC"
-                     , new SqlParameter[] { new SqlParameter("@actId", actId)});
+                     , new SqlParameter[] { new SqlParameter("@actId", actId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveModel.approveDetailModel()
                              {
@@ -176,7 +213,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@updateBy",UtilsAppCode.Session.User.empId)
                         });
 
-               if (approveType == AppCode.ApproveType.Report_Detail.ToString())
+                if (approveType == AppCode.ApproveType.Report_Detail.ToString())
                 {
                     rtn = updateActRepDetailStatus(statusId, actFormId);
                 }
@@ -386,7 +423,7 @@ namespace eActForm.BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
-        public static ApproveModel.approveModels getApproveByActFormId(string actFormId,string empId)
+        public static ApproveModel.approveModels getApproveByActFormId(string actFormId, string empId)
         {
             try
             {
@@ -405,11 +442,13 @@ namespace eActForm.BusinessLayer
                                                  empEmail = dr["empEmail"].ToString(),
                                                  statusId = dr["statusId"].ToString(),
                                                  statusName = dr["statusName"].ToString(),
+                                                 statusNameEN = dr["statusNameEN"].ToString(),
                                                  isSendEmail = (bool)dr["isSendEmail"],
                                                  remark = dr["remark"].ToString(),
                                                  signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
-                                                 ImgName = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
+                                                 ImgName = string.Format(ConfigurationManager.AppSettings["rootgetSignaByActURL"], actFormId, dr["empId"].ToString()),
                                                  isApprove = (bool)dr["isApproved"],
+                                                 approveGroupId = dr["approveGroupId"].ToString(),
                                                  delFlag = (bool)dr["delFlag"],
                                                  createdDate = (DateTime?)dr["createdDate"],
                                                  createdByUserId = dr["createdByUserId"].ToString(),
@@ -425,6 +464,19 @@ namespace eActForm.BusinessLayer
                    , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
                     var empDetail = models.approveDetailLists.Where(r => r.empId == empId).ToList(); //
+
+                    if (empDetail.Count > 1)
+                    {
+                        foreach (var item in empDetail)
+                        {
+                            if (item.statusId == "2")
+                            {
+                                empDetail[0] = item;
+                                break;
+                            }
+                        }
+                    }
+
                     var lists = (from DataRow dr in ds.Tables[0].Rows
                                  select new ApproveModel.approveModel()
                                  {
@@ -439,9 +491,10 @@ namespace eActForm.BusinessLayer
                                      updatedDate = (DateTime?)dr["updatedDate"],
                                      updatedByUserId = dr["updatedByUserId"].ToString(),
                                      isPermisionApprove = getPremisionApproveByEmpid(models.approveDetailLists, empId)
-                                 }).ToList();
+                                 }).ToList();           
+                        models.approveModel = lists[0];
+                   
 
-                    models.approveModel = lists[0];
 
                 }
 
@@ -510,5 +563,6 @@ namespace eActForm.BusinessLayer
 
             return result;
         }
+
     }
 }

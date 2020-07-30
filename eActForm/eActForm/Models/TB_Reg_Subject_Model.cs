@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace eActForm.Models
+﻿namespace eActForm.Models
 {
     public class TB_Reg_Subject_Model : ActBaseModel
     {
@@ -12,6 +7,6 @@ namespace eActForm.Models
         public string nameTH { get; set; }
         public string nameEn { get; set; }
         public string description { get; set; }
-
+        public string typeFormId { get; set; }
     }
 }

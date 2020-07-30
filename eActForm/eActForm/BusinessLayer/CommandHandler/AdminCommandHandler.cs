@@ -1,11 +1,8 @@
 ﻿using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer.CommandHandler
@@ -18,8 +15,7 @@ namespace eActForm.BusinessLayer.CommandHandler
             try
             {
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateProductPrice"
-                    , new SqlParameter[] {new SqlParameter("@productId",model.productCode)
-                     ,new SqlParameter("@customerId",model.customerId)
+                    ,new SqlParameter[] {new SqlParameter("@id",model.id)
                     ,new SqlParameter("@normalCost",model.normalCost)
                     ,new SqlParameter("@wholeSalesPrice",model.wholeSalesPrice)
                     ,new SqlParameter("@discount1",model.discount1)
@@ -122,7 +118,7 @@ namespace eActForm.BusinessLayer.CommandHandler
         }
 
 
-        public static int insertProductPrice(string productCode , string customerId)
+        public static int insertProductPrice(string productCode, string customerId)
         {
             int result = 0;
             try

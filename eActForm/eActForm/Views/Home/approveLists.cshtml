@@ -1,5 +1,9 @@
-﻿
+﻿@using System.Configuration;
 @model eActForm.Models.ApproveModel.approveModels
+@using eActForm.BusinessLayer;
+@{ 
+    DocumentsAppCode.setCulture(Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString());
+}
 <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
@@ -12,12 +16,12 @@
                 <table id="dtApproveLists" class="table table-striped table-hover">
                     <thead>
                         <tr style="background-color:#2B5D95;color:#ffffff;">
-                            <th>ลำดับ</th>
-                            <th>รหัสพนักงาน</th>
-                            <th>ชื่อ</th>
-                            <th>สถานะ</th>
-                            <th>วันที่อนุมัติ</th>
-                            <th>เหตุผล</th>
+                            <th>@Resources.Global.rank</th>
+                            <th>@Resources.Global.empId</th>
+                            <th>@Resources.Global.name</th>
+                            <th>@Resources.Global.status</th>
+                            <th>@Resources.Global.approveDate</th>
+                            <th>@Resources.Global.reason</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,25 +32,37 @@
                                 <tr class="gradeX">
                                     <td>@item.rangNo</td>
                                     <td>@item.empId</td>
-                                    <td>@item.empName</td>
+                                    @if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureThai"])
+                                    {
+                                        <td>@item.empName</td>
+                                    }
+                                    else if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"])
+                                    {
+                                        <td>@item.empName_EN</td>
+                                    }
                                     <td>
-                                          @{  
-                                              string status = "";
-                                              if (item.statusId == "")
-                                              {
-                                                  status = "ยังไม่อนุมัติ";
-                                              }
-                                              else
-                                              {
-                                                  status = item.statusName;
-                                              }
+                                        @{
+                                            string valStatusName = "";
+                                            if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureThai"])
+                                            {
+                                                valStatusName = item.statusName;
+                                            }
+                                            else if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"])
+                                            {
+                                                valStatusName = item.statusNameEN;
+                                            }
 
-                                              if(item.isApprove == false)
-                                              {
-                                                  status = "เรียน เพื่อทราบ";
-                                              }
+                                            var status = item.statusId == "" ? Resources.Global.notApprove : valStatusName;
 
-                                              } @status
+                                            if (item.isApprove == false && item.approveGroupId== ConfigurationManager.AppSettings["approveGroupForProcess"])
+                                            {
+                                                status = Resources.Global.dearForProcess;
+                                            }
+                                            else if (item.isApprove == false)
+                                            {
+                                                status = Resources.Global.dearToInform;
+                                            }
+                                        } @status
                                     </td>
                                     <td>@{ var date = item.statusId == "3" || item.statusId == "5" ? item.updatedDate.Value.ToString("dd/MM/yyyy HH:mm") : "";} @date</td>
                                     <td>
@@ -62,7 +78,8 @@
         <div class="modal-footer">
             <div>
                 <p class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>                </p>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Close</button>
+                </p>
             </div>
 
         </div>

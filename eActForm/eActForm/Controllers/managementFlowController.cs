@@ -4,7 +4,6 @@ using eActForm.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
 using static eActForm.Models.ApproveFlowModel;
@@ -17,7 +16,15 @@ namespace eActForm.Controllers
         public ActionResult Index()
         {
             ManagementFlow_Model model = new ManagementFlow_Model();
-            model.companyList = managementFlowAppCode.getCompany().Where(w => w.val1.Contains(UtilsAppCode.Session.User.empCompanyId)).ToList();
+            if (UtilsAppCode.Session.User.isSuperAdmin)
+            {
+                model.companyList = managementFlowAppCode.getCompany(); 
+            }
+            else
+            {
+                model.companyList = managementFlowAppCode.getCompany().Where(w => w.val1.Contains(UtilsAppCode.Session.User.empCompanyId)).ToList();
+            }
+
 
             return View(model);
         }
@@ -59,7 +66,7 @@ namespace eActForm.Controllers
         {
             ManagementFlow_Model management_Model = new ManagementFlow_Model();
             try
-            {     
+            {
                 management_Model = (ManagementFlow_Model)TempData["management_Model"];
                 TempData.Keep();
             }
@@ -70,7 +77,7 @@ namespace eActForm.Controllers
             return PartialView(management_Model);
         }
 
-       
+
         public JsonResult insertFlowApprove(ManagementFlow_Model model)
         {
             var result = new AjaxResult();
@@ -100,7 +107,7 @@ namespace eActForm.Controllers
             {
                 management_Model = (ManagementFlow_Model)TempData["management_Model"];
                 flowApproveDetail flowDetail_Model = new flowApproveDetail();
-                flowDetail_Model.rangNo = management_Model.approveFlow.flowDetail.OrderBy(x=>x.rangNo).Last().rangNo + 1;
+                flowDetail_Model.rangNo = management_Model.approveFlow.flowDetail.OrderBy(x => x.rangNo).Last().rangNo + 1;
                 flowDetail_Model.id = Guid.NewGuid().ToString();
                 management_Model.approveFlow.flowDetail.Add(flowDetail_Model);
 
@@ -147,6 +154,20 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError("getLimitBySubject => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getEmp(string subjectId , string limitId, string channelId)
+        {
+            List<RequestEmpModel> empList = new List<RequestEmpModel>();
+            try
+            {
+                empList = ApproveFlowAppCode.getEmpByConditon(subjectId, limitId, channelId);
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("ManagementFlowController >> getEmp => " + ex.Message);
+            }
+            return Json(empList, JsonRequestBehavior.AllowGet);
         }
     }
 }

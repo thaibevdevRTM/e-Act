@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using static eActForm.Models.Budget_Activity_Model;
-using static eActForm.Models.TB_Bud_Activity_Model;
 
 namespace eActForm.Models
 {
-	public class Budget_Approve_Detail_Model
+	public class Budget_Approve_Detail_Model  //update 21-04-2020
 	{
 
 		//public List<Budget_Activity_Invoice_Att> Budget_Activity_Invoice_list { get; set; }
@@ -17,6 +14,7 @@ namespace eActForm.Models
 		public List<TB_Bud_Activity_Model.Budget_Activity_Att> Budget_Activity_list { get; set; }
 		public TB_Bud_Activity_Model.Budget_Activity_Att Budget_Activity { get; set; }
 		public List<TB_Bud_Image_Model.BudImageModel> Budget_Invoice_list { get; set; }
+		public Budget_Activity_Last_Approve_Att Budget_Activity_Last_Approve { get; set; }
 
 		public class Budget_Approve_Detail_Att
 		{
@@ -24,7 +22,7 @@ namespace eActForm.Models
 			public string budgetActivityId { get; set; }
 			public string budgetApproveId { get; set; }
 			//public string budgetActivityInvoiceId { get; set; }
-			
+
 			public Boolean delFlag { get; set; }
 
 			public DateTime createdDate { get; set; }
@@ -63,7 +61,7 @@ namespace eActForm.Models
 			public string productTypeNameEN { get; set; }
 			public string cusShortName { get; set; }
 			public string cusNameTH { get; set; }
-			
+
 			public string productCategory { get; set; }
 			public string productGroup { get; set; }
 			public string productGroupName { get; set; }

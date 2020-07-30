@@ -1,106 +1,108 @@
 ﻿@model eActForm.Models.Budget_Activity_Model
+@using eActForm.BusinessLayer;
+@using System.Configuration;
 
-
+@*//update 21-04-2020*@
 <div class="row">
 
-		<table id="datatable" class="table table-striped table-hover">
-			<thead >
-				<tr style="background-color:#2B5D95;color:#ffffff;">
-					<th class="align-content-center font12B"> </th>
-					<th class="align-content-center font12B" >เลขที่กิจกรรม</th>
-					<th class="align-content-center font12B" >ลูกค้า</th>
-					<th class="align-content-center font12B" >ระยะเวลากิจกรรม</th>
-					<th class="align-content-center font12B" >ระยะเวลาการให้ทุน</th>
-					<th class="align-content-center font12B">ตั้งจ่าย</th>
-					<th class="align-content-center font12B">ยอดยกมา</th>
-					<th class="align-content-center font12B">คงเหลือ</th>
-					<th class="align-content-center font12B">สถานะ</th>
-				</tr>
-			</thead>
+    <table id="datatable" class="table table-striped table-hover">
+        <thead>
+            <tr style="background-color:#2B5D95;color:#ffffff;">
+                <th class="align-content-center font12B"> </th>
+                <th class="align-content-center font12B">เลขที่กิจกรรม</th>
+                <th class="align-content-center font12B">ลูกค้า</th>
+                <th class="align-content-center font12B">ระยะเวลากิจกรรม</th>
+                <th class="align-content-center font12B">ระยะเวลาการให้ทุน</th>
+                <th class="align-content-center font12B">ตั้งจ่าย</th>
+                <th class="align-content-center font12B">ยอดยกมา</th>
+                <th class="align-content-center font12B">คงเหลือ</th>
+                <th class="align-content-center font12B">สถานะ</th>
+            </tr>
+        </thead>
 
-			<tbody>
-				@if (Model.Budget_Activity_list.Count > 0)
-				{
-					var index = 0;
-					foreach (var item in Model.Budget_Activity_list)
-					{
-						<tr class="gradeX">
-							<td>
-								@using (Html.BeginForm("Index", "Home"))
-								{
-									@Html.ActionLink(" ", "activityProduct", "Budget", new { activityId = item.act_form_id, activityNo = item.act_activityNo, companyEN = item.act_companyEN }, new { @class = "btn ink-reaction btn-default fa fa-search" });
-								}
-							</td>
+        <tbody>
+            @if (Model.Budget_Activity_list.Count > 0)
+            {
+                var index = 0;
+                foreach (var item in Model.Budget_Activity_list)
+                {
+                    <tr class="gradeX">
+                        <td>
+                            @using (Html.BeginForm("Index", "Home"))
+                            {
+                                @Html.ActionLink(" ", "activityProduct", "Budget", new { activityId = item.act_form_id, activityNo = item.act_activityNo, companyEN = item.act_companyEN }, new { @class = "btn ink-reaction btn-default fa fa-search" });
+                            }
+                        </td>
 
-							<td style="font-size:12.5px;">@item.act_activityNo</td>
-							<td style="font-size:12.5px;">@item.cus_cusNameTH</td>
-							<td style="font-size:12.5px;">@Html.DisplayFor(x => item.act_activityPeriodSt) - @Html.DisplayFor(x => item.act_activityPeriodEnd) </td>
-							<td style="font-size:12.5px;">@Html.DisplayFor(x => item.act_costPeriodSt) - @Html.DisplayFor(x => item.act_costPeriodEnd) </td>
-							<td style="font-size:12.5px;text-align:right;">
-								@if (item.act_totalCost != 0)
-								{
-									string result = String.Format("{0:n2}", @item.act_totalCost);
-									@result.ToString();
-								}
-							</td>
-							<td style="font-size:12.5px;text-align:right;">
-								@if (item.act_totalCost != 0)
-								{
-									string result = String.Format("{0:n2}", @item.act_total_invoive);
-									@result.ToString();
-								}
-							</td>
-							<td style="font-size:12.5px;text-align:right;">
-								@if (item.act_totalCost != 0)
-								{
-									string result = String.Format("{0:n2}", @item.act_balance);
-									@result.ToString();
-								}
+                        <td style="font-size:12.5px;">@item.act_activityNo</td>
+                        <td style="font-size:12.5px;">@item.cus_cusNameTH</td>
 
-							</td>
+                        <td style="font-size:12.5px;">@{var date = item.act_activityPeriodSt == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.act_activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]) + "-" + DocumentsAppCode.convertDateTHToShowCultureDateEN(item.act_activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);} @date </td>
+                        <td style="font-size:12.5px;">@{date = item.act_costPeriodSt == null ? "" : DocumentsAppCode.convertDateTHToShowCultureDateEN(item.act_costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]) + "-" + DocumentsAppCode.convertDateTHToShowCultureDateEN(item.act_costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]);} @date </td>
 
-							@if (item.bud_ActivityStatusId == "1")
-							{
-								<td style="font-size:12.5px;text-align:center; color:firebrick;">@item.bud_ActivityStatus</td>
-							}
-							else if (item.bud_ActivityStatusId == "2")
-							{
-								<td style="font-size:12.5px;text-align:center; color:darkorange;">@item.bud_ActivityStatus</td>
-							}
-							else
-							{
-								<td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.bud_ActivityStatus</td>
-							}
-						</tr>
-						index++;
-					}
-				}
-			</tbody>
-		</table>
+                        <td style="font-size:12.5px;text-align:right;">
+                            @if (item.act_totalCost != 0)
+                            {
+                                string result = String.Format("{0:n2}", @item.act_totalCost);
+                                @result.ToString();
+                            }
+                        </td>
+                        <td style="font-size:12.5px;text-align:right;">
+                            @if (item.act_totalCost != 0)
+                            {
+                                string result = String.Format("{0:n2}", @item.act_total_invoive);
+                                @result.ToString();
+                            }
+                        </td>
+                        <td style="font-size:12.5px;text-align:right;">
+                            @if (item.act_totalCost != 0)
+                            {
+                                string result = String.Format("{0:n2}", @item.act_balance);
+                                @result.ToString();
+                            }
+
+                        </td>
+
+                        @if (item.bud_ActivityStatusId == "1")
+                        {
+                            <td style="font-size:12.5px;text-align:center; color:firebrick;">@item.bud_ActivityStatus</td>
+                        }
+                        else if (item.bud_ActivityStatusId == "2")
+                        {
+                            <td style="font-size:12.5px;text-align:center; color:darkorange;">@item.bud_ActivityStatus</td>
+                        }
+                        else
+                        {
+                            <td style="font-size:12.5px;text-align:center; color:forestgreen;">@item.bud_ActivityStatus</td>
+                        }
+                    </tr>
+                    index++;
+                }
+            }
+        </tbody>
+    </table>
 </div>
 
-<script>
-	$(document).ready(function () {
-		$('#datatable').DataTable({
-			"columnDefs": [
-				{ "orderable": false, "targets": 0 }
-				//, { "orderable": false, "targets": 1 }
-				//, { "orderable": false, "targets": 2 }
-				//, { "orderable": false, "targets": 3 }
-			],
-			"dom": 'lCfrtip',
-			"order": [],
-			"language": {
-				"lengthMenu": '_MENU_ entries per page',
-				"search": '<i class="fa fa-search"></i>',
-				"paginate": {
-					"previous": '<i class="fa fa-angle-left"></i>',
-					"next": '<i class="fa fa-angle-right"></i>'
-				}
-			}
-		});
-	})
-</script>
+<script>$(document).ready(function () {
+        $('#datatable').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": 0 }
+                //, { "orderable": false, "targets": 1 }
+                //, { "orderable": false, "targets": 2 }
+                //, { "orderable": false, "targets": 3 }
+            ],
+            "dom": 'lCfrtip',
+            "order": [],
+            "language": {
+                "lengthMenu": '_MENU_ entries per page',
+                "search": '<i class="fa fa-search"></i>',
+                "paginate": {
+                    "previous": '<i class="fa fa-angle-left"></i>',
+                    "next": '<i class="fa fa-angle-right"></i>'
+                }
+            }
+        });
+    })</script>
 
 
 

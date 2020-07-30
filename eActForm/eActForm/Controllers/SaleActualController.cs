@@ -21,7 +21,7 @@ namespace eActForm.Controllers
             activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate()
                 .Select(group => new TB_Act_ProductCate_Model
                 {
-                    cateName = group.cateName,   
+                    cateName = group.cateName,
                 }).ToList();
 
             return View(activityModel);

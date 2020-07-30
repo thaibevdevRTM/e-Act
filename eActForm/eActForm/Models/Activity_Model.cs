@@ -1,8 +1,7 @@
-﻿using System;
+﻿using eForms.Models.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using static eActForm.Models.TB_Act_Customers_Model;
 using static eActForm.Models.TB_Act_Product_Model;
 
@@ -17,20 +16,28 @@ namespace eActForm.Models
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
         public List<Product_Model> productlist { get; set; }
         public List<ProductSmellModel> productSmellLists { get; set; }
+
+
+        // ***************************** class is duplicat ***********************************/
+        public List<CostThemeDetail> costthemedetail { get; set; }
+        public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
+        // **********************************************************************************/
+
+
         public List<Customers_Model> customerslist { get; set; }
         public List<TB_Act_Other_Model> otherlist { get; set; }
         //public List<Productcostdetail> productcostdetaillist { get; set; }
-        public List<CostThemeDetail> costthemedetail { get; set; }
+        
         public List<TB_Act_Image_Model.ImageModel> productImageList { get; set; }
         public ActivityForm activityFormModel { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
-        public List<CostThemeDetailOfGroupByPrice> activitydetaillist { get; set; }
-        public List<TB_Act_Region_Model> regionGroupList { get; set; }       
+       
+        public List<TB_Act_Region_Model> regionGroupList { get; set; }
 
         public Activity_Model()
         {
             productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
-           // productcostdetaillist = new List<Productcostdetail>();
+            // productcostdetaillist = new List<Productcostdetail>();
             costthemedetail = new List<CostThemeDetail>();
             productlist = new List<Product_Model>();
             productcatelist = new List<TB_Act_ProductCate_Model>();
@@ -53,11 +60,20 @@ namespace eActForm.Models
         {
             OMT,
             MT,
+            SetPrice,
             TBM,
+            EXPENSE,
             HCM,
+            ITForm,
+            HCForm,        
             OtherCompany
         }
-
+        public enum groupCompany
+        {
+            NUM,//คือ form HC 
+            POM,
+            CVM,
+        }
 
         public class actForms
         {
@@ -70,6 +86,8 @@ namespace eActForm.Models
             public string id { get; set; }
             public string statusId { get; set; }
             public string statusName { get; set; }
+            public string statusNameEN { get; set; }
+            public string languageDoc { get; set; }
             public string activityNo { get; set; }
             public DateTime? documentDate { get; set; }
             public string reference { get; set; }
@@ -108,6 +126,7 @@ namespace eActForm.Models
     }
     public class SearchActivityModels
     {
+        public searchParameterFilterModel showUIModel { get; set; }
         public List<Customers_Model> customerslist { get; set; }
         public List<TB_Act_ProductType_Model> productTypelist { get; set; }
         public List<TB_Act_ProductGroup_Model> productGroupList { get; set; }
@@ -147,7 +166,9 @@ namespace eActForm.Models
         public string groupShort { get; set; }
         public string productTypeId { get; set; }
         public DateTime? activityPeriodSt { get; set; }
+        public string activityPeriodStStr { get; set; }
         public DateTime? activityPeriodEnd { get; set; }
+        public string activityPeriodEndStr { get; set; }
         public DateTime? costPeriodSt { get; set; }
         //[DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
@@ -182,13 +203,23 @@ namespace eActForm.Models
         public Boolean chkAddIO { get; set; }
         public string actIO { get; set; }
         public string actClaim { get; set; }
+        public int actClaimInt { get; set; }
         public string master_type_form_id { get; set; }
         public string benefit { get; set; }
         public string companyNameEN { get; set; }
         public string companyNameTH { get; set; }
+        public string SubjectId { get; set; }
+        public string empId { get; set; }
         public string formCompanyId { get; set; }
+        public string languageDoc { get; set; }
         public string digit_IO { get; set; }
-
+        public string statusNote { get; set; }
+        public string piorityDoc { get; set; }
+        public string empEmail { get; set; }
+        public string empTel { get; set; }
+        public string contactEmail { get; set; }
+        public string contactName { get; set; }
+        public string contactTel { get; set; }
     }
 
     public class CostThemeDetailOfGroupByPrice : ActBaseModel
@@ -198,7 +229,7 @@ namespace eActForm.Models
         public string activityId { get; set; }
         public string typeTheme { get; set; }
         public string activityTypeId { get; set; }
-
+        public string list_1_select { get; set; }
         public string productDetail { get; set; }
         public string productId { get; set; }
         public string productName { get; set; }
@@ -225,17 +256,33 @@ namespace eActForm.Models
         public Boolean isShowGroup { get; set; }
         public string IO { get; set; }
         public int rowNo { get; set; }
+        public string detail { get; set; }
+        public DateTime? date { get; set; }
+        public string dateInput { get; set; }
         public string mechanics { get; set; }
+        public bool chkBox { get; set; }
+        public string qty { get; set; }
+
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public CostThemeDetailOfGroupByPrice()
         {
             detailGroup = new List<ProductCostOfGroupByPrice>();
         }
+        public string listChoiceId { get; set; }
+        public string listChoiceName { get; set; }
+        public string statusEdit { get; set; }
+        public string displayType { get; set; }
+        public string subDisplayType { get; set; }
+        public string glCode { get; set; }
+        public string hospId { get; set; }
+        public string hospName { get; set; }
+        public string UseYearSelect { get; set; }
+        public string EO { get; set; }
 
     }
 
-        public class CostThemeDetail : ActBaseModel
+    public class CostThemeDetail : ActBaseModel
     {
         public string id { get; set; }
         public string productGroupId { get; set; }
@@ -312,6 +359,7 @@ namespace eActForm.Models
         public decimal? total { get; set; }
         public decimal? perTotal { get; set; }
         public int unit { get; set; }
+        public string unitTxt { get; set; }
         public decimal? compensate { get; set; }
         public decimal? LE { get; set; }
         public Boolean isShowGroup { get; set; }
@@ -319,6 +367,12 @@ namespace eActForm.Models
         public string digitGroup { get; set; }
         public string digitSubGroup { get; set; }
         public string EO { get; set; }
+        public bool chkBox { get; set; }
+        public string DateInput { get; set; }
+        public string place { get; set; }
+        public string detail { get; set; }
+        public string customer { get; set; }
+        public decimal? rsp { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public ProductCostOfGroupByPrice()
@@ -367,6 +421,6 @@ namespace eActForm.Models
     }
 
 
-   
+
 
 }

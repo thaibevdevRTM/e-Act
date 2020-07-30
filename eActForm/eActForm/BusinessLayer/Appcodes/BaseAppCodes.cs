@@ -1,10 +1,13 @@
-﻿using eActForm.Models;
+﻿using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Web;
+using static eActForm.Models.ActUserModel;
 
 namespace eActForm.BusinessLayer.Appcodes
 {
@@ -59,6 +62,47 @@ namespace eActForm.BusinessLayer.Appcodes
                 else if (actType == Activity_Model.activityType.HCM.ToString())
                 {
                     return ConfigurationManager.AppSettings["companyId_HCM"].ToString();
+                }
+                else if (actType == Activity_Model.activityType.EXPENSE.ToString())
+                {
+                    return ConfigurationManager.AppSettings["companyId_EXPENSE"].ToString();
+                }
+                else if (actType == Activity_Model.activityType.HCForm.ToString())
+                {
+                    String compId = "";
+                    if (UtilsAppCode.Session.User.isSuperAdmin)
+                    {
+                        List<TB_Act_Other_Model> lst = new List<TB_Act_Other_Model>();
+                        lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.groupCompany.NUM.ToString());
+                        foreach (var item in lst)
+                        {
+                            compId += item.val1 + ",";
+                        }
+
+                        lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.groupCompany.POM.ToString());
+                        foreach (var item in lst)
+                        {
+                            compId += item.val1 + ",";
+                        }
+
+                        lst = QueryOtherMaster.getOhterMaster("company", Activity_Model.groupCompany.CVM.ToString());
+                        foreach (var item in lst)
+                        {
+                            compId += item.val1 + ",";
+                        }
+
+                        compId = compId.Substring(0, compId.Length - 1);
+                    }
+                    else
+                    {
+                        List<ActUserModel.UserAuthorized> lst = new List<ActUserModel.UserAuthorized>();
+                        lst = UserAppCode.GetUserAuthorizedsByCompany(UtilsAppCode.Session.User.empCompanyGroup);
+                        compId = lst.Count > 0 ? lst.FirstOrDefault().companyId : "";
+                    }
+
+
+                    return compId; //ถ้าเป็น superadmim ถึงจะดึงทั้ง 8 ถ้าไม่ดึงตัวเอง
+
                 }
                 else
                 {
@@ -127,6 +171,60 @@ namespace eActForm.BusinessLayer.Appcodes
         {
             return DateTime.ParseExact(p_date, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
         }
+
+        public static DateTime converStrToDatetimeWithFormat(string p_date, string formatDate)
+        {
+            return DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
+        }
+        public static User getEmpFromApi(string empId)
+        {
+            ActUserModel.ResponseUserAPI response = new ActUserModel.ResponseUserAPI();
+            response = AuthenAppCode.doAuthenInfo(empId);
+            User userModel = new User();
+            if (response != null && response.userModel.Count > 0)
+            {
+                userModel = response.userModel[0];
+            }
+            return userModel;
+        }
+
+        public static void WriteSignatureToDisk(ApproveModel.approveModels approveModels,string activityId)
+        {
+
+            var modelApproveDetail = approveModels.approveDetailLists.Where(x => x.statusId.Equals("3")).ToList();
+            if (modelApproveDetail.Any())
+            {
+                bool folderExists = Directory.Exists(HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
+                if (!folderExists)
+                    Directory.CreateDirectory(HttpContext.Current.Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
+
+                foreach (var item in modelApproveDetail)
+                {
+                    UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
+                        , item.signature
+                        , string.Format(ConfigurationManager.AppSettings["rootSignaByActURL"], activityId, item.empId));
+                }
+            }
+
+        }
+
+        //public static void WriteSignatureToDisk(ApproveFlowModel.approveFlowModel flowModel, string activityId)
+        //{
+
+           
+        //        bool folderExists = Directory.Exists(HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
+        //        if (!folderExists)
+        //            Directory.CreateDirectory(HttpContext.Current.Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
+
+        //        foreach (var item in flowModel.flowDetail)
+        //        {
+        //            UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
+        //                , item.signature
+        //                , string.Format(ConfigurationManager.AppSettings["rootSignaByActURL"], activityId, item.empId));
+        //        }
+            
+
+        //}
 
     }
 }

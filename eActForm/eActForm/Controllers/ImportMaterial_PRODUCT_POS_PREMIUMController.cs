@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace eActForm.Controllers
@@ -65,7 +64,7 @@ namespace eActForm.Controllers
                             validateValue = false;
                             txtError += "กรุณาระบุ Status Mat บรรทัดที่ " + rowInExcelAlert + "<br />";
                         }
-                       
+
                         var keyValue_subGroupIdByRow = list_TB_Act_master_list_choiceModel.Where(x => x.name == dt.Rows[i]["Sub Group"].ToString().ToUpper()).FirstOrDefault();
                         if (keyValue_subGroupIdByRow != null)
                         {
@@ -108,22 +107,22 @@ namespace eActForm.Controllers
                         return View();
                     }
                     else
-                    {                        
+                    {
                         for (int i = 0; i < countDataHaveRows; i++)
                         {
                             var delFlag = false;
-                            if(dt.Rows[i]["Status Use"].ToString() == "ไม่ใช้งาน") { delFlag = true; }
+                            if (dt.Rows[i]["Status Use"].ToString() == "ไม่ใช้งาน") { delFlag = true; }
                             TB_Act_master_material_Model tB_Act_Master_Material_Model = new TB_Act_master_material_Model();
                             tB_Act_Master_Material_Model.plnt = dt.Rows[i]["Plnt"].ToString();
                             tB_Act_Master_Material_Model.material = dt.Rows[i]["Material"].ToString();
                             tB_Act_Master_Material_Model.materialDescription = dt.Rows[i]["Material Description"].ToString();
                             tB_Act_Master_Material_Model.sloc = dt.Rows[i]["SLoc"].ToString();
-                            tB_Act_Master_Material_Model.qty =  int.Parse(dt.Rows[i]["Qty"].ToString().Replace("-","0"));
+                            tB_Act_Master_Material_Model.qty = int.Parse(dt.Rows[i]["Qty"].ToString().Replace("-", "0"));
                             tB_Act_Master_Material_Model.tB_Act_master_list_choice_id = dt.Rows[i]["tB_Act_master_list_choice_id"].ToString();
                             tB_Act_Master_Material_Model.tB_Act_master_list_choice_id_InOutStock = dt.Rows[i]["tB_Act_master_list_choice_id_InOutStock"].ToString();
                             tB_Act_Master_Material_Model.qtyName = dt.Rows[i]["Qty Name"].ToString();
                             tB_Act_Master_Material_Model.createdByUserId = UtilsAppCode.Session.User.empId;
-                            tB_Act_Master_Material_Model.createdDate =  DateTime.Now;
+                            tB_Act_Master_Material_Model.createdDate = DateTime.Now;
                             tB_Act_Master_Material_Model.updatedByUserId = UtilsAppCode.Session.User.empId;
                             tB_Act_Master_Material_Model.updatedDate = DateTime.Now;
                             tB_Act_Master_Material_Model.delFlag = delFlag;
@@ -145,9 +144,9 @@ namespace eActForm.Controllers
             DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getTB_Act_master_material_Full");
             DataTable dt = ds.Tables[0];
             //=============process datatable=================
-            for(int i=0;i< dt.Rows.Count; i++)
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                if(dt.Rows[i]["Status Use"].ToString().ToLower()=="use")//ที่ต้องมาเปลี่ยนในนี้เพราะใส่ในสโตไม่ได้CollateในDBไม่เป็นThai_CI_AS
+                if (dt.Rows[i]["Status Use"].ToString().ToLower() == "use")//ที่ต้องมาเปลี่ยนในนี้เพราะใส่ในสโตไม่ได้CollateในDBไม่เป็นThai_CI_AS
                 {
                     dt.Rows[i]["Status Use"] = "ใช้งาน";
                 }

@@ -1,0 +1,716 @@
+﻿
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+
+
+<style type="text/css">
+
+    .font8 {
+        font-size: 8px;
+    }
+
+    .font10 {
+        font-size: 10px;
+    }
+
+    .textLeft {
+        text-align: left;
+    }
+
+    .inner {
+        display: inline-block;
+    }
+
+    #outer {
+        width: 100%;
+        text-align: center;
+    }
+</style>
+
+
+<div class="row">
+
+    <div class="form-group">
+        <div class="col-md-6 col-xs-12"></div>
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityNo">
+                    Act No.
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.TextBoxFor(x => x.activityFormTBMMKT.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-6 col-xs-12"></div>
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                    Document Date<span class="required">*</span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @if (Model.activityFormTBMMKT.documentDate.ToString() != "")
+                    {
+                        @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormTBMMKT.documentDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", @id = "txtdateDoc", @readonly = true, autocomplete = "off" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormTBMMKT.documentDate, ConfigurationManager.AppSettings["formatDateUse"]),
+                       new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]), @readonly = true, autocomplete = "off" })
+
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12"></div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtReference">
+                        Reference
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div id="divReference">
+                            @Html.TextBoxFor(x => x.activityFormTBMMKT.reference, new { @class = "form-control textboxcss", @id = "txtReference", autocomplete = "off" })
+                        </div>
+                        <div id="divRadioRef" class="radioRef">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="form-group">
+        <div class="col-md-6 col-xs-12"></div>
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlCustomer">
+                    Customer Name<span class="required">*</span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(x => x.activityFormTBMMKT.customerId, new SelectList(Model.customerslist, "id", "cusNameTH", 0), "Please Select", new
+               {
+                   @class = "form-control textboxcss",
+                   onchange = "onchangeCustomer();",
+                   id = "ddlCustomer"
+               })
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtActivityName">
+                        ชื่อกิจกรรม <span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.activityFormTBMMKT.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    @Html.HiddenFor(x => x.activityFormTBMMKT.chanel, new { @id = "txtchanel" })
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlProductCate">
+                        Product category<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(x => x.activityFormTBMMKT.productCateId, new SelectList(Model.productcatelist, "id", "cateName", 0), "Please Select", new
+                   {
+                       @class = "form-control textboxcss",
+                       required = "required",
+                       onchange = "onchangeCate();",
+                       id = "ddlProductCate"
+                   })
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlTheme">
+                    ประเภทกิจกรรม<span class="required">*</span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(x => x.activityFormTBMMKT.theme, new SelectList(Model.activityGroupList, "id", "activitySales"), new
+                    {
+                    @class = "form-control textboxcss",
+                    id = "ddlTheme"
+                    })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
+                    Product Group<span class="required">*</span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    @Html.DropDownListFor(x => x.activityFormTBMMKT.productGroupId, new SelectList(Model.productGroupList, "id", "groupName", 0), "Please Select", new { @class = "form-control textboxcss", required = "required", id = "ddlProductGrp" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtObjective">
+                        วัตถุประสงค์<span class="required">*</span>
+                    </label>
+
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.TextBoxFor(x => x.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productGroup">
+                        Product Brand<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        @Html.DropDownListFor(x => x.activityFormTBMMKT.productBrandId, new SelectList(Model.productBrandList, "id", "brandName"), "- เลือกประเภท -", new { @class = "form-control textboxcss", required = "required", id = "ddlProductBrand" })
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="radio">
+                            <label>
+                                @Html.RadioButtonFor(x => x.activityFormTBMMKT.trade, "term", new { @id = "rdbterm" }) รายการส่งเสริมการขาย (Trade Term)
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                @Html.RadioButtonFor(x => x.activityFormTBMMKT.trade, "outterm", new { @id = "rdbOutterm" }) รายการส่งเสริมการขาย (นอก Trade Term)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            @*@Html.CheckBoxFor(x => x.activityFormTBMMKT.chkAddIOStr, new { id = "chkAddIO", onchange = "OnChangeChkIO(this)" })*@ IO
+                        </label>
+                        <div id="divIO" class="col-md-9 col-sm-9 col-xs-12" style="margin-left:-10px">
+                            <div class="col-md-5 col-sm-5 col-xs-12">
+                                @Html.TextBoxFor(x => x.activityFormTBMMKT.actIO, new { @class = "form-control textboxcss", id = "txtActIO", autocomplete = "off" })
+                            </div>
+                            <label class="control-label col-md-2 col-sm-2 col-xs-12">
+                                Claim
+                            </label>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                @Html.TextBoxFor(x => x.activityFormTBMMKT.actClaim, new { @class = "form-control textboxcss", id = "txtActClaim",  autocomplete = "off" })
+
+                            </div>
+                            <label class="control-label col-md-1 col-sm-1 col-xs-12">
+                                %
+                            </label>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                        เวลากิจกรรม (Activity Period)<span class="required">*</span>
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("activityFormModel.activityPeriodStStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateActivitySt", autocomplete = "off" })
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("activityFormModel.activityPeriodEndStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateActivityEnd", autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txtdateDoc">
+                        เวลาการให้ทุนพิเศษ (Cost Period)
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("activityFormModel.str_costPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormTBMMKT.costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateCostPerSt", autocomplete = "off" })
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("activityFormModel.str_costPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormTBMMKT.costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateCostPerEnd", autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-12">
+        <p class="lead">รายละเอียดของการทำกิจกรรม (Activity Detail)</p>
+    </div>
+    <div class="col-md-6">
+        @Html.TextAreaFor(x => x.activityFormTBMMKT.activityDetail, 6, 50, new { @class = "form-control textboxcss", @Styles = "font-size: 8pt", @id = "txtActivityDetail" })
+    </div>
+</div>
+<hr />
+<div id="getQuery" class="col-lg-12">
+    @Html.Action("productSetPriceList", "ExpenseEstimateInput", new { typeForm = Model.activityFormTBMMKT.typeForm, actId = Model.activityFormTBMMKT.id })
+</div>
+
+<div class="row" id="divAddProductCostDetail">
+    <div class="col-lg-2 col-xs-2">
+    </div>
+    <div class="col-lg-2 col-xs-2">
+    </div>
+
+    <div class="form-group col-lg-2 col-xs-2">
+        รสชาติ
+        @Html.DropDownListFor(x => x.productSmellLists, new SelectList(Model.productSmellLists, "id", "nameTH"), "- เลือกรสชาติ -", new { @class = "form-control", required = "required", id = "ddlProductSmell" })
+    </div>
+    <div class="form-group col-lg-2 col-xs-2">
+        ขนาด
+        @Html.DropDownListFor(x => x.productlist, new SelectList(Model.productlist, "productCode", "size"), "- เลือกขนาด -", new { @class = "form-control", required = "required", id = "ddlProductSize" })
+    </div>
+    <div class="form-group col-lg-3 col-xs-3">
+        สินค้า
+        @Html.DropDownListFor(x => x.productlist, new SelectList(Model.productlist, "productCode", "productName"), "- เลือกสินค้า -", new { @class = "form-control", required = "required", id = "ddlProductfilter" })
+    </div>
+    <div class="form-group col-lg-1 col-xs-1" onclick="Additem()">
+        <label class="btn ink-reaction btn-danger fa fa-plus" style="margin-top:20px;"></label>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $(".fv").each(function () {
+            var v = $(this).val();
+            if (v == '') {
+                $(this).focus();
+            }
+        });
+
+      
+
+        if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' != "False") {
+             fillProductOnChange();
+             document.getElementById("ddlProductfilter").disabled = true;
+             document.getElementById("ddlProductSize").disabled = true;
+             getFormatCus();
+        }
+
+
+        $("#txtCustomerName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("getCustomerByRegion", "eAct")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        regionId: $("#ddlRegion").val(),
+                        txtCus: $("#txtCustomerName").val(),
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.cusNameTH, value: item.cusNameTH, id: item.id };
+                        }))
+
+                    }
+                })
+            },
+            minLength: 0,
+            messages: {
+                noResults: '',
+                results: function (resultsCount) {
+                }
+            }, select: function (event, ui) {
+                $("#customerId").val(ui.item.id)
+            }
+        }).focus(function () {
+            $(this).data("uiAutocomplete").search($(this).val());
+        });
+    });
+
+    $(function () {
+
+        $("#txtdateActivitySt").datepicker({
+           format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]'
+        });
+        $("#txtdateActivityEnd").datepicker({
+            format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]'
+        });
+        $("#txtdateCostPerSt").datepicker({
+           format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]'
+        });
+        $("#txtdateCostPerEnd").datepicker({
+            format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]'
+        });
+
+    });
+
+
+    $("#ddlProductSize").change(function () {
+        var ddlProduct = $("#ddlProductfilter");
+        $.ajax({
+            url: '@Url.Action("getddlProduct", "eAct")',
+            data: {
+                brandId: $("#ddlProductBrand").val(),
+                size: $("#ddlProductSize").val(),
+                smellId: $("#ddlProductSmell").val(),
+                productGroupId: $("#ddlProductGrp").val()
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                if (response.Data.getProductname.length > 0) {
+                    $("#ddlProductfilter option[value !='']").remove();
+                    $.each(response.Data.getProductname, function () {
+                        ddlProduct.append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    document.getElementById("ddlProductfilter").disabled = false;
+                }
+                else {
+                    document.getElementById("ddlProductfilter").disabled = true;
+                }
+            }
+        });
+    });
+
+    function setZero(txtId) {
+        if ($(txtId).val() == "0.00")
+            $(txtId).val("");
+    }
+
+    function onchangeCustomer() {
+        ObjModel = {};
+        getFormatCus();
+
+        $("#txtchanel").val('');
+         $.ajax({
+                url: '@Url.Action("getChanel", "eAct")',
+                data: {
+                    Id: $("#ddlCustomer").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+             success: function (response) {
+                 $("#txtchanel").val(response.Data.Chanel_group);
+             }
+         });
+    }
+
+
+    function getFormatCus() {
+        document.getElementById("divRadioRef").innerHTML = "";
+        document.getElementById("txtReference").readOnly = true;
+
+        if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]") {
+            $("#divRadioRef").append('<input type="checkbox" id="chkHyper" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" id="chkMarket" name="formatCus" value="Market" onchange = "onchangeRdbRef(this);">Market</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" id="chkMini" name="formatCus" value="Mini" onchange = "onchangeRdbRef(this);">Mini</input>');
+            $("#divRadioRef").append('&nbsp;&nbsp;&nbsp;&nbsp;');
+        }
+        else if ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]") {
+            $("#divRadioRef").append('<input type="checkbox" id="chkExpress" name="formatCus" value="Express" onchange = "onchangeRdbRef(this);">Express</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" id="chkTalad" name="formatCus" value="Talad" onchange = "onchangeRdbRef(this);">Talad</input>&nbsp;&nbsp;');
+            $("#divRadioRef").append('<input type="checkbox" id="chkHyper" name="formatCus" value="Hyper" onchange = "onchangeRdbRef(this);">Hyper</input>');
+            $("#divRadioRef").append('&nbsp;&nbsp;&nbsp;&nbsp;');
+        }
+        else {
+            document.getElementById("txtReference").readOnly = false;
+        }
+
+        var cus = ["Hyper", "Market", "Mini","Express","Talad","Hyper"];
+        cus.forEach(chkTrueRef);
+    }
+
+    function chkTrueRef(item, index) {
+        var txtRef = document.getElementById("txtReference").value.includes(item);
+        console.log(txtRef);
+        if (txtRef == true) {
+            document.getElementById("chk"+item).checked = true;
+        }
+    }
+
+    function onchangeRdbRef(element) {
+
+        var unionStr = $("#txtReference").val();
+        unionStr += element.value + ',';
+
+        if (!element.checked) {
+            console.log(element.value + ',')
+            unionStr = document.getElementById("txtReference").value.replace(element.value + ',', '');
+        }
+
+        $("#txtReference").val(unionStr)
+    }
+
+    $("#ddlProductBrand").change(function () {
+        fillProductOnChange();
+    });
+
+    $("#ddlProductSmell").change(function () {
+        fillProductOnChange();
+    });
+
+    function fillProductOnChange() {
+        $.ajax({
+            url: '@Url.Action("getProductDetail", "eAct")',
+            data: {
+                brandId: $("#ddlProductBrand").val(),
+                smellId: $("#ddlProductSmell").val(),
+                productGroupId:$("#ddlProductGrp").val()
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                fillDataSizeAndProduct(response);
+            }
+        });
+    }
+
+    function fillDataSizeAndProduct(response) {
+        var ddlProduct = $("#ddlProductfilter");
+        var ddlSize = $("#ddlProductSize");
+        if (response.Data.getProductsize.length > 0) {
+            $("#ddlProductSize option[value !='']").remove();
+            $.each(response.Data.getProductsize, function () {
+                ddlSize.append($("<option></option>").val(this['size']).html(this['size']));
+            });
+            document.getElementById("ddlProductSize").disabled = false;
+        }
+        else {
+            document.getElementById("ddlProductSize").disabled = true;
+        }
+
+        if (response.Data.getProductname.length > 0) {
+            $("#ddlProductfilter option[value !='']").remove();
+            $.each(response.Data.getProductname, function () {
+                ddlProduct.append($("<option></option>").val(this['Value']).html(this['Text']));
+            });
+            document.getElementById("ddlProductfilter").disabled = false;
+        }
+        else {
+            document.getElementById("ddlProductfilter").disabled = true;
+        }
+    }
+
+
+
+    function onchangeCate() {
+
+        ObjModel = {};
+        $("#ddlProductBrand").val('');
+        $("#ddlProductfilter").val('');
+        $("#ddlProductSize").val('');
+        $("#ddlProductSmell").val('');
+
+        document.getElementById("ddlProductBrand").disabled = true;
+        document.getElementById("ddlProductfilter").disabled = true;
+        document.getElementById("ddlProductSize").disabled = true;
+
+        var ddlProductGrp = $("#ddlProductGrp");
+
+         $.ajax({
+                url: '@Url.Action("getProductGroup", "eAct")',
+                data: {
+                    cateId: $("#ddlProductCate").val(),
+                },
+                dataType: "json",
+                type: 'POST',
+             success: function (response) {
+
+                 if (response.Data.productGroup.length > 0) {
+                     $("#ddlProductGrp option[value !='']").remove();
+                     $.each(response.Data.productGroup, function () {
+                         ddlProductGrp.append($("<option></option>").val(this['id']).html(this['groupName']));
+                     });
+                     document.getElementById("ddlProductGrp").disabled = false;
+                 }
+                 else {
+                     document.getElementById("ddlProductGrp").disabled = true;
+                 }
+
+
+                }
+         });
+    }
+
+
+
+    $("#ddlProductGrp").change(function () {
+        ObjModel = {};
+
+        var ddlProductBrand = $("#ddlProductBrand");
+
+        $("#ddlProductSmell").val('')
+        $("#ddlProductfilter").val('');
+        $("#ddlProductSize").val('');
+        document.getElementById("ddlProductfilter").disabled = true;
+        document.getElementById("ddlProductSize").disabled = true;
+
+        $.ajax({
+            url: '@Url.Action("getProductBrand", "eAct")',
+            data: {
+                p_groupId: $("#ddlProductGrp").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                if (response.Data.getProductname.length > 0) {
+                    $("#ddlProductBrand option[value !='']").remove();
+                    $.each(response.Data.getProductname, function () {
+                        ddlProductBrand.append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    document.getElementById("ddlProductBrand").disabled = false;
+                }
+                else {
+                    document.getElementById("ddlProductBrand").disabled = true;
+                }
+            }
+        });
+
+         $.ajax({
+            url: '@Url.Action("getProductSmell", "eAct")',
+            data: {
+                productGroupId: $("#ddlProductGrp").val(),
+            },
+            dataType: "json",
+            type: 'POST',
+             success: function (response) {
+                 if (response.Data.length > 0) {
+                     $("#ddlProductSmell option[value !='']").remove();
+                    $.each(response.Data, function () {
+                        $("#ddlProductSmell").append($("<option></option>").val(this['id']).html(this['nameTH']));
+                    });
+                    document.getElementById("ddlProductSmell").disabled = false;
+                }
+                else {
+                    document.getElementById("ddlProductSmell").disabled = true;
+                }
+            }
+        });
+
+    });
+
+
+    function Additem() {
+
+        var required = "กรุณา ระบุ :<br>";
+        var validate = true;
+        if ($("#ddlTheme").val() == '') { required += "ประเภทกิจกรรม*<br>"; validate = false; }
+        if (validate != true) {
+            bootbox.alert(required);
+            return false;
+        }
+
+
+        $("#WaitDialog").show();
+         $.ajax({
+                url: '@Url.Action("addItemProduct", "ExpenseEstimateInput")',
+             data: {
+             productid: $("#ddlProductfilter").val(),
+                 brandid: $("#ddlProductBrand").val(),
+                 smellId: $("#ddlProductSmell").val(),
+                 size: $("#ddlProductSize").val(),
+                 cusid: customer = $("#ddlCustomer").val(),
+                 theme: $("#ddlTheme").val(),
+                 actId: '@Model.activityFormModel.id',
+                 typeForm: '@Model.activityFormModel.typeForm',
+             },
+                dataType: "json",
+                type: 'POST',
+             success: function (response) {
+                 if (response.Data > 0) {
+
+                     rowCount = response.Data;
+                     CallChangefunc(response.ActivityId);
+                 }
+                 else {
+                     bootbox.alert("ไม่พบ สินค้า!");
+                 }
+                 $("#WaitDialog").hide();
+             }
+         });
+    }
+
+
+    function validateUpdate() {
+        var required = "กรุณา ระบุ :<br>";
+        var validate = true;
+
+        if ($("#txtdateActivitySt").val() == "" && $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; }
+        else {
+            var startDate = $("#txtdateActivitySt").val().split("-");
+            var endDate = $("#txtdateActivityEnd").val().split("-");
+            if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1], endDate[0])) {
+                required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
+            }
+        }
+        if (validate == true) {
+            updateData();
+        }
+        else {
+            bootbox.alert(required)
+        }
+    }
+
+    function updateData() {
+        $("#WaitDialog").show();
+            $.ajax({
+                url: '@Url.Action("updateDataActivity", "Activity")',
+                data: {
+                    str_costPeriodSt: $("#txtdateCostPerSt").val(),
+                    str_costPeriodEnd: $("#txtdateCostPerEnd").val(),
+                    str_activityPeriodSt: $("#txtdateActivitySt").val(),
+                    str_activityPeriodEnd: $("#txtdateActivityEnd").val(),
+                    chkAddIO: $("input[name='activityFormModel.chkAddIO']:checked").val(),
+                    actIO: $("#txtActIO").val(),
+                    actClaim: $("#txtActClaim").val(),
+                    id:'@Model.activityFormModel.id',
+                },
+                dataType: "json",
+                type: 'POST',
+            }).done(function (response) {
+                if (response.Success) {
+                    $("#WaitDialog").hide();
+                    doMsgSuccess("Update Success");
+                }
+            });
+    }
+
+
+
+    function CallChangefunc(actId) {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("productSetPriceList", "ExpenseEstimateInput")',
+            data: {
+                typeForm: '@Model.activityFormModel.typeForm',
+                actId: actId,
+            }
+        }).done(function (htmlResponse) {
+            $("#getQuery").html(htmlResponse)
+        });
+    }
+
+
+</script>

@@ -2,17 +2,19 @@
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
+using System.Web.Hosting;
 using WebLibrary;
+using static eActForm.Models.TB_Act_Image_Model;
 
 namespace eActForm.BusinessLayer
 {
-    public class ImageAppCode 
+    public class ImageAppCode
     {
-        public static List<TB_Act_Image_Model.ImageModel> GetImage(string activityId,string type)
+        public static List<TB_Act_Image_Model.ImageModel> GetImage(string activityId, string type)
         {
             try
             {
@@ -22,7 +24,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                //ExceptionManager.WriteError("getImage => " + ex.Message); // background service use this
+                //ExceptionManager.WriteError("getImage => " + ex.Message); // background service use this. then can't write logs
                 return new List<TB_Act_Image_Model.ImageModel>();
             }
         }
@@ -51,7 +53,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-               // ExceptionManager.WriteError("getImage => " + ex.Message);
+                // ExceptionManager.WriteError("getImage => " + ex.Message); // background service use this. then can't write logs
                 return new List<TB_Act_Image_Model.ImageModel>();
             }
         }
@@ -121,5 +123,34 @@ namespace eActForm.BusinessLayer
 
             return result;
         }
+
+        public static List<ImageModel> GetSizeFiles(string activityId)
+        {
+            try
+            {
+                TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
+                getImageModel.tbActImageList = ImageAppCode.GetImage(activityId);
+                string[] pathFile = new string[getImageModel.tbActImageList.Count];
+                if (getImageModel.tbActImageList.Any())
+                {
+                    int i = 0;
+                    foreach (var item in getImageModel.tbActImageList)
+                    {
+                        var pathCheck = HostingEnvironment.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
+                        long lengthPathCheck = new System.IO.FileInfo(pathCheck).Length;
+                        item.sizeFiles = lengthPathCheck.ToString();
+                        i++;
+                    }
+                }
+
+                return getImageModel.tbActImageList;
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("GetSizeFiles => " + ex.Message);
+                return new List<ImageModel>();
+            }
+        }
+
     }
 }

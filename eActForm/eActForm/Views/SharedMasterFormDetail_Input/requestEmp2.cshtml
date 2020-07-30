@@ -1,0 +1,79 @@
+﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
+@model eActForm.Models.Activity_TBMMKT_Model
+
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr style="border-bottom:none;">
+        <td>
+            <div id="divRequestEmp" style="width: 100%;padding-left:15px;padding-right:15px;">
+                <table class="table table-bordered" id="tabelRequestEmp">
+                    <tr style="background-color:#E5E2E2;height:25px; ">
+                        <th colspan="5" style="text-align :center;">
+                            List name (For more user, Please attach Excel file) / รายงานชื่อผู้ใช้งาน (ถ้ามีมากกว่า 5 คนขึ้นไป สามารถแนบไฟล์ Excel เพิ่มเติมได้)
+                        </th>
+                    </tr>
+                    <tr style="height:25px;">
+                        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">No.</th>
+                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">EmpID / รหัสพนักงาน</th>
+                        <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Name / ชื่อ - สกุล</th>
+                        <th style="width: 60%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">Detail authorizations / รายละเอียดของสิทธิ์</th>
+                    </tr>
+                    @{ var index = 0;}
+                    @foreach (var item in Model.requestEmpModel)
+                    {
+                        <tr class="tagCountRowinTable">
+                            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;vertical-align:middle">
+                                @(index+1)
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.empId" id="empId_@index" name="requestEmpModel[@index].empId" class="form-control position" onchange="changeGetEmp(@index);" />
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <input type="text" value="@item.empName.Replace("คุณ","")" id="empName_@index" name="requestEmpModel[@index].empName" readonly class="form-control textboxcss" />
+                            </td>
+                            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <textarea rows="5" id="detail_@index" name="requestEmpModel[@index].detail" class="form-control textboxcss">@item.detail</textarea>
+                            </td>
+                        </tr>
+                        index++;
+                    }
+                </table>
+                <script>
+
+                    function changeGetEmp(rowIndex) {
+                        $('#empId_' + rowIndex).val($('#empId_' + rowIndex).val().replaceAll("i", "1").replaceAll("I", "1"));
+
+                        if ('@Model.activityFormTBMMKT.master_type_form_id' != '@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]') {
+                            if ($('#empId_' + rowIndex).val() == $('#txtEmpId').val()) {
+                                alert('ข้อมูลพนักงานเพิ่มเติม ต้องไม่ซ้ำกับข้อมูลพนักงานผู้แจ้ง');
+                                clearDataUser(rowIndex);
+                                return;
+                            }
+                        }
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("getEmpDetailById", "eAct")',
+                        data: {
+                            empId: $('#empId_' + rowIndex).val(),
+                        }
+                    }).done(function (response) {
+                        if (response.Data != null) {
+                            $('#empName_' + rowIndex).val(response.Data.empName);
+                        } else {
+                            alert('ไม่พบ ข้อมูลพนักงาน ' + $('#empId_' + rowIndex).val());
+                            clearDataUser(rowIndex);
+                        }
+                    });
+                    }
+
+                    function clearDataUser(rowIndex) {
+                        $('#empName_' + rowIndex).val('');
+                        $('#empId_' + rowIndex).val('');
+                    }
+
+                </script>
+            </div>
+        </td>
+    </tr>
+</table>

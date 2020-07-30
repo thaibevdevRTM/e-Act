@@ -1,16 +1,11 @@
-﻿using eActForm.Models;
-using Microsoft.ApplicationBlocks.Data;
+﻿using Microsoft.Ajax.Utilities;
 using OfficeOpenXml;
 using OfficeOpenXml.Table;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
-using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
 using System.Web;
-using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
@@ -50,7 +45,7 @@ namespace eActForm.BusinessLayer
         }
 
         //EPPlus On mobile ก็ Export ได้
-        public static void ExportExcelEpPlus(DataTable dt, string excelSheetName, string fileName, string AuthorFile, string SubjectFile, HttpContextBase p,string typeProcess)
+        public static void ExportExcelEpPlus(DataTable dt, string excelSheetName, string fileName, string AuthorFile, string SubjectFile, HttpContextBase p, string typeProcess)
         {
 
             string currentDirectorypath = Environment.CurrentDirectory;
@@ -71,10 +66,14 @@ namespace eActForm.BusinessLayer
 
                 //Step 3 : Start loading datatable form A1 cell of worksheet.
                 worksheet.Cells["A1"].LoadFromDataTable(dt, true, TableStyles.None);
-                if(typeProcess== "MaterialProductPosPremium")
+                if (typeProcess == "MaterialProductPosPremium")
                 {
                     worksheet.Column(12).Style.Numberformat.Format = "yyyy-mm-dd";
                     worksheet.Column(14).Style.Numberformat.Format = "yyyy-mm-dd";
+                }else if(typeProcess== "MasterAP")
+                {
+                    worksheet.Column(15).Style.Numberformat.Format = "yyyy-mm-dd";
+                    worksheet.Column(17).Style.Numberformat.Format = "yyyy-mm-dd";
                 }
 
                 //Step 4 : (Optional) Set the file properties like title, author and subject

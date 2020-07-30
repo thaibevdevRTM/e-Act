@@ -1,8 +1,6 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer
 @using eActForm.Models
-
-
 @using System.Configuration;
 @{
 
@@ -11,30 +9,17 @@
     var urlWorkFlowTrv = "";
     if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"])//travelling TBM
     {
-        strHeader = "คำแนะนำการขอเบิกค่าใช้จ่ายในการเดินทาง";
+        strHeader = Resources.Global.viewManual;
         urlWorkFlowTrv = rootPathWeb + ConfigurationManager.AppSettings["renderPathFile"] + "manual/travelling_TBM.pdf";
     }
 
 }
 
-<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-@*<script src="~/Scripts/jquery.datetimepicker.full.js"></script>*@
-<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
-<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-ui.js"></script>
-
-@*<script src="~/Scripts/bootstrap.min.js"></script>*@
-
 <link href="~/Scripts/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
 <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
-<script src="~/Scripts/locales/bootstrap-datetimepicker.fr.js"></script>
 <script src="~/Scripts/locales/bootstrap-datetimepicker.th.js"></script>
-
 
 <style>
     .cssTableTDTextCenter {
@@ -53,28 +38,36 @@
         text-align: right;
         width: 100%;
     }
+
+    /*==========20200413===========*/
+    .hrTab {
+        background-color: #d4c8c8;
+        height: 35px;
+    }
+
+    .highHeadFooterTable {
+        height: 35px;
+    }
+    /*====END======20200413===========*/
 </style>
 
 @using (Ajax.BeginForm("insertDataActivity", "MainForm", new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }, new { id = "divconditionFlow", @class = "form-horizontal form-label-left" }))
 {
     @Html.AntiForgeryToken()
     <div id="GridPDF" style="width:97%; margin-left:20px;">
-        <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
-            @*=================for test====================*@
-            @*<tr>
-                    <td>
-                        @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
-                    </td>
-                </tr>*@
-            @*=========END========for test====================*@
-            @foreach (var item in Model.master_Type_Form_Detail_Models)
-            {
-                @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
-            }
-
-
-
-        </table>
+        @*<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">*@
+        @*=================for test====================*@
+        @*<tr>
+                <td>
+                    @Html.TextBoxFor(x => x.activityFormModel.id, new { @class = "form-control textboxcss", @id = "txtActivityidForTest", style = "" })
+                </td>
+            </tr>*@
+        @*=========END========for test==================*@
+        @foreach (var item in Model.master_Type_Form_Detail_Models)
+        {
+            @Html.Action(item.path_action, item.path_controller, new { activity_TBMMKT_Model = Model })
+        }
+        @*</table>*@
     </div>
 
     @Html.HiddenFor(x => x.activityFormModel.id, new { @id = "hdActivityId" })
@@ -83,11 +76,12 @@
     @Html.HiddenFor(x => x.activityFormTBMMKT.master_type_form_id, new { @id = "hdmaster_type_form_id" })
     @Html.HiddenFor(x => x.activityFormModel.activityNo, new { @id = "hdactivityNo" })
     @Html.HiddenFor(x => x.activityFormTBMMKT.formCompanyId, new { @id = "hdformCompanyId" })
+
 }
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;" id="tabel_report" runat="server">
     <tr>
         <td>
-            @RenderPage("~/Views/TBMMKT_ActivityBudgetInput/attachOutFormTag.cshtml")
+            @RenderPage("~/Views/SharedMasterFormDetail_Input/attachOutFormTag.cshtml")
         </td>
     </tr>
 </table>
@@ -97,10 +91,13 @@
 
 <div style="margin-left:25px;" class="text-center">
     <a href="@Url.Action("index", "Home", new { typeForm = @Model.activityFormModel.typeForm }, null)" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel</a>
-    @if (Model.activityFormModel.mode == "new"
-                        || Model.activityFormTBMMKT.statusId == 1
-                        || Model.activityFormTBMMKT.statusId == 5
-                        || (Model.activityFormModel.mode == "edit" && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM)))
+    @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString()
+            || Model.activityFormTBMMKT.statusId == 1
+            || Model.activityFormTBMMKT.statusId == 5
+            || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
+            || (Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)
+            && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
+        )
     {
         <button id="btnsubmit" type="button" class="btn ink-reaction btn-success" onclick="validatesubmit()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
     }
@@ -138,20 +135,48 @@
 
 <script>
 
-       if(('@Model.activityFormTBMMKT.statusId' == '2' && '@UtilsAppCode.Session.User.isAdminTBM' == "False") || ('@Model.activityFormTBMMKT.statusId' == '3'))
-        {
-           $("#GridPDF :input").prop("disabled", true);
-           $("#txtdescAttach").prop("disabled", true);
-        }
+    if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' == "False") {
 
-        if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
-            var arrayOfElements = document.getElementsByClassName('clstxtIO');
-            var lengthOfArray = arrayOfElements.length;
-            for (var i = 0; i < lengthOfArray; i++) {
-                arrayOfElements[i].disabled = 'disabled';
+        $("#GridPDF :input").prop("disabled", true);
+        $("#txtdescAttach").prop("disabled", true);
+
+        $("#ProductDetail_5").prop("disabled", true);
+        $("#ProductDetail_6").prop("disabled", true);
+
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' &&
+            '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
+
+            $("#divExpensesTrv :input").prop("disabled", false);
+            $("#divExpensesTrv :input").prop("readonly", true);
+
+
+            for (var i = 0; i < '@Model.expensesDetailModel.costDetailLists.Count'; i++) {
+                if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "Recorder")' == 'True') {
+                    $("#txtUnitPrice_" + i + "").prop("readonly", false);
+                } else if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
+                    $("#txtGlCode_" + i + "").prop("readonly", false);
+                }
             }
         }
 
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]' &&
+            '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
+
+            $("#divExpensesMed :input").prop("disabled", false);
+            $("#divExpensesMed :input").prop("readonly", true);
+            if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
+                $("#txtGlCode_0").prop("readonly", false);
+            }
+        }
+    }
+
+    if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
+        var arrayOfElements = document.getElementsByClassName('clstxtIO');
+        var lengthOfArray = arrayOfElements.length;
+        for (var i = 0; i < lengthOfArray; i++) {
+            arrayOfElements[i].disabled = 'disabled';
+        }
+    }
 
 
 
@@ -160,13 +185,25 @@
         });
 
     $(function () {
-        $("#txtdateDoc").datepicker();
-        $("#txtdateActivitySt").datepicker();
-        $("#txtactivityPeriodEnd").datepicker();
+        $("#txtdateDoc").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#txtdateActivitySt").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
+        $("#txtactivityPeriodEnd").datepicker({ format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]' });
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'){//travelling TBM
             $('#preview').modal('show');
         }
+
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
+            if (@Model.activityFormTBMMKT.statusId != "1" || @Model.activityFormTBMMKT.statusId == "5" || '@Model.activityFormTBMMKT.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
+                var arrayOfElements = document.getElementsByClassName('divDelImg');
+                var lengthOfArray = arrayOfElements.length;
+                for (var i = 0; i < lengthOfArray; i++) {
+                    arrayOfElements[i].style.display = 'none';
+                }
+            }
+        }
+
+
     });
 
     function validatesubmit() {
@@ -184,8 +221,7 @@
             if ($("#txtdateActivitySt").val() == "") { required += "ต้องการเช็ควันที่*<br>"; validate = false; }
             if ($("#txtactivityPeriodEnd").val() == "") { required += "เคลียร์เงินทดรองในวันที่*<br>"; validate = false; }
             if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
-        } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]' || '@Model.activityFormTBMMKT.master_type_form_id' =='@ConfigurationManager.AppSettings["formTrvHcmId"]')
-        {
+        } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]' || '@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvHcmId"]') {
 
             //Travelling form TBM
             if ($("#txtdateDoc2").val() == "") { required += "&emsp;Document Date*<br>"; validate = false; }
@@ -206,7 +242,7 @@
                 $("#txtForProject_0").val() != "" &&
                 $("#txtPeriod_0").val() != "" &&
                 $("#txtDepartureDate_0").val() != "" &&
-                $("#txtArrivalDate_0").val() != "")){
+                $("#txtArrivalDate_0").val() != "")) {
                 required += "&emsp;รายละเอียดของกิจกรรม/Description of activity*<br>"; validate = false;
             }
 
@@ -216,6 +252,11 @@
                 $("#txtUnit_0").val() != "")) {
                 required += "&emsp;ประมาณค่าใช้จ่าย/Estimate of travelling expenses*<br>"; validate = false;
             }
+
+        } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
+            if ($("#ddlCompany").val() == "") { required += "บริษัท*<br>"; validate = false; }
+            if ($("#txtExMonth").val() == "") { required += "ประจำเดือน*<br>"; validate = false; }
+            if ($("#ddlTravelling").val() == "") { required += "ระบุความเร่งด่วน*<br>"; validate = false; }
 
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]') {//ใบเบิกผลิตภัณฑ์,POS/PREMIUM
@@ -232,18 +273,206 @@
             if ($("#ddlchannel_place").val() == "") { required += "Channel+Region*<br>"; validate = false; }
             if ($("#txttoName").val() == "") { required += "ให้แก่(ชื่อผู้รับ)*<br>"; validate = false; }
             if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์ที่ขอเบิก*<br>"; validate = false; }
+
+            var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
+            for (i = 0; i < rowCount; i++) {
+                if ($("#ddlin_or_out_stock").val() == '@ConfigurationManager.AppSettings["idInStock"]' && $(".txtInTable_productId_" + i).val() != '' && $(".txtInTable_IO_" + i).val() == '') {
+                    required += "กรุณาระบุIOในMatรายการที่: " + (i + 1) + "<br>"; validate = false;
+                }
+            }
+
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]') {
+
+
+            if ($("#txtdateDoc").val() == "") { required += "&emsp;วันที่เอกสาร*<br>"; validate = false; }
+            if ($("#lblEmpName").val() == "" || $("#lblEmpName").val() == null) { required += "&emsp;ข้อมูลพนักงาน*<br>"; validate = false; }
+            if ($("#ddlRegional").val() == "") { required += "&emsp;ภาค*<br>"; validate = false; }
+            if ($("#txtEmpTel").val() == "") { required += "&emsp;โทรศัพท์ติดต่อ*<br>"; validate = false; }
+            if ($("#txtOrerOf").val() == "") { required += "&emsp;ตามคำสั่ง*<br>"; validate = false; }
+
+            if (!($("#txtDeparture_0").val() != "" &&
+                $("#txtArrival_0").val() != "" &&
+                $("#txtForProject_0").val() != "" &&
+                $("#txtPeriod_0").val() != "" &&
+                $("#txtDepartureDate_0").val() != "" &&
+                $("#txtArrivalDate_0").val() != "")) {
+                required += "&emsp;รายละเอียดการเดินทาง*<br>"; validate = false;
+            }
+
+            if ($("#totalEstimate").val() == "" || $("#totalEstimate").val() == "0.00") {
+                required += "&emsp;ประมาณค่าใช้จ่ายในการเดินทาง*<br>"; validate = false;
+            }
+
+            //เช็คถ้ากรอกว่าเกินสิทธิ
+            var ProductDetail_0 = 0.00, ProductDetail_1 = 0.00, txtUnitPrice_0 = 0.00, txtUnitPrice_1 = 0.00;
+            if ($("#ProductDetail_0").val() != "") { ProductDetail_0 = parseFloat($("#ProductDetail_0").val().replace(",", "")); }
+            if ($("#ProductDetail_1").val() != "") { ProductDetail_1 = parseFloat($("#ProductDetail_1").val().replace(",", "")); }
+            if ($("#txtUnitPrice_0").val() != "") { txtUnitPrice_0 = parseFloat($("#txtUnitPrice_0").val().replace(",", "")); }
+            if ($("#txtUnitPrice_1").val() != "") { txtUnitPrice_1 = parseFloat($("#txtUnitPrice_1").val().replace(",", "")); }
+
+            if (txtUnitPrice_0 > ProductDetail_0 || txtUnitPrice_1 > ProductDetail_1) {
+                required += "&emsp;ท่านกรอกยอดเงินเกินสิทธิ์*<br>"; validate = false;
+            }
+
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]') {
+            if ($("#txtdateDoc").val() == "") { required += "&emsp;Document Date*<br>"; validate = false; }
+            if ($("#txtActivityName").val() == "") { required += "&emsp;ชื่องาน*<br>"; validate = false; }
+            if ($("#ddlFiscalYear").val() == "" || $("#ddlFiscalYear").val() == null) { required += "&emsp;ปีงบประมาณ*<br>"; validate = false; }
+            if ($("#ddl_EO_PV").val() == "" || $("#ddl_EO_PV").val() == null) { required += "&emsp;งบประมาณเลขที่EO*<br>"; validate = false; }
+            if ($("#txtObjective").val() == "") { required += "&emsp;วัตถุประสงค์*<br>"; validate = false; }
+            if ($("#ddlAP").val() == "" || $("#ddlAP").val() == null) { required += "&emsp;Supplier*<br>"; validate = false; }
+            if ($("#ddlAttach").val() == "" || $("#ddlAttach").val() == null) { required += "&emsp;เอกสารแนบ*<br>"; validate = false; }
+            var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
+            for (i = 0; i < rowCount; i++) {
+                if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val() == '') { required += "&emsp;ส่วนที่3-5 [IO]*<br>"; validate = false; }
+                if ($(".txtGL_" + i).val() == '' && $("#tB_Act_ActivityForm_DetailOtherList_" + i + "__IO").val().toLowerCase() != 'เข้าstock') { required += "&emsp;ส่วนที่3-5 [GL]*<br>"; validate = false; }
+                if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__select_list_choice_id_ChReg").val() == '') { required += "&emsp;ส่วนที่3-5 [Ch.+Reg.]*<br>"; validate = false; }
+                if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__productBrandId").val() == '') { required += "&emsp;ส่วนที่3-5 [Brand]*<br>"; validate = false; }
+            }
+            if ($("#txtpayNo").val() == "" || $("#txtpayNo").val() == null) { required += "&emsp;ส่วนที่6 [สั่งจ่ายครั้งที่]*<br>"; validate = false; }
+            if ($("#txtpayNo").val() != "") {
+                if (parseInt($("#txtpayNo").val()) >= 2) {
+                    if ($("#ddlActivityNoSub").val() == "" || $("#ddlActivityNoSub").val() == null) {
+                        required += "&emsp;ส่วนที่6 [สั่งจ่ายต่อจากเอกสาร]*<br>"; validate = false;
+                    }
+                }
+            }
+            rowCount = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
+            for (i = 0; i < rowCount; i++) {
+                if ($("#activityOfEstimateList_" + i + "__IO").val() == '') { required += "&emsp;ส่วนที่6 [IO]*<br>"; validate = false; }
+                if ($(".txtproductDetail_" + i).val() == '') { required += "&emsp;ส่วนที่6 [รายละเอียด]*<br>"; validate = false; }
+                if ($("#activityOfEstimateList_" + i + "__listChoiceId").val() == '') { required += "&emsp;ส่วนที่6 [VAT]*<br>"; validate = false; }
+                if ($(".txtnormalCost_" + i).val() == '') { required += "&emsp;ส่วนที่6 [จำนวนเงิน(บาท)]*<br>"; validate = false; }
+            }
+        } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
+
+            if ($("#txtdateDoc").val() == "") { required += "&emsp;วันที่เอกสาร*<br>"; validate = false; }
+            if ($("#lblEmpName").val() == "" || $("#lblEmpName").val() == null) { required += "&emsp;ข้อมูลพนักงาน*<br>"; validate = false; }
+            if ($("#ddlRegional").val() == "") { required += "&emsp;ภาค*<br>"; validate = false; }
+            if ($("#txtEmpTel").val() == "") { required += "&emsp;โทรศัพท์ติดต่อ*<br>"; validate = false; }
+            if ($("#lblHireDate").val() == "") { required += "&emsp;วันที่เข้างาน(กรุณาติดต่อ Admin)*<br>"; validate = false; }
+            if ($("#txthospName_0").val() == "") { required += "&emsp;โรงพยาบาล*<br>"; validate = false; }
+            if (document.getElementById('lblPercent').innerHTML == "0") { required += "&emsp;กรุณาเลือกโรงพยาบาลให้ถูกต้อง*<br>"; validate = false; }
+
+            var price_1 = 0.00;
+            if ($("#txtUnitPrice_0").val() != "") { price_1 = parseFloat($("#txtUnitPrice_0").val().replace(",", "")); }
+            if (!($("#txtDateInput_0").val() != "" && $("#txtdetail_0").val() != "" && price_1 > 0 ))
+            {
+                required += "&emsp;รายละเอียดขอเบิกเงินค่ารักษาพยาบาลบรรทัดที่ 1 ให้ครบถ้วน*<br>"; validate = false;
+            }
+            var rowCount = parseInt($('#tabelExpensesMed tr.tagCountRowinTable').length);
+            for (i = 1; i < rowCount; i++) {
+                var price = 0.00;
+                if ($("#txtUnitPrice_" + i).val() != "") { price = parseFloat($("#txtUnitPrice_" + i).val().replace(",", "")); }
+                if ($("#txtDateInput_" + i).val() != "" ||
+                    $("#txtdetail_" + i).val() != "" ||
+                    price > 0)
+                {
+                    if ($("#txtDateInput_" + i).val() == "" || $("#txtdetail_" + i).val() == "" || price <= 0 ) {
+                        required += "&emsp;รายละเอียดขอเบิกเงินค่ารักษาพยาบาลบรรทัดที่ "+(i+1)+" ให้ครบถ้วน*<br>"; validate = false;
+                    }
+                }
+            }
+
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]') {
+            if ($("#txtEmpId").val() == "") { required += "&emsp;EmpID/รหัสพนักงาน*<br>"; validate = false; }
+            if ($("#ddlDepartment").val() == "") { required += "&emsp;Department/หน่วยงาน*<br>"; validate = false; }
+            if ($("#ddlchooseRequest").val() == null) { required += "&emsp;Choose request*<br>"; validate = false; }
+            if ($("#ddlProcuretoPay").val() == null && $("#ddlERPSystem").val() == null && $("#ddlOrdertoCash").val() == null && $("#ddlForecasttoDelivery").val() == null && $("#ddlFinanceAccounting").val() == null && $("#ddlHumanCapital").val() == null && $("#ddlOther").val() == null) { required += "&emsp;Choose system*<br>"; validate = false; }
+            if ($("#ddlChangetype").val() == null) { required += "&emsp;Change type / ประเภทของการเปลี่ยนแปลง*<br>"; validate = false; }
+            @*if ($("#ddlChangeAuthorizations").val() == null) { required += "&emsp;Change Authorizations / สิทธิ์การใช้งาน*<br>"; validate = false; }*@
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formSetPriceMT"]') {
+            if ($("#txtActivityName").val() == "") { required += "ชื่อกิจกรรม*<br>"; validate = false; }
+            if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม*<br>"; validate = false; }
+            if ($("#txtObjective").val() == "") { required += "วัตถุประสงค์*<br>"; validate = false; }
+            if ($("#ddlProductCate").val() == "") { required += "Product category*<br>"; validate = false; }
+            if ($("#ddlProductGrp").val() == "") { required += "กลุ่มสินค้า *<br>"; validate = false; }
+            if ($("#ddlTheme").val() == "") { required += "ประเภทกิจกรรม *<br>"; validate = false; }
+            if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
+            if ($("input[name='activityFormTBMMKT.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
+            if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
+                $("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]")) { required += "Reference*<br>"; validate = false; }
+            if ($("#txtdateActivitySt").val() == "") { required += "เลือก เวลาเริ่มกิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivitySt").focus(); }
+            var rowCount = parseInt($('#tbl_productDetail tr.tagTR').length);
+            for (i = 0; i < rowCount; i++) {
+                if ($("#wholeSalesPrice_" + i).val() == 0 || $("#wholeSalesPrice_" + i).val() == "") { required += "&emsp; ระบุราคา wholeSalesPrice แถวที่ " + (i+1) + "*<br>"; validate = false; }
+                if ($("#saleNormal_" + i).val() == 0 || $("#saleNormal_" + i).val() == "") { required += "&emsp; ระบุราคา saleNormal แถวที่ " + (i + 1) + "*<br>"; validate = false; }
+                if ($("#rsp_" + i).val() == 0 || $("#rsp_" + i).val() == "") { required += "&emsp; ระบุราคา RSP แถวที่ " + (i + 1) + "*<br>"; validate = false; }
+                if ($("#unitTxt_" + i).val() == 0 || $("#unitTxt_" + i).val() == "") { required += "&emsp; ระบุ Unit แถวที่ " + (i + 1) + "*<br>"; validate = false; }
+
+            }
+
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
+            var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
+            for (i = 0; i < rowCount; i++) {
+                if ($(".clstxtproductDetail_" + i).val() != "") {
+                    if ($("#activityOfEstimateList_" + i + "__activityTypeId").val() != "") {
+                        if ($("#activityOfEstimateList_" + i + "__activityTypeId").val() == "@ConfigurationManager.AppSettings["ddlTypeDetails"]") {
+                            if ($("#activityOfEstimateList_" + i + "__UseYearSelect").val() == "") {
+                                required += "&emsp;ปีงบประมาณบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                            }
+                            if ($(".clstxtEO_" + i).val() == "") {
+                                required += "&emsp;EOบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                            }
+                        }
+                    }
+                    else {
+                        required += "&emsp;ประเภทบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
+                    }
+                }
+            }
         }
         else {
 
         }
 
-            if (validate == true) {
-                SubmitData();
+        if (validate == true) {
+            //SubmitData();
+            validateUploadFileAndSubmit();
             }
             else {
                 bootbox.alert(required)
             }
         }
+
+    function validateUploadFileAndSubmit() {
+        var checkUpload = true;
+
+            var dataToBeSend = {
+                activityId: '@Model.activityFormModel.id'
+            };
+             $.ajax('@Url.Action("GetDataCheckFileSize", "GetDataMainForm")',
+            {
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(dataToBeSend),
+                dataType:'json',
+                type:"POST",
+                success: function (response) {
+                    var sizeFileAllBytes = 0;
+                    if (response.Data.tbToAjax.length > 0) {
+                        $.each(response.Data.tbToAjax,function(){
+                            sizeFileAllBytes += parseInt(this['sizeFiles']);
+                        });
+                    }
+                    if (sizeFileAllBytes > 25000000) {//25mb = 25000000 bytes
+                        checkUpload = false;
+                        bootbox.alert("@Resources.Global.msgMaximumFilesSave" + " 25MB");
+                    } else {
+                        SubmitData();
+                    }
+                },
+                error:function(data){
+                    alert("Error validateUploadFile."+data);
+                }
+            });
+
+        return checkUpload;
+    }
 
     function SubmitData() {
         console.log("submit");
@@ -257,8 +486,6 @@
         }
 
     function successQuery(data) {
-        console.log('success');
-        console.log(data);
 
         $.ajax({
             type: 'POST',
@@ -276,6 +503,7 @@
                 dataType: "json",
                 type: 'POST',
             }).done(function (response) {
+
                 $("#WaitDialog").hide();
                 $("#divPreview").html(htmlResponse);
                 $('#previewModal').modal('show');
@@ -300,10 +528,10 @@
 
     var fileList = new Array;
     Dropzone.options.dropzoneJsForm = {
-        maxFiles: 5,
+        maxFiles: 10,
         acceptedFiles: "",
         paramName: "file",
-        maxFilesize: 10,
+        maxFilesize: 20,
         //addRemoveLinks: true,
         init: function () {
 
@@ -325,6 +553,27 @@ function CallImageView(obj) {
     }).done(function (htmlResponse) {
             $("#divgetimage").html(htmlResponse)
         });
-}
+    }
 
+    function deleteRowTable(btn) {
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
+    function checkValInArray(arryFind, valCheck) {
+        var loopcheckValInArray = 0;
+        var detect = false;
+        for (loopcheckValInArray = 0; loopcheckValInArray < arryFind.length; loopcheckValInArray++) {
+            if (arryFind[loopcheckValInArray] == valCheck) {
+                detect = true;
+            }
+        }
+        return detect;
+    }
+    function CheckNum() {
+
+        if ((event.keyCode < 48 || event.keyCode > 57) && event.keyCode != 46) {
+            event.returnValue = false;
+        }
+    }
 </script>

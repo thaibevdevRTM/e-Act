@@ -119,6 +119,22 @@
                     <input id="adminHCM" type="checkbox" name="model.chkRole" value="7">
                     adminHCM
                 </div>
+                <div>
+                    <input id="adminNUM" type="checkbox" name="model.chkRole" value="8">
+                    adminNUM
+                </div>
+                <div>
+                    <input id="adminPOM" type="checkbox" name="model.chkRole" value="9">
+                    adminPOM
+                </div>
+                <div>
+                    <input id="admin_CHANG_INTER" type="checkbox" name="model.chkRole" value="10">
+                    admin_CHANG_INTER
+                </div>
+                <div>
+                    <input id="adminCVM" type="checkbox" name="model.chkRole" value="11">
+                    adminCVM
+                </div>
             </div>
 
             <div id="divProductType">
@@ -344,7 +360,7 @@
 
                 if (response.Data.regionList.length > 0) {
                     $.each(response.Data.regionList, function () {
-                        $("#divRegionLists").append("<div id='" + this['Id'] + "'> <span class='pull-left close' onclick=javascript:onclickDelCusList('" + this['Id'] + "');>x</span><input type='hidden' name='model.regionList' value='" + this['Id'] + "'/>" + this['descTh'] + " <br/></div>");
+                        $("#divRegionLists").append("<div id='" + this['id'] + "'> <span class='pull-left close' onclick=javascript:onclickDelCusList('" + this['id'] + "');>x</span><input type='hidden' name='model.regionList' value='" + this['id'] + "'/>" + this['descTh'] + " <br/></div>");
                     });
                 }
 
@@ -366,7 +382,7 @@
                             break;
                     }
                 });
-               
+
                 $.each(response.Data.userLists, function () {
                     switch (this['roleId']) {
                         case '1':
@@ -389,6 +405,19 @@
                             break;
                         case '7':
                             document.getElementById("adminHCM").checked = true;
+                            break;
+                        case '8':
+                            document.getElementById("adminNUM").checked = true;
+                            break;
+
+                        case '9':
+                            document.getElementById("adminPOM").checked = true;
+                            break;
+                        case '10':
+                            document.getElementById("admin_CHANG_INTER").checked = true;
+                            break;
+                        case '11':
+                            document.getElementById("adminCVM").checked = true;
                             break;
                     }
                 });

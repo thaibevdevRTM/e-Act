@@ -7,7 +7,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer.Appcodes
@@ -21,13 +20,13 @@ namespace eActForm.BusinessLayer.Appcodes
 
         public static List<TB_Reg_Subject_Model> getSubject(string companyId)
         {
-            if(companyId == "5601") { companyId = "5600"; }
+            if (companyId == "5601") { companyId = "5600"; }
             return QueryGetSubject.getAllSubject().Where(x => x.companyId.Contains(companyId)).OrderBy(x => x.nameTH).ToList();
         }
 
         public static List<TB_Reg_FlowLimit_Model> getLimit(string subjectId)
         {
-            return QueryGetAllFlowLimit.getAllFlowLimit().Where(x =>x.subjectId.Equals(subjectId)).ToList();
+            return QueryGetAllFlowLimit.getAllFlowLimit().Where(x => x.subjectId.Equals(subjectId)).ToList();
         }
 
         public static List<TB_Act_Other_Model> getApproveShow()
@@ -86,15 +85,19 @@ namespace eActForm.BusinessLayer.Appcodes
             {
 
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteFlowApprove"
-                      , new SqlParameter[] {new SqlParameter("@flowId", model.p_flowId[0]) });
+                      , new SqlParameter[] { new SqlParameter("@flowId", model.p_flowId[0])
+                      , new SqlParameter("@empId", model.p_empGroup[0])
+                      });
                 foreach (var item in model.p_appovedGroupList)
                 {
                     result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
-                      , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
-                     ,new SqlParameter("@flowId",model.p_flowId[0])
+
+                    , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
+                    ,new SqlParameter("@flowId",model.p_flowId[0])
                     ,new SqlParameter("@empId",model.p_empIdList[i])
                     ,new SqlParameter("@approveGroupId",model.p_appovedGroupList[i])
                     ,new SqlParameter("@rangNo",model.p_rangNoList[i])
+                    ,new SqlParameter("@description",model.p_empGroup[0])
                     ,new SqlParameter("@showInDoc",model.p_isShowList[i])
                     ,new SqlParameter("@isApprove",model.p_isApproveList[i])
                     ,new SqlParameter("@delFlag",'0')
@@ -106,16 +109,13 @@ namespace eActForm.BusinessLayer.Appcodes
                     i++;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("insertFlowApprove => " + ex.Message);
             }
 
             return result;
         }
-
-
-
 
     }
 }

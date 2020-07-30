@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace eActForm.Models
 {
@@ -14,6 +11,7 @@ namespace eActForm.Models
             public string customerId { get; set; }
             public string productTypeId { get; set; }
             public string productCateId { get; set; }
+            public string companyId { get; set; }
         }
         public class RequestUsreAPI
         {
@@ -23,6 +21,16 @@ namespace eActForm.Models
             {
                 username = user;
                 password = pass;
+            }
+        }
+        public class RequestUserInfoAPI
+        {
+            public string userName { get; set; }
+            public string keyToken { get; set; }
+            public RequestUserInfoAPI(string user, string token)
+            {
+                userName = user;
+                keyToken = token;
             }
         }
         public class ResponseUserAPI
@@ -75,6 +83,10 @@ namespace eActForm.Models
             public bool isAdminOMT { get; set; }
             public bool isAdminTBM { get; set; }
             public bool isAdminHCM { get; set; }
+            public bool isAdminNUM { get; set; }
+            public bool isAdminPOM { get; set; }
+            public bool isAdminChangInter { get; set; }
+            public bool isAdminCVM { get; set; }
             public string countWatingActForm { get; set; }
             public string counteatingRepDetail { get; set; }
             public string counteatingSummaryDetail { get; set; }
@@ -84,6 +96,7 @@ namespace eActForm.Models
             public string exception { get; set; }
             public string regionId { get; set; }
             public string customerId { get; set; }
+            public string empProbationEndDate { get; set; }
         }
     }
 }

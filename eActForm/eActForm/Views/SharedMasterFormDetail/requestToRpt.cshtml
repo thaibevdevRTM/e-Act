@@ -2,6 +2,7 @@
 @using eActForm.BusinessLayer;
 @using System.Globalization;
 @using System.Configuration;
+@using eActForm.Models;
 @{
     var bu = "";
     var reqName = "";
@@ -11,11 +12,20 @@
         foreach (var item in Model.approveFlowDetail)
         {
 
-            if (item.approveGroupId == ConfigurationManager.AppSettings["approveGrouApplicant"])
+            if (item.approveGroupId == AppCode.ApproveGroup.ApplicantApp)
             {
-                reqName = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
-                pos = item.empPositionTitleTH;
-                bu = item.bu;
+                if (Model.activityFormTBMMKT.chkUseEng)
+                {
+                    reqName = (item.empFNameEN + " " + item.empLNameEN);
+                    pos = item.empPositionTitleEN;
+                    bu = item.buEN;
+                }
+                else
+                {
+                    reqName = ("คุณ" + item.empFNameTH + " " + item.empLNameTH);
+                    pos = item.empPositionTitleTH;
+                    bu = item.bu;
+                }
             }
         }
     }

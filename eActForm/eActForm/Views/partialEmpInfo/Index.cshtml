@@ -1,0 +1,107 @@
+﻿
+<div id="divExpenseCashEmpInfo">
+
+
+    <h2>พนักงาน</h2>
+    <hr />
+    <div class="row">
+
+        <div class="col-lg-3 col-3">
+            <p class="pull-right text-warning">*</p><p class="pull-right">รหัส:</p>
+        </div>
+        <div class="col-lg-3 col">
+            <input type="text" data-val="true" data-val-required="field is required." class="form-control textboxcss textRight" Style="text-align:center;" id="txtEmpId" required name="activityFormModel.empId" onchange="getEmpDetail();" />
+        </div>
+
+
+        <div class="col-lg-2 col-3">
+            <p class="pull-right">ชื่อ :</p>
+        </div>
+        <div class="col-lg-4 col">
+            <lable id="lblEmpName"></lable>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-3 col-3">
+            <p class="pull-right">ตำแหน่ง :</p>
+        </div>
+        <div class="col-lg-3 col">
+            <lable id="lblEmpPosition"></lable>
+        </div>
+        <div class="col-lg-2 col-3">
+            <p class="pull-right">หน่วยงาน :</p>
+        </div>
+        <div class="col-lg-4 col">
+            <lable id="lblDept" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-3">
+            <p class="pull-right text-warning">*</p><p class="pull-right">เบอร์ติดต่อ:</p>
+        </div>
+        <div class="col-lg-3 col">
+            <input type="text" maxlength="10" data-val="true" data-val-required="field is required." class="form-control textboxcss textRight" Style="text-align:center;" id="txtTel" required name="activityFormModel.empTel" />
+        </div>
+        <div class="col-lg-2 col-3">
+            <p class="pull-right">Email :</p>
+        </div>
+        <div class="col-lg-4 col">
+            <input type="text" class="form-control textboxcss textRight" Style="text-align:center;" id="txtEmail" name="activityFormModel.empEmail" />
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-lg-12 col-12 d-flex align-items-center">
+            <div class="col-lg-3 col-3 d-flex align-items-center"><p class="pull-right">ที่อยู่ ออกใบกำกับภาษี:</p><p class="pull-right text-warning ">*</p></div>
+            <div class="col-lg-9 col-9">
+                <input type="text" data-val="true" data-val-required="field is required." class="form-control textboxcss textRight align-bottom" style="margin-left:-10px;" id="txtAddress" name="activityFormModel.remark" />
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" name="activityFormModel.customerName" id="customerName" />
+
+</div>
+
+<script type="text/javascript">
+
+     $(document).ready(function () {
+
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        getEmpDetail();
+    });
+     function getEmpDetail() {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getEmpDetailById", "eAct")',
+            data: {
+                empId: $("#txtEmpId").val(),
+            }
+        }).done(function (response) {
+            if (response.Data != null) {
+                $("#txtEmpName").val(response.Data.empName);
+                $("#customerName").val(response.Data.empName);
+                $("#txtEmail").val(response.Data.email);
+                document.getElementById('lblEmpName').innerHTML = response.Data.empName;
+                document.getElementById('lblEmpPosition').innerHTML = response.Data.position;
+                document.getElementById('lblDept').innerHTML = response.Data.department;
+            }
+            else {
+                $("#txtEmpName").val('');
+                $("#customerName").val('');
+                $("#txtEmail").val('');
+                document.getElementById('lblEmpName').innerHTML ='';
+                document.getElementById('lblEmpPosition').innerHTML = '';
+                document.getElementById('lblDept').innerHTML = '';
+            }
+        });
+    }
+
+
+</script>
+

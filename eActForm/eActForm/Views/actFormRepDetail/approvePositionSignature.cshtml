@@ -1,5 +1,5 @@
 ﻿@model eActForm.Models.ApproveFlowModel.approveFlowModel
-
+@using System.Configuration;
 <div class="row">
     @if (Model.flowDetail != null)
     {
@@ -32,10 +32,11 @@
                     {
                         if (item.isShowInDoc)
                         {
+
                             if (item.statusId == "3")
                             {
-                                <td>
-                                    <img style="text-align:center;" width="150" height="100" src="@item.imgSignature" />
+                                <td height="85">
+                                    <img style="text-align:center;" width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@item.empId)" />
                                 </td>
                             }
                             else

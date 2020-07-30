@@ -1,13 +1,13 @@
-﻿using System;
+﻿using eActForm.BusinessLayer;
+using eActForm.Models;
+using iTextSharp.text;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
-using eActForm.BusinessLayer;
-using eActForm.Models;
-using System.Configuration;
-using iTextSharp.text;
 using static eActForm.Models.RepDetailModel;
 
 namespace eActForm.Controllers
@@ -27,7 +27,7 @@ namespace eActForm.Controllers
             {
                 SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
                 models.typeForm = typeForm;
-               // ViewBag.TypeForm = typeForm;
+                // ViewBag.TypeForm = typeForm;
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
                     if (typeForm == Activity_Model.activityType.MT.ToString())
@@ -55,8 +55,9 @@ namespace eActForm.Controllers
             DocumentsModel.actRepDetailModels models = new DocumentsModel.actRepDetailModels();
             try
             {
-                DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "MM/dd/yyyy", null);
-                DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "MM/dd/yyyy", null);
+                DateTime startDate = Request["startDate"] == null ? DateTime.Now.AddDays(-15) : DateTime.ParseExact(Request.Form["startDate"], "dd/MM/yyyy", null);
+                DateTime endDate = Request["endDate"] == null ? DateTime.Now : DateTime.ParseExact(Request.Form["endDate"], "dd/MM/yyyy", null);
+
                 models.actRepDetailLists = DocumentsAppCode.getActRepDetailLists(startDate, endDate, typeForm);
 
                 if (Request.Form["txtActivityNo"] != "")
@@ -125,6 +126,9 @@ namespace eActForm.Controllers
             {
                 var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
                 GridHtml = GridHtml.Replace("<br>", "<br/>");
+                GridHtml = GridHtml.Replace("signa\">", "\"signa\" />");
+
+
                 AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
 
                 TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
@@ -142,6 +146,11 @@ namespace eActForm.Controllers
                 }
                 var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                 var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+
+                bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
+                if (folderExists)
+                    Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)), true);
+
                 resultAjax.Success = true;
             }
             catch (Exception ex)

@@ -1,97 +1,119 @@
 ﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.BusinessLayer;
 @using System.Globalization;
+@using System.Configuration;
 @{
+    /**/
+
     CultureInfo DateThai = new CultureInfo("th-TH");
     CultureInfo DateEnglish = new CultureInfo("en-US");
 }
-<tr>
-    <td style="padding-left:8px;">
-        <div id="divHeaderDetails" runat="server" style="width: 100%;">
-            <table style="width: 100%;border-collapse:collapse;" id="tabelHeaderDetails" runat="server">
-                <tr>
-                    <td>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-xs-12">
-                                สต๊อก :
-                            </label>
-                            <div class="col-md-3 col-xs-12">
-                                <div class="row">
-                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.list_0_select, new SelectList(Model.list_0, "id", "name", ""), "", new
-                                    {
-                                        @class = "form-control selectpicker",
-                                        id = "ddlin_or_out_stock"
-                                    })
-                                    <script>
-                                        $("#ddlin_or_out_stock").change(function () {
-                                            if ($("#ddlin_or_out_stock").val() != "") {
-                                                $('#ddlproduct_pos_premium').multiselect('enable');
-                                            }
-                                            else {
-                                                $('#ddlproduct_pos_premium').multiselect('disable');
-                                            }
-                                            $('#ddlproduct_pos_premium option').each(function () {
-                                                $(this).prop('selected', false);
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr>
+        <td style="padding-left:8px;">
+            <div id="divHeaderDetails" runat="server" style="width: 100%;">
+                <table style="width: 100%;border-collapse:collapse;" id="tabelHeaderDetails" runat="server">
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-xs-12">
+                                    สต๊อก :
+                                </label>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.list_0_select, new SelectList(Model.list_0, "id", "name", ""), "", new
+                                        {
+                                            @class = "form-control selectpicker",
+                                            id = "ddlin_or_out_stock"
+                                        })
+                                        @Html.HiddenFor(m => m.activityFormTBMMKT.list_0_select)
+                                        <script>
+                                            $(document).ready(function () {
+                                                if ('@Model.activityFormModel.activityNo' == '---' || '@Model.activityFormModel.activityNo' == '') {
+                                                    $('#ddlin_or_out_stock').prop('disabled', false);
+                                                } else {
+                                                    $('#ddlin_or_out_stock').prop('disabled', true);
+                                                    if ($("#ddlin_or_out_stock").val() == '@ConfigurationManager.AppSettings["idInStock"]') {
+                                                        $('#div_ddlproduct_pos_premium').hide();
+                                                        $('#div_showData_ddlproduct_pos_premium').show();
+                                                    }
+                                                }
                                             });
-                                            $('#ddlproduct_pos_premium').multiselect('refresh');
-                                        });
-                                    </script>
+                                            $("#ddlin_or_out_stock").change(function () {
+                                                if ($("#ddlin_or_out_stock").val() != "") {
+                                                    $('#ddlproduct_pos_premium').multiselect('enable');
+                                                }
+                                                else {
+                                                    $('#ddlproduct_pos_premium').multiselect('disable');
+                                                }
+                                                $('#ddlproduct_pos_premium option').each(function () {
+                                                    $(this).prop('selected', false);
+                                                });
+                                                $('#ddlproduct_pos_premium').multiselect('refresh');
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+                                <label class="control-label col-md-3 col-xs-12">
+                                    Document Date :
+                                </label>
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @*@Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM/dd/yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", autocomplete = "off" })*@
+                                        @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateDoc", autocomplete = "off" })
+                                    </div>
                                 </div>
                             </div>
-                            <label class="control-label col-md-3 col-xs-12">
-                                Document Date :
-                            </label>
-                            <div class="col-md-4 col-xs-12">
-                                <div class="row">
-                                    @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:MM/dd/yyyy}", new { @class = "form-control textboxcss", id = "txtdateDoc", autocomplete = "off" })
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-xs-12">
-                                ขอเบิก :
-                            </label>
-                            <div class="col-md-3 col-xs-12">
-                                <div class="row">
-                                    <style>
-                                        td div span {
-                                            line-height: 0px;
-                                        }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-xs-12">
+                                    ขอเบิก :
+                                </label>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        <style>
+                                            td div span {
+                                                line-height: 0px;
+                                            }
 
-                                        .multiselect {
-                                            min-width: 262px;
-                                            text-align: left;
-                                        }
+                                            .multiselect {
+                                                min-width: 262px;
+                                                text-align: left;
+                                            }
 
-                                        .btn-group > .btn:first-child {
-                                            width: 262px;
-                                        }
+                                            .btn-group > .btn:first-child {
+                                                width: 262px;
+                                            }
 
-                                        .btn .caret {
-                                            float: right;
-                                            margin-top: 7px;
-                                            margin-right: -6px;
-                                        }
+                                            .btn .caret {
+                                                float: right;
+                                                margin-top: 7px;
+                                                margin-right: -6px;
+                                            }
 
-                                        .checkbox, .radio {
-                                            position: relative;
-                                            display: block;
-                                            min-width: 262px;
-                                        }
-                                    </style>
-                                    @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.list_1,
-                                                                                                 "id", "name"),
-                                                                                                 new
-                                                                                                 {
-                                                                                                     @class = "form-control selectpicker",
-                                                                                                     id = "ddlproduct_pos_premium",
-                                                                                                     multiple = "multiple"
-                                                                                                 })
-                                    <script>
+                                            .checkbox, .radio {
+                                                position: relative;
+                                                display: block;
+                                                min-width: 262px;
+                                            }
+                                        </style>
+                                        <div id="div_ddlproduct_pos_premium">
+                                            @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.list_1,
+                                                                                                                   "id", "name"),
+                                                                                                                   new
+                                                                                                                   {
+                                                                                                                       @class = "form-control",
+                                                                                                                       id = "ddlproduct_pos_premium",
+                                                                                                                       multiple = "multiple"
+                                                                                                                   })
+                                        </div>
+                                        <div id="div_showData_ddlproduct_pos_premium" style="display:none;">
+                                            <input type="text" id="showData_ddlproduct_pos_premium" class="form-control textboxcss" readonly="readonly"  />
+                                        </div>
+                                        <script>
                                         $(document).ready(function () {
                                             $('#ddlproduct_pos_premium').multiselect({
                                                 nonSelectedText: '                                                    ',
@@ -135,41 +157,55 @@
                                                     }
                                                 }
                                                 $("#ddlproduct_pos_premium").multiselect('select', valuesSelectChoiceFromDb);
+
+                                                var txtSelectshowData_ddlproduct_pos_premium = "";
+                                                $("#ddlproduct_pos_premium option:selected").each(function () {
+                                                    var $this = $(this);
+                                                    var loop_i = 0;
+                                                    if ($this.length) {
+                                                        txtSelectshowData_ddlproduct_pos_premium = $this.text();
+                                                        if (loop_i > 0) {
+                                                            txtSelectshowData_ddlproduct_pos_premium += ",";
+                                                        }
+                                                        loop_i += 1;
+                                                    }
+                                                });
+                                                $("#showData_ddlproduct_pos_premium").val(txtSelectshowData_ddlproduct_pos_premium);
                                             }
                                         });
-                                    </script>
+                                        </script>
+                                    </div>
+                                </div>
+                                <label class="control-label col-md-3 col-xs-12">
+                                    เพื่อ :
+                                </label>
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.list_2_select, new SelectList(Model.list_2, "id", "name", ""), "", new
+                                        {
+                                            @class = "form-control selectpicker",
+                                            id = "ddlfor"
+                                        })
+                                    </div>
                                 </div>
                             </div>
-                            <label class="control-label col-md-3 col-xs-12">
-                                เพื่อ :
-                            </label>
-                            <div class="col-md-4 col-xs-12">
-                                <div class="row">
-                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.list_2_select, new SelectList(Model.list_2, "id", "name", ""), "", new
-                                    {
-                                        @class = "form-control selectpicker",
-                                        id = "ddlfor"
-                                    })
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-xs-12">
-                                Brand/ผลิตภัณฑ์ :
-                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-xs-12">
+                                    Brand/ผลิตภัณฑ์ :
+                                </label>
 
-                            <div class="col-md-3 col-xs-12">
-                                <div class="row">
-                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.brand_select, new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", ""), "", new
-                                    {
-                                        @class = "form-control selectpicker",
-                                        id = "ddlbrand_select"
-                                    })
-                                    <script>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.brand_select, new SelectList(Model.tB_Act_ProductBrand_Model_2, "id", "brandName", ""), "", new
+                                        {
+                                            @class = "form-control selectpicker",
+                                            id = "ddlbrand_select"
+                                        })
+                                        <script>
                                         $("#ddlbrand_select").change(function () {
                                             if ($("#ddlChannelOrBrand").val() != "" && $("#ddlbrand_select").val() != "") {
                                                 var dataToBeSend =
@@ -209,37 +245,37 @@
                                                 $("#txtCostCenter").val("");
                                             }
                                         });
-                                    </script>
+                                        </script>
+                                    </div>
+                                </div>
+
+                                <label class="control-label col-md-3 col-xs-12">
+                                    Cost Center :
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.costCenter, new { @class = "form-control textboxcss", @id = "txtCostCenter", style = "", @readonly = "readonly" })
+                                    </div>
                                 </div>
                             </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-xs-12">
+                                    Channel+Region :
+                                </label>
 
-                            <label class="control-label col-md-3 col-xs-12">
-                                Cost Center :
-                            </label>
-
-                            <div class="col-md-4 col-xs-12">
-                                <div class="row">
-                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.costCenter, new { @class = "form-control textboxcss", @id = "txtCostCenter", style = "", @readonly = "readonly" })
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-xs-12">
-                                Channel+Region :
-                            </label>
-
-                            <div class="col-md-3 col-xs-12">
-                                <div class="row">
-                                    @Html.DropDownListFor(x => x.activityFormTBMMKT.list_3_select, new SelectList(Model.list_3, "id", "name", ""), "", new
-                                    {
-                                        @class = "form-control selectpicker",
-                                        id = "ddlchannel_place"
-                                    })
-                                    <script>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        @Html.DropDownListFor(x => x.activityFormTBMMKT.list_3_select, new SelectList(Model.list_3, "id", "name", ""), "", new
+                                        {
+                                            @class = "form-control selectpicker",
+                                            id = "ddlchannel_place"
+                                        })
+                                        <script>
                                         $("#ddlchannel_place").change(function () {
                                             if ($("#ddlchannel_place").val() != "") {
                                                 var dataToBeSend =
@@ -273,130 +309,132 @@
                                                 $("#txtchannelRegionName").val("");
                                             }
                                         });
-                                    </script>
+                                        </script>
+                                    </div>
+                                </div>
+
+                                <label class="control-label col-md-3 col-xs-12">
+                                    Channel+Region Name:
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.channelRegionName, new { @class = "form-control textboxcss", @id = "txtchannelRegionName", style = "", @readonly = "readonly" })
+                                    </div>
                                 </div>
                             </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-xs-12">
+                                    GL No. :
+                                </label>
 
-                            <label class="control-label col-md-3 col-xs-12">
-                                Channel+Region Name:
-                            </label>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.glNo, new { @class = "form-control textboxcss", @id = "txtglNo", style = "", @readonly = "readonly" })
+                                    </div>
+                                </div>
 
-                            <div class="col-md-4 col-xs-12">
-                                <div class="row">
-                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.channelRegionName, new { @class = "form-control textboxcss", @id = "txtchannelRegionName", style = "", @readonly = "readonly" })
+                                <label class="control-label col-md-3 col-xs-12">
+                                    GL Name:
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.glName, new { @class = "form-control textboxcss", @id = "txtglName", style = "", @readonly = "readonly" })
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-xs-12">
-                                GL No. :
-                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-xs-12">
+                                    ให้แก่(ชื่อผู้รับ) :
+                                </label>
 
-                            <div class="col-md-3 col-xs-12">
-                                <div class="row">
-                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.glNo, new { @class = "form-control textboxcss", @id = "txtglNo", style = "", @readonly = "readonly" })
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toName, new { @class = "form-control textboxcss", @id = "txttoName", style = "" })
+                                    </div>
+                                </div>
+
+                                <label class="control-label col-md-3 col-xs-12">
+                                    โทรศัพท์/โทรสาร
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txttoContact", style = "" })
+                                    </div>
                                 </div>
                             </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-xs-12">
+                                    หมายเหตุ วันที่ส่งมอบ :
+                                </label>
 
-                            <label class="control-label col-md-3 col-xs-12">
-                                GL Name:
-                            </label>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        @*@Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM/dd/yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "", placeholder = "", autocomplete = "off" })*@
+                                        @Html.TextBox("activityFormModel.activityPeriodStStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "", placeholder = "", autocomplete = "off" })
+                                    </div>
+                                </div>
 
-                            <div class="col-md-4 col-xs-12">
-                                <div class="row">
-                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.glName, new { @class = "form-control textboxcss", @id = "txtglName", style = "", @readonly = "readonly" })
+                                <label class="control-label col-md-3 col-xs-12">
+                                    รายละเอียดผู้ติดต่อ
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, new { @class = "form-control textboxcss", @id = "txtdetailContact", style = "" })
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-xs-12">
-                                ให้แก่(ชื่อผู้รับ) :
-                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-xs-12">
+                                    ที่อยู่ :
+                                </label>
 
-                            <div class="col-md-3 col-xs-12">
-                                <div class="row">
-                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toName, new { @class = "form-control textboxcss", @id = "txttoName", style = "" })
+                                <div class="col-md-10 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toAddress, new { @class = "form-control textboxcss", @id = "txttoAddress" })
+                                    </div>
                                 </div>
                             </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-xs-12">
+                                    วัตถุประสงค์ที่ขอเบิก :
+                                </label>
 
-                            <label class="control-label col-md-3 col-xs-12">
-                                โทรศัพท์/โทรสาร
-                            </label>
-
-                            <div class="col-md-4 col-xs-12">
-                                <div class="row">
-                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toContact, new { @class = "form-control textboxcss", @id = "txttoContact", style = "" })
+                                <div class="col-md-10 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextAreaFor(x => x.activityFormTBMMKT.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-xs-12">
-                                หมายเหตุ วันที่ส่งมอบ :
-                            </label>
+                        </td>
+                    </tr>
 
-                            <div class="col-md-3 col-xs-12">
-                                <div class="row">
-                                    @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:MM/dd/yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", style = "", placeholder = "" ,autocomplete = "off" })
-                                </div>
-                            </div>
+                </table>
 
-                            <label class="control-label col-md-3 col-xs-12">
-                                รายละเอียดผู้ติดต่อ
-                            </label>
-
-                            <div class="col-md-4 col-xs-12">
-                                <div class="row">
-                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.detailContact, new { @class = "form-control textboxcss", @id = "txtdetailContact", style = "" })
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-xs-12">
-                                ที่อยู่ :
-                            </label>
-
-                            <div class="col-md-10 col-xs-12">
-                                <div class="row">
-                                    @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.toAddress, new { @class = "form-control textboxcss", @id = "txttoAddress" })
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-xs-12">
-                                วัตถุประสงค์ที่ขอเบิก :
-                            </label>
-
-                            <div class="col-md-10 col-xs-12">
-                                <div class="row">
-                                    @Html.TextAreaFor(x => x.activityFormModel.objective, new { @class = "form-control textboxcss", @id = "txtObjective" })
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-
-            </table>
-
-        </div>
-    </td>
-</tr>
+            </div>
+        </td>
+    </tr>
+</table>

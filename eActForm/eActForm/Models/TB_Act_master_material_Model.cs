@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace eActForm.Models
+﻿namespace eActForm.Models
 {
     public class TB_Act_master_material_Model : ActBaseModel
     {

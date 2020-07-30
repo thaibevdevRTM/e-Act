@@ -1,0 +1,64 @@
+﻿@*@model eActForm.Models.ApproveModel.approveModels*@
+@using System.Configuration;
+@using eActForm.Models;
+@{
+
+    var rootPathWeb = "./";
+    var urlImg1 = "";
+    var urlImg2 = "";
+
+    if (Model.approveDetailLists.Count > 0)
+    {
+        if (Model.approveDetailLists[0].statusId == Convert.ToString((int)AppCode.ApproveStatus.อนุมัติ))
+        {
+            urlImg1 = rootPathWeb + "images/check_b.png";
+            urlImg2 = rootPathWeb + "images/check.png";
+        }
+        else if (Model.approveDetailLists[0].statusId == Convert.ToString(((int)AppCode.ApproveStatus.ไม่อนุมัติ)))
+        {
+            urlImg1 = rootPathWeb + "images/check.png";
+            urlImg2 = rootPathWeb + "images/check_b.png";
+        }
+        else
+        {
+            urlImg1 = rootPathWeb + "images/check.png";
+            urlImg2 = rootPathWeb + "images/check.png";
+        }
+    }
+    else
+    {
+        urlImg1 = rootPathWeb + "images/check.png";
+        urlImg2 = rootPathWeb + "images/check.png";
+    }
+}
+
+
+<table class="tablethin fontDocSmall " style="width:100%; text-align:center;" border="1" cellpadding="2" cellspacing="0">
+    <tr style="height:25px;">
+        <td colspan="4" style=" text-align:left; border-bottom:0px;">
+            <div class=" fontDocSmall " style="padding-left:5em;">
+                <b>คำรับรองของผู้บังคับบัญชา</b>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr style="height:20px;">
+        <td style="width: 15%;text-align:right; border-top:0px;  border-right:0px;">
+            <img width="10px" height="10px" src="@urlImg1" />
+        </td>
+
+        <td style="width: 30%;text-align:left;  border-top:0px;border-right:0px; border-left:0px;">
+            ขอรับรองว่าปฏิบัติงานจริง
+        </td>
+        <td style="width: 5%;text-align:right; border-top:0px;border-right:0px;  border-left:0px;">
+            <img width="10px" height="10px" src="@urlImg2" />
+        </td>
+        <td style="width: 60%; text-align:left; border-top:0px; border-left:0px; ">
+            อื่น.........................................
+        </td>
+    </tr>
+
+
+</table>
+<div style="height:15px;"></div>

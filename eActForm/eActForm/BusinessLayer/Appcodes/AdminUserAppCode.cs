@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer.Appcodes
@@ -52,7 +51,7 @@ namespace eActForm.BusinessLayer.Appcodes
         }
 
 
-        public static int insertAuthorized(string empId, string companyId ,string customerId, string productTypeId,string regionId)
+        public static int insertAuthorized(string empId, string companyId, string customerId, string productTypeId, string regionId)
         {
             int result = 0;
             try
@@ -103,7 +102,7 @@ namespace eActForm.BusinessLayer.Appcodes
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserRoleByEmpId"
                     , new SqlParameter[] { new SqlParameter("@empId", empId) });
-            var lists = (from DataRow dr in ds.Tables[0].Rows
+                var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new AdminUserModel.User()
                              {
                                  empId = dr["empId"].ToString(),
@@ -146,7 +145,7 @@ namespace eActForm.BusinessLayer.Appcodes
 
         public static List<TB_Act_Other_Model> getCompany()
         {
-            return QueryOtherMaster.getOhterMaster("company", "");
+            return QueryGetMessage.getOtherByType("company");
         }
     }
 }

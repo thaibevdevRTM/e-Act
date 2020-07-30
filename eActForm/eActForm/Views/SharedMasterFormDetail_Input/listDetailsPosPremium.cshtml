@@ -1,51 +1,53 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
-<tr style="border-bottom:none;">
-    <td style="padding-left:30px;">
-        <style>
-            .suggesstion_box {
-                float: left;
-                list-style: none;
-                margin-top: -3px;
-                padding: 0;
-                width: 190px;
-                position: absolute;
-            }
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr style="border-bottom:none;">
+        <td style="padding-left:30px;">
+            <style>
+                .suggesstion_box {
+                    float: left;
+                    list-style: none;
+                    margin-top: -3px;
+                    padding: 0;
+                    width: 190px;
+                    position: absolute;
+                }
 
-           .suggesstion_box li {
-               padding: 10px;
-               background: #ffffff;
-               border-bottom: #bbb9b9 1px solid;
-           }
+                    .suggesstion_box li {
+                        padding: 10px;
+                        background: #ffffff;
+                        border-bottom: #bbb9b9 1px solid;
+                    }
 
-            .suggesstion_box li:hover {
-                background: #feffb8;
-                cursor: pointer;
-            }
-        </style>
-        <div style="height:5px;"></div>
-        <div id="divHeaderDetails" runat="server" style="width: 100%;padding-left:5px;padding-right:15px;">
-            <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelFormDetails" >
-                <tr style="background-color:#2f74b5;color:white;height:25px;">
-                    <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ที่</th>
-                    <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รหัสสินค้า</th>
-                    <th style="width: 40%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายการ</th>
-                    <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
-                    <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วย</th>
-                    <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
-                    <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หมายเหตุ</th>
-                </tr>
-                @{ var index = 0;}
-                @foreach (var item in Model.costThemeDetailOfGroupByPriceTBMMKT)
-                {
-                    <tr class="tagCountRowinTable">
-                        <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@(index+1)" id="costThemeDetailOfGroupByPriceTBMMKT[@index].rowNo" name="costThemeDetailOfGroupByPriceTBMMKT[@index].rowNo" class="form-control textboxcss clstxtIO" readonly="readonly" style="text-align:center;" />
-                        </td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.productId" id="costThemeDetailOfGroupByPriceTBMMKT[@index].productId" name="costThemeDetailOfGroupByPriceTBMMKT[@index].productId" class="form-control textboxcss txtInTable_productId_@index" />
-                            <div id="suggesstion_box_@index" class="suggesstion_box"></div>
-                            <script>
+                        .suggesstion_box li:hover {
+                            background: #feffb8;
+                            cursor: pointer;
+                        }
+            </style>
+            <div style="height:5px;"></div>
+            <div id="divHeaderDetails" runat="server" style="width: 100%;padding-left:5px;padding-right:15px;">
+                <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;" id="tabelFormDetails">
+                    <tr style="background-color:#2f74b5;color:white;height:25px;">
+                        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;">ที่</th>
+                        <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รหัสสินค้า</th>
+                        <th style="width: 30%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">รายการ</th>
+                        <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">จำนวน</th>
+                        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หน่วย</th>
+                        <th style="width: 10%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">ราคาต่อหน่วย(บาท)</th>
+                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">IO</th>
+                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">หมายเหตุ</th>
+                    </tr>
+                    @{ var index = 0;}
+                    @foreach (var item in Model.activityOfEstimateList)
+                    {
+                <tr class="tagCountRowinTable">
+                    <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;text-align:center;">
+                        <input type="text" value="@(index+1)" id="activityOfEstimateList[@index].rowNo" name="activityOfEstimateList[@index].rowNo" class="form-control textboxcss clstxtIO" readonly="readonly" style="text-align:center;" />
+                    </td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <input type="text" value="@item.productId" id="activityOfEstimateList[@index].productId" name="activityOfEstimateList[@index].productId" class="form-control textboxcss txtInTable_productId_@index" />
+                        <div id="suggesstion_box_@index" class="suggesstion_box"></div>
+                        <script>
                                 $(".txtInTable_productId_@index").keyup(function () {
                                     var v_select_tB_Act_master_list_choice_id = "";
                                     $('#ddlproduct_pos_premium option:selected').each(function () {
@@ -97,91 +99,96 @@
                                         selectData("@index", "", "","");
                                     }
                                 });
-                            </script>
-                        </td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.productDetail" id="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" name="costThemeDetailOfGroupByPriceTBMMKT[@index].productDetail" class="form-control textboxcss txtInTable_productDetail_@index" readonly="readonly" />
-                        </td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="hidden" value="@item.unit" id="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" name="costThemeDetailOfGroupByPriceTBMMKT[@index].unit" class="form-control textboxcss text-right hidunit_@index" />
-                            @Html.TextBoxFor(x => item.unit, "{0:n0}", new { @id = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].unit", Name = "costThemeDetailOfGroupByPriceTBMMKT[" + index + "].unit", @class = "form-control textboxcss text-center txtunit_" + index })
-                            <script>
+                        </script>
+                    </td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <input type="text" value="@item.productDetail" id="activityOfEstimateList[@index].productDetail" name="activityOfEstimateList[@index].productDetail" class="form-control textboxcss txtInTable_productDetail_@index" readonly="readonly" />
+                    </td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <input type="hidden" value="@item.unit" id="activityOfEstimateList[@index].unit" name="activityOfEstimateList[@index].unit" class="form-control textboxcss text-right hidunit_@index" />
+                        @Html.TextBoxFor(x => item.unit, "{0:n0}", new { @id = "activityOfEstimateList[" + index + "].unit", Name = "activityOfEstimateList[" + index + "].unit", @class = "form-control textboxcss text-center txtunit_" + index })
+                        <script>
                             $(".txtunit_@index").blur(function () {
                                     sumall();
                                 });
-                            </script>
-                        </td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.QtyName" id="costThemeDetailOfGroupByPriceTBMMKT[@index].QtyName" name="costThemeDetailOfGroupByPriceTBMMKT[@index].QtyName" class="form-control textboxcss txtInTable_QtyName_@index" readonly="readonly" />
-                        </td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.IO" id="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" name="costThemeDetailOfGroupByPriceTBMMKT[@index].IO" class="form-control textboxcss txtInTable_IO_@index" />
-                        </td>
-                        <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            <input type="text" value="@item.remark" id="costThemeDetailOfGroupByPriceTBMMKT[@index].remark" name="costThemeDetailOfGroupByPriceTBMMKT[@index].remark" class="form-control textboxcss txtInTable_remark_@index" />
-                        </td>
-                    </tr>
-                    index++;
-                }
-                <tr style="height:34px;">
-                    <td colspan="3" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                        รวม&nbsp;
+                        </script>
                     </td>
-                    <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;">
-                        <label id="totalEstimate" type="text" style="padding-top:5px;" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###")</label>&nbsp;
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <input type="text" value="@item.QtyName" id="activityOfEstimateList[@index].QtyName" name="activityOfEstimateList[@index].QtyName" class="form-control textboxcss txtInTable_QtyName_@index" readonly="readonly" />
                     </td>
-                    <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
-                    <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
-                    <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        @Html.TextBoxFor(x => item.unitPriceDisplay, new { @id = "activityOfEstimateList[" + index + "].unitPriceDisplay", Name = "activityOfEstimateList[" + index + "].unitPriceDisplay", @class = "form-control textboxcss text-right txtunitPriceDisplay__" + index })
+                    </td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <input type="text" value="@item.IO" id="activityOfEstimateList[@index].IO" name="activityOfEstimateList[@index].IO" class="form-control textboxcss txtInTable_IO_@index" />
+                    </td>
+                    <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                        <input type="text" value="@item.remark" id="activityOfEstimateList[@index].remark" name="activityOfEstimateList[@index].remark" class="form-control textboxcss txtInTable_remark_@index" />
+                    </td>
                 </tr>
-            </table>
-            <script>
-                function clearDataInTable() {
-                    var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
-                    for (i = 0; i < rowCount; i++) {
-                        $(".txtInTable_productId_" + i.toString()).val("");
-                        $(".txtInTable_productDetail_" + i.toString()).val("");
-                        $(".txtunit_" + i.toString()).val("0");
-                        $("#totalEstimate").text("0");
-                        $(".txtInTable_QtyName_" + i.toString()).val("");
-                        $(".txtInTable_IO_" + i.toString()).val("");
-                        $(".txtInTable_remark_" + i.toString()).val("");
+                        index++;
                     }
-                }
-                function sumall() {
-                    var totalAll = 0.00;
-                    var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
+                    <tr style="height:34px;">
+                        <td colspan="3" style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                            รวม&nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:center;">
+                            <label id="totalEstimate" type="text" style="padding-top:5px;" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###")</label>&nbsp;
+                        </td>
+                        <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
+                        <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
+                        <td style="border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:left;">&nbsp;</td>
+                    </tr>
+                </table>
+                <script>
+                    function clearDataInTable() {
+                        var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
+                        for (i = 0; i < rowCount; i++) {
+                            $(".txtInTable_productId_" + i.toString()).val("");
+                            $(".txtInTable_productDetail_" + i.toString()).val("");
+                            $(".txtunit_" + i.toString()).val("0");
+                            $("#totalEstimate").text("0");
+                            $(".txtInTable_QtyName_" + i.toString()).val("");
+                            $(".txtunitPriceDisplay__" + i.toString()).val("");
+                            $(".txtInTable_IO_" + i.toString()).val("");
+                            $(".txtInTable_remark_" + i.toString()).val("");
+                        }
+                    }
+                    function sumall() {
+                        var totalAll = 0.00;
+                        var rowCount = parseInt($('#tabelFormDetails tr.tagCountRowinTable').length);
 
-                    for (i = 0; i < rowCount; i++) {
-                        var rowunit = parseFloat($(".txtunit_" + i.toString()).val().replace(",", ""));
-                        $(".hidunit_" + i.toString()).val(rowunit.toFixed(0));
-                        totalAll = totalAll + rowunit;
+                        for (i = 0; i < rowCount; i++) {
+                            var rowunit = parseFloat($(".txtunit_" + i.toString()).val().replaceAll(",", ""));
+                            $(".hidunit_" + i.toString()).val(rowunit.toFixed(0));
+                            totalAll = totalAll + rowunit;
+                        }
+
+                        $("#totalEstimate").text(totalAll.format());
                     }
 
-                    $("#totalEstimate").text(totalAll.format());
-                }
+                    //======format text curency=========================
+                    Number.prototype.format = function (n, x) {
+                        var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+                        return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+                    };
+                    //[Example Use]
+                    //1234..format();           // "1,234"
+                    //12345..format(2);         // "12,345.00"
+                    //123456.7.format(3, 2);    // "12,34,56.700"
+                    //123456.789.format(2, 4);  // "12,3456.79"
+                    //=======END=====format text curency============
 
-                //======format text curency=========================
-                Number.prototype.format = function (n, x) {
-                    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
-                    return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
-                };
-                //[Example Use]
-                //1234..format();           // "1,234"
-                //12345..format(2);         // "12,345.00"
-                //123456.7.format(3, 2);    // "12,34,56.700"
-                //123456.789.format(2, 4);  // "12,3456.79"
-                //=======END=====format text curency============
-
-                function selectData(indexObj, material, materialDescription, QtyName) {
-                    $(".txtInTable_productId_" + indexObj).val(material);
-                    $(".txtInTable_productDetail_" + indexObj).val(materialDescription);
-                    $(".txtInTable_productDetail_" + indexObj).attr('title', materialDescription)
-                    $(".txtInTable_QtyName_" + indexObj).val(QtyName);
-                    $(".txtInTable_QtyName_" + indexObj).attr('title', QtyName)
-                    $("#suggesstion_box_" + indexObj).hide(); 
-                }
-            </script>
-        </div>
-    </td>
-</tr>
+                    function selectData(indexObj, material, materialDescription, QtyName) {
+                        $(".txtInTable_productId_" + indexObj).val(material);
+                        $(".txtInTable_productDetail_" + indexObj).val(materialDescription);
+                        $(".txtInTable_productDetail_" + indexObj).attr('title', materialDescription)
+                        $(".txtInTable_QtyName_" + indexObj).val(QtyName);
+                        $(".txtInTable_QtyName_" + indexObj).attr('title', QtyName)
+                        $("#suggesstion_box_" + indexObj).hide();
+                    }
+                </script>
+            </div>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,424 @@
+﻿@using eActForm.BusinessLayer;
+@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.Models;
+@using System.Configuration;
+
+<style>
+    .cssLabel {
+        text-align: right;
+        background-color: transparent;
+        border-color: transparent;
+    }
+</style>
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+
+    <tr style="border-bottom:none;">
+        <td>
+            <div id="divExpensesMed" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
+
+                <table class="table table-bordered" id="tabelExpensesMed" runat="server">
+                    <tr style="background-color:#E5E2E2;height:25px; ">
+                        <th colspan="4" style="text-align :center;">
+                            ขอเบิกเงินค่ารักษาพยาบาลตามรายการดังนี้
+                        </th>
+                    </tr>
+                    @*  <tr>
+                            <th style="text-align :center;"> สถานพยาบาลที่ไปตรวจรักษา</th>
+                            <th colspan="2" style="text-align :center;">
+
+                                @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].hospName, new
+                               {
+                                        id = "txthospName_0",
+                                   @class = "form-control textboxcss font10  text-center  expenseList",
+                                   name = "expensesDetailModel.costDetailLists[0].hospName",
+                                   onkeyup = "autocompleDetail(this,0)"
+                               })
+
+                            </th>
+                        </tr> *@
+                    <tr>
+                        <th colspan="4" style="text-align :center;">
+                            <div class="form-group">
+                                <div class="col-md-10 col-xs-12">
+                                    <div class="row">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
+                                            สถานพยาบาลที่ไปตรวจรักษา  :
+                                        </label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].hospName, new
+                                           {
+                                                    id = "txthospName_0",
+                                               @class = "form-control textboxcss font10  text-left  expenseList",
+                                               name = "expensesDetailModel.costDetailLists[0].hospName",
+                                               onkeyup = "autocompleDetail(this,0)"
+                                           })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-xs-12">
+                                    <div class="row"></div>
+                                </div>
+                            </div>
+
+                            @*<div class="form-group">
+                                    <div class="col-md-10 col-xs-12">
+                                        <div class="row">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lblEmpId">
+                                                รหัสบัญชี :
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].glCode, new
+                                           {
+                                               @class = "form-control textboxcss ",
+                                               id = "txtGlCode_0",
+                                               name = "expensesDetailModel.costDetailLists[0].glCode",
+                                               style = "",
+                                               @readonly = true
+                                           })
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-xs-12">
+                                        <div class="row"></div>
+                                    </div>
+                                </div>*@
+                        </th>
+                    </tr>
+
+                    <tr style="height:25px;">
+
+
+                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            วันที่ที่รักษา
+                        </th>
+                        <th style="width: 57%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            เจ็บป่วยเนื่องจาก
+                        </th>
+                        <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            รหัสบัญชี<br />
+                            <lable style="color:red;font-size:7pt;">
+                                *สำหรับบัญชีเท่านั้น
+                            </lable>
+                        </th>
+                        <th style="width: 15%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            จำนวนเงินตามใบเสร็จ
+                        </th>
+                    </tr>
+                    @{ var index = 0;}
+                    @foreach (var item in Model.expensesDetailModel.costDetailLists)
+                    {
+
+                        <tr class="tagCountRowinTable">
+
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
+
+                                @Html.TextBox("expensesDetailModel.costDetailLists[" + index + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.expensesDetailModel.costDetailLists[index].date, ConfigurationManager.AppSettings["formatDateUse"]), new
+                           {
+                               @class = "form-control textboxcss font10  text-center datepicker",
+                               id = "txtDateInput_" + index,
+                               autocomplete = "off"
+                           })
+                            </td>
+
+
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
+                                @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[index].detail, new
+                                {
+                                    @class = "form-control textboxcss ",
+                                    id = "txtdetail_" + index,
+                                    name = "expensesDetailModel.costDetailLists[" + index + "].detail",
+                                    style = ""
+                                })
+
+                            </td>
+
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @if (index == 0)
+                                {
+                                    @Html.TextBoxFor(x => x.expensesDetailModel.costDetailLists[0].glCode, new
+                                   {
+                                       @class = "form-control textboxcss ",
+                                       id = "txtGlCode_0",
+                                       name = "expensesDetailModel.costDetailLists[0].glCode",
+                                       style = "",
+                                       @readonly = true
+                                   })
+                                }
+                            </td>
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+
+
+                                <input type="text" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" onKeyPress="CheckNum()" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" />
+                                <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss text-right hdTotal_@index " />
+                                <input type="hidden" value="1" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" class="form-control textboxcss text-center " />
+                                <input type="hidden" value="@item.hospId" id="hdHospId_@index" name="expensesDetailModel.costDetailLists[@index].hospId" class="form-control textboxcss" />
+
+
+                                <script>
+
+
+
+                                    $("#txtUnitPrice_@index").blur(function () {
+
+
+                                            var v_unitRow = 0.00;
+                                            var v_unitpriceRow = 0.00;
+                                            var v_totalRow = 0.00;
+
+                                            if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
+                                            if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
+                                                v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
+                                            }
+                                            if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
+                                                v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
+
+                                                //var v_unitRow = 0.00;
+
+                                            }
+                                            v_totalRow = (v_unitRow * v_unitpriceRow);
+
+                                        $("#hdTotal_@index").val(v_totalRow.toFixed(2));
+                                        $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                                            sumall();
+                                        });
+
+                                    $("#txtUnit_@index").blur(function () {
+
+
+                                            var v_unitRow = 0.00;
+                                            var v_unitpriceRow = 0.00;
+                                            var v_totalRow = 0.00;
+                                            if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
+                                            if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
+                                                v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
+                                            }
+                                            if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
+                                                v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
+
+                                            }
+                                            v_totalRow = (v_unitRow * v_unitpriceRow);
+
+                                        $("#hdTotal_@index").val(v_totalRow.toFixed(2));
+                                        $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                                            sumall();
+                                        });
+
+                                </script>
+                            </td>
+                        </tr>
+                        index++;
+                    }
+                    <tr>
+                        <td colspan="3" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                            <b> จำนวนเงินรวม(บาท)</b>&nbsp;
+                        </td>
+                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                            @* <label id="totalEstimate" type="text" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###.00")</label>&nbsp;*@
+
+                            <label id="totalEstimate" type="text" readonly="readonly"></label>&nbsp;
+
+                        </td>
+                    </tr>
+                </table>
+
+
+                <table class="table table-bordered" runat="server">
+                    <tr>
+                        <td style="text-align:right">
+                            <div class="form-group">
+                                <label class="col-md-9 col-xs-12"> ค่ารักษาพยาบาลตามระเบียบบริษัทฯจากที่จ่ายจริงจำนวน</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        <label id="lblPercent">0</label>
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.hospPercent, new { @id = "hdPercent" }) %
+
+                                    </div>
+                                </div>
+                                @*<label class="col-md-3 col-xs-12">  </label>*@
+
+                                <label class="col-md-9 col-xs-12">เป็นจำนวนเงิน</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        <label id="lblAmount">0</label>
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amount, new { @id = "hdAmount" }) บาท
+                                    </div>
+                                </div>
+                                @*<label class="col-md-3 col-xs-12">  </label>*@
+
+                                <label class="col-md-9 col-xs-12">วงเงินช่วยเหลือค่ารักษาพยาบาลตามระดับ ปีละ</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        <label id="lblLimit">0</label>
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountLimit, new { @id = "hdLimit" }) บาท
+                                    </div>
+                                </div>
+                                @*<label class="col-md-3 col-xs-12"> บาท </label>*@
+
+                                <label class="col-md-9 col-xs-12">วงเงินใช้ไปสะสมยกมา</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        <label id="lblCumulative">0</label>
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountCumulative, new { @id = "hdCumulative" }) บาท
+                                    </div>
+                                </div>
+                                @*<label class="col-md-3 col-xs-12"> บาท </label>*@
+
+                                <label class="col-md-9 col-xs-12">คงเหลือสิทธิในการเบิกค่ารักษาพยาบาล</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        <label id="lblBalance">0</label>
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountBalance, new { @id = "hdBalance" }) บาท
+                                    </div>
+                                </div>
+                                @*<label class="col-md-3 col-xs-12"> บาท </label>*@
+
+                                <label class="col-md-9 col-xs-12">จำนวนเงินที่พนักงานได้รับทั้งสิ้น</label>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="row">
+                                        <label id="lblReceived">0.00</label>
+                                        @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.amountReceived, new { @id = "hdReceived" }) บาท
+                                    </div>
+                                </div>
+                                @*<label class="col-md-3 col-xs-12"> บาท</label>*@
+
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
+                @Html.HiddenFor(x => x.tB_Act_ActivityForm_DetailOther.SubjectId, new { @id = "hdSubjectId" })
+
+
+
+                <script>
+
+                    function sumall() {
+                        var totalAll = 0.00;
+                        var rowCount = '@Model.expensesDetailModel.costDetailLists.Count';
+
+                        for (i = 0; i < rowCount; i++) {
+                            var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
+                            totalAll = totalAll + rowtotal;
+                        }
+                        $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#totalEstimate").val(totalAll);
+                        calAmount();
+                    }
+                    sumall();
+
+
+                    function autocompleDetail(i, index) {
+                        console.log(i.id);
+                        $("#" + i.id).autocomplete({
+                            source: function (request, response) {
+                                $.ajax({
+                                    url: '@Url.Action("getAllHospital", "eAct")',
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        text: $("#" + i.id).val(),
+                                    },
+                                    success: function (data) {
+                                        response($.map(data, function (item) {
+                                            return { label: item.hospNameTH, value: item.hospNameTH, id: item.id, chk: item.percentage };
+                                        }))
+                                    }
+                                })
+                            },
+                            minLength: 0,
+                            messages: {
+                                noResults: '',
+                                results: function (resultsCount) {
+                                }
+                            }, select: function (event, ui) {
+                                //alert(ui.item.chk);
+                                // $("#" + i.id).val(ui.item.id)i.id + "/" + ui.item.label + "/" + i.label + "/" + i.value + "/" +
+                                //$("#lblPercent").val(ui.item.chk);
+                                $("#hdPercent").val(ui.item.chk);
+                                document.getElementById('lblPercent').innerHTML = ui.item.chk;
+                                $("#hdHospId_" + index).val(ui.item.id);
+                                calAmount();
+                            }
+                        }).focus(function () {
+                            $(this).data("uiAutocomplete").search($(this).val());
+                        });
+                    }
+
+                    function calAmount() {
+                        var total = $("#totalEstimate").val().replace(",", "");
+                        var per = $("#hdPercent").val().replace(",", "");
+                        var amount = 0.00;
+                        if (total != "" && per != "") {
+                            amount = parseFloat(total) * (parseFloat(per) / 100);
+                            $("#lblAmount").text(amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                            $("#hdAmount").val(amount);
+                            calReceived();
+                        } else {
+                            $("#lblAmount").val(0);
+                            $("#lblAmount").text("0.00");
+                        }
+                    }
+
+                    function calReceived() {
+                        var received = 0.00;
+                        var balance = parseFloat($("#hdBalance").val().replace(",", ""));
+                        var amount = parseFloat($("#hdAmount").val().replace(",", ""));
+                        if (amount > balance) {
+                            received = balance;
+                        } else {
+                            received = amount;
+                        }
+                        $("#lblReceived").text(received.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#hdReceived").val(received);
+                    }
+
+                $(function () {
+                    $('#txtdateMed').datetimepicker({
+                        language: 'th',
+                        format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]',
+                        weekStart: 1,
+                        todayBtn: 1,
+                        autoclose: 1,
+                        todayHighlight: 1,
+                        startView: 2,
+                        minView: 2,
+                        forceParse: 0
+                    });
+
+
+                    if ('@Model.activityFormTBMMKT.mode' =='@AppCode.Mode.edit.ToString()') {
+
+                        var percent = @Model.tB_Act_ActivityForm_DetailOther.hospPercent;
+                        var amount = parseFloat(@Model.tB_Act_ActivityForm_DetailOther.amount);
+                        var limit = parseFloat(@Model.tB_Act_ActivityForm_DetailOther.amountLimit);
+                        var cumulative = parseFloat(@Model.tB_Act_ActivityForm_DetailOther.amountCumulative);
+                        var balance = parseFloat(@Model.tB_Act_ActivityForm_DetailOther.amountBalance);
+                        var received = parseFloat(@Model.tB_Act_ActivityForm_DetailOther.amountReceived);
+
+                        $("#lblPercent").text(percent);
+                        $("#hdPercent").val(percent);
+                        $("#lblAmount").text(amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#hdAmount").val(amount);
+                        $("#lblLimit").text(limit.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#hdLimit").val(limit);
+                        $("#lblCumulative").text(cumulative.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#hdCumulative").val(cumulative);
+                        $("#lblBalance").text(balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#hdBalance").val(balance);
+                        $("#lblReceived").text(received.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#hdReceived").val(received);
+                    }
+                });
+
+                </script>
+            </div>
+        </td>
+    </tr>
+</table>
+

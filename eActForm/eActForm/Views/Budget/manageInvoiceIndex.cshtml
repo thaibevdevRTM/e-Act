@@ -1,68 +1,61 @@
 ﻿@using eActForm.BusinessLayer
 @model eActForm.Models.Budget_Activity_Model
 @{
-	ViewBag.Title = "Index";
-	Layout = "~/Views/Shared/_Layout.cshtml";
-
-	//var var_urlUploadfilesBudget = System.Configuration.ConfigurationManager.AppSettings["urlUploadfilesBudget"].ToString();
-	var var_companyEN = Request.QueryString["typeForm"];
+    //update 21-04-2020
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var var_companyEN = Request.QueryString["typeForm"];
 }
 
-<script src="~/Scripts/jquery-1.11.2.min.js"></script>
+
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
 
-<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
-<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-
-<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-ui.js"></script>
 
 <style type="text/css">
 
-	.font8 {
-		font-size: 8px;
-	}
 
-	.font10 {
-		font-size: 10px;
-	}
+    .font8 {
+        font-size: 8px;
+    }
 
-	.textRight {
-		text-align: right;
-	}
+    .font10 {
+        font-size: 10px;
+    }
 
-	.textLeft {
-		text-align: left;
-	}
+    .textRight {
+        text-align: right;
+    }
 
-	.inner {
-		display: inline-block;
-	}
+    .textLeft {
+        text-align: left;
+    }
 
-	#outer {
-		width: 100%;
-		text-align: center;
-	}
+    .inner {
+        display: inline-block;
+    }
+
+    #outer {
+        width: 100%;
+        text-align: center;
+    }
 </style>
 
 
 @Html.HiddenFor(x => UtilsAppCode.Session.User.empId, new { @id = "hd_createUserId" })
 
 <div class="alert alert-success" role="alert">
-	<h4 class="alert-heading">รายการใบแจ้งหนี้ (Invoice)</h4>
-	<p></p>
+    <h4 class="alert-heading">รายการใบแจ้งหนี้ (Invoice)</h4>
+    <p></p>
 </div>
 
 
 <div class="row">
-	<div class="col-md-12">
-		<div id="divManageInvoiceList">
+    <div class="col-md-12">
+        <div id="divManageInvoiceList">
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 
 
@@ -70,28 +63,28 @@
 <hr />
 
 <div class="row">
-	<div class="col-md-6">
-		<div id="divManageInvoiceView">
+    <div class="col-md-6">
+        <div id="divManageInvoiceView">
 
-		</div>
-	</div>
+        </div>
+    </div>
 
-	<div id="divUploadImg" class="col-md-6">
-		<div class="col-12">
-			<p class="lead">อัพโหลดใบแจ้งหนี้ (pdf,jpg)</p>
-		</div>
-		<div class="col-md-12" id="divUploadFiles">
-			<form action="@Url.Action("manageInvoiceUpload", "Budget", new { company = var_companyEN })" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
-				<div class="dz-message">
-					<span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
-				</div>
-			</form>
-		</div>
-	</div>
+    <div id="divUploadImg" class="col-md-6">
+        <div class="col-12">
+            <p class="lead">อัพโหลดใบแจ้งหนี้ (pdf,jpg)</p>
+        </div>
+        <div class="col-md-12" id="divUploadFiles">
+            <form action="@Url.Action("manageInvoiceUpload", "Budget", new { company = var_companyEN })" class="dropzone" id="dropzoneJsForm" method="post" enctype="multipart/form-data" style="min-height: 0; padding: 5px;">
+                <div class="dz-message">
+                    <span class="text-xl text-default-light"><i class="md md-attach-file"></i>&nbsp;Drop files here or click to upload.</span>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div id='myModalInvoice' class="modal fade" role="dialog">
-	<div id='myModalInvoiceContent'></div>
+    <div id='myModalInvoiceContent'></div>
 </div>
 
 

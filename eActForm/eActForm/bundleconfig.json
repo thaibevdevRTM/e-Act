@@ -1,0 +1,58 @@
+[
+  {
+    "outputFileName": "Scripts/jquery-ui.min.css",
+    "inputFiles": [
+      "Scripts/jquery-ui.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/pnotify/dist/pnotify.min.css",
+    "inputFiles": [
+      "Scripts/pnotify/dist/pnotify.css",
+      "Scripts/pnotify/dist/pnotify.buttons.css",
+      "Scripts/pnotify/dist/pnotify.nonblock.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/bootstrap-select.min.css",
+    "inputFiles": [
+      "Scripts/bootstrap-select.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/vendors/multiselect/bootstrap-multiselect.min.css",
+    "inputFiles": [
+      "Content/vendors/multiselect/bootstrap-multiselect.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/Site.min.css",
+    "inputFiles": [
+      "Content/Site.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/vendors/build/css/custom.min.min.css",
+    "inputFiles": [
+      "Content/vendors/build/css/custom.min.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/vendors/build/css/custom.min.css",
+    "inputFiles": [
+      "Content/vendors/build/css/custom.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/vendors/bootstrap-datepicker/datepicker3.min.css",
+    "inputFiles": [
+      "Content/vendors/bootstrap-datepicker/datepicker3.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/vendors/iCheck/skins/flat/green.min.css",
+    "inputFiles": [
+      "Content/vendors/iCheck/skins/flat/green.css"
+    ]
+  }
+]

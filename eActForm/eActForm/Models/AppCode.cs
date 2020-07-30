@@ -15,7 +15,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Mvc;
 using System.Web.UI;
 using WebLibrary;
 using static eActForm.Models.TB_Act_Image_Model;
@@ -24,10 +23,14 @@ namespace eActForm.Models
 {
     public class AppCode
     {
+
+        public static string StrConAuthen = ConfigurationManager.ConnectionStrings["ActDBAuthen_ConnectionString"].ConnectionString;
         public static string StrCon = ConfigurationManager.ConnectionStrings["ActDB_ConnectionString"].ConnectionString;
         public static string StrMessFail = ConfigurationManager.AppSettings["messFail"].ToString();
         public static string nonAL = "1D1097F4-246F-4DC2-BB69-B7BB6E678299";
         public static string AL = "FC696EB5-B058-445E-B605-977C5067AEBA";
+        public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
+        public static string[] compHcForm = { Activity_Model.groupCompany.NUM.ToString(), Activity_Model.groupCompany.POM.ToString(), Activity_Model.groupCompany.CVM.ToString() };
 
         public enum ApproveEmailype
         {
@@ -50,6 +53,7 @@ namespace eActForm.Models
             , Success = 4
             , ไม่อนุมัติ = 5
             , เพิ่มเติม = 7 // for Report Detail
+            , เรียนเพื่อทราบ
         }
         public enum StatusType
         {
@@ -57,13 +61,43 @@ namespace eActForm.Models
             doc // document
         }
 
+        public enum Mode
+        {
+            addNew,
+            edit
+        }
 
+
+        public static class ApproveGroup
+        {
+            public const string Applicant = "D0A49169-8697-4001-9CD4-896976E964F5";//ผู้ขอเบิก   
+            public const string ApplicantApp = "A2D5B3D5-610D-4D7E-B311-25717B3457F8";// ผู้ขออนุมัติ  
+            public const string Recorder = "8A6A0CA2-E9CC-4A6C-9E17-E0B212C12DAF";//ผู้บันทึก   
+            public const string Director = "2354EFCB-174F-48FE-B634-2DE926D7F836";// ผู้บังคับบัญชา  
+            public const string Approveby = "7C308168-B155-4684-A2CD-906EC94AA49C";//เรียน/อนุมัติ 
+            public const string PettyCashApprover = "BD48756C-12CC-4267-AD6F-A6C37F9B2B32";//ผู้อนุมัติเงินสดย่อย
+            public const string CreateBy = "1AFEFF8D-C980-4628-8550-78AE619AC31A";//ผู้จัดทำ
+            public const string PettyCashVerify = "FA88EB4E-26C1-49FB-BEC7-D161AA9CC0A0";//ผู้ตรวจสอบเงินสดย่อย
+        }
+        public static class CodeHtml
+        {
+            public const string LabelHtml = "label";
+            public const string TextboxHtml = "textbox";
+            public const string DropdownHtml = "dropdown";
+
+
+        }
+        public static class Expenses
+        {
+            public const string Allowance = "06FF853F-EBB0-48E8-9620-520D0B8F6E0C";
+            public const string Medical = "6BB0F68F-4B07-4E00-9B1E-B776D003D992";
+        }
         public static string checkNullorEmpty(string p)
         {
             return p == "" || p == null || p == "0" || p == "0.00" || p == "0.000" || p == "0.0000" || p == "0.00000" ? "0" : p;
         }
 
-        public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc,string serverMapPath)
+        public static MemoryStream GetFileReportTomail_Preview(string GridHtml, Document pdfDoc, string serverMapPath)
         {
             MemoryStream ms = new MemoryStream();
             try
@@ -75,8 +109,6 @@ namespace eActForm.Models
                 LoadControl.RenderControl(myWriter);
                 StringReader sr = new StringReader(sw.ToString());
 
-
-
                 StringBuilder GridBuilder = new StringBuilder();
                 GridBuilder.Append("<html>");
                 GridBuilder.Append("<style>");
@@ -87,22 +119,23 @@ namespace eActForm.Models
                 GridBuilder.Append("</body>");
                 GridBuilder.Append("</html>");
 
+                // Replace 
+                GridBuilder = GridBuilder.Replace("signa\">", "signa\"/>");
+
                 GridBuilder.Append(sw.ToString());
 
 
                 string path = serverMapPath + "\\Content\\" + "tablethin.css";
                 string readText = System.IO.File.ReadAllText(path);
 
-                //Document pdfDoc = new Document(pageSize, 25, 25, 10, 10);
-                //var writer = PdfWriter.GetInstance(pdfDoc, ms);
                 using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
                 {
                     pdfDoc.Open();
                     //pdfDoc = new Document(PageSize.A4, 25, 25, 10, 10);
                     using (MemoryStream cssMemoryStream = new MemoryStream(Encoding.UTF8.GetBytes(readText)))
                     {
-
-                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>"))))
+                        writer.CloseStream = false;
+                        using (MemoryStream mss = new MemoryStream(Encoding.UTF8.GetBytes(GridBuilder.ToString().Replace(".png\">", ".png\"/>").Replace(".jpg\">", ".jpg\"/>").Replace(".jpeg\">", ".jpeg\"/>").Replace(".jfif\">", ".jfif\"/>"))))
                         {
                             XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, mss, cssMemoryStream, Encoding.UTF8);
                         }
@@ -149,7 +182,6 @@ namespace eActForm.Models
                 string path = System.Web.HttpContext.Current.Server.MapPath("~") + "\\Content\\" + "tablethin.css";
                 string readText = System.IO.File.ReadAllText(path);
 
-                //Document pdfDoc = new Document(pageSize, 25, 25, 10, 10);
                 using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
                 {
                     pdfDoc.Open();
@@ -233,9 +265,13 @@ namespace eActForm.Models
             return genPdfFile(GridHtml, doc, rootPath, HttpContext.Current.Server.MapPath("~"));
         }
 
-        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath,string serverMapPath)
+        public static List<Attachment> genPdfFile(string GridHtml, Document doc, string rootPath, string serverMapPath)
         {
-            //GridHtml = GridHtml.Replace("\n", "");
+
+            //===========ส่วน Replace เพราะ new server ออกเน็ทนอกไม่ได้ ตอน Gen ไฟล์ต้องสลับ IP เป็นวงใน=================
+            GridHtml = GridHtml.Replace("./images/check", (ConfigurationManager.AppSettings["renderHost"] + ConfigurationManager.AppSettings["renderPathFile"] + "images/check"));
+            GridHtml = GridHtml.Replace(ConfigurationManager.AppSettings["renderHostPublicIP"], ConfigurationManager.AppSettings["renderHost"]);
+            //====END=======ส่วน Replace เพราะ new server ออกเน็ทนอกไม่ได้ ตอน Gen ไฟล์ต้องสลับ IP เป็นวงใน=================
             ContentType xlsxContent = new ContentType("application/pdf");
             MemoryStream msPreview = new MemoryStream();
             byte[] PreviewBytes = new byte[0];
@@ -277,13 +313,13 @@ namespace eActForm.Models
         public static string mergePDF(string rootPathOutput, string[] pathFile)
         {
             string result = string.Empty;
+            PdfReader reader = null/* TODO Change to default(_) if this is not a reference type */;
+            Document sourceDocument = null/* TODO Change to default(_) if this is not a reference type */;
+            PdfCopy pdfCopyProvider = null/* TODO Change to default(_) if this is not a reference type */;
+            PdfImportedPage importedPage;
+            sourceDocument = new Document();
             try
             {
-                PdfReader reader = null/* TODO Change to default(_) if this is not a reference type */;
-                Document sourceDocument = null/* TODO Change to default(_) if this is not a reference type */;
-                PdfCopy pdfCopyProvider = null/* TODO Change to default(_) if this is not a reference type */;
-                PdfImportedPage importedPage;
-                sourceDocument = new Document();
                 pdfCopyProvider = new PdfCopy(sourceDocument, new System.IO.FileStream(rootPathOutput, System.IO.FileMode.Create));
                 sourceDocument.Open();
 
@@ -305,21 +341,39 @@ namespace eActForm.Models
             }
             catch (Exception ex)
             {
-                result = "error" + ex.Message;
-                ExceptionManager.WriteError(ex.Message + ">> mergePDF");
+                try
+                {
+                    sourceDocument.Close();
+                    File.Delete(rootPathOutput);
+                    string replace = rootPathOutput.Replace(".pdf", "_.pdf");
+                    File.Copy(replace, rootPathOutput);
+                }
+                catch (Exception exc)
+                {
+                    result = "error" + exc.Message;
+                    ExceptionManager.WriteError(exc.Message + ">> mergePDF >> CopyError");
+                }
             }
             return result;
         }
 
         private static int get_pageCcount(string file)
         {
-            var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            using (StreamReader sr = new StreamReader(fs))
+            //var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            //using (StreamReader sr = new StreamReader(fs))
+            //{
+            //    Regex regex = new Regex(@"/Type\s*/Page[^s]");
+            //    MatchCollection matches = regex.Matches(sr.ReadToEnd());
+            //    return matches.Count;
+            //}
+            //แก้ปัญหามีเอกสารแนบ 4 หน้า ฟังก์ชันเดิมอ่านได้ 6 หน้า ทำให้ merge pdf ไม่ได้ By Kanokpun 2020622
+            int resultPagesCount = 0;
+            using ( var reader = new PdfReader(file))
             {
-                Regex regex = new Regex(@"/Type\s*/Page[^s]");
-                MatchCollection matches = regex.Matches(sr.ReadToEnd());
-                return matches.Count;
+                resultPagesCount = reader.NumberOfPages;
             }
+            return resultPagesCount;
+    
         }
 
 

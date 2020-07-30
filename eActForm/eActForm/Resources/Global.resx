@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="dropdownStatus" xml:space="preserve">
+    <value>nameTH</value>
+  </data>
+  <data name="headerTableCost" xml:space="preserve">
+    <value>ค่าใช้จ่าย</value>
+  </data>
+  <data name="headerTableObjective" xml:space="preserve">
+    <value>วัตถุประสงค์</value>
+  </data>
+  <data name="headerTableSales" xml:space="preserve">
+    <value>ยอดขายช่วงกิจกรรม</value>
+  </data>
+  <data name="headerTableSalesPercent" xml:space="preserve">
+    <value>% ต่อยอดขาย</value>
+  </data>
+  <data name="toApproveDocument" xml:space="preserve">
+    <value>เพื่ออนุมัติ</value>
+  </data>
+  <data name="toViewDocument" xml:space="preserve">
+    <value>ดูเอกสาร</value>
+  </data>
+  <data name="approval" xml:space="preserve">
+    <value>การอนุมัติ</value>
+  </data>
+  <data name="dontFoundYourSignatureInSystem" xml:space="preserve">
+    <value>ไม่พบลายเซ็นของคุณในระบบ</value>
+  </data>
+  <data name="insertYourSignature" xml:space="preserve">
+    <value>เพิ่มลายเซ็นในระบบ</value>
+  </data>
+  <data name="pleaseInsertYourSignatureBeforeApprovalDocument" xml:space="preserve">
+    <value>กรุณาเพิ่มลายเซ็นก่อนอนุมัติเอกสาร</value>
+  </data>
+  <data name="allDocuments" xml:space="preserve">
+    <value>เอกสารทั้งหมด</value>
+  </data>
+  <data name="approved" xml:space="preserve">
+    <value>อนุมัติ</value>
+  </data>
+  <data name="yourDocumentsApproved" xml:space="preserve">
+    <value>จำนวนเอกสารที่ได้รับการอนุมัติเรียบร้อย</value>
+  </data>
+  <data name="awaitingApproval" xml:space="preserve">
+    <value>รออนุมัติ</value>
+  </data>
+  <data name="overdue" xml:space="preserve">
+    <value>เกินกำหนด</value>
+  </data>
+  <data name="yourCreatedDocuments" xml:space="preserve">
+    <value>จำนวนเอกสารที่คุณสร้าง</value>
+  </data>
+  <data name="yourDocumentsAwaitingApproval" xml:space="preserve">
+    <value>จำนวนเอกสารที่รอการอนุมัติ</value>
+  </data>
+  <data name="approvalDocument" xml:space="preserve">
+    <value>เอกสารขออนุมัติ</value>
+  </data>
+  <data name="approvalHistory" xml:space="preserve">
+    <value>ประวัติการอนุมัติ</value>
+  </data>
+  <data name="approve" xml:space="preserve">
+    <value>อนุมัติ</value>
+  </data>
+  <data name="approveDate" xml:space="preserve">
+    <value>วันที่อนุมัติ</value>
+  </data>
+  <data name="compName" xml:space="preserve">
+    <value>companyName</value>
+  </data>
+  <data name="cultureLocal" xml:space="preserve">
+    <value>th-TH</value>
+  </data>
+  <data name="dearToInform" xml:space="preserve">
+    <value>เรียน เพื่อทราบ</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>ชื่อ</value>
+  </data>
+  <data name="notApprove" xml:space="preserve">
+    <value>ยังไม่อนุมัติ</value>
+  </data>
+  <data name="rank" xml:space="preserve">
+    <value>ลำดับ</value>
+  </data>
+  <data name="reason" xml:space="preserve">
+    <value>เหตุผล</value>
+  </data>
+  <data name="status" xml:space="preserve">
+    <value>สถานะ</value>
+  </data>
+  <data name="yourSignature" xml:space="preserve">
+    <value>ลายเซ็นปัจจุบัน</value>
+  </data>
+  <data name="empBu" xml:space="preserve">
+    <value>bu</value>
+  </data>
+  <data name="empCompName" xml:space="preserve">
+    <value>companyName</value>
+  </data>
+  <data name="empDepartment" xml:space="preserve">
+    <value>department</value>
+  </data>
+  <data name="empName" xml:space="preserve">
+    <value>empName</value>
+  </data>
+  <data name="empPosition" xml:space="preserve">
+    <value>position</value>
+  </data>
+  <data name="formName" xml:space="preserve">
+    <value>formName</value>
+  </data>
+  <data name="viewManual" xml:space="preserve">
+    <value>คำแนะนำการขอเบิกค่าใช้จ่าย</value>
+  </data>
+  <data name="toDocument" xml:space="preserve">
+    <value>เรียน</value>
+  </data>
+  <data name="amountTHB" xml:space="preserve">
+    <value>จำนวนเงิน(บาท)</value>
+  </data>
+  <data name="at" xml:space="preserve">
+    <value>ที่</value>
+  </data>
+  <data name="dateOfCheque" xml:space="preserve">
+    <value>ต้องการเช็ค</value>
+  </data>
+  <data name="dateOfPaymentSettlement" xml:space="preserve">
+    <value>เคลียร์เงินทดรองในวันที่</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>รายการ</value>
+  </data>
+  <data name="documentDate" xml:space="preserve">
+    <value>วันที่</value>
+  </data>
+  <data name="jobName" xml:space="preserve">
+    <value>ชื่องาน</value>
+  </data>
+  <data name="note" xml:space="preserve">
+    <value>หมายเหตุ</value>
+  </data>
+  <data name="position" xml:space="preserve">
+    <value>ตำแหน่ง</value>
+  </data>
+  <data name="purpose" xml:space="preserve">
+    <value>วัตถุประสงค์</value>
+  </data>
+  <data name="requestByName" xml:space="preserve">
+    <value>ชื่อผู้ขอยืม</value>
+  </data>
+  <data name="textDetailsAttachPay" xml:space="preserve">
+    <value>หมายเหตุ แนบหลักฐานใบยืมเงินทดรองมาด้วยตอนเคลียร์เงิน</value>
+  </data>
+  <data name="theEstimatedExpenseDetailsAsPerFollowing" xml:space="preserve">
+    <value>โดยมีรายละเอียดประมาณการค่าใช้จ่ายดังนี้</value>
+  </data>
+  <data name="totalAmountTHB" xml:space="preserve">
+    <value>รวมเงิน(บาท)</value>
+  </data>
+  <data name="piorityDoc" xml:space="preserve">
+    <value>ความเร่งด่วน</value>
+  </data>
+  <data name="accountCode" xml:space="preserve">
+    <value>รหัสบัญชี</value>
+  </data>
+  <data name="amount" xml:space="preserve">
+    <value>จำนวนเงิน</value>
+  </data>
+  <data name="approvePerson" xml:space="preserve">
+    <value>ผู้อนุมัติ</value>
+  </data>
+  <data name="documentNo" xml:space="preserve">
+    <value>เลขที่</value>
+  </data>
+  <data name="payee" xml:space="preserve">
+    <value>ผู้รับเงิน</value>
+  </data>
+  <data name="payer" xml:space="preserve">
+    <value>ผู้จ่ายเงิน</value>
+  </data>
+  <data name="toPay" xml:space="preserve">
+    <value>จ่ายให้</value>
+  </data>
+  <data name="total" xml:space="preserve">
+    <value>รวม</value>
+  </data>
+  <data name="verify" xml:space="preserve">
+    <value>ผู้ตรวจสอบ</value>
+  </data>
+  <data name="btnApprove" xml:space="preserve">
+    <value>อนุมัติ</value>
+  </data>
+  <data name="btnBack" xml:space="preserve">
+    <value>ย้อนกลับ</value>
+  </data>
+  <data name="btnReject" xml:space="preserve">
+    <value>ไม่อนุมัติ</value>
+  </data>
+  <data name="empId" xml:space="preserve">
+    <value>รหัสพนักงาน</value>
+  </data>
+  <data name="dearForProcess" xml:space="preserve">
+    <value>เรียน เพื่อดำเนินการ</value>
+  </data>
+  <data name="msgMaximumFilesSave" xml:space="preserve">
+    <value>ไม่สามารถบันทึกได้ ไฟล์อัพโหลดสูงสุดไม่เกิน</value>
+  </data>
+</root>

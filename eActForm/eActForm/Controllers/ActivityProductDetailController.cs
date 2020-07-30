@@ -2,8 +2,6 @@
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -12,10 +10,10 @@ namespace eActForm.Controllers
 {
     public class ActivityProductDetailController : Controller
     {
-        public ActionResult productCostDetail(string typeForm,string actId)
+        public ActionResult productCostDetail(string typeForm, string actId)
         {
 
-            Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ actId];
+            Activity_Model activityModel = TempData["actForm" + actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + actId];
             activityModel.activityFormModel.typeForm = typeForm;
             activityModel.activityFormModel.id = actId;
             TempData.Keep();
@@ -39,9 +37,9 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult showDetailGroup(string rowId , string actId)
+        public ActionResult showDetailGroup(string rowId, string actId)
         {
-            Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+actId];
+            Activity_Model activityModel = TempData["actForm" + actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + actId];
             Activity_Model ShowList_Product = new Activity_Model();
             ShowList_Product.productcostdetaillist1 = activityModel.productcostdetaillist1.Where(x => x.productGroupId == rowId).OrderBy(x => x.productName).ToList();
 
@@ -54,17 +52,19 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                Activity_Model activityModel = TempData["actForm" + id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ id];
+                Activity_Model activityModel = TempData["actForm" + id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + id];
                 if (rowid != null)
                 {
                     activityModel.productcostdetaillist1.RemoveAll(r => r.productGroupId == rowid);
+                    activityModel.activitydetaillist.RemoveAll(r => r.productGroupId == rowid);
                 }
                 else
                 {
                     activityModel.productcostdetaillist1 = new List<ProductCostOfGroupByPrice>();
+                    activityModel.activitydetaillist = new List<CostThemeDetailOfGroupByPrice>();
                 }
 
-                TempData["actForm"+ activityModel.activityFormModel.id] = activityModel;
+                TempData["actForm" + activityModel.activityFormModel.id] = activityModel;
                 TempData.Keep();
                 result.Data = activityModel.productcostdetaillist1.Count;
                 result.Success = true;
@@ -86,14 +86,14 @@ namespace eActForm.Controllers
             , string size
             , string cusid
             , string theme
-            ,string actId
-            ,string typeForm
-            ,string dateActivitySt)
+            , string actId
+            , string typeForm
+            , string dateActivitySt)
         {
             var result = new AjaxResult();
             try
             {
-                Activity_Model activityModel = TempData["actForm"+ actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm"+ actId];
+                Activity_Model activityModel = TempData["actForm" + actId] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + actId];
                 var productlist = new Activity_Model();
                 productlist.productcostdetaillist1 = QueryGetProductCostDetail.getProductcostdetail(brandid, smellId, size, cusid, productid, theme, typeForm);
                 activityModel.productcostdetaillist1.AddRange(productlist.productcostdetaillist1);
@@ -120,7 +120,7 @@ namespace eActForm.Controllers
                     costthememodel.detailGroup = item.detailGroup;
                     //if (ActFormAppCode.getDigitGroup(theme) != "")
                     //{
-                        
+
                     //    DateTime getDoc = DateTime.ParseExact(dateActivitySt, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                     //    string getYear = getDoc.Month > 9 ? getDoc.AddYears(1).ToString("yy") : getDoc.Year.ToString().Substring(2);
                     //    costthememodel.IO = "56S0" + getYear + ActFormAppCode.getDigitGroup(theme) + ActFormAppCode.getDigitRunnigGroup(item.productId);
@@ -135,7 +135,7 @@ namespace eActForm.Controllers
                     item.activityId = actId;
                     bool calSuccess = calProductDetail(item);
                 }
-                TempData["actForm"+ actId] = activityModel;
+                TempData["actForm" + actId] = activityModel;
                 result.Data = productlist.productcostdetaillist1.Count;
                 result.ActivityId = actId;
                 TempData.Keep();
@@ -178,7 +178,7 @@ namespace eActForm.Controllers
                 p_PromotionGp = p_PromotionGp > 0 ? p_PromotionGp : p_PromotionGp * -1;
 
                 Activity_Model activityModel = new Activity_Model();
-                activityModel = (Activity_Model)TempData["actForm"+ model.activityId];
+                activityModel = (Activity_Model)TempData["actForm" + model.activityId];
                 activityModel.productcostdetaillist1
                     .Where(r => r.productGroupId != null && r.productGroupId.Equals(model.productGroupId))
                     .Select(r =>

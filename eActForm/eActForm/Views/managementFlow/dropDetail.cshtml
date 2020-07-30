@@ -1,67 +1,74 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
 
 
-<div class="row form-group">
+    <div class="row form-group">
 
-    <div id="divSubject" class="col-md-3">
-        <div class="col-md-12 col-xs-12">
-            <label>Subject</label>
+        <div id="divSubject" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>Subject</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlSubject" })
+            </div>
         </div>
-        <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlSubject" })
+        <div id="divCus" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>Customer</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.DropDownListFor(model => model.customerList, new SelectList(Model.customerList, "id", "cusNameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlCustomer" })
+            </div>
         </div>
-    </div>
-    <div id="divCus" class="col-md-3">
-        <div class="col-md-12 col-xs-12">
-            <label>Customer</label>
+        <div id="divLimit" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>Limit</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlLimit" })
+            </div>
         </div>
-        <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.customerList, new SelectList(Model.customerList, "id", "cusNameTH"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCustomer" })
+        <div id="divProductType" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>ProductType</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.DropDownListFor(model => model.productTypeList, new SelectList(Model.productTypeList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlProductType" })
+            </div>
         </div>
-    </div>
-    <div id="divLimit" class="col-md-3">
-        <div class="col-md-12 col-xs-12">
-            <label>Limit</label>
+        <div id="divCate" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>Cate</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.DropDownListFor(model => model.cateList, new SelectList(Model.cateList, "id", "cateName"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlCate" })
+            </div>
         </div>
-        <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlLimit" })
-        </div>
-    </div>
-    <div id="divProductType" class="col-md-3">
-        <div class="col-md-12 col-xs-12">
-            <label>ProductType</label>
-        </div>
-        <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.productTypeList, new SelectList(Model.productTypeList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlProductType" })
-        </div>
-    </div>
-    <div id="divCate" class="col-md-3">
-        <div class="col-md-12 col-xs-12">
-            <label>Cate</label>
-        </div>
-        <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.cateList, new SelectList(Model.cateList, "id", "cateName"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCate" })
-        </div>
-    </div>
 
-    <div id="divBrand" class="col-md-3">
-        <div class="col-md-12 col-xs-12">
-            <label>Brand</label>
+        <div id="divBrand" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>Brand</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlBrand" })
+            </div>
         </div>
-        <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlBrand" })
+        <div id="divChanel" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>Chanel</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.DropDownListFor(model => model.chanelList, new SelectList(Model.chanelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlChanelGroup" })
+            </div>
+        </div>
+        <div id="divEmp" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>Employee</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.DropDownList("employee", new SelectList(Model.empList, "empId", "empName"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlEmployee" })
+            </div>
         </div>
     </div>
-    <div id="divChanel" class="col-md-3">
-        <div class="col-md-12 col-xs-12">
-            <label>Chanel</label>
-        </div>
-        <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.chanelList, new SelectList(Model.chanelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlChanelGroup" })
-        </div>
-    </div>
-
-</div>
 
 <div class="row form-group" style="text-align:center;">
     <p class="d-flex justify-content-center">
@@ -80,6 +87,10 @@
 
 
 <script type="text/javascript">
+    $('.selectpicker').selectpicker({
+        liveSearch: true,
+        showSubtext: true
+    });
 
     function callClear() {
          var url = '@Url.Action("Index", "ManagementFlow")';
@@ -99,6 +110,7 @@
                  channelId: $("#ddlChanelGroup").val(),
                  productBrandId: $("#ddlBrand").val(),
                  productTypeId: $("#ddlProductType").val(),
+                 empId : $("#ddlEmployee").val(),
              }
         }).done(function (htmlResponse) {
             $("#divApprove").html(htmlResponse);
@@ -134,5 +146,39 @@
             }
         });
     });
-  
+
+
+    $('#ddlBrand').change(function () {
+        getEmp();
+    });
+    $('#ddlChanelGroup').change(function () {
+        getEmp();
+    });
+
+    function getEmp() {
+        var channel = $("#ddlChanelGroup").val() == "" ? $("#ddlBrand").val() : $("#ddlChanelGroup").val();
+        $.ajax({
+            url: '@Url.Action("getEmp", "ManagementFlow")',
+            data: {
+                subjectId: $("#ddlSubject").val(),
+                limitId : $("#ddlLimit").val(),
+                channelId: channel,
+            },
+            dataType: "json",
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                 if (response.length > 0) {
+                     $("#ddlEmployee option[value !='']").remove();
+                    $.each(response, function () {
+                        $("#ddlEmployee").append($("<option></option>").val(this['empId']).html(this['empId'] +" "+this['empName']));
+                    });
+                     document.getElementById("ddlEmployee").disabled = false;
+                }
+                else {
+                     document.getElementById("ddlEmployee").disabled = true;
+                }
+            }
+        });
+    }
 </script>

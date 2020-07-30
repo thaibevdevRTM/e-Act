@@ -1,0 +1,265 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Configuration;
+
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr style="">
+        <td>
+            <div id="divHeaderDetails" runat="server" style="width: 100%;">
+                <table style="width: 100%;" id="tabelHeaderDetails" runat="server">
+                    <tr>
+                        <td>
+                            <div class="form-group">
+
+                                <label class="control-label col-md-2 col-xs-12">
+                                    เรื่อง :
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextAreaFor(x => x.activityFormTBMMKT.activityName, new { @class = "form-control textboxcss", @id = "txtActivityName", style = "", @rows = "2" })
+                                    </div>
+                                </div>
+
+                                <label class="control-label col-md-2 col-xs-12">
+                                    เอกสารเลขที่ :
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @Html.TextBoxFor(x => x.activityFormModel.activityNo, new { @class = "form-control textboxcss", @id = "txtActivityNo", @readonly = "readonly" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-xs-12">
+                                    ปีงบประมาณ :
+                                </label>
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        @if (Model.activityFormTBMMKT.statusId == 1 || Model.activityFormTBMMKT.statusId == 5)
+                                        {
+                                            @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.fiscalYear, new SelectList(Model.listFiscalYearModel, "UseYear", "UseYear", ""), "", new
+                                       {
+                                           @class = "form-control selectpicker",
+                                           id = "ddlFiscalYear"
+                                       })
+                                            <script>
+                                            $('#ddlFiscalYear').change(function () {
+                                                bindDropdownEO();
+                                                if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]')
+                                                {
+                                                    if ($('#ddlFiscalYear').val()=="") {
+                                                       $("#ddl_EO_PV").multiselect('dataprovider', null);
+                                                   }
+                                                }
+                                            });
+                                            function bindDropdownEO() {
+                                                var valproductBrandId = '';
+                                                var valchannelId = '';
+                                                if ($('#ddlChannelOrBrand').val() =="Brand") {
+                                                    valproductBrandId = $('#ddlBrand').val();
+                                                    valchannelId = '';
+                                                } else {
+                                                    valproductBrandId = '';
+                                                    valchannelId = $('#ddlChannel').val();
+                                                                        }
+
+                                                var dataToBeSend = {
+                                                    fiscalYear: $('#ddlFiscalYear').val()
+                                                    , master_type_form_id: "@Model.activityFormTBMMKT.master_type_form_id"
+                                                    , productBrandId: valproductBrandId
+                                                    , channelId: valchannelId
+                                                };
+
+                                                                        var nameDDl = "#ddl_EO_PV";
+                                                                        var ddl_EO_PV = $(nameDDl);
+                                                $.ajax('@Url.Action("GetDataEOPaymentVoucher", "GetDataMainForm")',
+                                                    {
+                                                        contentType: "application/json; charset=utf-8",
+                                                        data: JSON.stringify(dataToBeSend),
+                                                        dataType: 'json',
+                                                        type: "POST",
+                                                        success: function (response) {
+                                                            if (response.Data.tbToAjax.length > 0) {
+                                                                var data = [];
+                                                                $(nameDDl + " option[value !='']").remove();
+                                                                $.each(response.Data.tbToAjax, function () {
+                                                                    data.push({ label: this['EO'], value: this['activityIdAndEO'], selected: false });
+                                                                });
+                                                                $(nameDDl).multiselect('dataprovider', data);
+                                                            }
+                                                            else {
+
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert("Error GetDataEOPaymentVoucher.");
+                                                        }
+                                                    });
+                                            }
+
+                                            </script>
+                                        }
+                                        else
+                                        {
+                                            @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.fiscalYear, new { @class = "form-control textboxcss", @id = "txtfiscalYear", style = "" })
+                                        }
+                                    </div>
+                                </div>
+
+                                <label class="control-label col-md-2 col-xs-12">
+                                    งบประมาณเลขที่EO:
+                                </label>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="row">
+                                        <style>
+                                            td div span {
+                                                line-height: 0px;
+                                            }
+
+                                            .multiselect-container {
+                                                width: 100% !important;
+                                            }
+                                        </style>
+                                        @Html.DropDownList("activityFormTBMMKT.list_1_multi_select", new SelectList(Model.listGetDataEO,
+                                            "activityIdAndEO", "EO"),
+                                            new
+                                            {
+                                                @class = "form-control",
+                                                id = "ddl_EO_PV",
+                                                multiple = "multiple"
+                                            })
+                                        <script>
+                                            var valuesSelectChoiceFromDb = [];/*ไว้ใช้เก็บค่าที่SelectของMultiSelect Dropdown*/
+                                            var EOSelect = [];
+                                            var payByIOSelect = [];/*ไว้เก็บว่าเงินทั้งหมดของIOที่อยู่ในEOดังกล่าวต้องจ่ายทั้งหมดเท่าไร*/
+                                            function subStringGetActId(val) {
+                                                return val.substring(0, 36);
+                                            }
+                                            function subStringGetEO(val) {
+                                                var lenghtForCutOffGetEO = 37;
+                                                return val.substring(lenghtForCutOffGetEO, val.length);
+                                            }
+                                            $(document).ready(function () {
+                                                $('#ddl_EO_PV').multiselect({
+                                                numberDisplayed: 2,
+                                                enableFiltering: true,
+                                                nonSelectedText: '',
+                                                buttonWidth: '100%',
+                                                    onChange: function (option, checked) {
+                                                     payByIOSelect = [];
+                                                     payByIOSelect.push("");/*ใส่BlankRowการดึงข้อมูลจะได้เริ่มที่Index=1*/
+                                                        if ($("#ddl_EO_PV").val() != "")
+                                                        {
+                                                            var valEOSelect = subStringGetEO(option.val());
+                                                        if (checked === true) {
+                                                            valuesSelectChoiceFromDb.push(option.val());
+                                                            EOSelect.push(valEOSelect);
+                                                        } else {
+                                                            removeArray(valuesSelectChoiceFromDb, option.val());
+                                                            removeArray(EOSelect, valEOSelect);
+                                                            }
+                                                            /*======วนเพื่อผสม EOและคั่นด้วย  |  ==========*/
+                                                            var EOtext = "";
+                                                            var ActivityByEOSelect = "";
+                                                            for (var iLoopEO = 0; iLoopEO < EOSelect.length; iLoopEO++) {
+                                                                if (iLoopEO > 0) { EOtext += "|"; ActivityByEOSelect += "|"; }
+                                                                EOtext += EOSelect[iLoopEO]; ActivityByEOSelect += subStringGetActId(valuesSelectChoiceFromDb[iLoopEO]);                                                              
+                                                            }
+                                                            /*===END===วนเพื่อผสม EOและคั่นด้วย  |  ==========*/
+                                                            if (ActivityByEOSelect != "" && EOtext!="") {
+                                                            var dataToBeSend = {
+                                                                ActivityByEOSelect: ActivityByEOSelect.toString()
+                                                                ,EOSelect: EOtext
+                                                            };
+                                                            $.ajax('@Url.Action("GetDataIOPaymentVoucher", "GetDataMainForm")',
+                                                                {
+                                                                    contentType: "application/json; charset=utf-8",
+                                                                    data: JSON.stringify(dataToBeSend),
+                                                                    dataType: 'json',
+                                                                    type: "POST",
+                                                                    success: function (response) {
+                                                                        if (response.Data.tbToAjax.length > 0) {
+                                                                            removeDropdownIO();
+                                                                            //=====insertdata all from ajax===========
+                                                                            $.each(response.Data.tbToAjax, function () {
+                                                                                payByIOSelect.push(this['totalPayByIO']);
+                                                                                var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
+                                                                                var rowCount2 = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
+                                                                                for (i = 0; i < rowCount; i++) {
+                                                                                    $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").append($("<option></option>").val(this['IO']).html(this['IO']));
+                                                                                    //$("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").selectpicker('refresh');
+                                                                                }
+                                                                                for (i = 0; i < rowCount2; i++) {
+                                                                                    $("#activityOfEstimateList_" + i.toString() + "__IO").append($("<option></option>").val(this['IO']).html(this['IO']));
+                                                                                }
+                                                                            });
+                                                                            //==END===insertdata all from ajax============
+                                                                        }
+                                                                    },
+                                                                    error: function (data) {
+                                                                        alert("Error GetDataEOPaymentVoucher.");
+                                                                    }
+                                                                });
+                                                        } else {
+                                                            removeDropdownIO();
+                                                        }
+                                                    }
+                                                },
+                                            });
+                                                $(".multiselect .caret").css('float', 'right');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+                                                $(".multiselect .caret").css('margin', '8px 0');//ทำให้ caret ไปอยู่ขวาสุดของ Dropdown Multiselect ห้ามลบ
+                                            });
+                                            function removeArray(arr, what) {
+                                                var found = arr.indexOf(what);
+
+                                                while (found !== -1) {
+                                                    arr.splice(found, 1);
+                                                    found = arr.indexOf(what);
+                                                }
+                                        }
+                                        function removeDropdownIO() {
+                                            var rowCount = parseInt($('#tabelSectionThreeToFive tr.tagCountRowinTable').length);
+                                            var rowCount2 = parseInt($('#tabelSectionSix tr.tagCountRowinTable').length);
+                                            //====remove data old in dropdown====
+                                            for (i = 0; i < rowCount; i++) {
+                                                $(".txtGL_" + i.toString()).val(this['GL']);
+                                                $("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO option[value !='']").remove();
+                                                //$("#tB_Act_ActivityForm_DetailOtherList_" + i.toString() + "__IO").selectpicker('refresh');
+                                            }
+                                            for (i = 0; i < rowCount2; i++) {
+                                                $("#activityOfEstimateList_" + i.toString() + "__IO option[value !='']").remove();
+                                            }
+                                            $("#totalallPayByIO").text("0.00");
+                                            calCulateAll();
+                                           //====remove data old in dropdown====
+                                        }
+                                        </script>
+                                        <script>
+                                                $(function () {
+                                                    @if (Model.activityFormTBMMKT.list_1_multi_select != null)
+                                                    {
+                                                        foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
+                                                        {
+                                                        @:valuesSelectChoiceFromDb.push("@itemArray");
+                                                        @:EOSelect.push(subStringGetEO("@itemArray"));
+                                                        }
+                                                         @:$("#ddl_EO_PV").multiselect('select', valuesSelectChoiceFromDb);
+                                                    }
+                                                });
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </td>
+    </tr>
+</table>

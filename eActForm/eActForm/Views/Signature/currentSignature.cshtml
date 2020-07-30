@@ -1,4 +1,5 @@
 ﻿@using eActForm.BusinessLayer;
+@using System.Configuration;
 @model eActForm.Models.ActSignatureModel.SignModel
 <div class="row">
     <div class="text-center">
@@ -6,14 +7,22 @@
         {
             var base64 = Convert.ToBase64String(Model.signature);
             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-            <img src="@imgSrc" class="img-thumbnail" style="text-align:center;" />
-            <p style="text-align:center">@UtilsAppCode.Session.User.empFNameTH @UtilsAppCode.Session.User.empLNameTH</p>
-            <p style="text-align:center">@UtilsAppCode.Session.User.empPositionTitleTH</p>
+            <img src="@imgSrc" class="img-thumbnail" style="text-align:center;width:200px;" />
+            if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureThai"])
+            {
+                <p style="text-align:center">@UtilsAppCode.Session.User.empFNameTH @UtilsAppCode.Session.User.empLNameTH</p>
+                <p style="text-align:center">@UtilsAppCode.Session.User.empPositionTitleTH</p>
+            }
+            else if (Resources.Global.cultureLocal == ConfigurationManager.AppSettings["cultureEng"])
+            {
+                <p style="text-align:center">@UtilsAppCode.Session.User.empFNameEN  @UtilsAppCode.Session.User.empLNameEN</p>
+                <p style="text-align:center">@UtilsAppCode.Session.User.empPositionTitleEN</p>
+            }
         }
         else
         {
-            <p class="text-danger">ไม่พบลายเซ็นของคุณในระบบ!!! <br />กรุณาเพิ่มลายเซ็นก่อนอนุมัติเอกสาร</p>
-            @Html.ActionLink("เพิ่มลายเซ็นในระบบ Click", "index", "Signature")
+            <p class="text-danger">@Resources.Global.dontFoundYourSignatureInSystem !!! <br />@Resources.Global.pleaseInsertYourSignatureBeforeApprovalDocument</p>
+            @Html.ActionLink(Resources.Global.insertYourSignature + " Click", "index", "Signature")
         }
     </div>
 </div>

@@ -1,0 +1,570 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using System.Globalization;
+@using eActForm.Models;
+@using System.Configuration;
+@{
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
+    var picCheckBoxTrue = "./images/check_b.png";
+    var picCheckBoxFalse = "./images/check.png";
+    var pathWeb = ConfigurationManager.AppSettings["renderHostPublicIP"] + ConfigurationManager.AppSettings["renderPathFile"];
+
+    var CreateByName = "";
+    var CreateByPostition = "";
+    var CreateByEmpId = "";
+    var CreateByStampDateSignature = "";
+    var ApproveByName = "";
+    var ApproveByPostition = "";
+    var ApproveByEmpId = "";
+    var ApproveByStampDateSignature = "";
+    var Khun = "คุณ";
+    if (Model.approveFlowDetail != null)
+    {
+        foreach (var item in Model.approveFlowDetail)
+        {
+            if (item.approveGroupId == AppCode.ApproveGroup.CreateBy)
+            {
+                if (Model.activityFormTBMMKT.chkUseEng)
+                {
+                    CreateByName = (item.empFNameEN + " " + item.empLNameEN);
+                    CreateByPostition = item.empPositionTitleEN;
+                }
+                else
+                {
+                    CreateByName = (Khun + item.empFNameTH + " " + item.empLNameTH);
+                    CreateByPostition = item.empPositionTitleTH;
+                }
+
+                foreach (var itemFlowByDoc in Model.approveModels.approveDetailLists)
+                {
+                    if (item.empId == itemFlowByDoc.empId && item.approveGroupId == itemFlowByDoc.approveGroupId && itemFlowByDoc.statusId == "3")
+                    {
+                        CreateByEmpId = item.empId;
+                        CreateByStampDateSignature = itemFlowByDoc.updatedDate.Value.ToString("dd/MM/yyyy", DateEnglish);
+                    }
+                }
+
+            }
+            if (item.approveGroupId == AppCode.ApproveGroup.Approveby)
+            {
+                if (Model.activityFormTBMMKT.chkUseEng)
+                {
+                    ApproveByName = (item.empFNameEN + " " + item.empLNameEN);
+                    ApproveByPostition = item.empPositionTitleEN;
+                }
+                else
+                {
+                    ApproveByName = (Khun + item.empFNameTH + " " + item.empLNameTH);
+                    ApproveByPostition = item.empPositionTitleTH;
+                }
+
+                foreach (var itemFlowByDoc in Model.approveModels.approveDetailLists)
+                {
+                    if (item.empId == itemFlowByDoc.empId && item.approveGroupId == itemFlowByDoc.approveGroupId && itemFlowByDoc.statusId == "3")
+                    {
+                        ApproveByEmpId = item.empId;
+                        ApproveByStampDateSignature = itemFlowByDoc.updatedDate.Value.ToString("dd/MM/yyyy", DateEnglish);
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+
+<div id="divPage1" style="width: 100%;">
+    <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+        @foreach (var item in Model.dataRequesterToShows)
+        {
+            <tr>
+                <td colspan="2" style="width:100%;border-color:black;border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;background-color:#008000;color:white;" class="fontDocSmallV2Bold">
+                    &nbsp;Part 1 : For Requester / ส่วนที่ 1 : สำหรับ ผู้แจ้ง
+                </td>
+            </tr>
+            <tr>
+                <td style="width:50%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;">
+                    &nbsp;Name / ชื่อ : @item.empName
+                </td>
+                <td style="width:50%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;">
+                    &nbsp;Employee ID / รหัสพนักงาน :  @item.empId
+                </td>
+            </tr>
+            <tr>
+                <td style="width:50%;border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;">
+                    &nbsp;Department / หน่วยงาน : @item.empDepartment
+                </td>
+                <td style="width:50%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;">
+                    &nbsp;Phone / เบอร์ติดต่อ : @item.empPhone
+                </td>
+            </tr>
+            <tr>
+                <td style="width:50%;border-style: solid;border-width: 0px 1px 1px 1px; border-collapse: collapse;">
+                    &nbsp;Company / บริษัท : @item.empCompany
+                </td>
+                <td style="width: 50%;border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;">
+                    &nbsp;E-mail : @item.empEmail
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="2" style="border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;">
+                @{
+                    var index = 0;
+                    string[] valChooseRequest = new string[Model.list_chooseRequest.Count];
+                    string[] valCheckChooseRequest = new string[Model.list_chooseRequest.Count];
+                    foreach (var item in Model.list_chooseRequest)
+                    {
+                        valChooseRequest[index] = item.name;
+                        valCheckChooseRequest[index] = picCheckBoxFalse;
+                        if (Model.activityFormTBMMKT.list_chooseRequest_multi_select != null)
+                        {
+
+                            foreach (var itemArray in Model.activityFormTBMMKT.list_chooseRequest_multi_select)
+                            {
+                                if (itemArray == item.id)
+                                {
+                                    valCheckChooseRequest[index] = picCheckBoxTrue;
+                                }
+
+                            }
+                        }
+                        index++;
+                    }
+                }
+                &nbsp;<u>Choose request</u>
+                &nbsp;<img class="cssCheckBoxV1" src="@valCheckChooseRequest[0]" />@valChooseRequest[0]
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;<img class="cssCheckBoxV1" src="@valCheckChooseRequest[1]" />@valChooseRequest[1]
+                <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img class="cssCheckBoxV1" src="@valCheckChooseRequest[2]" />@valChooseRequest[2]
+                <br />
+                &nbsp;<u>Choose system</u>
+                <br />
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr>
+                        <td>&nbsp;<b>Procure to Pay :</b></td>
+                        @foreach (var item in Model.list_0)
+                        {
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_0_multi_select != null)
+                            {
+
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_0_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                        }
+                        <td><b>ERP System :</b></td>
+                        @foreach (var item in Model.list_1)
+                        {
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_1_multi_select != null)
+                            {
+
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_1_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>&nbsp;<b>Order to Cash :</b></td>
+                        @foreach (var item in Model.list_2)
+                        {
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_2_multi_select != null)
+                            {
+
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_2_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>&nbsp;<b>Forecast to Delivery :</b></td>
+                        @foreach (var item in Model.list_3)
+                        {
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_3_multi_select != null)
+                            {
+
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_3_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                        }
+                        <td colspan="2"><b>Finance&Accounting :</b></td>
+                        @foreach (var item in Model.list_4)
+                        {
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_4_multi_select != null)
+                            {
+
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_4_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>&nbsp;<b>Recruit to Retire :</b></td>
+                        @foreach (var item in Model.list_5)
+                        {
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_5_multi_select != null)
+                            {
+
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_5_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                        }
+                        <td><b>Other :</b></td>
+                        @foreach (var item in Model.list_6)
+                        {
+                            string valCheckPic = picCheckBoxFalse;
+                            if (Model.activityFormTBMMKT.list_6_multi_select != null)
+                            {
+
+                                foreach (var itemArray in Model.activityFormTBMMKT.list_6_multi_select)
+                                {
+                                    if (itemArray == item.id)
+                                    {
+                                        valCheckPic = picCheckBoxTrue;
+                                    }
+
+                                }
+                            }
+                            <td><img class="cssCheckBoxV1" src="@valCheckPic" />@item.name&nbsp;&nbsp;</td>
+                        }
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;height:119px;vertical-align:top;">
+                &nbsp;Objectives and requirements / วัตถุประสงค์และรายละเอียดความต้องการ :
+                <br />&nbsp;@Html.Raw(Model.activityFormModel.objective.Replace("\n", "<br/>&nbsp;").Replace("\r\n", "<br/>&nbsp;"))
+            </td>
+        </tr>
+        <tr>
+            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;padding-top:3px;">
+                &nbsp;Requestd by /ผู้ขอดำเนินการ
+                <br />
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr>
+                        <td style="width:20%;vertical-align:top;">&nbsp;ลายเซ็น<br /></td>
+                        <td style="width:80%;text-align:center;">
+
+                            @if (CreateByEmpId != "")
+                            {
+                                <img class="picSigV1" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], @CreateByEmpId)" alt="signa"/>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;ชื่อ</td>
+                        <td style="text-align:center;">@CreateByName</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;ตำแหน่ง</td>
+                        <td style="text-align:center;">@CreateByPostition</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        @if (CreateByStampDateSignature != "")
+                        {
+                            <td style="text-align:center;">วันที่ @CreateByStampDateSignature</td>
+                        }
+                        else
+                        {
+                            <td style="text-align:center;">วันที่ ........./........./.........</td>
+                        }
+                    </tr>
+                </table>
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;padding-top:3px;">
+                &nbsp;Approved by / ผู้อนุมัติดำเนินการ
+                <br />
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr>
+                        <td style="width:20%;vertical-align:top;">&nbsp;ลายเซ็น<br /></td>
+                        <td style="width:80%;text-align:center;">
+
+                            @if (ApproveByEmpId != "")
+                            {
+                                <img class="picSigV1" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@ApproveByEmpId)" alt="signa"/>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;ชื่อ</td>
+                        <td style="text-align:center;">@ApproveByName</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;ตำแหน่ง</td>
+                        <td style="text-align:center;">@ApproveByPostition</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        @if (ApproveByStampDateSignature != "")
+                        {
+                            <td style="text-align:center;">วันที่ @ApproveByStampDateSignature</td>
+                        }
+                        else
+                        {
+                            <td style="text-align:center;">วันที่ ........./........./.........</td>
+                        }
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="width:100%;border-color:black;border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;background-color:#008000;color:white;" class="fontDocSmallV2Bold">
+                &nbsp;Part 2 : For IT Business Partner / ส่วนที่ 2 : สำหรับ ผู้รับแจ้งงาน IT Business Partner
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr style="height:25px;">
+                        <td style="border-color:black;border-style: solid;border-width: 0px 0px 0px 1px;border-collapse: collapse;">&nbsp;Change&nbsp;&nbsp;</td>
+                        <td><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Form&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Screen&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Report&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Configuration&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td style="border-color:black;border-style: solid;border-width: 0px 1px 0px 0px;border-collapse: collapse;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Others.................................................................................................................................................</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;padding-top:5px;">
+                @{
+                    var lineUnderFullLine = "....................................................................................................................................................................................................................................................................................";
+                }
+                &nbsp;More details / รายละเอียดเพิ่ม เติม : ....................................................................................................................................................................................................................
+                <br />&nbsp;@lineUnderFullLine
+                <br />&nbsp;@lineUnderFullLine
+                <br />&nbsp;@lineUnderFullLine
+                <br />&nbsp;@lineUnderFullLine
+            </td>
+        </tr>
+        <tr>
+            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;padding-top:5px;">
+                @{
+                    var lineUnder = ".............................................................";
+                }
+                &nbsp;Submitted by / ผู้รับแจ้งงาน
+                <br />
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr>
+                        <td style="width:30%;">&nbsp;IT Business Partner</td>
+                        <td style="width:20%;text-align:right;">&nbsp;ลายเซ็น<br /></td>
+                        <td style="width:50%;text-align:center;">@lineUnder</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td style="text-align:right;">&nbsp;ชื่อ</td>
+                        <td style="text-align:center;">@lineUnder</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td style="text-align:center;">วันที่ ........./........./.........</td>
+                    </tr>
+                </table>
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;">
+                &nbsp;Approved by / ผู้อนุมัติดำเนินการ
+                <br />
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr>
+                        <td style="width:30%;">&nbsp;IT Business Partner</td>
+                        <td style="width:20%;text-align:right;">&nbsp;ลายเซ็น<br /></td>
+                        <td style="width:50%;text-align:center;">@lineUnder</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td style="text-align:right;">&nbsp;ชื่อ</td>
+                        <td style="text-align:center;">@lineUnder</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td style="text-align:center;">วันที่ ........./........./.........</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="width: 100%;border-color: black;border-style: solid;border-width: 1px 1px 1px 1px;border-collapse: collapse;background-color: #008000;color: white;" class="fontDocSmallV2Bold">
+                &nbsp;Part 3 : For IT Solution / ส่วนที่ 3 : การดำเนินงาน IT Solution
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;padding-top:5px;">
+                &nbsp;Change Request / Version : ................................................................................................................................................................................................................................
+                <br />&nbsp;Description / รายละเอียดของงาน : .......................................................................................................................................................................................................................
+                <br />&nbsp;@lineUnderFullLine
+                <br />&nbsp;@lineUnderFullLine
+                <br />&nbsp;@lineUnderFullLine
+                <br />&nbsp;@lineUnderFullLine
+            </td>
+        </tr>
+        <tr>
+            <td style="border-style: solid;border-width: 1px 1px 0px 1px; border-collapse: collapse;padding-top:5px;">
+                &nbsp;Completed by / ผู้ปฏิบัติงาน
+                <br />
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr>
+                        <td style="width:30%;">&nbsp;IT Solution</td>
+                        <td style="width:20%;text-align:right;">&nbsp;ลายเซ็น<br /></td>
+                        <td style="width:50%;text-align:center;">@lineUnder</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td style="text-align:right;">&nbsp;ชื่อ</td>
+                        <td style="text-align:center;">@lineUnder</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td style="text-align:center;">วันที่ ........./........./.........</td>
+                    </tr>
+                </table>
+            </td>
+            <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;padding-top:5px;">
+                &nbsp;Approved by / ผู้อนุมัติดำเนินการ
+                <br />
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr>
+                        <td style="width:30%;">&nbsp;IT Solution</td>
+                        <td style="width:20%;text-align:right;">&nbsp;ลายเซ็น<br /></td>
+                        <td style="width:50%;text-align:center;">@lineUnder</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td style="text-align:right;">&nbsp;ชื่อ</td>
+                        <td style="text-align:center;">@lineUnder</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td style="text-align: center;">วันที่ ........./........./.........</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="width:100%;border-color:black;border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse;background-color:#008000;color:white;" class="fontDocSmallV2Bold">
+                &nbsp;Part 4 : For Auditor / ส่วนที่ 4 : ส่งมอบงาน
+            </td>
+        </tr>
+        <tr>
+            <td style="border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;vertical-align:top;">
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr>
+                        <td class="verAlignMid" style="width:12%;">&nbsp;Status&nbsp;&nbsp;</td>
+                        <td class="verAlignMid" style="width:30%;"><u>QA System</u>&nbsp;:&nbsp;&nbsp;</td>
+                        <td class="verAlignMid" style="width:20%;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Accepted&nbsp;&nbsp;</td>
+                        <td class="verAlignMid" style="width:20%;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Pending&nbsp;&nbsp;</td>
+                        <td class="verAlignMid" style="width:13%;"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Reject</td>
+                    </tr>
+                    <tr>
+                        <td class="verAlignMid">&nbsp;Status&nbsp;&nbsp;</td>
+                        <td class="verAlignMid"><u>Production System</u>&nbsp;:&nbsp;&nbsp;</td>
+                        <td class="verAlignMid"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Accepted&nbsp;&nbsp;</td>
+                        <td class="verAlignMid"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Pending&nbsp;&nbsp;</td>
+                        <td class="verAlignMid"><img class="cssCheckBoxV1" src="@picCheckBoxFalse" />Reject</td>
+                    </tr>
+                    <tr>
+                        <td class="verAlignMid" colspan="5" style="font-size:10px;">
+                            &nbsp;&nbsp;<u>Remark</u> : In the event that the applicant soes not notify the test result with 1 week from the date of delivery of <br />&nbsp;&nbsp;the work,it is considered Accepted.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="verAlignMid" colspan="5" style="font-size:10px;">
+                            &nbsp;&nbsp;<u>หมายเหตุ</u> : กรณีหน่วยงานผู้ขอไม่มีการแจ้งผลการทดสอบภายใน 1 สัปดาห์นับจากวันที่ IT ส่งมอบงาน ถือว่า Accepted
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;vertical-align:top;">
+                <table style="width: 100%;border-collapse: collapse;" class="fontDocSmallV2">
+                    <tr>
+                        <td class="verAlignMid" colspan="3">
+                            &nbsp;Approved by / ผู้อนุมัติดำเนินการ
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="verAlignMid" style="width:30%;">&nbsp;IT Solution</td>
+                        <td class="verAlignMid" style="width:20%;text-align:right;">&nbsp;ลายเซ็น<br /></td>
+                        <td class="verAlignMid" style="width:50%;text-align:center;">@lineUnder</td>
+                    </tr>
+                    <tr>
+                        <td class="verAlignMid">&nbsp;</td>
+                        <td class="verAlignMid" style="text-align:right;">&nbsp;ชื่อ</td>
+                        <td class="verAlignMid" style="text-align:center;">@lineUnder</td>
+                    </tr>
+                    <tr>
+                        <td class="verAlignMid">&nbsp;</td>
+                        <td class="verAlignMid">&nbsp;</td>
+                        <td class="verAlignMid" style="text-align:center;">วันที่ ........./........./.........</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%;border-style: solid;border-width: 1px 0px 0px 0px;border-collapse: collapse;padding-top:3px;">
+                IT-FRM-314-Change Request Form
+            </td>
+            <td style="width:50%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;text-align:right;padding-top:3px;">
+                เอกสารE-actเลขที่ @Model.activityFormModel.activityNo หน้า 1/2
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="page-break-before: always;height:25px;">&nbsp;</div>

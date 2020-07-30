@@ -1,0 +1,115 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Configuration;
+<link href="~/Scripts/bootstrap-select.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-select.min.js"></script>
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr>
+        <td style="">
+            <div class="form-group">
+                <label class="control-label col-md-2 col-xs-12">
+                    Flow Subject :
+                </label>
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "nameTH", 0), "", new
+                   {
+                       @class = "form-control ",
+                       id = "ddlSubject",
+                       onchange = "selectCompanyDropdown();"
+                   })
+                        <script>
+                            $('#ddlSubject').selectpicker({
+                                liveSearch: true,
+                                showSubtext: true
+                            });
+                        </script>
+                        <div style="display:none;">
+                            @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.SubjectId, new SelectList(Model.tB_Reg_Subject, "id", "companyId", 0), "", new
+                            {
+                                @class = "form-control ",
+                                id = "ddlSubjectForGetCompany"
+                            })
+                            <script>
+                                $(document).ready(function () {
+                                    if ($('#ddlSubject').val() != '') {
+                                        getDepartmentFlow();
+                                    }
+                                });
+                                function selectCompanyDropdown() {
+                                    $('#ddlSubjectForGetCompany').val($('#ddlSubject').val());
+                                    //alert($("#ddlSubjectForGetCompany option:selected").text());
+                                    getDepartmentFlow();
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                    <label class="control-label col-md-2 col-xs-12">
+                        Flow Department :
+                    </label>
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="row">
+                            @Html.DropDownListFor(x => x.tB_Act_ActivityForm_DetailOther.departmentIdFlow, new SelectList(Model.listGetDepartmentMaster, "id", "name", ""), "", new
+                       {
+                           @class = "form-control SelectValddlDepartment",
+                           id = "ddlDepartmentFlow"
+                       })
+                            <script>
+                                $('#ddlDepartmentFlow').selectpicker({
+                                    liveSearch: true,
+                                    showSubtext: true
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="row">
+                            &nbsp;
+                        </div>
+                    </div>
+                </div>
+        </td>
+    </tr>
+</table>
+
+<script>
+        function getDepartmentFlow() {
+            var dataToBeSend = {
+                master_type_form_id: '@Model.activityFormTBMMKT.master_type_form_id'
+                , subjectId: $('#ddlSubject').val()
+            };
+             $.ajax('@Url.Action("GetDepartmentMasterBySubjectFlow", "GetDataMainForm")',
+            {
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(dataToBeSend),
+                dataType:'json',
+                type:"POST",
+                success:function(response){
+                    if (response.Data.tbToAjax.length > 0) {
+                        $("#ddlDepartmentFlow option[value!='']").remove();
+                        $.each(response.Data.tbToAjax,function(){
+                            $("#ddlDepartmentFlow").append($("<option></option>").val(this['id']).html(this['name']));
+                            var departmentFromEdit = '@Model.tB_Act_ActivityForm_DetailOther.departmentIdFlow';
+                            if (departmentFromEdit != '') {
+                                $("#ddlDepartmentFlow").selectpicker('val', departmentFromEdit);
+                            }
+                            $("#ddlDepartmentFlow").selectpicker('refresh');
+                        });
+                    }
+                },
+                error:function(data){
+                    alert("Error getDepartmentFlow."+data);
+                }
+            });
+        }
+</script>

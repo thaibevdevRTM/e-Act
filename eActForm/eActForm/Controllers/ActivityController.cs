@@ -9,7 +9,6 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -38,12 +37,12 @@ namespace eActForm.Controllers
 
                 activityModel.productcatelist = QuerygetAllProductCate.getAllProductCate().ToList();
                 activityModel.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
-                    .Where(x => x.activityCondition.Equals("mtm".ToLower()))
+                    .Where(x => x.activityCondition.Contains("mtm".ToLower()))
                     .GroupBy(item => item.activitySales)
                     .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
                 if (UtilsAppCode.Session.User.regionId != "")
                 {
-                    activityModel.regionGroupList = QueryGetAllRegion.getAllRegion().Where(x => x.id == UtilsAppCode.Session.User.regionId).ToList();
+                    activityModel.regionGroupList = QueryGetAllRegion.getRegoinByEmpId(UtilsAppCode.Session.User.empId);
                     activityModel.activityFormModel.regionId = UtilsAppCode.Session.User.regionId;
                 }
                 else
@@ -152,7 +151,7 @@ namespace eActForm.Controllers
                 string statusId = "";
                 Activity_Model activityModel = TempData["actForm" + activityFormModel.id] == null ? new Activity_Model() : (Activity_Model)TempData["actForm" + activityFormModel.id];
                 activityModel.activityFormModel = activityFormModel;
-                 statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
+                statusId = ActivityFormCommandHandler.getStatusActivity(activityFormModel.id);
                 if (statusId == "1" || statusId == "5" || statusId == "")
                 {
                     int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, activityFormModel.id);
@@ -207,7 +206,7 @@ namespace eActForm.Controllers
                 activityModel = (Activity_Model)TempData["actForm" + activityFormModel.id];
                 activityModel.activityFormModel = activityFormModel;
                 activityModel.activityFormModel.activityNo = "";
-                activityModel.activityFormModel.dateDoc = DateTime.Now.ToString("dd-MM-yyyy");
+                activityModel.activityFormModel.dateDoc = DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]);
                 int countSuccess = ActivityFormCommandHandler.insertAllActivity(activityModel, actId);
                 TempData.Keep();
                 result.ActivityId = actId;
@@ -243,9 +242,9 @@ namespace eActForm.Controllers
                     resultFilePath = UploadDirectory;
                     BinaryReader b = new BinaryReader(httpPostedFile.InputStream);
                     httpPostedFile.SaveAs(UploadDirectory);
-                    
+
                     imageFormModel.activityId = actId;
-                    imageFormModel._image = b.ReadBytes(0); 
+                    imageFormModel._image = b.ReadBytes(0);
                     imageFormModel.imageType = "UploadFile";
                     imageFormModel._fileName = _fileName.ToLower();
                     imageFormModel.extension = extension.ToLower();
@@ -325,12 +324,17 @@ namespace eActForm.Controllers
                     var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
                     var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
 
-                    if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
+                    if (QueryGetActivityByIdTBMMKT.getActivityById(activityId).FirstOrDefault().statusId != 3)
                     {
-                        ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                        var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                        if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
+                        {
+                            ApproveAppCode.updateApproveWaitingByRangNo(activityId);
+                            var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                        }
                     }
+
                 }
+                ApproveAppCode.setCountWatingApprove(); // เพิ่มให้อัพเดทเอกสารที่ต้องอนุมัติเลย กรณีผู้สร้างเอกสารต้องอนุมัติด้วยหลังจากส่งอนุมัติหนังสือ fream dev date 20200622
                 resultAjax.Success = true;
                 resultAjax.Message = genDoc[1];
             }
@@ -343,7 +347,7 @@ namespace eActForm.Controllers
             return Json(resultAjax, "text/plain");
         }
 
-       
+
     }
 }
 

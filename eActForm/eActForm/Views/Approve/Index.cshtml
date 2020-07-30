@@ -9,12 +9,10 @@
     var type = Request.QueryString["type"];
 }
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-<script src="~/Scripts/jquery-1.11.2.min.js"></script>
-<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
 <script src="~/Scripts/Approve/RepDetailApproves.js"></script>
 
-<h2>การอนุมัติ</h2>
+<h2>@Resources.Global.approval</h2>
 <hr />
 
 @if (ViewBag.messCannotFindSignature != null)
@@ -22,8 +20,8 @@
     <div class="loading" style="text-align: center;">
         <img src="~/images/warning_error.png" style="margin-top:100px;width:100px;height:100px;" />
         <div style="margin-top: 10px; color: white">
-            <p class="text-danger"><h2>ไม่พบลายเซ็นของคุณในระบบ!!! <br />กรุณาเพิ่มลายเซ็นก่อนอนุมัติเอกสาร</h2></p>
-            @Html.ActionLink("เพิ่มลายเซ็นในระบบ Click", "index", "Signature")
+            <p class="text-danger"><h2>@Resources.Global.dontFoundYourSignatureInSystem !!! <br />@Resources.Global.pleaseInsertYourSignatureBeforeApprovalDocument</h2></p>
+            @Html.ActionLink(Resources.Global.insertYourSignature + " Click", "index", "Signature")
         </div>
 
     </div>
@@ -32,31 +30,37 @@ else
 {
     <div class="row">
         <div class="col-md-4 col-xs-12">
-            <h3>ประวัติการอนุมัติ</h3>
+            <h3>@Resources.Global.approvalHistory</h3>
             <hr />
             @Html.Action("approveLists", "Approve", Model)
         </div>
         <div class="col-md-8 col-xs-12">
-            <h3>เอกสารขออนุมัติ</h3>
+            <h3>@Resources.Global.approvalDocument</h3>
             <hr />
-            @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
-            <div class="col-md-12">
-                <div id="divgetimage" class="col-md-12">
-                    @Html.Action("ImageList", "Activity", new { activityId = actId != null ? actId : "" })
-                </div>
-            </div>
+
+
+
             @using (Ajax.BeginForm("insertApprove", "Approve"
 , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery()", OnSuccess = "successQuery", OnFailure = "failureQuery" }
 , new { id = "formApprove", @class = "form-horizontal form-label-left" }))
             {
                 var item = Model.approveDetailLists.Where(r => r.empId == UtilsAppCode.Session.User.empId).ToList();
-                <h3>อนุมัติ</h3>
+
+                @Html.Action("activityPDFView", "ActivityViewer", new { actId = actId })
+
+
+                <div class="col-md-12">
+                    <div id="divgetimage" class="col-md-12">
+                        @Html.Action("ImageList", "Activity", new { activityId = actId != null ? actId : "" })
+                    </div>
+                </div>
+                <h3>@Resources.Global.approve</h3>
                 <hr />
                 <div class="form-group">
                     <div class="col-md-12 col-xs-12">
                         <div class="row">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlStatus">
-                                เหตุผล(เพิ่มเติม)
+                                @Resources.Global.reason
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
                                 <textarea name="txtRemark" id="txtRemark" class="form-control textboxcss" rows="5" cols="50" required style="border:solid;border-color:#ddd;border-width:thin;">
@@ -91,7 +95,7 @@ else
                     <div class="col-md-12 col-xs-12">
                         <div class="row">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="currentSignature">
-                                ลายเซ็นปัจจุบัน
+                                @Resources.Global.yourSignature
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
                                 @Html.Action("currentSignature", "Signature", new { empId = UtilsAppCode.Session.User.empId })
@@ -102,26 +106,29 @@ else
                 <div class="form-group">
                     <div class="col-md-3 col-sm-3 col-xs-12"></div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        @if (Model.approveModel.statusId != "2")
-                        {
-                            <h4 class="text-danger text-center">
-                                เอกสารฉบับนี้ได้ถูกอนุมัติเรียบร้อยแล้วครับ
-                            </h4>
-                        }
-                        else if (Model.approveModel.isPermisionApprove)
-                        {
-                            <a href="@Url.Action("index", "ApproveLists")" class="btn btn-warning pull-right"><i class="fa fa fa-reply fa-fw"></i>&nbsp;ย้อนกลับ</a>
-                            <button type="button" onclick="return confirmQuery(5);" class="btn btn-danger pull-right"><i class="fa fa fa-close fa-fw"></i>&nbsp;ไม่อนุมัติ</button>
-                            <button type="button" onclick="return confirmQuery(3);" class="btn btn-success pull-right"><i class="fa fa fa-check fa-fw"></i>&nbsp;อนุมัติ</button>
-                        }
-                        else
-                        {
-                            <h4 class="text-danger text-center">
-                                คุณไม่สามารถอนุมัติเอกสารฉบับนี้ได้<br />
-                                เนื่องจากไม่มีรายชื่ออยู่ในการอนุมัติ<br />
-                                @Html.ActionLink(" สอบถามข้อมูลเพิ่มเติม Click ", "contact", "home")
-                            </h4>
-                        }
+                        <div class="text-center">
+                            @if (Model.approveModel.statusId != "2")
+                            {
+                                <h4 class="text-danger text-center">
+                                    เอกสารฉบับนี้ได้ถูกอนุมัติเรียบร้อยแล้ว
+                                </h4>
+                            }
+                            else if (Model.approveModel.isPermisionApprove)
+                            {
+
+                                <button type="button" onclick="return confirmQuery(3);" class="btn btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;@Resources.Global.btnApprove</button>
+                                <button type="button" onclick="return confirmQuery(5);" class="btn btn-danger"><i class="fa fa-times fa-fw"></i>&nbsp;@Resources.Global.btnReject</button>
+                                <a href="@Url.Action("index", "ApproveLists")" class="btn btn-warning"><i class="fa fa fa-reply fa-fw"></i>&nbsp;@Resources.Global.btnBack</a>
+                            }
+                            else
+                            {
+                                <h4 class="text-danger text-center">
+                                    คุณไม่สามารถอนุมัติเอกสารฉบับนี้ได้<br />
+                                    เนื่องจากไม่มีรายชื่ออยู่ในการอนุมัติ<br />
+                                    @Html.ActionLink(" สอบถามข้อมูลเพิ่มเติม Click ", "contact", "home")
+                                </h4>
+                            }
+                        </div>
                     </div>
                 </div>
             }
@@ -161,12 +168,12 @@ else
         $("#lblstatusId").val(statusId);
         $("#ddlStatus").val(statusId);
         if (statusId == "5" && mess == "") {
-            doMsgFail("กรุณาระบุ เหตุผล(เพิ่มเติม) ค่ะ")
+            doMsgFail("กรุณาระบุ เหตุผล(เพิ่มเติม)")
             $("#txtRemark").focus();
             return false;
         }
         else if (statusId == "") {
-            doMsgFail("กรุณาระบุ(สถานะ) ค่ะ")
+            doMsgFail("กรุณาระบุ(สถานะ)")
             $("#ddlStatus").focus();
             return false;
         }
@@ -215,13 +222,13 @@ else
             }
         }else {
             $("#WaitDialog").hide();
-            bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + response.Message);
+            bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin <br/>" + response.Message);
         }
 
     }
 
     function failureQuery(data) {
-        bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
+        bootbox.alert("ไม่สามารถส่งเรื่องอนุมัติได้กรุณาติดต่อ Admin <br/>" + data.responseText);
     }
 
 
@@ -250,39 +257,35 @@ else
 
     function callPreviewApprove(obj) {
 
-        if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
-
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("previewActBudget", "Approve")',
-                data: {
-                    activityId: obj,
-                    typeForm: '@Model.typeForm.ToString()',
-                }
-            }).done(function (htmlResponse) {
-                $("#dataFromPDF").val(htmlResponse);
-                genFileActForm();
-                });
-
-        }
-        else if ('@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvTbmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formPosTbmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formTrvHcmId"]'
-            || '@Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formAdvHcmId"]'
+        if ('@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formBgTbmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formAdvTbmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formTrvTbmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formPosTbmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formTrvHcmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formAdvHcmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["masterEmpExpense"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formExpMedNumId"]'
+            || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formSetPriceMT"]'
+            
         ) {
-
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("index", "MainReport")',
                 data: {
                     activityId: obj,
-                    typeForm: '@Model.typeForm.ToString()',
                 }
             }).done(function (htmlResponse) {
+                //$("#dataFromPDF").val(htmlResponse);//ของเดิม
+                @*//=========ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย====มันจะได้Genถูกต้องสวยงาม====dev date 20200421=====*@
+                $("#newGenReportFromMaster").html(htmlResponse);
+                htmlResponse = $("#divForm").html();
                 $("#dataFromPDF").val(htmlResponse);
+                @*//====END=====ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย=====มันจะได้Genถูกต้องสวยงาม====dev date 20200421======*@
                 genFileActForm();
-                });
+            });
 
         }
         else {
@@ -343,7 +346,7 @@ else
             console.log(reponse);
 
             bootbox.confirm({
-                message: "ดำเนินการเรียบร้อยครับ",
+                message: "ดำเนินการเรียบร้อย",
                 buttons: {
                     confirm: {
                         label: 'OK',
@@ -363,5 +366,7 @@ else
 
 
 </script>
+<div id="newGenReportFromMaster" style="display:none;">
 
+</div>
 

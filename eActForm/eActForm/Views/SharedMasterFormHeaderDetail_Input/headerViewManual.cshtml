@@ -4,22 +4,18 @@
     var strHeader = "";
     if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"])//travelling TBM
     {
-        strHeader = "คำแนะนำการขอเบิกค่าใช้จ่าย";
+        strHeader = Resources.Global.viewManual;
     }
 }
-<tr>
-    <td style="text-align:right;">
-        <div class="form-group">
-            <div class="col-md-12 col-xs-12">
-                <div class="row">
-                    <h4>
-                        <u>
-                            <a href="#" onclick="$('#preview').modal('show');">@strHeader</a>
-                        </u>
-                    </h4>
-                </div>
-            </div>
-        </div>
-        <div style="height:8px;"></div>
-    </td>
-</tr>
+
+<table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
+    <tr>
+        <td style="text-align:right;">
+            <h4>
+                <u>
+                    <a href="#" onclick="$('#preview').modal('show');">@strHeader</a>
+                </u>
+            </h4>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,88 @@
+﻿@using eActForm.Models
+@using eActForm.BusinessLayer
+@using System.Configuration;
+@model eActForm.Models.ImportExcel
+
+<h2>Import Master Hospital</h2>
+
+@using (Html.BeginForm("Index", "ImportMasterHospital", FormMethod.Post, new { enctype = "multipart/form-data", id = "divUpload" }))
+{
+    @Html.TextBoxFor(m => m.file, new { type = "file", id = "fileImport" })
+    <br />
+    <div>
+        &nbsp;<button id="submitButton" type="button" onclick="uploadClicked()">Upload Data Click Here</button>
+    </div>
+    <b style="color:#ff0000">
+        @Html.ValidationMessageFor(model => model.file)
+    </b>
+}
+
+<h2>
+    @if (ViewBag.Error != null)
+    {
+        <b style="color:#ff0000">@Html.Raw(ViewBag.Error)</b>
+    }
+    else
+    {
+        <b style="color:#016427">@ViewBag.Result</b>
+    }
+
+</h2>
+<hr />
+<div>
+    <h2>
+        Download template file upload <a href="~/Uploadfiles/ImportHospital/template/TemplateHospital.xlsx" style="color:blue;">[Click]</a>
+    </h2><br />
+    1.ชื่อชีตต้องใช้ :dataimport<br />
+    2.คอลัมน์ A : ชื่อสถานพยาบาล ห้ามเป็นค่าว่าง<br />
+    3.คอลัมน์ B : จังหวัด ห้ามเป็นค่าว่าง<br />
+    4.คอลัมน์ C : ภาคการขายที่ ระบุ 1-8<br />
+    5.คอลัมน์ D : ประเภทสถานพยาบาล(%)<br />
+    &emsp;&emsp;ระบุ 100 คือ สถานพยาบาลของรัฐบาล ,<br />
+    &emsp;&emsp;ระบุ &nbsp;&nbsp;75 คือ สถานพยาบาลของเอกชนที่บริษัทฯ ทำสัญญา ,<br />
+    &emsp;&emsp;ระบุ &nbsp;&nbsp;50 คือ สถานพยาบาลของเอกชนที่บริษัทฯ ไม่ได้ทำสัญญา  <br />
+    6.คอลัมน์ E : สถานะ  ระบุ 1 คือใช้งาน ,ระบุ 0 คือปิดการใช้งาน<br />
+</div>
+<hr />
+<div>
+    <h2>
+        @using (Html.BeginForm("exportHospital", "ImportMasterHospital", FormMethod.Post))
+        {
+            <lebel>Download สถานพยาบาล ที่มีอยู่ในระบบปัจจุบัน.</lebel>
+            <input type="submit" value="Export" />
+        }
+    </h2>
+</div>
+<div>
+    <h2>
+        @using (Html.BeginForm("exportProvince", "ImportMasterHospital", FormMethod.Post))
+        {
+            <lebel>Download จังหวัด ที่มีอยู่ในระบบปัจจุบัน.</lebel>
+            <input type="submit" value="Export" />
+        }
+    </h2><br />
+</div>
+<script>
+    function uploadClicked() {
+
+        if (document.getElementById("fileImport").files.length == 0) {
+            alert("no files selected");
+        } else {
+            var r = confirm("Please confirm for upload file.");
+            if (r == true) {
+                $("#WaitDialog").show();
+                $("#divUpload").submit();
+            }
+        }
+    }
+    function beginQuery() {
+
+    }
+    function successQuery() {
+
+    }
+    function failureQuery(data) {
+        console.log('fail');
+        console.log(data);
+    }
+</script>

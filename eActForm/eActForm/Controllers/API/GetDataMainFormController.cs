@@ -1,14 +1,12 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.Models;
-using iTextSharp.text;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Hosting;
 using System.Web.Mvc;
-using WebLibrary;
+using System.Configuration;
+using eForms.Models.MasterData;
+using eForms.Presenter.MasterData;
 
 namespace eActForm.Controllers
 {
@@ -144,6 +142,168 @@ namespace eActForm.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetDataEOPaymentVoucher(ObjGetDataEO objGetDataEO)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                if (objGetDataEO.channelId == null) { objGetDataEO.channelId = ""; }
+                if (objGetDataEO.productBrandId == null) { objGetDataEO.productBrandId = ""; }
+                if (objGetDataEO.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"]) { objGetDataEO.master_type_form_id = ConfigurationManager.AppSettings["formBgTbmId"]; }
+
+                List<GetDataEO> tbToAjax = new List<GetDataEO>();
+                tbToAjax = QueryGetSelectMainForm.GetQueryDataEOPaymentVoucher(objGetDataEO);
+
+                var resultData = new
+                {
+                    tbToAjax = tbToAjax.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDataIOPaymentVoucher(ObjGetDataIO objGetDataIO)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                List<GetDataIO> tbToAjax = new List<GetDataIO>();
+                tbToAjax = QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
+
+                var resultData = new
+                {
+                    tbToAjax = tbToAjax.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetDataGLPaymentVoucher(ObjGetDataGL objGetDataGL)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                List<GetDataGL> tbToAjax = new List<GetDataGL>();
+                tbToAjax = QueryGetSelectMainForm.GetQueryDataGLPaymentVoucher(objGetDataGL);
+
+                var resultData = new
+                {
+                    tbToAjax = tbToAjax.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetDataPVPrevious(ObjGetDataPVPrevious objGetDataPVPrevious)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                List<GetDataPVPrevious> tbToAjax = new List<GetDataPVPrevious>();
+                tbToAjax = QueryGetSelectMainForm.GetQueryDataPVPrevious(objGetDataPVPrevious);
+
+                var resultData = new
+                {
+                    tbToAjax = tbToAjax.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDepartmentMaster(objGetDepartmentMaster objGetDepartmentMaster)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                List<departmentMasterModel> tbToAjax = new List<departmentMasterModel>();
+                tbToAjax = departmentMasterPresenter.getdepartmentMaster(AppCode.StrCon, objGetDepartmentMaster.companyId);
+
+                var resultData = new
+                {
+                    tbToAjax = tbToAjax.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDepartmentMasterBySubjectFlow(objGetDepartmentMaster objGetDepartmentMaster)
+        {
+            var result = new AjaxResult();
+            try
+            {
+
+                List<departmentMasterModel> tbToAjax = new List<departmentMasterModel>();
+                tbToAjax = departmentMasterPresenter.getdepartmentMasterBySubjectFlow(AppCode.StrCon, objGetDepartmentMaster.master_type_form_id, objGetDepartmentMaster.subjectId);
+
+                var resultData = new
+                {
+                    tbToAjax = tbToAjax.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDataCheckFileSize(objGetDataCheckUploadFile objGetDataCheckUploadFile)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
+                getImageModel.tbActImageList = ImageAppCode.GetSizeFiles(objGetDataCheckUploadFile.activityId);
+
+                var resultData = new
+                {
+                    tbToAjax = getImageModel.tbActImageList,
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

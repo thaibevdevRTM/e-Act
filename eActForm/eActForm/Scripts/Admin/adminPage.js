@@ -127,7 +127,7 @@
                     }
                 },
                 callback: function (result) {
-                    if (result == true) {
+                    if (result === true) {
                         if (result) {
                             $("#WaitDialog").show();
                             $.ajax({
@@ -207,7 +207,7 @@
                 dataType: "json",
                 type: 'POST',
                 success: function (response) {
-                    if (response.Success == true) {
+                    if (response.Success === true) {
                         console.log($("#ddlProductSmell").val())
                         $adminPage.callInsertOrUpdateProduct("คุณต้องการแก้ไขสินค้า ใช่ หรือ ไม่!", "update");
 
@@ -234,11 +234,11 @@
                     }
                 },
                 callback: function (result) {
-                    if (result == true) {
+                    if (result === true) {
                         console.log(result);
                         bootbox.dialog({ message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
 
-                        if (type == "insert") {
+                        if (type === "insert") {
                             $.ajax({
                                 url: $adminPage.urlAddProduct,
                                 data: {
@@ -295,7 +295,7 @@
 
         onchangePrice: function (cusId, rowIndex) {
 
-            var productId = $('#hdProductCode').val();
+            var p_id = $('#hdId_' + rowIndex).val();
             var p_normalCost = $('#normalCost_' + rowIndex).val();
             var p_wholeSalesPrice = $('#wholeSalesPrice_' + rowIndex).val();
             var p_discount1 = $('#discount1_' + rowIndex).val();
@@ -308,7 +308,7 @@
                 url: $adminPage.urlOnchangePrice,
                 data: {
                     customerId: cusId,
-                    productCode: productId,
+                    id: p_id,
                     normalCost: p_normalCost.replace(",", ""),
                     wholeSalesPrice: p_wholeSalesPrice.replace(",", ""),
                     discount1: p_discount1.replace(",", ""),

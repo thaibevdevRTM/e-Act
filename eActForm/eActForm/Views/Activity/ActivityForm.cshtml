@@ -9,15 +9,10 @@
     ViewBag.Title = "Home Page";
     var mode = Request["mode"] == null ? "" : Request["mode"];
 }
-<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.datetimepicker.full.js"></script>
-<script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <script src="~/Scripts/dropzone/dropzone.min.js"></script>
 <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
-<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-ui.js"></script>
+
 
 <style type="text/css">
 
@@ -76,11 +71,15 @@
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         @if (Model.activityFormModel.documentDate.ToString() != "")
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @readonly = true, autocomplete = "off" })
+                            @*@Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @readonly = true, autocomplete = "off" })*@
+                            @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", @id = "txtdateDoc", @readonly = true, autocomplete = "off" })
                         }
                         else
                         {
-                            @Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd-MM-yyyy"), @readonly = true, autocomplete = "off" })
+                            @*@Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd-MM-yyyy"), @readonly = true, autocomplete = "off" })*@
+                            @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]),
+                           new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now,ConfigurationManager.AppSettings["formatDateUse"]), @readonly = true, autocomplete = "off" })
+
                         }
                     </div>
                 </div>
@@ -276,10 +275,10 @@
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivitySt", autocomplete = "off" })
+                                @Html.TextBox("activityFormModel.activityPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateActivitySt", autocomplete = "off" })
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(x => x.activityFormModel.activityPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateActivityEnd", autocomplete = "off" })
+                                @Html.TextBox("activityFormModel.activityPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.activityPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateActivityEnd", autocomplete = "off" })
                             </div>
                         </div>
                     </div>
@@ -289,10 +288,10 @@
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(x => x.activityFormModel.costPeriodSt, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerSt", autocomplete = "off" })
+                                @Html.TextBox("activityFormModel.costPeriodSt", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodSt, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateCostPerSt", autocomplete = "off" })
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(x => x.activityFormModel.costPeriodEnd, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", id = "txtdateCostPerEnd", autocomplete = "off" })
+                                @Html.TextBox("activityFormModel.costPeriodEnd", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.costPeriodEnd, ConfigurationManager.AppSettings["formatDateUse"]), new { @class = "form-control textboxcss", id = "txtdateCostPerEnd", autocomplete = "off" })
                             </div>
                         </div>
                     </div>
@@ -530,16 +529,16 @@
         //    format: 'dd-mm-yyyy'
         //});
         $("#txtdateActivitySt").datepicker({
-            format: 'dd-mm-yyyy'
+           format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]'
         });
         $("#txtdateActivityEnd").datepicker({
-            format: 'dd-mm-yyyy'
+            format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]'
         });
         $("#txtdateCostPerSt").datepicker({
-            format: 'dd-mm-yyyy'
+           format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]'
         });
         $("#txtdateCostPerEnd").datepicker({
-            format: 'dd-mm-yyyy'
+            format: '@ConfigurationManager.AppSettings["formatDateUseJquery"]'
         });
 
     });
@@ -973,9 +972,10 @@
                         bootbox.alert("กรุณาทำรายการใหม่ เอกสารฉบับนี้ ส่งอนุมัติ ไปแล้ว");
                     }
                     else {
-                           callPreviewData('@Model.activityFormModel.id');
+                        callPreviewData('@Model.activityFormModel.id');
+                      
                     }
-                    $("#WaitDialog").hide();
+                    
                 }
             });
     }
@@ -1261,6 +1261,7 @@
             $("#WaitDialog").hide();
             $("#divPreview").html(htmlResponse)
             $('#previewModal').modal('show');
+             $("#WaitDialog").hide();
         });
     }
 

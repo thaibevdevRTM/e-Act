@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
@@ -37,7 +36,7 @@ namespace eActForm.BusinessLayer
                              });
                 return lists.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("getOtherByType => " + ex.Message);
                 return new List<TB_Act_Other_Model>();

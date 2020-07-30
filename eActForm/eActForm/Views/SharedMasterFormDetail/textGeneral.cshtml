@@ -1,0 +1,11 @@
+﻿@using System.Configuration;
+<div style="height:15px;"></div>
+@{
+    if (@Model.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] ||
+        @Model.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+    {
+        <div class=" fontDocSmall ">
+            <span style="color:red;">*มีการแก้ไขข้อมูลโดย HC</span>
+        </div>
+    }
+}

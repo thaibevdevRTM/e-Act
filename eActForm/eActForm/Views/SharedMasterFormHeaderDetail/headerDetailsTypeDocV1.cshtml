@@ -1,0 +1,13 @@
+﻿@model eActForm.Models.Activity_TBMMKT_Model
+@using eActForm.BusinessLayer;
+@using System.Globalization;
+@using System.Configuration;
+<table style="width:100%;">
+    <tr>
+        <td style="border-style: solid;border-width: 1px 0px 1px 0px; border-collapse: collapse;border-left:none;border-right:none;">
+            <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
+                ขออนุมัติงบประมาณกิจกรรม @Html.DisplayFor(x => x.activityFormModel.activityName, new { @class = "", @id = "txtActivityName" })
+            </div>
+        </td>
+    </tr>
+</table>

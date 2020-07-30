@@ -1,12 +1,15 @@
-﻿using System;
+﻿using eActForm.BusinessLayer.QueryHandler;
+using eActForm.Models;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Configuration;
-using eActForm.Models;
-using Microsoft.ApplicationBlocks.Data;
 using WebLibrary;
+using static eActForm.Models.ApproveFlowModel;
+
 namespace eActForm.BusinessLayer
 {
     public class ApproveFlowAppCode
@@ -104,7 +107,11 @@ namespace eActForm.BusinessLayer
             try
             {
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowIdByActFormId"
+
+                var getMasterType = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault().master_type_form_id;
+                string stor = ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stor
                     , new SqlParameter[] {new SqlParameter("@subId",subId)
                     ,new SqlParameter("@actFormId",actFormId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
@@ -118,14 +125,29 @@ namespace eActForm.BusinessLayer
                     string checkFlowApprove = checkFlowBeforeByActId(actFormId);
                     if (!string.IsNullOrEmpty(checkFlowApprove))
                     {
-                        model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
+                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || (AppCode.hcForm.Contains(getMasterType)))
+                        {
+                            model.flowDetail = getFlowDetailExpense(checkFlowApprove, actFormId);
+                        }
+                        else
+                        {
+                            model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
+                        }
                     }
                     else
                     {
-                        model.flowDetail = getFlowDetail(model.flowMain.id, actFormId);
+                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || (AppCode.hcForm.Contains(getMasterType)))
+                        {
+                            model.flowDetail = getFlowDetailExpense(model.flowMain.id, actFormId);
+                        }
+                        else
+                        {
+                            model.flowDetail = getFlowDetail(model.flowMain.id, actFormId);
+                        }
                     }
 
                 }
+
                 return model;
             }
             catch (Exception ex)
@@ -212,7 +234,20 @@ namespace eActForm.BusinessLayer
                                  statusId = dr["statusId"].ToString(),
                                  remark = dr["remark"].ToString(),
                                  imgSignature = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
+                                 signature = (dr["signature"] == null || dr["signature"] is DBNull) ? new byte[0] : (byte[])dr["signature"],
                              }).ToList();
+
+                if (lists.Any())
+                {
+                    int i = 0;
+                    foreach (var item in lists)
+                    {
+                        string imageBase64Data = Convert.ToBase64String(item.signature);
+                        string imageDataURL = string.Format("data:image/png;base64,{0}", imageBase64Data);
+                        lists[0].urlImg = imageDataURL;
+                        i++;
+                    }
+                }
                 return lists;
             }
             catch (Exception ex)
@@ -274,13 +309,54 @@ namespace eActForm.BusinessLayer
                                  isShowInDoc = (bool)dr["showInDoc"],
                                  description = dr["description"].ToString(),
                                  isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
-                                 bu = dr["empDivisionTH"].ToString()
+                                 bu = dr["empDivisionTH"].ToString(),
+                                 buEN = dr["empDivisionEN"].ToString(),
+                                 empFNameEN = dr["empFNameEN"].ToString(),
+                                 empLNameEN = dr["empLNameEN"].ToString(),
+                                 empPositionTitleEN = dr["empPositionTitleEN"].ToString()
                              }).ToList();
                 return lists;
             }
             catch (Exception ex)
             {
                 throw new Exception("getFlowDetail >>" + ex.Message);
+            }
+        }
+
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailExpense(string flowId, string actId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveDetailExpense"
+                    , new SqlParameter[]{ new SqlParameter("@flowId", flowId)
+                                   , new SqlParameter("@actFormId", actId)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApproveDetail()
+                             {
+                                 id = dr["id"].ToString(),
+                                 rangNo = (int)dr["rangNo"],
+                                 empId = dr["empId"].ToString(),
+                                 empEmail = dr["empEmail"].ToString(),
+                                 empFNameTH = dr["empFNameTH"].ToString(),
+                                 empLNameTH = dr["empLNameTH"].ToString(),
+                                 empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
+                                 approveGroupId = dr["approveGroupId"].ToString(),
+                                 approveGroupName = dr["approveGroupName"].ToString(),
+                                 approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
+                                 isShowInDoc = (bool)dr["showInDoc"],
+                                 description = dr["description"].ToString(),
+                                 isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
+                                 bu = dr["empDivisionTH"].ToString(),
+                                 buEN = dr["empDivisionEN"].ToString(),
+                                 empFNameEN = dr["empFNameEN"].ToString(),
+                                 empLNameEN = dr["empLNameEN"].ToString(),
+                                 empPositionTitleEN = dr["empPositionTitleEN"].ToString()
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFlowDetailExpense >>" + ex.Message);
             }
         }
 
@@ -297,7 +373,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@flowLimitId",model.flowLimitId)
                     ,new SqlParameter("@channelId",model.channelId)
                     ,new SqlParameter("@productBrandId",model.productBrandId)
-                    ,new SqlParameter("@productType",model.productTypeId)});
+                    ,new SqlParameter("@productType",model.productTypeId)
+                    ,new SqlParameter("@empId",model.empId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail()
                              {
@@ -308,10 +385,13 @@ namespace eActForm.BusinessLayer
                                  empFNameTH = dr["empName"].ToString(),
                                  approveGroupId = dr["approveGroupId"].ToString(),
                                  rangNo = int.Parse(dr["rangNo"].ToString()),
+                                 description = dr["description"].ToString(),
                                  isShowInDoc = !string.IsNullOrEmpty(dr["showInDoc"].ToString()) ? bool.Parse(dr["showInDoc"].ToString()) : true,
                                  isApproved = !string.IsNullOrEmpty(dr["isApproved"].ToString()) ? bool.Parse(dr["isApproved"].ToString()) : true,
                              }).ToList();
-                approveFlow_Model.flowDetail = lists.ToList();
+
+                var result = !string.IsNullOrEmpty(model.empId) ? lists.Where(x => x.description == model.empId).ToList() : lists.ToList();
+                approveFlow_Model.flowDetail = result;
                 return approveFlow_Model;
             }
             catch (Exception ex)
@@ -321,5 +401,58 @@ namespace eActForm.BusinessLayer
         }
 
 
+        public static List<TB_Reg_FlowModel> getMainFlowByMasterTypeId(string masterTypeId)
+        {
+            try
+            {
+                List<TB_Reg_FlowModel> regMainFlow = new List<TB_Reg_FlowModel>();
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_get_FlowMainByMasterTypeId"
+                    , new SqlParameter[] { new SqlParameter("@masterTypeId", masterTypeId) });
+                regMainFlow = (from DataRow dr in ds.Tables[0].Rows
+                               select new TB_Reg_FlowModel()
+                               {
+                                   id = dr["id"].ToString(),
+                                   subjectId = dr["subjectId"].ToString(),
+                                   companyId = dr["companyId"].ToString(),
+                                   customerId = dr["customerId"].ToString(),
+                                   productCatId = dr["productCatId"].ToString(),
+                                   productTypeId = dr["productTypeId"].ToString(),
+                                   flowLimitId = dr["flowLimitId"].ToString(),
+                                   channelId = dr["channelId"].ToString(),
+                                   productBrandId = dr["productBrandId"].ToString(),
+                               }).ToList();
+
+                return regMainFlow;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getMainFlowByMasterTypeId >>" + ex.Message);
+            }
+        }
+
+
+        public static List<RequestEmpModel> getEmpByConditon(string subjectId, string limitId, string channelId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmpSettingFlow"
+                    , new SqlParameter[] { new SqlParameter("@subjectId", subjectId)
+                    ,new SqlParameter("@flowLimitId", limitId)
+                    ,new SqlParameter("@channelId", channelId)
+                    });
+                var result = (from DataRow dr in ds.Tables[0].Rows
+                              select new RequestEmpModel
+                              {
+                                  empId = dr["empId"].ToString(),
+                                  empName = dr["empName"].ToString(),
+                              }).ToList();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getEmpByConditon >>" + ex.Message);
+            }
+        }
     }
 }

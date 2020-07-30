@@ -1,11 +1,16 @@
-﻿using System;
+﻿using eActForm.Models;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.ApplicationBlocks.Data;
-using eActForm.Models;
+using Org.BouncyCastle.Asn1.Ocsp;
+using System.Configuration;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System.Web;
+
 namespace eActForm.BusinessLayer
 {
     public class DocumentsAppCode
@@ -37,7 +42,7 @@ namespace eActForm.BusinessLayer
                              }).ToList();
                 return lists;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -140,6 +145,107 @@ namespace eActForm.BusinessLayer
             }
 
             return BahtText;
+        }
+
+        public static bool checkLanguageDoc(string cultureDoc, string culture, int statusId)
+        {
+
+            //เพื่อเช็คการใช้ภาษาในหน้า input form
+            string cultureLocal = "";
+            if (HttpContext.Current != null)
+            {
+                cultureLocal = HttpContext.Current.Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString();
+            }
+            else
+            {
+                //เกิดกรณี approve เรียก fn ผ่าน API ใช้ Cookies ไม่ได้
+                cultureLocal = cultureDoc;
+            }
+
+            //   Resources.Global.cultureLocal; 
+            //   Resources.Global.cultureLocal ;
+            bool chk = false;
+            try
+            {
+
+                if (HttpContext.Current != null && checkModeEdit(statusId))
+                {
+                    //ถ้าเป็นโหมดแก้ไขได้ ใช้ภาษาเครื่อง
+                    if (culture == cultureLocal) chk = true;
+                }
+                else
+                {
+
+                    //แก้ไขไม่ได้ต้องใช้ภาษาใน DB
+                    if (culture == cultureDoc) chk = true;
+
+                }
+
+                //if (culture == "en-US")
+                //{ chk = true; }
+
+                //DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActIDUseEng"
+                //    , new SqlParameter[] { new SqlParameter("@activityId", activityId) });
+                //if (ds.Tables[0].Rows.Count > 0) chk = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return chk;
+        }
+
+        public static bool checkModeEdit(int statusId, string formTYpeId = "")
+        {
+            bool chk = true; //แก้ไขได้
+
+            try
+            {
+
+
+
+                if ((statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM == false || formTYpeId == ConfigurationManager.AppSettings["formExpTrvNumId"])) || (statusId == 3))
+                {
+                    chk = false;//แก้ไข้ไม่ได้
+                }
+                else
+                {
+                    chk = true;
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return chk;
+        }
+        public static void setCulture(string culture)
+        {
+            if (culture == "" || culture == null)
+            {
+                culture = ConfigurationManager.AppSettings["cultureThai"]; // base Language
+            }
+
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+        }
+        public static string convertDateTHToShowCultureDateEN(DateTime? dateToShow, string formatDatetime)
+        {
+            string valResult = "";
+            if (dateToShow != null)
+            {
+                valResult = dateToShow.Value.ToString(formatDatetime, new CultureInfo(ConfigurationManager.AppSettings["cultureEng"], true));
+            }
+            return valResult;
+        }
+
+        public static string formatValueSelectEO_PVForm(string activityIdEO, string EO)
+        {
+            string valResult = (activityIdEO+"|"+ EO);
+            return valResult;
         }
 
     }

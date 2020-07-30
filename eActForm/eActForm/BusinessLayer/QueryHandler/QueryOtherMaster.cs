@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer.QueryHandler
@@ -44,5 +43,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                 return new List<TB_Act_Other_Model>();
             }
         }
+
+
     }
 }
