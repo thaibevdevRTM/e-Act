@@ -7,7 +7,7 @@ namespace eActForm.BusinessLayer
 {
     public class SearchAppCode
     {
-        public static SearchActivityModels getMasterDataForSearchForDetailReport(string typeForm)
+        public static SearchActivityModels getMasterDataForSearchForDetailReport()
         {
             try
             {
@@ -21,7 +21,7 @@ namespace eActForm.BusinessLayer
                     productTypelist = QuerygetAllProductCate.getProductTypeByEmpId(),
                     activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
                    .GroupBy(item => item.activitySales)
-                   .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList()
+                   .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales , activityCondition = grp.FirstOrDefault().activityCondition }).ToList()
                 };
                 return models;
             }

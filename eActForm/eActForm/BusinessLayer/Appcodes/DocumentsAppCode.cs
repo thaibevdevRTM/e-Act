@@ -20,6 +20,20 @@ namespace eActForm.BusinessLayer
             try
             {
                 string stored = typeForm == Activity_Model.activityType.MT.ToString() ? "usp_GetActivityRepDetailAll" : "usp_GetActivityRepDetailOMTAll";
+                switch (typeForm)
+                {
+                    case "MT":
+                        stored = "usp_GetActivityRepDetailAll"; 
+                        break;
+                    case "OMT":
+                        stored = "usp_GetActivityRepDetailOMTAll";
+                        break;
+                    default:
+                        stored = "usp_GetActivityRepDetailSetPriceAll";
+                        break;
+                }
+
+
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored);
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new DocumentsModel.actRepDetailModel()

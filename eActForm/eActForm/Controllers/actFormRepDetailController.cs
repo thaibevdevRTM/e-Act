@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Models.Forms;
 using iTextSharp.text;
@@ -23,7 +24,9 @@ namespace eActForm.Controllers
         public ActionResult Index(string typeForm)
         {
             ViewBag.TypeForm = typeForm;
+            var condition = QueryOtherMaster.getOhterMaster("Abbreviations", typeForm).FirstOrDefault();
             SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            models.activityGroupList = models.activityGroupList.Where(x => x.activityCondition.ToLower().Contains(condition.val1)).ToList();
             models.showUIModel = new searchParameterFilterModel();
             
 
@@ -35,9 +38,6 @@ namespace eActForm.Controllers
             {
                 models.customerslist = QueryGetAllCustomers.getAllRegion();
             }
-
-
-
 
             models.approveStatusList.Add(new ApproveModel.approveStatus()
             {

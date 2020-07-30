@@ -48,6 +48,7 @@
             @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 <li>@Html.ActionLink(" Report Detail MT", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.MT.ToString() }, null)</li>
+                <li>@Html.ActionLink(" Report Detail SetPrice", "reportDetail", "Documents", new { typeForm = Activity_Model.activityType.SetPrice.ToString() }, null)</li>
 
             }
             @if (UtilsAppCode.Session.User.isAdminOMT || UtilsAppCode.Session.User.isSuperAdmin)

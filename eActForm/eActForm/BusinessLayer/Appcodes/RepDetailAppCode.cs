@@ -223,7 +223,20 @@ namespace eActForm.BusinessLayer
                 DataSet ds = new DataSet();
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminOMT)
                 {
-                    string stored = typeForm == Activity_Model.activityType.MT.ToString() ? "usp_getReportDetailByCreateDate" : "usp_getReportDetailOMTByCreateDate";
+                    string stored = "";
+                    if (typeForm == Activity_Model.activityType.MT.ToString())
+                    {
+                        stored = "usp_getReportDetailByCreateDate";
+                    }
+                    else if (typeForm == Activity_Model.activityType.OMT.ToString())
+                    {
+                        stored = "usp_getReportDetailOMTByCreateDate";
+                    }
+                    else
+                    {
+                        stored = "usp_getReportDetailSetPriceByCreateDate";
+                    }
+
                     ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored
                     , new SqlParameter[] {
                         new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
