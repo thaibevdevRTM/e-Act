@@ -6,20 +6,12 @@
         var checkedValue = document.getElementById("chkMultiPrice").checked;
         if (checkedValue == true) {
             $('#preview').modal('show');
-
+            //เคลียร์ data เมื่อคลิกใหม่
         } else {
+            setElement("0");
             $('#preview').modal('hide');
-            $("#txtUnitPrice_1").val($("#ProductDetail_1").val());
-            document.getElementById("txtUnitPrice_1").readOnly = false;
-            $("#MultiPrice_1").val("");
-            $("#txtUnit_1").val(0);
-            document.getElementById("txtUnit_1").readOnly = false;
-            $("#txtTotal_1").val(0.00);
-
         }
     }
-
-
 
     function callMultiPrice() {
        // var checkedValue = document.getElementById("chkMultiPrice").checked;
@@ -27,19 +19,11 @@
         var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
 
         if (v_total > 0) {
-            document.getElementById("txtUnit_1").readOnly = true;
-            document.getElementById("chkMultiPrice").checked = true;
-            $("#txtUnitPrice_1").val();
-            document.getElementById("txtUnitPrice_1").readOnly = true;
+
+            setElement("1");
         } else {
-            $("#MultiPrice_1").val("");
-            document.getElementById("chkMultiPrice").checked = false;
-            $("#txtUnitPrice_1").val($("#ProductDetail_1").val());
-            document.getElementById("txtUnitPrice_1").readOnly = false;
-            $("#txtUnit_1").val(0);
-            document.getElementById("txtUnit_1").readOnly = false;
 
-
+            setElement("0");
         }
 
         //if (checkedValue == true) {
@@ -53,33 +37,59 @@
     }
 
 
-        function sumData() {
-            var multiPrice = "";
-            var totalUnit = 0;
-            var rowCount = '@Model.expensesDetailSubModel.costDetailLists.Count';
+    function sumData() {
+        var multiPrice = "";
+        var totalUnit = 0;
+        var totalVat = 0.00;
+        var rowCount = '@Model.expensesDetailSubModel.costDetailLists.Count';
 
-            for (i = 0; i < rowCount; i++) {
+        for (i = 0; i < rowCount; i++) {
 
-                var rowtotal = parseInt($("#txtSubUnit_" + i.toString()).val().replace(",", ""));
-                totalUnit = totalUnit + rowtotal;
-                if (parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) > 0) {
-                    multiPrice = multiPrice + (parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) + parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", ""))).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "|";
-                }
+            var rowtotal = parseInt($("#txtSubUnit_" + i.toString()).val().replace(",", ""));
+            totalUnit = totalUnit + rowtotal;
+            totalVat = totalVat + parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", ""));
+            if (parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) > 0) {
+                multiPrice = multiPrice + (parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) + parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", ""))).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "|";
             }
-            multiPrice = multiPrice.substring(0, multiPrice.length - 1);
-
-
-            $("#MultiPrice_1").val( multiPrice);
-            document.getElementById('MultiPrice_1').innerHTML = "(" + multiPrice + ")";
-            $("#txtUnit_1").val(totalUnit);
-
-
-            $("#txtUnitPrice_1").val("");
-            document.getElementById("txtUnitPrice_1").readOnly = true;
-            var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
-            $("#txtTotal_1").val(v_total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-            $('#preview').modal('hide');
         }
+        multiPrice = multiPrice.substring(0, multiPrice.length - 1);
+
+        $("#MultiPrice_1").val(multiPrice);
+        document.getElementById('MultiPrice_1').innerHTML = "(" + multiPrice + ")";
+        $("#txtUnit_1").val(totalUnit);
+
+        var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
+        $("#txtTotal_1").val(v_total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        $("#txtVat_1").val(totalVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        $('#preview').modal('hide');
+
+        setElement("1");
+    }
+
+    function setElement(chkMultiPrice) {
+        if (chkMultiPrice == "1") {
+            $("#txtUnitPrice_1").val("");
+
+            document.getElementById("txtUnitPrice_1").readOnly = true;
+            document.getElementById("txtVat_1").readOnly = true;
+            document.getElementById("txtUnit_1").readOnly = true;
+            document.getElementById("chkMultiPrice").checked = true;
+
+        } else {
+            document.getElementById("chkMultiPrice").checked = false;
+            document.getElementById("txtUnitPrice_1").readOnly = false;
+            document.getElementById("txtUnit_1").readOnly = false;
+            document.getElementById("txtUnitPrice_1").readOnly = false;
+            document.getElementById("txtVat_1").readOnly = false;
+            document.getElementById('MultiPrice_1').innerHTML = "";
+            $("#txtUnitPrice_1").val($("#ProductDetail_1").val());
+            $("#txtUnit_1").val("0");
+            $("#txtVat_1").val("0.00");
+            $("#txtTotal_1").val("0.00");
+        }
+
+    }
+
 </script>
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
@@ -101,7 +111,7 @@
                             จำนวน/วัน
                         </th>
                         <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            รหัสบัญชี(GL)
+                            ภาษีซื้อ Vat (บาท)
                         </th>
                         <th style="width: 11%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             ราคา/หน่วย(บาท)
@@ -124,8 +134,8 @@
                                             <label>@item.listChoiceName</label>
 
                                             <a onclick=" $('#preview').modal('show');" style="width: 100%">
-                                                <label  id="MultiPrice_@index" style=" text-decoration:underline; cursor:pointer"/>
-                                                    @*<input type="text" id="MultiPrice_@index" readonly style=" color:darkblue; border:hidden; text-align:center;" />*@
+                                                <label id="MultiPrice_@index" style=" text-decoration:underline; cursor:pointer" />
+                                                @*<input type="text" id="MultiPrice_@index" readonly style=" color:darkblue; border:hidden; text-align:center;" />*@
                                             </a>
                                         </div>
                                     </div>
@@ -192,19 +202,27 @@
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
 
-                                @if (item.listChoiceId != AppCode.Expenses.Allowance)
+                                @*@if (item.listChoiceId != AppCode.Expenses.Allowance)
+                                    {
+                                        <input type="text" value="@item.glCode" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" readonly />
+
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" value="" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" min="0" class="form-control textboxcss text-center " />
+
+                                    }*@
+
+                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense || item.listChoiceId == AppCode.Expenses.planeExpense)
                                 {
-                                    @*<input type="text" value="xxxxxxxxx" id="txtUnit_@index" class="form-control textboxcss text-center " />*@
-                                    <input type="text" value="@item.glCode" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" readonly />
+                                    <input type="text" value="@item.glCode" id="txtVat_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" />
 
                                 }
                                 else
                                 {
-                                    <input type="hidden" value="" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" min="0" class="form-control textboxcss text-center " />
+                                    <input type="hidden" value="" id="txtVat_@index" name="expensesDetailModel.costDetailLists[@index].glCode" min="0" class="form-control textboxcss text-center " />
 
                                 }
-
-
 
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
@@ -346,7 +364,7 @@
                         </th>
 
                         <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            vat(บาท)
+                            ภาษีซื้อ Vat (บาท)
                         </th>
                         <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             รวม(บาท)
@@ -426,16 +444,16 @@
 
                 <script>
 
-                            function sumSubAll() {
-                                var totalAll = 0.00;
-                                var rowCount = '@Model.expensesDetailSubModel.costDetailLists.Count';
+                    function sumSubAll() {
+                        var totalAll = 0.00;
+                        var rowCount = '@Model.expensesDetailSubModel.costDetailLists.Count';
 
-                                for (i = 0; i < rowCount; i++) {
-                                    var rowtotal = parseFloat($("#hdSubTotal_" + i.toString()).val().replace(",", ""));
-                                    totalAll = totalAll + rowtotal;
-                                }
-                                $("#totalSubEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                $("#totalSubEstimate").val(totalAll);
+                        for (i = 0; i < rowCount; i++) {
+                            var rowtotal = parseFloat($("#hdSubTotal_" + i.toString()).val().replace(",", ""));
+                            totalAll = totalAll + rowtotal;
+                        }
+                        $("#totalSubEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#totalSubEstimate").val(totalAll);
                     }
                     sumSubAll();
                 </script>

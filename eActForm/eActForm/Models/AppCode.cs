@@ -92,6 +92,8 @@ namespace eActForm.Models
             public const string Allowance = "06FF853F-EBB0-48E8-9620-520D0B8F6E0C";
             public const string Medical = "6BB0F68F-4B07-4E00-9B1E-B776D003D992";
             public const string hotelExpense = "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1";
+            public const string planeExpense = "F34854F6-B91F-4C9E-A4BD-C181199B8E4F";
+
         }
 
 
