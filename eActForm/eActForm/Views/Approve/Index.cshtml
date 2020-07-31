@@ -141,7 +141,9 @@ else
     <div id="divPreviewApprove">
     </div>
 </div>
-<input id="dataFromPDF" type="hidden" />
+<div id="dataFromPDF" style="display:none;">
+</div>
+
 <script>
 
     $(document).ready(function () {
@@ -269,7 +271,7 @@ else
             || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]'
             || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formExpMedNumId"]'
             || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formSetPriceMT"]'
-            
+
         ) {
             $.ajax({
                 type: 'POST',
@@ -282,7 +284,7 @@ else
                 @*//=========ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย====มันจะได้Genถูกต้องสวยงาม====dev date 20200421=====*@
                 $("#newGenReportFromMaster").html(htmlResponse);
                 htmlResponse = $("#divForm").html();
-                $("#dataFromPDF").val(htmlResponse);
+                $("#dataFromPDF").html(htmlResponse);
                 @*//====END=====ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย=====มันจะได้Genถูกต้องสวยงาม====dev date 20200421======*@
                 genFileActForm();
             });
@@ -299,7 +301,7 @@ else
             }).done(function (htmlResponse) {
                 //$("#divPreviewApprove").html(htmlResponse);
                 //$("#WaitDialog").hide();
-                $("#dataFromPDF").val(htmlResponse);
+                $("#dataFromPDF").html(htmlResponse);
                 genFileActForm();
             });
 
@@ -335,7 +337,7 @@ else
         $.ajax({
             url: '@Url.Action("doApprove", "ApiApprove")',
             data: {
-                gridHtml: $("#dataFromPDF").val(),
+                gridHtml: $("#dataFromPDF").html(),
                 statusId: $("#ddlStatus").val(),
                 activityId: '@actId' //$("#HdId").val()
             },
