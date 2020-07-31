@@ -360,7 +360,12 @@ namespace eActForm.Models
                 {
                     result = "error" + exc.Message;
                     //ExceptionManager.WriteError(exc.Message + ">> mergePDF >> CopyError"); // backgroud can't write error 
-                    throw new Exception(">> mergePDF >> CopyError >> " + exc.Message); 
+                    EmailAppCodes.sendEmailWithActId("activityId"
+                    , ConfigurationManager.AppSettings["emailForDevelopSite"]
+                    , ""
+                    , "eAct ApiApprove mergePDF Error"
+                    ,  ex.Message
+                    , null);
                 }
             }
             return result;
