@@ -121,7 +121,8 @@ namespace eActForm.Models
                 GridBuilder.Append("</html>");
 
                 // Replace 
-                GridBuilder = GridBuilder.Replace("signa\">", "signa\"/>");
+                GridBuilder = GridBuilder.Replace("signa>", "signa/>"); 
+                GridBuilder = GridBuilder.Replace("signa\">", "signa\"/>"); 
 
                 GridBuilder.Append(sw.ToString());
 
