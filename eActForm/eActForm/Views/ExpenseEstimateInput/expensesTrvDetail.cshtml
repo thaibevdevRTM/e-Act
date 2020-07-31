@@ -13,7 +13,9 @@
             document.getElementById("txtUnitPrice_1").readOnly = false;
             $("#MultiPrice_1").val("");
             $("#txtUnit_1").val(0);
+            document.getElementById("txtUnit_1").readOnly = false;
             $("#txtTotal_1").val(0.00);
+
         }
     }
 
@@ -25,16 +27,17 @@
         var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
 
         if (v_total > 0) {
-
+            document.getElementById("txtUnit_1").readOnly = true;
             document.getElementById("chkMultiPrice").checked = true;
             $("#txtUnitPrice_1").val();
             document.getElementById("txtUnitPrice_1").readOnly = true;
-
         } else {
             $("#MultiPrice_1").val("");
             document.getElementById("chkMultiPrice").checked = false;
             $("#txtUnitPrice_1").val($("#ProductDetail_1").val());
             document.getElementById("txtUnitPrice_1").readOnly = false;
+            $("#txtUnit_1").val(0);
+            document.getElementById("txtUnit_1").readOnly = false;
 
 
         }

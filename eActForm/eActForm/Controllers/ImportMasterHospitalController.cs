@@ -302,7 +302,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllHospital => " + ex.Message);
+                ExceptionManager.WriteError("getHospitalId => " + ex.Message);
             }
             return hospitalId;
         }
