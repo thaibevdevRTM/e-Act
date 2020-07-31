@@ -1,4 +1,5 @@
-﻿using iTextSharp.text;
+﻿using eActForm.BusinessLayer;
+using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
 using Microsoft.ApplicationBlocks.Data;
@@ -146,7 +147,13 @@ namespace eActForm.Models
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview");
+                //ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview"); backgroud can't write error
+                EmailAppCodes.sendEmailWithActId("activityId"
+                    , ConfigurationManager.AppSettings["emailForDevelopSite"]
+                    , ""
+                    , "eAct ApiApprove Error GetFileReportTomail_Preview"
+                    , GridHtml + " " + ex.Message
+                    , null);
                 ms.Dispose();
                 return ms;
             }
