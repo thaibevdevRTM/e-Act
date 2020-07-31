@@ -34,7 +34,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("QueryGetAllHospital.getAllHospital => " + ex.Message);
+                ExceptionManager.WriteError("getAllHospital => " + ex.Message);
                 return new List<HospitalModel>();
             }
         }
