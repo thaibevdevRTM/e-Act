@@ -34,7 +34,7 @@ namespace eActForm.BusinessLayer.QueryHandler
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllPrice => " + ex.Message);
+                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
                 return new List<TB_Act_Region_Model>();
             }
         }
@@ -59,7 +59,7 @@ namespace eActForm.BusinessLayer.QueryHandler
             }
             catch (Exception ex)
             {
-                throw new Exception("getcustomerRoleByEmpId >> " + ex.Message);
+                throw new Exception("getRegoinByEmpId >> " + ex.Message);
             }
         }
     }

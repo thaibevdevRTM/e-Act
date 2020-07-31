@@ -28,7 +28,7 @@ namespace eActForm.BusinessLayer.QueryHandler
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getTypeReportByTypeFormId => " + ex.Message);
+                ExceptionManager.WriteError("getReportTypeByTypeFormId => " + ex.Message);
                 return new List<ReportTypeModel>();
             }
         }
@@ -69,7 +69,7 @@ namespace eActForm.BusinessLayer.QueryHandler
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getTypeReportByTypeFormId => " + ex.Message);
+                ExceptionManager.WriteError("getReportMedIndividualDetail => " + ex.Message);
                 return new List<MedIndividualDetail>();
             }
         }
