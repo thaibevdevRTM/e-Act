@@ -41,6 +41,7 @@ namespace eActForm.Controllers
                         unit = 0,
                         unitPrice = 0,
                         total = 0,
+                        vat =0,
                         displayType = lst[i].displayType,
                         subDisplayType = lst[i].subDisplayType,
                         glCode = "",

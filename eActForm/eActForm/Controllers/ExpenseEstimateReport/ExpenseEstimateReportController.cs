@@ -55,7 +55,7 @@ namespace eActForm.Controllers
                         listChoiceName = model2.costDetailLists[i].listChoiceName,
                         productDetail = model2.costDetailLists[i].productDetail,
                         unit = model2.costDetailLists[i].unit,
-                        unitPrice = model2.costDetailLists[i].unitPrice,
+                        unitPrice = model2.costDetailLists[i].unitPrice+ model2.costDetailLists[i].vat,
                         total = model2.costDetailLists[i].total,
                         displayType = model2.costDetailLists[i].displayType,
                         subDisplayType = model2.costDetailLists[i].subDisplayType,

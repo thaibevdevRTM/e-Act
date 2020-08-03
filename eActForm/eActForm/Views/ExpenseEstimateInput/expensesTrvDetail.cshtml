@@ -231,7 +231,7 @@
                                 }
                                 else
                                 {
-                                    <input type="hidden" value="" id="txtVat_@index" name="expensesDetailModel.costDetailLists[@index].glCode" min="0" class="form-control textboxcss text-center " />
+                                    <input type="hidden" value="0" id="txtVat_@index" name="expensesDetailModel.costDetailLists[@index].vat" min="0" class="form-control textboxcss text-center " />
 
                                 }
 
@@ -266,7 +266,7 @@
                                             v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
                                         }
                                         if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                            v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", "")) + parseFloat($("#txtVat_@indexSub").val().replace(",", ""));
+                                            v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", "")) + parseFloat($("#txtVat_@index").val().replace(",", ""));
                                         }
                                         v_totalRow = (v_unitRow * v_unitpriceRow);
                                         $("#hdTotal_@index").val(v_totalRow.toFixed(2));

@@ -85,6 +85,8 @@ namespace eActForm.BusinessLayer
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                                   createdByUserId = d["createdByUserId"].ToString(),
                                   glCode = d["glCode"].ToString(),
+                                  vat = d["vat"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["vat"].ToString())),
+
                               });
 
                 return result.ToList();
@@ -119,6 +121,8 @@ namespace eActForm.BusinessLayer
                                   createdByUserId = d["createdByUserId"].ToString(),
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
+                                  vat = d["vat"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["vat"].ToString())),
+
                               });
 
                 return result.ToList();
