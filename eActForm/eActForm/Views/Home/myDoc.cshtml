@@ -363,6 +363,10 @@
     </div>
 </div>
 
+<div id="newGenReportFromMaster" style="display:none;">
+
+</div>
+
 <script>
     $(document).ready(function () {
         $('#datatable').DataTable({
@@ -425,11 +429,11 @@
 
 
     function genPdf(actId, statusId, htmlResponse) {
-        console.log(htmlResponse);
+        $("#newGenReportFromMaster").html(htmlResponse);
         $.ajax({
             url: '@Url.Action("genPdfApprove", "Documents")',
             data: {
-                GridHtml: htmlResponse,
+                GridHtml: $("#divForm").html(),
                 statusId: statusId,
                 activityId: actId,
             },

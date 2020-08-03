@@ -142,6 +142,10 @@ else
     </div>
 </div>
 
+<div id="newGenReportFromMaster" style="display:none;">
+
+</div>
+
 <script>
 
     $(document).ready(function () {
@@ -323,10 +327,11 @@ else
     }
 
     function genFileActForm(htmlResponse) {
+        $("newGenReportFromMaster").html(htmlResponse);
         $.ajax({
             url: '@Url.Action("doApprove", "ApiApprove")',
             data: {
-                gridHtml: htmlResponse,
+                gridHtml: $("divForm").html(),
                 statusId: $("#ddlStatus").val(),
                 activityId: '@actId' //$("#HdId").val()
             },
