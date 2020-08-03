@@ -181,9 +181,10 @@
                 <input type="hidden" value="@item.normalCost" id="activityOfEstimateList[@index].normalCost" name="activityOfEstimateList[@index].normalCost" class="form-control textboxcss text-right hidnormalCost_@index" />
                 @Html.TextBoxFor(x => item.normalCost, "{0:n2}", new { @id = "activityOfEstimateList[" + index + "].normalCost", Name = "activityOfEstimateList[" + index + "].normalCost", @class = "form-control textboxcss text-right txtnormalCost_" + index })
                 <script>
-                     $(".txtnormalCost_@index").blur(function () {
+                    $(".txtnormalCost_@index").blur(function () {
                          calCulateAll();
-                         $(".hidnormalCost_0").val($(".txtnormalCost_0").val());
+                        //$(".hidnormalCost_0").val($(".txtnormalCost_0").val().replaceAll(",", ""));
+                        //$(".txtnormalCost_0").val($(".txtnormalCost_0").val().replaceAll(",", ""));
                         });
                 </script>
             </td>
@@ -282,6 +283,7 @@
                 var rownormalCost = parseFloat($(".txtnormalCost_" + i.toString()).val().replaceAll(",", ""));
                 $(".hidnormalCost_" + i.toString()).val(rownormalCost.toFixed(2));
                 normalCostAll = normalCostAll + rownormalCost;
+                $(".txtnormalCost_" + i.toString()).val(rownormalCost.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
             }
         }
         $("#hdtotalnormalCostEstimate").val(normalCostAll);
