@@ -7742,6 +7742,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/MainReport/Index.cshtml">
       <publishTime>07/31/2020 16:17:18</publishTime>
     </File>
+    <File Include="Views/MainReport/ReportIndex.cshtml">
+      <publishTime>07/29/2020 15:47:33</publishTime>
+    </File>
     <File Include="Views/MainReport/ReportPettyCashNum.cshtml">
       <publishTime>07/29/2020 14:50:47</publishTime>
     </File>
@@ -7864,6 +7867,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/partialSaleTeam/index.cshtml">
       <publishTime>06/09/2020 16:26:12</publishTime>
+    </File>
+    <File Include="Views/ReportHc/listMedRpt.cshtml">
+      <publishTime>07/29/2020 15:47:33</publishTime>
+    </File>
+    <File Include="Views/ReportHc/mainSearchRpt.cshtml">
+      <publishTime>07/29/2020 15:47:33</publishTime>
     </File>
     <File Include="Views/SaleActual/Sale.cshtml">
       <publishTime>11/12/2019 14:57:42</publishTime>

@@ -59,7 +59,26 @@ namespace eForms.Presenter.MasterData
                 throw new Exception("getdepartmentMasterBySubjectFlow >>" + ex.Message);
             }
         }
-
+        public static List<departmentMasterModel> getdepartmentByCompId(string strConn, string compId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, "usp_getDepartmentByCompId"
+                    , new SqlParameter("@compId", compId));
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new departmentMasterModel()
+                             {
+                                
+                                 name = dr["empDepartmentEN"].ToString(),
+                                
+                             }).ToList();
+                return lists;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getdepartmentMasterBySubjectFlow >>" + ex.Message);
+            }
+        }
 
     }
 }

@@ -40,7 +40,10 @@
 
 
             }
-
+            @if (UtilsAppCode.Session.User.isAdminNUM || UtilsAppCode.Session.User.isSuperAdmin)
+            {
+            <li>@Html.ActionLink(" Report Medical", "ReportIndex", "MainReport", new { typeForm = Activity_Model.activityType.HCForm.ToString(), typeFormId = ConfigurationManager.AppSettings["formExpMedNumId"] }, null)</li>
+            }
         </ul>
     </li>
 }
