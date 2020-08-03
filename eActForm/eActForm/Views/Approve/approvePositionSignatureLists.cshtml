@@ -84,36 +84,36 @@
                         countisShowInDoc++;
                         if (countisShowInDoc <= 5)
                         {
-                <td style="width:140px;">
-                    @{ if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
-                        {
-                            <div class="fontSigV1">
-                                @item.approveGroupName
-                            </div>
-                            <div class="fontSigV1">
-                                (@item.approveGroupNameEN)
-                            </div>
-                        }
-                        else if (AppCode.hcForm.Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) && item.approveGroupId == "6074ADC7-F1E4-4544-8A65-AE9113E29999")
-                        {
-                            <div style="font-size:12.5px;">
-                                ผู้ลงนาม
-                            </div>
-                            <div style="font-size:12.5px;">
-                                (Endorser)
-                            </div>
-                        }
-                        else
-                        {
-                            <div style="font-size:12.5px;">
-                                @item.approveGroupName
-                            </div>
-                            <div style="font-size:12.5px;">
-                                (@item.approveGroupNameEN)
-                            </div>
-                        }
-                    }
-                </td>
+                            <td style="width:140px;">
+                                @{ if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
+                                    {
+                                        <div class="fontSigV1">
+                                            @item.approveGroupName
+                                        </div>
+                                        <div class="fontSigV1">
+                                            (@item.approveGroupNameEN)
+                                        </div>
+                                    }
+                                    else if (AppCode.hcForm.Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) && item.approveGroupId == "6074ADC7-F1E4-4544-8A65-AE9113E29999")
+                                    {
+                                        <div style="font-size:12.5px;">
+                                            ผู้ลงนาม
+                                        </div>
+                                        <div style="font-size:12.5px;">
+                                            (Endorser)
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div style="font-size:12.5px;">
+                                            @item.approveGroupName
+                                        </div>
+                                        <div style="font-size:12.5px;">
+                                            (@item.approveGroupNameEN)
+                                        </div>
+                                    }
+                                }
+                            </td>
                         }
                     }
                 }
@@ -138,7 +138,7 @@
                                     if (itemFlowByDoc.empId == item.empId && itemFlowByDoc.statusId == "3" && itemFlowByDoc.rangNo == item.rangNo)
                                     {
                                         <td height="85">
-                                            <img style="text-align:center;" width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@itemFlowByDoc.empId)" alt="signa"/>
+                                            <img style="text-align:center;" width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@itemFlowByDoc.empId)" alt="signa" />
                                         </td>
                                         writeoneHit += 1;
                                     }
@@ -255,6 +255,15 @@
                                             (@item.approveGroupNameEN)
                                         </div>
                                     }
+                                    else if (AppCode.hcForm.Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) && item.approveGroupId == "6074ADC7-F1E4-4544-8A65-AE9113E29999")
+                                    {
+                                        <div style="font-size:12.5px;">
+                                            ผู้ลงนาม
+                                        </div>
+                                        <div style="font-size:12.5px;">
+                                            (Endorser)
+                                        </div>
+                                    }
                                     else
                                     {
                                         <div style="font-size:12.5px;">
@@ -289,7 +298,7 @@
                                     if (itemFlowByDoc.empId == item.empId && itemFlowByDoc.statusId == "3" && itemFlowByDoc.rangNo == item.rangNo)
                                     {
                                         <td height="85">
-                                            <img style="text-align:center;" width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@itemFlowByDoc.empId)" alt="signa"/>
+                                            <img style="text-align:center;" width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@itemFlowByDoc.empId)" alt="signa" />
                                         </td>
                                         writeoneHit += 1;
                                     }
