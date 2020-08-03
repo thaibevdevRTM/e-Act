@@ -212,6 +212,7 @@ else
     function successQuery(response) {
         if (response.Success) {
             if ('@type' == '@AppCode.ApproveType.Activity_Form.ToString()') {
+                $("#WaitDialog").show();
                 callPreviewApprove('@actId');
             }
             else if ('@type' == '@AppCode.ApproveType.Report_Detail.ToString()') {
@@ -326,11 +327,11 @@ else
     }
 
     function genFileActForm(htmlResponse) {
-        $("newGenReportFromMaster").html(htmlResponse);
+        $("#newGenReportFromMaster").html(htmlResponse);
         $.ajax({
             url: '@Url.Action("doApprove", "ApiApprove")',
             data: {
-                gridHtml: $("divForm").html(),
+                gridHtml: $("#divForm").html(),
                 statusId: $("#ddlStatus").val(),
                 activityId: '@actId' //$("#HdId").val()
             },
