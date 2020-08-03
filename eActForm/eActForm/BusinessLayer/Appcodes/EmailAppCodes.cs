@@ -173,7 +173,8 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message + " " + actFormId);
+                //ExceptionManager.WriteError("sendRejectActForm >>" + ex.Message + " " + actFormId);
+                throw new Exception("sendRejectActForm >>" + ex.Message + " " + actFormId);
             }
         }
 
@@ -427,7 +428,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message);
+                //ExceptionManager.WriteError("Email sendApproveActForm >> " + ex.Message); backgroud can't write error
                 throw new Exception("sendEmailApprove" + ex.Message);
             }
         }

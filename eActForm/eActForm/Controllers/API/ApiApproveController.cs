@@ -2,6 +2,7 @@
 using eActForm.Models;
 using iTextSharp.text;
 using System;
+using System.CodeDom;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -74,9 +75,15 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("apiApprove genPdfApprove >> " + ex.Message);
                 resultAjax.Success = false;
                 resultAjax.Message = ex.Message;
+                //throw new Exception("apiApprove genPdfApprove >> " + ex.Message);
+                EmailAppCodes.sendEmailWithActId("activityId"
+                    , ConfigurationManager.AppSettings["emailForDevelopSite"]
+                    , ""
+                    , "eAct ApiApprove Error"
+                    , activityId + " " + ex.Message
+                    , null);
             }
 
             return resultAjax;
