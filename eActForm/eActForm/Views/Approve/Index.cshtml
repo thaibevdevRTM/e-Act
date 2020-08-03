@@ -211,6 +211,7 @@ else
         //$("#WaitDialog").show();
         if (response.Success) {
             if ('@type' == '@AppCode.ApproveType.Activity_Form.ToString()') {
+                $("#WaitDialog").show();
                 callPreviewApprove('@actId');
             }
             else if ('@type' == '@AppCode.ApproveType.Report_Detail.ToString()') {
