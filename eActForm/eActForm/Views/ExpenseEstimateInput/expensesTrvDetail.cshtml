@@ -254,9 +254,9 @@
                                @readonly = "readonly"
                            })
 
-                                <script>
+                            <script>
 
-                                $('#txtUnitPrice_@index,  #txtUnit_@index').bind('blur', function () {
+                                $('#txtUnitPrice_@index,  #txtUnit_@index, #txtVat_@index').bind('blur', function () {
 
                                         var v_unitRow = 0.00;
                                         var v_unitpriceRow = 0.00;
@@ -266,7 +266,7 @@
                                             v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
                                         }
                                         if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                            v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
+                                            v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", "")) + parseFloat($("#txtVat_@indexSub").val().replace(",", ""));
                                         }
                                         v_totalRow = (v_unitRow * v_unitpriceRow);
                                         $("#hdTotal_@index").val(v_totalRow.toFixed(2));
@@ -275,7 +275,7 @@
                                     });
 
 
-                                </script>
+                            </script>
                             </td>
                         </tr>
                         index++;

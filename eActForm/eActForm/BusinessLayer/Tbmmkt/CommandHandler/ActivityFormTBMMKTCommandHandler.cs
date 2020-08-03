@@ -59,6 +59,7 @@ namespace eActForm.BusinessLayer
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOtherList(rtn, model, activityId);
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
+                   // rtn = ProcessInsertEstimateSub(rtn, model, activityId);
 
                     rtn = ProcessInsertTB_Act_ActivityChoiceSelect(rtn, model, activityId);
 
@@ -132,6 +133,7 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.hospId = item.hospId;
                 costThemeDetail.UseYearSelect = item.UseYearSelect == null ? "" : item.UseYearSelect;
                 costThemeDetail.EO = item.EO == null ? "" : item.EO;
+                costThemeDetail.vat = item.vat == null ? 0 : item.vat; 
                 rtn += insertEstimate(costThemeDetail);
                 insertIndex++;
             }
@@ -1246,7 +1248,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@hospId",(model.hospId == null ? "" : model.hospId))
                     ,new SqlParameter("@UseYearSelect",model.UseYearSelect)
                     ,new SqlParameter("@EO",model.EO)
-            });
+                    ,new SqlParameter("@vat",decimal.Parse(string.Format("{0:0.00000}", model.vat)))
+                    });
             }
             catch (Exception ex)
             {

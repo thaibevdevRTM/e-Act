@@ -309,7 +309,7 @@
             if ($("#ProductDetail_0").val() != "") { ProductDetail_0 = parseFloat($("#ProductDetail_0").val().replace(",", "")); }
             if ($("#ProductDetail_1").val() != "") { ProductDetail_1 = parseFloat($("#ProductDetail_1").val().replace(",", "")); }
             if ($("#txtUnitPrice_0").val() != "") { txtUnitPrice_0 = parseFloat($("#txtUnitPrice_0").val().replace(",", "")); }
-            if ($("#txtUnitPrice_1").val() != "") { txtUnitPrice_1 = parseFloat($("#txtUnitPrice_1").val().replace(",", "")); }
+            if ($("#txtUnitPrice_1").val() != "") { txtUnitPrice_1 = parseFloat($("#txtUnitPrice_1").val().replace(",", "")) + parseFloat($("#txtVat_1").val().replace(",", "")); }
 
             if (txtUnitPrice_0 > ProductDetail_0 || txtUnitPrice_1 > ProductDetail_1) {
                 required += "&emsp;ท่านกรอกยอดเงินเกินสิทธิ์*<br>"; validate = false;
