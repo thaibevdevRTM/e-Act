@@ -56,16 +56,8 @@ namespace eActForm.Controllers
         {
             var result = new AjaxResult();
             result.Success = false;
-
-
             try
             {
-                //if (model.activity_TBMMKT_Model.activityOfEstimateList.Any())
-                //{
-                //    ApproveAppCode.manageApproveEmpExpense(model, Request.Form["lblActFormId"]);
-                //}
-
-
                 if (ApproveAppCode.updateApprove(Request.Form["lblActFormId"], Request.Form["ddlStatus"], Request.Form["txtRemark"], Request.Form["lblApproveType"]) > 0)
                 {
                     result.Success = true;

@@ -1,26 +1,4 @@
-﻿@*=====ของDEVทดลองprint pdf=========*@
-@*<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
-    @using (Html.BeginForm("printDoc", "MainReport", FormMethod.Post))
-    {
-        <input type="hidden" name="gridHtml" />
-        <button type="submit" class="btn ink-reaction" id="btnExportPDF" value="ExportPDF" style="margin-bottom:-28px;"><i class="fa fa-file-excel-o"></i>&nbsp;Export To PDF</button>
-        <br />
-        <br />
-    }
-
-    <center>
-        @RenderPage("~/Views/Shared/_previewMainReport.cshtml")
-    </center>
-
-    <script>
-        $("#btnExportPDF").click(function () {
-            $("input[name='gridHtml']").val($("#divForm").html());
-        });
-    </script>*@
-@*===END==ของงDEVทดลองprint pdf=========*@
-
-@*=====ของใช้งานจริง=========*@
-@model eActForm.Models.Activity_TBMMKT_Model
+﻿@model eActForm.Models.Activity_TBMMKT_Model
 @using System.Configuration;
 @using eActForm.Models;
 

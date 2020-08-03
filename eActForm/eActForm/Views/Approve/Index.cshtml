@@ -141,8 +141,6 @@ else
     <div id="divPreviewApprove">
     </div>
 </div>
-<div id="dataFromPDF" style="display:none;">
-</div>
 
 <script>
 
@@ -208,7 +206,6 @@ else
     }
 
     function successQuery(response) {
-        //$("#WaitDialog").show();
         if (response.Success) {
             if ('@type' == '@AppCode.ApproveType.Activity_Form.ToString()') {
                 $("#WaitDialog").show();
@@ -281,13 +278,7 @@ else
                     activityId: obj,
                 }
             }).done(function (htmlResponse) {
-                //$("#dataFromPDF").val(htmlResponse);//ของเดิม
-                @*//=========ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย====มันจะได้Genถูกต้องสวยงาม====dev date 20200421=====*@
-                $("#newGenReportFromMaster").html(htmlResponse);
-                htmlResponse = $("#divForm").html();
-                $("#dataFromPDF").html(htmlResponse);
-                @*//====END=====ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย=====มันจะได้Genถูกต้องสวยงาม====dev date 20200421======*@
-                genFileActForm();
+                genFileActForm(htmlResponse);
             });
 
         }
@@ -300,10 +291,7 @@ else
                     actId: obj,
                 }
             }).done(function (htmlResponse) {
-                //$("#divPreviewApprove").html(htmlResponse);
-                //$("#WaitDialog").hide();
-                $("#dataFromPDF").html(htmlResponse);
-                genFileActForm();
+                genFileActForm(htmlResponse);
             });
 
         }
@@ -334,11 +322,11 @@ else
         });
     }
 
-    function genFileActForm() {
+    function genFileActForm(htmlResponse) {
         $.ajax({
             url: '@Url.Action("doApprove", "ApiApprove")',
             data: {
-                gridHtml: $("#dataFromPDF").html(),
+                gridHtml: htmlResponse,
                 statusId: $("#ddlStatus").val(),
                 activityId: '@actId' //$("#HdId").val()
             },
@@ -346,7 +334,6 @@ else
             dataType: "json",
             type: 'POST',
         }).done(function (reponse) {
-            console.log(reponse);
 
             bootbox.confirm({
                 message: "ดำเนินการเรียบร้อย",
@@ -369,7 +356,3 @@ else
 
 
 </script>
-<div id="newGenReportFromMaster" style="display:none;">
-
-</div>
-

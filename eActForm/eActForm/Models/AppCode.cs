@@ -123,7 +123,7 @@ namespace eActForm.Models
 
 
                 string path = serverMapPath + "\\Content\\" + "tablethin.css";
-                string readText = System.IO.File.ReadAllText(path);
+                string readText = File.ReadAllText(path);
 
                 using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
                 {
@@ -323,9 +323,8 @@ namespace eActForm.Models
             sourceDocument = new Document();
             try
             {
-                pdfCopyProvider = new PdfCopy(sourceDocument, new System.IO.FileStream(rootPathOutput, System.IO.FileMode.Create));
+                pdfCopyProvider = new PdfCopy(sourceDocument, new FileStream(rootPathOutput, FileMode.Create));
                 sourceDocument.Open();
-
 
                 for (int f = 0; f <= (pathFile.Length - 1); f++)
                 {
