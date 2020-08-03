@@ -163,6 +163,7 @@
     <br />
 </div>
 
+
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -171,7 +172,11 @@
         });
         $("#hdRegionalId").val($("#ddlRegional").val());
         getEmpDetail();
-       // alert($("#hdSubjectId").val());
+        // alert($("#hdSubjectId").val());
+        if ('@Model.activityFormTBMMKT.activityNo'.replace('---', '') != '') {
+            $("#txtEmpId").prop("readonly", true);
+        }
+        @*alert('@Model.activityFormTBMMKT.activityNo'.replace('---', ''));*@
     });
 
     function getEmpDetail() {
@@ -208,6 +213,7 @@
             }
             else {
                 if ($("#txtEmpId").val() != '') { alert('ไม่พบ Flow อนุมัติของรหัสพนักงาน ' + $("#txtEmpId").val()); }
+                $("#txtEmpId").val('');
                 $("#lblEmpName").val('');
                 $("#lblLvl").val('');
                 $("#lblHireDate").val('');
@@ -370,7 +376,9 @@ alert(balance);
                     document.getElementById("ddlRegional").disabled = true;
                 }
 
-                if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' == "False") {
+                if ('@DocumentsAppCode.checkModeEdit(Model.activityFormTBMMKT.statusId, Model.activityFormTBMMKT.master_type_form_id)' == "False"
+                    || '@Model.activityFormTBMMKT.activityNo'.replace('---', '') != ''
+                ) {
                     document.getElementById("ddlRegional").disabled = true;
                 }
             }

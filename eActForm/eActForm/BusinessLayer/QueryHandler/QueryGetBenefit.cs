@@ -132,13 +132,14 @@ namespace eActForm.BusinessLayer
         {
             try
             {
+
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getCashLimitByTypeId"
                      , new SqlParameter("@typeId", typeId)
                       , new SqlParameter("@hireDate", hireDate)
                        , new SqlParameter("@jobLevel", jobLevel));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new CashEmpModel()
-                             {                           
+                             {
                                  cashPerDay = d["cash"] is DBNull ? 0 : decimal.Parse(d["cash"].ToString()),
                              });
                 return lists.ToList();
