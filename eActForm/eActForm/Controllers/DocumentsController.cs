@@ -126,7 +126,6 @@ namespace eActForm.Controllers
             {
                 var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
                 GridHtml = GridHtml.Replace("<br>", "<br/>");
-                GridHtml = GridHtml.Replace("signa\">", "\"signa\" />");
 
 
                 AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
