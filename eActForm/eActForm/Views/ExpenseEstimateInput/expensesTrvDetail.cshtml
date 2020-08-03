@@ -7,6 +7,11 @@
         if (checkedValue == true) {
             $('#preview').modal('show');
             //เคลียร์ data เมื่อคลิกใหม่
+            $('#divInt input').val('0');
+            $('#divDecimal input,#totalSubEstimate').val('0.00');
+            $("#totalSubEstimate").text('0.00');
+
+
         } else {
             setElement("0");
             $('#preview').modal('hide');
@@ -215,8 +220,14 @@
 
                                 @if (item.listChoiceId == AppCode.Expenses.hotelExpense || item.listChoiceId == AppCode.Expenses.planeExpense)
                                 {
-                                    <input type="text" value="@item.glCode" id="txtVat_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" />
+                                    @*<input type="text" value="@item.glCode" id="txtVat_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" />*@
+                                    @Html.TextBoxFor(x => item.vat, "{0:n2}", new
+                               {
+                                   @id = "txtVat_" + @index,
+                                   Name = "expensesDetailModel.costDetailLists[" + index + "].vat",
+                                   @class = "form-control textboxcss text-right",
 
+                               })
                                 }
                                 else
                                 {
@@ -245,32 +256,7 @@
 
                                 <script>
 
-                                    $("#txtUnitPrice_@index").blur(function () {
-
-
-                                        var v_unitRow = 0.00;
-                                        var v_unitpriceRow = 0.00;
-                                        var v_totalRow = 0.00;
-
-                                        if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
-                                        if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
-                                            v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
-                                        }
-                                        if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                            v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
-
-                                            //var v_unitRow = 0.00;
-
-                                        }
-                                        v_totalRow = (v_unitRow * v_unitpriceRow);
-
-                                        $("#hdTotal_@index").val(v_totalRow.toFixed(2));
-                                        $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                        sumall();
-                                    });
-
-                                    $("#txtUnit_@index").blur(function () {
-
+                                $('#txtUnitPrice_@index,  #txtUnit_@index').bind('blur', function () {
 
                                         var v_unitRow = 0.00;
                                         var v_unitpriceRow = 0.00;
@@ -281,14 +267,13 @@
                                         }
                                         if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
                                             v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
-
                                         }
                                         v_totalRow = (v_unitRow * v_unitpriceRow);
-
                                         $("#hdTotal_@index").val(v_totalRow.toFixed(2));
                                         $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                                         sumall();
                                     });
+
 
                                 </script>
                             </td>
@@ -380,29 +365,35 @@
                                 @(indexSub+1)
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="number" value="@item.unit" id="txtSubUnit_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].unit" min="0" class="form-control textboxcss text-center " />
+                                <div id="divInt">
+                                    <input type="number" value="@item.unit" id="txtSubUnit_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].unit" min="0" class="form-control textboxcss text-center " />
+                                </div>
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                                <input type="text" value="@item.unitPrice" id="txtSubUnitPrice_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].unitPrice" class="form-control textboxcss text-right" />
+                                <div id="divDecimal">
+                                    <input type="text" value="@item.unitPrice" id="txtSubUnitPrice_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].unitPrice" class="form-control textboxcss text-right" />
+                                </div>
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-
-                                <input type="text" value="@item.vat" id="txtSubVat_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].vat" class="form-control textboxcss text-right" />
+                                <div id="divDecimal">
+                                    <input type="text" value="@item.vat" id="txtSubVat_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].vat" class="form-control textboxcss text-right" />
+                                </div>
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                                <input type="hidden" value="@item.total" id="hdSubTotal_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].total" class="form-control textboxcss text-right hdTotal_@indexSub " />
-                                @Html.TextBoxFor(x => item.total, "{0:n2}", new
-                           {
-                               @id = "txtSubTotal_" + @indexSub
-                                                        ,
-                               Name = "expensesDetailSubModel.costDetailLists[" + indexSub + "].total"
-                                                        ,
-                               @class = "form-control textboxcss text-right"
-                                                        ,
-                               @readonly = "readonly"
-                           })
+                                <div id="divDecimal">
+                                    <input type="hidden" value="@item.total" id="hdSubTotal_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].total" class="form-control textboxcss text-right hdTotal_@indexSub " />
+                                    @Html.TextBoxFor(x => item.total, "{0:n2}", new
+                               {
+                                   @id = "txtSubTotal_" + @indexSub
+                                                            ,
+                                   Name = "expensesDetailSubModel.costDetailLists[" + indexSub + "].total"
+                                                            ,
+                                   @class = "form-control textboxcss text-right"
+                                                            ,
+                                   @readonly = "readonly"
+                               })
 
-
+                                </div>
 
                                 <script>
                                     $('#txtSubUnit_@indexSub,#txtSubUnitPrice_@indexSub,#txtSubVat_@indexSub').bind('blur', function () {
