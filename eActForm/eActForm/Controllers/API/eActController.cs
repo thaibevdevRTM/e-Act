@@ -292,7 +292,11 @@ namespace eActForm.Controllers
 
         public JsonResult getEmpDetailById(string empId, string typeFormId = "")
         {
-            bool langEn = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
+            bool langEn = false;
+            if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]] != null)
+            {
+                langEn = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
+            }
             List<RequestEmpModel> empDetailList = new List<RequestEmpModel>();
             var result = new AjaxResult();
             try
@@ -355,7 +359,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
+                ExceptionManager.WriteError("textThaiBaht => " + ex.Message);
             }
             return Json(txtBaht, JsonRequestBehavior.AllowGet);
         }
@@ -369,7 +373,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
+                ExceptionManager.WriteError("getOtherMasterByType => " + ex.Message);
             }
             return Json(getOtherList, JsonRequestBehavior.AllowGet);
         }
@@ -512,7 +516,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getCashLimitByEmpId => " + ex.Message);
+                ExceptionManager.WriteError("getCashLimitByTypeId => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -602,7 +606,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
+                ExceptionManager.WriteError("getAllActivityFormByEmpId => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
