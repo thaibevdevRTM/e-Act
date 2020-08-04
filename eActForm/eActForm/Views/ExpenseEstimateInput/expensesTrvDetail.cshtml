@@ -10,37 +10,20 @@
             $('#divInt input').val('0');
             $('#divDecimal input,#totalSubEstimate').val('0.00');
             $("#totalSubEstimate").text('0.00');
-
-
         } else {
-            setElement("0");
+            setElement("0");      
             $('#preview').modal('hide');
         }
     }
 
     function callMultiPrice() {
-       // var checkedValue = document.getElementById("chkMultiPrice").checked;
-        //alert(checkedValue);
         var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
-
         if (v_total > 0) {
-
             setElement("1");
         } else {
-
             setElement("0");
-        }
-
-        //if (checkedValue == true) {
-        //    $('#preview').modal('show');
-
-        //} else {
-        //    $('#preview').modal('hide');
-        //    $("#txtUnitPrice_1").val($("#ProductDetail_1").val());
-        //    document.getElementById("txtUnitPrice_1").readOnly = false;
-        //}
+        }   
     }
-
 
     function sumData() {
         var multiPrice = "";
@@ -66,20 +49,20 @@
         var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
         $("#txtTotal_1").val(v_total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         $("#txtVat_1").val(totalVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        $("#hdTotal_1").val(v_total.toFixed(2));
         $('#preview').modal('hide');
-
+    
         setElement("1");
+
     }
 
     function setElement(chkMultiPrice) {
         if (chkMultiPrice == "1") {
             $("#txtUnitPrice_1").val("");
-
             document.getElementById("txtUnitPrice_1").readOnly = true;
             document.getElementById("txtVat_1").readOnly = true;
             document.getElementById("txtUnit_1").readOnly = true;
             document.getElementById("chkMultiPrice").checked = true;
-
         } else {
             document.getElementById("chkMultiPrice").checked = false;
             document.getElementById("txtUnitPrice_1").readOnly = false;
@@ -91,8 +74,9 @@
             $("#txtUnit_1").val("0");
             $("#txtVat_1").val("0.00");
             $("#txtTotal_1").val("0.00");
+            $("#hdTotal_1").val(0);
         }
-
+        sumall();
     }
 
 </script>
@@ -115,11 +99,11 @@
                         <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             จำนวน/วัน
                         </th>
-                        <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            ภาษีซื้อ Vat (บาท)
-                        </th>
                         <th style="width: 11%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             ราคา/หน่วย(บาท)
+                        </th>
+                        <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            ภาษีซื้อ Vat (บาท)
                         </th>
                         <th style="width: 11%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             รวม(บาท)
@@ -207,6 +191,11 @@
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
 
+
+                                <input type="text" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" />
+                            </td>
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
                                 @*@if (item.listChoiceId != AppCode.Expenses.Allowance)
                                     {
                                         <input type="text" value="@item.glCode" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" readonly />
@@ -236,11 +225,8 @@
                                 }
 
                             </td>
-                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
 
 
-                                <input type="text" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" />
-                            </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                                 <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss text-right hdTotal_@index " />
                                 @Html.TextBoxFor(x => item.total, "{0:n2}", new
@@ -254,7 +240,7 @@
                                @readonly = "readonly"
                            })
 
-                            <script>
+                                <script>
 
                                 $('#txtUnitPrice_@index,  #txtUnit_@index, #txtVat_@index').bind('blur', function () {
 
@@ -275,7 +261,7 @@
                                     });
 
 
-                            </script>
+                                </script>
                             </td>
                         </tr>
                         index++;
@@ -297,16 +283,16 @@
 
                 <script>
 
-                            function sumall() {
-                                var totalAll = 0.00;
-                                var rowCount = '@Model.expensesDetailModel.costDetailLists.Count';
+                    function sumall() {
+                        var totalAll = 0.00;
+                        var rowCount = '@Model.expensesDetailModel.costDetailLists.Count';
 
-                                for (i = 0; i < rowCount; i++) {
-                                    var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
-                                    totalAll = totalAll + rowtotal;
-                                }
-                                $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                $("#totalEstimate").val(totalAll);
+                        for (i = 0; i < rowCount; i++) {
+                            var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
+                            totalAll = totalAll + rowtotal;
+                        }
+                        $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#totalEstimate").val(totalAll);
                     }
                     sumall();
                 </script>
@@ -497,6 +483,7 @@
 
         if (validateSub == true) {
             sumData();
+
         }
         else {
             bootbox.alert(requiredSub)
