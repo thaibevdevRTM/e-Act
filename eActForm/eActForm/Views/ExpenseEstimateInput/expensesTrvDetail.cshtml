@@ -485,7 +485,11 @@
 <script>
 
     $(document).ready(function () {
-        callMultiPrice();
+        var unit = parseInt('@Model.expensesDetailModel.costDetailLists[1].unit');
+        var Price = parseFloat('@Model.expensesDetailModel.costDetailLists[1].unitPrice');
+        if (unit != 0 && Price == 0) {
+            callMultiPrice();
+        }
     });
 
     function validateDetailSub() {

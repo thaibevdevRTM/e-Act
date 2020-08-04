@@ -32,8 +32,15 @@ namespace eActForm.Controllers
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
 
+            CostDetailOfGroupPriceTBMMKT modelSub = new CostDetailOfGroupPriceTBMMKT
+            {
+                costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
+            };
+
             modelHistory.costDetailLists = QueryGetActivityEstimateByActivityId.getHistoryByActivityId(activity_TBMMKT_Model.activityFormModel.id);
             model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
+            modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, AppCode.Expenses.hotelExpense);
+
 
             decimal? unitPrice = 0;
             for (int i = 0; i < 8; i++)
@@ -42,29 +49,61 @@ namespace eActForm.Controllers
                 {
                     if (modelHistory.costDetailLists.Count > 0)
                     {
-                        unitPrice= modelHistory.costDetailLists.Where(x => x.listChoiceId == model2.costDetailLists[i].listChoiceId).FirstOrDefault().unitPrice;
+                        unitPrice = modelHistory.costDetailLists.Where(x => x.listChoiceId == model2.costDetailLists[i].listChoiceId).FirstOrDefault().unitPrice;
                     }
                     else
                     {
                         unitPrice = model2.costDetailLists[i].unitPrice;
                     }
 
-                    modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                    if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model2.costDetailLists[i].unit != 0 && model2.costDetailLists[i].unitPrice == 0)
                     {
-                        listChoiceId = model2.costDetailLists[i].listChoiceId,
-                        listChoiceName = model2.costDetailLists[i].listChoiceName,
-                        productDetail = model2.costDetailLists[i].productDetail,
-                        unit = model2.costDetailLists[i].unit,
-                        unitPrice = model2.costDetailLists[i].unitPrice+ model2.costDetailLists[i].vat,
-                        total = model2.costDetailLists[i].total,
-                        displayType = model2.costDetailLists[i].displayType,
-                        subDisplayType = model2.costDetailLists[i].subDisplayType,
-                        updatedByUserId = model2.costDetailLists[i].updatedByUserId,
-                        createdByUserId = model2.costDetailLists[i].createdByUserId,
-                        statusEdit = model2.costDetailLists[i].createdByUserId == "" ? "" :
-                        (model2.costDetailLists[i].createdByUserId != model2.costDetailLists[i].updatedByUserId
-                        && model2.costDetailLists[i].unitPrice != unitPrice ? "*" : ""),
-                    }); ;
+                        string multiPrice = "";
+                        if (model2.costDetailLists[i].unitPrice + model2.costDetailLists[i].vat > 0)
+                        {
+                            multiPrice = multiPrice + string.Format("{0:N2}%", model2.costDetailLists[i].unitPrice + model2.costDetailLists[i].vat) + "|";
+                        }
+                        multiPrice = multiPrice.Substring(0, (multiPrice.Length - 1));
+                        //เป็นค่าที่พักหลายราคา
+                        modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                        {
+                            listChoiceId = model2.costDetailLists[i].listChoiceId,
+                            listChoiceName = model2.costDetailLists[i].listChoiceName,
+                            productDetail = model2.costDetailLists[i].productDetail,
+                            unit = model2.costDetailLists[i].unit,
+                            unitPrice = 0,
+                            unitPriceDisplay = multiPrice,
+                            total = model2.costDetailLists[i].total,
+                            displayType = model2.costDetailLists[i].displayType,
+                            subDisplayType = model2.costDetailLists[i].subDisplayType,
+                            updatedByUserId = model2.costDetailLists[i].updatedByUserId,
+                            createdByUserId = model2.costDetailLists[i].createdByUserId,
+                            statusEdit = model2.costDetailLists[i].createdByUserId == "" ? "" :
+                                       (model2.costDetailLists[i].createdByUserId != model2.costDetailLists[i].updatedByUserId
+                                       && model2.costDetailLists[i].unitPrice != unitPrice ? "*" : ""),
+                        });
+                    }
+                    else
+                    {
+                        modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                        {
+                            listChoiceId = model2.costDetailLists[i].listChoiceId,
+                            listChoiceName = model2.costDetailLists[i].listChoiceName,
+                            productDetail = model2.costDetailLists[i].productDetail,
+                            unit = model2.costDetailLists[i].unit,
+                            unitPrice = model2.costDetailLists[i].unitPrice + model2.costDetailLists[i].vat,
+                            unitPriceDisplay = "",
+                            total = model2.costDetailLists[i].total,
+                            displayType = model2.costDetailLists[i].displayType,
+                            subDisplayType = model2.costDetailLists[i].subDisplayType,
+                            updatedByUserId = model2.costDetailLists[i].updatedByUserId,
+                            createdByUserId = model2.costDetailLists[i].createdByUserId,
+                            statusEdit = model2.costDetailLists[i].createdByUserId == "" ? "" :
+                          (model2.costDetailLists[i].createdByUserId != model2.costDetailLists[i].updatedByUserId
+                          && model2.costDetailLists[i].unitPrice != unitPrice ? "*" : ""),
+                        });
+                    }
+
                 }
             }
 
@@ -105,10 +144,10 @@ namespace eActForm.Controllers
             };
             //if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             //{
-                //List<TB_Act_master_list_choiceModel> lst = new List<TB_Act_master_list_choiceModel>();
-                //lst = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "expensesTrv").OrderBy(x => x.orderNum).ToList();
+            //List<TB_Act_master_list_choiceModel> lst = new List<TB_Act_master_list_choiceModel>();
+            //lst = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "expensesTrv").OrderBy(x => x.orderNum).ToList();
 
-                // listChoiceName,listChoiceId
+            // listChoiceName,listChoiceId
             //    for (int i = 0; i < 5; i++)
             //    {
             //        model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
@@ -126,12 +165,12 @@ namespace eActForm.Controllers
             //}
             //else
             //{ }
-                //edit
-                model.costDetailLists = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
+            //edit
+            model.costDetailLists = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
 
-                model.costDetailLists[0].hospName = QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(model.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;
+            model.costDetailLists[0].hospName = QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(model.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;
 
-           
+
 
 
 
@@ -151,8 +190,8 @@ namespace eActForm.Controllers
             //        statusEdit = ""
             //    });
 
-           // }
-           // modelResult.costDetailLists = modelResult.costDetailLists.ToList();modelResult
+            // }
+            // modelResult.costDetailLists = modelResult.costDetailLists.ToList();modelResult
 
             activity_TBMMKT_Model.expensesDetailModel = model;
 
