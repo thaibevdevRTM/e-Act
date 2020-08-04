@@ -25,6 +25,8 @@ namespace eActForm.Controllers
             {
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
+
+
             if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             {
                 List<TB_Act_master_list_choiceModel> lst = new List<TB_Act_master_list_choiceModel>();
@@ -77,7 +79,10 @@ namespace eActForm.Controllers
             {
                 //edit
                 model.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
+                modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id,AppCode.Expenses.hotelExpense);
+
             }
+
             activity_TBMMKT_Model.expensesDetailModel = model;
             activity_TBMMKT_Model.expensesDetailSubModel = modelSub;
 
@@ -93,7 +98,6 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.list_1 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "airplaneClass").OrderBy(x => x.orderNum).ToList();
 
             }
-
 
             return PartialView(activity_TBMMKT_Model);
         }

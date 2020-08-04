@@ -1923,25 +1923,21 @@ namespace eActForm.BusinessLayer
         #region "SubEstimate"
         public static int ProcessInsertEstimateSub(int rtn, Activity_TBMMKT_Model model, string activityId)
         {
-            if (model.activityOfEstimateList != null)
+            if (model.activityOfEstimateSubList != null)
             {
                 rtn += deleteActivityOfEstimateSubByActivityId(activityId);
-                rtn += insertEstimateSubToStored(model.activityOfEstimateList, activityId, string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId, model.activityFormModel.createdDate);
-            }
-            if (model.activityOfEstimateList2 != null)
-            {
-                rtn += insertEstimateSubToStored(model.activityOfEstimateList2, activityId, model.activityFormModel.createdByUserId, model.activityFormModel.createdDate);
+                rtn += insertEstimateSubToStored(model.activityOfEstimateSubList, activityId, string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId, model.activityFormModel.createdDate);
             }
 
             return rtn;
         }
 
-        public static int insertEstimateSubToStored(List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList, string activityId, string createdByUserId, DateTime? createdDate)
+        public static int insertEstimateSubToStored(List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateSubList, string activityId, string createdByUserId, DateTime? createdDate)
         {
             int rtn = 0;
             int insertIndex = 1;
 
-            foreach (var item in activityOfEstimateList.ToList())
+            foreach (var item in activityOfEstimateSubList.ToList())
             {
 
                 CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
@@ -1950,7 +1946,7 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.listChoiceId = item.listChoiceId;
                 costThemeDetail.rowNo = insertIndex;
                 costThemeDetail.unit = item.unit;
-                costThemeDetail.unitPrice = item.unitPriceDisplay == null ? 0 : decimal.Parse(item.unitPriceDisplay.Replace(",", ""));
+                costThemeDetail.unitPrice = item.unitPrice == null ? 0 : item.unitPrice;
                 costThemeDetail.vat = item.vat == null ? 0 : item.vat;
                 costThemeDetail.total = item.total == null ? 0 : item.total;
                 costThemeDetail.delFlag = false;

@@ -76,8 +76,8 @@ namespace eActForm.Controllers
                         {
                             int lenghtCut = 37;
                             int maxLenght = item.Length;
-                            objGetDataIO.ActivityByEOSelect += (item.Substring(0,36) + "|");
-                            objGetDataIO.EOSelect += (item.Substring(lenghtCut, maxLenght-lenghtCut) + "|");
+                            objGetDataIO.ActivityByEOSelect += (item.Substring(0, 36) + "|");
+                            objGetDataIO.EOSelect += (item.Substring(lenghtCut, maxLenght - lenghtCut) + "|");
                         }
                         activity_TBMMKT_Model.listGetDataIO = QueryGetSelectMainForm.GetQueryDataIOPaymentVoucher(objGetDataIO);
                     }
@@ -90,7 +90,7 @@ namespace eActForm.Controllers
                     mode = AppCode.Mode.addNew.ToString();
                     string actId = Guid.NewGuid().ToString();
                     activityFormTBMMKT.statusId = 1;
-                    activityFormTBMMKT.createdByUserId = @UtilsAppCode.Session.User.empId; 
+                    activityFormTBMMKT.createdByUserId = @UtilsAppCode.Session.User.empId;
                     activity_TBMMKT_Model.activityFormModel.id = actId;
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
                     //activityFormTBMMKT.subjectId = subjectId;
@@ -105,7 +105,7 @@ namespace eActForm.Controllers
                     List<CostThemeDetailOfGroupByPriceTBMMKT> costThemeDetailOfGroupByPriceTBMMKT = new List<CostThemeDetailOfGroupByPriceTBMMKT>();
                     for (int i = 0; i < rowEstimateTable; i++)
                     {
-                        costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { id = "", IO = "", activityTypeId = "", productDetail = "", unit = 0, unitPrice = 0, total = 0 , EO = "",UseYearSelect ="" });
+                        costThemeDetailOfGroupByPriceTBMMKT.Add(new CostThemeDetailOfGroupByPriceTBMMKT() { id = "", IO = "", activityTypeId = "", productDetail = "", unit = 0, unitPrice = 0, total = 0, EO = "", UseYearSelect = "" });
                     }
 
                     TB_Act_ActivityForm_DetailOther tB_Act_ActivityForm_DetailOther = new TB_Act_ActivityForm_DetailOther();
@@ -201,6 +201,7 @@ namespace eActForm.Controllers
                     )
                 {
                     activity_TBMMKT_Model.activityOfEstimateList = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
+                    activity_TBMMKT_Model.activityOfEstimateSubList = activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists;
                     //activity_TBMMKT_Model.activityFormModel.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                     if (AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))//ฟอร์มเบิกค่าเดินทางและเบี้ยเลี่ยงnum
                     {
@@ -210,7 +211,7 @@ namespace eActForm.Controllers
                 }
 
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])//ฟอร์มChangeRequest_IT314
-                {                    
+                {
                     activity_TBMMKT_Model.activityFormTBMMKT.empId = activity_TBMMKT_Model.empInfoModel.empId;
                     string formCompanyIdBySubject = QueryGetSelectAllTB_Reg_Subject.GetQueryGetDataSubjectByid(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId).FirstOrDefault().companyId;
                     activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = formCompanyIdBySubject;

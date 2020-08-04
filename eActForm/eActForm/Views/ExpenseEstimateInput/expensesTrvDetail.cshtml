@@ -11,7 +11,7 @@
             $('#divDecimal input,#totalSubEstimate').val('0.00');
             $("#totalSubEstimate").text('0.00');
         } else {
-            setElement("0");      
+            setElement("0");
             $('#preview').modal('hide');
         }
     }
@@ -19,10 +19,10 @@
     function callMultiPrice() {
         var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
         if (v_total > 0) {
-            setElement("1");
+            sumData();
         } else {
             setElement("0");
-        }   
+        }
     }
 
     function sumData() {
@@ -45,20 +45,20 @@
         $("#MultiPrice_1").val(multiPrice);
         document.getElementById('MultiPrice_1').innerHTML = "(" + multiPrice + ")";
         $("#txtUnit_1").val(totalUnit);
-
+      
         var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
         $("#txtTotal_1").val(v_total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         $("#txtVat_1").val(totalVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         $("#hdTotal_1").val(v_total.toFixed(2));
         $('#preview').modal('hide');
-    
+
         setElement("1");
 
     }
 
     function setElement(chkMultiPrice) {
         if (chkMultiPrice == "1") {
-            $("#txtUnitPrice_1").val("");
+            $("#txtUnitPrice_1").val("0.00");
             document.getElementById("txtUnitPrice_1").readOnly = true;
             document.getElementById("txtVat_1").readOnly = true;
             document.getElementById("txtUnit_1").readOnly = true;
@@ -349,6 +349,8 @@
                         <tr class="tagCountRowinTable" style="height:20px;">
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 @(indexSub+1)
+                                <input type="hidden" value="@item.listChoiceId" id="hdSubListChoiceId_@index" name="expensesDetailSubModel.costDetailLists[@indexSub].listChoiceId" class="form-control textboxcss" />
+
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <div id="divInt">
@@ -357,12 +359,32 @@
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <div id="divDecimal">
-                                    <input type="text" value="@item.unitPrice" id="txtSubUnitPrice_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].unitPrice" class="form-control textboxcss text-right" />
+                                    @*<input type="text" value="@item.unitPriceDisplay" id="txtSubUnitPrice_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].unitPrice" class="form-control textboxcss text-right" />*@
+                                    @Html.TextBoxFor(x => item.unitPrice, "{0:n2}", new
+                                        {
+                                            @id = "txtSubUnitPrice_" + @indexSub
+                                                                     ,
+                                            Name = "expensesDetailSubModel.costDetailLists[" + indexSub + "].unitPrice"
+                                                                     ,
+                                            @class = "form-control textboxcss text-right"
+
+                                    })
                                 </div>
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <div id="divDecimal">
-                                    <input type="text" value="@item.vat" id="txtSubVat_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].vat" class="form-control textboxcss text-right" />
+
+
+                                    @*<input type="text" value="@item.vat" id="txtSubVat_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].vat" class="form-control textboxcss text-right" />*@
+                                    @Html.TextBoxFor(x => item.vat, "{0:n2}", new
+                                     {
+                                         @id = "txtSubVat_" + @indexSub
+                                                                  ,
+                                         Name = "expensesDetailSubModel.costDetailLists[" + indexSub + "].vat"
+                                                                  ,
+                                         @class = "form-control textboxcss text-right"
+                                                                
+                                     })
                                 </div>
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
@@ -461,6 +483,10 @@
     </div>
 </div>
 <script>
+
+    $(document).ready(function () {
+        callMultiPrice();
+    });
 
     function validateDetailSub() {
         var requiredSub = "<b>กรุณาระบุ/Please input data :<br></b>";
