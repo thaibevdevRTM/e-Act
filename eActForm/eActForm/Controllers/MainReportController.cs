@@ -141,12 +141,15 @@ namespace eActForm.Controllers
 
             if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
             {
+                decimal? vat = 0;
                 #region "ค่าเดินทางของ NUM"
                 model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
                 for (int i = 0; i < 8; i++)
                 {
                     if (model2.costDetailLists[i].total != 0 && model2.costDetailLists[i].listChoiceId != AppCode.Expenses.Allowance)
                     {
+                        //vat แสดงรวมค่าใช้จ่ายอื่นๆแสดงแยก
+                        vat +=( model2.costDetailLists[i].vat * model2.costDetailLists[i].unit);
                         modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                         {
                             listChoiceId = model2.costDetailLists[i].listChoiceId,
@@ -155,11 +158,25 @@ namespace eActForm.Controllers
                            (model2.costDetailLists[i].displayType == AppCode.CodeHtml.LabelHtml
                            ? model2.costDetailLists[i].unit + "วัน (สิทธิเบิก " + model2.costDetailLists[i].productDetail + " บาท/วัน)"
                            : model2.costDetailLists[i].productDetail),
-                            total = model2.costDetailLists[i].total,
-                            glCode = model2.costDetailLists[i].glCode,
-                        }); ;
+                            total = model2.costDetailLists[i].total- (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit),
+                            glCode = model2.costDetailLists[i].glCodeId,
+                        });
+                     
                     }
                 }
+                if (vat>0)
+                {
+                    modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                    {
+                        listChoiceId ="",
+                        listChoiceName ="vat",
+                        productDetail = "ภาษีซื้อ",
+                        total = vat,
+                        glCode = "",
+                    });
+                }
+
+
                 activity_Model.totalCostThisActivity = activity_Model.totalCostThisActivity - model2.costDetailLists.Where(X => X.listChoiceId == AppCode.Expenses.Allowance).FirstOrDefault().total;
                 #endregion
             }

@@ -280,6 +280,7 @@ namespace eActForm.Models
         public string hospName { get; set; }
         public string UseYearSelect { get; set; }
         public string EO { get; set; }
+        public string glCodeId { get; set; }
 
     }
 
