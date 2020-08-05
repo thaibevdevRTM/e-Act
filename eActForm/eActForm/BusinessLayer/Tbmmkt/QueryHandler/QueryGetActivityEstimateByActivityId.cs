@@ -150,10 +150,10 @@ namespace eActForm.BusinessLayer
                                   rowNo = Convert.ToInt32(d["rowNo"].ToString()),
                                   unit = d["unit"].ToString() == "" ? 0 : int.Parse(d["unit"].ToString()),
                                   unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
-                                  unitPriceDisplay = d["unitPrice"].ToString() == "" ? "0.00" : string.Format("{0:n2}", decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString()))),
+                                  unitPriceDisplayReport = string.Format("{0:n2}", (decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())) + decimal.Parse(AppCode.checkNullorEmpty(d["vat"].ToString())))),
                                   vat = d["vat"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["vat"].ToString())),
                                   total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
-                                                               
+
                               });
 
                 return result.ToList();

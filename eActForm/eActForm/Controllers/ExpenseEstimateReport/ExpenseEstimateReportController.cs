@@ -41,6 +41,9 @@ namespace eActForm.Controllers
             model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
             modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, AppCode.Expenses.hotelExpense);
 
+            modelSub.costDetailLists = modelSub.costDetailLists.Where(x => x.unitPrice > 0).ToList();
+
+
 
             decimal? unitPrice = 0;
             for (int i = 0; i < 8; i++)
@@ -59,9 +62,10 @@ namespace eActForm.Controllers
                     if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model2.costDetailLists[i].unit != 0 && model2.costDetailLists[i].unitPrice == 0)
                     {
                         string multiPrice = "";
-                        if (model2.costDetailLists[i].unitPrice + model2.costDetailLists[i].vat > 0)
+
+                        foreach (var item in modelSub.costDetailLists)
                         {
-                            multiPrice = multiPrice + string.Format("{0:N2}%", model2.costDetailLists[i].unitPrice + model2.costDetailLists[i].vat) + "|";
+                            multiPrice = multiPrice + item.unitPriceDisplayReport + "|";
                         }
                         multiPrice = multiPrice.Substring(0, (multiPrice.Length - 1));
                         //เป็นค่าที่พักหลายราคา
