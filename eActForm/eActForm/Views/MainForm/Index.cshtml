@@ -497,7 +497,7 @@
             $("#WaitDialog").hide();
             $('#previewModal').modal('show');
 
-            @*$.ajax({
+            $.ajax({
                 url: '@Url.Action("genPdfApprove", "Documents")',
                 data: {
                     GridHtml: $("#divForm").html(),
@@ -510,7 +510,7 @@
                 $("#divPreview").html(htmlResponse);
                 $("#WaitDialog").hide();
                 $('#previewModal').modal('show');
-            });*@
+            });
 
         });
 
