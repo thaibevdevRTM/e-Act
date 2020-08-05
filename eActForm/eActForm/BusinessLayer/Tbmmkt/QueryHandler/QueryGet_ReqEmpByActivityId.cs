@@ -42,7 +42,8 @@ namespace eActForm.BusinessLayer
                                  companyNameEN = d["companyNameEN"].ToString(),
                                  detail = d["detail"].ToString(),
                                  hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(BaseAppCodes.getEmpFromApi(d["empId"].ToString()).empProbationEndDate), ConfigurationManager.AppSettings["formatDateUse"]),//  empProbationEndDate
-                                 //!string.IsNullOrEmpty(d["hireDate"].ToString()) ? DateTime.Parse(d["hireDate"].ToString()).ToString(ConfigurationManager.AppSettings["formatDateUse"]) : "",
+                                 //api พัง ใช้อันนี้แทนเทสไปก่อน
+                                  //hireDate = !string.IsNullOrEmpty(d["hireDate"].ToString()) ? DateTime.Parse(d["hireDate"].ToString()).ToString(ConfigurationManager.AppSettings["formatDateUse"]) : "",
                              });
 
                 return lists.OrderBy(x => x.rowNo).ToList();

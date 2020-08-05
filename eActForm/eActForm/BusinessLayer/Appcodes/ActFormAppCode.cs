@@ -488,7 +488,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                throw new Exception("checkCanEditByUser >>" + ex.Message);
+                throw new Exception("getGrpCompByCompId >>" + ex.Message);
             }
         }
         public static bool checkFormAddTBDetailOther(string masterForm)

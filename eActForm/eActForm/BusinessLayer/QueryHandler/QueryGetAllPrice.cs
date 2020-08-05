@@ -36,7 +36,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                ExceptionManager.WriteError("getAllPrice => " + ex.Message);
                 return new List<TB_Act_ProductPrice_Model.ProductPrice>();
             }
         }

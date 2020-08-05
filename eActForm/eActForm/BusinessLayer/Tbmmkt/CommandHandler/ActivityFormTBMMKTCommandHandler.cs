@@ -800,7 +800,7 @@ namespace eActForm.BusinessLayer
                 List<string> templistEoInDoc = new List<string>();
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formBgTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])
                 {
-                    if(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO!="" && activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != null)
+                    if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != "" && activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO != null)
                     {
                         templistEoInDoc.Add(activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.EO);
                     }
@@ -812,7 +812,7 @@ namespace eActForm.BusinessLayer
                         }
                     }
                     activity_TBMMKT_Model.listEoInDoc = templistEoInDoc;
-                }                    
+                }
                 //===END========Get All EO In Doc=======================
 
 

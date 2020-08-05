@@ -36,7 +36,30 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllActivityGroup => " + ex.Message);
+                ExceptionManager.WriteError("getEmpByComp => " + ex.Message);
+                return new List<RequestEmpModel>();
+            }
+        }
+
+        public static List<RequestEmpModel> getEmpByDepartment(string companyId, string department)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmpByDepartment"
+                     , new SqlParameter("@companyId", companyId)
+                      , new SqlParameter("@department", department));
+                var lists = (from DataRow d in ds.Tables[0].Rows
+                             select new RequestEmpModel()
+                             {
+                                 empId = d["empId"].ToString(),                               
+                                 empName = d["empName"].ToString() ,
+                                 departmentEN = d["empDepartmentEN"].ToString(),                             
+                             });
+                return lists.OrderBy(x => x.empName).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getEmpByDepartment => " + ex.Message);
                 return new List<RequestEmpModel>();
             }
         }
