@@ -139,6 +139,12 @@ namespace eActForm.Controllers
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
 
+            #region "ดึงข้อมูล GL "
+            //ฟอร์มที่ใช้เป็นของ saleSupport
+            List<GetDataGL> lstGL = new List<GetDataGL>();
+            lstGL = QueryGetGL.GetGLMasterByDivisionId(AppCode.Division.salesSupport);
+            #endregion
+
             if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
             {
                 decimal? vat = 0;
@@ -159,7 +165,7 @@ namespace eActForm.Controllers
                            ? model2.costDetailLists[i].unit + "วัน (สิทธิเบิก " + model2.costDetailLists[i].productDetail + " บาท/วัน)"
                            : model2.costDetailLists[i].productDetail),
                             total = model2.costDetailLists[i].total- (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit),
-                            glCode = model2.costDetailLists[i].glCodeId,
+                            glCode = lstGL.Where(x => x.id == model2.costDetailLists[i].glCodeId).FirstOrDefault()?.GL,
                         });
                      
                     }
@@ -170,9 +176,9 @@ namespace eActForm.Controllers
                     {
                         listChoiceId ="",
                         listChoiceName ="vat",
-                        productDetail = "ภาษีซื้อ",
+                        productDetail = lstGL.Where(x => x.id == AppCode.GLId.vat).FirstOrDefault()?.groupGL,
                         total = vat,
-                        glCode = "",
+                        glCode = lstGL.Where(x => x.id == AppCode.GLId.vat).FirstOrDefault()?.GL,
                     });
                 }
 

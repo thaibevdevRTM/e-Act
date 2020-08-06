@@ -242,6 +242,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllCompany.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllCustomers.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllHospital.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetGL.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetFlow.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllPrice.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllProduct.cs" />
