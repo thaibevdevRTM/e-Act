@@ -160,6 +160,7 @@ namespace eActForm.Controllers
                 }
                 if (vat>0)
                 {
+                    //vat จากรายการเดียวหรือหลายรายการ
                     modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                     {
                         listChoiceId ="",

@@ -35,7 +35,7 @@
 
             var rowtotal = parseInt($("#txtSubUnit_" + i.toString()).val().replace(",", ""));
             totalUnit = totalUnit + rowtotal;
-            totalVat = totalVat + parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", ""));
+            totalVat = totalVat + (parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", "")) * rowtotal);
             if (parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) > 0) {
                 multiPrice = multiPrice + (parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) + parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", ""))).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "|";
             }
