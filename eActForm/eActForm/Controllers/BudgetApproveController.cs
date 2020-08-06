@@ -348,7 +348,7 @@ namespace eActForm.Controllers //update 21-04-2020
                                  approveGroupName = dr["approveGroupName"].ToString(),
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
                                  isShowInDoc = (bool)dr["showInDoc"],
-                                 description = dr["description"].ToString(),
+                                 empGroup = dr["empGroup"].ToString(),
                              }).ToList();
                 return lists;
             }

@@ -1,4 +1,5 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.QueryHandler;
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using iTextSharp.text;
@@ -51,7 +52,9 @@ namespace eActForm.Controllers
                 {
                     ViewBag.classFont = "formBorderStyle2";
                     ViewBag.padding = "paddingFormV3";
-                } else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"]) {
+                }
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+                {
                     ViewBag.classFont = "fontDocSmall";
                     ViewBag.padding = "paddingFormV2";
                 }
@@ -72,7 +75,8 @@ namespace eActForm.Controllers
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                 {
                     activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
-                }                    
+                    //BaseAppCodes.WriteSignatureToDisk(activity_TBMMKT_Model.approveModels, activityId);
+                }
                 //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
             }
 
@@ -112,7 +116,7 @@ namespace eActForm.Controllers
             activity_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm;
             activity_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm_EN;
 
-          
+
             CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT
             {
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
@@ -175,10 +179,10 @@ namespace eActForm.Controllers
                     glCode = "",
                 });
             }
-            
+
             modelResult.costDetailLists = modelResult.costDetailLists.ToList();
             activity_Model.expensesDetailModel = modelResult;
-          
+
 
 
             //===========Set Language By Document Dev date 20200310 Peerapop=====================
@@ -209,5 +213,26 @@ namespace eActForm.Controllers
             return File(file[0].ContentStream, "application/pdf", "reportPDF.pdf");
 
         }
+
+        public ActionResult ReportIndex(string typeForm, string typeFormId)
+        {
+
+
+            SearchReportModels models = new SearchReportModels();
+            models.formDetail = QueryGet_master_type_form_detail.get_master_type_form_detail(typeFormId, "rptExport");
+
+            //models.reportTypeList = QueryGetReport.getReportTypeByTypeFormId(typeFormId);
+            //models.companyList = ReportAppCode.getCompanyByRole(typeFormId);
+
+            //List<eForms.Models.MasterData.departmentMasterModel> departList = new List<eForms.Models.MasterData.departmentMasterModel>();
+            //departList.Add(new eForms.Models.MasterData.departmentMasterModel() { id = "", name = "", companyId = "" });
+            //models.departmentList = departList;
+
+            //List<RequestEmpModel> empList = new List<RequestEmpModel>();
+            //empList.Add(new RequestEmpModel() { empId = "", empName = "", departmentEN = "" });
+            //models.empList = empList;
+            return PartialView(models);
+        }
+
     }
 }

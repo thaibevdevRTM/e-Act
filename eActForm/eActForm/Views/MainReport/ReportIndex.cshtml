@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var typeForm = Request.QueryString["typeForm"];
+    var typeFormId = Request.QueryString["typeFormId"];
+}
+@model eActForm.Models.SearchReportModels
+
+
+
+
+@foreach (var item in Model.formDetail)
+{
+    @Html.Action(item.path_action, item.path_controller, new { typeForm = typeForm, typeFormId = typeFormId })
+}
+
