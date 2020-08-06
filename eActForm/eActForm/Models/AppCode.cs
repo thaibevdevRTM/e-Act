@@ -1,4 +1,5 @@
-﻿using iTextSharp.text;
+﻿using eActForm.BusinessLayer;
+using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
 using Microsoft.ApplicationBlocks.Data;
@@ -138,15 +139,11 @@ namespace eActForm.Models
                 GridBuilder.Append(GridHtml);
                 GridBuilder.Append("</body>");
                 GridBuilder.Append("</html>");
-
-                // Replace 
-                GridBuilder = GridBuilder.Replace("signa\">", "signa\"/>");
-
                 GridBuilder.Append(sw.ToString());
 
 
                 string path = serverMapPath + "\\Content\\" + "tablethin.css";
-                string readText = System.IO.File.ReadAllText(path);
+                string readText = File.ReadAllText(path);
 
                 using (var writer = PdfWriter.GetInstance(pdfDoc, ms))
                 {
@@ -166,7 +163,13 @@ namespace eActForm.Models
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview");
+                //ExceptionManager.WriteError(ex.Message + ">> GetFileReportTomail_Preview"); backgroud can't write error
+                EmailAppCodes.sendEmailWithActId("activityId"
+                    , ConfigurationManager.AppSettings["emailForDevelopSite"]
+                    , ""
+                    , "eAct ApiApprove Error GetFileReportTomail_Preview"
+                    , GridHtml + " " + ex.Message
+                    , null);
                 ms.Dispose();
                 return ms;
             }
@@ -340,9 +343,8 @@ namespace eActForm.Models
             sourceDocument = new Document();
             try
             {
-                pdfCopyProvider = new PdfCopy(sourceDocument, new System.IO.FileStream(rootPathOutput, System.IO.FileMode.Create));
+                pdfCopyProvider = new PdfCopy(sourceDocument, new FileStream(rootPathOutput, FileMode.Create));
                 sourceDocument.Open();
-
 
                 for (int f = 0; f <= (pathFile.Length - 1); f++)
                 {
@@ -371,7 +373,13 @@ namespace eActForm.Models
                 catch (Exception exc)
                 {
                     result = "error" + exc.Message;
-                    ExceptionManager.WriteError(exc.Message + ">> mergePDF >> CopyError");
+                    //ExceptionManager.WriteError(exc.Message + ">> mergePDF >> CopyError"); // backgroud can't write error 
+                    EmailAppCodes.sendEmailWithActId("activityId"
+                    , ConfigurationManager.AppSettings["emailForDevelopSite"]
+                    , ""
+                    , "eAct ApiApprove mergePDF Error"
+                    ,  ex.Message
+                    , null);
                 }
             }
             return result;

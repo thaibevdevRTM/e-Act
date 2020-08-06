@@ -141,7 +141,11 @@ else
     <div id="divPreviewApprove">
     </div>
 </div>
-<input id="dataFromPDF" type="hidden" />
+
+<div id="newGenReportFromMaster" style="display:none;">
+
+</div>
+
 <script>
 
     $(document).ready(function () {
@@ -206,9 +210,9 @@ else
     }
 
     function successQuery(response) {
-        //$("#WaitDialog").show();
         if (response.Success) {
             if ('@type' == '@AppCode.ApproveType.Activity_Form.ToString()') {
+                $("#WaitDialog").show();
                 callPreviewApprove('@actId');
             }
             else if ('@type' == '@AppCode.ApproveType.Report_Detail.ToString()') {
@@ -269,7 +273,7 @@ else
             || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formCR_IT_FRM_314"]'
             || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formExpMedNumId"]'
             || '@Model.masterTypeFormId' == '@ConfigurationManager.AppSettings["formSetPriceMT"]'
-            
+
         ) {
             $.ajax({
                 type: 'POST',
@@ -278,13 +282,7 @@ else
                     activityId: obj,
                 }
             }).done(function (htmlResponse) {
-                //$("#dataFromPDF").val(htmlResponse);//ของเดิม
-                @*//=========ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย====มันจะได้Genถูกต้องสวยงาม====dev date 20200421=====*@
-                $("#newGenReportFromMaster").html(htmlResponse);
-                htmlResponse = $("#divForm").html();
-                $("#dataFromPDF").val(htmlResponse);
-                @*//====END=====ปรับปรุงการ Gen Reportใหม่ให้เหมือนหน้าดูPreview====Fream ใครงงสอบถามได้เลย=====มันจะได้Genถูกต้องสวยงาม====dev date 20200421======*@
-                genFileActForm();
+                genFileActForm(htmlResponse);
             });
 
         }
@@ -297,10 +295,7 @@ else
                     actId: obj,
                 }
             }).done(function (htmlResponse) {
-                //$("#divPreviewApprove").html(htmlResponse);
-                //$("#WaitDialog").hide();
-                $("#dataFromPDF").val(htmlResponse);
-                genFileActForm();
+                genFileActForm(htmlResponse);
             });
 
         }
@@ -331,11 +326,12 @@ else
         });
     }
 
-    function genFileActForm() {
+    function genFileActForm(htmlResponse) {
+        $("#newGenReportFromMaster").html(htmlResponse);
         $.ajax({
             url: '@Url.Action("doApprove", "ApiApprove")',
             data: {
-                gridHtml: $("#dataFromPDF").val(),
+                gridHtml: $("#divForm").html(),
                 statusId: $("#ddlStatus").val(),
                 activityId: '@actId' //$("#HdId").val()
             },
@@ -343,7 +339,6 @@ else
             dataType: "json",
             type: 'POST',
         }).done(function (reponse) {
-            console.log(reponse);
 
             bootbox.confirm({
                 message: "ดำเนินการเรียบร้อย",
@@ -366,7 +361,3 @@ else
 
 
 </script>
-<div id="newGenReportFromMaster" style="display:none;">
-
-</div>
-
