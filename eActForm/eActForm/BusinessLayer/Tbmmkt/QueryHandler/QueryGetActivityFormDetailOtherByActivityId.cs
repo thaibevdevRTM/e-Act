@@ -75,7 +75,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                ExceptionManager.WriteError("getByActivityId => " + ex.Message);
                 return new List<TB_Act_ActivityForm_DetailOther>();
             }
         }

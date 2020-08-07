@@ -56,7 +56,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                ExceptionManager.WriteError("getByActivityId => " + ex.Message);
                 return new List<CostThemeDetailOfGroupByPriceTBMMKT>();
             }
         }
@@ -125,7 +125,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                ExceptionManager.WriteError("getHistoryByActivityId => " + ex.Message);
                 return new List<CostThemeDetailOfGroupByPriceTBMMKT>();
             }
         }

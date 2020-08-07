@@ -19,9 +19,9 @@ namespace eActForm.BusinessLayer.QueryHandler
                     , new SqlParameter("@typeFormId", typeFormId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail()
-                             {
-                                 id = d["flowId"].ToString(),
-                                 description = d["description"].ToString(),
+                             {                                 
+                                 id = d["flowId"].ToString(),                    
+                                 empGroup = d["empGroup"].ToString(),
                                  companyId = d["companyId"].ToString(),
                              });
                 return lists.ToList();

@@ -32,6 +32,8 @@ namespace eActForm.Controllers
                 {
                     activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId = QueryGetSubject.getAllSubject().Where(x => x.typeFormId == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().id;
                     activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.SubjectId;
+                    activity_TBMMKT_Model.activityFormTBMMKT.activityNo = "";
+                    activity_TBMMKT_Model.empInfoModel.empId = UtilsAppCode.Session.User.empId;
                 }
 
                 activity_TBMMKT_Model.regionalModel.Add(new RegionalModel() { id = "", companyId = "", nameEN = "", nameTH = "" });

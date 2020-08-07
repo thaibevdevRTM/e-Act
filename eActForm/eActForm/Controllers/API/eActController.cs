@@ -2,6 +2,8 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
+using eForms.Models.MasterData;
+using eForms.Presenter.MasterData;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -289,7 +291,11 @@ namespace eActForm.Controllers
 
         public JsonResult getEmpDetailById(string empId, string typeFormId = "")
         {
-            bool langEn = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
+            bool langEn = false;
+            if (Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]] != null)
+            {
+                langEn = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
+            }
             List<RequestEmpModel> empDetailList = new List<RequestEmpModel>();
             var result = new AjaxResult();
             try
@@ -311,8 +317,9 @@ namespace eActForm.Controllers
                         compId = empDetailList.FirstOrDefault().compId,
                         email = empDetailList.FirstOrDefault().email,
                         //hireDate = empDetailList.FirstOrDefault().hireDate
-                        //hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(empDetailList.FirstOrDefault().hireDate), ConfigurationManager.AppSettings["formatDateUse"]),
                         hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(BaseAppCodes.getEmpFromApi(empId).empProbationEndDate), ConfigurationManager.AppSettings["formatDateUse"]),//  empProbationEndDate
+                        //api พัง ใช้อันนี้แทนเทสไปก่อน
+                        //hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(empDetailList.FirstOrDefault().hireDate), ConfigurationManager.AppSettings["formatDateUse"]),
 
                     };
                     result.Data = resultData;
@@ -351,7 +358,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
+                ExceptionManager.WriteError("textThaiBaht => " + ex.Message);
             }
             return Json(txtBaht, JsonRequestBehavior.AllowGet);
         }
@@ -365,7 +372,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
+                ExceptionManager.WriteError("getOtherMasterByType => " + ex.Message);
             }
             return Json(getOtherList, JsonRequestBehavior.AllowGet);
         }
@@ -452,7 +459,7 @@ namespace eActForm.Controllers
             var result = new AjaxResult();
             try
             {
-                var getFlowDetail = QueryGetFlow.getFlowDetailBytypeFormId(typeFormId).ToList().Where(x => x.description == empId);
+                var getFlowDetail = QueryGetFlow.getFlowDetailBytypeFormId(typeFormId).ToList().Where(x => x.empGroup == empId);
                 var resultData = new
                 {
                     flow = getFlowDetail.ToList(),
@@ -508,7 +515,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getCashLimitByEmpId => " + ex.Message);
+                ExceptionManager.WriteError("getCashLimitByTypeId => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -576,7 +583,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getCumulativeByEmpId => " + ex.Message);
+                ExceptionManager.WriteError("getCashDetailByEmpId => " + ex.Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -598,8 +605,57 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllRegion => " + ex.Message);
+                ExceptionManager.WriteError("getAllActivityFormByEmpId => " + ex.Message);
             }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getDepartmentByCompId(string companyId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                List<departmentMasterModel> departmentList = new List<departmentMasterModel>();
+                departmentList = departmentMasterPresenter.getdepartmentByCompId(AppCode.StrCon, companyId);
+
+                var resultData = new
+                {
+                    departmentList = departmentList.ToList(),
+                };
+                result.Data = resultData;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+        public JsonResult getEmpByDepartment(string companyId, string department)
+        {
+            List<RequestEmpModel> empDetailList = new List<RequestEmpModel>();
+            var result = new AjaxResult();
+            try
+            {
+                empDetailList = QueryGet_empByComp.getEmpByDepartment(companyId, department).ToList();
+                if (empDetailList.Any())
+                {
+                    var resultData = new
+                    {
+                        //empId = empDetailList.FirstOrDefault().empId,
+                        //empName = empDetailList.FirstOrDefault().empName,                  
+                        //department =empDetailList.FirstOrDefault().departmentEN,         
+                        empList = empDetailList.ToList()
+                    };
+                    result.Data = resultData;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getEmpByDepartment => " + ex.Message);
+            }
+
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

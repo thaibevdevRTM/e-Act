@@ -33,7 +33,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                ExceptionManager.WriteError("getAllHospital => " + ex.Message);
                 return new List<HospitalModel>();
             }
         }
@@ -52,7 +52,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                ExceptionManager.WriteError("getHospitalType => " + ex.Message);
                 return new List<HospitalModel>();
             }
         }
@@ -75,7 +75,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                ExceptionManager.WriteError("exportHospital => " + ex.Message);
                 return new List<HospitalModel>();
             }
         }

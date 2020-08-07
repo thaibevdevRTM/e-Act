@@ -57,7 +57,7 @@ namespace eActForm.BusinessLayer.QueryHandler
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getActivityById => " + ex.Message);
+                ExceptionManager.WriteError("getCheckRefActivityByActNo => " + ex.Message);
                 return new List<ActivityFormTBMMKT>();
             }
         }

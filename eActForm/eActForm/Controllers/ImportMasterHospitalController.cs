@@ -28,7 +28,7 @@ namespace eActForm.Controllers
                 {
 
                     string folderKeepFile = "ImportMasterHospital";
-                    string UploadDirectory = Server.MapPath("~") + "Uploadfiles\\" + folderKeepFile;
+                    string UploadDirectory = Server.MapPath("~") + "\\Uploadfiles\\" + folderKeepFile;
 
 
                     string extension = Path.GetExtension(importExcel.file.FileName);

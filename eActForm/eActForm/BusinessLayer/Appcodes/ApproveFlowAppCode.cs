@@ -228,7 +228,7 @@ namespace eActForm.BusinessLayer
                                  approveGroupName = dr["approveGroupName"].ToString(),
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
                                  isShowInDoc = (bool)dr["showInDoc"],
-                                 description = dr["description"].ToString(),
+                                 empGroup = dr["empGroup"].ToString(),
                                  statusId = dr["statusId"].ToString(),
                                  remark = dr["remark"].ToString(),
                                  imgSignature = string.Format(ConfigurationManager.AppSettings["rootgetSignaURL"], dr["empId"].ToString()),
@@ -274,7 +274,7 @@ namespace eActForm.BusinessLayer
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
                                  isShowInDoc = (bool)dr["showInDoc"],
                                  isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
-                                 description = dr["description"].ToString(),
+                                 empGroup = dr["empGroup"].ToString(),
                              }).ToList();
                 return lists;
             }
@@ -305,7 +305,7 @@ namespace eActForm.BusinessLayer
                                  approveGroupName = dr["approveGroupName"].ToString(),
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
                                  isShowInDoc = (bool)dr["showInDoc"],
-                                 description = dr["description"].ToString(),
+                                 empGroup = dr["empGroup"].ToString(),
                                  isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
                                  bu = dr["empDivisionTH"].ToString(),
                                  buEN = dr["empDivisionEN"].ToString(),
@@ -342,7 +342,7 @@ namespace eActForm.BusinessLayer
                                  approveGroupName = dr["approveGroupName"].ToString(),
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
                                  isShowInDoc = (bool)dr["showInDoc"],
-                                 description = dr["description"].ToString(),
+                                 empGroup = dr["empGroup"].ToString(),
                                  isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
                                  bu = dr["empDivisionTH"].ToString(),
                                  buEN = dr["empDivisionEN"].ToString(),
@@ -383,12 +383,12 @@ namespace eActForm.BusinessLayer
                                  empFNameTH = dr["empName"].ToString(),
                                  approveGroupId = dr["approveGroupId"].ToString(),
                                  rangNo = int.Parse(dr["rangNo"].ToString()),
-                                 description = dr["description"].ToString(),
+                                 empGroup = dr["empGroup"].ToString(),
                                  isShowInDoc = !string.IsNullOrEmpty(dr["showInDoc"].ToString()) ? bool.Parse(dr["showInDoc"].ToString()) : true,
                                  isApproved = !string.IsNullOrEmpty(dr["isApproved"].ToString()) ? bool.Parse(dr["isApproved"].ToString()) : true,
                              }).ToList();
 
-                var result = !string.IsNullOrEmpty(model.empId) ? lists.Where(x => x.description == model.empId).ToList() : lists.ToList();
+                var result = !string.IsNullOrEmpty(model.empId) ? lists.Where(x => x.empGroup == model.empId).ToList() : lists.ToList();
                 approveFlow_Model.flowDetail = result;
                 return approveFlow_Model;
             }
