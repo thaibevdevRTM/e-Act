@@ -23,11 +23,12 @@ namespace eForms.Presenter
                 {
                     try
                     {
-                        
+
                         if (columnNames.Contains(pro.Name))
                             pro.SetValue(objT, row[pro.Name]);
                     }
-                    catch {
+                    catch
+                    {
                         //try
                         //{
                         //    pro.SetValue(objT, 0);

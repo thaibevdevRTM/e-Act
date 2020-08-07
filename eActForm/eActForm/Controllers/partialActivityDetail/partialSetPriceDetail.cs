@@ -1,10 +1,8 @@
 ﻿using eActForm.BusinessLayer;
-using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebLibrary;
 
@@ -46,6 +44,6 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-    
+
     }
 }

@@ -88,7 +88,7 @@ namespace eActForm.BusinessLayer
         }
 
 
-        public static List<ActivityFormTBMMKT> getAllActivityFormByEmpId(String typeFormId,string empId)
+        public static List<ActivityFormTBMMKT> getAllActivityFormByEmpId(String typeFormId, string empId)
         {
             try
             {
@@ -102,11 +102,11 @@ namespace eActForm.BusinessLayer
                                   id = d["Id"].ToString(),
                                   statusId = int.Parse(d["statusId"].ToString()),
                                   activityNo = d["activityNo"].ToString(),
-                                  documentDate = !string.IsNullOrEmpty(d["documentDate"].ToString()) ? DateTime.Parse(d["documentDate"].ToString()) : (DateTime?)null,                          
+                                  documentDate = !string.IsNullOrEmpty(d["documentDate"].ToString()) ? DateTime.Parse(d["documentDate"].ToString()) : (DateTime?)null,
                                   companyId = d["companyId"].ToString(),
-                                  master_type_form_id = d["master_type_form_id"].ToString(),                               
+                                  master_type_form_id = d["master_type_form_id"].ToString(),
                                   empId = d["empId"].ToString(),
-                                       
+
                               });
 
                 return result.ToList();
@@ -118,6 +118,6 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        
+
     }
 }

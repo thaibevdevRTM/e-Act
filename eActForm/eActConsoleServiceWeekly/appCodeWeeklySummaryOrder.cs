@@ -1,15 +1,12 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using Microsoft.ApplicationBlocks.Data;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.ApplicationBlocks.Data;
-using WebLibrary;
-using System.Net.Mail;
-using ClosedXML.Excel;
 using System.IO;
+using System.Net.Mail;
+using WebLibrary;
 
 namespace eActConsoleServiceWeekly
 {
@@ -129,7 +126,7 @@ namespace eActConsoleServiceWeekly
 
         private static DataTable setRecivedDate(DataTable dt)
         {
-            foreach(DataRow dr in dt.Rows)
+            foreach (DataRow dr in dt.Rows)
             {
                 DateTime baseDate = (DateTime)dr["orderDate"];
                 switch (DateTime.Now.DayOfWeek)
