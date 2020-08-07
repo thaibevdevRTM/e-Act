@@ -148,18 +148,31 @@
 
             $("#divExpensesTrv :input").prop("disabled", false);
             $("#divExpensesTrv :input").prop("readonly", true);
+            document.getElementById("chkMultiPrice").disabled = true;
 
+            $("#divDetailSub :input").prop("disabled", false);
+            $("#divDetailSub :input").prop("readonly", true);
+             
 
             for (var i = 0; i < '@Model.expensesDetailModel.costDetailLists.Count'; i++) {
                 if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "Recorder")' == 'True') {
                     $("#txtUnitPrice_" + i + "").prop("readonly", false);
-                } else if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
-                    $("#txtGlCode_" + i + "").prop("readonly", false);
+                    $("#txtVat_" + i + "").prop("readonly", false);
                 }
+            }
+
+            for (var i = 0; i < '@Model.expensesDetailSubModel.costDetailLists.Count'; i++) {
+                if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "Recorder")' == 'True') {
+                    $("#txtSubUnitPrice_" + i + "").prop("readonly", false);
+                    $("#txtSubVat_" + i + "").prop("readonly", false);
+                }
+                @*else if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
+                    $("#txtGlCode_" + i + "").prop("readonly", false);
+                }*@
             }
         }
 
-        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]' &&
+        @*if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]' &&
             '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
 
             $("#divExpensesMed :input").prop("disabled", false);
@@ -167,7 +180,7 @@
             if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
                 $("#txtGlCode_0").prop("readonly", false);
             }
-        }
+        }*@
     }
 
     if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {

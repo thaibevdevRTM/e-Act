@@ -31,6 +31,7 @@ namespace eActForm.BusinessLayer
                 else if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && ActFormAppCode.checkCanEditByUser(activityId))
                 {
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
+                    rtn = ProcessInsertEstimateSub(rtn, model, activityId);
                 }
                 else
                 {

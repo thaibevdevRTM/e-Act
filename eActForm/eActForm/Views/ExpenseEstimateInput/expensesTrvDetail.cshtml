@@ -5,14 +5,14 @@
     function chkMultiPrice_change(){
         var checkedValue = document.getElementById("chkMultiPrice").checked;
         if (checkedValue == true) {
-            $('#preview').modal('show');
+            $('#divDetailSub').modal('show');
             //เคลียร์ data เมื่อคลิกใหม่
             $('#divInt input').val('0');
             $('#divDecimal input,#totalSubEstimate').val('0.00');
             $("#totalSubEstimate").text('0.00');
         } else {
             setElement("0");
-            $('#preview').modal('hide');
+            $('#divDetailSub').modal('hide');
         }
     }
 
@@ -50,7 +50,7 @@
         $("#txtTotal_1").val(v_total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         $("#txtVat_1").val(totalVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         $("#hdTotal_1").val(v_total.toFixed(2));
-        $('#preview').modal('hide');
+        $('#divDetailSub').modal('hide');
 
         setElement("1");
 
@@ -122,7 +122,7 @@
                                             <input type="hidden" value="@item.listChoiceId" id="hdListChoiceId_@index" name="expensesDetailModel.costDetailLists[@index].listChoiceId" class="form-control textboxcss" />
                                             <label>@item.listChoiceName</label>
 
-                                            <a onclick=" $('#preview').modal('show');" style="width: 100%">
+                                            <a onclick=" $('#divDetailSub').modal('show');" style="width: 100%">
                                                 <label id="MultiPrice_@index" style=" text-decoration:underline; cursor:pointer" />
                                                 @*<input type="text" id="MultiPrice_@index" readonly style=" color:darkblue; border:hidden; text-align:center;" />*@
                                             </a>
@@ -148,17 +148,15 @@
                                             {
 
                                                 @Html.DropDownListFor(x => x.expensesDetailModel.costDetailLists[index].productDetail,
-                                new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
-                                "name",
-                                "name", @item.productDetail), "", new
-                                {
-                                    @class = "form-control selectpicker",
-                                    @id = "ProductDetail_" + index,
-                                    @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
+                                     new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
+                                     "name",
+                                     "name", @item.productDetail), "", new
+                                     {
+                                         @class = "form-control selectpicker",
+                                         @id = "ProductDetail_" + index,
+                                         @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
 
-                                })
-
-
+                                     })
                                             }
 
 
@@ -307,7 +305,7 @@
     <div id="divPreview">
     </div>
 </div>
-<div id="preview" class="modal fade" role="dialog">
+<div id="divDetailSub" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
         <!-- Modal content-->

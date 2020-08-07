@@ -58,10 +58,7 @@
                 @if (@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") != ".00")
                 {
                     <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
-                    if (@Model.expensesDetailModel.costDetailLists[@index].statusEdit != "")
-                    {
-                        <span style="color:red">*</span>
-                    }
+
                 }
                 else
                 {
@@ -70,6 +67,10 @@
                         <label>@Model.expensesDetailModel.costDetailLists[@index].unitPriceDisplay </label>
                     }
 
+                }
+                @if (@Model.expensesDetailModel.costDetailLists[@index].statusEdit != "")
+                {
+                    <span style="color:red">*</span>
                 }
             </td>
             <td style="text-align:right; padding-right:5px;">

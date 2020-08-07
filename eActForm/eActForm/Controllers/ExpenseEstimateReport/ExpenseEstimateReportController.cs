@@ -45,18 +45,18 @@ namespace eActForm.Controllers
 
 
 
-            decimal? unitPrice = 0;
+            decimal? total = 0;
             for (int i = 0; i < 8; i++)
             {
                 if (model2.costDetailLists[i].total != 0)
                 {
                     if (modelHistory.costDetailLists.Count > 0)
                     {
-                        unitPrice = modelHistory.costDetailLists.Where(x => x.listChoiceId == model2.costDetailLists[i].listChoiceId).FirstOrDefault().unitPrice;
+                        total = modelHistory.costDetailLists.Where(x => x.listChoiceId == model2.costDetailLists[i].listChoiceId).FirstOrDefault().total;
                     }
                     else
                     {
-                        unitPrice = model2.costDetailLists[i].unitPrice;
+                        total = model2.costDetailLists[i].total;
                     }
 
                     if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model2.costDetailLists[i].unit != 0 && model2.costDetailLists[i].unitPrice == 0)
@@ -84,7 +84,7 @@ namespace eActForm.Controllers
                             createdByUserId = model2.costDetailLists[i].createdByUserId,
                             statusEdit = model2.costDetailLists[i].createdByUserId == "" ? "" :
                                        (model2.costDetailLists[i].createdByUserId != model2.costDetailLists[i].updatedByUserId
-                                       && model2.costDetailLists[i].unitPrice != unitPrice ? "*" : ""),
+                                       && model2.costDetailLists[i].total != total ? "*" : ""),
                         });
                     }
                     else
@@ -104,7 +104,7 @@ namespace eActForm.Controllers
                             createdByUserId = model2.costDetailLists[i].createdByUserId,
                             statusEdit = model2.costDetailLists[i].createdByUserId == "" ? "" :
                           (model2.costDetailLists[i].createdByUserId != model2.costDetailLists[i].updatedByUserId
-                          && model2.costDetailLists[i].unitPrice != unitPrice ? "*" : ""),
+                          && model2.costDetailLists[i].total != total ? "*" : ""),
                         });
                     }
 
@@ -133,9 +133,7 @@ namespace eActForm.Controllers
 
             modelResult.costDetailLists = modelResult.costDetailLists.ToList();
 
-
             activity_TBMMKT_Model.expensesDetailModel = modelResult;
-
 
             return PartialView(activity_TBMMKT_Model);
         }
@@ -146,65 +144,16 @@ namespace eActForm.Controllers
             {
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
-            //if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
-            //{
-            //List<TB_Act_master_list_choiceModel> lst = new List<TB_Act_master_list_choiceModel>();
-            //lst = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "expensesTrv").OrderBy(x => x.orderNum).ToList();
 
-            // listChoiceName,listChoiceId
-            //    for (int i = 0; i < 5; i++)
-            //    {
-            //        model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
-            //        {
-            //            date = null,
-            //            detail = "",
-            //            hospId = "",
-            //            glCode = "",
-            //            unit = 0,
-            //            unitPrice = 0,
-            //            total = 0,
-
-            //        });
-            //    }
-            //}
-            //else
-            //{ }
-            //edit
             model.costDetailLists = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
 
             model.costDetailLists[0].hospName = QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(model.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;
-
-
-
-
-
-            //int rowAdd = 5 - modelResult.costDetailLists.Count;
-            //for (int i = 0; i < rowAdd; i++)
-            //{
-            //    modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
-            //    {
-            //        listChoiceId = "",
-            //        listChoiceName = "",
-            //        productDetail = "",
-            //        unit = 0,
-            //        unitPrice = 0,
-            //        total = 0,
-            //        displayType = "",
-            //        subDisplayType = "",
-            //        statusEdit = ""
-            //    });
-
-            // }
-            // modelResult.costDetailLists = modelResult.costDetailLists.ToList();modelResult
 
             activity_TBMMKT_Model.expensesDetailModel = model;
 
             return PartialView(activity_TBMMKT_Model);
         }
-        //public ActionResult testExpensesDetails(Activity_TBMMKT_Model activity_TBMMKT_Model)
-        //{
-        //    return PartialView(activity_TBMMKT_Model);
-        //}
+
     }
 
 
