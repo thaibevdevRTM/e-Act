@@ -14,7 +14,6 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using WebLibrary;
@@ -379,7 +378,7 @@ namespace eActForm.Models
                     , ConfigurationManager.AppSettings["emailForDevelopSite"]
                     , ""
                     , "eAct ApiApprove mergePDF Error"
-                    ,  ex.Message
+                    , ex.Message
                     , null);
                 }
             }
@@ -397,12 +396,12 @@ namespace eActForm.Models
             //}
             //แก้ปัญหามีเอกสารแนบ 4 หน้า ฟังก์ชันเดิมอ่านได้ 6 หน้า ทำให้ merge pdf ไม่ได้ By Kanokpun 2020622
             int resultPagesCount = 0;
-            using ( var reader = new PdfReader(file))
+            using (var reader = new PdfReader(file))
             {
                 resultPagesCount = reader.NumberOfPages;
             }
             return resultPagesCount;
-    
+
         }
 
 

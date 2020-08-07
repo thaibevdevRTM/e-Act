@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using eForms.Models.Reports;
+using Microsoft.ApplicationBlocks.Data;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using eForms.Models.Reports;
-using Microsoft.ApplicationBlocks.Data;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace eForms.Presenter.Reports
 {
@@ -18,11 +18,11 @@ namespace eForms.Presenter.Reports
                                 .Select(cl => new RepPostEvaGroup
                                 {
                                     name = cl.First().brandName.Trim(),
-                                    value = (cl.Sum(c => c.total) / 1000000 ).ToString(),
+                                    value = (cl.Sum(c => c.total) / 1000000).ToString(),
                                     sumActSalesParti = (cl.Sum(c => c.actAmount)).ToString(),
                                     sumNormalCase = (cl.Sum(c => c.normalCost)),
-                                    sumPromotionCase = (cl.Sum(c=> c.themeCost) ),
-                                    sumSalesInCase = (cl.Sum(c=> c.actReportQuantity)),
+                                    sumPromotionCase = (cl.Sum(c => c.themeCost)),
+                                    sumSalesInCase = (cl.Sum(c => c.actReportQuantity)),
                                     countGroup = cl.Count().ToString()
                                 }).ToList();
                 return list;

@@ -1,15 +1,11 @@
 ﻿using eActForm.BusinessLayer;
+using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
-using iTextSharp.text;
 using System;
-using System.CodeDom;
 using System.Configuration;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -48,27 +44,8 @@ namespace eActForm.Controllers
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
-                    var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
-                    gridHtml = gridHtml.Replace("<br>", "<br/>");
-                    gridHtml = gridHtml.Replace("undefined", "");
 
-                    AppCode.genPdfFile(gridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert), Server.MapPath("~"));
-
-                    TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-                    getImageModel.tbActImageList = ImageAppCode.GetImage(activityId, ".pdf");
-                    string[] pathFile = new string[getImageModel.tbActImageList.Count + 1];
-                    pathFile[0] = Server.MapPath(rootPathInsert);
-                    if (getImageModel.tbActImageList.Any())
-                    {
-                        int i = 1;
-                        foreach (var item in getImageModel.tbActImageList)
-                        {
-                            pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-                            i++;
-                        }
-                    }
-                    var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
-                    var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+                    GenPDFAppCode.doGen(gridHtml, activityId);
 
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
                 }

@@ -1,13 +1,8 @@
 ﻿using eActForm.BusinessLayer;
-using eActForm.BusinessLayer.Appcodes;
-using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
-using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
-using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -136,8 +131,8 @@ namespace eActForm.Controllers
                 //edit
                 model.costDetailLists = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
 
-                model.costDetailLists[0].hospName= QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(model.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;
-                                                         
+                model.costDetailLists[0].hospName = QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(model.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;
+
             }
             activity_TBMMKT_Model.expensesDetailModel = model;
 

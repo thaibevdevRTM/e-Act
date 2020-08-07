@@ -27,11 +27,11 @@ namespace eActForm.Models
         public List<Customers_Model> customerslist { get; set; }
         public List<TB_Act_Other_Model> otherlist { get; set; }
         //public List<Productcostdetail> productcostdetaillist { get; set; }
-        
+
         public List<TB_Act_Image_Model.ImageModel> productImageList { get; set; }
         public ActivityForm activityFormModel { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
-       
+
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
 
         public Activity_Model()
@@ -65,7 +65,7 @@ namespace eActForm.Models
             EXPENSE,
             HCM,
             ITForm,
-            HCForm,        
+            HCForm,
             OtherCompany
         }
         public enum groupCompany
