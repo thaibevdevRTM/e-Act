@@ -75,7 +75,7 @@ namespace eActForm.Models
         public List<GetDataDetailPaymentAll> listGetDataDetailPaymentAll { get; set; }
         public List<departmentMasterModel> listGetDepartmentMaster { get; set; }
         public List<DataRequesterToShow> dataRequesterToShows { get; set; }
-        public List<string> listEoInDoc  { get; set; }
+        public List<string> listEoInDoc { get; set; }
 
     }
 
@@ -193,7 +193,7 @@ namespace eActForm.Models
         public string activityId { get; set; }
         public string typeKeep { get; set; }
         public int rowNo { get; set; }
-        public string activityIdEO { get; set; }        
+        public string activityIdEO { get; set; }
         public string IO { get; set; }
         public string GL { get; set; }
         public string select_list_choice_id_ChReg { get; set; }
@@ -201,7 +201,7 @@ namespace eActForm.Models
         public string EO { get; set; }
     }
 
-        public class TB_Act_ActivityLayout
+    public class TB_Act_ActivityLayout
     {
         public string id { get; set; }
         public string activityId { get; set; }
@@ -241,7 +241,7 @@ namespace eActForm.Models
         public string unitPriceDisplayReport { get; set; }
         public string QtyName { get; set; }
         public string remark { get; set; }
-     
+
     }
 
     public class RequestEmpModel : ActBaseModel

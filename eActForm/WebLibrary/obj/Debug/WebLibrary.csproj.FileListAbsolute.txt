@@ -32,7 +32,6 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.Cop
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CoreCompileInputs.cache
-D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\bin\Debug\Microsoft.Exchange.WebServices.xml
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.dll
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.pdb
 D:\WORK\PROJECT\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
