@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using WebLibrary;
 using System.Linq;
+using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
@@ -491,9 +491,9 @@ namespace eActForm.BusinessLayer
                                      updatedDate = (DateTime?)dr["updatedDate"],
                                      updatedByUserId = dr["updatedByUserId"].ToString(),
                                      isPermisionApprove = getPremisionApproveByEmpid(models.approveDetailLists, empId)
-                                 }).ToList();           
-                        models.approveModel = lists[0];
-                   
+                                 }).ToList();
+                    models.approveModel = lists[0];
+
 
 
                 }

@@ -34,7 +34,7 @@ namespace eActForm.BusinessLayer
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                                   orderNum = d["orderNum"].ToString(),
-                                  displayType  = d["displayType"].ToString(),
+                                  displayType = d["displayType"].ToString(),
                                   subDisplayType = d["subDisplayType"].ToString(),
                               });
                 return result.OrderBy(x => x.orderNum).OrderBy(x => x.id).ToList();

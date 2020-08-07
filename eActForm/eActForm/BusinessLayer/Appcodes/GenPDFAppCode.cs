@@ -1,8 +1,6 @@
-﻿using Antlr.Runtime.Tree;
-using eActForm.Models;
+﻿using eActForm.Models;
 using iTextSharp.text;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
@@ -11,7 +9,7 @@ namespace eActForm.BusinessLayer.Appcodes
 {
     public class GenPDFAppCode
     {
-        public static string doGen(string gridHtml,string activityId)
+        public static string doGen(string gridHtml, string activityId)
         {
             try
             {
@@ -36,7 +34,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
                 return resultMergePDF;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("doGen PDF >> " + ex.Message);
             }

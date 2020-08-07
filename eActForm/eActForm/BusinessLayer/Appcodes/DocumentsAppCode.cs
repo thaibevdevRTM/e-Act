@@ -2,10 +2,8 @@
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using Org.BouncyCastle.Asn1.Ocsp;
 using System.Configuration;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -244,7 +242,7 @@ namespace eActForm.BusinessLayer
 
         public static string formatValueSelectEO_PVForm(string activityIdEO, string EO)
         {
-            string valResult = (activityIdEO+"|"+ EO);
+            string valResult = (activityIdEO + "|" + EO);
             return valResult;
         }
 

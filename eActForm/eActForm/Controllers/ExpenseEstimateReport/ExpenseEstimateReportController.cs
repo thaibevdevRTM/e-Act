@@ -1,13 +1,8 @@
 ﻿using eActForm.BusinessLayer;
-using eActForm.BusinessLayer.Appcodes;
-using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
-using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
-using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -42,7 +37,7 @@ namespace eActForm.Controllers
                 {
                     if (modelHistory.costDetailLists.Count > 0)
                     {
-                        unitPrice= modelHistory.costDetailLists.Where(x => x.listChoiceId == model2.costDetailLists[i].listChoiceId).FirstOrDefault().unitPrice;
+                        unitPrice = modelHistory.costDetailLists.Where(x => x.listChoiceId == model2.costDetailLists[i].listChoiceId).FirstOrDefault().unitPrice;
                     }
                     else
                     {
@@ -105,10 +100,10 @@ namespace eActForm.Controllers
             };
             //if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             //{
-                //List<TB_Act_master_list_choiceModel> lst = new List<TB_Act_master_list_choiceModel>();
-                //lst = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "expensesTrv").OrderBy(x => x.orderNum).ToList();
+            //List<TB_Act_master_list_choiceModel> lst = new List<TB_Act_master_list_choiceModel>();
+            //lst = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "expensesTrv").OrderBy(x => x.orderNum).ToList();
 
-                // listChoiceName,listChoiceId
+            // listChoiceName,listChoiceId
             //    for (int i = 0; i < 5; i++)
             //    {
             //        model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
@@ -126,12 +121,12 @@ namespace eActForm.Controllers
             //}
             //else
             //{ }
-                //edit
-                model.costDetailLists = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
+            //edit
+            model.costDetailLists = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
 
-                model.costDetailLists[0].hospName = QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(model.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;
+            model.costDetailLists[0].hospName = QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(model.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;
 
-           
+
 
 
 
@@ -151,8 +146,8 @@ namespace eActForm.Controllers
             //        statusEdit = ""
             //    });
 
-           // }
-           // modelResult.costDetailLists = modelResult.costDetailLists.ToList();modelResult
+            // }
+            // modelResult.costDetailLists = modelResult.costDetailLists.ToList();modelResult
 
             activity_TBMMKT_Model.expensesDetailModel = model;
 

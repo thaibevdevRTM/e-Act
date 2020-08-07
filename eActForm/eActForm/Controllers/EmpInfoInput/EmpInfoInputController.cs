@@ -1,14 +1,11 @@
 ﻿using eActForm.BusinessLayer;
-using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Models.MasterData;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
-using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -17,7 +14,7 @@ namespace eActForm.Controllers
     {
         public ActionResult empInfoDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
-             bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
+            bool chk = AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id);
 
             if (activity_TBMMKT_Model.activityFormTBMMKT.mode == AppCode.Mode.edit.ToString())
             {

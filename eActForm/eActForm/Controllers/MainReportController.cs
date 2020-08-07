@@ -1,11 +1,9 @@
 ﻿using eActForm.BusinessLayer;
-using eActForm.BusinessLayer.Appcodes;
 using eActForm.Models;
 using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Web.Mvc;
@@ -51,7 +49,9 @@ namespace eActForm.Controllers
                 {
                     ViewBag.classFont = "formBorderStyle2";
                     ViewBag.padding = "paddingFormV3";
-                } else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"]) {
+                }
+                else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+                {
                     ViewBag.classFont = "fontDocSmall";
                     ViewBag.padding = "paddingFormV2";
                 }
@@ -72,7 +72,7 @@ namespace eActForm.Controllers
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                 {
                     activity_TBMMKT_Model.approveModels = ApproveAppCode.getApproveByActFormId(activityId);
-                }                    
+                }
                 //=END==ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
             }
 
@@ -112,7 +112,7 @@ namespace eActForm.Controllers
             activity_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm;
             activity_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(ConfigurationManager.AppSettings["formReportPettyCashNum"]).FirstOrDefault().nameForm_EN;
 
-          
+
             CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT
             {
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
@@ -175,10 +175,10 @@ namespace eActForm.Controllers
                     glCode = "",
                 });
             }
-            
+
             modelResult.costDetailLists = modelResult.costDetailLists.ToList();
             activity_Model.expensesDetailModel = modelResult;
-          
+
 
 
             //===========Set Language By Document Dev date 20200310 Peerapop=====================

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data;
-using eForms.Models.MasterData;
+﻿using eForms.Models.MasterData;
 using Microsoft.ApplicationBlocks.Data;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace eForms.Presenter.MasterData
 {
-    public class ProvincePresenter: BasePresenter
+    public class ProvincePresenter : BasePresenter
     {
         public static List<ProvinceModel> getProvince(string strConn)
         {
@@ -22,7 +22,7 @@ namespace eForms.Presenter.MasterData
                              }).ToList();
                 return lists;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("getProvince >>" + ex.Message);
             }

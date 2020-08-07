@@ -2,11 +2,9 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
-using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -121,7 +119,7 @@ namespace eActForm.Controllers
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
 
-               // BaseAppCodes.WriteSignatureToDisk(models, actId);
+                // BaseAppCodes.WriteSignatureToDisk(models, actId);
 
             }
             catch (Exception ex)
@@ -227,7 +225,7 @@ namespace eActForm.Controllers
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
 
-               // BaseAppCodes.WriteSignatureToDisk(models, actId);
+                // BaseAppCodes.WriteSignatureToDisk(models, actId);
 
             }
             catch (Exception ex)
@@ -285,6 +283,6 @@ namespace eActForm.Controllers
             return models;
         }
 
-  
+
     }
 }

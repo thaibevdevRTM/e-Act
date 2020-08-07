@@ -1,11 +1,11 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.Models;
+using eForms.Models.MasterData;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
-using eForms.Models.MasterData;
-using System.Collections.Generic;
 
 namespace eActForm.Controllers
 {
@@ -22,9 +22,9 @@ namespace eActForm.Controllers
         {
             if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"] || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
             {
-                if(activity_TBMMKT_Model.activityFormModel.documentDate == null)
-                { 
-                activity_TBMMKT_Model.activityFormModel.documentDate = DateTime.Now;
+                if (activity_TBMMKT_Model.activityFormModel.documentDate == null)
+                {
+                    activity_TBMMKT_Model.activityFormModel.documentDate = DateTime.Now;
                 }
             }
             return PartialView(activity_TBMMKT_Model);
@@ -90,7 +90,7 @@ namespace eActForm.Controllers
         {
             if (string.IsNullOrEmpty(activity_TBMMKT_Model.activityFormModel.documentDate.ToString()))
             {
-                activity_TBMMKT_Model.activityFormModel.documentDate =DateTime.Now;
+                activity_TBMMKT_Model.activityFormModel.documentDate = DateTime.Now;
             }
             return PartialView(activity_TBMMKT_Model);
         }
