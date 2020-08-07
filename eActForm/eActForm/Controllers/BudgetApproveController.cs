@@ -7,10 +7,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
-using System.IO;
 
 namespace eActForm.Controllers //update 21-04-2020
 {
@@ -385,7 +385,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 //del signature file
                 bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)));
                 if (folderExists)
-                    Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)),true);
+                    Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budgetApproveId)), true);
 
                 TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
                 getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budgetApproveId);
@@ -713,7 +713,7 @@ namespace eActForm.Controllers //update 21-04-2020
                     //del signature file
                     bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)));
                     if (folderExists)
-                        Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)),true);
+                        Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)), true);
 
 
                     TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
@@ -748,7 +748,7 @@ namespace eActForm.Controllers //update 21-04-2020
                         EmailAppCodes.sendApproveBudget(budget_approve_id, AppCode.ApproveType.Budget_form, false);
                     }
                 }
-                
+
 
                 resultAjax.Success = true;
             }
@@ -781,7 +781,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 // del signature file
                 bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)));
                 if (folderExists)
-                    Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)),true);
+                    Directory.Delete(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], budget_approve_id)), true);
 
                 TB_Bud_Image_Model getBudgetImageModel = new TB_Bud_Image_Model();
                 getBudgetImageModel.BudImageList = ImageAppCodeBudget.getImageBudgetByApproveId(budget_approve_id);

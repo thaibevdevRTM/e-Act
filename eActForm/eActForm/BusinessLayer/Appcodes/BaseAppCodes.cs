@@ -188,7 +188,7 @@ namespace eActForm.BusinessLayer.Appcodes
             return userModel;
         }
 
-        public static void WriteSignatureToDisk(ApproveModel.approveModels approveModels,string activityId)
+        public static void WriteSignatureToDisk(ApproveModel.approveModels approveModels, string activityId)
         {
 
             var modelApproveDetail = approveModels.approveDetailLists.Where(x => x.statusId.Equals("3")).ToList();
@@ -211,7 +211,7 @@ namespace eActForm.BusinessLayer.Appcodes
         //public static void WriteSignatureToDisk(ApproveFlowModel.approveFlowModel flowModel, string activityId)
         //{
 
-           
+
         //        bool folderExists = Directory.Exists(HttpContext.Current.Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
         //        if (!folderExists)
         //            Directory.CreateDirectory(HttpContext.Current.Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
@@ -222,7 +222,7 @@ namespace eActForm.BusinessLayer.Appcodes
         //                , item.signature
         //                , string.Format(ConfigurationManager.AppSettings["rootSignaByActURL"], activityId, item.empId));
         //        }
-            
+
 
         //}
 

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace eActForm.Models
 {
     public class exPerryCashModels
     {
-        public exPerryCashModel exPrettyModel {get;set;}
+        public exPerryCashModel exPrettyModel { get; set; }
         public List<exPerryCashModel> exPrettyModelList { get; set; }
 
         public exPerryCashModels()

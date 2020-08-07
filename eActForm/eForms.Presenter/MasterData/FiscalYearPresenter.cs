@@ -2,13 +2,13 @@
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace eForms.Presenter.MasterData
 {
-    public class FiscalYearPresenter 
+    public class FiscalYearPresenter
     {
         public static List<FiscalYearModel> getFiscalNow(string strConn, string typePeriod)
         {
@@ -36,7 +36,7 @@ namespace eForms.Presenter.MasterData
                 throw new Exception("getPhysicalYearByYear >>" + ex.Message);
             }
         }
-        public static List<FiscalYearModel> getFiscalYearByYear(string strConn, string yearFrom,string yearTo)
+        public static List<FiscalYearModel> getFiscalYearByYear(string strConn, string yearFrom, string yearTo)
         {
             try
             {

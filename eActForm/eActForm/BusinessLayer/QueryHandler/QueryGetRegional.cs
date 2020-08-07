@@ -24,7 +24,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                                  companyId = d["companyId"].ToString(),
                                  nameTH = d["regionalNameTH"].ToString(),
                                  nameEN = d["regionalNameEN"].ToString(),
-                               
+
                              });
                 return lists.ToList();
             }

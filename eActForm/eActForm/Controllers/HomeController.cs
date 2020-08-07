@@ -76,7 +76,7 @@ namespace eActForm.Controllers
 
 
 
-        public ActionResult requestDeleteDoc(string actId, string statusId, string statusNote,string typeForm)
+        public ActionResult requestDeleteDoc(string actId, string statusId, string statusNote, string typeForm)
         {
             AjaxResult result = new AjaxResult();
             try
@@ -101,14 +101,14 @@ namespace eActForm.Controllers
                     }
                 }
                 ApproveAppCode.setCountWatingApprove();
-           
-           // TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];
-         }
-            catch(Exception ex)
+
+                // TempData["SearchDataModel"] = result.Success ? null : TempData["SearchDataModel"];
+            }
+            catch (Exception ex)
             {
                 ExceptionManager.WriteError("requestDeleteDoc => " + ex.Message);
             }
-         
+
             return RedirectToAction("myDoc", new { typeForm = typeForm });
         }
 
@@ -172,7 +172,7 @@ namespace eActForm.Controllers
 
             model.typeForm = BaseAppCodes.getCompanyTypeForm().ToString();
             TempData["SearchDataModel"] = model;
-            return RedirectToAction("Index",new { typeForm = model.typeForm });
+            return RedirectToAction("Index", new { typeForm = model.typeForm });
         }
 
         public ActionResult logOut()

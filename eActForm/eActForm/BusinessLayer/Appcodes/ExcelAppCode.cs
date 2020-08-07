@@ -1,5 +1,4 @@
-﻿using Microsoft.Ajax.Utilities;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using OfficeOpenXml.Table;
 using System;
 using System.Data;
@@ -70,7 +69,8 @@ namespace eActForm.BusinessLayer
                 {
                     worksheet.Column(12).Style.Numberformat.Format = "yyyy-mm-dd";
                     worksheet.Column(14).Style.Numberformat.Format = "yyyy-mm-dd";
-                }else if(typeProcess== "MasterAP")
+                }
+                else if (typeProcess == "MasterAP")
                 {
                     worksheet.Column(15).Style.Numberformat.Format = "yyyy-mm-dd";
                     worksheet.Column(17).Style.Numberformat.Format = "yyyy-mm-dd";
