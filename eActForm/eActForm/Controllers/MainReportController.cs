@@ -126,14 +126,36 @@ namespace eActForm.Controllers
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
 
+            #region "ดึงข้อมูล GL "
+            //ฟอร์มที่ใช้เป็นของ saleSupport
+            List<GetDataGL> lstGL = new List<GetDataGL>();
+            lstGL = QueryGetGL.GetGLMasterByDivisionId(AppCode.Division.salesSupport);
+            #endregion
+
             if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
             {
+                decimal? vat = 0,vatsum=0;
                 #region "ค่าเดินทางของ NUM"
                 model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
                 for (int i = 0; i < 8; i++)
                 {
                     if (model2.costDetailLists[i].total != 0 && model2.costDetailLists[i].listChoiceId != AppCode.Expenses.Allowance)
                     {
+                        //vat แสดงรวมค่าใช้จ่ายอื่นๆแสดงแยก
+
+                        if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model2.costDetailLists[i].unitPrice == 0)
+                        {
+                            vat = model2.costDetailLists[i].vat;
+                          //  vatsum += model2.costDetailLists[i].vat;
+
+                        }
+                        else
+                        {
+                            vat = (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit);
+                          //  vatsum += (model2.costDetailLists[i].vat * model2.costDetailLists[i].unit);
+                        }
+                        vatsum += vat;
+
                         modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                         {
                             listChoiceId = model2.costDetailLists[i].listChoiceId,
@@ -142,11 +164,23 @@ namespace eActForm.Controllers
                            (model2.costDetailLists[i].displayType == AppCode.CodeHtml.LabelHtml
                            ? model2.costDetailLists[i].unit + "วัน (สิทธิเบิก " + model2.costDetailLists[i].productDetail + " บาท/วัน)"
                            : model2.costDetailLists[i].productDetail),
-                            total = model2.costDetailLists[i].total,
-                            glCode = model2.costDetailLists[i].glCode,
-                        }); ;
+                            total = model2.costDetailLists[i].total - (vat),
+                            glCode = lstGL.Where(x => x.id == model2.costDetailLists[i].glCodeId).FirstOrDefault()?.GL,
+                        });
                     }
                 }
+                if (vatsum > 0)
+                {
+                    modelResult.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                    {
+                        listChoiceId = "",
+                        listChoiceName = "vat",
+                        productDetail = lstGL.Where(x => x.id == AppCode.SSGLId.vat).FirstOrDefault()?.groupGL,
+                        total = vatsum,
+                        glCode = lstGL.Where(x => x.id == AppCode.SSGLId.vat).FirstOrDefault()?.GL,
+                    });
+                }
+
                 activity_Model.totalCostThisActivity = activity_Model.totalCostThisActivity - model2.costDetailLists.Where(X => X.listChoiceId == AppCode.Expenses.Allowance).FirstOrDefault().total;
                 #endregion
             }
@@ -159,12 +193,12 @@ namespace eActForm.Controllers
                     productDetail = "ค่ารักษาพยาบาล",
                     total = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived,
                     displayType = "",
-                    glCode = activity_Model.expensesDetailModel.costDetailLists[0].glCode,
+                    glCode = lstGL.Where(x => x.id == AppCode.SSGLId.medical).FirstOrDefault()?.GL,
                 });
                 activity_Model.totalCostThisActivity = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
 
             }
-
+            
             int rowAdd = 8 - modelResult.costDetailLists.Count;
             for (int i = 0; i < rowAdd; i++)
             {

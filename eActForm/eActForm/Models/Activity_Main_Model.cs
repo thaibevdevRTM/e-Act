@@ -17,6 +17,7 @@ namespace eActForm.Models
         public List<TB_Act_ActivityForm_SelectBrandOrChannel> tB_Act_ActivityForm_SelectBrandOrChannel { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList2 { get; set; }
+        public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateSubList { get; set; }
         public List<TB_Reg_Subject> tB_Reg_Subject { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalCostThisActivity { get; set; }
@@ -26,6 +27,7 @@ namespace eActForm.Models
         public List<PurposeModel> purposeModel { get; set; }
         public List<PlaceDetailModel> placeDetailModel { get; set; }
         public CostDetailOfGroupPriceTBMMKT expensesDetailModel { get; set; }
+        public CostDetailOfGroupPriceTBMMKT expensesDetailSubModel { get; set; }
         public List<string> chkPurpose { get; set; }
 
         public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
@@ -58,6 +60,7 @@ namespace eActForm.Models
             purposeModel = new List<PurposeModel>();
             placeDetailModel = new List<PlaceDetailModel>();
             expensesDetailModel = new CostDetailOfGroupPriceTBMMKT();
+            expensesDetailSubModel = new CostDetailOfGroupPriceTBMMKT();
             approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
             exPerryCashList = new List<exPerryCashModel>();
             exPerryCashModel = new exPerryCashModel();
@@ -365,6 +368,8 @@ namespace eActForm.Models
     public class GetDataGL
     {
         public string GL { get; set; }
+        public string id { get; set; }
+        public string groupGL { get; set; }
     }
 
 

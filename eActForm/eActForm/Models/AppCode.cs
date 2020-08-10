@@ -91,6 +91,9 @@ namespace eActForm.Models
         {
             public const string Allowance = "06FF853F-EBB0-48E8-9620-520D0B8F6E0C";
             public const string Medical = "6BB0F68F-4B07-4E00-9B1E-B776D003D992";
+            public const string hotelExpense = "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1";
+            public const string planeExpense = "F34854F6-B91F-4C9E-A4BD-C181199B8E4F";
+
         }
 
 
@@ -100,7 +103,16 @@ namespace eActForm.Models
             public const string MedAll = "BF0BE76C-341E-4E56-8986-7A5B01248DE5";
         }
 
-
+        public static class Division
+        {
+            public const string sales = "65E3590D-8BE4-412B-A63C-65E860902B90";
+            public const string salesSupport = "2B894845-42B5-4968-9F30-1DDFAA74EF14";
+        }
+        public static class SSGLId
+        {
+            public const string vat = "CE4DA8CE-DB49-4E9F-931D-F33778B9FBC5";
+            public const string medical ="DE79CCD8-5B57-4E68-AEEA-65725135E029";
+        }
         public static string checkNullorEmpty(string p)
         {
             return p == "" || p == null || p == "0" || p == "0.00" || p == "0.000" || p == "0.0000" || p == "0.00000" ? "0" : p;

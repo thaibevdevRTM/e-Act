@@ -262,7 +262,8 @@ namespace eActForm.Models
         public string mechanics { get; set; }
         public bool chkBox { get; set; }
         public string qty { get; set; }
-
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? vat { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public CostThemeDetailOfGroupByPrice()
@@ -279,6 +280,7 @@ namespace eActForm.Models
         public string hospName { get; set; }
         public string UseYearSelect { get; set; }
         public string EO { get; set; }
+        public string glCodeId { get; set; }
 
     }
 

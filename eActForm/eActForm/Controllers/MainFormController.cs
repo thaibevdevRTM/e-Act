@@ -200,6 +200,7 @@ namespace eActForm.Controllers
                     )
                 {
                     activity_TBMMKT_Model.activityOfEstimateList = activity_TBMMKT_Model.expensesDetailModel.costDetailLists;
+                    activity_TBMMKT_Model.activityOfEstimateSubList = activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists;
                     //activity_TBMMKT_Model.activityFormModel.documentDate = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr, ConfigurationManager.AppSettings["formatDateUse"]);
                     if (AppCode.hcForm.Contains(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))//ฟอร์มเบิกค่าเดินทางและเบี้ยเลี่ยงnum
                     {

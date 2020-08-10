@@ -36,6 +36,7 @@ namespace eActForm.BusinessLayer
                                   orderNum = d["orderNum"].ToString(),
                                   displayType = d["displayType"].ToString(),
                                   subDisplayType = d["subDisplayType"].ToString(),
+                                  glCodeId = d["glCodeId"].ToString(),
                               });
                 return result.OrderBy(x => x.orderNum).OrderBy(x => x.id).ToList();
             }
