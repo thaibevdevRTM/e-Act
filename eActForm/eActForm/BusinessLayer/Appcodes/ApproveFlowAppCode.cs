@@ -287,7 +287,12 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveDetailForActForm"
+                List<ActivityForm> getActList = QueryGetActivityById.getActivityById(actId);
+                string[] comp = new string[] { "5600", "5601" };
+
+                var callStored = getActList.FirstOrDefault().companyId == ("5600") || getActList.FirstOrDefault().companyId == ("5601") ? "usp_getFlowApproveDetailForActFormMT" : "usp_getFlowApproveDetailForActForm";
+
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, callStored
                     , new SqlParameter[] { new SqlParameter("@flowId", flowId)
                                             , new SqlParameter("@actFormId",actId)
                     });
