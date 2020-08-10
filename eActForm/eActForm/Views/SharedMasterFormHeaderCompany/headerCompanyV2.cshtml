@@ -40,20 +40,40 @@
         compName = @Model.activityFormTBMMKT.companyName;
     }
 }
-<div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
-    <table style="border-color:none;">
-        <tr>
-            <td style="width:135px;">&nbsp;</td>
-            <td style="width:400px;text-align: center;vertical-align:middle;" class="fontDocV2">@compName</td>
-            <td style="width:165px;text-align: left;vertical-align:middle;" class="fontDocSmall">@Resources.Global.documentNo : @Model.activityFormModel.activityNo</td>
-        </tr>
-        <tr>
-            <td style="width:135px;">&nbsp;</td>
-            <td style="width:405px;text-align: center;vertical-align:middle;" class="fontDocV2">@formName</td>
-            <td style="width:160px;text-align: left;vertical-align:middle;" class="fontDocSmall">
-                @Resources.Global.documentDate&nbsp;&nbsp;: @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
-            </td>
-        </tr>
-    </table>
-</div>
+    <div id="divHeadCompany" runat="server" style="width: 100%; align-content: center; text-align: center;">
+        @if (Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"])
+        {
+            <table style="border-color:none;">
+                <tr>
+                    <td style="width:135px;">&nbsp;</td>
+                    <td style="width:400px;text-align: center;vertical-align:middle;" class="fontDocV1">@compName</td>
+                    <td style="width:165px;text-align: left;vertical-align:middle;" class="fontDocSmall">@Resources.Global.documentNo : @Model.activityFormModel.activityNo</td>
+                </tr>
+                <tr>
+                    <td style="width:135px;">&nbsp;</td>
+                    <td style="width:405px;text-align: center;vertical-align:middle;" class="fontDocV1">@formName</td>
+                    <td style="width:160px;text-align: left;vertical-align:middle;" class="fontDocSmall">
+                        @Resources.Global.documentDate&nbsp;&nbsp;: @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
+                    </td>
+                </tr>
+            </table>
+        }
+        else
+        {
+            <table style="border-color:none;">
+                <tr>
+                    <td style="width:135px;">&nbsp;</td>
+                    <td style="width:400px;text-align: center;vertical-align:middle;" class="fontDocV2">@compName</td>
+                    <td style="width:165px;text-align: left;vertical-align:middle;" class="fontDocSmall">@Resources.Global.documentNo : @Model.activityFormModel.activityNo</td>
+                </tr>
+                <tr>
+                    <td style="width:135px;">&nbsp;</td>
+                    <td style="width:405px;text-align: center;vertical-align:middle;" class="fontDocV2">@formName</td>
+                    <td style="width:160px;text-align: left;vertical-align:middle;" class="fontDocSmall">
+                        @Resources.Global.documentDate&nbsp;&nbsp;: @Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish)
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
 
