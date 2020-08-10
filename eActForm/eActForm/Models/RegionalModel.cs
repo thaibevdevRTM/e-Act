@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace eActForm.Models
+﻿namespace eActForm.Models
 {
     public class RegionalModel
     {

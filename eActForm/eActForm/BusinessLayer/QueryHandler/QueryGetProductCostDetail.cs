@@ -84,7 +84,7 @@ namespace eActForm.BusinessLayer
                                  disCount2 = d["discount2"] is DBNull ? 0 : decimal.Parse(d["discount2"].ToString()),
                                  disCount3 = d["discount3"] is DBNull ? 0 : decimal.Parse(d["discount3"].ToString()),
                                  saleNormal = d["saleNormal"] is DBNull ? 0 : decimal.Parse(d["saleNormal"].ToString()),
-                                 rsp =  0,
+                                 rsp = 0,
 
                              }).ToList();
                 if (p_productId != "")

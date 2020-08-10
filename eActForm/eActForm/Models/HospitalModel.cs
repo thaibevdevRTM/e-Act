@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace eActForm.Models
+﻿namespace eActForm.Models
 {
     public class HospitalModel
     {
@@ -15,7 +12,7 @@ namespace eActForm.Models
         public string hospTypeName { get; set; }
         public int percentage { get; set; }
         public string delFlag { get; set; }
-     
+
 
     }
 }

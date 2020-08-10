@@ -4,7 +4,6 @@ using System;
 using System.Configuration;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using WebLibrary;
 
 namespace eActForm.Controllers
@@ -37,7 +36,7 @@ namespace eActForm.Controllers
                 user = Request.Cookies["CL"]["n"];
                 password = Request.Cookies["CL"]["p"];
                 var chkRemember = Request.Cookies["CL"]["chkRemember"];
-                return redirectResult(user, password );
+                return redirectResult(user, password);
 
             }
 

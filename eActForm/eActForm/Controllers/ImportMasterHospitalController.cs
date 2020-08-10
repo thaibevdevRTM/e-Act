@@ -1,18 +1,14 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.Models;
+using eForms.Models.MasterData;
 using eForms.Presenter.MasterData;
-using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Web.Mvc;
 using WebLibrary;
-using System.Reflection;
-using eForms.Models.MasterData;
 
 namespace eActForm.Controllers
 {
@@ -302,10 +298,10 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getAllHospital => " + ex.Message);
+                ExceptionManager.WriteError("getHospitalId => " + ex.Message);
             }
             return hospitalId;
         }
-     
+
     }
-  }
+}

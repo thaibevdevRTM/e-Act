@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Web.UI.WebControls.WebParts;
 
 namespace eActForm.Models
 {
@@ -38,7 +37,7 @@ namespace eActForm.Models
             public string remark;
             public string imgSignature { get; set; }
 
-            public string urlImg { get; set; }    
+            public string urlImg { get; set; }
             public bool? isApproved { get; set; }
             public string bu { get; set; }
             public string buEN { get; set; }

@@ -215,6 +215,7 @@
     <Compile Include="BusinessLayer\Appcodes\BaseAppCodes.cs" />
     <Compile Include="BusinessLayer\Appcodes\exPerryCashAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\FileExt.cs" />
+    <Compile Include="BusinessLayer\Appcodes\GenPDFAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\ImageAppCodeBudget.cs" />
     <Compile Include="BusinessLayer\Appcodes\managementFlowAppCode.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllCompany.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllCustomers.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllHospital.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetGL.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetFlow.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllPrice.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetAllProduct.cs" />
@@ -265,9 +267,9 @@
     <Compile Include="BusinessLayer\Appcodes\SignatureAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UserAppCode.cs" />
     <Compile Include="BusinessLayer\Appcodes\UtilsAppCode.cs" />
-    <Compile Include="BusinessLayer\QueryHandler\QueryGetReport.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetRegional.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetPosition.cs" />
+    <Compile Include="BusinessLayer\QueryHandler\QueryGetReport.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryGetSubject.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryOtherMaster.cs" />
     <Compile Include="BusinessLayer\QueryHandler\QueryProcessHospital.cs" />
@@ -329,7 +331,6 @@
     <Compile Include="Controllers\ExpenseEstimateReport\parialPriceStructureRpt.cs" />
     <Compile Include="Controllers\exPerryCashController.cs" />
     <Compile Include="Controllers\API\apiGetDataMasterController.cs" />
-    <Compile Include="Controllers\ReportHc\ReportHcController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportMasterHospitalController.cs" />
     <Compile Include="Controllers\ImportMasterAPController.cs" />
@@ -345,6 +346,7 @@
     <Compile Include="Controllers\partialSaleTeam\partialSaleTeamController.cs" />
     <Compile Include="Controllers\partialActivityDetail\partialActivityDetailController.cs" />
     <Compile Include="Controllers\partialViewEmpInfo\partialEmpInfoController.cs" />
+    <Compile Include="Controllers\ReportHc\ReportHcController.cs" />
     <Compile Include="Controllers\SharedMasterFormDetail_InputController.cs" />
     <Compile Include="Controllers\SharedMasterFormHeaderCompany_InputController.cs" />
     <Compile Include="Controllers\SharedMasterFormHeaderCompanyController.cs" />
@@ -367,12 +369,12 @@
     </Compile>
     <Compile Include="Models\Claim_Report_Model.cs" />
     <Compile Include="Models\exPerryCashModel.cs" />
-    <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\ImportExcel.cs" />
     <Compile Include="Models\DataMasterModels\salesTeamModel.cs" />
     <Compile Include="Models\positionModel.cs" />
     <Compile Include="Models\HospitalModel.cs" />
     <Compile Include="Models\RegionalModel.cs" />
+    <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\TB_Act_ActivityChoiceSelectModel.cs" />
     <Compile Include="Models\TB_Act_master_list_choiceModel.cs" />
     <Compile Include="Models\Master_Company_Model.cs" />
@@ -3184,9 +3186,9 @@
     <Content Include="Views\SharedMasterFormHeaderCompany_Input\headerCompanySubject.cshtml" />
     <Content Include="Views\SharedMasterFormDetail_Input\requestEmp2.cshtml" />
     <Content Include="Views\SharedMasterFormHeaderDetail_Input\dropdownConditionSubject.cshtml" />
-    <Content Include="Views\MainReport\ReportIndex.cshtml" />
     <Content Include="Views\ReportHc\listMedRpt.cshtml" />
     <Content Include="Views\ReportHc\mainSearchRpt.cshtml" />
+    <Content Include="Views\MainReport\ReportIndex.cshtml" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <TypeScriptCompile Include="Content\vendors\moment\moment.d.ts" />
