@@ -305,7 +305,7 @@ namespace eActForm.Controllers
                 {
 
                     GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
-                    GenPDFAppCode.doGen(GridHtml1, activityId);
+                    GenPDFAppCode.doGen(GridHtml1, activityId, Server);
                     if (QueryGetActivityByIdTBMMKT.getActivityById(activityId).FirstOrDefault().statusId != 3)
                     {
                         if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)

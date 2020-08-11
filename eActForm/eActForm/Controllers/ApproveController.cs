@@ -194,7 +194,7 @@ namespace eActForm.Controllers
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
-                    GenPDFAppCode.doGen(GridHtml, activityId);
+                    GenPDFAppCode.doGen(GridHtml, activityId, Server);
 
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
                     ApproveAppCode.setCountWatingApprove();

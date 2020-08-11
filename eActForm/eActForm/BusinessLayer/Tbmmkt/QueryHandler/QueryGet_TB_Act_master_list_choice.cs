@@ -42,7 +42,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("get_channelMasterType => " + ex.Message);
+                ExceptionManager.WriteError("get_TB_Act_master_list_choice => " + ex.Message);
                 return new List<TB_Act_master_list_choiceModel>();
             }
         }
