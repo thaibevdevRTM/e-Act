@@ -124,7 +124,7 @@ namespace eActForm.Controllers
             var resultAjax = new AjaxResult();
             try
             {
-                GenPDFAppCode.doGen(GridHtml, activityId);
+                GenPDFAppCode.doGen(GridHtml, activityId, Server);
 
                 bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], activityId)));
                 if (folderExists)
