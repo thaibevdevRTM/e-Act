@@ -192,7 +192,7 @@ namespace eActForm.BusinessLayer
                         string getYear = "";
                         if (getActList.FirstOrDefault().activityPeriodSt != null)
                         {
-                            if (getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9)
+                            if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21)
                             {
                                 getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
                             }
