@@ -201,14 +201,7 @@ namespace eActForm.BusinessLayer
                                 getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value).ToString().Substring(2, 2);
                             }
                         }
-                        if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"] ||
-                           getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_OMT"])
-                        {
-                            if (getActList.FirstOrDefault().documentDate != null)
-                            {
-                                int updateNoDoc = checkUpdateNoDoc(getActList.FirstOrDefault().chanel_Id, getActList.FirstOrDefault().documentDate.Value.AddYears(1).Year.ToString(), getActList.FirstOrDefault().id);
-                            }
-                        }
+
                         if (getActList.FirstOrDefault().companyId == ConfigurationManager.AppSettings["companyId_MT"])
                         {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id, activityId).FirstOrDefault().docNo);
@@ -312,23 +305,6 @@ namespace eActForm.BusinessLayer
             {
                 ExceptionManager.WriteError(ex.Message + ">> genNumberActivity");
                 return null;
-            }
-        }
-        protected static int checkUpdateNoDoc(string chanelId, string year, string activityId)
-        {
-            int rtn = 0;
-            try
-            {
-                rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_updateDocNoByChanelId"
-                    , new SqlParameter[] { new SqlParameter("@chanelId", chanelId)
-                    , new SqlParameter("@year", year) });
-
-                return rtn;
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("checkUpdateNoDoc >>" + ex.Message);
             }
         }
 
