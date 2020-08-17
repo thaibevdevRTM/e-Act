@@ -111,7 +111,7 @@ namespace eActForm.Models
         public static class SSGLId
         {
             public const string vat = "CE4DA8CE-DB49-4E9F-931D-F33778B9FBC5";
-            public const string medical ="DE79CCD8-5B57-4E68-AEEA-65725135E029";
+            public const string medical = "D86D142B-7BCC-42D0-8E01-155010122792";
         }
         public static string checkNullorEmpty(string p)
         {
