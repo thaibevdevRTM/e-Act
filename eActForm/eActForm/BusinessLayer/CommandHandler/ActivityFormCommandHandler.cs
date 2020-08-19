@@ -98,6 +98,7 @@ namespace eActForm.BusinessLayer
                         costThemeDetail.themeCost = item.themeCost;
                         costThemeDetail.growth = item.growth;
                         costThemeDetail.total = item.total;
+                        costThemeDetail.totalCase = item.totalCase;
                         costThemeDetail.perTotal = item.perTotal;
                         costThemeDetail.unit = item.unit;
                         costThemeDetail.compensate = item.compensate;
@@ -192,13 +193,13 @@ namespace eActForm.BusinessLayer
                         string getYear = "";
                         if (getActList.FirstOrDefault().activityPeriodSt != null)
                         {
-                            if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
+                            if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10 )
                             {
                                 getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
                             }
                             else
                             {
-                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value).ToString().Substring(2, 2);
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
                             }
                         }
 
@@ -486,6 +487,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@le",model.LE)
                     ,new SqlParameter("@IO",model.IO)
                     ,new SqlParameter("@total",model.total)
+                    ,new SqlParameter("@totalCase",model.totalCase)
                     ,new SqlParameter("@perTotal",model.perTotal)
                     ,new SqlParameter("@isShowGroup",model.isShowGroup)
                     ,new SqlParameter("@rowNo",model.rowNo)

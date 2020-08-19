@@ -246,6 +246,8 @@ namespace eActForm.Models
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? total { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalCase { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? perTotal { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
@@ -297,6 +299,7 @@ namespace eActForm.Models
         public decimal? themeCost { get; set; }
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
+        public decimal? totalCase { get; set; }
         public decimal? perTotal { get; set; }
         public int unit { get; set; }
         public decimal? compensate { get; set; }

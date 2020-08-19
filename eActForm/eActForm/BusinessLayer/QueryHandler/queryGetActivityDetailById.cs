@@ -40,6 +40,7 @@ namespace eActForm.BusinessLayer
                                  isShowGroup = true,
                                  growth = d["growth"].ToString() == "" ? 0 : decimal.Parse(d["growth"].ToString()),
                                  total = d["total"].ToString() == "" ? 0 : decimal.Parse(d["total"].ToString()),
+                                 totalCase = d["totalCase"].ToString() == "" ? 0 : decimal.Parse(d["totalCase"].ToString()),
                                  perTotal = d["perTotal"].ToString() == "" ? 0 : decimal.Parse(d["perTotal"].ToString()),
                                  unit = d["unit"].ToString() == "" ? 0 : int.Parse(d["unit"].ToString()),
                                  compensate = d["compensate"].ToString() == "" ? 0 : decimal.Parse(d["compensate"].ToString()),

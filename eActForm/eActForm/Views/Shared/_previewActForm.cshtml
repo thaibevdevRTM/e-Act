@@ -10,6 +10,7 @@
     decimal? costProduct = 0;
     decimal? growthPerTotal = 0;
     decimal? sumGrowth = 0;
+    decimal? totalCase = 0;
 }
 
 <div class="modal-body">
@@ -376,18 +377,21 @@
 
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
-                        <td colspan="5" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
+                        <td colspan="3" style="font-size:12.5px;">ประมาณการยอดขาย (Estimate)</td>
+                        <td colspan="3" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
                     }
                     else
                     {
-                        <td colspan="4" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
+                        <td colspan="3" style="font-size:12.5px;">ประมาณการยอดขาย (Estimate)</td>
+                        <td colspan="2" style="font-size:12.5px;">ประมาณการค่าใช้จ่าย (Estimate)</td>
                     }
                 </tr>
                 <tr>
                     <td width="10%" style="font-size:12.5px;">ยอดขายปกติ (Case)</td>
                     <td width="10%" style="font-size:12.5px;">ยอดขายข่วงทำกิจกรรม (Case)</td>
                     <td width="10%" style="font-size:12.5px;">% Growth</td>
-                    <td width="12%" style="font-size:12.5px;">ค่าใช้จ่ายรวม Spending Exp. (Bath)</td>
+                    <td width="12%" style="font-size:12.5px;">Spending Exp. (Case)</td>
+                    <td width="12%" style="font-size:12.5px;">Spending Exp. (Bath)</td>
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
                         <td width="7%" style="font-size:12.5px;">% ยอดขาย</td>
@@ -416,6 +420,7 @@
 
                             <td class="font11 textRight">@Html.DisplayFor(m => item.themeCost)</td>
                             <td class="font11 textRight">@string.Format("{0:n2}", item.growth)</td>
+                            <td class="font11 textRight">@Html.DisplayFor(m => item.totalCase)</td>
                             <td class="font11 textRight">@Html.DisplayFor(m => item.total)</td>
                             @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                             {
@@ -424,6 +429,7 @@
                         </tr>
                         perTotal = item.perTotal == null ? 0 + perTotal : item.perTotal + perTotal;
                         totalActCost = item.total == null ? 0 + totalActCost : item.total + totalActCost;
+                        totalCase = item.totalCase == null ? 0 + totalCase : item.totalCase + totalCase;
                         costProduct = item.normalCost == null ? 0 + costProduct : item.normalCost + costProduct;
                         costActivity = item.themeCost == null ? 0 + costActivity : item.themeCost + costActivity;
                         sumGrowth = item.growth == null ? 0 + sumGrowth : item.growth + sumGrowth;
@@ -467,6 +473,13 @@
                                 string result = String.Format("{0:n2}%", @growthPerTotal);
                                 @result.ToString();
                             }
+                        }
+                    </td>
+                    <td class="textRight">
+                        @if (totalCase != 0)
+                        {
+                            string result = String.Format("{0:n2}", @totalCase);
+                            @result.ToString();
                         }
                     </td>
                     <td class="textRight">
