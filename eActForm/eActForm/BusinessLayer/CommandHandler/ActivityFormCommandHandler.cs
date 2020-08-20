@@ -198,7 +198,7 @@ namespace eActForm.BusinessLayer
                             }
                             else
                             {
-                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().documentDate.Value).ToString().Substring(2, 2);
+                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
                             }
                         }
 
