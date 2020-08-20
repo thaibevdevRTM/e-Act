@@ -6,7 +6,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using WebLibrary;
-using static eActForm.Controllers.GetDataMainFormController;
 
 namespace eActForm.BusinessLayer
 {
@@ -69,7 +68,7 @@ namespace eActForm.BusinessLayer
                 return new List<GetDataGL>();
             }
         }
-        
+
         public static List<GetDataPVPrevious> GetQueryDataPVPrevious(ObjGetDataPVPrevious objGetGetDataPVPrevious)
         {
             try

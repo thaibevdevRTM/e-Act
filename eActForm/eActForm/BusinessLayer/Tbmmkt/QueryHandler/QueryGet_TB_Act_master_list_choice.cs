@@ -34,14 +34,15 @@ namespace eActForm.BusinessLayer
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                                   orderNum = d["orderNum"].ToString(),
-                                  displayType  = d["displayType"].ToString(),
+                                  displayType = d["displayType"].ToString(),
                                   subDisplayType = d["subDisplayType"].ToString(),
+                                  glCodeId = d["glCodeId"].ToString(),
                               });
                 return result.OrderBy(x => x.orderNum).OrderBy(x => x.id).ToList();
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("get_channelMasterType => " + ex.Message);
+                ExceptionManager.WriteError("get_TB_Act_master_list_choice => " + ex.Message);
                 return new List<TB_Act_master_list_choiceModel>();
             }
         }

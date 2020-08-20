@@ -18,7 +18,7 @@ namespace eActForm.Controllers
             ManagementFlow_Model model = new ManagementFlow_Model();
             if (UtilsAppCode.Session.User.isSuperAdmin)
             {
-                model.companyList = managementFlowAppCode.getCompany(); 
+                model.companyList = managementFlowAppCode.getCompany();
             }
             else
             {
@@ -156,7 +156,7 @@ namespace eActForm.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getEmp(string subjectId , string limitId, string channelId)
+        public JsonResult getEmp(string subjectId, string limitId, string channelId)
         {
             List<RequestEmpModel> empList = new List<RequestEmpModel>();
             try

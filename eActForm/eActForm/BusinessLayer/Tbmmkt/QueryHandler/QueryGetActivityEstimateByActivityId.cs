@@ -85,6 +85,8 @@ namespace eActForm.BusinessLayer
                                   updatedByUserId = d["updatedByUserId"].ToString(),
                                   createdByUserId = d["createdByUserId"].ToString(),
                                   glCode = d["glCode"].ToString(),
+                                  vat = d["vat"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["vat"].ToString())),
+                                  glCodeId = d["glCodeId"].ToString(),
                               });
 
                 return result.ToList();
@@ -119,6 +121,8 @@ namespace eActForm.BusinessLayer
                                   createdByUserId = d["createdByUserId"].ToString(),
                                   updatedDate = DateTime.Parse(d["updatedDate"].ToString()),
                                   updatedByUserId = d["updatedByUserId"].ToString(),
+                                  vat = d["vat"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["vat"].ToString())),
+
                               });
 
                 return result.ToList();
@@ -130,5 +134,35 @@ namespace eActForm.BusinessLayer
             }
         }
 
+        public static List<CostThemeDetailOfGroupByPriceTBMMKT> getEstimateSub(string activityId, string listChoiceId)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEstimateSubByActivityId"
+                 , new SqlParameter("@activityId", activityId)
+                  , new SqlParameter("@listChoiceId", listChoiceId));
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new CostThemeDetailOfGroupByPriceTBMMKT()
+                              {
+
+                                  listChoiceId = d["listChoiceId"].ToString(),
+                                  rowNo = Convert.ToInt32(d["rowNo"].ToString()),
+                                  unit = d["unit"].ToString() == "" ? 0 : int.Parse(d["unit"].ToString()),
+                                  unitPrice = d["unitPrice"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())),
+                                  unitPriceDisplayReport = string.Format("{0:n2}", (decimal.Parse(AppCode.checkNullorEmpty(d["unitPrice"].ToString())) + decimal.Parse(AppCode.checkNullorEmpty(d["vat"].ToString())))),
+                                  vat = d["vat"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["vat"].ToString())),
+                                  total = d["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(d["total"].ToString())),
+
+                              });
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getWithListChoice => " + ex.Message);
+                return new List<CostThemeDetailOfGroupByPriceTBMMKT>();
+            }
+        }
     }
 }

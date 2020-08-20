@@ -12,8 +12,8 @@ namespace eActConsoleService
         {
             try
             {
-                 DataSet ds = SqlHelper.ExecuteDataset(Properties.Settings.Default.strConn, CommandType.StoredProcedure, "usp_getCountWaitingApproveGroupByEmpId");               
-               var lists = (from DataRow dr in ds.Tables[0].Rows
+                DataSet ds = SqlHelper.ExecuteDataset(Properties.Settings.Default.strConn, CommandType.StoredProcedure, "usp_getCountWaitingApproveGroupByEmpId");
+                var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveModel.approveWaitingModel()
                              {
                                  empId = dr["empId"].ToString()

@@ -11,10 +11,10 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGet_empDetailById
     {
-        public static List<RequestEmpModel> getEmpDetailById(string empId )
+        public static List<RequestEmpModel> getEmpDetailById(string empId)
         {
             try
-            {                
+            {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmpDetaitById"
                      , new SqlParameter("@empId", empId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
@@ -36,7 +36,7 @@ namespace eActForm.BusinessLayer
                                  companyNameEN = d["companyNameEN"].ToString(),
                                  compId = d["empCompanyId"].ToString(),
                                  email = d["empEmail"].ToString(),
-                                 hireDate  = d["hireDate"].ToString()
+                                 hireDate = d["hireDate"].ToString()
                              });
                 return lists.OrderBy(x => x.empName).ToList();
             }
@@ -47,7 +47,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<RequestEmpModel> getEmpDetailFlowById(string empId, string  typeFormId)
+        public static List<RequestEmpModel> getEmpDetailFlowById(string empId, string typeFormId)
         {
             try
             {
