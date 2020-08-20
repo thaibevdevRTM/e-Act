@@ -14,7 +14,6 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using WebLibrary;
@@ -92,6 +91,9 @@ namespace eActForm.Models
         {
             public const string Allowance = "06FF853F-EBB0-48E8-9620-520D0B8F6E0C";
             public const string Medical = "6BB0F68F-4B07-4E00-9B1E-B776D003D992";
+            public const string hotelExpense = "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1";
+            public const string planeExpense = "F34854F6-B91F-4C9E-A4BD-C181199B8E4F";
+
         }
 
 
@@ -101,7 +103,16 @@ namespace eActForm.Models
             public const string MedAll = "BF0BE76C-341E-4E56-8986-7A5B01248DE5";
         }
 
-
+        public static class Division
+        {
+            public const string sales = "65E3590D-8BE4-412B-A63C-65E860902B90";
+            public const string salesSupport = "2B894845-42B5-4968-9F30-1DDFAA74EF14";
+        }
+        public static class SSGLId
+        {
+            public const string vat = "CE4DA8CE-DB49-4E9F-931D-F33778B9FBC5";
+            public const string medical = "D86D142B-7BCC-42D0-8E01-155010122792";
+        }
         public static string checkNullorEmpty(string p)
         {
             return p == "" || p == null || p == "0" || p == "0.00" || p == "0.000" || p == "0.0000" || p == "0.00000" ? "0" : p;
@@ -367,7 +378,7 @@ namespace eActForm.Models
                     , ConfigurationManager.AppSettings["emailForDevelopSite"]
                     , ""
                     , "eAct ApiApprove mergePDF Error"
-                    ,  ex.Message
+                    , ex.Message
                     , null);
                 }
             }
@@ -385,12 +396,12 @@ namespace eActForm.Models
             //}
             //แก้ปัญหามีเอกสารแนบ 4 หน้า ฟังก์ชันเดิมอ่านได้ 6 หน้า ทำให้ merge pdf ไม่ได้ By Kanokpun 2020622
             int resultPagesCount = 0;
-            using ( var reader = new PdfReader(file))
+            using (var reader = new PdfReader(file))
             {
                 resultPagesCount = reader.NumberOfPages;
             }
             return resultPagesCount;
-    
+
         }
 
 

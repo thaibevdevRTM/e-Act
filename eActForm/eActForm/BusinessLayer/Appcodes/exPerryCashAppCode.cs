@@ -7,7 +7,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web.Mvc;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer.Appcodes
@@ -175,7 +174,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 //ค่าที่ insert จะไปยัดใน tB_Act_ActivityForm_DetailOther อีกที ไม่งั้น Get Flow ไม่ได้ ???????
                 activity_TBMMKT_Model.activityFormTBMMKT.SubjectId = ApproveFlowAppCode.getMainFlowByMasterTypeId(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().subjectId;
                 activity_TBMMKT_Model.activityFormTBMMKT.objective = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
-                
+
                 if (ConfigurationManager.AppSettings["masterEmpExpense"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)
                 {
                     activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-01", "yyyy-MM-dd").ToString("dd/MM/yyyy");
@@ -189,7 +188,7 @@ namespace eActForm.BusinessLayer.Appcodes
         }
 
 
-        public static List<RequestEmpModel> getEmpByChannel(string subjectId, string channelId,string filter)
+        public static List<RequestEmpModel> getEmpByChannel(string subjectId, string channelId, string filter)
         {
             try
             {
@@ -203,7 +202,7 @@ namespace eActForm.BusinessLayer.Appcodes
                                  select new RequestEmpModel()
                                  {
                                      empId = dr["empId"].ToString(),
-                                     empName = dr["empId"].ToString() + "  "+ dr["empName"].ToString(),             
+                                     empName = dr["empId"].ToString() + "  " + dr["empName"].ToString(),
                                  }).ToList();
 
                     lists = !string.IsNullOrEmpty(filter) ? lists.Where(x => x.empId.Contains(filter)).ToList() : lists;

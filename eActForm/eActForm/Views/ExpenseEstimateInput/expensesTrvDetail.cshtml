@@ -1,12 +1,90 @@
 ﻿@using eActForm.BusinessLayer;
 @model eActForm.Models.Activity_TBMMKT_Model
 @using eActForm.Models;
+<script>
+    function chkMultiPrice_change(){
+        var checkedValue = document.getElementById("chkMultiPrice").checked;
+        if (checkedValue == true) {
+            $('#divDetailSub').modal('show');
+            //เคลียร์ data เมื่อคลิกใหม่
+            $('#divInt input').val('0');
+            $('#divDecimal input,#totalSubEstimate').val('0.00');
+            $("#totalSubEstimate").text('0.00');
+        } else {
+            setElement("0");
+            $('#divDetailSub').modal('hide');
+        }
+    }
 
+    function callMultiPrice() {
+        var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
+        if (v_total > 0) {
+            sumData();
+        } else {
+            setElement("0");
+        }
+    }
+
+    function sumData() {
+        var multiPrice = "";
+        var totalUnit = 0;
+        var totalVat = 0.00;
+        var rowCount = '@Model.expensesDetailSubModel.costDetailLists.Count';
+
+        for (i = 0; i < rowCount; i++) {
+
+            var rowtotal = parseInt($("#txtSubUnit_" + i.toString()).val().replace(",", ""));
+            totalUnit = totalUnit + rowtotal;
+            totalVat = totalVat + (parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", "")) * rowtotal);
+            if (parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) > 0) {
+                multiPrice = multiPrice + (parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) + parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", ""))).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "|";
+            }
+        }
+        multiPrice = multiPrice.substring(0, multiPrice.length - 1);
+
+        $("#MultiPrice_1").val(multiPrice);
+        document.getElementById('MultiPrice_1').innerHTML = "(" + multiPrice + ")";
+        $("#txtUnit_1").val(totalUnit);
+      
+        var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
+        $("#txtTotal_1").val(v_total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        $("#txtVat_1").val(totalVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        $("#hdTotal_1").val(v_total.toFixed(2));
+        $('#divDetailSub').modal('hide');
+
+        setElement("1");
+
+    }
+
+    function setElement(chkMultiPrice) {
+        if (chkMultiPrice == "1") {
+            $("#txtUnitPrice_1").val("0.00");
+            document.getElementById("txtUnitPrice_1").readOnly = true;
+            document.getElementById("txtVat_1").readOnly = true;
+            document.getElementById("txtUnit_1").readOnly = true;
+            document.getElementById("chkMultiPrice").checked = true;
+        } else {
+            document.getElementById("chkMultiPrice").checked = false;
+            document.getElementById("txtUnitPrice_1").readOnly = false;
+            document.getElementById("txtUnit_1").readOnly = false;
+            document.getElementById("txtUnitPrice_1").readOnly = false;
+            document.getElementById("txtVat_1").readOnly = false;
+            document.getElementById('MultiPrice_1').innerHTML = "";
+            $("#txtUnitPrice_1").val($("#ProductDetail_1").val());
+            $("#txtUnit_1").val("0");
+            $("#txtVat_1").val("0.00");
+            $("#txtTotal_1").val("0.00");
+            $("#hdTotal_1").val(0);
+        }
+        sumall();
+    }
+
+</script>
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
         <td>
             <div id="divExpensesTrv" runat="server" style="width: 100%;padding-left:15px;padding-right:15px;">
-                 
+
 
                 <table class="table table-bordered" id="tabelExpensesTrv" runat="server">
                     <tr style="background-color:#E5E2E2;height:25px; ">
@@ -21,11 +99,11 @@
                         <th style="width: 8%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             จำนวน/วัน
                         </th>
-                        <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                            รหัสบัญชี(GL)
-                        </th>
                         <th style="width: 11%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             ราคา/หน่วย(บาท)
+                        </th>
+                        <th style="width: 12%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            ภาษีซื้อ Vat (บาท)
                         </th>
                         <th style="width: 11%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                             รวม(บาท)
@@ -34,165 +112,161 @@
                     @{ var index = 0;}
                     @foreach (var item in Model.expensesDetailModel.costDetailLists)
                     {
-                <tr class="tagCountRowinTable">
+                        <tr class="tagCountRowinTable">
 
-                    <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;">
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:left;">
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-xs-12">
-                                <div class="row">
-                                    <input type="hidden" value="@item.listChoiceId" id="hdListChoiceId_@index" name="expensesDetailModel.costDetailLists[@index].listChoiceId" class="form-control textboxcss" />
-                                    <label>@item.listChoiceName</label>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="row">
+                                            <input type="hidden" value="@item.listChoiceId" id="hdListChoiceId_@index" name="expensesDetailModel.costDetailLists[@index].listChoiceId" class="form-control textboxcss" />
+                                            <label>@item.listChoiceName</label>
+
+                                            <a onclick=" $('#divDetailSub').modal('show');" style="width: 100%">
+                                                <label id="MultiPrice_@index" style=" text-decoration:underline; cursor:pointer" />
+                                                @*<input type="text" id="MultiPrice_@index" readonly style=" color:darkblue; border:hidden; text-align:center;" />*@
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="row">
+
+                                            @if (item.displayType == AppCode.CodeHtml.LabelHtml)
+                                            {
+                                                <label> สิทธิเบิก  </label>
+                                                @*<label id="ProductDetail_@index" value="@item.productDetail" name="expensesDetailModel.costDetailLists[@index].productDetail" />*@
+                                                <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" readonly style="border:hidden; text-align:center;" />
+
+                                                @*<label id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail">....</label>*@
+                                                <label id="lblBath_@index"> บาท/วัน </label>
+                                            }
+                                            @if (item.displayType == AppCode.CodeHtml.TextboxHtml)
+                                            {
+                                                <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" class="form-control textboxcss" />
+                                            }
+                                            @if (item.displayType == AppCode.CodeHtml.DropdownHtml)
+                                            {
+
+                                                @Html.DropDownListFor(x => x.expensesDetailModel.costDetailLists[index].productDetail,
+                                     new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
+                                     "name",
+                                     "name", @item.productDetail), "", new
+                                     {
+                                         @class = "form-control selectpicker",
+                                         @id = "ProductDetail_" + index,
+                                         @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
+
+                                     })
+                                            }
+
+
+
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-xs-12">
-                                <div class="row">
+                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense)
+                                {
+                                    <div>
+                                        <input id="chkMultiPrice" type="checkbox" onchange="chkMultiPrice_change()" name=""> ราคาที่พักต่างกัน
+                                    </div>
+                                }
+                            </td>
 
-                                    @if (item.displayType == AppCode.CodeHtml.LabelHtml)
+
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
+                                @if (item.subDisplayType == "showDay")
+                                {
+                                    <input type="number" value="@item.unit" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" min="0" class="form-control textboxcss text-center " />
+
+                                }
+                                else
+                                {
+                                    <input type="hidden" value="1" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" min="0" class="form-control textboxcss text-center " />
+
+                                }
+
+                            </td>
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
+
+                                <input type="text" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" />
+                            </td>
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+
+                                @*@if (item.listChoiceId != AppCode.Expenses.Allowance)
                                     {
-                                        <label> สิทธิเบิก  </label>
-                                        @*<label id="ProductDetail_@index" value="@item.productDetail" name="expensesDetailModel.costDetailLists[@index].productDetail" />*@
-                                        <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" readonly style="border:hidden; text-align:center;" />
+                                        <input type="text" value="@item.glCode" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" readonly />
 
-                                        @*<label id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail">....</label>*@
-                                        <label id="lblBath_@index"> บาท/วัน </label>
                                     }
-                                    @if (item.displayType == AppCode.CodeHtml.TextboxHtml)
+                                    else
                                     {
-                                        <input type="text" value="@item.productDetail" id="ProductDetail_@index" name="expensesDetailModel.costDetailLists[@index].productDetail" class="form-control textboxcss" />
-                                    }
-                                    @if (item.displayType == AppCode.CodeHtml.DropdownHtml)
-                                    {
+                                        <input type="hidden" value="" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" min="0" class="form-control textboxcss text-center " />
 
-                                        @Html.DropDownListFor(x => x.expensesDetailModel.costDetailLists[index].productDetail,
-                        new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
-                        "name",
-                        "name", @item.productDetail), "", new
-                        {
-                            @class = "form-control selectpicker",
-                            @id = "ProductDetail_" + index,
-                            @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
+                                    }*@
 
-                        })
+                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense || item.listChoiceId == AppCode.Expenses.planeExpense)
+                                {
+                                    @*<input type="text" value="@item.glCode" id="txtVat_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" />*@
+                                    @Html.TextBoxFor(x => item.vat, "{0:n2}", new
+                               {
+                                   @id = "txtVat_" + @index,
+                                   Name = "expensesDetailModel.costDetailLists[" + index + "].vat",
+                                   @class = "form-control textboxcss text-right",
 
+                               })
+                                }
+                                else
+                                {
+                                    <input type="hidden" value="0" id="txtVat_@index" name="expensesDetailModel.costDetailLists[@index].vat" min="0" class="form-control textboxcss text-center " />
 
-                                    }
+                                }
 
-
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </td>
+                            </td>
 
 
-                    <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                                <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss text-right hdTotal_@index " />
+                                @Html.TextBoxFor(x => item.total, "{0:n2}", new
+                           {
+                               @id = "txtTotal_" + @index
+                                    ,
+                               Name = "expensesDetailModel.costDetailLists[" + index + "].total"
+                                    ,
+                               @class = "form-control textboxcss text-right"
+                                    ,
+                               @readonly = "readonly"
+                           })
 
-                        @if (item.subDisplayType == "showDay")
-                        {
-                            <input type="number" value="@item.unit" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" min="0" class="form-control textboxcss text-center " />
+                                <script>
 
-                        }
-                        else
-                        {
-                            <input type="hidden" value="1" id="txtUnit_@index" name="expensesDetailModel.costDetailLists[@index].unit" min="0" class="form-control textboxcss text-center " />
-
-                        }
-
-                    </td>
-                    <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-
-                        @if (item.listChoiceId != AppCode.Expenses.Allowance)
-                        {
-                            @*<input type="text" value="xxxxxxxxx" id="txtUnit_@index" class="form-control textboxcss text-center " />*@
-                            <input type="text" value="@item.glCode" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" readonly />
-
-                        }
-                        else
-                        {
-                            <input type="hidden" value="" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" min="0" class="form-control textboxcss text-center " />
-
-                        }
-
-
-
-                    </td>
-                    <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
-                      
-                        
-                        <input type="text" value="@item.unitPriceDisplay" id="txtUnitPrice_@index" name="expensesDetailModel.costDetailLists[@index].unitPriceDisplay" class="form-control textboxcss text-right" />
-                    </td>
-                    <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                        <input type="hidden" value="@item.total" id="hdTotal_@index" name="expensesDetailModel.costDetailLists[@index].total" class="form-control textboxcss text-right hdTotal_@index " />
-                        @Html.TextBoxFor(x => item.total, "{0:n2}", new
-                   {
-                       @id = "txtTotal_" + @index
-                            ,
-                       Name = "expensesDetailModel.costDetailLists[" + index + "].total"
-                            ,
-                       @class = "form-control textboxcss text-right"
-                            ,
-                       @readonly = "readonly"
-                   })
-
-                        <script>
-
-
-
-                                    $("#txtUnitPrice_@index").blur(function () {
-
+                                $('#txtUnitPrice_@index,  #txtUnit_@index, #txtVat_@index').bind('blur', function () {
 
                                         var v_unitRow = 0.00;
                                         var v_unitpriceRow = 0.00;
                                         var v_totalRow = 0.00;
-
                                         if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
                                         if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
                                             v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
                                         }
                                         if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                            v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
-
-                                            //var v_unitRow = 0.00;
-
+                                            v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", "")) + parseFloat($("#txtVat_@index").val().replace(",", ""));
                                         }
                                         v_totalRow = (v_unitRow * v_unitpriceRow);
-
                                         $("#hdTotal_@index").val(v_totalRow.toFixed(2));
                                         $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                                         sumall();
                                     });
 
-                                    $("#txtUnit_@index").blur(function () {
 
-
-                                        var v_unitRow = 0.00;
-                                        var v_unitpriceRow = 0.00;
-                                        var v_totalRow = 0.00;
-                                        if ($("#txtUnit_@index").val() == "") { $("#txtUnit_@index").val() == "1"; }
-                                        if ($("#txtUnit_@index").val() != "" && $("#txtUnit_@index").val() != "0.00" && $("#txtUnit_@index").val() != "0") {
-                                            v_unitRow = parseFloat($("#txtUnit_@index").val().replace(",", ""));
-                                        }
-                                        if ($("#txtUnitPrice_@index").val() != "" && $("#txtUnitPrice_@index").val() != "0.00" && $("#txtUnitPrice_@index").val() != "0") {
-                                            v_unitpriceRow = parseFloat($("#txtUnitPrice_@index").val().replace(",", ""));
-
-                                        }
-                                        v_totalRow = (v_unitRow * v_unitpriceRow);
-
-                                        $("#hdTotal_@index").val(v_totalRow.toFixed(2));
-                                        $("#txtTotal_@index").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                        sumall();
-                                    });
-
-                        </script>
-                    </td>
-                </tr>
+                                </script>
+                            </td>
+                        </tr>
                         index++;
                     }
                     <tr>
                         <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
-                           <b> จำนวนเงินรวม(บาท)</b>&nbsp;
+                            <b> จำนวนเงินรวม(บาท)</b>&nbsp;
                         </td>
                         <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
                             @* <label id="totalEstimate" type="text" readonly="readonly">@Model.totalCostThisActivity.Value.ToString("#,###.00")</label>&nbsp;*@
@@ -206,17 +280,17 @@
 
 
                 <script>
-                   
-                            function sumall() {
-                                var totalAll = 0.00;
-                                var rowCount = '@Model.expensesDetailModel.costDetailLists.Count';
 
-                                for (i = 0; i < rowCount; i++) {
-                                    var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
-                                    totalAll = totalAll + rowtotal;
-                                }
-                                $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-                                $("#totalEstimate").val(totalAll);
+                    function sumall() {
+                        var totalAll = 0.00;
+                        var rowCount = '@Model.expensesDetailModel.costDetailLists.Count';
+
+                        for (i = 0; i < rowCount; i++) {
+                            var rowtotal = parseFloat($("#hdTotal_" + i.toString()).val().replace(",", ""));
+                            totalAll = totalAll + rowtotal;
+                        }
+                        $("#totalEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#totalEstimate").val(totalAll);
                     }
                     sumall();
                 </script>
@@ -226,3 +300,221 @@
     </tr>
 </table>
 
+
+<div class="modal fade" id="previewModal" role="dialog" style="display:none">
+    <div id="divPreview">
+    </div>
+</div>
+<div id="divDetailSub" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                <h4 class="modal-title">ค่าที่พักกรณีราคาต่อคืนไม่เท่ากัน</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered" id="tabelExpensesTrv" runat="server" width="80%">
+                    @*<tr style="background-color:#E5E2E2;height:20px; ">
+                            <th colspan="4" style="text-align :center;">
+                                ค่าที่พัก
+                            </th>
+                        </tr>*@
+                    <tr style="background-color:#E5E2E2;height:20px; ">
+                        <th style="width: 5%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            ลำดับ
+                        </th>
+                        <th style="width: 20%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            จำนวน/วัน
+                        </th>
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            ราคา/หน่วย(บาท)
+                        </th>
+
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            ภาษีซื้อ Vat (บาท)
+                        </th>
+                        <th style="width: 25%;border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                            รวม(บาท)
+                        </th>
+                    </tr>
+                    @{ var indexSub = 0;}
+
+                    @foreach (var item in Model.expensesDetailSubModel.costDetailLists)
+
+                    {
+                        <tr class="tagCountRowinTable" style="height:20px;">
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                @(indexSub+1)
+                                <input type="hidden" value="@item.listChoiceId" id="hdSubListChoiceId_@index" name="expensesDetailSubModel.costDetailLists[@indexSub].listChoiceId" class="form-control textboxcss" />
+
+                            </td>
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <div id="divInt">
+                                    <input type="number" value="@item.unit" id="txtSubUnit_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].unit" min="0" class="form-control textboxcss text-center " />
+                                </div>
+                            </td>
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <div id="divDecimal">
+                                    @*<input type="text" value="@item.unitPriceDisplay" id="txtSubUnitPrice_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].unitPrice" class="form-control textboxcss text-right" />*@
+                                    @Html.TextBoxFor(x => item.unitPrice, "{0:n2}", new
+                                        {
+                                            @id = "txtSubUnitPrice_" + @indexSub
+                                                                     ,
+                                            Name = "expensesDetailSubModel.costDetailLists[" + indexSub + "].unitPrice"
+                                                                     ,
+                                            @class = "form-control textboxcss text-right"
+
+                                    })
+                                </div>
+                            </td>
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
+                                <div id="divDecimal">
+
+
+                                    @*<input type="text" value="@item.vat" id="txtSubVat_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].vat" class="form-control textboxcss text-right" />*@
+                                    @Html.TextBoxFor(x => item.vat, "{0:n2}", new
+                                     {
+                                         @id = "txtSubVat_" + @indexSub
+                                                                  ,
+                                         Name = "expensesDetailSubModel.costDetailLists[" + indexSub + "].vat"
+                                                                  ,
+                                         @class = "form-control textboxcss text-right"
+                                                                
+                                     })
+                                </div>
+                            </td>
+                            <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                                <div id="divDecimal">
+                                    <input type="hidden" value="@item.total" id="hdSubTotal_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].total" class="form-control textboxcss text-right hdTotal_@indexSub " />
+                                    @Html.TextBoxFor(x => item.total, "{0:n2}", new
+                               {
+                                   @id = "txtSubTotal_" + @indexSub
+                                                            ,
+                                   Name = "expensesDetailSubModel.costDetailLists[" + indexSub + "].total"
+                                                            ,
+                                   @class = "form-control textboxcss text-right"
+                                                            ,
+                                   @readonly = "readonly"
+                               })
+
+                                </div>
+
+                                <script>
+                                    $('#txtSubUnit_@indexSub,#txtSubUnitPrice_@indexSub,#txtSubVat_@indexSub').bind('blur', function () {
+                                        var v_unitRow = 0.00;
+                                        var v_unitpriceRow = 0.00;
+                                        var v_totalRow = 0.00;
+                                        if ($("#txtSubUnit_@indexSub").val() == "") { $("#txtSubUnit_@indexSub").val() == "1"; }
+                                        if ($("#txtSubUnit_@indexSub").val() != "" && $("#txtSubUnit_@indexSub").val() != "0.00" && $("#txtSubUnit_@indexSub").val() != "0") {
+                                            v_unitRow = parseFloat($("#txtSubUnit_@indexSub").val().replace(",", ""));
+                                        }
+                                        if ($("#txtSubUnitPrice_@indexSub").val() != "" && $("#txtSubUnitPrice_@indexSub").val() != "0.00" && $("#txtSubUnitPrice_@indexSub").val() != "0") {
+                                            v_unitpriceRow = parseFloat($("#txtSubUnitPrice_@indexSub").val().replace(",", "")) + parseFloat($("#txtSubVat_@indexSub").val().replace(",", ""));
+
+                                        }
+                                        v_totalRow = (v_unitRow * v_unitpriceRow);
+
+                                        $("#hdSubTotal_@indexSub").val(v_totalRow.toFixed(2));
+                                        $("#txtSubTotal_@indexSub").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                                        sumSubAll();
+                                    });
+
+                                </script>
+
+                            </td>
+                        </tr>
+                        indexSub++;
+                    }
+                    <tr>
+                        <td colspan="4" style="width: 85%;border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
+                            <b> จำนวนเงินรวม(บาท)</b>&nbsp;
+                        </td>
+                        <td style="width: 15%;border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse;text-align:right;">
+                            <label id="totalSubEstimate" type="text" readonly="readonly"></label>&nbsp;
+                            @*@Model.totalCostThisActivity.Value.ToString("#,###.00")*@
+
+                        </td>
+                    </tr>
+                </table>
+
+                <script>
+
+                    function sumSubAll() {
+                        var totalAll = 0.00;
+                        var rowCount = '@Model.expensesDetailSubModel.costDetailLists.Count';
+
+                        for (i = 0; i < rowCount; i++) {
+                            var rowtotal = parseFloat($("#hdSubTotal_" + i.toString()).val().replace(",", ""));
+                            totalAll = totalAll + rowtotal;
+                        }
+                        $("#totalSubEstimate").text(totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                        $("#totalSubEstimate").val(totalAll);
+                    }
+                    sumSubAll();
+                </script>
+
+
+                <div class="modal-footer">
+
+                    <div style="margin-left:25px;" class="text-center">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="callMultiPrice()">
+                            <i class="fa fa fa-reply fa-fw"></i>&nbsp;Cancel
+                        </button>
+
+                        @if (Model.activityFormModel.mode == AppCode.Mode.addNew.ToString()
+                                || Model.activityFormTBMMKT.statusId == 1
+                                || Model.activityFormTBMMKT.statusId == 5
+                                || (Model.activityFormModel.mode == AppCode.Mode.edit.ToString() && Model.activityFormTBMMKT.statusId == 2 && (UtilsAppCode.Session.User.isAdminTBM || UtilsAppCode.Session.User.isAdminHCM))
+                                || (Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)
+                                && ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id) && Model.activityFormTBMMKT.statusId == 2)
+                            )
+                        {
+                            <button id="btnSaveDetailSub" type="button" class="btn ink-reaction btn-success" onclick="validateDetailSub()"><i class="fa fa fa-check fa-fw"></i>&nbsp;Save</button>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        var unit = parseInt('@Model.expensesDetailModel.costDetailLists[1].unit');
+        var Price = parseFloat('@Model.expensesDetailModel.costDetailLists[1].unitPrice');
+        if (unit != 0 && Price == 0) {
+            callMultiPrice();
+        }
+    });
+
+    function validateDetailSub() {
+        var requiredSub = "<b>กรุณาระบุ/Please input data :<br></b>";
+        var validateSub = true;
+        if (parseFloat($("#totalSubEstimate").val().replace(",", "")) <= 0.00) {
+            requiredSub += "&emsp;ค่าที่พัก*<br>"; validateSub = false;
+        }
+
+        //เช็คถ้ากรอกว่าเกินสิทธิ
+        var rowCount = '@Model.expensesDetailSubModel.costDetailLists.Count';
+        var hotelExpense = 0.00
+        if ($("#ProductDetail_1").val() != "") { hotelExpense = parseFloat($("#ProductDetail_1").val().replace(",", "")); }
+
+        for (i = 0; i < rowCount; i++) {
+            if ((parseFloat($("#txtSubUnitPrice_" + i.toString()).val().replace(",", "")) + parseFloat($("#txtSubVat_" + i.toString()).val().replace(",", ""))) > hotelExpense) {
+                requiredSub += "&emsp;ท่านกรอกยอดเงินเกินสิทธิ์ลำดับที่ " + (i + 1) + "*<br>";
+                validateSub = false;
+            }
+        }
+
+        if (validateSub == true) {
+            sumData();
+
+        }
+        else {
+            bootbox.alert(requiredSub)
+        }
+    }
+</script>

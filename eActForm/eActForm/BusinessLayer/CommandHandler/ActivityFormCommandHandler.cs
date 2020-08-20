@@ -192,7 +192,7 @@ namespace eActForm.BusinessLayer
                         string getYear = "";
                         if (getActList.FirstOrDefault().activityPeriodSt != null)
                         {
-                            if (getActList.FirstOrDefault().activityPeriodSt.Value.Month > 9)
+                            if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
                             {
                                 getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
                             }
@@ -206,7 +206,7 @@ namespace eActForm.BusinessLayer
                         {
                             int genNumber = int.Parse(getActivityDoc(getActList.FirstOrDefault().chanel_Id, activityId).FirstOrDefault().docNo);
 
-                            if(getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"]) { result[0] += ConfigurationManager.AppSettings["docSetPrice"]; }
+                            if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"]) { result[0] += ConfigurationManager.AppSettings["docSetPrice"]; }
                             result[0] += getActList.FirstOrDefault().trade == "term" ? "W" : "S";
                             result[0] += getActList.FirstOrDefault().shortBrand.Trim();
                             result[0] += getActList.FirstOrDefault().chanelShort.Trim();
