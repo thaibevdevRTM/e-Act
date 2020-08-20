@@ -25,6 +25,7 @@ namespace eActForm.Models
             public decimal? normalSale { get; set; }
             public decimal? promotionSale { get; set; }
             public decimal? total { get; set; }
+            public decimal? totalCase { get; set; }
             public decimal? specialDisc { get; set; }
             public decimal? specialDiscBaht { get; set; }
             public decimal? promotionCost { get; set; }
