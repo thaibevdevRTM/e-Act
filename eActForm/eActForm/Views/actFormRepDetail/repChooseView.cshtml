@@ -159,7 +159,7 @@
     $(function () {
         $("#btnSelected").click(function () {
             var urlCall = "";
-            if ('@Model.typeForm' == '@Activity_Model.activityType.MT.ToString()')
+            if ('@Model.typeForm' == '@Activity_Model.activityType.MT.ToString()' || '@Model.typeForm' == '@Activity_Model.activityType.OMT.ToString()')
             {
                 urlCall = '@Url.Action("repListView", "actFormRepDetail" )';
             }

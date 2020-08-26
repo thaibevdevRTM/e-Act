@@ -112,7 +112,8 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] {
                         new SqlParameter("@id",id)
                         ,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.รออนุมัติ)
-                        ,new SqlParameter("@actNo",TxtDoc+docNo)
+                        ,new SqlParameter("@typeForm",TxtDoc)
+                        ,new SqlParameter("@actNo",docNo)
                         ,new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@reference","")

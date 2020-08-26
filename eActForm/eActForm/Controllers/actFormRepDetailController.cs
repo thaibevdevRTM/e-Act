@@ -382,6 +382,7 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
+
             return RedirectToAction("repPreviewForApproveDetail", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
         }
 
