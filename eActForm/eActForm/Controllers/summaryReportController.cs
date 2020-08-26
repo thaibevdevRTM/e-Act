@@ -333,7 +333,7 @@ namespace eActForm.Controllers
         {
 
 
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport("");
             return View(models);
 
         }

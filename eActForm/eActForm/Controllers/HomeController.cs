@@ -16,7 +16,7 @@ namespace eActForm.Controllers
         // GET: Home
         public ActionResult Index(string actId, string typeForm)
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport(typeForm);
             if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
             {
                 if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
