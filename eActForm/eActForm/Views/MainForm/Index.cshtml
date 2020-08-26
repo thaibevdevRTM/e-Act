@@ -344,7 +344,7 @@
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__select_list_choice_id_ChReg").val() == '') { required += "&emsp;ส่วนที่3-5 [Ch.+Reg.]*<br>"; validate = false; }
                 if ($("#tB_Act_ActivityForm_DetailOtherList_" + i + "__productBrandId").val() == '') { required += "&emsp;ส่วนที่3-5 [Brand]*<br>"; validate = false; }
             }
-            if ($("#txtpayNo").val() == "" || $("#txtpayNo").val() == null) { required += "&emsp;ส่วนที่6 [สั่งจ่ายครั้งที่]*<br>"; validate = false; }
+            if ($("#txtpayNo").val() == "" || $("#txtpayNo").val() == "0" || $("#txtpayNo").val() == null) { required += "&emsp;ส่วนที่6 [สั่งจ่ายครั้งที่]*<br>"; validate = false; }
             if ($("#txtpayNo").val() != "") {
                 if (parseInt($("#txtpayNo").val()) >= 2) {
                     if ($("#ddlActivityNoSub").val() == "" || $("#ddlActivityNoSub").val() == null) {

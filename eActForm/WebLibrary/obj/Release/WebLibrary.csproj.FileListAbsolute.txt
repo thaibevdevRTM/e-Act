@@ -49,3 +49,9 @@ D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.C
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CoreCompileInputs.cache
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.dll
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrary\bin\Release\WebLibrary.pdb
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csprojAssemblyReference.cache
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CoreCompileInputs.cache
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
+D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
