@@ -146,6 +146,7 @@
             url: '@Url.Action("repPreviewListView", "actFormRepDetail")',
             data: {
                 actId: actId,
+                typeForm: '@Model.typeForm',
             }
         }).done(function (htmlResponse) {
             genPdf(actId, htmlResponse);

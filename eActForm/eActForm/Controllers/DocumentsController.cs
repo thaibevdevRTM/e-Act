@@ -25,12 +25,12 @@ namespace eActForm.Controllers
         {
             try
             {
-                SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+                SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport(typeForm);
                 models.typeForm = typeForm;
                 // ViewBag.TypeForm = typeForm;
                 if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin)
                 {
-                    if (typeForm == Activity_Model.activityType.MT.ToString())
+                    if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString())
                     {
                         models.customerslist = QueryGetAllCustomers.getCustomersMT();
                     }
@@ -97,6 +97,7 @@ namespace eActForm.Controllers
         public ActionResult reportDetailListsView(string typeForm)
         {
             DocumentsModel.actRepDetailModels models = new DocumentsModel.actRepDetailModels();
+            
             try
             {
                 if (TempData["SearchDataRepDetail"] != null)

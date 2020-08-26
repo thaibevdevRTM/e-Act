@@ -17,7 +17,19 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                string stored = typeForm == Activity_Model.activityType.MT.ToString() ? "usp_GetActivityRepDetailAll" : "usp_GetActivityRepDetailOMTAll";
+                string stored = "";
+                if(typeForm == Activity_Model.activityType.MT.ToString())
+                {
+                    stored = "usp_GetActivityRepDetailAll";
+                }
+                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    stored = "usp_GetActivityRepDetailOMTAll";
+                }
+                else
+                {
+                    stored = "usp_GetActivityRepDetailSetPriceAll";
+                }
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored);
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new DocumentsModel.actRepDetailModel()

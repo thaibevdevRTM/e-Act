@@ -105,7 +105,7 @@
                                     else
                                     {
                                         <td></td>
-}
+                                    }
                                     @if (item.costPeriodEnd != null)
                                     {
                                         <td width="100px" style="text-align:center;">@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
@@ -158,9 +158,18 @@
 
     $(function () {
         $("#btnSelected").click(function () {
-            $('#divPreview').load('@Url.Action("repListView", "actFormRepDetail" )');
+            var urlCall = "";
+            if ('@Model.typeForm' == '@Activity_Model.activityType.MT.ToString()')
+            {
+                urlCall = '@Url.Action("repListView", "actFormRepDetail" )';
+            }
+            else
+            {
+                urlCall = '@Url.Action("repListViewSetPrice", "actFormRepDetail" )';
+            }
+            $('#divPreview').load(urlCall);
             $("#previewModal").modal('show');
-        });
+            });
     });
 
 </script>
