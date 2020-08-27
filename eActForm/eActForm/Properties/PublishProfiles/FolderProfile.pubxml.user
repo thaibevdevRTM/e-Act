@@ -81,13 +81,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2020 08:46:05</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
-      <publishTime>08/27/2020 09:39:29</publishTime>
+      <publishTime>08/27/2020 14:18:22</publishTime>
     </File>
     <File Include="bin/eActForm.dll.config">
       <publishTime>08/26/2020 17:03:40</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
-      <publishTime>08/27/2020 09:39:29</publishTime>
+      <publishTime>08/27/2020 14:18:22</publishTime>
     </File>
     <File Include="bin/eActForm.dll.config">
       <publishTime>08/26/2020 17:03:40</publishTime>
@@ -105,7 +105,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/26/2020 16:12:52</publishTime>
     </File>
     <File Include="bin/en/eActForm.resources.dll">
-      <publishTime>08/27/2020 09:39:29</publishTime>
+      <publishTime>08/27/2020 14:18:23</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.xml">
       <publishTime>03/31/2020 20:02:01</publishTime>
@@ -7500,7 +7500,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/07/2020 14:51:53</publishTime>
     </File>
     <File Include="Views/Activity/ActivityForm.cshtml">
-      <publishTime>08/20/2020 14:17:16</publishTime>
+      <publishTime>08/27/2020 13:17:56</publishTime>
     </File>
     <File Include="Views/Activity/ImageList.cshtml">
       <publishTime>08/07/2020 14:51:50</publishTime>
@@ -7740,7 +7740,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/22/2020 11:29:00</publishTime>
     </File>
     <File Include="Views/MainForm/Index.cshtml">
-      <publishTime>08/26/2020 16:11:06</publishTime>
+      <publishTime>08/27/2020 13:25:33</publishTime>
     </File>
     <File Include="Views/MainReport/Index.cshtml">
       <publishTime>08/21/2020 09:49:11</publishTime>

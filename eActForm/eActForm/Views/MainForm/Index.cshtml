@@ -418,6 +418,14 @@
                 if ($("#unitTxt_" + i).val() == 0 || $("#unitTxt_" + i).val() == "") { required += "&emsp; ระบุ Unit แถวที่ " + (i + 1) + "*<br>"; validate = false; }
 
             }
+            if ($("#txtdateActivitySt").val() == "" || $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivityEnd").focus(); }
+            else {
+                var startDate = $("#txtdateActivitySt").val().split("/");
+                var endDate = $("#txtdateActivityEnd").val().split("/");
+                if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1], endDate[0])) {
+                    required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
+                }
+            }
 
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
