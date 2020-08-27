@@ -193,13 +193,29 @@ namespace eActForm.BusinessLayer
                         string getYear = "";
                         if (getActList.FirstOrDefault().activityPeriodSt != null)
                         {
-                            if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10 )
+
+                            if (getActList.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formSetPriceMT"])
                             {
-                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
+                                if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
+                                {
+                                    getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
+                                }
+                                else
+                                {
+                                    getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
+                                }
+
                             }
                             else
                             {
-                                getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
+                                if (getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 9 && getActList.FirstOrDefault().activityPeriodSt.Value.Day >= 21 || getActList.FirstOrDefault().activityPeriodSt.Value.Month >= 10)
+                                {
+                                    getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value.AddYears(1)).ToString().Substring(2, 2);
+                                }
+                                else
+                                {
+                                    getYear = new ThaiBuddhistCalendar().GetYear(getActList.FirstOrDefault().activityPeriodSt.Value).ToString().Substring(2, 2);
+                                }
                             }
                         }
 
