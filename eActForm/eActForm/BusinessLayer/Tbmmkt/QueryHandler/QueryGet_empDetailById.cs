@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using WebLibrary;
+using static eActForm.Models.ActUserModel;
 
 namespace eActForm.BusinessLayer
 {
@@ -15,28 +16,28 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmpDetaitById"
-                     , new SqlParameter("@empId", empId));
-                var lists = (from DataRow d in ds.Tables[0].Rows
+                //DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmpDetaitById"
+                //     , new SqlParameter("@empId", empId));
+
+                ResponseUserAPI response = AuthenAppCode.doAuthenInfo(empId);
+                var lists = (from User d in response.userModel
                              select new RequestEmpModel()
                              {
-                                 id = d["id"].ToString(),
-                                 empId = d["empId"].ToString(),
-                                 empName = d["empFNameTH"].ToString() + " " + d["empLNameTH"].ToString(),
-                                 position = d["empPositionTitleTH"].ToString(),
-                                 level = d["empLevel"].ToString(),
-                                 department = d["empDepartmentTH"].ToString(),
-                                 bu = d["empDivisionTH"].ToString(),
-                                 companyName = "บริษัท" + d["companyNameTH"].ToString(),
-
-                                 empNameEN = d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
-                                 positionEN = d["empPositionTitleEN"].ToString(),
-                                 departmentEN = d["empDepartmentEN"].ToString(),
-                                 buEN = d["empDivisionEN"].ToString(),
-                                 companyNameEN = d["companyNameEN"].ToString(),
-                                 compId = d["empCompanyId"].ToString(),
-                                 email = d["empEmail"].ToString(),
-                                 hireDate = d["hireDate"].ToString()
+                                 empId = d.empId ,
+                                 empName =  d.empFNameTH + " " + d.empLNameTH, 
+                                 position =  d.empPositionTitleTH, 
+                                 level = d.empLevel,
+                                 department = d.empDepartmentTH,
+                                 bu = d.empDivisionTH,
+                                 companyName = "บริษัท" + d.empCompanyNameTH,
+                                 empNameEN = d.empFNameEN + " " + d.empLNameEN,
+                                 positionEN = d.empPositionTitleEN,
+                                 departmentEN = d.empDepartmentEN,
+                                 buEN = d.empDivisionEN,
+                                 companyNameEN = d.empCompanyName,
+                                 compId = d.empCompanyId,
+                                 email = d.empEmail,
+                                 hireDate = d.empProbationEndDate
                              });
                 return lists.OrderBy(x => x.empName).ToList();
             }
@@ -51,32 +52,19 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmpDetaitFlowById"
                      , new SqlParameter("@empId", empId)
                       , new SqlParameter("@typeFormId", typeFormId));
-                var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new RequestEmpModel()
-                             {
-                                 id = d["id"].ToString(),
-                                 empId = d["empId"].ToString(),
-                                 empName = d["empFNameTH"].ToString() + " " + d["empLNameTH"].ToString(),
-                                 position = d["empPositionTitleTH"].ToString(),
-                                 level = d["empLevel"].ToString(),
-                                 department = d["empDepartmentTH"].ToString(),
-                                 bu = d["empDivisionTH"].ToString(),
-                                 companyName = "บริษัท" + d["companyNameTH"].ToString(),
 
-                                 empNameEN = d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
-                                 positionEN = d["empPositionTitleEN"].ToString(),
-                                 departmentEN = d["empDepartmentEN"].ToString(),
-                                 buEN = d["empDivisionEN"].ToString(),
-                                 companyNameEN = d["companyNameEN"].ToString(),
-                                 compId = d["empCompanyId"].ToString(),
-                                 email = d["empEmail"].ToString(),
-                                 hireDate = d["hireDate"].ToString()
-                             });
-                return lists.OrderBy(x => x.empName).ToList();
+                if( ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    return getEmpDetailById(empId);
+                }
+                else
+                {
+                    // emp can't map with flow
+                    return new List<RequestEmpModel>();
+                }
             }
             catch (Exception ex)
             {
