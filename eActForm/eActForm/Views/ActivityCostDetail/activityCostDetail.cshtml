@@ -68,64 +68,64 @@
                 foreach (var item in Model.activitydetaillist)
                 {
 
-        <tr>
-            <td onclick="onDelActDetail('@item.productGroupId')">
-                <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
-                @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
-            </td>
-            @if (item.isShowGroup == true)
-            {
-                <td class="font10 textLeft">@item.typeTheme</td>
-            }
-            else
-            {
-                if (item.detailGroup.Count >= 1)
-                {
+                    <tr class="tagTR">
+                        <td onclick="onDelActDetail('@item.productGroupId')">
+                            <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
+                            @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
+                        </td>
+                        @if (item.isShowGroup == true)
+                        {
+                            <td class="font10 textLeft">@item.typeTheme</td>
+                        }
+                        else
+                        {
+                            if (item.detailGroup.Count >= 1)
+                            {
 
-                    <td class="font10 textLeft">@item.detailGroup[0].typeTheme</td>
-                }
-            }
+                                <td class="font10 textLeft">@item.detailGroup[0].typeTheme</td>
+                            }
+                        }
 
-            @*@if (item.isShowGroup != true)
-        {*@
-            <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
-            @*}
-        else
-        {
-            <td>@Html.TextBoxFor(model => item.brandName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" }) </td>
-        }*@
-            @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
-            {
-                <td>@Html.TextBoxFor(model => item.mechanics, new { @id = "lblMechanics_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
-            }
-            <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")", style = "autofocus = 'autofocus'" })</td>
-            <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        @*@if (item.isShowGroup != true)
+                    {*@
+                        <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        @*}
+                    else
+                    {
+                        <td>@Html.TextBoxFor(model => item.brandName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" }) </td>
+                    }*@
+                        @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                        {
+                            <td>@Html.TextBoxFor(model => item.mechanics, new { @id = "lblMechanics_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        }
+                        <td>@Html.TextBoxFor(model => item.unit, new { @id = "lblUnit_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblUnit_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        <td>@Html.TextBoxFor(model => item.compensate, new { @id = "lblCompensate_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblCompensate_" + index + ")", style = "autofocus = 'autofocus'" })</td>
 
-            <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")", style = "autofocus = 'autofocus'" })</td>
-            <td>
-                @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")", style = "autofocus = 'autofocus'" })
-            </td>
-            <td>
-                @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true, style = "autofocus = 'autofocus'" })
-            </td>
-            <td>
-                @Html.TextBoxFor(model => item.LE, "{0:n2}", new { @id = "lblLE_" + index, Name = "lblLE_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")", style = "autofocus = 'autofocus'" })
-            </td>
-            <td>
-                @Html.TextBoxFor(model => item.totalCase, "{0:n2}", new { @id = "lblTotalCase_" + index, Name = "lblTotalCase_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotalCase_" + index + ")", style = "autofocus = 'autofocus'" })
-            </td>
-            <td>
-                @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")", style = "autofocus = 'autofocus'" })
-            </td>
-            @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-            {
-                @Html.HiddenFor(model => item.perTotal, new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", style = "autofocus = 'autofocus'" })
-            }
-            else
-            {
-                <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", style = item.perTotal > 200 ? "background-color:coral;" : "" })</td>
-            }
-        </tr>
+                        <td>@Html.TextBoxFor(model => item.normalCost, "{0:n2}", new { @id = "lblNormalCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblNormalCost_" + index + ")", style = "autofocus = 'autofocus'" })</td>
+                        <td>
+                            @Html.TextBoxFor(model => item.themeCost, "{0:n2}", new { @id = "lblThemeCost_" + index, Name = "lblThemeCost_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", onfocus = "setZero(lblThemeCost_" + index + ")", style = "autofocus = 'autofocus'" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => item.growth, "{0:n2}", new { @id = "lblGrowth_" + index, Name = "lblGrowth_" + index, @class = "form-control textboxcss font10 textRight", @readonly = true, style = "autofocus = 'autofocus'" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => item.LE, "{0:n2}", new { @id = "lblLE_" + index, Name = "lblLE_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")", style = "autofocus = 'autofocus'" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => item.totalCase, "{0:n2}", new { @id = "lblTotalCase_" + index, Name = "lblTotalCase_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotalCase_" + index + ")", style = "autofocus = 'autofocus'" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")", style = "autofocus = 'autofocus'" })
+                        </td>
+                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                        {
+                            @Html.HiddenFor(model => item.perTotal, new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", style = "autofocus = 'autofocus'" })
+                        }
+                        else
+                        {
+                            <td>@Html.TextBoxFor(model => item.perTotal, "{0:n2}", new { @id = "lblPerTotal_" + index, Name = "lblPerTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthPerTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", style = item.perTotal > 200 ? "background-color:coral;" : "" })</td>
+                        }
+                    </tr>
                     LE = item.LE == null ? 0 + LE : item.LE + LE;
                     total = item.total == null ? 0 + total : item.total + total;
                     totalCase = item.totalCase == null ? 0 + totalCase : item.totalCase + totalCase;
@@ -136,99 +136,99 @@
                 }
             }
 
-        <tr>
-            @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
-            {
-                <td colspan="6" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
-            }
-            else
-            {
-                <td colspan="5" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
-            }
+            <tr>
+                @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                {
+                    <td colspan="6" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
+                }
+                else
+                {
+                    <td colspan="5" class="auto-style3" style="text-align:right;">&nbsp;รวม</td>
+                }
 
-            <td>
-                <p class="text-success textRight">
-                    @if (normalTotal != 0)
-                    {
-                        string result = String.Format("{0:n2}", @normalTotal);
-                        @result.ToString();
-                    }
-                </p>
-            </td>
-            <td>
-                <p class="text-success textRight">
-                    @if (activityTotal != 0)
-                    {
-                        string result = String.Format("{0:n2}", @activityTotal);
-                        @result.ToString();
-                    }
-                </p>
-            </td>
-            <td>
-                <p class="text-success textRight">
-                    @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
-                    {
-                        growthTotal = sumGrowth;
-                        string result = String.Format("{0:n2}%", @growthTotal);
-                        @result.ToString();
-
-                    }
-                    else
-                    {
-                        if (activityTotal != 0 && normalTotal != 0)
+                <td>
+                    <p class="text-success textRight">
+                        @if (normalTotal != 0)
                         {
-                            growthTotal = (activityTotal - normalTotal) / normalTotal * 100;
-                            string result = String.Format("{0:n2}%", @growthTotal);
+                            string result = String.Format("{0:n2}", @normalTotal);
                             @result.ToString();
                         }
-                    }
-
-                </p>
-            </td>
-            <td>
-                <p class="text-success textRight">
-                    @if (LE != 0)
-                    {
-                        string result = String.Format("{0:n2}%", @LE);
-                        @result.ToString();
-                    }
-                </p>
-            </td>
-
-            <td>
-                <p class="text-success textRight">
-                   
-                    @if (totalCase != 0)
-                    {
-                        string result = String.Format("{0:n2}", @totalCase);
-                        @result.ToString();
-                    }
-                </p>
-            </td>
-            <td>
-                <p class="text-success textRight">
-                    @if (total != 0)
-                    {
-                        string result = String.Format("{0:n2}", @total);
-                        @result.ToString();
-                    }
-                </p>
-            </td>
-
-            @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
-            {
-                <td>
-                    @*<p class="text-success textRight">
-                    @if (total != 0 && activityTotal != 0)
-                    {
-                        perTotal = total / (activityTotal * Convert.ToDecimal(promotioncost == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
-                        string result = String.Format("{0:n2}", @perTotal);
-                        @result.ToString();
-                    }
-                </p>*@
+                    </p>
                 </td>
-            }
-        </tr>
+                <td>
+                    <p class="text-success textRight">
+                        @if (activityTotal != 0)
+                        {
+                            string result = String.Format("{0:n2}", @activityTotal);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success textRight">
+                        @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
+                        {
+                            growthTotal = sumGrowth;
+                            string result = String.Format("{0:n2}%", @growthTotal);
+                            @result.ToString();
+
+                        }
+                        else
+                        {
+                            if (activityTotal != 0 && normalTotal != 0)
+                            {
+                                growthTotal = (activityTotal - normalTotal) / normalTotal * 100;
+                                string result = String.Format("{0:n2}%", @growthTotal);
+                                @result.ToString();
+                            }
+                        }
+
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success textRight">
+                        @if (LE != 0)
+                        {
+                            string result = String.Format("{0:n2}%", @LE);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+
+                <td>
+                    <p class="text-success textRight">
+
+                        @if (totalCase != 0)
+                        {
+                            string result = String.Format("{0:n2}", @totalCase);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success textRight">
+                        @if (total != 0)
+                        {
+                            string result = String.Format("{0:n2}", @total);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+
+                @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
+                {
+                    <td>
+                        @*<p class="text-success textRight">
+                        @if (total != 0 && activityTotal != 0)
+                        {
+                            perTotal = total / (activityTotal * Convert.ToDecimal(promotioncost == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
+                            string result = String.Format("{0:n2}", @perTotal);
+                            @result.ToString();
+                        }
+                    </p>*@
+                    </td>
+                }
+            </tr>
         </table>
     </div>
 </div>
