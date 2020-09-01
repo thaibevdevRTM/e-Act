@@ -101,6 +101,11 @@ namespace eActForm.BusinessLayer
                     typeForm = ConfigurationManager.AppSettings["reportSetPrice"];
                     TxtDoc = ConfigurationManager.AppSettings["getTxtDocReportSetPrice"];
                 }
+                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                     typeForm = ConfigurationManager.AppSettings["reportOMT"];
+                    TxtDoc = ConfigurationManager.AppSettings["getTxtDocReportOMT"];
+                }
                 else
                 {
                     typeForm = ConfigurationManager.AppSettings["reportMT"];

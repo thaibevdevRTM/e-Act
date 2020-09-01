@@ -275,7 +275,8 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
-                return typeForm == Activity_Model.activityType.MT.ToString() ? dataTableToRepDetailModels(ds) : dataTableToRepDetailSetPriceModels(ds);
+                return typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString() ? 
+                    dataTableToRepDetailModels(ds) : dataTableToRepDetailSetPriceModels(ds);
             }
             catch (Exception ex)
             {
