@@ -37,7 +37,7 @@ namespace eActForm.BusinessLayer
                                  empTel = d["empTel"].ToString(),
                                  detail = d["detail"].ToString(),
                                  empName = !langEn ? (chkFormHc ? "" : "คุณ") + d["empFNameTH"].ToString() + " " + d["empLNameTH"].ToString() : d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
-                                 //empId = d["empId"].ToString(),
+                                 empId = d["empId"].ToString(),
                                  //position = !langEn ? d["empPositionTitleTH"].ToString() : d["empPositionTitleEN"].ToString(),
                                  //level = d["empLevel"].ToString(),
                                  //department = !langEn ? d["empDepartmentTH"].ToString() : d["empDepartmentEN"].ToString(),

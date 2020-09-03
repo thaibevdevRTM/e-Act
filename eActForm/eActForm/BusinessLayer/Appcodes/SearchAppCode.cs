@@ -11,7 +11,7 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                typeForm = typeForm == Activity_Model.activityType.SetPrice.ToString() ? "sp" : "mtm";
+                typeForm = typeForm == Activity_Model.activityType.SetPrice.ToString() ? "reps" : "mtm";
                 SearchActivityModels models = new SearchActivityModels
                 {
                     showUIModel = new searchParameterFilterModel(),

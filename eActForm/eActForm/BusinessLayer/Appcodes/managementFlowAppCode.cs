@@ -97,7 +97,7 @@ namespace eActForm.BusinessLayer.Appcodes
                     ,new SqlParameter("@empId",model.p_empIdList[i])
                     ,new SqlParameter("@approveGroupId",model.p_appovedGroupList[i])
                     ,new SqlParameter("@rangNo",model.p_rangNoList[i])
-                    ,new SqlParameter("@description",model.p_empGroup[0])
+                    ,new SqlParameter("@empGroup",model.p_empGroup[0])
                     ,new SqlParameter("@showInDoc",model.p_isShowList[i])
                     ,new SqlParameter("@isApprove",model.p_isApproveList[i])
                     ,new SqlParameter("@delFlag",'0')

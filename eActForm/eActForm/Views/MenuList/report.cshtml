@@ -11,7 +11,7 @@
 
             @if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
             {
-                if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"])
+                if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.isSuperAdmin )
                 {
                     <li>@Html.ActionLink(" Report Post Evaluation", "index", "actFormRepPostEva")</li>
 
@@ -19,7 +19,7 @@
                     <li>@Html.ActionLink(" Report Detail SetPrice", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.SetPrice.ToString() }, null)</li>
 
                 }
-                if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
+                if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"] || UtilsAppCode.Session.User.isSuperAdmin )
                 {
                     <li>@Html.ActionLink(" Report Detail OMT", "index", "actFormRepDetail", new { typeForm = Activity_Model.activityType.OMT.ToString() }, null)</li>
                 }

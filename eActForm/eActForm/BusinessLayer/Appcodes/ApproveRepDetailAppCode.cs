@@ -101,6 +101,11 @@ namespace eActForm.BusinessLayer
                     typeForm = ConfigurationManager.AppSettings["reportSetPrice"];
                     TxtDoc = ConfigurationManager.AppSettings["getTxtDocReportSetPrice"];
                 }
+                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                     typeForm = ConfigurationManager.AppSettings["reportOMT"];
+                    TxtDoc = ConfigurationManager.AppSettings["getTxtDocReportOMT"];
+                }
                 else
                 {
                     typeForm = ConfigurationManager.AppSettings["reportMT"];
@@ -112,7 +117,8 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] {
                         new SqlParameter("@id",id)
                         ,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.รออนุมัติ)
-                        ,new SqlParameter("@actNo",TxtDoc+docNo)
+                        ,new SqlParameter("@typeForm",TxtDoc)
+                        ,new SqlParameter("@actNo",docNo)
                         ,new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@reference","")
