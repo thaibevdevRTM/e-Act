@@ -143,6 +143,7 @@
         $("#ProductDetail_5").prop("disabled", true);
         $("#ProductDetail_6").prop("disabled", true);
 
+        
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' &&
             '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
 
@@ -152,7 +153,7 @@
 
             $("#divDetailSub :input").prop("disabled", false);
             $("#divDetailSub :input").prop("readonly", true);
-             
+
 
             for (var i = 0; i < '@Model.expensesDetailModel.costDetailLists.Count'; i++) {
                 if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "Recorder")' == 'True') {
@@ -213,6 +214,7 @@
                 for (var i = 0; i < lengthOfArray; i++) {
                     arrayOfElements[i].style.display = 'none';
                 }
+                $("#GridPDF :input").prop("disabled", false);
             }
         }
 
@@ -429,6 +431,8 @@
 
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
+
+            if ($("#txtdateDoc").val() == "") { required += "&emsp;วันที่เสนอกิจกรรม*<br>"; validate = false; }
             var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
                 if ($(".txttotal_" + i).val() != "0.00") {
