@@ -1,0 +1,115 @@
+﻿
+@using eActForm.Models
+@using System.Configuration
+@using eActForm.BusinessLayer
+@model eActForm.Models.RepDetailModel.actFormRepDetails
+    <style>
+        table.fixed {
+            table-layout: fixed;
+            width: 100px;
+        }
+
+            table.fixed td {
+                overflow: hidden;
+            }
+    </style>
+<div class="modal-dialog modal-large">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <div style=""></div>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        @RenderPage("~/Views/Shared/_PreviewForApproveDetailSetPrice.cshtml")
+
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+
+
+
+    $(function () {
+                $("#btnExportExcel").click(function () {
+                    $("input[name='gridHtml']").val($("#GridPDF").html());
+                });
+
+                 $("#btnExportPDF").click(function () {
+                     $("input[name='gridHtml']").val($("#GridPDF").html());
+                 });
+    });
+
+            $(function () {
+                $("#btnSubmit").click(function () {
+                    $("#previewModal").modal('hide');
+                    $("#WaitDialog").show();
+                    $.ajax({
+                        url: '@Url.Action("repReportDetailApprove", "actFormRepDetail")',
+                        data: {
+                            gridHtml: $("#Grid").html(),
+                            gridOs: $("#divOS").html(),
+                            gridEst: $("#divEst").html(),
+                            gridWA: $("#divWA").html(),
+                            gridSO: $("#divSO").html(),
+                            customerId: $("#ddlCustomer").val(),
+                            productTypeId: $("#ddlProductType").val(),
+                            startDate: $("#startDate").val(),
+                            endDate: $("#endDate").val(),
+                            typeForm:"@Model.typeForm",
+                        },
+                        dataType: "json",
+                        type: 'POST'
+                    }).done(function (response) {
+                        $("#WaitDialog").hide();
+                        if (response.Success) {
+                            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+                            $("#chooseRepDetailView").html("");
+                            }
+                            else {
+                            doMsgFail("ไม่สามารถดำเนินการได้สำเร็จ กรุณาติดต่อ Admin ครับ");
+                            }
+                    });
+                });
+            });
+
+
+
+    $(function () {
+                $("#btnSubmitPDF").click(function () {
+                    $("#previewModal").modal('hide');
+                    $("#WaitDialog").show();
+                    $.ajax({
+                        url: '@Url.Action("repReportDetailApprove", "actFormRepDetail")',
+                        data: {
+                            gridHtml: $("#GridPDF").html(),
+                            gridOs: $("#divOS").html(),
+                            gridEst: $("#divEst").html(),
+                            gridWA: $("#divWA").html(),
+                            gridSO: $("#divSO").html(),
+                            customerId: $("#ddlCustomer").val(),
+                            productTypeId: $("#ddlProductType").val(),
+                            startDate: $("#startDate").val(),
+                            endDate: $("#endDate").val(),
+                            typeForm: "@Model.typeForm",
+                        },
+                        dataType: "json",
+                        type: 'POST'
+                    }).done(function (response) {
+                        $("#WaitDialog").hide();
+                        if (response.Success) {
+                            doMsgSuccess("ดำเนินการเรียบร้อยครับ");
+                            $("#chooseRepDetailView").html("");
+                            }
+                            else {
+                            doMsgFail("ไม่สามารถดำเนินการได้สำเร็จ กรุณาติดต่อ Admin ครับ");
+                            }
+                    });
+
+
+                });
+            });
+</script>

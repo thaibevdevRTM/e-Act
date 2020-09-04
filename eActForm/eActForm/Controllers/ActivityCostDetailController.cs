@@ -184,7 +184,7 @@ namespace eActForm.Controllers
         /// <param name="compensate"></param>
         /// <param name="LE"></param>
         /// <returns></returns>
-        public JsonResult calActivityDetailCost(string name, string mechanics, string productGroupId, string productId, string normalCase, string promotionCase, string unit, string compensate, string LE, string typeForm, string actId)
+        public JsonResult calActivityDetailCost(string name, string mechanics, string productGroupId, string productId, string normalCase, string promotionCase, string unit, string compensate, string LE, string totalCase, string typeForm, string actId)
         {
             var result = new AjaxResult();
 
@@ -197,6 +197,7 @@ namespace eActForm.Controllers
                 decimal get_PerTotal = 0;
                 decimal p_total = 0;
                 decimal p_LE = decimal.Parse(AppCode.checkNullorEmpty(LE));
+                decimal p_totalCase = decimal.Parse(AppCode.checkNullorEmpty(totalCase));
                 decimal p_growth = 0;
 
                 if (activityModel.productcostdetaillist1 != null)
@@ -234,6 +235,10 @@ namespace eActForm.Controllers
                 get_PerTotal = p_total == 0 ? 0 : (p_total / (decimal.Parse(promotionCase) * getNormalCost)) * 100; // % ยอดขายโปโมชั่น
 
 
+                if(p_totalCase > 0)
+                {
+                    p_total = p_totalCase * getNormalCost;
+                }
 
                 activityModel.activitydetaillist
                         .Where(r => r.productGroupId != null && r.productGroupId.Equals(productGroupId))
@@ -246,6 +251,7 @@ namespace eActForm.Controllers
                             r.growth = Math.Round(p_growth, 2);
                             r.themeCost = decimal.Parse(promotionCase);
                             r.total = Math.Round(p_total, 2);
+                            r.totalCase = Math.Round(p_totalCase, 2);
                             r.perTotal = Math.Round(get_PerTotal, 2);
                             r.unit = int.Parse(unit);
                             r.compensate = decimal.Parse(compensate);

@@ -9,6 +9,7 @@ namespace eActForm.Models
         public class actRepDetailModels
         {
             public List<actRepDetailModel> actRepDetailLists { get; set; }
+            public string typeForm { get; set; }
         }
         public class actRepDetailModel : ActBaseModel
         {

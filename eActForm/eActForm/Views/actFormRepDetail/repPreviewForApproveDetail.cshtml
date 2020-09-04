@@ -1,2 +1,14 @@
 ﻿
-@RenderPage("~/Views/Shared/_PreviewForApproveDetail.cshtml")
+@using eActForm.Models
+@using System.Configuration
+@using eActForm.BusinessLayer
+@model eActForm.Models.RepDetailModel.actFormRepDetails
+
+@if (Model.typeForm == Activity_Model.activityType.SetPrice.ToString())
+{
+    @RenderPage("~/Views/Shared/_PreviewForApproveDetailSetPrice.cshtml")
+}
+else
+{
+    @RenderPage("~/Views/Shared/_PreviewForApproveDetail.cshtml")
+}

@@ -70,6 +70,7 @@ namespace eActForm.Models
             public string empCompanyGroup { get; set; }
             public string empCompanyId { get; set; }
             public string empCompanyName { get; set; }
+            public string empCompanyNameTH { get; set; }
             public string empDivisionEN { get; set; }
             public string empDivisionTH { get; set; }
             public string empDepartmentEN { get; set; }

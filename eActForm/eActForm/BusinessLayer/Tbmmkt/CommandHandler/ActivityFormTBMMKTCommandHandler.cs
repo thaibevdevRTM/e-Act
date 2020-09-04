@@ -112,6 +112,7 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.activityTypeId = item.activityTypeId;
                 costThemeDetail.productDetail = item.productDetail;
                 costThemeDetail.total = item.total == null ? 0 : item.total;
+                costThemeDetail.totalCase = item.totalCase == null ? 0 : item.totalCase;
                 costThemeDetail.normalCost = item.normalCost == null ? 0 : item.normalCost;
                 costThemeDetail.IO = item.IO;
                 costThemeDetail.rowNo = insertIndex;
@@ -1230,6 +1231,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@remark",model.remark)
                     ,new SqlParameter("@normalCost",decimal.Parse(string.Format("{0:0.00000}", model.normalCost)))
                     ,new SqlParameter("@total",decimal.Parse(string.Format("{0:0.00000}", model.total)))
+                    ,new SqlParameter("@totalCase",decimal.Parse(string.Format("{0:0.00000}", model.totalCase)))
                     ,new SqlParameter("@rowNo",model.rowNo)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)

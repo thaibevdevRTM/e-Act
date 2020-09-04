@@ -81,31 +81,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2020 10:31:12</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
-      <publishTime>08/13/2020 16:16:49</publishTime>
+      <publishTime>09/02/2020 16:48:14</publishTime>
     </File>
     <File Include="bin/eActForm.dll.config">
-      <publishTime>08/13/2020 09:39:40</publishTime>
+      <publishTime>09/02/2020 16:41:08</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
-      <publishTime>08/13/2020 16:16:49</publishTime>
+      <publishTime>09/02/2020 16:48:14</publishTime>
     </File>
     <File Include="bin/eActForm.dll.config">
-      <publishTime>08/13/2020 09:39:40</publishTime>
+      <publishTime>09/02/2020 16:41:08</publishTime>
     </File>
     <File Include="bin/eForms.Models.dll">
-      <publishTime>08/13/2020 09:39:40</publishTime>
+      <publishTime>09/01/2020 11:06:54</publishTime>
     </File>
     <File Include="bin/eForms.Models.pdb">
-      <publishTime>08/13/2020 09:39:40</publishTime>
+      <publishTime>09/01/2020 11:06:54</publishTime>
     </File>
     <File Include="bin/eForms.Presenter.dll">
-      <publishTime>08/13/2020 10:08:54</publishTime>
+      <publishTime>09/01/2020 11:06:55</publishTime>
     </File>
     <File Include="bin/eForms.Presenter.pdb">
-      <publishTime>08/13/2020 10:08:54</publishTime>
+      <publishTime>09/01/2020 11:06:55</publishTime>
     </File>
     <File Include="bin/en/eActForm.resources.dll">
-      <publishTime>08/13/2020 16:16:50</publishTime>
+      <publishTime>09/02/2020 16:48:15</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.xml">
       <publishTime>08/19/2020 10:31:31</publishTime>
@@ -7476,10 +7476,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/26/2020 14:07:05</publishTime>
     </File>
     <File Include="Views/actFormRepDetail/repListView.cshtml">
-      <publishTime>08/07/2020 14:51:53</publishTime>
+      <publishTime>09/01/2020 10:57:57</publishTime>
     </File>
     <File Include="Views/actFormRepDetail/repListViewGroupBrand.cshtml">
-      <publishTime>04/22/2020 11:29:02</publishTime>
+      <publishTime>09/01/2020 10:57:57</publishTime>
+    </File>
+    <File Include="Views/actFormRepDetail/repListViewSetPrice.cshtml">
+      <publishTime>09/01/2020 10:57:57</publishTime>
     </File>
     <File Include="Views/actFormRepDetail/repPreviewForApprove.cshtml">
       <publishTime>08/19/2020 10:31:31</publishTime>
@@ -7497,7 +7500,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2020 10:31:31</publishTime>
     </File>
     <File Include="Views/Activity/ActivityForm.cshtml">
-      <publishTime>08/07/2020 14:51:50</publishTime>
+      <publishTime>09/01/2020 11:27:38</publishTime>
     </File>
     <File Include="Views/Activity/ImageList.cshtml">
       <publishTime>08/19/2020 10:31:30</publishTime>
@@ -7509,7 +7512,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2020 10:31:30</publishTime>
     </File>
     <File Include="Views/ActivityCostDetail/activityCostDetail.cshtml">
-      <publishTime>08/07/2020 14:51:50</publishTime>
+      <publishTime>09/01/2020 11:02:36</publishTime>
     </File>
     <File Include="Views/ActivityProductDetail/ProductCostdetail.cshtml">
       <publishTime>08/19/2020 10:31:30</publishTime>
@@ -7536,7 +7539,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2020 10:31:30</publishTime>
     </File>
     <File Include="Views/Approve/approvePositionSignatureLists.cshtml">
-      <publishTime>08/13/2020 09:39:39</publishTime>
+      <publishTime>09/01/2020 10:57:29</publishTime>
     </File>
     <File Include="Views/Approve/approvePositionSignatureListsV2.cshtml">
       <publishTime>08/19/2020 10:31:30</publishTime>
@@ -7689,13 +7692,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2020 10:31:30</publishTime>
     </File>
     <File Include="Views/ExpenseEstimateInput/expensesMedDetail.cshtml">
-      <publishTime>08/13/2020 09:39:39</publishTime>
+      <publishTime>09/01/2020 10:57:30</publishTime>
     </File>
     <File Include="Views/ExpenseEstimateInput/expensesMedDetail_old.cshtml">
       <publishTime>06/02/2020 13:34:55</publishTime>
     </File>
     <File Include="Views/ExpenseEstimateInput/expensesTrvDetail.cshtml">
-      <publishTime>08/13/2020 09:39:39</publishTime>
+      <publishTime>09/01/2020 10:57:30</publishTime>
     </File>
     <File Include="Views/ExpenseEstimateInput/productSetPriceList.cshtml">
       <publishTime>08/19/2020 10:31:30</publishTime>
@@ -7704,7 +7707,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2020 10:31:30</publishTime>
     </File>
     <File Include="Views/ExpenseEstimateReport/expensesTrvDetailRpt.cshtml">
-      <publishTime>08/13/2020 09:39:40</publishTime>
+      <publishTime>09/01/2020 10:57:30</publishTime>
     </File>
     <File Include="Views/ExpenseEstimateReport/parialPriceStructureRpt.cshtml">
       <publishTime>08/19/2020 10:31:30</publishTime>
@@ -7737,7 +7740,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2020 10:31:30</publishTime>
     </File>
     <File Include="Views/MainForm/Index.cshtml">
-      <publishTime>08/13/2020 09:39:40</publishTime>
+      <publishTime>09/02/2020 12:24:18</publishTime>
     </File>
     <File Include="Views/MainReport/Index.cshtml">
       <publishTime>08/19/2020 10:31:30</publishTime>
@@ -7887,7 +7890,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2020 10:31:30</publishTime>
     </File>
     <File Include="Views/Shared/_previewActForm.cshtml">
-      <publishTime>08/07/2020 14:51:52</publishTime>
+      <publishTime>09/01/2020 10:57:57</publishTime>
     </File>
     <File Include="Views/Shared/_previewActFormBudget.cshtml">
       <publishTime>08/19/2020 10:31:30</publishTime>
@@ -7897,6 +7900,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Shared/_PreviewForApproveDetail.cshtml">
       <publishTime>08/19/2020 10:31:30</publishTime>
+    </File>
+    <File Include="Views/Shared/_PreviewForApproveDetailSetPrice.cshtml">
+      <publishTime>09/01/2020 10:57:57</publishTime>
     </File>
     <File Include="Views/Shared/_previewMainReport.cshtml">
       <publishTime>08/19/2020 10:31:30</publishTime>
@@ -8181,7 +8187,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2020 10:31:31</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/13/2020 10:10:13</publishTime>
+      <publishTime>09/02/2020 16:45:47</publishTime>
     </File>
     <File Include="WebForm1.aspx">
       <publishTime>08/19/2020 10:31:31</publishTime>
