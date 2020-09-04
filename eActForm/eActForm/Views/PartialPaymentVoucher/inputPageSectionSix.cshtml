@@ -22,7 +22,7 @@
 
                 <div class="col-md-3 col-xs-12">
                     <div class="row">
-                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.payNo, new { @class = "form-control textboxcss", @id = "txtpayNo" })
+                        @Html.TextBoxFor(x => x.tB_Act_ActivityForm_DetailOther.payNo, new { @class = "form-control textboxcss", @id = "txtpayNo", @onKeyPress = "CheckNum()" })
                         <script>
                             $('#txtpayNo').blur(function () {
                                 checktxtpayNo();
