@@ -143,7 +143,7 @@
         $("#ProductDetail_5").prop("disabled", true);
         $("#ProductDetail_6").prop("disabled", true);
 
-        
+
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' &&
             '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
 
@@ -207,13 +207,7 @@
             $('#preview').modal('show');
         }
 
-        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
-            if (@Model.activityFormTBMMKT.statusId == "5"  || '@Model.activityFormTBMMKT.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
-                 document.getElementById("addEnt").style.display = "block";
-                 document.getElementById("addEx").style.display = "block";
-            }
-        }
-
+      
 
     });
 
