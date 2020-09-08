@@ -51,7 +51,6 @@ namespace eActForm.BusinessLayer
                                  //detail = d["detail"].ToString(),
                                  //hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(BaseAppCodes.getEmpFromApi(d["empId"].ToString()).empProbationEndDate), ConfigurationManager.AppSettings["formatDateUse"]),//  empProbationEndDate                                                                                                                                                                                                        //hireDate = !string.IsNullOrEmpty(d["hireDate"].ToString()) ? DateTime.Parse(d["hireDate"].ToString()).ToString(ConfigurationManager.AppSettings["formatDateUse"]) : "",
                              });
-
                 return lists.OrderBy(x => x.rowNo).ToList();
             }
             catch (Exception ex)
