@@ -256,22 +256,25 @@ namespace eActForm.Models
         }
         public RequestEmpModel(string empId)
         {
-            List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
-            empId = model[0].empId;
-            empName = model[0].empName;
-            position = model[0].position;
-            level = model[0].level;
-            department = model[0].department;
-            bu = model[0].bu;
-            companyName = model[0].companyName;
-            empNameEN = model[0].empNameEN;
-            positionEN = model[0].positionEN;
-            departmentEN = model[0].departmentEN;
-            buEN = model[0].buEN;
-            companyNameEN = model[0].companyNameEN;
-            compId = model[0].compId;
-            email = model[0].email;
-            hireDate = model[0].hireDate;
+            if (!string.IsNullOrEmpty(empId))
+            {
+                List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                empId = model[0].empId;
+                empName = model[0].empName;
+                position = model[0].position;
+                level = model[0].level;
+                department = model[0].department;
+                bu = model[0].bu;
+                companyName = model[0].companyName;
+                empNameEN = model[0].empNameEN;
+                positionEN = model[0].positionEN;
+                departmentEN = model[0].departmentEN;
+                buEN = model[0].buEN;
+                companyNameEN = model[0].companyNameEN;
+                compId = model[0].compId;
+                email = model[0].email;
+                hireDate = model[0].hireDate;
+            }
         }
         public string id { get; set; }
         public string activityId { get; set; }
