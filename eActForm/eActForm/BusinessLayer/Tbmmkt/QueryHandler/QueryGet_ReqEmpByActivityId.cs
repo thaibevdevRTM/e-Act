@@ -1,5 +1,4 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
-using eActForm.Controllers;
 using eActForm.Models;
 using Microsoft.ApplicationBlocks.Data;
 using System;
@@ -31,27 +30,26 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strore
                      , new SqlParameter("@activityId", activityId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new RequestEmpModel()
+                             select new RequestEmpModel(d["empId"].ToString())
                              {
                                  id = d["id"].ToString(),
                                  rowNo = Convert.ToInt32(d["rowNo"].ToString()),
-                                 empId = d["empId"].ToString(),
-                                 empName = !langEn ? (chkFormHc ? "" : "คุณ") + d["empFNameTH"].ToString() + " " + d["empLNameTH"].ToString() : d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
-                                 position = !langEn ? d["empPositionTitleTH"].ToString() : d["empPositionTitleEN"].ToString(),
-                                 level = d["empLevel"].ToString(),
-                                 department = !langEn ? d["empDepartmentTH"].ToString() : d["empDepartmentEN"].ToString(),
-                                 bu = !langEn ? d["empDivisionTH"].ToString() : d["empDivisionEN"].ToString(),
-                                 empNameEN = d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
-                                 positionEN = d["empPositionTitleEN"].ToString(),
-                                 departmentEN = d["empDepartmentEN"].ToString(),
-                                 buEN = d["empDivisionEN"].ToString(),
                                  empTel = d["empTel"].ToString(),
-                                 companyName = "บริษัท " + d["companyNameTH"].ToString(),
-                                 companyNameEN = d["companyNameEN"].ToString(),
                                  detail = d["detail"].ToString(),
-                                 hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(BaseAppCodes.getEmpFromApi(d["empId"].ToString()).empProbationEndDate), ConfigurationManager.AppSettings["formatDateUse"]),//  empProbationEndDate
-                                                                                                                                                                                                                                            //api พัง ใช้อันนี้แทนเทสไปก่อน
-                                                                                                                                                                                                                                            //hireDate = !string.IsNullOrEmpty(d["hireDate"].ToString()) ? DateTime.Parse(d["hireDate"].ToString()).ToString(ConfigurationManager.AppSettings["formatDateUse"]) : "",
+                                 empName = !langEn ? (chkFormHc ? "" : "คุณ") + d["empFNameTH"].ToString() + " " + d["empLNameTH"].ToString() : d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
+                                 empId = d["empId"].ToString(),
+                                 //position = !langEn ? d["empPositionTitleTH"].ToString() : d["empPositionTitleEN"].ToString(),
+                                 //level = d["empLevel"].ToString(),
+                                 //department = !langEn ? d["empDepartmentTH"].ToString() : d["empDepartmentEN"].ToString(),
+                                 //bu = !langEn ? d["empDivisionTH"].ToString() : d["empDivisionEN"].ToString(),
+                                 //empNameEN = d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
+                                 //positionEN = d["empPositionTitleEN"].ToString(),
+                                 //departmentEN = d["empDepartmentEN"].ToString(),
+                                 //buEN = d["empDivisionEN"].ToString(),
+                                 //companyName = "บริษัท " + d["companyNameTH"].ToString(),
+                                 //companyNameEN = d["companyNameEN"].ToString(),
+                                 //detail = d["detail"].ToString(),
+                                 //hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(BaseAppCodes.getEmpFromApi(d["empId"].ToString()).empProbationEndDate), ConfigurationManager.AppSettings["formatDateUse"]),//  empProbationEndDate                                                                                                                                                                                                        //hireDate = !string.IsNullOrEmpty(d["hireDate"].ToString()) ? DateTime.Parse(d["hireDate"].ToString()).ToString(ConfigurationManager.AppSettings["formatDateUse"]) : "",
                              });
 
                 return lists.OrderBy(x => x.rowNo).ToList();
@@ -72,23 +70,23 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strore
                      , new SqlParameter("@activityId", activityId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new RequestEmpModel()
+                             select new RequestEmpModel(d["empId"].ToString())
                              {
                                  id = d["id"].ToString(),
                                  rowNo = Convert.ToInt32(d["rowNo"].ToString()),
-                                 empId = d["empId"].ToString(),
-                                 empName = !langEn ? "คุณ" + d["empFNameTH"].ToString() + " " + d["empLNameTH"].ToString() : d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
-                                 position = !langEn ? d["empPositionTitleTH"].ToString() : d["empPositionTitleEN"].ToString(),
-                                 level = d["empLevel"].ToString(),
-                                 department = !langEn ? d["empDepartmentTH"].ToString() : d["empDepartmentEN"].ToString(),
-                                 bu = !langEn ? d["empDivisionTH"].ToString() : d["empDivisionEN"].ToString(),
-                                 empNameEN = d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
-                                 positionEN = d["empPositionTitleEN"].ToString(),
-                                 departmentEN = d["empDepartmentEN"].ToString(),
-                                 buEN = d["empDivisionEN"].ToString(),
-                                 empTel = d["empTel"].ToString(),
-                                 companyName = d["companyNameTH"].ToString(),
-                                 companyNameEN = d["companyNameEN"].ToString(),
+                                 //empId = d["empId"].ToString(),
+                                 //empName = !langEn ? "คุณ" + d["empFNameTH"].ToString() + " " + d["empLNameTH"].ToString() : d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
+                                 //position = !langEn ? d["empPositionTitleTH"].ToString() : d["empPositionTitleEN"].ToString(),
+                                 //level = d["empLevel"].ToString(),
+                                 //department = !langEn ? d["empDepartmentTH"].ToString() : d["empDepartmentEN"].ToString(),
+                                 //bu = !langEn ? d["empDivisionTH"].ToString() : d["empDivisionEN"].ToString(),
+                                 //empNameEN = d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
+                                 //positionEN = d["empPositionTitleEN"].ToString(),
+                                 //departmentEN = d["empDepartmentEN"].ToString(),
+                                 //buEN = d["empDivisionEN"].ToString(),
+                                 //empTel = d["empTel"].ToString(),
+                                 //companyName = d["companyNameTH"].ToString(),
+                                 //companyNameEN = d["companyNameEN"].ToString(),
                              });
                 return lists.OrderBy(x => x.rowNo).ToList();
             }

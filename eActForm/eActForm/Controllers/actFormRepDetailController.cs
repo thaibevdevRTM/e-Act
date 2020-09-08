@@ -5,11 +5,8 @@ using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Net.Mail;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Web.Mvc;
 using WebLibrary;
@@ -23,11 +20,11 @@ namespace eActForm.Controllers
         public ActionResult Index(string typeForm)
         {
             ViewBag.TypeForm = typeForm;
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport(typeForm);
             models.showUIModel = new searchParameterFilterModel();
-            
 
-            if (typeForm == Activity_Model.activityType.MT.ToString())
+
+            if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
             {
                 models.customerslist = QueryGetAllCustomers.getCustomersMT();
             }
@@ -72,7 +69,7 @@ namespace eActForm.Controllers
 
                     if (Request.Form["ddlCustomer"] != "")
                     {
-                        if (typeForm == Activity_Model.activityType.MT.ToString())
+                        if (typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.SetPrice.ToString())
                         {
                             model = RepDetailAppCode.getFilterRepDetailByCustomer(model, Request.Form["ddlCustomer"]);
                         }
@@ -203,6 +200,22 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
+        public ActionResult repListViewSetPrice()
+        {
+            RepDetailModel.actFormRepDetails model = null;
+            try
+            {
+                model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"] ?? new RepDetailModel.actFormRepDetails();
+                ViewBag.MouthText = DateTime.ParseExact(model.dateReport, "MM-yyyy", null).ToString("MMM yyyy");
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message);
+            }
+
+            return PartialView(model);
+        }
+
 
         public ActionResult repPreviewForApproveDetail(string startDate)
         {
@@ -301,7 +314,7 @@ namespace eActForm.Controllers
                 gridHtml = gridHtml.Replace("<br>", "<br/>");
                 RepDetailModel.actFormRepDetails model = (RepDetailModel.actFormRepDetails)Session["ActFormRepDetail"];
                 model.actFormRepDetailLists = model.actFormRepDetailLists.Where(r => r.delFlag == false).ToList();
-                string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model);
+                string actRepDetailId = ApproveRepDetailAppCode.insertActivityRepDetail(customerId, productTypeId, startDate, endDate, model , typeForm);
                 if (ApproveRepDetailAppCode.insertApproveForReportDetail(customerId, productTypeId, actRepDetailId, typeForm) > 0)
                 {
                     RepDetailAppCode.genFilePDFBrandGroup(actRepDetailId, gridHtml, gridOS, gridEst, gridWA, gridSO);
@@ -369,6 +382,7 @@ namespace eActForm.Controllers
                 ExceptionManager.WriteError(ex.Message);
             }
 
+
             return RedirectToAction("repPreviewForApproveDetail", new { startDate = model.actFormRepDetailLists.Count > 0 ? model.actFormRepDetailLists[0].createdDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy") });
         }
 
@@ -408,12 +422,12 @@ namespace eActForm.Controllers
             return Json(result);
         }
 
-        public ActionResult genImageStream(byte[] p_image,string empId)
+        public ActionResult genImageStream(byte[] p_image, string empId)
         {
             return File(p_image, "image/png");
         }
 
-      
+
 
     }
 }

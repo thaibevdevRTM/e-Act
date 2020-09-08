@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.UI.WebControls.WebParts;
 
 namespace eActForm.Models
 {
@@ -25,6 +26,7 @@ namespace eActForm.Models
             public decimal? normalSale { get; set; }
             public decimal? promotionSale { get; set; }
             public decimal? total { get; set; }
+            public decimal? totalCase { get; set; }
             public decimal? specialDisc { get; set; }
             public decimal? specialDiscBaht { get; set; }
             public decimal? promotionCost { get; set; }
@@ -32,6 +34,16 @@ namespace eActForm.Models
             public decimal? perGrowth { get; set; }
             public decimal? perSE { get; set; }
             public decimal? perToSale { get; set; }
+            public decimal? wholeSalesPrice { get; set; }
+            public decimal? saleIn { get; set; }
+            public decimal? saleOut { get; set; }
+            public decimal? discount1 { get; set; }
+            public decimal? discount2 { get; set; }
+            public decimal? discount3 { get; set; }
+            public decimal? normalGp { get; set; }
+            public decimal? promotionGp { get; set; }
+            public decimal? rsp { get; set; }
+            public string unitTxt { get; set; }
         }
 
         public class actApproveRepDetailModels

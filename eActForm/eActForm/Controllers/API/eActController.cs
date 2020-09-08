@@ -4,7 +4,6 @@ using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
 using eForms.Models.MasterData;
 using eForms.Presenter.MasterData;
-using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -318,9 +317,9 @@ namespace eActForm.Controllers
                         compId = empDetailList.FirstOrDefault().compId,
                         email = empDetailList.FirstOrDefault().email,
                         //hireDate = empDetailList.FirstOrDefault().hireDate
-                        hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(BaseAppCodes.getEmpFromApi(empId).empProbationEndDate), ConfigurationManager.AppSettings["formatDateUse"]),//  empProbationEndDate
+                        //hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(BaseAppCodes.getEmpFromApi(empId).empProbationEndDate), ConfigurationManager.AppSettings["formatDateUse"]),//  empProbationEndDate
                         //api พัง ใช้อันนี้แทนเทสไปก่อน
-                        //hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(empDetailList.FirstOrDefault().hireDate), ConfigurationManager.AppSettings["formatDateUse"]),
+                        hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(empDetailList.FirstOrDefault().hireDate), ConfigurationManager.AppSettings["formatDateUse"]),
 
                     };
                     result.Data = resultData;

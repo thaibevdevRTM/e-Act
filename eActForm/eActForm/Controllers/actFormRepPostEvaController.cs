@@ -1,13 +1,13 @@
 ﻿using eActForm.BusinessLayer;
 using eActForm.Models;
-using System;
-using System.Web.Mvc;
+using eForms.Models.Forms;
 using eForms.Models.Reports;
 using eForms.Presenter.Reports;
-using WebLibrary;
+using System;
 using System.Collections.Generic;
-using eForms.Models.Forms;
 using System.Text;
+using System.Web.Mvc;
+using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -17,7 +17,7 @@ namespace eActForm.Controllers
         // GET: actFormRepPostEva
         public ActionResult index()
         {
-            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport();
+            SearchActivityModels models = SearchAppCode.getMasterDataForSearchForDetailReport("");
             models.showUIModel = new searchParameterFilterModel { isShowActNo = false, isShowStatus = false, isShowActType = false, isShowProductGroup = false, isShowProductType = false, isShowMonthText = false };
             return View(models);
         }

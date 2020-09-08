@@ -90,16 +90,34 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getApproveRepDetailListsByEmpId >>" + ex.Message);
             }
         }
-        public static string insertActivityRepDetail(string customerId, string productTypeId, string startDate, string endDate, RepDetailModel.actFormRepDetails model)
+        public static string insertActivityRepDetail(string customerId, string productTypeId, string startDate, string endDate, RepDetailModel.actFormRepDetails model,string typeForm)
         {
             try
             {
                 string id = Guid.NewGuid().ToString();
-                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc("repDetail", "").FirstOrDefault().docNo));
+                string TxtDoc = "";
+                if (typeForm == Activity_Model.activityType.SetPrice.ToString())
+                {
+                    typeForm = ConfigurationManager.AppSettings["reportSetPrice"];
+                    TxtDoc = ConfigurationManager.AppSettings["getTxtDocReportSetPrice"];
+                }
+                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                     typeForm = ConfigurationManager.AppSettings["reportOMT"];
+                    TxtDoc = ConfigurationManager.AppSettings["getTxtDocReportOMT"];
+                }
+                else
+                {
+                    typeForm = ConfigurationManager.AppSettings["reportMT"];
+                    TxtDoc = ConfigurationManager.AppSettings["getTxtDocReportMT"];
+                }
+
+                string docNo = string.Format("{0:0000}", int.Parse(ActivityFormCommandHandler.getActivityDoc(typeForm, "").FirstOrDefault().docNo));
                 int rtn = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertActivityRepDetail"
                     , new SqlParameter[] {
                         new SqlParameter("@id",id)
                         ,new SqlParameter("@statusId",(int)AppCode.ApproveStatus.รออนุมัติ)
+                        ,new SqlParameter("@typeForm",TxtDoc)
                         ,new SqlParameter("@actNo",docNo)
                         ,new SqlParameter("@startDate",DateTime.ParseExact(startDate,"MM/dd/yyyy",null))
                         ,new SqlParameter("@endDate",DateTime.ParseExact(endDate,"MM/dd/yyyy",null))

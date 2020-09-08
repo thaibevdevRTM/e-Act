@@ -9,6 +9,7 @@
 
     Layout = null;
     decimal? total = 0;
+    decimal? totalCase = 0;
     decimal? normalTotal = 0;
     decimal? activityTotal = 0;
     decimal? growthTotal = 0;
@@ -36,12 +37,13 @@
                     <th class="align-content-center font10" rowspan="2" style="width:6%;">Compensate</th>
                     @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
                     {
-                        <th class="align-content-center font10" colspan="5" style="width:49%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
-
+                        <th class="align-content-center font10" colspan="3" style="width:25%;">ประมาณการยอดขาย (Estimate)</th>
+                        <th class="align-content-center font10" colspan="3" style="width:26%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
                     }
                     else
                     {
-                        <th class="align-content-center font10" colspan="6" style="width:49%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
+                        <th class="align-content-center font10" colspan="3" style="width:20%;">ประมาณการยอดขาย (Estimate)</th>
+                        <th class="align-content-center font10" colspan="4" style="width:30%;">ประมาณการค่าใช้จ่าย (Estimate)</th>
                     }
                 </tr>
                 <tr>
@@ -49,7 +51,8 @@
                     <th class="align-content-center font10">ยอดขายข่วงทำกิจกรรม (Case)</th>
                     <th class="align-content-center font10">% Growth</th>
                     <th class="align-content-center font10">%SE</th>
-                    <th class="align-content-center font10">ค่าใช้จ่ายรวม Spending Exp. (Bath)</th>
+                    <th class="align-content-center font10">Spending Exp. (Case)</th>
+                    <th class="align-content-center font10">Spending Exp. (Bath)</th>
                     @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                     {
                         <th class="align-content-center font10">% : ยอดขาย</th>
@@ -65,7 +68,7 @@
                 foreach (var item in Model.activitydetaillist)
                 {
 
-                    <tr>
+                    <tr class="tagTR">
                         <td onclick="onDelActDetail('@item.productGroupId')">
                             <button class="btn ink-reaction btn-danger fa fa-trash-o"></button>
                             @Html.HiddenFor(model => item.productId, new { @id = "hdProductId_" + index })
@@ -84,13 +87,13 @@
                         }
 
                         @*@if (item.isShowGroup != true)
-                            {*@
+                    {*@
                         <td>@Html.TextBoxFor(model => item.productName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
                         @*}
-                            else
-                            {
-                                <td>@Html.TextBoxFor(model => item.brandName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" }) </td>
-                            }*@
+                    else
+                    {
+                        <td>@Html.TextBoxFor(model => item.brandName, new { @id = "lblProductName_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" }) </td>
+                    }*@
                         @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                         {
                             <td>@Html.TextBoxFor(model => item.mechanics, new { @id = "lblMechanics_" + index, @class = "form-control textboxcss font10 textLeft", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + ")", style = "autofocus = 'autofocus'" })</td>
@@ -109,6 +112,9 @@
                             @Html.TextBoxFor(model => item.LE, "{0:n2}", new { @id = "lblLE_" + index, Name = "lblLE_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblLE_" + index + ")", style = "autofocus = 'autofocus'" })
                         </td>
                         <td>
+                            @Html.TextBoxFor(model => item.totalCase, "{0:n2}", new { @id = "lblTotalCase_" + index, Name = "lblTotalCase_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calActivityDetailCost('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotalCase_" + index + ")", style = "autofocus = 'autofocus'" })
+                        </td>
+                        <td>
                             @Html.TextBoxFor(model => item.total, "{0:n2}", new { @id = "lblTotal_" + index, Name = "lblTotal_" + index, @class = "form-control textboxcss font10 textRight", @onchange = "calGrowthTotal('" + item.productGroupId + "'," + index + "," + "true" + ")", onfocus = "setZero(lblTotal_" + index + ")", style = "autofocus = 'autofocus'" })
                         </td>
                         @if (Model.activityFormModel.typeForm == Activity_Model.activityType.OMT.ToString())
@@ -122,6 +128,7 @@
                     </tr>
                     LE = item.LE == null ? 0 + LE : item.LE + LE;
                     total = item.total == null ? 0 + total : item.total + total;
+                    totalCase = item.totalCase == null ? 0 + totalCase : item.totalCase + totalCase;
                     normalTotal = item.normalCost == null ? 0 + normalTotal : item.normalCost + normalTotal;
                     activityTotal = item.themeCost == null ? 0 + activityTotal : item.themeCost + activityTotal;
                     sumGrowth = item.growth == null ? 0 + sumGrowth : item.growth + sumGrowth;
@@ -190,6 +197,16 @@
 
                 <td>
                     <p class="text-success textRight">
+
+                        @if (totalCase != 0)
+                        {
+                            string result = String.Format("{0:n2}", @totalCase);
+                            @result.ToString();
+                        }
+                    </p>
+                </td>
+                <td>
+                    <p class="text-success textRight">
                         @if (total != 0)
                         {
                             string result = String.Format("{0:n2}", @total);
@@ -202,13 +219,13 @@
                 {
                     <td>
                         @*<p class="text-success textRight">
-                                @if (total != 0 && activityTotal != 0)
-                                {
-                                    perTotal = total / (activityTotal * Convert.ToDecimal(promotioncost == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
-                                    string result = String.Format("{0:n2}", @perTotal);
-                                    @result.ToString();
-                                }
-                            </p>*@
+                        @if (total != 0 && activityTotal != 0)
+                        {
+                            perTotal = total / (activityTotal * Convert.ToDecimal(promotioncost == null || Session["promotionTotal"].ToString() == "0" ? "1" : Session["promotionTotal"].ToString()));
+                            string result = String.Format("{0:n2}", @perTotal);
+                            @result.ToString();
+                        }
+                    </p>*@
                     </td>
                 }
             </tr>
@@ -287,6 +304,8 @@
         var LE = $("#lblLE_" + rowIndex).val();
         LE = LE == "" ? 0 : LE;
         var productId = $("#hdProductId_" + rowIndex).val();
+        var totalCase = $("#lblTotalCase_" + rowIndex).val();
+        totalCase = totalCase == "" ? 0 : totalCase;
 
 
         $.ajax({
@@ -302,6 +321,7 @@
                 unit: unit,
                 compensate: compensate,
                 LE: LE,
+                totalCase: totalCase,
                 typeForm: '@Model.activityFormModel.typeForm',
                 actId : '@Model.activityFormModel.id'
             }

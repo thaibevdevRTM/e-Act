@@ -1,21 +1,21 @@
-﻿using Microsoft.ApplicationBlocks.Data;
+﻿using eForms.Models.MasterData;
+using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Data.SqlClient;
-using eForms.Models.MasterData;
+using System.Linq;
 
 namespace eForms.Presenter.MasterData
 {
     public class SalesTeamPresenter : BasePresenter
     {
-        public static List<SalesTeamCVMModel> getSalesTeamCVM(string strConn,string provinceId)
+        public static List<SalesTeamCVMModel> getSalesTeamCVM(string strConn, string provinceId)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(strConn, CommandType.StoredProcedure, "usp_getSalesTeamCVMMaster"
-                    , new SqlParameter[] {new SqlParameter("@provinceId", provinceId) });
+                    , new SqlParameter[] { new SqlParameter("@provinceId", provinceId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new SalesTeamCVMModel()
                              {
@@ -30,7 +30,7 @@ namespace eForms.Presenter.MasterData
             }
         }
 
-        public static List<SalesTeamCVMModel>getSalesTeamCVMBySaleTeamId(string strConn, string saleTeamId)
+        public static List<SalesTeamCVMModel> getSalesTeamCVMBySaleTeamId(string strConn, string saleTeamId)
         {
             try
             {

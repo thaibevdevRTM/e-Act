@@ -31,6 +31,7 @@ namespace eActForm.BusinessLayer
                 else if (model.activityFormModel.mode == AppCode.Mode.edit.ToString() && ActFormAppCode.checkCanEditByUser(activityId))
                 {
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
+                    rtn = ProcessInsertEstimateSub(rtn, model, activityId);
                 }
                 else
                 {
@@ -59,6 +60,7 @@ namespace eActForm.BusinessLayer
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOther(rtn, model, activityId);
                     rtn = ProcessInsertTB_Act_ActivityForm_DetailOtherList(rtn, model, activityId);
                     rtn = ProcessInsertEstimate(rtn, model, activityId);
+                    rtn = ProcessInsertEstimateSub(rtn, model, activityId);
 
                     rtn = ProcessInsertTB_Act_ActivityChoiceSelect(rtn, model, activityId);
 
@@ -110,6 +112,7 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.activityTypeId = item.activityTypeId;
                 costThemeDetail.productDetail = item.productDetail;
                 costThemeDetail.total = item.total == null ? 0 : item.total;
+                costThemeDetail.totalCase = item.totalCase == null ? 0 : item.totalCase;
                 costThemeDetail.normalCost = item.normalCost == null ? 0 : item.normalCost;
                 costThemeDetail.IO = item.IO;
                 costThemeDetail.rowNo = insertIndex;
@@ -132,6 +135,7 @@ namespace eActForm.BusinessLayer
                 costThemeDetail.hospId = item.hospId;
                 costThemeDetail.UseYearSelect = item.UseYearSelect == null ? "" : item.UseYearSelect;
                 costThemeDetail.EO = item.EO == null ? "" : item.EO;
+                costThemeDetail.vat = item.vat == null ? 0 : item.vat;
                 rtn += insertEstimate(costThemeDetail);
                 insertIndex++;
             }
@@ -1227,6 +1231,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@remark",model.remark)
                     ,new SqlParameter("@normalCost",decimal.Parse(string.Format("{0:0.00000}", model.normalCost)))
                     ,new SqlParameter("@total",decimal.Parse(string.Format("{0:0.00000}", model.total)))
+                    ,new SqlParameter("@totalCase",decimal.Parse(string.Format("{0:0.00000}", model.totalCase)))
                     ,new SqlParameter("@rowNo",model.rowNo)
                     ,new SqlParameter("@delFlag",model.delFlag)
                     ,new SqlParameter("@createdDate",model.createdDate)
@@ -1246,7 +1251,8 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@hospId",(model.hospId == null ? "" : model.hospId))
                     ,new SqlParameter("@UseYearSelect",model.UseYearSelect)
                     ,new SqlParameter("@EO",model.EO)
-            });
+                    ,new SqlParameter("@vat",decimal.Parse(string.Format("{0:0.00000}", model.vat)))
+                    });
             }
             catch (Exception ex)
             {
@@ -1916,6 +1922,96 @@ namespace eActForm.BusinessLayer
 
             return rtn;
         }
-    }
 
+        #region "SubEstimate"
+        public static int ProcessInsertEstimateSub(int rtn, Activity_TBMMKT_Model model, string activityId)
+        {
+            if (model.activityOfEstimateSubList != null)
+            {
+                rtn += deleteActivityOfEstimateSubByActivityId(activityId);
+                rtn += insertEstimateSubToStored(model.activityOfEstimateSubList, activityId, string.IsNullOrEmpty(model.activityFormModel.createdByUserId) ? model.activityFormTBMMKT.createdByUserId : model.activityFormModel.createdByUserId, model.activityFormModel.createdDate);
+            }
+
+            return rtn;
+        }
+
+        public static int insertEstimateSubToStored(List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateSubList, string activityId, string createdByUserId, DateTime? createdDate)
+        {
+            int rtn = 0;
+            int insertIndex = 1;
+
+            foreach (var item in activityOfEstimateSubList.ToList())
+            {
+
+                CostThemeDetailOfGroupByPriceTBMMKT costThemeDetail = new CostThemeDetailOfGroupByPriceTBMMKT();
+                costThemeDetail.id = Guid.NewGuid().ToString();
+                costThemeDetail.activityId = activityId;
+                costThemeDetail.listChoiceId = item.listChoiceId;
+                costThemeDetail.rowNo = insertIndex;
+                costThemeDetail.unit = item.unit;
+                costThemeDetail.unitPrice = item.unitPrice == null ? 0 : item.unitPrice;
+                costThemeDetail.vat = item.vat == null ? 0 : item.vat;
+                costThemeDetail.total = item.total == null ? 0 : item.total;
+                costThemeDetail.delFlag = false;
+                costThemeDetail.createdByUserId = createdByUserId;
+                costThemeDetail.createdDate = createdDate == null ? DateTime.Now : createdDate;
+                costThemeDetail.updatedByUserId = UtilsAppCode.Session.User.empId;
+                costThemeDetail.updatedDate = DateTime.Now;
+
+                rtn += insertEstimateSub(costThemeDetail);
+                insertIndex++;
+            }
+
+            return insertIndex;
+        }
+
+        protected static int insertEstimateSub(CostThemeDetailOfGroupByPriceTBMMKT model)
+        {
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertCostThemeDetailSub"
+                    , new SqlParameter[] {new SqlParameter("@id",model.id)
+                    ,new SqlParameter("@activityId",model.activityId)
+                    ,new SqlParameter("@listChoiceId",(model.listChoiceId == null ? "" : model.listChoiceId))
+                    ,new SqlParameter("@rowNo",model.rowNo)
+                    ,new SqlParameter("@unit",Convert.ToInt32(model.unit))
+                    ,new SqlParameter("@unitPrice", decimal.Parse(string.Format("{0:0.00000}", model.unitPrice)))
+                    ,new SqlParameter("@vat",decimal.Parse(string.Format("{0:0.00000}", model.vat)))
+                    ,new SqlParameter("@total",decimal.Parse(string.Format("{0:0.00000}", model.total)))
+                    ,new SqlParameter("@delFlag",model.delFlag)
+                    ,new SqlParameter("@createdDate",model.createdDate)
+                    ,new SqlParameter("@createdByUserId",model.createdByUserId)
+                    ,new SqlParameter("@updatedDate",model.updatedDate)
+                    ,new SqlParameter("@updatedByUserId",model.updatedByUserId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> insertEstimateSub");
+            }
+            return result;
+
+
+        }
+
+        public static int deleteActivityOfEstimateSubByActivityId(string activityId)
+        {
+
+            int result = 0;
+            try
+            {
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteActivityOfEstimateSubByActivityId"
+                    , new SqlParameter[] {new SqlParameter("@activityId",activityId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> deleteActivityOfEstimateSubByActivityId");
+            }
+
+            return result;
+        }
+        #endregion
+    }
 }

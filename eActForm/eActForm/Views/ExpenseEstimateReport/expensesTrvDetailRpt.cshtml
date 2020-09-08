@@ -14,17 +14,17 @@
         </td>
     </tr>
     <tr style="height:20px;">
-        <td style="width: 40%;text-align:center;">
+        <td style="width: 35%;text-align:center;">
             <b>รายละเอียด</b>
         </td>
 
-        <td style="width: 10%;text-align:center;">
+        <td style="width: 5%;text-align:center;">
             <b>จำนวน/วัน</b>
         </td>
-        <td style="width: 10%;text-align:center;">
+        <td style="width: 22%;text-align:center;">
             <b>ราคา/หน่วย</b>
         </td>
-        <td style="width: 10%; text-align:center;">
+        <td style="width: 8%; text-align:center;">
             <b>    Total/รวม(บาท)</b>
         </td>
     </tr>
@@ -54,13 +54,23 @@
                 }
             </td>
             <td style="text-align:right; padding-right:5px;">
+
                 @if (@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") != ".00")
                 {
                     <label>@Model.expensesDetailModel.costDetailLists[@index].unitPrice.Value.ToString("#,###.00") </label>
-                    if (@Model.expensesDetailModel.costDetailLists[@index].statusEdit !="")
+
+                }
+                else
+                {
+                    if (Model.expensesDetailModel.costDetailLists[@index].listChoiceId == AppCode.Expenses.hotelExpense && Model.expensesDetailModel.costDetailLists[@index].unit != 0)
                     {
-                        <span style="color:red">*</span>
+                        <label>@Model.expensesDetailModel.costDetailLists[@index].unitPriceDisplay </label>
                     }
+
+                }
+                @if (@Model.expensesDetailModel.costDetailLists[@index].statusEdit != "")
+                {
+                    <span style="color:red">*</span>
                 }
             </td>
             <td style="text-align:right; padding-right:5px;">

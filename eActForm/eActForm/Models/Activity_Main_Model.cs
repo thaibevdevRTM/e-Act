@@ -1,4 +1,5 @@
-﻿using eForms.Models.MasterData;
+﻿using eActForm.BusinessLayer;
+using eForms.Models.MasterData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,6 +18,7 @@ namespace eActForm.Models
         public List<TB_Act_ActivityForm_SelectBrandOrChannel> tB_Act_ActivityForm_SelectBrandOrChannel { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList { get; set; }
         public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateList2 { get; set; }
+        public List<CostThemeDetailOfGroupByPriceTBMMKT> activityOfEstimateSubList { get; set; }
         public List<TB_Reg_Subject> tB_Reg_Subject { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalCostThisActivity { get; set; }
@@ -26,6 +28,7 @@ namespace eActForm.Models
         public List<PurposeModel> purposeModel { get; set; }
         public List<PlaceDetailModel> placeDetailModel { get; set; }
         public CostDetailOfGroupPriceTBMMKT expensesDetailModel { get; set; }
+        public CostDetailOfGroupPriceTBMMKT expensesDetailSubModel { get; set; }
         public List<string> chkPurpose { get; set; }
 
         public List<ApproveFlowModel.flowApproveDetail> approveFlowDetail { get; set; }
@@ -58,6 +61,7 @@ namespace eActForm.Models
             purposeModel = new List<PurposeModel>();
             placeDetailModel = new List<PlaceDetailModel>();
             expensesDetailModel = new CostDetailOfGroupPriceTBMMKT();
+            expensesDetailSubModel = new CostDetailOfGroupPriceTBMMKT();
             approveFlowDetail = new List<ApproveFlowModel.flowApproveDetail>();
             exPerryCashList = new List<exPerryCashModel>();
             exPerryCashModel = new exPerryCashModel();
@@ -75,7 +79,7 @@ namespace eActForm.Models
         public List<GetDataDetailPaymentAll> listGetDataDetailPaymentAll { get; set; }
         public List<departmentMasterModel> listGetDepartmentMaster { get; set; }
         public List<DataRequesterToShow> dataRequesterToShows { get; set; }
-        public List<string> listEoInDoc  { get; set; }
+        public List<string> listEoInDoc { get; set; }
 
     }
 
@@ -193,7 +197,7 @@ namespace eActForm.Models
         public string activityId { get; set; }
         public string typeKeep { get; set; }
         public int rowNo { get; set; }
-        public string activityIdEO { get; set; }        
+        public string activityIdEO { get; set; }
         public string IO { get; set; }
         public string GL { get; set; }
         public string select_list_choice_id_ChReg { get; set; }
@@ -201,7 +205,7 @@ namespace eActForm.Models
         public string EO { get; set; }
     }
 
-        public class TB_Act_ActivityLayout
+    public class TB_Act_ActivityLayout
     {
         public string id { get; set; }
         public string activityId { get; set; }
@@ -241,12 +245,34 @@ namespace eActForm.Models
         public string unitPriceDisplayReport { get; set; }
         public string QtyName { get; set; }
         public string remark { get; set; }
-     
+
     }
 
     public class RequestEmpModel : ActBaseModel
     {
+        public RequestEmpModel()
+        {
 
+        }
+        public RequestEmpModel(string empId)
+        {
+            List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+            empId = model[0].empId;
+            empName = model[0].empName;
+            position = model[0].position;
+            level = model[0].level;
+            department = model[0].department;
+            bu = model[0].bu;
+            companyName = model[0].companyName;
+            empNameEN = model[0].empNameEN;
+            positionEN = model[0].positionEN;
+            departmentEN = model[0].departmentEN;
+            buEN = model[0].buEN;
+            companyNameEN = model[0].companyNameEN;
+            compId = model[0].compId;
+            email = model[0].email;
+            hireDate = model[0].hireDate;
+        }
         public string id { get; set; }
         public string activityId { get; set; }
         public int rowNo { get; set; }
@@ -365,6 +391,8 @@ namespace eActForm.Models
     public class GetDataGL
     {
         public string GL { get; set; }
+        public string id { get; set; }
+        public string groupGL { get; set; }
     }
 
 

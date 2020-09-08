@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using static eActForm.Models.ApproveModel;
 
 namespace eActForm.Controllers
 {
@@ -168,12 +167,12 @@ namespace eActForm.Controllers
         public ActionResult attachfileDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
             List<TB_Act_Image_Model.ImageModel> lists = ImageAppCode.GetImage(activity_TBMMKT_Model.activityFormTBMMKT.id);
-           
+
             TB_Act_ActivityForm_SelectBrandOrChannel models = new TB_Act_ActivityForm_SelectBrandOrChannel();
             models.txt = lists.Count.ToString();
-            models.val=activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
+            models.val = activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id;
             return PartialView(models);
-           // return PartialView(activity_TBMMKT_Model);
+            // return PartialView(activity_TBMMKT_Model);
         }
 
         public ActionResult textGeneral(Activity_TBMMKT_Model activity_TBMMKT_Model)

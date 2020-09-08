@@ -44,7 +44,8 @@
                         <th colspan="2" width="100px">ประมาณการยอดขาย</th>
                         <th rowspan="3">%Growth</th>
                         <th rowspan="3">%SE</th>
-                        <th rowspan="3">ประมาณการค่าใช้จ่าย</th>
+                        <th rowspan="3">Spending Exp.(Case)</th>
+                        <th rowspan="3">Spending Exp.(Bath)</th>
                         <th rowspan="3">%Sale</th>
                         <th rowspan="3">หมายเหตุ</th>
                     </tr>
@@ -67,7 +68,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{ var index = 1; string strActNo = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0;}
+                    @{ var index = 1; string strActNo = "", strActDetail = ""; decimal? sumTotal = 0, sumNormalSale = 0, sumNormalPromotion = 0, sumTotalCase = 0;}
                     @foreach (var item in Model.actFormRepDetailLists)
                     {
                         if (item.delFlag == false)
@@ -114,7 +115,7 @@
                                     else
                                     {
                                         <td></td>
-}
+                                    }
                                     if (item.costPeriodEnd != null)
                                     {
                                         <td>@item.costPeriodEnd.Value.ToString("dd/MM/yyyy")</td>
@@ -122,7 +123,7 @@
                                     else
                                     {
                                         <td></td>
-}
+                                    }
                                     index++;
                                 }
 
@@ -145,6 +146,7 @@
                                 <td>@string.Format("{0:n2}", item.promotionSale)</td>
                                 <td>@string.Format("{0:n2}", item.perGrowth)</td>
                                 <td>@string.Format("{0:n2}", item.perSE)</td>
+                                <td>@string.Format("{0:n2}", item.totalCase)</td>
                                 <td>@string.Format("{0:n2}", item.total)</td>
                                 <td>@string.Format("{0:n2}", item.perToSale)</td>
                                 <td></td>
@@ -152,6 +154,7 @@
                             strActDetail = item.activityDetail;
                             strActNo = item.activityNo;
                             sumTotal = sumTotal + item.total;
+                            sumTotalCase = sumTotalCase + item.totalCase;
                             sumNormalSale = item.normalSale == 0 ? sumNormalSale : sumNormalSale + item.normalSale;
                             sumNormalPromotion = item.promotionSale == 0 ? sumNormalPromotion : sumNormalPromotion + item.promotionSale;
 
@@ -165,6 +168,7 @@
                         <td><h5>@string.Format("{0:n2}", sumNormalPromotion)</h5></td>
                         <td></td>
                         <td></td>
+                        <td><h5> @string.Format("{0:n2}", sumTotalCase)</h5></td>
                         <td><h5> @string.Format("{0:n2}", sumTotal)</h5></td>
                         <td></td>
                         <td></td>

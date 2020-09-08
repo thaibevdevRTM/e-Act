@@ -1,8 +1,5 @@
-﻿using System;
+﻿using eForms.Models.MasterData;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using eForms.Models.MasterData;
 namespace eActForm.Models
 {
     public class salesTeamModel

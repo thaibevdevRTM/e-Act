@@ -27,11 +27,11 @@ namespace eActForm.Models
         public List<Customers_Model> customerslist { get; set; }
         public List<TB_Act_Other_Model> otherlist { get; set; }
         //public List<Productcostdetail> productcostdetaillist { get; set; }
-        
+
         public List<TB_Act_Image_Model.ImageModel> productImageList { get; set; }
         public ActivityForm activityFormModel { get; set; }
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
-       
+
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
 
         public Activity_Model()
@@ -65,7 +65,7 @@ namespace eActForm.Models
             EXPENSE,
             HCM,
             ITForm,
-            HCForm,        
+            HCForm,
             OtherCompany
         }
         public enum groupCompany
@@ -246,6 +246,8 @@ namespace eActForm.Models
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? total { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? totalCase { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? perTotal { get; set; }
         public string smellId { get; set; }
         public string brandName { get; set; }
@@ -262,7 +264,8 @@ namespace eActForm.Models
         public string mechanics { get; set; }
         public bool chkBox { get; set; }
         public string qty { get; set; }
-
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public decimal? vat { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public CostThemeDetailOfGroupByPrice()
@@ -279,6 +282,7 @@ namespace eActForm.Models
         public string hospName { get; set; }
         public string UseYearSelect { get; set; }
         public string EO { get; set; }
+        public string glCodeId { get; set; }
 
     }
 
@@ -295,6 +299,7 @@ namespace eActForm.Models
         public decimal? themeCost { get; set; }
         public decimal? growth { get; set; }
         public decimal? total { get; set; }
+        public decimal? totalCase { get; set; }
         public decimal? perTotal { get; set; }
         public int unit { get; set; }
         public decimal? compensate { get; set; }

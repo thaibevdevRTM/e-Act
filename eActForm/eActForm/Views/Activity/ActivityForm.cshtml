@@ -78,7 +78,7 @@
                         {
                             @*@Html.TextBoxFor(x => x.activityFormModel.documentDate, "{0:dd-MM-yyyy}", new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = @DateTime.Now.ToString("dd-MM-yyyy"), @readonly = true, autocomplete = "off" })*@
                             @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, ConfigurationManager.AppSettings["formatDateUse"]),
-                           new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now,ConfigurationManager.AppSettings["formatDateUse"]), @readonly = true, autocomplete = "off" })
+                           new { @class = "form-control textboxcss", @id = "txtdateDoc", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, ConfigurationManager.AppSettings["formatDateUse"]), @readonly = true, autocomplete = "off" })
 
                         }
                     </div>
@@ -895,16 +895,25 @@
         if ($("#ddlProductBrand").val() == "") { required += "Brand *<br>"; validate = false; }
         if ($("#txtdateActivitySt").val() == "" || $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivityEnd").focus();}
         else {
-            var startDate =  $("#txtdateActivitySt").val().split("-");
-            var endDate = $("#txtdateActivityEnd").val().split("-");
+            var startDate =  $("#txtdateActivitySt").val().split("/");
+            var endDate = $("#txtdateActivityEnd").val().split("/");
             if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1],endDate[0])) {
                 required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
             }
         }
         if ($("input[name='activityFormModel.trade']:checked").val() == null) { required += "รายการส่งเสริม *<br>"; validate = false; }
 
-        if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
+       
+           if ($("#txtReference").val() == "" && ($("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusBigC"]" ||
             $("#ddlCustomer").val() == "@ConfigurationManager.AppSettings["cusLotus"]")) { required += "Reference*<br>"; validate = false; }
+        
+         if ($("#ddlTheme").val() == "8B5402F5-63D0-46E5-BFDA-9FC72F3CF565")
+         {
+            var rowCount = parseInt($('#tbl_activityDetail tr.tagTR').length);
+            for (i = 0; i < rowCount; i++) {
+                if ($("#lblTotalCase_" + i).val() == 0 || $("#lblTotalCase_" + i).val() == "") { required += "&emsp; ระบุราคา Spending Exp.(Case) แถวที่ " + (i+1) + "*<br>"; validate = false; }
+            }
+         }
 
         //if (rowCount == 0) { required += "เพิ่มสินค้า *<br>"; validate = false; }
 
@@ -973,9 +982,9 @@
                     }
                     else {
                         callPreviewData('@Model.activityFormModel.id');
-                      
+
                     }
-                    
+
                 }
             });
     }
@@ -1119,7 +1128,7 @@
             document.getElementById("ddlCustomer").disabled = true;
             document.getElementById("txtActivityName").disabled = true;
             document.getElementById("txtchanel").disabled = true;
-            //document.getElementById("ddlTheme").disabled = true;
+            document.getElementById("ddlTheme").disabled = true;
             document.getElementById("ddlProductBrand").disabled = true;
             document.getElementById("ddlProductCate").disabled = true;
             document.getElementById("txtObjective").disabled = true;

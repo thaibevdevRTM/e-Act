@@ -143,23 +143,37 @@
         $("#ProductDetail_5").prop("disabled", true);
         $("#ProductDetail_6").prop("disabled", true);
 
+        
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' &&
             '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
 
             $("#divExpensesTrv :input").prop("disabled", false);
             $("#divExpensesTrv :input").prop("readonly", true);
+            document.getElementById("chkMultiPrice").disabled = true;
+
+            $("#divDetailSub :input").prop("disabled", false);
+            $("#divDetailSub :input").prop("readonly", true);
 
 
             for (var i = 0; i < '@Model.expensesDetailModel.costDetailLists.Count'; i++) {
                 if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "Recorder")' == 'True') {
                     $("#txtUnitPrice_" + i + "").prop("readonly", false);
-                } else if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
-                    $("#txtGlCode_" + i + "").prop("readonly", false);
+                    $("#txtVat_" + i + "").prop("readonly", false);
                 }
+            }
+
+            for (var i = 0; i < '@Model.expensesDetailSubModel.costDetailLists.Count'; i++) {
+                if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "Recorder")' == 'True') {
+                    $("#txtSubUnitPrice_" + i + "").prop("readonly", false);
+                    $("#txtSubVat_" + i + "").prop("readonly", false);
+                }
+                @*else if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
+                    $("#txtGlCode_" + i + "").prop("readonly", false);
+                }*@
             }
         }
 
-        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]' &&
+        @*if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]' &&
             '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
 
             $("#divExpensesMed :input").prop("disabled", false);
@@ -167,7 +181,7 @@
             if ('@ActFormAppCode.checkGroupApproveByUser(Model.activityFormTBMMKT.id, "PettyCashVerify")' == 'True') {
                 $("#txtGlCode_0").prop("readonly", false);
             }
-        }
+        }*@
     }
 
     if ('@UtilsAppCode.Session.User.isAdminTBM' != 'True') {
@@ -194,12 +208,9 @@
         }
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
-            if (@Model.activityFormTBMMKT.statusId != "1" || @Model.activityFormTBMMKT.statusId == "5" || '@Model.activityFormTBMMKT.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
-                var arrayOfElements = document.getElementsByClassName('divDelImg');
-                var lengthOfArray = arrayOfElements.length;
-                for (var i = 0; i < lengthOfArray; i++) {
-                    arrayOfElements[i].style.display = 'none';
-                }
+            if (@Model.activityFormTBMMKT.statusId == "5"  || '@Model.activityFormTBMMKT.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
+                 document.getElementById("addEnt").style.display = "block";
+                 document.getElementById("addEx").style.display = "block";
             }
         }
 
@@ -309,7 +320,7 @@
             if ($("#ProductDetail_0").val() != "") { ProductDetail_0 = parseFloat($("#ProductDetail_0").val().replace(",", "")); }
             if ($("#ProductDetail_1").val() != "") { ProductDetail_1 = parseFloat($("#ProductDetail_1").val().replace(",", "")); }
             if ($("#txtUnitPrice_0").val() != "") { txtUnitPrice_0 = parseFloat($("#txtUnitPrice_0").val().replace(",", "")); }
-            if ($("#txtUnitPrice_1").val() != "") { txtUnitPrice_1 = parseFloat($("#txtUnitPrice_1").val().replace(",", "")); }
+            if ($("#txtUnitPrice_1").val() != "") { txtUnitPrice_1 = parseFloat($("#txtUnitPrice_1").val().replace(",", "")) + parseFloat($("#txtVat_1").val().replace(",", "")); }
 
             if (txtUnitPrice_0 > ProductDetail_0 || txtUnitPrice_1 > ProductDetail_1) {
                 required += "&emsp;ท่านกรอกยอดเงินเกินสิทธิ์*<br>"; validate = false;
@@ -405,9 +416,19 @@
                 if ($("#unitTxt_" + i).val() == 0 || $("#unitTxt_" + i).val() == "") { required += "&emsp; ระบุ Unit แถวที่ " + (i + 1) + "*<br>"; validate = false; }
 
             }
+            if ($("#txtdateActivitySt").val() == "" || $("#txtdateActivityEnd").val() == "") { required += "เลือก เวลากิจกรรม  *<br>"; validate = false; document.getElementById("txtdateActivityEnd").focus(); }
+            else {
+                var startDate = $("#txtdateActivitySt").val().split("/");
+                var endDate = $("#txtdateActivityEnd").val().split("/");
+                if (new Date(startDate[2], startDate[1], startDate[0]) > new Date(endDate[2], endDate[1], endDate[0])) {
+                    required += "เลือก เวลากิจกรรมให้ถูกต้อง  *<br>"; validate = false;
+                }
+            }
 
         }
         else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formBgTbmId"]') {
+
+            if ($("#txtdateDoc").val() == "") { required += "&emsp;วันที่เสนอกิจกรรม*<br>"; validate = false; }
             var rowCount = parseInt($('#tableDetailsBG tr.tagCountRowinTable').length);
             for (i = 0; i < rowCount; i++) {
                 if ($(".txttotal_" + i).val() != "0.00") {

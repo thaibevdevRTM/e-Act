@@ -1,7 +1,6 @@
 ﻿using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
-using Microsoft.Ajax.Utilities;
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
@@ -112,7 +111,7 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivityCustomersFormByEmpId";
                 }
-                else if(typeForm == Activity_Model.activityType.SetPrice.ToString())
+                else if (typeForm == Activity_Model.activityType.SetPrice.ToString())
                 {
                     strCall = "usp_getActivitySetPriceByEmpId";
                 }
@@ -494,7 +493,7 @@ namespace eActForm.BusinessLayer
         public static bool checkFormAddTBDetailOther(string masterForm)
         {
             bool check = false;
-            if(ConfigurationManager.AppSettings["masterEmpExpense"] == masterForm
+            if (ConfigurationManager.AppSettings["masterEmpExpense"] == masterForm
                 || ConfigurationManager.AppSettings["formSetPriceMT"] == masterForm)
             {
                 check = true;
@@ -517,7 +516,7 @@ namespace eActForm.BusinessLayer
 
                 if (ConfigurationManager.AppSettings["masterEmpExpense"] == activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)
                 {
-                    activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-"+DateTime.Today.ToString("dd"), "yyyy-MM-dd").ToString("dd/MM/yyyy");
+                    activity_TBMMKT_Model.activityFormModel.documentDateStr = BaseAppCodes.converStrToDatetimeWithFormat(activity_TBMMKT_Model.activityFormModel.documentDateStr + "-" + DateTime.Today.ToString("dd"), "yyyy-MM-dd").ToString("dd/MM/yyyy");
                 }
 
             }

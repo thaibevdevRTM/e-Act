@@ -2,11 +2,9 @@
 using eActForm.BusinessLayer.Appcodes;
 using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
-using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using WebLibrary;
@@ -121,7 +119,7 @@ namespace eActForm.Controllers
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
 
-               // BaseAppCodes.WriteSignatureToDisk(models, actId);
+                // BaseAppCodes.WriteSignatureToDisk(models, actId);
 
             }
             catch (Exception ex)
@@ -196,26 +194,7 @@ namespace eActForm.Controllers
                 }
                 else if (statusId == ConfigurationManager.AppSettings["statusApprove"])
                 {
-                    var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
-                    GridHtml = GridHtml.Replace("<br>", "<br/>");
-                    GridHtml = GridHtml.Replace("undefined", "");
-                    AppCode.genPdfFile(GridHtml, new Document(PageSize.A4, 25, 25, 10, 10), Server.MapPath(rootPathInsert));
-
-                    TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-                    getImageModel.tbActImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension == ".pdf").ToList();
-                    string[] pathFile = new string[getImageModel.tbActImageList.Count + 1];
-                    pathFile[0] = Server.MapPath(rootPathInsert);
-                    if (getImageModel.tbActImageList.Any())
-                    {
-                        int i = 1;
-                        foreach (var item in getImageModel.tbActImageList)
-                        {
-                            pathFile[i] = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootUploadfiles"], item._fileName));
-                            i++;
-                        }
-                    }
-                    var rootPathOutput = Server.MapPath(string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId));
-                    var resultMergePDF = AppCode.mergePDF(rootPathOutput, pathFile);
+                    GenPDFAppCode.doGen(GridHtml, activityId, Server);
 
                     EmailAppCodes.sendApprove(activityId, AppCode.ApproveType.Activity_Form, false);
                     ApproveAppCode.setCountWatingApprove();
@@ -246,7 +225,7 @@ namespace eActForm.Controllers
                 models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
                 //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
 
-               // BaseAppCodes.WriteSignatureToDisk(models, actId);
+                // BaseAppCodes.WriteSignatureToDisk(models, actId);
 
             }
             catch (Exception ex)
@@ -304,6 +283,6 @@ namespace eActForm.Controllers
             return models;
         }
 
-  
+
     }
 }

@@ -2,10 +2,8 @@
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using Org.BouncyCastle.Asn1.Ocsp;
 using System.Configuration;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -19,7 +17,19 @@ namespace eActForm.BusinessLayer
         {
             try
             {
-                string stored = typeForm == Activity_Model.activityType.MT.ToString() ? "usp_GetActivityRepDetailAll" : "usp_GetActivityRepDetailOMTAll";
+                string stored = "";
+                if(typeForm == Activity_Model.activityType.MT.ToString())
+                {
+                    stored = "usp_GetActivityRepDetailAll";
+                }
+                else if(typeForm == Activity_Model.activityType.OMT.ToString())
+                {
+                    stored = "usp_GetActivityRepDetailOMTAll";
+                }
+                else
+                {
+                    stored = "usp_GetActivityRepDetailSetPriceAll";
+                }
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stored);
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new DocumentsModel.actRepDetailModel()
@@ -256,7 +266,7 @@ namespace eActForm.BusinessLayer
 
         public static string formatValueSelectEO_PVForm(string activityIdEO, string EO)
         {
-            string valResult = (activityIdEO+"|"+ EO);
+            string valResult = (activityIdEO + "|" + EO);
             return valResult;
         }
 

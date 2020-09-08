@@ -1,13 +1,8 @@
 ﻿using eActForm.BusinessLayer;
-using eActForm.BusinessLayer.Appcodes;
-using eActForm.BusinessLayer.QueryHandler;
 using eActForm.Models;
-using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
-using WebLibrary;
 
 namespace eActForm.Controllers
 {
@@ -21,6 +16,12 @@ namespace eActForm.Controllers
             {
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
+            CostDetailOfGroupPriceTBMMKT modelSub = new CostDetailOfGroupPriceTBMMKT
+            {
+                costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
+            };
+
+
             if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             {
                 List<TB_Act_master_list_choiceModel> lst = new List<TB_Act_master_list_choiceModel>();
@@ -37,20 +38,48 @@ namespace eActForm.Controllers
                         unit = 0,
                         unitPrice = 0,
                         total = 0,
+                        vat =0,
                         displayType = lst[i].displayType,
                         subDisplayType = lst[i].subDisplayType,
                         glCode = "",
                     });
                 }
 
+                #region "เพิ่มกรณ๊รายละเอียดของค่าที่พักราคาไม่เท่ากัน ไม่ให้เกิน 7 ราคา"
 
+           
+                if (activity_TBMMKT_Model.expensesDetailSubModel == null || activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists.Any())
+                {
+                    //List<TB_Act_master_list_choiceModel> lstSub = new List<TB_Act_master_list_choiceModel>();
+                    //lst = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "expensesTrv").OrderBy(x => x.orderNum).ToList();
+
+                    // listChoiceName,listChoiceId
+                    for (int i = 0; i < 7; i++)
+                    {
+                        modelSub.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
+                        {
+                            listChoiceId =AppCode.Expenses.hotelExpense,
+                            rowNo=i+1,
+                            unit = 0,
+                            unitPrice = 0,
+                            vat=0,
+                            total = 0,
+                        
+                        });
+                    }
+                }
+                #endregion
             }
             else
             {
                 //edit
                 model.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
+                modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id,AppCode.Expenses.hotelExpense);
+
             }
+
             activity_TBMMKT_Model.expensesDetailModel = model;
+            activity_TBMMKT_Model.expensesDetailSubModel = modelSub;
 
             if (activity_TBMMKT_Model.list_0 == null || activity_TBMMKT_Model.list_0.Count == 0)
             {
@@ -64,7 +93,6 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.list_1 = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice("master", "airplaneClass").OrderBy(x => x.orderNum).ToList();
 
             }
-
 
             return PartialView(activity_TBMMKT_Model);
         }
@@ -103,8 +131,8 @@ namespace eActForm.Controllers
                 //edit
                 model.costDetailLists = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
 
-                model.costDetailLists[0].hospName= QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(model.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;
-                                                         
+                model.costDetailLists[0].hospName = QueryGetAllHospital.getAllHospital().Where(x => x.id.Contains(model.costDetailLists[0].hospId)).FirstOrDefault().hospNameTH;
+
             }
             activity_TBMMKT_Model.expensesDetailModel = model;
 
