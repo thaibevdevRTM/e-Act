@@ -55,3 +55,4 @@ D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrar
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CoreCompileInputs.cache
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.dll
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.pdb
+D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Release\WebLibrary.csproj.CoreCompileInputs.cache
