@@ -177,31 +177,6 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
-        public ActionResult exPerryListEntertainment(Activity_TBMMKT_Model activity_TBMMKT_Model, string actId)
-        {
-            try
-            {
-                var estimateList = QueryGetActivityEstimateByActivityId.getByActivityId(activity_TBMMKT_Model.activityFormModel.id);
-                activity_TBMMKT_Model.activityOfEstimateList = estimateList.Where(x => x.activityTypeId.Equals("1")).ToList();
-                if (!activity_TBMMKT_Model.activityOfEstimateList.Any())
-                {
-                    activity_TBMMKT_Model.activityOfEstimateList.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
-                    activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
-                }
-
-                activity_TBMMKT_Model.activityOfEstimateList2 = estimateList.Where(x => x.activityTypeId.Equals("2")).ToList();
-                if (!activity_TBMMKT_Model.activityOfEstimateList2.Any())
-                {
-                    activity_TBMMKT_Model.activityOfEstimateList2.Add(new CostThemeDetailOfGroupByPriceTBMMKT());
-                    activity_TBMMKT_Model.activityFormModel.mode = AppCode.Mode.addNew.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("exPerryListDetail => " + ex.Message);
-            }
-            return PartialView(activity_TBMMKT_Model);
-        }
 
         public ActionResult exTravelDetail(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {

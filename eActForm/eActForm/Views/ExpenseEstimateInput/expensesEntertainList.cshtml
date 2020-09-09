@@ -21,8 +21,10 @@
                 <th class="align-content-center font10" rowspan="2" style="width:5%;"></th>
                 <th class="align-content-center font10" rowspan="2" style="width:10%;">วันที่</th>
                 <th class="align-content-center font10" rowspan="2" style="width:15%;">สถานที่</th>
-                <th class="align-content-center font10" rowspan="2" style="width:25%;">จุดประสงค์</th>
-                <th class="align-content-center font10" rowspan="2" style="width:25%;">ชื่อลูกค้า</th>
+                <th class="align-content-center font10" rowspan="2" style="width:20%;">จุดประสงค์</th>
+                <th class="align-content-center font10" rowspan="2" style="width:20%;">ชื่อลูกค้า</th>
+                <th class="align-content-center font10" rowspan="2" style="width:10%;">ใช้ไป</th>
+                <th class="align-content-center font10" rowspan="2" style="width:10%;">วงเงิน</th>
                 <th class="align-content-center font10" rowspan="2" style="width:10%;">รวมเป็นจำนวนเงิน</th>
             </tr>
         </thead>
@@ -40,57 +42,70 @@
                  new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].detail, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.DropDownListFor(x => x.activityOfEstimateList2[i].detail, new SelectList(Model.objExpenseCashList, "id", "displayVal", 0), "Please Select", 
+                       new{ @class = "form-control textboxcss font10 textRight"})</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].balance, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].limit, new { @class = "form-control textboxcss font10 textRight" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal()" })</td>
+
+
 
                 </tr>
             </tbody>
         }
-        <tr>
-            <td></td>
-            <td colspan="4" class="textRight">
-                รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
-                Total Entertainment Expenses and Market Visit
-            </td>
-            <td class="textRight">
-                <label id="lbltotalExMaket"></label>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td colspan="4" class="textRight">
-                รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท)
-                Total Monthly Expenses (Baht)
-            </td>
-            <td class="textRight">
-                <label id="lbltotalExpenses"></label>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td colspan="4" class="textRight">
-                กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)
-            </td>
-            <td class="textRight">
-                <label id="lbltotalAdvance">
-                    @{
-                        string result = String.Format("{0:n2}", @Model.totalCostThisActivity);
-                        @result.ToString();
-                        @Html.HiddenFor(x => x.activityFormTBMMKT.benefit)
-                    }
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td colspan="4" class="textRight">
-                รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses
-            </td>
-            <td class="textRight">
-                <label id="lbltotalAll"></label>
-            </td>
-        </tr>
+    <tr>
+        <td></td>
+        <td colspan="4" class="textRight">
+            รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
+            Total Entertainment Expenses and Market Visit
+        </td>
+        <td></td>
+        <td></td>
+        <td class="textRight">
+            <label id="lbltotalExMaket"></label>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="4" class="textRight">
+            รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท)
+            Total Monthly Expenses (Baht)
+        </td>
+        <td></td>
+        <td></td>
+        <td class="textRight">
+            <label id="lbltotalExpenses"></label>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="4" class="textRight">
+            กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)
+        </td>
+        <td></td>
+        <td></td>
+        <td class="textRight">
+            <label id="lbltotalAdvance">
+                @{
+                    string result = String.Format("{0:n2}", @Model.totalCostThisActivity);
+                    @result.ToString();
+                    @Html.HiddenFor(x => x.activityFormTBMMKT.benefit)
+                }
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="4" class="textRight">
+            รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses
+        </td>
+        <td></td>
+        <td></td>
+        <td class="textRight">
+            <label id="lbltotalAll"></label>
+        </td>
+    </tr>
     </table>
 
 
@@ -222,5 +237,40 @@
         totalAllExpenses();
     }
 
+
+    function getExpensesTxt(i) {
+        console.log(i.id);
+        $("#"+i.id).autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("getOtherMasterByType", "eAct")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        type: 'CashLimitType',
+                        subType: '',
+                        text: $("#"+i.id).val(),
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.displayVal, value: item.displayVal, id: item.id };
+                        }))
+
+                    }
+                })
+            },
+            minLength: 0,
+            messages: {
+                noResults: '',
+                results: function (resultsCount) {
+                }
+            }, select: function (event, ui) {
+                $("#"+i.id).val(ui.item.id)
+            }
+        }).focus(function () {
+            $(this).data("uiAutocomplete").search($(this).val());
+        });
+
+    }
 
 </script>
