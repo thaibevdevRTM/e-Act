@@ -29,25 +29,24 @@
             </tr>
         </thead>
 
-        @for (int i = 0; i < Model.activityOfEstimateList2.Count; i++)
+        @for (int i = 0; i < Model.activityOfEstimateList.Count; i++)
         {
             <tbody id="first1">
                 <tr class="tagCountRowExpenses">
                     <td>
                         <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
-                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
+                        @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
                     </td>
                     <td style="text-align:right">
-                        @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
-                 new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
+                        @Html.TextBox("activityOfEstimateList[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
+                 new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" , id = "activityOfEstimateList["+ i +"]dateInput" })
                     </td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.DropDownListFor(x => x.activityOfEstimateList2[i].detail, new SelectList(Model.objExpenseCashList, "id", "displayVal", 0), "Please Select", 
-                       new{ @class = "form-control textboxcss font10 textRight"})</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].balance, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].limit, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.DropDownListFor(x => x.activityOfEstimateList[i].detail, new SelectList(Model.objExpenseCashList, "id", "displayVal", 0), "Please Select", new { @class = "form-control textboxcss font10 textRight", onchange = "validateData(this)" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].balance, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].limit, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal()" })</td>
 
 
 
@@ -135,22 +134,22 @@
             </tr>
         </thead>
 
-        @for (int i = 0; i < Model.activityOfEstimateList.Count; i++)
+        @for (int i = 0; i < Model.activityOfEstimateList2.Count; i++)
         {
             <tbody id=first>
                 <tr class="tagCountRowTravel">
                     <td>
                         <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
-                        @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hindenTypeId" })
+                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "1", @class = "hindenTypeId" })
                     </td>
                     <td style="text-align:right">
                         @Html.TextBox("activityOfEstimateList[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
                       new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail(this)" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].compensate, "{0:0.000}", new { @class = "form-control textboxcss font10 textRight", @type = "number", onkeyup = "getLite()" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getValues()" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail(this)" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].compensate, "{0:0.000}", new { @class = "form-control textboxcss font10 textRight", @type = "number", onkeyup = "getLite()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getValues()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
 
                 </tr>
             </tbody>
@@ -207,8 +206,10 @@
         var newRow = $("#tbl_Entertainment tbody tr").first().clone().find("input").val("").end();
         $("#tbl_Entertainment > tbody:first").append(newRow);
         newRow.find("input").each(function () {
-            $(this).attr("id", $(this).attr("name").replace("[0]", "_" + RowCount + "_"));
-            $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+            $(this).attr("id", $(this).attr("name").replace(/\d+/, RowCount));
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, RowCount));
+            $(newRow).find("select").attr("name", $("select", newRow).attr("name").replace(/\d+/, RowCount));
+            $(newRow).find("select").attr("id", $("select", newRow).attr("name").replace(/\d+/, RowCount));
 
             var elms = document.getElementsByClassName('hindenTypeId2')
             for (var i = 0; i < elms.length; i++) {
@@ -227,7 +228,7 @@
         var rowCount = parseInt($('#tbl_Entertainment tr.tagCountRowExpenses').length);
 
         for (i = 0; i < rowCount; i++) {
-            var x = document.getElementsByName("activityOfEstimateList2[" + i + "].total");
+            var x = document.getElementsByName("activityOfEstimateList[" + i + "].total");
             var rowtotal = parseFloat($(x).val());
             if (isNaN(rowtotal)) rowtotal = 0;
             var totalAll = totalAll + rowtotal;
@@ -238,7 +239,29 @@
     }
 
 
-    function getExpensesTxt(i) {
+
+    function validateData(i) {
+        var required = "กรุณา ระบุ :<br>";
+        var validate = true;
+
+        var rowIndex = $(i).closest('tr').index();
+        console.log(rowIndex);
+        console.log($("#activityOfEstimateList[" + rowIndex + "].dateInput").val());
+
+
+        if ($("#activityOfEstimateList[" + rowIndex + "].dateInput").val() == "") {
+            required += "วันที่ *<br>"; validate = false;
+        }
+
+        if (validate == true) {
+            getData(i);
+        }
+        else {
+            bootbox.alert(required)
+        }
+    }
+
+    function getDetailList(i) {
         console.log(i.id);
         $("#"+i.id).autocomplete({
             source: function (request, response) {
@@ -271,6 +294,11 @@
             $(this).data("uiAutocomplete").search($(this).val());
         });
 
+    }
+
+
+    function getData(i) {
+        console.log(i.id);
     }
 
 </script>

@@ -226,7 +226,7 @@
                             string url = System.Configuration.ConfigurationManager.AppSettings["urlUploadfiles"].ToString();
                             foreach (var item in Model.productImageList)
                             {
-                                if (item.extension != ".pdf")
+                                if (item.extension == ".jpg" || item.extension == ".png" || item.extension == ".jpeg")
                                 {
                                     if (Model.productImageList.Count == 1)
                                     {
