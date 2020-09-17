@@ -161,12 +161,15 @@
     var valPhone = "048487B9-330A-4A65-8788-3E04004418F0";
 
     function addRow() {
-        var RowCount = $('#tbl_CashDetail tbody tr').length - 1;
+        var RowCount = $('#tbl_CashDetail tbody tr').length - 3;
+        console.log(RowCount);
         var newRow = $("#tbl_CashDetail tbody tr").first().clone().find("input").val("").end();
         $("#tbl_CashDetail > tbody:first").append(newRow);
         newRow.find("input").each(function () {
             $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
             $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+            $(newRow).find("select").attr("name", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
+            $(newRow).find("select").attr("id", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
 
             var elms = document.getElementsByClassName('hindenTypeId')
             for (var i = 0; i < elms.length; i++) {
@@ -182,7 +185,8 @@
     }
 
     function addRowEntertainment() {
-        var RowCount = $('#tbl_Entertainment tbody tr').length - 4;
+        var RowCount = $('#tbl_Entertainment tbody tr').length - 1;
+        console.log(RowCount);
         var newRow = $("#tbl_Entertainment tbody tr").first().clone().find("input").val("").end();
         $("#tbl_Entertainment > tbody:first").append(newRow);
         newRow.find("input").each(function () {
@@ -205,44 +209,53 @@
     function cashDelete(btn) {
         var row = btn.parentNode.parentNode;
         row.parentNode.removeChild(row);
-        getTotal();
         getTotal2();
     }
 
 
-    function getLimitExpense(i) {
-        var rowIndex = $(i).closest('tr').index();
+    function getLimitExpense() {
+       
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getLimitEmpByEmpId", "ExpenseEstimateInput")',
             data: {
                 empId: $("#txtEmpId").val(),
+
             }
         }).done(function (response) {
             if (response.Data != null) {
-                $("#activityOfEstimateList_" + rowIndex + "__balance").val("0");
+                console.log(response.Data.txtLimtEntertain);
                 for (var i = 0; i < response.Data.getEntertain.length;) {
-                    var productId = $("#activityOfEstimateList_" + rowIndex + "__productId").val();
-                    if (response.Data.getEntertain[i].id == productId) {
-                        $("#activityOfEstimateList_" + rowIndex + "__balance").val(response.Data.getEntertain[i].cash);
+                   
+                    if (response.Data.getEntertain[i].id == valEntertain) {
+                        document.getElementById('lblCumulativeEntertainLimit').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    }
+                    else if (response.Data.getEntertain[i].id == valBypass) {
+                        document.getElementById('lblCumulativeBypassLimit').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    }
+                    else if (response.Data.getEntertain[i].id == valWash) {
+                        document.getElementById('lblCumulativeCarWashLimit').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    }
+                    else if (response.Data.getEntertain[i].id == valPhone) {
+                        document.getElementById('lblCumulativePhoneLimit').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                     }
                 }
+                
             }
         });
     }
 
     function getTotal1() {
         var totalEntertain = 0.00;
-       
+        document.getElementById('lblUseEntertain').innerHTML = totalEntertain;
         //count row ทั้งหมด
         var rowCount = parseInt($('#tbl_Entertainment tr.tagCountRowExpenses').length);
         console.log(rowCount);
         for (i = 0; i < rowCount; i++) {
 
-            var x = $("#activityOfEstimateList_" + i + "__total").val();
+            var x = document.getElementsByName("activityOfEstimateList[" + i + "].total");
+            var rowtotal = parseFloat($(x).val());
             var product = $("#activityOfEstimateList_" + i + "__productId").val()
-
-            var rowtotal = parseFloat(x);
             if (isNaN(rowtotal)) rowtotal = 0;
 
             if (product == valEntertain) {
@@ -257,15 +270,19 @@
         var totalBypass = 0.00;
         var totalWash = 0.00;
         var totalPhone = 0.00;
-
+        document.getElementById('lblUseBypass').innerHTML = totalBypass;
+        document.getElementById('lblUseWash').innerHTML = totalWash;
+        document.getElementById('lblUsePhone').innerHTML = totalPhone;
         //count row ทั้งหมด
         var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowTravel').length);
         for (i = 0; i < rowCount; i++) {
 
-            var x = $("#activityOfEstimateList2_" + i + "__total").val();
+            var x = document.getElementsByName("activityOfEstimateList2[" + i + "].total");
+            var rowtotal = parseFloat($(x).val());
             var product = $("#activityOfEstimateList2_" + i + "__productId").val()
 
-            var rowtotal = parseFloat(x);
+            console.log(rowtotal);
+            console.log(product);
             if (isNaN(rowtotal)) rowtotal = 0;
 
             if (product == valBypass) {

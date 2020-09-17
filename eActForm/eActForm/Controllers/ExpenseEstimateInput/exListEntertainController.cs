@@ -55,7 +55,7 @@ namespace eActForm.Controllers
                 if (empCashList.Any())
                 {
                     var resultData = new
-                    {    
+                    {
                         getEntertain = empCashList.ToList()
                     };
                     result.Data = resultData;
@@ -71,13 +71,15 @@ namespace eActForm.Controllers
         }
 
 
-        public JsonResult getCumulativeByEmpId(string docDate, string empId, string productId)
+        public JsonResult getCumulativeByEmpId(string docDate, string empId)
         {
             List<exPerryCashModel> empCashList = new List<exPerryCashModel>();
             var result = new AjaxResult();
             try
             {
-                empCashList = expensesEntertainAppCode.getAmountLimitByEmpId(empId, docDate, productId).ToList();
+                docDate = BaseAppCodes.converStrToDatetimeWithFormat(docDate + "-" + DateTime.Today.ToString("dd"), "yyyy-MM-dd").ToString("dd/MM/yyyy");
+
+                empCashList = expensesEntertainAppCode.getAmountLimitByEmpId(empId, docDate).ToList();
                 if (empCashList.Any())
                 {
                     var resultData = new

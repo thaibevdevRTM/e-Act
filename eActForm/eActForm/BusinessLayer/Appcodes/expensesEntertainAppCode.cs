@@ -42,15 +42,14 @@ namespace eActForm.BusinessLayer.Appcodes
             }
         }
 
-        public static List<exPerryCashModel> getAmountLimitByEmpId(string empId, string docDate ,string productId)
+        public static List<exPerryCashModel> getAmountLimitByEmpId(string empId, string docDate)
         {
             try
             {
                 DateTime date = BaseAppCodes.converStrToDatetimeWithFormat(docDate, ConfigurationManager.AppSettings["formatDateUse"]);
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_exGetAmountLimitByEmpId"
                     , new SqlParameter[] { new SqlParameter("@empId", empId),
-                      new SqlParameter("@docDate", date),
-                      new SqlParameter("@productId", productId)});
+                      new SqlParameter("@docDate", date)});
                 if (ds.Tables.Count > 0)
                 {
                     var lists = (from DataRow dr in ds.Tables[0].Rows

@@ -1,16 +1,24 @@
 ﻿var $exEntertain = (function () {
+    document.getElementById("txtExMonth").addEventListener("change", getLimit);
+    document.getElementById("txtEmpId").addEventListener("change", getLimit);
+    
+
+    function getLimit() {
+        getCumulativeByEmpId();
+        getLimitExpense();
+    }
+
     return {
 
+       
         validateData: function (i) {
             var required = "กรุณา ระบุ :<br>";
             var validate = true;
 
             var rowIndex = $(i).closest('tr').index();
-            if ($("#lblEmpName").val() == "") {
+            if ($("#txtEmpId").val().length != 8) {
                 required += "ระบุ รหัสพนักงาน*<br>"; validate = false;
             }
-
-
             if (validate == true) {
       
                 $("#activityOfEstimateList_" + rowIndex + "__total").val("0")

@@ -193,13 +193,8 @@
             if (response.Data != null) {
                 $("#lblEmpName").val(response.Data.empName);
                 $("#lblLvl").val(response.Data.level);
-                $("#lblHireDate").val(response.Data.hireDate);
                 $("#hdCompId").val(response.Data.compId);
-
-
-                $("#lblEmpName").text(response.Data.empName);
                 $("#lblEmpPosition").text(response.Data.position);
-                $("#lblLvl").text(response.Data.level);
                 $("#lblDept").text(response.Data.department);
                 $("#lblComp").text(response.Data.companyName);
                 $("#lblHireDate").text(response.Data.hireDate);
@@ -235,6 +230,7 @@
             } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
                 getCashDetail();
             }
+
         });
     }
 
