@@ -23,9 +23,7 @@
                 <th class="align-content-center font10" rowspan="2" style="width:15%;">สถานที่</th>
                 <th class="align-content-center font10" rowspan="2" style="width:20%;">จุดประสงค์</th>
                 <th class="align-content-center font10" rowspan="2" style="width:20%;">ชื่อลูกค้า</th>
-                <th class="align-content-center font10" rowspan="2" style="width:10%;">ใช้ไป</th>
-                <th class="align-content-center font10" rowspan="2" style="width:10%;">วงเงิน</th>
-                <th class="align-content-center font10" rowspan="2" style="width:10%;">รวมเป็นจำนวนเงิน</th>
+                <th class="align-content-center font10" rowspan="2" style="width:10%;">ยอดเบิก</th>
             </tr>
         </thead>
 
@@ -35,76 +33,36 @@
                 <tr class="tagCountRowExpenses">
                     <td>
                         <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
-                        @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
+                        @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hindenTypeId" })
                     </td>
                     <td style="text-align:right">
                         @Html.TextBox("activityOfEstimateList[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
-                 new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" , id = "activityOfEstimateList["+ i +"]dateInput" })
+                 new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.DropDownListFor(x => x.activityOfEstimateList[i].detail, new SelectList(Model.objExpenseCashList, "id", "displayVal", 0), "Please Select", new { @class = "form-control textboxcss font10 textRight", onchange = "validateData(this)" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].detail, new { @class = "form-control textboxcss font10 textRight" })</td>
+                    <td style="text-align:right"> @Html.DropDownListFor(x => x.activityOfEstimateList[i].productId, new SelectList(Model.objExpenseCashList, "id", "displayVal", 0), "Please Select", new { @class = "form-control textboxcss font10 textRight", onchange = "$exEntertain.validateData(this)" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].balance, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].limit, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal()" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal1()" })</td>
 
 
 
                 </tr>
             </tbody>
         }
-    <tr>
-        <td></td>
-        <td colspan="4" class="textRight">
-            รวมค่าใช้จ่ายในการเลี้ยงรับรองและ/หรือการตรวจตลาด
-            Total Entertainment Expenses and Market Visit
-        </td>
-        <td></td>
-        <td></td>
-        <td class="textRight">
-            <label id="lbltotalExMaket"></label>
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td colspan="4" class="textRight">
-            รวมค่าใช้จ่ายประจำเดือนทั้งหมด เป็นจำนวนเงิน (บาท)
-            Total Monthly Expenses (Baht)
-        </td>
-        <td></td>
-        <td></td>
-        <td class="textRight">
-            <label id="lbltotalExpenses"></label>
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td colspan="4" class="textRight">
-            กรณีมีการเบิกเงินค่าใช้จ่ายล่วงหน้า จำนวนที่ขอเบิกไป  (บาท) /  Cash Advance (Baht)
-        </td>
-        <td></td>
-        <td></td>
-        <td class="textRight">
-            <label id="lbltotalAdvance">
-                @{
-                    string result = String.Format("{0:n2}", @Model.totalCostThisActivity);
-                    @result.ToString();
-                    @Html.HiddenFor(x => x.activityFormTBMMKT.benefit)
-                }
-            </label>
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td colspan="4" class="textRight">
-            รวมค่าใช้จ่ายที่ต้องการเบิกในครั้งนี้ (บาท) /  Total All Expenses
-        </td>
-        <td></td>
-        <td></td>
-        <td class="textRight">
-            <label id="lbltotalAll"></label>
-        </td>
-    </tr>
+
+
+        <tr>
+            <td></td>
+            <td colspan="4" class="textRight">
+                ค่ารับรอง
+            </td>  
+            <td class="textRight">
+                <label id="lblUseEntertain">
+                    0.00
+                </label>
+            </td>
+        </tr>
+       
     </table>
 
 
@@ -128,7 +86,6 @@
                 <th class="align-content-center font10" rowspan="2" style="width:5%;"></th>
                 <th class="align-content-center font10" rowspan="2" style="width:10%;">วันที่</th>
                 <th class="align-content-center font10" rowspan="2" style="width:30%;">รายการ</th>
-                <th class="align-content-center font10" rowspan="2" style="width:15%;">ลิตร</th>
                 <th class="align-content-center font10" rowspan="2" style="width:15%;">จำนวนเงิน</th>
                 <th class="align-content-center font10" rowspan="2" style="width:30%;">หมายเหตุ</th>
             </tr>
@@ -140,15 +97,14 @@
                 <tr class="tagCountRowTravel">
                     <td>
                         <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
-                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "1", @class = "hindenTypeId" })
+                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
                     </td>
                     <td style="text-align:right">
-                        @Html.TextBox("activityOfEstimateList[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
+                        @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
                       new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail(this)" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].compensate, "{0:0.000}", new { @class = "form-control textboxcss font10 textRight", @type = "number", onkeyup = "getLite()" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getValues()" })</td>
+                    <td style="text-align:right"> @Html.DropDownListFor(x => x.activityOfEstimateList2[i].productId, new SelectList(Model.objExpenseCashList, "id", "displayVal", 0), "Please Select", new { @class = "form-control textboxcss font10 textRight", onchange = "$exEntertain.validateData(this)" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal2()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
 
                 </tr>
@@ -157,63 +113,64 @@
         <tr>
             <td></td>
             <td colspan="2" class="textRight">
-                รวมค่าใช้จ่ายในการเดินทาง/ค่าใช้จ่ายประจำเดือน (ไม่รวมค่าเลี้ยงรับรองหรือการตรวจตลาด)
-                Total Travel & Transporation Expenses (Excluding Entertainment Expenses and Market Visit)
+                ค่าทางด่วน
             </td>
             <td class="textRight">
-                <label id="lblLite"></label>
-            </td>
-            <td class="textRight">
-                <label id="lblShowtotal"></label>
+                <label id="lblUseBypass">
+                    0.00
+                </label>
             </td>
             <td></td>
         </tr>
-
-
+        <tr>
+            <td></td>
+            <td colspan="2" class="textRight">
+                ค่าล้างรถ
+            </td>
+            <td class="textRight">
+                <label id="lblUseWash">
+                    0.00
+                </label>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="2" class="textRight">
+                ค่าโทรศัพท์
+            </td>
+            <td class="textRight">
+                <label id="lblUsePhone">
+                    0.00
+                </label>
+            </td>
+            <td></td>
+        </tr>
 
     </table>
     <div id="addEx" class="row pull-right" style="width:150px" onclick="addRow();">
         <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
     </div>
-    @if (UtilsAppCode.Session.User.isCreator && Model.activityFormModel.mode == AppCode.Mode.addNew.ToString())
-    {
-        <div id="divCashBill" class="row">
 
-            @foreach (var item in Model.exPerryCashList)
-            {
-                <div class="col-lg-8">
-                </div>
-                <div class="col-lg-4">
-                    <label style="color:red">
-                        <label style="color:red"> @item.cashName @item.cash บาท/เดือน</label>
-                    </label>
-                </div>
-            }
-
-        </div>
-    }
-    else
-    {
-        <div id="divCashBill" class="row"></div>
-    }
 </div>
-
-
 <script type="text/javascript">
 
-    function addRowEntertainment() {
-        var RowCount = $('#tbl_Entertainment tbody tr').length - 4;
-        var newRow = $("#tbl_Entertainment tbody tr").first().clone().find("input").val("").end();
-        $("#tbl_Entertainment > tbody:first").append(newRow);
-        newRow.find("input").each(function () {
-            $(this).attr("id", $(this).attr("name").replace(/\d+/, RowCount));
-            $(this).attr("name", $(this).attr("name").replace(/\d+/, RowCount));
-            $(newRow).find("select").attr("name", $("select", newRow).attr("name").replace(/\d+/, RowCount));
-            $(newRow).find("select").attr("id", $("select", newRow).attr("name").replace(/\d+/, RowCount));
+    var valEntertain = "87757B5B-C946-4001-A74B-AB6C9003AD25";
+    var valBypass = "E57354A6-940A-4BDF-8916-E77E24D9310F";
+    var valWash = "D05DA2C9-82AB-43F7-8479-D63F24F9D20D";
+    var valPhone = "048487B9-330A-4A65-8788-3E04004418F0";
 
-            var elms = document.getElementsByClassName('hindenTypeId2')
+    function addRow() {
+        var RowCount = $('#tbl_CashDetail tbody tr').length - 1;
+        var newRow = $("#tbl_CashDetail tbody tr").first().clone().find("input").val("").end();
+        $("#tbl_CashDetail > tbody:first").append(newRow);
+        newRow.find("input").each(function () {
+            $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
+            $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
+
+            var elms = document.getElementsByClassName('hindenTypeId')
             for (var i = 0; i < elms.length; i++) {
-                elms[i].setAttribute("value", "2");
+                elms[i].setAttribute("value", "1");
             }
         }
         );
@@ -221,84 +178,142 @@
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
         });
+
     }
 
-    function getTotal() {
-        var totalAll = 0.00;
-        var rowCount = parseInt($('#tbl_Entertainment tr.tagCountRowExpenses').length);
+    function addRowEntertainment() {
+        var RowCount = $('#tbl_Entertainment tbody tr').length - 4;
+        var newRow = $("#tbl_Entertainment tbody tr").first().clone().find("input").val("").end();
+        $("#tbl_Entertainment > tbody:first").append(newRow);
+        newRow.find("input").each(function () {
+            $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, RowCount));
+            $(newRow).find("select").attr("name", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
+            $(newRow).find("select").attr("id", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
 
-        for (i = 0; i < rowCount; i++) {
-            var x = document.getElementsByName("activityOfEstimateList[" + i + "].total");
-            var rowtotal = parseFloat($(x).val());
-            if (isNaN(rowtotal)) rowtotal = 0;
-            var totalAll = totalAll + rowtotal;
-        }
-        document.getElementById('lbltotalExMaket').innerHTML = totalAll.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-        totalExpenExMaket();
-        totalAllExpenses();
-    }
-
-
-
-    function validateData(i) {
-        var required = "กรุณา ระบุ :<br>";
-        var validate = true;
-
-        var rowIndex = $(i).closest('tr').index();
-        console.log(rowIndex);
-        console.log($("#activityOfEstimateList[" + rowIndex + "].dateInput").val());
-
-
-        if ($("#activityOfEstimateList[" + rowIndex + "].dateInput").val() == "") {
-            required += "วันที่ *<br>"; validate = false;
-        }
-
-        if (validate == true) {
-            getData(i);
-        }
-        else {
-            bootbox.alert(required)
-        }
-    }
-
-    function getDetailList(i) {
-        console.log(i.id);
-        $("#"+i.id).autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: '@Url.Action("getOtherMasterByType", "eAct")',
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        type: 'CashLimitType',
-                        subType: '',
-                        text: $("#"+i.id).val(),
-                    },
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.displayVal, value: item.displayVal, id: item.id };
-                        }))
-
-                    }
-                })
-            },
-            minLength: 0,
-            messages: {
-                noResults: '',
-                results: function (resultsCount) {
-                }
-            }, select: function (event, ui) {
-                $("#"+i.id).val(ui.item.id)
+            var elms = document.getElementsByClassName('hindenTypeId2')
+            for (var i = 0; i < elms.length; i++) {
+                elms[i].setAttribute("value", "2");
             }
-        }).focus(function () {
-            $(this).data("uiAutocomplete").search($(this).val());
         });
-
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy'
+        });
     }
 
 
-    function getData(i) {
-        console.log(i.id);
+    function cashDelete(btn) {
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        getTotal();
+        getTotal2();
     }
+
+
+    function getLimitExpense(i) {
+        var rowIndex = $(i).closest('tr').index();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getLimitEmpByEmpId", "ExpenseEstimateInput")',
+            data: {
+                empId: $("#txtEmpId").val(),
+            }
+        }).done(function (response) {
+            if (response.Data != null) {
+                $("#activityOfEstimateList_" + rowIndex + "__balance").val("0");
+                for (var i = 0; i < response.Data.getEntertain.length;) {
+                    var productId = $("#activityOfEstimateList_" + rowIndex + "__productId").val();
+                    if (response.Data.getEntertain[i].id == productId) {
+                        $("#activityOfEstimateList_" + rowIndex + "__balance").val(response.Data.getEntertain[i].cash);
+                    }
+                }
+            }
+        });
+    }
+
+    function getTotal1() {
+        var totalEntertain = 0.00;
+       
+        //count row ทั้งหมด
+        var rowCount = parseInt($('#tbl_Entertainment tr.tagCountRowExpenses').length);
+        console.log(rowCount);
+        for (i = 0; i < rowCount; i++) {
+
+            var x = $("#activityOfEstimateList_" + i + "__total").val();
+            var product = $("#activityOfEstimateList_" + i + "__productId").val()
+
+            var rowtotal = parseFloat(x);
+            if (isNaN(rowtotal)) rowtotal = 0;
+
+            if (product == valEntertain) {
+                totalEntertain = totalEntertain + rowtotal;
+                document.getElementById('lblUseEntertain').innerHTML = totalEntertain.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+
+        }
+    }
+
+    function getTotal2() {
+        var totalBypass = 0.00;
+        var totalWash = 0.00;
+        var totalPhone = 0.00;
+
+        //count row ทั้งหมด
+        var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowTravel').length);
+        for (i = 0; i < rowCount; i++) {
+
+            var x = $("#activityOfEstimateList2_" + i + "__total").val();
+            var product = $("#activityOfEstimateList2_" + i + "__productId").val()
+
+            var rowtotal = parseFloat(x);
+            if (isNaN(rowtotal)) rowtotal = 0;
+
+            if (product == valBypass) {
+                totalBypass = totalBypass + rowtotal;
+                document.getElementById('lblUseBypass').innerHTML = totalBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+            else if (product == valWash) {
+                totalWash = totalWash + rowtotal;
+                document.getElementById('lblUseWash').innerHTML = totalWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+            else if (product == valPhone) {
+                totalPhone = totalPhone + rowtotal;
+                document.getElementById('lblUsePhone').innerHTML = totalPhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+        }
+    }
+
+    function getCumulativeByEmpId() {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getCumulativeByEmpId", "ExpenseEstimateInput")',
+            data: {
+                empId: $("#txtEmpId").val(),
+                docDate: $("#txtExMonth").val(),
+            }
+        }).done(function (response) {
+            if (response.Data != null) {
+                if (productId == valEntertain) {
+                    document.getElementById('lblCumulativeEntertain').innerHTML = response.Data.cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                }
+                else if (product == valBypass) {
+                    totalBypass = totalBypass + rowtotal;
+                    document.getElementById('lblCumulativeBypass').innerHTML = totalBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                }
+                else if (product == valWash) {
+                    totalWash = totalWash + rowtotal;
+                    document.getElementById('lblCumulativeWash').innerHTML = totalWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                }
+                else if (product == valPhone) {
+                    totalPhone = totalPhone + rowtotal;
+                    document.getElementById('lblCumulativePhone').innerHTML = totalPhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                }
+
+            }
+        });
+    }
+
+   
 
 </script>

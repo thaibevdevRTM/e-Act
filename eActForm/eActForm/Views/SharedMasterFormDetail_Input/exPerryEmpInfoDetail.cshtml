@@ -53,6 +53,9 @@
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
         });
+        if ($("#txtEmpId").val() == '') {
+            $("#txtEmpId").val('@UtilsAppCode.Session.User.empId');
+        }
         getEmpDetail();
 
         if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
@@ -116,6 +119,11 @@
                 document.getElementById('lblDept').innerHTML = '';
             }
         });
+
+        @*if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReceptions"]') {
+            $exEntertain.getDataExpense();
+            $exEntertain.getAmountLimitByEmpId();
+        }*@
     }
 
 
