@@ -30,14 +30,13 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strore
                      , new SqlParameter("@activityId", activityId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new RequestEmpModel(d["empId"].ToString())
+                             select new RequestEmpModel(d["empId"].ToString(), langEn, chkFormHc)
                              {
                                  id = d["id"].ToString(),
                                  rowNo = Convert.ToInt32(d["rowNo"].ToString()),
                                  empTel = d["empTel"].ToString(),
                                  detail = d["detail"].ToString(),
-                                 empName = !langEn ? (chkFormHc ? "" : "คุณ") + d["empFNameTH"].ToString() + " " + d["empLNameTH"].ToString() : d["empFNameEN"].ToString() + " " + d["empLNameEN"].ToString(),
-                                 //empId = d["empId"].ToString(),
+                                 empId = d["empId"].ToString(),
                                  //position = !langEn ? d["empPositionTitleTH"].ToString() : d["empPositionTitleEN"].ToString(),
                                  //level = d["empLevel"].ToString(),
                                  //department = !langEn ? d["empDepartmentTH"].ToString() : d["empDepartmentEN"].ToString(),
@@ -51,7 +50,6 @@ namespace eActForm.BusinessLayer
                                  //detail = d["detail"].ToString(),
                                  //hireDate = DocumentsAppCode.convertDateTHToShowCultureDateEN(Convert.ToDateTime(BaseAppCodes.getEmpFromApi(d["empId"].ToString()).empProbationEndDate), ConfigurationManager.AppSettings["formatDateUse"]),//  empProbationEndDate                                                                                                                                                                                                        //hireDate = !string.IsNullOrEmpty(d["hireDate"].ToString()) ? DateTime.Parse(d["hireDate"].ToString()).ToString(ConfigurationManager.AppSettings["formatDateUse"]) : "",
                              });
-
                 return lists.OrderBy(x => x.rowNo).ToList();
             }
             catch (Exception ex)
@@ -70,7 +68,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strore
                      , new SqlParameter("@activityId", activityId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new RequestEmpModel(d["empId"].ToString())
+                             select new RequestEmpModel(d["empId"].ToString(),false,false)
                              {
                                  id = d["id"].ToString(),
                                  rowNo = Convert.ToInt32(d["rowNo"].ToString()),

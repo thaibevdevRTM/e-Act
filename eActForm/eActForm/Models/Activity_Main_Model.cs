@@ -250,11 +250,12 @@ namespace eActForm.Models
 
     public class RequestEmpModel : ActBaseModel
     {
+
         public RequestEmpModel()
         {
 
         }
-        public RequestEmpModel(string empId)
+        public RequestEmpModel(string empId,bool langEn,bool chkFormHc)
         {
             List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
             this.empId = model[0].empId;

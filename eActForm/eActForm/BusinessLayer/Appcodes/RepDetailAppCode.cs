@@ -275,7 +275,8 @@ namespace eActForm.BusinessLayer
                     }
                 }
 
-                return typeForm == Activity_Model.activityType.MT.ToString() ? dataTableToRepDetailModels(ds) : dataTableToRepDetailSetPriceModels(ds);
+                return typeForm == Activity_Model.activityType.MT.ToString() || typeForm == Activity_Model.activityType.OMT.ToString() ? 
+                    dataTableToRepDetailModels(ds) : dataTableToRepDetailSetPriceModels(ds);
             }
             catch (Exception ex)
             {
@@ -309,10 +310,12 @@ namespace eActForm.BusinessLayer
                 if (getFormId == ConfigurationManager.AppSettings["formSetPriceMT"])
                 {
                     model = dataTableToRepDetailSetPriceModels(ds);
+                    model.typeForm = Activity_Model.activityType.SetPrice.ToString();
                 }
                 else
                 {
                     model = dataTableToRepDetailModels(ds);
+                    model.typeForm = Activity_Model.activityType.MT.ToString();
                 }
 
                 model.actFormRepDetailGroupLists.Select(r => r.delFlag = false
@@ -347,9 +350,9 @@ namespace eActForm.BusinessLayer
 
         public static string getActivityTypeReportDetailByActNo(string repDetailId)
         {
+            string result = "";
             try
             {
-                string result = "";
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getActivityTypeReportByRepId"
                     , new SqlParameter[] { new SqlParameter("@repDetailId", repDetailId) });
 
@@ -362,6 +365,7 @@ namespace eActForm.BusinessLayer
             }
             catch (Exception ex)
             {
+                result = "";
                 throw new Exception("getStatusNote >>" + ex.Message);
             }
         }
