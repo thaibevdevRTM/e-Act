@@ -257,7 +257,7 @@ namespace eActForm.Models
         public RequestEmpModel(string empId)
         {
             List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
-            empId = model[0].empId;
+            this.empId = model[0].empId;
             empName = model[0].empName;
             position = model[0].position;
             level = model[0].level;

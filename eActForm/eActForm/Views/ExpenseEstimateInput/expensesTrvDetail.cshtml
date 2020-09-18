@@ -45,7 +45,7 @@
         $("#MultiPrice_1").val(multiPrice);
         document.getElementById('MultiPrice_1').innerHTML = "(" + multiPrice + ")";
         $("#txtUnit_1").val(totalUnit);
-      
+
         var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
         $("#txtTotal_1").val(v_total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         $("#txtVat_1").val(totalVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
@@ -148,15 +148,15 @@
                                             {
 
                                                 @Html.DropDownListFor(x => x.expensesDetailModel.costDetailLists[index].productDetail,
-                                     new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
-                                     "name",
-                                     "name", @item.productDetail), "", new
-                                     {
-                                         @class = "form-control selectpicker",
-                                         @id = "ProductDetail_" + index,
-                                         @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
+                                          new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
+                                          "name",
+                                          "name", @item.productDetail), "", new
+                                          {
+                                              @class = "form-control selectpicker",
+                                              @id = "ProductDetail_" + index,
+                                              @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
 
-                                     })
+                                          })
                                             }
 
 
@@ -164,7 +164,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense)
+                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense )
                                 {
                                     <div>
                                         <input id="chkMultiPrice" type="checkbox" onchange="chkMultiPrice_change()" name=""> ราคาที่พักต่างกัน
@@ -194,31 +194,23 @@
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
 
-                                @*@if (item.listChoiceId != AppCode.Expenses.Allowance)
-                                    {
-                                        <input type="text" value="@item.glCode" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" readonly />
 
-                                    }
-                                    else
-                                    {
-                                        <input type="hidden" value="" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" min="0" class="form-control textboxcss text-center " />
 
-                                    }*@
-
-                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense || item.listChoiceId == AppCode.Expenses.planeExpense)
+                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense 
+                                    || item.listChoiceId == AppCode.Expenses.planeExpense )
                                 {
-                                    @*<input type="text" value="@item.glCode" id="txtVat_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" />*@
-                                    @Html.TextBoxFor(x => item.vat, "{0:n2}", new
-                               {
-                                   @id = "txtVat_" + @index,
-                                   Name = "expensesDetailModel.costDetailLists[" + index + "].vat",
-                                   @class = "form-control textboxcss text-right",
 
-                               })
+                                    @Html.TextBoxFor(x => item.vat, "{0:n2}", new
+                                       {
+                                           @id = "txtVat_" + @index,
+                                           Name = "expensesDetailModel.costDetailLists[" + index + "].vat",
+                                           @class = "form-control textboxcss text-right",
+
+                                       })
                                 }
                                 else
                                 {
-                                    <input type="hidden" value="0" id="txtVat_@index" name="expensesDetailModel.costDetailLists[@index].vat" min="0" class="form-control textboxcss text-center " />
+                                    <input type = "hidden" value = "0" id = "txtVat_@index" name = "expensesDetailModel.costDetailLists[@index].vat" min = "0" class="form-control textboxcss text-center " />
 
                                 }
 
@@ -381,7 +373,7 @@
                                          Name = "expensesDetailSubModel.costDetailLists[" + indexSub + "].vat"
                                                                   ,
                                          @class = "form-control textboxcss text-right"
-                                                                
+
                                      })
                                 </div>
                             </td>

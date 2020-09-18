@@ -137,7 +137,7 @@ namespace eActForm.Controllers
                         costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
                     };
 
-                    model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
+                    model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, QueryGetGL.getGLTypeByEmpGroupName());
 
                     for (int i = 0; i < model2.costDetailLists.Count; i++)
                     {
