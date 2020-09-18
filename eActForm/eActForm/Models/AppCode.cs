@@ -89,13 +89,19 @@ namespace eActForm.Models
         }
         public static class Expenses
         {
-            public const string Allowance = "06FF853F-EBB0-48E8-9620-520D0B8F6E0C";
+            public static string Allowance = UtilsAppCode.Session.User.empGroupName.Equals("Spirits Product") ? "0A7DD084-8A63-4691-8886-2012FF5A9656" : "06FF853F-EBB0-48E8-9620-520D0B8F6E0C";
             public const string Medical = "6BB0F68F-4B07-4E00-9B1E-B776D003D992";
-            public const string hotelExpense = "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1";
-            public const string planeExpense = "F34854F6-B91F-4C9E-A4BD-C181199B8E4F";
+            public static string hotelExpense = UtilsAppCode.Session.User.empGroupName.Equals("Spirits Product") ? "B0A35B60-4FC6-47FF-9DD2-07C51D4A7133" : "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1";
+            public static string planeExpense = UtilsAppCode.Session.User.empGroupName.Equals("Spirits Product") ? "557030E5-4E1D-4E53-B0A7-39BD6A78906C" : "F34854F6-B91F-4C9E-A4BD-C181199B8E4F";
 
         }
 
+
+        public static class GLType
+        {
+            public const string GLSale = "expensesTrvForSale";
+            public const string GLSaleSupport = "expensesTrv";
+        }
 
         public static class ReportType
         {
@@ -111,7 +117,7 @@ namespace eActForm.Models
         public static class SSGLId
         {
             public const string vat = "CE4DA8CE-DB49-4E9F-931D-F33778B9FBC5";
-            public const string medical = "D86D142B-7BCC-42D0-8E01-155010122792";
+            public const string medical = "D86D142B-7BCC-42D0-8E01-155010122792,3CF6C5D8-232C-4862-8226-42388D9FED0C";
         }
         public static string checkNullorEmpty(string p)
         {

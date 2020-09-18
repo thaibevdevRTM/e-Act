@@ -99,6 +99,8 @@ namespace eActForm.Models
             public string regionId { get; set; }
             public string customerId { get; set; }
             public string empProbationEndDate { get; set; }
+            public string empGroupName { get; set; }
+            public string empGroupNameTH { get; set; }
         }
     }
 }

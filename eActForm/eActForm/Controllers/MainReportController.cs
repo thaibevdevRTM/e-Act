@@ -129,15 +129,15 @@ namespace eActForm.Controllers
             #region "ดึงข้อมูล GL "
             //ฟอร์มที่ใช้เป็นของ saleSupport
             List<GetDataGL> lstGL = new List<GetDataGL>();
-            lstGL = QueryGetGL.GetGLMasterByDivisionId(AppCode.Division.salesSupport);
+            lstGL = QueryGetGL.getGLMasterByDivisionId();
             #endregion
 
             if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
             {
                 decimal? vat = 0,vatsum=0;
                 #region "ค่าเดินทางของ NUM"
-                model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
-                for (int i = 0; i < 8; i++)
+                model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, QueryGetGL.getGLTypeByEmpGroupName());
+                for (int i = 0; i < model2.costDetailLists.Count; i++)
                 {
                     if (model2.costDetailLists[i].total != 0 && model2.costDetailLists[i].listChoiceId != AppCode.Expenses.Allowance)
                     {
@@ -165,6 +165,7 @@ namespace eActForm.Controllers
                            ? model2.costDetailLists[i].unit + "วัน (สิทธิเบิก " + model2.costDetailLists[i].productDetail + " บาท/วัน)"
                            : model2.costDetailLists[i].productDetail),
                             total = model2.costDetailLists[i].total - (vat),
+                            //glCode = lstGL.Where(x => x.groupGL.Contains(model2.costDetailLists[i].listChoiceName) ).FirstOrDefault()?.GL,
                             glCode = lstGL.Where(x => x.id == model2.costDetailLists[i].glCodeId).FirstOrDefault()?.GL,
                         });
                     }
@@ -193,7 +194,7 @@ namespace eActForm.Controllers
                     productDetail = "ค่ารักษาพยาบาล",
                     total = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived,
                     displayType = "",
-                    glCode = lstGL.Where(x => x.id == AppCode.SSGLId.medical).FirstOrDefault()?.GL,
+                    glCode = lstGL.Where(x => AppCode.SSGLId.medical.Contains(x.id)).FirstOrDefault()?.GL,//glCode = lstGL.Where(x => x.id == ).FirstOrDefault()?.GL,
                 });
                 activity_Model.totalCostThisActivity = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
 
