@@ -259,7 +259,7 @@ namespace eActForm.Models
         {
             List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
             this.empId = model[0].empId;
-            empName = model[0].empName;
+            empName = !langEn ? (chkFormHc ? "" : "คุณ") + model[0].empName : model[0].empNameEN;
             position = model[0].position;
             level = model[0].level;
             department = model[0].department;
