@@ -42,13 +42,20 @@
             </label>
         </div>
         <div class="col-md-3 col-xs-12">
-            @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, "yyyy-MM")
-            , new {type = "month", @class = "form-control textboxcss", @id = "txtExMonth", Style = "text-align:center;", autocomplete = "off" })
+            @if (Model.activityFormModel.documentDate.ToString() != "")
+            {
+                @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, "yyyy-MM")
+                     , new { type = "month", @class = "form-control textboxcss", @id = "txtExMonth", Style = "text-align:center;", autocomplete = "off" })
+            }
+            else
+            {
+                @Html.TextBox("activityFormModel.documentDateStr", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityFormModel.documentDate, "yyyy-MM")
+                    , new { type = "month", @class = "form-control textboxcss", @id = "txtExMonth", Style = "text-align:center;", @Value = DocumentsAppCode.convertDateTHToShowCultureDateEN(@DateTime.Now, "yyyy-MM"),  autocomplete = "off" })
+            }
         </div>
     </div>
 
 </div>
-
 
 
 

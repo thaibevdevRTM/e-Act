@@ -440,6 +440,31 @@
                 }
             }
         }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReceptions"]') {
+
+
+            var getLimitPhone = parseFloat(document.getElementById('lblLimitPhone').innerHTML.split(",").join(""));
+            var getCumulaPhone = parseFloat(document.getElementById('lblCumulativePhone').innerHTML.split(",").join(""));
+            var getLimitBypass = parseFloat(document.getElementById('lblLimitBypass').innerHTML.split(",").join(""));
+            var getCumulaBypass = parseFloat(document.getElementById('lblCumulativeBypass').innerHTML.split(",").join(""));
+            var getLimitCarWash = parseFloat(document.getElementById('lblLimitCarWash').innerHTML.split(",").join(""));
+            var getCumulaCarWash = parseFloat(document.getElementById('lblCumulativeCarWash').innerHTML.split(",").join(""));
+            var getLimitEntertain = parseFloat(document.getElementById('lblLimitEntertain').innerHTML.split(",").join(""));
+            var getCumulaEntertain = parseFloat(document.getElementById('lblCumulativeEntertain').innerHTML.split(",").join(""));
+
+            if (getCumulaPhone > getLimitPhone) {
+                required += "ค่าโทรศัพท์ วงเงินเกินกำหนด! *<br>"; validate = false;
+            }
+            if (getCumulaBypass > getLimitBypass) {
+                required += "ค่าทางด่วน วงเงินเกินกำหนด! *<br>"; validate = false;
+            }
+            if (getCumulaCarWash > getLimitCarWash) {
+                required += "ค่าทางด่วน วงเงินเกินกำหนด! *<br>"; validate = false;
+            }
+            if (getCumulaEntertain > getLimitEntertain) {
+                required += "ค่ารับรอง วงเงินเกินกำหนด! *<br>"; validate = false;
+            }
+        }
         else {
 
         }

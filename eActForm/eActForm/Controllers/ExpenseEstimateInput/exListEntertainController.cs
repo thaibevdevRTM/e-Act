@@ -84,7 +84,7 @@ namespace eActForm.Controllers
                 {
                     var resultData = new
                     {
-                        empList = empCashList.ToList()
+                        cashList = empCashList.ToList()
                     };
                     result.Data = resultData;
                 }

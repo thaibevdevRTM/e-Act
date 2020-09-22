@@ -2,7 +2,12 @@
 @using eActForm.BusinessLayer
 @using eActForm.Models
 @using System.Configuration;
-
+@{ 
+    string valEntertain = "87757B5B-C946-4001-A74B-AB6C9003AD25";
+    string valBypass = "E57354A6-940A-4BDF-8916-E77E24D9310F";
+    string valWash = "D05DA2C9-82AB-43F7-8479-D63F24F9D20D";
+    string valPhone = "048487B9-330A-4A65-8788-3E04004418F0";
+}
 
 <div class="col-lg-12 col-xs-12">
     <fieldset>
@@ -32,37 +37,58 @@
             <tbody id="first1">
                 <tr class="tagCountRowExpenses">
                     <td>
-                        <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
-                        @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hindenTypeId" })
+                        <button type="button" id="btnDel1[@i]" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
+                        @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hiddenTypeId" })
+                        @Html.HiddenFor(x => x.activityOfEstimateList[i].productId, new { Value = @valEntertain, @class = "hiddenValEntertain" })
                     </td>
                     <td style="text-align:right">
                         @Html.TextBox("activityOfEstimateList[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
                  new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].detail, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.DropDownListFor(x => x.activityOfEstimateList[i].productId, new SelectList(Model.objExpenseCashList, "id", "displayVal", 0), "Please Select", new { @class = "form-control textboxcss font10 textRight", onchange = "$exEntertain.validateData(this)" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail1(this)" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal1()" })</td>
-
-
-
                 </tr>
             </tbody>
         }
 
 
         <tr>
-            <td></td>
-            <td colspan="4" class="textRight">
-                ค่ารับรอง
-            </td>  
+            <td colspan="5">
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-left">
+                    <img width="30em" height="30em" src="~/images/food.png" />
+                    <label>ค่ารับรอง</label>
+                </div>
+
+                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <label>วงเงิน</label>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <p id="lblLimitEntertain">
+                        0.00
+                    </p>
+                </div>
+                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <label>สะสม</label>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <p id="lblCumulativeEntertain">
+                        0.00
+                    </p>
+                </div>
+                <div class="col-lg-4 col-md-3 col-sm-3 col-xs-6 text-center">
+                </div>
+
+            </td>
+
             <td class="textRight">
                 <label id="lblUseEntertain">
                     0.00
                 </label>
             </td>
         </tr>
-       
+
     </table>
 
 
@@ -98,12 +124,13 @@
                     <td>
                         <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
                         @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
+                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].productId)
                     </td>
                     <td style="text-align:right">
-                        @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
+                        @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
                       new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
-                    <td style="text-align:right"> @Html.DropDownListFor(x => x.activityOfEstimateList2[i].productId, new SelectList(Model.objExpenseCashList, "id", "displayVal", 0), "Please Select", new { @class = "form-control textboxcss font10 textRight", onchange = "$exEntertain.validateData(this)" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail2(this)" , onfocus = "autocompleDetail2(this)" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal2()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
 
@@ -111,9 +138,30 @@
             </tbody>
         }
         <tr>
-            <td></td>
-            <td colspan="2" class="textRight">
-                ค่าทางด่วน
+            <td colspan="3" class="textRight">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
+                    <img width="30em" height="30em" src="~/images/highwayv2.png" />
+                    <label>ค่าทางด่วน</label>
+                </div>
+
+                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <label>วงเงิน</label>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <p id="lblLimitBypass">
+                        0.00
+                    </p>
+                </div>
+                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <label>สะสม</label>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <p id="lblCumulativeBypass">
+                        0.00
+                    </p>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-center">
+                </div>
             </td>
             <td class="textRight">
                 <label id="lblUseBypass">
@@ -123,9 +171,31 @@
             <td></td>
         </tr>
         <tr>
-            <td></td>
-            <td colspan="2" class="textRight">
-                ค่าล้างรถ
+            <td colspan="3" class="textRight">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
+                    <img width="30em" height="30em" src="~/images/car-wash.png" />
+                    <label>ค่าล้างรถ</label>
+                </div>
+
+                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <label>วงเงิน</label>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <p id="lblLimitCarWash">
+                        0.00
+                    </p>
+                </div>
+                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <label>สะสม</label>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <p id="lblCumulativeCarWash">
+                        0.00
+                    </p>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-center">
+                </div>
+
             </td>
             <td class="textRight">
                 <label id="lblUseWash">
@@ -135,12 +205,66 @@
             <td></td>
         </tr>
         <tr>
-            <td></td>
-            <td colspan="2" class="textRight">
-                ค่าโทรศัพท์
+            <td colspan="3" class="textRight">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
+                    <img width="30em" height="30em" src="~/images/pngtree-phone-icon-png-image_1757859.jpg" />
+                    <label>ค่าโทรศัพท์</label>
+                </div>
+
+                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <label>วงเงิน</label>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <p id="lblLimitPhone">
+                        0.00
+                    </p>
+                </div>
+                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <label>สะสม</label>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <p id="lblCumulativePhone">
+                        0.00
+                    </p>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-center">
+                </div>
             </td>
             <td class="textRight">
                 <label id="lblUsePhone">
+                    0.00
+                </label>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="3" class="textRight">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
+                   
+                    <label>อื่นๆ</label>
+                </div>
+
+                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <label>วงเงิน</label>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <p id="lblLimitOther">
+                        0.00
+                    </p>
+                </div>
+                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <label>สะสม</label>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <p id="lblCumulativeOther">
+                        0.00
+                    </p>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-center">
+                </div>
+            </td>
+            <td class="textRight">
+                <label id="lblUseOther">
                     0.00
                 </label>
             </td>
@@ -154,26 +278,119 @@
 
 </div>
 <script type="text/javascript">
+    var cumulaBypass = 0.00;
+    var cumulaCarWash = 0.00;
+    var cumulaEntertain = 0.00;
+    var cumulaPhone = 0.00;
+    var cumulaOther = 0.00;
+    var getLimitCarWash = 0.00;
+    var getLimitEntertain = 0.00;
+    var getLimitBypass = 0.00;
+    var getLimitPhone = 0.00;
+    var getLimitOther = 0.00;
 
-    var valEntertain = "87757B5B-C946-4001-A74B-AB6C9003AD25";
-    var valBypass = "E57354A6-940A-4BDF-8916-E77E24D9310F";
-    var valWash = "D05DA2C9-82AB-43F7-8479-D63F24F9D20D";
-    var valPhone = "048487B9-330A-4A65-8788-3E04004418F0";
+    $(document).ready(function () {
+        getLimitExpense();
 
+
+       // document.getElementById("btnDel1[0]").disabled = true;
+    });
+
+     if(@Model.activityFormTBMMKT.statusId != "1" || @Model.activityFormTBMMKT.statusId == "5" || '@Model.activityFormTBMMKT.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
+        document.getElementById("addEnt").style.display = "none";
+        document.getElementById("addEx").style.display = "none";
+     }
+
+    function autocompleDetail1(i) {
+        var rowIndex = $(i).closest('tr').index();
+        $("#activityOfEstimateList_" + rowIndex + "__productId").val('');
+        $("#"+i.id).autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("getOtherMasterByType", "eAct")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        type: 'CashLimitType',
+                        subType: '1',
+                        text: $("#"+i.id).val(),
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.displayVal, value: item.displayVal, id: item.id };
+
+                        }))
+                    }
+                })
+            },
+            minLength: 0,
+            messages: {
+                noResults: '',
+                results: function (resultsCount) {
+                }
+            }, select: function (event, ui) {
+
+                $("#activityOfEstimateList_" + rowIndex + "__productId").val(ui.item.id);
+                $("#" + i.id).val(ui.item.id);
+
+            }
+        }).focus(function () {
+            $(this).data("uiAutocomplete").search($(this).val());
+        });
+
+    }
+
+    function autocompleDetail2(i) {
+        var rowIndex = $(i).closest('tr').index();
+        $("#activityOfEstimateList2_" + rowIndex + "__productId").val('');
+        $("#"+i.id).autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("getOtherMasterByType", "eAct")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        type: 'CashLimitType',
+                        subType: '2',
+                        text: $("#"+i.id).val(),
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.displayVal, value: item.displayVal, id: item.id };
+
+                        }))
+                    }
+                })
+            },
+            minLength: 0,
+            messages: {
+                noResults: '',
+                results: function (resultsCount) {
+                }
+            }, select: function (event, ui) {
+
+                $("#activityOfEstimateList2_" + rowIndex + "__productId").val(ui.item.id);
+                $("#" + i.id).val(ui.item.id);
+
+            }
+        }).focus(function () {
+            $(this).data("uiAutocomplete").search($(this).val());
+        });
+
+    }
     function addRow() {
-        var RowCount = $('#tbl_CashDetail tbody tr').length - 3;
-        console.log(RowCount);
+        var RowCount = $('#tbl_CashDetail tbody tr').length - 4;
         var newRow = $("#tbl_CashDetail tbody tr").first().clone().find("input").val("").end();
         $("#tbl_CashDetail > tbody:first").append(newRow);
         newRow.find("input").each(function () {
             $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
             $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
-            $(newRow).find("select").attr("name", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
-            $(newRow).find("select").attr("id", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
+            //$(newRow).find("select").attr("name", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
+            //$(newRow).find("select").attr("id", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
 
-            var elms = document.getElementsByClassName('hindenTypeId')
+            var elms = document.getElementsByClassName('hindenTypeId2')
             for (var i = 0; i < elms.length; i++) {
-                elms[i].setAttribute("value", "1");
+                elms[i].setAttribute("value", "2");
             }
         }
         );
@@ -186,18 +403,20 @@
 
     function addRowEntertainment() {
         var RowCount = $('#tbl_Entertainment tbody tr').length - 1;
-        console.log(RowCount);
         var newRow = $("#tbl_Entertainment tbody tr").first().clone().find("input").val("").end();
         $("#tbl_Entertainment > tbody:first").append(newRow);
         newRow.find("input").each(function () {
             $(this).attr("id", $(this).attr("name").replace("[0].", "_" + RowCount + "__"));
-            $(this).attr("name", $(this).attr("name").replace(/\d+/, RowCount));
-            $(newRow).find("select").attr("name", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
-            $(newRow).find("select").attr("id", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
+            $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
 
-            var elms = document.getElementsByClassName('hindenTypeId2')
+
+            var elms = document.getElementsByClassName('hiddenTypeId')
             for (var i = 0; i < elms.length; i++) {
-                elms[i].setAttribute("value", "2");
+                elms[i].setAttribute("value", "1");
+            }
+            var elms = document.getElementsByClassName('hiddenValEntertain')
+            for (var i = 0; i < elms.length; i++) {
+                elms[i].setAttribute("value", "@valEntertain");
             }
         });
         $('.datepicker').datepicker({
@@ -207,14 +426,19 @@
 
 
     function cashDelete(btn) {
+        var rowIndex = $(btn).closest('tr').index();
         var row = btn.parentNode.parentNode;
-        row.parentNode.removeChild(row);
-        getTotal2();
+        if (rowIndex != 0) {
+            row.parentNode.removeChild(row);
+            getTotal1();
+            getTotal2();
+        }
+        
     }
 
 
     function getLimitExpense() {
-       
+
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getLimitEmpByEmpId", "ExpenseEstimateInput")',
@@ -224,24 +448,34 @@
             }
         }).done(function (response) {
             if (response.Data != null) {
-                console.log(response.Data.txtLimtEntertain);
-                for (var i = 0; i < response.Data.getEntertain.length;) {
-                   
-                    if (response.Data.getEntertain[i].id == valEntertain) {
-                        document.getElementById('lblCumulativeEntertainLimit').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+                for (var i = 0; i < response.Data.getEntertain.length;i++) {
+                    if (response.Data.getEntertain[i].id == '@valEntertain') {
+                        document.getElementById('lblLimitEntertain').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        getLimitEntertain = response.Data.getEntertain[i].cash;
                     }
-                    else if (response.Data.getEntertain[i].id == valBypass) {
-                        document.getElementById('lblCumulativeBypassLimit').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    else if (response.Data.getEntertain[i].id == '@valBypass') {
+                        document.getElementById('lblLimitBypass').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        getLimitBypass = response.Data.getEntertain[i].cash;;
                     }
-                    else if (response.Data.getEntertain[i].id == valWash) {
-                        document.getElementById('lblCumulativeCarWashLimit').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    else if (response.Data.getEntertain[i].id == '@valWash') {
+                        document.getElementById('lblLimitCarWash').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        getLimitCarWash = response.Data.getEntertain[i].cash;
                     }
-                    else if (response.Data.getEntertain[i].id == valPhone) {
-                        document.getElementById('lblCumulativePhoneLimit').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    else if (response.Data.getEntertain[i].id == '@valPhone') {
+                        document.getElementById('lblLimitPhone').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        getLimitPhone = response.Data.getEntertain[i].cash;
+                    }
+                    else {
+                        document.getElementById('lblLimitOther').innerHTML = response.Data.getEntertain[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        getLimitOther = response.Data.getEntertain[i].cash;
+
                     }
                 }
-                
             }
+
+            getCumulativeByEmpId();
+            
         });
     }
 
@@ -250,19 +484,29 @@
         document.getElementById('lblUseEntertain').innerHTML = totalEntertain;
         //count row ทั้งหมด
         var rowCount = parseInt($('#tbl_Entertainment tr.tagCountRowExpenses').length);
-        console.log(rowCount);
         for (i = 0; i < rowCount; i++) {
 
             var x = document.getElementsByName("activityOfEstimateList[" + i + "].total");
             var rowtotal = parseFloat($(x).val());
-            var product = $("#activityOfEstimateList_" + i + "__productId").val()
+            var productId = $("#activityOfEstimateList_" + i + "__productId").val()
             if (isNaN(rowtotal)) rowtotal = 0;
-
-            if (product == valEntertain) {
+            if (productId == '@valEntertain') {
                 totalEntertain = totalEntertain + rowtotal;
                 document.getElementById('lblUseEntertain').innerHTML = totalEntertain.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
             }
+        }
 
+        var getCumulativeEntertain = document.getElementById("lblCumulativeEntertain").innerHTML.split(",").join("");
+        var getPriceCumulativeEntertain = parseFloat($(getCumulativeEntertain).val());
+        if (isNaN(getPriceCumulativeEntertain)) getPriceCumulativeEntertain = 0;
+        getPriceCumulativeEntertain = cumulaEntertain + totalEntertain;
+        document.getElementById('lblCumulativeEntertain').innerHTML = getPriceCumulativeEntertain.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+
+        if (getPriceCumulativeEntertain > getLimitEntertain) {
+            document.getElementById("lblCumulativeEntertain").style.color = "#ff0000";
+        } else {
+            document.getElementById("lblCumulativeEntertain").style.color = "#000000";
         }
     }
 
@@ -270,38 +514,112 @@
         var totalBypass = 0.00;
         var totalWash = 0.00;
         var totalPhone = 0.00;
+        var totalOther = 0.00;
         document.getElementById('lblUseBypass').innerHTML = totalBypass;
         document.getElementById('lblUseWash').innerHTML = totalWash;
         document.getElementById('lblUsePhone').innerHTML = totalPhone;
+        document.getElementById('lblUseOther').innerHTML = totalOther;
         //count row ทั้งหมด
         var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowTravel').length);
         for (i = 0; i < rowCount; i++) {
 
             var x = document.getElementsByName("activityOfEstimateList2[" + i + "].total");
             var rowtotal = parseFloat($(x).val());
-            var product = $("#activityOfEstimateList2_" + i + "__productId").val()
+            var productId = $("#activityOfEstimateList2_" + i + "__productId").val()
 
-            console.log(rowtotal);
-            console.log(product);
+
+
             if (isNaN(rowtotal)) rowtotal = 0;
 
-            if (product == valBypass) {
+            if (productId == '@valBypass') {
                 totalBypass = totalBypass + rowtotal;
                 document.getElementById('lblUseBypass').innerHTML = totalBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
             }
-            else if (product == valWash) {
+            else if (productId == '@valWash') {
+
                 totalWash = totalWash + rowtotal;
                 document.getElementById('lblUseWash').innerHTML = totalWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
             }
-            else if (product == valPhone) {
+            else if (productId == '@valPhone') {
                 totalPhone = totalPhone + rowtotal;
                 document.getElementById('lblUsePhone').innerHTML = totalPhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+                var getPriceCumulativePhone = cumulaPhone + totalPhone;
+                document.getElementById('lblCumulativePhone').innerHTML = getPriceCumulativePhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+            else {
+                totalOther = totalOther + rowtotal;
+                document.getElementById('lblUseOther').innerHTML = totalOther.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
             }
         }
+
+        
+
+        var getCumulativeBypass = document.getElementById('lblCumulativeBypass').innerHTML.split(",").join("");
+        var getPriceCumulativeBypass = parseFloat(getCumulativeBypass);
+        if (isNaN(getPriceCumulativeBypass)) getPriceCumulativeBypass = 0;
+        getPriceCumulativeBypass = cumulaBypass + totalBypass;
+        document.getElementById('lblCumulativeBypass').innerHTML = getPriceCumulativeBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+        console.log(getPriceCumulativeBypass);
+        console.log(getLimitBypass+"limit");
+        if (getPriceCumulativeBypass > getLimitBypass) {
+            document.getElementById("lblCumulativeBypass").style.color = "#ff0000";
+        } else {
+            document.getElementById("lblCumulativeBypass").style.color = "#000000";
+        }
+
+
+
+        var getCumulativeCarWash = document.getElementById('lblCumulativeCarWash').innerHTML.split(",").join("");
+        var getPriceCumulativeCarWash = parseFloat(getCumulativeCarWash);
+        if (isNaN(getPriceCumulativeCarWash)) getPriceCumulativeCarWash = 0;
+        getPriceCumulativeCarWash = cumulaCarWash + totalWash;
+        document.getElementById('lblCumulativeCarWash').innerHTML = getPriceCumulativeCarWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+        if (getPriceCumulativeCarWash > getLimitCarWash) {
+            document.getElementById("lblCumulativeCarWash").style.color = "#ff0000";
+        }
+        else {
+            document.getElementById("lblCumulativeCarWash").style.color = "	#000000";
+        }
+
+        console.log(totalPhone);
+        console.log(cumulaPhone + "cumu");
+        //var getCumulativePhone = document.getElementById('lblCumulativePhone').innerHTML.split(",").join("");
+        //var getPriceCumulativePhone = parseFloat(getCumulativePhone);
+        //if (isNaN(getPriceCumulativePhone)) getPriceCumulativePhone = 0;
+        //getPriceCumulativePhone = cumulaPhone + totalPhone;
+        //document.getElementById('lblCumulativePhone').innerHTML = getPriceCumulativePhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        if (getPriceCumulativePhone > getLimitPhone) {
+            document.getElementById("lblCumulativePhone").style.color = "#ff0000";
+        }
+        else {
+            document.getElementById("lblCumulativePhone").style.color = "#000000";
+        }
+
+
+        var getCumulativeOther = document.getElementById('lblCumulativeOther').innerHTML.split(",").join("");
+        var getPriceCumulativeOther = parseFloat(getCumulativeOther);
+        if (isNaN(getPriceCumulativeOther)) getPriceCumulativeOther = 0;
+        getPriceCumulativeOther = cumulaOther + totalOther;
+        document.getElementById('lblCumulativeOther').innerHTML = getPriceCumulativeOther.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+        if (getPriceCumulativeOther > getLimitOther) {
+            document.getElementById("lblCumulativeOther").style.color = "#ff0000";
+        }
+        else {
+            document.getElementById("lblCumulativeOther").style.color = "#000000";
+        }
+
     }
 
     function getCumulativeByEmpId() {
-
+        cumulaBypass = 0.00;
+        cumulaCarWash = 0.00;
+        cumulaEntertain = 0.00;
+        cumulaPhone = 0.00;
+        cumulaOther = 0.00;
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getCumulativeByEmpId", "ExpenseEstimateInput")',
@@ -311,26 +629,42 @@
             }
         }).done(function (response) {
             if (response.Data != null) {
-                if (productId == valEntertain) {
-                    document.getElementById('lblCumulativeEntertain').innerHTML = response.Data.cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                }
-                else if (product == valBypass) {
-                    totalBypass = totalBypass + rowtotal;
-                    document.getElementById('lblCumulativeBypass').innerHTML = totalBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                }
-                else if (product == valWash) {
-                    totalWash = totalWash + rowtotal;
-                    document.getElementById('lblCumulativeWash').innerHTML = totalWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                }
-                else if (product == valPhone) {
-                    totalPhone = totalPhone + rowtotal;
-                    document.getElementById('lblCumulativePhone').innerHTML = totalPhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                }
+                for (var i = 0; i < response.Data.cashList.length; i++) {
 
+                    if (response.Data.cashList[i].cashTypeId == '@valEntertain') {
+                        document.getElementById('lblCumulativeEntertain').innerHTML = response.Data.cashList[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        cumulaEntertain = response.Data.cashList[i].cash;
+                    }
+                    else if (response.Data.cashList[i].cashTypeId == '@valBypass') {
+                        document.getElementById('lblCumulativeBypass').innerHTML = response.Data.cashList[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        cumulaBypass = response.Data.cashList[i].cash;
+                    }
+                    else if (response.Data.cashList[i].cashTypeId == '@valWash') {
+                        document.getElementById('lblCumulativeCarWash').innerHTML = response.Data.cashList[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        cumulaCarWash = response.Data.cashList[i].cash;
+                    }
+                    else if (response.Data.cashList[i].cashTypeId == '@valPhone') {
+                        document.getElementById('lblCumulativePhone').innerHTML = response.Data.cashList[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                        cumulaPhone = response.Data.cashList[i].cash;
+                    }
+                }
             }
+            else {
+                document.getElementById('lblCumulativeEntertain').innerHTML = 0.00;
+                document.getElementById('lblCumulativeBypass').innerHTML = 0.00;
+                document.getElementById('lblCumulativeCarWash').innerHTML = 0.00;
+                document.getElementById('lblCumulativePhone').innerHTML = 0.00;
+                document.getElementById('lblCumulativeOther').innerHTML = 0.00;
+            }
+
+            getTotal1();
+            getTotal2();
         });
     }
 
-   
+
+
+
+
 
 </script>

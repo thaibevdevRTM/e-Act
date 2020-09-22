@@ -4,11 +4,22 @@
     
 
     function getLimit() {
-        getCumulativeByEmpId();
+        $exEntertain.clearValue();
         getLimitExpense();
     }
 
+
+
     return {
+
+
+        clearValue: function () {
+            document.getElementById('lblLimitEntertain').innerHTML = "0.00";
+            document.getElementById('lblLimitBypass').innerHTML = "0.00";
+            document.getElementById('lblLimitCarWash').innerHTML = "0.00";
+            document.getElementById('lblLimitPhone').innerHTML = "0.00";
+
+        },
 
        
         validateData: function (i) {

@@ -56,6 +56,7 @@ namespace eActForm.BusinessLayer.Appcodes
                                  select new exPerryCashModel()
                                  {
                                      cash = dr["total"].ToString() == "" ? 0 : decimal.Parse(AppCode.checkNullorEmpty(dr["total"].ToString())),
+                                     cashTypeId = dr["productId"].ToString(),
                                  }).ToList();
                     return lists;
                 }
