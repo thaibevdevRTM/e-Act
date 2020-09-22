@@ -296,7 +296,7 @@
        // document.getElementById("btnDel1[0]").disabled = true;
     });
 
-     if(@Model.activityFormTBMMKT.statusId != "1" || @Model.activityFormTBMMKT.statusId == "5" || '@Model.activityFormTBMMKT.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
+     if(@Model.activityFormTBMMKT.statusId == "2" || @Model.activityFormTBMMKT.statusId == "3" || @Model.activityFormTBMMKT.statusId =="6" && '@Model.activityFormTBMMKT.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
         document.getElementById("addEnt").style.display = "none";
         document.getElementById("addEx").style.display = "none";
      }
@@ -433,7 +433,7 @@
             getTotal1();
             getTotal2();
         }
-        
+
     }
 
 
@@ -475,7 +475,7 @@
             }
 
             getCumulativeByEmpId();
-            
+
         });
     }
 
@@ -553,7 +553,7 @@
             }
         }
 
-        
+
 
         var getCumulativeBypass = document.getElementById('lblCumulativeBypass').innerHTML.split(",").join("");
         var getPriceCumulativeBypass = parseFloat(getCumulativeBypass);
