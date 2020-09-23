@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using eActForm.BusinessLayer;
+using System.Collections.Generic;
 
 namespace eActForm.Models
 {
@@ -19,6 +20,15 @@ namespace eActForm.Models
         }
         public class flowApproveDetail : ActBaseModel
         {
+            public flowApproveDetail(string empId)
+            {
+                if (empId != "")
+                {
+                    List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                    this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
+                    this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
+                }
+            }
             public string id { get; set; }
             public string companyId { get; set; }
             public string flowId { get; set; }

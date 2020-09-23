@@ -136,12 +136,12 @@ namespace eActForm.Controllers
                     {
                         costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
                     };
-
-                    model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, QueryGetGL.getGLTypeByEmpGroupName());
+                    AppCode.Expenses expenseEnum = new AppCode.Expenses(activity_TBMMKT_Model.activityFormModel.createdByUserId);
+                    model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, QueryGetGL.getGLTypeByEmpGroupName(expenseEnum.groupName));
 
                     for (int i = 0; i < model2.costDetailLists.Count; i++)
                     {
-                        if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.Allowance)
+                        if (model2.costDetailLists[i].listChoiceId == new AppCode.Expenses(activity_TBMMKT_Model.activityFormModel.createdByUserId).Allowance)
                         {
                             calSum1 += model2.costDetailLists[i].total;
                         }

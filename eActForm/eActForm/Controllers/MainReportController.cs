@@ -129,21 +129,23 @@ namespace eActForm.Controllers
             #region "ดึงข้อมูล GL "
             //ฟอร์มที่ใช้เป็นของ saleSupport
             List<GetDataGL> lstGL = new List<GetDataGL>();
-            lstGL = QueryGetGL.getGLMasterByDivisionId();
+            AppCode.Expenses expenseEnum = new AppCode.Expenses(activity_TBMMKT_Model.activityFormModel.createdByUserId);
+            lstGL = QueryGetGL.getGLMasterByDivisionId(QueryGetGL.getDivisionIdByEmpGroupName(expenseEnum.groupName));
             #endregion
 
             if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
             {
                 decimal? vat = 0,vatsum=0;
                 #region "ค่าเดินทางของ NUM"
-                model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, QueryGetGL.getGLTypeByEmpGroupName());
+                
+                model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, QueryGetGL.getGLTypeByEmpGroupName(expenseEnum.groupName));
                 for (int i = 0; i < model2.costDetailLists.Count; i++)
                 {
-                    if (model2.costDetailLists[i].total != 0 && model2.costDetailLists[i].listChoiceId != AppCode.Expenses.Allowance)
+                    if (model2.costDetailLists[i].total != 0 && model2.costDetailLists[i].listChoiceId != expenseEnum.Allowance)
                     {
                         //vat แสดงรวมค่าใช้จ่ายอื่นๆแสดงแยก
 
-                        if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model2.costDetailLists[i].unitPrice == 0)
+                        if (model2.costDetailLists[i].listChoiceId == expenseEnum.hotelExpense && model2.costDetailLists[i].unitPrice == 0)
                         {
                             vat = model2.costDetailLists[i].vat;
                           //  vatsum += model2.costDetailLists[i].vat;
@@ -182,7 +184,7 @@ namespace eActForm.Controllers
                     });
                 }
 
-                activity_Model.totalCostThisActivity = activity_Model.totalCostThisActivity - model2.costDetailLists.Where(X => X.listChoiceId == AppCode.Expenses.Allowance).FirstOrDefault().total;
+                activity_Model.totalCostThisActivity = activity_Model.totalCostThisActivity - model2.costDetailLists.Where(X => X.listChoiceId == new AppCode.Expenses(activity_Model.activityFormModel.createdByUserId).Allowance).FirstOrDefault().total;
                 #endregion
             }
             else if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])

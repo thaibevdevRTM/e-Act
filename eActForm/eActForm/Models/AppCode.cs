@@ -87,15 +87,23 @@ namespace eActForm.Models
 
 
         }
-        public static class Expenses
+        public class Expenses
         {
-            public static string Allowance = UtilsAppCode.Session.User.empGroupName.Equals("Spirits Product") ? "0A7DD084-8A63-4691-8886-2012FF5A9656" : "06FF853F-EBB0-48E8-9620-520D0B8F6E0C";
             public const string Medical = "6BB0F68F-4B07-4E00-9B1E-B776D003D992";
-            public static string hotelExpense = UtilsAppCode.Session.User.empGroupName.Equals("Spirits Product") ? "B0A35B60-4FC6-47FF-9DD2-07C51D4A7133" : "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1";
-            public static string planeExpense = UtilsAppCode.Session.User.empGroupName.Equals("Spirits Product") ? "557030E5-4E1D-4E53-B0A7-39BD6A78906C" : "F34854F6-B91F-4C9E-A4BD-C181199B8E4F";
+            public string Allowance { get { return groupName.Equals("Spirits Product") ? "0A7DD084-8A63-4691-8886-2012FF5A9656" : "06FF853F-EBB0-48E8-9620-520D0B8F6E0C"; }  }
+            public string hotelExpense { get { return groupName.Equals("Spirits Product") ? "B0A35B60-4FC6-47FF-9DD2-07C51D4A7133" : "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1"; } } 
+            public string planeExpense { get { return groupName.Equals("Spirits Product") ? "557030E5-4E1D-4E53-B0A7-39BD6A78906C" : "F34854F6-B91F-4C9E-A4BD-C181199B8E4F"; } }
+            
 
+            public string groupName;
+            public Expenses(string empId)
+            {
+                List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                this.groupName = model.Count > 0 ? model[0].empGroupName : "";
+            }
         }
 
+        
 
         public static class GLType
         {

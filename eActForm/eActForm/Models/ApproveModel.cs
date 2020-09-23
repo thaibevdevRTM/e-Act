@@ -64,6 +64,10 @@ namespace eActForm.Models
             public string companyName { get; set; }
             public string companyNameEN { get; set; }
             public string approveGroupId { get; set; }
+            public string approveGroupNameTH { get; set; }
+            public string approveGroupnameEN { get; set; }
+
+            public bool isShowInDoc { get; set; }
         }
         public class approveStatus : ActBaseModel
         {

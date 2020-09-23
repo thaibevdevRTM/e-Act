@@ -11,11 +11,11 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGetGL
     {
-        public static string getGLTypeByEmpGroupName()
+        public static string getGLTypeByEmpGroupName(string empGroupName)
         {
             try
             {
-                if (UtilsAppCode.Session.User.empGroupName.Equals("Spirits Product"))
+                if (empGroupName.Equals("Spirits Product"))
                 {
                     return AppCode.GLType.GLSale;
                 }
@@ -29,11 +29,11 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getGLTypeByEmpGroupName >> " + ex.Message);
             }
         }
-        private static string getDivisionIdByEmpGroupName()
+        public static string getDivisionIdByEmpGroupName(string empGroupName)
         {
             try
             {
-                if (UtilsAppCode.Session.User.empGroupName.Equals("Spirits Product"))
+                if (empGroupName.Equals("Spirits Product"))
                 {
                     return AppCode.Division.sales;
                 }
@@ -46,11 +46,11 @@ namespace eActForm.BusinessLayer
                 throw new Exception("getDivisionIdByEmpGroupName >> " + ex.Message);
             }
         }
-        public static List<GetDataGL> getGLMasterByDivisionId()
+        public static List<GetDataGL> getGLMasterByDivisionId(string divisionId)
         {
             try
             {
-                string divisionId = getDivisionIdByEmpGroupName();
+                
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getDataGLByDivisionId"
                     , new SqlParameter("@divisionId", divisionId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
