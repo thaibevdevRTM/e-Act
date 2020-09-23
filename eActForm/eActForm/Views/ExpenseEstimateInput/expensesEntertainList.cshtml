@@ -8,6 +8,7 @@
     string valWash = "D05DA2C9-82AB-43F7-8479-D63F24F9D20D";
     string valPhone = "048487B9-330A-4A65-8788-3E04004418F0";
 }
+<script src="~/Scripts/expense/exEntertain.js"></script>
 
 <div class="col-lg-12 col-xs-12">
     <fieldset>
@@ -447,7 +448,7 @@
 
 
     function getLimitExpense() {
-
+        console.log("tttt");
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getLimitEmpByEmpId", "ExpenseEstimateInput")',
@@ -570,8 +571,6 @@
         getPriceCumulativeBypass = cumulaBypass + totalBypass;
         document.getElementById('lblCumulativeBypass').innerHTML = getPriceCumulativeBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
-        console.log(getPriceCumulativeBypass);
-        console.log(getLimitBypass+"limit");
         if (getPriceCumulativeBypass > getLimitBypass) {
             document.getElementById("lblCumulativeBypass").style.color = "#ff0000";
         } else {
@@ -593,13 +592,12 @@
             document.getElementById("lblCumulativeCarWash").style.color = "	#000000";
         }
 
-        console.log(totalPhone);
-        console.log(cumulaPhone + "cumu");
-        //var getCumulativePhone = document.getElementById('lblCumulativePhone').innerHTML.split(",").join("");
-        //var getPriceCumulativePhone = parseFloat(getCumulativePhone);
-        //if (isNaN(getPriceCumulativePhone)) getPriceCumulativePhone = 0;
-        //getPriceCumulativePhone = cumulaPhone + totalPhone;
-        //document.getElementById('lblCumulativePhone').innerHTML = getPriceCumulativePhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+        var getCumulativePhone = document.getElementById('lblCumulativePhone').innerHTML.split(",").join("");
+        var getPriceCumulativePhone = parseFloat(getCumulativePhone);
+        if (isNaN(getPriceCumulativePhone)) getPriceCumulativePhone = 0;
+        getPriceCumulativePhone = cumulaPhone + totalPhone;
+        document.getElementById('lblCumulativePhone').innerHTML = getPriceCumulativePhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         if (getPriceCumulativePhone > getLimitPhone) {
             document.getElementById("lblCumulativePhone").style.color = "#ff0000";
         }

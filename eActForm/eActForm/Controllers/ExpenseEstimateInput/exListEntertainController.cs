@@ -91,7 +91,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getLimitEmpByEmpId => " + ex.Message);
+                ExceptionManager.WriteError("getCumulativeByEmpId => " + ex.Message);
             }
 
 

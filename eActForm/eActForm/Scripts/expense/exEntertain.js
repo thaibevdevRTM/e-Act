@@ -4,6 +4,7 @@
     
 
     function getLimit() {
+        console.log("filejava");
         $exEntertain.clearValue();
         getLimitExpense();
     }
