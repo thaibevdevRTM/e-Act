@@ -25,7 +25,7 @@
 
 @if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
 {
-    ApproveFlowModel.flowApproveDetail flowApproveDetail = new ApproveFlowModel.flowApproveDetail();
+    ApproveFlowModel.flowApproveDetail flowApproveDetail = new ApproveFlowModel.flowApproveDetail("");
     flowApproveDetail.approveGroupName = "ผู้รับของ";
     flowApproveDetail.approveGroupNameEN = "Received By";
     flowApproveDetail.empFNameTH = "                                    ";
@@ -37,20 +37,31 @@
 
 @if (Model.activity_TBMMKT_Model.activityFormTBMMKT.statusNote != "FromPaper")
 {
-    <div class="text-center">
-        @if (TempData["approvePositionSignatureError"] != null)
+<div class="text-center">
+    @if (TempData["approvePositionSignatureError"] != null)
+    {
+        <div><p class="warning"><h3>@TempData["approvePositionSignatureError"]</h3> </p></div>
+    }
+    else
+    {
+        if (Model.approveFlowDetail == null)
         {
-            <div><p class="warning"><h3>@TempData["approvePositionSignatureError"]</h3> </p></div>
+            <div><p class="warning"><h4>ตรวจสอบไม่พบ flow อนุมัติ <br /> กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน<br /> เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4607,4580</h4> </p></div>
         }
         else
         {
-            if (Model.approveFlowDetail == null)
+
+            if (Model.approveDetailLists.Count > 0)
             {
-                <div><p class="warning"><h4>ตรวจสอบไม่พบ flow อนุมัติ <br /> กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน<br /> เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4607,4580</h4> </p></div>
+                var countLine = Model.approveDetailLists.FindAll(x => x.isShowInDoc).Count;
+                @genSignatureFromApproveDetail(1);
+                if (countLine > 6)
+                {
+                    @genSignatureFromApproveDetail(2);
+                }
             }
             else
             {
-
                 @Grid1();
                 var haveShowNameGreatherThanFive = 0;
                 foreach (var item in Model.approveFlowDetail)
@@ -64,10 +75,11 @@
                 {
                     @Grid2();
                 }
-
             }
+
         }
-    </div>
+    }
+</div>
 
 
     @helper Grid1()
@@ -332,5 +344,121 @@
                 }
             </tr>
         </table>
+    }
+
+
+    @helper genSignatureFromApproveDetail(int line)
+    {
+        <!-- ===================================================
+            ====================================================
+            first default get flow approve from approveDetail then approveDetail not fount will get flow from flowApprove
+            =====================================================
+            ====================================================
+        -->
+        string yu = "";
+        int startIndex = line == 1 ? 0 : 5;
+        var listShowInDoc = Model.approveDetailLists.FindAll(x => x.isShowInDoc);
+        <table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
+            <tr>
+                @for (int index = 0 + startIndex; index < listShowInDoc.Count && index < 5 + startIndex; index++)
+                {
+                    var item = listShowInDoc[index];
+                    <td style="width:140px;">
+                        @{
+
+
+                            if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
+                            {
+                                <div class="fontSigV1">
+                                    @item.approveGroupNameTH
+                                </div>
+                                <div class="fontSigV1">
+                                    (@item.approveGroupnameEN)
+                                </div>
+                            }
+                            else if (AppCode.hcForm.Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) && item.approveGroupId == "6074ADC7-F1E4-4544-8A65-AE9113E29999")
+                            {
+                                <div style="font-size:12.5px;">
+                                    ผู้ลงนาม
+                                </div>
+                                <div style="font-size:12.5px;">
+                                    (Endorser)
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="font-size:12.5px;">
+                                    @item.approveGroupNameTH
+                                </div>
+                                <div style="font-size:12.5px;">
+                                    (@item.approveGroupnameEN)
+                                </div>
+                            }
+
+
+                            if (item.statusId == "3")
+                            {
+
+                                <img width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], item.empId)" />
+
+                            }
+                            else
+                            {
+                                <img width="135" height="80" src="http://10.6.241.10/eAct/images/blank.png" />
+                            }
+
+
+
+                            var name = "";
+                            if (Model.activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng)
+                            {
+                                name = item.empName_EN;
+                            }
+                            else
+                            {
+                                name = yu + item.empName;
+                            }
+
+                            if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
+                            {
+                                <div style="text-align:center; margin-top:5px;" class="fontSigV1">@name</div>
+                            }
+                            else
+                            {
+                                <div style="text-align:center; margin-top:5px; font-size:12.5px;">@name</div>
+                            }
+
+
+                            var position = "";
+
+                            if (Model.activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng)
+                            {
+                                position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleEN;
+                            }
+                            else
+                            {
+                                position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleTH;
+                            }
+
+                            if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
+                            {
+                                <div style="text-align:center;height:50px;" class="fontSigV1">@Html.Raw(position)</div>
+                            }
+                            else
+                            {
+                                <div style="text-align:center; height:50px; font-size:12.5px;">@Html.Raw(position)</div>
+                            }
+
+
+
+
+                        }
+                    </td>
+                }
+            </tr>
+
+        </table>
+
+
     }
 }
