@@ -81,7 +81,7 @@ namespace eActForm.BusinessLayer
                         ,new SqlParameter("@actFormId", actId)
                     });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveFlowModel.flowApproveDetail()
+                             select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
                              {
                                  id = dr["id"].ToString(),
                                  rangNo = (int)dr["rangNo"],
@@ -89,7 +89,7 @@ namespace eActForm.BusinessLayer
                                  empEmail = dr["empEmail"].ToString(),
                                  empFNameTH = dr["empFNameTH"].ToString(),
                                  empLNameTH = dr["empLNameTH"].ToString(),
-                                 empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
+                                 //empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
                                  approveGroupName = dr["approveGroupName"].ToString(),
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
                                  isShowInDoc = (bool)dr["showInDoc"],

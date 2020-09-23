@@ -294,6 +294,8 @@ namespace eActForm.Models
         public string email { get; set; }
         public string detail { get; set; }
         public string hireDate { get; set; }
+        public string empGroupName { get; set; }
+        public string empGroupNameTH { get; set; }
     }
 
     public class PurposeModel : ActBaseModel

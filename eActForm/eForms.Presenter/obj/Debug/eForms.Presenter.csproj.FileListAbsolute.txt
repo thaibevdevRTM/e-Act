@@ -72,3 +72,12 @@ D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\eForms.Pr
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb
+D:\Thaibev\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.dll
+D:\Thaibev\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Presenter.pdb
+D:\Thaibev\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.dll
+D:\Thaibev\e-Act\eActForm\eForms.Presenter\bin\Debug\eForms.Models.pdb
+D:\Thaibev\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csprojAssemblyReference.cache
+D:\Thaibev\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CoreCompileInputs.cache
+D:\Thaibev\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.csproj.CopyComplete
+D:\Thaibev\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.dll
+D:\Thaibev\e-Act\eActForm\eForms.Presenter\obj\Debug\eForms.Presenter.pdb

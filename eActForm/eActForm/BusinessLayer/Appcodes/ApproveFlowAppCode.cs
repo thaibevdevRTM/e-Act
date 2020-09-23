@@ -121,27 +121,15 @@ namespace eActForm.BusinessLayer
                 {
                     model.flowMain = lists[0];
                     string checkFlowApprove = checkFlowBeforeByActId(actFormId);
-                    if (!string.IsNullOrEmpty(checkFlowApprove))
+                    checkFlowApprove = string.IsNullOrEmpty(checkFlowApprove) ? model.flowMain.id : checkFlowApprove;
+
+                    if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || (AppCode.hcForm.Contains(getMasterType)))
                     {
-                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || (AppCode.hcForm.Contains(getMasterType)))
-                        {
-                            model.flowDetail = getFlowDetailExpense(checkFlowApprove, actFormId);
-                        }
-                        else
-                        {
-                            model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
-                        }
+                        model.flowDetail = getFlowDetailExpense(checkFlowApprove, actFormId);
                     }
                     else
                     {
-                        if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || (AppCode.hcForm.Contains(getMasterType)))
-                        {
-                            model.flowDetail = getFlowDetailExpense(model.flowMain.id, actFormId);
-                        }
-                        else
-                        {
-                            model.flowDetail = getFlowDetail(model.flowMain.id, actFormId);
-                        }
+                        model.flowDetail = getFlowDetail(checkFlowApprove, actFormId);
                     }
 
                 }
@@ -216,7 +204,7 @@ namespace eActForm.BusinessLayer
                         ,new SqlParameter("@actFormId", actId)
                     });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveFlowModel.flowApproveDetail()
+                             select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
                              {
                                  id = dr["id"].ToString(),
                                  rangNo = (int)dr["rangNo"],
@@ -224,7 +212,7 @@ namespace eActForm.BusinessLayer
                                  empEmail = dr["empEmail"].ToString(),
                                  empFNameTH = dr["empFNameTH"].ToString(),
                                  empLNameTH = dr["empLNameTH"].ToString(),
-                                 empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
+                                 //empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
                                  approveGroupName = dr["approveGroupName"].ToString(),
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
                                  isShowInDoc = (bool)dr["showInDoc"],
@@ -261,7 +249,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveDetail"
                     , new SqlParameter[] { new SqlParameter("@flowId", flowId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveFlowModel.flowApproveDetail()
+                             select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
                              {
                                  id = dr["id"].ToString(),
                                  rangNo = (int)dr["rangNo"],
@@ -269,7 +257,7 @@ namespace eActForm.BusinessLayer
                                  empEmail = dr["empEmail"].ToString(),
                                  empFNameTH = dr["empFNameTH"].ToString(),
                                  empLNameTH = dr["empLNameTH"].ToString(),
-                                 empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
+                                 //empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
                                  approveGroupName = dr["approveGroupName"].ToString(),
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
                                  isShowInDoc = (bool)dr["showInDoc"],
@@ -297,7 +285,7 @@ namespace eActForm.BusinessLayer
                                             , new SqlParameter("@actFormId",actId)
                     });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveFlowModel.flowApproveDetail()
+                             select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
                              {
                                  id = dr["id"].ToString(),
                                  rangNo = (int)dr["rangNo"],
@@ -305,7 +293,7 @@ namespace eActForm.BusinessLayer
                                  empEmail = dr["empEmail"].ToString(),
                                  empFNameTH = dr["empFNameTH"].ToString(),
                                  empLNameTH = dr["empLNameTH"].ToString(),
-                                 empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
+                                 //empPositionTitleTH = dr["empPositionTitleTH"].ToString(), get position from AD
                                  approveGroupId = dr["approveGroupId"].ToString(),//เฟรมเพิ่ม 20200113 เพิ่มapproveGroupId ไว้ใช้ดึงชือ่ผู้อนุมัติแสดงบนหนังสือฟอร์ม
                                  approveGroupName = dr["approveGroupName"].ToString(),
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
@@ -334,7 +322,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[]{ new SqlParameter("@flowId", flowId)
                                    , new SqlParameter("@actFormId", actId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveFlowModel.flowApproveDetail()
+                             select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
                              {
                                  id = dr["id"].ToString(),
                                  rangNo = (int)dr["rangNo"],
@@ -342,7 +330,7 @@ namespace eActForm.BusinessLayer
                                  empEmail = dr["empEmail"].ToString(),
                                  empFNameTH = dr["empFNameTH"].ToString(),
                                  empLNameTH = dr["empLNameTH"].ToString(),
-                                 empPositionTitleTH = dr["empPositionTitleTH"].ToString(),
+                                 //empPositionTitleTH = dr["empPositionTitleTH"].ToString(), get from AD
                                  approveGroupId = dr["approveGroupId"].ToString(),
                                  approveGroupName = dr["approveGroupName"].ToString(),
                                  approveGroupNameEN = dr["approveGroupNameEN"].ToString(),
@@ -353,7 +341,7 @@ namespace eActForm.BusinessLayer
                                  buEN = dr["empDivisionEN"].ToString(),
                                  empFNameEN = dr["empFNameEN"].ToString(),
                                  empLNameEN = dr["empLNameEN"].ToString(),
-                                 empPositionTitleEN = dr["empPositionTitleEN"].ToString()
+                                 //empPositionTitleEN = dr["empPositionTitleEN"].ToString()
                              }).ToList();
                 return lists;
             }
@@ -379,7 +367,7 @@ namespace eActForm.BusinessLayer
                     ,new SqlParameter("@productType",model.productTypeId)
                     ,new SqlParameter("@empId",model.empId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveFlowModel.flowApproveDetail()
+                             select new ApproveFlowModel.flowApproveDetail("")
                              {
                                  id = dr["id"].ToString(),
                                  companyId = dr["companyId"].ToString(),

@@ -549,6 +549,7 @@ namespace eActForm.BusinessLayer
                     }
                     else if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formCR_IT_FRM_314"])
                     {
+                        
                         index_each = 0;
                         List<TB_Act_ActivityChoiceSelectModel> tempList = activity_TBMMKT_Model.tB_Act_ActivityChoiceSelectModel.Where(x => x.type == "ChooseRequest").ToList();
                         if (tempList.Count > 0)

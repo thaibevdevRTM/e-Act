@@ -18,7 +18,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowDetailByTypeFormId"
                     , new SqlParameter("@typeFormId", typeFormId));
                 var lists = (from DataRow d in ds.Tables[0].Rows
-                             select new ApproveFlowModel.flowApproveDetail()
+                             select new ApproveFlowModel.flowApproveDetail("")
                              {                                 
                                  id = d["flowId"].ToString(),                    
                                  empGroup = d["empGroup"].ToString(),

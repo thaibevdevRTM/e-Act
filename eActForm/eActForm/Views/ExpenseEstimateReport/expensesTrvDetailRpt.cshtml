@@ -62,7 +62,7 @@
                 }
                 else
                 {
-                    if (Model.expensesDetailModel.costDetailLists[@index].listChoiceId == AppCode.Expenses.hotelExpense && Model.expensesDetailModel.costDetailLists[@index].unit != 0)
+                    if (Model.expensesDetailModel.costDetailLists[@index].listChoiceId == new AppCode.Expenses(Model.activityFormModel.createdByUserId).hotelExpense && Model.expensesDetailModel.costDetailLists[@index].unit != 0)
                     {
                         <label>@Model.expensesDetailModel.costDetailLists[@index].unitPriceDisplay </label>
                     }
