@@ -96,8 +96,16 @@ namespace eActForm.Models
             
 
             public string groupName;
+
+            public Expenses()
+            {
+                List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(UtilsAppCode.Session.User.empId);
+                this.groupName = model.Count > 0 ? model[0].empGroupName : "";
+            }
+
             public Expenses(string empId)
             {
+                empId = empId == null ? UtilsAppCode.Session.User.empId : empId;
                 List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
                 this.groupName = model.Count > 0 ? model[0].empGroupName : "";
             }
