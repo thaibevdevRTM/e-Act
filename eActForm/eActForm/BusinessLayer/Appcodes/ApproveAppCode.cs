@@ -458,7 +458,7 @@ namespace eActForm.BusinessLayer
                                                  updatedByUserId = dr["updatedByUserId"].ToString(),
                                                  approveGroupNameTH = dr["groupNameTH"].ToString(),
                                                  approveGroupnameEN = dr["groupNameEN"].ToString(),
-                                                 isShowInDoc = (bool)dr["showInDoc"]
+                                                 isShowInDoc = (bool?)dr["showInDoc"]
                                              }).ToList();
 
 
