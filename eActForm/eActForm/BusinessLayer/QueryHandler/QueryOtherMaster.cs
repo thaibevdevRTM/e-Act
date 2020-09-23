@@ -28,6 +28,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                                  subType = d["subType"].ToString(),
                                  val1 = d["val1"].ToString(),
                                  val2 = d["val2"].ToString(),
+                                 glCode = d["glCode"].ToString(),
                                  sort = d["sort"].ToString(),
                                  delFlag = bool.Parse(d["delFlag"].ToString()),
                                  createdDate = DateTime.Parse(d["createdDate"].ToString()),

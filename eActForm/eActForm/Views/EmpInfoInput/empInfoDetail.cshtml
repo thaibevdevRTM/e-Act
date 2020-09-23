@@ -191,13 +191,15 @@
         }).done(function (response) {
             console.log(response);
             if (response.Data != null) {
-                $("#lblEmpName").val(response.Data.empName);
-                $("#lblLvl").val(response.Data.level);
+                $("#lblEmpName").text(response.Data.empName);
+                $("#lblLvl").text(response.Data.level);
                 $("#hdCompId").val(response.Data.compId);
                 $("#lblEmpPosition").text(response.Data.position);
                 $("#lblDept").text(response.Data.department);
                 $("#lblComp").text(response.Data.companyName);
                 $("#lblHireDate").text(response.Data.hireDate);
+
+
 
                 if (response.Data.hireDate == '') { alert("ไม่มีข้อมูลเริ่มทำงานกรุณาติดต่อเจ้าหน้าที่"); }
 

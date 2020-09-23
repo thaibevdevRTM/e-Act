@@ -40,6 +40,7 @@
                         <button type="button" id="btnDel1[@i]" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hiddenTypeId" })
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].productId, new { Value = @valEntertain, @class = "hiddenValEntertain" })
+                        @Html.HiddenFor(x => x.activityOfEstimateList[i].glCode)
                     </td>
                     <td style="text-align:right">
                         @Html.TextBox("activityOfEstimateList[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
@@ -125,12 +126,13 @@
                         <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
                         @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
                         @Html.HiddenFor(x => x.activityOfEstimateList2[i].productId)
+                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].glCode)
                     </td>
                     <td style="text-align:right">
                         @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
                       new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail2(this)" , onfocus = "autocompleDetail2(this)" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail2(this)" , onclick = "autocompleDetail2(this)" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal2()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
 
@@ -299,7 +301,9 @@
      if(@Model.activityFormTBMMKT.statusId == "2" || @Model.activityFormTBMMKT.statusId == "3" || @Model.activityFormTBMMKT.statusId =="6" && '@Model.activityFormTBMMKT.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
         document.getElementById("addEnt").style.display = "none";
         document.getElementById("addEx").style.display = "none";
-     }
+    }
+
+    
 
     function autocompleDetail1(i) {
         var rowIndex = $(i).closest('tr').index();
@@ -329,7 +333,7 @@
                 results: function (resultsCount) {
                 }
             }, select: function (event, ui) {
-
+                $("#activityOfEstimateList_" + rowIndex + "__glCode").val(ui.item.glCode);
                 $("#activityOfEstimateList_" + rowIndex + "__productId").val(ui.item.id);
                 $("#" + i.id).val(ui.item.id);
 
@@ -417,6 +421,11 @@
             var elms = document.getElementsByClassName('hiddenValEntertain')
             for (var i = 0; i < elms.length; i++) {
                 elms[i].setAttribute("value", "@valEntertain");
+            }
+
+            var elms = document.getElementsByClassName('hiddenGlCode')
+            for (var i = 0; i < elms.length; i++) {
+                elms[i].setAttribute("value", "");
             }
         });
         $('.datepicker').datepicker({
