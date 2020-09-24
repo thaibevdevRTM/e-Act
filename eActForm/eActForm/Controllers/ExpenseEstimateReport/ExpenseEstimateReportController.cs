@@ -12,6 +12,8 @@ namespace eActForm.Controllers
 
         public ActionResult expensesTrvDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+
+            #region init
             CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT
             {
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
@@ -31,13 +33,13 @@ namespace eActForm.Controllers
             {
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
+            #endregion
 
 
-            AppCode.Expenses expenseEnum = new AppCode.Expenses(activity_TBMMKT_Model.activityFormModel.createdByUserId);
+            AppCode.Expenses expenseEnum = new AppCode.Expenses(activity_TBMMKT_Model.approveFlowDetail.Count > 0 ? activity_TBMMKT_Model.approveFlowDetail[0].empId : activity_TBMMKT_Model.activityFormModel.createdByUserId);
             modelHistory.costDetailLists = QueryGetActivityEstimateByActivityId.getHistoryByActivityId(activity_TBMMKT_Model.activityFormModel.id);
             model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, QueryGetGL.getGLTypeByEmpGroupName(expenseEnum.groupName));
             modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, expenseEnum.hotelExpense);
-
             modelSub.costDetailLists = modelSub.costDetailLists.Where(x => x.unitPrice > 0).ToList();
 
 
