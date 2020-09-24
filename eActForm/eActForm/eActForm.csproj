@@ -447,12 +447,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Antlr3.Runtime.dll" />
-    <Content Include="bin\eActForm.dll" />
-    <Content Include="bin\eActForm.pdb" />
-    <Content Include="bin\eForms.Models.dll" />
-    <Content Include="bin\eForms.Models.pdb" />
-    <Content Include="bin\eForms.Presenter.dll" />
-    <Content Include="bin\eForms.Presenter.pdb" />
     <Content Include="bin\EntityFramework.SqlServer.xml" />
     <Content Include="bin\EntityFramework.xml" />
     <Content Include="bin\en\eActForm.resources.dll" />
@@ -2844,8 +2838,6 @@
     <Content Include="ActSummaryDetail\f063c365-1e86-433e-bbb9-1fc6b58a386c.pdf" />
     <Content Include="Content\vendors\echarts\build\build.sh" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="bin\ApplicationInsights.config" />
-    <Content Include="bin\eActForm.dll.config" />
     <Content Include="bin\roslyn\csc.exe.config" />
     <Content Include="bin\roslyn\csc.rsp" />
     <Content Include="bin\roslyn\csi.exe.config" />
