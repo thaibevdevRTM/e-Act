@@ -174,7 +174,6 @@ namespace eActForm.BusinessLayer.Appcodes
 
         public static DateTime converStrToDatetimeWithFormat(string p_date, string formatDate)
         {
-            p_date = p_date.Length > 10 ? p_date.Split(' ')[0] : p_date;
             return DateTime.ParseExact(p_date, formatDate, CultureInfo.InvariantCulture);
         }
         public static User getEmpFromApi(string empId)
