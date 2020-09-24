@@ -8,7 +8,6 @@
     string valWash = "D05DA2C9-82AB-43F7-8479-D63F24F9D20D";
     string valPhone = "048487B9-330A-4A65-8788-3E04004418F0";
 }
-<script src="~/Scripts/expense/exEntertain.js"></script>
 
 <div class="col-lg-12 col-xs-12">
     <fieldset>
@@ -41,7 +40,6 @@
                         <button type="button" id="btnDel1[@i]" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hiddenTypeId" })
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].productId, new { Value = @valEntertain, @class = "hiddenValEntertain" })
-                        @Html.HiddenFor(x => x.activityOfEstimateList[i].glCode)
                     </td>
                     <td style="text-align:right">
                         @Html.TextBox("activityOfEstimateList[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
@@ -127,7 +125,6 @@
                         <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
                         @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
                         @Html.HiddenFor(x => x.activityOfEstimateList2[i].productId)
-                        @Html.HiddenFor(x => x.activityOfEstimateList2[i].glCode)
                     </td>
                     <td style="text-align:right">
                         @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
@@ -307,9 +304,11 @@
     
 
     function autocompleDetail1(i) {
+        
         var rowIndex = $(i).closest('tr').index();
         $("#activityOfEstimateList_" + rowIndex + "__productId").val('');
-        $("#"+i.id).autocomplete({
+        $("#" + i.id).autocomplete({
+            autoFocus: true,
             source: function (request, response) {
                 $.ajax({
                     url: '@Url.Action("getOtherMasterByType", "eAct")',
@@ -424,10 +423,6 @@
                 elms[i].setAttribute("value", "@valEntertain");
             }
 
-            var elms = document.getElementsByClassName('hiddenGlCode')
-            for (var i = 0; i < elms.length; i++) {
-                elms[i].setAttribute("value", "");
-            }
         });
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
@@ -448,7 +443,6 @@
 
 
     function getLimitExpense() {
-        console.log("tttt");
         $.ajax({
             type: 'POST',
             url: '@Url.Action("getLimitEmpByEmpId", "ExpenseEstimateInput")',
@@ -499,7 +493,7 @@
             var x = document.getElementsByName("activityOfEstimateList[" + i + "].total");
             var rowtotal = parseFloat($(x).val());
             var productId = $("#activityOfEstimateList_" + i + "__productId").val()
-            if (isNaN(rowtotal)) rowtotal = 0;
+            if (isNaN(rowtotal)) rowtotal = 0.00;
             if (productId == '@valEntertain') {
                 totalEntertain = totalEntertain + rowtotal;
                 document.getElementById('lblUseEntertain').innerHTML = totalEntertain.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
@@ -525,10 +519,12 @@
         var totalWash = 0.00;
         var totalPhone = 0.00;
         var totalOther = 0.00;
-        document.getElementById('lblUseBypass').innerHTML = totalBypass;
-        document.getElementById('lblUseWash').innerHTML = totalWash;
-        document.getElementById('lblUsePhone').innerHTML = totalPhone;
-        document.getElementById('lblUseOther').innerHTML = totalOther;
+
+        console.log(totalBypass);
+        document.getElementById('lblUseBypass').innerHTML = totalBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        document.getElementById('lblUseWash').innerHTML = totalWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        document.getElementById('lblUsePhone').innerHTML = totalPhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        document.getElementById('lblUseOther').innerHTML = totalOther.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         //count row ทั้งหมด
         var rowCount = parseInt($('#tbl_CashDetail tr.tagCountRowTravel').length);
         for (i = 0; i < rowCount; i++) {
@@ -539,23 +535,19 @@
 
 
 
-            if (isNaN(rowtotal)) rowtotal = 0;
+            if (isNaN(rowtotal)) rowtotal = 0.00;
 
             if (productId == '@valBypass') {
                 totalBypass = totalBypass + rowtotal;
                 document.getElementById('lblUseBypass').innerHTML = totalBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
             }
             else if (productId == '@valWash') {
-
                 totalWash = totalWash + rowtotal;
                 document.getElementById('lblUseWash').innerHTML = totalWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
             }
             else if (productId == '@valPhone') {
                 totalPhone = totalPhone + rowtotal;
                 document.getElementById('lblUsePhone').innerHTML = totalPhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-
-                var getPriceCumulativePhone = cumulaPhone + totalPhone;
-                document.getElementById('lblCumulativePhone').innerHTML = getPriceCumulativePhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
             }
             else {
                 totalOther = totalOther + rowtotal;
@@ -567,7 +559,7 @@
 
         var getCumulativeBypass = document.getElementById('lblCumulativeBypass').innerHTML.split(",").join("");
         var getPriceCumulativeBypass = parseFloat(getCumulativeBypass);
-        if (isNaN(getPriceCumulativeBypass)) getPriceCumulativeBypass = 0;
+        if (isNaN(getPriceCumulativeBypass)) getPriceCumulativeBypass = 0.00;
         getPriceCumulativeBypass = cumulaBypass + totalBypass;
         document.getElementById('lblCumulativeBypass').innerHTML = getPriceCumulativeBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
@@ -581,7 +573,7 @@
 
         var getCumulativeCarWash = document.getElementById('lblCumulativeCarWash').innerHTML.split(",").join("");
         var getPriceCumulativeCarWash = parseFloat(getCumulativeCarWash);
-        if (isNaN(getPriceCumulativeCarWash)) getPriceCumulativeCarWash = 0;
+        if (isNaN(getPriceCumulativeCarWash)) getPriceCumulativeCarWash = 0.00;
         getPriceCumulativeCarWash = cumulaCarWash + totalWash;
         document.getElementById('lblCumulativeCarWash').innerHTML = getPriceCumulativeCarWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
@@ -595,7 +587,7 @@
 
         var getCumulativePhone = document.getElementById('lblCumulativePhone').innerHTML.split(",").join("");
         var getPriceCumulativePhone = parseFloat(getCumulativePhone);
-        if (isNaN(getPriceCumulativePhone)) getPriceCumulativePhone = 0;
+        if (isNaN(getPriceCumulativePhone)) getPriceCumulativePhone = 0.00;
         getPriceCumulativePhone = cumulaPhone + totalPhone;
         document.getElementById('lblCumulativePhone').innerHTML = getPriceCumulativePhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         if (getPriceCumulativePhone > getLimitPhone) {
@@ -608,7 +600,7 @@
 
         var getCumulativeOther = document.getElementById('lblCumulativeOther').innerHTML.split(",").join("");
         var getPriceCumulativeOther = parseFloat(getCumulativeOther);
-        if (isNaN(getPriceCumulativeOther)) getPriceCumulativeOther = 0;
+        if (isNaN(getPriceCumulativeOther)) getPriceCumulativeOther = 0.00;
         getPriceCumulativeOther = cumulaOther + totalOther;
         document.getElementById('lblCumulativeOther').innerHTML = getPriceCumulativeOther.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 

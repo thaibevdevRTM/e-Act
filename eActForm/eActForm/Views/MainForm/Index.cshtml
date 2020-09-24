@@ -133,7 +133,7 @@
 
 @foreach (var item in Model.scristModelList)
 {
-    var getscript = @item.scriptsName.Replace("\n", "/");
+    var getscript = @item.scriptsName.Replace("\\", "/").ToString();
     <script src="@getscript"></script>
 }
 
