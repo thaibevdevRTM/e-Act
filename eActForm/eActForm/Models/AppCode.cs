@@ -130,6 +130,11 @@ namespace eActForm.Models
             public const string sales = "65E3590D-8BE4-412B-A63C-65E860902B90";
             public const string salesSupport = "2B894845-42B5-4968-9F30-1DDFAA74EF14";
         }
+
+        public static class GLVat
+        {
+            public const string gl = "161310000";
+        }
         public static class SSGLId
         {
             public const string vat = "CE4DA8CE-DB49-4E9F-931D-F33778B9FBC5";
