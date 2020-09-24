@@ -458,7 +458,7 @@ namespace eActForm.BusinessLayer
                                                  updatedByUserId = dr["updatedByUserId"].ToString(),
                                                  approveGroupNameTH = dr["groupNameTH"].ToString(),
                                                  approveGroupnameEN = dr["groupNameEN"].ToString(),
-                                                 isShowInDoc = (bool?)dr["showInDoc"]
+                                                 isShowInDoc = dr["showInDoc"] is DBNull ? null : (bool?)dr["showInDoc"]
                                              }).ToList();
 
 
@@ -498,7 +498,7 @@ namespace eActForm.BusinessLayer
                                  }).ToList();
                     models.approveModel = lists[0];
 
-
+                    models.isApproveDetailListsShowDocHaveNull = models.approveDetailLists.Where(x => x.isShowInDoc == null).Count() > 0 ? true : false;
 
                 }
 
