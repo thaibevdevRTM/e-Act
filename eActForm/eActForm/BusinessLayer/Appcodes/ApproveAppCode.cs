@@ -414,7 +414,7 @@ namespace eActForm.BusinessLayer
                             ,new SqlParameter("@updatedDate",DateTime.Now)
                             ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
                             ,new SqlParameter("@showInDoc",m.isShowInDoc)
-                            ,new SqlParameter("@appvoceGroupId",m.approveGroupId)
+                            ,new SqlParameter("@approveGroupId",m.approveGroupId)
                         });
                 }
 
