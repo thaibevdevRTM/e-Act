@@ -18,6 +18,7 @@ namespace eActForm.Models
         }
         public class approveModels
         {
+            public bool isApproveDetailListsShowDocHaveNull { get; set; }
             public string masterTypeFormId { get; set; }
             public approveModel approveModel { get; set; }
             public List<approveDetailModel> approveDetailLists { get; set; }
