@@ -143,7 +143,6 @@
                     <img width="30em" height="30em" src="~/images/highwayv2.png" />
                     <label>ค่าทางด่วน</label>
                 </div>
-
                 <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
                     <label>วงเงิน</label>
                 </div>
@@ -291,8 +290,6 @@
 
     $(document).ready(function () {
         getLimitExpense();
-
-
        // document.getElementById("btnDel1[0]").disabled = true;
     });
 
@@ -333,7 +330,6 @@
                 results: function (resultsCount) {
                 }
             }, select: function (event, ui) {
-                $("#activityOfEstimateList_" + rowIndex + "__glCode").val(ui.item.glCode);
                 $("#activityOfEstimateList_" + rowIndex + "__productId").val(ui.item.id);
                 $("#" + i.id).val(ui.item.id);
 
