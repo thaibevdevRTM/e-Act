@@ -178,9 +178,9 @@ namespace eActForm.Controllers
                     {
                         listChoiceId = "",
                         listChoiceName = "vat",
-                        productDetail = lstGL.Where(x => x.id == AppCode.SSGLId.vat).FirstOrDefault()?.groupGL,
+                        productDetail = lstGL.Where(x => x.GL == AppCode.GLVat.gl).FirstOrDefault()?.groupGL,
                         total = vatsum,
-                        glCode = lstGL.Where(x => x.id == AppCode.SSGLId.vat).FirstOrDefault()?.GL,
+                        glCode = lstGL.Where(x => x.GL == AppCode.GLVat.gl).FirstOrDefault()?.GL,
                     });
                 }
 
