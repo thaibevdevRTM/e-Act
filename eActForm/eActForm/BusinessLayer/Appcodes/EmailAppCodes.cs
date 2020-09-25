@@ -707,9 +707,9 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
                 var models = (from DataRow dr in ds.Tables[0].Rows
-                              select new ApproveModel.approveEmailDetailModel()
+                              select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
-                                  empEmail = dr["empEmail"].ToString(),
+                                  //empEmail =  dr["empEmail"].ToString()
                                   empPrefix = dr["empPrefix"].ToString(),
                                   empName = dr["empName"].ToString(),
                                   empName_EN = dr["empName_EN"].ToString(),
@@ -737,7 +737,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
                 var models = (from DataRow dr in ds.Tables[0].Rows
-                              select new ApproveModel.approveEmailDetailModel()
+                              select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(),dr["empEmail"].ToString())
                               {
                                   empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
@@ -763,7 +763,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
                 var models = (from DataRow dr in ds.Tables[0].Rows
-                              select new ApproveModel.approveEmailDetailModel()
+                              select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(),dr["empEmail"].ToString())
                               {
                                   empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
@@ -968,7 +968,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
                 var models = (from DataRow dr in ds.Tables[0].Rows
-                              select new ApproveModel.approveEmailDetailModel()
+                              select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(), dr["empEmail"].ToString())
                               {
                                   empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
@@ -1081,7 +1081,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
 
                 var models = (from DataRow dr in ds.Tables[0].Rows
-                              select new ApproveModel.approveEmailDetailModel()
+                              select new ApproveModel.approveEmailDetailModel(dr["empId"].ToString(),dr["empEmail"].ToString())
                               {
                                   empEmail = dr["empEmail"].ToString(),
                                   empPrefix = dr["empPrefix"].ToString(),
