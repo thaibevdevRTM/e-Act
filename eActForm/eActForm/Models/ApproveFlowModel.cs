@@ -9,6 +9,11 @@ namespace eActForm.Models
         {
             public flowApprove flowMain { get; set; }
             public List<flowApproveDetail> flowDetail { get; set; }
+
+            public approveFlowModel()
+            {
+                flowDetail = new List<flowApproveDetail>();
+            }
         }
         public class flowApprove : ActBaseModel
         {
