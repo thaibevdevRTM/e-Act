@@ -80,10 +80,6 @@
     }
 
 </script>
-@{ 
-
-    var expenseEnum = new AppCode.Expenses();
-}
 <table style="width: 100%;border-style: solid;border-width: 0px 0px 0px 0px; border-collapse: collapse;">
     <tr style="border-bottom:none;">
         <td>
@@ -168,7 +164,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (item.listChoiceId == expenseEnum.hotelExpense )
+                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense )
                                 {
                                     <div>
                                         <input id="chkMultiPrice" type="checkbox" onchange="chkMultiPrice_change()" name=""> ราคาที่พักต่างกัน
@@ -200,8 +196,8 @@
 
 
 
-                                @if (item.listChoiceId == expenseEnum.hotelExpense 
-                                    || item.listChoiceId == expenseEnum.planeExpense )
+                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense 
+                                    || item.listChoiceId == AppCode.Expenses.planeExpense )
                                 {
 
                                     @Html.TextBoxFor(x => item.vat, "{0:n2}", new
