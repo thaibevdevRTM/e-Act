@@ -141,7 +141,7 @@
                         <td style="border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse; text-align:right;" class="fontDocSmall">@string.Format("{0:n2}", @item.total)</td>
                     </tr>
 
-                    totalEntertainment = item.total == null ? 0 + totalEntertainment : item.total + total;
+                    totalEntertainment = item.total == null ? 0 + totalEntertainment : totalEntertainment + item.total;
                 }
             <tr>
                 <td colspan="4" class="font12" style="border-style: solid;border-width: 1px 1px 1px 1px; border-collapse: collapse; text-align:right">
