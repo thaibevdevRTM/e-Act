@@ -35,11 +35,9 @@ namespace eActForm.Controllers
             };
             #endregion
 
-
-            AppCode.Expenses expenseEnum = new AppCode.Expenses(activity_TBMMKT_Model.activityFormModel.empId);
             modelHistory.costDetailLists = QueryGetActivityEstimateByActivityId.getHistoryByActivityId(activity_TBMMKT_Model.activityFormModel.id);
-            model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, QueryGetGL.getGLTypeByEmpGroupName(expenseEnum.groupName));
-            modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, expenseEnum.hotelExpense);
+            model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
+            modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, AppCode.Expenses.hotelExpense);
             modelSub.costDetailLists = modelSub.costDetailLists.Where(x => x.unitPrice > 0).ToList();
 
 
@@ -58,7 +56,7 @@ namespace eActForm.Controllers
                         total = model2.costDetailLists[i].total;
                     }
 
-                    if (model2.costDetailLists[i].listChoiceId == expenseEnum.hotelExpense && model2.costDetailLists[i].unit != 0 && model2.costDetailLists[i].unitPrice == 0)
+                    if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model2.costDetailLists[i].unit != 0 && model2.costDetailLists[i].unitPrice == 0)
                     {
                         string multiPrice = "";
 

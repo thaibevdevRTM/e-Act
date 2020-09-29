@@ -400,6 +400,7 @@ namespace eActForm.Models
     public class GetDataGL
     {
         public string GL { get; set; }
+        public string GLSale { get; set; }
         public string id { get; set; }
         public string groupGL { get; set; }
     }

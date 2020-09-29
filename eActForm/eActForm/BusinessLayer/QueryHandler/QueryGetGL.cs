@@ -5,45 +5,30 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using WebLibrary;
 
 namespace eActForm.BusinessLayer
 {
     public class QueryGetGL
     {
-        public static string getGLTypeByEmpGroupName(string empGroupName)
+        public static string getGL(List<GetDataGL> glList,string glCodeId ,string empId)
         {
             try
             {
-                if (empGroupName.Equals("Spirits Product"))
+                string rtn = "";
+                AppCode.Expenses expenseEnum = new AppCode.Expenses(empId);
+                var list = glList.Where(x => x.id == glCodeId);
+                if (list != null && list.Count() > 0)
                 {
-                    return AppCode.GLType.GLSale;
+                    rtn = expenseEnum.groupName.Equals("Spirits Product") ? list.FirstOrDefault().GLSale : list.FirstOrDefault().GL;
                 }
-                else
-                {
-                    return AppCode.GLType.GLSaleSupport;
-                }
+                return rtn;
+
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                throw new Exception("getGLTypeByEmpGroupName >> " + ex.Message);
-            }
-        }
-        public static string getDivisionIdByEmpGroupName(string empGroupName)
-        {
-            try
-            {
-                if (empGroupName.Equals("Spirits Product"))
-                {
-                    return AppCode.Division.sales;
-                }
-                else
-                {
-                    return AppCode.Division.salesSupport;
-                }
-            }catch(Exception ex)
-            {
-                throw new Exception("getDivisionIdByEmpGroupName >> " + ex.Message);
+                throw new Exception("getGL >> " + ex.Message);
             }
         }
         public static List<GetDataGL> getGLMasterByDivisionId(string divisionId)
@@ -58,6 +43,7 @@ namespace eActForm.BusinessLayer
                              {
                                  id = d["id"].ToString(),
                                  GL = d["GL"].ToString(),
+                                 GLSale = d["GLSales"].ToString(),
                                  groupGL = d["GroupGL"].ToString(),
                              });
                 return lists.ToList();
