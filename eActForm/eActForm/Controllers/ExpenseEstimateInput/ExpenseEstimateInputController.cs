@@ -21,7 +21,7 @@ namespace eActForm.Controllers
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
 
-            AppCode.Expenses expenseEnum = new AppCode.Expenses(activity_TBMMKT_Model.approveFlowDetail.Count > 0 ? activity_TBMMKT_Model.approveFlowDetail[0].empId :  activity_TBMMKT_Model.activityFormModel.createdByUserId);
+            AppCode.Expenses expenseEnum = new AppCode.Expenses(activity_TBMMKT_Model.activityFormModel.empId);
             if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             {
                 List<TB_Act_master_list_choiceModel> lst = new List<TB_Act_master_list_choiceModel>();

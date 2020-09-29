@@ -35,6 +35,8 @@
                 <li>@Html.ActionLink("Horeca ยืมเงินทดรอง", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formAdvHcmId"] }, null)</li>
                 <li>@Html.ActionLink("Horeca Travelling Form", "Index", "MainForm", new { typeForm = Activity_Model.activityType.HCM.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formTrvHcmId"] }, null)</li>
             }
+            <li>@Html.ActionLink("ใบเบิกค่ารับรองพนักงาน", "Index", "MainForm", new { typeForm = Activity_Model.activityType.EXPENSE.ToString(), master_type_form_id = ConfigurationManager.AppSettings["formReceptions"] }, null)</li>
+
         </ul>
     </li>
 }

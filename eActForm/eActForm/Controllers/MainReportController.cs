@@ -129,7 +129,7 @@ namespace eActForm.Controllers
             #region "ดึงข้อมูล GL "
             //ฟอร์มที่ใช้เป็นของ saleSupport
             List<GetDataGL> lstGL = new List<GetDataGL>();
-            AppCode.Expenses expenseEnum = new AppCode.Expenses(activity_TBMMKT_Model.approveFlowDetail.Count > 0 ? activity_TBMMKT_Model.approveFlowDetail[0].empId : activity_TBMMKT_Model.activityFormModel.createdByUserId);
+            AppCode.Expenses expenseEnum = new AppCode.Expenses(activity_TBMMKT_Model.activityFormModel.empId);
             lstGL = QueryGetGL.getGLMasterByDivisionId(QueryGetGL.getDivisionIdByEmpGroupName(expenseEnum.groupName));
             #endregion
 

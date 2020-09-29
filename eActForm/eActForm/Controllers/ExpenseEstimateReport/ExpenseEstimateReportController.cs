@@ -36,7 +36,7 @@ namespace eActForm.Controllers
             #endregion
 
 
-            AppCode.Expenses expenseEnum = new AppCode.Expenses(activity_TBMMKT_Model.approveFlowDetail.Count > 0 ? activity_TBMMKT_Model.approveFlowDetail[0].empId : activity_TBMMKT_Model.activityFormModel.createdByUserId);
+            AppCode.Expenses expenseEnum = new AppCode.Expenses(activity_TBMMKT_Model.activityFormModel.empId);
             modelHistory.costDetailLists = QueryGetActivityEstimateByActivityId.getHistoryByActivityId(activity_TBMMKT_Model.activityFormModel.id);
             model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, QueryGetGL.getGLTypeByEmpGroupName(expenseEnum.groupName));
             modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, expenseEnum.hotelExpense);
@@ -153,7 +153,6 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
+
     }
-
-
 }
