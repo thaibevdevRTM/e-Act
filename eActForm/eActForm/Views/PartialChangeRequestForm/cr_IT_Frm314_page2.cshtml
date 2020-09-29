@@ -192,7 +192,10 @@
                                 @item.empId
                             </td>
                             <td style="border-style: solid;border-width: 0px 1px 1px 0px; border-collapse: collapse;" class="tdTopCenter">
-                                @item.empName.Replace("คุณ", "")
+                                @if (item.empName != null)
+                                {
+                                    @:item.empName.Replace("คุณ", "")
+                                }
                             </td>
                             <td style="border-style: solid;border-width: 0px 0px 1px 0px; border-collapse: collapse;" class="tdTopLeft">
                                 &nbsp;@Html.Raw(item.detail.Replace("\n", "<br/>&nbsp;").Replace("\r\n", "<br/>&nbsp;"))
