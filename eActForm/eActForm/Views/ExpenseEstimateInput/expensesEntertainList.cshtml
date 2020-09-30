@@ -109,7 +109,7 @@
     <table class="table table-bordered" id="tbl_CashDetail" cellpadding="0" cellspacing="0">
         <thead class="thead-dark">
             <tr>
-                <th class="align-content-center font10" rowspan="2" style="width:5%;"></th>
+                <th class="align-content-center font10" rowspan="2" style="width:8%;"></th>
                 <th class="align-content-center font10" rowspan="2" style="width:10%;">วันที่</th>
                 <th class="align-content-center font10" rowspan="2" style="width:30%;">รายการ</th>
                 <th class="align-content-center font10" rowspan="2" style="width:15%;">จำนวนเงิน</th>
@@ -274,7 +274,6 @@
     <div id="addEx" class="row pull-right" style="width:150px" onclick="addRow();">
         <label class="btn ink-reaction btn-success fa fa-plus" style="width:120px; height:30px;">Add</label>
     </div>
-
 </div>
 <script type="text/javascript">
     var cumulaBypass = 0.00;
@@ -287,6 +286,11 @@
     var getLimitBypass = 0.00;
     var getLimitPhone = 0.00;
     var getLimitOther = 0.00;
+    var getCumulativeBypass = 0.00;
+    var getPriceCumulativeBypass = 0.00;
+    var getPriceCumulativeCarWash = 0.00;
+    var getPriceCumulativePhone = 0.00;
+    var getPriceCumulativeOther = 0.00;
 
     $(document).ready(function () {
         getLimitExpense();
@@ -498,7 +502,7 @@
             }
         }
 
-        if ('@Model.activityFormTBMMKT.statusId' == 0 || '@Model.activityFormTBMMKT.statusId' == 5) {
+        if ('@Model.activityFormTBMMKT.statusId' == 1 || '@Model.activityFormTBMMKT.statusId' == 5) {
             var getCumulativeEntertain = document.getElementById("lblCumulativeEntertain").innerHTML.split(",").join("");
             var getPriceCumulativeEntertain = parseFloat($(getCumulativeEntertain).val());
             if (isNaN(getPriceCumulativeEntertain)) getPriceCumulativeEntertain = 0;
@@ -555,27 +559,27 @@
         }
 
 
-        if ('@Model.activityFormTBMMKT.statusId' == 0 || '@Model.activityFormTBMMKT.statusId' == 5) {
+        if ('@Model.activityFormTBMMKT.statusId' == 1 || '@Model.activityFormTBMMKT.statusId' == 5) {
             var getCumulativeBypass = document.getElementById('lblCumulativeBypass').innerHTML.split(",").join("");
-            var getPriceCumulativeBypass = parseFloat(getCumulativeBypass);
+            getPriceCumulativeBypass = parseFloat(getCumulativeBypass);
             if (isNaN(getPriceCumulativeBypass)) getPriceCumulativeBypass = 0.00;
             getPriceCumulativeBypass = cumulaBypass + totalBypass;
             document.getElementById('lblCumulativeBypass').innerHTML = getPriceCumulativeBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
             var getCumulativeCarWash = document.getElementById('lblCumulativeCarWash').innerHTML.split(",").join("");
-            var getPriceCumulativeCarWash = parseFloat(getCumulativeCarWash);
+            getPriceCumulativeCarWash = parseFloat(getCumulativeCarWash);
             if (isNaN(getPriceCumulativeCarWash)) getPriceCumulativeCarWash = 0.00;
             getPriceCumulativeCarWash = cumulaCarWash + totalWash;
             document.getElementById('lblCumulativeCarWash').innerHTML = getPriceCumulativeCarWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
             var getCumulativePhone = document.getElementById('lblCumulativePhone').innerHTML.split(",").join("");
-            var getPriceCumulativePhone = parseFloat(getCumulativePhone);
+            getPriceCumulativePhone = parseFloat(getCumulativePhone);
             if (isNaN(getPriceCumulativePhone)) getPriceCumulativePhone = 0.00;
             getPriceCumulativePhone = cumulaPhone + totalPhone;
             document.getElementById('lblCumulativePhone').innerHTML = getPriceCumulativePhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
             var getCumulativeOther = document.getElementById('lblCumulativeOther').innerHTML.split(",").join("");
-            var getPriceCumulativeOther = parseFloat(getCumulativeOther);
+            getPriceCumulativeOther = parseFloat(getCumulativeOther);
             if (isNaN(getPriceCumulativeOther)) getPriceCumulativeOther = 0.00;
             getPriceCumulativeOther = cumulaOther + totalOther;
             document.getElementById('lblCumulativeOther').innerHTML = getPriceCumulativeOther.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
@@ -594,7 +598,7 @@
         else {
             document.getElementById("lblCumulativeCarWash").style.color = "	#000000";
         }
-       
+
         if (getPriceCumulativePhone > getLimitPhone) {
             document.getElementById("lblCumulativePhone").style.color = "#ff0000";
         }
