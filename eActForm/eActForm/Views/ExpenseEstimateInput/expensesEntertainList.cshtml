@@ -298,12 +298,12 @@
         document.getElementById("addEx").style.display = "none";
     }
 
-    
+
 
     function autocompleDetail1(i) {
-        
+
         var rowIndex = $(i).closest('tr').index();
-        $("#activityOfEstimateList_" + rowIndex + "__productId").val('');
+
         $("#" + i.id).autocomplete({
             autoFocus: true,
             source: function (request, response) {
@@ -318,6 +318,7 @@
                     },
                     success: function (data) {
                         response($.map(data, function (item) {
+                            $("#activityOfEstimateList_" + rowIndex + "__productId").val('');
                             return { label: item.displayVal, value: item.displayVal, id: item.id };
 
                         }))
@@ -342,7 +343,7 @@
 
     function autocompleDetail2(i) {
         var rowIndex = $(i).closest('tr').index();
-        $("#activityOfEstimateList2_" + rowIndex + "__productId").val('');
+
         $("#"+i.id).autocomplete({
             source: function (request, response) {
                 $.ajax({
@@ -356,6 +357,7 @@
                     },
                     success: function (data) {
                         response($.map(data, function (item) {
+                            $("#activityOfEstimateList2_" + rowIndex + "__productId").val('');
                             return { label: item.displayVal, value: item.displayVal, id: item.id };
 
                         }))
@@ -496,12 +498,13 @@
             }
         }
 
-        var getCumulativeEntertain = document.getElementById("lblCumulativeEntertain").innerHTML.split(",").join("");
-        var getPriceCumulativeEntertain = parseFloat($(getCumulativeEntertain).val());
-        if (isNaN(getPriceCumulativeEntertain)) getPriceCumulativeEntertain = 0;
-        getPriceCumulativeEntertain = cumulaEntertain + totalEntertain;
-        document.getElementById('lblCumulativeEntertain').innerHTML = getPriceCumulativeEntertain.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-
+        if ('@Model.activityFormTBMMKT.statusId' == 0 || '@Model.activityFormTBMMKT.statusId' == 5) {
+            var getCumulativeEntertain = document.getElementById("lblCumulativeEntertain").innerHTML.split(",").join("");
+            var getPriceCumulativeEntertain = parseFloat($(getCumulativeEntertain).val());
+            if (isNaN(getPriceCumulativeEntertain)) getPriceCumulativeEntertain = 0;
+            getPriceCumulativeEntertain = cumulaEntertain + totalEntertain;
+            document.getElementById('lblCumulativeEntertain').innerHTML = getPriceCumulativeEntertain.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
 
         if (getPriceCumulativeEntertain > getLimitEntertain) {
             document.getElementById("lblCumulativeEntertain").style.color = "#ff0000";
@@ -552,12 +555,32 @@
         }
 
 
+        if ('@Model.activityFormTBMMKT.statusId' == 0 || '@Model.activityFormTBMMKT.statusId' == 5) {
+            var getCumulativeBypass = document.getElementById('lblCumulativeBypass').innerHTML.split(",").join("");
+            var getPriceCumulativeBypass = parseFloat(getCumulativeBypass);
+            if (isNaN(getPriceCumulativeBypass)) getPriceCumulativeBypass = 0.00;
+            getPriceCumulativeBypass = cumulaBypass + totalBypass;
+            document.getElementById('lblCumulativeBypass').innerHTML = getPriceCumulativeBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
-        var getCumulativeBypass = document.getElementById('lblCumulativeBypass').innerHTML.split(",").join("");
-        var getPriceCumulativeBypass = parseFloat(getCumulativeBypass);
-        if (isNaN(getPriceCumulativeBypass)) getPriceCumulativeBypass = 0.00;
-        getPriceCumulativeBypass = cumulaBypass + totalBypass;
-        document.getElementById('lblCumulativeBypass').innerHTML = getPriceCumulativeBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            var getCumulativeCarWash = document.getElementById('lblCumulativeCarWash').innerHTML.split(",").join("");
+            var getPriceCumulativeCarWash = parseFloat(getCumulativeCarWash);
+            if (isNaN(getPriceCumulativeCarWash)) getPriceCumulativeCarWash = 0.00;
+            getPriceCumulativeCarWash = cumulaCarWash + totalWash;
+            document.getElementById('lblCumulativeCarWash').innerHTML = getPriceCumulativeCarWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+            var getCumulativePhone = document.getElementById('lblCumulativePhone').innerHTML.split(",").join("");
+            var getPriceCumulativePhone = parseFloat(getCumulativePhone);
+            if (isNaN(getPriceCumulativePhone)) getPriceCumulativePhone = 0.00;
+            getPriceCumulativePhone = cumulaPhone + totalPhone;
+            document.getElementById('lblCumulativePhone').innerHTML = getPriceCumulativePhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+            var getCumulativeOther = document.getElementById('lblCumulativeOther').innerHTML.split(",").join("");
+            var getPriceCumulativeOther = parseFloat(getCumulativeOther);
+            if (isNaN(getPriceCumulativeOther)) getPriceCumulativeOther = 0.00;
+            getPriceCumulativeOther = cumulaOther + totalOther;
+            document.getElementById('lblCumulativeOther').innerHTML = getPriceCumulativeOther.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
 
         if (getPriceCumulativeBypass > getLimitBypass) {
             document.getElementById("lblCumulativeBypass").style.color = "#ff0000";
@@ -565,40 +588,19 @@
             document.getElementById("lblCumulativeBypass").style.color = "#000000";
         }
 
-
-
-        var getCumulativeCarWash = document.getElementById('lblCumulativeCarWash').innerHTML.split(",").join("");
-        var getPriceCumulativeCarWash = parseFloat(getCumulativeCarWash);
-        if (isNaN(getPriceCumulativeCarWash)) getPriceCumulativeCarWash = 0.00;
-        getPriceCumulativeCarWash = cumulaCarWash + totalWash;
-        document.getElementById('lblCumulativeCarWash').innerHTML = getPriceCumulativeCarWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-
         if (getPriceCumulativeCarWash > getLimitCarWash) {
             document.getElementById("lblCumulativeCarWash").style.color = "#ff0000";
         }
         else {
             document.getElementById("lblCumulativeCarWash").style.color = "	#000000";
         }
-
-
-        var getCumulativePhone = document.getElementById('lblCumulativePhone').innerHTML.split(",").join("");
-        var getPriceCumulativePhone = parseFloat(getCumulativePhone);
-        if (isNaN(getPriceCumulativePhone)) getPriceCumulativePhone = 0.00;
-        getPriceCumulativePhone = cumulaPhone + totalPhone;
-        document.getElementById('lblCumulativePhone').innerHTML = getPriceCumulativePhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+       
         if (getPriceCumulativePhone > getLimitPhone) {
             document.getElementById("lblCumulativePhone").style.color = "#ff0000";
         }
         else {
             document.getElementById("lblCumulativePhone").style.color = "#000000";
         }
-
-
-        var getCumulativeOther = document.getElementById('lblCumulativeOther').innerHTML.split(",").join("");
-        var getPriceCumulativeOther = parseFloat(getCumulativeOther);
-        if (isNaN(getPriceCumulativeOther)) getPriceCumulativeOther = 0.00;
-        getPriceCumulativeOther = cumulaOther + totalOther;
-        document.getElementById('lblCumulativeOther').innerHTML = getPriceCumulativeOther.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
         if (getPriceCumulativeOther > getLimitOther) {
             document.getElementById("lblCumulativeOther").style.color = "#ff0000";
@@ -626,21 +628,26 @@
             if (response.Data != null) {
                 for (var i = 0; i < response.Data.cashList.length; i++) {
 
+
+
                     if (response.Data.cashList[i].cashTypeId == '@valEntertain') {
-                        document.getElementById('lblCumulativeEntertain').innerHTML = response.Data.cashList[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                        cumulaEntertain = response.Data.cashList[i].cash;
+                        cumulaEntertain = cumulaEntertain + response.Data.cashList[i].cash;
+                        document.getElementById('lblCumulativeEntertain').innerHTML = cumulaEntertain.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
                     }
                     else if (response.Data.cashList[i].cashTypeId == '@valBypass') {
-                        document.getElementById('lblCumulativeBypass').innerHTML = response.Data.cashList[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                        cumulaBypass = response.Data.cashList[i].cash;
+                        cumulaBypass = cumulaBypass + response.Data.cashList[i].cash;
+                        document.getElementById('lblCumulativeBypass').innerHTML = cumulaBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                     }
                     else if (response.Data.cashList[i].cashTypeId == '@valWash') {
-                        document.getElementById('lblCumulativeCarWash').innerHTML = response.Data.cashList[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                        cumulaCarWash = response.Data.cashList[i].cash;
+                        cumulaCarWash = cumulaCarWash + response.Data.cashList[i].cash;
+                        document.getElementById('lblCumulativeCarWash').innerHTML = cumulaCarWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
                     }
                     else if (response.Data.cashList[i].cashTypeId == '@valPhone') {
-                        document.getElementById('lblCumulativePhone').innerHTML = response.Data.cashList[i].cash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                        cumulaPhone = response.Data.cashList[i].cash;
+                        cumulaPhone = cumulaPhone + response.Data.cashList[i].cash;
+                        document.getElementById('lblCumulativePhone').innerHTML = cumulaPhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
                     }
                 }
             }

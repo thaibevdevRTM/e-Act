@@ -35,7 +35,8 @@ namespace eActForm.Models
         public static string[] checkDocMT =
         {
           Activity_Model.activityType.MT.ToString(),
-          Activity_Model.activityType.SetPrice.ToString()
+          Activity_Model.activityType.SetPrice.ToString(),
+          ConfigurationManager.AppSettings["formSetPriceMT"]
         };
 
         public static string[] checkDocTBM =
