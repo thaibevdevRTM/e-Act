@@ -42,30 +42,11 @@ namespace eActForm.Controllers //update 21-04-2020
             {
                 ApproveFlowModel.approveFlowModel flowModel = BudgetApproveController.getFlowIdBudgetByBudgetActivityId(ConfigurationManager.AppSettings["subjectBudgetFormId"], actId);
                 models.approveFlowDetail = flowModel.flowDetail;
-
-                //ApproveFlowModel.approveFlowModel flowModel = BudgetApproveController.getFlowIdBudgetByBudgetActivityId(ConfigurationManager.AppSettings["subjectBudgetFormId"], actId);
-                //var modelApproveDetail = models.approveDetailLists;
-                //if (modelApproveDetail.Any())
-                //{
-                //    bool folderExists = Directory.Exists(Server.MapPath(string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], actId)));
-                //    if (!folderExists)
-                //        Directory.CreateDirectory(Server.MapPath(@"" + string.Format(ConfigurationManager.AppSettings["rootCreateSubSigna"], actId)));
-
-                //    foreach (var item in modelApproveDetail)
-                //    {
-                //        UtilsAppCode.Session.writeFileHistory(System.Web.HttpContext.Current.Server
-                //            , item.signature
-                //            , string.Format(ConfigurationManager.AppSettings["rootSignaByActURL"], actId, item.empId));
-                //    }
-
-                //}
             }
             else
             {
                 ApproveFlowModel.approveFlowModel flowModel = BudgetApproveController.getFlowIdBudgetByBudgetActivityIdOMT(ConfigurationManager.AppSettings["subjectBudgetFormId"], actId);
                 models.approveFlowDetail = flowModel.flowDetail;
-
-
             }
             return PartialView(models);
         }
@@ -240,7 +221,7 @@ namespace eActForm.Controllers //update 21-04-2020
             }
             catch (Exception ex)
             {
-                throw new Exception("getCountApproveByActFormId >>" + ex.Message);
+                throw new Exception("getApproveByBudgetApproveId >>" + ex.Message);
             }
         }
 
@@ -263,7 +244,8 @@ namespace eActForm.Controllers //update 21-04-2020
                 if (lists.Count > 0)
                 {
                     model.flowMain = lists[0];
-                    model.flowDetail = getFlowDetailBudget(model.flowMain.id);
+                    model.flowDetail = getFlowDetailBudget(model.flowMain.id, budgetActivityId);
+
                 }
                 return model;
             }
@@ -292,7 +274,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 if (lists.Count > 0)
                 {
                     model.flowMain = lists[0];
-                    model.flowDetail = getFlowDetailBudget(model.flowMain.id);
+                    model.flowDetail = getFlowDetailBudget(model.flowMain.id, budgetActivityId);
                 }
                 return model;
             }
@@ -319,7 +301,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 if (lists.Count > 0)
                 {
                     model.flowMain = lists[0];
-                    model.flowDetail = getFlowDetailBudget(model.flowMain.id);
+                    model.flowDetail = getFlowDetailBudget(model.flowMain.id, budgetActivityId);
                 }
                 return model;
             }
@@ -329,12 +311,15 @@ namespace eActForm.Controllers //update 21-04-2020
             }
         }
 
-        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailBudget(string flowId)
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailBudget(string flowId,string budgetActivityId)
         {
             try
             {
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveDetail"
-                    , new SqlParameter[] { new SqlParameter("@flowId", flowId) });
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowDetailByFlowId"
+                    , new SqlParameter[] { 
+                        new SqlParameter("@flowId", flowId) 
+                        ,new SqlParameter("@budgetActivityId", budgetActivityId)
+                    });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
                              {
@@ -547,6 +532,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 insertApproveBudgetDetail(budgetActivityId);
                 var budget_approve_id = getApproveBudgetId(budgetActivityId);
 
+                // check alredy approve
                 if (BudgetApproveController.getApproveByBudgetApproveId(budget_approve_id).approveDetailLists.Count == 0)
                 {
                     if (companyEN == "MT")
