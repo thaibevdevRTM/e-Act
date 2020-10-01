@@ -31,8 +31,9 @@ namespace eActForm.Controllers
             {
                 //เพิ่มปีงบเพื่อ Budget Control dev date 20200708 Peerapop
                 //ตั้งไว้ดึงจากปีงบปัจจุบันบวกไปอีก 10ปีหากต้องการเพิ่มหรือจัดการปีทำที่ตาราง TB_Act_master_period_year
+                //update 2020-10-01 เพิ่มให้ดึงปีย้อนหลังด้วย 10 ปี peerapop
                 nowPhysicalYear = FiscalYearPresenter.getFiscalNow(AppCode.StrCon, ConfigurationManager.AppSettings["typePeriodTBVGroup"]).FirstOrDefault().UseYear;
-                yearFrom = nowPhysicalYear;
+                yearFrom = (Convert.ToInt32(nowPhysicalYear) - 10).ToString();
                 yearTo = (Convert.ToInt32(nowPhysicalYear) + 10).ToString();
             }
             activity_TBMMKT_Model.listFiscalYearModel = FiscalYearPresenter.getFiscalYearByYear(AppCode.StrCon, yearFrom, yearTo).OrderBy(m => m.UseYear).ToList();
