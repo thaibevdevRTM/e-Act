@@ -16,7 +16,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_checkApproveDetailForFormHC"
-                    , new SqlParameter[] { new SqlParameter("@actId", actId });
+                    , new SqlParameter[] { new SqlParameter("@actId", actId )});
                 return obj != null ? (bool)obj : false;
             }
             catch(Exception ex)
