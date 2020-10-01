@@ -11,6 +11,19 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGetBenefit
     {
+        public static bool getAllowAutoApproveForFormHC(string actId)
+        {
+            try
+            {
+                object obj = SqlHelper.ExecuteScalar(AppCode.StrCon, CommandType.StoredProcedure, "usp_checkApproveDetailForFormHC"
+                    , new SqlParameter[] { new SqlParameter("@actId", actId });
+                return obj != null ? (bool)obj : false;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("getAllowAutoApproveForFormHC >> " + ex.Message);
+            }
+        }
         public static List<CashEmpModel> getCashLimitByEmpId(string empId)
         {
             try

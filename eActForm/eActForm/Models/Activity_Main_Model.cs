@@ -136,6 +136,18 @@ namespace eActForm.Models
 
     public class TB_Act_ActivityForm_DetailOther
     {
+
+        public TB_Act_ActivityForm_DetailOther()
+        {
+            this.SubjectId = "";
+            this.productBrandId = "";
+            this.channelId = "";
+            this.BudgetNumber = "";
+            this.costCenter = "";
+            this.channelRegionName = "";
+            this.glNo = "";
+            this.glName = "";
+        }
         public string Id { get; set; }
         public string activityId { get; set; }
         public string channelId { get; set; }
