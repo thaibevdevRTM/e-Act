@@ -51,3 +51,4 @@ D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CoreCompileInpu
 D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
 D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
 D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
+D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
