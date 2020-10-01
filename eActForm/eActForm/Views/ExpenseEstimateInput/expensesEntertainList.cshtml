@@ -2,7 +2,7 @@
 @using eActForm.BusinessLayer
 @using eActForm.Models
 @using System.Configuration;
-@{ 
+@{
     string valEntertain = "87757B5B-C946-4001-A74B-AB6C9003AD25";
     string valBypass = "E57354A6-940A-4BDF-8916-E77E24D9310F";
     string valWash = "D05DA2C9-82AB-43F7-8479-D63F24F9D20D";
@@ -37,7 +37,7 @@
             <tbody id="first1">
                 <tr class="tagCountRowExpenses">
                     <td>
-                        <button type="button" id="btnDel1[@i]" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
+                        <button type="button" id="btnDel1[@i]" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this,@i);"></button>
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hiddenTypeId" })
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].productId, new { Value = @valEntertain, @class = "hiddenValEntertain" })
                     </td>
@@ -122,7 +122,7 @@
             <tbody id=first>
                 <tr class="tagCountRowTravel">
                     <td>
-                        <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
+                        <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this,@i);"></button>
                         @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
                         @Html.HiddenFor(x => x.activityOfEstimateList2[i].productId)
                     </td>
@@ -130,7 +130,7 @@
                         @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
                       new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail2(this)" , onclick = "autocompleDetail2(this)" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail2(this)", onclick = "autocompleDetail2(this)" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal2()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
 
@@ -239,7 +239,7 @@
         <tr>
             <td colspan="3" class="textRight">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
-                   
+
                     <label>อื่นๆ</label>
                 </div>
 
@@ -432,14 +432,11 @@
     }
 
 
-    function cashDelete(btn) {
-        var rowIndex = $(btn).closest('tr').index();
+    function cashDelete(btn, i) {;
         var row = btn.parentNode.parentNode;
-        if (rowIndex != 0) {
-            row.parentNode.removeChild(row);
-            getTotal1();
-            getTotal2();
-        }
+         row.parentNode.removeChild(row);
+         getTotal1();
+         getTotal2();
 
     }
 
@@ -523,7 +520,6 @@
         var totalPhone = 0.00;
         var totalOther = 0.00;
 
-        console.log(totalBypass);
         document.getElementById('lblUseBypass').innerHTML = totalBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         document.getElementById('lblUseWash').innerHTML = totalWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         document.getElementById('lblUsePhone').innerHTML = totalPhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');

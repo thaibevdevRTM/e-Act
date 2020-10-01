@@ -32,12 +32,6 @@ namespace eActForm.Models
         public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
         public static string[] compHcForm = { Activity_Model.groupCompany.NUM.ToString(), Activity_Model.groupCompany.POM.ToString(), Activity_Model.groupCompany.CVM.ToString() };
 
-        public static string[] checkDocMT =
-        {
-          Activity_Model.activityType.MT.ToString(),
-          Activity_Model.activityType.SetPrice.ToString(),
-          ConfigurationManager.AppSettings["formSetPriceMT"]
-        };
 
         public static string[] checkDocTBM =
         {

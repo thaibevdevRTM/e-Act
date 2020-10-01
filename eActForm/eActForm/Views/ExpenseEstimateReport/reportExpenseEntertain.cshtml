@@ -204,7 +204,7 @@
                     </td>
                     <td class="fontDocSmall" style="border-style: solid;border-width: 1px 1px 1px 0px; border-collapse: collapse; text-align:right">
                         @{
-                            string result = String.Format("{0:0.###}", @total);
+                            string result = String.Format("{0:n2}", @total);
                             @result.ToString();
                         }
                     </td>
