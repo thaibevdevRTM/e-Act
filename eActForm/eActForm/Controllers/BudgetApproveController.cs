@@ -244,7 +244,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 if (lists.Count > 0)
                 {
                     model.flowMain = lists[0];
-                    model.flowDetail = getFlowDetailBudget(model.flowMain.id, budgetActivityId);
+                    model.flowDetail = getFlowDetailBudget(model.flowMain.id);
 
                 }
                 return model;
@@ -274,7 +274,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 if (lists.Count > 0)
                 {
                     model.flowMain = lists[0];
-                    model.flowDetail = getFlowDetailBudget(model.flowMain.id, budgetActivityId);
+                    model.flowDetail = getFlowDetailBudget(model.flowMain.id);
                 }
                 return model;
             }
@@ -301,24 +301,25 @@ namespace eActForm.Controllers //update 21-04-2020
                 if (lists.Count > 0)
                 {
                     model.flowMain = lists[0];
-                    model.flowDetail = getFlowDetailBudget(model.flowMain.id, budgetActivityId);
+                    
+                    model.flowDetail = getFlowDetailBudget(model.flowMain.id);
                 }
                 return model;
             }
             catch (Exception ex)
             {
-                throw new Exception("getFlow by actFormId >>" + ex.Message);
+                throw new Exception("get FlowId by BudgetApproveId >>" + ex.Message);
             }
         }
 
-        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailBudget(string flowId,string budgetActivityId)
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailBudget(string flowId)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowDetailByFlowId"
                     , new SqlParameter[] { 
                         new SqlParameter("@flowId", flowId) 
-                        ,new SqlParameter("@budgetActivityId", budgetActivityId)
+                        //,new SqlParameter("@budgetActivityId", budgetActivityId)
                     });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
