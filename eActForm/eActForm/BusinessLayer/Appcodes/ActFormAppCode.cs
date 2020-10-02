@@ -123,6 +123,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivityFormByEmpId_HCPomNum";
                 }
+                else if (typeForm == Activity_Model.activityType.EXPENSE.ToString())
+                {
+                    strCall = "usp_getActivityExpenseEntertainByEmpId";
+                }
                 else
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";

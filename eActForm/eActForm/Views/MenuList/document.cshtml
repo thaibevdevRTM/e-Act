@@ -28,6 +28,7 @@
             @if (UtilsAppCode.Session.User.isSuperAdmin || (UtilsAppCode.Session.User.isCreator && (@Array.AsReadOnly(AppCode.compHcForm).Contains(UtilsAppCode.Session.User.empCompanyGroup))))
             {
                 <li>@Html.ActionLink(" Documents HC", "Index", "Home", new { typeForm = Activity_Model.activityType.HCForm.ToString() }, null)</li>
+                <li>@Html.ActionLink(" Documents Entertain", "Index", "Home", new { typeForm = Activity_Model.activityType.EXPENSE.ToString() }, null)</li>
             }
             @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isCreator)
             {

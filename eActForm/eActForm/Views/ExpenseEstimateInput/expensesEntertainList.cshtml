@@ -37,7 +37,7 @@
             <tbody id="first1">
                 <tr class="tagCountRowExpenses">
                     <td>
-                        <button type="button" id="btnDel1[@i]" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this,@i);"></button>
+                        <button type="button" id="btnDel1[@i]" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hiddenTypeId" })
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].productId, new { Value = @valEntertain, @class = "hiddenValEntertain" })
                     </td>
@@ -46,7 +46,7 @@
                  new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].detail, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail1(this)" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail1(this)" , autocomplete = "off" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal1()" })</td>
                 </tr>
@@ -122,7 +122,7 @@
             <tbody id=first>
                 <tr class="tagCountRowTravel">
                     <td>
-                        <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this,@i);"></button>
+                        <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
                         @Html.HiddenFor(x => x.activityOfEstimateList2[i].activityTypeId, new { Value = "2", @class = "hindenTypeId2" })
                         @Html.HiddenFor(x => x.activityOfEstimateList2[i].productId)
                     </td>
@@ -130,7 +130,7 @@
                         @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
                       new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail2(this)", onclick = "autocompleDetail2(this)" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail2(this)", onclick = "autocompleDetail2(this)" , autocomplete = "off" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal2()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
 
@@ -432,13 +432,16 @@
     }
 
 
-    function cashDelete(btn, i) {;
+    function cashDelete(btn) {
+        
         var row = btn.parentNode.parentNode;
          row.parentNode.removeChild(row);
          getTotal1();
          getTotal2();
 
+
     }
+
 
 
     function getLimitExpense() {

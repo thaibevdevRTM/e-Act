@@ -107,7 +107,7 @@ namespace eActForm.BusinessLayer
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
 
                 var getMasterType = QueryGetActivityByIdTBMMKT.getActivityById(actFormId).FirstOrDefault().master_type_form_id;
-                string stor = ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
+                string stor = AppCode.AllForm.Contains(getMasterType)  ? "usp_getFlowIdExpenseByActFormId" : "usp_getFlowIdByActFormId";
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, stor
                     , new SqlParameter[] {new SqlParameter("@subId",subId)
@@ -123,7 +123,7 @@ namespace eActForm.BusinessLayer
                     string checkFlowApprove = checkFlowBeforeByActId(actFormId);
                     checkFlowApprove = string.IsNullOrEmpty(checkFlowApprove) ? model.flowMain.id : checkFlowApprove;
 
-                    if (ConfigurationManager.AppSettings["masterEmpExpense"] == getMasterType || (AppCode.hcForm.Contains(getMasterType)))
+                    if ((AppCode.hcForm.Contains(getMasterType)) || (AppCode.AllForm.Contains(getMasterType)))
                     {
                         model.flowDetail = getFlowDetailExpense(checkFlowApprove, actFormId);
                     }

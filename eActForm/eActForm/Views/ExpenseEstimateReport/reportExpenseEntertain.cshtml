@@ -3,10 +3,8 @@
 @using eActForm.BusinessLayer
 @model eActForm.Models.Activity_TBMMKT_Model
 @{
-    decimal? unit = 0;
     decimal? total = 0;
     decimal? totalEntertainment = 0;
-    decimal? totalAdvance = 0;
 }
 
 
@@ -179,10 +177,10 @@
         <div>
             <table style="width: 100%;border-style: solid;border-width: 1px 0px 0px 0px; border-collapse: collapse;">
                 <tr style="background-color: #E5E2E2; height: 25px;">
-                    <td style="width: 15%; border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;" class="fontDocSmall">วันที่</td>
-                    <td style="width: 40%; text-align: center; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDocSmall">รายการ</td>
-                    <td style="width: 15%; text-align: center; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDocSmall">จำนวนเงิน</td>
-                    <td style="width: 20%; text-align: center; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDocSmall">หมายเหตุ</td>
+                    <td style="width: 13%; border-style: solid;border-width: 0px 1px 0px 1px; border-collapse: collapse;text-align:center;" class="fontDocSmall">วันที่</td>
+                    <td style="width: 37%; text-align: center; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDocSmall">รายการ</td>
+                    <td style="width: 17%; text-align: center; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDocSmall">จำนวนเงิน</td>
+                    <td style="width: 16%; text-align: center; border-style: solid;border-width: 0px 1px 0px 0px; border-collapse: collapse;text-align:center;" class="fontDocSmall">หมายเหตุ</td>
                 </tr>
                 @foreach (var item in Model.activityOfEstimateList2)
                 {
