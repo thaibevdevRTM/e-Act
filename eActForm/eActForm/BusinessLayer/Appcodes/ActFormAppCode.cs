@@ -151,6 +151,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivityFormAll_HCPomNum";
                 }
+                if (isAdmin() && typeForm == Activity_Model.activityType.EXPENSE.ToString())
+                {
+                    strCall = "usp_getActivityFormAll_Expense";
+                }
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall
                 , new SqlParameter[] {

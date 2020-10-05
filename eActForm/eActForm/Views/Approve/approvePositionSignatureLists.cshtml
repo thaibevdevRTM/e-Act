@@ -1,6 +1,7 @@
 ﻿@model eActForm.Models.ApproveModel.approveModels
 @using eActForm.Models;
 @using System.Configuration;
+@using eActForm.BusinessLayer;
 <style>
     .line1px {
         border-bottom: groove;
@@ -158,6 +159,18 @@
 
                                 }
                             }
+
+                            //แปะลายเส้น auto
+                            if (@Array.AsReadOnly(AppCode.hcForm).Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) ||
+                                    (@Array.AsReadOnly(AppCode.AllForm).Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)))
+                            {
+                                if (Model.activity_TBMMKT_Model.activityFormModel.empId == UtilsAppCode.Session.User.empId && item.rangNo == 1)
+                                {
+                                    <td height="85">
+                                        <img width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], @item.empId)" />
+                                    </td>
+                                }
+                            }
                             if (writeoneHit == 0)
                             {
                                 <td>
@@ -165,6 +178,8 @@
                                 </td>
                             }
                         }
+
+
                     }
 
                     index++;
@@ -319,6 +334,17 @@
                                     }
                                 }
                             }
+                            //แปะลายเส้น auto
+                            if (@Array.AsReadOnly(AppCode.hcForm).Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) ||
+                                    (@Array.AsReadOnly(AppCode.AllForm).Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id)))
+                            {
+                                if (Model.activity_TBMMKT_Model.activityFormModel.empId == UtilsAppCode.Session.User.empId && item.rangNo == 1)
+                                {
+                                    <td height="85">
+                                        <img width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], @item.empId)" />
+                                    </td>
+                                }
+                            }
                             if (writeoneHit == 0)
                             {
                                 <td>
@@ -455,8 +481,9 @@
                             }
 
 
-                            if (item.statusId == "3")
+                            if (item.statusId == "3" || Model.activity_TBMMKT_Model.activityFormModel.empId == UtilsAppCode.Session.User.empId)
                             {
+
 
                                 <img width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], item.empId)" />
 
@@ -465,7 +492,6 @@
                             {
                                 <img width="135" height="80" src="http://10.6.241.10/eAct/images/blank.png" />
                             }
-
 
 
                             var name = "";
