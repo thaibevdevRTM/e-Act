@@ -45,10 +45,11 @@ namespace eActForm.Controllers
 
             if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPaymentVoucherTbmId"])//ใบสั่งจ่าย dev date 20200408 Peerapop
             {
-                //ฟอร์มนี้Defaultไว้ดึง2ปีก่อน (ปีปัจจุบันกับย้อนหลัง1ปี) ถ้าเข้ามาครั้งแรกจะDefault ปีงบประมาณปัจจุบันให้
+                //ฟอร์มนี้Defaultไว้ดึง2ปีก่อน (ปีปัจจุบันกับย้อนหลัง1ปี) ถ้าเข้ามาครั้งแรกจะDefault ปีงบประมาณปัจจุบันให้ (ของเดิม)
+                //(ปีปัจจุบันกับย้อนหลัง10ปี) ถ้าเข้ามาครั้งแรกจะDefault ปีงบประมาณปัจจุบันให้ update 10 ปี 2020-10-01 Peerapop
                 //สาเหตุที่ต้องให้เลือกย้อนหลังได้1ปี เพราะกรณี เดือน พ.ย. ของทุกปีอาจจะมีการทำจ่ายของปีงบประมาณก่อนหน้าได้ ในส่วนนี้จะไปมีผลกับการดึง EO มาให้เลือกในการทำสั่งจ่าย
                 nowPhysicalYear = FiscalYearPresenter.getFiscalNow(AppCode.StrCon, ConfigurationManager.AppSettings["typePeriodTBVGroup"]).FirstOrDefault().UseYear;
-                yearFrom = (Convert.ToInt32(nowPhysicalYear) - 1).ToString();
+                yearFrom = (Convert.ToInt32(nowPhysicalYear) - 10).ToString();
                 yearTo = nowPhysicalYear;
                 if (activity_TBMMKT_Model.tB_Act_ActivityForm_DetailOther.fiscalYear == null)
                 {

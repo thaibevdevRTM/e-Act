@@ -9,6 +9,11 @@ namespace eActForm.Models
         {
             public flowApprove flowMain { get; set; }
             public List<flowApproveDetail> flowDetail { get; set; }
+
+            public approveFlowModel()
+            {
+                flowDetail = new List<flowApproveDetail>();
+            }
         }
         public class flowApprove : ActBaseModel
         {
@@ -25,8 +30,11 @@ namespace eActForm.Models
                 if (empId != "")
                 {
                     List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
-                    this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
-                    this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
+                    if (model.Count > 0)
+                    {
+                        this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
+                        this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
+                    }
                 }
             }
             public string id { get; set; }

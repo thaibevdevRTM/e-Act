@@ -304,7 +304,7 @@ namespace eActForm.BusinessLayer
                                  buEN = dr["empDivisionEN"].ToString(),
                                  empFNameEN = dr["empFNameEN"].ToString(),
                                  empLNameEN = dr["empLNameEN"].ToString(),
-                                 empPositionTitleEN = dr["empPositionTitleEN"].ToString()
+                                 //empPositionTitleEN = dr["empPositionTitleEN"].ToString()
                              }).ToList();
                 return lists;
             }

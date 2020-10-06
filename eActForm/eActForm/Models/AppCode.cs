@@ -32,6 +32,41 @@ namespace eActForm.Models
         public static string[] hcForm = { ConfigurationManager.AppSettings["formExpTrvNumId"], ConfigurationManager.AppSettings["formExpMedNumId"] };
         public static string[] compHcForm = { Activity_Model.groupCompany.NUM.ToString(), Activity_Model.groupCompany.POM.ToString(), Activity_Model.groupCompany.CVM.ToString() };
 
+        public static string[] checkDocMT =
+        {
+          Activity_Model.activityType.MT.ToString(),
+          Activity_Model.activityType.SetPrice.ToString()
+        };
+
+        public static string[] checkDocTBM =
+        {
+            ConfigurationManager.AppSettings["formBgTbmId"],
+            ConfigurationManager.AppSettings["formAdvTbmId"],
+            ConfigurationManager.AppSettings["formTrvTbmId"],
+            ConfigurationManager.AppSettings["formPosTbmId"],
+            ConfigurationManager.AppSettings["masterEmpExpense"],
+            ConfigurationManager.AppSettings["formPaymentVoucherTbmId"],
+            ConfigurationManager.AppSettings["masterEmpExpense"]
+        };
+
+        public static string[] checkDocHC =
+        {
+           ConfigurationManager.AppSettings["formTrvHcmId"],
+           ConfigurationManager.AppSettings["formAdvHcmId"],
+           ConfigurationManager.AppSettings["formExpTrvNumId"],
+           ConfigurationManager.AppSettings["formExpMedNumId"],
+
+        };
+        public static string[] checkDocIT =
+        {
+          ConfigurationManager.AppSettings["formCR_IT_FRM_314"]
+        };
+
+        public static string[] checkDocAll =
+       {
+          ConfigurationManager.AppSettings["formReceptions"]
+        };
+
         public enum ApproveEmailype
         {
             approve
@@ -90,10 +125,10 @@ namespace eActForm.Models
         public class Expenses
         {
             public const string Medical = "6BB0F68F-4B07-4E00-9B1E-B776D003D992";
-            public string Allowance { get { return groupName.Equals("Spirits Product") ? "0A7DD084-8A63-4691-8886-2012FF5A9656" : "06FF853F-EBB0-48E8-9620-520D0B8F6E0C"; }  }
-            public string hotelExpense { get { return groupName.Equals("Spirits Product") ? "B0A35B60-4FC6-47FF-9DD2-07C51D4A7133" : "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1"; } } 
-            public string planeExpense { get { return groupName.Equals("Spirits Product") ? "557030E5-4E1D-4E53-B0A7-39BD6A78906C" : "F34854F6-B91F-4C9E-A4BD-C181199B8E4F"; } }
-            
+            public const string Allowance = "06FF853F-EBB0-48E8-9620-520D0B8F6E0C"; //{ get { return groupName.Equals("Spirits Product") ? "0A7DD084-8A63-4691-8886-2012FF5A9656" : "06FF853F-EBB0-48E8-9620-520D0B8F6E0C"; } } //ค่าเบี้ยเลี้ยงเดินทาง
+            public const string hotelExpense = "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1";//{ get { return groupName.Equals("Spirits Product") ? "B0A35B60-4FC6-47FF-9DD2-07C51D4A7133" : "3FB9A4DC-9CE9-49D9-A68D-AAE0455BB6D1"; } }
+            public const string planeExpense = "F34854F6-B91F-4C9E-A4BD-C181199B8E4F";//{ get { return groupName.Equals("Spirits Product") ? "557030E5-4E1D-4E53-B0A7-39BD6A78906C" : "F34854F6-B91F-4C9E-A4BD-C181199B8E4F"; } }
+
 
             public string groupName;
 
@@ -111,12 +146,12 @@ namespace eActForm.Models
             }
         }
 
-        
+
 
         public static class GLType
         {
-            public const string GLSale = "expensesTrvForSale";
-            public const string GLSaleSupport = "expensesTrv";
+            //public const string GLSale = "expensesTrvForSale"; // not use
+            public const string GLSaleSupport = "expensesTrv"; // fixed this GL all support and sales
         }
 
         public static class ReportType
@@ -138,7 +173,7 @@ namespace eActForm.Models
         public static class SSGLId
         {
             public const string vat = "CE4DA8CE-DB49-4E9F-931D-F33778B9FBC5";
-            public const string medical = "D86D142B-7BCC-42D0-8E01-155010122792,3CF6C5D8-232C-4862-8226-42388D9FED0C";
+            public const string medical = "D86D142B-7BCC-42D0-8E01-155010122792"; //,3CF6C5D8-232C-4862-8226-42388D9FED0C
         }
         public static string checkNullorEmpty(string p)
         {

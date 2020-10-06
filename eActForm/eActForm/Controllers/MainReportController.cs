@@ -28,11 +28,11 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
                 activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
                 activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm_EN;
-
-                activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
                 activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
                 activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
+                activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
 
+                #region set viewbag
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
                     || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
                     || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
@@ -67,6 +67,7 @@ namespace eActForm.Controllers
                     ViewBag.classFont = "fontDocV1";
                     ViewBag.padding = "paddingFormV1";
                 }
+                #endregion
 
 
                 //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
@@ -84,7 +85,7 @@ namespace eActForm.Controllers
             DocumentsAppCode.setCulture(activity_TBMMKT_Model.activityFormModel.languageDoc);
             //====END=======Set Language By Document Dev date 20200310 Peerapop==================
 
-            return PartialView(activity_TBMMKT_Model);// production
+            return PartialView(activity_TBMMKT_Model);
         }
 
         public ActionResult ReportPettyCashNum(string activityId, Activity_TBMMKT_Model activity_TBMMKT_Model)
@@ -129,23 +130,24 @@ namespace eActForm.Controllers
             #region "ดึงข้อมูล GL "
             //ฟอร์มที่ใช้เป็นของ saleSupport
             List<GetDataGL> lstGL = new List<GetDataGL>();
-            AppCode.Expenses expenseEnum = new AppCode.Expenses(activity_TBMMKT_Model.approveFlowDetail.Count > 0 ? activity_TBMMKT_Model.approveFlowDetail[0].empId : activity_TBMMKT_Model.activityFormModel.createdByUserId);
-            lstGL = QueryGetGL.getGLMasterByDivisionId(QueryGetGL.getDivisionIdByEmpGroupName(expenseEnum.groupName));
+            lstGL = QueryGetGL.getGLMasterByDivisionId(AppCode.Division.salesSupport);
             #endregion
+
+            #region form HC
 
             if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
             {
                 decimal? vat = 0,vatsum=0;
                 #region "ค่าเดินทางของ NUM"
                 
-                model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, QueryGetGL.getGLTypeByEmpGroupName(expenseEnum.groupName));
+                model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
                 for (int i = 0; i < model2.costDetailLists.Count; i++)
                 {
-                    if (model2.costDetailLists[i].total != 0 && model2.costDetailLists[i].listChoiceId != expenseEnum.Allowance)
+                    if (model2.costDetailLists[i].total != 0 && model2.costDetailLists[i].listChoiceId != AppCode.Expenses.Allowance)
                     {
                         //vat แสดงรวมค่าใช้จ่ายอื่นๆแสดงแยก
 
-                        if (model2.costDetailLists[i].listChoiceId == expenseEnum.hotelExpense && model2.costDetailLists[i].unitPrice == 0)
+                        if (model2.costDetailLists[i].listChoiceId == AppCode.Expenses.hotelExpense && model2.costDetailLists[i].unitPrice == 0)
                         {
                             vat = model2.costDetailLists[i].vat;
                           //  vatsum += model2.costDetailLists[i].vat;
@@ -168,7 +170,7 @@ namespace eActForm.Controllers
                            : model2.costDetailLists[i].productDetail),
                             total = model2.costDetailLists[i].total - (vat),
                             //glCode = lstGL.Where(x => x.groupGL.Contains(model2.costDetailLists[i].listChoiceName) ).FirstOrDefault()?.GL,
-                            glCode = lstGL.Where(x => x.id == model2.costDetailLists[i].glCodeId).FirstOrDefault()?.GL,
+                            glCode =  QueryGetGL.getGL(lstGL, model2.costDetailLists[i].glCodeId, activity_TBMMKT_Model.activityFormModel.empId) //lstGL.Where(x => x.id == model2.costDetailLists[i].glCodeId).FirstOrDefault()?.GL,
                         });
                     }
                 }
@@ -184,7 +186,7 @@ namespace eActForm.Controllers
                     });
                 }
 
-                activity_Model.totalCostThisActivity -= model2.costDetailLists.Where(X => X.listChoiceId == new AppCode.Expenses(activity_TBMMKT_Model.approveFlowDetail.Count > 0 ? activity_TBMMKT_Model.approveFlowDetail[0].empId : activity_TBMMKT_Model.activityFormModel.createdByUserId).Allowance).FirstOrDefault().total;
+                activity_Model.totalCostThisActivity -= model2.costDetailLists.Where(X => X.listChoiceId == AppCode.Expenses.Allowance).FirstOrDefault().total;
                 #endregion
             }
             else if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
@@ -196,7 +198,7 @@ namespace eActForm.Controllers
                     productDetail = "ค่ารักษาพยาบาล",
                     total = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived,
                     displayType = "",
-                    glCode = lstGL.Where(x => AppCode.SSGLId.medical.Contains(x.id)).FirstOrDefault()?.GL,//glCode = lstGL.Where(x => x.id == ).FirstOrDefault()?.GL,
+                    glCode = QueryGetGL.getGL(lstGL, AppCode.SSGLId.medical, activity_TBMMKT_Model.activityFormModel.empId)//lstGL.Where(x => AppCode.SSGLId.medical.Contains(x.id)).FirstOrDefault()?.GL,//glCode = lstGL.Where(x => x.id == ).FirstOrDefault()?.GL,
                 });
                 activity_Model.totalCostThisActivity = activity_Model.tB_Act_ActivityForm_DetailOther.amountReceived;
 
@@ -215,6 +217,8 @@ namespace eActForm.Controllers
                     glCode = "",
                 });
             }
+
+            #endregion
 
             modelResult.costDetailLists = modelResult.costDetailLists.ToList();
             activity_Model.expensesDetailModel = modelResult;

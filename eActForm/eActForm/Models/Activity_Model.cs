@@ -33,6 +33,7 @@ namespace eActForm.Models
         public List<ProductCostOfGroupByPrice> productcostdetaillist1 { get; set; }
 
         public List<TB_Act_Region_Model> regionGroupList { get; set; }
+        public List<scriptModel> scristModelList { get; set; }
 
         public Activity_Model()
         {
@@ -266,6 +267,8 @@ namespace eActForm.Models
         public string qty { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? vat { get; set; }
+        public decimal? balance { get; set; }
+        public decimal? limit { get; set; }
         public List<ProductCostOfGroupByPrice> detailGroup { get; set; }
 
         public CostThemeDetailOfGroupByPrice()
