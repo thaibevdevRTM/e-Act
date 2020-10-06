@@ -28,11 +28,11 @@ namespace eActForm.Controllers
                 activity_TBMMKT_Model.activityFormTBMMKT.companyName = QueryGet_master_company.get_master_company(activity_TBMMKT_Model.activityFormTBMMKT.companyId).FirstOrDefault().companyNameTH;
                 activity_TBMMKT_Model.activityFormTBMMKT.formName = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm;
                 activity_TBMMKT_Model.activityFormTBMMKT.formNameEn = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().nameForm_EN;
-
-                activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
                 activity_TBMMKT_Model.activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
                 activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng = (activity_TBMMKT_Model.activityFormTBMMKT.languageDoc == ConfigurationManager.AppSettings["cultureEng"]);
+                activity_TBMMKT_Model.master_Type_Form_Detail_Models = QueryGet_master_type_form_detail.get_master_type_form_detail(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "report");
 
+                #region set viewbag
                 if (activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvTbmId"]
                     || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formTrvHcmId"]
                     || activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"]
@@ -67,6 +67,7 @@ namespace eActForm.Controllers
                     ViewBag.classFont = "fontDocV1";
                     ViewBag.padding = "paddingFormV1";
                 }
+                #endregion
 
 
                 //===ดึงผู้อนุมัติทั้งหมด=เพือเอาไปใช้แสดงในรายงาน===
@@ -84,7 +85,7 @@ namespace eActForm.Controllers
             DocumentsAppCode.setCulture(activity_TBMMKT_Model.activityFormModel.languageDoc);
             //====END=======Set Language By Document Dev date 20200310 Peerapop==================
 
-            return PartialView(activity_TBMMKT_Model);// production
+            return PartialView(activity_TBMMKT_Model);
         }
 
         public ActionResult ReportPettyCashNum(string activityId, Activity_TBMMKT_Model activity_TBMMKT_Model)
@@ -131,6 +132,8 @@ namespace eActForm.Controllers
             List<GetDataGL> lstGL = new List<GetDataGL>();
             lstGL = QueryGetGL.getGLMasterByDivisionId(AppCode.Division.salesSupport);
             #endregion
+
+            #region form HC
 
             if (activity_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"])
             {
@@ -214,6 +217,8 @@ namespace eActForm.Controllers
                     glCode = "",
                 });
             }
+
+            #endregion
 
             modelResult.costDetailLists = modelResult.costDetailLists.ToList();
             activity_Model.expensesDetailModel = modelResult;
