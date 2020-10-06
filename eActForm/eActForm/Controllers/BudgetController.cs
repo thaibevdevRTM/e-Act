@@ -511,15 +511,16 @@ namespace eActForm.Controllers  //update 21-04-2020
                 {
                     resultAjax.Code = 2;
                     resultAjax.Message = getBudImageModel.BudImageList.ElementAtOrDefault(0).invoiceNo;
+
                 }
                 else
                 {
+                    //update image invoice
+                    int countSuccess = ImageAppCodeBudget.updateImageBudget(budgetInvoiceModel);
+
                     resultAjax.Code = 0;
                     resultAjax.Message = null;
                 }
-
-                //update image invoice
-                int countSuccess = ImageAppCodeBudget.updateImageBudget(budgetInvoiceModel);
 
                 //resultAjax.ActivityId = Session["activityId"].ToString();
                 resultAjax.Success = true;

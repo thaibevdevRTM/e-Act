@@ -46,12 +46,6 @@
                     <td style="text-align:left;">
 
                         <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
-                        @*<a onclick="callApproveList('@(last == null ? "" : last.budgetApproveId)');"> <i class="btn ink-reaction btn-dark fa fa-eye"></i> </a>*@
-
-                        @*<a href="javascript:" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
-                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-                            </a>*@
-
                         @if (item.invoiceApproveStatusId == 1) // draff
                         {
                             <a href="javascript:" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
@@ -60,11 +54,9 @@
                         }
                         else
                         {
-                            <a href="javascript:" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
+                            @*<a href="javascript:" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
                                 <i class="btn ink-reaction btn-warning fa fa-reply"></i>&nbsp;
-                            </a>
-
-                            @*@Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = last.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank" })*@
+                            </a>*@
                         }
 
                     </td>
