@@ -111,6 +111,28 @@ namespace eActForm.Controllers //update 21-04-2020
             }
         }
 
+        public static string getBudgetActivityId(string budget_approve_Id)
+        {
+            try
+            {
+                Budget_Approve_Detail_Model models = new Budget_Approve_Detail_Model();
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetActIdByApproveId"
+                    , new SqlParameter[] {
+                        new SqlParameter("@budget_approve_id",budget_approve_Id)
+                    });
+                models.Budget_Approve_detail_list = (from DataRow dr in ds.Tables[0].Rows
+                                                     select new Budget_Approve_Detail_Model.Budget_Approve_Detail_Att()
+                                                     {
+                                                         budgetActivityId = dr["budgetActivityId"].ToString()
+                                                     }).ToList();
+                return models.Budget_Approve_detail_list.ElementAt(0).budgetActivityId.ToString();
+            }
+            catch (Exception ex)
+            {
+                return "0";
+            }
+        }
+
         public static string getApproveBudgetId(string budgetActivityId)
         {
             try
@@ -244,7 +266,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 if (lists.Count > 0)
                 {
                     model.flowMain = lists[0];
-                    model.flowDetail = getFlowDetailBudget(model.flowMain.id);
+                    model.flowDetail = getFlowDetailBudget(model.flowMain.id, budgetActivityId);
 
                 }
                 return model;
@@ -274,7 +296,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 if (lists.Count > 0)
                 {
                     model.flowMain = lists[0];
-                    model.flowDetail = getFlowDetailBudget(model.flowMain.id);
+                    model.flowDetail = getFlowDetailBudget(model.flowMain.id, budgetActivityId);
                 }
                 return model;
             }
@@ -288,6 +310,7 @@ namespace eActForm.Controllers //update 21-04-2020
         {
             try
             {
+                
                 ApproveFlowModel.approveFlowModel model = new ApproveFlowModel.approveFlowModel();
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowIdByBudgetApproveId"
                     , new SqlParameter[] {
@@ -300,9 +323,9 @@ namespace eActForm.Controllers //update 21-04-2020
                              }).ToList();
                 if (lists.Count > 0)
                 {
+                    var budgetActivityId = getBudgetActivityId(budget_approve_id);
                     model.flowMain = lists[0];
-                    
-                    model.flowDetail = getFlowDetailBudget(model.flowMain.id);
+                    model.flowDetail = getFlowDetailBudget(model.flowMain.id, budgetActivityId);
                 }
                 return model;
             }
@@ -312,14 +335,14 @@ namespace eActForm.Controllers //update 21-04-2020
             }
         }
 
-        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailBudget(string flowId)
+        public static List<ApproveFlowModel.flowApproveDetail> getFlowDetailBudget(string flowId,string budgetActivityId)
         {
             try
             {
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetFlowDetailByFlowId"
                     , new SqlParameter[] { 
                         new SqlParameter("@flowId", flowId) 
-                        //,new SqlParameter("@budgetActivityId", budgetActivityId)
+                        ,new SqlParameter("@budgetActivityId", budgetActivityId)
                     });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail(dr["empId"].ToString())
