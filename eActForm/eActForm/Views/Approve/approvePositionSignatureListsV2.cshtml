@@ -1,6 +1,7 @@
 ﻿@model eActForm.Models.ApproveModel.approveModels
 @using eActForm.Models;
 @using System.Configuration;
+@using eActForm.BusinessLayer;
 <style>
     .line1px {
         border-bottom: groove;
@@ -37,315 +38,167 @@
 
 @if (Model.activity_TBMMKT_Model.activityFormTBMMKT.statusNote != "FromPaper")
 {
-<div class="text-center">
-    @if (TempData["approvePositionSignatureError"] != null)
-    {
-        <div><p class="warning"><h3>@TempData["approvePositionSignatureError"]</h3> </p></div>
-    }
-    else
-    {
-        if (Model.approveFlowDetail == null)
+    <div class="text-center">
+        @if (TempData["approvePositionSignatureError"] != null)
         {
-            <div><p class="warning"><h4>ตรวจสอบไม่พบ flow อนุมัติ <br /> กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน<br /> เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4607,4580</h4> </p></div>
+            <div><p class="warning"><h3>@TempData["approvePositionSignatureError"]</h3> </p></div>
         }
         else
         {
-
-            if (Model.approveDetailLists.Count > 0 && !Model.isApproveDetailListsShowDocHaveNull)
+            if (Model.approveFlowDetail == null)
             {
-                var countLine = Model.approveDetailLists.FindAll(x => x.isShowInDoc == true).Count;
-                @genSignatureFromApproveDetail(1);
-                if (countLine > 6)
-                {
-                    @genSignatureFromApproveDetail(2);
-                }
+                <div><p class="warning"><h4>ตรวจสอบไม่พบ flow อนุมัติ <br /> กรุณาติดต่อ ส่วนงานพัฒนาระบบงานสนับสนุน<br /> เบอร์โทรศัพท์ติดต่อ : 02-785-5555 ext. 5744,4607,4580</h4> </p></div>
             }
             else
             {
-                @Grid1();
-                var haveShowNameGreatherThanFive = 0;
-                foreach (var item in Model.approveFlowDetail)
+
+                if (Model.approveDetailLists.Count > 0 && !Model.isApproveDetailListsShowDocHaveNull)
                 {
-                    if (item.isShowInDoc)
+                    var countLine = Model.approveDetailLists.FindAll(x => x.isShowInDoc == true).Count;
+                    @genSignatureFromApproveDetail(1);
+                    if (countLine > 6)
                     {
-                        haveShowNameGreatherThanFive += 1;
+                        @genSignatureFromApproveDetail(2);
                     }
                 }
-                if (haveShowNameGreatherThanFive > 6)
+                else
                 {
-                    @Grid2();
+                    var countLine = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true).Count;
+                    @Grid(1);
+                    if (countLine > 6)
+                    {
+                        @Grid(2);
+                    }
                 }
+
             }
-
         }
-    }
-</div>
+    </div>
 
-
-    @helper Grid1()
+    @helper Grid(int line)
     {
-
+        <!-- ===================================================
+            ====================================================
+            first default get flow approve from approveDetail then approveDetail not fount will get flow from flowApprove
+            =====================================================
+            ====================================================
+        -->
+        string yu = "";
+        int startIndex = line == 1 ? 0 : 5;
+        var listShowInDoc = Model.approveFlowDetail.FindAll(x => x.isShowInDoc == true);
         <table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
             <tr>
-                @{ int countisShowInDoc = 0;
-                    string yu = "คุณ";}
-                @foreach (var item in Model.approveFlowDetail)
+                @for (int index = 0 + startIndex; index < listShowInDoc.Count && index < 5 + startIndex; index++)
                 {
-                    if (item.isShowInDoc)
-                    {
-                        countisShowInDoc++;
-                        if (countisShowInDoc <= 6)
-                        {
-                            <td style="width:120px;">
-                                @{ if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
-                                    {
-                                        <div class="fontSigV1">
-                                            @item.approveGroupName
-                                        </div>
-                                        <div class="fontSigV1">
-                                            (@item.approveGroupNameEN)
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div style="font-size:12.5px;">
-                                            @item.approveGroupName
-                                        </div>
-                                        <div style="font-size:12.5px;">
-                                            (@item.approveGroupNameEN)
-                                        </div>
-                                    }
-                                }
-                            </td>
-                        }
-                    }
-                }
-            </tr>
+                    var item = listShowInDoc[index];
+                    <td style="width:140px;">
+                        @{
 
-            <tr>
-                @{ int index = 0;
-                    countisShowInDoc = 0;}
-                @foreach (var item in Model.approveFlowDetail)
-                {
-                    if (item.isShowInDoc)
-                    {
-                        countisShowInDoc++;
-                        if (countisShowInDoc <= 6)
-                        {
-                            int writeoneHit = 0;
-                            foreach (var itemFlowByDoc in Model.approveDetailLists)
+
+                            if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
                             {
-                                if (writeoneHit == 0)
-                                {
-                                    if (itemFlowByDoc.empId == item.empId && itemFlowByDoc.statusId == "3" && itemFlowByDoc.rangNo == item.rangNo)
-                                    {
-                                        <td height="85">
-                                            <img width="115" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@itemFlowByDoc.empId)" />
-                                        </td>
-                                        writeoneHit += 1;
-                                    }
-
-                                }
+                                <div class="fontSigV1">
+                                    @item.approveGroupName
+                                </div>
+                                <div class="fontSigV1">
+                                    (@item.approveGroupNameEN)
+                                </div>
                             }
-                            if (writeoneHit == 0)
+                            else if (AppCode.hcForm.Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id) && item.approveGroupId == "6074ADC7-F1E4-4544-8A65-AE9113E29999")
                             {
-                                <td>
-                                    <div style="text-align:center;height:80px;"></div>
-                                </td>
+                                <div style="font-size:12.5px;">
+                                    ผู้ลงนาม
+                                </div>
+                                <div style="font-size:12.5px;">
+                                    (Endorser)
+                                </div>
                             }
-                        }
-                    }
+                            else
+                            {
+                                <div style="font-size:12.5px;">
+                                    @item.approveGroupName
+                                </div>
+                                <div style="font-size:12.5px;">
+                                    (@item.approveGroupNameEN)
+                                </div>
+                            }
 
-                    index++;
+
+                            <div style="text-align:center;height:80px;">
+                                <table class="tablethin" style="text-align:center; width:100%" cellpadding="0" cellspacing="0">
+                                    <tr style="height: 80px;">
+                                        @if (@Array.AsReadOnly(AppCode.formApproveAuto).Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                                        {
+
+                                            <td style="width: 100%; border-style: solid;border-width: 1px 0px 1px 0px; border-collapse: collapse;text-align:center;">
+                                                @if (Model.activity_TBMMKT_Model.activityFormModel.empId == UtilsAppCode.Session.User.empId && item.rangNo == 1)
+                                                {
+                                                    <img width="115" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], @item.empId)" />
+                                                }
+                                            </td>
+
+                                        }
+                                        else
+                                        {
+                                            <td style="width: 100%; border-style: solid;border-width: 1px 0px 1px 0px; border-collapse: collapse;text-align:center;"></td>
+                                        }
+                                    </tr>
+
+                                </table>
+                            </div>
+
+
+
+                            var name = "";
+                            if (Model.activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng)
+                            {
+                                name = item.empFNameEN + " " + item.empLNameEN;
+                            }
+                            else
+                            {
+                                name = yu + item.empFNameTH + " " + item.empLNameTH;
+                            }
+
+                            if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
+                            {
+                                <div style="text-align:center; margin-top:5px;" class="fontSigV1">@name</div>
+                            }
+                            else
+                            {
+                                <div style="text-align:center; margin-top:5px; font-size:12.5px;">@name</div>
+                            }
+
+
+                            var position = "";
+
+                            if (Model.activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng)
+                            {
+                                position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleEN;
+                            }
+                            else
+                            {
+                                position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleTH;
+                            }
+
+                            if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
+                            {
+                                <div style="text-align:center;height:50px;" class="fontSigV1">@Html.Raw(position)</div>
+                            }
+                            else
+                            {
+                                <div style="text-align:center; height:50px; font-size:12.5px;">@Html.Raw(position)</div>
+                            }
+
+
+
+
+                        }
+                    </td>
                 }
             </tr>
 
-            <tr>
-                @{ countisShowInDoc = 0;}
-                @foreach (var item in Model.approveFlowDetail)
-                {
-                    if (item.isShowInDoc)
-                    {
-                        countisShowInDoc++;
-                        if (countisShowInDoc <= 6)
-                        {
-                            <td>
-                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
-                                    {
-                                        <div style="text-align:center; margin-top:5px;" class="fontSigV1">@yu@item.empFNameTH @item.empLNameTH</div>
-                                    }
-                                    else
-                                    {
-                                        <div style="text-align:center; margin-top:5px; font-size:12.5px;">@yu@item.empFNameTH @item.empLNameTH</div>
-                                    }
-                                }
-                            </td>
-                        }
-
-                    }
-
-                }
-            </tr>
-            <tr>
-                @{ countisShowInDoc = 0;}
-                @foreach (var item in Model.approveFlowDetail)
-                {
-                    if (item.isShowInDoc)
-                    {
-                        countisShowInDoc++;
-                        if (countisShowInDoc <= 6)
-                        {
-                            <td>
-                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
-                                    {
-                                        <div style="text-align:center;height:50px;" class="fontSigV1">@Html.Raw(item.empPositionTitleTH)</div>
-                                    }
-                                    else
-                                    {
-                                        <div style="text-align:center; height:50px; font-size:12.5px;">@Html.Raw(item.empPositionTitleTH)</div>
-                                    }
-                                }
-                            </td>
-                        }
-
-                    }
-                }
-            </tr>
         </table>
     }
-
-
-    @helper Grid2()
-    {
-        <table class="tablethin" style="text-align:center;" border="1" cellpadding="0" cellspacing="0">
-            <tr>
-                @{ int countisShowInDoc = 0;
-                    string yu = "คุณ";}
-                @foreach (var item in Model.approveFlowDetail)
-                {
-                    if (item.isShowInDoc)
-                    {
-                        countisShowInDoc++;
-                        if (countisShowInDoc >= 7)
-                        {
-                            <td style="width:120px;">
-                                @{ if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
-                                    {
-                                        <div class="fontSigV1">
-                                            @item.approveGroupName
-                                        </div>
-                                        <div class="fontSigV1">
-                                            (@item.approveGroupNameEN)
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div style="font-size:12.5px;">
-                                            @item.approveGroupName
-                                        </div>
-                                        <div style="font-size:12.5px;">
-                                            (@item.approveGroupNameEN)
-                                        </div>
-                                    }
-                                }
-                            </td>
-                        }
-                    }
-                }
-            </tr>
-
-            <tr>
-                @{ int index = 0;
-                    countisShowInDoc = 0;}
-                @foreach (var item in Model.approveFlowDetail)
-                {
-                    if (item.isShowInDoc)
-                    {
-                        countisShowInDoc++;
-                        if (countisShowInDoc >= 7)
-                        {
-                            int writeoneHit = 0;
-                            foreach (var itemFlowByDoc in Model.approveDetailLists)
-                            {
-                                if (writeoneHit == 0)
-                                {
-                                    if (itemFlowByDoc.empId == item.empId && itemFlowByDoc.statusId == "3" && itemFlowByDoc.rangNo == item.rangNo)
-                                    {
-                                        <td height="85">
-                                            <img width="115" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@itemFlowByDoc.empId)" />
-                                        </td>
-                                        writeoneHit += 1;
-                                    }
-
-                                }
-                            }
-                            if (writeoneHit == 0)
-                            {
-                                <td>
-                                    <div style="text-align:center;height:80px;"></div>
-                                </td>
-                            }
-                        }
-                    }
-
-                    index++;
-                }
-            </tr>
-
-            <tr>
-                @{ countisShowInDoc = 0;}
-                @foreach (var item in Model.approveFlowDetail)
-                {
-                    if (item.isShowInDoc)
-                    {
-                        countisShowInDoc++;
-                        if (countisShowInDoc >= 7)
-                        {
-                            <td>
-                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
-                                    {
-                                        <div style="text-align:center; margin-top:5px;" class="fontSigV1">@yu@item.empFNameTH @item.empLNameTH</div>
-                                    }
-                                    else
-                                    {
-                                        <div style="text-align:center; margin-top:5px; font-size:12.5px;">@yu@item.empFNameTH @item.empLNameTH</div>
-                                    }
-                                }
-                            </td>
-                        }
-
-                    }
-
-                }
-            </tr>
-            <tr>
-                @{ countisShowInDoc = 0;}
-                @foreach (var item in Model.approveFlowDetail)
-                {
-                    if (item.isShowInDoc)
-                    {
-                        countisShowInDoc++;
-                        if (countisShowInDoc >= 7)
-                        {
-                            <td>
-                                @{if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
-                                    {
-                                        <div style="text-align:center;height:50px;" class="fontSigV1">@Html.Raw(item.empPositionTitleTH)</div>
-                                    }
-                                    else
-                                    {
-                                        <div style="text-align:center; height:50px; font-size:12.5px;">@Html.Raw(item.empPositionTitleTH)</div>
-                                    }
-                                }
-                            </td>
-                        }
-
-                    }
-                }
-            </tr>
-        </table>
-    }
-
 
     @helper genSignatureFromApproveDetail(int line)
     {
