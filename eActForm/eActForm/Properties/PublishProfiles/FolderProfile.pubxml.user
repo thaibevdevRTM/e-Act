@@ -81,13 +81,21 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2020 08:46:05</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
+<<<<<<< Updated upstream
       <publishTime>10/06/2020 16:37:12</publishTime>
+=======
+      <publishTime>10/07/2020 09:56:54</publishTime>
+>>>>>>> Stashed changes
     </File>
     <File Include="bin/eActForm.dll.config">
       <publishTime>09/24/2020 10:22:55</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
+<<<<<<< Updated upstream
       <publishTime>10/06/2020 16:37:12</publishTime>
+=======
+      <publishTime>10/07/2020 09:56:54</publishTime>
+>>>>>>> Stashed changes
     </File>
     <File Include="bin/eActForm.dll.config">
       <publishTime>09/24/2020 10:22:55</publishTime>
@@ -105,7 +113,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/29/2020 14:24:20</publishTime>
     </File>
     <File Include="bin/en/eActForm.resources.dll">
+<<<<<<< Updated upstream
       <publishTime>10/06/2020 16:37:13</publishTime>
+=======
+      <publishTime>10/07/2020 09:56:55</publishTime>
+>>>>>>> Stashed changes
     </File>
     <File Include="bin/EntityFramework.SqlServer.xml">
       <publishTime>03/31/2020 20:02:01</publishTime>
@@ -7563,10 +7575,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/07/2020 14:51:50</publishTime>
     </File>
     <File Include="Views/Approve/approvePositionSignatureLists.cshtml">
+<<<<<<< Updated upstream
       <publishTime>10/06/2020 16:36:45</publishTime>
     </File>
     <File Include="Views/Approve/approvePositionSignatureListsV2.cshtml">
       <publishTime>09/24/2020 11:02:25</publishTime>
+=======
+      <publishTime>10/07/2020 09:24:11</publishTime>
+    </File>
+    <File Include="Views/Approve/approvePositionSignatureListsV2.cshtml">
+      <publishTime>10/07/2020 09:30:13</publishTime>
+>>>>>>> Stashed changes
     </File>
     <File Include="Views/Approve/getApproveComment.cshtml">
       <publishTime>04/22/2020 11:28:59</publishTime>
@@ -7770,7 +7789,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/22/2020 11:29:00</publishTime>
     </File>
     <File Include="Views/MainForm/Index.cshtml">
+<<<<<<< Updated upstream
       <publishTime>10/06/2020 15:25:57</publishTime>
+=======
+      <publishTime>10/07/2020 09:56:10</publishTime>
+>>>>>>> Stashed changes
     </File>
     <File Include="Views/MainReport/Index.cshtml">
       <publishTime>09/29/2020 10:28:33</publishTime>

@@ -308,21 +308,19 @@
                             <div style="text-align:center;height:80px;">
                                 <table class="tablethin" style="text-align:center; width:100%" cellpadding="0" cellspacing="0">
                                     <tr style="height: 80px;">
-                                        @if (@Array.AsReadOnly(AppCode.formApproveAuto).Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
-                                        {
-
-                                            <td style="width: 100%; border-style: solid;border-width: 1px 0px 1px 0px; border-collapse: collapse;text-align:center;">
-                                                @if (Model.activity_TBMMKT_Model.activityFormModel.empId == UtilsAppCode.Session.User.empId && item.rangNo == 1)
+                                        <td style="width: 100%; border-style: solid;border-width: 1px 0px 1px 0px; border-collapse: collapse;text-align:center;">
+                                            @if (@Array.AsReadOnly(AppCode.formApproveAuto).Contains(Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id))
+                                            {
+                                                if (Model.activity_TBMMKT_Model.activityFormModel.empId == UtilsAppCode.Session.User.empId && item.rangNo == 1)
                                                 {
                                                     <img width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], @item.empId)" />
                                                 }
-                                            </td>
-
-                                        }
-                                        else
-                                        {
-                                            <td style="width: 100%; border-style: solid;border-width: 1px 0px 1px 0px; border-collapse: collapse;text-align:center;"></td>
-                                        }
+                                            }
+                                            else
+                                            {
+                                                <img width="135" height="80" src="http://10.6.241.10/eAct/images/blank.png" />
+                                            }
+                                        </td>
                                     </tr>
 
                                 </table>
