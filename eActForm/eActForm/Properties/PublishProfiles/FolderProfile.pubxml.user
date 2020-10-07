@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
-This file is used by the publish/package process of your Web project. You can customize the behavior of this process
-by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+https://go.microsoft.com/fwlink/?LinkID=208121. 
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
@@ -81,24 +80,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2020 08:46:05</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
-<<<<<<< Updated upstream
-      <publishTime>10/06/2020 16:37:12</publishTime>
-=======
-      <publishTime>10/07/2020 09:56:54</publishTime>
->>>>>>> Stashed changes
-    </File>
-    <File Include="bin/eActForm.dll.config">
-      <publishTime>09/24/2020 10:22:55</publishTime>
+      <publishTime>10/07/2020 16:25:36</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
-<<<<<<< Updated upstream
-      <publishTime>10/06/2020 16:37:12</publishTime>
-=======
-      <publishTime>10/07/2020 09:56:54</publishTime>
->>>>>>> Stashed changes
-    </File>
-    <File Include="bin/eActForm.dll.config">
-      <publishTime>09/24/2020 10:22:55</publishTime>
+      <publishTime>10/07/2020 16:25:36</publishTime>
     </File>
     <File Include="bin/eForms.Models.dll">
       <publishTime>09/29/2020 10:28:44</publishTime>
@@ -113,11 +98,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/29/2020 14:24:20</publishTime>
     </File>
     <File Include="bin/en/eActForm.resources.dll">
-<<<<<<< Updated upstream
-      <publishTime>10/06/2020 16:37:13</publishTime>
-=======
-      <publishTime>10/07/2020 09:56:55</publishTime>
->>>>>>> Stashed changes
+      <publishTime>10/07/2020 16:25:37</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.xml">
       <publishTime>03/31/2020 20:02:01</publishTime>
@@ -773,9 +754,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/WebLibrary.pdb">
       <publishTime>09/29/2020 14:23:32</publishTime>
     </File>
-    <File Include="BusinessLayer/Appcodes/expensesEntertainAppCode.cs">
-      <publishTime>09/10/2020 16:28:24</publishTime>
-    </File>
     <File Include="Content/bootstrap-grid.css">
       <publishTime>03/31/2020 20:02:02</publishTime>
     </File>
@@ -1001,18 +979,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/themes/base/tooltip.css">
       <publishTime>03/31/2020 20:02:02</publishTime>
     </File>
-    <File Include="Content/themes/fonts/fontawesome-webfont.woff2">
-      <publishTime>04/23/2020 08:32:45</publishTime>
-    </File>
-    <File Include="Content/themes/fonts/glyphicons-halflings-regular.ttf">
-      <publishTime>04/23/2020 08:32:45</publishTime>
-    </File>
-    <File Include="Content/themes/fonts/glyphicons-halflings-regular.woff">
-      <publishTime>04/23/2020 08:32:45</publishTime>
-    </File>
-    <File Include="Content/themes/fonts/glyphicons-halflings-regular.woff2">
-      <publishTime>04/23/2020 08:32:45</publishTime>
-    </File>
     <File Include="Content/vendors/bootstrap-datepicker/bootstrap-datepicker.js">
       <publishTime>04/22/2020 11:28:47</publishTime>
     </File>
@@ -1021,9 +987,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/vendors/bootstrap-datepicker/datepicker3.css">
       <publishTime>04/22/2020 11:28:47</publishTime>
-    </File>
-    <File Include="Content/vendors/bootstrap-datepicker/datepicker3.min.css">
-      <publishTime>08/07/2020 14:51:42</publishTime>
     </File>
     <File Include="Content/vendors/bootstrap-datepicker/datepicker3.min.css">
       <publishTime>08/07/2020 14:51:42</publishTime>
@@ -5285,33 +5248,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/vendors/Flot/README.md">
       <publishTime>03/31/2020 20:02:29</publishTime>
     </File>
-    <File Include="Content/vendors/font-awesome/css/font-awesome.css">
-      <publishTime>11/25/2019 09:29:07</publishTime>
-    </File>
-    <File Include="Content/vendors/font-awesome/css/font-awesome.css.map">
-      <publishTime>11/25/2019 09:29:07</publishTime>
-    </File>
-    <File Include="Content/vendors/font-awesome/css/font-awesome.min.css">
-      <publishTime>11/25/2019 09:29:07</publishTime>
-    </File>
-    <File Include="Content/vendors/font-awesome/fonts/fontawesome-webfont.eot">
-      <publishTime>11/25/2019 09:29:07</publishTime>
-    </File>
-    <File Include="Content/vendors/font-awesome/fonts/fontawesome-webfont.svg">
-      <publishTime>11/25/2019 09:29:07</publishTime>
-    </File>
-    <File Include="Content/vendors/font-awesome/fonts/fontawesome-webfont.ttf">
-      <publishTime>11/25/2019 09:29:07</publishTime>
-    </File>
-    <File Include="Content/vendors/font-awesome/fonts/fontawesome-webfont.woff">
-      <publishTime>11/25/2019 09:29:07</publishTime>
-    </File>
-    <File Include="Content/vendors/font-awesome/fonts/fontawesome-webfont.woff2">
-      <publishTime>11/25/2019 09:29:07</publishTime>
-    </File>
-    <File Include="Content/vendors/font-awesome/fonts/FontAwesome.otf">
-      <publishTime>11/25/2019 09:29:07</publishTime>
-    </File>
     <File Include="Content/vendors/iCheck/.bower.json">
       <publishTime>04/22/2020 11:28:55</publishTime>
     </File>
@@ -7130,14 +7066,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="images/non_al.jpeg">
       <publishTime>03/31/2020 20:02:36</publishTime>
     </File>
+    <File Include="images/noSig.jpg">
+      <publishTime>10/07/2020 15:59:36</publishTime>
+    </File>
     <File Include="images/pngtree-phone-icon-png-image_1757859.jpg">
       <publishTime>09/29/2020 10:28:34</publishTime>
     </File>
     <File Include="images/tbmmktLogo.png">
       <publishTime>08/07/2020 14:51:56</publishTime>
-    </File>
-    <File Include="images/Thaibev-logo.png">
-      <publishTime>06/02/2020 13:34:57</publishTime>
     </File>
     <File Include="images/warning_error.png">
       <publishTime>04/22/2020 11:29:09</publishTime>
@@ -7318,9 +7254,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/jquery-ui.js">
       <publishTime>04/22/2020 11:28:58</publishTime>
-    </File>
-    <File Include="Scripts/jquery-ui.min.css">
-      <publishTime>08/07/2020 14:51:50</publishTime>
     </File>
     <File Include="Scripts/jquery-ui.min.css">
       <publishTime>08/07/2020 14:51:50</publishTime>
@@ -7575,17 +7508,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/07/2020 14:51:50</publishTime>
     </File>
     <File Include="Views/Approve/approvePositionSignatureLists.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>10/06/2020 16:36:45</publishTime>
+      <publishTime>10/07/2020 16:17:51</publishTime>
     </File>
     <File Include="Views/Approve/approvePositionSignatureListsV2.cshtml">
-      <publishTime>09/24/2020 11:02:25</publishTime>
-=======
-      <publishTime>10/07/2020 09:24:11</publishTime>
-    </File>
-    <File Include="Views/Approve/approvePositionSignatureListsV2.cshtml">
-      <publishTime>10/07/2020 09:30:13</publishTime>
->>>>>>> Stashed changes
+      <publishTime>10/07/2020 10:52:09</publishTime>
     </File>
     <File Include="Views/Approve/getApproveComment.cshtml">
       <publishTime>04/22/2020 11:28:59</publishTime>
@@ -7735,16 +7661,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/07/2020 14:51:51</publishTime>
     </File>
     <File Include="Views/ExpenseEstimateInput/expensesEntertainList.cshtml">
-      <publishTime>10/06/2020 15:25:57</publishTime>
+      <publishTime>10/07/2020 15:44:18</publishTime>
     </File>
     <File Include="Views/ExpenseEstimateInput/expensesMedDetail.cshtml">
       <publishTime>09/01/2020 10:57:30</publishTime>
     </File>
-    <File Include="Views/ExpenseEstimateInput/expensesMedDetail_old.cshtml">
-      <publishTime>06/02/2020 13:34:55</publishTime>
-    </File>
     <File Include="Views/ExpenseEstimateInput/expensesTrvDetail.cshtml">
-      <publishTime>10/06/2020 15:25:57</publishTime>
+      <publishTime>10/07/2020 10:00:57</publishTime>
     </File>
     <File Include="Views/ExpenseEstimateInput/productSetPriceList.cshtml">
       <publishTime>08/24/2020 17:07:43</publishTime>
@@ -7759,7 +7682,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2020 14:08:27</publishTime>
     </File>
     <File Include="Views/ExpenseEstimateReport/reportExpenseEntertain.cshtml">
-      <publishTime>10/06/2020 15:25:57</publishTime>
+      <publishTime>10/07/2020 10:00:57</publishTime>
     </File>
     <File Include="Views/Home/approveLists.cshtml">
       <publishTime>08/07/2020 14:51:51</publishTime>
@@ -7771,7 +7694,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/02/2020 17:12:11</publishTime>
     </File>
     <File Include="Views/Home/myDoc.cshtml">
-      <publishTime>10/06/2020 15:25:57</publishTime>
+      <publishTime>10/07/2020 10:00:57</publishTime>
     </File>
     <File Include="Views/ImportMasterAP/Index.cshtml">
       <publishTime>08/07/2020 14:51:51</publishTime>
@@ -7789,11 +7712,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/22/2020 11:29:00</publishTime>
     </File>
     <File Include="Views/MainForm/Index.cshtml">
-<<<<<<< Updated upstream
-      <publishTime>10/06/2020 15:25:57</publishTime>
-=======
-      <publishTime>10/07/2020 09:56:10</publishTime>
->>>>>>> Stashed changes
+      <publishTime>10/07/2020 10:00:57</publishTime>
     </File>
     <File Include="Views/MainReport/Index.cshtml">
       <publishTime>09/29/2020 10:28:33</publishTime>
@@ -7835,16 +7754,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/22/2020 11:29:00</publishTime>
     </File>
     <File Include="Views/MenuList/document.cshtml">
-      <publishTime>10/06/2020 15:25:57</publishTime>
+      <publishTime>10/07/2020 10:00:57</publishTime>
     </File>
     <File Include="Views/MenuList/hcForm.cshtml">
-      <publishTime>10/06/2020 15:25:58</publishTime>
+      <publishTime>10/07/2020 10:00:57</publishTime>
     </File>
     <File Include="Views/MenuList/importData.cshtml">
       <publishTime>08/07/2020 14:51:51</publishTime>
-    </File>
-    <File Include="Views/MenuList/itForm.cshtml">
-      <publishTime>06/02/2020 13:34:56</publishTime>
     </File>
     <File Include="Views/MenuList/report.cshtml">
       <publishTime>09/04/2020 13:21:12</publishTime>
@@ -7861,14 +7777,8 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/partialActivityDetail/partialSetPriceDetail.cshtml">
       <publishTime>08/07/2020 14:51:53</publishTime>
     </File>
-    <File Include="Views/partialActivityDetail/partialSetPriceMT.cshtml">
-      <publishTime>05/20/2020 16:29:00</publishTime>
-    </File>
     <File Include="Views/partialActivityDetailReport/partialSetPriceDetailRpt.cshtml">
       <publishTime>08/07/2020 14:51:53</publishTime>
-    </File>
-    <File Include="Views/partialActivityDetailReport/partialSetPriceMTRpt.cshtml">
-      <publishTime>05/20/2020 16:29:00</publishTime>
     </File>
     <File Include="Views/partialByProduct/Index.cshtml">
       <publishTime>08/07/2020 14:51:53</publishTime>
@@ -8090,7 +8000,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/29/2020 10:28:33</publishTime>
     </File>
     <File Include="Views/SharedMasterFormDetail_Input/exPerryEmpInfoDetail.cshtml">
-      <publishTime>10/06/2020 15:25:58</publishTime>
+      <publishTime>10/07/2020 10:00:57</publishTime>
     </File>
     <File Include="Views/SharedMasterFormDetail_Input/exPerryListDetail.cshtml">
       <publishTime>09/29/2020 10:28:33</publishTime>

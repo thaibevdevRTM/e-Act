@@ -37,7 +37,8 @@
             <tbody id="first1">
                 <tr class="tagCountRowExpenses">
                     <td>
-                        <button type="button" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
+                        @{var btnDel = "btn_"+@i+"__Del"; }
+                        <button type="button" id="@btnDel" name="btn[@i].Del" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hiddenTypeId" })
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].productId, new { Value = @valEntertain, @class = "hiddenValEntertain" })
                     </td>
@@ -393,8 +394,7 @@
             $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
             //$(newRow).find("select").attr("name", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
            // $(newRow).find("select").attr("id", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
-            $(this).parent().prev('select').attr('id').replace("[0].", "[" + RowCount + "]");
-
+   
             var elms = document.getElementsByClassName('hindenTypeId2')
             for (var i = 0; i < elms.length; i++) {
                 elms[i].setAttribute("value", "2");
@@ -434,12 +434,14 @@
 
 
     function cashDelete(btn) {
-        
-        var row = btn.parentNode.parentNode;
-        console.log(row);
-         row.parentNode.removeChild(row);
-         getTotal1();
-         getTotal2();
+        var rowIndex = $(btn).closest('tr').index();
+        console.log(rowIndex);
+        if (rowIndex > 0) {
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            getTotal1();
+            getTotal2();
+        }
 
 
     }
