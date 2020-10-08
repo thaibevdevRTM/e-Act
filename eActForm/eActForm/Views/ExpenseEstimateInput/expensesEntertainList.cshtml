@@ -23,10 +23,10 @@
     <table class="table table-bordered" id="tbl_Entertainment" cellpadding="0" cellspacing="0">
         <thead class="thead-dark">
             <tr>
-                <th class="align-content-center font10" rowspan="2" style="width:5%;"></th>
-                <th class="align-content-center font10" rowspan="2" style="width:10%;">วันที่</th>
+                <th class="align-content-center font10" rowspan="2" style="width:5%"></th>
+                <th class="align-content-center font10" rowspan="2" style="width:15%;">วันที่</th>
                 <th class="align-content-center font10" rowspan="2" style="width:15%;">สถานที่</th>
-                <th class="align-content-center font10" rowspan="2" style="width:20%;">จุดประสงค์</th>
+                <th class="align-content-center font10" rowspan="2" style="width:30%;">จุดประสงค์</th>
                 <th class="align-content-center font10" rowspan="2" style="width:20%;">ชื่อลูกค้า</th>
                 <th class="align-content-center font10" rowspan="2" style="width:10%;">ยอดเบิก</th>
             </tr>
@@ -37,7 +37,7 @@
             <tbody id="first1">
                 <tr class="tagCountRowExpenses">
                     <td>
-                        @{var btnDel = "btn_"+@i+"__Del"; }
+                        @{var btnDel = "btn_" + @i + "__Del"; }
                         <button type="button" id="@btnDel" name="btn[@i].Del" class="btn ink-reaction btn-danger fa fa-trash-o" onclick="cashDelete(this);"></button>
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].activityTypeId, new { Value = "1", @class = "hiddenTypeId" })
                         @Html.HiddenFor(x => x.activityOfEstimateList[i].productId, new { Value = @valEntertain, @class = "hiddenValEntertain" })
@@ -47,7 +47,7 @@
                  new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].detail, new { @class = "form-control textboxcss font10 textRight" })</td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail1(this)" , autocomplete = "off" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail1(this)", autocomplete = "off" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal1()" })</td>
                 </tr>
@@ -62,23 +62,29 @@
                     <label>ค่ารับรอง</label>
                 </div>
 
-                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
+                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-12 text-center">
                     <label>วงเงิน</label>
                 </div>
-                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
                     <p id="lblLimitEntertain">
                         0.00
                     </p>
                 </div>
-                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <label>สะสม</label>
+                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-12 text-center">
+                    <label>ใช้ไป</label>
                 </div>
-                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
                     <p id="lblCumulativeEntertain">
                         0.00
                     </p>
                 </div>
-                <div class="col-lg-4 col-md-3 col-sm-3 col-xs-6 text-center">
+                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-12 text-center">
+                    <label>คงเหลือ</label>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
+                    <p id="lblAmountEntertain">
+                        0.00
+                    </p>
                 </div>
 
             </td>
@@ -110,10 +116,10 @@
     <table class="table table-bordered" id="tbl_CashDetail" cellpadding="0" cellspacing="0">
         <thead class="thead-dark">
             <tr>
-                <th class="align-content-center font10" rowspan="2" style="width:8%;"></th>
-                <th class="align-content-center font10" rowspan="2" style="width:10%;">วันที่</th>
-                <th class="align-content-center font10" rowspan="2" style="width:30%;">รายการ</th>
-                <th class="align-content-center font10" rowspan="2" style="width:15%;">จำนวนเงิน</th>
+                <th class="align-content-center font10" rowspan="2" style="width:4%;"></th>
+                <th class="align-content-center font10" rowspan="2" style="width:15%;">วันที่</th>
+                <th class="align-content-center font10" rowspan="2" style="width:29%;">รายการ</th>
+                <th class="align-content-center font10" rowspan="2" style="width:16%;">จำนวนเงิน</th>
                 <th class="align-content-center font10" rowspan="2" style="width:30%;">หมายเหตุ</th>
             </tr>
         </thead>
@@ -131,7 +137,7 @@
                         @Html.TextBox("activityOfEstimateList2[" + i + "].dateInput", DocumentsAppCode.convertDateTHToShowCultureDateEN(Model.activityOfEstimateList2[i].date, ConfigurationManager.AppSettings["formatDateUse"]),
                       new { @class = "form-control textboxcss font10 textRight datepicker", autocomplete = "off" })
                     </td>
-                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail2(this)", onclick = "autocompleDetail2(this)" , autocomplete = "off" })</td>
+                    <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].productDetail, new { @class = "form-control textboxcss font10 textRight expenseList", onkeyup = "autocompleDetail2(this)", onclick = "autocompleDetail2(this)", autocomplete = "off" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].total, "{0:0.00}", new { @class = "form-control textboxcss font10 textRight", onkeyup = "getTotal2()" })</td>
                     <td style="text-align:right"> @Html.TextBoxFor(x => x.activityOfEstimateList2[i].remark, new { @class = "form-control textboxcss font10 textRight" })</td>
 
@@ -144,24 +150,38 @@
                     <img width="30em" height="30em" src="~/images/highwayv2.png" />
                     <label>ค่าทางด่วน</label>
                 </div>
-                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <label>วงเงิน</label>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <div class="col-12">
+                        <label>วงเงิน</label>
+                    </div>
+                    <div class="col-12">
+                        <p id="lblLimitBypass">
+                            0.00
+                        </p>
+                    </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <p id="lblLimitBypass">
-                        0.00
-                    </p>
+                    <div class="col-12">
+                        <label>ใช้ไป</label>
+                    </div>
+                    <div class="col-12">
+                        <p id="lblCumulativeBypass">
+                            0.00
+                        </p>
+                    </div>
                 </div>
-                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <label>สะสม</label>
-                </div>
+
                 <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <p id="lblCumulativeBypass">
-                        0.00
-                    </p>
+                    <div class="col-12">
+                        <label>คงเหลือ</label>
+                    </div>
+                    <div class="col-12">
+                        <u id="lblAmountBypass">
+                            0.00
+                        </u>
+                    </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-center">
-                </div>
+
             </td>
             <td class="textRight">
                 <label id="lblUseBypass">
@@ -177,23 +197,37 @@
                     <label>ค่าล้างรถ</label>
                 </div>
 
-                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <label>วงเงิน</label>
-                </div>
                 <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <p id="lblLimitCarWash">
-                        0.00
-                    </p>
+                    <div class="col-12">
+                        <label>วงเงิน</label>
+                    </div>
+                    <div class="col-12">
+                        <p id="lblLimitCarWash">
+                            0.00
+                        </p>
+                    </div>
                 </div>
-                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <label>สะสม</label>
-                </div>
+
                 <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <p id="lblCumulativeCarWash">
-                        0.00
-                    </p>
+                    <div class="col-12">
+                        <label>ใช้ไป</label>
+                    </div>
+                    <div class="col-12">
+                        <p id="lblCumulativeCarWash">
+                            0.00
+                        </p>
+                    </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-center">
+
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <div class="col-12">
+                        <label>คงเหลือ</label>
+                    </div>
+                    <div class="col-12">
+                        <u id="lblAmountCarWash">
+                            0.00
+                        </u>
+                    </div>
                 </div>
 
             </td>
@@ -211,24 +245,39 @@
                     <label>ค่าโทรศัพท์</label>
                 </div>
 
-                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <label>วงเงิน</label>
-                </div>
                 <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <p id="lblLimitPhone">
-                        0.00
-                    </p>
+                    <div class="col-12">
+                        <label>วงเงิน</label>
+                    </div>
+                    <div class="col-12">
+                        <p id="lblLimitPhone">
+                            0.00
+                        </p>
+                    </div>
                 </div>
-                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <label>สะสม</label>
-                </div>
+
                 <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <p id="lblCumulativePhone">
-                        0.00
-                    </p>
+                    <div class="col-12">
+                        <label>ใช้ไป</label>
+                    </div>
+                    <div class="col-12">
+                        <p id="lblCumulativePhone">
+                            0.00
+                        </p>
+                    </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-center">
+
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
+                    <div class="col-12">
+                        <label>คงเหลือ</label>
+                    </div>
+                    <div class="col-12">
+                        <u id="lblAmountPhone">
+                            0.00
+                        </u>
+                    </div>
                 </div>
+
             </td>
             <td class="textRight">
                 <label id="lblUsePhone">
@@ -240,27 +289,29 @@
         <tr>
             <td colspan="3" class="textRight">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
-
                     <label>อื่นๆ</label>
                 </div>
 
-                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <label>วงเงิน</label>
-                </div>
                 <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <p id="lblLimitOther">
-                        0.00
-                    </p>
+                    <div class="col-12">
+                        <label>วงเงิน</label>
+                    </div>
+                    <div class="col-12">
+                        <p id="lblLimitOther">
+                            0.00
+                        </p>
+                    </div>
                 </div>
-                <div class="col-lg-1 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <label>สะสม</label>
-                </div>
+
                 <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 text-center">
-                    <p id="lblCumulativeOther">
-                        0.00
-                    </p>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-center">
+                    <div class="col-12">
+                        <label>ใช้ไป</label>
+                    </div>
+                    <div class="col-12">
+                        <p id="lblCumulativeOther">
+                            0.00
+                        </p>
+                    </div>
                 </div>
             </td>
             <td class="textRight">
@@ -394,7 +445,7 @@
             $(this).attr("name", $(this).attr("name").replace("[0]", "[" + RowCount + "]"));
             //$(newRow).find("select").attr("name", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
            // $(newRow).find("select").attr("id", $("select", newRow).attr("name").replace("[0].", "_" + RowCount + "__"));
-   
+
             var elms = document.getElementsByClassName('hindenTypeId2')
             for (var i = 0; i < elms.length; i++) {
                 elms[i].setAttribute("value", "2");
@@ -491,6 +542,7 @@
 
     function getTotal1() {
         var totalEntertain = 0.00;
+
         document.getElementById('lblUseEntertain').innerHTML = totalEntertain;
         //count row ทั้งหมด
         var rowCount = parseInt($('#tbl_Entertainment tr.tagCountRowExpenses').length);
@@ -512,6 +564,16 @@
             if (isNaN(getPriceCumulativeEntertain)) getPriceCumulativeEntertain = 0;
             getPriceCumulativeEntertain = cumulaEntertain + totalEntertain;
             document.getElementById('lblCumulativeEntertain').innerHTML = getPriceCumulativeEntertain.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+            if (getPriceCumulativeEntertain > 0) {
+                var getAmountEntertain = getLimitEntertain - getPriceCumulativeEntertain;
+                document.getElementById('lblAmountEntertain').innerHTML = getAmountEntertain.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+            else {
+                document.getElementById('lblAmountEntertain').innerHTML = "0.00";
+            }
+
+
         }
 
         if (getPriceCumulativeEntertain > getLimitEntertain) {
@@ -569,17 +631,41 @@
             getPriceCumulativeBypass = cumulaBypass + totalBypass;
             document.getElementById('lblCumulativeBypass').innerHTML = getPriceCumulativeBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
+            if (getPriceCumulativeBypass > 0) {
+                var getAmountBypass = getLimitBypass - getPriceCumulativeBypass;
+                document.getElementById('lblAmountBypass').innerHTML = getAmountBypass.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+            else {
+                document.getElementById('lblAmountBypass').innerHTML = "0.00";
+            }
+
+
             var getCumulativeCarWash = document.getElementById('lblCumulativeCarWash').innerHTML.split(",").join("");
             getPriceCumulativeCarWash = parseFloat(getCumulativeCarWash);
             if (isNaN(getPriceCumulativeCarWash)) getPriceCumulativeCarWash = 0.00;
             getPriceCumulativeCarWash = cumulaCarWash + totalWash;
             document.getElementById('lblCumulativeCarWash').innerHTML = getPriceCumulativeCarWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            if (getPriceCumulativeCarWash > 0) {
+                var getAmountCarWash = getLimitCarWash - getPriceCumulativeCarWash;
+                document.getElementById('lblAmountCarWash').innerHTML = getAmountCarWash.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+            else {
+                document.getElementById('lblAmountCarWash').innerHTML = "0.00";
+            }
+
 
             var getCumulativePhone = document.getElementById('lblCumulativePhone').innerHTML.split(",").join("");
             getPriceCumulativePhone = parseFloat(getCumulativePhone);
             if (isNaN(getPriceCumulativePhone)) getPriceCumulativePhone = 0.00;
             getPriceCumulativePhone = cumulaPhone + totalPhone;
             document.getElementById('lblCumulativePhone').innerHTML = getPriceCumulativePhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            if (getPriceCumulativePhone > 0) {
+                var getAmountPhone = getLimitPhone - getPriceCumulativePhone;
+                document.getElementById('lblAmountPhone').innerHTML = getAmountPhone.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+            else {
+                document.getElementById('lblAmountPhone').innerHTML = "0.00";
+            }
 
             var getCumulativeOther = document.getElementById('lblCumulativeOther').innerHTML.split(",").join("");
             getPriceCumulativeOther = parseFloat(getCumulativeOther);
@@ -664,6 +750,7 @@
                 document.getElementById('lblCumulativeCarWash').innerHTML = 0.00;
                 document.getElementById('lblCumulativePhone').innerHTML = 0.00;
                 document.getElementById('lblCumulativeOther').innerHTML = 0.00;
+
             }
 
             getTotal1();

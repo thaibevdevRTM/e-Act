@@ -20,6 +20,8 @@
             document.getElementById('lblLimitCarWash').innerHTML = "0.00";
             document.getElementById('lblLimitPhone').innerHTML = "0.00";
 
+           
+
         },
 
        
