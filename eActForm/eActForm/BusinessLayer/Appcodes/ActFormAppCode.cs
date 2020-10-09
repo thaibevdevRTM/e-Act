@@ -123,6 +123,10 @@ namespace eActForm.BusinessLayer
                 {
                     strCall = "usp_getActivityFormByEmpId_HCPomNum";
                 }
+                else if (typeForm == Activity_Model.activityType.EXPENSE.ToString())
+                {
+                    strCall = "usp_getActivityExpenseEntertainByEmpId";
+                }
                 else
                 {
                     strCall = "usp_tbm_getActivityFormByEmpId";
@@ -146,6 +150,10 @@ namespace eActForm.BusinessLayer
                 if (isAdmin() && typeForm == Activity_Model.activityType.HCForm.ToString())
                 {
                     strCall = "usp_getActivityFormAll_HCPomNum";
+                }
+                if (isAdmin() && typeForm == Activity_Model.activityType.EXPENSE.ToString())
+                {
+                    strCall = "usp_getActivityFormAll_Expense";
                 }
 
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, strCall

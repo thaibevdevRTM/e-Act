@@ -95,6 +95,7 @@ namespace eActForm.Controllers
                     activityFormTBMMKT.master_type_form_id = master_type_form_id;// for production
                     //activityFormTBMMKT.subjectId = subjectId;
                     activityFormTBMMKT.formCompanyId = QueryGet_master_type_form.get_master_type_form(activityFormTBMMKT.master_type_form_id).FirstOrDefault().companyId;
+                    activityFormTBMMKT.formCompanyId = !string.IsNullOrEmpty(activityFormTBMMKT.formCompanyId) ? activityFormTBMMKT.formCompanyId : @UtilsAppCode.Session.User.empCompanyId;
                     activityFormTBMMKT.chkUseEng = Request.Cookies[ConfigurationManager.AppSettings["nameCookieLanguageEact"]].Value.ToString() == ConfigurationManager.AppSettings["cultureEng"];
                     //===mock data for first input====
                     int rowEstimateTable = 14;

@@ -251,7 +251,7 @@ namespace eActForm.Models
 
     public class CostThemeDetailOfGroupByPriceTBMMKT : CostThemeDetailOfGroupByPrice
     {
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n3}", ApplyFormatInEditMode = true)]
         public decimal? unitPrice { get; set; }
         public string unitPriceDisplay { get; set; }
         public string unitPriceDisplayReport { get; set; }

@@ -663,7 +663,14 @@ namespace eActForm.Controllers
         public ActionResult genImageStream(string empId)
         {
             var result = SignatureAppCode.currentSignatureByEmpId(empId);
-            return File(result.lists[0].signature, "image/jpg");
+            if(result.lists.Any())
+            {
+                return File(result.lists[0].signature, "image/jpg");
+            }
+            else
+            {
+                return File(Server.MapPath("~/images/noSig.jpg"), "image/jpg");
+            }
         }
     }
 }

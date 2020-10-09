@@ -314,8 +314,7 @@ namespace eActForm.Controllers
                             if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
                             {
                                 
-                                if( model.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formExpTrvNumId"] 
-                                    || model.FirstOrDefault().master_type_form_id == ConfigurationManager.AppSettings["formExpMedNumId"])
+                                if(AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id))
                                 {
                                     // case form benefit will auto approve
                                     if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))

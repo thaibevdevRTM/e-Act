@@ -244,7 +244,6 @@ namespace eActForm.Models
         public decimal? themeCost { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? growth { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? total { get; set; }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public decimal? totalCase { get; set; }
@@ -265,7 +264,7 @@ namespace eActForm.Models
         public string mechanics { get; set; }
         public bool chkBox { get; set; }
         public string qty { get; set; }
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n3}", ApplyFormatInEditMode = true)]
         public decimal? vat { get; set; }
         public decimal? balance { get; set; }
         public decimal? limit { get; set; }
