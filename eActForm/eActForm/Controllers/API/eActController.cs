@@ -558,13 +558,13 @@ namespace eActForm.Controllers
 
                     hireDate = (BaseAppCodes.converStrToDatetimeWithFormat(hireDate, ConfigurationManager.AppSettings["formatDateUse"])).ToString();
                     cashEmpList = QueryGetBenefit.getCashLimitByTypeId(typeId, hireDate, jobLevel).ToList();
-                    if (cashEmpList.Count > 0)
+                    if (cashEmpList != null && cashEmpList.Count > 0)
                     {
                         limit = cashEmpList[0].cashPerDay;
                     }
 
                     cashEmpList = QueryGetBenefit.getCumulativeByEmpId(empId).ToList();
-                    if (cashEmpList.Count > 0)
+                    if (cashEmpList != null && cashEmpList.Count > 0)
                     {
                         cumulative = cashEmpList[0].cashPerDay;
                     }
@@ -575,7 +575,7 @@ namespace eActForm.Controllers
                         limit = limit,
                         cumulative = cumulative,
                         balance = balance,
-                        cashPerDay = cashEmpList[0].cashPerDay,
+                        cashPerDay = cumulative//cashEmpList[0].cashPerDay,
                     };
                     result.Data = resultData;
 
@@ -663,7 +663,14 @@ namespace eActForm.Controllers
         public ActionResult genImageStream(string empId)
         {
             var result = SignatureAppCode.currentSignatureByEmpId(empId);
-            return File(result.lists[0].signature, "image/jpg");
+            if(result.lists.Any())
+            {
+                return File(result.lists[0].signature, "image/jpg");
+            }
+            else
+            {
+                return File(Server.MapPath("~/images/noSig.jpg"), "image/jpg");
+            }
         }
     }
 }

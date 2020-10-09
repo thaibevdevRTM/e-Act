@@ -204,6 +204,8 @@
                 $("#lblComp").text(response.Data.companyName);
                 $("#lblHireDate").text(response.Data.hireDate);
 
+
+
                 if (response.Data.hireDate == '') { alert("ไม่มีข้อมูลเริ่มทำงานกรุณาติดต่อเจ้าหน้าที่"); }
 
                 getRegional();
@@ -235,6 +237,7 @@
             } else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
                 getCashDetail();
             }
+
         });
     }
 

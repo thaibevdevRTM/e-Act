@@ -106,7 +106,7 @@ namespace eActForm.Controllers
             try
             {
                 management_Model = (ManagementFlow_Model)TempData["management_Model"];
-                flowApproveDetail flowDetail_Model = new flowApproveDetail();
+                flowApproveDetail flowDetail_Model = new flowApproveDetail("");
                 flowDetail_Model.rangNo = management_Model.approveFlow.flowDetail.OrderBy(x => x.rangNo).Last().rangNo + 1;
                 flowDetail_Model.id = Guid.NewGuid().ToString();
                 management_Model.approveFlow.flowDetail.Add(flowDetail_Model);
@@ -127,7 +127,7 @@ namespace eActForm.Controllers
             try
             {
                 management_Model = (ManagementFlow_Model)TempData["management_Model"];
-                flowApproveDetail flowDetail_Model = new flowApproveDetail();
+                flowApproveDetail flowDetail_Model = new flowApproveDetail("");
                 management_Model.approveFlow.flowDetail.RemoveAll(r => r.id == id);
 
                 TempData.Keep();

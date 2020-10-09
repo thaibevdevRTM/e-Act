@@ -21,11 +21,11 @@ namespace eActForm.Controllers
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
 
-
             if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             {
                 List<TB_Act_master_list_choiceModel> lst = new List<TB_Act_master_list_choiceModel>();
-                lst = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "expensesTrv").OrderBy(x => x.orderNum).ToList();
+                
+                lst = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, AppCode.GLType.GLSaleSupport).OrderBy(x => x.orderNum).ToList();
 
                 // listChoiceName,listChoiceId
                 for (int i = 0; i < lst.Count; i++)
@@ -50,15 +50,12 @@ namespace eActForm.Controllers
            
                 if (activity_TBMMKT_Model.expensesDetailSubModel == null || activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailSubModel.costDetailLists.Any())
                 {
-                    //List<TB_Act_master_list_choiceModel> lstSub = new List<TB_Act_master_list_choiceModel>();
-                    //lst = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "expensesTrv").OrderBy(x => x.orderNum).ToList();
 
-                    // listChoiceName,listChoiceId
                     for (int i = 0; i < 7; i++)
                     {
                         modelSub.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()
                         {
-                            listChoiceId =AppCode.Expenses.hotelExpense,
+                            listChoiceId = AppCode.Expenses.hotelExpense,
                             rowNo=i+1,
                             unit = 0,
                             unitPrice = 0,
@@ -73,8 +70,8 @@ namespace eActForm.Controllers
             else
             {
                 //edit
-                model.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
-                modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id,AppCode.Expenses.hotelExpense);
+                model.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
+                modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, AppCode.Expenses.hotelExpense);
 
             }
 
@@ -107,10 +104,6 @@ namespace eActForm.Controllers
             };
             if (activity_TBMMKT_Model.expensesDetailModel == null || activity_TBMMKT_Model.expensesDetailModel.costDetailLists == null || !activity_TBMMKT_Model.expensesDetailModel.costDetailLists.Any())
             {
-                //List<TB_Act_master_list_choiceModel> lst = new List<TB_Act_master_list_choiceModel>();
-                //lst = QueryGet_TB_Act_master_list_choice.get_TB_Act_master_list_choice(activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id, "expensesTrv").OrderBy(x => x.orderNum).ToList();
-
-                // listChoiceName,listChoiceId
                 for (int i = 0; i < 5; i++)
                 {
                     model.costDetailLists.Add(new CostThemeDetailOfGroupByPriceTBMMKT()

@@ -306,12 +306,24 @@ namespace eActForm.Controllers
 
                     GridHtml1 = GridHtml1.Replace("---", genDoc[0]).Replace("<br>", "<br/>");
                     GenPDFAppCode.doGen(GridHtml1, activityId, Server);
-                    if (QueryGetActivityByIdTBMMKT.getActivityById(activityId).FirstOrDefault().statusId != 3)
+                    List <ActivityFormTBMMKT> model = QueryGetActivityByIdTBMMKT.getActivityById(activityId);
+                    if (model.FirstOrDefault().statusId != 3)
                     {
                         if (ApproveAppCode.insertApproveForActivityForm(activityId) > 0)
                         {
-                            ApproveAppCode.updateApproveWaitingByRangNo(activityId);
-                            var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                            if (ApproveAppCode.updateApproveWaitingByRangNo(activityId) > 0)
+                            {
+                                
+                                if(AppCode.formApproveAuto.Contains(model.FirstOrDefault().master_type_form_id))
+                                {
+                                    // case form benefit will auto approve
+                                    if (QueryGetBenefit.getAllowAutoApproveForFormHC(activityId))
+                                    {
+                                        ApproveAppCode.updateApprove(activityId, ((int)AppCode.ApproveStatus.อนุมัติ).ToString(), "", AppCode.ApproveType.Activity_Form.ToString());
+                                    }
+                                }
+                                var rtn = await EmailAppCodes.sendApproveAsync(activityId, AppCode.ApproveType.Activity_Form, false);
+                            }
                         }
                     }
 

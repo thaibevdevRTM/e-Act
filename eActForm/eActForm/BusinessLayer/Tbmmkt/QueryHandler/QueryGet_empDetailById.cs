@@ -37,7 +37,10 @@ namespace eActForm.BusinessLayer
                                  companyNameEN = d.empCompanyName,
                                  compId = d.empCompanyId,
                                  email = d.empEmail,
-                                 hireDate = d.empProbationEndDate
+                                 hireDate = d.empProbationEndDate,
+                                 empGroupName = d.empGroupName,
+                                 empGroupNameTH = d.empGroupNameTH
+
                              });
                 return lists.OrderBy(x => x.empName).ToList();
             }

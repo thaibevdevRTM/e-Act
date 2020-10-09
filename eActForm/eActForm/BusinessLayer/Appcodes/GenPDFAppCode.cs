@@ -18,8 +18,10 @@ namespace eActForm.BusinessLayer
                 gridHtml = gridHtml.Replace("undefined", "");
                 var rootPathInsert = string.Format(ConfigurationManager.AppSettings["rooPdftURL"], activityId + "_");
                 AppCode.genPdfFile(gridHtml, new Document(PageSize.A4, 25, 25, 10, 10), server.MapPath(rootPathInsert), server.MapPath("~"));
-                TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels();
-                getImageModel.tbActImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension == ".pdf").ToList();
+                TB_Act_Image_Model.ImageModels getImageModel = new TB_Act_Image_Model.ImageModels
+                {
+                    tbActImageList = ImageAppCode.GetImage(activityId).Where(x => x.extension == ".pdf").ToList()
+                };
                 string[] pathFile = new string[getImageModel.tbActImageList.Count + 1];
                 pathFile[0] = server.MapPath(rootPathInsert);
                 if (getImageModel.tbActImageList.Any())

@@ -136,6 +136,18 @@ namespace eActForm.Models
 
     public class TB_Act_ActivityForm_DetailOther
     {
+
+        public TB_Act_ActivityForm_DetailOther()
+        {
+            this.SubjectId = "";
+            this.productBrandId = "";
+            this.channelId = "";
+            this.BudgetNumber = "";
+            this.costCenter = "";
+            this.channelRegionName = "";
+            this.glNo = "";
+            this.glName = "";
+        }
         public string Id { get; set; }
         public string activityId { get; set; }
         public string channelId { get; set; }
@@ -239,7 +251,7 @@ namespace eActForm.Models
 
     public class CostThemeDetailOfGroupByPriceTBMMKT : CostThemeDetailOfGroupByPrice
     {
-        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:n3}", ApplyFormatInEditMode = true)]
         public decimal? unitPrice { get; set; }
         public string unitPriceDisplay { get; set; }
         public string unitPriceDisplayReport { get; set; }
@@ -250,28 +262,35 @@ namespace eActForm.Models
 
     public class RequestEmpModel : ActBaseModel
     {
+
         public RequestEmpModel()
         {
 
         }
-        public RequestEmpModel(string empId)
+        public RequestEmpModel(string empId,bool langEn,bool chkFormHc)
         {
-            List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
-            empId = model[0].empId;
-            empName = model[0].empName;
-            position = model[0].position;
-            level = model[0].level;
-            department = model[0].department;
-            bu = model[0].bu;
-            companyName = model[0].companyName;
-            empNameEN = model[0].empNameEN;
-            positionEN = model[0].positionEN;
-            departmentEN = model[0].departmentEN;
-            buEN = model[0].buEN;
-            companyNameEN = model[0].companyNameEN;
-            compId = model[0].compId;
-            email = model[0].email;
-            hireDate = model[0].hireDate;
+            if (empId != "")
+            {
+                List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                if (model.Count > 0)
+                {
+                    this.empId = model[0].empId;
+                    empName = !langEn ? (chkFormHc ? "" : "คุณ") + model[0].empName : model[0].empNameEN;
+                    position = model[0].position;
+                    level = model[0].level;
+                    department = model[0].department;
+                    bu = model[0].bu;
+                    companyName = model[0].companyName;
+                    empNameEN = model[0].empNameEN;
+                    positionEN = model[0].positionEN;
+                    departmentEN = model[0].departmentEN;
+                    buEN = model[0].buEN;
+                    companyNameEN = model[0].companyNameEN;
+                    compId = model[0].compId;
+                    email = model[0].email;
+                    hireDate = model[0].hireDate;
+                }
+            }
         }
         public string id { get; set; }
         public string activityId { get; set; }
@@ -293,6 +312,8 @@ namespace eActForm.Models
         public string email { get; set; }
         public string detail { get; set; }
         public string hireDate { get; set; }
+        public string empGroupName { get; set; }
+        public string empGroupNameTH { get; set; }
     }
 
     public class PurposeModel : ActBaseModel
@@ -391,6 +412,7 @@ namespace eActForm.Models
     public class GetDataGL
     {
         public string GL { get; set; }
+        public string GLSale { get; set; }
         public string id { get; set; }
         public string groupGL { get; set; }
     }

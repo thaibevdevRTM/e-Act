@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using eActForm.BusinessLayer;
+using System.Collections.Generic;
 
 namespace eActForm.Models
 {
@@ -8,6 +9,11 @@ namespace eActForm.Models
         {
             public flowApprove flowMain { get; set; }
             public List<flowApproveDetail> flowDetail { get; set; }
+
+            public approveFlowModel()
+            {
+                flowDetail = new List<flowApproveDetail>();
+            }
         }
         public class flowApprove : ActBaseModel
         {
@@ -19,6 +25,23 @@ namespace eActForm.Models
         }
         public class flowApproveDetail : ActBaseModel
         {
+            public flowApproveDetail(string empId)
+            {
+                if (empId != "")
+                {
+                    List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                    if (model.Count > 0)
+                    {
+                        this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
+                        this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
+                    }
+                    else
+                    {
+                        this.empPositionTitleTH = "";
+                        this.empPositionTitleEN = "";
+                    }
+                }
+            }
             public string id { get; set; }
             public string companyId { get; set; }
             public string flowId { get; set; }

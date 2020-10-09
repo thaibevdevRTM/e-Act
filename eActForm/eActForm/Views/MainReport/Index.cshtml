@@ -49,7 +49,7 @@
 
         function submitCheckForm() {
 
-            if ('@Model.activityFormTBMMKT.master_type_form_id'=='@ConfigurationManager.AppSettings["formExpMedNumId"]') {
+            if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpMedNumId"]') {
                 if ('@Model.tB_Act_ActivityForm_DetailOther.amountReceived' > 0) {
 
                     $.ajax({
@@ -73,7 +73,12 @@
                     alert('ไม่สามารถยืนยันเอกสารได้ เนื่องจากได้รับวงเงินครบตามสิทธิแล้ว');
                 }
 
-            } else {
+            }
+            else if ('@Model.approveFlowDetail.Count' == 0)
+            {
+                    alert('ไม่สามารถยืนยันเอกสารได้ เนื่องจากไม่พบ Flow');
+            }
+            else {
                 submitPreview();
             }
         }

@@ -103,33 +103,6 @@ namespace eActForm.Controllers
             return PartialView(models);
         }
 
-        public ActionResult approvePositionSignatureLists(string actId, string subId)
-        {
-            ApproveModel.approveModels models = new ApproveModel.approveModels();
-            try
-            {
-                models = ApproveAppCode.getApproveByActFormId(actId);
-                models = setSrcSignature(models, actId);
-
-                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
-                //เพิ่มตัดตำแหน่ง
-                models.approveFlowDetail = newlinePosition(flowModel).flowDetail;
-                //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
-                Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
-                models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
-                //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
-
-                // BaseAppCodes.WriteSignatureToDisk(models, actId);
-
-            }
-            catch (Exception ex)
-            {
-                ExceptionManager.WriteError("approvePositionSignatureLists >>" + ex.Message);
-                TempData["approvePositionSignatureError"] = AppCode.StrMessFail + ex.Message;
-            }
-            return PartialView(models);
-        }
-
         public ActionResult previewApprove(string actId)
         {
             Activity_Model activityModel = new Activity_Model();
@@ -210,7 +183,32 @@ namespace eActForm.Controllers
             return Json(resultAjax, "text/plain");
         }
 
+        public ActionResult approvePositionSignatureLists(string actId, string subId)
+        {
+            ApproveModel.approveModels models = new ApproveModel.approveModels();
+            try
+            {
+                models = ApproveAppCode.getApproveByActFormId(actId);
+                models = setSrcSignature(models, actId);
+                
+                ApproveFlowModel.approveFlowModel flowModel = ApproveFlowAppCode.getFlowId(subId, actId);
+                //เพิ่มตัดตำแหน่ง
+                models.approveFlowDetail = newlinePosition(flowModel).flowDetail;
+                //=============dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
+                Activity_TBMMKT_Model activity_TBMMKT_Model = new Activity_TBMMKT_Model();
+                models.activity_TBMMKT_Model = ActivityFormTBMMKTCommandHandler.getDataForEditActivity(actId);
+                //=======END======dev date fream 20200115 เพิ่มดึงค่าว่าเป็นฟอร์มอะไร========
 
+                // BaseAppCodes.WriteSignatureToDisk(models, actId);
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("approvePositionSignatureLists >>" + ex.Message);
+                TempData["approvePositionSignatureError"] = AppCode.StrMessFail + ex.Message;
+            }
+            return PartialView(models);
+        }
         public ActionResult approvePositionSignatureListsV2(string actId, string subId)
         {
             ApproveModel.approveModels models = new ApproveModel.approveModels();

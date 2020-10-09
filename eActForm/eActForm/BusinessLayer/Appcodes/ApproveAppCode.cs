@@ -413,6 +413,8 @@ namespace eActForm.BusinessLayer
                             ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
                             ,new SqlParameter("@updatedDate",DateTime.Now)
                             ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                            ,new SqlParameter("@showInDoc",m.isShowInDoc)
+                            ,new SqlParameter("@approveGroupId",m.approveGroupId)
                         });
                 }
 
@@ -454,7 +456,9 @@ namespace eActForm.BusinessLayer
                                                  createdByUserId = dr["createdByUserId"].ToString(),
                                                  updatedDate = (DateTime?)dr["updatedDate"],
                                                  updatedByUserId = dr["updatedByUserId"].ToString(),
-
+                                                 approveGroupNameTH = dr["groupNameTH"].ToString(),
+                                                 approveGroupnameEN = dr["groupNameEN"].ToString(),
+                                                 isShowInDoc = dr["showInDoc"] is DBNull ? null : (bool?)dr["showInDoc"]
                                              }).ToList();
 
 
@@ -494,7 +498,7 @@ namespace eActForm.BusinessLayer
                                  }).ToList();
                     models.approveModel = lists[0];
 
-
+                    models.isApproveDetailListsShowDocHaveNull = models.approveDetailLists.Where(x => x.isShowInDoc == null).Count() > 0 ? true : false;
 
                 }
 

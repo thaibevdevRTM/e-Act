@@ -21,7 +21,6 @@ D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.pdb
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
-D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
 D:\project\GitHub\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CoreCompileInputs.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.pdb
@@ -45,3 +44,10 @@ D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrar
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CoreCompileInputs.cache
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
+D:\Thaibev\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.dll
+D:\Thaibev\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.pdb
+D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CoreCompileInputs.cache
+D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
+D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
+D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
+D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache

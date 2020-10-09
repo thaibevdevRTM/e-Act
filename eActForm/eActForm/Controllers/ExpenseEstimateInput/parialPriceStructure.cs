@@ -51,7 +51,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("addItemProduct >> " + ex.Message);
+                ExceptionManager.WriteError("ExpenseEstimateInput >> addItemProduct >> " + ex.Message);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -68,7 +68,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("calDiscountProduct >>" + ex.Message);
+                ExceptionManager.WriteError("ExpenseEstimateInput >> calDiscountProduct" + ex.Message);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -129,7 +129,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("calProductDetail >> " + ex.Message);
+                ExceptionManager.WriteError("ExpenseEstimateInput >> calProductDetail >> " + ex.Message);
                 success = false;
             }
 
@@ -159,7 +159,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("delCostDetail >>" + ex.Message);
+                ExceptionManager.WriteError("ExpenseEstimateInput >> delCostDetail >>" + ex.Message);
                 result.Message = ex.Message;
                 result.Success = false;
             }

@@ -304,6 +304,10 @@ namespace eActForm.BusinessLayer
                             {
                                 typeFormCompany = Activity_Model.activityType.HCM.ToString();
                             }
+                            else if (!string.IsNullOrEmpty(getActList.FirstOrDefault().companyId))
+                            {
+                                typeFormCompany = Activity_Model.activityType.EXPENSE.ToString();
+                            }
                         }
                         //==END===update by fream devDate 20200214=======
                         result[1] = typeFormCompany;

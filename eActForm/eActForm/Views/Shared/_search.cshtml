@@ -45,7 +45,7 @@
     </div>
 </div>
 
-@if (UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_TBM"] && UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_HCM"])
+@if (UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_MT"] || UtilsAppCode.Session.User.empCompanyId == ConfigurationManager.AppSettings["companyId_OMT"])
 {
     <div class="form-group">
         <div class="col-md-6 col-xs-12">

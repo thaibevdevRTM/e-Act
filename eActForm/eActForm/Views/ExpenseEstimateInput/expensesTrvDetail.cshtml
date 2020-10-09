@@ -8,8 +8,8 @@
             $('#divDetailSub').modal('show');
             //เคลียร์ data เมื่อคลิกใหม่
             $('#divInt input').val('0');
-            $('#divDecimal input,#totalSubEstimate').val('0.00');
-            $("#totalSubEstimate").text('0.00');
+            $('#divDecimal input,#totalSubEstimate').val('0.000');
+            $("#totalSubEstimate").text('0.000');
         } else {
             setElement("0");
             $('#divDetailSub').modal('hide');
@@ -45,7 +45,7 @@
         $("#MultiPrice_1").val(multiPrice);
         document.getElementById('MultiPrice_1').innerHTML = "(" + multiPrice + ")";
         $("#txtUnit_1").val(totalUnit);
-      
+
         var v_total = parseFloat($("#totalSubEstimate").val().replace(",", ""));
         $("#txtTotal_1").val(v_total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         $("#txtVat_1").val(totalVat.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
@@ -148,15 +148,15 @@
                                             {
 
                                                 @Html.DropDownListFor(x => x.expensesDetailModel.costDetailLists[index].productDetail,
-                                     new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
-                                     "name",
-                                     "name", @item.productDetail), "", new
-                                     {
-                                         @class = "form-control selectpicker",
-                                         @id = "ProductDetail_" + index,
-                                         @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
+                                          new SelectList(item.subDisplayType == "trainClass" ? Model.list_0 : Model.list_1,
+                                          "name",
+                                          "name", @item.productDetail), "", new
+                                          {
+                                              @class = "form-control selectpicker",
+                                              @id = "ProductDetail_" + index,
+                                              @name = "expensesDetailModel.costDetailLists[" + @index + "].productDetail",
 
-                                     })
+                                          })
                                             }
 
 
@@ -164,7 +164,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense)
+                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense )
                                 {
                                     <div>
                                         <input id="chkMultiPrice" type="checkbox" onchange="chkMultiPrice_change()" name=""> ราคาที่พักต่างกัน
@@ -194,31 +194,23 @@
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
 
-                                @*@if (item.listChoiceId != AppCode.Expenses.Allowance)
-                                    {
-                                        <input type="text" value="@item.glCode" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" readonly />
 
-                                    }
-                                    else
-                                    {
-                                        <input type="hidden" value="" id="txtGlCode_@index" name="expensesDetailModel.costDetailLists[@index].glCode" min="0" class="form-control textboxcss text-center " />
 
-                                    }*@
-
-                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense || item.listChoiceId == AppCode.Expenses.planeExpense)
+                                @if (item.listChoiceId == AppCode.Expenses.hotelExpense 
+                                    || item.listChoiceId == AppCode.Expenses.planeExpense )
                                 {
-                                    @*<input type="text" value="@item.glCode" id="txtVat_@index" name="expensesDetailModel.costDetailLists[@index].glCode" class="form-control textboxcss text-right" />*@
-                                    @Html.TextBoxFor(x => item.vat, "{0:n2}", new
-                               {
-                                   @id = "txtVat_" + @index,
-                                   Name = "expensesDetailModel.costDetailLists[" + index + "].vat",
-                                   @class = "form-control textboxcss text-right",
 
-                               })
+                                    @Html.TextBoxFor(x => item.vat, "{0:n2}", new
+                                       {
+                                           @id = "txtVat_" + @index,
+                                           Name = "expensesDetailModel.costDetailLists[" + index + "].vat",
+                                           @class = "form-control textboxcss text-right",
+
+                                       })
                                 }
                                 else
                                 {
-                                    <input type="hidden" value="0" id="txtVat_@index" name="expensesDetailModel.costDetailLists[@index].vat" min="0" class="form-control textboxcss text-center " />
+                                    <input type = "hidden" value = "0" id = "txtVat_@index" name = "expensesDetailModel.costDetailLists[@index].vat" min = "0" class="form-control textboxcss text-center " />
 
                                 }
 
@@ -358,7 +350,7 @@
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:center;">
                                 <div id="divDecimal">
                                     @*<input type="text" value="@item.unitPriceDisplay" id="txtSubUnitPrice_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].unitPrice" class="form-control textboxcss text-right" />*@
-                                    @Html.TextBoxFor(x => item.unitPrice, "{0:n2}", new
+                                    @Html.TextBoxFor(x => item.unitPrice, "{0:n3}", new
                                         {
                                             @id = "txtSubUnitPrice_" + @indexSub
                                                                      ,
@@ -374,21 +366,21 @@
 
 
                                     @*<input type="text" value="@item.vat" id="txtSubVat_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].vat" class="form-control textboxcss text-right" />*@
-                                    @Html.TextBoxFor(x => item.vat, "{0:n2}", new
+                                    @Html.TextBoxFor(x => item.vat, "{0:n3}", new
                                      {
                                          @id = "txtSubVat_" + @indexSub
                                                                   ,
                                          Name = "expensesDetailSubModel.costDetailLists[" + indexSub + "].vat"
                                                                   ,
                                          @class = "form-control textboxcss text-right"
-                                                                
+
                                      })
                                 </div>
                             </td>
                             <td style=" border-style: solid;border-width: 1px 1px 0px 0px; border-collapse: collapse;text-align:right;">
                                 <div id="divDecimal">
                                     <input type="hidden" value="@item.total" id="hdSubTotal_@indexSub" name="expensesDetailSubModel.costDetailLists[@indexSub].total" class="form-control textboxcss text-right hdTotal_@indexSub " />
-                                    @Html.TextBoxFor(x => item.total, "{0:n2}", new
+                                    @Html.TextBoxFor(x => item.total, "{0:n3}", new
                                {
                                    @id = "txtSubTotal_" + @indexSub
                                                             ,
@@ -403,21 +395,21 @@
 
                                 <script>
                                     $('#txtSubUnit_@indexSub,#txtSubUnitPrice_@indexSub,#txtSubVat_@indexSub').bind('blur', function () {
-                                        var v_unitRow = 0.00;
-                                        var v_unitpriceRow = 0.00;
-                                        var v_totalRow = 0.00;
+                                        var v_unitRow = 0.000;
+                                        var v_unitpriceRow = 0.000;
+                                        var v_totalRow = 0.000;
                                         if ($("#txtSubUnit_@indexSub").val() == "") { $("#txtSubUnit_@indexSub").val() == "1"; }
-                                        if ($("#txtSubUnit_@indexSub").val() != "" && $("#txtSubUnit_@indexSub").val() != "0.00" && $("#txtSubUnit_@indexSub").val() != "0") {
+                                        if ($("#txtSubUnit_@indexSub").val() != "" && $("#txtSubUnit_@indexSub").val() != "0.000" && $("#txtSubUnit_@indexSub").val() != "0") {
                                             v_unitRow = parseFloat($("#txtSubUnit_@indexSub").val().replace(",", ""));
                                         }
-                                        if ($("#txtSubUnitPrice_@indexSub").val() != "" && $("#txtSubUnitPrice_@indexSub").val() != "0.00" && $("#txtSubUnitPrice_@indexSub").val() != "0") {
+                                        if ($("#txtSubUnitPrice_@indexSub").val() != "" && $("#txtSubUnitPrice_@indexSub").val() != "0.000" && $("#txtSubUnitPrice_@indexSub").val() != "0") {
                                             v_unitpriceRow = parseFloat($("#txtSubUnitPrice_@indexSub").val().replace(",", "")) + parseFloat($("#txtSubVat_@indexSub").val().replace(",", ""));
 
                                         }
                                         v_totalRow = (v_unitRow * v_unitpriceRow);
 
-                                        $("#hdSubTotal_@indexSub").val(v_totalRow.toFixed(2));
-                                        $("#txtSubTotal_@indexSub").val(v_totalRow.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+                                        $("#hdSubTotal_@indexSub").val(v_totalRow.toFixed(3));
+                                        $("#txtSubTotal_@indexSub").val(v_totalRow.toFixed(3).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
                                         sumSubAll();
                                     });
 

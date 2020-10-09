@@ -131,7 +131,12 @@
     </div>
 </div>
 
-
+@foreach (var item in Model.scristModelList)
+{
+    var getscript = @item.scriptsName.Replace("\\", "/").ToString();
+    
+    <script src="@string.Format(ConfigurationManager.AppSettings["rootURL"], @getscript)"></script>
+}
 
 <script>
 
@@ -143,9 +148,7 @@
         $("#ProductDetail_5").prop("disabled", true);
         $("#ProductDetail_6").prop("disabled", true);
 
-        
-        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' &&
-            '@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)' == 'True') {
+        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formExpTrvNumId"]' && @ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)@ActFormAppCode.checkCanEditByUser(Model.activityFormTBMMKT.id)) {
 
             $("#divExpensesTrv :input").prop("disabled", false);
             $("#divExpensesTrv :input").prop("readonly", true);
@@ -207,12 +210,6 @@
             $('#preview').modal('show');
         }
 
-        if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["masterEmpExpense"]') {
-            if (@Model.activityFormTBMMKT.statusId == "5"  || '@Model.activityFormTBMMKT.createdByUserId' != '@UtilsAppCode.Session.User.empId') {
-                 document.getElementById("addEnt").style.display = "block";
-                 document.getElementById("addEx").style.display = "block";
-            }
-        }
 
 
     });
@@ -439,6 +436,31 @@
                              required += "&emsp;EOบรรทัดที่ " + (i + 1) + "*<br>"; validate = false;
                        }
                 }
+            }
+        }
+        else if ('@Model.activityFormTBMMKT.master_type_form_id' == '@ConfigurationManager.AppSettings["formReceptions"]') {
+
+
+            var getLimitPhone = parseFloat(document.getElementById('lblLimitPhone').innerHTML.split(",").join(""));
+            var getCumulaPhone = parseFloat(document.getElementById('lblCumulativePhone').innerHTML.split(",").join(""));
+            var getLimitBypass = parseFloat(document.getElementById('lblLimitBypass').innerHTML.split(",").join(""));
+            var getCumulaBypass = parseFloat(document.getElementById('lblCumulativeBypass').innerHTML.split(",").join(""));
+            var getLimitCarWash = parseFloat(document.getElementById('lblLimitCarWash').innerHTML.split(",").join(""));
+            var getCumulaCarWash = parseFloat(document.getElementById('lblCumulativeCarWash').innerHTML.split(",").join(""));
+            var getLimitEntertain = parseFloat(document.getElementById('lblLimitEntertain').innerHTML.split(",").join(""));
+            var getCumulaEntertain = parseFloat(document.getElementById('lblCumulativeEntertain').innerHTML.split(",").join(""));
+
+            if (getCumulaPhone > getLimitPhone) {
+                required += "ค่าโทรศัพท์ วงเงินเกินกำหนด! *<br>"; validate = false;
+            }
+            if (getCumulaBypass > getLimitBypass) {
+                required += "ค่าทางด่วน วงเงินเกินกำหนด! *<br>"; validate = false;
+            }
+            if (getCumulaCarWash > getLimitCarWash) {
+                required += "ค่าล้างรถ วงเงินเกินกำหนด! *<br>"; validate = false;
+            }
+            if (getCumulaEntertain > getLimitEntertain) {
+                required += "ค่ารับรอง วงเงินเกินกำหนด! *<br>"; validate = false;
             }
         }
         else {

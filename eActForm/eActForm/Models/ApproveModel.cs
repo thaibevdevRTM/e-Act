@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using eActForm.BusinessLayer;
+using System.Collections.Generic;
 namespace eActForm.Models
 {
     public class ApproveModel
@@ -18,6 +19,7 @@ namespace eActForm.Models
         }
         public class approveModels
         {
+            public bool isApproveDetailListsShowDocHaveNull { get; set; }
             public string masterTypeFormId { get; set; }
             public approveModel approveModel { get; set; }
             public List<approveDetailModel> approveDetailLists { get; set; }
@@ -64,6 +66,10 @@ namespace eActForm.Models
             public string companyName { get; set; }
             public string companyNameEN { get; set; }
             public string approveGroupId { get; set; }
+            public string approveGroupNameTH { get; set; }
+            public string approveGroupnameEN { get; set; }
+
+            public bool? isShowInDoc { get; set; }
         }
         public class approveStatus : ActBaseModel
         {
@@ -76,6 +82,21 @@ namespace eActForm.Models
 
         public class approveEmailDetailModel : ActBaseModel
         {
+            public approveEmailDetailModel(string empId,string emailDB)
+            {
+                if( empId != "")
+                {
+                    List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                    if(model.Count > 0)
+                    {
+                        empEmail = model[0].email;
+                    }
+                    else
+                    {
+                        empEmail = emailDB;
+                    }
+                }
+            }
             public string id { get; set; }
             public string activityName { get; set; }
             public string activitySales { get; set; }

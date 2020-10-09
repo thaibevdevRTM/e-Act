@@ -10,9 +10,7 @@
             <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
             </div>
-            @{
-                var src = "http://webapp8.apps.thaibev.com/files/eCheck/Photos/" + @UtilsAppCode.Session.User.empId + ".jpg";
-            }
+           
 
             <ul class="nav navbar-nav navbar-right">
                 <li style="margin-top:14px;">
@@ -65,7 +63,7 @@
                 </li>
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <img src=@src alt="">@UtilsAppCode.Session.User.empFNameTH @UtilsAppCode.Session.User.empLNameTH
+                        <img src="~/images/numan-logo.png" />@UtilsAppCode.Session.User.empFNameTH @UtilsAppCode.Session.User.empLNameTH
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -90,7 +88,9 @@
                         <li>
                             <a>
 
-                                <span class="image"><img src=@src alt="Profile Image" /></span>
+                                <span class="image">
+                                    <img src="~/images/numan-logo.png" />
+                                </span>
                                 <span>
                                     <span>@UtilsAppCode.Session.User.empFNameTH @UtilsAppCode.Session.User.empLNameTH</span>
                                     <span class="time">3 mins ago</span>

@@ -12,7 +12,7 @@
             {
                 if (item.isShowInDoc)
                 {
-                    <td style="width:150px;">
+                    <td style="width:120px;height:40px;">
                         <div style="font-size:12.5px;">
                             @item.approveGroupName
                         </div>
@@ -41,14 +41,14 @@
                                     <img src="@imgSrc" class="img-thumbnail" style="text-align:center;margin:auto;" />*@
 
                                 @*<img style="text-align:center;" width="150" height="90" src="@Model.approveDetailLists[index].ImgName" />*@
-                                <img width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@item.empId)"/>
+                                <img width="120" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"],@item.empId)"/>
                             }
                         </td>
                     }
                     else
                     {
                         <td>
-                            <div style="text-align:center;height:100px;"></div>
+                            <div style="text-align:center;height:80px;"></div>
                         </td>
                     }
                 }
@@ -62,7 +62,7 @@
                 if (item.isShowInDoc)
                 {
                     <td>
-                        <div style="text-align:center; margin-top:20px; font-size:12.5px;">@item.empFNameTH @item.empLNameTH</div>
+                        <div style="text-align:center; height:20px; margin-top:20px; font-size:12.5px;">@item.empFNameTH @item.empLNameTH</div>
                     </td>
                 }
             }
@@ -73,7 +73,7 @@
                 if (item.isShowInDoc)
                 {
                     <td>
-                        <div style="text-align:center; height:50px; font-size:12.5px;">@item.empPositionTitleTH</div>
+                        <div style="text-align:center; height:40px; font-size:12.5px;">@item.empPositionTitleTH</div>
                     </td>
                 }
             }

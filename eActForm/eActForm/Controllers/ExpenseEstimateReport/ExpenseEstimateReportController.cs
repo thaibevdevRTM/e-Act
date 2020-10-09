@@ -12,6 +12,8 @@ namespace eActForm.Controllers
 
         public ActionResult expensesTrvDetailRpt(Activity_TBMMKT_Model activity_TBMMKT_Model)
         {
+
+            #region init
             CostDetailOfGroupPriceTBMMKT modelResult = new CostDetailOfGroupPriceTBMMKT
             {
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
@@ -31,11 +33,11 @@ namespace eActForm.Controllers
             {
                 costDetailLists = new List<CostThemeDetailOfGroupByPriceTBMMKT>()
             };
+            #endregion
 
             modelHistory.costDetailLists = QueryGetActivityEstimateByActivityId.getHistoryByActivityId(activity_TBMMKT_Model.activityFormModel.id);
-            model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, "expensesTrv");
+            model2.costDetailLists = QueryGetActivityEstimateByActivityId.getWithListChoice(activity_TBMMKT_Model.activityFormModel.id, activity_TBMMKT_Model.activityFormModel.master_type_form_id, AppCode.GLType.GLSaleSupport);
             modelSub.costDetailLists = QueryGetActivityEstimateByActivityId.getEstimateSub(activity_TBMMKT_Model.activityFormModel.id, AppCode.Expenses.hotelExpense);
-
             modelSub.costDetailLists = modelSub.costDetailLists.Where(x => x.unitPrice > 0).ToList();
 
 
@@ -149,7 +151,6 @@ namespace eActForm.Controllers
             return PartialView(activity_TBMMKT_Model);
         }
 
+
     }
-
-
 }

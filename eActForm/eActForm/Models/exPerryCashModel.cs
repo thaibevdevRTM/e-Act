@@ -23,6 +23,7 @@ namespace eActForm.Models
         public string detail { get; set; }
         public string status { get; set; }
         public string cashLimitId { get; set; }
+        public string cashTypeId { get; set; }
         public string cashName { get; set; }
         public string positionId { get; set; }
         public string positionName { get; set; }
@@ -36,6 +37,8 @@ namespace eActForm.Models
         public DateTime? monthCash { get; set; }
         public string createby { get; set; }
         public DateTime? createDate { get; set; }
+
+
 
     }
 
