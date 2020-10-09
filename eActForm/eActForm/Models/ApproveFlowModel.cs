@@ -35,6 +35,11 @@ namespace eActForm.Models
                         this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
                         this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
                     }
+                    else
+                    {
+                        this.empPositionTitleTH = "";
+                        this.empPositionTitleEN = "";
+                    }
                 }
             }
             public string id { get; set; }
