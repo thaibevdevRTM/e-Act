@@ -317,7 +317,15 @@
                                         }
                                         else
                                         {
-                                            <img width="135" height="80" src="http://10.6.241.10/eAct/images/blank.png" />
+                                            var status = Model.approveDetailLists.Find(x => x.empId == item.empId).statusId;
+                                            if (status == "3")
+                                            {
+                                                <img width="135" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], @item.empId)" />
+                                            }
+                                            else
+                                            {
+                                                <img width="135" height="80" src="http://10.6.241.10/eAct/images/blank.png" />
+                                            }
                                         }
                                     </td>
                                 </tr>
