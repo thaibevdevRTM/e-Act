@@ -139,7 +139,11 @@
                                             }
                                             else
                                             {
-                                                var status = Model.approveDetailLists.Find(x => x.empId == item.empId).statusId;
+                                                var status = "0";
+                                                if (Model.approveDetailLists != null && Model.approveDetailLists.Count > 0)
+                                                {
+                                                    status = Model.approveDetailLists.Find(x => x.empId == item.empId).statusId;
+                                                }
                                                 if (status == "3")
                                                 {
                                                     <img width="115" height="80" src="@string.Format(ConfigurationManager.AppSettings["urlGetImg"], @item.empId)" />
@@ -181,11 +185,17 @@
 
                             if (Model.activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng)
                             {
-                                position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleEN;
+                                if (!string.IsNullOrEmpty(item.empId))
+                                {
+                                    position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleEN;
+                                }
                             }
                             else
                             {
-                                position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleTH;
+                                if (!string.IsNullOrEmpty(item.empId))
+                                {
+                                    position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleTH;
+                                }
                             }
 
                             if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
@@ -299,11 +309,17 @@
 
                             if (Model.activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng)
                             {
-                                position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleEN;
+                                if (!string.IsNullOrEmpty(item.empId))
+                                {
+                                    position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleEN;
+                                }
                             }
                             else
                             {
-                                position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleTH;
+                                if (!string.IsNullOrEmpty(item.empId))
+                                {
+                                    position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleTH;
+                                }
                             }
 
                             if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])
