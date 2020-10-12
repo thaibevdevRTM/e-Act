@@ -10,6 +10,7 @@ using static eActForm.Models.ApproveFlowModel;
 
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public class ManagementFlowController : Controller
     {
         // GET: managementFlow

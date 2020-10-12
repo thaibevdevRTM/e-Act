@@ -5,9 +5,9 @@ using System.Configuration;
 using System.Web.Mvc;
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public class BaseController : Controller
     {
-
         public JsonResult resendApprove(string actId)
         {
             var result = new AjaxResult();

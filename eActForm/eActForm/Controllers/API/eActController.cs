@@ -13,6 +13,7 @@ using WebLibrary;
 
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public partial class eActController : Controller
     {
 
@@ -265,7 +266,7 @@ namespace eActForm.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("getCustomerByRegion => " + ex.Message);
+                
             }
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }
