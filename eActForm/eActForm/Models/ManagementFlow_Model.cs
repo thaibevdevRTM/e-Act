@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web.UI.WebControls.WebParts;
 
 namespace eActForm.Models
 {
@@ -26,8 +27,9 @@ namespace eActForm.Models
         public List<string> p_isApproveList { get; set; }
         public List<string> p_flowId { get; set; }
         public List<string> p_productType { get; set; }
-        public string p_companyId { get; set; }
         public List<string> p_empGroup { get; set; }
+        public string p_companyId { get; set; }
+        public string typeFlow { get; set; }
         public ManagementFlow_Model()
         {
             approveFlow = new ApproveFlowModel.approveFlowModel();

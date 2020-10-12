@@ -76,6 +76,11 @@ namespace eActForm.Models
             CVM,
         }
 
+        public enum typeFlow
+        {
+            flow,
+            flowAddOn
+        }
         public class actForms
         {
             public List<actForm> actLists { get; set; }

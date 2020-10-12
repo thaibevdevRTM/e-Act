@@ -25,12 +25,10 @@ namespace eActForm.Controllers
             {
                 model.companyList = managementFlowAppCode.getCompany().Where(w => w.val1.Contains(UtilsAppCode.Session.User.empCompanyId)).ToList();
             }
-
-
             return View(model);
         }
 
-        public ActionResult dropDetail(string companyId)
+        public ActionResult dropDetail(string companyId,string typeFlow)
         {
             ManagementFlow_Model model = new ManagementFlow_Model();
             try
@@ -42,7 +40,7 @@ namespace eActForm.Controllers
                 model.chanelList = managementFlowAppCode.getChanel("data");
                 model.productBrandList = managementFlowAppCode.getProductBrand();
                 model.productTypeList = managementFlowAppCode.getProductType();
-
+                model.typeFlow = typeFlow;
             }
             catch (Exception ex)
             {
@@ -51,7 +49,7 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-        public ActionResult genDataApproveList(getDataList_Model model)
+        public ActionResult genDataApproveList(getDataList_Model model,string typeFlow)
         {
             ManagementFlow_Model management_Model = new ManagementFlow_Model();
             management_Model.approveFlow = ApproveFlowAppCode.getFlowApproveGroupByType(model);

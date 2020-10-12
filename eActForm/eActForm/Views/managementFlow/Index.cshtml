@@ -1,6 +1,7 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
-
-
+    @{ 
+        var typeFlow = Request["typeFlow"] == null ? "" : Request["typeFlow"];
+    }
 <style>
     .hero-container {
         background-image: -webkit-linear-gradient(left, #fff, #f0f0f0, #fff);
@@ -43,7 +44,10 @@
         $.ajax({
             type: 'POST',
             url: '@Url.Action("dropDetail", "ManagementFlow")',
-            data: { companyId: $("#ddlCompany").val() }
+            data: {
+                companyId: $("#ddlCompany").val(),
+                typeFlow: '@typeFlow',
+            }
         }).done(function (htmlResponse) {
             $("#WaitDialog").hide();
             $("#divDrop").html(htmlResponse);
