@@ -1,7 +1,8 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
-    @{ 
-        var typeFlow = Request["typeFlow"] == null ? "" : Request["typeFlow"];
-    }
+@using eActForm.Models
+@{
+    var typeFlow = Request["typeFlow"] == null ? "" : Request["typeFlow"];
+}
 <style>
     .hero-container {
         background-image: -webkit-linear-gradient(left, #fff, #f0f0f0, #fff);
@@ -66,6 +67,11 @@
             document.getElementById("divLimit").style.display = "block";
             document.getElementById("divCate").style.display = "block";
             document.getElementById("divProductType").style.display = "block";
+            if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
+                document.getElementById("divBrand").style.display = "block";
+                document.getElementById("divCus").style.display = "none";
+            }
+
         }
         else if ($("#ddlCompany").val() == '5601')
         {
