@@ -57,7 +57,11 @@ namespace eActForm.Controllers
             management_Model.getDDLShowApproveList = managementFlowAppCode.getApproveShow();
             management_Model.getDDlApproveList = managementFlowAppCode.getApprove();
             management_Model.typeFlow = typeFlow;
-
+            management_Model.p_productType = model.productTypeId;
+            management_Model.p_productCatId = model.productCatId;
+            management_Model.p_productBrandId = model.productBrandId;
+            management_Model.p_flowLimitId = model.flowLimitId;
+            management_Model.p_channelId = model.channelId;
 
             TempData["management_Model"] = management_Model;
             return RedirectToAction("approveList");

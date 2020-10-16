@@ -12,6 +12,7 @@
     , new { id = "subUpdate", @class = "form-horizontal form-label-left" }))
 {
 
+
     <table id="dtApproveLists" class="table table-striped table-hover">
         <thead>
             <tr style="background-color:#2B5D95;color:#ffffff;">
@@ -73,6 +74,11 @@
                         @Html.Hidden("Model.p_companyId", item.companyId)
                         @Html.Hidden("Model.p_empGroup", item.empGroup)
                         @Html.Hidden("Model.typeFlow", Model.typeFlow)
+                        @Html.Hidden("Model.p_productType", Model.p_productType)
+                        @Html.Hidden("Model.p_productCatId", Model.p_productCatId)
+                        @Html.Hidden("Model.p_productBrandId", Model.p_productBrandId)
+                        @Html.Hidden("Model.p_flowLimitId", Model.p_flowLimitId)
+                        @Html.Hidden("Model.p_channelId", Model.p_channelId)
 
                     </tr>
 
@@ -89,8 +95,8 @@
             <button type="button" onclick="return validateForm();" class="btn btn-info">Update</button>
         </div>
     </div>
-}
 
+}
 <script type="text/javascript">
     function validateForm() {
         $("#subUpdate").submit();

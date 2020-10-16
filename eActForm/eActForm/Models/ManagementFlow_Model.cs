@@ -26,16 +26,16 @@ namespace eActForm.Models
         public List<string> p_isShowList { get; set; }
         public List<string> p_isApproveList { get; set; }
         public List<string> p_flowId { get; set; }
-        public List<string> p_productType { get; set; }
         public List<string> p_empGroup { get; set; }
-        public List<string> p_subjectId { get; set; }
-        public string p_productTypeId { get; set; }
+        public string p_subjectId { get; set; }
+        public string p_productType { get; set; }
         public string p_productBrandId { get; set; }
         public string p_channelId { get; set; }
         public string p_flowLimitId { get; set; }
         public string p_companyId { get; set; }
         public string p_productCatId { get; set; }
         public string p_productGroupId { get; set; }
+        public string activityTypeId { get; set; }
         public string typeFlow { get; set; }
         public ManagementFlow_Model()
         {

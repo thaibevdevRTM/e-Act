@@ -129,7 +129,7 @@ namespace eActForm.BusinessLayer.Appcodes
                 result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteFlowApprove"
                       , new SqlParameter[] { new SqlParameter("@companyId", model.p_companyId)
                       , new SqlParameter("@subjectId", model.p_subjectId)
-                      , new SqlParameter("@productTypeId", model.p_productTypeId)
+                      , new SqlParameter("@productTypeId", model.p_productType)
                       , new SqlParameter("@productCatId", model.p_productCatId)
                       , new SqlParameter("@productGroupId", model.p_productGroupId)
                       , new SqlParameter("@flowLimitId", model.p_flowLimitId)
@@ -146,14 +146,19 @@ namespace eActForm.BusinessLayer.Appcodes
                         result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApproveAddOn"
 
                         , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
-                    ,new SqlParameter("@flowId",model.p_flowId[0])
+                    ,new SqlParameter("@subjectId",model.p_subjectId)
+                    ,new SqlParameter("@productTypeId", model.p_productType)
+                    ,new SqlParameter("@productCatId", model.p_productCatId)
+                    ,new SqlParameter("@productGroupId", model.p_productGroupId)
+                    ,new SqlParameter("@channelId", model.p_channelId)
+                    ,new SqlParameter("@flowLimitId", model.p_flowLimitId)
                     ,new SqlParameter("@empId",model.p_empIdList[i])
                     ,new SqlParameter("@approveGroupId",model.p_appovedGroupList[i])
                     ,new SqlParameter("@rangNo",model.p_rangNoList[i])
                     ,new SqlParameter("@empGroup",model.p_empGroup[0])
                     ,new SqlParameter("@showInDoc",model.p_isShowList[i])
                     ,new SqlParameter("@isApprove",model.p_isApproveList[i])
-
+                    ,new SqlParameter("@activityTypeId",model.p_isApproveList[i])
                     ,new SqlParameter("@delFlag",'0')
                     ,new SqlParameter("@createdDate",DateTime.Now)
                     ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
