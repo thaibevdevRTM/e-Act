@@ -165,11 +165,11 @@
                             var name = "";
                             if (Model.activity_TBMMKT_Model.activityFormTBMMKT.chkUseEng)
                             {
-                                name = item.empFNameEN + " " + item.empLNameEN;
+                                name = item.empFNameEN;
                             }
                             else
                             {
-                                name = yu + item.empFNameTH + " " + item.empLNameTH;
+                                name = yu + item.empFNameTH;
                             }
 
                             if (Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formAdvTbmId"] || Model.activity_TBMMKT_Model.activityFormTBMMKT.master_type_form_id == ConfigurationManager.AppSettings["formPosTbmId"])

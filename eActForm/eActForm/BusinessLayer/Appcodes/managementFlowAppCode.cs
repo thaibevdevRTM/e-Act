@@ -88,11 +88,13 @@ namespace eActForm.BusinessLayer.Appcodes
                       , new SqlParameter[] { new SqlParameter("@flowId", model.p_flowId[0])
                       , new SqlParameter("@empId", model.p_empGroup[0])
                       });
-                foreach (var item in model.p_appovedGroupList)
+                if (result > 0)
                 {
-                    result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
+                    foreach (var item in model.p_appovedGroupList)
+                    {
+                        result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
 
-                    , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
+                        , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
                     ,new SqlParameter("@flowId",model.p_flowId[0])
                     ,new SqlParameter("@empId",model.p_empIdList[i])
                     ,new SqlParameter("@approveGroupId",model.p_appovedGroupList[i])
@@ -105,8 +107,61 @@ namespace eActForm.BusinessLayer.Appcodes
                     ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updatedDate",DateTime.Now)
                     ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
-                      });
-                    i++;
+                          });
+                        i++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("insertFlowApprove => " + ex.Message);
+            }
+
+            return result;
+        }
+        public static int insertFlowApproveAddOn(ManagementFlow_Model model)
+        {
+            int i = 0;
+            int result = 0;
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteFlowApprove"
+                      , new SqlParameter[] { new SqlParameter("@companyId", model.p_companyId)
+                      , new SqlParameter("@subjectId", model.p_subjectId)
+                      , new SqlParameter("@productTypeId", model.p_productTypeId)
+                      , new SqlParameter("@productCatId", model.p_productCatId)
+                      , new SqlParameter("@productGroupId", model.p_productGroupId)
+                      , new SqlParameter("@flowLimitId", model.p_flowLimitId)
+                      , new SqlParameter("@channelId", model.p_channelId)
+                      , new SqlParameter("@productBrandId", model.p_productBrandId)
+                      , new SqlParameter("@empGroup",model.p_empGroup[0])
+                   });
+
+
+                if (result > 0)
+                {
+                    foreach (var item in model.p_appovedGroupList)
+                    {
+                        result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApproveAddOn"
+
+                        , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
+                    ,new SqlParameter("@flowId",model.p_flowId[0])
+                    ,new SqlParameter("@empId",model.p_empIdList[i])
+                    ,new SqlParameter("@approveGroupId",model.p_appovedGroupList[i])
+                    ,new SqlParameter("@rangNo",model.p_rangNoList[i])
+                    ,new SqlParameter("@empGroup",model.p_empGroup[0])
+                    ,new SqlParameter("@showInDoc",model.p_isShowList[i])
+                    ,new SqlParameter("@isApprove",model.p_isApproveList[i])
+
+                    ,new SqlParameter("@delFlag",'0')
+                    ,new SqlParameter("@createdDate",DateTime.Now)
+                    ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+                    ,new SqlParameter("@updatedDate",DateTime.Now)
+                    ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                          });
+                        i++;
+                    }
                 }
             }
             catch (Exception ex)

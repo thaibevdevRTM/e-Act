@@ -328,8 +328,8 @@ namespace eActForm.BusinessLayer
                                  rangNo = (int)dr["rangNo"],
                                  empId = dr["empId"].ToString(),
                                  empEmail = dr["empEmail"].ToString(),
-                                 empFNameTH = dr["empFNameTH"].ToString(),
-                                 empLNameTH = dr["empLNameTH"].ToString(),
+                                 //empFNameTH = dr["empFNameTH"].ToString(),
+                                 //empLNameTH = dr["empLNameTH"].ToString(),
                                  //empPositionTitleTH = dr["empPositionTitleTH"].ToString(), get from AD
                                  approveGroupId = dr["approveGroupId"].ToString(),
                                  approveGroupName = dr["approveGroupName"].ToString(),
@@ -339,8 +339,8 @@ namespace eActForm.BusinessLayer
                                  isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
                                  bu = dr["empDivisionTH"].ToString(),
                                  buEN = dr["empDivisionEN"].ToString(),
-                                 empFNameEN = dr["empFNameEN"].ToString(),
-                                 empLNameEN = dr["empLNameEN"].ToString(),
+                                 //empFNameEN = dr["empFNameEN"].ToString(),
+                                 //empLNameEN = dr["empLNameEN"].ToString(),
                                  //empPositionTitleEN = dr["empPositionTitleEN"].ToString()
                              }).ToList();
                 return lists;

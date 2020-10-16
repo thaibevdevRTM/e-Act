@@ -52,13 +52,13 @@ namespace eActForm.Controllers
         public ActionResult genDataApproveList(getDataList_Model model,string typeFlow)
         {
             ManagementFlow_Model management_Model = new ManagementFlow_Model();
-
             management_Model.approveFlow = ApproveFlowAppCode.getFlowApproveGroupByType(model, typeFlow);
-
-
             management_Model.approveGroupList = managementFlowAppCode.getApproveGroup();
             management_Model.getDDLShowApproveList = managementFlowAppCode.getApproveShow();
             management_Model.getDDlApproveList = managementFlowAppCode.getApprove();
+            management_Model.typeFlow = typeFlow;
+
+
             TempData["management_Model"] = management_Model;
             return RedirectToAction("approveList");
         }
@@ -86,7 +86,19 @@ namespace eActForm.Controllers
             try
             {
                 result.Success = false;
-                if (managementFlowAppCode.insertFlowApprove(model) > 0)
+                var countRow = 0;
+                if(model.typeFlow == Activity_Model.typeFlow.flowAddOn.ToString())
+                {
+                    countRow = managementFlowAppCode.insertFlowApproveAddOn(model);
+                }
+                else
+                {
+                    countRow = managementFlowAppCode.insertFlowApprove(model);
+                }
+                
+                    
+
+                if(countRow > 0)
                 {
                     result.Success = true;
                 }
@@ -94,6 +106,7 @@ namespace eActForm.Controllers
                 {
                     result.Message = AppCode.StrMessFail;
                 }
+                
             }
             catch (Exception ex)
             {

@@ -1,5 +1,7 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
-
+@{
+    var typeFlow = Request["typeFlow"] == null ? "" : Request["typeFlow"];
+}
 <style>
     .center {
         text-align: center;
@@ -70,6 +72,8 @@
                         @Html.Hidden("Model.p_flowId", item.flowId)
                         @Html.Hidden("Model.p_companyId", item.companyId)
                         @Html.Hidden("Model.p_empGroup", item.empGroup)
+                        @Html.Hidden("Model.typeFlow", Model.typeFlow)
+
                     </tr>
 
                 }
