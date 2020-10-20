@@ -104,7 +104,26 @@ namespace eActForm.BusinessLayer
             return result;
         }
 
+        public static int deleteBudgetApproveByActNo(string activityNo)
+        {
 
+            int result = 0;
+
+            try
+            {
+
+                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteBudgetApproveByActNo"
+                    , new SqlParameter[] {new SqlParameter("@activityNo",activityNo)
+                    ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                    });
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError(ex.Message + ">> deleteBudgetApproveByActNo");
+            }
+
+            return result;
+        }
 
     }
 }
