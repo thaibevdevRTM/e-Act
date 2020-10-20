@@ -119,6 +119,8 @@ namespace eActForm.Models
 
 
         }
+
+        
         public class Expenses
         {
             public const string Medical = "6BB0F68F-4B07-4E00-9B1E-B776D003D992";
@@ -128,6 +130,7 @@ namespace eActForm.Models
 
 
             public string groupName;
+            public string positionCheckGL;
 
             public Expenses()
             {

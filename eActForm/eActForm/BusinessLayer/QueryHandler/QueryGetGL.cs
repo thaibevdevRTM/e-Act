@@ -2,6 +2,7 @@
 using Microsoft.ApplicationBlocks.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace eActForm.BusinessLayer
                 var list = glList.Where(x => x.id == glCodeId);
                 if (list != null && list.Count() > 0)
                 {
-                    rtn = expenseEnum.groupName.Equals("Spirits Product") ? list.FirstOrDefault().GLSale : list.FirstOrDefault().GL;
+                    rtn = ConfigurationManager.AppSettings["positionGLSales"].Contains(expenseEnum.positionCheckGL) ? list.FirstOrDefault().GLSale : list.FirstOrDefault().GL;
                 }
                 return rtn;
 
