@@ -72,6 +72,7 @@ namespace eActForm.Models
             public byte[] signature { get; set; }
             public string empGroup { get; set; }
             public string typeFlow { get; set; }
+            public string activityGroup { get; set; }
         }
     }
 }

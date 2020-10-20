@@ -75,10 +75,13 @@
                         @Html.Hidden("Model.p_empGroup", item.empGroup)
                         @Html.Hidden("Model.typeFlow", Model.typeFlow)
                         @Html.Hidden("Model.p_productType", Model.p_productType)
-                        @Html.Hidden("Model.p_productCatId", Model.p_productCatId)
+                        @Html.Hidden("Model.p_productCateId", Model.p_productCateId)
                         @Html.Hidden("Model.p_productBrandId", Model.p_productBrandId)
                         @Html.Hidden("Model.p_flowLimitId", Model.p_flowLimitId)
                         @Html.Hidden("Model.p_channelId", Model.p_channelId)
+                        @Html.Hidden("Model.p_subjectId", Model.p_subjectId)
+                        @Html.Hidden("Model.activityTypeId", Model.activityTypeId)
+                        @Html.Hidden("Model.addOn_Id", item.id)
 
                     </tr>
 
@@ -127,8 +130,8 @@
 
     function successQuery(response) {
         if (response.Success) {
-            var url = '@Url.Action("Index", "ManagementFlow")';
-            doMsgSuccessAction('บันทึกเรียบร้อย', url);
+           //var url = '@Url.Action("Index", "ManagementFlow")';
+            doMsgSuccess('บันทึกเรียบร้อย');
         }
         else {
             $("#WaitDialog").hide();

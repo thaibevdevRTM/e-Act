@@ -361,11 +361,12 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] {new SqlParameter("@companyId",model.companyId)
                     ,new SqlParameter("@subjectId",model.subjectId)
                     ,new SqlParameter("@customerId",model.customerId)
-                    ,new SqlParameter("@productCatId",model.productCatId)
+                    ,new SqlParameter("@productCateId",model.productCateId)
                     ,new SqlParameter("@flowLimitId",model.flowLimitId)
                     ,new SqlParameter("@channelId",model.channelId)
                     ,new SqlParameter("@productBrandId",model.productBrandId)
                     ,new SqlParameter("@productType",model.productTypeId)
+                    ,new SqlParameter("@activityGroup",model.activityGroup)
                     ,new SqlParameter("@empId",model.empId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail("")
@@ -380,9 +381,11 @@ namespace eActForm.BusinessLayer
                                  empGroup = dr["empGroup"].ToString(),
                                  isShowInDoc = !string.IsNullOrEmpty(dr["showInDoc"].ToString()) ? bool.Parse(dr["showInDoc"].ToString()) : true,
                                  isApproved = !string.IsNullOrEmpty(dr["isApproved"].ToString()) ? bool.Parse(dr["isApproved"].ToString()) : true,
+                                 activityGroup = dr["activityTypeId"].ToString(),
                              }).ToList();
 
                 var result = !string.IsNullOrEmpty(model.empId) ? lists.Where(x => x.empGroup == model.empId).ToList() : lists.ToList();
+                result = string.IsNullOrEmpty(model.activityGroup) ? lists.Where(x => x.activityGroup == "").ToList() : lists.ToList();
                 approveFlow_Model.flowDetail = result;
                 return approveFlow_Model;
             }
@@ -401,7 +404,7 @@ namespace eActForm.BusinessLayer
                     , new SqlParameter[] {new SqlParameter("@companyId",model.companyId)
                     ,new SqlParameter("@subjectId",model.subjectId)
                     ,new SqlParameter("@customerId",model.customerId)
-                    ,new SqlParameter("@productCatId",model.productCatId)
+                    ,new SqlParameter("@productCateId",model.productCateId)
                     ,new SqlParameter("@flowLimitId",model.flowLimitId)
                     ,new SqlParameter("@channelId",model.channelId)
                     ,new SqlParameter("@productBrandId",model.productBrandId)
@@ -422,6 +425,8 @@ namespace eActForm.BusinessLayer
                              }).ToList();
 
                 var result = !string.IsNullOrEmpty(model.empId) ? lists.Where(x => x.empGroup == model.empId).ToList() : lists.ToList();
+
+
                 approveFlow_Model.flowDetail = result;
                 return approveFlow_Model;
             }

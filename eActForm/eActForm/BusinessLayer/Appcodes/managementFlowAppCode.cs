@@ -125,31 +125,24 @@ namespace eActForm.BusinessLayer.Appcodes
             int result = 0;
             try
             {
-
-                result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteFlowApprove"
-                      , new SqlParameter[] { new SqlParameter("@companyId", model.p_companyId)
-                      , new SqlParameter("@subjectId", model.p_subjectId)
-                      , new SqlParameter("@productTypeId", model.p_productType)
-                      , new SqlParameter("@productCatId", model.p_productCatId)
-                      , new SqlParameter("@productGroupId", model.p_productGroupId)
-                      , new SqlParameter("@flowLimitId", model.p_flowLimitId)
-                      , new SqlParameter("@channelId", model.p_channelId)
-                      , new SqlParameter("@productBrandId", model.p_productBrandId)
-                      , new SqlParameter("@empGroup",model.p_empGroup[0])
-                   });
-
+                foreach (var item in model.addOn_Id)
+                {
+                    result += SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteFlowApproveAddOn"
+                          , new SqlParameter[] { new SqlParameter("@addOnId", item)
+                       });
+                }
 
                 if (result > 0)
                 {
                     foreach (var item in model.p_appovedGroupList)
                     {
-                        result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApproveAddOn"
+                        result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove_AddOn"
 
                         , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
                     ,new SqlParameter("@subjectId",model.p_subjectId)
                     ,new SqlParameter("@productTypeId", model.p_productType)
-                    ,new SqlParameter("@productCatId", model.p_productCatId)
-                    ,new SqlParameter("@productGroupId", model.p_productGroupId)
+                    ,new SqlParameter("@productCateId", model.p_productCateId)
+                    ,new SqlParameter("@productBrandId", model.p_productBrandId)
                     ,new SqlParameter("@channelId", model.p_channelId)
                     ,new SqlParameter("@flowLimitId", model.p_flowLimitId)
                     ,new SqlParameter("@empId",model.p_empIdList[i])
@@ -158,7 +151,7 @@ namespace eActForm.BusinessLayer.Appcodes
                     ,new SqlParameter("@empGroup",model.p_empGroup[0])
                     ,new SqlParameter("@showInDoc",model.p_isShowList[i])
                     ,new SqlParameter("@isApprove",model.p_isApproveList[i])
-                    ,new SqlParameter("@activityTypeId",model.p_isApproveList[i])
+                    ,new SqlParameter("@activityTypeId",model.activityTypeId)
                     ,new SqlParameter("@delFlag",'0')
                     ,new SqlParameter("@createdDate",DateTime.Now)
                     ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
@@ -171,7 +164,7 @@ namespace eActForm.BusinessLayer.Appcodes
             }
             catch (Exception ex)
             {
-                ExceptionManager.WriteError("insertFlowApprove => " + ex.Message);
+                ExceptionManager.WriteError("insertFlowApproveAddOn => " + ex.Message);
             }
 
             return result;

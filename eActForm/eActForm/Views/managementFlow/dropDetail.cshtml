@@ -62,6 +62,14 @@
             @Html.DropDownListFor(model => model.chanelList, new SelectList(Model.chanelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlChanelGroup" })
         </div>
     </div>
+    <div id="divActivityGroup" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>ActivityGroup</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.activityGroupList, new SelectList(Model.activityGroupList, "id", "activitySales"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlActGroup" })
+        </div>
+    </div>
     <div id="divEmp" class="col-md-3">
         <div class="col-md-12 col-xs-12">
             <label>Employee</label>
@@ -108,10 +116,11 @@
                  subjectId: $("#ddlSubject").val(),
                  customerId: $("#ddlCustomer").val(),
                  flowLimitId: $("#ddlLimit").val(),
-                 productCatId: $("#ddlCate").val(),
+                 productCateId: $("#ddlCate").val(),
                  channelId: $("#ddlChanelGroup").val(),
                  productBrandId: $("#ddlBrand").val(),
                  productTypeId: $("#ddlProductType").val(),
+                 activityGroup: $("#ddlActGroup").val(),
                  empId: $("#ddlEmployee").val(),
                  typeFlow: '@typeFlow',
              }
@@ -150,7 +159,7 @@
         });
     });
 
-
+    
     $('#ddlBrand').change(function () {
         getEmp();
     });

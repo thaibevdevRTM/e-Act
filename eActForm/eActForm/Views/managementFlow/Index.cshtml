@@ -83,6 +83,16 @@
             document.getElementById("divLimit").style.display = "none";
             document.getElementById("divCate").style.display = "none";
             document.getElementById("divProductType").style.display = "none";
+
+            if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
+                document.getElementById("divCus").style.display = "none";
+                document.getElementById("divLimit").style.display = "block";
+                document.getElementById("divCate").style.display = "block";
+                document.getElementById("divProductType").style.display = "block";
+                document.getElementById("divBrand").style.display = "block";
+
+            } 
+            
         }
         else {
             document.getElementById("divBrand").style.display = "block";
@@ -93,6 +103,8 @@
             document.getElementById("divCate").style.display = "none";
             document.getElementById("divProductType").style.display = "none";
             document.getElementById("divEmp").style.display = "block";
+            document.getElementById("divActivityGroup").style.display = "none";
+            
         }
     }
 

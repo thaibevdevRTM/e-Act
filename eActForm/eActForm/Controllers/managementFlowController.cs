@@ -40,6 +40,10 @@ namespace eActForm.Controllers
                 model.chanelList = managementFlowAppCode.getChanel("data");
                 model.productBrandList = managementFlowAppCode.getProductBrand();
                 model.productTypeList = managementFlowAppCode.getProductType();
+                model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                    .Where(x => x.activityCondition.Contains("mtm".ToLower()))
+                    .GroupBy(item => item.activitySales)
+                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
                 model.typeFlow = typeFlow;
             }
             catch (Exception ex)
@@ -58,10 +62,12 @@ namespace eActForm.Controllers
             management_Model.getDDlApproveList = managementFlowAppCode.getApprove();
             management_Model.typeFlow = typeFlow;
             management_Model.p_productType = model.productTypeId;
-            management_Model.p_productCatId = model.productCatId;
+            management_Model.p_productCateId = model.productCateId;
             management_Model.p_productBrandId = model.productBrandId;
             management_Model.p_flowLimitId = model.flowLimitId;
             management_Model.p_channelId = model.channelId;
+            management_Model.p_subjectId = model.subjectId;
+            management_Model.activityTypeId = model.activityGroup;
 
             TempData["management_Model"] = management_Model;
             return RedirectToAction("approveList");

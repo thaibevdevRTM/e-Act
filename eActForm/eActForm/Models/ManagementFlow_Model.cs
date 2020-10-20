@@ -17,8 +17,9 @@ namespace eActForm.Models
         public List<TB_Act_Other_Model> getDDlApproveList { get; set; }
         public List<TB_Reg_ApproveGroup_Model> approveGroupList { get; set; }
         public ApproveFlowModel.approveFlowModel approveFlow { get; set; }
+        public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
         public List<RequestEmpModel> empList { get; set; }
-
+        public List<string> addOn_Id { get; set; }
         public List<string> p_idList { get; set; }
         public List<string> p_rangNoList { get; set; }
         public List<string> p_empIdList { get; set; }
@@ -33,7 +34,7 @@ namespace eActForm.Models
         public string p_channelId { get; set; }
         public string p_flowLimitId { get; set; }
         public string p_companyId { get; set; }
-        public string p_productCatId { get; set; }
+        public string p_productCateId { get; set; }
         public string p_productGroupId { get; set; }
         public string activityTypeId { get; set; }
         public string typeFlow { get; set; }
@@ -59,11 +60,12 @@ namespace eActForm.Models
         public string subjectId { get; set; }
         public string companyId { get; set; }
         public string customerId { get; set; }
-        public string productCatId { get; set; }
+        public string productCateId { get; set; }
         public string productTypeId { get; set; }
         public string flowLimitId { get; set; }
         public string channelId { get; set; }
         public string productBrandId { get; set; }
+        public string activityGroup { get; set; }
         public string empId { get; set; }
     }
 }
