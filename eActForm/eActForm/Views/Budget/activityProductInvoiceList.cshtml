@@ -45,18 +45,39 @@
                 <tr class="gradeX">
                     <td style="text-align:left;">
 
-                        <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+
                         @if (item.invoiceApproveStatusId == 1) // draff
                         {
+
+                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+
                             <a href="javascript:" onclick="return onDelete('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
                                 <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
                             </a>
                         }
+                        else if (item.invoiceApproveStatusId == 3) // approve
+                        {
+
+                            <a href="javascript:" class="anchorDetail btn ink-reaction btn-sm btn-info fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+
+                            <a href="javascript:" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
+                                <i class="btn ink-reaction btn-warning fa fa-reply"></i>&nbsp;
+                            </a>
+
+                        }
+                        else if (item.invoiceApproveStatusId == 5) // not approve
+                        {
+
+                            <a href="javascript:" class="disabled anchorDetail btn ink-reaction btn-sm btn-default fa fa-edit" onclick="javascript:onSelectInvoice('@item.activityId','@item.activityOfEstimateId','@item.invoiceId');"></a>
+
+                            <a href="javascript:" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
+                                <i class="btn ink-reaction btn-warning fa fa-reply"></i>&nbsp;
+                            </a>
+
+                        }
                         else
                         {
-                            @*<a href="javascript:" onclick="return onCancel('@item.activityId','@item.activityOfEstimateId','@item.invoiceId','@item.invoiceNo');">
-                                <i class="btn ink-reaction btn-warning fa fa-reply"></i>&nbsp;
-                            </a>*@
+
                         }
 
                     </td>
