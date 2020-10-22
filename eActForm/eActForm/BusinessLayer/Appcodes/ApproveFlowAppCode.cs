@@ -291,8 +291,8 @@ namespace eActForm.BusinessLayer
                                  rangNo = (int)dr["rangNo"],
                                  empId = dr["empId"].ToString(),
                                  empEmail = dr["empEmail"].ToString(),
-                                 empFNameTH = dr["empFNameTH"].ToString(),
-                                 empLNameTH = dr["empLNameTH"].ToString(),
+                                 //empFNameTH = dr["empFNameTH"].ToString(),
+                                 //empLNameTH = dr["empLNameTH"].ToString(),
                                  //empPositionTitleTH = dr["empPositionTitleTH"].ToString(), get position from AD
                                  approveGroupId = dr["approveGroupId"].ToString(),//เฟรมเพิ่ม 20200113 เพิ่มapproveGroupId ไว้ใช้ดึงชือ่ผู้อนุมัติแสดงบนหนังสือฟอร์ม
                                  approveGroupName = dr["approveGroupName"].ToString(),
@@ -302,8 +302,8 @@ namespace eActForm.BusinessLayer
                                  isApproved = dr["isApproved"] != null ? (bool)dr["isApproved"] : true,
                                  bu = dr["empDivisionTH"].ToString(),
                                  buEN = dr["empDivisionEN"].ToString(),
-                                 empFNameEN = dr["empFNameEN"].ToString(),
-                                 empLNameEN = dr["empLNameEN"].ToString(),
+                                 //empFNameEN = dr["empFNameEN"].ToString(),
+                                 //empLNameEN = dr["empLNameEN"].ToString(),
                                  //empPositionTitleEN = dr["empPositionTitleEN"].ToString()
                              }).ToList();
                 return lists;

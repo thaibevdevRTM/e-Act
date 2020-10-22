@@ -41,6 +41,8 @@ namespace eActForm.Models
                     {
                         this.empPositionTitleTH = "";
                         this.empPositionTitleEN = "";
+                        this.empFNameTH="";
+                        this.empFNameEN="";
                     }
                 }
             }

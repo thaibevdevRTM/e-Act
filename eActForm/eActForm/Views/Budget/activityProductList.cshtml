@@ -4,6 +4,7 @@
     //update 21-04-2020
     ViewBag.Title = "";
     var var_lastApprove = Model.Budget_Activity_Last_Approve;
+    var var_Count_Wait_Approve = Model.Budget_Count_Wait_Approve;
 
 }
 
@@ -24,9 +25,15 @@
 
 @if (var_lastApprove != null)
 {
-    <a onclick="callApproveList('@(var_lastApprove == null ? "" : var_lastApprove.budgetApproveId)');"> <i class="btn ink-reaction btn-dark fa fa-eye"></i> รายการอนุมัติครั้งล่าสุด </a>
+    <a onclick="callApproveList('@(var_lastApprove == null ? "" : var_lastApprove.budgetApproveId)');"> <i class="btn ink-reaction btn-dark fa fa-eye"></i> การอนุมัติล่าสุด </a>
     @Html.ActionLink(" ", "getPdfBudget", "BudgetViewer", new { budgetApproveId = var_lastApprove == null ? null : var_lastApprove.budgetApproveId }, new { @class = "btn ink-reaction btn-success fa fa-search", target = "_blank", })
-    <span>รายละเอียดค่าใช้จ่าย(pdf)</span>
+    <span>รายละเอียด(pdf)</span>
+
+
+    <a href="javascript:" onclick="return onCancelWaitApproveByActno('@Model.Budget_Activity.act_activityNo','@Model.Budget_Activity.act_form_id');" >
+        <i class="btn ink-reaction btn-danger fa fa-reply"></i>ยกเลิกขออนุมัติ
+    </a>
+
 }
 
 
@@ -113,19 +120,20 @@
     </tbody>
 </table>
 
-<script>$('document').ready(function () {
+<script>
+    $('document').ready(function () {
 
-		$('tr').click(function () {
+        $('tr').click(function () {
 
-			$('tr').removeClass('info');
-			$(this).addClass('info');
+            $('tr').removeClass('info');
+            $(this).addClass('info');
 
 
-			var id = $(this).data('id');
-			$('.links a').each(function () {
-				this.href = this.href.split("cshtml")[0] + "cshtml/" + id;
-			});
+            var id = $(this).data('id');
+            $('.links a').each(function () {
+                this.href = this.href.split("cshtml")[0] + "cshtml/" + id;
+            });
 
-		});
-	});</script>
+        });
+    });</script>
 

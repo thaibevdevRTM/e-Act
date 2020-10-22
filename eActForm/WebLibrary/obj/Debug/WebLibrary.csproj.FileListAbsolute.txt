@@ -51,3 +51,10 @@ D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
 D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
 D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
 D:\Thaibev\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.dll
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\WebLibrary\bin\Debug\WebLibrary.pdb
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csprojAssemblyReference.cache
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CoreCompileInputs.cache
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.csproj.CopyComplete
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.dll
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\WebLibrary\obj\Debug\WebLibrary.pdb
