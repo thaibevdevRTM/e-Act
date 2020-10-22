@@ -34,11 +34,15 @@ namespace eActForm.Models
                     {
                         this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
                         this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
+                        this.empFNameTH = model.Count > 0 ? model[0].empName : "";
+                        this.empFNameEN = model.Count > 0 ? model[0].empNameEN : "";
                     }
                     else
                     {
                         this.empPositionTitleTH = "";
                         this.empPositionTitleEN = "";
+                        this.empFNameTH="";
+                        this.empFNameEN="";
                     }
                 }
             }
