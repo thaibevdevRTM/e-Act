@@ -60,6 +60,7 @@ namespace eActForm.Controllers
             management_Model.approveGroupList = managementFlowAppCode.getApproveGroup();
             management_Model.getDDLShowApproveList = managementFlowAppCode.getApproveShow();
             management_Model.getDDlApproveList = managementFlowAppCode.getApprove();
+            management_Model.getDDLActiveList = managementFlowAppCode.getActive();
             management_Model.typeFlow = typeFlow;
             management_Model.p_productType = model.productTypeId;
             management_Model.p_productCateId = model.productCateId;

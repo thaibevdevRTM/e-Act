@@ -382,6 +382,7 @@ namespace eActForm.BusinessLayer
                                  isShowInDoc = !string.IsNullOrEmpty(dr["showInDoc"].ToString()) ? bool.Parse(dr["showInDoc"].ToString()) : true,
                                  isApproved = !string.IsNullOrEmpty(dr["isApproved"].ToString()) ? bool.Parse(dr["isApproved"].ToString()) : true,
                                  activityGroup = dr["activityTypeId"].ToString(),
+                                 delFlag = !string.IsNullOrEmpty(dr["delFlag"].ToString()) ? bool.Parse(dr["delFlag"].ToString()) : true,
                              }).ToList();
 
                 var result = !string.IsNullOrEmpty(model.empId) ? lists.Where(x => x.empGroup == model.empId).ToList() : lists.ToList();

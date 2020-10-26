@@ -39,6 +39,11 @@ namespace eActForm.BusinessLayer.Appcodes
             return QueryOtherMaster.getOhterMaster("approve", "");
         }
 
+        public static List<TB_Act_Other_Model> getActive()
+        {
+            return QueryOtherMaster.getOhterMaster("active", "");
+        }
+
         public static List<TB_Act_Customers_Model.Customers_Model> getCustomer(string companyId)
         {
             if (companyId == ConfigurationManager.AppSettings["companyId_MT"])
@@ -102,7 +107,7 @@ namespace eActForm.BusinessLayer.Appcodes
                     ,new SqlParameter("@empGroup",model.p_empGroup[0])
                     ,new SqlParameter("@showInDoc",model.p_isShowList[i])
                     ,new SqlParameter("@isApprove",model.p_isApproveList[i])
-                    ,new SqlParameter("@delFlag",'0')
+                    ,new SqlParameter("@delFlag",model.p_active[i] == AppCode.Active.Active.ToString() ? 0 : 1)
                     ,new SqlParameter("@createdDate",DateTime.Now)
                     ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updatedDate",DateTime.Now)

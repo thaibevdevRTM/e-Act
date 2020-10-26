@@ -1,7 +1,5 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
-@{
-    var typeFlow = Request["typeFlow"] == null ? "" : Request["typeFlow"];
-}
+@using eActForm.Models
 <style>
     .center {
         text-align: center;
@@ -12,17 +10,17 @@
     , new { id = "subUpdate", @class = "form-horizontal form-label-left" }))
 {
 
-
     <table id="dtApproveLists" class="table table-striped table-hover">
         <thead>
             <tr style="background-color:#2B5D95;color:#ffffff;">
                 <th></th>
-                <th class="center" width="10%">ลำดับ</th>
-                <th class="center">รหัส</th>
+                <th class="center" width="8%">ลำดับ</th>
+                <th class="center" width="12%">รหัส</th>
                 <th class="center">ชื่อ</th>
                 <th class="center">กลุ่ม</th>
                 <th class="center">แสดง</th>
                 <th class="center">อนุมัติ</th>
+                <th class="center">Active</th>
             </tr>
         </thead>
         <tbody>
@@ -70,6 +68,13 @@
                            id = "ddlApprove",
                        })
                         </td>
+                        <td>
+                            @Html.DropDownList("Model.p_active", new SelectList(Model.getDDLActiveList, "val1", "displayVal", item.delFlag), new
+                                                 {
+                                                     @class = "form-control textboxcss",
+                                                     id = "ddlActive",
+                                                 })
+                        </td>
                         @Html.Hidden("Model.p_flowId", item.flowId)
                         @Html.Hidden("Model.p_companyId", item.companyId)
                         @Html.Hidden("Model.p_empGroup", item.empGroup)
@@ -79,10 +84,6 @@
                         @Html.Hidden("Model.p_productBrandId", Model.p_productBrandId)
                         @Html.Hidden("Model.p_flowLimitId", Model.p_flowLimitId)
                         @Html.Hidden("Model.p_channelId", Model.p_channelId)
-                        @Html.Hidden("Model.p_subjectId", Model.p_subjectId)
-                        @Html.Hidden("Model.activityTypeId", Model.activityTypeId)
-                        @Html.Hidden("Model.addOn_Id", item.id)
-
                     </tr>
 
                 }
@@ -98,8 +99,8 @@
             <button type="button" onclick="return validateForm();" class="btn btn-info">Update</button>
         </div>
     </div>
-
 }
+
 <script type="text/javascript">
     function validateForm() {
         $("#subUpdate").submit();
@@ -130,8 +131,8 @@
 
     function successQuery(response) {
         if (response.Success) {
-           //var url = '@Url.Action("Index", "ManagementFlow")';
-            doMsgSuccess('บันทึกเรียบร้อย');
+            var url = '@Url.Action("Index", "ManagementFlow")';
+            doMsgSuccessAction('บันทึกเรียบร้อย', url);
         }
         else {
             $("#WaitDialog").hide();

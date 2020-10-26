@@ -13,6 +13,7 @@ namespace eActForm.Models
         public List<TB_Act_ProductType_Model> productTypeList { get; set; }
         public List<TB_Act_Other_Model> companyList { get; set; }
         public List<TB_Reg_FlowLimit_Model> getLimitList { get; set; }
+        public List<TB_Act_Other_Model> getDDLActiveList { get; set; }
         public List<TB_Act_Other_Model> getDDLShowApproveList { get; set; }
         public List<TB_Act_Other_Model> getDDlApproveList { get; set; }
         public List<TB_Reg_ApproveGroup_Model> approveGroupList { get; set; }
@@ -28,6 +29,7 @@ namespace eActForm.Models
         public List<string> p_isApproveList { get; set; }
         public List<string> p_flowId { get; set; }
         public List<string> p_empGroup { get; set; }
+        public List<string> p_active { get; set; }
         public string p_subjectId { get; set; }
         public string p_productType { get; set; }
         public string p_productBrandId { get; set; }
