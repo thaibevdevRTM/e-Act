@@ -214,7 +214,8 @@
                                     <i class="btn glyphicon glyphicon-retweet"></i>&nbsp;
                                 </a>
                             }
-                            @if (item.statusId == "1" || item.statusId == "3" || item.statusId == "5" || (item.statusId == "6" && @ActFormAppCode.isAdmin()))
+                            @if (item.statusId == "1" ||  item.statusId == "5" || (item.statusId == "6" && @ActFormAppCode.isAdmin()) ||
+                                        (item.statusId == "3" && item.companyId == ConfigurationManager.AppSettings["companyId_MT"] || item.companyId == ConfigurationManager.AppSettings["companyId_OMT"] || item.companyId == ConfigurationManager.AppSettings["companyId_TBM"]))
                             {
                                 <a href="javascript:" onclick="return checkBeforeDelete('@item.id','@item.statusId');">
                                     <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;

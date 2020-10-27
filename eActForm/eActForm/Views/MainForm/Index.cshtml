@@ -528,10 +528,30 @@
             url: '@Url.Action("Index", "MainReport")',
             data: { activityId: '@Model.activityFormModel.id' }
         }).done(function (htmlResponse) {
+            if ('@Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)' == 'True') {
+                $.ajax({
+                    url: '@Url.Action("genPdfApprove", "Documents")',
+                    data: {
+                        GridHtml: $("#divForm").html(),
+                        statusId: '',
+                        activityId: '@Model.activityFormModel.id',
+                    },
+                    dataType: "json",
+                    type: 'POST',
+                }).done(function (response) {
+                    console.log('Gen');
+                    $("#divPreview").html(htmlResponse);
+                    $("#WaitDialog").hide();
+                    $('#previewModal').modal('show');
+                });
+            }
+            else {
+                console.log('No Gen');
                 $("#divPreview").html(htmlResponse);
                 $("#WaitDialog").hide();
                 $('#previewModal').modal('show');
-          
+            }
+
         });
 
     }

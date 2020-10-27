@@ -200,6 +200,7 @@ namespace eActForm.BusinessLayer
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
                                  createByUserName = dr["createByUserName"].ToString(),
                                  master_type_form_id = dr["master_type_form_id"].ToString(),
+                                 companyId = BaseAppCodes.getCompanyIdByactivityType(typeForm),
 
                              }).ToList();
 
