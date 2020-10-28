@@ -13,7 +13,6 @@ using WebLibrary;
 
 namespace eActForm.Controllers
 {
-    [LoginExpire]
     public partial class eActController : Controller
     {
 

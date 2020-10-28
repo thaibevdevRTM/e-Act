@@ -152,9 +152,12 @@ namespace eActForm.Controllers
             ManagementFlow_Model management_Model = new ManagementFlow_Model();
             try
             {
+               
                 management_Model = (ManagementFlow_Model)TempData["management_Model"];
                 flowApproveDetail flowDetail_Model = new flowApproveDetail("");
                 management_Model.approveFlow.flowDetail.RemoveAll(r => r.id == id);
+
+                var result = managementFlowAppCode.delFlowAddOnByEmpId(id);
 
                 TempData.Keep();
             }

@@ -175,5 +175,15 @@ namespace eActForm.BusinessLayer.Appcodes
             return result;
         }
 
+
+        public static int delFlowAddOnByEmpId(string id)
+        {
+
+            var result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteFlowApproveAddOn"
+                   , new SqlParameter[] { new SqlParameter("@addOnId", id)
+                });
+
+            return result;
+        }
     }
 }
