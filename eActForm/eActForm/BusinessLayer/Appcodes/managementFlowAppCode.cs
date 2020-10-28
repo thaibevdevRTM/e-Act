@@ -137,13 +137,12 @@ namespace eActForm.BusinessLayer.Appcodes
                        });
                 }
 
-                if (result > 0)
-                {
-                    foreach (var item in model.p_appovedGroupList)
-                    {
-                        result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove_AddOn"
 
-                        , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
+                foreach (var item in model.p_appovedGroupList)
+                {
+                    result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove_AddOn"
+
+                    , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
                     ,new SqlParameter("@subjectId",model.p_subjectId)
                     ,new SqlParameter("@productTypeId", model.p_productType)
                     ,new SqlParameter("@productCateId", model.p_productCateId)
@@ -153,7 +152,7 @@ namespace eActForm.BusinessLayer.Appcodes
                     ,new SqlParameter("@empId",model.p_empIdList[i])
                     ,new SqlParameter("@approveGroupId",model.p_appovedGroupList[i])
                     ,new SqlParameter("@rangNo",model.p_rangNoList[i])
-                    ,new SqlParameter("@empGroup",model.p_empGroup[0])
+                    ,new SqlParameter("@empGroup", string.IsNullOrEmpty(model.p_empGroup[0])? "no" : model.p_empGroup[0])
                     ,new SqlParameter("@showInDoc",model.p_isShowList[i])
                     ,new SqlParameter("@isApprove",model.p_isApproveList[i])
                     ,new SqlParameter("@activityTypeId",model.activityTypeId)
@@ -162,10 +161,10 @@ namespace eActForm.BusinessLayer.Appcodes
                     ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updatedDate",DateTime.Now)
                     ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
-                          });
-                        i++;
-                    }
+                      });
+                    i++;
                 }
+
             }
             catch (Exception ex)
             {

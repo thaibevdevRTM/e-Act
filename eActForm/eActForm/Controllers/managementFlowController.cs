@@ -69,6 +69,8 @@ namespace eActForm.Controllers
             management_Model.p_channelId = model.channelId;
             management_Model.p_subjectId = model.subjectId;
             management_Model.activityTypeId = model.activityGroup;
+            management_Model.p_companyId = model.companyId;
+
 
             TempData["management_Model"] = management_Model;
             return RedirectToAction("approveList");
@@ -133,7 +135,15 @@ namespace eActForm.Controllers
             {
                 management_Model = (ManagementFlow_Model)TempData["management_Model"];
                 flowApproveDetail flowDetail_Model = new flowApproveDetail("");
-                flowDetail_Model.rangNo = management_Model.approveFlow.flowDetail.OrderBy(x => x.rangNo).Last().rangNo + 1;
+                if (management_Model.approveFlow.flowDetail.Any())
+                {
+                    flowDetail_Model.rangNo = management_Model.approveFlow.flowDetail.OrderBy(x => x.rangNo).Last().rangNo + 1;
+                }
+                else
+                {
+                    flowDetail_Model.rangNo = 1;
+
+                }
                 flowDetail_Model.id = Guid.NewGuid().ToString();
                 management_Model.approveFlow.flowDetail.Add(flowDetail_Model);
 
