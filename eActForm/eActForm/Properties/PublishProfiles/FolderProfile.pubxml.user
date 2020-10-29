@@ -80,10 +80,17 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/23/2020 08:46:05</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
+<<<<<<< Updated upstream
       <publishTime>10/28/2020 11:36:12</publishTime>
     </File>
     <File Include="bin/eActForm.pdb">
       <publishTime>10/28/2020 11:36:12</publishTime>
+=======
+      <publishTime>10/29/2020 10:45:17</publishTime>
+    </File>
+    <File Include="bin/eActForm.pdb">
+      <publishTime>10/29/2020 10:45:17</publishTime>
+>>>>>>> Stashed changes
     </File>
     <File Include="bin/eForms.Models.dll">
       <publishTime>09/29/2020 10:28:44</publishTime>
@@ -98,7 +105,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/29/2020 14:24:20</publishTime>
     </File>
     <File Include="bin/en/eActForm.resources.dll">
+<<<<<<< Updated upstream
       <publishTime>10/28/2020 11:36:12</publishTime>
+=======
+      <publishTime>10/29/2020 10:45:18</publishTime>
+>>>>>>> Stashed changes
     </File>
     <File Include="bin/EntityFramework.SqlServer.xml">
       <publishTime>03/31/2020 20:02:01</publishTime>
@@ -7743,7 +7754,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/22/2020 11:29:00</publishTime>
     </File>
     <File Include="Views/MainForm/Index.cshtml">
+<<<<<<< Updated upstream
       <publishTime>10/27/2020 09:55:49</publishTime>
+=======
+      <publishTime>10/28/2020 16:32:09</publishTime>
+>>>>>>> Stashed changes
     </File>
     <File Include="Views/MainReport/Index.cshtml">
       <publishTime>09/29/2020 10:28:33</publishTime>
@@ -7755,10 +7770,14 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/01/2020 10:57:30</publishTime>
     </File>
     <File Include="Views/managementFlow/approveList.cshtml">
+<<<<<<< Updated upstream
       <publishTime>10/27/2020 14:13:52</publishTime>
+=======
+      <publishTime>10/29/2020 10:01:13</publishTime>
+>>>>>>> Stashed changes
     </File>
     <File Include="Views/managementFlow/dropDetail.cshtml">
-      <publishTime>10/27/2020 11:39:21</publishTime>
+      <publishTime>10/29/2020 08:57:52</publishTime>
     </File>
     <File Include="Views/managementFlow/Index.cshtml">
       <publishTime>10/27/2020 11:34:44</publishTime>

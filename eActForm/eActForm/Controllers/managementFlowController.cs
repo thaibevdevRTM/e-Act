@@ -168,12 +168,12 @@ namespace eActForm.Controllers
             return RedirectToAction("approveList");
         }
 
-        public JsonResult getLimitBySubject(string subjectId)
+        public JsonResult getLimitBySubject(string subjectId,string companyId)
         {
             var result = new AjaxResult();
             try
             {
-                var lists = managementFlowAppCode.getLimit(subjectId);
+                var lists = managementFlowAppCode.getLimit(subjectId, companyId);
                 result.Data = lists;
             }
             catch (Exception ex)

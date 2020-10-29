@@ -141,6 +141,7 @@
             url: '@Url.Action("getLimitBySubject", "ManagementFlow")',
             data: {
                 subjectId: $("#ddlSubject").val(),
+                companyId: $("#ddlCompany").val(),
             },
             dataType: "json",
             type: 'POST',
