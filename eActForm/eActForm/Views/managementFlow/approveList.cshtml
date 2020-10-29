@@ -30,68 +30,7 @@
                 int i = 0;
                 foreach (var item in Model.approveFlow.flowDetail.OrderBy(x => x.rangNo))
                 {
-<<<<<<< Updated upstream
-            <tr>
-                <td>
-                    <a href="javascript:" onclick="return checkDelete('@item.id');">
-                        <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-                    </a>
-                </td>
-                <td>
-                    @*<input id="txtRangNo" type="number" class="form-control textboxcss" name="Model.p_rangNoList" value="@item.rangNo">*@
-                    @Html.TextBox("Model.p_rangNoList", item.rangNo, new { @class = "form-control textboxcss", @type = "number", @id = "txtRangNo" })
-                </td>
-                <td>
 
-                    @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", @id = "txtempId" })
-                </td>
-                <td>
-
-                    @Html.TextBox("empName", item.empFNameTH, new { @class = "form-control textboxcss", @id = "txtempName", @readonly = true })
-                </td>
-                <td>
-                    @Html.DropDownList("Model.p_appovedGroupList", new SelectList(Model.approveGroupList, "id", "nameTH", item.approveGroupId), "Please Select", new
-               {
-                   @class = "form-control textboxcss",
-                   id = "ddlApproveGroupId"
-               })
-                </td>
-                <td>
-                    @Html.DropDownList("Model.p_isShowList", new SelectList(Model.getDDLShowApproveList, "val1", "displayVal", item.isShowInDoc), "Please Select", new
-               {
-                   @class = "form-control textboxcss",
-                   id = "ddlApproveShow",
-               })
-                </td>
-                <td>
-                    @Html.DropDownList("Model.p_isApproveList", new SelectList(Model.getDDlApproveList, "val1", "displayVal", item.isApproved), "Please Select", new
-               {
-                   @class = "form-control textboxcss",
-                   id = "ddlApprove",
-               })
-                </td>
-                <td>
-                    @Html.DropDownList("Model.p_active", new SelectList(Model.getDDLActiveList, "val1", "displayVal", item.delFlag), new
-                                         {
-                                             @class = "form-control textboxcss",
-                                             id = "ddlActive",
-                                         })
-                </td>
-
-                @Html.Hidden("Model.p_subjectId", Model.p_subjectId)
-                @Html.Hidden("Model.p_flowId", item.flowId)
-                @Html.Hidden("Model.p_companyId", item.companyId)
-                @Html.Hidden("Model.p_empGroup", item.empGroup)
-                @Html.Hidden("Model.typeFlow", Model.typeFlow)
-                @Html.Hidden("Model.p_productType", Model.p_productType)
-                @Html.Hidden("Model.p_productCateId", Model.p_productCateId)
-                @Html.Hidden("Model.p_productBrandId", Model.p_productBrandId)
-                @Html.Hidden("Model.p_flowLimitId", Model.p_flowLimitId)
-                @Html.Hidden("Model.p_channelId", Model.p_channelId)
-                @Html.Hidden("Model.activityTypeId", Model.activityTypeId)
-                @Html.Hidden("Model.addOn_Id", item.id)
-            </tr>
-=======
                     <tr>
                         <td>
                             <a href="javascript:" onclick="return checkDelete('@item.id');">
@@ -109,7 +48,6 @@
 
                         </td>
                         <td>
->>>>>>> Stashed changes
 
                             @Html.TextBox("empName", item.empFNameTH, new { @class = "form-control textboxcss", @id = "txtempName_" + @i, @readonly = true })
                         </td>
