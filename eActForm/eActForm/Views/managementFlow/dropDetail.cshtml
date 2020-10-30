@@ -1,74 +1,85 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
+@using eActForm.Models
+@{
+    var typeFlow = Request["typeFlow"] == null ? "" : Request["typeFlow"];
+}
 
+<div class="row form-group">
 
-    <div class="row form-group">
-
-        <div id="divSubject" class="col-md-3">
-            <div class="col-md-12 col-xs-12">
-                <label>Subject</label>
-            </div>
-            <div class="col-md-12 col-xs-12">
-                @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlSubject" })
-            </div>
+    <div id="divSubject" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Subject</label>
         </div>
-        <div id="divCus" class="col-md-3">
-            <div class="col-md-12 col-xs-12">
-                <label>Customer</label>
-            </div>
-            <div class="col-md-12 col-xs-12">
-                @Html.DropDownListFor(model => model.customerList, new SelectList(Model.customerList, "id", "cusNameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlCustomer" })
-            </div>
-        </div>
-        <div id="divLimit" class="col-md-3">
-            <div class="col-md-12 col-xs-12">
-                <label>Limit</label>
-            </div>
-            <div class="col-md-12 col-xs-12">
-                @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlLimit" })
-            </div>
-        </div>
-        <div id="divProductType" class="col-md-3">
-            <div class="col-md-12 col-xs-12">
-                <label>ProductType</label>
-            </div>
-            <div class="col-md-12 col-xs-12">
-                @Html.DropDownListFor(model => model.productTypeList, new SelectList(Model.productTypeList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlProductType" })
-            </div>
-        </div>
-        <div id="divCate" class="col-md-3">
-            <div class="col-md-12 col-xs-12">
-                <label>Cate</label>
-            </div>
-            <div class="col-md-12 col-xs-12">
-                @Html.DropDownListFor(model => model.cateList, new SelectList(Model.cateList, "id", "cateName"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlCate" })
-            </div>
-        </div>
-
-        <div id="divBrand" class="col-md-3">
-            <div class="col-md-12 col-xs-12">
-                <label>Brand</label>
-            </div>
-            <div class="col-md-12 col-xs-12">
-                @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlBrand" })
-            </div>
-        </div>
-        <div id="divChanel" class="col-md-3">
-            <div class="col-md-12 col-xs-12">
-                <label>Chanel</label>
-            </div>
-            <div class="col-md-12 col-xs-12">
-                @Html.DropDownListFor(model => model.chanelList, new SelectList(Model.chanelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlChanelGroup" })
-            </div>
-        </div>
-        <div id="divEmp" class="col-md-3">
-            <div class="col-md-12 col-xs-12">
-                <label>Employee</label>
-            </div>
-            <div class="col-md-12 col-xs-12">
-                @Html.DropDownList("employee", new SelectList(Model.empList, "empId", "empName"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlEmployee" })
-            </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.subjectList, new SelectList(Model.subjectList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlSubject" })
         </div>
     </div>
+    <div id="divCus" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Customer</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.customerList, new SelectList(Model.customerList, "id", "cusNameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlCustomer" })
+        </div>
+    </div>
+    <div id="divLimit" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Limit</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.getLimitList, new SelectList(Model.getLimitList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlLimit" })
+        </div>
+    </div>
+    <div id="divProductType" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>ProductType</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.productTypeList, new SelectList(Model.productTypeList, "id", "nameTH"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlProductType" })
+        </div>
+    </div>
+    <div id="divCate" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Cate</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.cateList, new SelectList(Model.cateList, "id", "cateName"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlCate" })
+        </div>
+    </div>
+
+    <div id="divBrand" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Brand</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.productBrandList, new SelectList(Model.productBrandList, "id", "brandName"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlBrand" })
+        </div>
+    </div>
+    <div id="divChanel" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Chanel</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.chanelList, new SelectList(Model.chanelList, "id", "chanelGroup"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlChanelGroup" })
+        </div>
+    </div>
+    <div id="divActivityGroup" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>ActivityGroup</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownListFor(model => model.activityGroupList, new SelectList(Model.activityGroupList, "id", "activitySales"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlActGroup" })
+        </div>
+    </div>
+    <div id="divEmp" class="col-md-3">
+        <div class="col-md-12 col-xs-12">
+            <label>Employee</label>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            @Html.DropDownList("employee", new SelectList(Model.empList, "empId", "empName"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlEmployee" })
+        </div>
+    </div>
+</div>
 
 <div class="row form-group" style="text-align:center;">
     <p class="d-flex justify-content-center">
@@ -106,11 +117,13 @@
                  subjectId: $("#ddlSubject").val(),
                  customerId: $("#ddlCustomer").val(),
                  flowLimitId: $("#ddlLimit").val(),
-                 productCatId: $("#ddlCate").val(),
+                 productCateId: $("#ddlCate").val(),
                  channelId: $("#ddlChanelGroup").val(),
                  productBrandId: $("#ddlBrand").val(),
                  productTypeId: $("#ddlProductType").val(),
-                 empId : $("#ddlEmployee").val(),
+                 activityGroup: $("#ddlActGroup").val(),
+                 empId: $("#ddlEmployee").val(),
+                 typeFlow: '@typeFlow',
              }
         }).done(function (htmlResponse) {
             $("#divApprove").html(htmlResponse);
@@ -118,17 +131,23 @@
     }
 
     $('#ddlSubject').change(function () {
-        if ($("#ddlSubject").val() == '@System.Configuration.ConfigurationManager.AppSettings["subjectActivityFormId"]' || $("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_TBM"]') {
+        if ($("#ddlSubject").val() ==  $("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_TBM"]') {
             document.getElementById("divProductType").style.display = "none";
         }
         else {
-            document.getElementById("divProductType").style.display = "block";
+            if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
+                document.getElementById("divProductType").style.display = "block";
+            }
+            else {
+                document.getElementById("divProductType").style.display = "none";
+            }
         }
 
         $.ajax({
             url: '@Url.Action("getLimitBySubject", "ManagementFlow")',
             data: {
                 subjectId: $("#ddlSubject").val(),
+                companyId: $("#ddlCompany").val(),
             },
             dataType: "json",
             type: 'POST',

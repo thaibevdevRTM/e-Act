@@ -72,8 +72,9 @@ namespace eActForm.Models
             public string empLNameEN { get; set; }
             public string empPositionTitleEN { get; set; }
             public byte[] signature { get; set; }
-
             public string empGroup { get; set; }
+            public string typeFlow { get; set; }
+            public string activityGroup { get; set; }
         }
     }
 }

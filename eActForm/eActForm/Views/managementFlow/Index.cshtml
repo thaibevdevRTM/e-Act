@@ -1,6 +1,8 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
-
-
+@using eActForm.Models
+@{
+    var typeFlow = Request["typeFlow"] == null ? "" : Request["typeFlow"];
+}
 <style>
     .hero-container {
         background-image: -webkit-linear-gradient(left, #fff, #f0f0f0, #fff);
@@ -43,7 +45,10 @@
         $.ajax({
             type: 'POST',
             url: '@Url.Action("dropDetail", "ManagementFlow")',
-            data: { companyId: $("#ddlCompany").val() }
+            data: {
+                companyId: $("#ddlCompany").val(),
+                typeFlow: '@typeFlow',
+            }
         }).done(function (htmlResponse) {
             $("#WaitDialog").hide();
             $("#divDrop").html(htmlResponse);
@@ -61,7 +66,14 @@
             document.getElementById("divCus").style.display = "block";
             document.getElementById("divLimit").style.display = "block";
             document.getElementById("divCate").style.display = "block";
-            document.getElementById("divProductType").style.display = "block";
+            document.getElementById("divProductType").style.display = "none";
+            if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
+                document.getElementById("divBrand").style.display = "block";
+                document.getElementById("divCus").style.display = "none";
+                document.getElementById("divProductType").style.display = "block";
+                document.getElementById("divActivityGroup").style.display = "block";
+            }
+
         }
         else if ($("#ddlCompany").val() == '5601')
         {
@@ -73,6 +85,17 @@
             document.getElementById("divLimit").style.display = "none";
             document.getElementById("divCate").style.display = "none";
             document.getElementById("divProductType").style.display = "none";
+
+            if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
+                document.getElementById("divCus").style.display = "none";
+                document.getElementById("divLimit").style.display = "block";
+                document.getElementById("divCate").style.display = "block";
+                document.getElementById("divProductType").style.display = "block";
+                document.getElementById("divBrand").style.display = "block";
+                document.getElementById("divActivityGroup").style.display = "block";
+
+            } 
+            
         }
         else {
             document.getElementById("divBrand").style.display = "block";
@@ -83,6 +106,8 @@
             document.getElementById("divCate").style.display = "none";
             document.getElementById("divProductType").style.display = "none";
             document.getElementById("divEmp").style.display = "block";
+            document.getElementById("divActivityGroup").style.display = "none";
+            
         }
     }
 

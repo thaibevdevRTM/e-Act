@@ -1,5 +1,5 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
-
+@using eActForm.Models
 <style>
     .center {
         text-align: center;
@@ -14,20 +14,23 @@
         <thead>
             <tr style="background-color:#2B5D95;color:#ffffff;">
                 <th></th>
-                <th class="center" width="10%">ลำดับ</th>
-                <th class="center">รหัส</th>
+                <th class="center" width="8%">ลำดับ</th>
+                <th class="center" width="12%">รหัส</th>
                 <th class="center">ชื่อ</th>
                 <th class="center">กลุ่ม</th>
                 <th class="center">แสดง</th>
                 <th class="center">อนุมัติ</th>
+                <th class="center">Active</th>
             </tr>
         </thead>
         <tbody>
 
             @if (Model.approveFlow.flowDetail.Any())
             {
+                int i = 0;
                 foreach (var item in Model.approveFlow.flowDetail.OrderBy(x => x.rangNo))
                 {
+
                     <tr>
                         <td>
                             <a href="javascript:" onclick="return checkDelete('@item.id');">
@@ -40,11 +43,13 @@
                         </td>
                         <td>
 
-                            @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", @id = "txtempId" })
+                            @Html.TextBox("Model.p_empIdList", item.empId, new { @class = "form-control textboxcss", @id = "txtempId_" + @i, @onchange = "changeGetEmp(" + @i + ")" })
+
+
                         </td>
                         <td>
 
-                            @Html.TextBox("empName", item.empFNameTH, new { @class = "form-control textboxcss", @id = "txtempName", @readonly = true })
+                            @Html.TextBox("empName", item.empFNameTH, new { @class = "form-control textboxcss", @id = "txtempName_" + @i, @readonly = true })
                         </td>
                         <td>
                             @Html.DropDownList("Model.p_appovedGroupList", new SelectList(Model.approveGroupList, "id", "nameTH", item.approveGroupId), "Please Select", new
@@ -67,11 +72,28 @@
                            id = "ddlApprove",
                        })
                         </td>
-                        @Html.Hidden("Model.p_flowId", item.flowId)
-                        @Html.Hidden("Model.p_companyId", item.companyId)
-                        @Html.Hidden("Model.p_empGroup", item.empGroup)
-                    </tr>
+                        <td>
+                            @Html.DropDownList("Model.p_active", new SelectList(Model.getDDLActiveList, "val1", "displayVal", item.delFlag), new
+                                                 {
+                                                     @class = "form-control textboxcss",
+                                                     id = "ddlActive",
+                                                 })
+                        </td>
 
+                        @Html.Hidden("Model.p_subjectId", Model.p_subjectId)
+                        @Html.Hidden("Model.p_flowId", item.flowId)
+                        @Html.Hidden("Model.p_companyId", Model.p_companyId)
+                        @Html.Hidden("Model.p_empGroup", item.empGroup)
+                        @Html.Hidden("Model.typeFlow", Model.typeFlow)
+                        @Html.Hidden("Model.p_productType", Model.p_productType)
+                        @Html.Hidden("Model.p_productCateId", Model.p_productCateId)
+                        @Html.Hidden("Model.p_productBrandId", Model.p_productBrandId)
+                        @Html.Hidden("Model.p_flowLimitId", Model.p_flowLimitId)
+                        @Html.Hidden("Model.p_channelId", Model.p_channelId)
+                        @Html.Hidden("Model.activityTypeId", Model.activityTypeId)
+                        @Html.Hidden("Model.addOn_Id", item.id)
+                    </tr>
+                    i++;
                 }
             }
     </table>
@@ -90,6 +112,21 @@
 <script type="text/javascript">
     function validateForm() {
         $("#subUpdate").submit();
+    }
+
+    function changeGetEmp(rowIndex) {
+        console.log('tt');
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getEmpDetailById", "eAct")',
+            data: {
+                empId: $('#txtempId_' + rowIndex).val(),
+            }
+        }).done(function (response) {
+            console.log(response);
+            $('#txtempName_' + rowIndex).val(response.Data.empName);
+        });
+
     }
 
     function Add() {
@@ -117,8 +154,8 @@
 
     function successQuery(response) {
         if (response.Success) {
-            var url = '@Url.Action("Index", "ManagementFlow")';
-            doMsgSuccessAction('บันทึกเรียบร้อย', url);
+
+            doMsgSuccess('บันทึกเรียบร้อย');
         }
         else {
             $("#WaitDialog").hide();
@@ -132,4 +169,7 @@
     function beginQuery() {
 
     }
+
+
+
 </script>

@@ -416,15 +416,15 @@
                                 <td class="font11 textLeft">@Html.DisplayFor(m => item.mechanics)</td>
                             }
 
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
+                            <td class="font11 textRight">@string.Format("{0:n2}", item.normalCost)</td>
 
-                            <td class="font11 textRight">@string.Format("{0:n2}", item.themeCost)</td>
+                            <td class="font11 textRight"> @string.Format("{0:n2}", item.themeCost)</td>
                             <td class="font11 textRight">@string.Format("{0:n2}", item.growth)</td>
                             <td class="font11 textRight">@string.Format("{0:n2}", item.totalCase)</td>
                             <td class="font11 textRight">@string.Format("{0:n2}", item.total)</td>
                             @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                             {
-                                <td class="font11 textRight">@Html.DisplayFor(m => item.perTotal)</td>
+                                <td class="font11 textRight">@string.Format("{0:n2}", item.perTotal)</td>
                             }
                         </tr>
                         perTotal = item.perTotal == null ? 0 + perTotal : item.perTotal + perTotal;
