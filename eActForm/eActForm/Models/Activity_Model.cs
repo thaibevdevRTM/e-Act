@@ -140,6 +140,7 @@ namespace eActForm.Models
         public List<TB_Act_ProductGroup_Model> productGroupList { get; set; }
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
         public List<ApproveModel.approveStatus> approveStatusList { get; set; }
+        public List<TB_Act_ProductBrand_Model> productBrandList { get; set; }
         public string typeForm { get; set; }
     }
 

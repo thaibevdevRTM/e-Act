@@ -1,4 +1,5 @@
 ﻿@model eActForm.Models.ManagementFlow_Model
+@using eActForm.Models
 @{
     var typeFlow = Request["typeFlow"] == null ? "" : Request["typeFlow"];
 }
@@ -64,7 +65,7 @@
     </div>
     <div id="divActivityGroup" class="col-md-3">
         <div class="col-md-12 col-xs-12">
-            <label>ActivityGroup</label>
+            <label>Activity Type</label>
         </div>
         <div class="col-md-12 col-xs-12">
             @Html.DropDownListFor(model => model.activityGroupList, new SelectList(Model.activityGroupList, "id", "activitySales"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlActGroup" })
@@ -134,7 +135,12 @@
             document.getElementById("divProductType").style.display = "none";
         }
         else {
-            document.getElementById("divProductType").style.display = "block";
+            if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
+                document.getElementById("divProductType").style.display = "block";
+            }
+            else {
+                document.getElementById("divProductType").style.display = "none";
+            }
         }
 
         $.ajax({
@@ -160,7 +166,7 @@
         });
     });
 
-    
+
     $('#ddlBrand').change(function () {
         getEmp();
     });

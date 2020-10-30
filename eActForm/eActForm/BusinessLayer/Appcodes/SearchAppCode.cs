@@ -19,6 +19,7 @@ namespace eActForm.BusinessLayer
                     productGroupList = QueryGetAllProductGroup.getAllProductGroup(),
                     customerslist = QueryGetAllCustomers.getCustomersByEmpId().Where(x => x.cusNameEN != "").ToList(),
                     productTypelist = QuerygetAllProductCate.getProductTypeByEmpId(),
+                    productBrandList = QueryGetAllBrand.GetAllBrand().OrderBy(x => x.brandName).ToList(),
                     activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup().Where(x => x.activityCondition.Contains(typeForm))
                    .GroupBy(item => item.activitySales)
                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList()

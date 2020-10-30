@@ -76,5 +76,11 @@ namespace eForms.Models.Reports
         public string dayAddStart { get; set; }
         public string dayAddEnd { get; set; }
         public int countGroup { get; set; }
+        public string activityTypeId { get; set; }
+        public string productTypeId { get; set; }
+        public string productCateId { get; set; }
+        public string productGroupId { get; set; }
+        public string productBrandId { get; set; }
+
     }
 }

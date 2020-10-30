@@ -9,6 +9,7 @@
         public bool isShowActType { get; set; }
         public bool isShowProductType { get; set; }
         public bool isShowProductGroup { get; set; }
+        public bool isShowProductBrand { get; set; }
         public bool isShowMonthText { get; set; }
         public searchParameterFilterModel()
         {
@@ -19,6 +20,7 @@
             isShowActType = true;
             isShowProductType = true;
             isShowProductGroup = true;
+            isShowProductBrand = true;
             isShowMonthText = true;
         }
     }
