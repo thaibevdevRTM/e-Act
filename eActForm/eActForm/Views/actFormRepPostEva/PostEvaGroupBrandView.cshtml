@@ -8,10 +8,10 @@
 
 
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-4">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Group Brand and Sum Spending Exp. (MB)</h2>
+                <h5>Group Brand and Sum Spending Exp. (MB)</h5>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -22,17 +22,15 @@
                 </ul>
                 <div class="clearfix"></div>
             </div>
-            <div class="x_content" style="height:300px;">
-
-                <div id="echartGroupBrandAndSpending" style="height:300px;"></div>
-
+            <div class="x_content" style="height:150px;">
+                <div id="echartGroupBrandAndSpending" style="height:100%"></div>
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-4">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Group Sum Sales-In (MB)</h2>
+                <h5>Group Sum Sales-In (MB)</h5>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -43,7 +41,7 @@
                 </ul>
                 <div class="clearfix"></div>
             </div>
-            <div class="x_content" style="height:300px;">
+            <div class="x_content" style="height:100%">
 
                 <canvas id="chartGroupSumSaleIn"></canvas>
 
@@ -52,9 +50,9 @@
     </div>
 </div>
 
-<div class="row">
 
-    <div class="col-md-12">
+<div>
+    <div class="col-md-6">
         <div class="x_panel">
             <div class="x_title">
                 <h2>Compare estimate(case) and sales-in(case)</h2>
@@ -69,10 +67,144 @@
                 <div class="clearfix"></div>
             </div>
             <div class="chart-container">
-                <div class="row" style="width:700px;">
+                <div class="row" style="width:500px;">
+                    <canvas id="chartCompareSE" class="chartjs-render-monitor"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Compare actual vs expend (%SE)</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="chart-container">
+                <div class="row" style="width:500px;">
+                    <canvas id="chartActual" class="chartjs-render-monitor"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-8">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Compare estimate(case) and sales-in(case)</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="chart-container">
+                <div class="row" style="width:80%">
                     <canvas id="chartCompare" class="chartjs-render-monitor"></canvas>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Recently Added Products</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <ul class="products-list product-list-in-card pl-2 pr-2">
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript:void(0)" class="product-title">
+                                Samsung TV
+                                <span class="badge badge-warning float-right">$1800</span>
+                            </a>
+                            <span class="product-description">
+                                Samsung 32" 1080p 60Hz LED Smart HDTV.
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript:void(0)" class="product-title">
+                                Bicycle
+                                <span class="badge badge-info float-right">$700</span>
+                            </a>
+                            <span class="product-description">
+                                26" Mongoose Dolomite Men's 7-speed, Navy Blue.
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript:void(0)" class="product-title">
+                                Xbox One <span class="badge badge-danger float-right">
+                                    $350
+                                </span>
+                            </a>
+                            <span class="product-description">
+                                Xbox One Console Bundle with Halo Master Chief Collection.
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript:void(0)" class="product-title">
+                                PlayStation 4
+                                <span class="badge badge-success float-right">$399</span>
+                            </a>
+                            <span class="product-description">
+                                PlayStation 4 500GB Console (PS4)
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                </ul>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer text-center">
+                <a href="javascript:void(0)" class="uppercase">View All Products</a>
+            </div>
+            <!-- /.card-footer -->
         </div>
     </div>
 </div>
@@ -101,8 +233,95 @@
             dataType: "json",
             success: function (response) {
                 genMonthlySpending(response);
+                genMonthlyCompareSEActual(response);
+                genMonthlyCompareActualExpend(response);
             },
         });
+    }
+
+    function genMonthlyCompareActualExpend(jsondata) {
+        var labels = [];
+        if ($('#chartCompare').length) {
+            var ctxC = document.getElementById("chartActual");
+            var mybarChart = new Chart(ctxC, {
+                type: 'horizontalBar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '# Net Sales',
+                            backgroundColor: "#289CE3",
+                            data: []
+                        }, {
+                            label: '# SE(AP+SD)',
+                            backgroundColor: "#ECCB34",
+                            data: []
+                        }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        jsondata.forEach(function (e) {
+            labels.push([e.name]);
+            mybarChart.data.datasets[0].data.push(e.accuracySaleBath);
+            mybarChart.data.datasets[1].data.push(e.saleActual);
+        })
+
+        mybarChart.update();
+    }
+
+
+
+
+
+
+    function genMonthlyCompareSEActual(jsondata) {
+        var labels = [];
+        if ($('#chartCompare').length) {
+            var ctxC = document.getElementById("chartCompareSE");
+            var mybarChart = new Chart(ctxC, {
+                type: 'horizontalBar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '# งบจัด',
+                            backgroundColor: "#50EB88",
+                            data: []
+                        }, {
+                            label: '# งบจ่าย',
+                            backgroundColor: "#ECCB34",
+                            data: []
+                        }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        jsondata.forEach(function (e) {
+            labels.push([e.name]);
+            mybarChart.data.datasets[0].data.push(e.accuracySpendingBath);
+            mybarChart.data.datasets[1].data.push(e.saleActual);
+        })
+
+        mybarChart.update();
     }
 
     function genMonthlySpending(jsondata) {
@@ -394,7 +613,7 @@
                     }
                 },
                 pointer: {
-                    length: '90%',
+                    length: '50%',
                     color: 'auto'
                 },
                 title: {
@@ -448,10 +667,10 @@
                 series: [{
                     name: 'Area Mode',
                     type: 'pie',
-                    radius: [25, 90],
-                    center: ['50%', 170],
+                    radius: [15, 40],
+                    center: ['50%', 60],
                     roseType: 'area',
-                    x: '50%',
+                    x: '10%',
                     max: 40,
                     sort: 'ascending',
                     data: jsondata

@@ -23,7 +23,11 @@ namespace eForms.Presenter.Reports
                                     sumNormalCase = (cl.Sum(c => c.normalCost)),
                                     sumPromotionCase = (cl.Sum(c => c.themeCost)),
                                     sumSalesInCase = (cl.Sum(c => c.actReportQuantity)),
-                                    countGroup = cl.Count().ToString()
+                                    countGroup = cl.Count().ToString(),
+                                    accuracySpendingBath = (cl.Sum(c => c.accuracySpendingBath)),
+                                    saleActual = (cl.Sum(c => c.saleActual)),
+                                    accuracySaleBath = (cl.Sum(c => c.accuracySaleBath)),
+
                                 }).ToList();
                 return list;
 
