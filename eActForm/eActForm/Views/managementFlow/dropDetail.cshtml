@@ -131,7 +131,8 @@
     }
 
     $('#ddlSubject').change(function () {
-        if ($("#ddlSubject").val() ==  $("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_TBM"]') {
+
+        if ($("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_TBM"]') {
             document.getElementById("divProductType").style.display = "none";
         }
         else {
@@ -167,6 +168,9 @@
     });
 
 
+    $('#ddlLimit').change(function () {
+        getEmp();
+    });
     $('#ddlBrand').change(function () {
         getEmp();
     });
