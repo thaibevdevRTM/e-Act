@@ -78,7 +78,7 @@
             <label>Employee</label>
         </div>
         <div class="col-md-12 col-xs-12">
-            @Html.DropDownList("employee", new SelectList(Model.empList, "empId", "empName"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlEmployee" })
+            @Html.DropDownList("employee", new SelectList(Model.empList, "empId", "empName"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlEmployee" })
         </div>
     </div>
 </div>
