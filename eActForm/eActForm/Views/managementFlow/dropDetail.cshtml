@@ -4,6 +4,8 @@
     var typeFlow = Request["typeFlow"] == null ? "" : Request["typeFlow"];
 }
 
+
+
 <div class="row form-group">
 
     <div id="divSubject" class="col-md-3">
@@ -157,6 +159,7 @@
                      $("#ddlLimit option[value !='']").remove();
                     $.each(response.Data, function () {
                         $("#ddlLimit").append($("<option></option>").val(this['id']).html(this['displayVal']));
+                       
                     });
                      document.getElementById("ddlLimit").disabled = false;
                 }
@@ -194,8 +197,10 @@
                  if (response.length > 0) {
                      $("#ddlEmployee option[value !='']").remove();
                     $.each(response, function () {
-                        $("#ddlEmployee").append($("<option></option>").val(this['empId']).html(this['empId'] +" "+this['empName']));
+                        $("#ddlEmployee").append($("<option></option>").val(this['empId']).html(this['empId'] + " " + this['empName']));
+
                     });
+                     $("#ddlEmployee").selectpicker("refresh");
                      document.getElementById("ddlEmployee").disabled = false;
                 }
                 else {
