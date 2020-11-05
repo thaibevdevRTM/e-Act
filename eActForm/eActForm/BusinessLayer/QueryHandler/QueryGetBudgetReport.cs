@@ -11,7 +11,7 @@ namespace eActForm.BusinessLayer.QueryHandler
 {
     public class QueryGetBudgetReport
     {
-        public static List<Budget_Report_Model.Report_Budget_Activity_Att> getReportBudgetActivity(string act_StatusId, string act_activityNo, string companyEN, string act_createdDateStart, string act_createdDateEnd)
+        public static List<Budget_Report_Model.Report_Budget_Activity_Att> getReportBudgetActivity(string act_StatusId, string act_activityNo, string companyEN, string act_createdDateStart, string act_createdDateEnd , string actYear)
         {
             try
             {
@@ -21,6 +21,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                  , new SqlParameter("@companyEN", companyEN)
                  , new SqlParameter("@createdDateStart", act_createdDateStart)
                  , new SqlParameter("@createdDateEnd", act_createdDateEnd)
+                 , new SqlParameter("@actYear", actYear)
                  );
 
                 var result = (from DataRow d in ds.Tables[0].Rows
