@@ -311,14 +311,14 @@
                             {
                                 if (!string.IsNullOrEmpty(item.empId))
                                 {
-                                    position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleEN;
+                                    position = Model.approveDetailLists.Find(x => x.empId.Equals(item.empId)).empPositionTitleEN;
                                 }
                             }
                             else
                             {
                                 if (!string.IsNullOrEmpty(item.empId))
                                 {
-                                    position = Model.approveFlowDetail.Find(x => x.empId.Equals(item.empId)).empPositionTitleTH;
+                                    position = Model.approveDetailLists.Find(x => x.empId.Equals(item.empId)).empPositionTitleTH;
                                 }
                             }
 

@@ -4,6 +4,8 @@
     var typeFlow = Request["typeFlow"] == null ? "" : Request["typeFlow"];
 }
 
+
+
 <div class="row form-group">
 
     <div id="divSubject" class="col-md-3">
@@ -76,7 +78,7 @@
             <label>Employee</label>
         </div>
         <div class="col-md-12 col-xs-12">
-            @Html.DropDownList("employee", new SelectList(Model.empList, "empId", "empName"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlEmployee" })
+            @Html.DropDownList("employee", new SelectList(Model.empList, "empId", "empName"), "Please Select", new { @class = "form-control txtBoxRed selectpicker", id = "ddlEmployee" })
         </div>
     </div>
 </div>
@@ -131,7 +133,8 @@
     }
 
     $('#ddlSubject').change(function () {
-        if ($("#ddlSubject").val() ==  $("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_TBM"]') {
+
+        if ($("#ddlCompany").val() == '@System.Configuration.ConfigurationManager.AppSettings["companyId_TBM"]') {
             document.getElementById("divProductType").style.display = "none";
         }
         else {
@@ -156,6 +159,7 @@
                      $("#ddlLimit option[value !='']").remove();
                     $.each(response.Data, function () {
                         $("#ddlLimit").append($("<option></option>").val(this['id']).html(this['displayVal']));
+                       
                     });
                      document.getElementById("ddlLimit").disabled = false;
                 }
@@ -167,6 +171,9 @@
     });
 
 
+    $('#ddlLimit').change(function () {
+        getEmp();
+    });
     $('#ddlBrand').change(function () {
         getEmp();
     });
@@ -190,8 +197,10 @@
                  if (response.length > 0) {
                      $("#ddlEmployee option[value !='']").remove();
                     $.each(response, function () {
-                        $("#ddlEmployee").append($("<option></option>").val(this['empId']).html(this['empId'] +" "+this['empName']));
+                        $("#ddlEmployee").append($("<option></option>").val(this['empId']).html(this['empId'] + " " + this['empName']));
+
                     });
+                     $("#ddlEmployee").selectpicker("refresh");
                      document.getElementById("ddlEmployee").disabled = false;
                 }
                 else {

@@ -69,7 +69,8 @@ namespace eActForm.Controllers
             management_Model.p_channelId = model.channelId;
             management_Model.p_subjectId = model.subjectId;
             management_Model.activityTypeId = model.activityGroup;
-            management_Model.p_companyId = model.companyId;
+
+            management_Model.p_companyId = management_Model.approveFlow.flowDetail.Any() ? management_Model.approveFlow.flowDetail[0].companyId : model.companyId;
 
             TempData["management_Model"] = management_Model;
             return RedirectToAction("approveList");
