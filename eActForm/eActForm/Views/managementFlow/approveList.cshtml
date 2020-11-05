@@ -33,9 +33,13 @@
 
                     <tr>
                         <td>
-                            <a href="javascript:" onclick="return checkDelete('@item.id');">
-                                <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
-                            </a>
+                            @if (i > 0)
+                            {
+                                <a href="javascript:" onclick="return checkDelete('@item.id');">
+                                    <i class="btn ink-reaction btn-danger fa fa-trash-o"></i>&nbsp;
+                                </a>
+                            }
+
                         </td>
                         <td>
                             @*<input id="txtRangNo" type="number" class="form-control textboxcss" name="Model.p_rangNoList" value="@item.rangNo">*@
@@ -154,7 +158,7 @@
 
     function successQuery(response) {
         if (response.Success) {
-
+            submitPreview();
             doMsgSuccess('บันทึกเรียบร้อย');
         }
         else {
