@@ -27,10 +27,12 @@ namespace eActForm.Models
         {
             public string userName { get; set; }
             public string keyToken { get; set; }
-            public RequestUserInfoAPI(string user, string token)
+            public string tokenType { get; set; }
+            public RequestUserInfoAPI(string user, string token,string tokenType)
             {
                 userName = user;
                 keyToken = token;
+                this.tokenType = tokenType;
             }
         }
         public class ResponseUserAPI
@@ -101,6 +103,8 @@ namespace eActForm.Models
             public string empProbationEndDate { get; set; }
             public string empGroupName { get; set; }
             public string empGroupNameTH { get; set; }
+            public string tokenAccess { get; set; }
+            public string tokenType { get; set; }
         }
     }
 }
