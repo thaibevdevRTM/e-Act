@@ -46,6 +46,25 @@ namespace eActForm.Models
         }
         public class approveDetailModel : ActBaseModel
         {
+
+            public approveDetailModel(string empId)
+            {
+                if (empId != "")
+                {
+                    List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
+                    if (model.Count > 0)
+                    {
+                        this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
+                        this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
+                    }
+                    else
+                    {
+                        this.empPositionTitleTH = "";
+                        this.empPositionTitleEN = "";
+                    }
+                }
+            }
+
             public string id { get; set; }
             public string approveId { get; set; }
             public int? rangNo { get; set; }
@@ -68,7 +87,8 @@ namespace eActForm.Models
             public string approveGroupId { get; set; }
             public string approveGroupNameTH { get; set; }
             public string approveGroupnameEN { get; set; }
-
+            public string empPositionTitleTH { get; set; }
+            public string empPositionTitleEN { get; set; }
             public bool? isShowInDoc { get; set; }
         }
         public class approveStatus : ActBaseModel

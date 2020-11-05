@@ -212,6 +212,43 @@
         });
     }
 
+    function onCancelWaitApproveByActno(actNo, actId) {
+        var msg = "";
+		// can be delete
+        msg = "คุณต้องการยกเลิกการขออนุมัติ " + actNo + " นี้หรือไม่?";
+        bootbox.confirm({
+            title: "Confirm Message",
+            message: msg,
+            buttons: {
+                confirm: {
+                    label: "Yes",
+                    className: "btn-success"
+                },
+                cancel: {
+                    label: "No",
+                    className: "btn-danger"
+                }
+            },
+			callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("deleteBudgetApproveByActNo", "Budget")',
+                        data: {
+                            actNo: actNo,
+                            actId: actId,
+						},
+						success: function (response) {
+							console.log(response.success);
+							window.location.reload();
+							//callProductList(actId);
+						}
+
+					})
+                }
+            }
+        });
+	}
+
 	function onCancel(actId,estId,invId,invNo) {
         var msg = "";
 		// can be delete

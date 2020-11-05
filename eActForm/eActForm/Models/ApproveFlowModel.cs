@@ -34,11 +34,15 @@ namespace eActForm.Models
                     {
                         this.empPositionTitleTH = model.Count > 0 ? model[0].position : "";
                         this.empPositionTitleEN = model.Count > 0 ? model[0].positionEN : "";
+                        this.empFNameTH = model.Count > 0 ? model[0].empName : "";
+                        this.empFNameEN = model.Count > 0 ? model[0].empNameEN : "";
                     }
                     else
                     {
                         this.empPositionTitleTH = "";
                         this.empPositionTitleEN = "";
+                        this.empFNameTH="";
+                        this.empFNameEN="";
                     }
                 }
             }
@@ -68,8 +72,9 @@ namespace eActForm.Models
             public string empLNameEN { get; set; }
             public string empPositionTitleEN { get; set; }
             public byte[] signature { get; set; }
-
             public string empGroup { get; set; }
+            public string typeFlow { get; set; }
+            public string activityGroup { get; set; }
         }
     }
 }

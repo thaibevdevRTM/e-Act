@@ -162,7 +162,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserCreateBudgetForm"
                     , new SqlParameter[] { new SqlParameter("@budgetApproveId", budgetApproveId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveModel.approveDetailModel()
+                             select new ApproveModel.approveDetailModel("")
                              {
                                  empId = dr["empId"].ToString(),
                                  empName = dr["empName"].ToString(),
@@ -190,7 +190,7 @@ namespace eActForm.Controllers //update 21-04-2020
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getBudgetApproveDetailByBudgetId"
                     , new SqlParameter[] { new SqlParameter("@budgetApproveId", budgetApproveId) });
                 models.approveDetailLists = (from DataRow dr in ds.Tables[0].Rows
-                                             select new ApproveModel.approveDetailModel()
+                                             select new ApproveModel.approveDetailModel("")
                                              {
                                                  id = dr["id"].ToString(),
                                                  approveId = dr["approveId"].ToString(),

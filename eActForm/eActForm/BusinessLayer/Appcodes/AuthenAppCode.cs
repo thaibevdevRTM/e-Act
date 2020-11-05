@@ -1,4 +1,5 @@
 ﻿using eActForm.Models;
+using Microsoft.VisualBasic.ApplicationServices;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -34,7 +35,7 @@ namespace eActForm.BusinessLayer
             try
             {
                 ActUserModel.ResponseUserAPI response = null;
-                ActUserModel.RequestUserInfoAPI request = new ActUserModel.RequestUserInfoAPI(strUser, "nOj9kPmXwNhMW0rVaUAafmOFsk0E8SY4aMz5UBZiP2H3BNjiAGqzIAoLhsiV1Wtq");
+                ActUserModel.RequestUserInfoAPI request = new ActUserModel.RequestUserInfoAPI(strUser, UtilsAppCode.Session.User.tokenAccess, UtilsAppCode.Session.User.tokenType);
                 string rtn = OkHTTP.SendPost(ConfigurationManager.AppSettings["urlAuthenInfo"], JsonConvert.SerializeObject(request).ToString());
                 JObject json = JObject.Parse(rtn);
                 if (json.Count > 0)

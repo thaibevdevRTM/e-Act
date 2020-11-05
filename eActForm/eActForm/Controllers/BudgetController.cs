@@ -169,6 +169,22 @@ namespace eActForm.Controllers  //update 21-04-2020
             return Json(resultAjax, "text/plain");
         }
 
+        public JsonResult deleteBudgetApproveByActNo(string actNo, string actId)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                int countSuccess = BudgetFormCommandHandler.deleteBudgetApproveByActNo(actNo);
+                result.Success = true;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Success = false;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult delInvoiceDetail(string actId, string estId, string invId, string delType)
         {
             var result = new AjaxResult();

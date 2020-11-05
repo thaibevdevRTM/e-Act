@@ -99,6 +99,12 @@ namespace eActForm.Models
             edit
         }
 
+        public enum Active
+        {
+            Active = 0,
+            Inactive = 1
+        }
+
 
         public static class ApproveGroup
         {
@@ -119,6 +125,8 @@ namespace eActForm.Models
 
 
         }
+
+        
         public class Expenses
         {
             public const string Medical = "6BB0F68F-4B07-4E00-9B1E-B776D003D992";
@@ -128,6 +136,7 @@ namespace eActForm.Models
 
 
             public string groupName;
+            public string positionCheckGL;
 
             public Expenses()
             {
@@ -140,6 +149,7 @@ namespace eActForm.Models
                 empId = empId == null ? UtilsAppCode.Session.User.empId : empId;
                 List<RequestEmpModel> model = QueryGet_empDetailById.getEmpDetailById(empId);
                 this.groupName = model.Count > 0 ? model[0].empGroupName : "";
+                this.positionCheckGL = model.Count > 0 ? model[0].position : "";
             }
         }
 
