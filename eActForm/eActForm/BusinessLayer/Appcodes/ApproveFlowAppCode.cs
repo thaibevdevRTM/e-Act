@@ -351,21 +351,65 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static ApproveFlowModel.approveFlowModel getFlowApproveGroupByType(getDataList_Model model)
+        public static ApproveFlowModel.approveFlowModel getFlowApproveGroupByType(getDataList_Model model,string typeFlow)
         {
             try
             {
+                string getStored = typeFlow == Activity_Model.typeFlow.flowAddOn.ToString() ? "usp_getFlowAddOnByType" : "usp_getFlowApproveByAllType";
                 ApproveFlowModel.approveFlowModel approveFlow_Model = new ApproveFlowModel.approveFlowModel();
-                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowApproveByAllType"
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, getStored
                     , new SqlParameter[] {new SqlParameter("@companyId",model.companyId)
                     ,new SqlParameter("@subjectId",model.subjectId)
                     ,new SqlParameter("@customerId",model.customerId)
-                    ,new SqlParameter("@productCatId",model.productCatId)
+                    ,new SqlParameter("@productCateId",model.productCateId)
                     ,new SqlParameter("@flowLimitId",model.flowLimitId)
                     ,new SqlParameter("@channelId",model.channelId)
                     ,new SqlParameter("@productBrandId",model.productBrandId)
                     ,new SqlParameter("@productType",model.productTypeId)
+                    ,new SqlParameter("@activityGroup",model.activityGroup)
                     ,new SqlParameter("@empId",model.empId)});
+                var lists = (from DataRow dr in ds.Tables[0].Rows
+                             select new ApproveFlowModel.flowApproveDetail("")
+                             {
+                                 id = dr["id"].ToString(),
+                                 companyId = dr["companyId"].ToString(),
+                                 flowId = dr["flowId"].ToString(),
+                                 empId = dr["empId"].ToString(),
+                                 empFNameTH = dr["empName"].ToString(),
+                                 approveGroupId = dr["approveGroupId"].ToString(),
+                                 rangNo = int.Parse(dr["rangNo"].ToString()),
+                                 empGroup = dr["empGroup"].ToString(),
+                                 isShowInDoc = !string.IsNullOrEmpty(dr["showInDoc"].ToString()) ? bool.Parse(dr["showInDoc"].ToString()) : true,
+                                 isApproved = !string.IsNullOrEmpty(dr["isApproved"].ToString()) ? bool.Parse(dr["isApproved"].ToString()) : true,
+                                 activityGroup = dr["activityTypeId"].ToString(),
+                                 delFlag = !string.IsNullOrEmpty(dr["delFlag"].ToString()) ? bool.Parse(dr["delFlag"].ToString()) : true,
+                             }).ToList();
+
+                var result = !string.IsNullOrEmpty(model.empId) ? lists.Where(x => x.empGroup == model.empId).ToList() : lists.ToList();
+                result = string.IsNullOrEmpty(model.activityGroup) ? lists.Where(x => x.activityGroup == "").ToList() : lists.ToList();
+                approveFlow_Model.flowDetail = result;
+                return approveFlow_Model;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFlowApproveGroupByType >>" + ex.Message);
+            }
+        }
+
+        public static ApproveFlowModel.approveFlowModel getFlowAddOnByType(getDataList_Model model)
+        {
+            try
+            {
+                ApproveFlowModel.approveFlowModel approveFlow_Model = new ApproveFlowModel.approveFlowModel();
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getFlowAddOnByType"
+                    , new SqlParameter[] {new SqlParameter("@companyId",model.companyId)
+                    ,new SqlParameter("@subjectId",model.subjectId)
+                    ,new SqlParameter("@customerId",model.customerId)
+                    ,new SqlParameter("@productCateId",model.productCateId)
+                    ,new SqlParameter("@flowLimitId",model.flowLimitId)
+                    ,new SqlParameter("@channelId",model.channelId)
+                    ,new SqlParameter("@productBrandId",model.productBrandId)
+                    ,new SqlParameter("@productType",model.productTypeId)});
                 var lists = (from DataRow dr in ds.Tables[0].Rows
                              select new ApproveFlowModel.flowApproveDetail("")
                              {
@@ -382,6 +426,8 @@ namespace eActForm.BusinessLayer
                              }).ToList();
 
                 var result = !string.IsNullOrEmpty(model.empId) ? lists.Where(x => x.empGroup == model.empId).ToList() : lists.ToList();
+
+
                 approveFlow_Model.flowDetail = result;
                 return approveFlow_Model;
             }

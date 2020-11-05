@@ -1,4 +1,5 @@
 ﻿@using eActForm.BusinessLayer
+@using eActForm.Models
 @if (UtilsAppCode.Session.User.isAdmin || UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
 {
     <li>
@@ -9,6 +10,7 @@
             @if (UtilsAppCode.Session.User.isSuperAdmin || UtilsAppCode.Session.User.isAdminTBM)
             {
                 <li>@Html.ActionLink(" Flow Setting ", "index", "ManagementFlow")</li>
+                <li>@Html.ActionLink(" Flow AddOn Setting ", "index", "ManagementFlow" , new { typeFlow = Activity_Model.typeFlow.flowAddOn.ToString()},null)</li>
             }
         </ul>
     </li>

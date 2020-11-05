@@ -10,6 +10,7 @@ using static eActForm.Models.ApproveFlowModel;
 
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public class ManagementFlowController : Controller
     {
         // GET: managementFlow
@@ -24,12 +25,10 @@ namespace eActForm.Controllers
             {
                 model.companyList = managementFlowAppCode.getCompany().Where(w => w.val1.Contains(UtilsAppCode.Session.User.empCompanyId)).ToList();
             }
-
-
             return View(model);
         }
 
-        public ActionResult dropDetail(string companyId)
+        public ActionResult dropDetail(string companyId,string typeFlow)
         {
             ManagementFlow_Model model = new ManagementFlow_Model();
             try
@@ -41,7 +40,11 @@ namespace eActForm.Controllers
                 model.chanelList = managementFlowAppCode.getChanel("data");
                 model.productBrandList = managementFlowAppCode.getProductBrand();
                 model.productTypeList = managementFlowAppCode.getProductType();
-
+                model.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
+                    .Where(x => x.activityCondition.Contains("mtm".ToLower()))
+                    .GroupBy(item => item.activitySales)
+                    .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
+                model.typeFlow = typeFlow;
             }
             catch (Exception ex)
             {
@@ -50,13 +53,25 @@ namespace eActForm.Controllers
             return PartialView(model);
         }
 
-        public ActionResult genDataApproveList(getDataList_Model model)
+        public ActionResult genDataApproveList(getDataList_Model model,string typeFlow)
         {
             ManagementFlow_Model management_Model = new ManagementFlow_Model();
-            management_Model.approveFlow = ApproveFlowAppCode.getFlowApproveGroupByType(model);
+            management_Model.approveFlow = ApproveFlowAppCode.getFlowApproveGroupByType(model, typeFlow);
             management_Model.approveGroupList = managementFlowAppCode.getApproveGroup();
             management_Model.getDDLShowApproveList = managementFlowAppCode.getApproveShow();
             management_Model.getDDlApproveList = managementFlowAppCode.getApprove();
+            management_Model.getDDLActiveList = managementFlowAppCode.getActive();
+            management_Model.typeFlow = typeFlow;
+            management_Model.p_productType = model.productTypeId;
+            management_Model.p_productCateId = model.productCateId;
+            management_Model.p_productBrandId = model.productBrandId;
+            management_Model.p_flowLimitId = model.flowLimitId;
+            management_Model.p_channelId = model.channelId;
+            management_Model.p_subjectId = model.subjectId;
+            management_Model.activityTypeId = model.activityGroup;
+
+            management_Model.p_companyId = management_Model.approveFlow.flowDetail.Any() ? management_Model.approveFlow.flowDetail[0].companyId : model.companyId;
+
             TempData["management_Model"] = management_Model;
             return RedirectToAction("approveList");
         }
@@ -84,7 +99,19 @@ namespace eActForm.Controllers
             try
             {
                 result.Success = false;
-                if (managementFlowAppCode.insertFlowApprove(model) > 0)
+                var countRow = 0;
+                if(model.typeFlow == Activity_Model.typeFlow.flowAddOn.ToString())
+                {
+                    countRow = managementFlowAppCode.insertFlowApproveAddOn(model);
+                }
+                else
+                {
+                    countRow = managementFlowAppCode.insertFlowApprove(model);
+                }
+                
+                    
+
+                if(countRow > 0)
                 {
                     result.Success = true;
                 }
@@ -92,6 +119,7 @@ namespace eActForm.Controllers
                 {
                     result.Message = AppCode.StrMessFail;
                 }
+                
             }
             catch (Exception ex)
             {
@@ -107,7 +135,15 @@ namespace eActForm.Controllers
             {
                 management_Model = (ManagementFlow_Model)TempData["management_Model"];
                 flowApproveDetail flowDetail_Model = new flowApproveDetail("");
-                flowDetail_Model.rangNo = management_Model.approveFlow.flowDetail.OrderBy(x => x.rangNo).Last().rangNo + 1;
+                if (management_Model.approveFlow.flowDetail.Any())
+                {
+                    flowDetail_Model.rangNo = management_Model.approveFlow.flowDetail.OrderBy(x => x.rangNo).Last().rangNo + 1;
+                }
+                else
+                {
+                    flowDetail_Model.rangNo = 1;
+
+                }
                 flowDetail_Model.id = Guid.NewGuid().ToString();
                 management_Model.approveFlow.flowDetail.Add(flowDetail_Model);
 
@@ -126,9 +162,12 @@ namespace eActForm.Controllers
             ManagementFlow_Model management_Model = new ManagementFlow_Model();
             try
             {
+               
                 management_Model = (ManagementFlow_Model)TempData["management_Model"];
                 flowApproveDetail flowDetail_Model = new flowApproveDetail("");
                 management_Model.approveFlow.flowDetail.RemoveAll(r => r.id == id);
+
+                var result = managementFlowAppCode.delFlowAddOnByEmpId(id);
 
                 TempData.Keep();
             }
@@ -139,12 +178,12 @@ namespace eActForm.Controllers
             return RedirectToAction("approveList");
         }
 
-        public JsonResult getLimitBySubject(string subjectId)
+        public JsonResult getLimitBySubject(string subjectId,string companyId)
         {
             var result = new AjaxResult();
             try
             {
-                var lists = managementFlowAppCode.getLimit(subjectId);
+                var lists = managementFlowAppCode.getLimit(subjectId, companyId);
                 result.Data = lists;
             }
             catch (Exception ex)

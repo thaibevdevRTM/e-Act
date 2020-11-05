@@ -99,6 +99,12 @@ namespace eActForm.Models
             edit
         }
 
+        public enum Active
+        {
+            Active = 0,
+            Inactive = 1
+        }
+
 
         public static class ApproveGroup
         {

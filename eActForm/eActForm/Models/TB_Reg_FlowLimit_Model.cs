@@ -7,5 +7,6 @@
         public string limitBegin { get; set; }
         public string limitTo { get; set; }
         public string displayVal { get; set; }
+        public string companyId { get; set; }
     }
 }
