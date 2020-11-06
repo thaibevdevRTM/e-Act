@@ -100,7 +100,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getEmailCC"
                      , new SqlParameter[] { new SqlParameter("@actId", actId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveModel.approveDetailModel()
+                             select new ApproveModel.approveDetailModel("")
                              {
                                  empEmail = dr["empEmail"].ToString()
                              }).ToList();
@@ -433,7 +433,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getApproveDetailByActFormId"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actFormId) });
                 models.approveDetailLists = (from DataRow dr in ds.Tables[0].Rows
-                                             select new ApproveModel.approveDetailModel()
+                                             select new ApproveModel.approveDetailModel(dr["empId"].ToString())
                                              {
                                                  id = dr["id"].ToString(),
                                                  approveId = dr["approveId"].ToString(),
@@ -458,7 +458,7 @@ namespace eActForm.BusinessLayer
                                                  updatedByUserId = dr["updatedByUserId"].ToString(),
                                                  approveGroupNameTH = dr["groupNameTH"].ToString(),
                                                  approveGroupnameEN = dr["groupNameEN"].ToString(),
-                                                 isShowInDoc = dr["showInDoc"] is DBNull ? null : (bool?)dr["showInDoc"]
+                                                 isShowInDoc = dr["showInDoc"] is DBNull ? null : (bool?)dr["showInDoc"],
                                              }).ToList();
 
 

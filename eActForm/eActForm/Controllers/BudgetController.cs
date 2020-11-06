@@ -21,7 +21,8 @@ namespace eActForm.Controllers  //update 21-04-2020
 
         public ActionResult activityIndex(string typeForm)
         {
-            return View();
+            SearchBudgetActivityModels models = BudgetReportController.getMasterDataForSearch(typeForm);
+            return View(models);
         }
 
         public ActionResult searchBudgetActivityForm(string typeForm)
@@ -29,22 +30,16 @@ namespace eActForm.Controllers  //update 21-04-2020
             DateTime act_createdDateStart = DateTime.Now.AddYears(-10);
             DateTime act_createdDateEnd = DateTime.Now.AddYears(2);
             string act_budgetStatusIdin = null;
+            string actYear = null;
 
             Budget_Activity_Model budget_activity = new Budget_Activity_Model();
 
             try
             {
                 #region filter
-                if (Request.Form["chk_all"] != null && Request.Form["chk_all"] == "true")
-                {
-                    act_createdDateStart = DateTime.Now.AddYears(-10);
-                    act_createdDateEnd = DateTime.Now.AddYears(2);
-                }
-                else
-                {
-                    act_createdDateStart = DateTime.ParseExact(Request.Form["startDate"].Trim(), "MM/dd/yyyy", null);
-                    act_createdDateEnd = DateTime.ParseExact(Request.Form["endDate"].Trim(), "MM/dd/yyyy", null);
-                }
+                actYear = Request.Form["ddlActYear"];
+                //act_createdDateStart = DateTime.ParseExact(Request.Form["startDate"].Trim(), "MM/dd/yyyy", null);
+                //act_createdDateEnd = DateTime.ParseExact(Request.Form["endDate"].Trim(), "MM/dd/yyyy", null);
 
                 if (Request.Form["ddlFormType"] != "" && Request.Form["ddlFormType"] != "Select All")
                 {
@@ -57,7 +52,7 @@ namespace eActForm.Controllers  //update 21-04-2020
                 }
                 #endregion
 
-                budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, act_createdDateStart, act_createdDateEnd, act_budgetStatusIdin).ToList();
+                budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, act_createdDateStart, act_createdDateEnd, act_budgetStatusIdin, actYear).ToList();
                 TempData["searchBudgetActivityForm"] = budget_activity;
             }
             catch (Exception ex)
@@ -71,7 +66,9 @@ namespace eActForm.Controllers  //update 21-04-2020
         public ActionResult activityList(string typeForm)
         {
             Budget_Activity_Model models = new Budget_Activity_Model();
-
+            DateTime act_createdDateStart = DateTime.Now.AddYears(-10);
+            DateTime act_createdDateEnd = DateTime.Now.AddYears(2);
+            string act_year = null;
             try
             {
                 if (TempData["searchBudgetActivityForm"] != null)
@@ -80,7 +77,11 @@ namespace eActForm.Controllers  //update 21-04-2020
                 }
                 else
                 {
-                    models.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, DateTime.Now.AddDays(-30), DateTime.Now, null).ToList();
+                    if (act_year == null)
+                    {
+                        act_year = (DateTime.Now.AddMonths(3).Year + 543).ToString();
+                    }
+                    models.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", null, null, null, typeForm, act_createdDateStart, act_createdDateEnd, null, act_year).ToList();
                 }
                 TempData["searchBudgetActivityForm"] = null;
                 return PartialView(models);
@@ -220,7 +221,7 @@ namespace eActForm.Controllers  //update 21-04-2020
         public PartialViewResult activityProductInvoiceList(string activityId, string activityOfEstimateId)
         {
             Budget_Activity_Model budget_activity_model = new Budget_Activity_Model();
-            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault(); ;
+            budget_activity_model.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null,null).FirstOrDefault(); ;
             budget_activity_model.Budget_Activity_Invoice_list = QueryGetBudgetActivity.getBudgetActivityInvoice(activityId, activityOfEstimateId, null);
             budget_activity_model.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
 
@@ -234,7 +235,7 @@ namespace eActForm.Controllers  //update 21-04-2020
             Budget_Activity_Model budget_activity = new Budget_Activity_Model();
             try
             {
-                budget_activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).FirstOrDefault(); ;
+                budget_activity.Budget_Activity = QueryGetBudgetActivity.getBudgetActivityList(null, activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, null).FirstOrDefault();
                 budget_activity.Budget_Activity_Product_list = QueryGetBudgetActivity.getBudgetActivityProduct(activityId, null);
                 budget_activity.Budget_Activity_Ststus_list = QueryGetBudgetActivity.getBudgetActivityStatus();
                 budget_activity.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
@@ -249,6 +250,7 @@ namespace eActForm.Controllers  //update 21-04-2020
         public ActionResult activityProduct(string activityId)
         {
             Budget_Activity_Model budget_activity = new Budget_Activity_Model();
+            string act_year = null;
 
             if (activityId == null) { activityId = Session["activityId"].ToString(); }
 
@@ -257,7 +259,7 @@ namespace eActForm.Controllers  //update 21-04-2020
             {
                 try
                 {
-                    budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null).ToList();
+                    budget_activity.Budget_Activity_list = QueryGetBudgetActivity.getBudgetActivityList("3", activityId, null, null, null, DateTime.Now.AddYears(-10), DateTime.Now.AddYears(2), null, act_year).ToList();
                     //budget_activity.Budget_Activity_Last_Approve = QueryGetBudgetActivity.getBudgetActivityLastApprove(activityId).FirstOrDefault();
                 }
                 catch (Exception ex)

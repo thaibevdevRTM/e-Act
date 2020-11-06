@@ -24,7 +24,7 @@ namespace eActForm.Controllers
                 models.productTypelist = QuerygetAllProductCate.getAllProductType().ToList();
                 models.budgetStstuslist = QueryGetBudgetActivity.getBudgetActivityStatus().ToList();
                 models.budgetStstuslist = models.budgetStstuslist.Where(r => r.id != "4" && r.id != "5").ToList();
-
+                models.activityYearlist = QueryGetBudgetActivity.getYearActivity().ToList();
                 models.activityGroupList = QueryGetAllActivityGroup.getAllActivityGroup()
                 .GroupBy(item => item.activitySales)
                 .Select(grp => new TB_Act_ActivityGroup_Model { id = grp.First().id, activitySales = grp.First().activitySales }).ToList();
@@ -68,20 +68,31 @@ namespace eActForm.Controllers
                 string actNo = null;
                 string actStatus = null;
                 string actProductType = null;
-
+                string actYear = null;
                 #region filter
 
-                if (Request.Form["chk_all"] != null && Request.Form["chk_all"] == "true")
-                {
-                    startDate = Request.Form["startDate"];
-                    endDate = Request.Form["endDate"];
-                }
+                //if (Request.Form["chk_all"] != null && Request.Form["chk_all"] == "true")
+                //{
+                //    startDate = Request.Form["startDate"];
+                //    endDate = Request.Form["endDate"];
+                //}
+                //else
+                //{
+                //    if (String.IsNullOrEmpty(Request.Form["ddlActYear"]) != true)
+                //    {
+                //        actYear = Request.Form["ddlActYear"];
+                //    }
 
+                //}
+
+                actYear = Request.Form["ddlActYear"];
                 actNo = Request["txtActivityNo"] == null ? null : Request["txtActivityNo"];
                 actStatus = Request["ddlStatus"] == null ? null : Request["ddlStatus"];
 
-
-                model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(actStatus, actNo, typeForm, startDate, endDate);
+                if (String.IsNullOrEmpty(actYear) != true)
+                {
+                    model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(actStatus, actNo, typeForm, startDate, endDate, actYear);
+                }
 
                 //----------------------------------------------
 
@@ -142,24 +153,38 @@ namespace eActForm.Controllers
                 string actNo = null;
                 string actStatus = null;
                 string actProductType = null;
+                string actYear = null;
 
                 #region filter
 
-                if (Request.Form["chk_all"] == null || Request.Form["chk_all"] == "false")
-                {
-                    startDate = Request.Form["startDate"];
-                    endDate = Request.Form["endDate"];
+                //if (Request.Form["chk_all"] == null || Request.Form["chk_all"] == "false")
+                //{
+                //    startDate = Request.Form["startDate"];
+                //    endDate = Request.Form["endDate"];
 
-                    if (Request.Form["startDate"] == null) { startDate = DateTime.Today.AddDays(-45).ToString("MM/dd/yyyy"); }
-                    if (Request.Form["endDate"] == null) { endDate = DateTime.Today.ToString("MM/dd/yyyy"); }
+                //    if (Request.Form["startDate"] == null) { startDate = DateTime.Today.AddDays(-45).ToString("MM/dd/yyyy"); }
+                //    if (Request.Form["endDate"] == null) { endDate = DateTime.Today.ToString("MM/dd/yyyy"); }
 
-                }
+                //}
+                //else
+                //{
+                //    if (String.IsNullOrEmpty(Request.Form["ddlActYear"]) != true)
+                //    {
+                //        actYear = Request.Form["ddlActYear"];
+                //    }
 
+                //}
+
+                actYear = Request.Form["ddlActYear"];
                 actNo = Request["txtActivityNo"] == null ? null : Request["txtActivityNo"];
                 actStatus = Request["ddlStatus"] == null ? null : Request["ddlStatus"];
 
+                if (String.IsNullOrEmpty(actYear) != true)
+                {
+                    model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(actStatus, actNo, typeForm, startDate, endDate, actYear);
+                }
 
-                model.Report_Budget_Activity_List = QueryGetBudgetReport.getReportBudgetActivity(actStatus, actNo, typeForm, startDate, endDate);
+                    
 
                 //----------------------------------------------
 

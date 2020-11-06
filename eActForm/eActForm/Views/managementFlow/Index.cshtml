@@ -58,6 +58,9 @@
 
 
     function setShowDrop() {
+       
+
+
         if ($("#ddlCompany").val() == '5600') {
             document.getElementById("divBrand").style.display = "none";
             document.getElementById("divChanel").style.display = "none";
@@ -95,10 +98,10 @@
                 document.getElementById("divBrand").style.display = "block";
                 document.getElementById("divActivityGroup").style.display = "block";
 
-            } 
-            
+            }
         }
-        else {
+        else if ($("#ddlCompany").val() == '3030') {
+
             document.getElementById("divBrand").style.display = "block";
             document.getElementById("divChanel").style.display = "block";
             document.getElementById("divSubject").style.display = "block";
@@ -108,7 +111,18 @@
             document.getElementById("divProductType").style.display = "none";
             document.getElementById("divEmp").style.display = "block";
             document.getElementById("divActivityGroup").style.display = "none";
-            
+        }
+        else {
+            document.getElementById("divSubject").style.display = "block";
+            document.getElementById("divCus").style.display = "none";
+            document.getElementById("divLimit").style.display = "block";
+            document.getElementById("divCate").style.display = "none";
+            document.getElementById("divProductType").style.display = "none";
+            document.getElementById("divEmp").style.display = "block";
+            document.getElementById("divActivityGroup").style.display = "none";
+            document.getElementById("divProductType").style.display = "none";
+            document.getElementById("divChanel").style.display = "none";
+            document.getElementById("divBrand").style.display = "none";
         }
     }
 

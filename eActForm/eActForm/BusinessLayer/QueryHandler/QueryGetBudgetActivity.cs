@@ -11,6 +11,30 @@ namespace eActForm.BusinessLayer
 {
     public class QueryGetBudgetActivity
     {
+
+
+        public static List<Budget_Activity_Model.Budget_Activity_Year_Att> getYearActivity()
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getYearActivity");
+
+                var result = (from DataRow d in ds.Tables[0].Rows
+                              select new Budget_Activity_Model.Budget_Activity_Year_Att()
+                              {
+                                  activityYear = d["activityYear"].ToString()
+                              }
+                              );
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getYearActivity => " + ex.Message);
+                return new List<Budget_Activity_Model.Budget_Activity_Year_Att>();
+            }
+        }
+
         public static List<Budget_Activity_Model.Budget_Activity_Status_Att> getBudgetActivityStatus()
         {
             try
@@ -116,7 +140,7 @@ namespace eActForm.BusinessLayer
             }
         }
 
-        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityList(string act_approveStatusId, string act_activityId, string act_activityNo, string budgetApproveId, string companyTH, DateTime act_createdDateStart, DateTime act_createdDateEnd, string act_budgetStatusIdIn)
+        public static List<TB_Bud_Activity_Model.Budget_Activity_Att> getBudgetActivityList(string act_approveStatusId, string act_activityId, string act_activityNo, string budgetApproveId, string companyTH, DateTime act_createdDateStart, DateTime act_createdDateEnd, string act_budgetStatusIdIn, string actYear)
         {
             try
             {
@@ -130,6 +154,7 @@ namespace eActForm.BusinessLayer
                  , new SqlParameter("@act_createdDateStart", act_createdDateStart)
                  , new SqlParameter("@act_createdDateEnd", act_createdDateEnd)
                  , new SqlParameter("@act_budgetStatusIdIn", act_budgetStatusIdIn)
+                 , new SqlParameter("@actYear", actYear)
                  );
 
                 var result = (from DataRow d in ds.Tables[0].Rows

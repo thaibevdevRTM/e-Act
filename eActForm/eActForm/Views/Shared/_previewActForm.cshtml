@@ -2,6 +2,7 @@
 @using eActForm.BusinessLayer
 @using System.Configuration;
 @using eActForm.Models;
+@using System.Globalization;
 @{
     Layout = null;
     decimal? perTotal = 0;
@@ -11,6 +12,8 @@
     decimal? growthPerTotal = 0;
     decimal? sumGrowth = 0;
     decimal? totalCase = 0;
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
 }
 
 <div class="modal-body">
@@ -62,7 +65,7 @@
                     <td></td>
                     <td style="text-align:right; font-size:12.5px;">Document Date</td>
                     <td></td>
-                    <td class="cssborderbottom" style="font-size:12.5px;">@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy") </td>
+                    <td class="cssborderbottom" style="font-size:12.5px;">@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish) </td>
                 </tr>
                 <tr>
                     <td></td>
