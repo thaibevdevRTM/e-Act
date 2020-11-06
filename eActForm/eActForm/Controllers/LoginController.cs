@@ -76,6 +76,7 @@ namespace eActForm.Controllers
                 if (response != null && response.userModel.Count > 0)
                 {
                     UtilsAppCode.Session.User = response.userModel[0];
+                    int insertToken = eForms.Presenter.AppCode.pUserAppCode.insertTokenByEmpId(AppCode.StrCon, UtilsAppCode.Session.User.empId, UtilsAppCode.Session.User.tokenAccess, UtilsAppCode.Session.User.tokenType);
                     UserAppCode.setRoleUser(UtilsAppCode.Session.User.empId);
                     ApproveAppCode.setCountWatingApprove();
                     BudgetApproveController.setCountWatingApproveBudget();
