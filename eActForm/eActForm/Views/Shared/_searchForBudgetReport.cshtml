@@ -29,7 +29,39 @@
 
 <div class="form-group">
     <div class="col-md-6 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">
+        <div class="row">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ddlActYear">
+                Year
+            </label>
+
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                @Html.DropDownListFor(model => model.activityYearlist, new SelectList(Model.activityYearlist, "activityYear", "activityYear"), "Please Select", new { @disabled = "disabled", @class = "form-control textboxcss", id = "ddlActYear", Name = "ddlActYear" })
+                <input type="hidden" id="txtActYear" class="form-control textboxcss" readonly>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+
+
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-md-6 col-xs-12">
+
+
+
+
+
+
+    </div>
+</div>
+
+<div id="divdate" class="form-group">
+    <div id="divstartdate" class="col-md-6 col-xs-12">
+        <label id="lblstartDate" class="control-label col-md-3 col-sm-3 col-xs-12" for="startDate">
             Start date
         </label>
         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -37,23 +69,17 @@
         </div>
 
     </div>
-    <div class="col-md-6 col-xs-12">
+    <div id="divenddate" class="col-md-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="endDate">
             End date
         </label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-9 col-sm- col-xs-12">
             <input type="text" name="endDate" id="endDate" value="@DocumentsAppCode.convertDateTHToShowCultureDateEN(DateTime.Now, ConfigurationManager.AppSettings["formatDateMMddyyyy"])" class="form-control fv">
         </div>
-
-        <label class="control-label col-md-2 col-sm-2 col-xs-12" for="ddlCustomer">
-            ทั้งหมด<span class="required"></span>
-        </label>
-
-        <input type="checkbox" name="chk_all" id="chk_all" value="true" onclick="toggle()" class="icheckbox_flat-green">
-
-
     </div>
 </div>
+
+
 
 @if (UtilsAppCode.Session.User.empCompanyId != ConfigurationManager.AppSettings["companyId_TBM"])
 {
@@ -145,15 +171,17 @@
         $("#endDate").datepicker();
     });
 
-    function toggle() {
-        if (document.getElementById("chk_all").checked) {
-            document.getElementById("startDate").disabled = true;
-            document.getElementById("endDate").disabled = true;
-        }
-        else {
-            document.getElementById("startDate").disabled = false;
-            document.getElementById("endDate").disabled = false;
-        }
-    }
+    //function toggle() {
+    //    if (document.getElementById("chk_all").checked) {
+    //        document.getElementById("startDate").disabled = true;
+    //        document.getElementById("endDate").disabled = true;
+    //        document.getElementById("ddlActYear").disabled = false;
+    //    }
+    //    else {
+    //        document.getElementById("startDate").disabled = false;
+    //        document.getElementById("endDate").disabled = false;
+    //        document.getElementById("ddlActYear").disabled = true;
+    //    }
+    //}
 
 </script>
