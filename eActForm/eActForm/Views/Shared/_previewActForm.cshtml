@@ -2,6 +2,7 @@
 @using eActForm.BusinessLayer
 @using System.Configuration;
 @using eActForm.Models;
+@using System.Globalization;
 @{
     Layout = null;
     decimal? perTotal = 0;
@@ -11,6 +12,8 @@
     decimal? growthPerTotal = 0;
     decimal? sumGrowth = 0;
     decimal? totalCase = 0;
+    CultureInfo DateThai = new CultureInfo("th-TH");
+    CultureInfo DateEnglish = new CultureInfo("en-US");
 }
 
 <div class="modal-body">
@@ -62,7 +65,7 @@
                     <td></td>
                     <td style="text-align:right; font-size:12.5px;">Document Date</td>
                     <td></td>
-                    <td class="cssborderbottom" style="font-size:12.5px;">@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy") </td>
+                    <td class="cssborderbottom" style="font-size:12.5px;">@Model.activityFormModel.documentDate.Value.ToString("dd/MM/yyyy", DateEnglish) </td>
                 </tr>
                 <tr>
                     <td></td>
@@ -416,15 +419,15 @@
                                 <td class="font11 textLeft">@Html.DisplayFor(m => item.mechanics)</td>
                             }
 
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.normalCost)</td>
+                            <td class="font11 textRight">@string.Format("{0:n2}", item.normalCost)</td>
 
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.themeCost)</td>
+                            <td class="font11 textRight"> @string.Format("{0:n2}", item.themeCost)</td>
                             <td class="font11 textRight">@string.Format("{0:n2}", item.growth)</td>
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.totalCase)</td>
-                            <td class="font11 textRight">@Html.DisplayFor(m => item.total)</td>
+                            <td class="font11 textRight">@string.Format("{0:n2}", item.totalCase)</td>
+                            <td class="font11 textRight">@string.Format("{0:n2}", item.total)</td>
                             @if (Model.activityFormModel.typeForm != Activity_Model.activityType.OMT.ToString())
                             {
-                                <td class="font11 textRight">@Html.DisplayFor(m => item.perTotal)</td>
+                                <td class="font11 textRight">@string.Format("{0:n2}", item.perTotal)</td>
                             }
                         </tr>
                         perTotal = item.perTotal == null ? 0 + perTotal : item.perTotal + perTotal;

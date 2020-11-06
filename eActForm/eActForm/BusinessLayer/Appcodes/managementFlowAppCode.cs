@@ -21,12 +21,13 @@ namespace eActForm.BusinessLayer.Appcodes
         public static List<TB_Reg_Subject_Model> getSubject(string companyId)
         {
             if (companyId == "5601") { companyId = "5600"; }
-            return QueryGetSubject.getAllSubject().Where(x => x.companyId.Contains(companyId)).OrderBy(x => x.nameTH).ToList();
+            return QueryGetSubject.getAllSubject().Where(x => x.companyId.Equals(companyId)).OrderBy(x => x.nameTH).ToList();
         }
 
-        public static List<TB_Reg_FlowLimit_Model> getLimit(string subjectId)
+        public static List<TB_Reg_FlowLimit_Model> getLimit(string subjectId,string companyId)
         {
-            return QueryGetAllFlowLimit.getAllFlowLimit().Where(x => x.subjectId.Equals(subjectId)).ToList();
+            var result = QueryGetAllFlowLimit.getAllFlowLimit().Where(x => x.subjectId.Equals(subjectId)).ToList();
+            return result.Where(x => x.companyId.Equals(companyId)).ToList();
         }
 
         public static List<TB_Act_Other_Model> getApproveShow()
@@ -37,6 +38,11 @@ namespace eActForm.BusinessLayer.Appcodes
         public static List<TB_Act_Other_Model> getApprove()
         {
             return QueryOtherMaster.getOhterMaster("approve", "");
+        }
+
+        public static List<TB_Act_Other_Model> getActive()
+        {
+            return QueryOtherMaster.getOhterMaster("active", "");
         }
 
         public static List<TB_Act_Customers_Model.Customers_Model> getCustomer(string companyId)
@@ -88,11 +94,13 @@ namespace eActForm.BusinessLayer.Appcodes
                       , new SqlParameter[] { new SqlParameter("@flowId", model.p_flowId[0])
                       , new SqlParameter("@empId", model.p_empGroup[0])
                       });
-                foreach (var item in model.p_appovedGroupList)
+                if (result > 0)
                 {
-                    result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
+                    foreach (var item in model.p_appovedGroupList)
+                    {
+                        result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove"
 
-                    , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
+                        , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
                     ,new SqlParameter("@flowId",model.p_flowId[0])
                     ,new SqlParameter("@empId",model.p_empIdList[i])
                     ,new SqlParameter("@approveGroupId",model.p_appovedGroupList[i])
@@ -100,13 +108,14 @@ namespace eActForm.BusinessLayer.Appcodes
                     ,new SqlParameter("@empGroup",model.p_empGroup[0])
                     ,new SqlParameter("@showInDoc",model.p_isShowList[i])
                     ,new SqlParameter("@isApprove",model.p_isApproveList[i])
-                    ,new SqlParameter("@delFlag",'0')
+                    ,new SqlParameter("@delFlag",model.p_active[i])
                     ,new SqlParameter("@createdDate",DateTime.Now)
                     ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
                     ,new SqlParameter("@updatedDate",DateTime.Now)
                     ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
-                      });
-                    i++;
+                          });
+                        i++;
+                    }
                 }
             }
             catch (Exception ex)
@@ -116,6 +125,65 @@ namespace eActForm.BusinessLayer.Appcodes
 
             return result;
         }
+        public static int insertFlowApproveAddOn(ManagementFlow_Model model)
+        {
+            int i = 0;
+            int result = 0;
+            try
+            {
+                foreach (var item in model.addOn_Id)
+                {
+                    result += SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteFlowApproveAddOn"
+                          , new SqlParameter[] { new SqlParameter("@addOnId", item)
+                       });
+                }
 
+
+                foreach (var item in model.p_appovedGroupList)
+                {
+                    result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_insertFlowApprove_AddOn"
+
+                    , new SqlParameter[] {new SqlParameter("@companyId",model.p_companyId)
+                    ,new SqlParameter("@subjectId",model.p_subjectId)
+                    ,new SqlParameter("@productTypeId", model.p_productType)
+                    ,new SqlParameter("@productCateId", model.p_productCateId)
+                    ,new SqlParameter("@productBrandId", model.p_productBrandId)
+                    ,new SqlParameter("@channelId", model.p_channelId)
+                    ,new SqlParameter("@flowLimitId", model.p_flowLimitId)
+                    ,new SqlParameter("@empId",model.p_empIdList[i])
+                    ,new SqlParameter("@approveGroupId",model.p_appovedGroupList[i])
+                    ,new SqlParameter("@rangNo",model.p_rangNoList[i])
+                    ,new SqlParameter("@empGroup", string.IsNullOrEmpty(model.p_empGroup[0])? "no" : model.p_empGroup[0])
+                    ,new SqlParameter("@showInDoc",model.p_isShowList[i])
+                    ,new SqlParameter("@isApprove",model.p_isApproveList[i])
+                    ,new SqlParameter("@activityTypeId",model.activityTypeId)
+                    ,new SqlParameter("@delFlag",model.p_active[i])
+                    ,new SqlParameter("@createdDate",DateTime.Now)
+                    ,new SqlParameter("@createdByUserId",UtilsAppCode.Session.User.empId)
+                    ,new SqlParameter("@updatedDate",DateTime.Now)
+                    ,new SqlParameter("@updatedByUserId",UtilsAppCode.Session.User.empId)
+                      });
+                    i++;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("insertFlowApproveAddOn => " + ex.Message);
+            }
+
+            return result;
+        }
+
+
+        public static int delFlowAddOnByEmpId(string id)
+        {
+
+            var result = SqlHelper.ExecuteNonQuery(AppCode.StrCon, CommandType.StoredProcedure, "usp_deleteFlowApproveAddOn"
+                   , new SqlParameter[] { new SqlParameter("@addOnId", id)
+                });
+
+            return result;
+        }
     }
 }

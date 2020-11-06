@@ -77,7 +77,7 @@ namespace eActForm.BusinessLayer
                 DataSet ds = SqlHelper.ExecuteDataset(AppCode.StrCon, CommandType.StoredProcedure, "usp_getUserCreateActivityForm"
                     , new SqlParameter[] { new SqlParameter("@actFormId", actId) });
                 var lists = (from DataRow dr in ds.Tables[0].Rows
-                             select new ApproveModel.approveDetailModel()
+                             select new ApproveModel.approveDetailModel("")
                              {
                                  empId = dr["empId"].ToString(),
                                  empName = dr["empName"].ToString(),
@@ -200,6 +200,7 @@ namespace eActForm.BusinessLayer
                                  totalCost = dr["totalCost"] is DBNull ? 0 : (decimal?)dr["totalCost"],
                                  createByUserName = dr["createByUserName"].ToString(),
                                  master_type_form_id = dr["master_type_form_id"].ToString(),
+                                 companyId = BaseAppCodes.getCompanyIdByactivityType(typeForm),
 
                              }).ToList();
 

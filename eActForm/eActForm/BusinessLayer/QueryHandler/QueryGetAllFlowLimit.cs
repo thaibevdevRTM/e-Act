@@ -20,6 +20,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                              {
                                  id = d["id"].ToString(),
                                  subjectId = d["subjectId"].ToString(),
+                                 companyId = d["companyId"].ToString(),
                                  limitBegin = d["limitBegin"].ToString(),
                                  limitTo = d["limitTo"].ToString(),
                                  displayVal = d["displayVal"].ToString(),

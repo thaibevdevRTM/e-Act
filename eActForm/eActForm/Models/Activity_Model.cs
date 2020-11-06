@@ -76,6 +76,11 @@ namespace eActForm.Models
             CVM,
         }
 
+        public enum typeFlow
+        {
+            flow,
+            flowAddOn
+        }
         public class actForms
         {
             public List<actForm> actLists { get; set; }
@@ -122,6 +127,8 @@ namespace eActForm.Models
             public string brandId { get; set; }
             public string master_type_form_id { get; set; }
             public DateTime? dateSentApprove { get; set; }
+            public string companyId { get; set; }
+
         }
 
     }

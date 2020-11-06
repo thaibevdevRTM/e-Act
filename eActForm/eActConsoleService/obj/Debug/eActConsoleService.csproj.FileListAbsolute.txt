@@ -217,3 +217,7 @@ D:\Thaibev\e-Act\eActForm\eActConsoleService\bin\Debug\en\eActForm.resources.dll
 D:\Thaibev\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CopyComplete
 D:\Thaibev\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
 D:\Thaibev\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csprojAssemblyReference.cache
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.csproj.CoreCompileInputs.cache
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.exe
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eActConsoleService\obj\Debug\eActConsoleService.pdb

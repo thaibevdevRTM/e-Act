@@ -8,10 +8,6 @@ D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Models\b
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csproj.CoreCompileInputs.cache
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.dll
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.pdb
-D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.dll
-D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.pdb
-D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.dll
-D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.pdb
 D:\WORK\ThaiBev\Work\ProjectDevelopOther\Eact_WEB\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csprojAssemblyReference.cache
 D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.dll
 D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.pdb
@@ -19,7 +15,6 @@ D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Models\obj\Debug\e
 D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csproj.CoreCompileInputs.cache
 D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.dll
 D:\work\project\source code\e-act local\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.pdb
-D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csproj.CoreCompileInputs.cache
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.dll
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.pdb
 D:\thaibev\eAct_GitHub\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csprojAssemblyReference.cache
@@ -43,3 +38,14 @@ D:\Thaibev\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.pdb
 D:\Thaibev\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csproj.CoreCompileInputs.cache
 D:\Thaibev\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.dll
 D:\Thaibev\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.pdb
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.dll
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.pdb
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csprojAssemblyReference.cache
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csproj.CoreCompileInputs.cache
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.dll
+D:\work\1 Project\source code\EACT-MTM\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.pdb
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.dll
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\bin\Debug\eForms.Models.pdb
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.csproj.CoreCompileInputs.cache
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.dll
+D:\project\GitHub\e-Act\e-Act\eActForm\eForms.Models\obj\Debug\eForms.Models.pdb

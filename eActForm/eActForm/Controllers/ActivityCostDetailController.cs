@@ -7,6 +7,7 @@ using WebLibrary;
 
 namespace eActForm.Controllers
 {
+    [LoginExpire]
     public class ActivityCostDetailController : Controller
     {
         public ActionResult activityCostDetail(string typeForm, string actId)
