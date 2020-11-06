@@ -26,6 +26,7 @@ namespace eActForm.Models
             public string act_activityNo { get; set; }
             public string sub_code { get; set; }
             public string act_activityName { get; set; }
+            public string act_reference { get; set; }
             public string brandName { get; set; }
             public string themeId { get; set; }
             public string Theme { get; set; }

@@ -40,6 +40,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                                   act_activityNo = d["act_activityNo"].ToString(),
                                   sub_code = d["sub_code"].ToString(),
                                   act_activityName = d["act_activityName"].ToString(),
+                                  act_reference = d["act_reference"].ToString(),
                                   brandName = d["brandName"].ToString(),
                                   themeId = d["themeId"].ToString(),
                                   Theme = d["Theme"].ToString(),
