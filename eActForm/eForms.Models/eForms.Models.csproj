@@ -51,6 +51,7 @@
     <Compile Include="MasterData\BaseMasterModel.cs" />
     <Compile Include="MasterData\ProvinceModel.cs" />
     <Compile Include="MasterData\SalesTeamCVMModel.cs" />
+    <Compile Include="MasterData\tokenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\RepMedicalModel.cs" />
     <Compile Include="Reports\RepPostEvaModel.cs" />

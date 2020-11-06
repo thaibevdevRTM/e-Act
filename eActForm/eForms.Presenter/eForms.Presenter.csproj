@@ -37,6 +37,7 @@
       <HintPath>..\..\..\..\..\DLL\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppCode\pUserAppCode.cs" />
     <Compile Include="BasePresenter.cs" />
     <Compile Include="Forms\activityFormOrderProductPresenter.cs" />
     <Compile Include="MasterData\APPresenter.cs" />
