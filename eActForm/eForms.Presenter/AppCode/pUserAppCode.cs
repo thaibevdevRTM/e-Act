@@ -30,7 +30,7 @@ namespace eForms.Presenter.AppCode
             }
             catch (Exception ex)
             {
-                throw new Exception("getCheckRoleUser >>" + ex.Message);
+                throw new Exception("insertTokenByEmpId >>" + ex.Message);
             }
         }
 
@@ -55,7 +55,7 @@ namespace eForms.Presenter.AppCode
             }
             catch (Exception ex)
             {
-                throw new Exception("getCheckRoleUser >>" + ex.Message);
+                throw new Exception("getTokenByEmpId >>" + ex.Message);
             }
         }
     }
