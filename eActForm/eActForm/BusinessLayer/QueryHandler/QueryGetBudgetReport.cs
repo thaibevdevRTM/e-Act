@@ -11,7 +11,7 @@ namespace eActForm.BusinessLayer.QueryHandler
 {
     public class QueryGetBudgetReport
     {
-        public static List<Budget_Report_Model.Report_Budget_Activity_Att> getReportBudgetActivity(string act_StatusId, string act_activityNo, string companyEN, string act_createdDateStart, string act_createdDateEnd)
+        public static List<Budget_Report_Model.Report_Budget_Activity_Att> getReportBudgetActivity(string act_StatusId, string act_activityNo, string companyEN, string act_createdDateStart, string act_createdDateEnd , string actYear)
         {
             try
             {
@@ -21,6 +21,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                  , new SqlParameter("@companyEN", companyEN)
                  , new SqlParameter("@createdDateStart", act_createdDateStart)
                  , new SqlParameter("@createdDateEnd", act_createdDateEnd)
+                 , new SqlParameter("@actYear", actYear)
                  );
 
                 var result = (from DataRow d in ds.Tables[0].Rows
@@ -39,6 +40,7 @@ namespace eActForm.BusinessLayer.QueryHandler
                                   act_activityNo = d["act_activityNo"].ToString(),
                                   sub_code = d["sub_code"].ToString(),
                                   act_activityName = d["act_activityName"].ToString(),
+                                  act_reference = d["act_reference"].ToString(),
                                   brandName = d["brandName"].ToString(),
                                   themeId = d["themeId"].ToString(),
                                   Theme = d["Theme"].ToString(),

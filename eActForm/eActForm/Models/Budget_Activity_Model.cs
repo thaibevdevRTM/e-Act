@@ -16,6 +16,9 @@ namespace eActForm.Models //update 21-04-2020
         public List<ApproveModel.approveStatus> approveStatusList { get; set; }
         public List<Budget_Activity_Model.Budget_Activity_Status_Att> budgetStstuslist { get; set; }
         public string typeForm { get; set; }
+
+        public List<Budget_Activity_Model.Budget_Activity_Year_Att> activityYearlist { get; set; }
+
     }
 
     public class Budget_Activity_Model
@@ -23,6 +26,7 @@ namespace eActForm.Models //update 21-04-2020
 
         public List<TB_Bud_Image_Model.BudImageModel> Budget_ImageList { get; set; }
 
+       
         public List<Budget_Activity_Att> Budget_Activity_list { get; set; }
         public List<Budget_Activity_Status_Att> Budget_Activity_Ststus_list { get; set; }
         public List<Budget_Activity_Product_Att> Budget_Activity_Product_list { get; set; }
@@ -37,7 +41,11 @@ namespace eActForm.Models //update 21-04-2020
         public Budget_Count_Wait_Approve_Att Budget_Count_Wait_Approve { get; set; }
         public Budget_Activity_Last_Approve_Att Budget_Activity_Last_Approve { get; set; }
 
-
+        public List<Budget_Activity_Year_Att> activityYearlist { get; set; }
+        public class Budget_Activity_Year_Att
+        {
+            public string activityYear { get; set; }
+        }
 
         public class Budget_Invoice_history_Att
         {

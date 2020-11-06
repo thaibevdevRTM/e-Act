@@ -50,6 +50,19 @@
         }*@
     }
 
+    $(function () {
+        //document.getElementById("startDate").disabled = true;
+        //document.getElementById("endDate").disabled = true;
+        
+        document.getElementById("divdate").style.visibility = "hidden";
+        document.getElementById("ddlActYear").disabled = false;
+
+        var x = document.getElementById("ddlActYear");
+        x.remove(0);
+
+        //document.getElementById("ddlActYear").selectedIndex = "1";
+    });
+
     function successQuery(htmlResponse) {
         $("#getQuery").html(htmlResponse)
         $("#getQuery").fadeIn(300);
