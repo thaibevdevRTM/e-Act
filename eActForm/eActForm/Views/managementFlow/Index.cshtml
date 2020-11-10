@@ -37,8 +37,8 @@
             </div>
             <div class="col-md-12 col-xs-12">
 
-                @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed multiselectCompany", id = "ddlCompanyMulti" })
 
+                @Html.ListBoxFor(m => m.companyList, new MultiSelectList(Model.companyList, "val1", "displayVal"), new { @class = "form-control txtBoxRed multiselectCompany", id = "ddlCompanyMulti", @multiple = "multiple" })
             </div>
         </div>
     }
@@ -50,7 +50,7 @@
                 <label>Company</label>
             </div>
             <div class="col-md-12 col-xs-12">
-                @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
+                @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", multiple = "multiple", id = "ddlCompany" })
             </div>
         </div>
     }
@@ -65,6 +65,8 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+       
+
         $("#txtEmpId").autocomplete({
             source: function (request, response) {
                 var channel = $("#ddlChannel").val() == "" ? $("#ddlBrand").val() : $("#ddlChannel").val();
@@ -102,6 +104,7 @@
 
 
     function getEmpDetail() {
+
         ddlCompanyMulti = $("#ddlCompanyMulti")
         $.ajax({
             type: 'POST',
@@ -115,7 +118,9 @@
                 $.each(response.Data.companyList, function () {
                     ddlCompanyMulti.append($("<option></option>").val(this['Value']).html(this['Text']));
                 });
-                makeMultiSelect();
+                $('#ddlCompanyMulti').multiselect({
+                    includeSelectAllOption: true
+                });
             }
         });
     }
@@ -139,8 +144,6 @@
 
     function setShowDrop() {
 
-
-
         if ($("#ddlCompany").val() == '5600') {
             document.getElementById("divBrand").style.display = "none";
             document.getElementById("divChanel").style.display = "none";
@@ -151,7 +154,6 @@
             document.getElementById("divCate").style.display = "block";
             document.getElementById("divProductType").style.display = "none";
             if ('@typeFlow' == '@Activity_Model.typeFlow.flowAddOn.ToString()') {
-                console.log('ttt');
                 document.getElementById("divBrand").style.display = "block";
                 document.getElementById("divCus").style.display = "none";
                 document.getElementById("divProductType").style.display = "block";
@@ -163,7 +165,7 @@
         {
             document.getElementById("divBrand").style.display = "none";
             document.getElementById("divChanel").style.display = "none";
-             document.getElementById("divEmp").style.display = "none";
+            document.getElementById("divEmp").style.display = "none";
             document.getElementById("divSubject").style.display = "block";
             document.getElementById("divCus").style.display = "block";
             document.getElementById("divLimit").style.display = "none";
@@ -206,42 +208,6 @@
         }
     }
 
-    function makeMultiSelect() {
-        $('select.multiselectCompany').multipleSelect({
-            multipleWidth: 190,
-            width: '100%',
-            filter: true,
-            multiple: true,
-            position: 'bottom',
-            animate: 'none', // 'none', 'fade', 'slide'
-            placeholder: '-- Select --',
-            //addTitle: 'Sunil',
-            //delimiter: ', ',
-            //minimumCountSelected: 3,
-            selectAllText: 'Select All',
-            allSelected: 'All Selected',
-            countSelected: '# of % selected',
-            noMatchesFound: 'No matches found',
-            onClick: function () {
-                //$("#<%= hdnfld.ClientID %>").val("1");
-            },
-            onOptgroupClick: function () {
-                //$("#<%= hdnfld.ClientID %>").val("1");
-            },
-            onUncheckAll: function () {
-                //$("#<%= hdnfld.ClientID %>").val("1");
-                //unSelectAll();
-            },
-            onClose: function () {
-                //var hdnVal = $("#<%= hdnfld.ClientID %>").val();
-                //if (hdnVal == "1") {
-                //    $('#cover').show();
-                //    $(".myhdnBtn").click();
-                //}
-            }
-        });
-    }
-
-
+  
 
 </script>

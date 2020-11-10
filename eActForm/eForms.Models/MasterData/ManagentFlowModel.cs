@@ -11,7 +11,7 @@ namespace eForms.Models.MasterData
 
         public class flowSubject
         {
-            public string flowId { get; set; }
+            public string flowApproveId { get; set; }
             public string subjectName { get; set; }
             public string subjectId { get; set; }
             public string empId { get; set; }
@@ -24,6 +24,9 @@ namespace eForms.Models.MasterData
             public string productCatId { get; set; }
             public string companyId { get; set; }
             public string companyName { get; set; }
+            public string rangNo { get; set; }
+            public string cusNameTH { get; set; }
+
 
         }
 
