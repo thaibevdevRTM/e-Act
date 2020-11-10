@@ -20,15 +20,40 @@
 <h3>Flow management</h3>
 <div class="row form-group">
 
-    <div id="divSubject" class="col-md-3">
-        <div class="col-md-12 col-xs-12">
-            <label>Company</label>
+    @if (typeFlow == Activity_Model.typeFlow.swap.ToString())
+    {
+        <div id="divEmp" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>EmpId</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.TextBox("txtEmpId", "", new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
+            </div>
         </div>
-        <div class="col-md-12 col-xs-12">
-            @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
-        </div>
-    </div>
 
+        <div id="divCompanyMulti" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>Company</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+
+                @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed multiselectCompany", id = "ddlCompanyMulti" })
+
+            </div>
+        </div>
+    }
+    else
+    {
+
+        <div id="divCompany" class="col-md-3">
+            <div class="col-md-12 col-xs-12">
+                <label>Company</label>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
+            </div>
+        </div>
+    }
 </div>
 
 <hr />
@@ -37,8 +62,63 @@
 </div>
 
 
-<script>
+<script type="text/javascript">
 
+    $(document).ready(function () {
+        $("#txtEmpId").autocomplete({
+            source: function (request, response) {
+                var channel = $("#ddlChannel").val() == "" ? $("#ddlBrand").val() : $("#ddlChannel").val();
+                $.ajax({
+                    url: '@Url.Action("getEmpByChannel", "eAct")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        subjectId: $("#ddlSubject").val(),
+                        channelId: channel,
+                        filter: $("#txtEmpId").val(),
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.empName, value: item.empId, id: item.empId };
+
+                        }))
+
+                    }
+                })
+            },
+            minLength: 0,
+            messages: {
+                noResults: '',
+                results: function (resultsCount) {
+                }
+            }, select: function (event, ui) {
+                $("#txtEmpId").val(ui.item.id)
+            },
+            close: function (event, ui) { getEmpDetail(); }
+        }).focus(function () {
+            $(this).data("uiAutocomplete").search($(this).val());
+        });
+    });
+
+
+    function getEmpDetail() {
+        ddlCompanyMulti = $("#ddlCompanyMulti")
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("getCompanyByEmpId", "ManagementFlow")',
+            data: {
+                empId: $("#txtEmpId").val(),
+            }
+        }).done(function (response) {
+            if (response.Data != null) {
+                $("#ddlCompanyMulti option[value !='']").remove();
+                $.each(response.Data.companyList, function () {
+                    ddlCompanyMulti.append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+                makeMultiSelect();
+            }
+        });
+    }
 
     $("#ddlCompany").change(function () {
         $("#WaitDialog").show();
@@ -58,7 +138,7 @@
 
 
     function setShowDrop() {
-       
+
 
 
         if ($("#ddlCompany").val() == '5600') {
@@ -126,7 +206,41 @@
         }
     }
 
-
+    function makeMultiSelect() {
+        $('select.multiselectCompany').multipleSelect({
+            multipleWidth: 190,
+            width: '100%',
+            filter: true,
+            multiple: true,
+            position: 'bottom',
+            animate: 'none', // 'none', 'fade', 'slide'
+            placeholder: '-- Select --',
+            //addTitle: 'Sunil',
+            //delimiter: ', ',
+            //minimumCountSelected: 3,
+            selectAllText: 'Select All',
+            allSelected: 'All Selected',
+            countSelected: '# of % selected',
+            noMatchesFound: 'No matches found',
+            onClick: function () {
+                //$("#<%= hdnfld.ClientID %>").val("1");
+            },
+            onOptgroupClick: function () {
+                //$("#<%= hdnfld.ClientID %>").val("1");
+            },
+            onUncheckAll: function () {
+                //$("#<%= hdnfld.ClientID %>").val("1");
+                //unSelectAll();
+            },
+            onClose: function () {
+                //var hdnVal = $("#<%= hdnfld.ClientID %>").val();
+                //if (hdnVal == "1") {
+                //    $('#cover').show();
+                //    $(".myhdnBtn").click();
+                //}
+            }
+        });
+    }
 
 
 

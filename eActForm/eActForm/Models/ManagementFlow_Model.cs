@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using eForms.Models.MasterData;
+using System.Collections.Generic;
 using System.Web.UI.WebControls.WebParts;
 
 namespace eActForm.Models
@@ -20,6 +21,7 @@ namespace eActForm.Models
         public ApproveFlowModel.approveFlowModel approveFlow { get; set; }
         public List<TB_Act_ActivityGroup_Model> activityGroupList { get; set; }
         public List<RequestEmpModel> empList { get; set; }
+        public List<ManagentFlowModel.flowSubject> flowSubjectList { get; set; }
         public List<string> addOn_Id { get; set; }
         public List<string> p_idList { get; set; }
         public List<string> p_rangNoList { get; set; }

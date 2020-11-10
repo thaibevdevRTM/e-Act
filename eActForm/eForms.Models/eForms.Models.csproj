@@ -49,6 +49,7 @@
     <Compile Include="MasterData\FiscalYearModel.cs" />
     <Compile Include="MasterData\AmphuresModel.cs" />
     <Compile Include="MasterData\BaseMasterModel.cs" />
+    <Compile Include="MasterData\ManagentFlowModel.cs" />
     <Compile Include="MasterData\ProvinceModel.cs" />
     <Compile Include="MasterData\SalesTeamCVMModel.cs" />
     <Compile Include="MasterData\tokenModel.cs" />

@@ -79,7 +79,9 @@ namespace eActForm.Models
         public enum typeFlow
         {
             flow,
-            flowAddOn
+            flowAddOn,
+            swap
+
         }
         public class actForms
         {
