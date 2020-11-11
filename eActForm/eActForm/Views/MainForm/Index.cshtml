@@ -533,7 +533,7 @@
                 $.ajax({
                     url: '@Url.Action("genPdfApprove", "Documents")',
                     data: {
-                        GridHtml: $("#divForm").html(),
+                        GridHtml: htmlResponse,
                         statusId: '',
                         activityId: '@Model.activityFormModel.id',
                     },
