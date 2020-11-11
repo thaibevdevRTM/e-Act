@@ -528,8 +528,9 @@
             url: '@Url.Action("Index", "MainReport")',
             data: { activityId: '@Model.activityFormModel.id' }
         }).done(function (htmlResponse) {
-            if ('@Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)' == 'True' ||
-                '@Array.AsReadOnly(AppCode.checkDocTBM).Contains(Model.activityFormTBMMKT.master_type_form_id)' == 'True') {
+            if (('@Array.AsReadOnly(AppCode.hcForm).Contains(Model.activityFormTBMMKT.master_type_form_id)' == 'True' ||
+                '@Array.AsReadOnly(AppCode.checkDocTBM).Contains(Model.activityFormTBMMKT.master_type_form_id)' == 'True') &&
+                '@Model.activityFormModel.mode' == '@AppCode.Mode.edit.ToString()') {
                 $.ajax({
                     url: '@Url.Action("genPdfApprove", "Documents")',
                     data: {
