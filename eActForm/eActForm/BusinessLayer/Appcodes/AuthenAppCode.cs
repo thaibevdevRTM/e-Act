@@ -1,4 +1,5 @@
 ﻿using eActForm.Models;
+using eForms.Presenter.AppCode;
 using Microsoft.VisualBasic.ApplicationServices;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -34,8 +35,10 @@ namespace eActForm.BusinessLayer
         {
             try
             {
+
+                var getTokenList = pUserAppCode.getTokenByEmpId(AppCode.StrCon, strUser);
                 ActUserModel.ResponseUserAPI response = null;
-                ActUserModel.RequestUserInfoAPI request = new ActUserModel.RequestUserInfoAPI(strUser, UtilsAppCode.Session.User.tokenAccess, UtilsAppCode.Session.User.tokenType);
+                ActUserModel.RequestUserInfoAPI request = new ActUserModel.RequestUserInfoAPI(strUser, getTokenList[0].tokenAccess, getTokenList[0].tokenType);
                 string rtn = OkHTTP.SendPost(ConfigurationManager.AppSettings["urlAuthenInfo"], JsonConvert.SerializeObject(request).ToString());
                 JObject json = JObject.Parse(rtn);
                 if (json.Count > 0)

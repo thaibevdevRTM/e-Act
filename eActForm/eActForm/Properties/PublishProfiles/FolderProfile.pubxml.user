@@ -80,8 +80,6 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/23/2020 08:46:05</publishTime>
     </File>
     <File Include="bin/eActForm.dll">
-      <publishTime>11/11/2020 11:49:03</publishTime>
-    </File>
     <File Include="bin/eActForm.pdb">
       <publishTime>11/11/2020 11:49:03</publishTime>
     </File>
@@ -100,49 +98,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/en/eActForm.resources.dll">
       <publishTime>11/11/2020 11:49:04</publishTime>
     </File>
-    <File Include="bin/EntityFramework.SqlServer.xml">
-      <publishTime>03/31/2020 20:02:01</publishTime>
-    </File>
-    <File Include="bin/EntityFramework.xml">
-      <publishTime>03/31/2020 20:02:01</publishTime>
-    </File>
-    <File Include="bin/EPPlus.dll">
-      <publishTime>08/07/2020 14:51:53</publishTime>
-    </File>
-    <File Include="bin/itextsharp.dll">
-      <publishTime>03/31/2020 17:48:09</publishTime>
-    </File>
-    <File Include="bin/itextsharp.xmlworker.dll">
-      <publishTime>03/31/2020 17:48:09</publishTime>
-    </File>
-    <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
-      <publishTime>04/08/2020 11:53:20</publishTime>
-    </File>
-    <File Include="bin/Microsoft.AI.DependencyCollector.dll">
-      <publishTime>04/08/2020 11:53:20</publishTime>
-    </File>
     <File Include="bin/Microsoft.AI.PerfCounterCollector.dll">
-      <publishTime>04/08/2020 11:53:20</publishTime>
-    </File>
-    <File Include="bin/Microsoft.AI.ServerTelemetryChannel.dll">
-      <publishTime>04/08/2020 11:53:20</publishTime>
-    </File>
-    <File Include="bin/Microsoft.AI.Web.dll">
-      <publishTime>04/08/2020 11:53:20</publishTime>
-    </File>
-    <File Include="bin/Microsoft.AI.WindowsServer.dll">
-      <publishTime>04/08/2020 11:53:20</publishTime>
-    </File>
-    <File Include="bin/Microsoft.ApplicationBlocks.Data.dll">
-      <publishTime>03/31/2020 17:48:07</publishTime>
-    </File>
-    <File Include="bin/Microsoft.ApplicationInsights.dll">
-      <publishTime>04/08/2020 11:53:20</publishTime>
-    </File>
-    <File Include="bin/Microsoft.AspNet.TelemetryCorrelation.dll">
-      <publishTime>04/08/2020 11:53:20</publishTime>
-    </File>
-    <File Include="bin/Microsoft.AspNetCore.Antiforgery.dll">
       <publishTime>08/07/2020 14:51:53</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Authentication.Abstractions.dll">
