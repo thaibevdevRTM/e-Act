@@ -22,25 +22,39 @@
 
     @if (typeFlow == Activity_Model.typeFlow.swap.ToString())
     {
-        <div id="divEmp" class="col-md-3">
-            <div class="col-md-12 col-xs-12">
-                <label>EmpId</label>
+        using (Ajax.BeginForm("getFlowApproveByEmpId", "ManagementFlow"
+    , new AjaxOptions { HttpMethod = "post", OnBegin = "return beginQuery_Index()", OnSuccess = "successQuery_Index", OnFailure = "failureQuery_Index" }
+    , new { id = "subUpdate", @class = "form-horizontal form-label-left" }))
+        {
+            <div id="divEmp" class="col-md-3">
+                <div class="col-md-12 col-xs-12">
+                    <label>EmpId</label>
+                </div>
+                <div class="col-md-10 col-xs-12">
+                    @Html.TextBox("empId", "", new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
+                </div>
             </div>
-            <div class="col-md-12 col-xs-12">
-                @Html.TextBox("txtEmpId", "", new { @class = "form-control textboxcss textRight", Style = "text-align:center;", id = "txtEmpId", onchange = "getEmpDetail();" })
-            </div>
-        </div>
 
-        <div id="divCompanyMulti" class="col-md-3">
-            <div class="col-md-12 col-xs-12">
-                <label>Company</label>
+            <div id="divCompanyMulti" class="col-md-2">
+                <div class="col-md-12 col-xs-12">
+                    <label>Company</label>
+                </div>
+                <div class="col-md-10 col-xs-12">
+                    @Html.ListBoxFor(m => m.companyList, new MultiSelectList(Model.companyList, "val1", "displayVal"), new { @class = "form-control", id = "ddlCompanyMulti" })
+                </div>
             </div>
-            <div class="col-md-12 col-xs-12">
 
 
-                @Html.ListBoxFor(m => m.companyList, new MultiSelectList(Model.companyList, "val1", "displayVal"), new { @class = "form-control txtBoxRed multiselectCompany", id = "ddlCompanyMulti", @multiple = "multiple" })
+            <div id="divSubmit" class="col-md-3">
+                <div class="col-md-12 col-xs-12">
+                    <label></label>
+                </div>
+                <div class="col-md-12 col-xs-12">
+                    <button type="submit" class="btn ink-reaction btn-success"><i class="fa fa fa-check fa-fw"></i>&nbsp;Submit</button>
+                </div>
+
             </div>
-        </div>
+        }
     }
     else
     {
@@ -50,9 +64,11 @@
                 <label>Company</label>
             </div>
             <div class="col-md-12 col-xs-12">
-                @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", multiple = "multiple", id = "ddlCompany" })
+                @Html.DropDownListFor(model => model.companyList, new SelectList(Model.companyList, "val1", "displayVal"), "Please Select", new { @class = "form-control txtBoxRed", id = "ddlCompany" })
             </div>
         </div>
+
+
     }
 </div>
 
@@ -65,17 +81,20 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-       
+        document.getElementById("divCompanyMulti").style.display = "none";
+        document.getElementById("divSubmit").style.display = "none";
+
+
 
         $("#txtEmpId").autocomplete({
-            source: function (request, response) {
+        source: function (request, response) {
                 var channel = $("#ddlChannel").val() == "" ? $("#ddlBrand").val() : $("#ddlChannel").val();
                 $.ajax({
-                    url: '@Url.Action("getEmpByChannel", "eAct")',
+                url: '@Url.Action("getEmpByChannel", "eAct")',
                     type: "POST",
                     dataType: "json",
                     data: {
-                        subjectId: $("#ddlSubject").val(),
+                    subjectId: $("#ddlSubject").val(),
                         channelId: channel,
                         filter: $("#txtEmpId").val(),
                     },
@@ -90,7 +109,7 @@
             },
             minLength: 0,
             messages: {
-                noResults: '',
+            noResults: '',
                 results: function (resultsCount) {
                 }
             }, select: function (event, ui) {
@@ -115,6 +134,9 @@
         }).done(function (response) {
             if (response.Data != null) {
                 $("#ddlCompanyMulti option[value !='']").remove();
+                document.getElementById("divCompanyMulti").style.display = "block";
+                document.getElementById("divSubmit").style.display = "block";
+
                 $.each(response.Data.companyList, function () {
                     ddlCompanyMulti.append($("<option></option>").val(this['Value']).html(this['Text']));
                 });
@@ -128,10 +150,10 @@
     $("#ddlCompany").change(function () {
         $("#WaitDialog").show();
         $.ajax({
-            type: 'POST',
+        type: 'POST',
             url: '@Url.Action("dropDetail", "ManagementFlow")',
             data: {
-                companyId: $("#ddlCompany").val(),
+            companyId: $("#ddlCompany").val(),
                 typeFlow: '@typeFlow',
             }
         }).done(function (htmlResponse) {
@@ -140,6 +162,21 @@
             setShowDrop();
         });
     });
+
+
+    function successQuery_Index(htmlResponse) {
+
+        $("#divDrop").html(htmlResponse);
+      
+    }
+
+    function failureQuery_Index(data) {
+        bootbox.alert("ไม่สามารถ บันทึกได้กรุณาติดต่อ Admin ครับ <br/>" + data.responseText);
+    }
+
+    function beginQuery_Index() {
+
+    }
 
 
     function setShowDrop() {
@@ -161,8 +198,7 @@
             }
 
         }
-        else if ($("#ddlCompany").val() == '5601')
-        {
+        else if ($("#ddlCompany").val() == '5601') {
             document.getElementById("divBrand").style.display = "none";
             document.getElementById("divChanel").style.display = "none";
             document.getElementById("divEmp").style.display = "none";
@@ -208,6 +244,6 @@
         }
     }
 
-  
+
 
 </script>

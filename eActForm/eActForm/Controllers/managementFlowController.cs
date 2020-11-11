@@ -244,5 +244,37 @@ namespace eActForm.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
+        public ActionResult getFlowSwap(string empId,string[] companyList )
+        {
+            ManagentFlowModel flowSubject = new ManagentFlowModel();
+            try
+            {
+                flowSubject.flowSubjectsList = pManagementFlowAppCode.getFlowApproveByEmpId(AppCode.StrCon, empId).Where(w => companyList.Contains(w.companyId)).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getFlowApproveByEmpId => " + ex.Message);
+            }
+
+            return PartialView(flowSubject);
+        }
+
+
+        public ActionResult insertFlowAddOn(string[] ApproveIdList, string[] selectRow)
+        {
+            ManagentFlowModel flowSubject = new ManagentFlowModel();
+            try
+            {
+                //flowSubject.flowSubjectsList = pManagementFlowAppCode.getFlowApproveByEmpId(AppCode.StrCon, empId).Where(w => companyList.Contains(w.companyId)).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.WriteError("getFlowApproveByEmpId => " + ex.Message);
+            }
+
+            return PartialView(flowSubject);
+        }
     }
 }

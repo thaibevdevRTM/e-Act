@@ -8,7 +8,7 @@ namespace eForms.Models.MasterData
 {
     public class ManagentFlowModel
     {
-
+        public List<flowSubject> flowSubjectsList { get; set; }
         public class flowSubject
         {
             public string flowApproveId { get; set; }
@@ -26,17 +26,12 @@ namespace eForms.Models.MasterData
             public string companyName { get; set; }
             public string rangNo { get; set; }
             public string cusNameTH { get; set; }
+            public Boolean selectRow { get; set; }
+            public List<string> flowApproveIdList { get; set; }
 
 
         }
 
-        public class companySubjectList
-        {
 
-        }
-
-
-
-
-        }
+    }
 }
